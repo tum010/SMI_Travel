@@ -233,23 +233,32 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                             if(flightList.get(j).getAdCost() != null){
                                ticketfare = ticketfare + flightList.get(j).getAdCost();
                             }
-                            if(flightList.get(j).getAdTax() != null){
-                               tickettax = tickettax + flightList.get(j).getAdTax();
-                            }
+//                            if(flightList.get(j).getAdTax() != null){
+//                               tickettax = tickettax + flightList.get(j).getAdTax();
+//                            }
                         }else if("CHILD".equals(mpricecategoryname)){
                             if(flightList.get(j).getChCost()!= null){
                                ticketfare = ticketfare + flightList.get(j).getChCost();
                             }
-                            if(flightList.get(j).getChTax() != null){
-                               tickettax = tickettax + flightList.get(j).getChTax();
-                            }
+//                            if(flightList.get(j).getChTax() != null){
+//                               tickettax = tickettax + flightList.get(j).getChTax();
+//                            }
                         }else if("INFANT".equals(mpricecategoryname)){
                             if(flightList.get(j).getInCost() != null){
                                ticketfare = ticketfare + flightList.get(j).getInCost();
                             }
-                            if(flightList.get(j).getInTax() != null){
-                               tickettax = tickettax + flightList.get(j).getInTax();
-                            }
+//                            if(flightList.get(j).getInTax() != null){
+//                               tickettax = tickettax + flightList.get(j).getInTax();
+//                            }
+                        }
+                        if(flightList.get(j).getAdTaxCost() != null){
+                            tickettax = tickettax + flightList.get(j).getAdTaxCost();
+                        }
+                        if(flightList.get(j).getChTaxCost() != null){
+                            tickettax = tickettax + flightList.get(j).getChTaxCost();
+                        }
+                        if(flightList.get(j).getInTaxCost() != null){
+                            tickettax = tickettax + flightList.get(j).getInTaxCost();
                         }
                     }
                 }
@@ -284,14 +293,14 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         if (ticketPassList.isEmpty()){
             return null;
         }else{
-            result =  buildTicketListHTML(ticketPassList,Refno);
+            result =  buildTicketListHTML(ticketPassList,Refno,"");
         }
         session.close();
         this.sessionFactory.close();
         return result;
     }
     
-    public String buildTicketListHTML(List<AirticketPassenger> airPassengerList,String refno){
+    public String buildTicketListHTML(List<AirticketPassenger> airPassengerList,String refno,String invno){
         StringBuffer html = new StringBuffer();
         if (airPassengerList == null || airPassengerList.size() == 0) {
             return html.toString();
@@ -310,11 +319,13 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         String department = "";
         String masterId = "";
         String mpricecategoryname = "";
+        String referno = "";
         for(int i = 0 ; i < airPassengerList.size() ; i++ ){
-            ticket = airPassengerList.get(i).getSeries1() 
-                            + airPassengerList.get(i).getSeries2() 
-                            + airPassengerList.get(i).getSeries3();
-            
+            if(airPassengerList.get(i).getSeries1() != null && airPassengerList.get(i).getSeries2() != null && airPassengerList.get(i).getSeries3() != null){
+                ticket = airPassengerList.get(i).getSeries1() 
+                                + airPassengerList.get(i).getSeries2() 
+                                + airPassengerList.get(i).getSeries3();
+            }
             if(airPassengerList.get(i).getMPricecategory() != null ){
                 mpricecategoryname = airPassengerList.get(i).getMPricecategory().getName();
             }
@@ -331,23 +342,32 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                     if(airlines.get(j).getAdCost() != null){
                        ticketfare = ticketfare + airlines.get(j).getAdCost();
                     }
-                    if(airlines.get(j).getAdTax() != null){
-                        tickettax = tickettax +  airlines.get(j).getAdTax();
-                    }
+//                    if(airlines.get(j).getAdTax() != null){
+//                        tickettax = tickettax +  airlines.get(j).getAdTax();
+//                    }
                 }else if("CHILD".equals(mpricecategoryname)){
                     if(airlines.get(j).getChCost()!= null){
                         ticketfare = ticketfare + airlines.get(j).getChCost();
                     }    
-                    if(airlines.get(j).getChTax() != null){
-                        tickettax = tickettax +  airlines.get(j).getChTax();
-                    }
+//                    if(airlines.get(j).getChTax() != null){
+//                        tickettax = tickettax +  airlines.get(j).getChTax();
+//                    }
                 }else if("INFANT".equals(mpricecategoryname)){
                     if(airlines.get(j).getInCost() != null){
                        ticketfare = ticketfare + airlines.get(j).getInCost();
                     }
-                    if(airlines.get(j).getInTax() != null){
-                        tickettax = tickettax +  airlines.get(j).getInTax();
-                    }
+//                    if(airlines.get(j).getInTax() != null){
+//                        tickettax = tickettax +  airlines.get(j).getInTax();
+//                    }
+                }
+                if(airlines.get(j).getAdTaxCost() != null){
+                    tickettax = tickettax +  airlines.get(j).getAdTaxCost();
+                }
+                if(airlines.get(j).getChTaxCost() != null){
+                    tickettax = tickettax +  airlines.get(j).getChTaxCost();
+                }
+                if(airlines.get(j).getInTaxCost() != null){
+                    tickettax = tickettax +  airlines.get(j).getInTaxCost();
                 }
             }
             
@@ -388,6 +408,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                         if(!"null".equals(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId())
                         || airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId() != null){
                             masterId = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId());
+                            referno = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getReferenceNo());
                         }
     //                    department = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
     //                    masterId = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId());
@@ -404,21 +425,43 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 ticketBy = ticketFareAirline.getTicketBuy();
                 department = ticketFareAirline.getDepartment();
                 masterId =  ticketFareAirline.getMaster().getId();
+                referno = ticketFareAirline.getMaster().getReferenceNo();
             }   
-            String newrow
-                = "<tr>"
-                + "<td>" + (ticket == "null" ? "" : ticket ) + "</td>"
-                + "<td>" + (name == "null" ? "" : name ) + "</td>"
-                + "<td>" + (ticketClass == "null" ? "" : ticketClass ) + "</td>"
-                + "<td>" + (departDate == "null" ? "" : departDate ) + "</td>"
-                + "<td class='money'>"+ (ticketFare == "null" ? "" : ticketFare )+"</td>" 
-                + "<td class='money'>" + (ticketTax == "null" ? "" : ticketTax ) +"</td>" 
-//                    + "<td class=\"text-center\" onclick=\"setTicketDetail('" + ticket + "','" + ticketFare + "','" + ticketTax + "','" + issueDate + "','" + ticketRouting + "','" + airline + "','" + ticketBy + "','" + name + "','" + department + "','" + masterId + "','" + ticketId + "')\">"
-                + "<td class=\"text-center\" onclick=\"setTicketFareDetail('" + ticket + "','" + refno + "')\">"
-                + "<a href=\"\"><span class=\"glyphicon glyphicon-check\"></span></a>" + "</td>"
-                + "</tr>";
-            System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
-            html.append(newrow);
+            
+            if(!"".equalsIgnoreCase(refno)){
+                String newrow
+                    = "<tr>"
+                    + "<td>" + (ticket == "null" ? "" : ticket ) + "</td>"
+                    + "<td>" + (name == "null" ? "" : name ) + "</td>"
+                    + "<td>" + (ticketClass == "null" ? "" : ticketClass ) + "</td>"
+                    + "<td>" + (departDate == "null" ? "" : departDate ) + "</td>"
+                    + "<td class='money'>"+ (ticketFare == "null" ? "" : ticketFare )+"</td>" 
+                    + "<td class='money'>" + (ticketTax == "null" ? "" : ticketTax ) +"</td>" 
+    //                    + "<td class=\"text-center\" onclick=\"setTicketDetail('" + ticket + "','" + ticketFare + "','" + ticketTax + "','" + issueDate + "','" + ticketRouting + "','" + airline + "','" + ticketBy + "','" + name + "','" + department + "','" + masterId + "','" + ticketId + "')\">"
+                    + "<td class=\"text-center\" onclick=\"setTicketFareDetail('" + ticket + "','" + refno + "','')\">"
+                    + "<a href=\"\"><span class=\"glyphicon glyphicon-check\"></span></a>" + "</td>"
+                    + "</tr>";
+                System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
+                html.append(newrow);
+            }
+            
+            if(!"".equalsIgnoreCase(invno)){
+                String newrow
+                    = "<tr>"
+                    + "<td>" + (referno == "null" ? "" : referno ) + "</td>"
+                    + "<td>" + (ticket == "null" ? "" : ticket ) + "</td>"
+                    + "<td>" + (name == "null" ? "" : name ) + "</td>"
+                    + "<td>" + (ticketClass == "null" ? "" : ticketClass ) + "</td>"
+                    + "<td>" + (departDate == "null" ? "" : departDate ) + "</td>"
+                    + "<td class='money'>"+ (ticketFare == "null" ? "" : ticketFare )+"</td>" 
+                    + "<td class='money'>" + (ticketTax == "null" ? "" : ticketTax ) +"</td>" 
+    //                    + "<td class=\"text-center\" onclick=\"setTicketDetail('" + ticket + "','" + ticketFare + "','" + ticketTax + "','" + issueDate + "','" + ticketRouting + "','" + airline + "','" + ticketBy + "','" + name + "','" + department + "','" + masterId + "','" + ticketId + "')\">"
+                    + "<td class=\"text-center\" onclick=\"setTicketFareDetail('" + ticket + "','','" + invno + "')\">"
+                    + "<a href=\"\"><span class=\"glyphicon glyphicon-check\"></span></a>" + "</td>"
+                    + "</tr>";
+                System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
+                html.append(newrow);
+            }
         }
         return html.toString();
     }
@@ -887,6 +930,39 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
 
     public void setUtil(UtilityFunction util) {
         this.util = util;
+    }
+
+    @Override
+    public String getListTicketFareFromInvno(String invNo) {
+        String result ="";
+        System.out.println(" invNo ::: "+invNo);
+        String query = " From InvoiceDetail inv where inv.invoice.invNo = :invNo and inv.billableDesc.MBilltype.id = 1";
+        Session session = this.sessionFactory.openSession();
+        List<InvoiceDetail> invoiceDetails = session.createQuery(query).setParameter("invNo", invNo).list();
+        System.out.println(" invoiceDetails.size() " + invoiceDetails.size());
+        if (invoiceDetails.isEmpty()){
+            return null;
+        }else{
+            String refitemid = invoiceDetails.get(0).getBillableDesc().getRefItemId();
+            System.out.println(" refitemid ::: " + refitemid);
+            String queryairline = " from AirticketAirline air where air.id in (:refItemId)";
+            List<AirticketAirline> airticketAirlines = session.createQuery(queryairline).setParameter("refItemId", refitemid).list();
+            System.out.println(" airticketAirlines.size() " + airticketAirlines.size());
+            if (airticketAirlines.isEmpty()){
+                return null;
+            }else{
+                String query2 = " from AirticketPassenger  airP where airP.airticketAirline.airticketPnr.airticketBooking.master.referenceNo = :refno";
+                List<AirticketPassenger> ticketPassList = session.createQuery(query2).setParameter("refno", airticketAirlines.get(0).getAirticketPnr().getAirticketBooking().getMaster().getReferenceNo()).list();
+                if (ticketPassList.isEmpty()){
+                    return null;
+                }else{
+                    result =  buildTicketListHTML(ticketPassList,"",invNo);
+                }
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
     }
     
 }

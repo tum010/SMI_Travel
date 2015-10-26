@@ -14,6 +14,8 @@
 <c:set var="flightDetailFromAirticket" value="${requestScope['Flight_Detail_Airticket']}" /> 
 <c:set var="invoiceDetailList" value="${requestScope['invoiceDetailList']}" />
 <c:set var="receiptDetailList" value="${requestScope['receiptDetailList']}" />
+<c:set var="withholdingtax" value="${requestScope['withholdingtax']}" />
+
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -53,6 +55,7 @@
             
             <form action="AddTicketFare.smi" method="post" id="AddTicketFareForm" name="AddTicketFareForm" role="form">
                 <input type="hidden" name="masterId" id="masterId" value="${ticketFare.master.id}">
+                <input type="hidden" name="whtax" id="whtax" value="${withholdingtax}">
                 <input type="hidden" name="ticketTemp" id="ticketTemp" value="">
                 <input type="hidden" name="ticketFareTemp" id="ticketFareTemp" value="">
                 <input type="hidden" name="ticketTaxTemp" id="ticketTaxTemp" value="">
@@ -85,6 +88,9 @@
                         <div class="col-xs-1 text-right" style="width: 100px">
                             <!--<button type="submit"  id="ButtonRefno"  name="ButtonRefno" onclick="refnoAction();"  class="btn btn-primary" data-toggle="modal" data-target="#ListRefnoModal"> Refno </button>-->
                             <a  id="ButtonRefno" class="btn btn-primary" data-toggle="modal" data-target="#ListRefnoModal"  style="height: 34px"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Refno</a>
+                        </div>
+                        <div class="col-xs-1 text-right" style="width: 100px">
+                            <a  id="ButtonInv" class="btn btn-primary" data-toggle="modal" data-target="#ListInvnoModal"  style="height: 34px"><i class="glyphicon glyphicon-th-list"></i>&nbsp;Invno</a>
                         </div>
                     </div> 
                 </div>
@@ -338,9 +344,32 @@
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
                                     <input id="diffVat" name="diffVat" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" onkeypress="return isNumberKey(event)" value="${ticketFare.diffVat}">
+                                    <span class="input-group-addon" id="caldiffvat"><span class="glyphicon glyphicon-usd"></span></span>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-xs-12" style="padding-top: 20px">
+                            <div class="col-xs-1 text-right"  style="width: 121px">
+                                <label class="control-label text-right">Ticket Comm Date </label>
+                            </div>
+                            <div class="col-xs-1"  style="width: 200px">
+                                <div class='input-group date' >
+                                    <input id="ticketCommDate" name="ticketCommDate"  type="text" 
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['ticketCommDate']}">
+                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </div>
+                            <div class="col-xs-1 text-right"  style="width: 128px">
+                                <label class="control-label text-right">Agent Comm Date </label>
+                            </div>
+                            <div class="col-xs-1"  style="width: 200px">
+                                <div class='input-group date'>
+                                    <input id="agentCommDate" name="agentCommDate"  type="text" 
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['agentCommDate']}">
+                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                            </div>
+                        </div>        
                         <div class="col-xs-12" style="padding-top: 20px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Agent</label>
@@ -360,7 +389,7 @@
                                 <input type="text" class="form-control" id="agent_name" name="agent_name" value="${SelectedAgent.name}" readonly="">
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 185px">
-                                <label class="control-label text-right">Airline Charge</label>
+                                <label class="control-label text-right">Agent Charge</label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
@@ -548,6 +577,7 @@
                         <div class="col-xs-12 text-center" >  
                             <input type="hidden" name="action" id="action" value="">
                             <input type="hidden" name="temp" id="temp" value="">
+                            <input type="hidden" name="invno" id="invno" value="${requestScope['invNo']}"> 
                             <input type="hidden" name="refno" id="refno" value="${requestScope['refNo']}"> 
                             <input type="hidden" name="ticketFareFlag" id="ticketFareFlag" value="${requestScope['ticketFareFlag']}">
                             <input type="hidden" name="flightDetailFlag" id="flightDetailFlag" value="${requestScope['flightDetailFlag']}">
@@ -711,8 +741,43 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
-<!--Modal  Agent-->
 
+<!--List Invno Modal-->
+<div class="modal fade" id="ListInvnoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 50%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">List Ticket No</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: right;padding-bottom: 12px"><i id="ajaxloadInvno"  class="fa fa-spinner fa-spin hidden"></i>Search : <input placeholder ="Inv No" type="text" style="width: 175px" id="filtercusInvno" name="filtercusInvno"/> </div> 
+                <table class="display" id="ListInvnoTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th style="width:10%;">Ref No</th>
+                            <th style="width:10%;">Ticket</th>
+                            <th style="width:15%;">Name</th>
+                            <th style="width:10%;">Class</th>
+                            <th style="width:10%;">Depart Date</th>
+                            <th style="width:10%;">Fare</th>
+                            <th style="width:10%;">Tax</th>
+                            <th style="width:5%;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="ListInvnoModalOK" name="ListInvnoModalOK" type="button"  class="btn btn-success" data-dismiss="modal">OK</button>
+                <button id="ListInvnoModalClose" name="ListInvnoModalClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal-dialog -->
+
+<!--Modal  Agent-->
 <div class="modal fade" id="AgentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -799,6 +864,7 @@
        
 <script type="text/javascript">
     setTicketDetailTemp = [];
+    setTicketDetailByInvTemp = [];
     $(document).ready(function () {
         $('.datemask').mask('0000-00-00');
         
@@ -817,6 +883,13 @@
             FilterTicketList($("#filtercus").val());
         }
         
+//        if($('#refno').val() != ""){
+//            var refNo = $('#refno').val();
+//            $("#filtercus").val(refNo);
+//            FilterTicketList($("#filtercus").val());
+//        }
+
+        
         $(".money").mask('000,000,000.00', {reverse: true});
         $('.date').datetimepicker();
 
@@ -829,7 +902,24 @@
             "bLengthChange": false,
             "iDisplayLength": 10
         });
-
+        
+        $('#ListInvnoTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+        });
+        
+        //on modal List Ticket
+        $("#filtercusInvno").keyup(function (event) {
+            if (event.keyCode === 13) {
+                FilterTicketListByInvoice($("#filtercusInvno").val());
+            }
+        });
+        
         $("#ticketNo").keyup(function (event) {
             if(event.keyCode === 13){
                searchTicketNo();
@@ -940,6 +1030,28 @@
                     }
                 }
             });
+            
+        $("#caldiffvat").on('click', function () {
+            var diffVat = document.getElementById('diffVat').value;
+            var whtax = document.getElementById('whtax').value;
+
+            var diffVat = replaceAll(",","",$('#diffVat').val()); 
+            if (diffVat == ""){
+                diffVat = 0;
+            }
+
+            var vat = parseFloat(diffVat); 
+            var tax = parseFloat(whtax);
+            if(diffVat < 0) {
+    //          Little Comm =  (Diff vat * -1) *(100/(100+wh))
+                var littlecomm = (vat * (-1)) * (100/(100+tax));
+                document.getElementById("litterCommission").value = formatNumber(littlecomm);
+            }else if(diffVat > 0){
+    //          Over Comm  =  (Diff vat ) *(100/(100+wh))
+                var overcomm = (vat) * (100/(100+tax));
+                document.getElementById("overCommission").value = formatNumber(overcomm);
+            }
+        });
             
         $("#invoiceAmount").focusout(function(){
             calculateVat();
@@ -1405,6 +1517,10 @@ function saveAction(optionsave){
     var countRow = document.getElementById('countRow');
     countRow.value = $('#InvoiceDeailTable tr').length;
     
+    var ticketCommDate = document.getElementById('ticketCommDate');
+    ticketCommDate.value = $("#ticketCommDate").val();
+    var agentCommDate = document.getElementById('agentCommDate');
+    agentCommDate.value = $("#agentCommDate").val();
 }
 
 function searchTicketNo() {
@@ -1426,6 +1542,7 @@ function searchTicketNo() {
         document.getElementById('AddTicketFareForm').submit();
     }
 }
+
 function FilterTicketList(referNo) {
     var servletName = 'TicketFareAirlineServlet';
     var servicesName = 'AJAXBean';
@@ -1488,22 +1605,94 @@ function CallFilterAjax(param) {
         alert(e);
     }
 }   
+
+
+function FilterTicketListByInvoice(invNo) {
+    var servletName = 'TicketFareAirlineServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&invNo=' + invNo +
+            '&type=' + 'getTicketListByInvno';
+    CallFilterAjaxByInvoice(param);
+}
+
+function CallFilterAjaxByInvoice(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxloadInvno").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+                try { 
+                    if(msg == "null"){
+                        $('#ListInvnoTable').dataTable().fnClearTable();
+                        $('#ListInvnoTable').dataTable().fnDestroy();
+                        $('#ListInvnoTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": false,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 10
+                        });
+                    }else{
+                        $('#ListInvnoTable').dataTable().fnClearTable();
+                        $('#ListInvnoTable').dataTable().fnDestroy();
+                        $("#ListInvnoTable tbody").empty().append(msg);
+                        $('#ListInvnoTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": false,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength":10
+                        });
+                    }
+
+                     $("#ajaxloadInvno").addClass("hidden");
+                } catch (e) {
+                    alert(e);
+                }
+
+            }, error: function (msg) {
+                 $("#ajaxloadInvno").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}   
+
 function selectTicketNo(){
     clearData();
     $('#AddTicketByRefModal').modal('hide');
-    
+    var invno = '';
     $.each(setTicketDetailTemp, function (key, value) {
         $("#ticketNo").val(value.no);
+        invno = value.invno;
         $('#AddTicketFareForm').bootstrapValidator('revalidateField', 'ticketNo');
         searchTicketNo();
     });
     setFormatCurrency();
     setDataCurrency();
     $("#ListRefnoModal").modal('hide');
+    alert(invno);
+    if(invno === ''){
+        $("#ListRefnoModal").modal('hide');
+    }else{
+        $("#ListInvnoModal").modal('hide');
+    }
 }
 
-function setTicketFareDetail(ticket,refno){
-    setTicketDetailTemp.push({no:ticket,refno:refno});
+function setTicketFareDetail(ticket,refno,invno){
+    setTicketDetailTemp.push({no:ticket,refno:refno,invno:invno});
     var ticketNo = $("#ticketNo").val();
     if(ticketNo != ""){
         $("#ticketNoAlert").text('Are you sure to edit Ticket No. ?');
@@ -1511,11 +1700,17 @@ function setTicketFareDetail(ticket,refno){
     }else{
         $("#ticketNo").val(ticket);
         $("#refno").val(refno);
+        $("#invno").val(invno);
         searchTicketNo();
     }
     setFormatCurrency();
     setDataCurrency();
-    $("#ListRefnoModal").modal('hide');
+    
+    if(invno === ''){
+        $("#ListRefnoModal").modal('hide');
+    }else{
+        $("#ListInvnoModal").modal('hide');
+    }
 }
 function clearData(){
 //    $("#ticketNo").val("");
@@ -1552,7 +1747,8 @@ function clearData(){
     $("#addPayDate").val("");
     $("#agentPayDate").val("");
     $("#agentReceiveDate").val("");
-    
+    $("#ticketCommDate").val("");
+    $("#agentCommDate").val("");
     $('#FlightDeailTable').dataTable().fnClearTable();
     $('#FlightDeailTable').dataTable().fnDestroy();
     $("#FlightDeailTable tbody").empty();

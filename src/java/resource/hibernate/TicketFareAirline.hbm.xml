@@ -122,6 +122,15 @@
         <property name="invAmount" type="big_decimal">
             <column name="inv_amount" precision="10"  />
         </property>
+        <property name="vat" type="big_decimal">
+            <column name="vat" precision="10" />
+        </property>
+        <property name="ticketCommissionDate" type="date">
+            <column name="ticket_commission_date" length="10" />
+        </property>
+        <property name="agentCommissionDate" type="date">
+            <column name="agent_commission_date" length="10" />
+        </property>
         <bag name="paymentAirticketFares" table="payment_airticket_fare" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ticket_fare_id" />
