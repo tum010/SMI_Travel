@@ -176,23 +176,32 @@ public class CreditNoteImpl implements CreditNoteDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public String gennarateTaxInvoiceNo(Date createDate) {
+    public String gennarateTaxInvoiceNo(Date createDate,String department) {
         String cnNo = "";
         Session session = this.sessionFactory.openSession();
-        List<CreditNote> list = new ArrayList<CreditNote>();
+        List<String> list = new LinkedList<String>();
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("yyMM");
-        Query query = session.createQuery("from CreditNote c where c.cnNo Like :cnNo Order by c.cnNo desc  LIMIT 1");
-        query.setParameter("cnNo", "%" + df.format(createDate) + "%");
+        String querysql = "";
+        if("Wendy".equalsIgnoreCase(department) ||  "Outbound".equalsIgnoreCase(department)){
+            querysql = "SELECT RIGHT(cn_no, 4) as cnnum  FROM credit_note where department in ('Wendy','Outbound') and cn_no Like :cnno ORDER BY RIGHT(cn_no, 4) desc";
+        }else{
+            querysql = "SELECT RIGHT(cn_no, 4) as cnnum  FROM credit_note where department = :department and cn_no Like :cnno ORDER BY RIGHT(cn_no, 4) desc";
+        }       
+//        Query query = session.createQuery("from CreditNote c where c.cnNo Like :cnNo Order by c.cnNo desc  LIMIT 1");
+        Query query = session.createSQLQuery(querysql);
+        query.setParameter("cnno", "%" + df.format(createDate) + "%");
+        if(!"Wendy".equalsIgnoreCase(department) && !"Outbound".equalsIgnoreCase(department)){
+            query.setParameter("department", department);
+        }
         query.setMaxResults(1);
         list = query.list();
         if (list.isEmpty()) {
             cnNo = df.format(createDate) + "-" + "0001";
         } else {
-            cnNo = String.valueOf(list.get(0).getCnNo());
+            cnNo = String.valueOf(list.get(0));
             if (!cnNo.equalsIgnoreCase("")) {
-                System.out.println("taxNo" + cnNo.substring(4, 8) + "/////");
-                int running = Integer.parseInt(cnNo.substring(4, 8)) + 1;
+                int running = Integer.parseInt(cnNo) + 1;
                 String temp = String.valueOf(running);
                 for (int i = temp.length(); i < 4; i++) {
                     temp = "0" + temp;

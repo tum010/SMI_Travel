@@ -39,7 +39,7 @@ public class CreditNoteService {
             status = this.creditNoteDao.updateCreditNote(cn);
             cnNo = cn.getCnNo();
         }else{
-            cn.setCnNo(this.creditNoteDao.gennarateTaxInvoiceNo(cn.getCreateDate()));
+            cn.setCnNo(this.creditNoteDao.gennarateTaxInvoiceNo(cn.getCreateDate(),cn.getDepartment()));
             cnNo = cn.getCnNo();
             MFinanceItemstatus itemStatus = new MFinanceItemstatus();
             itemStatus.setId("1");
