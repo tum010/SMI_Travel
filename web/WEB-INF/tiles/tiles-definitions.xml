@@ -636,5 +636,25 @@
         <put-attribute name="title" value="Report : PackageTourHotel" />
         <put-attribute name="body" value="/WEB-INF/jsp/PackageTourHotel.jsp" />
     </definition>
+    
+    <definition name="HotelMonthly" extends="baseLayout">
+        <put-attribute name="title" value="Report : HotelMonthly" />
+        <put-attribute name="body" value="/WEB-INF/jsp/HotelMonthly.jsp" />
+    </definition>
+    
+    <definition name="DaytoursMonthly" extends="baseLayout">
+        <put-attribute name="title" value="Report : DaytoursMonthly" />
+        <put-attribute name="body" value="/WEB-INF/jsp/DaytoursMonthly.jsp" />
+    </definition>
+    
+    <definition name="PackageMonthly" extends="baseLayout">
+        <put-attribute name="title" value="Report : PackageMonthly" />
+        <put-attribute name="body" value="/WEB-INF/jsp/PackageMonthly.jsp" />
+    </definition>
+    
+    <definition name="OtherMonthly" extends="baseLayout">
+        <put-attribute name="title" value="Report : OtherMonthly" />
+        <put-attribute name="body" value="/WEB-INF/jsp/OtherMonthly.jsp" />
+    </definition>
 	
 </tiles-definitions>

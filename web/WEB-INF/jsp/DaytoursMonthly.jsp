@@ -1,6 +1,6 @@
 <%-- 
-    Document   : PackageTourHotel
-    Created on : Oct 26, 2015, 10:36:32 AM
+    Document   : DaytoursMonthly
+    Created on : Oct 26, 2015, 11:03:55 AM
     Author     : Kanokporn
 --%>
 
@@ -10,11 +10,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <section class="content-header"  >
     <h4>
-        <b>Report : Hotel Summary </b>
+        <b>Report : Daytours Monthly </b>
     </h4>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Report</a></li>          
-        <li class="active"><a href="#">Hotel Summary</a></li>
+        <li class="active"><a href="#">Daytours Monthly</a></li>
     </ol>
 </section>
 <div class="container" style="padding-top: 30px;" ng-app="">
@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-6">
-                    <h3>Hotel Summary Report</h3>
+                    <h3>Daytours Monthly Report</h3>
                 </div>
             </div>
             <div class="col-md-10" >
@@ -72,6 +72,23 @@
                                             <option value="">--Select--</option>
                                             <option value="I">Wendy</option>
                                             <option value="O">Outbound</option>
+                                            <!--<option value="Inbound">Inbound</option>-->
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="depart" class="col-sm-5 control-label text-right">Detail</label>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <select id="detail" name="detail"  class="form-control">
+                                            <option value="">--Select--</option>
+                                            <option value="1">Show</option>
+                                            <option value="2">Not Show</option>
                                             <!--<option value="Inbound">Inbound</option>-->
                                         </select>
                                     </div>

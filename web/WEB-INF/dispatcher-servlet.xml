@@ -146,6 +146,10 @@
                                 <prop key="TicketProfitLoss.smi">TicketProfitLossController</prop>
                                 <prop key="TicketSummaryCommission.smi">TicketSummaryCommissionController</prop>
                                 <prop key="PackageTourHotel.smi">PackageTourHotelController</prop>
+                                <prop key="HotelMonthly.smi">HotelMonthlyController</prop>
+                                <prop key="DaytoursMonthly.smi">DaytoursMonthlyController</prop>
+                                <prop key="PackageMonthly.smi">PackageMonthlyController</prop>
+                                <prop key="OtherMonthly.smi">OtherMonthlyController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -631,6 +635,22 @@
             <property name="ticketSummaryCommissionService" ref="TicketSummaryCommissionService" />
     </bean>
     <bean id="PackageTourHotelController" class="com.smi.travel.controller.PackageTourHotelController">
+            <property name="utilityService" ref="UtilityService" />
+    </bean>
+    
+    <bean id="HotelMonthlyController" class="com.smi.travel.controller.HotelMonthlyController">
+            <property name="utilityService" ref="UtilityService" />
+    </bean>
+    
+    <bean id="DaytoursMonthlyController" class="com.smi.travel.controller.DaytoursMonthlyController">
+            <property name="utilityService" ref="UtilityService" />
+    </bean>
+    
+    <bean id="PackageMonthlyController" class="com.smi.travel.controller.PackageMonthlyController">
+            <property name="utilityService" ref="UtilityService" />
+    </bean>
+    
+    <bean id="OtherMonthlyController" class="com.smi.travel.controller.OtherMonthlyController">
             <property name="utilityService" ref="UtilityService" />
     </bean>
 	<!-- add bean id controller -->
