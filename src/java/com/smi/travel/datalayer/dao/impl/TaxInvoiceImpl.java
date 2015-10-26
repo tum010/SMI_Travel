@@ -72,21 +72,28 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     private String gennarateTaxInvoiceNo(Date taxInvDate,String department){
         String taxNo = "";
         Session session = this.sessionFactory.openSession();
-        List<TaxInvoice> list = new LinkedList<TaxInvoice>();
+        List<String> list = new LinkedList<String>();
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("yyMM");
-        Query query = session.createQuery("from TaxInvoice t where t.department = :department and t.taxNo Like :taxNo Order by t.taxNo desc");
-        query.setParameter("taxNo", "%"+ df.format(taxInvDate) + "%");
-        query.setParameter("department", department);
+        String querysql = "";
+        if("Wendy".equalsIgnoreCase(department) ||  "Outbound".equalsIgnoreCase(department)){
+            querysql = "SELECT RIGHT(tax_no, 4) as taxnum  FROM tax_invoice where department in ('Wendy','Outbound') and tax_no Like :taxno ORDER BY RIGHT(tax_no, 4) desc";
+        }else{
+            querysql = "SELECT RIGHT(tax_no, 4) as taxnum  FROM tax_invoice where department = :department and tax_no Like :taxno ORDER BY RIGHT(tax_no, 4) desc";
+        }
+        Query query = session.createSQLQuery(querysql);
+        query.setParameter("taxno", "%"+ df.format(taxInvDate) + "%");
+        if(!"Wendy".equalsIgnoreCase(department) && !"Outbound".equalsIgnoreCase(department)){
+            query.setParameter("department", department);
+        }
         query.setMaxResults(1);
         list = query.list();
         if (list.isEmpty()) {
             taxNo = df.format(taxInvDate) + "-" + "0001";
         } else {
-            taxNo = String.valueOf(list.get(0).getTaxNo());
+            taxNo = String.valueOf(list.get(0));
             if (!taxNo.equalsIgnoreCase("")) {
-                System.out.println("taxNo" + taxNo.substring(4,8) + "/////");
-                int running = Integer.parseInt(taxNo.substring(4,8)) + 1;
+                int running = Integer.parseInt(taxNo) + 1;
                 String temp = String.valueOf(running);
                 for (int i = temp.length(); i < 4; i++) {
                     temp = "0" + temp;
