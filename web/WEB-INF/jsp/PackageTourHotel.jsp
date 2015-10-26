@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col-md-10" >
-                <form role="form" id="HotelSummaryReportFrom" method="post" class="form-horizontal" onsubmit="printInvoiceMonthly();">                   
+                <form role="form" id="HotelSummaryReportFrom" method="post" class="form-horizontal" onsubmit="printHotelSummary();">                   
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">

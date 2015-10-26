@@ -76,6 +76,7 @@ public class ReportController extends SMITravelController {
     private static final String PaymentAirlineInfo = "PaymentAirlineInfo";
     private static final String PaymentAirlineListReport = "PaymentAirlineListReport";
     private static final String PaymentTourHotelSummary = "PaymentTourHotelSummary";
+    private static final String HotelSummary = "HotelSummary";
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
     private ReportService reportservice;
@@ -135,6 +136,11 @@ public class ReportController extends SMITravelController {
         String statusInvoice = request.getParameter("status");
         String pvtype = request.getParameter("pvtype");
         String invSupCode = request.getParameter("invSupCode");
+        
+        //Hotel Summary
+        String fromHotelSummary = request.getParameter("fromdate");
+        String toHotelSummary = request.getParameter("todate");
+        String departmentHotelSummary = request.getParameter("department");
         
         Map model = new HashMap();
         List data = new ArrayList();
@@ -235,6 +241,8 @@ public class ReportController extends SMITravelController {
             ((PaymentAirline) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }else if(PaymentTourHotelSummary.equalsIgnoreCase(name)){
             data = reportservice.getPaymentTourHotelSummary(from, to, pvtype, status, invSupCode, user.getUsername()+"-"+user.getRole().getName());
+        }else if(HotelSummary.equalsIgnoreCase(name)){
+            data = reportservice.getHotelSummary(fromHotelSummary, toHotelSummary, departmentHotelSummary);
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

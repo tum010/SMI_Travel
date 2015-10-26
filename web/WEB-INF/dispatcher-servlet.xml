@@ -636,6 +636,7 @@
     </bean>
     <bean id="PackageTourHotelController" class="com.smi.travel.controller.PackageTourHotelController">
             <property name="utilityService" ref="UtilityService" />
+            <property name="packageTourHotelService" ref="PackageTourHotelService" />
     </bean>
     
     <bean id="HotelMonthlyController" class="com.smi.travel.controller.HotelMonthlyController">
