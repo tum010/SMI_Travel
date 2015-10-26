@@ -145,6 +145,7 @@
                                 <prop key="TicketRefundSummary.smi">TicketRefundSummaryController</prop>
                                 <prop key="TicketProfitLoss.smi">TicketProfitLossController</prop>
                                 <prop key="TicketSummaryCommission.smi">TicketSummaryCommissionController</prop>
+                                <prop key="PackageTourHotel.smi">PackageTourHotelController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -628,6 +629,9 @@
     <bean id="TicketSummaryCommissionController" class="com.smi.travel.controller.TicketSummaryCommissionController">
             <property name="utilityService" ref="UtilityService" />
             <property name="ticketSummaryCommissionService" ref="TicketSummaryCommissionService" />
+    </bean>
+    <bean id="PackageTourHotelController" class="com.smi.travel.controller.PackageTourHotelController">
+            <property name="utilityService" ref="UtilityService" />
     </bean>
 	<!-- add bean id controller -->
 
