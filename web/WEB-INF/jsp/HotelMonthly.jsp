@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col-md-10" >
-                <form role="form" id="HotelSummaryReportFrom" method="post" class="form-horizontal" onsubmit="printInvoiceMonthly();">                   
+                <form role="form" id="HotelMonthlyReportFrom" method="post" class="form-horizontal" onsubmit="printHotelMonthly();">                   
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
@@ -124,7 +124,7 @@
 
         });
         
-         $("#HotelSummaryReportFrom")
+         $("#HotelMonthlyReportFrom")
             .bootstrapValidator({
                 framework: 'bootstrap',
                 feedbackIcons: {
@@ -170,11 +170,11 @@
             });
             $('#DateFrom').datetimepicker().on('dp.change', function (e) {
 //                alert("1");
-                $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'fromdate');
+                $('#HotelMonthlyReportFrom').bootstrapValidator('revalidateField', 'fromdate');
             });
             $('#DateTo').datetimepicker().on('dp.change', function (e) {
-                $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'todate');
+                $('#HotelMonthlyReportFrom').bootstrapValidator('revalidateField', 'todate');
             });  
     });   
 </script>
-<script type="text/javascript" src="js/HotelSummaryReport.js"></script> 
+<script type="text/javascript" src="js/HotelMonthly.js"></script> 

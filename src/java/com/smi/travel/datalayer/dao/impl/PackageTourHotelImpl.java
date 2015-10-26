@@ -174,7 +174,149 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
 
     @Override
     public List getHotelMonthly(String from, String to, String department, String detail) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList<HotelSummary>();
+        HotelSummary listHotelSummary = new HotelSummary();
+        
+        String query = "";
+        String query2 = "";
+        int checkQuery = 0;
+        if( from == null  && to == null  && department == null ){
+            query2 = "select * from ("+ 
+                    "  SELECT " +
+                    "ht.`name` as hotel, " +
+                    "ht.`id` as hotelid, " +
+                    "CONCAT(hr.qty,' ',hr.category) as room_type, " +
+                    "(DATEDIFF(hb.checkout,hb.checkin)) as night, " +
+                    "sum(IFNULL(hr.cost,0)) as net, " +
+                    "sum(IFNULL(hr.price,0)) as sell, " +
+                    "sum(IFNULL(hr.price,0) - IFNULL(hr.cost,0) ) as profit " +
+                    "FROM `hotel_booking` hb " +
+                    "INNER JOIN hotel ht on  hb.hotel_id = ht.id  " +
+                    "INNER JOIN master mt on mt.id = hb.master_id " +
+                    "left JOIN hotel_room hr on hr.booking_hotel_id = hb.id ";
+        }else{
+            query2 = "SELECT " +
+                    "ht.`name` as hotel, " +
+                    "ht.`id` as hotelid, " +
+                    "CONCAT(hr.qty,' ',hr.category) as room_type, " +
+                    "(DATEDIFF(hb.checkout,hb.checkin)) as night, " +
+                    "sum(IFNULL(hr.cost,0)) as net, " +
+                    "sum(IFNULL(hr.price,0)) as sell, " +
+                    "sum(IFNULL(hr.price,0) - IFNULL(hr.cost,0) ) as profit " +
+                    "FROM `hotel_booking` hb " +
+                    "INNER JOIN hotel ht on  hb.hotel_id = ht.id " +
+                    "INNER JOIN master mt on mt.id = hb.master_id " +
+                    "left JOIN hotel_room hr on hr.booking_hotel_id = hb.id  where ";
+            
+        }
+        
+        if ((from != null )&&(!"".equalsIgnoreCase(from))) {
+            if ((to != null )&&(!"".equalsIgnoreCase(to))) {
+                if(checkQuery == 1){
+                     query += " and  mt.Create_date  BETWEEN  '" + from + "' AND '" + to + "' ";
+                }else{
+                    checkQuery = 1;
+                     query += " mt.Create_date  BETWEEN  '" + from + "' AND '" + to + "' ";
+                }
+            }
+        }
+        
+        if ((department != null )&&(!"".equalsIgnoreCase(department))) {
+            if(checkQuery == 1){
+                 query += " and mt.booking_type  = '" + department + "' ";
+            }else{
+                checkQuery = 1;
+                 query += " mt.booking_type  = '" + department + "' ";
+            }
+        }
+  
+        query2 += query + "group by ht.id ,CONCAT(hr.qty,' ',hr.category) ";
+
+        query2 += " UNION all  " + 
+                "SELECT " +
+                "ht.`name` as hotel, " +
+                "ht.`id` as hotelid, " +
+                "'Other' as room_type, " +
+                "sum(IFNULL(hr.cost,0)) as net, " +
+                "sum(IFNULL(hr.price,0)) as sell, " +
+                "sum(IFNULL(hr.price,0) - IFNULL(hr.cost,0) ) as profit " +
+                "FROM `hotel_booking` hb " +
+                "INNER JOIN hotel ht on  hb.hotel_id = ht.id  " +
+                "INNER JOIN master mt on mt.id = hb.master_id " +
+                "left JOIN hotel_request hr on hr.booking_hotel_id = hb.id  " ;
+        // Edit where 
+        
+        query2 += query + "group by ht.id )x ORDER BY x.hotel , x.night desc ";
+        System.out.println("Query : " + query2);
+        List<Object[]> QueryList =  session.createSQLQuery(query2)
+                .addScalar("room_type",Hibernate.STRING)	
+                .addScalar("hotelid",Hibernate.INTEGER)		
+                .addScalar("hotel",Hibernate.STRING)		
+                .addScalar("night",Hibernate.INTEGER)		
+                .addScalar("sell",Hibernate.BIG_DECIMAL)		
+                .addScalar("net",Hibernate.BIG_DECIMAL)	
+                .addScalar("profit",Hibernate.BIG_DECIMAL)
+                .list();
+        for (Object[] B : QueryList) {
+            HotelSummary hotelSummary = new HotelSummary();
+            //header    
+            if(from != null && !"".equals(from)){
+//                SimpleDateFormat sm = new SimpleDateFormat("dd-mm-yyyy");
+//                String strDate = sm.format(from);
+                hotelSummary.setFrompage(from);
+            }else{
+                hotelSummary.setFrompage("");
+            }
+            if(to != null && !"".equals(to)){
+//                SimpleDateFormat sm = new SimpleDateFormat("dd-mm-yyyy");
+//                String strDate = sm.format(to);
+                hotelSummary.setTopage(to);
+            }else{
+                hotelSummary.setTopage("");
+            }
+            if(department != null && !"".equals(department)){
+                hotelSummary.setDepartmentpage(department);
+            }else{
+                hotelSummary.setDepartmentpage("");
+            }
+            
+            hotelSummary.setSystemdate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(new Date()));
+            
+            hotelSummary.setRoomtype(util.ConvertString(B[0]));
+            if(B[1] != null && !"".equals(B[1])){
+                hotelSummary.setHotelid((Integer) B[1]);
+            }else{
+                hotelSummary.setHotelid(0);
+            }
+            hotelSummary.setHotel(util.ConvertString(B[2]));
+            System.out.println("Night : "+B[3]);
+            if(B[3] != null && !"".equals(B[3])){
+                hotelSummary.setNight((Integer) B[3]);
+            }else{
+                hotelSummary.setNight(0);
+            }
+            if(B[4] != null && !"".equals(B[4])){
+                hotelSummary.setSell((BigDecimal) B[4]);
+            }else{
+                hotelSummary.setSell(new BigDecimal(0));
+            }
+            if(B[5] != null && !"".equals(B[5])){
+                hotelSummary.setNet((BigDecimal) B[5]);
+            }else{
+                hotelSummary.setNet(new BigDecimal(0));
+            }
+            if(B[6] != null && !"".equals(B[6])){
+                hotelSummary.setProfit((BigDecimal) B[6]);
+            }else{
+                hotelSummary.setProfit(new BigDecimal(0));
+            } 
+             
+            data.add(hotelSummary);
+        }
+
+        return data;
     }
     
     

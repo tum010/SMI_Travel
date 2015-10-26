@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.view.entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  *
@@ -21,12 +22,21 @@ public class HotelSummary {
     private BigDecimal net;		
     private BigDecimal profit;
     private String roomtype;
-    private String hotelid;
+    private Integer hotelid;
+    private List hotelMonthlyDetail;
     
     //Header
     private String frompage;
     private String topage;
     private String departmentpage;
+
+    public List getHotelMonthlyDetail() {
+        return hotelMonthlyDetail;
+    }
+
+    public void setHotelMonthlyDetail(List hotelMonthlyDetail) {
+        this.hotelMonthlyDetail = hotelMonthlyDetail;
+    }
 
     public String getRoomtype() {
         return roomtype;
@@ -36,16 +46,15 @@ public class HotelSummary {
         this.roomtype = roomtype;
     }
 
-    public String getHotelid() {
+    public Integer getHotelid() {
         return hotelid;
     }
 
-    public void setHotelid(String hotelid) {
+    public void setHotelid(Integer hotelid) {
         this.hotelid = hotelid;
     }
-    
-    
 
+    
     public String getFrompage() {
         return frompage;
     }
