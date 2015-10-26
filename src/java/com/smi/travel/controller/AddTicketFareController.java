@@ -6,6 +6,7 @@ import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
+import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.MPaymentDoctype;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
@@ -63,6 +64,10 @@ public class AddTicketFareController extends SMITravelController {
     private static final String INVOICECREDIT = "invoiceCredit";
     private static final String INVOICECREDITVALUE = "invoiceCreditValue";
     private static final String DUEDATE = "dueDate";
+    private static final String TICKETCOMMDATE = "ticketCommDate";
+    private static final String AGENTCOMMDATE = "agentCommDate";
+    private static final String withholdingtax = "withholdingtax";
+    private static final String INVNO = "invNo";
     private UtilityService utilityService;
     private TicketFareAirlineService ticketFareAirlineService;
     private AgentService agentService;
@@ -113,9 +118,12 @@ public class AddTicketFareController extends SMITravelController {
         String routing = request.getParameter("routing");
         String dueDate = request.getParameter("dueDate");
         String countRowInvoice = request.getParameter("countRow");
-
+        String agentCommDate = request.getParameter("agentCommDate");
+        String ticketCommDate = request.getParameter("ticketCommDate");
+        String invno = request.getParameter("invno");
+        
         String result = "";
-        setResponseAttribute(request,refno);
+        setResponseAttribute(request,refno,invno);
         Agent agents = new Agent();
 
         util = new UtilityFunction();
@@ -131,7 +139,7 @@ public class AddTicketFareController extends SMITravelController {
         String invDate = "" ;
         String invcredit = "" ;
         String invcreditvalue = "";
-        String staffowner = "" ;
+        String staffowner = "";
         String ticketflightrouting = "";
         
         if ("save".equalsIgnoreCase(action)){
@@ -176,6 +184,16 @@ public class AddTicketFareController extends SMITravelController {
             if(StringUtils.isNotEmpty(issueDate)){
                 ticketFareAirline.setIssueDate(util.convertStringToDate(issueDate));
                 request.setAttribute(ISSUEDATE, issueDate);
+            }
+            
+            if(StringUtils.isNotEmpty(ticketCommDate)){
+                ticketFareAirline.setTicketCommissionDate(util.convertStringToDate(ticketCommDate));
+                request.setAttribute(TICKETCOMMDATE, ticketCommDate);
+            }
+            
+            if(StringUtils.isNotEmpty(agentCommDate)){
+                ticketFareAirline.setAgentCommissionDate(util.convertStringToDate(agentCommDate));
+                request.setAttribute(AGENTCOMMDATE, agentCommDate);
             }
 
             if(StringUtils.isNotEmpty(ticketFare)){
@@ -429,6 +447,8 @@ public class AddTicketFareController extends SMITravelController {
             request.setAttribute(TICKETBUY, ticketFareAirline.getTicketBuy());
             request.setAttribute(TICKETROUTING, ticketFareAirline.getTicketRouting());
             request.setAttribute(ISSUEDATE, ticketFareAirline.getIssueDate());
+            request.setAttribute(TICKETCOMMDATE, ticketFareAirline.getTicketCommissionDate());
+            request.setAttribute(AGENTCOMMDATE, ticketFareAirline.getAgentCommissionDate());
             agents = agentService.getAgentFromID(String.valueOf(ticketFareAirline.getAgentId()));
             request.setAttribute(SELECTEDAGENT, agents);
             request.setAttribute(OVERDATE, ticketFareAirline.getOverDate());
@@ -602,6 +622,8 @@ public class AddTicketFareController extends SMITravelController {
                     request.setAttribute(TICKETBUY, ticketFareAirline.getTicketBuy());
                     request.setAttribute(TICKETROUTING, ticketFareAirline.getTicketRouting());
                     request.setAttribute(ISSUEDATE, ticketFareAirline.getIssueDate());
+                    request.setAttribute(TICKETCOMMDATE, ticketFareAirline.getTicketCommissionDate());
+                    request.setAttribute(AGENTCOMMDATE, ticketFareAirline.getAgentCommissionDate());
                     agents = agentService.getAgentFromID(String.valueOf(ticketFareAirline.getAgentId()));
                     request.setAttribute(SELECTEDAGENT, agents);
                     request.setAttribute(OVERDATE, ticketFareAirline.getOverDate());
@@ -621,7 +643,7 @@ public class AddTicketFareController extends SMITravelController {
     }
     
     
-    public void setResponseAttribute(HttpServletRequest request,String refno) {
+    public void setResponseAttribute(HttpServletRequest request,String refno,String invno) {
         List<MAirlineAgent> mAirlineAgentsList = utilityService.getListMAirLineAgent();
         request.setAttribute(AIRLINELIST,mAirlineAgentsList);
         List<Agent> agent = utilityService.getListAgent();
@@ -631,6 +653,9 @@ public class AddTicketFareController extends SMITravelController {
         
         request.setAttribute(FLIGHTDETAILFLAG,"dummy");
         request.setAttribute(REFNO,refno);
+        request.setAttribute(INVNO,invno);
+        MDefaultData mDefaultData = utilityService.getMDefaultDataFromType("withholding tax");
+        request.setAttribute(withholdingtax,mDefaultData.getValue());
     }
    
     public UtilityService getUtilityService() {

@@ -27,6 +27,7 @@ public class TicketFareAirlineServlet implements AbstractAJAXServlet{
         String ticketId = request.getParameter("ticketId");
         String ticketNo = request.getParameter("ticketNo");
         String referNo = request.getParameter("referNo");
+        String invNo = request.getParameter("invNo");
         System.out.print("set parameter mapping");
         Map result = new HashMap();
         
@@ -35,7 +36,7 @@ public class TicketFareAirlineServlet implements AbstractAJAXServlet{
         result.put("ticketId", ticketId);
         result.put("ticketNo", ticketNo);
         result.put("referNo", referNo);
-        
+        result.put("invNo", invNo);
         return result;    
     }
     

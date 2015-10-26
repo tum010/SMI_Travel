@@ -51,10 +51,14 @@ public class TicketFareAirline {
      private BigDecimal invAmount;
      private Date dueDate;
      private MPaymentDoctype MPaymentDoctype;
+     private Date ticketCommissionDate;
+     private Date agentCommissionDate;
+     private BigDecimal vat;
      private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
      private List refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
      private List ticketFareInvoices = new LinkedList<TicketFareInvoice>();
-
+     
+     
     public TicketFareAirline() {
     }
 
@@ -406,6 +410,30 @@ public class TicketFareAirline {
 
     public void setTicketFareInvoices(List ticketFareInvoices) {
         this.ticketFareInvoices = ticketFareInvoices;
+    }
+
+    public Date getTicketCommissionDate() {
+        return ticketCommissionDate;
+    }
+
+    public void setTicketCommissionDate(Date ticketCommissionDate) {
+        this.ticketCommissionDate = ticketCommissionDate;
+    }
+
+    public Date getAgentCommissionDate() {
+        return agentCommissionDate;
+    }
+
+    public void setAgentCommissionDate(Date agentCommissionDate) {
+        this.agentCommissionDate = agentCommissionDate;
+    }
+
+    public BigDecimal getVat() {
+        return vat;
+    }
+
+    public void setVat(BigDecimal vat) {
+        this.vat = vat;
     }
 
     
