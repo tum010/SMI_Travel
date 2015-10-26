@@ -615,4 +615,8 @@ public class ReportService {
      public List getHotelSummary(String from,String to ,String department){
         return packageTourHotelDao.getHotelSummary(from, to, department);
     }
+     
+     public List getHotelMonthly(String from,String to ,String department,String detail){
+        return packageTourHotelDao.getHotelMonthly(from, to, department,detail);
+    }
 }

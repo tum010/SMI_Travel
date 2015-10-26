@@ -8,109 +8,115 @@
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="city" class="java.lang.String"/>
 	<field name="hotel" class="java.lang.String"/>
-	<field name="night" class="java.lang.String"/>
-	<field name="sell" class="java.lang.String"/>
-	<field name="net" class="java.lang.String"/>
-	<field name="profit" class="java.lang.String"/>
-	<variable name="totalroomnight" class="java.lang.String"/>
-	<variable name="totalsellprice" class="java.lang.String"/>
-	<variable name="totalnetprice" class="java.lang.String"/>
-	<variable name="totalprofit" class="java.lang.String"/>
+	<field name="night" class="java.lang.Integer"/>
+	<field name="sell" class="java.math.BigDecimal"/>
+	<field name="net" class="java.math.BigDecimal"/>
+	<field name="profit" class="java.math.BigDecimal"/>
+	<variable name="totalroomnight" class="java.lang.Integer" resetType="Group" resetGroup="hotelSummary" calculation="Sum">
+		<variableExpression><![CDATA[$F{night}]]></variableExpression>
+	</variable>
+	<variable name="totalsellprice" class="java.math.BigDecimal" resetType="Group" resetGroup="hotelSummary" calculation="Sum">
+		<variableExpression><![CDATA[$F{sell}]]></variableExpression>
+	</variable>
+	<variable name="totalnetprice" class="java.math.BigDecimal" resetType="Group" resetGroup="hotelSummary" calculation="Sum">
+		<variableExpression><![CDATA[$F{net}]]></variableExpression>
+	</variable>
+	<variable name="totalprofit" class="java.math.BigDecimal" resetType="Group" resetGroup="hotelSummary" calculation="Sum">
+		<variableExpression><![CDATA[$F{profit}]]></variableExpression>
+	</variable>
 	<group name="hotelSummary">
 		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
 		<groupHeader>
 			<band height="24">
 				<staticText>
 					<reportElement x="12" y="0" width="39" height="23" uuid="8a3d20dc-99f7-43cd-a24a-6eff03d20da7"/>
-					<box>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-					</box>
 					<textElement textAlignment="Right">
 						<font fontName="TH SarabunPSK" size="16"/>
 					</textElement>
 					<text><![CDATA[  City :  ]]></text>
 				</staticText>
 				<textField pattern="">
-					<reportElement x="50" y="0" width="499" height="23" uuid="89a3e5f9-00ef-4b26-908d-ad81769f83d7"/>
-					<box>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
+					<reportElement x="61" y="0" width="488" height="23" uuid="89a3e5f9-00ef-4b26-908d-ad81769f83d7"/>
 					<textElement>
 						<font fontName="TH SarabunPSK" size="16"/>
 					</textElement>
-					<textFieldExpression><![CDATA[  $F{city}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{city}]]></textFieldExpression>
 				</textField>
+				<rectangle>
+					<reportElement mode="Transparent" x="12" y="0" width="537" height="23" forecolor="#000000" uuid="1d19a20c-e864-4915-a20e-5624708f40f8"/>
+					<graphicElement>
+						<pen lineWidth="1.0"/>
+					</graphicElement>
+				</rectangle>
 			</band>
 		</groupHeader>
 		<groupFooter>
 			<band height="44">
-				<textField>
-					<reportElement x="144" y="0" width="79" height="21" uuid="b3875ebc-bb15-40c6-998f-71c06f75ae4c"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement>
-						<font fontName="TH SarabunPSK" size="16"/>
-					</textElement>
-					<textFieldExpression><![CDATA[  $V{totalroomnight}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="440" y="0" width="109" height="21" uuid="efd5ffa6-d585-4c38-9274-f51293b1eb65"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement>
-						<font fontName="TH SarabunPSK" size="16"/>
-					</textElement>
-					<textFieldExpression><![CDATA[  $V{totalprofit}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="12" y="0" width="132" height="21" uuid="8cc37628-0a29-49b9-b9b9-45700c1bd012"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
+				<textField pattern="###0">
+					<reportElement x="144" y="0" width="72" height="21" uuid="b3875ebc-bb15-40c6-998f-71c06f75ae4c"/>
 					<textElement textAlignment="Right">
 						<font fontName="TH SarabunPSK" size="16"/>
 					</textElement>
-					<textFieldExpression><![CDATA[Total    ]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{totalroomnight}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="331" y="0" width="109" height="21" uuid="bf14bf2a-a485-4422-b72a-1c1b42e076bf"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement>
+				<textField pattern="###0.00">
+					<reportElement x="440" y="0" width="103" height="21" uuid="efd5ffa6-d585-4c38-9274-f51293b1eb65"/>
+					<textElement textAlignment="Right">
 						<font fontName="TH SarabunPSK" size="16"/>
 					</textElement>
-					<textFieldExpression><![CDATA[  $V{totalnetprice}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="223" y="0" width="108" height="21" uuid="6721f51a-c028-4eba-9352-7fe17388216c"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement>
+				<textField pattern="###0.00">
+					<reportElement x="223" y="0" width="101" height="21" uuid="6721f51a-c028-4eba-9352-7fe17388216c"/>
+					<textElement textAlignment="Right">
 						<font fontName="TH SarabunPSK" size="16"/>
 					</textElement>
-					<textFieldExpression><![CDATA[  $V{totalsellprice}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$V{totalsellprice}]]></textFieldExpression>
 				</textField>
+				<textField pattern="###0.00">
+					<reportElement x="331" y="0" width="102" height="21" uuid="bf14bf2a-a485-4422-b72a-1c1b42e076bf"/>
+					<textElement textAlignment="Right">
+						<font fontName="TH SarabunPSK" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalnetprice}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement isPrintRepeatedValues="false" x="12" y="0" width="127" height="21" uuid="79986300-18af-4e7f-8706-70c194ddedf4"/>
+					<textElement textAlignment="Right">
+						<font fontName="TH SarabunPSK" size="16" isBold="false"/>
+					</textElement>
+					<text><![CDATA[ Total    ]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="12" y="0" width="132" height="21" forecolor="#000000" uuid="073f8b54-9fe2-47ba-a3a6-f88afd3598a6"/>
+					<graphicElement>
+						<pen lineWidth="1.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="144" y="0" width="79" height="21" forecolor="#000000" uuid="eb2446ff-1902-469b-bc53-a939f9793ed6"/>
+					<graphicElement>
+						<pen lineWidth="1.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="223" y="0" width="108" height="21" forecolor="#000000" uuid="89a4237d-6d7e-49d7-b8c0-6a5014097089"/>
+					<graphicElement>
+						<pen lineWidth="1.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="331" y="0" width="109" height="21" forecolor="#000000" uuid="8f8a5d2b-2f96-42cb-957c-07ce7de16d17"/>
+					<graphicElement>
+						<pen lineWidth="1.0"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="440" y="0" width="109" height="21" forecolor="#000000" uuid="53c14cc8-5e94-49ea-aa63-024288cf69c0"/>
+					<graphicElement>
+						<pen lineWidth="1.0"/>
+					</graphicElement>
+				</rectangle>
 			</band>
 		</groupFooter>
 	</group>
@@ -123,30 +129,23 @@
 	<pageHeader>
 		<band height="110" splitType="Stretch">
 			<staticText>
-				<reportElement isPrintRepeatedValues="false" x="12" y="5" width="127" height="25" uuid="dc1e30bd-82db-40ba-b554-fdfef46eca5a"/>
+				<reportElement x="12" y="5" width="127" height="26" uuid="dc1e30bd-82db-40ba-b554-fdfef46eca5a"/>
 				<textElement>
-					<font size="16" isBold="true"/>
+					<font fontName="SansSerif" size="18" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Hotel Summary]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="144" y="5" width="111" height="25" uuid="dc1e9fa4-a859-4887-bd2a-3297215a4018"/>
 				<textElement>
-					<font fontName="SansSerif" size="15" isBold="false"/>
+					<font fontName="TH SarabunPSK" size="22" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{frompage}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="258" y="5" width="34" height="25" uuid="f08db6bd-afc2-4916-a4af-5883d1b64f3d"/>
-				<textElement>
-					<font fontName="SansSerif" size="15" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[  to]]></textFieldExpression>
-			</textField>
-			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="296" y="5" width="111" height="25" uuid="6971e38d-c57a-4380-8556-e71c1d71352a"/>
 				<textElement>
-					<font fontName="SansSerif" size="15" isBold="false"/>
+					<font fontName="TH SarabunPSK" size="22" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{topage}]]></textFieldExpression>
 			</textField>
@@ -242,75 +241,82 @@
 				</textElement>
 				<text><![CDATA[Hotel Name]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="255" y="5" width="41" height="26" uuid="5b72e1d1-0abe-468f-bfbc-25493c905fd2"/>
+				<textElement>
+					<font fontName="SansSerif" size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ to]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<detail>
 		<band height="22" splitType="Stretch">
-			<textField>
-				<reportElement x="12" y="0" width="132" height="21" uuid="42aa25a3-aca1-41e5-a793-340d53d0f471"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
+			<textField isBlankWhenNull="true">
+				<reportElement x="24" y="0" width="120" height="21" uuid="42aa25a3-aca1-41e5-a793-340d53d0f471"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[  $F{hotel}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{hotel}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="144" y="0" width="79" height="21" uuid="7edf104d-51f0-4c08-81ba-d42867e26464"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement>
+			<textField pattern="###0" isBlankWhenNull="true">
+				<reportElement x="144" y="0" width="72" height="21" uuid="7edf104d-51f0-4c08-81ba-d42867e26464"/>
+				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[  $F{night}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{night}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="223" y="0" width="108" height="21" uuid="a8fb7b48-d1b0-4ad5-872f-d89204ffccc0"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="223" y="0" width="101" height="21" uuid="a8fb7b48-d1b0-4ad5-872f-d89204ffccc0"/>
+				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[  $F{sell}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{sell}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="331" y="0" width="109" height="21" uuid="0ad757df-d7df-452a-9a28-a6552444bad3"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="331" y="0" width="102" height="21" uuid="0ad757df-d7df-452a-9a28-a6552444bad3"/>
+				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[  $F{net}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{net}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="440" y="0" width="109" height="21" uuid="7571e2f3-cffc-4334-9eae-96f7ead3bf8f"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement x="440" y="0" width="103" height="21" uuid="7571e2f3-cffc-4334-9eae-96f7ead3bf8f"/>
+				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA[ $F{profit}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{profit}]]></textFieldExpression>
 			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="12" y="0" width="132" height="21" forecolor="#000000" uuid="ae7a7629-0813-416f-9258-911297e58310"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="144" y="0" width="79" height="21" forecolor="#000000" uuid="a7fc739c-6e3f-4910-b96d-21c92f2ade9b"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="223" y="0" width="108" height="21" forecolor="#000000" uuid="785ffb7b-be97-4c7c-8000-a6196f51fcee"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="331" y="0" width="109" height="21" forecolor="#000000" uuid="d4fb6154-7c20-4f26-a31c-b7224397f723"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="440" y="0" width="109" height="21" forecolor="#000000" uuid="cf7da82f-1ffd-40d4-a92f-6fedac0a1006"/>
+				<graphicElement>
+					<pen lineWidth="1.0"/>
+				</graphicElement>
+			</rectangle>
 		</band>
 	</detail>
 	<summary>

@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface PackageTourHotelDao {
     public List getHotelSummary(String from,String to ,String department);
+    public List getHotelMonthly(String from,String to ,String department,String detail);
 }

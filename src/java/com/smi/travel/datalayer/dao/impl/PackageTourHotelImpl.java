@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.PackageTourHotelDao;
 import com.smi.travel.datalayer.view.entity.HotelSummary;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -96,10 +97,10 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
         List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("city",Hibernate.STRING)		
                 .addScalar("hotel",Hibernate.STRING)		
-                .addScalar("night",Hibernate.STRING)		
-                .addScalar("sell",Hibernate.STRING)		
-                .addScalar("net",Hibernate.STRING)	
-                .addScalar("profit",Hibernate.STRING)
+                .addScalar("night",Hibernate.INTEGER)		
+                .addScalar("sell",Hibernate.BIG_DECIMAL)		
+                .addScalar("net",Hibernate.BIG_DECIMAL)	
+                .addScalar("profit",Hibernate.BIG_DECIMAL)
                 .list();
         for (Object[] B : QueryList) {
             HotelSummary hotelSummary = new HotelSummary();
@@ -128,25 +129,26 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             
             hotelSummary.setCity(util.ConvertString(B[0]));
             hotelSummary.setHotel(util.ConvertString(B[1]));
-            if(util.ConvertString(B[2]) != null && !"".equals(util.ConvertString(B[2]))){
-                hotelSummary.setNight(util.ConvertString(B[2]));
+            System.out.println("Night : "+B[2]);
+            if(B[2] != null && !"".equals(B[2])){
+                hotelSummary.setNight((Integer) B[2]);
             }else{
-                hotelSummary.setNight("0.00");
+                hotelSummary.setNight(0);
             }
-            if(util.ConvertString(B[3]) != null && !"".equals(util.ConvertString(B[3]))){
-                hotelSummary.setSell(util.ConvertString(B[3]));
+            if(B[3] != null && !"".equals(B[3])){
+                hotelSummary.setSell((BigDecimal) B[3]);
             }else{
-                hotelSummary.setSell("0.00");
+                hotelSummary.setSell(new BigDecimal(0));
             }
-            if(util.ConvertString(B[4]) != null && !"".equals(util.ConvertString(B[4]))){
-                hotelSummary.setNet(util.ConvertString(B[4]));
+            if(B[4] != null && !"".equals(B[4])){
+                hotelSummary.setNet((BigDecimal) B[4]);
             }else{
-                hotelSummary.setNet("0.00");
+                hotelSummary.setNet(new BigDecimal(0));
             }
-            if(util.ConvertString(B[5]) != null && !"".equals(util.ConvertString(B[5]))){
-                hotelSummary.setProfit(util.ConvertString(B[5]));
+            if(B[5] != null && !"".equals(B[5])){
+                hotelSummary.setProfit((BigDecimal) B[5]);
             }else{
-                hotelSummary.setProfit("0.00");
+                hotelSummary.setProfit(new BigDecimal(0));
             }           
             data.add(hotelSummary);
         }
@@ -168,6 +170,11 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
 
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    @Override
+    public List getHotelMonthly(String from, String to, String department, String detail) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

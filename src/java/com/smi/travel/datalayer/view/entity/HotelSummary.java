@@ -5,6 +5,8 @@
  */
 package com.smi.travel.datalayer.view.entity;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Kanokporn
@@ -14,15 +16,35 @@ public class HotelSummary {
     private String systemdate;		
     private String city;		
     private String hotel;		
-    private String night;		
-    private String sell	;	
-    private String net;		
-    private String profit;
+    private Integer night;		
+    private BigDecimal sell;	
+    private BigDecimal net;		
+    private BigDecimal profit;
+    private String roomtype;
+    private String hotelid;
     
     //Header
     private String frompage;
     private String topage;
     private String departmentpage;
+
+    public String getRoomtype() {
+        return roomtype;
+    }
+
+    public void setRoomtype(String roomtype) {
+        this.roomtype = roomtype;
+    }
+
+    public String getHotelid() {
+        return hotelid;
+    }
+
+    public void setHotelid(String hotelid) {
+        this.hotelid = hotelid;
+    }
+    
+    
 
     public String getFrompage() {
         return frompage;
@@ -81,37 +103,38 @@ public class HotelSummary {
         this.hotel = hotel;
     }
 
-    public String getNight() {
+    public Integer getNight() {
         return night;
     }
 
-    public void setNight(String night) {
+    public void setNight(Integer night) {
         this.night = night;
     }
 
-    public String getSell() {
+   
+    public BigDecimal getSell() {
         return sell;
     }
 
-    public void setSell(String sell) {
+    public void setSell(BigDecimal sell) {
         this.sell = sell;
     }
 
-    public String getNet() {
+    public BigDecimal getNet() {
         return net;
     }
 
-    public void setNet(String net) {
+    public void setNet(BigDecimal net) {
         this.net = net;
     }
 
-    public String getProfit() {
+    public BigDecimal getProfit() {
         return profit;
     }
 
-    public void setProfit(String profit) {
+    public void setProfit(BigDecimal profit) {
         this.profit = profit;
     }
-    
-    
+
+   
 }
