@@ -130,7 +130,8 @@ public class ExportDataToExcelController  extends SMITravelController{
             String departments = request.getParameter("department");
             String salebyUsers = request.getParameter("salebyUser");
             String termPays = request.getParameter("termPay");
-            data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays,printby);
+            String paymentTypes = request.getParameter("paymentType");
+            data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays,printby,paymentTypes);
         }else if(ChangeARReport.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
             data = reportservice.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status,accno);
@@ -146,7 +147,8 @@ public class ExportDataToExcelController  extends SMITravelController{
             String departments = request.getParameter("department");
             String salebyUsers = request.getParameter("salebyUser");
             String termPays = request.getParameter("termPay");
-            data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays, printby);
+            String paymentTypes = request.getParameter("paymentType");
+            data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays, printby,paymentTypes);
         }else if(CollectionReport.equalsIgnoreCase(name)){
             //Collectipn Report
             type = request.getParameter("type");

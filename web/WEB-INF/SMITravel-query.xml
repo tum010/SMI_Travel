@@ -420,6 +420,10 @@
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
+    <bean id="PackageTourHotelDao" class="com.smi.travel.datalayer.dao.impl.PackageTourHotelImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
     <!-- Component Bean -->
     <bean id="AJAXBean" class="com.smi.travel.datalayer.bean.master.AJAXBean">
         <constructor-arg>

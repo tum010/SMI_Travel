@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.service;
 
+import com.smi.travel.datalayer.dao.PackageTourHotelDao;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
 import com.smi.travel.datalayer.dao.SummaryTicketAdjustCostAndIncomeDao;
@@ -88,6 +89,7 @@ public class ReportService {
     private SummaryTicketAdjustCostAndIncomeDao summaryTicketAdjustCostAndIncomeDao;
     private PaymentWendytourDao paymentWendytourDao;
     private TicketSummaryCommissionDao ticketSummaryCommissionDao;
+    private PackageTourHotelDao packageTourHotelDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -269,8 +271,8 @@ public class ReportService {
         return billAirAgentDao.getBillAirAgentReport();
     }
     
-    public List getBillAirAgentReportSummary(String agentCode,String invoiceFromDate,String InvoiceToDate,String issueFrom,String issueTo,String refundFrom,String refundTo,String department,String salebyUser,String termPay,String printby){
-        return billAirAgentDao.getBillAirAgentReportSummary(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay,printby);
+    public List getBillAirAgentReportSummary(String agentCode,String invoiceFromDate,String InvoiceToDate,String issueFrom,String issueTo,String refundFrom,String refundTo,String department,String salebyUser,String termPay,String printby,String paymentType){
+        return billAirAgentDao.getBillAirAgentReportSummary(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay,printby,paymentType);
     }
 
     public HotelVoucherDao getHotelVoucherdao() {
@@ -600,5 +602,17 @@ public class ReportService {
             ,String typeRoutingPage ,String routingDetailPage , String airlineCodePage ,String agentCodePage ,String agentNamePage ,String ticketnoPagePage 
             ,String departmentPage ,String salebyUserPage , String salebyNamePage , String termPayPage,String printby) {
         return ticketSummaryCommissionDao.searchTicketSummaryCommission(invoicefromdatePage, invoicetodatePage, issuefromdatePage, issuetodatePage, overfromdatePage, overtodatePage, littlefromdatePage, littletodatePage, agemtcomreceivefromdatePage, agemtcomreceivetodatePage, comrefundfromdatePage, comrefundtodatePage, addpayfromdatePage, addpaytodatePage, decreasepayfromdatePage, decreasepaytodatePage, typeRoutingPage, routingDetailPage, airlineCodePage, agentCodePage, agentNamePage, ticketnoPagePage, departmentPage, salebyUserPage, salebyNamePage, termPayPage, printby);
+    }
+
+    public PackageTourHotelDao getPackageTourHotelDao() {
+        return packageTourHotelDao;
+    }
+
+    public void setPackageTourHotelDao(PackageTourHotelDao packageTourHotelDao) {
+        this.packageTourHotelDao = packageTourHotelDao;
+    }
+    
+     public List getHotelSummary(String from,String to ,String department){
+        return packageTourHotelDao.getHotelSummary(from, to, department);
     }
 }

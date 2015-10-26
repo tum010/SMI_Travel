@@ -39,8 +39,17 @@ public class CreditNoteController extends SMITravelController {
         System.out.println("request.getRequestURI() :" + request.getRequestURI());
         String callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");//request.getParameter("type");
         String department = "";
+//        if (callPageFrom != null) {
+//            department = callPageFrom;
+//        }
         if (callPageFrom != null) {
-            department = callPageFrom;
+            if("W".equalsIgnoreCase(callPageFrom)){
+                department = "Wendy";
+            }else if("O".equalsIgnoreCase(callPageFrom)){
+                department = "Outbound";
+            }else if("I".equalsIgnoreCase(callPageFrom)){
+                department = "Inbound";
+            }            
         }
         String action = request.getParameter("action");
         String creditNo = request.getParameter("cnNo");
@@ -48,7 +57,8 @@ public class CreditNoteController extends SMITravelController {
 
         if ("search".equalsIgnoreCase(action)) {
             CreditNote creditNote = new CreditNote();
-            creditNote = creditNoteService.getCreditNote(creditNo, type.get(department));
+//            creditNote = creditNoteService.getCreditNote(creditNo, type.get(department));
+            creditNote = creditNoteService.getCreditNote(creditNo, department);
             if (creditNote == null) {
                 request.setAttribute("failStatus", true);
                 request.setAttribute("failMessage", "Credit note no:" + creditNo + " not available !");
@@ -61,14 +71,16 @@ public class CreditNoteController extends SMITravelController {
             String result = "fail";
             if (null != cn) {
                 if (null == cn.getId() || "".equals(cn.getId())) {
-                    cn.setDepartment(type.get(department));
+//                    cn.setDepartment(type.get(department));
+                    cn.setDepartment(department);
                     cn.setCreateBy(user.getUsername());
                     cn.setCreateDate(Calendar.getInstance().getTime());
                 }
                 result = creditNoteService.saveCreditNote(cn);
             }
             if (!"fail".equals(result)) {
-                CreditNote creditNote = creditNoteService.getCreditNote(result, type.get(department));
+//                CreditNote creditNote = creditNoteService.getCreditNote(result, type.get(department));
+                CreditNote creditNote = creditNoteService.getCreditNote(result, department);
                 request.setAttribute("creditNote", creditNote);
                 request.setAttribute("successStatus", true);
                 request.setAttribute("successMessage", "Save Success!");
@@ -91,7 +103,8 @@ public class CreditNoteController extends SMITravelController {
                 request.setAttribute("failStatus", true);
                 request.setAttribute("failMessage", method + " fail!");
             }
-            CreditNote creditNote = creditNoteService.getCreditNote(cnNo, type.get(department));
+//            CreditNote creditNote = creditNoteService.getCreditNote(cnNo, type.get(department));
+            CreditNote creditNote = creditNoteService.getCreditNote(cnNo, department);
             request.setAttribute("creditNote", creditNote);
         }
 //        CreditNote cn = (CreditNote) request.getAttribute("creditNote");

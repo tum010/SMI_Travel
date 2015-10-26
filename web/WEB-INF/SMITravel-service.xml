@@ -169,6 +169,7 @@
         <property name="summaryTicketAdjustCostAndIncomeDao" ref="SummaryTicketAdjustCostAndIncomeDao" />
         <property name="paymentWendytourDao" ref="PaymentWendytourDao" />
         <property name="ticketSummaryCommissionDao" ref="TicketSummaryCommissionDao" />
+        <property name="PackageTourHotelDao" ref="PackageTourHotelDao" />
     </bean> 
     
     
@@ -331,6 +332,10 @@
     
     <bean id="TicketSummaryCommissionService" class="com.smi.travel.datalayer.service.TicketSummaryCommissionService">
         <property name="ticketSummaryCommissionDao" ref="TicketSummaryCommissionDao" />
+    </bean>
+    
+    <bean id="PackageTourHotelService" class="com.smi.travel.datalayer.service.PackageTourHotelService">
+        <property name="packageTourHotelDao" ref="PackageTourHotelDao" />
     </bean>
     <!--<add data>-->
 </beans>
