@@ -279,9 +279,10 @@ function printBillAirAgent(){
     var departments = document.getElementById("department").value;
     var salebyUsers = document.getElementById("salebyUser").value;
     var termPays = document.getElementById("termPay").value;
+    var paymentType = document.getElementById("paymentType").value;
     
     if((invoiceFrom !== '') && (invoiceTo !== '')){
-        window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays);
+        window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays +"$paymentType="+paymentType);
     }else if((issueFrom !== '') && (issueTo !== '')){
         window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays);
     }else if((refundFrom !== '') && (refundFrom !== '')){

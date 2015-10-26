@@ -10,7 +10,7 @@ function printHotelSummary(){
     if((from === '') || (to === '')){
         validateDate();
     } else {
-        window.open("report.smi?name=HotelSummaryReport&fromdate="+from+"&todate="+to+"&department="+department);   
+        window.open("report.smi?name=HotelSummary&fromdate="+from+"&todate="+to+"&department="+department);   
     }
 }
 
