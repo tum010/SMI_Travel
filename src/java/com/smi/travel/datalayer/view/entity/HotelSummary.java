@@ -23,12 +23,21 @@ public class HotelSummary {
     private BigDecimal profit;
     private String roomtype;
     private Integer hotelid;
+    private String printby;
     private List hotelMonthlyDetail;
     
     //Header
     private String frompage;
     private String topage;
     private String departmentpage;
+
+    public String getPrintby() {
+        return printby;
+    }
+
+    public void setPrintby(String printby) {
+        this.printby = printby;
+    }
 
     public List getHotelMonthlyDetail() {
         return hotelMonthlyDetail;

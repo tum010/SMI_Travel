@@ -173,7 +173,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
     }
 
     @Override
-    public List getHotelMonthly(String from, String to, String department, String detail) {
+    public List getHotelMonthly(String from, String to, String department, String detail,String systemuser) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<HotelSummary>();
@@ -183,32 +183,33 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
         String query2 = "";
         int checkQuery = 0;
         if( from == null  && to == null  && department == null ){
-            query2 = "select * from ("+ 
-                    "  SELECT " +
+            query2 = "select * from (" +
+                    "SELECT  " +
                     "ht.`name` as hotel, " +
                     "ht.`id` as hotelid, " +
                     "CONCAT(hr.qty,' ',hr.category) as room_type, " +
                     "(DATEDIFF(hb.checkout,hb.checkin)) as night, " +
                     "sum(IFNULL(hr.cost,0)) as net, " +
-                    "sum(IFNULL(hr.price,0)) as sell, " +
-                    "sum(IFNULL(hr.price,0) - IFNULL(hr.cost,0) ) as profit " +
-                    "FROM `hotel_booking` hb " +
+                    "sum(IFNULL(hr.price,0)) as sell,  " +
+                    "sum(IFNULL(hr.price,0) - IFNULL(hr.cost,0) ) as profit  " +
+                    "FROM `hotel_booking` hb  " +
                     "INNER JOIN hotel ht on  hb.hotel_id = ht.id  " +
                     "INNER JOIN master mt on mt.id = hb.master_id " +
-                    "left JOIN hotel_room hr on hr.booking_hotel_id = hb.id ";
+                    "left JOIN hotel_room hr on hr.booking_hotel_id = hb.id  ";
         }else{
-            query2 = "SELECT " +
+            query2 = "select * from (" +
+                    "SELECT  " +
                     "ht.`name` as hotel, " +
-                    "ht.`id` as hotelid, " +
+                    "ht.`id` as hotelid," +
                     "CONCAT(hr.qty,' ',hr.category) as room_type, " +
                     "(DATEDIFF(hb.checkout,hb.checkin)) as night, " +
                     "sum(IFNULL(hr.cost,0)) as net, " +
                     "sum(IFNULL(hr.price,0)) as sell, " +
-                    "sum(IFNULL(hr.price,0) - IFNULL(hr.cost,0) ) as profit " +
-                    "FROM `hotel_booking` hb " +
-                    "INNER JOIN hotel ht on  hb.hotel_id = ht.id " +
-                    "INNER JOIN master mt on mt.id = hb.master_id " +
-                    "left JOIN hotel_room hr on hr.booking_hotel_id = hb.id  where ";
+                    "sum(IFNULL(hr.price,0) - IFNULL(hr.cost,0) ) as profit  " +
+                    "FROM `hotel_booking` hb  " +
+                    "INNER JOIN hotel ht on  hb.hotel_id = ht.id  " +
+                    "INNER JOIN master mt on mt.id = hb.master_id   " +
+                    "left JOIN hotel_room hr on hr.booking_hotel_id = hb.id  where   ";
             
         }
         
@@ -235,16 +236,17 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
         query2 += query + "group by ht.id ,CONCAT(hr.qty,' ',hr.category) ";
 
         query2 += " UNION all  " + 
-                "SELECT " +
+                "SELECT  " +
                 "ht.`name` as hotel, " +
                 "ht.`id` as hotelid, " +
                 "'Other' as room_type, " +
+                "null as night, " +
                 "sum(IFNULL(hr.cost,0)) as net, " +
                 "sum(IFNULL(hr.price,0)) as sell, " +
                 "sum(IFNULL(hr.price,0) - IFNULL(hr.cost,0) ) as profit " +
-                "FROM `hotel_booking` hb " +
+                "FROM `hotel_booking` hb  " +
                 "INNER JOIN hotel ht on  hb.hotel_id = ht.id  " +
-                "INNER JOIN master mt on mt.id = hb.master_id " +
+                "INNER JOIN master mt on mt.id = hb.master_id  " +
                 "left JOIN hotel_request hr on hr.booking_hotel_id = hb.id  " ;
         if(checkQuery == 1){
              query2 += " where ";
@@ -253,7 +255,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
              query2 += " ";
         }
         
-        query2 += query + "group by ht.id )x ORDER BY x.hotel , x.night desc ";
+        query2 += query + " group by ht.id )x ORDER BY x.hotel , x.night desc ";
         System.out.println("Query : " + query2);
         List<Object[]> QueryList =  session.createSQLQuery(query2)
                 .addScalar("room_type",Hibernate.STRING)	
