@@ -222,6 +222,11 @@
 	   <property name="url" value="/WEB-INF/report/HotelMonthly.jrxml"/>
 	</bean>  
         
+        <bean id="HotelMonthlyDetailReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/HotelMonthlyDetail.jrxml"/>
+	</bean>
+        
         
         <bean id="OtherMonthlyReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
