@@ -5,6 +5,7 @@
  */
 package com.smi.travel.controller;
 
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.PackageTourHotelService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
@@ -27,7 +28,9 @@ public class PackageTourHotelController extends SMITravelController {
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         
-        
+        SystemUser user = (SystemUser) session.getAttribute("USER");
+        String printby = user.getRole().getName();
+        request.setAttribute("printby", printby);
         return PackageTourHotel;
     }
 
