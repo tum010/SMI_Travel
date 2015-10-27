@@ -246,7 +246,7 @@ public class ReportController extends SMITravelController {
         }else if(HotelSummary.equalsIgnoreCase(name)){
             data = reportservice.getHotelSummary(fromHotelSummary, toHotelSummary, departmentHotelSummary);
         }else if(HotelMonthly.equalsIgnoreCase(name)){
-            data = reportservice.getHotelMonthly(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly);
+            data = reportservice.getHotelMonthly(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser);
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);
