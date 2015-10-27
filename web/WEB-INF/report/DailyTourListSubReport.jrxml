@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DailyTourListSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5500a2c9-031b-498f-a83e-d62c72c10ab3">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="tour" class="java.lang.String"/>
+	<field name="adult" class="java.lang.String"/>
+	<field name="child" class="java.lang.String"/>
+	<field name="infant" class="java.lang.String"/>
+	<field name="sell" class="java.lang.String"/>
+	<field name="net" class="java.lang.String"/>
+	<field name="balance" class="java.lang.String"/>
+	<field name="everage" class="java.lang.String"/>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="43" height="34" uuid="aed95abf-5b1a-46ff-bb9e-980042f28e12"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="0" width="157" height="34" uuid="79d52883-f396-417f-98f9-f17523449718"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOUR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="69" height="17" uuid="ad62641d-d92d-4b4d-86e2-51fdff8d5134"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAX]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="0" width="85" height="34" uuid="9573fbb2-e422-4556-829f-ba6c6351f7ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SELLING]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="17" width="23" height="17" uuid="cf31c157-a1c7-4cca-8797-e5aa97afb76c"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="223" y="17" width="23" height="17" uuid="99840ba1-5ff0-43c0-a8d2-286153f57b32"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="246" y="17" width="23" height="17" uuid="14c24108-a0e2-4d15-abe2-d7303e8a6969"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="354" y="0" width="83" height="34" uuid="8c6b558b-e25d-430e-bf3d-d2f1bd755217"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NET]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="437" y="0" width="79" height="34" uuid="b9a65d72-7668-4d7d-a0ae-2b7037e26cbf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BALANCE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="516" y="0" width="79" height="17" uuid="f1b3db60-a635-4d7e-936b-5bfdb9d27ae9"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EVERAGE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="516" y="17" width="79" height="17" uuid="0a9becb7-f337-49d7-b14d-538013fbbdb6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROFIT/PAX]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="43" height="34" uuid="241cf2f0-cbf3-4a97-9eea-bd83c5cfa0f7"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="43" y="0" width="157" height="34" uuid="adfd0d0e-85f6-40f5-9816-eb9a5c6760e5"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="200" y="0" width="69" height="34" uuid="e16bd760-f261-4750-9e98-da151928d60f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="269" y="0" width="85" height="34" uuid="fa4f8305-bb6f-4483-ace9-a85349c62986"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="354" y="0" width="83" height="34" uuid="3fd67d6f-8f8a-4c6f-940f-e9e863bdc864"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="437" y="0" width="79" height="34" uuid="f869e3d5-bf2f-4d23-b42d-a2397d5ff17f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="516" y="0" width="79" height="34" uuid="66ba5acf-7149-444b-8777-3ebe77ca0c56"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="43" height="20" uuid="31235532-46ad-42ce-8390-a3631113a73a"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="43" y="0" width="157" height="20" uuid="345db1d1-14ce-439d-85c4-fbdd5bb1d005"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tour}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="23" height="20" uuid="b1a9cd1e-b5cc-4d06-8772-a74bb7e51f2d"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{adult} != null && !"null".equals($F{adult}) && $F{adult}.length() > 0 && !"".equalsIgnoreCase($F{adult})) ? new BigDecimal($F{adult}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="0" width="23" height="20" uuid="db06558a-0f0e-41c3-9467-ea7200ba939f"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{child} != null && !"null".equals($F{child}) && $F{child}.length() > 0 && !"".equalsIgnoreCase($F{child})) ? new BigDecimal($F{child}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="246" y="0" width="23" height="20" uuid="03e35837-e74d-4599-88c1-7218c4056f52"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{infant} != null && !"null".equals($F{infant}) && $F{infant}.length() > 0 && !"".equalsIgnoreCase($F{infant})) ? new BigDecimal($F{infant}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="269" y="0" width="82" height="20" uuid="8ff443fc-c3d0-4018-99e0-f8a41fa856e7"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{sell} != null && !"null".equals($F{sell}) && $F{sell}.length() > 0 && !"".equalsIgnoreCase($F{sell})) ? new BigDecimal($F{sell}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="354" y="0" width="80" height="20" uuid="192188ac-e209-48f3-a595-48315d66cf41"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{net} != null && !"null".equals($F{net}) && $F{net}.length() > 0 && !"".equalsIgnoreCase($F{net})) ? new BigDecimal($F{net}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="437" y="0" width="76" height="20" uuid="66aeb30b-7529-4752-ab74-879e5394ef92"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{balance} != null && !"null".equals($F{balance}) && $F{balance}.length() > 0 && !"".equalsIgnoreCase($F{balance})) ? new BigDecimal($F{balance}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="516" y="0" width="76" height="20" uuid="5916af9b-0784-4445-b1ca-39ea6e70f4a1"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{everage} != null && !"null".equals($F{everage}) && $F{everage}.length() > 0 && !"".equalsIgnoreCase($F{everage})) ? new BigDecimal($F{everage}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="43" height="20" uuid="a88e719f-caf0-400d-a12d-03b9b24c7acf"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="43" y="0" width="157" height="20" uuid="4fe8b5e9-51f3-4f49-a228-acdeaddc4ad4"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="200" y="0" width="23" height="20" uuid="8a0408fd-7d84-48b8-96fd-c745bf880eda"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="223" y="0" width="23" height="20" uuid="83c0be1f-287b-4322-b6ee-cf469f7f7d02"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="246" y="0" width="23" height="20" uuid="160d8e7d-30ed-4d09-93b6-1382754c8db8"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="269" y="0" width="85" height="20" uuid="0b3bf813-057e-4ed3-aafc-dfaa83a655aa"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="354" y="0" width="83" height="20" uuid="4adc95dc-b855-4034-b2f4-311c5ec7b4b1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="516" y="0" width="79" height="20" uuid="09068342-c149-4868-8a3b-d0670e3a183e"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="437" y="0" width="79" height="20" uuid="0c14fe39-3f50-47ee-8061-0e453820aaad"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</detail>
+</jasperReport>
