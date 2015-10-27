@@ -215,5 +215,19 @@
          <bean id="HotelSummary"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/HotelSummary.jrxml"/>
-	</bean>                                                
+	</bean>  
+        
+        
+        <bean id="OtherMonthlyReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/OtherMonthlyReport.jrxml"/>
+	</bean>
+        <bean id="OtherMonthlyListReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/OtherMonthlyListReport.jrxml"/>
+	</bean>
+        <bean id="OtherMonthlyDetailReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/OtherMonthlyDetailReport.jrxml"/>
+	</bean>                                              
 </beans>
