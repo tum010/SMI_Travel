@@ -83,7 +83,7 @@
 					<textFieldExpression><![CDATA[$V{totalnetprice}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement isPrintRepeatedValues="false" x="10" y="1" width="127" height="21" uuid="b7138359-e391-4ce2-b366-ebd277f178a0"/>
+					<reportElement x="10" y="1" width="127" height="21" uuid="b7138359-e391-4ce2-b366-ebd277f178a0"/>
 					<textElement textAlignment="Right">
 						<font fontName="TH SarabunPSK" size="16" isBold="false"/>
 					</textElement>

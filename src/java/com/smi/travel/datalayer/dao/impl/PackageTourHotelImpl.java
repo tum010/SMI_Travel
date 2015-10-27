@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.PackageTourHotelDao;
+import com.smi.travel.datalayer.view.entity.HotelMonthly;
 import com.smi.travel.datalayer.view.entity.HotelSummary;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -106,16 +107,18 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             HotelSummary hotelSummary = new HotelSummary();
             //header    
             if(from != null && !"".equals(from)){
-//                SimpleDateFormat sm = new SimpleDateFormat("dd-mm-yyyy");
-//                String strDate = sm.format(from);
-                hotelSummary.setFrompage(from);
+                String array[] = from.split("-");
+                String fromdate = array[2] + "-"+array[1] + "-" + array[0];
+                System.out.println("From Date : " + fromdate);
+                hotelSummary.setFrompage(fromdate);
             }else{
                 hotelSummary.setFrompage("");
             }
             if(to != null && !"".equals(to)){
-//                SimpleDateFormat sm = new SimpleDateFormat("dd-mm-yyyy");
-//                String strDate = sm.format(to);
-                hotelSummary.setTopage(to);
+                String array[] = to.split("-");
+                String todate = array[2] + "-"+array[1] + "-" + array[0];
+                System.out.println("To Date : " + todate);
+                hotelSummary.setTopage(todate);
             }else{
                 hotelSummary.setTopage("");
             }
@@ -270,16 +273,18 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             HotelSummary hotelSummary = new HotelSummary();
             //header    
             if(from != null && !"".equals(from)){
-//                SimpleDateFormat sm = new SimpleDateFormat("dd-mm-yyyy");
-//                String strDate = sm.format(from);
-                hotelSummary.setFrompage(from);
+                String array[] = from.split("-");
+                String fromdate = array[2] + "-"+array[1] + "-" + array[0];
+                System.out.println("From Date : " + fromdate);
+                hotelSummary.setFrompage(fromdate);
             }else{
                 hotelSummary.setFrompage("");
             }
             if(to != null && !"".equals(to)){
-//                SimpleDateFormat sm = new SimpleDateFormat("dd-mm-yyyy");
-//                String strDate = sm.format(to);
-                hotelSummary.setTopage(to);
+                String array[] = to.split("-");
+                String todate = array[2] + "-"+array[1] + "-" + array[0];
+                System.out.println("To Date : " + todate);
+                hotelSummary.setTopage(todate);
             }else{
                 hotelSummary.setTopage("");
             }
@@ -320,6 +325,109 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
                 hotelSummary.setProfit(new BigDecimal(0));
             } 
              
+            data.add(hotelSummary);
+        }
+
+        return data;
+    }
+
+    @Override
+    public List getHotelMonthlyDetail(String from, String to, String department, String detail, String systemuser) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList<HotelMonthly>();
+        HotelMonthly listHotelSummaryDetail = new HotelMonthly();
+        
+        String query = "";
+        int checkQuery = 0;
+        if( from == null  && to == null  && department == null ){
+            query = "SELECT * FROM `hotel_monthly_detail_main` " ;
+        }else{
+            query = "SELECT * FROM `hotel_monthly_detail_main` where " ;
+        }
+        
+        if ((from != null )&&(!"".equalsIgnoreCase(from))) {
+            if ((to != null )&&(!"".equalsIgnoreCase(to))) {
+                if(checkQuery == 1){
+                     query += " and  mt.Create_date  BETWEEN  '" + from + "' AND '" + to + "' ";
+                }else{
+                    checkQuery = 1;
+                     query += " mt.Create_date  BETWEEN  '" + from + "' AND '" + to + "' ";
+                }
+            }
+        }
+        
+        if ((department != null )&&(!"".equalsIgnoreCase(department))) {
+            if(checkQuery == 1){
+                 query += " and mt.booking_type  = '" + department + "' ";
+            }else{
+                checkQuery = 1;
+                 query += " mt.booking_type  = '" + department + "' ";
+            }
+        }
+        
+        query += "GROUP BY ht.id " +
+                 "having  sum((select sum(IFNULL(hr.price,0)) from hotel_room hr where hr.booking_hotel_id = hb.id))  is not null " +
+                 "and sum((select sum(IFNULL(hr.cost,0)) from hotel_room hr where hr.booking_hotel_id = hb.id)) is not null  ";
+        
+        List<Object[]> QueryList =  session.createSQLQuery(query)
+                .addScalar("city",Hibernate.STRING)		
+                .addScalar("hotel",Hibernate.STRING)		
+                .addScalar("night",Hibernate.INTEGER)		
+                .addScalar("sell",Hibernate.BIG_DECIMAL)		
+                .addScalar("net",Hibernate.BIG_DECIMAL)	
+                .addScalar("profit",Hibernate.BIG_DECIMAL)
+                .list();
+        for (Object[] B : QueryList) {
+            HotelMonthly hotelSummary = new HotelMonthly();
+            //header    
+            if(from != null && !"".equals(from)){
+                String array[] = from.split("-");
+                String fromdate = array[2] + "-"+array[1] + "-" + array[0];
+                System.out.println("From Date : " + fromdate);
+                hotelSummary.setFrompage(fromdate);
+            }else{
+                hotelSummary.setFrompage("");
+            }
+            if(to != null && !"".equals(to)){
+                String array[] = to.split("-");
+                String todate = array[2] + "-"+array[1] + "-" + array[0];
+                System.out.println("To Date : " + todate);
+                hotelSummary.setTopage(todate);
+            }else{
+                hotelSummary.setTopage("");
+            }
+            if(department != null && !"".equals(department)){
+                hotelSummary.setDepartmentpage(department);
+            }else{
+                hotelSummary.setDepartmentpage("");
+            }
+            
+            hotelSummary.setSystemdate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(new Date()));
+            
+//            hotelSummary.setCity(util.ConvertString(B[0]));
+//            hotelSummary.setHotel(util.ConvertString(B[1]));
+//            System.out.println("Night : "+B[2]);
+//            if(B[2] != null && !"".equals(B[2])){
+//                hotelSummary.setNight((Integer) B[2]);
+//            }else{
+//                hotelSummary.setNight(0);
+//            }
+//            if(B[3] != null && !"".equals(B[3])){
+//                hotelSummary.setSell((BigDecimal) B[3]);
+//            }else{
+//                hotelSummary.setSell(new BigDecimal(0));
+//            }
+//            if(B[4] != null && !"".equals(B[4])){
+//                hotelSummary.setNet((BigDecimal) B[4]);
+//            }else{
+//                hotelSummary.setNet(new BigDecimal(0));
+//            }
+//            if(B[5] != null && !"".equals(B[5])){
+//                hotelSummary.setProfit((BigDecimal) B[5]);
+//            }else{
+//                hotelSummary.setProfit(new BigDecimal(0));
+//            }           
             data.add(hotelSummary);
         }
 
