@@ -13,7 +13,11 @@ function printHotelMonthly(){
     if((from === '') || (to === '')){
         validateDate();
     } else {
-        window.open("report.smi?name=HotelMonthlyReport&fromdate="+from+"&todate="+to+"&department="+department+"&detail="+detail+"&systemuser="+systemuser);   
+        if(detail === '1'){
+            window.open("report.smi?name=HotelMonthlyDetailReport&fromdate="+from+"&todate="+to+"&department="+department+"&detail="+detail+"&systemuser="+systemuser);   
+        }else{
+            window.open("report.smi?name=HotelMonthlyReport&fromdate="+from+"&todate="+to+"&department="+department+"&detail="+detail+"&systemuser="+systemuser);   
+        }
     }
 }
 
