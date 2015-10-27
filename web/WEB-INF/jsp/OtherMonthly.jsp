@@ -29,15 +29,17 @@
                 </div>
             </div>
             <div class="col-md-10" >
-                <form role="form" id="OtherMonthlyFrom" method="post" class="form-horizontal">                   
+                <form role="form" id="OtherMonthlyFrom" method="post" class="form-horizontal">      
+                    
+                    
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group">
-                                <label class="col-md-5 control-label text-right"> From <font style="color: red;">*</font></label>
+                            <div class="form-group" id="fromdatepanel">
+                                <label class="col-md-5 control-label text-right">From<font style="color: red">*</font></label>
                                 <div class="col-md-4">  
-                                    <div class="form-group" id="DateFrom">
-                                        <div class='input-group date'>
-                                            <input type='text' id="fromdate" name="fromdate" class="form-control" data-date-format="YYYY-MM-DD" />
+                                    <div class="form-group">
+                                        <div class='input-group date' id='DateFrom'>
+                                            <input type='text' id="fromdate" name="fromdate" class="form-control" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -45,23 +47,23 @@
                                 </div>
                             </div>
                         </div>
-                    </div>            
+                    </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group" id="DateTo">
-                                <label class="col-md-5 control-label text-right"> To <font style="color: red;">*</font></label>
+                            <div class="form-group" id="todatepanel">
+                                <label class="col-md-5 control-label text-right">To<font style="color: red">*</font></label>
                                 <div class="col-md-4">  
                                     <div class="form-group">
-                                        <div class='input-group date'>
-                                            <input   type='text' id="todate" name="todate" class="form-control" data-date-format="YYYY-MM-DD"  />
-                                            <span class="input-group-addon"><span  class="glyphicon glyphicon-calendar"></span>
+                                        <div class='input-group date' id='DateTo'>
+                                            <input type='text' id="todate" name="todate"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>   
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
@@ -116,13 +118,15 @@
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () { 
-        $('.date').datetimepicker();
-        $('span').click(function () {
-            var position = $(this).offset();
-            console.log("positon :"+position.top);
-            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-
+        $('.date').datetimepicker({
         });
+        
+        $('span').click(function() {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+        });
+
         
          $("#OtherMonthlyFrom")
             .bootstrapValidator({
@@ -168,12 +172,30 @@
                     data.fv.revalidateField('fromdate');
                 }
             });
+            
             $('#DateFrom').datetimepicker().on('dp.change', function (e) {
-//                alert("1");
                 $('#OtherMonthlyFrom').bootstrapValidator('revalidateField', 'fromdate');
+                var fromdate = document.getElementById("fromdate").value;
+                var todate = document.getElementById("todate").value;
+                if(((fromdate !== '') && (todate !== '')) && fromdate < todate){
+                    $("#printbutton").removeClass("disabled");
+                }else if((((fromdate !== '') && (todate !== '')) && fromdate === todate)) {
+                    $("#printbutton").removeClass("disabled");
+                }else{
+                    $("#printbutton").addClass("disabled");
+                }
             });
             $('#DateTo').datetimepicker().on('dp.change', function (e) {
                 $('#OtherMonthlyFrom').bootstrapValidator('revalidateField', 'todate');
+                var fromdate = document.getElementById("fromdate").value;
+                var todate = document.getElementById("todate").value;
+                if(((fromdate !== '') && (todate !== '')) && fromdate < todate){
+                    $("#printbutton").removeClass("disabled");
+                }else if((((fromdate !== '') && (todate !== '')) && fromdate === todate)) {
+                    $("#printbutton").removeClass("disabled");
+                }else{
+                    $("#printbutton").addClass("disabled");
+                }
             });  
     });   
     
@@ -183,8 +205,8 @@
         var department = document.getElementById("department").value;
         var detail = document.getElementById("detail").value;
         
-        if((fromdate !== '') && (todate !== '')){
-             $("#printbutton").removeClass("disabled");
+        if(((fromdate !== '') && (todate !== '')) && fromdate < todate){
+            $("#printbutton").removeClass("disabled");
             window.open("report.smi?name=OtherMonthlyReport"+"&fromdate="+fromdate+"&todate="+todate+"&department="+department+"&detail="+detail);  
         }else{
             $('#OtherMonthlyFrom').bootstrapValidator('revalidateField', 'fromdate');
@@ -193,5 +215,9 @@
         }
         
     }
+    
+    
+    
+    
 </script>
 <!--<script type="text/javascript" src="js/HotelSummaryReport.js"></script> -->
