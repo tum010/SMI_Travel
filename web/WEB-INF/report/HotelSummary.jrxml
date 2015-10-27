@@ -81,7 +81,7 @@
 					<textFieldExpression><![CDATA[$V{totalnetprice}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement isPrintRepeatedValues="false" x="12" y="0" width="127" height="21" uuid="79986300-18af-4e7f-8706-70c194ddedf4"/>
+					<reportElement x="12" y="0" width="127" height="21" uuid="79986300-18af-4e7f-8706-70c194ddedf4"/>
 					<textElement textAlignment="Right">
 						<font fontName="TH SarabunPSK" size="16" isBold="false"/>
 					</textElement>
@@ -167,7 +167,7 @@
 				</textElement>
 				<text><![CDATA[ Page :  ]]></text>
 			</staticText>
-			<textField pattern="">
+			<textField pattern="" isBlankWhenNull="true">
 				<reportElement x="398" y="45" width="109" height="24" uuid="a5d2f39f-c2e2-4214-8a6f-fa1b97f45980"/>
 				<textElement>
 					<font size="11"/>
