@@ -9,10 +9,11 @@ function printHotelMonthly(){
     var to  = $("#todate").val();
     var department = $('#department').val();
     var detail = $('#detail').val();
+    var systemuser = $('#systemuser').val();
     if((from === '') || (to === '')){
         validateDate();
     } else {
-        window.open("report.smi?name=HotelMonthly&fromdate="+from+"&todate="+to+"&department="+department+"&detail="+detail);   
+        window.open("report.smi?name=HotelMonthly&fromdate="+from+"&todate="+to+"&department="+department+"&detail="+detail+"&systemuser="+systemuser);   
     }
 }
 
