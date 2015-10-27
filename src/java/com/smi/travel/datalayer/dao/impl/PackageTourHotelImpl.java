@@ -7,6 +7,7 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.PackageTourHotelDao;
 import com.smi.travel.datalayer.view.entity.HotelMonthly;
+import com.smi.travel.datalayer.view.entity.HotelMonthlyDetail;
 import com.smi.travel.datalayer.view.entity.HotelSummary;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -185,6 +186,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
         String query = "";
         String query2 = "";
         int checkQuery = 0;
+        int checkQuery2 = 0;
         if( from == null  && to == null  && department == null ){
             query2 = "select * from (" +
                     "SELECT  " +
@@ -336,47 +338,50 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<HotelMonthly>();
-        HotelMonthly listHotelSummaryDetail = new HotelMonthly();
         
         String query = "";
+        String query2 = "";
         int checkQuery = 0;
+        int checkQuery2 = 0;
         if( from == null  && to == null  && department == null ){
-            query = "SELECT * FROM `hotel_monthly_detail_main` " ;
+            query = "SELECT * FROM `hotel_monthly_detail_main` mt " ;
         }else{
-            query = "SELECT * FROM `hotel_monthly_detail_main` where " ;
+            query = "SELECT * FROM `hotel_monthly_detail_main` mt where " ;
         }
         
         if ((from != null )&&(!"".equalsIgnoreCase(from))) {
             if ((to != null )&&(!"".equalsIgnoreCase(to))) {
                 if(checkQuery == 1){
-                     query += " and  mt.Create_date  BETWEEN  '" + from + "' AND '" + to + "' ";
+                     query += " and  mt.createdate  BETWEEN  '" + from + "' AND '" + to + "' ";
                 }else{
                     checkQuery = 1;
-                     query += " mt.Create_date  BETWEEN  '" + from + "' AND '" + to + "' ";
+                     query += " mt.createdate  BETWEEN  '" + from + "' AND '" + to + "' ";
                 }
             }
         }
         
         if ((department != null )&&(!"".equalsIgnoreCase(department))) {
             if(checkQuery == 1){
-                 query += " and mt.booking_type  = '" + department + "' ";
+                 query += " and mt.department  = '" + department + "' ";
             }else{
                 checkQuery = 1;
-                 query += " mt.booking_type  = '" + department + "' ";
+                 query += " mt.department  = '" + department + "' ";
             }
         }
         
-        query += "GROUP BY ht.id " +
-                 "having  sum((select sum(IFNULL(hr.price,0)) from hotel_room hr where hr.booking_hotel_id = hb.id))  is not null " +
-                 "and sum((select sum(IFNULL(hr.cost,0)) from hotel_room hr where hr.booking_hotel_id = hb.id)) is not null  ";
-        
+        System.out.println("Query Detail :  " + query);
         List<Object[]> QueryList =  session.createSQLQuery(query)
-                .addScalar("city",Hibernate.STRING)		
-                .addScalar("hotel",Hibernate.STRING)		
-                .addScalar("night",Hibernate.INTEGER)		
-                .addScalar("sell",Hibernate.BIG_DECIMAL)		
-                .addScalar("net",Hibernate.BIG_DECIMAL)	
-                .addScalar("profit",Hibernate.BIG_DECIMAL)
+                .addScalar("hotel",Hibernate.STRING)
+                .addScalar("refno",Hibernate.STRING)			
+                .addScalar("leader",Hibernate.STRING)			
+                .addScalar("checkin",Hibernate.STRING)			
+                .addScalar("checkout",Hibernate.STRING)			
+                .addScalar("adult",Hibernate.STRING)			
+                .addScalar("child",Hibernate.STRING)			
+                .addScalar("infant",Hibernate.STRING)			
+                .addScalar("hotelbookid",Hibernate.STRING)			   
+                .addScalar("createdate",Hibernate.STRING)
+                .addScalar("department",Hibernate.STRING)
                 .list();
         for (Object[] B : QueryList) {
             HotelMonthly hotelSummary = new HotelMonthly();
@@ -404,35 +409,62 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             }
             
             hotelSummary.setSystemdate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(new Date()));
+            hotelSummary.setPrintby(systemuser);
+            hotelSummary.setHotel(util.ConvertString(B[0]) == null || "".equals(util.ConvertString(B[0])) ? "" : util.ConvertString(B[0]));
+            hotelSummary.setRefno(util.ConvertString(B[1]) == null || "".equals(util.ConvertString(B[1])) ? "" : util.ConvertString(B[1]));
+            hotelSummary.setLeader(util.ConvertString(B[2]) == null || "".equals(util.ConvertString(B[2])) ? "" : util.ConvertString(B[2]));
+            hotelSummary.setCheckin(util.ConvertString(B[3]) == null || "".equals(util.ConvertString(B[3])) ? "" : util.ConvertString(B[3]));
+            hotelSummary.setCheckout(util.ConvertString(B[4]) == null || "".equals(util.ConvertString(B[4])) ? "" : util.ConvertString(B[4]));
+            hotelSummary.setAdult(util.ConvertString(B[5]) == null || "".equals(util.ConvertString(B[5])) ? "" : util.ConvertString(B[5]));
+            hotelSummary.setChild(util.ConvertString(B[6]) == null || "".equals(util.ConvertString(B[6])) ? "" : util.ConvertString(B[6]));
+            hotelSummary.setInfant(util.ConvertString(B[7]) == null || "".equals(util.ConvertString(B[7])) ? "" : util.ConvertString(B[7]));
+            hotelSummary.setHotelid(util.ConvertString(B[8]) == null || "".equals(util.ConvertString(B[8])) ? "" : util.ConvertString(B[8]));
+            hotelSummary.setCreatedate(util.ConvertString(B[9]) == null || "".equals(util.ConvertString(B[9])) ? "" : util.ConvertString(B[9]));
+            hotelSummary.setDepartment(util.ConvertString(B[10]) == null || "".equals(util.ConvertString(B[10])) ? "" : util.ConvertString(B[10]));
             
-//            hotelSummary.setCity(util.ConvertString(B[0]));
-//            hotelSummary.setHotel(util.ConvertString(B[1]));
-//            System.out.println("Night : "+B[2]);
-//            if(B[2] != null && !"".equals(B[2])){
-//                hotelSummary.setNight((Integer) B[2]);
-//            }else{
-//                hotelSummary.setNight(0);
-//            }
-//            if(B[3] != null && !"".equals(B[3])){
-//                hotelSummary.setSell((BigDecimal) B[3]);
-//            }else{
-//                hotelSummary.setSell(new BigDecimal(0));
-//            }
-//            if(B[4] != null && !"".equals(B[4])){
-//                hotelSummary.setNet((BigDecimal) B[4]);
-//            }else{
-//                hotelSummary.setNet(new BigDecimal(0));
-//            }
-//            if(B[5] != null && !"".equals(B[5])){
-//                hotelSummary.setProfit((BigDecimal) B[5]);
-//            }else{
-//                hotelSummary.setProfit(new BigDecimal(0));
-//            }           
+            //Detail
+            if(!"".equals(util.ConvertString(B[8])) && util.ConvertString(B[8]) != null){
+                query2 = " SELECT * FROM `hotel_monthly_detail_room` mt  where mt.hote_booking_id ='"+util.ConvertString(B[8])+"'" ;
+            }
+            System.out.println("Query Sub Detail : " + query2);
+            List<Object[]> QueryList2 =  session.createSQLQuery(query2)
+                    .addScalar("hotel",Hibernate.STRING)
+                    .addScalar("hotelid",Hibernate.STRING)
+                    .addScalar("hote_booking_id",Hibernate.STRING)
+                    .addScalar("category",Hibernate.STRING)
+                    .addScalar("room",Hibernate.STRING)
+                    .addScalar("night",Hibernate.STRING)
+                    .addScalar("net",Hibernate.STRING)
+                    .addScalar("sell",Hibernate.STRING)
+                    .addScalar("profit",Hibernate.STRING)
+                    .addScalar("cost",Hibernate.STRING)
+                    .addScalar("price",Hibernate.STRING)
+                    .addScalar("qty",Hibernate.STRING)
+                    .addScalar("curcost",Hibernate.STRING)
+                    .addScalar("curprice",Hibernate.STRING)            
+                .list();
+            List<HotelMonthlyDetail> listHotelSummaryDetail = new ArrayList<HotelMonthlyDetail>();
+            for (Object[] B2 : QueryList2) {
+                HotelMonthlyDetail hotelMonthDetail  = new HotelMonthlyDetail();
+                hotelMonthDetail.setHotel(util.ConvertString(B2[0]));
+                hotelMonthDetail.setHotelid(util.ConvertString(B2[1]));
+                hotelMonthDetail.setHotel_booking_id(util.ConvertString(B2[2]));
+                hotelMonthDetail.setCategory(util.ConvertString(B2[3]));
+                hotelMonthDetail.setRoom(util.ConvertString(B2[4]));
+                hotelMonthDetail.setNight(util.ConvertString(B2[5]));
+                hotelMonthDetail.setNet(util.ConvertString(B2[6]));
+                hotelMonthDetail.setSell(util.ConvertString(B2[7]));
+                hotelMonthDetail.setProfit(util.ConvertString(B2[8]));
+                hotelMonthDetail.setCost(util.ConvertString(B2[9]));
+                hotelMonthDetail.setPrice(util.ConvertString(B2[10]));
+                hotelMonthDetail.setQty(util.ConvertString(B2[11]));
+                hotelMonthDetail.setCurcost(util.ConvertString(B2[12]));
+                hotelMonthDetail.setCurprice(util.ConvertString(B2[13]));
+                listHotelSummaryDetail.add(hotelMonthDetail);
+            }
+            hotelSummary.setHotelMonthlyDetail(listHotelSummaryDetail);
             data.add(hotelSummary);
         }
-
         return data;
-    }
-    
-    
+    } 
 }

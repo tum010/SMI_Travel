@@ -80,7 +80,6 @@ public class ReportController extends SMITravelController {
     private static final String PaymentTourHotelSummary = "PaymentTourHotelSummary";
     private static final String HotelSummary = "HotelSummary";
     private static final String HotelMonthlyReport = "HotelMonthlyReport";
-    private static final String HotelMonthlyDetailReport = "HotelMonthlyDetailReport";
     
     private static final String OtherMonthlyReport = "OtherMonthlyReport"; // other
     private static final String DailyTourReport = "DailyTourReport";
@@ -247,9 +246,12 @@ public class ReportController extends SMITravelController {
         }else if(HotelSummary.equalsIgnoreCase(name)){
             data = reportservice.getHotelSummary(fromHotelSummary, toHotelSummary, departmentHotelSummary);
         }else if(HotelMonthlyReport.equalsIgnoreCase(name)){
-            data = reportservice.getHotelMonthly(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser);
-        }else if(HotelMonthlyDetailReport.equalsIgnoreCase(name)){
-            data = reportservice.getHotelMonthly(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser);
+            System.out.println("Detail is : " + detailHotelMonthly);
+            if("2".equals(detailHotelMonthly)){
+                data = reportservice.getHotelMonthly(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser);
+            }else{
+                data = reportservice.getHotelMonthlyDetail(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser);
+            }
         }
         
         

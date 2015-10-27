@@ -28,8 +28,26 @@ public class HotelMonthly {
     private String adult;			
     private String child;			
     private String infant;			
-    private String hotelid;   
+    private String hotelid; 
+    private String createdate;
+    private String department;
     private List hotelMonthlyDetail;
+
+    public String getCreatedate() {
+        return createdate;
+    }
+
+    public void setCreatedate(String createdate) {
+        this.createdate = createdate;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
 
     public String getFrompage() {
         return frompage;

@@ -650,4 +650,8 @@ public class ReportService {
     public void setDaytourBookingdao(DaytourBookingDao daytourBookingdao) {
         this.daytourBookingdao = daytourBookingdao;
     }
+    
+    public List getHotelMonthlyDetail(String from,String to ,String department,String detail,String systemuser){
+        return packageTourHotelDao.getHotelMonthlyDetail(from, to, department,detail,systemuser);
+    }
 }
