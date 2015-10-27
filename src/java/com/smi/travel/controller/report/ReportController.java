@@ -7,6 +7,7 @@ package com.smi.travel.controller.report;
 
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.report.model.AgentCommission;
+import com.smi.travel.datalayer.report.model.DailyTourReport;
 import com.smi.travel.datalayer.report.model.GuideCommissionInfo;
 import com.smi.travel.datalayer.report.model.OtherMonthlyReport;
 import com.smi.travel.datalayer.report.model.PaymentAirline;
@@ -81,6 +82,7 @@ public class ReportController extends SMITravelController {
     private static final String HotelMonthly = "HotelMonthly";
     
     private static final String OtherMonthlyReport = "OtherMonthlyReport"; // other
+    private static final String DailyTourReport = "DailyTourReport";
     
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -255,6 +257,10 @@ public class ReportController extends SMITravelController {
             String detail = request.getParameter("detail");
             data = reportservice.getOtherMonthlyReport(datefrom,dateto,department,detail,user.getUsername()+" - "+user.getRole().getName());
             ((OtherMonthlyReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
+        } else if(DailyTourReport.equalsIgnoreCase(name)){
+            String detail = request.getParameter("detail");
+            data = reportservice.getDailyTourReport(from,to,department,detail,user.getUsername()+" - "+user.getRole().getName());
+            ((DailyTourReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

@@ -24,4 +24,6 @@ public interface DaytourBookingDao {
     public int enableBookDetailDaytour(String DaytourID);
     public String DeleteBookingDaytourPrice(String DayTourPriceId);
     public String DeleteBookingDaytourPriceNotMatch(String TourID,String DaytourBookID);
+
+    public Object getDailyTourReport(String from, String to, String department, String detail, String user);
 }

@@ -285,4 +285,9 @@ public class DaytourBookingImpl implements DaytourBookingDao {
         return ListPriceID;
     }
 
+    @Override
+    public Object getDailyTourReport(String from, String to, String department, String detail, String user) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

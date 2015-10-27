@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.service;
 
+import com.smi.travel.datalayer.dao.DaytourBookingDao;
 import com.smi.travel.datalayer.dao.PackageTourHotelDao;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
@@ -92,6 +93,7 @@ public class ReportService {
     private TicketSummaryCommissionDao ticketSummaryCommissionDao;
     private PackageTourHotelDao packageTourHotelDao;
     private OtherMonthlyDao otherMonthlyDao;
+    private DaytourBookingDao daytourBookingdao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -554,6 +556,12 @@ public class ReportService {
         return data;
     }
     
+    public List getDailyTourReport(String from, String to, String department, String detail, String user) {
+        List data  = new ArrayList();
+        data.add(daytourBookingdao.getDailyTourReport(from,to,department,detail,user));
+        return data;
+    }
+    
     public SummaryTicketAdjustCostAndIncomeDao getSummaryTicketAdjustCostAndIncomeDao() {
         return summaryTicketAdjustCostAndIncomeDao;
     }
@@ -633,5 +641,13 @@ public class ReportService {
 
     public void setOtherMonthlyDao(OtherMonthlyDao otherMonthlyDao) {
         this.otherMonthlyDao = otherMonthlyDao;
+    }
+
+    public DaytourBookingDao getDaytourBookingdao() {
+        return daytourBookingdao;
+    }
+
+    public void setDaytourBookingdao(DaytourBookingDao daytourBookingdao) {
+        this.daytourBookingdao = daytourBookingdao;
     }
 }

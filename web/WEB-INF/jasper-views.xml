@@ -232,5 +232,18 @@
         <bean id="OtherMonthlyDetailReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/OtherMonthlyDetailReport.jrxml"/>
-	</bean>                                              
+	</bean>
+        
+        <bean id="DailyTourReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/DailyTourReport.jrxml"/>
+	</bean>
+        <bean id="DailyTourListSubReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/DailyTourListSubReport.jrxml"/>
+	</bean>
+        <bean id="DailyTourDetailSubReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/DailyTourDetailSubReport.jrxml"/>
+	</bean>                                                              
 </beans>
