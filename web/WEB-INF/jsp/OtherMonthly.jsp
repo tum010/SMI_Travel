@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col-md-10" >
-                <form role="form" id="HotelSummaryReportFrom" method="post" class="form-horizontal" onsubmit="printInvoiceMonthly();">                   
+                <form role="form" id="OtherMonthlyFrom" method="post" class="form-horizontal">                   
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
@@ -100,11 +100,11 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <div class="col-sm-7 text-right">
-                                    <button type="submit"  class="btn btn-success"><span class="glyphicon glyphicon-print" id="btnDownloadAP"></span> Print</button>
+                                    <button type="button"  id="printbutton" name="printbutton" onclick="printOtherMonthlyReport()" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
                                 </div>
-                                <div class="col-sm-2 text-left">
+<!--                                <div class="col-sm-2 text-left">
                                     <button type="button" onclick="" class="btn btn-warning"><span class="glyphicon glyphicon-print"></span> Cancel</button>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
 
         });
         
-         $("#HotelSummaryReportFrom")
+         $("#OtherMonthlyFrom")
             .bootstrapValidator({
                 framework: 'bootstrap',
                 feedbackIcons: {
@@ -170,11 +170,28 @@
             });
             $('#DateFrom').datetimepicker().on('dp.change', function (e) {
 //                alert("1");
-                $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'fromdate');
+                $('#OtherMonthlyFrom').bootstrapValidator('revalidateField', 'fromdate');
             });
             $('#DateTo').datetimepicker().on('dp.change', function (e) {
-                $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'todate');
+                $('#OtherMonthlyFrom').bootstrapValidator('revalidateField', 'todate');
             });  
     });   
+    
+    function printOtherMonthlyReport(){
+        var fromdate = document.getElementById("fromdate").value;
+        var todate = document.getElementById("todate").value;
+        var department = document.getElementById("department").value;
+        var detail = document.getElementById("detail").value;
+        
+        if((fromdate !== '') && (todate !== '')){
+             $("#printbutton").removeClass("disabled");
+            window.open("report.smi?name=OtherMonthlyReport"+"&fromdate="+fromdate+"&todate="+todate+"&department="+department+"&detail="+detail);  
+        }else{
+            $('#OtherMonthlyFrom').bootstrapValidator('revalidateField', 'fromdate');
+            $('#OtherMonthlyFrom').bootstrapValidator('revalidateField', 'todate');
+            $("#printbutton").addClass("disabled");
+        }
+        
+    }
 </script>
-<script type="text/javascript" src="js/HotelSummaryReport.js"></script> 
+<!--<script type="text/javascript" src="js/HotelSummaryReport.js"></script> -->

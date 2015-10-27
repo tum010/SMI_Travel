@@ -247,15 +247,12 @@ public class ReportController extends SMITravelController {
             data = reportservice.getHotelSummary(fromHotelSummary, toHotelSummary, departmentHotelSummary);
         }else if(HotelMonthlyReport.equalsIgnoreCase(name)){
             data = reportservice.getHotelMonthly(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser);
-        }
-        
-        
-        else if(OtherMonthlyReport.equalsIgnoreCase(name)){
-            String datefrom = request.getParameter("datefrom");
-            String dateto = request.getParameter("dateto");
+        }else if(OtherMonthlyReport.equalsIgnoreCase(name)){
+            String datefrom = request.getParameter("fromdate");
+            String dateto = request.getParameter("todate");
 //            String department = request.getParameter("department");
             String detail = request.getParameter("detail");
-            data = reportservice.getOtherMonthlyReport(datefrom,dateto,department,detail,user.getUsername()+" - "+user.getRole().getName());
+            data = reportservice.getOtherMonthlyReport(datefrom,dateto,department,detail,user.getRole().getName());
             ((OtherMonthlyReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         } else if(DailyTourReport.equalsIgnoreCase(name)){
             String detail = request.getParameter("detail");
