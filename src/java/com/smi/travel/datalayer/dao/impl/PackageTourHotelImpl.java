@@ -246,7 +246,12 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
                 "INNER JOIN hotel ht on  hb.hotel_id = ht.id  " +
                 "INNER JOIN master mt on mt.id = hb.master_id " +
                 "left JOIN hotel_request hr on hr.booking_hotel_id = hb.id  " ;
-        // Edit where 
+        if(checkQuery == 1){
+             query2 += " where ";
+        }else{
+            checkQuery = 1;
+             query2 += " ";
+        }
         
         query2 += query + "group by ht.id )x ORDER BY x.hotel , x.night desc ";
         System.out.println("Query : " + query2);
