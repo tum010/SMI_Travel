@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherMonthlyReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="066fbbab-8a6b-4c4e-b9b4-dc8a866fdd73">
-	<property name="ireport.zoom" value="1.1000000000000023"/>
+	<property name="ireport.zoom" value="1.3310000000000035"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="36"/>
+	<property name="ireport.y" value="77"/>
 	<field name="subReportDir" class="java.lang.String"/>
 	<field name="otherMonthlyListReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<field name="otherMonthlyDetailReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
@@ -50,7 +50,7 @@
 				<text><![CDATA[Report Coupon]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="490" y="74" width="25" height="20" uuid="75b2b34e-7e25-4c0c-a78c-bd9554bec3a2"/>
+				<reportElement x="502" y="74" width="22" height="20" uuid="75b2b34e-7e25-4c0c-a78c-bd9554bec3a2"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
@@ -71,14 +71,14 @@
 				<text><![CDATA[Print Date]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="521" y="78" width="15" height="15" uuid="04a01847-81dd-452e-aa32-a2aac89c0588"/>
+				<reportElement x="533" y="78" width="12" height="15" uuid="04a01847-81dd-452e-aa32-a2aac89c0588"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="511" y="74" width="10" height="20" uuid="bb625f69-ac02-4f12-91c0-1473d2fa94a1"/>
+				<reportElement x="523" y="74" width="7" height="20" uuid="bb625f69-ac02-4f12-91c0-1473d2fa94a1"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
@@ -115,12 +115,12 @@
 				<subreportExpression><![CDATA[$F{subReportDir} + "/OtherMonthlyListReport.jasper"]]></subreportExpression>
 			</subreport>
 			<break>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="82" width="595" height="1" uuid="7e2811f0-58e9-4642-89b0-8722e3024090">
+				<reportElement positionType="FixRelativeToBottom" x="0" y="79" width="595" height="1" uuid="7e2811f0-58e9-4642-89b0-8722e3024090">
 					<printWhenExpression><![CDATA[$F{otherMonthlyDetailReportDataSource} != null]]></printWhenExpression>
 				</reportElement>
 			</break>
 			<subreport>
-				<reportElement x="0" y="88" width="595" height="76" uuid="f4f1b5c1-f930-488a-9d3f-b51d21fbde2e"/>
+				<reportElement x="0" y="81" width="595" height="76" uuid="f4f1b5c1-f930-488a-9d3f-b51d21fbde2e"/>
 				<dataSourceExpression><![CDATA[$F{otherMonthlyDetailReportDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/OtherMonthlyDetailReport.jasper"]]></subreportExpression>
 			</subreport>

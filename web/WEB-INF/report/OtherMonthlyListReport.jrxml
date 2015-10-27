@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherMonthlyListReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="2" bottomMargin="20" uuid="a50cc33b-72d0-4600-9043-4eca4bb29c82">
-	<property name="ireport.zoom" value="6.115909044841646"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherMonthlyListReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="1" bottomMargin="20" uuid="a50cc33b-72d0-4600-9043-4eca4bb29c82">
+	<property name="ireport.zoom" value="2.5937424601000805"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="233"/>
+	<property name="ireport.y" value="0"/>
 	<field name="code" class="java.lang.String"/>
 	<field name="tour" class="java.lang.String"/>
 	<field name="adult" class="java.lang.String"/>

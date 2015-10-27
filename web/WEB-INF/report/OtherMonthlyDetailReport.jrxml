@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherMonthlyDetailReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="2" bottomMargin="20" uuid="129b46e8-179f-4605-83bd-94a84a7f154c">
-	<property name="ireport.zoom" value="2.35794769100001"/>
-	<property name="ireport.x" value="184"/>
-	<property name="ireport.y" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherMonthlyDetailReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="1" bottomMargin="20" uuid="129b46e8-179f-4605-83bd-94a84a7f154c">
+	<property name="ireport.zoom" value="2.3579476910000117"/>
+	<property name="ireport.x" value="34"/>
+	<property name="ireport.y" value="10"/>
 	<field name="code" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
 	<field name="refno" class="java.lang.String"/>
@@ -15,85 +15,85 @@
 	<group name="Tour">
 		<groupExpression><![CDATA[$F{code}]]></groupExpression>
 		<groupHeader>
-			<band height="41">
+			<band height="38">
 				<staticText>
-					<reportElement x="19" y="0" width="35" height="20" uuid="520efeec-8f38-4786-99f6-aaeffebb266e"/>
+					<reportElement x="19" y="-3" width="35" height="20" uuid="520efeec-8f38-4786-99f6-aaeffebb266e"/>
 					<textElement>
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[CODE :]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="259" y="20" width="55" height="20" uuid="a1d2a5bb-04f9-4601-b700-a2ac32f36bca"/>
+					<reportElement x="259" y="17" width="55" height="20" uuid="a1d2a5bb-04f9-4601-b700-a2ac32f36bca"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[CH]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="204" y="20" width="56" height="20" uuid="e0612399-2423-4795-813e-d6a20afddb63"/>
+					<reportElement x="204" y="17" width="56" height="20" uuid="e0612399-2423-4795-813e-d6a20afddb63"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[AD]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="207" y="0" width="223" height="20" uuid="c3139365-1260-4e4e-b10c-d03c3c214315"/>
+					<reportElement x="207" y="-3" width="223" height="20" uuid="c3139365-1260-4e4e-b10c-d03c3c214315"/>
 					<textElement verticalAlignment="Top">
 						<font fontName="TH SarabunPSK" size="14" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 				</textField>
 				<rectangle radius="10">
-					<reportElement mode="Transparent" x="0" y="20" width="555" height="20" uuid="1fbc61a9-64fb-4d2c-b06a-181ede09dacc"/>
+					<reportElement mode="Transparent" x="0" y="17" width="555" height="20" uuid="1fbc61a9-64fb-4d2c-b06a-181ede09dacc"/>
 					<graphicElement>
 						<pen lineWidth="0.25"/>
 					</graphicElement>
 				</rectangle>
 				<staticText>
-					<reportElement x="456" y="20" width="90" height="20" uuid="db3adae5-1aea-486c-9fe3-64b0370a566d"/>
+					<reportElement x="456" y="17" width="90" height="20" uuid="db3adae5-1aea-486c-9fe3-64b0370a566d"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PRICE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="7" y="20" width="97" height="20" uuid="20cd7d97-3ea8-44c9-a5a5-c925357c5214"/>
+					<reportElement x="7" y="17" width="97" height="20" uuid="20cd7d97-3ea8-44c9-a5a5-c925357c5214"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[REF NO.]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="56" y="0" width="91" height="20" uuid="1cbe5774-39ca-4666-a1d2-952ddffd489f"/>
+					<reportElement x="56" y="-3" width="91" height="20" uuid="1cbe5774-39ca-4666-a1d2-952ddffd489f"/>
 					<textElement verticalAlignment="Top">
 						<font fontName="TH SarabunPSK" size="14" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="170" y="0" width="35" height="20" uuid="1c63412e-5870-4bd4-8a9e-2632511c221d"/>
+					<reportElement x="170" y="-3" width="35" height="20" uuid="1c63412e-5870-4bd4-8a9e-2632511c221d"/>
 					<textElement>
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[TOUR :]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="367" y="20" width="90" height="20" uuid="f2aca67a-cbfd-48f5-bf04-196a5914e730"/>
+					<reportElement x="367" y="17" width="90" height="20" uuid="f2aca67a-cbfd-48f5-bf04-196a5914e730"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[NET]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="313" y="20" width="55" height="20" uuid="11abcae8-38d5-49b5-81ac-93665a6386f0"/>
+					<reportElement x="313" y="17" width="55" height="20" uuid="11abcae8-38d5-49b5-81ac-93665a6386f0"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[IN]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="103" y="20" width="102" height="20" uuid="3d6ff121-802e-4a6c-9c3b-bd29931f55f7"/>
+					<reportElement x="103" y="17" width="102" height="20" uuid="3d6ff121-802e-4a6c-9c3b-bd29931f55f7"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
