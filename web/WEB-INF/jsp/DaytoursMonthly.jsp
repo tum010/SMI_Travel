@@ -100,7 +100,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <div class="col-sm-7 text-right">
-                                    <button type="submit"  class="btn btn-success"><span class="glyphicon glyphicon-print" id="btnDownloadAP"></span> Print</button>
+                                    <button type="button"  class="btn btn-success" onclick="printDailyTourReport()"><span class="glyphicon glyphicon-print" id="btnDownloadAP"></span> Print</button>
                                 </div>
                                 <div class="col-sm-2 text-left">
                                     <button type="button" onclick="" class="btn btn-warning"><span class="glyphicon glyphicon-print"></span> Cancel</button>
@@ -175,6 +175,14 @@
             $('#DateTo').datetimepicker().on('dp.change', function (e) {
                 $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'todate');
             });  
-    });   
+    });
+    
+    function printDailyTourReport(){
+        var fromdate = document.getElementById("fromdate").value;
+        var todate = document.getElementById("todate").value;
+        var department = document.getElementById("department").value;
+        var detail = document.getElementById("detail").value;
+        window.open("report.smi?name=DailyTourReport&fromdate="+fromdate+"&todate="+todate+"&department="+department+"&detail="+detail);
+    }
 </script>
 <script type="text/javascript" src="js/HotelSummaryReport.js"></script> 

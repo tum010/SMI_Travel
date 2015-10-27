@@ -171,6 +171,7 @@
         <property name="ticketSummaryCommissionDao" ref="TicketSummaryCommissionDao" />
         <property name="PackageTourHotelDao" ref="PackageTourHotelDao" />
         <property name="otherMonthlyDao" ref="OtherMonthlyDao" />
+        <property name="daytourBookingdao" ref="DaytourBookingDao" />
     </bean> 
     
     
