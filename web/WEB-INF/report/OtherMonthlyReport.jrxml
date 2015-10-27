@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherMonthlyReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="066fbbab-8a6b-4c4e-b9b4-dc8a866fdd73">
+	<property name="ireport.zoom" value="0.9090909090909105"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="subReportDir" class="java.lang.String"/>
+	<field name="otherMonthlyListReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="otherMonthlyDetailReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="fromto" class="java.lang.String"/>
+	<field name="systemdate" class="java.lang.String"/>
+	<field name="user" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="97">
+			<staticText>
+				<reportElement x="445" y="55" width="37" height="20" uuid="229d6652-164a-4322-add9-2d7123b134bf"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Print By]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="492" y="54" width="78" height="20" uuid="8c98de06-df30-4a94-9e67-632608596415"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="482" y="35" width="10" height="20" uuid="1567be9c-c933-4745-881a-1af4c5597321"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="545" y="74" width="10" height="20" uuid="99fb0eed-a2c2-470a-85e1-6bfecd36f29a"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="5" width="182" height="35" uuid="7ee627c9-7e7e-4ae5-8e81-4c703c991e21"/>
+				<textElement textAlignment="Right">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Report Coupon]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="490" y="74" width="25" height="20" uuid="75b2b34e-7e25-4c0c-a78c-bd9554bec3a2"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Page]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="555" y="78" width="15" height="16" uuid="179a7b7d-670b-44cf-93db-3865392ba1dc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="434" y="35" width="48" height="20" uuid="425e4741-e4b7-4a78-bfa7-5053076dd7ca"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Print Date]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="521" y="78" width="15" height="15" uuid="04a01847-81dd-452e-aa32-a2aac89c0588"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="511" y="74" width="10" height="20" uuid="bb625f69-ac02-4f12-91c0-1473d2fa94a1"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="492" y="34" width="78" height="20" uuid="68553b30-76ef-4fc1-9076-e05d7f8bca83"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="482" y="55" width="10" height="20" uuid="d8b776d3-c9ea-4b25-bb16-fb471665fad3"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="250" y="5" width="320" height="35" uuid="f1293f1c-5cd4-4285-b258-490634c888a2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="20" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fromto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="166">
+			<subreport>
+				<reportElement x="0" y="2" width="595" height="76" uuid="056cb5c0-9552-4e7e-859e-740a3624481f"/>
+				<dataSourceExpression><![CDATA[$F{otherMonthlyListReportDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/OtherMonthlyListReport.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="82" width="100" height="1" uuid="7e2811f0-58e9-4642-89b0-8722e3024090"/>
+			</break>
+			<subreport>
+				<reportElement x="0" y="88" width="595" height="76" uuid="f4f1b5c1-f930-488a-9d3f-b51d21fbde2e"/>
+				<dataSourceExpression><![CDATA[$F{otherMonthlyDetailReportDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/OtherMonthlyDetailReport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

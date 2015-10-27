@@ -8,6 +8,7 @@ package com.smi.travel.controller.report;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.report.model.AgentCommission;
 import com.smi.travel.datalayer.report.model.GuideCommissionInfo;
+import com.smi.travel.datalayer.report.model.OtherMonthlyReport;
 import com.smi.travel.datalayer.report.model.PaymentAirline;
 import com.smi.travel.datalayer.report.model.TicketOrder;
 import com.smi.travel.datalayer.service.ReportService;
@@ -78,6 +79,9 @@ public class ReportController extends SMITravelController {
     private static final String PaymentTourHotelSummary = "PaymentTourHotelSummary";
     private static final String HotelSummary = "HotelSummary";
     private static final String HotelMonthly = "HotelMonthly";
+    
+    private static final String OtherMonthlyReport = "OtherMonthlyReport"; // other
+    
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
     private ReportService reportservice;
@@ -233,12 +237,6 @@ public class ReportController extends SMITravelController {
         }else if(PaymentAirlineInfo.equalsIgnoreCase(name)){
             String payno = request.getParameter("payno");
             System.out.println(" payno " + payno);
-//            data = reportservice.getPaymentAirlineReport(payno,user.getUsername()+"-"+user.getRole().getName());
-            data = reportservice.getPaymentAirlineReport(payno,user.getUsername()+"-"+user.getRole().getName());
-            ((PaymentAirline) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
-        }else if(PaymentAirlineInfo.equalsIgnoreCase(name)){
-            String payno = request.getParameter("payno");
-            System.out.println(" payno " + payno);
             data = reportservice.getPaymentAirlineReport(payno,user.getUsername()+"-"+user.getRole().getName());
             ((PaymentAirline) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }else if(PaymentTourHotelSummary.equalsIgnoreCase(name)){
@@ -247,6 +245,16 @@ public class ReportController extends SMITravelController {
             data = reportservice.getHotelSummary(fromHotelSummary, toHotelSummary, departmentHotelSummary);
         }else if(HotelMonthly.equalsIgnoreCase(name)){
             data = reportservice.getHotelMonthly(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser);
+        }
+        
+        
+        else if(OtherMonthlyReport.equalsIgnoreCase(name)){
+            String datefrom = request.getParameter("datefrom");
+            String dateto = request.getParameter("dateto");
+//            String department = request.getParameter("department");
+            String detail = request.getParameter("detail");
+            data = reportservice.getOtherMonthlyReport(datefrom,dateto,department,detail,user.getUsername()+" - "+user.getRole().getName());
+            ((OtherMonthlyReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

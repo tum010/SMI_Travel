@@ -27,6 +27,7 @@ import com.smi.travel.datalayer.view.dao.InvoiceEmailDao;
 import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
 import com.smi.travel.datalayer.view.dao.InvoiceSummaryDao;
 import com.smi.travel.datalayer.view.dao.LandVoucherDao;
+import com.smi.travel.datalayer.view.dao.OtherMonthlyDao;
 import com.smi.travel.datalayer.view.dao.ReceiptDao;
 import com.smi.travel.datalayer.view.dao.ReceiveListDao;
 import com.smi.travel.datalayer.view.dao.RefundAirReportDao;
@@ -90,6 +91,7 @@ public class ReportService {
     private PaymentWendytourDao paymentWendytourDao;
     private TicketSummaryCommissionDao ticketSummaryCommissionDao;
     private PackageTourHotelDao packageTourHotelDao;
+    private OtherMonthlyDao otherMonthlyDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -544,7 +546,12 @@ public class ReportService {
         List data  = new ArrayList();
         data.add(paymentAirTicketDao.getPaymentAirlineReport(payno,printby));
         return data;
-//        return paymentAirTicketDao.getPaymentAirlineList(payno,printby);
+    }
+    
+    public List getOtherMonthlyReport(String datefrom,String dateto,String department,String detail,String user){
+        List data  = new ArrayList();
+        data.add(otherMonthlyDao.getOtherMonthlyReport(datefrom,dateto,department,detail,user));
+        return data;
     }
     
     public SummaryTicketAdjustCostAndIncomeDao getSummaryTicketAdjustCostAndIncomeDao() {
@@ -618,5 +625,13 @@ public class ReportService {
      
      public List getHotelMonthly(String from,String to ,String department,String detail,String systemuser){
         return packageTourHotelDao.getHotelMonthly(from, to, department,detail,systemuser);
+    }
+
+    public OtherMonthlyDao getOtherMonthlyDao() {
+        return otherMonthlyDao;
+    }
+
+    public void setOtherMonthlyDao(OtherMonthlyDao otherMonthlyDao) {
+        this.otherMonthlyDao = otherMonthlyDao;
     }
 }
