@@ -18,6 +18,7 @@ public class DailyTourReport {
     private String fromto;
     private String systemdate;
     private String user;
+    private String newpage;
     
     public DailyTourReport(){
         this.dailyTourListReportDataSource = null;
@@ -70,5 +71,13 @@ public class DailyTourReport {
 
     public void setUser(String user) {
         this.user = user;
+    }
+
+    public String getNewpage() {
+        return newpage;
+    }
+
+    public void setNewpage(String newpage) {
+        this.newpage = newpage;
     }
 }

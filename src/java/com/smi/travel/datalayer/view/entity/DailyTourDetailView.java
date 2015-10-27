@@ -20,8 +20,8 @@ public class DailyTourDetailView {
     private String infant;
     private String qty;
     private String net;
-    private String balance;
-    private String everage;
+    private String price;
+    private String profit;
 
     public String getCode() {
         return code;
@@ -95,19 +95,19 @@ public class DailyTourDetailView {
         this.net = net;
     }
 
-    public String getBalance() {
-        return balance;
+    public String getPrice() {
+        return price;
     }
 
-    public void setBalance(String balance) {
-        this.balance = balance;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public String getEverage() {
-        return everage;
+    public String getProfit() {
+        return profit;
     }
 
-    public void setEverage(String everage) {
-        this.everage = everage;
-    }
+    public void setProfit(String profit) {
+        this.profit = profit;
+    }  
 }

@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.DaytourBooking;
+import com.smi.travel.datalayer.report.model.DailyTourReport;
 import java.util.List;
 
 /**
@@ -24,6 +25,5 @@ public interface DaytourBookingDao {
     public int enableBookDetailDaytour(String DaytourID);
     public String DeleteBookingDaytourPrice(String DayTourPriceId);
     public String DeleteBookingDaytourPriceNotMatch(String TourID,String DaytourBookID);
-
-    public Object getDailyTourReport(String from, String to, String department, String detail, String user);
+    public DailyTourReport getDailyTourReport(String from, String to, String department, String detail, String user);
 }

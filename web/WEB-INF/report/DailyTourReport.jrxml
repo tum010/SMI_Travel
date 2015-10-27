@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DailyTourReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27de6d34-1141-4e66-9efa-cffd872f692e">
-	<property name="ireport.zoom" value="2.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DailyTourReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="27de6d34-1141-4e66-9efa-cffd872f692e">
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -10,95 +10,98 @@
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="subReportDir" class="java.lang.String"/>
-	<field name="dailyTourListReportDataSource" class="java.lang.String"/>
-	<field name="dailyTourDetailReportDataSource" class="java.lang.String"/>
-	<title>
-		<band height="70" splitType="Stretch">
+	<field name="dailyTourListReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="dailyTourDetailReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="newpage" class="java.lang.String"/>
+	<pageHeader>
+		<band height="70">
 			<staticText>
-				<reportElement x="0" y="0" width="227" height="27" uuid="c792efc6-d005-4a60-8f9f-aa2f0e574b93"/>
-				<textElement textAlignment="Center">
+				<reportElement x="39" y="0" width="227" height="27" uuid="c792efc6-d005-4a60-8f9f-aa2f0e574b93"/>
+				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="20"/>
 				</textElement>
 				<text><![CDATA[Daily Tour Report]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="227" y="0" width="327" height="27" uuid="3af06a3b-bb38-4ebc-9d17-fb02f6ed0427"/>
+				<reportElement x="271" y="0" width="239" height="27" uuid="3af06a3b-bb38-4ebc-9d17-fb02f6ed0427"/>
 				<textElement textAlignment="Center">
 					<font size="20"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fromto}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="436" y="54" width="30" height="14" uuid="9055ef9f-000e-4ed2-97bb-3cb64dc728e7"/>
+				<reportElement x="454" y="56" width="30" height="14" uuid="9055ef9f-000e-4ed2-97bb-3cb64dc728e7"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Page :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="510" y="54" width="18" height="14" uuid="0e9ccbc8-27f9-4645-b770-a87f83510501"/>
+				<reportElement x="528" y="54" width="18" height="14" uuid="0e9ccbc8-27f9-4645-b770-a87f83510501"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[of]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="471" y="40" width="84" height="14" uuid="1e27245e-8406-4411-90f8-f86a2d84fdb2"/>
-				<textElement textAlignment="Right">
+				<reportElement x="489" y="40" width="84" height="14" uuid="1e27245e-8406-4411-90f8-f86a2d84fdb2"/>
+				<textElement>
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="471" y="26" width="83" height="15" uuid="a4a984e6-c505-49ee-a9e2-f4dfa22e174e"/>
-				<textElement textAlignment="Right">
+				<reportElement x="489" y="26" width="83" height="15" uuid="a4a984e6-c505-49ee-a9e2-f4dfa22e174e"/>
+				<textElement>
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="479" y="55" width="22" height="15" uuid="53e4567c-9df8-4f50-8b82-037edd30144a"/>
-				<textElement>
+				<reportElement x="500" y="55" width="22" height="15" uuid="53e4567c-9df8-4f50-8b82-037edd30144a"/>
+				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="422" y="26" width="44" height="14" uuid="3b66d632-9a58-4faf-9c38-0f0a1e9994fd"/>
+				<reportElement x="440" y="28" width="44" height="14" uuid="3b66d632-9a58-4faf-9c38-0f0a1e9994fd"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Print Date :]]></text>
 			</staticText>
 			<textField evaluationTime="Report">
-				<reportElement x="536" y="54" width="18" height="15" uuid="f92726e9-d6ad-4461-8c09-5bc4e0a85d93"/>
-				<textElement>
+				<reportElement x="548" y="55" width="18" height="15" uuid="f92726e9-d6ad-4461-8c09-5bc4e0a85d93"/>
+				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="422" y="40" width="44" height="14" uuid="b4a4b25a-7908-458e-8497-e981c495a066"/>
+				<reportElement x="440" y="42" width="44" height="14" uuid="b4a4b25a-7908-458e-8497-e981c495a066"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Print by :]]></text>
 			</staticText>
 		</band>
-	</title>
+	</pageHeader>
 	<detail>
 		<band height="125" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="0" width="555" height="55" uuid="57c95402-0375-417a-94d5-641928c4b511"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<reportElement x="0" y="0" width="595" height="55" uuid="57c95402-0375-417a-94d5-641928c4b511"/>
+				<dataSourceExpression><![CDATA[$F{dailyTourListReportDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/DailyTourListSubReport.jasper"]]></subreportExpression>
 			</subreport>
 			<break>
-				<reportElement x="0" y="61" width="100" height="1" uuid="f575a363-8b4f-4594-b7c8-9fcfd3020cb2"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="61" width="100" height="1" uuid="f575a363-8b4f-4594-b7c8-9fcfd3020cb2">
+					<printWhenExpression><![CDATA[$F{newpage}.equalsIgnoreCase("1")]]></printWhenExpression>
+				</reportElement>
 			</break>
 			<subreport>
-				<reportElement x="-1" y="70" width="555" height="55" uuid="b284d4dc-60a9-4288-9065-ec44cf9a5ae1"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<reportElement x="-1" y="70" width="596" height="55" uuid="b284d4dc-60a9-4288-9065-ec44cf9a5ae1"/>
+				<dataSourceExpression><![CDATA[$F{dailyTourDetailReportDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/DailyTourDetailSubReport.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
