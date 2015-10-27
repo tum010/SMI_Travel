@@ -13,7 +13,7 @@ function printHotelMonthly(){
     if((from === '') || (to === '')){
         validateDate();
     } else {
-        window.open("report.smi?name=HotelMonthly&fromdate="+from+"&todate="+to+"&department="+department+"&detail="+detail+"&systemuser="+systemuser);   
+        window.open("report.smi?name=HotelMonthlyReport&fromdate="+from+"&todate="+to+"&department="+department+"&detail="+detail+"&systemuser="+systemuser);   
     }
 }
 

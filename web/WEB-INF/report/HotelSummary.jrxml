@@ -25,7 +25,7 @@
 		<variableExpression><![CDATA[$F{profit}]]></variableExpression>
 	</variable>
 	<group name="hotelSummary">
-		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
+		<groupExpression><![CDATA[$F{city}]]></groupExpression>
 		<groupHeader>
 			<band height="24">
 				<staticText>
@@ -124,60 +124,68 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="36" splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band height="110" splitType="Stretch">
+		<band height="74" splitType="Stretch">
 			<staticText>
-				<reportElement x="12" y="5" width="127" height="26" uuid="dc1e30bd-82db-40ba-b554-fdfef46eca5a"/>
+				<reportElement x="0" y="0" width="127" height="26" uuid="dc1e30bd-82db-40ba-b554-fdfef46eca5a"/>
 				<textElement>
 					<font fontName="SansSerif" size="18" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Hotel Summary]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="144" y="5" width="111" height="25" uuid="dc1e9fa4-a859-4887-bd2a-3297215a4018"/>
+				<reportElement x="132" y="0" width="111" height="25" uuid="dc1e9fa4-a859-4887-bd2a-3297215a4018"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="22" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{frompage}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="296" y="5" width="111" height="25" uuid="6971e38d-c57a-4380-8556-e71c1d71352a"/>
+				<reportElement x="284" y="0" width="111" height="25" uuid="6971e38d-c57a-4380-8556-e71c1d71352a"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="22" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{topage}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="371" y="31" width="66" height="24" uuid="691aa5dc-9ce3-40cf-8f66-86f260d9ea87"/>
+				<reportElement x="359" y="26" width="66" height="24" uuid="691aa5dc-9ce3-40cf-8f66-86f260d9ea87"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[ Print Date :  ]]></text>
 			</staticText>
 			<textField pattern="">
-				<reportElement x="440" y="31" width="109" height="24" uuid="1b6a8d0d-6c29-4506-b9fd-cf8f2e985cc1"/>
+				<reportElement x="428" y="26" width="109" height="24" uuid="1b6a8d0d-6c29-4506-b9fd-cf8f2e985cc1"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="371" y="50" width="36" height="24" uuid="41f010a7-78f6-4bd8-a591-a4afcf033359"/>
+				<reportElement x="359" y="45" width="36" height="24" uuid="41f010a7-78f6-4bd8-a591-a4afcf033359"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[ Page :  ]]></text>
 			</staticText>
 			<textField pattern="">
-				<reportElement x="410" y="50" width="109" height="24" uuid="a5d2f39f-c2e2-4214-8a6f-fa1b97f45980"/>
+				<reportElement x="398" y="45" width="109" height="24" uuid="a5d2f39f-c2e2-4214-8a6f-fa1b97f45980"/>
 				<textElement>
 					<font size="11"/>
 				</textElement>
 			</textField>
 			<staticText>
-				<reportElement x="331" y="89" width="109" height="20" backcolor="#FFFFFF" uuid="1ca6376a-a253-41ad-8a99-aea5716101aa"/>
+				<reportElement x="243" y="0" width="41" height="26" uuid="5b72e1d1-0abe-468f-bfbc-25493c905fd2"/>
+				<textElement>
+					<font fontName="SansSerif" size="18" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ to]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="331" y="6" width="109" height="20" backcolor="#FFFFFF" uuid="1ca6376a-a253-41ad-8a99-aea5716101aa"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -190,7 +198,7 @@
 				<text><![CDATA[Net Price]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="144" y="89" width="79" height="20" backcolor="#FFFFFF" uuid="01ed8816-4ae0-45a1-a682-3d0129bf2956"/>
+				<reportElement x="144" y="6" width="79" height="20" backcolor="#FFFFFF" uuid="01ed8816-4ae0-45a1-a682-3d0129bf2956"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -203,7 +211,7 @@
 				<text><![CDATA[Room Night]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="440" y="89" width="109" height="20" backcolor="#FFFFFF" uuid="b7ac0f7b-b27d-4fae-968f-3aba44a326df"/>
+				<reportElement x="440" y="6" width="109" height="20" backcolor="#FFFFFF" uuid="b7ac0f7b-b27d-4fae-968f-3aba44a326df"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -216,7 +224,7 @@
 				<text><![CDATA[Profit]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="223" y="89" width="108" height="20" backcolor="#FFFFFF" uuid="de7208e1-6749-4218-9934-e32b31ec9d72"/>
+				<reportElement x="223" y="6" width="108" height="20" backcolor="#FFFFFF" uuid="de7208e1-6749-4218-9934-e32b31ec9d72"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -229,7 +237,7 @@
 				<text><![CDATA[Selling Price]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="89" width="132" height="20" backcolor="#FFFFFF" uuid="664aa178-e3f0-49c9-b79c-82546f212ea4"/>
+				<reportElement x="12" y="6" width="132" height="20" backcolor="#FFFFFF" uuid="664aa178-e3f0-49c9-b79c-82546f212ea4"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -240,13 +248,6 @@
 					<font fontName="TH SarabunPSK" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Hotel Name]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="255" y="5" width="41" height="26" uuid="5b72e1d1-0abe-468f-bfbc-25493c905fd2"/>
-				<textElement>
-					<font fontName="SansSerif" size="18" isBold="false"/>
-				</textElement>
-				<text><![CDATA[ to]]></text>
 			</staticText>
 		</band>
 	</pageHeader>

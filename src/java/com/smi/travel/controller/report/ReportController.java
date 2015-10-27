@@ -78,7 +78,7 @@ public class ReportController extends SMITravelController {
     private static final String PaymentAirlineListReport = "PaymentAirlineListReport";
     private static final String PaymentTourHotelSummary = "PaymentTourHotelSummary";
     private static final String HotelSummary = "HotelSummary";
-    private static final String HotelMonthly = "HotelMonthly";
+    private static final String HotelMonthlyReport = "HotelMonthlyReport";
     
     private static final String OtherMonthlyReport = "OtherMonthlyReport"; // other
     
@@ -243,7 +243,7 @@ public class ReportController extends SMITravelController {
             data = reportservice.getPaymentTourHotelSummary(from, to, pvtype, status, invSupCode, user.getUsername()+"-"+user.getRole().getName());
         }else if(HotelSummary.equalsIgnoreCase(name)){
             data = reportservice.getHotelSummary(fromHotelSummary, toHotelSummary, departmentHotelSummary);
-        }else if(HotelMonthly.equalsIgnoreCase(name)){
+        }else if(HotelMonthlyReport.equalsIgnoreCase(name)){
             data = reportservice.getHotelMonthly(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser);
         }
         

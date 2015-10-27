@@ -210,12 +210,14 @@
         <bean id="PaymentTourHotelSummary"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/PaymentTourHotelSummary.jrxml"/>
-	</bean>        
+	</bean> 
+               
         <bean id="HotelSummary"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/HotelSummary.jrxml"/>
-	</bean>       
-        <bean id="HotelMonthly"
+	</bean> 
+              
+        <bean id="HotelMonthlyReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/HotelMonthly.jrxml"/>
 	</bean>  
