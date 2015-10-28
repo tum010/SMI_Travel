@@ -1068,7 +1068,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
             cell7.setCellValue(new BigDecimal(listAgent.get(num).getService()).doubleValue());
             cell7.setCellStyle(styleNum);
         HSSFCell cell8 = row.createCell(8);
-            cell8.setCellValue("");
+            cell8.setCellValue(new BigDecimal(listAgent.get(num).getServicevat()).doubleValue());
             cell8.setCellStyle(styleNum);
         HSSFCell cell9 = row.createCell(9);
             cell9.setCellValue(new BigDecimal(listAgent.get(num).getAmountair()).doubleValue());
@@ -1304,7 +1304,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 cell8.setCellValue(!"".equalsIgnoreCase(data.getIns()) ? new BigDecimal(data.getIns()).doubleValue() : 0);
                 cell8.setCellStyle(styleC25);
              HSSFCell cell9 = row.createCell(10);
-                cell9.setCellValue(!"".equalsIgnoreCase(data.getSaleprice()) ? new BigDecimal(data.getSaleprice()).doubleValue() : 0);
+                cell9.setCellValue(!"".equalsIgnoreCase(data.getNetsale()) ? new BigDecimal(data.getNetsale()).doubleValue() : 0);
                 cell9.setCellStyle(styleC25);
              HSSFCell cell10 = row.createCell(11);
                 cell10.setCellValue(!"".equalsIgnoreCase(data.getVat()) ? new BigDecimal(data.getVat()).doubleValue() : 0);
@@ -3029,7 +3029,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         cell151.setCellStyle(styleAlignRight);
                         sheet.autoSizeColumn(0);
                 HSSFCell cell1511 = row15.createCell(1);
-                        cell1511.setCellValue(df.format(sumComPay));
+                        cell1511.setCellValue(df.format(sumComPay.subtract(BigDecimal.ONE)));
                         cell1511.setCellStyle(styleAlignRight);
                         sheet.addMergedRegion(CellRangeAddress.valueOf("B15:D15"));
                         sheet.autoSizeColumn(1);
@@ -3038,7 +3038,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         cell152.setCellStyle(styleAlignRight);
                         sheet.autoSizeColumn(4);
                 HSSFCell cell1521 = row15.createCell(5);
-                        cell1521.setCellValue(df.format(vatComPay));
+                        cell1521.setCellValue(df.format(vatComPay.subtract(BigDecimal.ONE)));
                         cell1521.setCellStyle(styleAlignRight);
                         row15.createCell(7).setCellStyle(styleAlignRightBorderRight);
                         sheet.autoSizeColumn(5);
