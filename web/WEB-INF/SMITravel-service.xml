@@ -172,6 +172,7 @@
         <property name="PackageTourHotelDao" ref="PackageTourHotelDao" />
         <property name="otherMonthlyDao" ref="OtherMonthlyDao" />
         <property name="daytourBookingdao" ref="DaytourBookingDao" />
+        <property name="packageMonthlyDao" ref="PackageMonthlyDao" />
     </bean> 
     
     

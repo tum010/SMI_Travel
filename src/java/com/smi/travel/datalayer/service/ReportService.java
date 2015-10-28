@@ -29,6 +29,7 @@ import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
 import com.smi.travel.datalayer.view.dao.InvoiceSummaryDao;
 import com.smi.travel.datalayer.view.dao.LandVoucherDao;
 import com.smi.travel.datalayer.view.dao.OtherMonthlyDao;
+import com.smi.travel.datalayer.view.dao.PackageMonthlyDao;
 import com.smi.travel.datalayer.view.dao.ReceiptDao;
 import com.smi.travel.datalayer.view.dao.ReceiveListDao;
 import com.smi.travel.datalayer.view.dao.RefundAirReportDao;
@@ -94,6 +95,7 @@ public class ReportService {
     private PackageTourHotelDao packageTourHotelDao;
     private OtherMonthlyDao otherMonthlyDao;
     private DaytourBookingDao daytourBookingdao;
+    private PackageMonthlyDao packageMonthlyDao;
     
     public List getInvoiceMonthly(String BillFrom,String BillTo,String ClientName,String Payment,String Accno,String vattype,String from,String to,String department){
         return invoiceReportDao.getInvoiceMonthly(BillFrom, BillTo, ClientName, Payment, Accno, vattype, from, to, department);
@@ -562,6 +564,12 @@ public class ReportService {
         return data;
     }
     
+    public List getPackageMonthlyReport(String datefrom,String dateto,String department,String detail,String user){
+        List data  = new ArrayList();
+        data.add(packageMonthlyDao.getPackageMonthlyReport(datefrom,dateto,department,detail,user));
+        return data;
+    }
+    
     public SummaryTicketAdjustCostAndIncomeDao getSummaryTicketAdjustCostAndIncomeDao() {
         return summaryTicketAdjustCostAndIncomeDao;
     }
@@ -653,5 +661,13 @@ public class ReportService {
     
     public List getHotelMonthlyDetail(String from,String to ,String department,String detail,String systemuser){
         return packageTourHotelDao.getHotelMonthlyDetail(from, to, department,detail,systemuser);
+    }
+
+    public PackageMonthlyDao getPackageMonthlyDao() {
+        return packageMonthlyDao;
+    }
+
+    public void setPackageMonthlyDao(PackageMonthlyDao packageMonthlyDao) {
+        this.packageMonthlyDao = packageMonthlyDao;
     }
 }
