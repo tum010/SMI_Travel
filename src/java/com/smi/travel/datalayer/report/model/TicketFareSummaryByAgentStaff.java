@@ -34,7 +34,8 @@ public class TicketFareSummaryByAgentStaff {
     private String invdateto;
     private String printon;
     private String termpay;
-
+    
+    private String cost;
     
 
     public String getAgentname() {
@@ -211,6 +212,14 @@ public class TicketFareSummaryByAgentStaff {
 
     public void setTermpay(String termpay) {
         this.termpay = termpay;
+    }
+
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
     }
 
 
