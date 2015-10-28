@@ -125,6 +125,8 @@
                         <th>Remarks</th>
                         <th>Price Room</th>
                         <th>Price addition</th>
+                        <th>Total Cost</th>
+                        <th>Cur</th>
                         <th>Total Price</th>
                         <th>Cur</th>
                         <th>Action</th>
@@ -168,6 +170,8 @@
                     <td>${b.remark}</td>
                     <td class="moneyformat text-right">${b.adult}</td>
                     <td class="moneyformat text-right">${b.child}</td>
+                    <td class="moneyformat text-right">${b.totalcost}</td>
+                    <td class="tdcenter">${b.curCost}</td>
                     <td class="moneyformat text-right">${b.adult + b.child}</td>
                     <td class="tdcenter">${b.curAmount}</td>
                     <td class="text-center">

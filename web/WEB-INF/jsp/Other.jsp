@@ -129,8 +129,10 @@
                             <th colspan="3" >Adult</th>
                             <th colspan="3">Child</th>
                             <th colspan="3">Infant</th>
+                            <th rowspan="2">Cost</th>
                             <th rowspan="2">Cur</th>
-                            <th rowspan="2">Amount</th>
+                            <th rowspan="2">Price</th>
+                            <th rowspan="2">Cur</th>
                             <th rowspan="2">Action</th>
 
                         </tr>
@@ -172,8 +174,10 @@
                                 <td class="tdright moneyformat"> ${table.inCost}</td>
                                 <td class="tdcenter moneyformat"> ${table.inQty}</td>
                                 <td class="tdright moneyformat"> ${table.inPrice }</td>
-                                <td class="tdcenter"> ${table.curAmount}</td>
+                                <td class="tdright moneyformat"> ${(table.adCost * table.adQty) + (table.chCost * table.chQty) + (table.inCost * table.inQty)}</td>
+                                <td class="tdcenter"> ${table.curCost}</td>
                                 <td class="tdright moneyformat"> ${(table.adPrice * table.adQty) + (table.chPrice * table.chQty) + (table.inPrice * table.inQty)}</td>
+                                <td class="tdcenter"> ${table.curAmount}</td>
                                 <td> 
                                     <center> 
                                         <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&itemid=${table.id}&action=edit&callPageFrom=FromOther"><span class="glyphicon glyphicon-edit editicon"      onclick="" ></span></a>

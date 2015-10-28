@@ -317,6 +317,9 @@ function addRowRefundAirlineList() {
                                         $("#total" + row).html(fare.Total);
                                         $("#department" + row).html(fare.Dept);
                                         $("#passsenger" + row).html(fare.Passenger);
+                                        document.getElementById("refundBy").value = fare.InvTo;
+                                        document.getElementById("refundByName").value = fare.InvName;
+                                        
                                         var counter = $('#RefundAirlineTable tbody tr').length / 2;
                                         if (row === counter) {
                                             addRowRefundAirlineList();
