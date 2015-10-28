@@ -957,6 +957,12 @@ public class BillableImpl implements BillableDao {
                 }else{
                      description += " |";
                 }
+                
+                if(list.get(i).getProduct().getCode() != null){ // Product code
+                    description += ""+list.get(i).getProduct().getCode() +"|";
+                }else{
+                    description += " |";
+                }
             }
         }
         session.close();

@@ -1158,7 +1158,7 @@ public class AJAXBean extends AbstractBean implements
                     System.out.println("displaydesTemp" + displaydesTemp);
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
                         String[] parts = displaydesTemp.split("\\|");
-                        displaydescription += parts[4] + " : " + parts[5];
+                        displaydescription += parts[9] + " : " + parts[4] + " : " + parts[5];
 
                     }
                 }
@@ -1172,7 +1172,7 @@ public class AJAXBean extends AbstractBean implements
                     displaydesTemp = billableDao.getDescriptionInvoiceDayTourFromRefId(refItemId);
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
                         String[] parts = displaydesTemp.split("\\|");
-                        displaydescription += parts[5] + " : " + parts[6];
+                        displaydescription += parts[4] + " : " + parts[5] + " : " + parts[6];
                         System.out.println("displaydescription" + displaydescription);
                     }
                 }
@@ -1187,7 +1187,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='" + arcode + "'>"
                         + "<input type='hidden' name='invoiceId' id='invoiceId' value='" + invoice.getId() + "'>"
                         + "<td class='text-center'>" + No + "</td>"
-                        + "<td>" + description + "</td>"
+                        + "<td>" + displaydescription + "</td>"
                         + "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
                         + "<td><center><a href=\"#/inv\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','" + isVat + "','" + vat + "','" + amount + "','" + currency + "','" + invId + "','','','','1','" + displaydescription + "','" + invNo + "' )\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
@@ -1284,8 +1284,8 @@ public class AJAXBean extends AbstractBean implements
                     displaydescription += billTypeName + " #-- ";
                     displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
-                    String[] parts = displaydesTemp.split("\\|");
-                        displaydescription += parts[4] + " : " + parts[5];
+                        String[] parts = displaydesTemp.split("\\|");
+                        displaydescription += parts[9] + " : " + parts[4] + " : " + parts[5];
                     }
                 }
             } else if ("3".equals(product)) {
@@ -1298,7 +1298,7 @@ public class AJAXBean extends AbstractBean implements
                     displaydesTemp = billableDao.getDescriptionInvoiceDayTourFromRefId(refItemId);
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
                         String[] parts = displaydesTemp.split("\\|");
-                        displaydescription += parts[5] + " : " + parts[6];
+                        displaydescription += parts[4] + " : " + parts[5] + " : " + parts[6];
                     }
                 }
             }
@@ -1314,7 +1314,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<input type='hidden' name='arcodeBillable' id='arcodeBillable' value='" + arcode + "'>"
                         + "<input type='hidden' name='mAccPayBillable' id='mAccPayBillable' value='" + mAccPay + "'>"
                         + "<td class='text-center'>" + No + "</td>"
-                        + "<td>" + description + "</td>"
+                        + "<td>" + displaydescription + "</td>"
                         + "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
                         + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + currency + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
