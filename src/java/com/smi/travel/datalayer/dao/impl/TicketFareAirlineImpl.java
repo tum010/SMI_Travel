@@ -733,7 +733,18 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             Initialname = ticketFare.getMInitialname().getName();
         }
         //AirticketPassenger.airticketAirline.airticketPnr.airticketBooking.master.bookingType
-
+        String queryrefundby = "from TicketFareInvoice finv where finv.ticketFareAirline.ticketNo = :ticketno";
+        List<TicketFareInvoice> ticketFareInvoices = session.createQuery(queryrefundby).setParameter("ticketno", TicketNo).list();
+        String invTo = "";
+        String invName = "";
+        if (ticketFareInvoices.isEmpty()){
+            System.out.println(" ticketFareInvoices isEmpty ");
+        }else{
+            if(ticketFareInvoices.get(0).getInvoice() != null){
+                invTo =  String.valueOf(ticketFareInvoices.get(0).getInvoice().getInvTo());
+                invName = String.valueOf(ticketFareInvoices.get(0).getInvoice().getInvName());
+            }
+        }
         
         String BookingType = "";
         if(ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null){
@@ -778,6 +789,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         result.put("Passenger", Initialname+" " + ticketFare.getLastName() +" "+ticketFare.getFirstName());
         result.put("Total", price+ticketFare.getTicketTax());
         result.put("Sector", rounting);
+        result.put("InvTo", invTo);
+        result.put("InvName", invName);
         session.close();
         this.sessionFactory.close();
         return result;
