@@ -317,12 +317,12 @@ public class DaytourBookingImpl implements DaytourBookingDao {
         List data = new ArrayList();
         
         boolean condition = false;
-        String query = "SELECT db.tour_id AS tourid, dt.`code` AS tourcode, dt.`name` AS tourname, db.tour_date AS tourdate, db.adult AS ad, db.child AS ch, "
-                + "db.infant AS Inf, sum(dp.price * dp.qty) AS sell, sum( ifnull( GET_COST_DAYTOUR_FROM_TOURDATE (db.tour_id, db.tour_date), 0 )) AS net, "
-                + "sum(dp.price * dp.qty) - sum( ifnull( GET_COST_DAYTOUR_FROM_TOURDATE (db.tour_id, db.tour_date), 0 )) AS balance, "
-                + "round(( sum(dp.price * dp.qty) - sum( ifnull( GET_COST_DAYTOUR_FROM_TOURDATE (db.tour_id, db.tour_date), 0 ))) / ( db.adult + db.child + db.infant ), 2 ) AS average "
-                + "FROM `daytour_booking` db INNER JOIN daytour dt ON dt.id = db.tour_id INNER JOIN daytour_booking_price dp ON dp.daytour_booking_id = db.id "
-                + "JOIN `master` `mt` ON (`mt`.`id` = `db`.`master_id`) ";
+        String query = "SELECT db.tour_id AS tourid, dt.`code` AS tourcode, dt.`name` AS tourname, db.tour_date AS tourdate, sum(db.adult) AS ad, "
+                + "sum(db.child) AS ch, sum(db.infant) AS Inf, GET_PRICE_DAYTOUR_BOOK (db.id) AS sell, "
+                + "sum( ifnull( GET_COST_DAYTOUR_FROM_TOURDATE (db.tour_id, db.tour_date), 0 )) AS net, "
+                + "GET_PRICE_DAYTOUR_BOOK (db.id) - sum( ifnull( GET_COST_DAYTOUR_FROM_TOURDATE (db.tour_id, db.tour_date), 0 )) AS balance, "
+                + "round(( GET_PRICE_DAYTOUR_BOOK (db.id) - sum( ifnull( GET_COST_DAYTOUR_FROM_TOURDATE (db.tour_id, db.tour_date), 0 ))) / ( db.adult + db.child + db.infant ), 2 ) AS average "
+                + "FROM `daytour_booking` db INNER JOIN daytour dt ON dt.id = db.tour_id JOIN `master` `mt` ON (`mt`.`id` = `db`.`master_id`) ";
                
         if((!"".equalsIgnoreCase(from)) && (from != null)){
             query += (condition ? " AND " : " WHERE "); 
