@@ -131,6 +131,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             String salebyUsers = request.getParameter("salebyUser");
             String termPays = request.getParameter("termPay");
             String paymentTypes = request.getParameter("paymentType");
+            System.out.println("termPays : "+termPays);
             data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays,printby,paymentTypes);
         }else if(ChangeARReport.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
@@ -146,8 +147,10 @@ public class ExportDataToExcelController  extends SMITravelController{
             String refundTo = request.getParameter("refundTo");
             String departments = request.getParameter("department");
             String salebyUsers = request.getParameter("salebyUser");
-            String termPays = request.getParameter("termPay");
+            String termPays = "";
             String paymentTypes = request.getParameter("paymentType");
+            System.out.println("termPays : "+termPays);
+           
             data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays, printby,paymentTypes);
         }else if(CollectionReport.equalsIgnoreCase(name)){
             //Collectipn Report
