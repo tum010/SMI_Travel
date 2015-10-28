@@ -31,6 +31,7 @@ public class HotelBooking  {
      private Date deadline;
      private String curAmount;
      private String curCost;
+     private Integer totalcost;
      private List hotelPassengers = new LinkedList<HotelPassenger>();
      private List hotelRooms = new LinkedList<HotelRoom>();
      private List hotelRequests = new LinkedList<HotelRequest>();
@@ -232,6 +233,14 @@ public class HotelBooking  {
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
+    }
+
+    public Integer getTotalcost() {
+        return totalcost;
+    }
+
+    public void setTotalcost(Integer totalcost) {
+        this.totalcost = totalcost;
     }
 
 

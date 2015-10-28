@@ -172,8 +172,10 @@
                         <th style="width:15%" colspan="3">Adult</th>
                         <th style="width:15%" colspan="3">Child</th>
                         <th style="width:15%" colspan="3">Infant</th>
+                        <th style="width:10%" rowspan="2">Cost</th>
                         <th style="width:8%" rowspan="2">Cur</th>
-                        <th style="width:10%" rowspan="2">Amount</th>
+                        <th style="width:10%" rowspan="2">Price</th>
+                        <th style="width:8%" rowspan="2">Cur</th>
                         <th style="width:8%" rowspan="2">Action</th>
                     </tr>
                     <tr>
@@ -215,11 +217,16 @@
                             <td class="tdright moneyformat"> ${table.inCost}</td>
                             <td class="tdcenter moneyformat"> ${table.inQty}</td>
                             <td class="tdright moneyformat"> ${table.inPrice}</td>
-                            <td class="tdcenter">${table.curAmount}</td>
+                            <td class="tdright moneyformat"> ${(table.adCost * table.adQty) + 
+                                                               (table.chCost * table.chQty) + 
+                                                               (table.inCost * table.inQty)}
+                            </td>
+                            <td class="tdcenter">${table.curCost}</td>
                             <td class="tdright moneyformat"> ${(table.adPrice * table.adQty) + 
                                                                (table.chPrice * table.chQty) + 
                                                                (table.inPrice * table.inQty)}
                             </td>
+                            <td class="tdcenter">${table.curAmount}</td>
                             <td>
                     <center> 
                         <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&itemid=${table.id}&action=edit&callPageFrom=FromDayTour"><span class="glyphicon glyphicon-edit editicon"      onclick="" ></span></a>

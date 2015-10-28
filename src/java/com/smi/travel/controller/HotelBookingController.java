@@ -75,6 +75,7 @@ public class HotelBookingController extends SMITravelController {
         UtilityFunction util = new UtilityFunction();
         for (int i = 0; i < hotelBookingList.size(); i++) {
             int sumRoom = 0, sumReuest = 0;
+            int sumRoomCost = 0, sumReuestCost = 0;
             int Nonight = 0;
             HotelBooking hotelList = hotelBookingList.get(i);
             Nonight =util.getDateDiff(hotelList.getCheckin(), hotelList.getCheckout());
@@ -82,15 +83,17 @@ public class HotelBookingController extends SMITravelController {
             for (int j = 0; j < hotelRoom.size(); j++) {
                 HotelRoom room = hotelRoom.get(j);
                 sumRoom += (room.getPrice() *room.getQty() * Nonight);
-                
+                sumRoomCost += (room.getCost()*room.getQty() * Nonight);
             }
             hotelBookingList.get(i).setAdult(sumRoom);
             List<HotelRequest> hotelRequests = new ArrayList<HotelRequest>(hotelList.getHotelRequests());
             for (int j = 0; j < hotelRequests.size(); j++) {
                 HotelRequest hr = hotelRequests.get(j);
                 sumReuest += hr.getPrice();
+                sumReuestCost += hr.getCost();
             }
             hotelBookingList.get(i).setChild(sumReuest);
+            hotelBookingList.get(i).setTotalcost(sumRoomCost + sumReuestCost);
 
         }
     }
