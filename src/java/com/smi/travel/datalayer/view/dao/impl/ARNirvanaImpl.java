@@ -513,7 +513,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 }else{
                     cell.setCellValue(ar.getPeriod());
                 }
-                ce
+                
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ar.getNote());
                 cell = dataRow.createCell(cellnum++);
