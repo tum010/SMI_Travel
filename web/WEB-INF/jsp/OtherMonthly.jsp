@@ -175,6 +175,7 @@
             
             $('#DateFrom').datetimepicker().on('dp.change', function (e) {
                 $('#OtherMonthlyFrom').bootstrapValidator('revalidateField', 'fromdate');
+                $('#OtherMonthlyFrom').bootstrapValidator('revalidateField', 'todate');
                 var fromdate = document.getElementById("fromdate").value;
                 var todate = document.getElementById("todate").value;
                 if(((fromdate !== '') && (todate !== '')) && fromdate < todate){
@@ -186,6 +187,7 @@
                 }
             });
             $('#DateTo').datetimepicker().on('dp.change', function (e) {
+                $('#OtherMonthlyFrom').bootstrapValidator('revalidateField', 'fromdate');
                 $('#OtherMonthlyFrom').bootstrapValidator('revalidateField', 'todate');
                 var fromdate = document.getElementById("fromdate").value;
                 var todate = document.getElementById("todate").value;
@@ -208,12 +210,15 @@
         if(((fromdate !== '') && (todate !== '')) && fromdate < todate){
             $("#printbutton").removeClass("disabled");
             window.open("report.smi?name=OtherMonthlyReport"+"&fromdate="+fromdate+"&todate="+todate+"&department="+department+"&detail="+detail);  
-        }else{
+        }else if((((fromdate !== '') && (todate !== '')) && fromdate === todate)) {
+            $("#printbutton").removeClass("disabled");
+            window.open("report.smi?name=OtherMonthlyReport"+"&fromdate="+fromdate+"&todate="+todate+"&department="+department+"&detail="+detail);  
+        }else {
             $('#OtherMonthlyFrom').bootstrapValidator('revalidateField', 'fromdate');
             $('#OtherMonthlyFrom').bootstrapValidator('revalidateField', 'todate');
             $("#printbutton").addClass("disabled");
         }
-        
+       
     }
     
     
