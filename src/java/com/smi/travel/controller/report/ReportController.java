@@ -85,7 +85,7 @@ public class ReportController extends SMITravelController {
     
     private static final String OtherMonthlyReport = "OtherMonthlyReport"; // Other
     private static final String DailyTourReport = "DailyTourReport";
-    private static final String PackageMonthlyReport = "PackageMonthlyReport"; //PackageMonthly
+    private static final String PackageSummaryReport = "PackageSummaryReport"; //PackageMonthly
     
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -265,7 +265,7 @@ public class ReportController extends SMITravelController {
             String detail = request.getParameter("detail");
             data = reportservice.getDailyTourReport(from,to,department,detail,user.getUsername()+" - "+user.getRole().getName());
             ((DailyTourReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
-        }else if(PackageMonthlyReport.equalsIgnoreCase(name)){
+        }else if(PackageSummaryReport.equalsIgnoreCase(name)){
             String datefrom = request.getParameter("fromdate");
             String dateto = request.getParameter("todate");
             String detail = request.getParameter("detail");
