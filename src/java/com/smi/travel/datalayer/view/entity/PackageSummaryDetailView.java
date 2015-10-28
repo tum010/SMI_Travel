@@ -5,6 +5,8 @@
  */
 package com.smi.travel.datalayer.view.entity;
 
+import net.sf.jasperreports.engine.JRDataSource;
+
 /**
  *
  * @author Jittima
@@ -25,6 +27,8 @@ public class PackageSummaryDetailView {
     private String grouptour;
     private String department;
     private String createdate;
+    private String subReportDir;
+    private JRDataSource packageHotelSubReportDataSource;
 
     public String getPackagedate() {
         return packagedate;
@@ -128,5 +132,33 @@ public class PackageSummaryDetailView {
 
     public void setCreatedate(String createdate) {
         this.createdate = createdate;
+    }
+
+    /**
+     * @return the subReportDir
+     */
+    public String getSubReportDir() {
+        return subReportDir;
+    }
+
+    /**
+     * @param subReportDir the subReportDir to set
+     */
+    public void setSubReportDir(String subReportDir) {
+        this.subReportDir = subReportDir;
+    }
+
+    /**
+     * @return the packageHotelSubReportDataSource
+     */
+    public JRDataSource getPackageHotelSubReportDataSource() {
+        return packageHotelSubReportDataSource;
+    }
+
+    /**
+     * @param packageHotelSubReportDataSource the packageHotelSubReportDataSource to set
+     */
+    public void setPackageHotelSubReportDataSource(JRDataSource packageHotelSubReportDataSource) {
+        this.packageHotelSubReportDataSource = packageHotelSubReportDataSource;
     }
 }

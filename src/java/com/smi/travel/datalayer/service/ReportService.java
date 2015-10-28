@@ -564,9 +564,9 @@ public class ReportService {
         return data;
     }
     
-    public List getPackageMonthlyReport(String datefrom,String dateto,String department,String detail,String user){
+    public List getPackageMonthlyReport(String datefrom,String dateto,String department,String detail,String user,String url){
         List data  = new ArrayList();
-        data.add(packageMonthlyDao.getPackageMonthlyReport(datefrom,dateto,department,detail,user));
+        data.add(packageMonthlyDao.getPackageMonthlyReport(datefrom,dateto,department,detail,user,url));
         return data;
     }
     

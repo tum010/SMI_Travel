@@ -10,9 +10,11 @@ import com.smi.travel.datalayer.view.dao.PackageMonthlyDao;
 import com.smi.travel.datalayer.view.entity.OtherMonthlyView;
 import com.smi.travel.datalayer.view.entity.PackageMonthlyView;
 import com.smi.travel.datalayer.view.entity.PackageSummaryDetailView;
+import com.smi.travel.datalayer.view.entity.PackageSummaryHotelView;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -47,7 +49,7 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
     }
 
     @Override
-    public PackageMonthlyReport getPackageMonthlyReport(String datefrom, String dateto, String department, String detail, String user) {
+    public PackageMonthlyReport getPackageMonthlyReport(String datefrom, String dateto, String department, String detail, String user,String url) {
         UtilityFunction util = new UtilityFunction();
         PackageMonthlyReport packageMonthly = new PackageMonthlyReport();
         SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -63,7 +65,7 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
         packageMonthly.setPackageMonthlyListReportDataSource(new JRBeanCollectionDataSource(getPackageMonthlyList(datefrom,dateto,department,detail)));
         
         if("1".equalsIgnoreCase(detail)){
-            packageMonthly.setPackageMonthlyDetailReportDataSource(new JRBeanCollectionDataSource(getPackageMonthlyDetail(datefrom,dateto,department,detail)));
+            packageMonthly.setPackageMonthlyDetailReportDataSource(new JRBeanCollectionDataSource(getPackageMonthlyDetail(datefrom,dateto,department,detail,url)));
         }else{
             packageMonthly.setPackageMonthlyDetailReportDataSource(null);
         }
@@ -119,7 +121,7 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
     }
     
         
-    public List getPackageMonthlyDetail(String datefrom,String dateto,String department,String detail) {
+    public List getPackageMonthlyDetail(String datefrom,String dateto,String department,String detail,String url) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList();
@@ -176,11 +178,23 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
             packageSum.setLeadername(B[8]== null ? "" :util.ConvertString(B[8]));
             packageSum.setBookpax(B[9]== null ? "" :util.ConvertString(B[9]));
             packageSum.setGrouptour(B[10]== null ? "" :util.ConvertString(B[10]));
+            packageSum.setSubReportDir("C:\\Users\\chonnasith\\Documents\\NetBeansProjects\\SMI_Travel\\build\\web\\WEB-INF\\report");
+            packageSum.setPackageHotelSubReportDataSource(new JRBeanCollectionDataSource(test()));
             data.add(packageSum);
         }
+        
+        
     
         this.sessionFactory.close();
         session.close();
+        return data;
+    }
+
+    private List test() {
+        List data = new ArrayList();
+        PackageSummaryHotelView packageSum = new PackageSummaryHotelView();
+        packageSum.setName("250001");
+        data.add(packageSum);
         return data;
     }
 }

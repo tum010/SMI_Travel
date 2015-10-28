@@ -12,5 +12,5 @@ import com.smi.travel.datalayer.report.model.PackageMonthlyReport;
  * @author Jittima
  */
 public interface PackageMonthlyDao {
-    public PackageMonthlyReport getPackageMonthlyReport(String datefrom,String dateto,String department,String detail,String user);
+    public PackageMonthlyReport getPackageMonthlyReport(String datefrom,String dateto,String department,String detail,String user,String url);
 }

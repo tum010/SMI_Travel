@@ -14,6 +14,7 @@ import com.smi.travel.datalayer.report.model.PackageMonthlyReport;
 import com.smi.travel.datalayer.report.model.PaymentAirline;
 import com.smi.travel.datalayer.report.model.TicketOrder;
 import com.smi.travel.datalayer.service.ReportService;
+import com.smi.travel.datalayer.view.entity.PackageSummaryDetailView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.util.ArrayList;
@@ -269,8 +270,8 @@ public class ReportController extends SMITravelController {
             String datefrom = request.getParameter("fromdate");
             String dateto = request.getParameter("todate");
             String detail = request.getParameter("detail");
-            data = reportservice.getPackageMonthlyReport(datefrom,dateto,department,detail,user.getRole().getName());
-            ((PackageMonthlyReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
+            data = reportservice.getPackageMonthlyReport(datefrom,dateto,department,detail,user.getRole().getName(),getServletContext().getRealPath("/WEB-INF/report/"));
+            ((PackageMonthlyReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));         
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

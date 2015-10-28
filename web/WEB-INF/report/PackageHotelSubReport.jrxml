@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PackageHotelSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="2" bottomMargin="2" uuid="3b2af3aa-9f6d-49a3-9041-44d1188765a9">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="REFNO_MASTER" class="java.lang.String">
+		<defaultValueExpression><![CDATA[$P{REFNO_MASTER}]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     hotel_booking_view.`name` AS name
+FROM
+     `hotel_booking_view` hotel_booking_view
+WHERE
+     hotel_booking_view.`refno` = $P{REFNO_MASTER}]]>
+	</queryString>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<rectangle radius="7">
+				<reportElement mode="Transparent" x="0" y="16" width="555" height="16" uuid="47fe968e-4013-48cf-a25c-c08c65085375"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="0" width="36" height="16" uuid="ded7e7ee-41fd-4b38-a177-3830e4ffd393"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HOTEL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="16" width="36" height="16" uuid="a6ac54c7-006c-4af9-b98a-0af01ca81e31"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="89" y="16" width="72" height="16" uuid="37060e8c-2abb-4a6d-bc9d-d80b3f335fcb"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CHECK IN - OUT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="16" width="36" height="16" uuid="67a26ca7-b3db-4fac-9348-c69ce70646a9"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ROOM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="411" y="16" width="21" height="16" uuid="83e2edbb-2571-4e55-aa90-3406e35b0ee2"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NET]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="479" y="16" width="36" height="16" uuid="78c1b056-0d2a-4a90-98b8-22377949a53e"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRICE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="132" y="-34" width="100" height="17" uuid="e3e85e38-369c-473e-82bf-90e46e1c8afb"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{REFNO_MASTER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

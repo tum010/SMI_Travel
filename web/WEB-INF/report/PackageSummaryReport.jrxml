@@ -87,6 +87,9 @@
 		<band height="137" splitType="Stretch">
 			<subreport>
 				<reportElement x="0" y="0" width="595" height="55" uuid="584a7951-3583-49ac-bf1b-eefc48299f2b"/>
+				<subreportParameter name="SYSTEM_DATE">
+					<subreportParameterExpression><![CDATA[$F{systemdate}]]></subreportParameterExpression>
+				</subreportParameter>
 				<dataSourceExpression><![CDATA[$F{packageMonthlyListReportDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/PackageListSubReport.jasper"]]></subreportExpression>
 			</subreport>
