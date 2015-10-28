@@ -462,7 +462,11 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ar.getTransdate());
                 cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ar.getDuedate());
+                if(ar.getDuedate() == null){
+                    cell.setCellValue("");
+                }else{
+                    cell.setCellValue(ar.getDuedate());
+                }
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ar.getCurrencyid());
                 cell = dataRow.createCell(cellnum++);
@@ -498,9 +502,18 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(UtilityFunction.getObjectString(ar.getWhthmamt()));
                 cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ar.getYear());
+                if(ar.getYear() == null){
+                    cell.setCellValue("");
+                }else{
+                    cell.setCellValue(ar.getYear());
+                }
                 cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ar.getPeriod());
+                if(ar.getPeriod() == null){
+                    cell.setCellValue("");
+                }else{
+                    cell.setCellValue(ar.getPeriod());
+                }
+                ce
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ar.getNote());
                 cell = dataRow.createCell(cellnum++);
