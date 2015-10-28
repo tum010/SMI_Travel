@@ -1,27 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PackageSummaryReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b3fa3595-8123-44fe-bd95-906352e77f2d">
-	<background>
-		<band splitType="Stretch"/>
-	</background>
-	<title>
-		<band height="79" splitType="Stretch"/>
-	</title>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PackageSummaryReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="b3fa3595-8123-44fe-bd95-906352e77f2d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="packageMonthlyListReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="packageMonthlyDetailReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="subReportDir" class="java.lang.String"/>
+	<field name="fromto" class="java.lang.String"/>
+	<field name="systemdate" class="java.lang.String"/>
+	<field name="user" class="java.lang.String"/>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="72" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="554" y="55" width="18" height="15" uuid="7f6c46ca-a41f-4d4c-bae6-ee0c69e541f2"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="251" y="0" width="268" height="27" uuid="817083bc-5ecf-4e11-9e46-d8447e649b35"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fromto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="449" y="28" width="44" height="14" uuid="1ad7fb67-a82a-4ba0-a062-a5e5b78ae54e"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Print Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="449" y="42" width="44" height="14" uuid="803e8067-d862-469a-8fab-159ba76ea1c7"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Print by :]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="498" y="26" width="83" height="15" uuid="a0b8f143-285a-445a-b8b8-e08c33ceb90b"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="50" y="0" width="185" height="27" uuid="f7a50750-f595-466e-a955-88d11ef07203"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="20"/>
+				</textElement>
+				<text><![CDATA[Package Report]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="498" y="40" width="84" height="14" uuid="2a4e5302-1181-475b-9258-47d3732e1b13"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="537" y="54" width="18" height="14" uuid="8890d5fb-9d64-4774-aa3f-1b7b49f99a63"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[of]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="509" y="55" width="22" height="15" uuid="eaf6beff-91ee-4179-9081-3a4559b1680d"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="463" y="56" width="30" height="14" uuid="cb8bed1d-06c4-4ae5-a960-3948fe32f2f6"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Page :]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
-	<columnHeader>
-		<band height="61" splitType="Stretch"/>
-	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="137" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="595" height="55" uuid="584a7951-3583-49ac-bf1b-eefc48299f2b"/>
+				<dataSourceExpression><![CDATA[$F{packageMonthlyListReportDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/PackageListSubReport.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="68" width="100" height="1" uuid="ad25e569-20c5-48fd-be85-33300e2c03c0">
+					<printWhenExpression><![CDATA[$F{packageMonthlyDetailReportDataSource} != null]]></printWhenExpression>
+				</reportElement>
+			</break>
+			<subreport>
+				<reportElement x="-1" y="81" width="596" height="55" uuid="3025d90a-e3b9-4630-8208-3a830e72583f"/>
+				<dataSourceExpression><![CDATA[$F{packageMonthlyDetailReportDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/PackageDetailSubReport.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>
