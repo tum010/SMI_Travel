@@ -3029,7 +3029,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         cell151.setCellStyle(styleAlignRight);
                         sheet.autoSizeColumn(0);
                 HSSFCell cell1511 = row15.createCell(1);
-                        cell1511.setCellValue(df.format(sumComPay.subtract(BigDecimal.ONE)));
+                        cell1511.setCellValue(df.format(sumComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE))));
                         cell1511.setCellStyle(styleAlignRight);
                         sheet.addMergedRegion(CellRangeAddress.valueOf("B15:D15"));
                         sheet.autoSizeColumn(1);
@@ -3038,7 +3038,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         cell152.setCellStyle(styleAlignRight);
                         sheet.autoSizeColumn(4);
                 HSSFCell cell1521 = row15.createCell(5);
-                        cell1521.setCellValue(df.format(vatComPay.subtract(BigDecimal.ONE)));
+                        cell1521.setCellValue(df.format(vatComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE))));
                         cell1521.setCellStyle(styleAlignRight);
                         row15.createCell(7).setCellStyle(styleAlignRightBorderRight);
                         sheet.autoSizeColumn(5);
