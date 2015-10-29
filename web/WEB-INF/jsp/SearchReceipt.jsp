@@ -6,6 +6,7 @@
 <c:set var="receiptSearchList" value="${requestScope['receiptSearchList']}" />
 <c:set var="callPage" value="${requestScope['callPage']}" />
 <c:set var="mFinanceItemStatus_List" value="${requestScope['mFinanceItemStatus_List']}" />
+
 <section class="content-header" >
     <h1>
         Finance & Cashier - Receipt
@@ -92,21 +93,14 @@
                     <div class="col-xs-1 text-right" style="width: 40px">
                         <label class="control-label text-right">Type </label>
                     </div>
-                    <div class="col-xs-1" style="width: 100px">
+                    <div class="col-xs-1" style="width: 100px"  id="classHideTemp">
                         <select id="recType" name="recType" class="form-control selectize">
-                            <option value="">----</option> 
-                             <c:choose>
-                                <c:when test="${requestScope['recType'] == 'T'}">
-                                    <c:set var="selectedTemp" value="selected" />
-                                </c:when>
-                            </c:choose>
-                            <option value="T" ${selectedTemp}>Temp</option>
-                            <c:choose>
-                                <c:when test="${requestScope['recType'] == 'V'}">
-                                    <c:set var="selectedVat" value="selected" />
-                                </c:when>
-                            </c:choose>
                             <option value="V" ${selectedVat}>Vat</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-1" style="width: 100px"  id="classShowTemp" hidden="">
+                        <select id="recType" name="recType" class="form-control selectize">
+                            <option value="T" ${selectedTemp}>Temp</option>
                         </select>
                     </div>
                     <div class="col-xs-1 text-right" style="width: 40px">

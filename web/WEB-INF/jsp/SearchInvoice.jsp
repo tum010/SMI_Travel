@@ -142,7 +142,7 @@
                             <option value="A" ${accountSelectedA}>Ticket</option>
                         </select>    
                     </div>
-                        <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px" id="classShowTemp" hidden="">
+                    <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px" id="classShowTemp" hidden="">
                         <select class="form-control" id="Type" name="Type">   
                             <option value="T" ${accountSelectedT}>Temp</option>
                         </select>    

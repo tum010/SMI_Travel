@@ -55,6 +55,7 @@ public class ReceiptController extends SMITravelController {
     private static final String DELETERESULT = "deleteresult";
     private static final String SEARCHRECEIPT = "searchReceipt";
     private static final String RECEIVEDATE = "receiveDate";
+    private static final String INVIDLIST = "invoiceIdList";
     private UtilityService utilityService;
     private ReceiptService receiptService;
     private InvoiceService invoiceService;
@@ -147,8 +148,17 @@ public class ReceiptController extends SMITravelController {
                         List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
                         request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
                         request.setAttribute(RECEIPTCREDITLIST,receiptCreditList);
+                        List<ReceiptDetail> recInvId = new ArrayList<ReceiptDetail>();
                         if(receiptDetailList != null){
-                        request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
+                            for(int i = 0 ;i < receiptDetailList.size();i++){
+                                ReceiptDetail receiptD = new ReceiptDetail();
+                                receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
+                                receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
+                                receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
+                                recInvId.add(receiptD);
+                            }
+                            request.setAttribute(INVIDLIST, recInvId);
+                            request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
                         }
                         if(receiptCreditList != null){
                         request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);

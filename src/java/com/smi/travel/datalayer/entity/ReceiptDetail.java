@@ -25,7 +25,10 @@ public class ReceiptDetail {
      private String curAmount;
      private String airlineCode;
      private String remark;
-
+     private String invoiceId;
+     private String invoiceNo;
+     private String invoiceType;
+     
     public ReceiptDetail() {
     }
 
@@ -150,6 +153,30 @@ public class ReceiptDetail {
     
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getInvoiceId() {
+        return invoiceId;
+    }
+
+    public void setInvoiceId(String invoiceId) {
+        this.invoiceId = invoiceId;
+    }
+
+    public String getInvoiceNo() {
+        return invoiceNo;
+    }
+
+    public void setInvoiceNo(String invoiceNo) {
+        this.invoiceNo = invoiceNo;
+    }
+
+    public String getInvoiceType() {
+        return invoiceType;
+    }
+
+    public void setInvoiceType(String invoiceType) {
+        this.invoiceType = invoiceType;
     }
 
 

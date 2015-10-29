@@ -425,8 +425,8 @@ import org.hibernate.Transaction;
         if(list.isEmpty()){
             return null;
         }
-        session.close();
-        this.sessionFactory.close();
+//        session.close();
+//        this.sessionFactory.close();
         return list;
     }
 
