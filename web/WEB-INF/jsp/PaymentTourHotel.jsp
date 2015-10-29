@@ -359,19 +359,21 @@
                         <thead class="datatable-header">
                             <tr>
                                 <th class="hidden">Id</th>
-                                <th style="width: 12%">Product</th>
+                                <th style="width: 11%">Product</th>
                                 <th style="width: 8%">Ref No</th>
                                 <th style="width: 9%">Inv No</th>
-                                <th style="width: 9%">Code</th>
+                                <th style="width: 13%">Inv Date</th>
                                 <th style="width: 8%">Type</th>
-                                <th style="width: 12%">Amount</th>
-                                <th style="width: 12%">Comm</th>
-                                <th style="width: 14%">Description</th>
+                                <th style="width: 11%">Amount</th>
+                                <th style="width: 11%">Comm</th>
+                                <th style="width: 13%">Description</th>
                                 <th style="width: 7%">A/C</th>
                                 <th style="width: 6%">Action</th>
                                 <th class="hidden">Export Date</th>
                                 <th class="hidden">Is Export</th>
                                 <th class="hidden">Is Ex Inv</th>
+                                <th class="hidden">Tour Id</th>
+                                <th class="hidden">Tour Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -392,7 +394,12 @@
                                     </td>
                                     <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.master.referenceNo}" onfocusout="checkRefNo('${i.count}')"> </td>
                                     <td> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}">  </td>
-                                    <td> <input style="width: ${Code}" id="code${i.count}" name="code${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.refCode}">  </td>
+                                    <td>
+                                        <div class="input-group daydatepicker" id="daydatepicker${i.count}">
+                                            <input type="text" name="invDate${i.count}" id="invDate${i.count}" class="form-control datemask" data-date-format="YYYY-MM-DD" value="${pl.invDate}" />
+                                            <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
+                                        </div>
+                                    </td>
                                     <td class="center">
                                         <c:set var="type1" value="" />
                                         <c:if test="${'T' == pl.amountType}">
@@ -457,18 +464,20 @@
                                 <th style="width: 8%">Product</th>
                                 <th style="width: 6%">Ref No</th>
                                 <th style="width: 6%">Inv No</th>
-                                <th style="width: 6%">Code</th>
+                                <th style="width: 9%">Inv Date</th>
                                 <th style="width: 2%">Type</th>
                                 <th style="width: 5%" onclick="checkVatAll()"><u>Is vat</u></th>
                                 <th style="width: 5%">Vat</th>
                                 <th style="width: 11%">Gross</th>
                                 <th style="width: 11%">Amount</th>
                                 <th style="width: 11%">Comm</th>
-                                <th style="width: 16%">Description</th>
+                                <th style="width: 14%">Description</th>
                                 <th style="width: 4%">A/C</th>
                                 <th style="width: 1%">Action</th>
                                 <th class="hidden">Export Date</th>
                                 <th class="hidden">Is Export</th>
+                                <th class="hidden">Tour Id</th>
+                                <th class="hidden">Tour Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -492,8 +501,8 @@
                                     <td class="hidden"> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.master.referenceNo}"> </td>
                                     <td align="center">${pl.invoiceCreditor}</td>
                                     <td class="hidden"> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}">  </td>
-                                    <td align="center">${pl.refCode}</td>
-                                    <td class="hidden"> <input style="width: ${Code}" id="code${i.count}" name="code${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.refCode}">  </td>
+                                    <td align="center">${pl.invDate}</td>
+                                    <td class="hidden"> <input id="invDate${i.count}" name="invDate${i.count}" type="text" class="form-control" value="${pl.invDate}">  </td>
                                     <td align="center">${pl.amountType}</td>
                                     <td class="hidden">
                                         <c:set var="type1" value="" />
@@ -777,6 +786,11 @@
     $(document).ready(function () {
         $('.date').datetimepicker();
         $('.datemask').mask('0000-00-00');
+        $('.spandate').click(function() {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+        });
         
         $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
@@ -924,6 +938,10 @@
                 }
             });
         }
+        
+        $(".daydatepicker").datetimepicker({
+            pickTime: false
+        });
            
         $("#PaymentHotelTable").on("change", "select:last", function () {
             var row = parseInt($("#counter").val());
@@ -939,6 +957,8 @@
                     $("#tr_ProductDetailAddRow").addClass("show");
             }
         });
+
+        AddRow((parseInt($("#counter").val())));
         
         $("#tr_ProductDetailAddRow a").click(function () {
             $(this).parent().removeClass("show");
@@ -1046,7 +1066,7 @@
         $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
     }
     
-    AddRow(parseInt($("#counter").val()));
+//    AddRow(parseInt($("#counter").val()));
                   
     function AddRow(row) {
         var idRole = '${idRole}';
@@ -1059,7 +1079,12 @@
                 '</td>' +
                 '<td><input maxlength ="10" id="refNo' + row + '" name="refNo' + row + '"   type="text" class="form-control " onfocusout="checkRefNo(\''+row+'\')"></td>' +
                 '<td><input maxlength ="15" id="invNo' + row + '" name="invNo' + row + '"   type="text" class="form-control "></td>' +
-                '<td><input maxlength ="15" id="code' + row + '" name="code' + row + '"   type="text" class="form-control "></td>' +
+                '<td>' +
+                    '<div class="input-group daydatepicker" id="daydatepicker' + row + '">' +
+                    '<input type="text" name="invDate' + row + '" id="invDate' + row + '" class="form-control datemask" data-date-format="YYYY-MM-DD"/>' +
+                    '<span class="input-group-addon spandate" style="padding : 1px 10px;" onclick="AddrowBySelect(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
+                    '</div>' +            
+                '</td>' +
                 '<td align="center">' +
                 '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T"> T&nbsp;&nbsp;' +
                 '<input type="radio" name="type' + row + '" id="typeC' +row + '" value="C" > C' +
@@ -1084,8 +1109,31 @@
             $("#select_product_list option").clone().appendTo("#select-product" + row);
             var tempCount = parseInt($("#counter").val()) + 1;
             $("#counter").val(tempCount);
+            reloadDatePicker();
         }
       
+    }
+    
+    function reloadDatePicker() {
+        try {
+            $(".daydatepicker").datetimepicker({
+                pickTime: false
+            });
+            $('span').click(function() {
+                var position = $(this).offset();
+                $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+            });
+        } catch (e) {
+
+        }
+    }
+    
+    function AddrowBySelect(row) {
+        var count = parseInt($("#counter").val());
+        row = parseInt(row);
+        if (row === (count-1)) {
+            AddRow(count);
+        }
     }
     
     function calculateComm(row){
@@ -1389,14 +1437,14 @@
             list = list.replace("[","");
             list = list.replace("]","");
             list = list.replace(/ /g,"");
-
+            
             var refNo_list = list.split(',');
             for(var i = 0;i<=refNo_list.length;i++){
                if(String(refNo) === String(refNo_list[i])){
                     var refNoField = document.getElementById('refNo'+row);
                     refNoField.style.borderColor = "Green";
                     $("#btnSave").removeClass("disabled");
-//                    return;
+                    return;
                } else {
                     var refNoField = document.getElementById('refNo'+row);
                     refNoField.style.borderColor = "Red";

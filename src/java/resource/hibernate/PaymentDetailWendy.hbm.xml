@@ -40,9 +40,6 @@
         <property name="description" type="string">
             <column name="description" />
         </property>
-        <property name="refCode" type="string">
-            <column name="ref_code" />
-        </property>
         <property name="exportDate" type="timestamp">
             <column name="export_date" />
         </property>
@@ -54,6 +51,15 @@
         </property>
         <property name="isExInv" type="java.lang.Integer">
             <column name="is_ex_inv" precision="10" />
+        </property>
+        <property name="invDate" type="date">
+            <column name="inv_date" length="10" />
+        </property>
+        <property name="tourId" type="java.lang.Integer">
+            <column name="tour_id" />
+        </property>
+        <property name="tourDate" type="date">
+            <column name="tour_date" length="10" />
         </property>
     </class>
 </hibernate-mapping>

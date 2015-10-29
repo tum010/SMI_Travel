@@ -23,16 +23,18 @@ public class PaymentDetailWendy   {
      private Double vat;
      private BigDecimal gross;
      private Integer isVat;
-     private String refCode;
      private Date exportDate;
      private Integer isExport;
      private BigDecimal recCom;
      private Integer isExInv;
+     private Date invDate;
+     private Integer tourId;
+     private Date tourDate;
 
     public PaymentDetailWendy() {
     }
 
-    public PaymentDetailWendy(Master master, MPaytype MPaytype, PaymentWendy paymentWendy, String invoiceCreditor, BigDecimal amount, String amountType, String description ,String accCode,Double vat,BigDecimal gross,Integer isVat,String refCode,Date exportDate,Integer isExport,BigDecimal recCom,Integer isExInv) {
+    public PaymentDetailWendy(Master master, MPaytype MPaytype, PaymentWendy paymentWendy, String invoiceCreditor, BigDecimal amount, String amountType, String description ,String accCode,Double vat,BigDecimal gross,Integer isVat,Date exportDate,Integer isExport,BigDecimal recCom,Integer isExInv,Date invDate,Integer tourId,Date tourDate) {
        this.master = master;
        this.MPaytype = MPaytype;
        this.paymentWendy = paymentWendy;
@@ -44,11 +46,13 @@ public class PaymentDetailWendy   {
        this.gross = gross;
        this.isVat = isVat;
        this.accCode = accCode;
-       this.refCode = refCode;
        this.exportDate = exportDate;
        this.isExport = isExport;
        this.recCom = recCom;
        this.isExInv = isExInv;
+       this.invDate = invDate;
+       this.tourId = tourId;
+       this.tourDate = tourDate;
     }
    
     public String getId() {
@@ -142,14 +146,6 @@ public class PaymentDetailWendy   {
         this.isVat = isVat;
     }
 
-    public String getRefCode() {
-        return refCode;
-    }
-
-    public void setRefCode(String refCode) {
-        this.refCode = refCode;
-    }
-
     public Date getExportDate() {
         return exportDate;
     }
@@ -180,6 +176,30 @@ public class PaymentDetailWendy   {
 
     public void setIsExInv(Integer isExInv) {
         this.isExInv = isExInv;
+    }
+
+    public Date getInvDate() {
+        return invDate;
+    }
+
+    public void setInvDate(Date invDate) {
+        this.invDate = invDate;
+    }
+
+    public Integer getTourId() {
+        return tourId;
+    }
+
+    public void setTourId(Integer tourId) {
+        this.tourId = tourId;
+    }
+
+    public Date getTourDate() {
+        return tourDate;
+    }
+
+    public void setTourDate(Date tourDate) {
+        this.tourDate = tourDate;
     }
 
 }

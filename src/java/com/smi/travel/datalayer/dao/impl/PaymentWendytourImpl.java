@@ -57,7 +57,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
                 paymentDetailWendyList = payment.getPaymentDetailWendies();
                 PaymentDetailWendy paymentDetailWendy = new PaymentDetailWendy();
                 paymentDetailWendy = paymentDetailWendyList.get(0);
-                paymentDetailWendy.setRefCode("PW"+refCode+runningCode);
+//                paymentDetailWendy.setRefCode("PW"+refCode+runningCode);
             }
             session.save(payment);    
             List<PaymentDetailWendy> paymentDetailWendy = payment.getPaymentDetailWendies();

@@ -65,7 +65,7 @@ public class PaymentTourHotelController extends SMITravelController {
         request.setAttribute(PRODUCTLIST, mProdictList);
         List<MCurrency> mCurrencyList = utilservice.getListMCurrency();
         request.setAttribute(CURRENCYLIST, mCurrencyList);
-        request.setAttribute(PAYMENHOTELTCOUNT, "0");
+        request.setAttribute(PAYMENHOTELTCOUNT, "1");
         //request.setAttribute("btnSave", "save");       
         
         String action = request.getParameter("action");
@@ -386,10 +386,13 @@ public class PaymentTourHotelController extends SMITravelController {
             String isExport = request.getParameter("isExport" + i);
             String recCom = request.getParameter("recCom" + i);
             String isExInv = request.getParameter("isExInv" + i);
+            String invDate = request.getParameter("invDate" + i);
+            String tourId = request.getParameter("tourId" + i);
+            String tourDate = request.getParameter("tourDate" + i);
             
             if((product!="" && product!=null) || (refNo!="" && refNo!=null) || (invNo!="" && invNo!=null) || (code!="" && code!=null) || 
                     (type!="" && type!=null) || (amount!="" && amount!=null) || (description!="" && description!=null) || 
-                    (recCom!="" && recCom!=null)){
+                    (recCom!="" && recCom!=null) || (invDate!="" && invDate!=null) || (tourId!="" && tourId!=null) || (tourDate!="" && tourDate!=null)){
                 
                 if(amount!="" && amount!=null){
                     BigDecimal amountRe = new BigDecimal(amount.replaceAll(",",""));
@@ -434,13 +437,25 @@ public class PaymentTourHotelController extends SMITravelController {
                     paymentDetailWendy.setIsExport(0);
                 }
                 
+                if(invDate!="" && invDate!=null){
+                    paymentDetailWendy.setInvDate(utilfunction.convertStringToDate(invDate));
+                }
+                
+                if(tourId!="" && tourId!=null){
+                    paymentDetailWendy.setTourId(Integer.parseInt(tourId));
+                }
+                
+                if(tourDate!="" && tourId!=null){
+                    paymentDetailWendy.setTourDate(utilfunction.convertStringToDate(tourDate));
+                }
+                
                 if(paymentDetailWendyId!=null && paymentDetailWendyId!=""){
                     paymentDetailWendy.setId(paymentDetailWendyId);                              
                     paymentDetailWendy.setAmountType(type);
                     paymentDetailWendy.setDescription(description);
                     paymentDetailWendy.setInvoiceCreditor(invNo);
                     paymentDetailWendy.setPaymentWendy(paymentWendy);
-                    paymentDetailWendy.setRefCode(code);
+//                    paymentDetailWendy.setRefCode(code);
                    
                     MPaytype mpayType = new MPaytype();                   
                     if(product==""){
@@ -466,7 +481,7 @@ public class PaymentTourHotelController extends SMITravelController {
                     paymentDetailWendy.setDescription(description);
                     paymentDetailWendy.setInvoiceCreditor(invNo);
                     paymentDetailWendy.setPaymentWendy(paymentWendy);
-                    paymentDetailWendy.setRefCode(code);
+//                    paymentDetailWendy.setRefCode(code);
                     
                     MPaytype mpayType = new MPaytype();
                     if(product==""){

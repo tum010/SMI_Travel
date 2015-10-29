@@ -493,7 +493,7 @@ public class DaytourOperationDetailController extends SMITravelController {
             }
             
             if((!"".equalsIgnoreCase(refCode)) && (refCode != null)){
-                paymentDetailWendy.setRefCode(refCode);
+//                paymentDetailWendy.setRefCode(refCode);
             }
             
             paymentWendy.getPaymentDetailWendies().add(paymentDetailWendy);
