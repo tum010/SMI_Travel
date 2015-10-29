@@ -1332,6 +1332,7 @@
             if(refNo===''){
                 var refNoField = document.getElementById('refNo'+row);
                 refNoField.style.borderColor = "";
+                $("#btnSave").removeClass("disabled");
                 return;
             }        
 
@@ -1344,28 +1345,30 @@
                if(String(refNo) === String(refNo_list[i])){
                     var refNoField = document.getElementById('refNo'+row);
                     refNoField.style.borderColor = "Green";
-                    return;
+                    $("#btnSave").removeClass("disabled");
+//                    return;
                } else {
                     var refNoField = document.getElementById('refNo'+row);
                     refNoField.style.borderColor = "Red";
+                    $("#btnSave").addClass("disabled");
                }
             }
         }    
     }
     
     function validateForm(){
-        var count = document.getElementById('counter').value;
-        
-        for(var i=0;i<=count;i++){
-            var refNoField = document.getElementById('refNo'+i);
-            
-            if(refNoField !== null){
-                var color = document.getElementById('refNo'+i).style.borderColor;
-                if(color === "red"){
-                    return false;
-                }   
-            }
-        }
+//        var count = document.getElementById('counter').value;
+//        
+//        for(var i=0;i<=count;i++){
+//            var refNoField = document.getElementById('refNo'+i);
+//            
+//            if(refNoField !== null){
+//                var color = document.getElementById('refNo'+i).style.borderColor;
+//                if(color === "red"){
+//                    return false;
+//                }   
+//            }
+//        }
     }
     
     function checkVatAll(){
