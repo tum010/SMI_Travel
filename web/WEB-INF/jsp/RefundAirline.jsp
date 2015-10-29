@@ -192,8 +192,8 @@
                                 <input type="hidden" id="ticketId${index}" name="ticketId${index}" colName="ticketId" value="${detail.airticketPassenger.id}">
                                 <td style="text-align:center"> <input id="ticketNo${index}" name="ticketNo${index}" colName="ticketNo" type="text" class="form-control" value="${detail.ticketFareAirline["TicketNo"]}"></td>
                                 <td style="text-align:center"> <input id="refund${index}" name="refund${index}" colName="refund" type="text" class="form-control" value="${detail.sectorRefund}" onfocusout="checkRefund(this)"></td>
-                                <td style="text-align:center"> <input id="Receive${index}" name="receive${index}" colName="receive" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.receiveAirline}"></td>
-                                <td style="text-align:center"> <input id="Pay${index}" name="pay${index}" colName="pay" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.payCustomer}"></td>
+                                <td style="text-align:center"> <input id="Receive${index}" name="receive${index}" colName="receive" onfocusout="calculateProfit(this)" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.receiveAirline}"></td>
+                                <td style="text-align:center"> <input id="Pay${index}" name="pay${index}" colName="pay" type="text" onfocusout="calculateProfit(this)" class="form-control text-right decimal" style="text-align: right" value="${detail.payCustomer}"></td>
                                 <td style="text-align:center"> <input id="Profit${index}" name="profit${index}" colName="profit" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.profit}"></td>
                                 <td style="text-align:center"> <input id="AirCom${index}" name="airCom${index}" colName="airCom" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.airComission}"></td>
                                 <td style="text-align:center"> <input id="AgentCom${index}" name="agentCom${index}" colName="agentCom" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.agentComission}"></td>
@@ -400,6 +400,24 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /Delete Hotel modal -->
 
+<!--ticketno alert size-->
+<div class="modal fade" id="TicketnoUsedSizeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Ticket No is already been used</h4>
+            </div>
+            <div class="modal-body" id="TicketnoUsedSizeAlert">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
 <div  class="hide" id="">
     <table id="tempRow" class="display" cellspacing="0" width="100%">
         <tbody>
@@ -408,8 +426,8 @@
         <input type="hidden" id="ticketId" name="ticketId" colName="ticketId" value="">
         <td style="text-align:center"> <input id="ticketNo" name="ticketNo" colName="ticketNo" type="text" class="form-control" value=""></td>
         <td style="text-align:center"> <input id="refund" name="refund" colName="refund" type="text" maxlength="255" class="form-control" value="" onfocusout="checkRefund(this)"></td>
-        <td style="text-align:center"> <input id="receive" name="receive" colName="receive" type="text" class="form-control text-right decimal" value=""></td>
-        <td style="text-align:center"> <input id="pay" name="pay" type="text" colName="pay" class="form-control text-right decimal"></td>
+        <td style="text-align:center"> <input id="receive" name="receive" colName="receive" onfocusout="calculateProfit(this)" type="text" class="form-control text-right decimal" value=""></td>
+        <td style="text-align:center"> <input id="pay" name="pay" type="text" colName="pay" onfocusout="calculateProfit(this)"  class="form-control text-right decimal"></td>
         <td style="text-align:center"> <input id="profit" name="profit" colName="profit" type="text" class="form-control text-right decimal"></td>
         <td style="text-align:center"> <input id="airCom" name="airCom" colName="airCom" type="text" class="form-control text-right decimal"></td>
         <td style="text-align:center"> <input id="agentCom" name="agentCom" colName="agentCom" type="text" class="form-control text-right decimal"></td>
@@ -515,8 +533,8 @@
                 '<td><input id="sectorIssue-' + row + '" name="sectorIssue-' + row + '"  type="text" class="form-control"></td>' +
                 '<td><input id="sectorRefund-' + row + '" name="sectorRefund-' + row + '"  type="text" class="form-control" maxlength="255"></td>' +
                 '<td><input id="total-' + row + '" name="total-' + row + '"  type="text" class="form-control" maxlength="20"></td>' +
-                '<td><input id="receive-' + row + '" name="receive-' + row + '"  type="text" class="form-control"></td>' +
-                '<td><input id="pay-' + row + '" name="pay-' + row + '"  type="text" class="form-control"></td>' +
+                '<td><input id="receive-' + row + '" name="receive-' + row + '"  onfocusout="calculateProfit(this)" type="text" class="form-control"></td>' +
+                '<td><input id="pay-' + row + '" name="pay-' + row + '"  onfocusout="calculateProfit(this)" type="text" class="form-control"></td>' +
                 '<td><input id="profit-' + row + '" name="profit-' + row + '"  type="text" class="form-control"></td>' +
                 '<td><input id="com-' + row + '" name="com-' + row + '"  type="text" class="form-control"></td>' +
                 '<td><div class="input-group daydatepicker" id="daydatepicker-' + row + '" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="inputDate-' + row + '" name="inputDate-' + row + '" data-date-format="YYYY-MM-DD"/><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
@@ -595,4 +613,7 @@
 //    });       
 //    }
 //}
+
+
+
 </script>

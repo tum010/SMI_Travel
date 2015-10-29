@@ -21,6 +21,7 @@ import com.smi.travel.datalayer.view.entity.PaymentAirRefund;
 import com.smi.travel.datalayer.view.entity.PaymentAirView;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -344,6 +345,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             return null;
         }else{
             for(int i=0;i<listAirline.size();i++){
+                
                 System.out.println(" invoiceSubCode " + invoiceSubCode);
                 String paymentAirFare = "from PaymentAirticketFare fare where fare.ticketFareAirline.id = :ticketfareId and fare.paymentAirticket.invoiceSup = :invoiceSup";
                 List<PaymentAirticketFare> paymentAirticketFares = session.createQuery(paymentAirFare).setParameter("ticketfareId", listAirline.get(i).getId()).setParameter("invoiceSup", invoiceSubCode).list();
@@ -372,7 +374,24 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                     ticketFareView.setDiffVat(listAirline.get(i).getDiffVat());
 
                     ticketFareView.setTicketIns(listAirline.get(i).getTicketIns());
-                    ticketFareView.setSalePrice(listAirline.get(i).getSalePrice());
+                    //Ticket Fare --> amount
+                    BigDecimal amount = new BigDecimal(BigInteger.ZERO);
+                    if("B".equalsIgnoreCase(String.valueOf(listAirline.get(i).getTicketType()))){
+                        amount = amount.add(listAirline.get(i).getTicketFare());
+                        amount = amount.add(listAirline.get(i).getTicketTax());
+                        amount = amount.add(listAirline.get(i).getTicketIns());
+                        amount = amount.add(listAirline.get(i).getTicketCommission());
+                    }else if("D".equalsIgnoreCase(String.valueOf(listAirline.get(i).getTicketType()))){
+                        amount = amount.add(listAirline.get(i).getTicketFare());
+                        amount = amount.add(listAirline.get(i).getTicketTax());
+                        amount = amount.add(listAirline.get(i).getTicketIns());
+                    }else if("A".equalsIgnoreCase(String.valueOf(listAirline.get(i).getTicketType()))){
+                        amount = amount.add(listAirline.get(i).getTicketFare());
+                        amount = amount.add(listAirline.get(i).getTicketTax());
+                        amount = amount.add(listAirline.get(i).getTicketIns());
+                    }
+                    
+                    ticketFareView.setSalePrice(amount);
                     if(listAirline.get(i).getMaster() != null){
                         ticketFareView.setReferenceNo(listAirline.get(i).getMaster().getReferenceNo());
                     }
@@ -900,9 +919,9 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 .addScalar("debitnote", Hibernate.STRING)
                 .addScalar("totalpaymentamount", Hibernate.STRING)
                 .addScalar("receivefromair", Hibernate.STRING)
-                .addScalar("receivefrominv", Hibernate.STRING)
-                .addScalar("invno", Hibernate.STRING)
-                .addScalar("ticketins", Hibernate.STRING)
+//                .addScalar("receivefrominv", Hibernate.STRING)
+//                .addScalar("invno", Hibernate.STRING)
+//                .addScalar("ticketins", Hibernate.STRING)
                 .list();
               
         for (Object[] B : QueryStaffList) {
@@ -920,9 +939,9 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             payment.setDebitnote(B[10]== null ? "" :util.ConvertString(B[10]));
             payment.setTotalpaymentamount(B[11]== null ? "" :util.ConvertString(B[11]));
             payment.setReceivefromair(B[12]== null ? "" :util.ConvertString(B[12]));
-            payment.setReceivefrominv(B[13]== null ? "" :util.ConvertString(B[13]));
-            payment.setInvno(B[14]== null ? "" :util.ConvertString(B[14]));
-            payment.setTicketins(B[15]== null ? "" :util.ConvertString(B[15]));
+//            payment.setReceivefrominv(B[13]== null ? "" :util.ConvertString(B[13]));
+//            payment.setInvno(B[14]== null ? "" :util.ConvertString(B[14]));
+//            payment.setTicketins(B[15]== null ? "" :util.ConvertString(B[15]));
             data.add(payment);
         }
         
@@ -965,6 +984,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 .addScalar("netsales", Hibernate.STRING)
                 .addScalar("vat", Hibernate.STRING)
                 .addScalar("balance_pay", Hibernate.STRING)
+                .addScalar("department", Hibernate.STRING)
                 .list();
         
         SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -986,6 +1006,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             payment.setNetsale(B[8]== null ? "" :util.ConvertString(B[8]));
             payment.setVat(B[9]== null ? "" :util.ConvertString(B[9]));
             payment.setBalancepay(B[10]== null ? "" :util.ConvertString(B[10]));
+            payment.setDepartment(B[11]== null ? "" :util.ConvertString(B[11]));
             data.add(payment);
         }
         

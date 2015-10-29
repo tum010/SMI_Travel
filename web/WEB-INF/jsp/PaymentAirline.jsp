@@ -18,6 +18,7 @@
 <c:set var="flagSearch" value="${requestScope['flagSearch']}" /> 
 <c:set var="addRefundList" value="${requestScope['addRefundList']}" />
 <c:set var="creditList" value="${requestScope['creditList']}" />
+<c:set var="withholdingtax" value="${requestScope['withholdingtax']}" />
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -72,6 +73,7 @@
                 <input id="paymentAirRefundId" name="paymentAirRefundId" type="hidden" class="form-control" maxlength="11" value="${paymentAirRefund.id}">
                 <input type="hidden" name="action" id="action" value="">
                 <input type="hidden" name="vat" id="vat" value="">
+                <input type="hidden" name="whtax" id="whtax" value="${withholdingtax}">
                 <input type="hidden" name="flagSearch" id="flagSearch" value="${flagSearch}">
                 <input type="hidden" name="paytoTemp"  id="paytoTemp" value="${paymentAirticket.payTo}">
                 <input type="hidden" name="ticketNoList" id="ticketNoList" value="">
@@ -1312,21 +1314,28 @@ function addRefundNo(){
         var payto = $("#paytoTemp").val();
         
         if(payto == 'A'){
-            var ticket = $('#TicketFareTable tr').length;
-            if(ticket == '2'){
-                if( $('#checksearchticket').val() === "1" ){
-                    getTicketNoFromTicketFare();
-                }
-            }else{
-                getTicketNoFromTicketFare();
-            }
-            var ticketNoList = $("#ticketNoList").val();
+//            var ticket = $('#TicketFareTable tr').length;
+//            if(ticket == '2'){
+//                if( $('#checksearchticket').val() === "1" ){
+//                    getTicketNoFromTicketFare();
+//                }
+//            }else{
+//                getTicketNoFromTicketFare();
+//            }
+//            var ticketNoList = $("#ticketNoList").val();
+//            var param = 'action=' + 'text' +
+//                '&servletName=' + servletName +
+//                '&servicesName=' + servicesName +
+//                '&refundNo=' + refundNo +
+//                '&rowCount=' + rowCount +
+//                '&ticketNoList=' + ticketNoList +
+//                '&type=' + 'addRefund';
             var param = 'action=' + 'text' +
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
                 '&refundNo=' + refundNo +
                 '&rowCount=' + rowCount +
-                '&ticketNoList=' + ticketNoList +
+                '&ticketNoList=' + 'customer' +
                 '&type=' + 'addRefund';
         }else if (payto == 'C'){
             var param = 'action=' + 'text' +
@@ -1713,7 +1722,7 @@ function calculateTotalCommission() {
             commissionTemp = commission;
 
             }
-       document.getElementById("sumCommissionTicket").value = formatNumber(commission +(commission *(7/100)));
+       document.getElementById("sumCommissionTicket").value = formatNumber(commission);
        document.getElementById("totalCommissionTicketFare").value = formatNumber(commission +(commission *(7/100)));
     }
     calculateWithodingTax();
@@ -1937,11 +1946,10 @@ function calculateWithodingTax(){
     
     var sumCommRefund = parseFloat(sumCommissionRefund);
     var sumcomm = parseFloat(sumCommissionTicket);
-    
-    
-    
-    var withholdingTax = ( (sumcomm*(1-(vat/100)))  - (sumCommRefund*(1-(vat/100))) ) * 0.03;
-//    With Tax = Ticket Comission – ComRefund * 3%
+    var tax = document.getElementById('whtax').value;
+    var whtax = parseFloat(tax);
+
+    var withholdingTax = ( (sumcomm + sumCommRefund ) * (whtax / 100));
     document.getElementById("withholdingTax").value = formatNumber(withholdingTax);
 }
 function deleteCreditList(id,Ccount) {

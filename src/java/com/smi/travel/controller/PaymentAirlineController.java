@@ -60,6 +60,7 @@ public class PaymentAirlineController extends SMITravelController {
     private static final String CREDITROWCOUNT = "creditRowCount";
     private static final String CREDITLIST = "creditList";
     private static final String SETCALCULATECREDIT = "setCalculateCredit";
+    private static final String withholdingtax = "withholdingtax";
     private UtilityService utilityService; 
     private PaymentAirTicketService paymentAirTicketService;
     UtilityFunction util;
@@ -623,6 +624,8 @@ public class PaymentAirlineController extends SMITravelController {
         request.setAttribute(INVOICESUPLIST,invoiceSupplierList);
         MDefaultData mDefaultData = utilityService.getMDefaultDataFromType("vat");
         request.setAttribute(VAT,mDefaultData.getValue());
+        MDefaultData mDefault = utilityService.getMDefaultDataFromType("withholding tax");
+        request.setAttribute(withholdingtax,mDefault.getValue());
     }
     
     public UtilityService getUtilityService() {
