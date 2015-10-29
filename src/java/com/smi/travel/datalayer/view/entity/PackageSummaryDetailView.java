@@ -29,6 +29,9 @@ public class PackageSummaryDetailView {
     private String createdate;
     private String subReportDir;
     private JRDataSource packageHotelSubReportDataSource;
+    private JRDataSource packageOthersSubReportDataSource;
+    private JRDataSource packageAirlineSubReportDataSource;
+    private JRDataSource packageLandSubReportDataSource;
 
     public String getPackagedate() {
         return packagedate;
@@ -134,31 +137,43 @@ public class PackageSummaryDetailView {
         this.createdate = createdate;
     }
 
-    /**
-     * @return the subReportDir
-     */
     public String getSubReportDir() {
         return subReportDir;
     }
 
-    /**
-     * @param subReportDir the subReportDir to set
-     */
     public void setSubReportDir(String subReportDir) {
         this.subReportDir = subReportDir;
     }
 
-    /**
-     * @return the packageHotelSubReportDataSource
-     */
     public JRDataSource getPackageHotelSubReportDataSource() {
         return packageHotelSubReportDataSource;
     }
 
-    /**
-     * @param packageHotelSubReportDataSource the packageHotelSubReportDataSource to set
-     */
     public void setPackageHotelSubReportDataSource(JRDataSource packageHotelSubReportDataSource) {
         this.packageHotelSubReportDataSource = packageHotelSubReportDataSource;
+    }
+
+    public JRDataSource getPackageOthersSubReportDataSource() {
+        return packageOthersSubReportDataSource;
+    }
+
+    public void setPackageOthersSubReportDataSource(JRDataSource packageOthersSubReportDataSource) {
+        this.packageOthersSubReportDataSource = packageOthersSubReportDataSource;
+    }
+
+    public JRDataSource getPackageAirlineSubReportDataSource() {
+        return packageAirlineSubReportDataSource;
+    }
+
+    public void setPackageAirlineSubReportDataSource(JRDataSource packageAirlineSubReportDataSource) {
+        this.packageAirlineSubReportDataSource = packageAirlineSubReportDataSource;
+    }
+
+    public JRDataSource getPackageLandSubReportDataSource() {
+        return packageLandSubReportDataSource;
+    }
+
+    public void setPackageLandSubReportDataSource(JRDataSource packageLandSubReportDataSource) {
+        this.packageLandSubReportDataSource = packageLandSubReportDataSource;
     }
 }

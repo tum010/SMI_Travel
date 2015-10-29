@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PackageDetailSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="2" bottomMargin="2" uuid="cf1ccb46-96bc-4028-a911-b10f03b03c4f">
 	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="47"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="191"/>
 	<parameter name="REFNO_MASTER" class="java.lang.String">
 		<defaultValueExpression><![CDATA[$F{refno}]]></defaultValueExpression>
 	</parameter>
@@ -21,6 +21,9 @@
 	<field name="leadername" class="java.lang.String"/>
 	<field name="subReportDir" class="java.lang.String"/>
 	<field name="packageHotelSubReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="packageLandSubReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="packageOthersSubReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="packageAirlineSubReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<group name="groupTour">
 		<groupExpression><![CDATA[$F{grouptour}]]></groupExpression>
 		<groupHeader>
@@ -131,12 +134,9 @@
 				</textField>
 			</band>
 		</groupHeader>
-		<groupFooter>
-			<band height="8"/>
-		</groupFooter>
 	</group>
 	<detail>
-		<band height="40" splitType="Stretch">
+		<band height="119" splitType="Stretch">
 			<rectangle radius="7">
 				<reportElement x="0" y="3" width="555" height="15" uuid="5bcd6807-6c0e-4d22-bbf2-58fc16d5c8a5"/>
 				<graphicElement>
@@ -179,12 +179,36 @@
 				<textFieldExpression><![CDATA[$F{leadername}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="0" y="20" width="555" height="18" uuid="ed75d6eb-8aa5-42a7-b476-d62d1b20f63d"/>
+				<reportElement x="0" y="50" width="555" height="15" uuid="ed75d6eb-8aa5-42a7-b476-d62d1b20f63d"/>
 				<subreportParameter name="REFNO_MASTER">
 					<subreportParameterExpression><![CDATA[$F{refno}]]></subreportParameterExpression>
 				</subreportParameter>
 				<dataSourceExpression><![CDATA[$F{packageHotelSubReportDataSource}]]></dataSourceExpression>
-				<subreportExpression><![CDATA["C:/Users/chonnasith/Documents/NetBeansProjects/SMI_Travel/build/web/WEB-INF/report/PackageHotelSubReport.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/PackageHotelSubReport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="27" width="555" height="15" uuid="cb44dd1a-e694-42e8-bfb9-6321c80700fd"/>
+				<subreportParameter name="REFNO_MASTER">
+					<subreportParameterExpression><![CDATA[$F{refno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{packageAirlineSubReportDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/PackageAirlineSubReport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="74" width="555" height="15" uuid="bffb9abe-87d2-48aa-a084-3d5143938cb9"/>
+				<subreportParameter name="REFNO_MASTER">
+					<subreportParameterExpression><![CDATA[$F{refno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{packageLandSubReportDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/PackageLandSubReport.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="98" width="555" height="15" uuid="27507bc8-0ddb-4df7-bf32-e7f170acee68"/>
+				<subreportParameter name="REFNO_MASTER">
+					<subreportParameterExpression><![CDATA[$F{refno}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[$F{packageOthersSubReportDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/PackageOthersSubReport.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

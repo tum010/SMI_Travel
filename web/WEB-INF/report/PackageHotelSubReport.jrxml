@@ -14,6 +14,13 @@ FROM
 WHERE
      hotel_booking_view.`refno` = $P{REFNO_MASTER}]]>
 	</queryString>
+	<field name="name" class="java.lang.String"/>
+	<field name="checkin" class="java.lang.String"/>
+	<field name="checkout" class="java.lang.String"/>
+	<field name="net" class="java.lang.String"/>
+	<field name="sell" class="java.lang.String"/>
+	<field name="refno" class="java.lang.String"/>
+	<field name="room" class="java.lang.String"/>
 	<columnHeader>
 		<band height="33" splitType="Stretch">
 			<rectangle radius="7">
@@ -30,35 +37,35 @@ WHERE
 				<text><![CDATA[HOTEL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="33" y="16" width="36" height="16" uuid="a6ac54c7-006c-4af9-b98a-0af01ca81e31"/>
+				<reportElement x="46" y="16" width="36" height="16" uuid="a6ac54c7-006c-4af9-b98a-0af01ca81e31"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NAME]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="89" y="16" width="72" height="16" uuid="37060e8c-2abb-4a6d-bc9d-d80b3f335fcb"/>
+				<reportElement x="163" y="16" width="72" height="16" uuid="37060e8c-2abb-4a6d-bc9d-d80b3f335fcb"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CHECK IN - OUT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="265" y="16" width="36" height="16" uuid="67a26ca7-b3db-4fac-9348-c69ce70646a9"/>
+				<reportElement x="329" y="16" width="36" height="16" uuid="67a26ca7-b3db-4fac-9348-c69ce70646a9"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ROOM]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="411" y="16" width="21" height="16" uuid="83e2edbb-2571-4e55-aa90-3406e35b0ee2"/>
+				<reportElement x="440" y="16" width="21" height="16" uuid="83e2edbb-2571-4e55-aa90-3406e35b0ee2"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NET]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="479" y="16" width="36" height="16" uuid="78c1b056-0d2a-4a90-98b8-22377949a53e"/>
+				<reportElement x="500" y="16" width="36" height="16" uuid="78c1b056-0d2a-4a90-98b8-22377949a53e"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
@@ -67,14 +74,52 @@ WHERE
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="34" splitType="Stretch">
-			<textField>
-				<reportElement x="132" y="-34" width="100" height="17" uuid="e3e85e38-369c-473e-82bf-90e46e1c8afb"/>
+		<band height="16" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="8" y="0" width="137" height="15" uuid="f7a2143f-ba02-4e96-bb0a-a7e3dfd2753c"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{REFNO_MASTER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="151" y="0" width="49" height="15" uuid="2a87e09a-6535-40d1-a913-154e660d90e9"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="51" height="15" uuid="d303d436-4574-4aaf-bf7c-6a826ff825a1"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkout}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="270" y="0" width="145" height="15" uuid="f73f6ad7-3e7f-4b40-bb83-b02e6a396bac"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{room}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="487" y="0" width="63" height="15" uuid="bb5d49e0-69a6-4a38-99f4-87e185b98d87"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{sell} != null && !"null".equals($F{sell}) && $F{sell}.length() > 0 && !"".equalsIgnoreCase($F{sell})) ? new BigDecimal($F{sell}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="419" y="0" width="62" height="15" uuid="8c54da6b-a91f-4e46-a8d8-1704f775642d"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{net} != null && !"null".equals($F{net}) && $F{net}.length() > 0 && !"".equalsIgnoreCase($F{net})) ? new BigDecimal($F{net}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
+	<lastPageFooter>
+		<band height="12"/>
+	</lastPageFooter>
 </jasperReport>
