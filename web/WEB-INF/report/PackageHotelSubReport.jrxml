@@ -31,7 +31,7 @@ WHERE
 				<text><![CDATA[ROOM]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="163" y="16" width="72" height="16" uuid="ccaffbe8-f0dd-43d8-b9da-95d31ec0c030"/>
+				<reportElement positionType="Float" x="177" y="16" width="72" height="16" uuid="ccaffbe8-f0dd-43d8-b9da-95d31ec0c030"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
@@ -76,25 +76,11 @@ WHERE
 	<detail>
 		<band height="16" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="8" y="0" width="137" height="15" uuid="f7a2143f-ba02-4e96-bb0a-a7e3dfd2753c"/>
+				<reportElement stretchType="RelativeToBandHeight" x="8" y="0" width="148" height="15" uuid="f7a2143f-ba02-4e96-bb0a-a7e3dfd2753c"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="151" y="0" width="49" height="15" uuid="2a87e09a-6535-40d1-a913-154e660d90e9"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{checkin}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="200" y="0" width="51" height="15" uuid="d303d436-4574-4aaf-bf7c-6a826ff825a1"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{checkout}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement stretchType="RelativeToBandHeight" x="270" y="0" width="145" height="15" uuid="f73f6ad7-3e7f-4b40-bb83-b02e6a396bac"/>
@@ -116,6 +102,13 @@ WHERE
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{net} != null && !"null".equals($F{net}) && $F{net}.length() > 0 && !"".equalsIgnoreCase($F{net})) ? new BigDecimal($F{net}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="0" width="102" height="15" uuid="2a87e09a-6535-40d1-a913-154e660d90e9"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkin}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -122,22 +122,22 @@
         </div>
         <!--Row 2 -->
         <c:set var="readonly" value="" />
+        <c:set var="disabled" value="" />
+        <c:set var="star" value="" />
         <c:if test="${idRole  == 19}">
             <c:set var="readonly" value="readonly=\"\"" />
-        </c:if>  
-        <c:set var="disabled" value="" />
-        <c:if test="${idRole  == 19}">
             <c:set var="disabled" value="disabled=\"\"" />
+            <c:set var="star" value="*" />
         </c:if>
         <div class="row" style="padding-left: 0px">
             <div class="col-xs-12 ">
                 <div class="col-xs-2 text-right" style="padding-left:0px;padding-right:0px;width:85px;">
-                    <label class="control-label">Pay Date</lable>
+                    <label class="control-label">Pay Date<font style="color: red">${star}</font></lable>
                 </div>               
                 <div class="col-md-2 form-group text-left" style="padding-left:28px">
                     <div class="col-sm-12">
                         <div class='input-group date' style="width:140px;">
-                            <input name="InputPayDate" id="InputPayDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['InputPayDate']}" ${readonly}/>
+                            <input name="InputPayDate" id="InputPayDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['InputPayDate']}"/>
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
@@ -835,46 +835,96 @@
             $(this).val(value)
         });
         
-        $('#PaymentTourHotelForm').bootstrapValidator({
-            container: 'tooltip',
-            excluded: [':disabled', ':hidden', ':not(:visible)'],
-            feedbackIcons: {
-                valid: 'uk-icon-check',
-                invalid: 'uk-icon-times',
-                validating: 'uk-icon-refresh'
-            },
-            fields: {
-                InputInvoiceSupCode: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Invoice Sup is required'
-                        }
-                    }
+        var idRole = '${idRole}';
+        if(idRole === '19'){
+            $('#PaymentTourHotelForm').bootstrapValidator({
+                container: 'tooltip',
+                excluded: [':disabled', ':hidden', ':not(:visible)'],
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
                 },
-                InputAPCode: {
-                    validators: {
-                        notEmpty: {
-                            message: 'A/P Code is required'
+                fields: {
+                    InputInvoiceSupCode: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Invoice Sup is required.'
+                            }
+                        }
+                    },
+                    InputAPCode: {
+                        validators: {
+                            notEmpty: {
+                                message: 'A/P Code is required.'
+                            }
+                        }
+                    },
+                    itemStatus: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Status is required.'
+                            }
+                        }
+                    },
+                    account: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Account is required.'
+                            }
                         }
                     }
+                    ,InputPayDate: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Pay Date is required.'
+                            }
+                        }
+                    }
+                }
+            });
+        }else if((idRole === '22') || (idRole === '1')){
+            $('#PaymentTourHotelForm').bootstrapValidator({
+                container: 'tooltip',
+                excluded: [':disabled', ':hidden', ':not(:visible)'],
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
                 },
-                itemStatus: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Status is required'
+                fields: {
+                    InputInvoiceSupCode: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Invoice Sup is required.'
+                            }
+                        }
+                    },
+                    InputAPCode: {
+                        validators: {
+                            notEmpty: {
+                                message: 'A/P Code is required.'
+                            }
+                        }
+                    },
+                    itemStatus: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Status is required.'
+                            }
+                        }
+                    },
+                    account: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Account is required.'
+                            }
                         }
                     }
-                },
-                account: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Account is required'
-                        }
-                    }
-                }               
-            }
-        });
-              
+                }
+            });
+        }
+           
         $("#PaymentHotelTable").on("change", "select:last", function () {
             var row = parseInt($("#counter").val());
             AddRow(row);
@@ -1332,6 +1382,7 @@
             if(refNo===''){
                 var refNoField = document.getElementById('refNo'+row);
                 refNoField.style.borderColor = "";
+                $("#btnSave").removeClass("disabled");
                 return;
             }        
 
@@ -1344,28 +1395,30 @@
                if(String(refNo) === String(refNo_list[i])){
                     var refNoField = document.getElementById('refNo'+row);
                     refNoField.style.borderColor = "Green";
-                    return;
+                    $("#btnSave").removeClass("disabled");
+//                    return;
                } else {
                     var refNoField = document.getElementById('refNo'+row);
                     refNoField.style.borderColor = "Red";
+                    $("#btnSave").addClass("disabled");
                }
             }
         }    
     }
     
     function validateForm(){
-        var count = document.getElementById('counter').value;
-        
-        for(var i=0;i<=count;i++){
-            var refNoField = document.getElementById('refNo'+i);
-            
-            if(refNoField !== null){
-                var color = document.getElementById('refNo'+i).style.borderColor;
-                if(color === "red"){
-                    return false;
-                }   
-            }
-        }
+//        var count = document.getElementById('counter').value;
+//        
+//        for(var i=0;i<=count;i++){
+//            var refNoField = document.getElementById('refNo'+i);
+//            
+//            if(refNoField !== null){
+//                var color = document.getElementById('refNo'+i).style.borderColor;
+//                if(color === "red"){
+//                    return false;
+//                }   
+//            }
+//        }
     }
     
     function checkVatAll(){

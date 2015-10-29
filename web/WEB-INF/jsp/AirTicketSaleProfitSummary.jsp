@@ -18,7 +18,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
-                <div ng-include="'WebContent/Report/AirticketReportMenu.html'"></div>
+                <div ng-include="'WebContent/Report/PackageTourHotelMenu.html'"></div>
             </div>
 
             <div class="form-group">

@@ -220,21 +220,30 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
         for (Object[] B : QueryHotel) {
             PackageSummaryHotelView packageHotel = new PackageSummaryHotelView();
             packageHotel.setRefno(refNo);
-            packageHotel.setName(B[1]== null ? "" : util.ConvertString(B[1]));
-            packageHotel.setCheckin(B[2]== null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[2])))));
-            packageHotel.setCheckout(B[3]== null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[3])))));
+            packageHotel.setName(B[1]== null ? "" : util.ConvertString(B[1]));           
             packageHotel.setRoom(B[4]== null ? "" : util.ConvertString(B[4]));
             packageHotel.setNet(B[5]== null ? "" : util.ConvertString(B[5]));
             packageHotel.setSell(B[6]== null ? "" : util.ConvertString(B[6]));
+            
+            String checkinTemp = (B[2]== null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[2])))));
+            String checkuotTemp = (B[3]== null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[3])))));
+            String[] checkin = checkinTemp.split(" ");
+            String[] checkout = checkuotTemp.split(" ");
+            if(!checkin[2].equalsIgnoreCase(checkout[2])){
+                packageHotel.setCheckin(checkin[0]+" "+checkin[1]+" "+checkin[2]+" - "+checkout[0]+" "+checkout[1]+" "+checkout[2]);
+            }else{
+                if(checkin[1].equalsIgnoreCase(checkout[1])){
+                    packageHotel.setCheckin(checkin[0]+" - "+checkout[0]+" "+checkout[1]+" "+checkout[2]);
+                }else{
+                    packageHotel.setCheckin(checkin[0]+" "+checkin[1]+" - "+checkout[0]+" "+checkout[1]+" "+checkout[2]);
+                }
+            }
+            
+//            packageHotel.setCheckin(B[2]== null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[2])))));
+//            packageHotel.setCheckout(B[3]== null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[3])))));
+                    
             data.add(packageHotel);
-        }
-        
-//        for(int i=0;i<3;i++){
-//            PackageSummaryHotelView packageSum = new PackageSummaryHotelView();
-//            packageSum.setRefno(refNo);
-//            packageSum.setName(refNo);
-//            data.add(packageSum);
-//        }       
+        }     
         
         return data;
     }
@@ -292,17 +301,27 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
                 .addScalar("net", Hibernate.STRING)
                 .list();
         
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd MMM yy");
+        SimpleDateFormat timeformat = new SimpleDateFormat();
+        timeformat.applyPattern("HH:mm");
+        
         for (Object[] B : QueryOther) {
             PackageSummaryOthersView packageOther = new PackageSummaryOthersView();
             packageOther.setCode(B[1]== null ? "" : util.ConvertString(B[1]));
-            packageOther.setDescription(B[2]== null ? "" : util.ConvertString(B[2]));
-            packageOther.setDate(B[3]== null ? "" : util.ConvertString(B[3]));
-//            packageOther.setA(B[4]== null ? "" : util.ConvertString(B[4]));
+            packageOther.setDescription(B[2]== null ? "" : util.ConvertString(B[2]));           
             packageOther.setAdult(B[5]== null ? "" : util.ConvertString(B[5]));
             packageOther.setChild(B[6]== null ? "" : util.ConvertString(B[6]));
             packageOther.setInfant(B[7]== null ? "" : util.ConvertString(B[7]));
             packageOther.setSell(B[8]== null ? "" : util.ConvertString(B[8]));
             packageOther.setNet(B[9]== null ? "" : util.ConvertString(B[9]));
+            
+            String dateTemp = (B[3]== null ? "" : util.ConvertString(B[3]));
+            String timeTemp = (B[4]== null ? "" : util.ConvertString(B[4]));
+            String date = (!"".equalsIgnoreCase(dateTemp) ? String.valueOf(dateformat.format(util.convertStringToDate(dateTemp))) : ""); 
+            String time = (!"".equalsIgnoreCase(timeTemp) ? String.valueOf(timeformat.format(util.convertStringToTime(timeTemp))) : ""); 
+            packageOther.setDate(date+" "+time);
+            
             data.add(packageOther);
         }
         

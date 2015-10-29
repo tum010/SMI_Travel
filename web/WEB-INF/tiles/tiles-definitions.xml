@@ -633,7 +633,7 @@
     </definition>
     
     <definition name="PackageTourHotel" extends="baseLayout">
-        <put-attribute name="title" value="Report : PackageTourHotel" />
+        <put-attribute name="title" value="Report : BookingSummary" />
         <put-attribute name="body" value="/WEB-INF/jsp/PackageTourHotel.jsp" />
     </definition>
     
