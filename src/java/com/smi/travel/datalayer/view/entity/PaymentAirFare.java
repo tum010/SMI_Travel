@@ -23,7 +23,8 @@ public class PaymentAirFare {
     private String netsale;
     private String vat;
     private String balancepay;
-
+    private String department;
+    
     public String getSystemdate() {
         return systemdate;
     }
@@ -126,6 +127,14 @@ public class PaymentAirFare {
 
     public void setBalancepay(String balancepay) {
         this.balancepay = balancepay;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
     
     

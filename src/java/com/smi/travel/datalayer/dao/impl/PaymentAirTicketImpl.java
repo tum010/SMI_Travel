@@ -984,6 +984,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 .addScalar("netsales", Hibernate.STRING)
                 .addScalar("vat", Hibernate.STRING)
                 .addScalar("balance_pay", Hibernate.STRING)
+                .addScalar("department", Hibernate.STRING)
                 .list();
         
         SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -1005,6 +1006,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
             payment.setNetsale(B[8]== null ? "" :util.ConvertString(B[8]));
             payment.setVat(B[9]== null ? "" :util.ConvertString(B[9]));
             payment.setBalancepay(B[10]== null ? "" :util.ConvertString(B[10]));
+            payment.setDepartment(B[11]== null ? "" :util.ConvertString(B[11]));
             data.add(payment);
         }
         
