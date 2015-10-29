@@ -233,13 +233,16 @@ $(document).ready(function () {
 //Print Ticket Order Button
 $(document).ready(function () {
     var printBtn = $('#printTicketOrder').val();
-    if(printBtn === 'success'){
+    if(printBtn !== 'fail'){
         $('#btnPrintTicketOrder').removeClass('disabled');
     }
+    
 });
 
 function printTicketOrderReport(){
-    
+    var printBtn = $('#printTicketOrder').val();
+    var refno = $('#getRealformatUrl').val(); 
+    window.open("report.smi?name=TicketOrder"+"&refno="+refno+"&pnrID="+printBtn);  
 }
 
 //Add New Booking

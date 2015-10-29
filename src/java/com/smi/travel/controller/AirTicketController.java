@@ -75,7 +75,7 @@ public class AirTicketController extends SMITravelController {
     private static final String MCurrency = "MCurrency";
     private static final String AirLocking = "airLocking";
     private static final String RoleName = "roleName";        
-
+    private static final String PNRDATA = "pnrdata";      
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         int result = 0;
@@ -100,7 +100,7 @@ public class AirTicketController extends SMITravelController {
             roleName = "NO";
             request.setAttribute(RoleName, roleName);
         }
-
+        request.setAttribute(PNRDATA, "0");
         if ("new".equalsIgnoreCase(action)) {
             System.out.println("AirTicketController new not supported yet");
 //            request.setAttribute(ACTION, "new");
@@ -120,7 +120,8 @@ public class AirTicketController extends SMITravelController {
                 List<AirticketPnr> pnrList = new ArrayList<AirticketPnr>();
                 pnrList.addAll(sortedPnr);
                 request.setAttribute(airTicketPnrList, pnrList);
-
+                request.setAttribute(PNRDATA, pnrList.size()); 
+                
                 if (pnrList != null) {
                     request.setAttribute(AirticketBooking, airBook);
 

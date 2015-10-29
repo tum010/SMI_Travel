@@ -1046,7 +1046,7 @@ public class BillableImpl implements BillableDao {
         List<AirticketPnr> airticketPnrList = session.createQuery(query).setParameter("refno",refNo).list();
         if(!airticketPnrList.isEmpty()){
             if(airticketPnrList.get(0).getId() != null){
-                result = "success";
+                result = airticketPnrList.get(0).getId();
             }          
         }
         session.close();

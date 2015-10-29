@@ -106,7 +106,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <input type="hidden" class="form-control" id="pnr" name="pnr" value="${currentPnr.id}">
-                                <input type="text" class="form-control" id="pnr_name" name="pnr_name" value="${currentPnr.pnr}">
+                                <input type="text" class="form-control" id="pnr_name" name="pnr_name" value="">
                                 <c:if test="${lockUnlockBooking == 0}">
                                     <span class="input-group-addon"><span data-toggle="modal" data-target="#ImportModal" class="glyphicon-import glyphicon"></span></span>
                                 </c:if>
