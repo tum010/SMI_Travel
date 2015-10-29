@@ -319,6 +319,14 @@ function addRowRefundAirlineList() {
                                         $("#passsenger" + row).html(fare.Passenger);
                                         document.getElementById("refundBy").value = fare.InvTo;
                                         document.getElementById("refundByName").value = fare.InvName;
+                                        var size = fare.SizeData ;
+                                        if(size === "1"){
+                                            $("#TicketnoUsedSizeAlert").text('Ticket No : '+ ticketNo + ' is already been used in ' + fare.SizeData + ' time');
+                                            $('#TicketnoUsedSizeModal').modal('show');
+                                        }else if(size > "1"){
+                                            $("#TicketnoUsedSizeAlert").text('Ticket No : '+ ticketNo + ' is already been used ' + fare.SizeData + ' times');
+                                            $('#TicketnoUsedSizeModal').modal('show');
+                                        }
                                         
                                         var counter = $('#RefundAirlineTable tbody tr').length / 2;
                                         if (row === counter) {
@@ -588,4 +596,30 @@ function setBillValue(billto, billname, address, term, pay) {
     $("#refundBy").val(billto);
     $("#refundByName").val(billname);
     $("#refundCustModal").modal('hide');
+}
+
+
+function calculateProfit(e){
+    var row = $(e).parent().parent().attr("row");
+    
+    var receive = replaceAll(",","",$("#receive"+row).val());
+    if (receive == ""){
+        receive = 0;
+    }
+    
+    var receivetemp = parseFloat(receive);
+    
+    var pay = replaceAll(",","",$("#pay"+row).val());
+    if (pay == ""){
+        pay = 0;
+    }
+    
+    var paytemp = parseFloat(pay);
+    
+    var profit = receivetemp - paytemp ;
+    document.getElementById("profit"+row).value = (profit);
+}
+
+function replaceAll(find, replace, str) {
+  return str.replace(new RegExp(find, 'g'), replace);
 }

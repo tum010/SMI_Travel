@@ -510,10 +510,27 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         List<TicketFareInvoice> list = new ArrayList<TicketFareInvoice>();
         String ticketfareid = "";
         Session session = this.sessionFactory.openSession();
-        if((ticket.getInvoiceNo() != null) &&(!"".equalsIgnoreCase(ticket.getInvoiceNo()))){
+        if((ticket.getInvoiceNo() != null) &&(!"".equalsIgnoreCase(ticket.getInvoiceNo())) 
+            && (ticket.getReferenceNo()!= null) &&(!"".equalsIgnoreCase(ticket.getReferenceNo()))){
+            String queryInvoice = "from TicketFareInvoice tk where tk.invoice.invNo = :invNo and tk.ticketFareAirline.Master.referenceNo = :referenceNo";
+            list = session.createQuery(queryInvoice)
+                    .setParameter("invNo",ticket.getInvoiceNo())
+                    .setParameter("referenceNo",ticket.getReferenceNo())
+                    .list();
+        }else if((ticket.getInvoiceNo() != null) &&(!"".equalsIgnoreCase(ticket.getInvoiceNo())) 
+            && ((ticket.getReferenceNo()!= null) || (!"".equalsIgnoreCase(ticket.getReferenceNo())))){
             String queryInvoice = "from TicketFareInvoice tk where tk.invoice.invNo = :invNo";
-            list = session.createQuery(queryInvoice).setParameter("invNo",ticket.getInvoiceNo()).list();
+            list = session.createQuery(queryInvoice)
+                    .setParameter("invNo",ticket.getInvoiceNo())
+                    .list();
+        }else if( ((ticket.getInvoiceNo() == null) || ("".equalsIgnoreCase(ticket.getInvoiceNo()))) 
+            && (ticket.getReferenceNo()!= null) &&(!"".equalsIgnoreCase(ticket.getReferenceNo()))){
+            String queryInvoice = "from TicketFareInvoice tk where tk.ticketFareAirline.Master.referenceNo = :referenceNo";
+            list = session.createQuery(queryInvoice)
+                    .setParameter("referenceNo",ticket.getReferenceNo())
+                    .list();
         }
+        
         int temp = list.size()-1;
         if(!list.isEmpty()){
             for(int i = 0 ; i < list.size() ; i++ ){
@@ -746,6 +763,17 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             }
         }
         
+        
+        //AirticketPassenger.airticketAirline.airticketPnr.airticketBooking.master.bookingType
+        String queryticketno = "From RefundAirticketDetail ref where ( ref.airticketPassenger.series1 || ref.airticketPassenger.series2 || ref.airticketPassenger.series3) = :ticketno";
+        List<RefundAirticketDetail> refundAirticketDetails = session.createQuery(queryticketno).setParameter("ticketno", TicketNo).list();
+        String sizeData = "";
+        if (refundAirticketDetails.isEmpty()){
+            System.out.println(" refundAirticketDetails isEmpty ");
+        }else{
+            sizeData = String.valueOf(refundAirticketDetails.size());
+        }
+        
         String BookingType = "";
         if(ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null){
             if(! "null".equals(ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType())
@@ -791,6 +819,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         result.put("Sector", rounting);
         result.put("InvTo", invTo);
         result.put("InvName", invName);
+        result.put("SizeData", sizeData);
         session.close();
         this.sessionFactory.close();
         return result;

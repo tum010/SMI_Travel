@@ -29,6 +29,7 @@ public class SearchTicketFareController extends SMITravelController {
     private static final String DATALIST = "Ticket_List";
     private static final String TransactionResult = "result";
     private static final String TICKETALREADYUSE = "TicketAlreadyUse";
+    private static final String REFNO = "refNumber";
     private UtilityService utilityService;
     private TicketFareAirlineService ticketFareAirlineService;
     UtilityFunction util;
@@ -46,6 +47,8 @@ public class SearchTicketFareController extends SMITravelController {
         String ticketId = request.getParameter("ticketId");
         String deleteTicketNo = request.getParameter("deleteTicketNo");
         String deleteTicketId = request.getParameter("deleteTicketId");
+        String refNumber = request.getParameter("refNumber");
+        
         List<MAirlineAgent> mAirlineAgentsList = utilityService.getListMAirLineAgent();
         request.setAttribute(AIRLINELIST,mAirlineAgentsList);
         util = new UtilityFunction();
@@ -57,7 +60,7 @@ public class SearchTicketFareController extends SMITravelController {
         ticketFareView.setTicketNo(ticketNo);
         
         
-
+        
         if(StringUtils.isNotEmpty(issueDateFrom)){
             ticketFareView.setIssueDateFrom(util.convertStringToDate(issueDateFrom));
             request.setAttribute(ISSUEDATEFROM,issueDateFrom);
@@ -68,6 +71,7 @@ public class SearchTicketFareController extends SMITravelController {
         }
         
         ticketFareView.setInvoiceNo(invoiceNo);
+        ticketFareView.setReferenceNo(refNumber);
         ticketFareView.setDepartment(department);
         
         if ("search".equalsIgnoreCase(action)) {
@@ -115,6 +119,7 @@ public class SearchTicketFareController extends SMITravelController {
         request.setAttribute(TICKETROUTING,ticketRouting);
         request.setAttribute(TICKETTYPE,ticketType);
         request.setAttribute(INVOICENO,invoiceNo);
+        request.setAttribute(REFNO,refNumber);
         request.setAttribute(DEPARTMENT,department);
         return SearchTicketFare;
     }

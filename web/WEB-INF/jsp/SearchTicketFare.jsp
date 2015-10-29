@@ -150,6 +150,14 @@
                         </div>
                         <div class="col-xs-12 form-group">
                             <div class="col-xs-1 text-right" style="width: 150px">
+                                <label class="control-label text-right">Ref No </label>
+                            </div>
+                            <div class="col-xs-1 form-group" style="width: 200px">
+                                <div class="input-group">
+                                    <input id="refNumber" name="refNumber" type="text" class="form-control" value="${requestScope['refNumber']}">
+                                </div>
+                            </div>
+                            <div class="col-xs-1 text-right" style="width: 150px">
                                 <label class="control-label text-right">Invoice No </label>
                             </div>
                             <div class="col-xs-1 form-group" style="width: 200px">
@@ -160,7 +168,7 @@
                             <div class="col-xs-1 text-right" style="width: 150px">
                                 <label class="control-label text-right">Department </label>
                             </div>
-                            <div class="col-xs-1" style="width: 200px">
+                            <div class="col-xs-1" style="width: 180px">
                                 <select id="department" name="department" class="form-control selectize">
                                     <option value="">--- Department ---</option> 
                                      <c:choose>
@@ -186,7 +194,7 @@
                             </div>
                             <div class="col-xs-1 text-right" style="width: 150px">
                             </div>
-                            <div class="col-xs-1 text-left" style="width: 190px">
+                            <div class="col-xs-1 text-right" style="width: 330px;padding-top: 15px">
                                 <input type="hidden" id="ticketId" name="ticketId" >
                                 <input type="hidden" name="action" id="action" value="">
                                 <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm">
