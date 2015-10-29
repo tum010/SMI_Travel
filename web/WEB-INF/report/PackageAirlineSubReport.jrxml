@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PackageAirlineSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="2" bottomMargin="2" uuid="3e1fc369-6ac6-40da-b9ec-9c7ccf1a16e9">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="pnr" class="java.lang.String"/>
+	<field name="airline" class="java.lang.String"/>
+	<field name="flight" class="java.lang.String"/>
+	<field name="dept" class="java.lang.String"/>
+	<field name="arrv" class="java.lang.String"/>
+	<field name="classflight" class="java.lang.String"/>
+	<field name="deptdate" class="java.lang.String"/>
+	<field name="net" class="java.lang.String"/>
+	<field name="sell" class="java.lang.String"/>
+	<group name="pnr">
+		<groupExpression><![CDATA[$F{pnr}]]></groupExpression>
+		<groupHeader>
+			<band height="32">
+				<rectangle radius="7">
+					<reportElement mode="Transparent" x="0" y="15" width="555" height="16" uuid="22a64adf-08f4-4729-a5cb-804e810fd3d6"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="49" y="0" width="26" height="16" uuid="49c026ba-3b69-435d-a2ff-a83535eb47b0"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PNR :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="75" y="1" width="75" height="15" uuid="e5f31876-f3b7-4690-9960-8548b5a6d0a5"/>
+					<textElement>
+						<font fontName="TH SarabunPSK" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{pnr}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="227" y="0" width="42" height="16" uuid="520ef6fe-eb3f-405d-a2f2-bb28891a7ed3"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[AIRLINE :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="269" y="1" width="178" height="15" uuid="0970282d-b291-4567-8bee-dcd05cb877a0"/>
+					<textElement>
+						<font fontName="TH SarabunPSK" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{airline}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="30" y="15" width="38" height="16" uuid="e8eee412-289c-43f5-a28f-16ec178f2a84"/>
+					<textElement>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[FLIGHT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="112" y="15" width="27" height="16" uuid="6ffcd4f5-4ed2-4e00-a630-a8136753124d"/>
+					<textElement>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DEPT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="160" y="15" width="27" height="16" uuid="ac67ef06-c7cd-4654-aff4-d3de47a17345"/>
+					<textElement>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ARRV]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="251" y="15" width="32" height="16" uuid="d2159397-07e1-4c24-82a5-e3739f9ab0fe"/>
+					<textElement>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CLASS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="352" y="15" width="53" height="16" uuid="d50f3eaf-3d9d-4c2c-80e4-a7b655e80fb9"/>
+					<textElement>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DEPT DATE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="436" y="15" width="26" height="16" uuid="82698ad0-2813-4081-ac0a-108735af64fd"/>
+					<textElement>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NET]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="495" y="15" width="38" height="16" uuid="4550c7fd-8be7-4aaa-8206-078d38e76581"/>
+					<textElement>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SELLING]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<columnHeader>
+		<band height="16">
+			<staticText>
+				<reportElement x="11" y="0" width="38" height="16" uuid="82c2db48-2462-4df4-9a9e-c603d87f95b4"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AIR LINE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="11" y="0" width="77" height="15" uuid="f3ce8443-1456-41c3-8f8c-313268445824"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{flight}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="105" y="0" width="41" height="15" uuid="95091b89-ce20-4e11-a56d-0acb2dc424cd"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dept}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="153" y="0" width="41" height="15" uuid="50b99dbe-94ba-417c-b888-cc717562d038"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{arrv}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="200" y="0" width="137" height="15" uuid="19986c09-6477-412e-acaa-8a3c99854048"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{classflight}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="347" y="0" width="63" height="15" uuid="da8575d4-64b9-4fb5-8155-5e5b8d84fa1f"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deptdate}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement stretchType="RelativeToBandHeight" x="415" y="0" width="63" height="15" uuid="4211529f-9034-4b2f-bb98-7c1e64196857"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{net} != null && !"null".equals($F{net}) && $F{net}.length() > 0 && !"".equalsIgnoreCase($F{net})) ? new BigDecimal($F{net}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement stretchType="RelativeToBandHeight" x="483" y="0" width="63" height="15" uuid="17a74c22-3737-4c86-8b8e-f55c5c7e3e0d"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{sell} != null && !"null".equals($F{sell}) && $F{sell}.length() > 0 && !"".equalsIgnoreCase($F{sell})) ? new BigDecimal($F{sell}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -22,54 +22,54 @@ WHERE
 	<field name="refno" class="java.lang.String"/>
 	<field name="room" class="java.lang.String"/>
 	<columnHeader>
-		<band height="33" splitType="Stretch">
-			<rectangle radius="7">
-				<reportElement mode="Transparent" x="0" y="16" width="555" height="16" uuid="47fe968e-4013-48cf-a25c-c08c65085375"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</rectangle>
+		<band height="33">
 			<staticText>
-				<reportElement x="10" y="0" width="36" height="16" uuid="ded7e7ee-41fd-4b38-a177-3830e4ffd393"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[HOTEL]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="46" y="16" width="36" height="16" uuid="a6ac54c7-006c-4af9-b98a-0af01ca81e31"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[NAME]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="163" y="16" width="72" height="16" uuid="37060e8c-2abb-4a6d-bc9d-d80b3f335fcb"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[CHECK IN - OUT]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="329" y="16" width="36" height="16" uuid="67a26ca7-b3db-4fac-9348-c69ce70646a9"/>
+				<reportElement positionType="Float" x="329" y="16" width="36" height="16" uuid="8b4252d7-652d-425a-ac54-de6a2d9d07b2"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ROOM]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="440" y="16" width="21" height="16" uuid="83e2edbb-2571-4e55-aa90-3406e35b0ee2"/>
+				<reportElement positionType="Float" x="163" y="16" width="72" height="16" uuid="ccaffbe8-f0dd-43d8-b9da-95d31ec0c030"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CHECK IN - OUT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="46" y="16" width="36" height="16" uuid="9a99dc0f-a4be-4896-b6dd-b167e08c9bcd"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="440" y="16" width="21" height="16" uuid="f5a88730-25bc-446f-b7be-5fb3de8a523a"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NET]]></text>
 			</staticText>
+			<rectangle radius="7">
+				<reportElement positionType="Float" mode="Transparent" x="0" y="16" width="555" height="16" uuid="1c1594aa-8cd1-4a99-8c72-9ca8871ef760"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
 			<staticText>
-				<reportElement x="500" y="16" width="36" height="16" uuid="78c1b056-0d2a-4a90-98b8-22377949a53e"/>
+				<reportElement positionType="Float" x="500" y="16" width="36" height="16" uuid="7b6fa8cb-0add-45ff-b61a-cccaaf55abfb"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="10" y="0" width="36" height="16" uuid="73e1f892-2a48-44f0-a1b9-567cc2af2ce5"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HOTEL]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -119,7 +119,4 @@ WHERE
 			</textField>
 		</band>
 	</detail>
-	<lastPageFooter>
-		<band height="12"/>
-	</lastPageFooter>
 </jasperReport>

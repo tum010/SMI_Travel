@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PackageLandSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="2" bottomMargin="2" uuid="a902ef05-676b-4a62-954c-0079fc85ab34">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="agent" class="java.lang.String"/>
+	<field name="okby" class="java.lang.String"/>
+	<field name="category" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="qty" class="java.lang.String"/>
+	<field name="net" class="java.lang.String"/>
+	<field name="sell" class="java.lang.String"/>
+	<field name="total" class="java.lang.String"/>
+	<columnHeader>
+		<band height="33">
+			<staticText>
+				<reportElement positionType="Float" x="443" y="16" width="25" height="16" uuid="3c0196b7-dc3a-476e-8b90-840420fbb35d"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NET]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="276" y="16" width="60" height="16" uuid="e0264864-c080-4e2f-99e3-6db30ec92b6c"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="499" y="16" width="34" height="16" uuid="b0e97165-1f25-4d8f-bbd5-a526cbf38355"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRICE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="11" y="0" width="36" height="16" uuid="76b1ba82-bea5-40aa-a96c-3189e9ce9cfd"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAND]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="25" y="16" width="36" height="16" uuid="458760af-4300-4c5d-9172-2ef97e1b9666"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AGENT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="159" y="16" width="49" height="16" uuid="d2ccee18-64d2-45ae-a2ff-62ff246cd2a9"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CATEGORY]]></text>
+			</staticText>
+			<rectangle radius="7">
+				<reportElement positionType="Float" mode="Transparent" x="0" y="16" width="555" height="16" uuid="68a314f6-18c8-46c2-ad20-b292ef41227e"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="391" y="16" width="26" height="16" uuid="d804b7e0-466a-4cd6-b41f-b25a4ddd9b5e"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[QTY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="92" y="16" width="36" height="16" uuid="704a74ab-6c24-4646-9ca0-c5128bb9f673"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OK BY]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="11" y="0" width="61" height="15" uuid="7bed7220-a027-437e-8b4a-3f500cbdf01b"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agent}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="79" y="0" width="61" height="15" uuid="64783a21-24c0-4c39-9944-57271149228c"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{okby}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="149" y="0" width="71" height="15" uuid="c8e8a928-137a-42d0-a192-9e993dded062"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{category}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="232" y="0" width="152" height="15" uuid="ec2018f6-189c-4230-b7bb-d13086772d90"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement stretchType="RelativeToBandHeight" x="488" y="0" width="61" height="15" uuid="7e025d0e-4d26-454e-a5b4-91f795bcda53"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{sell} != null && !"null".equals($F{sell}) && $F{sell}.length() > 0 && !"".equalsIgnoreCase($F{sell})) ? new BigDecimal($F{sell}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement stretchType="RelativeToBandHeight" x="423" y="0" width="61" height="15" uuid="0e6ba232-ff5d-4a0f-841e-070adfa7e036"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{net} != null && !"null".equals($F{net}) && $F{net}.length() > 0 && !"".equalsIgnoreCase($F{net})) ? new BigDecimal($F{net}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0">
+				<reportElement stretchType="RelativeToBandHeight" x="391" y="0" width="26" height="15" uuid="bd30f740-4312-4a6d-b44d-a3617c5708ed"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{qty} != null && !"null".equals($F{qty}) && $F{qty}.length() > 0 && !"".equalsIgnoreCase($F{qty})) ? new BigDecimal($F{qty}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
