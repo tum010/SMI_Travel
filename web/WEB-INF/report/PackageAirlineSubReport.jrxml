@@ -102,7 +102,7 @@
 			</band>
 		</groupHeader>
 	</group>
-	<columnHeader>
+	<title>
 		<band height="16">
 			<staticText>
 				<reportElement x="11" y="0" width="38" height="16" uuid="82c2db48-2462-4df4-9a9e-c603d87f95b4"/>
@@ -112,7 +112,7 @@
 				<text><![CDATA[AIR LINE]]></text>
 			</staticText>
 		</band>
-	</columnHeader>
+	</title>
 	<detail>
 		<band height="16" splitType="Stretch">
 			<textField isStretchWithOverflow="true">

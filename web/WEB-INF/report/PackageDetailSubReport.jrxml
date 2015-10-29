@@ -24,7 +24,7 @@
 	<field name="packageLandSubReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<field name="packageOthersSubReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<field name="packageAirlineSubReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
-	<group name="groupTour">
+	<group name="groupTour" isStartNewPage="true">
 		<groupExpression><![CDATA[$F{grouptour}]]></groupExpression>
 		<groupHeader>
 			<band height="52">
@@ -136,9 +136,9 @@
 		</groupHeader>
 	</group>
 	<detail>
-		<band height="61" splitType="Stretch">
+		<band height="49" splitType="Stretch">
 			<rectangle radius="7">
-				<reportElement x="0" y="3" width="555" height="15" forecolor="#FFFFFF" backcolor="#E0FEFE" uuid="5bcd6807-6c0e-4d22-bbf2-58fc16d5c8a5"/>
+				<reportElement x="0" y="3" width="555" height="15" forecolor="#FFFFFF" backcolor="#FFFFCC" uuid="5bcd6807-6c0e-4d22-bbf2-58fc16d5c8a5"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -179,7 +179,7 @@
 				<textFieldExpression><![CDATA[$F{leadername}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="34" width="555" height="5" uuid="ed75d6eb-8aa5-42a7-b476-d62d1b20f63d"/>
+				<reportElement positionType="Float" x="0" y="29" width="555" height="5" uuid="ed75d6eb-8aa5-42a7-b476-d62d1b20f63d"/>
 				<subreportParameter name="REFNO_MASTER">
 					<subreportParameterExpression><![CDATA[$F{refno}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -187,7 +187,7 @@
 				<subreportExpression><![CDATA[$F{subReportDir} + "/PackageHotelSubReport.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="43" width="555" height="5" uuid="bffb9abe-87d2-48aa-a084-3d5143938cb9"/>
+				<reportElement positionType="Float" x="0" y="36" width="555" height="5" uuid="bffb9abe-87d2-48aa-a084-3d5143938cb9"/>
 				<subreportParameter name="REFNO_MASTER">
 					<subreportParameterExpression><![CDATA[$F{refno}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -195,7 +195,7 @@
 				<subreportExpression><![CDATA[$F{subReportDir} + "/PackageLandSubReport.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="53" width="555" height="5" uuid="27507bc8-0ddb-4df7-bf32-e7f170acee68"/>
+				<reportElement positionType="Float" x="0" y="43" width="555" height="5" uuid="27507bc8-0ddb-4df7-bf32-e7f170acee68"/>
 				<subreportParameter name="REFNO_MASTER">
 					<subreportParameterExpression><![CDATA[$F{refno}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -203,7 +203,7 @@
 				<subreportExpression><![CDATA[$F{subReportDir} + "/PackageOthersSubReport.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="26" width="555" height="5" uuid="0dc569e2-7874-413d-994e-2341e34b9da1"/>
+				<reportElement positionType="Float" x="0" y="22" width="555" height="5" uuid="0dc569e2-7874-413d-994e-2341e34b9da1"/>
 				<subreportParameter name="REFNO_MASTER">
 					<subreportParameterExpression><![CDATA[$F{refno}]]></subreportParameterExpression>
 				</subreportParameter>
