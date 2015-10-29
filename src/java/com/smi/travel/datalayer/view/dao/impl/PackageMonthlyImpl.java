@@ -9,14 +9,18 @@ import com.smi.travel.datalayer.report.model.PackageMonthlyReport;
 import com.smi.travel.datalayer.view.dao.PackageMonthlyDao;
 import com.smi.travel.datalayer.view.entity.OtherMonthlyView;
 import com.smi.travel.datalayer.view.entity.PackageMonthlyView;
+import com.smi.travel.datalayer.view.entity.PackageSummaryAirlineView;
 import com.smi.travel.datalayer.view.entity.PackageSummaryDetailView;
 import com.smi.travel.datalayer.view.entity.PackageSummaryHotelView;
+import com.smi.travel.datalayer.view.entity.PackageSummaryLandView;
+import com.smi.travel.datalayer.view.entity.PackageSummaryOthersView;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -178,8 +182,11 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
             packageSum.setLeadername(B[8]== null ? "" :util.ConvertString(B[8]));
             packageSum.setBookpax(B[9]== null ? "" :util.ConvertString(B[9]));
             packageSum.setGrouptour(B[10]== null ? "" :util.ConvertString(B[10]));
-            packageSum.setSubReportDir("C:\\Users\\chonnasith\\Documents\\NetBeansProjects\\SMI_Travel\\build\\web\\WEB-INF\\report");
-            packageSum.setPackageHotelSubReportDataSource(new JRBeanCollectionDataSource(test()));
+            packageSum.setSubReportDir(url);
+            packageSum.setPackageHotelSubReportDataSource(new JRBeanCollectionDataSource(getPackageHotel(util.ConvertString(B[7]))));
+            packageSum.setPackageLandSubReportDataSource(new JRBeanCollectionDataSource(getPackageLand(util.ConvertString(B[7]))));
+            packageSum.setPackageOthersSubReportDataSource(new JRBeanCollectionDataSource(getPackageOthers(util.ConvertString(B[7]))));
+            packageSum.setPackageAirlineSubReportDataSource(new JRBeanCollectionDataSource(getPackageAirline(util.ConvertString(B[7]))));
             data.add(packageSum);
         }
         
@@ -190,11 +197,155 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
         return data;
     }
 
-    private List test() {
+    private List getPackageHotel(String refNo) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
         List data = new ArrayList();
-        PackageSummaryHotelView packageSum = new PackageSummaryHotelView();
-        packageSum.setName("250001");
-        data.add(packageSum);
+        
+        String query = "SELECT * FROM `hotel_booking_view` hb WHERE hb.refno = '"+ refNo +"'";
+        
+        List<Object[]> QueryHotel = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("checkin", Hibernate.STRING)
+                .addScalar("checkout", Hibernate.STRING)
+                .addScalar("room", Hibernate.STRING)
+                .addScalar("net", Hibernate.STRING)
+                .addScalar("sell", Hibernate.STRING)
+                .list();
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd MMM yy");
+        
+        for (Object[] B : QueryHotel) {
+            PackageSummaryHotelView packageHotel = new PackageSummaryHotelView();
+            packageHotel.setRefno(refNo);
+            packageHotel.setName(B[1]== null ? "" : util.ConvertString(B[1]));
+            packageHotel.setCheckin(B[2]== null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[2])))));
+            packageHotel.setCheckout(B[3]== null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[3])))));
+            packageHotel.setRoom(B[4]== null ? "" : util.ConvertString(B[4]));
+            packageHotel.setNet(B[5]== null ? "" : util.ConvertString(B[5]));
+            packageHotel.setSell(B[6]== null ? "" : util.ConvertString(B[6]));
+            data.add(packageHotel);
+        }
+        
+//        for(int i=0;i<3;i++){
+//            PackageSummaryHotelView packageSum = new PackageSummaryHotelView();
+//            packageSum.setRefno(refNo);
+//            packageSum.setName(refNo);
+//            data.add(packageSum);
+//        }       
+        
+        return data;
+    }
+
+    private List getPackageLand(String refNo) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        
+        String query = "SELECT * FROM `land_booking_view` lb WHERE lb.refno = '"+ refNo +"'";
+        
+        List<Object[]> QueryLand = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("agent", Hibernate.STRING)
+                .addScalar("okby", Hibernate.STRING)
+                .addScalar("category", Hibernate.STRING)
+                .addScalar("description", Hibernate.STRING)
+                .addScalar("qty", Hibernate.STRING)
+                .addScalar("net", Hibernate.STRING)
+                .addScalar("sell", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryLand) {
+            PackageSummaryLandView packageLand = new PackageSummaryLandView();
+            packageLand.setAgent(B[1]== null ? "" : util.ConvertString(B[1]));
+            packageLand.setOkby(B[2]== null ? "" : util.ConvertString(B[2]));
+            packageLand.setCategory(B[3]== null ? "" : util.ConvertString(B[3]));
+            packageLand.setDescription(B[4]== null ? "" : util.ConvertString(B[4]));
+            packageLand.setQty(B[5]== null ? "" : util.ConvertString(B[5]));
+            packageLand.setNet(B[6]== null ? "" : util.ConvertString(B[6]));
+            packageLand.setSell(B[7]== null ? "" : util.ConvertString(B[7]));
+            data.add(packageLand);
+        }
+        
+        return data;
+    }
+
+    private List getPackageOthers(String refNo) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        
+        String query = "SELECT * FROM `other_booking_view` ob WHERE ob.refno = '"+ refNo +"'";
+        
+        List<Object[]> QueryOther = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("code", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("other_date", Hibernate.STRING)
+                .addScalar("other_time", Hibernate.STRING)
+                .addScalar("adult", Hibernate.STRING)
+                .addScalar("child", Hibernate.STRING)
+                .addScalar("infant", Hibernate.STRING)
+                .addScalar("sell", Hibernate.STRING)
+                .addScalar("net", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryOther) {
+            PackageSummaryOthersView packageOther = new PackageSummaryOthersView();
+            packageOther.setCode(B[1]== null ? "" : util.ConvertString(B[1]));
+            packageOther.setDescription(B[2]== null ? "" : util.ConvertString(B[2]));
+            packageOther.setDate(B[3]== null ? "" : util.ConvertString(B[3]));
+//            packageOther.setA(B[4]== null ? "" : util.ConvertString(B[4]));
+            packageOther.setAdult(B[5]== null ? "" : util.ConvertString(B[5]));
+            packageOther.setChild(B[6]== null ? "" : util.ConvertString(B[6]));
+            packageOther.setInfant(B[7]== null ? "" : util.ConvertString(B[7]));
+            packageOther.setSell(B[8]== null ? "" : util.ConvertString(B[8]));
+            packageOther.setNet(B[9]== null ? "" : util.ConvertString(B[9]));
+            data.add(packageOther);
+        }
+        
+        return data;
+    }
+
+    private List getPackageAirline(String refNo) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        
+        String query = "SELECT * FROM `airticket_booking_view` ab WHERE ab.refno = '"+ refNo +"'";
+        
+        List<Object[]> QueryAirline = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("pnr", Hibernate.STRING)
+                .addScalar("airline", Hibernate.STRING)
+                .addScalar("flight", Hibernate.STRING)
+                .addScalar("dept", Hibernate.STRING)
+                .addScalar("arrv", Hibernate.STRING)
+                .addScalar("class", Hibernate.STRING)
+                .addScalar("depart_date", Hibernate.STRING)
+                .addScalar("net", Hibernate.STRING)
+                .addScalar("sell", Hibernate.STRING)
+                .list();
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd MMM yy");
+        
+        for (Object[] B : QueryAirline) {
+            PackageSummaryAirlineView packageAirline = new PackageSummaryAirlineView();
+            packageAirline.setPnr(B[1]== null ? "" : util.ConvertString(B[1]));
+            packageAirline.setAirline(B[2]== null ? "" : util.ConvertString(B[2]));
+            packageAirline.setFlight(B[3]== null ? "" : util.ConvertString(B[3]));
+            packageAirline.setDept(B[4]== null ? "" : util.ConvertString(B[4]));
+            packageAirline.setArrv(B[5]== null ? "" : util.ConvertString(B[5]));
+            packageAirline.setClassflight(B[6]== null ? "" : util.ConvertString(B[6]));
+            packageAirline.setDeptdate(B[7]== null ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[7])))));
+            packageAirline.setNet(B[8]== null ? "" : util.ConvertString(B[8]));
+            packageAirline.setSell(B[9]== null ? "" : util.ConvertString(B[9]));
+            data.add(packageAirline);
+        }
+        
         return data;
     }
 }
