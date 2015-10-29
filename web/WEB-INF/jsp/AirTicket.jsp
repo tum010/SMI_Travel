@@ -28,7 +28,7 @@
 <c:set var="mCurrency" value="${requestScope['MCurrency']}" />
 <c:set var="roleName" value="${requestScope['roleName']}" />
 <c:set var="airLocking" value="${requestScope['airLocking']}" />
-
+<c:set var="pnrdata" value="${requestScope['pnrdata']}" />
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 
@@ -101,6 +101,8 @@
                 </c:choose>
                 <input type="hidden" id="requestLock" name="requestLock" value="${lockUnlockBooking}"/>
                 <input type="hidden" value="${action}" id="action" name="action" />
+                <input type="hidden" value="${pnrdata}" id="pnrdata" name="pnrdata" />
+                
                 <!--Detail Panel-->
                 <div class="panel panel-default">
                     <div class="panel-heading">

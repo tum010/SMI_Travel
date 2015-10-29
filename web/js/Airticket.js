@@ -1,5 +1,10 @@
 $(document).ready(function () {
-    // MONEY FORMAT
+    var checkpnr = $('#pnrdata').val(); 
+    if(checkpnr !== "0"){
+        $("#ButtonAdd").addClass("disabled");
+    }
+        
+    // MONEY FORMAT 
     $(".money").mask('000,000,000,000,000,000', {reverse: true});
     // SET DATATIMEPICKER
     $('#datetimepicker3').datetimepicker({
