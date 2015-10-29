@@ -1215,7 +1215,7 @@ function clearInvoice(){
 //    $('#counterTable').val('1');
 //    AddRowDetailBillAble();
 
-$('#SearchRefNo, #InvNo, #InputInvDate, #InputDueDate, #InvTo, #InvToName, #InvToAddress, #SaleStaffId, #SaleStaffCode, #SaleStaffName, #ARCode, #Remark, #TextAmount, #TotalNet,#InvoiceId ').val('');
+$('#SearchRefNo, #InvNo, #InputDueDate, #InvTo, #InvToName, #InvToAddress, #SaleStaffId, #SaleStaffCode, #SaleStaffName, #ARCode, #Remark, #TextAmount, #TotalNet,#InvoiceId ').val('');
     $('#Grpup').attr('checked', false);
 //    $('input[name="Department"]')[0].checked = false;
 //    $('input[name="Department"]')[1].checked = false;
@@ -1231,7 +1231,7 @@ $('#SearchRefNo, #InvNo, #InputInvDate, #InputDueDate, #InvTo, #InvToName, #InvT
     });
     $('#counterTable').val('1');
     
-    $("#InputDueDate").datepicker({ dateFormat: "yy-mm-dd"}).datepicker("setDate", "0");
+//    $("#InputDueDate").datepicker({ dateFormat: "yy-mm-dd"}).datepicker("setDate", "0");
     AddRowDetailBillAble();
 }
 function copyInvoice(){

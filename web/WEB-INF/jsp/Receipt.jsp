@@ -21,6 +21,7 @@
 <c:set var="callPage" value="${requestScope['callPage']}" />
 <c:set var="receiptDetailList" value="${requestScope['receiptDetailList']}" />
 <c:set var="receiptCreditList" value="${requestScope['receiptCreditList']}" />
+<c:set var="invoiceIdList" value="${requestScope['invoiceIdList']}" />
 
 <c:set var="roleName" value="${requestScope['roleName']}" />
 <section class="content-header" >
@@ -679,6 +680,12 @@
                                             </c:when>
                                         </c:choose>
                                         <option value="3" ${selected3}>Invoice</option>
+                                        <c:choose>
+                                            <c:when test="${requestScope['SelectPrint'] == '4'}">
+                                                <c:set var="selected4" value="selected" />
+                                            </c:when>
+                                        </c:choose>
+                                        <option value="4" ${selected4}>Invoice Email</option>
                                     </select>
                                 </div>
                                 <div class="col-md-1 text-left " style="width: 100px">
@@ -1136,6 +1143,83 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade " id="PrintInvoiceModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Print</h4>
+            </div>
+            <div class="modal-body" >
+                <div class="row">
+                    <div class="col-md-5">
+                        <h5>Invoice No </h5>
+                    </div>
+                    <div class="col-md-7">
+                        <select id="selectInvoiceId" name="selectInvoiceId" class="form-control">
+                            <c:forEach var="table" items="${invoiceIdList}" >
+                               <option value="${table.invoiceId} | ${table.invoiceType}">${table.invoiceNo}</option>  
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h5>Sales Staff </h5>
+                    </div>
+                    <div class="col-md-7">
+                        <select id="selectSalesStaff" name="selectSalesStaff" class="form-control">
+                            <option value="0">Not Show Sales Staff</option>
+                            <option value="1">Show Sales Staff</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h5>Show Leader to Invoice </h5>
+                    </div>
+                    <div class="col-md-7">
+                        <select id="selectLeader" name="selectLeader" class="form-control">
+                            <option value="0">Not Show Leader</option>
+                            <option value="1">Show Leader</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h5>Payment by money Transfer</h5>
+                    </div>
+                    <div class="col-md-7">
+                        <select id="selectPayment" name="selectPayment" class="form-control">
+                            <option value="0">Not show</option>
+                            <option value="SCB2">Payment Bank Siam commercial bank PCL</option>
+                            <option value="BBL">Payment Bank Bangkok bank PCL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <h5>Sign </h5>
+                    </div>
+                    <div class="col-md-7">
+                        <select id="SelectSign" name="SelectSign" class="form-control">
+                            <option value="">--Sign--</option>
+                            <option value="benjaporn">Benjaporn</option>
+                            <option value="pawina">Pawina</option>
+                            <option value="supavadee">Supavadee</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">  
+                <button type="button" onclick="confirmPrintInvoice()" class="btn btn-success" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <!--Disable Modal-->
 <div class="modal fade" id="SendEmailReceiptModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -1594,7 +1678,12 @@
     }
     
     function printReceipt() {
-        $('#PrintReceiptModal').modal('show');       
+        var printtype = document.getElementById('selectPrint').value;
+        if(printtype == 1 || printtype == 2 ){
+            $('#PrintReceiptModal').modal('show');
+        }else if(printtype == 3 || printtype == 4){
+            $('#PrintInvoiceModal').modal('show');
+        }
     }
     
     function confirmPrintReceipt() {
@@ -1611,10 +1700,38 @@
             window.open("report.smi?name=ReceiptReport&receiveId="+receiveId+"&receiveNo="+receiveNo+"&optionPrint="+optionPrint);
         }else if(printtype == 2){
             window.open("report.smi?name=ReceiptEmail&receiveId="+receiveId+"&receiveNo="+receiveNo+"&optionPrint="+optionPrint);
-        }else if(printtype == 3){
-//            window.open("report.smi?name=ReceiptEmail&receiveId="+receiveId+"&receiveNo="+receiveNo+"&optionPrint="+optionPrint);
-        }          
+        }        
     }
+    
+    function confirmPrintInvoice(){
+        var printtype = document.getElementById('selectPrint').value;
+        var invoice = document.getElementById('selectInvoiceId').value;
+        
+        var inv = invoice.split("|");
+        var invoiceId = inv[0];
+        var invType = inv[1];
+        var sale = document.getElementById('selectSalesStaff').value;
+        var payment =  document.getElementById('selectPayment').value;
+        var sign =  document.getElementById('SelectSign').value;
+        var leader =  document.getElementById('selectLeader').value;
+        
+        if(printtype == 3){
+            if(invType === 'T'){
+                window.open("report.smi?name=InvoiceTemp&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
+            }else{
+                window.open("report.smi?name=InvoiceReport&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
+            }
+        }else if(printtype == 4){
+            if(invType === 'T'){
+                window.open("report.smi?name=InvoiceTemp&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
+            }else{
+                window.open("SendMail.smi?reportname=Invoice&reportid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign);   
+            }
+        } 
+    }
+    
+    
+    
     //http://localhost:8080/SMITravel/SendMail.smi?reportname=Invoice
     function sendEmailReceipt(){
         $('#SendEmailReceiptModal').modal('show');     
