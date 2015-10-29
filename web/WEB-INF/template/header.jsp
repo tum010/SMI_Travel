@@ -90,7 +90,7 @@
                             //  ,"<li><a href='DaytourOperationOther.smi'> Other</a></li>"
                             ];
                             var reportMenu = [
-                                            "<li><a href='AirTicketMonthReport.smi'> AirTicket</a></li>",
+                                            "<li><a href='TicketFareSummaryReport.smi'>Checking AirTicket</a></li>",
                                             "<li><a href='HotelSumReport.smi'> Hotel</a></li>",
                                             "<li><a href=''>Land</a></li>",
                                             "<li><a href=''>Others</a></li>",
