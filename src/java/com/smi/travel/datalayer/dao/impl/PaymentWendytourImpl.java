@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
+import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.Master;
@@ -14,6 +15,7 @@ import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.entity.PaymentWendyReference;
 import com.smi.travel.datalayer.entity.TourOperationDesc;
+import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.datalayer.view.entity.PaymentTourHotelSummary;
 import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
@@ -596,6 +598,33 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         session.close();
         this.sessionFactory.close();
         return result;
+    }
+
+    @Override
+    public List<Daytour> searchListTourCode(String name) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        String sql ="SELECT * FROM `daytour` where name like '%"+name+"%' or code like '"+name+"%' and status = 'active' limit 200";
+        List<Object[]> QueryList =  session.createSQLQuery(sql)
+                .addScalar("id",Hibernate.STRING)
+                .addScalar("code",Hibernate.STRING)
+                .addScalar("name",Hibernate.STRING)
+                .list();
+        
+        List<Daytour> daytourList =  new LinkedList<Daytour>();
+        for(Object[] B : QueryList){
+            Daytour daytour = new Daytour();
+            daytour.setId(B[0].toString());
+            daytour.setCode(B[1].toString());
+            daytour.setName(B[2].toString());
+            daytourList.add(daytour);
+        }       
+        if (daytourList.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return daytourList;
     }
     
 }
