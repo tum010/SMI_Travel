@@ -1193,7 +1193,7 @@
                             <input class="form-control" type="hidden" id="PaymentWendyDetailId" name="PaymentWendyDetailId" value="${paymentWendyDetailList.id}" readonly="">
                             <input class="form-control" type="hidden" id="createBy" name="createBy" value="${paymentWendyList.createBy}" readonly="">
                             <input class="form-control" type="hidden" id="createDate" name="createDate" value="${paymentWendyList.createDate}" readonly="">
-                            <input class="form-control" type="hidden" id="refCode" name="refCode" value="${paymentWendyDetailList.refCode}" readonly="">
+                            <input class="form-control" type="hidden" id="invNo" name="invNo" value="${paymentWendyDetailList.invoiceCreditor}" readonly="">
                             
                             <div class="col-xs-12 form-group"><hr/></div>  
                             <div class="text-center" style="padding-top: 10px">

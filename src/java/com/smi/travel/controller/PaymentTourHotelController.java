@@ -1,6 +1,8 @@
 package com.smi.travel.controller;
 
 
+import com.smi.travel.datalayer.entity.Daytour;
+import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDefaultData;
@@ -12,6 +14,8 @@ import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.entity.TourOperationDesc;
+import com.smi.travel.datalayer.service.BookingDaytourService;
+import com.smi.travel.datalayer.service.DaytourOperationService;
 import com.smi.travel.datalayer.service.PaymentTourHotelService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
@@ -45,9 +49,12 @@ public class PaymentTourHotelController extends SMITravelController {
     private static final String CURRENCYLIST ="currency_list";
     private static final String PRODUCTDETAILLIST ="productDetail_list";
     private static final String REFNOLIST ="refNo_list";
+    private static final String DayTourList = "DayTourList";
+    private static final String TourList = "TourList";
     private UtilityService utilservice;
     UtilityFunction util;
     private PaymentTourHotelService paymentTourHotelService;
+    private BookingDaytourService bookingDaytourService;
     private static final String TransectionResult = "result";
     
     @Override
@@ -65,6 +72,8 @@ public class PaymentTourHotelController extends SMITravelController {
         request.setAttribute(PRODUCTLIST, mProdictList);
         List<MCurrency> mCurrencyList = utilservice.getListMCurrency();
         request.setAttribute(CURRENCYLIST, mCurrencyList);
+        List<Daytour> tourList = getBookingDaytourService().getTourList();
+        request.setAttribute(TourList, tourList);
         request.setAttribute(PAYMENHOTELTCOUNT, "1");
         //request.setAttribute("btnSave", "save");       
         
@@ -598,6 +607,14 @@ public class PaymentTourHotelController extends SMITravelController {
 
     public void setPaymentTourHotelService(PaymentTourHotelService paymentTourHotelService) {
         this.paymentTourHotelService = paymentTourHotelService;
+    }
+
+    public BookingDaytourService getBookingDaytourService() {
+        return bookingDaytourService;
+    }
+
+    public void setBookingDaytourService(BookingDaytourService bookingDaytourService) {
+        this.bookingDaytourService = bookingDaytourService;
     }
     
 }

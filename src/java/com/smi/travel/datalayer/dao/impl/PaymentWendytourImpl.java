@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
+import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
@@ -57,7 +58,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
                 paymentDetailWendyList = payment.getPaymentDetailWendies();
                 PaymentDetailWendy paymentDetailWendy = new PaymentDetailWendy();
                 paymentDetailWendy = paymentDetailWendyList.get(0);
-//                paymentDetailWendy.setRefCode("PW"+refCode+runningCode);
+                paymentDetailWendy.setInvoiceCreditor("PW"+refCode+runningCode);
             }
             session.save(payment);    
             List<PaymentDetailWendy> paymentDetailWendy = payment.getPaymentDetailWendies();
@@ -575,6 +576,26 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         }
         
         return data;
+    }
+
+    @Override
+    public String checkDayTourOperationDetail(String tourId, String tourDate) {
+        String result = "fail";
+        Session session = this.sessionFactory.openSession();
+        List<DaytourBooking> list = new LinkedList<DaytourBooking>();
+        String querysql = "SELECT * FROM daytour_booking DB Where DB.tour_id = :tourId and DB.tour_date = :tourDate";
+        Query query = session.createSQLQuery(querysql);
+        query.setParameter("tourId", tourId);
+        query.setParameter("tourDate", tourDate);
+        list = query.list();
+        if (!list.isEmpty()) {
+            result = "success";
+        }else{
+            result = "fail";
+        }    
+        session.close();
+        this.sessionFactory.close();
+        return result;
     }
     
 }

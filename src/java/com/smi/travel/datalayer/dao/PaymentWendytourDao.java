@@ -37,4 +37,5 @@ public interface PaymentWendytourDao {
     public PaymentWendy getPaymentWendyFromDayTourOperation(TourOperationDesc paymentWendy);
     public String InsertPaymentWendyReference(PaymentWendyReference paymentWendyReference);
     public List getPaymentTourHotelSummary(String from, String to, String pvtype, String status, String invSupCode, String printBy);
+    public String checkDayTourOperationDetail(String tourId,String tourDate);
 }

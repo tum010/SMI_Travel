@@ -395,7 +395,7 @@ public class DaytourOperationDetailController extends SMITravelController {
         String PayNoGuideBillId = request.getParameter("PayNoGuideBillId");
         String PayNoGuideBill = request.getParameter("PayNoGuideBill");
         String PaymentWendyDetailId = request.getParameter("PaymentWendyDetailId");
-        String refCode = request.getParameter("refCode");
+        String invNo = request.getParameter("invNo");
         
         String status = request.getParameter("StatusGuideBill");
         String amount = request.getParameter("AmountGuideBill");
@@ -492,8 +492,8 @@ public class DaytourOperationDetailController extends SMITravelController {
                 paymentDetailWendy.setId(PaymentWendyDetailId);
             }
             
-            if((!"".equalsIgnoreCase(refCode)) && (refCode != null)){
-//                paymentDetailWendy.setRefCode(refCode);
+            if((!"".equalsIgnoreCase(invNo)) && (invNo != null)){
+                paymentDetailWendy.setInvoiceCreditor(invNo);
             }
             
             paymentWendy.getPaymentDetailWendies().add(paymentDetailWendy);

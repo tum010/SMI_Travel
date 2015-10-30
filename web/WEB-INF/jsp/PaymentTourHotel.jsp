@@ -17,6 +17,7 @@
 <c:set var="resultText" value="${requestScope['resultText']}" />
 <c:set var="idRole" value="${requestScope['idRole']}" />
 <c:set var="refNo_list" value="${requestScope['refNo_list']}" />
+<c:set var="tourList" value="${requestScope['TourList']}" />
 
 <section class="content-header" >
     <h1>
@@ -366,9 +367,9 @@
                                 <th style="width: 8%">Type</th>
                                 <th style="width: 11%">Amount</th>
                                 <th style="width: 11%">Comm</th>
-                                <th style="width: 13%">Description</th>
+                                <th style="width: 12%">Description</th>
                                 <th style="width: 7%">A/C</th>
-                                <th style="width: 6%">Action</th>
+                                <th style="width: 7%">Action</th>
                                 <th class="hidden">Export Date</th>
                                 <th class="hidden">Is Export</th>
                                 <th class="hidden">Is Ex Inv</th>
@@ -434,12 +435,17 @@
                                             <span id="editSpan${i.count}" class="glyphicon glyphicon-th-list" onclick="editlist('${pl.id}','${i.count}')" ></span>
                                         </a>
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
+                                            <span id="editTour${i.count}" onclick="editTour('${i.count}')" class="glyphicon glyphicon glyphicon-list-alt"></span>
+                                        </a>    
+                                        <a href="#" onclick=""  data-toggle="modal" data-target="">
                                             <span id="SpanRemove${i.count}" onclick="deletelist('${pl.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span>
                                         </a>
                                     </td>
                                     <td class="hidden"> <input id="exportDate${i.count}" name="exportDate${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.exportDate}"> </td>
                                     <td class="hidden"> <input id="isExport${i.count}" name="isExport${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.isExport}"> </td>
                                     <td class="hidden"> <input id="isExInv${i.count}" name="isExInv${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.isExInv}"> </td>
+                                    <td class="hidden"> <input id="tourId${i.count}" name="tourId${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.tourId}"> </td>
+                                    <td class="hidden"> <input id="tourDate${i.count}" name="tourDate${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.tourDate}"> </td>
                                 </tr>                       
                             </c:forEach> 
                         </tbody>
@@ -782,6 +788,70 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<!--PACKAGE MODAL-->
+<div class="modal fade" id="DayTourModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Day Tour Operation</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-xs-12 form-group">
+                    <div class="col-xs-1 form-group" style="width: 100px">
+                        <label class="control-label">Tour Code</lable>
+                    </div>
+                    <div class="col-xs-1 form-group" style="width: 170px" id="codepanel"> 
+                        <div class="input-group" >                      
+                            <input name="tourCode" id="tourCode" type="text" class="form-control" value="" onkeypress="" style="text-transform:uppercase" ${readonly}/>                          
+                            <span class="input-group-addon" data-toggle="modal">
+                                <span class="glyphicon-search glyphicon"></span>
+                            </span>
+                        </div>    
+                    </div>
+                    <div class="col-xs-1" style="width: 260px" id="namepanel">
+                        <input name="tourName" id="tourName" type="text" class="form-control" value="" style="text-transform:uppercase" readonly=""/>
+                    </div>  
+                </div>
+                <div class="col-xs-12 form-group">
+                    <div class="col-xs-1 form-group" style="width: 100px">
+                        <label class="control-label">Tour Date</lable>
+                    </div>
+                    <div class="col-xs-1 form-group" style="width: 170px">
+                        <div class='input-group date' id="datepanel">
+                            <input name="tourDate" id="tourDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value=""/>
+                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                    </div>  
+                </div>
+                <div class="col-xs-1 hidden" style="width: 260px">
+                    <input name="tourId" id="tourId" type="text" class="form-control" value="" />
+                    <input name="tourRow" id="tourRow" type="text" class="form-control" value="" />
+                </div>  
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="viewDayTour()" class="btn btn-primary">View</button>
+                <button type="submit" onclick="checkDaytour()" class="btn btn-success">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<script>
+    tourCode = [];                        
+</script>
+<c:forEach var="tour" items="${tourList}">
+<script>
+    tourCode.push({id: "${tour.id}", code: "${tour.code}", name: "${tour.name}"});
+</script>
+</c:forEach>                                  
+    
 <script type="text/javascript">
     $(document).ready(function () {
         $('.date').datetimepicker();
@@ -1037,6 +1107,46 @@
 
         });
         
+           // ON KEY INPUT AUTO SELECT TOURCODE-TOURNAME
+                    $(function () {
+                        var availableTags = [];
+
+                        $.each(tourCode, function (key, value) {
+                            availableTags.push(value.code);
+                            if (!(value.name in availableTags)) {
+                                availableTags.push(value.name);
+                            }
+                        });
+
+                        $("#tourCode").autocomplete({
+                            source: availableTags,
+                            close: function (event, ui) {
+                                $("#tourCode").trigger('keyup');
+                            }
+                        });
+
+
+                        $("#tourCode").keyup(function () {
+                            var position = $(this).offset();
+                            $(".ui-widget").css("top", position.top + 30);
+                            $(".ui-widget").css("left", position.left);
+                            $(".ui-widget").css("relative", position.relative + 1000);
+                            var name = this.value;
+                            var code = this.value.toUpperCase();
+                            $("#tourName").val(null);
+                            $.each(tourCode, function (key, value) {
+                                if (name === value.name) {
+                                    $("#tourCode").val(value.code);
+                                    code = $("#tourCode").val().toUpperCase();
+                                }
+                                if (value.code.toUpperCase() === code) {
+                                    $("#tourId").val(value.id);
+                                    $("#tourName").val(value.name);
+                                }
+                            }); //end each tourCode
+                        }); // end InputTourCode keyup
+                    }); // end AutoComplete TourCode TourName
+        
     });
     
     function setEnvironment(){
@@ -1091,19 +1201,24 @@
                 '</td>' +
                 '<td><input maxlength ="15" class="form-control numerical"  style="text-align:right;" id="amount' + row + '" name="amount' + row + '"  align="right" type="text" onfocusout="CalculateGrandTotal(\'\')" onkeyup="insertCommas(this)"></td>' +
                 '<td><input maxlength ="15" class="form-control numerical"  style="text-align:right;" id="recCom' + row + '" name="recCom' + row + '"  align="right" type="text" onfocusout="calculateComm(\''+row+'\')" onkeyup="insertCommas(this)"></td>' +
-                '<td><input class="form-control" maxlength="255" style="width: ${DescriptionSize}" id="description' + row + '" name="description' + row + '" rows="2" ></td>' +
+                '<td><input class="form-control" maxlength="255" id="description' + row + '" name="description' + row + '" rows="2" ></td>' +
                 '<td><input id="ac' + row + '" name="ac' + row + '"   type="text" class="form-control" readonly=""></td>' +
                 '<td class="text-center">' +
-                    '<a href="#" onclick=""  data-toggle="modal" data-target="">' +
+                    '<a href="#" onclick=""  data-toggle="modal" data-target=""> ' +
                         '<span id="editSpan' + row + '" class="glyphicon glyphicon-th-list" onclick="editlist(\'\',\''+ row + '\')" ></span>' +
                     '</a>' +
-                    '<a href="#" onclick=""  data-toggle="modal" data-target="">  '+
+                    '<a href="#" onclick=""  data-toggle="modal" data-target=""> ' +
+                        '<span id="editTour' + row + '" onclick="editTour(\'' + row + '\')" class="glyphicon glyphicon glyphicon-list-alt"></span>' +
+                    '</a>' +    
+                    '<a href="#" onclick=""  data-toggle="modal" data-target=""> '+
                         '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon" onclick="deletelist(\'\', \''+row+'\')"></span>' +
                     '</a>' +
                 '</td>' +
                 '<td class="hidden"> <input id="exportDate' + row + '" name="exportDate' + row + '" maxlength ="15"  type="text" class="form-control"></td>' +
                 '<td class="hidden"> <input id="isExport' + row + '" name="isExport' + row + '" maxlength ="15"  type="text" class="form-control"> </td>' +
                 '<td class="hidden"> <input id="isExInv' + row + '" name="isExInv' + row + '" maxlength ="15"  type="text" class="form-control"> </td>' +
+                '<td class="hidden"> <input id="tourId' + row + '" name="tourId' + row + '" maxlength ="15"  type="text" class="form-control"> </td>' +
+                '<td class="hidden"> <input id="tourDate' + row + '" name="tourDate' + row + '" maxlength ="15"  type="text" class="form-control"> </td>' +
                 '</tr>'
             );
             $("#select_product_list option").clone().appendTo("#select-product" + row);
@@ -1606,5 +1721,107 @@
             
             CalculateGrossTotal('',$("#counter").val());   
         }
-    }  
+    }
+    
+    function editTour(row){
+        var tourId = $("#tourId"+row).val();
+        var tourDate = $("#tourDate"+row).val();
+        if((tourId !== '') && (tourDate !== '')){
+            for(var i=0;i<tourCode.length;i++){
+                var id = tourCode[i].id;
+                if(tourId === id){
+                    $("#tourRow").val(row);
+                    $("#tourId").val(tourId);
+                    $("#tourDate").val(tourDate);
+                    $("#tourCode").val(tourCode[i].code);
+                    $("#tourName").val(tourCode[i].name);
+                    i = tourCode.length;
+                }    
+            }           
+        }else{
+            $("#tourRow").val(row);
+            $("#tourId").val('');
+            $("#tourDate").val('');
+            $("#tourCode").val('');
+            $("#tourName").val('');
+        }
+        $("#DayTourModel").modal("show");
+    }
+    
+    function viewDayTour(){
+        var tourId = $("#tourId").val();
+        var tourDate = $("#tourDate").val();
+        if((tourId !== '') && (tourDate !== '')){
+            $("#codepanel").removeClass("has-error");
+            $("#namepanel").removeClass("has-error");
+            $("#datepanel").removeClass("has-error");
+            window.open("DaytourOperationDetail.smi?action=edit&tourID="+tourId+"&tourDate="+tourDate);
+        }else{
+            $("#codepanel").addClass("has-error");
+            $("#namepanel").addClass("has-error");
+            $("#datepanel").addClass("has-error");
+        }
+    }
+    
+    function checkDaytour(){
+        var tourId = $("#tourId").val();
+        var tourCode = $("#tourCode").val();
+        var tourName = $("#tourName").val();
+        var tourDate = $("#tourDate").val();
+        var row = $("#tourRow").val();
+        
+        if((tourId !== '') && (tourDate !== '')){
+            var servletName = 'PaymentTourHotelServlet';
+            var servicesName = 'AJAXBean';        
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&tourId=' + tourId +
+                    '&tourCode=' + tourCode +
+                    '&tourName=' + tourName +
+                    '&tourDate=' + tourDate +
+                    '&type=' + 'check';
+            CallAjaxCheck(param);
+        }else{
+            $("#tourId").val('');
+            $("#tourCode").val('');
+            $("#tourName").val('');
+            $("#tourDate").val('');
+            $("#tourId"+row).val('');
+            $("#tourDate"+row).val('');
+            $("#DayTourModel").modal("hide");
+        }
+        
+    }
+    
+    function CallAjaxCheck(param) {
+        var url = 'AJAXServlet';
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    if(msg === 'success'){
+                        var row = $("#tourRow").val();
+                        $("#tourId"+row).val($("#tourId").val());
+                        $("#tourDate"+row).val($("#tourDate").val());
+                        $("#codepanel").removeClass("has-error");
+                        $("#namepanel").removeClass("has-error");
+                        $("#datepanel").removeClass("has-error");
+                        $("#DayTourModel").modal("hide");
+                    }else{                        
+                        $("#codepanel").addClass("has-error");
+                        $("#namepanel").addClass("has-error");
+                        $("#datepanel").addClass("has-error");
+                    }
+                }, error: function(msg) {
+                    console.log('auto ERROR');
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
 </script>
