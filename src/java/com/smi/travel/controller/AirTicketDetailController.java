@@ -84,6 +84,7 @@ public class AirTicketDetailController extends SMITravelController {
     private static final String Result = "Result";
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String CHECKPNR = "checkPnr_list";
+    private static final String ISBILLSTATUS = "IsBillStatus";
 
 
     @Override
@@ -96,6 +97,7 @@ public class AirTicketDetailController extends SMITravelController {
         System.out.println(" ============= addpnrname ============= " + addpnrname);
         System.out.println(" ============= action ============= " + action);
         int result = 0;
+        request.setAttribute(ISBILLSTATUS,0);
         //set pnrId
         if(!"".equalsIgnoreCase(pnr) && pnr != null){
             request.setAttribute("pnrIdTemp", pnr);
@@ -165,6 +167,7 @@ public class AirTicketDetailController extends SMITravelController {
                 request.setAttribute(Action, "update");
                 request.setAttribute(TransactionResult, resultText[ne.result]);
             }
+            
         } else if ("disableFlight".equalsIgnoreCase(action)) {
             String flightId = request.getParameter("disableFlightId");
             System.out.println("Set disable flight id [" + flightId + "].");
@@ -254,6 +257,8 @@ public class AirTicketDetailController extends SMITravelController {
 
         calculateTotalEachFlightInPnr(airticketPnr);
         TreeSet<AirticketFlight> sortedFlight = new TreeSet<AirticketFlight>(new AirticketFlightComparator());
+        
+      
         if (airticketPnr != null) {
             List<AirticketAirline> airlines = new ArrayList<AirticketAirline>(airticketPnr.getAirticketAirlines());
             List<AirticketFlight> allFlights = new ArrayList<AirticketFlight>();
@@ -261,10 +266,14 @@ public class AirTicketDetailController extends SMITravelController {
             for (int i = 0; i < airlines.size(); i++) {
 //                allFlights.addAll(airlines.get(i).getAirticketFlights());
                 // AirTicketDetail.jsp in TableAir
+                
                 sortedFlight.addAll(airlines.get(i).getAirticketFlights());
                 allPassengers.addAll(airlines.get(i).getAirticketPassengers());
             }
-
+            
+//            if(allFlights != null){
+//                request.setAttribute(ISBILLSTATUS,allFlights.get(0).getIsBill());
+//            }
             allFlights.addAll(sortedFlight);
             request.setAttribute(CurrentPnr, airticketPnr);
             request.setAttribute(Airline, airlines);
@@ -406,6 +415,7 @@ public class AirTicketDetailController extends SMITravelController {
             String inTaxCost = request.getParameter("inTaxCost-" + i);
             
             AirticketFlight airFlight = getAirFlight(flightId, null);
+            
             if (airFlight == null) {
                 airFlight = new AirticketFlight();
             }
@@ -431,7 +441,7 @@ public class AirTicketDetailController extends SMITravelController {
             airFlight.setMTicketType(mTicketType);
             //airFlight.set
             //airFlight.setClass
-
+            
             if (StringUtils.isNotEmpty(adCost)) {
                 airFlight.setAdCost(Integer.valueOf(adCost));
             }
@@ -479,6 +489,8 @@ public class AirTicketDetailController extends SMITravelController {
             } else {
                 System.out.println("Detail is null, Not update DB this object " + i);
             }
+            
+            request.setAttribute(ISBILLSTATUS,airFlight.getIsBill());
         }
     }
 
@@ -537,11 +549,11 @@ public class AirTicketDetailController extends SMITravelController {
         String flightOrder = request.getParameter("flight-" + i + "-flightOrder");
 
         AirticketFlight airFlight = getAirFlight(Id, airPnr);
-
         if (airFlight == null) {
             airFlight = new AirticketFlight();
             airFlight.setIsBill("0");
         }
+        request.setAttribute(ISBILLSTATUS,airFlight.getIsBill());
 //        airFlight.setId(Id);
         airFlight.setMItemstatus(utilservice.getMItemstatusFromName(status));
         airFlight.setFlightNo(flightNo);

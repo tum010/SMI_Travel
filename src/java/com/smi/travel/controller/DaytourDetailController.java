@@ -51,6 +51,7 @@ public class DaytourDetailController extends SMITravelController {
     private static final String GuideList = "GuideList";
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String MCurrency = "MCurrency";
+    private static final String ISBILLSTATUS = "IsBillStatus";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -84,7 +85,8 @@ public class DaytourDetailController extends SMITravelController {
         }
 
         DaytourBooking dBooking = new DaytourBooking();
-
+        request.setAttribute(ISBILLSTATUS,0);
+        
         log.info("action[" + action + "] refNo[" + refNo + "] counterPrice(" + counterPrice + "), counterCoupon(" + counterCoupon + ")");
         if ("delete".equalsIgnoreCase(action)) {
             System.out.println("Delete me");
@@ -110,6 +112,8 @@ public class DaytourDetailController extends SMITravelController {
                     return one.getId().compareTo(two.getId());
                 }
             });
+            System.out.println(" bDaytour.getIsBill() " + bDaytour.getIsBill());
+            request.setAttribute(ISBILLSTATUS,bDaytour.getIsBill());
             
             request.setAttribute(DAYTOURBOOKPRICES,bookPriceList);
             
@@ -167,11 +171,15 @@ public class DaytourDetailController extends SMITravelController {
                 DaytourBooking dbDaytour = bookingDaytourService.getBookDetailDaytourFromID(dBookingId);
                 bDaytour.setMItemstatus(dbDaytour.getMItemstatus());
                 bDaytour.setIsBill(dbDaytour.getIsBill());
+
+                request.setAttribute(ISBILLSTATUS,dbDaytour.getIsBill());
             } else {
                 MItemstatus okayStatus = new MItemstatus();
                 okayStatus.setId("1");
                 bDaytour.setMItemstatus(okayStatus);
                 bDaytour.setIsBill(new Integer(0));
+
+                request.setAttribute(ISBILLSTATUS,bDaytour.getIsBill());
             }
             setDaytourPriceRows(request, counterPrice, bDaytour);
             setDaytourCouponRows(request, counterCoupon, bDaytour);

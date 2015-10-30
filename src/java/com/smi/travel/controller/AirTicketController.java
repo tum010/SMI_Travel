@@ -75,7 +75,8 @@ public class AirTicketController extends SMITravelController {
     private static final String MCurrency = "MCurrency";
     private static final String AirLocking = "airLocking";
     private static final String RoleName = "roleName";        
-    private static final String PNRDATA = "pnrdata";      
+    private static final String PNRDATA = "pnrdata";
+    private static final String ISBILLSTATUS = "IsBillStatus";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         int result = 0;
@@ -93,6 +94,9 @@ public class AirTicketController extends SMITravelController {
         String username = user.getUsername();
         request.setAttribute("idRole", idRole);
         String roleName = user.getRole().getName();
+        
+        request.setAttribute(ISBILLSTATUS,0);
+        
         if("Airticket Manager".equalsIgnoreCase(roleName)){
             roleName = "YES";
             request.setAttribute(RoleName, roleName);
@@ -312,6 +316,7 @@ public class AirTicketController extends SMITravelController {
             } else {
                 System.out.println("Detail is null, Not update DB this object " + i);
             }
+            request.setAttribute(ISBILLSTATUS,airDesc.getIsBill());
         }
         //List<AirticketDesc> airticketDescsList = new ArrayList<AirticketDesc>(airBook.getAirticketDescs());
         //request.setAttribute(AirticketDescsList, airticketDescsList);

@@ -25,7 +25,7 @@
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <c:set var="mCurrency" value="${requestScope['MCurrency']}" />
-
+<c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -322,12 +322,17 @@
                                         </td>                                       
                                         <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
-                                            <a id="RowPriceButtonRemove-${loop.count}"  name="RowPriceButtonRemove-${loop.count}"  ParentTrPriceId=""  class="RemovePriceRow">
-                                                <span id="RowPriceSpanRemove-${loop.count}"  name="RowPriceSpanRemove-${loop.count}"  
-                                                      class="glyphicon glyphicon-remove deleteicon" 
-                                                      onclick="DeletePrice('${item.id}', '${item.detail}');"
-                                                      data-toggle="modal" data-target="#DelPrice" ></span>
-                                            </a>                                       
+                                            <c:if test="${item.daytourBooking.isBill == 0}">
+                                                <a id="RowPriceButtonRemove-${loop.count}"  name="RowPriceButtonRemove-${loop.count}"  ParentTrPriceId=""  class="RemovePriceRow">
+                                                    <span id="RowPriceSpanRemove-${loop.count}"  name="RowPriceSpanRemove-${loop.count}"  
+                                                          class="glyphicon glyphicon-remove deleteicon" 
+                                                          onclick="DeletePrice('${item.id}', '${item.detail}');"
+                                                          data-toggle="modal" data-target="#DelPrice" ></span>
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${item.daytourBooking.isBill == 1}">
+                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                            </c:if>
                                         </c:if>
                                         <c:if test="${lockUnlockBooking == 1}">
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
@@ -409,7 +414,12 @@
                 <div class="col-xs-12 form-group"  ></div>
                 <div class="text-center" style="margin-top: 20px">
                     <c:if test="${lockUnlockBooking == 0}">
-                        <button id="ButtonSave" type="submit" onclick="submitAction();" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                        <c:if test="${isBillStatus == 0}">
+                            <button id="ButtonSave" type="submit" onclick="submitAction();" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                        </c:if>
+                        <c:if test="${isBillStatus == 1}">
+                            <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                        </c:if>
                     </c:if>
                     <c:if test="${lockUnlockBooking == 1}">
                         <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>

@@ -30,6 +30,7 @@
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <c:set var="mCurrency" value="${requestScope['MCurrency']}" />
+<c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -322,9 +323,14 @@
                                     <td><input id="row-room-${formula.count}-price" name="row-room-${formula.count}-price" class="form-control text-right money" value="${re.price}" maxlength="11"></td>
                                     <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
-                                            <a id="ButtonRemove${formula.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '1', '${re.id}', '${formula.count}')">
-                                                <span id="SpanRemove${formula.count}" class="glyphicon glyphicon-remove deleteicon"></span>
-                                            </a>                                            
+                                            <c:if test="${re.hotelBooking.isBill == 0}">
+                                                <a id="ButtonRemove${formula.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '1', '${re.id}', '${formula.count}')">
+                                                    <span id="SpanRemove${formula.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                                </a> 
+                                            </c:if>
+                                            <c:if test="${re.hotelBooking.isBill == 1}">
+                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                            </c:if>
                                         </c:if>
                                         <c:if test="${lockUnlockBooking == 1}">
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
@@ -376,9 +382,14 @@
                                     <td><input id="row-request-${additional.count}-price" name="row-request-${additional.count}-price" class="form-control text-right money" value="${re.price}" maxlength="11"></td>
                                     <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
-                                            <a id="AdditionalButtonRemove${additional.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '2', '${re.id}', '${additional.count}')">
-                                                <span id="AdditionalSpanRemove${additional.count}" class="glyphicon glyphicon-remove deleteicon"></span>
-                                            </a>                                            
+                                            <c:if test="${re.hotelBooking.isBill == 0}">
+                                                <a id="AdditionalButtonRemove${additional.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '2', '${re.id}', '${additional.count}')">
+                                                    <span id="AdditionalSpanRemove${additional.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                                </a>     
+                                            </c:if>
+                                            <c:if test="${re.hotelBooking.isBill == 1}">
+                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                            </c:if>
                                         </c:if>
                                         <c:if test="${lockUnlockBooking == 1}">
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
@@ -448,9 +459,14 @@
                                     </td>          
                                     <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
-                                            <a id="PassengerButtonRemove${passenger.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '3', '${pa.id}', '${passenger.count}')">
-                                                <span id="PassengerSpanRemove${passenger.count}" class="glyphicon glyphicon-remove deleteicon"></span>
-                                            </a>                                           
+                                            <c:if test="${pa.hotelBooking.isBill == 0}">
+                                                <a id="PassengerButtonRemove${passenger.count}" class="remCF" onclick="ConfirmDelete('${hotelBooking.id}', '3', '${pa.id}', '${passenger.count}')">
+                                                    <span id="PassengerSpanRemove${passenger.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                                </a>
+                                            </c:if>
+                                            <c:if test="${pa.hotelBooking.isBill == 1}">
+                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                            </c:if>
                                         </c:if>
                                         <c:if test="${lockUnlockBooking == 1}">
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
@@ -486,7 +502,12 @@
                     <input name="id" value="${param.id}"type="hidden">
                     <input name="referenceNo" value="${param.referenceNo}"type="hidden">
                     <c:if test="${lockUnlockBooking == 0}">
-                        <button id="hotelSave" name="hotelSave" type="submit" class="btn btn-success" ><span class="fa fa-save"></span> Save</button>
+                        <c:if test="${isBillStatus == 0}">
+                            <button id="hotelSave" name="hotelSave" type="submit" class="btn btn-success" ><span class="fa fa-save"></span> Save</button>
+                        </c:if>
+                        <c:if test="${isBillStatus == 1}">
+                            <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                        </c:if>
                     </c:if>
                     <c:if test="${lockUnlockBooking == 1}">
                         <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>

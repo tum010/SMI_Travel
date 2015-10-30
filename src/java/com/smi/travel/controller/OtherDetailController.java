@@ -30,6 +30,7 @@ public class OtherDetailController extends SMITravelController {
     private static final String BOOKINGTYPE = "BOOKING_TYPE";
     private static final String CurrencyList = "currency_list";
     private static final String LockUnlockBooking = "LockUnlockBooking";
+    private static final String ISBILLSTATUS = "IsBillStatus";
     private UtilityService utilservice;
     private BookingOtherService OtherService;
     private UtilityFunction util;
@@ -74,7 +75,9 @@ public class OtherDetailController extends SMITravelController {
         String counter = request.getParameter("counter");
                         
         SystemUser user = (SystemUser) session.getAttribute("USER");
-
+        
+        request.setAttribute(ISBILLSTATUS,0);
+        
         util = new UtilityFunction();
         if (refno != null) {
             int[] booksize = utilservice.getCountItemFromBooking(refno);
@@ -119,6 +122,10 @@ public class OtherDetailController extends SMITravelController {
             Other.setProduct(product);
             Other.setCurAmount(currency);
             Other.setCurCost(currencycost);
+            
+            System.out.println(" Other.getIsBill() " + Other.getIsBill());
+            request.setAttribute(ISBILLSTATUS,Other.getIsBill());
+            
             Agent agent = new Agent();
             if((agentId != null)&&(!"".equalsIgnoreCase(agentId))){
                 System.out.println("setup agentId :"+agentId);
@@ -239,6 +246,9 @@ public class OtherDetailController extends SMITravelController {
         }
         if ("edit".equalsIgnoreCase(action)) {
             OtherBooking Other = OtherService.getBookDetailOtherFromID(request.getParameter("itemid"));
+            System.out.println(" Other.getIsBill() " + Other.getIsBill());
+            request.setAttribute(ISBILLSTATUS,Other.getIsBill());
+            
             itemid = request.getParameter("itemid");
             Product pro = Other.getProduct();
             if (pro != null) {
@@ -293,7 +303,13 @@ public class OtherDetailController extends SMITravelController {
             request.setAttribute("currencycost", currencycost);
             getTicket(request, Other.getId());
         }
-                
+        
+        if("1".equalsIgnoreCase(isbill)){
+            request.setAttribute(ISBILLSTATUS,1);   
+        }else{
+            request.setAttribute(ISBILLSTATUS,0);   
+        }
+            
         request.setAttribute("isbill", isbill);
         request.setAttribute("status", status);
         request.setAttribute("itemid", itemid);
@@ -328,7 +344,7 @@ public class OtherDetailController extends SMITravelController {
         if(("1").equals(String.valueOf(master.getFlagOther())) 
             || ("2").equals(String.valueOf(master.getMBookingstatus().getId()))
             || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
-            request.setAttribute(LockUnlockBooking,1);
+            request.setAttribute(LockUnlockBooking,1);  
         }else{
             request.setAttribute(LockUnlockBooking,0);
         }

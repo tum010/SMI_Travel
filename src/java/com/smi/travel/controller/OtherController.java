@@ -33,6 +33,7 @@ public class OtherController extends SMITravelController {
     private static final String AMOUNT = "amount";
     private static final String MARKUP = "markup";
     private static final String LockUnlockBooking = "LockUnlockBooking";
+    private static final String ISBILLSTATUS = "IsBillStatus";
     private UtilityService utilservice;
     private BookingOtherService OtherService;
 

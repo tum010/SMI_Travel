@@ -32,6 +32,7 @@ public class PassengerController extends SMITravelController {
     private static final String PassengerList = "PassengerList";
     private static final String TransactionResult = "result";
     private static final String LockUnlockBooking = "LockUnlockBooking";
+    private static final String ISBILLSTATUS = "IsBillStatus";
 
     private static final String[] resultText
             = {"Save unsuccessful",

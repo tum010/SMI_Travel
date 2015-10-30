@@ -32,6 +32,7 @@ public class DaytourController extends SMITravelController {
     private static final String DaytourBookingList = "DaytourBookingList";
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String LockUnlockBookingOther = "lockUnlockBookingOther";
+    private static final String ISBILLSTATUS = "IsBillStatus";
     private BookingOtherService OtherService;
 
     @Override

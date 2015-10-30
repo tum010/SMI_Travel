@@ -18,6 +18,7 @@
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -72,7 +73,8 @@
                     <c:if test="${lockUnlockBooking == 0}">
                         <a id="ButtonAdd" href="HotelDetail.smi?referenceNo=${param.referenceNo}&Order=${hotelBookingList.size()+1}&action=new" class="btn btn-success">
                             <span id="SpanAdd" class="glyphicon glyphicon-plus"></span>Add
-                        </a>                    </c:if>
+                        </a>                    
+                    </c:if>
                     <c:if test="${lockUnlockBooking == 1}">
                         <a id="ButtonAdd" class="btn btn-success disabled">
                             <span class="glyphicon glyphicon-plus"></span>Add
@@ -182,7 +184,12 @@
                         </c:if>
                         <c:if test="${b.MItemstatus.id == 1}">
                             <c:if test="${lockUnlockBooking == 0}">
-                                <span class="glyphicon glyphicon-remove deleteicon" id="DisableHotel-${loopCounter.count}"   onclick="DeleteHotel('${b.id}', ' ${b.hotel.getName()}');" data-toggle="modal" data-target="#DeleteHotel" ></span>
+                                <c:if test="${b.isBill == 0}">
+                                    <span class="glyphicon glyphicon-remove deleteicon" id="DisableHotel-${loopCounter.count}"   onclick="DeleteHotel('${b.id}', ' ${b.hotel.getName()}');" data-toggle="modal" data-target="#DeleteHotel" ></span>
+                                </c:if>
+                                <c:if test="${b.isBill == 1}">
+                                    <span class="glyphicon glyphicon-remove deleteicon disabled"></span>
+                                </c:if>
                             </c:if>
                             <c:if test="${lockUnlockBooking == 1}">
                                 <span class="glyphicon glyphicon-remove deleteicon disabled"></span>

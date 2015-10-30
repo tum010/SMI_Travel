@@ -35,7 +35,7 @@
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <c:set var="checkPnr_list" value="${requestScope['checkPnr_list']}" />
-
+<c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -108,7 +108,12 @@
                                 <input type="hidden" class="form-control" id="pnr" name="pnr" value="${currentPnr.id}">
                                 <input type="text" class="form-control" id="pnr_name" name="pnr_name" value="">
                                 <c:if test="${lockUnlockBooking == 0}">
-                                    <span class="input-group-addon"><span data-toggle="modal" data-target="#ImportModal" class="glyphicon-import glyphicon"></span></span>
+                                    <c:if test="${isBillStatus == 0}">
+                                        <span class="input-group-addon"><span data-toggle="modal" data-target="#ImportModal" class="glyphicon-import glyphicon"></span></span>
+                                    </c:if>
+                                    <c:if test="${isBillStatus == 1}">
+                                        <span class="input-group-addon"><span class="glyphicon-import glyphicon disabled"></span></span>
+                                    </c:if>
                                 </c:if>
                                 <c:if test="${lockUnlockBooking == 1}">
                                     <span class="input-group-addon"><span class="glyphicon-import glyphicon disabled"></span></span>
@@ -124,7 +129,14 @@
                             </c:when>
                             <c:otherwise>
                                 <c:if test="${lockUnlockBooking == 0}">
-                                    <a id="btn-add"  class="btn btn-success" data-toggle="collapse" data-parent="#accordion" aria-controls="collapseExample"><span class="glyphicon glyphicon-plus"></span> Add</a>
+                                    <c:if test="${isBillStatus == 0}">
+                                        <a id="btn-add"  class="btn btn-success" data-toggle="collapse" data-parent="#accordion" aria-controls="collapseExample"><span class="glyphicon glyphicon-plus"></span> Add</a>
+                                    </c:if>
+                                    <c:if test="${isBillStatus == 1}">
+                                        <a class="btn btn-success disabled">
+                                            <span class="glyphicon glyphicon-plus"></span>Add</button>
+                                        </a>   
+                                    </c:if>
                                 </c:if>
                                 <c:if test="${lockUnlockBooking == 1}">
                                     <a class="btn btn-success disabled">
@@ -240,7 +252,12 @@
                                             </c:if>
                                             <c:if test="${flight.MItemstatus.id != 2}">
                                                 <c:if test="${lockUnlockBooking == 0}">
-                                                    <span id="SpanRemove${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#DisableFlight" ></span>
+                                                    <c:if test="${flight.isBill == 0}">
+                                                        <span id="SpanRemove${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#DisableFlight" ></span>
+                                                    </c:if>
+                                                    <c:if test="${flight.isBill == 1}">
+                                                        <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                                    </c:if>
                                                 </c:if>
                                                 <c:if test="${lockUnlockBooking == 1}">
                                                     <span class="glyphicon glyphicon-remove deleteicon" ></span>
@@ -995,9 +1012,16 @@
                     <div class="text-right" style="padding:5px 15px">
                         <%--<c:if test="${empty currentPnr.pnr || currentPnr.pnr=='DUMMY' }">--%>
                         <c:if test="${lockUnlockBooking == 0}">
-                            <a id="btn-addPassenger" class="btn btn-success" data-toggle="collapse" data-parent="#accordion"  aria-controls="collapseExample">
-                                <span class="glyphicon glyphicon-plus"></span> Add
-                            </a>
+                            <c:if test="${isBillStatus == 0}">
+                                <a id="btn-addPassenger" class="btn btn-success" data-toggle="collapse" data-parent="#accordion"  aria-controls="collapseExample">
+                                    <span class="glyphicon glyphicon-plus"></span> Add
+                                </a>
+                            </c:if>
+                            <c:if test="${isBillStatus == 1}">
+                                <a class="btn btn-success disabled">
+                                    <span class="glyphicon glyphicon-plus"></span>Add</button>
+                                </a>
+                            </c:if>    
                         </c:if>
                         <c:if test="${lockUnlockBooking == 1}">
                             <a class="btn btn-success disabled">
@@ -1085,9 +1109,14 @@
                                         </a>
                                         <c:if test="${flight.MItemstatus.id != 2}">
                                             <c:if test="${lockUnlockBooking == 0}">
-                                                <a id="passenger_tableButtonRemove${pStatus.count}" href="#" class="confirm-delete" data-id="${passenger.id}">
-                                                    <span id="passenger_tableSpanRemove${pStatus.count}" class="glyphicon glyphicon-remove deleteicon"></span>
-                                                </a>                                                 
+                                                <c:if test="${flight.isBill == 0}">
+                                                    <a id="passenger_tableButtonRemove${pStatus.count}" href="#" class="confirm-delete" data-id="${passenger.id}">
+                                                        <span id="passenger_tableSpanRemove${pStatus.count}" class="glyphicon glyphicon-remove deleteicon"></span>
+                                                    </a> 
+                                                </c:if>
+                                                <c:if test="${flight.isBill == 1}">
+                                                    <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                                </c:if>
                                             </c:if>
                                             <c:if test="${lockUnlockBooking == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
@@ -1259,7 +1288,12 @@
                         </c:when>
                         <c:otherwise>
                             <c:if test="${lockUnlockBooking == 0}">
-                                <button id="ButtonSave" class="btn btn-success" type="submit"><span class="fa fa-save"></span> Save</button>
+                                <c:if test="${isBillStatus == 0}">
+                                    <button id="ButtonSave" class="btn btn-success" type="submit"><span class="fa fa-save"></span> Save</button>
+                                </c:if>
+                                <c:if test="${isBillStatus == 1}">
+                                    <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                </c:if>
                             </c:if>
                             <c:if test="${lockUnlockBooking == 1}">
                                 <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>

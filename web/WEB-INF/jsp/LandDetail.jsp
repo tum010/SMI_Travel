@@ -19,6 +19,7 @@
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
+<c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -676,7 +677,12 @@
                                     <td> <input style="width: ${DescriptionSize}" maxlength ="255"  type="text" class="form-control" value="${table.description}">  </td>
                                     <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
-                                            <a class="remCF"><span  onclick="deletelist('${table.id}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                            <c:if test="${table.landBooking.isBill == 0}">
+                                                <a class="remCF"><span  onclick="deletelist('${table.id}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                            </c:if>
+                                            <c:if test="${table.landBooking.isBill == 1}">
+                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                            </c:if>
                                         </c:if>
                                         <c:if test="${lockUnlockBooking == 1}">
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
@@ -690,9 +696,16 @@
 
                 <div id="tr_ItineraryAddRow" class="text-center hide" style="padding-top: 10px">
                     <c:if test="${lockUnlockBooking == 0}">
-                        <a class="btn btn-success" onclick="AddRow()">
-                            <i class="glyphicon glyphicon-plus"></i> Add
-                        </a>                       
+                        <c:if test="${isBillStatus == 0}">
+                            <a class="btn btn-success" onclick="AddRow()">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
+                        </c:if>
+                        <c:if test="${isBillStatus == 1}">
+                            <a class="btn btn-success disabled">
+                                <span class="glyphicon glyphicon-plus"></span>Add</button>
+                            </a>   
+                        </c:if>
                     </c:if>
                     <c:if test="${lockUnlockBooking == 1}">
                         <a class="btn btn-success disabled">
@@ -715,7 +728,12 @@
                         </c:when>
                         <c:otherwise>
                             <c:if test="${lockUnlockBooking == 0}">
-                                <button type="submit" id="savereal" onfocus="readdata()"  onmouseover="readdata()"  class="btn btn-success "><span class="fa fa-save"></span> Save</button>
+                                <c:if test="${isBillStatus == 0}">
+                                    <button type="submit" id="savereal" onfocus="readdata()"  onmouseover="readdata()"  class="btn btn-success "><span class="fa fa-save"></span> Save</button>
+                                </c:if>
+                                <c:if test="${isBillStatus == 1}">
+                                    <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                </c:if>
                             </c:if>
                             <c:if test="${lockUnlockBooking == 1}">
                                 <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>

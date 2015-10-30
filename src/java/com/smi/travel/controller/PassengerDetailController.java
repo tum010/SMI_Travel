@@ -45,6 +45,7 @@ public class PassengerDetailController extends SMITravelController {
     private static final String initialList = "initialList";
     private static final String CustomerList = "customerList";
     private static final String LockUnlockBooking = "LockUnlockBooking";
+    private static final String ISBILLSTATUS = "IsBillStatus";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 

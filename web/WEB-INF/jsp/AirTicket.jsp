@@ -31,7 +31,7 @@
 <c:set var="pnrdata" value="${requestScope['pnrdata']}" />
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
-
+<c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
 
 <c:choose>
     <c:when test="${not empty param.referenceNo}">
@@ -253,7 +253,12 @@
                                         </c:if>
                                         <c:if test="${p.MItemstatus.id == 1}">
                                             <c:if test="${lockUnlockBooking == 0}">
-                                                <span id="SpanGlyphiconRemove${loopCounter.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisablePnrForm('${p.id}', '${p.pnr}');" data-toggle="modal" data-target="#DisablePnr" ></span>
+                                                <c:if test="${isBillStatus == 0}">
+                                                    <span id="SpanGlyphiconRemove${loopCounter.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisablePnrForm('${p.id}', '${p.pnr}');" data-toggle="modal" data-target="#DisablePnr" ></span>
+                                                </c:if>
+                                                <c:if test="${isBillStatus == 1}">
+                                                    <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                                </c:if>
                                             </c:if>
                                             <c:if test="${lockUnlockBooking == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
@@ -320,9 +325,14 @@
                                     </td>
                                     <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
-                                            <a id="ButtonRemove${airdesc.count}" class="remCF" onclick="deleteDesc(${param.referenceNo},${detail.id})">
-                                                <span id="SpanRemove${airdesc.count}"  class="glyphicon glyphicon-remove deleteicon"></span>
-                                            </a>                                            
+                                            <c:if test="${isBillStatus == 0}">
+                                                <a id="ButtonRemove${airdesc.count}" class="remCF" onclick="deleteDesc(${param.referenceNo},${detail.id})">
+                                                    <span id="SpanRemove${airdesc.count}"  class="glyphicon glyphicon-remove deleteicon"></span>
+                                                </a>    
+                                            </c:if>
+                                            <c:if test="${isBillStatus == 1}">
+                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                            </c:if>
                                         </c:if>
                                         <c:if test="${lockUnlockBooking == 1}">
                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
@@ -368,7 +378,12 @@
                     <input type="hidden" id="flagAir" name="flagAir" value="${booking.master.flagAir}"/>
                     <input type="hidden" id="mBookingStatus" name="mBookingStatus" value="${booking.master.MBookingstatus.id}"/>
                     <c:if test="${lockUnlockBooking == 0}">
-                        <button id="ButtonSave" type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                        <c:if test="${isBillStatus == 0}">
+                            <button id="ButtonSave" type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                        </c:if>
+                        <c:if test="${isBillStatus == 1}">
+                            <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                        </c:if>
                     </c:if>
                     <c:if test="${lockUnlockBooking == 1}">
                         <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>

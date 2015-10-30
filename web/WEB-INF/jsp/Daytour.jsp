@@ -12,6 +12,7 @@
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <c:set var="lockUnlockBookingOther" value="${requestScope['lockUnlockBookingOther']}" />
+<c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
  <c:set var="cur" value="" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
@@ -66,7 +67,7 @@
                     <c:if test="${lockUnlockBooking == 0}">
                         <a id="Add" name="Add" href="DaytourDetail.smi?action=new&referenceNo=${param.referenceNo}" class="btn btn-success">
                             <span id="SpanAdd" name="SpanAdd" class="glyphicon glyphicon-plus"></span>Add
-                        </a>                    
+                        </a>
                     </c:if>
                     <c:if test="${lockUnlockBooking == 1}">
                         <a class="btn btn-success disabled">
@@ -124,7 +125,12 @@
                                 </c:if>
                                 <c:if test="${item.MItemstatus.id == 1}">
                                     <c:if test="${lockUnlockBooking == 0}">
-                                        <span id="SpanGlyphiconRemove" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableDaytour('${item.id}', ' ${item.daytour.code}');" data-toggle="modal" data-target="#DaytourModal" ></span>
+                                        <c:if test="${item.isBill == 0}">
+                                            <span id="SpanGlyphiconRemove" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableDaytour('${item.id}', ' ${item.daytour.code}');" data-toggle="modal" data-target="#DaytourModal" ></span>
+                                        </c:if>
+                                        <c:if test="${item.isBill == 1}">
+                                             <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                        </c:if>
                                     </c:if>
                                     <c:if test="${lockUnlockBooking == 1}">
                                         <span class="glyphicon glyphicon-remove deleteicon" ></span>
@@ -149,7 +155,7 @@
                 <c:if test="${lockUnlockBookingOther == 0}">
                     <a id="acs"  href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromDayTour" class="btn btn-success">
                         <span class="glyphicon glyphicon-plus"></span>Add</button>
-                    </a>                
+                    </a>         
                 </c:if>
                 <c:if test="${lockUnlockBookingOther == 1}">
                     <a class="btn btn-success disabled">
@@ -235,7 +241,12 @@
                         </c:if>
                         <c:if test="${table.status.id == 1}">
                             <c:if test="${lockUnlockBookingOther == 0}">
-                                <span class="glyphicon glyphicon-remove deleteicon"   onclick="getCouponCheck('${table.id}', ' ${table.product.code}');" data-toggle="modal" data-target="" ></span>                            </c:if>
+                                <c:if test="${table.isBill == 0}">
+                                    <span class="glyphicon glyphicon-remove deleteicon"   onclick="getCouponCheck('${table.id}', ' ${table.product.code}');" data-toggle="modal" data-target="" ></span>                            </c:if>
+                                </c:if>
+                                <c:if test="${table.isBill == 1}">
+                                    <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                </c:if>
                             <c:if test="${lockUnlockBookingOther == 1}">
                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
                             </c:if>

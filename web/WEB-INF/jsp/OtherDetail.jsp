@@ -21,6 +21,7 @@
 <c:set var="currency_list" value="${requestScope['currency_list']}" />
 <c:set var="booktype" value="${requestScope['BOOKING_TYPE']}" />
 <c:set var="ticketList" value="${requestScope['ticketList']}" />
+<c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
 <c:set var="enableVat" value="" />
 <c:set var="checkVat" value="checked" />
 <c:if test="${booktype == 'i'}">
@@ -375,7 +376,12 @@
                                 </c:when>
                                 <c:otherwise>
                                     <c:if test="${lockUnlockBooking == 0}">
-                                        <button type="submit"  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                        <c:if test="${isBillStatus == 0}">
+                                            <button type="submit"  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                        </c:if>
+                                        <c:if test="${isBillStatus == 1}">
+                                            <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                        </c:if>
                                     </c:if>
                                     <c:if test="${lockUnlockBooking == 1}">
                                         <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>

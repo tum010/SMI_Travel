@@ -39,6 +39,7 @@ public class LandDetailController extends SMITravelController {
     private static final String TransectionResult = "result";
     private static final String CurrencyList = "CurrencyList";
     private static final String LockUnlockBooking = "LockUnlockBooking";
+    private static final String ISBILLSTATUS = "IsBillStatus";
     private UtilityService utilservice;
     private AgentService agentservice;
     private ProductService productservice;
@@ -90,7 +91,8 @@ public class LandDetailController extends SMITravelController {
         String Itenarary = request.getParameter("Itenarary");
         String DelItenarary = request.getParameter("DelItenarary");
         String itinerarycount = request.getParameter("itinerarycount");
-       
+        
+        request.setAttribute(ISBILLSTATUS,0);
         
         util = new UtilityFunction();
         int[] booksize = utilservice.getCountItemFromBooking(refno);
@@ -185,7 +187,7 @@ public class LandDetailController extends SMITravelController {
                     
  
             }
-
+            request.setAttribute(ISBILLSTATUS,land.getIsBill());
             if (!"".equalsIgnoreCase(landID)) {
                 land.setId(landID);
             }
@@ -202,7 +204,7 @@ public class LandDetailController extends SMITravelController {
             request.setAttribute("isEdit", "1");
             landID = request.getParameter("landid");
             LandBooking land = landservice.getBookDetailLandFromID(landID);
-
+            request.setAttribute(ISBILLSTATUS,land.getIsBill());
             List<LandItinerary> ItineraryList = landservice.getListItinerary(landID);
             request.setAttribute(ITINERARYLIST, ItineraryList);
             if (ItineraryList == null) {
@@ -268,7 +270,7 @@ public class LandDetailController extends SMITravelController {
             }
 
         }
-
+        request.setAttribute(ISBILLSTATUS,Integer.parseInt(isbill));
         request.setAttribute("isbill", isbill);
         request.setAttribute("landid", landID);
         request.setAttribute("agent_id", agentId);

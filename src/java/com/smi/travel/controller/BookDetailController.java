@@ -57,7 +57,7 @@ public class BookDetailController extends SMITravelController {
     private static final String PACKAGEID = "packageID";
     private static final String[] resultText = {"Save unsuccessful", "Save successful"};
     private static final String LockUnlockBooking = "LockUnlockBooking";
-
+    private static final String ISBILLSTATUS = "IsBillStatus";
     private UtilityService utilservice;
     private MInitialname mInitialname;
     UtilityFunction util; 

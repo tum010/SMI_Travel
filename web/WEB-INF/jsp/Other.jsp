@@ -16,6 +16,7 @@
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
+<c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -186,7 +187,12 @@
                                         </c:if>
                                         <c:if test="${table.status.id == 1}">
                                             <c:if test="${lockUnlockBooking == 0}">
-                                                <span class="glyphicon glyphicon-remove deleteicon"   onclick="getCouponCheck('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="" ></span>
+                                                <c:if test="${table.isBill == 0}">
+                                                    <span class="glyphicon glyphicon-remove deleteicon"   onclick="getCouponCheck('${table.id}',' ${table.product.code}');" data-toggle="modal" data-target="" ></span>
+                                                </c:if>
+                                                <c:if test="${table.isBill == 1}">
+                                                    <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                                </c:if>
                                             </c:if>
                                             <c:if test="${lockUnlockBooking == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>

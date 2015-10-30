@@ -42,6 +42,7 @@ public class HotelBookingController extends SMITravelController {
     private static final String Master = "Master"; 
     private static final String BookType = "BOOKING_TYPE";
     private static final String LockUnlockBooking = "LockUnlockBooking";
+    private static final String ISBILLSTATUS = "IsBillStatus";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {

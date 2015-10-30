@@ -63,6 +63,7 @@ public class HotelDetailController extends SMITravelController {
     private static final String PassengerList = "PassengerList";
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String MCurrency = "MCurrency";
+    private static final String ISBILLSTATUS = "IsBillStatus";
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -96,10 +97,12 @@ public class HotelDetailController extends SMITravelController {
         String hotelRoomRows = request.getParameter("roomCounter");
         String hotelRequestRows = request.getParameter("requestCounter");
         String hotelPassengerRows = request.getParameter("passengerCounter");
-
+        
         int result = 0;
         System.out.println("orderNO : " + orderNo);
-
+        
+        request.setAttribute(ISBILLSTATUS,0);
+        
         if ("new".equalsIgnoreCase(action)) {
             System.out.println("add");
             setResponseAttribute(request, refNo);
@@ -121,6 +124,10 @@ public class HotelDetailController extends SMITravelController {
             hotelBooking.setIsBill(util.convertStringToInteger(isBill));
             hotelBooking.setCurCost(currencycost);
             hotelBooking.setCurAmount(currency);
+            
+            System.out.println(" hotelBooking.getIsBill() " + hotelBooking.getIsBill());
+            request.setAttribute(ISBILLSTATUS,hotelBooking.getIsBill());
+            
             if (StringUtils.isNotEmpty(orderNo)) {
                 hotelBooking.setOrderNo(Integer.parseInt(orderNo));
             }
@@ -178,6 +185,9 @@ public class HotelDetailController extends SMITravelController {
             for (HotelRequest re : hotelRequests) {
                 System.out.println("Description : " + re.getDescription());
             }
+            System.out.println(" hotel.getIsBill() " + hotel.getIsBill());
+            request.setAttribute(ISBILLSTATUS,hotel.getIsBill());
+            
             request.setAttribute(HotelRequestsList, hotelRequests);
             List<HotelRoom> hotelRooms = hotel.getHotelRooms();
             request.setAttribute(HotelRooms, hotelRooms);
