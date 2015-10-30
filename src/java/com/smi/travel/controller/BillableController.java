@@ -75,6 +75,8 @@ public class BillableController extends SMITravelController {
     private static final String MBankList = "MBankList";
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String ReceiptDetailList = "ReceiptDetailList";
+    private static final String ISBILLSTATUS = "IsBillStatus";
+    
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         int result = 0;
@@ -281,6 +283,16 @@ public class BillableController extends SMITravelController {
             return new ModelAndView("redirect:Billable.smi?referenceNo=" + refNo + "&result=" + result + "&action=edit");
         } else if ("delete".equalsIgnoreCase(action)) {
             System.out.println("action delete");
+        } else if("deleteBillable".equalsIgnoreCase(action)) {
+            String resultdelete = "";
+            String billdescIdDelete = request.getParameter("billdescIdDelete");
+            resultdelete = billableService.DeleteBillableDesc(billdescIdDelete);
+            
+//            if (resultdelete == "fail"){
+//                request.setAttribute("deleteresult", "delete unsuccessful");
+//            } else {
+//                request.setAttribute("deleteresult", "delete successful");
+//            }
         } else {
             System.out.println("no action");
             if ("".equalsIgnoreCase(refNo) || (refNo == null)) {

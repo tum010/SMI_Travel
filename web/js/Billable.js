@@ -249,3 +249,45 @@ function printTicketOrderReport(){
 function addNewBooking(){
     window.location.href = "BookDetail.smi?&action=new";
 }
+
+function deleteBillableList(id,Ccount) {
+    document.getElementById('billDescIdDelete').value = id;
+    document.getElementById('billDescRowDelete').value = Ccount;
+    
+    var billtype = document.getElementById('billtype-'+Ccount).value ;
+    var detail = document.getElementById('detail-'+Ccount).value ;
+
+    $("#delBillable").text('Are you comfirm to delete billable '+ billtype + ' : '+ detail);
+    $('#DeleteBillableListModal').modal('show');
+}
+
+function DeleteRowBillable(){
+    var cCount = document.getElementById('billDescRowDelete').value;
+    var id = document.getElementById('billDescIdDelete').value;
+    var deleteresult = document.getElementById('deleteresult').value;
+    if(id === ''){
+        $("#billtype-" + cCount).parent().parent().remove();
+    }else {
+        $.ajax({
+            url: 'Billable.smi?action=deleteBillable',
+            type: 'get',
+            data: {billdescIdDelete: id},
+            success: function () {
+                $("#billtype-" + cCount).parent().parent().remove();
+                $('#textAlertDivDelete').show();
+            },
+            error: function () {
+                console.log("error");
+                $('#textAlertDivNotDelete').show();
+            }
+        }); 
+    }
+    $('#DeleteBillableListModal').modal('hide');
+}
+
+//function deleteReceiptDetailList(id,Ccount) {
+//    document.getElementById('receiptIdDelete').value = id;
+//    document.getElementById('receiptRowDelete').value = Ccount;
+//    $("#delReceiptDetail").text('Are you sure delete this credit ?');
+//    $('#DeleteReceiptDetailListModal').modal('show');
+//}

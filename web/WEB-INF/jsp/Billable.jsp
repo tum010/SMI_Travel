@@ -30,7 +30,6 @@
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
-
 <c:set var="ReceiptDetailList" value="${requestScope['ReceiptDetailList']}" />
 
 <input type="hidden" value="${requestScope['result']}" id="resultText">
@@ -70,13 +69,21 @@
                 <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
 <!--Alert Save -->
 <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Success!</strong> 
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Save Success!</strong> 
 </div>
 <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Not  Success!</strong> 
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Save Not  Success!</strong> 
 </div>
+<div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Delete Success!</strong> 
+</div>
+<div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Delete Unsuccess!</strong> 
+</div> 
                 <div class="row" style="padding-left: 15px">  
                     <div class="col-md-6">
                         <h4><b>Billable</b></h4>
@@ -307,17 +314,23 @@
                             <th style="width:10%">Ex. Rate</th>
                             <th style="width:17%">Bill Date</th>
                             <th style="width:20%">Remark</th>
+                            <th style="width:5%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         
                     <input type="hidden" id="billDescCount" name="billDescCount" value="" />
-
+                    <input type="hidden" id="billDescIdDelete" name="billDescIdDelete" value="" />
+                    <input type="hidden" id="billDescRowDelete" name="billDescRowDelete" value="" />
+                    
+                    <input type="hidden" id="receiptIdDelete" name="receiptIdDelete" value="" />
+                    <input type="hidden" id="receiptRowDelete" name="receiptRowDelete" value="" />
+                    
                     <c:set var="totalCost"  value="0"/>
                     <c:set var="totalPrice"  value="0"/>
                     <c:forEach var="b" items="${BillableDescList}" varStatus="Counter">
                         <tr>
-                            <td>${Counter.count}</td>
+                            <td><input type="hidden" id="countbilltable-${Counter.count}" name="countbilltable-${Counter.count}" value="${Counter.count}" />${Counter.count}</td>
                             <td class="hidden"><input type="hidden" id="billDescId-${Counter.count}" name="billDescId-${Counter.count}" value="${b.id}" /></td>
                             <td class="hidden"><input type="hidden" id="billRefId-${Counter.count}" name="billRefId-${Counter.count}" value="${b.refItemId}" /></td>
                             <td><input type="hidden" id="billtype-${Counter.count}" name="billtype-${Counter.count}" value="${b.MBilltype.getName()}" />${b.MBilltype.getName()}</td>
@@ -347,13 +360,31 @@
                                     </span>
                                 </div>
                             </td>
-                            
                             <td><input type="text" id="remark-${Counter.count}" name="remark-${Counter.count}" value="${b.remark}" class="form-control" maxlength="255"/></td>
-                                <c:if test="${Counter.last}">
-                            <script>
-                                $("#billDescCount").val(parseInt("${Counter.count}") + 1);
-                            </script>
-                        </c:if>
+                            <td> 
+                                <c:if test="${b.isBill == 0}">
+                                    <center> 
+                                        <span id="deletedis" class="glyphicon glyphicon-remove" ></span>
+                                    </center>                               
+                                </c:if>
+                                <c:if test="${b.isBill == 1}">
+                                    <c:if test="${b.billable.master.MBookingstatus.id == 3}">
+                                        <center> 
+                                            <span id="deletedis" class="glyphicon glyphicon-remove" ></span>
+                                        </center> 
+                                    </c:if>
+                                    <c:if test="${b.billable.master.MBookingstatus.id != 3}">
+                                        <center> 
+                                            <a class="remCF"><span id="SpanRemove${Counter.count}" onclick="deleteBillableList('${b.id}','${Counter.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                        </center>
+                                    </c:if>
+                                </c:if>
+                            </td>
+                            <c:if test="${Counter.last}">
+                                <script>
+                                    $("#billDescCount").val(parseInt("${Counter.count}") + 1);
+                                </script>
+                            </c:if>
                         </tr>
                         <c:set var="totalCost"  value="${totalCost + b.cost}"/> 
                         <c:set var="totalPrice"  value="${totalPrice + b.price}"/> 
@@ -411,6 +442,11 @@
                             <td align="center">${table.currency}</td>
                             <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.recAmount}" /></td>
                             <td align="center">${table.curAmount}</td>
+<!--                            <td> 
+                                <center> 
+                                    <a class="remCF"><span id="SpanRemove${Counter.count}" onclick="deleteReceiptDetailList('${table.id}','${Counter.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                </center>
+                            </td>-->
                         </tr>
                         </c:forEach>    
                     </tbody>
@@ -709,7 +745,55 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+<!--DELETE MODAL-->
+<div class="modal fade" id="DeleteBillableListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Delete Billable</h4>
+            </div>
+            <div class="modal-body" id="delBillable">
 
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="DeleteRowBillable()" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<!--DELETE MODAL-->
+<div class="modal fade" id="DeleteReceiptDetailListModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog"> 
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Delete Receipt Detail</h4>
+            </div>
+            <div class="modal-body" id="delReceiptDetail">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="DeleteRowReceiptDetail()" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<c:if test="${! empty requestScope['deleteresult']}">
+    <c:if test="${requestScope['deleteresult'] =='delete successful'}">        
+        <script language="javascript">
+            $('#textAlertDivDelete').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['deleteresult'] =='delete unsuccessful'}">        
+        <script language="javascript">
+           $('#textAlertDivNotDelete').show();
+        </script>
+    </c:if>
+</c:if>
 <!--Script-->                                
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {

@@ -23,6 +23,7 @@ import com.smi.travel.datalayer.entity.LandItinerary;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.OtherBooking;
+import com.smi.travel.datalayer.entity.PaymentAirCredit;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.util.UtilityFunction;
 import java.text.DecimalFormat;
@@ -1051,5 +1052,69 @@ public class BillableImpl implements BillableDao {
         }
         session.close();
         return result;
+    }
+
+    @Override
+    public String DeleteBillableDesc(String billdescId){
+        boolean resultdelete = false;
+        String billTypeId = "";
+        String refItemId = "";
+        int resulttemp = 0;
+        String result = "";
+        String queryupdate = "";
+        String resultdeleted = "";
+        
+        Session session = this.sessionFactory.openSession();   
+        List<BillableDesc> billableDescs = new ArrayList<BillableDesc>();
+        BillableDesc billableDesc = new BillableDesc();
+        String query = "from BillableDesc bill where bill.id = :billid";
+        billableDescs = session.createQuery(query).setParameter("billid", billdescId).list();
+        
+        if (billableDescs.isEmpty()) {
+            return "fail";
+        }else{
+            billableDesc =  billableDescs.get(0);
+            billTypeId = String.valueOf(billableDesc.getMBilltype().getId());
+            refItemId = String.valueOf(billableDesc.getRefItemId());
+            try {
+                transaction = session.beginTransaction();
+                session.delete(billableDesc);
+                transaction.commit();
+                resultdelete = true;
+                resultdeleted = "success";
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                resultdeleted = "fail";
+            }
+        }
+        
+        if(resultdelete){
+            if("1".equalsIgnoreCase(billTypeId)){
+                queryupdate = "update AirticketFlight flight  set  flight.isBill = 1 where  flight.airticketAirline.id in (:refid)";
+            }else if("2".equalsIgnoreCase(billTypeId) || "8".equalsIgnoreCase(billTypeId)){
+                queryupdate = "update  OtherBooking  other  set  other.isBill = 1 where other.id  =  :refid";
+            }else if("3".equalsIgnoreCase(billTypeId)){
+                queryupdate = "update  LandBooking   land  set  land.isBill = 1 where land.id  =  :refid";
+            }else if("4".equalsIgnoreCase(billTypeId)){
+                queryupdate = "update  HotelBooking   hotel  set  hotel.isBill = 1 where  hotel.id  =  :refid";
+            }else if("6".equalsIgnoreCase(billTypeId)){
+                queryupdate = "update  DaytourBooking   tour  set  tour.isBill = 1 where tour.id  =  :refid";
+            }
+
+            try {
+                Query queryup = session.createQuery(queryupdate);
+                queryup.setParameter("refid", refItemId);
+                System.out.println(" query " + query);
+                resulttemp = queryup.executeUpdate();
+                result = String.valueOf(resulttemp);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                resulttemp = 0;
+                result = "fail";
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return resultdeleted;
     }
 }

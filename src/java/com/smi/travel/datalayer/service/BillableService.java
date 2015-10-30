@@ -43,6 +43,10 @@ public class BillableService {
         return result;
     }
     
+    public String DeleteBillableDesc(String billdescId){
+        return billableDao.DeleteBillableDesc(billdescId);
+    }
+    
     public List<CustomerAgentInfo> getListCustomerAgentInfo() {
         return customerAgentInfodao.getListCustomerAgentInfo();
     }

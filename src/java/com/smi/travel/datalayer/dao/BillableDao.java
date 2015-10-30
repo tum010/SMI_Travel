@@ -28,5 +28,6 @@ public interface BillableDao {
     public Billable getBillableBookingForTaxInvoice(String searchRefNo);
     public Invoice getInvoiceForTaxInvoice(String billDescId);
     public String printTicketOrder(String refNo);
+    public String DeleteBillableDesc(String billdescId);
 
 }
