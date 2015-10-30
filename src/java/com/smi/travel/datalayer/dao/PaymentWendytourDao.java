@@ -6,11 +6,13 @@
 
 package com.smi.travel.datalayer.dao;
 
+import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.entity.PaymentWendyReference;
 import com.smi.travel.datalayer.entity.TourOperationDesc;
+import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
 import java.util.List;
 
@@ -38,4 +40,5 @@ public interface PaymentWendytourDao {
     public String InsertPaymentWendyReference(PaymentWendyReference paymentWendyReference);
     public List getPaymentTourHotelSummary(String from, String to, String pvtype, String status, String invSupCode, String printBy);
     public String checkDayTourOperationDetail(String tourId,String tourDate);
+    public List<Daytour> searchListTourCode(String name);
 }

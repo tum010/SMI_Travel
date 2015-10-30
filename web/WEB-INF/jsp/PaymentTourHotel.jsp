@@ -362,12 +362,12 @@
                                 <th class="hidden">Id</th>
                                 <th style="width: 11%">Product</th>
                                 <th style="width: 8%">Ref No</th>
-                                <th style="width: 9%">Inv No</th>
+                                <th style="width: 10%">Inv No</th>
                                 <th style="width: 13%">Inv Date</th>
                                 <th style="width: 8%">Type</th>
                                 <th style="width: 11%">Amount</th>
                                 <th style="width: 11%">Comm</th>
-                                <th style="width: 12%">Description</th>
+                                <th style="width: 11%">Description</th>
                                 <th style="width: 7%">A/C</th>
                                 <th style="width: 7%">Action</th>
                                 <th class="hidden">Export Date</th>
@@ -547,10 +547,15 @@
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
                                             <span id="editSpan${i.count}" class="glyphicon glyphicon-th-list" onclick="editlist('${pl.id}','${i.count}')" ></span>
                                         </a>
+                                        <a href="#" onclick=""  data-toggle="modal" data-target="">
+                                            <span id="editTour${i.count}" onclick="editTour('${i.count}')" class="glyphicon glyphicon glyphicon-list-alt"></span>
+                                        </a>   
                                     </td>    
                                     <td class="hidden"> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
                                     <td class="hidden"> <input id="exportDate${i.count}" name="exportDate${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.exportDate}"> </td>
                                     <td class="hidden"> <input id="isExport${i.count}" name="isExport${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.isExport}"> </td>
+                                    <td class="hidden"> <input id="tourId${i.count}" name="tourId${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.tourId}"> </td>
+                                    <td class="hidden"> <input id="tourDate${i.count}" name="tourDate${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.tourDate}"> </td>
                                 </tr>                       
                             </c:forEach> 
                         </tbody>
@@ -789,7 +794,7 @@
 </div>
 
 <!--PACKAGE MODAL-->
-<div class="modal fade" id="DayTourModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="fade modal" id="DayTourModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -1107,7 +1112,7 @@
 
         });
         
-           // ON KEY INPUT AUTO SELECT TOURCODE-TOURNAME
+//            ON KEY INPUT AUTO SELECT TOURCODE-TOURNAME
                     $(function () {
                         var availableTags = [];
 
@@ -1130,7 +1135,7 @@
                             var position = $(this).offset();
                             $(".ui-widget").css("top", position.top + 30);
                             $(".ui-widget").css("left", position.left);
-                            $(".ui-widget").css("relative", position.relative + 1000);
+                            $(".ui-widget").css("relative", position.fixed);
                             var name = this.value;
                             var code = this.value.toUpperCase();
                             $("#tourName").val(null);
@@ -1147,6 +1152,34 @@
                         }); // end InputTourCode keyup
                     }); // end AutoComplete TourCode TourName
         
+
+        //Auto complete
+//        var showflag = 1;
+//        $("#tourCode").keyup(function(event) {
+//            var position = $(this).offset();
+//            $(".ui-widget").css("top", position.top + 30);
+//            $(".ui-widget").css("left", position.left);
+//            $(".ui-widget").css("relative", position.relative);
+//            if ($(this).val() === "") {
+//                $("#tourCode").val("");
+//                $("#tourName").val("");
+//                $("#tourId").val("");
+//            } else {
+//                if (event.keyCode === 13) {
+//                    searchTourCodeAutoList(this.value);
+//                }
+//            }
+//        });
+//        $("#tourCode").keydown(function() {
+//            var position = $(this).offset();
+//            $(".ui-widget").css("top", position.top + 30);
+//            $(".ui-widget").css("left", position.left);
+//            if (showflag == 0) {
+//                $(".ui-widget").css("top", -1000);
+//                showflag = 1;
+//            }
+//        });
+
     });
     
     function setEnvironment(){
@@ -1780,7 +1813,7 @@
                     '&tourCode=' + tourCode +
                     '&tourName=' + tourName +
                     '&tourDate=' + tourDate +
-                    '&type=' + 'check';
+                    '&type=' + 'checkDayToursOperationDetail';
             CallAjaxCheck(param);
         }else{
             $("#tourId").val('');
@@ -1818,6 +1851,96 @@
                     }
                 }, error: function(msg) {
                     console.log('auto ERROR');
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
+    
+    //Auto Complete
+    function searchTourCodeAutoList(tourCode) {
+        var servletName = 'PaymentTourHotelServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&tourCode=' + tourCode +
+                '&type=' + 'getTourCodeAutoList';
+        CallAjaxAuto(param);
+    }
+    
+    function CallAjaxAuto(param) {
+        var url = 'AJAXServlet';
+        var billArray = [];
+        var billListId = [];
+        var billListName = [];
+        var billListCode = [];
+        var billid, billname, billcode;
+
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                beforeSend: function() {
+    //                  $("#dataload").removeClass("hidden");    
+                },
+                success: function(msg) {
+                    var billJson = JSON.parse(msg);
+                    for (var i in billJson) {
+                        if (billJson.hasOwnProperty(i)) {
+                            billid = billJson[i].id;
+                            billname = billJson[i].name;
+                            billcode = billJson[i].code;
+                            billArray.push(billcode);
+                            billArray.push(billname);
+                            billListId.push(billid);
+                            billListName.push(billname);
+                            billListCode.push(billcode);
+                        }
+    //                        $("#dataload").addClass("hidden"); 
+                    }
+    //                   $("#InvTo_Id").val(billid);
+                    $("#tourId").val(billid);
+                    $("#tourName").val(billname);
+                    $("#tourCode").val(billcode);
+    //                   $("#InvToAddress").val(billaddr);
+
+                    $("#tourCode").autocomplete({
+                        source: billArray,
+                        close: function() {
+                            $("#tourCode").trigger("keyup");
+                            var billselect = $("#tourCode").val();
+                            for (var i = 0; i < billListId.length; i++) {
+                                if ((billselect == billListName[i]) || (billselect == billListCode[i])) {
+                                    $("#tourCode").val(billListCode[i]);
+                                    $("#tourId").val(billListId[i]);
+                                    $("#tourName").val(billListName[i]);
+    //                                   $("#InvToAddress").val(billListAddress[i]);
+                                }
+                            }
+                        }
+                    });
+
+                    var billval = $("#tourCode").val();
+                    for (var i = 0; i < billListCode.length; i++) {
+                        if (billval == billListName[i]) {
+                            $("#tourCode").val(billListCode[i]);
+                        }
+                    }
+                    if (billListCode.length == 1) {
+                        showflag = 0;
+                        $("#tourCode").val(billListCode[0]);
+                    }
+                    var event = jQuery.Event('keydown');
+                    event.keyCode = 40;
+                    $("#tourCode").trigger(event);
+
+                }, error: function(msg) {
+                    console.log('auto ERROR');
+    //                   $("#dataload").addClass("hidden");
                 }
             });
         } catch (e) {

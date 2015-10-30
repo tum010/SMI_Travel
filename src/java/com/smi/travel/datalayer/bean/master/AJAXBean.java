@@ -30,6 +30,7 @@ import com.smi.travel.datalayer.dao.TransferJobDao;
 import com.smi.travel.datalayer.entity.Billable;
 import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Customer;
+import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;
 import com.smi.travel.datalayer.entity.DaytourPrice;
@@ -801,13 +802,16 @@ public class AJAXBean extends AbstractBean implements
             }
             
         }else if (PAYMENTTOURHOTEL.equalsIgnoreCase(servletName)){
-            if("check".equalsIgnoreCase(type)){
+            if("checkDayToursOperationDetail".equalsIgnoreCase(type)){
                 String tourId = map.get("tourId").toString();
                 String tourCode = map.get("tourCode").toString();
                 String tourName = map.get("tourName").toString();
                 String tourDate = map.get("tourDate").toString();
                 result = paymentWendytourDao.checkDayTourOperationDetail(tourId,tourDate);
                 System.out.println("Result : "+result);
+            }else if("getTourCodeAutoList".equalsIgnoreCase(type)){
+                String name = map.get("tourCode").toString();
+                result = buildTourListJSON(paymentWendytourDao.searchListTourCode(name));
             }
         }
 
@@ -1431,6 +1435,19 @@ public class AJAXBean extends AbstractBean implements
             field.put("id", customer.getBillTo());
             field.put("name", customer.getBillName());
             field.put("address", customer.getAddress());
+            record.add(field);
+        }
+        return record;
+    }
+    
+    public JSONArray buildTourListJSON(List<Daytour> listDaytour) {
+        JSONArray record = new JSONArray();
+        for (int i = 0; i < listDaytour.size(); i++) {
+            Daytour daytour = listDaytour.get(i);
+            JSONObject field = new JSONObject();
+            field.put("id", daytour.getId());
+            field.put("code", daytour.getCode());
+            field.put("name", daytour.getName());
             record.add(field);
         }
         return record;
