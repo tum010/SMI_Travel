@@ -218,11 +218,19 @@
 
 var currency = 0;
 function validFromInvoice(){
+    
+    
   var counter = $('#DetailBillableTable tbody tr').length;
     var different = 0;
     var rowTemp = 0;
+    var checkcur1 = false;
     for(var i=1 ; i <= (counter-1);i++){
         var currency1 = $('#SelectCurrencyAmount' +i).find(":selected").text();
+        if(currency1 === ''){
+            checkcur1 = true;
+        }else{
+            $('#textAlertCurrencyAmountNotEmpty').hide();
+        }
         for(var j=2;j<=(counter-1);j++){
             var type = $('#SelectProductType' +j).find(":selected").text();
             if(type !== ""){
@@ -248,6 +256,13 @@ function validFromInvoice(){
         document.getElementById("saveInvoice").disabled = true;
 //        alert("Currency : " + currency); 
 //        $('#InvoiceForm').bootstrapValidator('validateField', 'SelectCurrencyAmount2'+rowTemp);
+        if(checkcur1){
+            $('#textAlertCurrencyAmountNotEmpty').show();
+            document.getElementById("saveInvoice").disabled = true;
+        }else{
+            $('#textAlertInvoiceNotEmpty').hide();
+            document.getElementById("saveInvoice").disabled = false;
+        }
         return false;
     } else {
          $('#DetailBillableTable').find('tr').each(function () { 
@@ -260,6 +275,13 @@ function validFromInvoice(){
         $('#textAlertCurrency').hide();
         currency = 0;
         document.getElementById("saveInvoice").disabled = false;
+        if(checkcur1){
+            $('#textAlertCurrencyAmountNotEmpty').show();
+            document.getElementById("saveInvoice").disabled = true;
+        }else{
+            $('#textAlertInvoiceNotEmpty').hide();
+            document.getElementById("saveInvoice").disabled = false;
+        }
         return true;
     } 
 }
@@ -380,7 +402,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur,cur_c){
             '<td align="center" '+vathidden+'>'+vatValue +'</td>'+ 
             '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="'+ vat +'" ></td>'+
             '<td '+vathidden+' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>'+
-            '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber('+row+');" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="'+price +'" ></td>'+
+            '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber('+row+');" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" value="'+price +'" ></td>'+
             '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="validFromInvoice()">'+ selectC +'</select></td>'+
             '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="'+price +'" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right" ></td>'+
             '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="'+price +'" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>'+
@@ -447,6 +469,16 @@ function subStringDescription(description,row){
 }
 function changeFormatAmountNumber(id){
     var count = document.getElementById('InputAmount'+id).value;
+    
+    var curamount = document.getElementById('SelectCurrencyAmount'+id).value;
+    if(curamount === ''){
+        $('#textAlertCurrencyAmountNotEmpty').show();
+        document.getElementById("saveInvoice").disabled = true;
+    }else{
+        $('#textAlertInvoiceNotEmpty').hide();
+        document.getElementById("saveInvoice").disabled = false;
+    }
+    
     count = count.replace(/\,/g,'');
     count  = parseFloat(count);
     if(isNaN(count)){

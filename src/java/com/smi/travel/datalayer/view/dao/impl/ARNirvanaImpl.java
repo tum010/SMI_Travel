@@ -145,8 +145,8 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
            }
         }
         
+        query += " ORDER BY ar.intreference desc , ar.invdate  DESC";
         
-        query += "  ORDER BY ar.invdate  DESC";
         System.out.println("query : " + query);
         List<Object[]> ARNirvanaList = session.createSQLQuery(query )
                 .addScalar("invtype", Hibernate.STRING)
@@ -424,7 +424,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         for (int i = 0; i < ARList.size(); i++) {
             query += (i == 0 ? "" : ",");
             query += ("'"+ARList.get(i).getRowid()+"'");
-        }
+        } 
         query += ") order by accno , intreference asc " ;
         System.out.println(" query :: " + query);
         Query HqlQuery = session.createQuery(query);
@@ -437,7 +437,10 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
     
     
     private String genReport(List<ARNirvana> arDataList , String fullFileName , List<ARNirvana> ARList){
+        UtilityFunction util = new UtilityFunction();
         String status ="";
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd/MM/yyyy");
         try {
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.createSheet();
@@ -460,12 +463,12 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ar.getTranscode());
                 cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ar.getTransdate());
+                cell.setCellValue(ar.getTransdate() == null ? "" : util.ConvertString(df.format(util.convertStringToDate(String.valueOf(ar.getTransdate())))));
                 cell = dataRow.createCell(cellnum++);
                 if(ar.getDuedate() == null){
                     cell.setCellValue("");
                 }else{
-                    cell.setCellValue(ar.getDuedate());
+                    cell.setCellValue(util.ConvertString(df.format(util.convertStringToDate(String.valueOf(ar.getDuedate())))));
                 }
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ar.getCurrencyid());
