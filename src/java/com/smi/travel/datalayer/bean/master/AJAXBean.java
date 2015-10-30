@@ -20,6 +20,7 @@ import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
+import com.smi.travel.datalayer.dao.PaymentWendytourDao;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
 import com.smi.travel.datalayer.dao.ReceiptDao;
 import com.smi.travel.datalayer.dao.RefundAirticketDao;
@@ -101,6 +102,7 @@ public class AJAXBean extends AbstractBean implements
     private static final String RECEIPT = "ReceiptServlet";
     private static final String TAXINVOICE = "TaxInvoiceServlet";
     private static final String CREDITNOTE = "CreditNoteServlet";
+    private static final String PAYMENTTOURHOTEL = "PaymentTourHotelServlet";
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -124,6 +126,7 @@ public class AJAXBean extends AbstractBean implements
     private TaxInvoiceDao taxInvoiceDao;
     private CreditNoteDao creditNoteDao;
     private MFilghtDao mFlightDao;
+    private PaymentWendytourDao paymentWendytourDao; 
 
     public AJAXBean(List queryList) {
         super(queryList);
@@ -177,6 +180,8 @@ public class AJAXBean extends AbstractBean implements
                     creditNoteDao = (CreditNoteDao) obj;
                 } else if (obj instanceof MFilghtDao) {
                     mFlightDao = (MFilghtDao) obj;
+                } else if (obj instanceof PaymentWendytourDao) {
+                    paymentWendytourDao = (PaymentWendytourDao) obj;
                 }
             }
         }
@@ -795,6 +800,15 @@ public class AJAXBean extends AbstractBean implements
                 }
             }
             
+        }else if (PAYMENTTOURHOTEL.equalsIgnoreCase(servletName)){
+            if("check".equalsIgnoreCase(type)){
+                String tourId = map.get("tourId").toString();
+                String tourCode = map.get("tourCode").toString();
+                String tourName = map.get("tourName").toString();
+                String tourDate = map.get("tourDate").toString();
+                result = paymentWendytourDao.checkDayTourOperationDetail(tourId,tourDate);
+                System.out.println("Result : "+result);
+            }
         }
 
         return result;
