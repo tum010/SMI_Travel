@@ -71,7 +71,8 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+ " invno = '"+invno+"'";
         }
-        
+         query += " ORDER BY invno desc  ";
+         
         if(checkQuery == 0){query = query.replaceAll("where", "");}
         System.out.println("query : "+query);
         

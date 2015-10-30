@@ -533,7 +533,8 @@ public class APNirvanaImpl implements APNirvanaDao {
             haveCondition = true;
         }
         
-
+        query.append(" Order by `ap_nirvana`.payno desc");
+        
         List<Object[]> QueryList = session.createSQLQuery(query.toString())
                 .addScalar("refinvoiceno", Hibernate.STRING)
                 .addScalar("intreference", Hibernate.STRING)
@@ -702,7 +703,7 @@ public class APNirvanaImpl implements APNirvanaDao {
         for (int i = 0; i < APList.size(); i++) {
             query += (i == 0 ? "" : ",");
             query += ("'"+APList.get(i).getRowid()+"'");
-        }
+        } 
         query += ") order by accno , intreference asc " ;
         System.out.println(" query :: " + query);
         Query HqlQuery = session.createQuery(query);
@@ -754,6 +755,7 @@ public class APNirvanaImpl implements APNirvanaDao {
             haveCondition = true;
         }
         
+        query.append(" Order by `ap_nirvana`.payno desc");
 //        SQLQuery sQLQuery = session.createSQLQuery(query.toString()).addEntity(APNirvana.class);
 //        List result = new ArrayList<APNirvana>();
 //        List result = sQLQuery.list();
@@ -812,7 +814,9 @@ public class APNirvanaImpl implements APNirvanaDao {
     }
     
     private String genReport(List<APNirvana> apDataList , String fullFileName , List<APNirvana> APList){
-      String status ="";
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd/MM/yyyy");
+        String status ="";
         UtilityFunction util = new UtilityFunction();
      try {
             HSSFWorkbook workbook = new HSSFWorkbook();
@@ -836,9 +840,9 @@ public class APNirvanaImpl implements APNirvanaDao {
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ap.getTranscode());
                 cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getTransdate());
+                cell.setCellValue(ap.getTransdate() == null ? "" : util.ConvertString(df.format(util.convertStringToDate(String.valueOf(ap.getTransdate())))));
                 cell = dataRow.createCell(cellnum++);
-                cell.setCellValue(ap.getDuedate() == null ? "":util.convertDateToString(ap.getDuedate()));
+                cell.setCellValue(ap.getDuedate() == null ? "" : util.ConvertString(df.format(util.convertStringToDate(String.valueOf(ap.getDuedate())))));
                 cell = dataRow.createCell(cellnum++);
                 cell.setCellValue(ap.getCurrencyid());
                 cell = dataRow.createCell(cellnum++);
