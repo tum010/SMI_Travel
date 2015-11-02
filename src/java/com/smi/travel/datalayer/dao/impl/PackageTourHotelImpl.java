@@ -423,6 +423,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             hotelSummary.setDepartment(util.ConvertString(B[10]) == null || "".equals(util.ConvertString(B[10])) ? "" : util.ConvertString(B[10]));
             hotelSummary.setSubReportDir(url);
             hotelSummary.setHotelMonthlyDetailSubReportDataSource(new JRBeanCollectionDataSource(getHotelMonthlySub(util.ConvertString(B[8]) == null || "".equals(util.ConvertString(B[8])) ? "" : util.ConvertString(B[8]))));
+            data.add(hotelSummary);
         }
         return data;
     } 
