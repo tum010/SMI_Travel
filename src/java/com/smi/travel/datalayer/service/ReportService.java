@@ -639,9 +639,9 @@ public class ReportService {
         return packageTourHotelDao.getHotelSummary(from, to, department);
     }
      
-     public List getHotelMonthly(String from,String to ,String department,String detail,String systemuser){
-        return packageTourHotelDao.getHotelMonthly(from, to, department,detail,systemuser);
-    }
+//     public List getHotelMonthly(String from,String to ,String department,String detail,String systemuser,Stri){
+//        return packageTourHotelDao.getHotelMonthly(from, to, department,detail,systemuser);
+//    }
 
     public OtherMonthlyDao getOtherMonthlyDao() {
         return otherMonthlyDao;
@@ -659,9 +659,9 @@ public class ReportService {
         this.daytourBookingdao = daytourBookingdao;
     }
     
-    public List getHotelMonthlyDetail(String from,String to ,String department,String detail,String systemuser){
-        return packageTourHotelDao.getHotelMonthlyDetail(from, to, department,detail,systemuser);
-    }
+//    public List getHotelMonthlyDetail(String from,String to ,String department,String detail,String systemuser){
+//        return packageTourHotelDao.getHotelMonthlyDetail(from, to, department,detail,systemuser);
+//    }
 
     public PackageMonthlyDao getPackageMonthlyDao() {
         return packageMonthlyDao;
@@ -669,5 +669,11 @@ public class ReportService {
 
     public void setPackageMonthlyDao(PackageMonthlyDao packageMonthlyDao) {
         this.packageMonthlyDao = packageMonthlyDao;
+    }
+    
+    public List getHotelMonthlyReport(String from,String to ,String department,String detail,String systemuser,String url){
+        List data  = new ArrayList();
+        data.add(packageTourHotelDao.getHotelMonthlyReport(from, to, department, detail, systemuser, url));
+        return data;
     }
 }

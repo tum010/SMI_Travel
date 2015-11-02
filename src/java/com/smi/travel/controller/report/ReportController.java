@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.report.model.AgentCommission;
 import com.smi.travel.datalayer.report.model.DailyTourReport;
 import com.smi.travel.datalayer.report.model.GuideCommissionInfo;
+import com.smi.travel.datalayer.report.model.HotelMonthlyReport;
 import com.smi.travel.datalayer.report.model.OtherMonthlyReport;
 import com.smi.travel.datalayer.report.model.PackageMonthlyReport;
 import com.smi.travel.datalayer.report.model.PaymentAirline;
@@ -251,10 +252,11 @@ public class ReportController extends SMITravelController {
             data = reportservice.getHotelSummary(fromHotelSummary, toHotelSummary, departmentHotelSummary);
         }else if(HotelMonthlyReport.equalsIgnoreCase(name)){
             System.out.println("Detail is : " + detailHotelMonthly);
-                data = reportservice.getHotelMonthly(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser);
+            data = reportservice.getHotelMonthlyReport(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser,getServletContext().getRealPath("/WEB-INF/report/"));         
+            ((HotelMonthlyReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));  
         }else if(HotelMonthlyDetailReport.equalsIgnoreCase(name)){
             System.out.println("Detail is : " + detailHotelMonthly);
-            data = reportservice.getHotelMonthlyDetail(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser);
+//            data = reportservice.getHotelMonthlyDetail(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser);
         }else if(OtherMonthlyReport.equalsIgnoreCase(name)){
             String datefrom = request.getParameter("fromdate");
             String dateto = request.getParameter("todate");
