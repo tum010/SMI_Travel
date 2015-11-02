@@ -24,6 +24,7 @@ import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.PaymentAirCredit;
+import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.util.UtilityFunction;
 import java.text.DecimalFormat;
@@ -1066,10 +1067,14 @@ public class BillableImpl implements BillableDao {
         
         Session session = this.sessionFactory.openSession();   
         List<BillableDesc> billableDescs = new ArrayList<BillableDesc>();
+        List<InvoiceDetail> invoiceDetails = new ArrayList<InvoiceDetail>();
         BillableDesc billableDesc = new BillableDesc();
+        
         String query = "from BillableDesc bill where bill.id = :billid";
         billableDescs = session.createQuery(query).setParameter("billid", billdescId).list();
-        
+        String queryinvdetail = "from InvoiceDetail inv where inv.billableDesc.id = :billid";
+        invoiceDetails = session.createQuery(queryinvdetail).setParameter("billid", billdescId).list();
+                
         if (billableDescs.isEmpty()) {
             return "fail";
         }else{
@@ -1078,6 +1083,21 @@ public class BillableImpl implements BillableDao {
             refItemId = String.valueOf(billableDesc.getRefItemId());
             try {
                 transaction = session.beginTransaction();
+                if(!invoiceDetails.isEmpty()){
+                    for(int i = 0 ; i < invoiceDetails.size() ; i++){
+                        InvoiceDetail invoiceDetail = new InvoiceDetail();
+                        invoiceDetail = invoiceDetails.get(i);
+                        List<ReceiptDetail> receiptDetailList = invoiceDetail.getReceiptDetails();
+                        if(!receiptDetailList.isEmpty()){
+                            for(int j = 0 ; j < receiptDetailList.size() ; j++){
+                                ReceiptDetail receiptDetail = new ReceiptDetail();
+                                receiptDetail = receiptDetailList.get(j);
+                                session.delete(receiptDetail);
+                            }
+                        }
+                        session.delete(invoiceDetail);
+                    }
+                }
                 session.delete(billableDesc);
                 transaction.commit();
                 resultdelete = true;

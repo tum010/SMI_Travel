@@ -284,14 +284,14 @@ public class BillableController extends SMITravelController {
         } else if ("delete".equalsIgnoreCase(action)) {
             System.out.println("action delete");
         } else if("deleteBillable".equalsIgnoreCase(action)) {
-            String resultdelete = "fail";
+            String resultdelete = "";
             String billdescIdDelete = request.getParameter("billdescIdDelete");
             resultdelete = billableService.DeleteBillableDesc(billdescIdDelete);
-            if (resultdelete == "fail"){
-                return new ModelAndView("redirect:Billable.smi?referenceNo=" + refNo + "&deleteresult=unsuccessful&action=edit");
-            } else {
-                return new ModelAndView("redirect:Billable.smi?referenceNo=" + refNo + "&deleteresult=successful&action=edit");
-            }
+//            if (resultdelete == "fail"){
+//                return new ModelAndView("redirect:Billable.smi?referenceNo=" + refNo + "&result=deletefail");
+//            } else {
+//                return new ModelAndView("redirect:Billable.smi?referenceNo=" + refNo + "&result=deletesuccess");
+//            }
         } else {
             System.out.println("no action");
             if ("".equalsIgnoreCase(refNo) || (refNo == null)) {
