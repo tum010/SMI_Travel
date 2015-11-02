@@ -5,6 +5,7 @@
  */
 package com.smi.travel.datalayer.dao;
 
+import com.smi.travel.datalayer.report.model.HotelMonthlyReport;
 import java.util.List;
 
 /**
@@ -13,6 +14,7 @@ import java.util.List;
  */
 public interface PackageTourHotelDao {
     public List getHotelSummary(String from,String to ,String department);
-    public List getHotelMonthly(String from,String to ,String department,String detail,String systemuser);
-    public List getHotelMonthlyDetail(String from,String to ,String department,String detail,String systemuser);
+    public List getHotelMonthly(String from,String to ,String department,String detail,String systemuser,String url);
+    public List getHotelMonthlyDetail(String from,String to ,String department,String detail,String systemuser,String url);
+    public HotelMonthlyReport getHotelMonthlyReport(String from,String to ,String department,String detail,String systemuser,String url);
 }

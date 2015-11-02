@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.PackageTourHotelDao;
+import com.smi.travel.datalayer.report.model.HotelMonthlyReport;
 import com.smi.travel.datalayer.view.entity.HotelMonthly;
 import com.smi.travel.datalayer.view.entity.HotelMonthlyDetail;
 import com.smi.travel.datalayer.view.entity.HotelSummary;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -177,7 +179,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
     }
 
     @Override
-    public List getHotelMonthly(String from, String to, String department, String detail,String systemuser) {
+    public List getHotelMonthly(String from, String to, String department, String detail,String systemuser,String url) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<HotelSummary>();
@@ -334,15 +336,13 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
     }
 
     @Override
-    public List getHotelMonthlyDetail(String from, String to, String department, String detail, String systemuser) {
+    public List getHotelMonthlyDetail(String from, String to, String department, String detail, String systemuser,String url) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<HotelMonthly>();
         
         String query = "";
-        String query2 = "";
         int checkQuery = 0;
-        int checkQuery2 = 0;
         if( from == null  && to == null  && department == null ){
             query = "SELECT * FROM `hotel_monthly_detail_main` mt " ;
         }else{
@@ -421,12 +421,19 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             hotelSummary.setHotelid(util.ConvertString(B[8]) == null || "".equals(util.ConvertString(B[8])) ? "" : util.ConvertString(B[8]));
             hotelSummary.setCreatedate(util.ConvertString(B[9]) == null || "".equals(util.ConvertString(B[9])) ? "" : util.ConvertString(B[9]));
             hotelSummary.setDepartment(util.ConvertString(B[10]) == null || "".equals(util.ConvertString(B[10])) ? "" : util.ConvertString(B[10]));
-            
-            //Detail
-            if(!"".equals(util.ConvertString(B[8])) && util.ConvertString(B[8]) != null){
-                query2 = " SELECT * FROM `hotel_monthly_detail_room` mt  where mt.hote_booking_id ='"+util.ConvertString(B[8])+"'" ;
-            }
-            System.out.println("Query Sub Detail : " + query2);
+            hotelSummary.setSubReportDir(url);
+            hotelSummary.setHotelMonthlyDetailSubReportDataSource(new JRBeanCollectionDataSource(getHotelMonthlySub(util.ConvertString(B[8]) == null || "".equals(util.ConvertString(B[8])) ? "" : util.ConvertString(B[8]))));
+        }
+        return data;
+    } 
+    
+    private List getHotelMonthlySub(String refno){
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        
+        String query2 = " SELECT * FROM `hotel_monthly_detail_room` mt  where mt.hote_booking_id ='"+refno+"'" ;
+        System.out.println("Query Sub Detail : " + query2);
             List<Object[]> QueryList2 =  session.createSQLQuery(query2)
                     .addScalar("hotel",Hibernate.STRING)
                     .addScalar("hotelid",Hibernate.STRING)
@@ -443,28 +450,50 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
                     .addScalar("curcost",Hibernate.STRING)
                     .addScalar("curprice",Hibernate.STRING)            
                 .list();
-            List<HotelMonthlyDetail> listHotelSummaryDetail = new ArrayList<HotelMonthlyDetail>();
-            for (Object[] B2 : QueryList2) {
-                HotelMonthlyDetail hotelMonthDetail  = new HotelMonthlyDetail();
-                hotelMonthDetail.setHotel(util.ConvertString(B2[0]));
-                hotelMonthDetail.setHotelid(util.ConvertString(B2[1]));
-                hotelMonthDetail.setHotel_booking_id(util.ConvertString(B2[2]));
-                hotelMonthDetail.setCategory(util.ConvertString(B2[3]));
-                hotelMonthDetail.setRoom(util.ConvertString(B2[4]));
-                hotelMonthDetail.setNight(util.ConvertString(B2[5]));
-                hotelMonthDetail.setNet(util.ConvertString(B2[6]));
-                hotelMonthDetail.setSell(util.ConvertString(B2[7]));
-                hotelMonthDetail.setProfit(util.ConvertString(B2[8]));
-                hotelMonthDetail.setCost(util.ConvertString(B2[9]));
-                hotelMonthDetail.setPrice(util.ConvertString(B2[10]));
-                hotelMonthDetail.setQty(util.ConvertString(B2[11]));
-                hotelMonthDetail.setCurcost(util.ConvertString(B2[12]));
-                hotelMonthDetail.setCurprice(util.ConvertString(B2[13]));
-                listHotelSummaryDetail.add(hotelMonthDetail);
+            if(QueryList2 != null){
+                for (Object[] B2 : QueryList2) {
+                    HotelMonthlyDetail hotelMonthDetail  = new HotelMonthlyDetail();
+                    hotelMonthDetail.setHotel(util.ConvertString(B2[0]));
+                    hotelMonthDetail.setHotelid(util.ConvertString(B2[1]));
+                    hotelMonthDetail.setHotel_booking_id(util.ConvertString(B2[2]));
+                    hotelMonthDetail.setCategory(util.ConvertString(B2[3]));
+                    hotelMonthDetail.setRoom(util.ConvertString(B2[4]));
+                    hotelMonthDetail.setNight(util.ConvertString(B2[5]));
+                    hotelMonthDetail.setNet(util.ConvertString(B2[6]));
+                    hotelMonthDetail.setSell(util.ConvertString(B2[7]));
+                    hotelMonthDetail.setProfit(util.ConvertString(B2[8]));
+                    hotelMonthDetail.setCost(util.ConvertString(B2[9]));
+                    hotelMonthDetail.setPrice(util.ConvertString(B2[10]));
+                    hotelMonthDetail.setQty(util.ConvertString(B2[11]));
+                    hotelMonthDetail.setCurcost(util.ConvertString(B2[12]));
+                    hotelMonthDetail.setCurprice(util.ConvertString(B2[13]));
+                    data.add(hotelMonthDetail);
+                } 
             }
-            hotelSummary.setHotelMonthlyDetail(listHotelSummaryDetail);
-            data.add(hotelSummary);
-        }
         return data;
-    } 
+    }
+
+    @Override
+    public HotelMonthlyReport getHotelMonthlyReport(String from, String to, String department, String detail, String systemuser, String url) {
+        UtilityFunction util = new UtilityFunction();
+        HotelMonthlyReport hotelMonthly = new HotelMonthlyReport();
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy hh:mm");
+        
+        SimpleDateFormat datefromto = new SimpleDateFormat();
+        datefromto.applyPattern("dd-MM-yyyy");
+        
+        hotelMonthly.setFrompage(util.ConvertString(datefromto.format(util.convertStringToDate(from))));
+        hotelMonthly.setTopage(util.ConvertString(datefromto.format(util.convertStringToDate(to))));
+        hotelMonthly.setSystemdate(String.valueOf(dateformat.format(new Date())));
+        hotelMonthly.setPrintby(systemuser);
+        hotelMonthly.setHotelMonthlyReportDataSource(new JRBeanCollectionDataSource(getHotelMonthly(from, to, department, detail, systemuser,url)));
+        
+        if("1".equalsIgnoreCase(detail)){
+            hotelMonthly.setHotelMonthlyDetailReportDataSource(new JRBeanCollectionDataSource(getHotelMonthlyDetail(from, to, department, detail, systemuser,url)));
+        }else{
+            hotelMonthly.setHotelMonthlyDetailReportDataSource(null);
+        }
+        return hotelMonthly;
+    }
 }
