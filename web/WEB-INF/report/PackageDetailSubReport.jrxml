@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PackageDetailSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="2" bottomMargin="2" uuid="cf1ccb46-96bc-4028-a911-b10f03b03c4f">
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="5.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="3"/>
+	<property name="ireport.y" value="273"/>
 	<parameter name="REFNO_MASTER" class="java.lang.String">
 		<defaultValueExpression><![CDATA[$F{refno}]]></defaultValueExpression>
 	</parameter>
