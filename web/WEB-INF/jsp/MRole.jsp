@@ -279,7 +279,7 @@
         <script language="javascript">
            $('#textAlertLap').show();
         </script>
-    </c:if>Delete successful
+    </c:if>
     <c:if test="${requestScope['result'] =='Delete successful'}">        
         <script language="javascript">
            $('#textAlertDivDelete').show();

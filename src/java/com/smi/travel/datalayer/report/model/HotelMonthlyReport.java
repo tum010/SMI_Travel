@@ -12,8 +12,8 @@ import net.sf.jasperreports.engine.JRDataSource;
  * @author Kanokporn
  */
 public class HotelMonthlyReport {
-    private JRDataSource hotelMonthlyReportDataSource;
-    private JRDataSource hotelMonthlyDetailReportDataSource;
+    private JRDataSource hotelmonthlyreportdatasource;
+    private JRDataSource hotelmonthlydetailreportdatasource;
     private String subReportDir;
     private String frompage;
     private String topage;
@@ -38,24 +38,24 @@ public class HotelMonthlyReport {
         this.printby = printby;
     }
 
-    public JRDataSource getHotelMonthlyReportDataSource() {
-        return hotelMonthlyReportDataSource;
+    public JRDataSource getHotelmonthlyreportdatasource() {
+        return hotelmonthlyreportdatasource;
     }
 
-    public void setHotelMonthlyReportDataSource(JRDataSource hotelMonthlyReportDataSource) {
-        this.hotelMonthlyReportDataSource = hotelMonthlyReportDataSource;
+    public void setHotelmonthlyreportdatasource(JRDataSource hotelmonthlyreportdatasource) {
+        this.hotelmonthlyreportdatasource = hotelmonthlyreportdatasource;
     }
 
-    public JRDataSource getHotelMonthlyDetailReportDataSource() {
-        return hotelMonthlyDetailReportDataSource;
+    public JRDataSource getHotelmonthlydetailreportdatasource() {
+        return hotelmonthlydetailreportdatasource;
     }
 
-    public void setHotelMonthlyDetailReportDataSource(JRDataSource hotelMonthlyDetailReportDataSource) {
-        this.hotelMonthlyDetailReportDataSource = hotelMonthlyDetailReportDataSource;
+    public void setHotelmonthlydetailreportdatasource(JRDataSource hotelmonthlydetailreportdatasource) {
+        this.hotelmonthlydetailreportdatasource = hotelmonthlydetailreportdatasource;
     }
+
+   
     
-
-
     public String getSubReportDir() {
         return subReportDir;
     }

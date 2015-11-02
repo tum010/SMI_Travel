@@ -270,7 +270,10 @@ public class LandDetailController extends SMITravelController {
             }
 
         }
-        request.setAttribute(ISBILLSTATUS,Integer.parseInt(isbill));
+        if(isbill != null){
+            request.setAttribute(ISBILLSTATUS,Integer.parseInt(isbill));
+        }
+        
         request.setAttribute("isbill", isbill);
         request.setAttribute("landid", landID);
         request.setAttribute("agent_id", agentId);
