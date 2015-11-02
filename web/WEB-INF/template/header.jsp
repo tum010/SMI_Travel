@@ -85,7 +85,8 @@
                                     //	"<li><a id='menu-maccount' href='MAccountCode.smi'>Account</a></li>",
                                             "<li><a id='menu-mpackage' href='MPackage.smi'>Package</a></li>" ];
 
-                            var bookingMenu = [ "<li><a href='Book.smi'> Booking</a></li>" ];
+                            var bookingMenu = [ "<li><a href='Book.smi'> Booking</a></li>",
+                                               "<li><a href='BookInformation.smi'>Information</a></li>" ];
                             var daytourMenu = [ "<li><a href='DaytourOperationDetail.smi'> Day Tour</a></li>"
                             //  ,"<li><a href='DaytourOperationOther.smi'> Other</a></li>"
                             ];

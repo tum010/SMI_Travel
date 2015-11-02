@@ -272,19 +272,29 @@ function DeleteRowBillable(){
     if(id === ''){
         $("#billtype-" + cCount).parent().parent().remove();
     }else {
-        $.ajax({
-            url: 'Billable.smi?action=deleteBillable',
-            type: 'get',
-            data: {billdescIdDelete: id},
-            success: function () {
-                $("#billtype-" + cCount).parent().parent().remove();
-                $('#textAlertDivDelete').show();
-            },
-            error: function () {
-                console.log("error");
-                $('#textAlertDivNotDelete').show();
-            }
-        }); 
+        var action = document.getElementById('action');
+        action.value = 'deleteBillable';
+        document.getElementById('billDescIdDelete').value = id;
+        document.getElementById('billDescRowDelete').value = cCount;
+        
+        document.getElementById('Billable').submit();
+        
+//        if($("#deleteresultText").val() === "successful" ){
+//            $("#billtype-" + cCount).parent().parent().remove();
+//        }
+//        $.ajax({
+//            url: 'Billable.smi?action=deleteBillable',
+//            type: 'get',
+//            data: {billdescIdDelete: id},
+//            success: function () {
+//                $("#billtype-" + cCount).parent().parent().remove();
+////                $('#textAlertDivDelete').show();
+//            },
+//            error: function () {
+//                console.log("error");
+//                $('#textAlertDivNotDelete').show();
+//            }
+//        }); 
     }
     $('#DeleteBillableListModal').modal('hide');
 }
