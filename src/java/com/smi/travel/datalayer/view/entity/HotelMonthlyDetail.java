@@ -5,7 +5,7 @@
  */
 package com.smi.travel.datalayer.view.entity;
 
-import java.math.BigDecimal;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  *
@@ -27,7 +27,25 @@ public class HotelMonthlyDetail {
     private String curcost;			
     private String price;			
     private String curprice;
+    private String subReportDir;
+    private JRDataSource hotelMonthlyDetailSubReportDataSource;
 
+    public String getSubReportDir() {
+        return subReportDir;
+    }
+
+    public void setSubReportDir(String subReportDir) {
+        this.subReportDir = subReportDir;
+    }
+
+    public JRDataSource getHotelMonthlyDetailSubReportDataSource() {
+        return hotelMonthlyDetailSubReportDataSource;
+    }
+
+    public void setHotelMonthlyDetailSubReportDataSource(JRDataSource hotelMonthlyDetailSubReportDataSource) {
+        this.hotelMonthlyDetailSubReportDataSource = hotelMonthlyDetailSubReportDataSource;
+    }
+    
     public String getHotel() {
         return hotel;
     }

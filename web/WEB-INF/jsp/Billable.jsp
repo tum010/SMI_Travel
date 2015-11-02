@@ -32,6 +32,7 @@
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <c:set var="ReceiptDetailList" value="${requestScope['ReceiptDetailList']}" />
 
+<input type="hidden" value="${requestScope['deleteresult']}" id="deleteresultText">
 <input type="hidden" value="${requestScope['result']}" id="resultText">
 <section class="content-header" >
     <h1>
@@ -783,12 +784,12 @@
     </div><!-- /.modal-dialog -->
 </div>
 <c:if test="${! empty requestScope['deleteresult']}">
-    <c:if test="${requestScope['deleteresult'] =='delete successful'}">        
+    <c:if test="${requestScope['deleteresult'] =='successful'}">        
         <script language="javascript">
             $('#textAlertDivDelete').show();
         </script>
     </c:if>
-    <c:if test="${requestScope['deleteresult'] =='delete unsuccessful'}">        
+    <c:if test="${requestScope['deleteresult'] =='unsuccessful'}">        
         <script language="javascript">
            $('#textAlertDivNotDelete').show();
         </script>

@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.view.entity;
 
 import java.util.List;
+import net.sf.jasperreports.engine.JRDataSource;
 
 /**
  *
@@ -32,6 +33,26 @@ public class HotelMonthly {
     private String createdate;
     private String department;
     private List hotelMonthlyDetail;
+    private String subReportDir;
+    private JRDataSource hotelMonthlyDetailSubReportDataSource;
+
+    public String getSubReportDir() {
+        return subReportDir;
+    }
+
+    public void setSubReportDir(String subReportDir) {
+        this.subReportDir = subReportDir;
+    }
+
+    public JRDataSource getHotelMonthlyDetailSubReportDataSource() {
+        return hotelMonthlyDetailSubReportDataSource;
+    }
+
+    public void setHotelMonthlyDetailSubReportDataSource(JRDataSource hotelMonthlyDetailSubReportDataSource) {
+        this.hotelMonthlyDetailSubReportDataSource = hotelMonthlyDetailSubReportDataSource;
+    }
+    
+    
 
     public String getCreatedate() {
         return createdate;

@@ -519,12 +519,12 @@ public class APNirvanaImpl implements APNirvanaDao {
         }
         if ((from != null) && (!"".equalsIgnoreCase(from))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.createdate >= '" + from + "'");
+            query.append(" `ap_nirvana`.transdate >= '" + from + "'");
             haveCondition = true;
         }
         if ((to != null) && (!"".equalsIgnoreCase(to))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.createdate <= '" + to + "'");
+            query.append(" `ap_nirvana`.transdate <= '" + to + "'");
             haveCondition = true;
         }
         if ((accno != null) && (!"".equalsIgnoreCase(accno))) {
@@ -746,12 +746,12 @@ public class APNirvanaImpl implements APNirvanaDao {
         }
         if ((from != null) && (!"".equalsIgnoreCase(from))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.createdate >= '" + from + "'");
+            query.append(" `ap_nirvana`.transdate >= '" + from + "'");
             haveCondition = true;
         }
         if ((to != null) && (!"".equalsIgnoreCase(to))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `ap_nirvana`.createdate <= '" + to + "'");
+            query.append(" `ap_nirvana`.transdate <= '" + to + "'");
             haveCondition = true;
         }
         
@@ -767,6 +767,9 @@ public class APNirvanaImpl implements APNirvanaDao {
                 .addScalar("vatamt", Hibernate.BIG_DECIMAL)
                 .addScalar("basevatamt", Hibernate.BIG_DECIMAL)
                 .addScalar("currencyid", Hibernate.STRING)
+                .addScalar("payno", Hibernate.STRING)
+                .addScalar("refinvoiceno", Hibernate.STRING)
+                .addScalar("transdate", Hibernate.DATE)
                 .list();
         List result = new ArrayList<APNirvana>();
         if(QueryList.isEmpty()){
@@ -790,6 +793,9 @@ public class APNirvanaImpl implements APNirvanaDao {
             apNirvana.setCurrencyid(util.ConvertString(B[6]));
             apNirvana.setVatamt((B[4]) != null ? new BigDecimal(util.ConvertString(B[4])) : new BigDecimal("0.00"));
             apNirvana.setBasevatamt((B[5]) != null ? new BigDecimal(util.ConvertString(B[5])) : new BigDecimal("0.00"));
+            apNirvana.setPayno(util.ConvertString(B[7]));
+            apNirvana.setRefinvoiceno(util.ConvertString(B[8]));
+            apNirvana.setTransdate(util.convertStringToDate(util.ConvertString(B[9])));
             if(header){
                 SimpleDateFormat dateformat = new SimpleDateFormat();
                 dateformat.applyPattern("dd-MM-yyyy HH:mm:ss");         
