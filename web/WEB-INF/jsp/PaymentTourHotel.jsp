@@ -626,7 +626,6 @@
                 <div class="row" style="padding-left: 25px;">
                     <div class="col-xs-1 text-right" style="width: 975px">
                          <button type="button" onclick="checkDaytour()" class="btn btn-success">OK</button>
-                         <button type="button" onclick="closePackagePanel()" class="btn btn-default">Close</button>
                     </div>    
                 </div>
             </div>
@@ -1941,32 +1940,37 @@
     }
     
     function editTour(row){
-        var tourId = $("#tourId"+row).val();
-        var tourDate = $("#tourDate"+row).val();
-        if((tourId !== '') && (tourDate !== '')){
-            for(var i=0;i<tourCode.length;i++){
-                var id = tourCode[i].id;
-                if(tourId === id){
-                    $("#tourRow").val(row);
-                    $("#tourId").val(tourId);
-                    $("#tourDate").val(tourDate);
-                    $("#tourCode").val(tourCode[i].code);
-                    $("#tourName").val(tourCode[i].name);
-                    i = tourCode.length;
-                }    
-            }           
+        if(row !== $("#tourRow").val()){
+            var tourId = $("#tourId"+row).val();
+            var tourDate = $("#tourDate"+row).val();
+            if((tourId !== '') && (tourDate !== '')){
+                for(var i=0;i<tourCode.length;i++){
+                    var id = tourCode[i].id;
+                    if(tourId === id){
+                        $("#tourRow").val(row);
+                        $("#tourId").val(tourId);
+                        $("#tourDate").val(tourDate);
+                        $("#tourCode").val(tourCode[i].code);
+                        $("#tourName").val(tourCode[i].name);
+                        i = tourCode.length;
+                    }    
+                }           
+            }else{
+                $("#tourRow").val(row);
+                $("#tourId").val('');
+                $("#tourDate").val('');
+                $("#tourCode").val('');
+                $("#tourName").val('');
+            }
+            $("#codepanel").removeClass("has-error");
+            $("#namepanel").removeClass("has-error");
+            $("#datepanel").removeClass("has-error");
+            $("#packagepanel").removeClass("hidden");
+    //        $("#DayTourModel").modal("show");
         }else{
-            $("#tourRow").val(row);
-            $("#tourId").val('');
-            $("#tourDate").val('');
-            $("#tourCode").val('');
-            $("#tourName").val('');
+            $("#tourRow").val('');
+            $("#packagepanel").addClass("hidden");
         }
-        $("#codepanel").removeClass("has-error");
-        $("#namepanel").removeClass("has-error");
-        $("#datepanel").removeClass("has-error");
-        $("#packagepanel").removeClass("hidden");
-//        $("#DayTourModel").modal("show");
     }
     
     function viewDayTour(){
