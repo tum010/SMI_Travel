@@ -25,6 +25,7 @@ import com.smi.travel.datalayer.view.entity.TicketCommissionReceive;
 import com.smi.travel.datalayer.view.entity.TicketProfitLoss;
 import com.smi.travel.datalayer.view.entity.TicketSummaryAirlineView;
 import com.smi.travel.datalayer.view.entity.TicketSummaryCommissionView;
+import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
@@ -3886,6 +3887,10 @@ public class ExportDataToExcelView extends AbstractExcelView {
   }
     
    private void getApReport(HSSFWorkbook wb, List ApNirvana) {
+        UtilityFunction util = new UtilityFunction();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd/MM/yyyy");
+        
         String sheetName = "Sheet1";// name of sheet
         HSSFSheet sheet = wb.createSheet(sheetName);
         
@@ -3981,23 +3986,23 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell61.setCellStyle(styleC3Center);
         sheet.autoSizeColumn(0);
         HSSFCell cell62 = row6.createCell(1);
-        cell62.setCellValue("Pay No.");
+        cell62.setCellValue("Ref InvNo");
         cell62.setCellStyle(styleC3Center);
         sheet.autoSizeColumn(1);
         HSSFCell cell63 = row6.createCell(2);
-        cell63.setCellValue("Ap Code");
+        cell63.setCellValue("Invoice Date");
         sheet.autoSizeColumn(2);
         cell63.setCellStyle(styleC3Center);
         HSSFCell cell64 = row6.createCell(3);
-        cell64.setCellValue("Invoice Sup");
+        cell64.setCellValue("Pay No.");
         cell64.setCellStyle(styleC3Center);
         sheet.autoSizeColumn(3);
         HSSFCell cell65 = row6.createCell(4);
-        cell65.setCellValue("Acc Code");
+        cell65.setCellValue("Ap Code");
         cell65.setCellStyle(styleC3Center);
         sheet.autoSizeColumn(4);
         HSSFCell cell66 = row6.createCell(5);
-        cell66.setCellValue("Cur");
+        cell66.setCellValue("Invoice Sup");
         cell66.setCellStyle(styleC3Center);
         sheet.autoSizeColumn(5);
         
@@ -4009,14 +4014,22 @@ public class ExportDataToExcelView extends AbstractExcelView {
         styleC3Right.setBorderRight(HSSFCellStyle.BORDER_THIN);
         styleC3Right.setBorderTop(HSSFCellStyle.BORDER_THIN);
         HSSFCell cell67 = row6.createCell(6);
-        cell67.setCellValue("Gross");
+        cell67.setCellValue("Acc Code");
         cell67.setCellStyle(styleC3Right);
         sheet.autoSizeColumn(6);
         HSSFCell cell68 = row6.createCell(7);
-        cell68.setCellValue("Amount");
+        cell68.setCellValue("Cur");
         cell68.setCellStyle(styleC3Right);
         sheet.autoSizeColumn(7);
-        
+        HSSFCell cell69 = row6.createCell(8);
+        cell69.setCellValue("Gross");
+        cell69.setCellStyle(styleC3Right);
+        sheet.autoSizeColumn(8);
+        HSSFCell cell70 = row6.createCell(9);
+        cell70.setCellValue("Amount");
+        cell70.setCellStyle(styleC3Right);
+        sheet.autoSizeColumn(9);
+
         //Detail of Table
         int count = 9 ;
         HSSFCellStyle styleC23 = wb.createCellStyle();
@@ -4039,31 +4052,37 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 cell0.setCellValue(i+1);
                 cell0.setCellStyle(styleC23);
              HSSFCell cell1 = row.createCell(1);
-                cell1.setCellValue(data.getIntreference());
+                cell1.setCellValue(data.getRefinvoiceno());
                 cell1.setCellStyle(styleC24);
              HSSFCell cell2 = row.createCell(2);
-                cell2.setCellValue(data.getVendorid());
+                cell2.setCellValue(data.getTransdate() == null ? "" : util.ConvertString(df.format(data.getTransdate())));
                 cell2.setCellStyle(styleC24);
              HSSFCell cell3 = row.createCell(3);
-                cell3.setCellValue(data.getVendorname());
+                cell3.setCellValue(data.getPayno());
                 cell3.setCellStyle(styleC24);
              HSSFCell cell4 = row.createCell(4);
-                cell4.setCellValue(data.getPuraccount1());
+                cell4.setCellValue(data.getVendorid());
                 cell4.setCellStyle(styleC24);
              HSSFCell cell5 = row.createCell(5);
-                cell5.setCellValue(data.getCurrencyid());
-                cell5.setCellStyle(styleC23);   
+                cell5.setCellValue(data.getVendorname());
+                cell5.setCellStyle(styleC24);   
              HSSFCell cell6 = row.createCell(6);
-                cell6.setCellValue((data.getVatamt() != null) ? data.getVatamt().doubleValue() : new BigDecimal("0").doubleValue());
-                cell6.setCellStyle(styleC25);
+                cell6.setCellValue(data.getPuraccount1());
+                cell6.setCellStyle(styleC24);
              HSSFCell cell7 = row.createCell(7);
-                cell7.setCellValue((data.getBasevatamt() != null) ? data.getBasevatamt().doubleValue() : new BigDecimal("0").doubleValue());
-                cell7.setCellStyle(styleC25);
+                cell7.setCellValue(data.getCurrencyid());
+                cell7.setCellStyle(styleC23);
+             HSSFCell cell8 = row.createCell(8);
+                cell8.setCellValue((data.getVatamt() != null) ? data.getVatamt().doubleValue() : new BigDecimal("0").doubleValue());
+                cell8.setCellStyle(styleC25);
+             HSSFCell cell9 = row.createCell(9);
+                cell9.setCellValue((data.getBasevatamt() != null) ? data.getBasevatamt().doubleValue() : new BigDecimal("0").doubleValue());
+                cell9.setCellStyle(styleC25);
              
              
              if(i == (ApNirvana.size()-1)){
                 row = sheet.createRow(count + i + 1);
-                for(int k=0;k<5;k++){
+                for(int k=0;k<7;k++){
                     HSSFCellStyle styleSum = wb.createCellStyle();
                     styleSum.setAlignment(styleC24.ALIGN_RIGHT);
                     styleSum.setBorderTop(HSSFCellStyle.BORDER_THIN);
@@ -4080,16 +4099,16 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 styleSum.setBorderBottom(HSSFCellStyle.BORDER_THIN);
                 styleSum.setDataFormat(currency.getFormat("#,##0.00"));
                 
-                String sumGross = "SUM(G" + 10+":G"+(count + i + 1)+")";
-                String sumAmount = "SUM(H" + 10+":H"+(count + i + 1)+")";
+                String sumGross = "SUM(I" + 10+":I"+(count + i + 1)+")";
+                String sumAmount = "SUM(J" + 10+":J"+(count + i + 1)+")";
                 
-                HSSFCell cell5Sum = row.createCell(5);
+                HSSFCell cell5Sum = row.createCell(7);
                     cell5Sum.setCellValue("Total");
                     cell5Sum.setCellStyle(styleSum);
-                HSSFCell cell6Sum = row.createCell(6);
+                HSSFCell cell6Sum = row.createCell(8);
                     cell6Sum.setCellFormula(sumGross);
                     cell6Sum.setCellStyle(styleSum);
-                HSSFCell cell7Sum = row.createCell(7);
+                HSSFCell cell7Sum = row.createCell(9);
                     cell7Sum.setCellFormula(sumAmount);
                     cell7Sum.setCellStyle(styleSum);
                 

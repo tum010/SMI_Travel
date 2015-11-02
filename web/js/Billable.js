@@ -264,7 +264,6 @@ function deleteBillableList(id,Ccount) {
 function DeleteRowBillable(){
     var cCount = document.getElementById('billDescRowDelete').value;
     var id = document.getElementById('billDescIdDelete').value;
-    var deleteresult = document.getElementById('deleteresult').value;
     if(id === ''){
         $("#billtype-" + cCount).parent().parent().remove();
     }else {
@@ -274,7 +273,7 @@ function DeleteRowBillable(){
             data: {billdescIdDelete: id},
             success: function () {
                 $("#billtype-" + cCount).parent().parent().remove();
-                $('#textAlertDivDelete').show();
+//                $('#textAlertDivDelete').show();
             },
             error: function () {
                 console.log("error");
