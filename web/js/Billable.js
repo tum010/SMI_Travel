@@ -225,9 +225,14 @@ $(document).ready(function () {
         $('#textAlertDivSave').show();
     }else if ( bla === ""){
         $('#textAlertDivSave').hide();
+    }else if(bla ===  "deletesuccess"){
+        $('#textAlertDivDelete').show();
+    }else if(bla ===  "deletefail"){
+        $('#textAlertDivNotDelete').show();
     }else {
         $('#textAlertDivNotSave').show();
     }
+    
 });
 
 //Print Ticket Order Button
@@ -273,7 +278,7 @@ function DeleteRowBillable(){
             data: {billdescIdDelete: id},
             success: function () {
                 $("#billtype-" + cCount).parent().parent().remove();
-//                $('#textAlertDivDelete').show();
+                $('#textAlertDivDelete').show();
             },
             error: function () {
                 console.log("error");
