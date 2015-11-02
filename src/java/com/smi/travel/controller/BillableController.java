@@ -76,6 +76,7 @@ public class BillableController extends SMITravelController {
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String ReceiptDetailList = "ReceiptDetailList";
     private static final String ISBILLSTATUS = "IsBillStatus";
+    private static final String DELETERESULT = "deleteresult";
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -100,7 +101,7 @@ public class BillableController extends SMITravelController {
         Date transferDate = convertStringToDate(transferD);
         String accIdS = request.getParameter("accId");
         MBank accId = this.getBankAccountById(accIdS);
-        
+        String deleteresult = request.getParameter("deleteresult");
         request.setAttribute("thisdate", Util.convertDateToString(new Date()));
         Integer checkedPayable = null;
         if ("on".equalsIgnoreCase(payable)) {
@@ -108,6 +109,8 @@ public class BillableController extends SMITravelController {
         } else {
             checkedPayable = new Integer(1);
         }
+        
+        request.setAttribute(DELETERESULT, deleteresult); 
         
         Master master = utilservice.getbookingFromRefno(refNo);
         Billable billForm = new Billable();
@@ -284,14 +287,22 @@ public class BillableController extends SMITravelController {
         } else if ("delete".equalsIgnoreCase(action)) {
             System.out.println("action delete");
         } else if("deleteBillable".equalsIgnoreCase(action)) {
+            System.out.println("===================================== deleteBillable ");
             String resultdelete = "";
-            String billdescIdDelete = request.getParameter("billdescIdDelete");
-            resultdelete = billableService.DeleteBillableDesc(billdescIdDelete);
-//            if (resultdelete == "fail"){
-//                return new ModelAndView("redirect:Billable.smi?referenceNo=" + refNo + "&result=deletefail");
-//            } else {
-//                return new ModelAndView("redirect:Billable.smi?referenceNo=" + refNo + "&result=deletesuccess");
-//            }
+            String billDescIdDelete = request.getParameter("billDescIdDelete");
+            String billDescRowDelete = request.getParameter("billDescRowDelete");
+            System.out.println(" billdescIdDelete " + billDescIdDelete);
+            System.out.println(" billDescRowDelete " + billDescRowDelete);
+            resultdelete = billableService.DeleteBillableDesc(billDescIdDelete);
+            
+            System.out.println("resultdelete " + resultdelete);
+            if (resultdelete == "fail"){ 
+                request.setAttribute(DELETERESULT, "unsuccessful");
+                return new ModelAndView("redirect:Billable.smi?referenceNo=" + refNo + "&deleteresult=unsuccessful&action=edit");
+            } else {
+                request.setAttribute(DELETERESULT, "successful");
+                return new ModelAndView("redirect:Billable.smi?referenceNo=" + refNo + "&deleteresult=successful&action=edit");
+            }
         } else {
             System.out.println("no action");
             if ("".equalsIgnoreCase(refNo) || (refNo == null)) {
@@ -324,7 +335,7 @@ public class BillableController extends SMITravelController {
     }
 
     public void setResponseAttribute(HttpServletRequest request, String refNo) {
-
+        System.out.println(" +++++++++++++++++++++++ setResponseAttribute +++++++++++++++++++++++++++++++++++++ ");
         int[] booksize = utilservice.getCountItemFromBooking(refNo);
         List<CustomerAgentInfo> customerAgentInfo = billableService.getListCustomerAgentInfo();
         request.setAttribute(CustomerAgent, customerAgentInfo);
@@ -343,12 +354,13 @@ public class BillableController extends SMITravelController {
         
         List<MBank> mBankList = utilservice.getListBank();
         request.setAttribute(MBankList, mBankList);
-        
+//        if(master != null){
         if(("2").equals(String.valueOf(master.getMBookingstatus().getId())) || ("5").equals(String.valueOf(master.getMBookingstatus().getId()))){
             request.setAttribute(LockUnlockBooking,1);
         }else{
             request.setAttribute(LockUnlockBooking,0);
         }
+//        }
     }
 
     private Integer convertStringToInteger(String input) {

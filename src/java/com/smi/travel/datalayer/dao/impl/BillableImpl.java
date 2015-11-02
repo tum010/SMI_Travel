@@ -1061,7 +1061,7 @@ public class BillableImpl implements BillableDao {
         String billTypeId = "";
         String refItemId = "";
         int resulttemp = 0;
-        String result = "";
+        String result = "fail";
         String queryupdate = "";
         String resultdeleted = "";
         
@@ -1078,6 +1078,7 @@ public class BillableImpl implements BillableDao {
         if (billableDescs.isEmpty()) {
             return "fail";
         }else{
+            System.out.println("billableDescs not empty");
             billableDesc =  billableDescs.get(0);
             billTypeId = String.valueOf(billableDesc.getMBilltype().getId());
             refItemId = String.valueOf(billableDesc.getRefItemId());
@@ -1107,7 +1108,6 @@ public class BillableImpl implements BillableDao {
                 resultdeleted = "fail";
             }
         }
-        
         if(resultdelete){
             if("1".equalsIgnoreCase(billTypeId)){
                 queryupdate = "update AirticketFlight flight  set  flight.isBill = 1 where  flight.airticketAirline.id in (:refid)";
@@ -1126,7 +1126,11 @@ public class BillableImpl implements BillableDao {
                 queryup.setParameter("refid", refItemId);
                 System.out.println(" query " + query);
                 resulttemp = queryup.executeUpdate();
-                result = String.valueOf(resulttemp);
+                if(resulttemp == 1){
+                    result = "success";
+                }else{
+                    result = "fail";
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
                 resulttemp = 0;
@@ -1135,6 +1139,6 @@ public class BillableImpl implements BillableDao {
         }
         session.close();
         this.sessionFactory.close();
-        return resultdeleted;
+        return result;
     }
 }
