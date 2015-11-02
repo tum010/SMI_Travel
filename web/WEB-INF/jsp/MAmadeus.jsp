@@ -70,10 +70,10 @@
                         <thead>
                             <tr class="datatable-header">
                                 <th >Name</th>
-                                <th style="width: 30px" >section</th>
-                                <th style="width: 30px" >nodlm</th>
-                                <th style="width: 10px" >length</th>
-                                <th style="width: 30px" >start length</th>
+                                <th style="width: 30px" >Section</th>
+                                <th style="width: 30px" >Nodlm</th>
+                                <th style="width: 10px" >Length</th>
+                                <th style="width: 30px" >Start Length</th>
                                 <th style="width: 5px">Action</th>
                             </tr>
                         </thead>

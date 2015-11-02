@@ -7,8 +7,10 @@
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.DaytourComissionDao;
+import com.smi.travel.datalayer.dao.SystemUserDao;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;
+import com.smi.travel.datalayer.entity.SystemUser;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,7 @@ import java.util.List;
  */
 public class DaytourCommissionService {
     private DaytourComissionDao daytourComissiondao;
+    private SystemUserDao systemUser;
     
     public List<DaytourBooking> getListBookingDaytourComission(String StartDate,String EndDate,String agentID,String guideID){
         return daytourComissiondao.getListBookingDaytourComission(StartDate, EndDate,agentID,guideID);
@@ -55,6 +58,18 @@ public class DaytourCommissionService {
 
     public void setDaytourComissiondao(DaytourComissionDao daytourComissiondao) {
         this.daytourComissiondao = daytourComissiondao;
+    }
+    
+    public int insertSystemUser(SystemUser user){
+        return systemUser.insertSystemUser(user);
+    }
+
+    public SystemUserDao getSystemUser() {
+        return systemUser;
+    }
+
+    public void setSystemUser(SystemUserDao systemUser) {
+        this.systemUser = systemUser;
     }
     
     

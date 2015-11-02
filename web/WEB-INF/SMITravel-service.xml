@@ -207,6 +207,7 @@
     
     <bean id="DaytourCommissionService" class="com.smi.travel.datalayer.service.DaytourCommissionService">
         <property name="daytourComissiondao" ref="DaytourComissionDao" />
+        <property name="systemUser" ref="SystemUserDao" />
     </bean> 
     
     <bean id="UtilityService" class="com.smi.travel.datalayer.service.UtilityService">

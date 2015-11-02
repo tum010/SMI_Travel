@@ -14,42 +14,42 @@
 	<columnHeader>
 		<band height="23" splitType="Stretch">
 			<rectangle radius="7">
-				<reportElement positionType="Float" mode="Transparent" x="5" y="6" width="550" height="16" uuid="fa6aa9ee-6e9f-4497-a552-06ccfced0d37"/>
+				<reportElement positionType="Float" mode="Opaque" x="46" y="6" width="436" height="16" forecolor="#FFFFFF" backcolor="#99CCFF" uuid="fa6aa9ee-6e9f-4497-a552-06ccfced0d37"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement positionType="Float" x="401" y="6" width="25" height="16" uuid="2939a25c-5be2-4498-b768-faa89f7c4d14"/>
+				<reportElement positionType="Float" x="325" y="7" width="25" height="16" uuid="2939a25c-5be2-4498-b768-faa89f7c4d14"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cost]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="267" y="6" width="55" height="16" uuid="fa6a2bee-0852-4621-8980-cc0a9c6db794"/>
+				<reportElement positionType="Float" x="223" y="6" width="55" height="16" uuid="fa6a2bee-0852-4621-8980-cc0a9c6db794"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Category]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="51" y="6" width="31" height="16" uuid="2f00aade-9d9b-4cac-a8b0-a24936a895cc"/>
+				<reportElement positionType="Float" x="70" y="6" width="31" height="16" uuid="2f00aade-9d9b-4cac-a8b0-a24936a895cc"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Qty]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="131" y="6" width="67" height="16" uuid="f05420ee-edc6-4240-9996-77f0690b424a"/>
+				<reportElement positionType="Float" x="134" y="6" width="67" height="16" uuid="f05420ee-edc6-4240-9996-77f0690b424a"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Room]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="489" y="6" width="31" height="16" uuid="c725f0ae-94af-4eba-9491-84215b0a3d43"/>
-				<textElement>
+				<reportElement positionType="Float" x="411" y="6" width="31" height="16" uuid="c725f0ae-94af-4eba-9491-84215b0a3d43"/>
+				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Price]]></text>
@@ -59,35 +59,35 @@
 	<detail>
 		<band height="17" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="5" y="0" width="77" height="15" uuid="e942fae4-f712-4040-acf8-a7ea08b953ab"/>
+				<reportElement stretchType="RelativeToBandHeight" x="30" y="0" width="59" height="15" uuid="e942fae4-f712-4040-acf8-a7ea08b953ab"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="82" y="0" width="116" height="15" uuid="67e10c23-518e-42d5-a955-127cbbecae08"/>
+				<reportElement stretchType="RelativeToBandHeight" x="95" y="0" width="70" height="15" uuid="67e10c23-518e-42d5-a955-127cbbecae08"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{room}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="198" y="0" width="124" height="15" uuid="99a9c059-c7a0-44f2-80b5-da6ae0444b12"/>
+				<reportElement stretchType="RelativeToBandHeight" x="186" y="2" width="77" height="15" uuid="99a9c059-c7a0-44f2-80b5-da6ae0444b12"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{category}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="426" y="0" width="94" height="15" uuid="8f8b2f78-456c-4aae-aaa6-a5845883225e"/>
+				<reportElement stretchType="RelativeToBandHeight" x="353" y="0" width="87" height="15" uuid="8f8b2f78-456c-4aae-aaa6-a5845883225e"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="322" y="0" width="104" height="15" uuid="febcb936-249f-4090-a307-6fb259dc4d13"/>
+				<reportElement stretchType="RelativeToBandHeight" x="268" y="2" width="79" height="15" uuid="febcb936-249f-4090-a307-6fb259dc4d13"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>

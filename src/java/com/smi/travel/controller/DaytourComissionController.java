@@ -7,7 +7,9 @@ import com.smi.travel.datalayer.service.DaytourCommissionService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -76,6 +78,32 @@ public class DaytourComissionController extends SMITravelController {
                 return DaytourCommission;
             }
 
+        }else if("addGuide".equalsIgnoreCase(action)){
+            SystemUser user = new SystemUser();
+            String name = request.getParameter("guideName");
+            String detail = request.getParameter("guideDetail");
+            String tel = request.getParameter("guideTel");
+            user.setName(name + " " + detail);
+            user.setUsername(name);
+            user.setTel(tel);
+            user.setPassword("MD5"+name);
+            SystemUser username = (SystemUser) session.getAttribute("USER");
+            user.setCreateBy(username.getName());
+            SimpleDateFormat dateformat = new SimpleDateFormat();
+            dateformat.applyPattern("dd-MM-yyyy ");
+            user.setCreateDate(null);
+            user.setPosition("GUIDE");
+            int result = 0;
+            String resultTest = "";
+            result  = daytourCommissionService.insertSystemUser(user);
+            System.out.println("Result Add Guide : " + result);
+            if(result == 0){
+                resultTest = "success";
+            }else{
+                resultTest = "unsuccess";
+            }
+            request.setAttribute("result", resultTest);
+            return DaytourCommission;
         } else {
             setGeneralResponseAttribute(request);
         }

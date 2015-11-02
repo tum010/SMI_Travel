@@ -92,6 +92,9 @@
                     <div class="col-xs-2 text-right">
                         <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">Search</button>
                     </div>
+                    <div class="col-xs-2 text-right">
+                        <button type="button" id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#AddGuideModal">Add Guide</button>
+                    </div>
                 </div>
                 <div class="col-xs-12 form-group">
                     <div class="col-xs-1 text-right">
@@ -360,6 +363,45 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
 
+<div class="modal fade" id="AddGuideModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">    
+               <h4 class="modal-title">Delete Tax Invoice Wendy</h4>                              
+            </div>
+            <div class="modal-body" id="add">
+                <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-3 text-right">Name</div>
+                        <div class="col-xs-7">
+                            <input  name="guideName" id="guideName" type="text"  class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-3 text-right">Detail</div>
+                        <div class="col-xs-7 ">
+                            <div class="form-group" >
+                               <input  name="guideDetail" id="guideDetail" type="text"  class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-group ">
+                        <div class="col-xs-3 text-right">Tel</div>
+                        <div class="col-xs-7 ">
+                            <div class="form-group">
+                                <input  name="guideTel" id="guideTel" type="number"  maxlength="20" class="form-control" />
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnAdd" type="submit" onclick="addGuide()" class="btn btn-danger">Add</button>
+                <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <script type="text/javascript" charset="uts-8">
     $(document).ready(function () { 

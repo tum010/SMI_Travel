@@ -337,6 +337,15 @@ function printAgentCommission() {
     window.open("report.smi?name=AgentCommission&startdate=" + agentPrintFrom + "&enddate=" + agentPrintTo+"&agentID="+selAgentReport);
 }
 
+function addGuide(){
+    
+    $('#action').val('addGuide');
+    var action = $('#action').val();
+    console.log('Action Add Guide : ' + action);
+    $("#AddGuideModal").hide();
+    $("#saveDaytourCommissionForm").submit();
+}
+
 function getGuideCommission(tourcode,textid){
     var servletName = 'DaytourCommissionServlet';
     var servicesName = 'AJAXBean';

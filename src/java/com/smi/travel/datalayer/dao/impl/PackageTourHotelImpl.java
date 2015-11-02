@@ -54,7 +54,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
                 "sum((select sum( (IFNULL(hr.price,0)-IFNULL(hr.cost,0))  * DATEDIFF(hb.checkout,hb.checkin)) from hotel_room hr where hr.booking_hotel_id = hb.id)) as profit	" +
                 "FROM `hotel_booking` hb " +
                 "INNER JOIN hotel ht on  hb.hotel_id = ht.id	" +
-                "left JOIN m_city ci on ci.id = ht.city	" +
+                "INNER JOIN m_city ci on ci.id = ht.city	" +
                 "INNER JOIN master mt on mt.id = hb.master_id	" ;
         }else{
             query = "SELECT " +
@@ -70,7 +70,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
                 "sum((select sum( (IFNULL(hr.price,0)-IFNULL(hr.cost,0))  * DATEDIFF(hb.checkout,hb.checkin)) from hotel_room hr where hr.booking_hotel_id = hb.id)) as profit	" +
                 "FROM `hotel_booking` hb " +
                 "INNER JOIN hotel ht on  hb.hotel_id = ht.id	" +
-                "left JOIN m_city ci on ci.id = ht.city	" +
+                "INNER JOIN m_city ci on ci.id = ht.city	" +
                 "INNER JOIN master mt on mt.id = hb.master_id	where  " ;
         }
         
@@ -216,7 +216,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
                     "FROM `hotel_booking` hb  " +
                     "INNER JOIN hotel ht on  hb.hotel_id = ht.id  " +
                     "INNER JOIN master mt on mt.id = hb.master_id   " +
-                    "left JOIN hotel_room hr on hr.booking_hotel_id = hb.id  where   ";
+                    "INNER JOIN hotel_room hr on hr.booking_hotel_id = hb.id  where   ";
             
         }
         
@@ -254,7 +254,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
                 "FROM `hotel_booking` hb  " +
                 "INNER JOIN hotel ht on  hb.hotel_id = ht.id  " +
                 "INNER JOIN master mt on mt.id = hb.master_id  " +
-                "left JOIN hotel_request hr on hr.booking_hotel_id = hb.id  " ;
+                "INNER JOIN hotel_request hr on hr.booking_hotel_id = hb.id  " ;
         if(checkQuery == 1){
              query2 += " where ";
         }else{
@@ -422,7 +422,16 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             hotelSummary.setCreatedate(util.ConvertString(B[9]) == null || "".equals(util.ConvertString(B[9])) ? "" : util.ConvertString(B[9]));
             hotelSummary.setDepartment(util.ConvertString(B[10]) == null || "".equals(util.ConvertString(B[10])) ? "" : util.ConvertString(B[10]));
             hotelSummary.setSubReportDir(url);
-            hotelSummary.setHotelMonthlyDetailSubReportDataSource(new JRBeanCollectionDataSource(getHotelMonthlySub(util.ConvertString(B[8]) == null || "".equals(util.ConvertString(B[8])) ? "" : util.ConvertString(B[8]))));
+            List dataTemp = new ArrayList();
+            dataTemp = getHotelMonthlySub(util.ConvertString(B[8]) == null || "".equals(util.ConvertString(B[8])) ? "" : util.ConvertString(B[8]));
+            if(dataTemp.size() > 0){
+                System.out.println("Size Have : " + dataTemp.size());
+                hotelSummary.setHotelMonthlyDetailSubReportDataSource(new JRBeanCollectionDataSource(dataTemp));
+            }else{
+                System.out.println("Size Not Have : " + dataTemp.size());
+                hotelSummary.setHotelMonthlyDetailSubReportDataSource(null);
+            }
+            
             data.add(hotelSummary);
         }
         return data;
