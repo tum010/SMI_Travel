@@ -150,6 +150,7 @@
                                 <prop key="DaytoursMonthly.smi">DaytoursMonthlyController</prop>
                                 <prop key="PackageMonthly.smi">PackageMonthlyController</prop>
                                 <prop key="OtherMonthly.smi">OtherMonthlyController</prop>
+                                <prop key="BookInformation.smi">BookInformationController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -654,6 +655,9 @@
     
     <bean id="OtherMonthlyController" class="com.smi.travel.controller.OtherMonthlyController">
             <property name="utilityService" ref="UtilityService" />
+    </bean>
+    <bean id="BookInformationController" class="com.smi.travel.controller.BookInformationController">
+        
     </bean>
 	<!-- add bean id controller -->
 

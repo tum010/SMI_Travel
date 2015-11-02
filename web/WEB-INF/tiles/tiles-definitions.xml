@@ -595,6 +595,11 @@
         <put-attribute name="title" value="Report : Ticket Refund Report" />
         <put-attribute name="body" value="/WEB-INF/jsp/TicketRefundSummary.jsp" />
     </definition>
+    
+    <definition name="BookInformation" extends="baseLayout">
+        <put-attribute name="title" value="Booking:Information" />
+        <put-attribute name="body" value="/WEB-INF/jsp/BookInformation.jsp" />
+    </definition>
     <!--<add data>-->
     
     <definition name="SendMail" extends="baseLayout">
