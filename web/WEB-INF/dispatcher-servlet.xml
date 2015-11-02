@@ -657,7 +657,8 @@
             <property name="utilityService" ref="UtilityService" />
     </bean>
     <bean id="BookInformationController" class="com.smi.travel.controller.BookInformationController">
-        
+        <property name="workspaceService" ref="WorkSpaceService" />
+        <property name="utilservice" ref="UtilityService" />
     </bean>
 	<!-- add bean id controller -->
 

@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao;
 
+import com.smi.travel.datalayer.view.entity.BookingHotelSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingView;
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface BookingViewDao {
     public int cancelBook(String refNoEdit);
     public String checkBook(String refNoEdit);
     public int enableBook(String refNoEdit);
+    public List<BookingHotelSummaryView> getListBookingHotelSummaryView(String bookRefNo, String bookLeader, String bookDate, String hotelName, String hotelCheckIn, String hotelCheckOut);
 }

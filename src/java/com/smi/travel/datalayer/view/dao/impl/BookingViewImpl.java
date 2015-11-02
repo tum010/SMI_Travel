@@ -9,10 +9,14 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.view.dao.BookingViewDao;
+import com.smi.travel.datalayer.view.entity.BookingHotelSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingView;
+import com.smi.travel.util.UtilityFunction;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -191,6 +195,81 @@ public class BookingViewImpl implements BookingViewDao{
         }
 
         return result;
+    }
+
+    @Override
+    public List<BookingHotelSummaryView> getListBookingHotelSummaryView(String bookRefNo, String bookLeader, String bookDate, String hotelName, String hotelCheckIn, String hotelCheckOut) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<BookingHotelSummaryView> bookingHotelSummaryViewList = new ArrayList<BookingHotelSummaryView>();
+        
+        String query = " SELECT * FROM `booking_hotel_summary` ";
+        boolean condition = false;
+        
+        if((!"".equalsIgnoreCase(bookRefNo)) && (bookRefNo != null)){
+            query += (condition ? " and " : " where ");
+            query += " refno = '" + bookRefNo + "' " ;
+            condition = true;
+        }
+        if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
+            query += (condition ? " and " : " where ");
+            query += " leader LIKE '%" + bookLeader + "'% " ;
+            condition = true;
+        }
+        if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
+            query += (condition ? " and " : " where ");
+            query += " refdate = '" + bookDate + "' " ;
+            condition = true;
+        }
+        if((hotelName != null) &&(!"".equalsIgnoreCase(hotelName))){
+            query += (condition ? " and " : " where ");
+            query += " `hotel = '" + hotelName + "' " ;
+            condition = true;
+        }
+        if((hotelCheckIn != null) &&(!"".equalsIgnoreCase(hotelCheckIn))){
+            query += (condition ? " and " : " where ");
+            query += " checkin = '" + hotelCheckIn + "' " ;
+            condition = true;
+        }
+        if((hotelCheckOut != null) &&(!"".equalsIgnoreCase(hotelCheckOut))){
+            query += (condition ? " and " : " where ");
+            query += " checkout = '" + hotelCheckOut + "' " ;
+            condition = true;
+        }
+
+        List<Object[]> QueryHotel = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("refdate", Hibernate.STRING)
+                .addScalar("agent", Hibernate.STRING)
+                .addScalar("leader", Hibernate.STRING)
+                .addScalar("hotel", Hibernate.STRING)
+                .addScalar("checkin", Hibernate.STRING)
+                .addScalar("checkout", Hibernate.STRING)
+                .addScalar("Total_cost", Hibernate.STRING)
+                .addScalar("curcost", Hibernate.STRING)
+                .addScalar("Total_price", Hibernate.STRING)
+                .addScalar("curamount", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryHotel) {
+            BookingHotelSummaryView bookingHotelSummaryView = new BookingHotelSummaryView();
+            bookingHotelSummaryView.setRefno(B[0]== null ? "" : util.ConvertString(B[0]));
+            bookingHotelSummaryView.setRefdate(B[1]== null ? "" : util.ConvertString(B[1]));
+            bookingHotelSummaryView.setAgent(B[2]== null ? "" :util.ConvertString(B[2]));
+            bookingHotelSummaryView.setLeader(B[3]== null ? "" :util.ConvertString(B[3]));
+            bookingHotelSummaryView.setHotel(B[4]== null ? "" :util.ConvertString(B[4]));
+            bookingHotelSummaryView.setCheckin(B[5]== null ? "" :util.ConvertString(B[5]));
+            bookingHotelSummaryView.setCheckout(B[6]== null ? "" :util.ConvertString(B[6]));
+            bookingHotelSummaryView.setTotalcost(B[7]== null ? "" :util.ConvertString(B[7]));
+            bookingHotelSummaryView.setCurcost(B[8]== null ? "" :util.ConvertString(B[8]));
+            bookingHotelSummaryView.setTotalprice(B[9]== null ? "" :util.ConvertString(B[9]));
+            bookingHotelSummaryView.setCuramount(B[10]== null ? "" :util.ConvertString(B[10]));
+            bookingHotelSummaryViewList.add(bookingHotelSummaryView);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return bookingHotelSummaryViewList;
     }
    
 }

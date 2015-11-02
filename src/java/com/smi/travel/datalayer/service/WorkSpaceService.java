@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.view.dao.BookingViewDao;
+import com.smi.travel.datalayer.view.entity.BookingHotelSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingView;
 import java.util.List;
 
@@ -65,5 +66,9 @@ public class WorkSpaceService {
 
     public int enableBook(String refNoEdit) {
         return bookingviewdao.enableBook(refNoEdit);
+    }
+
+    public List<BookingHotelSummaryView> getListBookingHotelSummaryView(String bookRefNo, String bookLeader, String bookDate, String hotelName, String hotelCheckIn, String hotelCheckOut) {
+        return bookingviewdao.getListBookingHotelSummaryView(bookRefNo, bookLeader, bookDate, hotelName, hotelCheckIn, hotelCheckOut);
     }
 }
