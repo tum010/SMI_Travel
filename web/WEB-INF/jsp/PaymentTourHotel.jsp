@@ -583,6 +583,56 @@
         <input type="hidden" id="createBy" name="createBy" value="${requestScope['createBy']}">
         
         <!-- Table Content -->
+        <div class="panel panel-default hidden" id="packagepanel">                    
+            <div class="panel-body">
+                <!--Row 1.1 -->
+                <div class="row" style="padding-left: 25px;">
+                    <div class="col-xs-1" style="width: 100px">
+                        <label class="control-label">Tour Code</lable>
+                    </div>
+                    <div class="col-xs-1 form-group" style="width: 170px" id="codepanel"> 
+                        <div class="input-group" >                      
+                            <input name="tourCode" id="tourCode" type="text" class="form-control" value="" onkeypress="" style="text-transform:uppercase" ${readonly}/>                          
+                            <span class="input-group-addon" data-toggle="modal" data-target="#SearchPackageCode">
+                                <span class="glyphicon-search glyphicon"></span>
+                            </span>
+                        </div>    
+                    </div>
+                    <div class="col-xs-1" style="width: 310px" id="namepanel">
+                        <input name="tourName" id="tourName" type="text" class="form-control" value="" style="text-transform:uppercase" readonly=""/>
+                    </div>
+                    <div class="col-xs-1 form-group text-right" style="width: 120px">
+                        <label class="control-label">Tour Date</lable>
+                    </div>
+                    <div class="col-xs-1 form-group" style="width: 170px">
+                        <div class='input-group date' id="datepanel">
+                            <input name="tourDate" id="tourDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value=""/>
+                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>                           
+                    </div>
+                    <div class="col-xs-1 form-group" style="width: 100px">
+                         <div class='input-group'>
+                            <button type="button" id="btnView" name="btnView" class="btn btn-primary" onclick="viewDayTour()">
+                                <i class="fa fa-search"></i> View             
+                            </button>
+                        </div>       
+                    </div>        
+                    <div class="col-xs-1 hidden" style="width: 260px">
+                        <input name="tourId" id="tourId" type="text" class="form-control" value="" />
+                        <input name="tourRow" id="tourRow" type="text" class="form-control" value="" />
+                    </div>  
+                </div>
+                <!--Row 1.2 -->
+                <div class="row" style="padding-left: 25px;">
+                    <div class="col-xs-1 text-right" style="width: 975px">
+                         <button type="button" onclick="checkDaytour()" class="btn btn-success">OK</button>
+                         <button type="button" onclick="closePackagePanel()" class="btn btn-default">Close</button>
+                    </div>    
+                </div>
+            </div>
+        </div><!--End Table Content -->
+        
+        <!-- Table Content -->
         <div class="panel panel-default">                    
             <div class="panel-body">
                 <!--Row 1.1 -->
@@ -699,6 +749,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
 <!--Search Invoice Sup-->
 <div class="modal fade" id="SearchInvoiceSup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -742,37 +793,125 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
-<!--Search A/P Code-->
-<div class="modal fade" id="SearchAPCode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+<!--Tour Modal-->
+<div class="modal fade" id="SearchPackageCode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">A/P </h4>
+                <h4 class="modal-title">Tour</h4>
             </div>
             <div class="modal-body">
-                <table class="display" id="SearchAPCodeTable">
+                <table class="display" id="tourTable">
                     <thead class="datatable-header">
                         <tr>
-                            <th>Code</th>
+                            <th class="hidden">ID</th>
+                            <th style="width:20%">Code</th>
                             <th>Name</th>
                         </tr>
                     </thead>
+                    <script>
+                        tourCode = [];
+                        
+                    </script>
                     <tbody>
-                            <tr class="packet">
-                                <td class="">XXX
-                                <td>XXXXX</td> 
+                        <c:forEach var="tour" items="${tourList}">
+                            <tr>
+                                <td class="tour-id hidden">${tour.id}</td>
+                                <td class="tour-code">${tour.code}</td>
+                                <td class="tour-name">${tour.name}</td>
                             </tr>
+                        <script>
+                            tourCode.push({id: "${tour.id}", code: "${tour.code}", name: "${tour.name}"});
+                        </script>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
+            <!-- Script Daytour List table-->
+            <script>
+                $(document).ready(function () {
+                    $("#tourTable tr").on('click', function () {//winit
+                        $("#SearchPackageCode").modal('hide');
+                        var tour_id = $(this).find(".tour-id").html();
+                        var tour_code = $(this).find(".tour-code").html();
+                        var tour_name = $(this).find(".tour-name").html();
+                        $("#tourId").val(tour_id);
+                        $("#tourCode").val(tour_code);
+                        $("#tourName").val(tour_name);
+                        $("#tourCode").focus();
+                    });
+                    
+                    // tourTable
+                    var tourTable = $('#tourTable').dataTable({bJQueryUI: true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": true,
+                        "bPaginate": true,
+                        "bInfo": false,
+                        "bLengthChange": false,
+                        "iDisplayLength": 10
+                    });
+
+                    $('#tourTable tbody').on('click', 'tr', function () {
+                        if ($(this).hasClass('row_selected')) {
+                            $(this).removeClass('row_selected');
+                        }
+                        else {
+                            tourTable.$('tr.row_selected').removeClass('row_selected');
+                            $(this).addClass('row_selected');
+                        }
+
+                    });
+                    // ON KEY INPUT AUTO SELECT TOURCODE-TOURNAME
+                    $(function () {
+                        var availableTags = [];
+
+                        $.each(tourCode, function (key, value) {
+                            availableTags.push(value.code);
+                            if (!(value.name in availableTags)) {
+                                availableTags.push(value.name);
+                            }
+                        });
+
+                        $("#tourCode").autocomplete({
+                            source: availableTags,
+                            close: function (event, ui) {
+                                $("#tourCode").trigger('keyup');
+                            }
+                        });
+
+
+                        $("#tourCode").keyup(function () {
+                            var position = $(this).offset();
+                            $(".ui-widget").css("top", position.top + 30);
+                            $(".ui-widget").css("left", position.left);
+                            var name = this.value;
+                            var code = this.value.toUpperCase();
+                            $("#tourName").val(null);
+                            $.each(tourCode, function (key, value) {
+                                if (name === value.name) {
+                                    $("#tourCode").val(value.code);
+                                    code = $("#tourCode").val().toUpperCase();
+                                }
+                                if (value.code.toUpperCase() === code) {
+                                    $("#tourId").val(value.id);
+                                    $("#tourName").val(value.name);
+                                }
+                            }); //end each tourCode
+                        }); // end InputTourCode keyup
+                    }); // end AutoComplete TourCode TourName
+
+                });
+            </script>
             <div class="modal-footer">
-                <button id="SearchAPCodeOK" name="SearchAPCodeOK" type="button"  class="btn btn-success" data-dismiss="modal">OK</button>
-                <button id="SearchAPCodeClose" name="SearchAPCodeClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="" type="button" onclick="" class="btn btn-success">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal-dialog -->
+</div>
 
 <!--DELETE MODAL-->
 <div class="modal fade" id="DeleteProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -794,7 +933,7 @@
 </div>
 
 <!--PACKAGE MODAL-->
-<div class="fade modal" id="DayTourModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!--<div class="fade modal" id="DayTourModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -844,21 +983,67 @@
                 <button type="submit" onclick="checkDaytour()" class="btn btn-success">OK</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
+        </div> /.modal-content 
+    </div> /.modal-dialog 
+</div>-->
 
-<script>
-    tourCode = [];                        
-</script>
-<c:forEach var="tour" items="${tourList}">
-<script>
-    tourCode.push({id: "${tour.id}", code: "${tour.code}", name: "${tour.name}"});
-</script>
-</c:forEach>                                  
+<!--Tour Code List-->                            
+<!--<select class="hidden" id="select-list-city">
+    <c:forEach var="tour" items="${tourList}" varStatus="status">                                                      
+    <c:set var="select" value="" />
+    <c:if test="${pass.id == requestScope['city']}">
+        <c:set var="select" value="selected" />
+    </c:if>
+    <option value="<c:out value="${tour.id}" />" ${select}><c:out value="${tour.name}" /></option>    
+    </c:forEach>
+</select>                            -->
+
+
+<!--<select class="form-control" id="city" name="city">
+    <option value=""> -- tour code --</option>
+</select>-->
     
 <script type="text/javascript">
     $(document).ready(function () {
+        //Select City
+//        Selectize.define('clear_selection', function(options) {
+//            var self = this;
+//            self.plugins.settings.dropdown_header = {
+//                title: 'Clear Selection'
+//            };
+//            this.require('dropdown_header');
+//            self.setup = (function() {
+//                var original = self.setup;
+//                return function() {
+//                    original.apply(this, arguments);
+//                    this.$dropdown.on('mousedown', '.selectize-dropdown-header', function(e) {
+//                        self.setValue('');
+//                        self.close();
+//                        self.blur();
+//                        return false;
+//                    });
+//                };
+//            })();
+//        });
+//
+//        var dataCity = [];
+//        dataCity = tourCode;
+//        $("#select-list-city option").clone().appendTo("#city");
+//
+//        var nameCity = "#city";
+//        console.log("name = " + nameCity);
+//
+//        $(nameCity).selectize({
+//            removeItem: '',
+//            sortField: 'text',
+//            create: false,
+//            dropdownParent: 'body',
+//            plugins: {
+//                'clear_selection': {}
+//            }
+//
+//        });        
+        
         $('.date').datetimepicker();
         $('.datemask').mask('0000-00-00');
         $('.spandate').click(function() {
@@ -1112,45 +1297,44 @@
 
         });
         
-//            ON KEY INPUT AUTO SELECT TOURCODE-TOURNAME
-                    $(function () {
-                        var availableTags = [];
-
-                        $.each(tourCode, function (key, value) {
-                            availableTags.push(value.code);
-                            if (!(value.name in availableTags)) {
-                                availableTags.push(value.name);
-                            }
-                        });
-
-                        $("#tourCode").autocomplete({
-                            source: availableTags,
-                            close: function (event, ui) {
-                                $("#tourCode").trigger('keyup');
-                            }
-                        });
-
-
-                        $("#tourCode").keyup(function () {
-                            var position = $(this).offset();
-                            $(".ui-widget").css("top", position.top + 30);
-                            $(".ui-widget").css("left", position.left);
-                            $(".ui-widget").css("relative", position.fixed);
-                            var name = this.value;
-                            var code = this.value.toUpperCase();
-                            $("#tourName").val(null);
-                            $.each(tourCode, function (key, value) {
-                                if (name === value.name) {
-                                    $("#tourCode").val(value.code);
-                                    code = $("#tourCode").val().toUpperCase();
-                                }
-                                if (value.code.toUpperCase() === code) {
-                                    $("#tourId").val(value.id);
-                                    $("#tourName").val(value.name);
-                                }
-                            }); //end each tourCode
-                        }); // end InputTourCode keyup
-                    }); // end AutoComplete TourCode TourName
+//        ON KEY INPUT AUTO SELECT TOURCODE-TOURNAME
+//        $(function () {
+//            var availableTags = [];
+//
+//            $.each(tourCode, function (key, value) {
+//                availableTags.push(value.code);
+//                if (!(value.name in availableTags)) {
+//                    availableTags.push(value.name);
+//                }
+//            });
+//
+//            $("#tourCode").autocomplete({
+//                source: availableTags,
+//                close: function (event, ui) {
+//                    $("#tourCode").trigger('keyup');
+//                }
+//            });
+//
+//            $("#tourCode").keyup(function () {
+//                var position = $(this).offset();
+//                $(".ui-widget").css("top", position.top + 30);
+//                $(".ui-widget").css("left", position.left);
+//                $(".ui-widget").css("relative", position.fixed);
+//                var name = this.value;
+//                var code = this.value.toUpperCase();
+//                $("#tourName").val(null);
+//                $.each(tourCode, function (key, value) {
+//                    if (name === value.name) {
+//                        $("#tourCode").val(value.code);
+//                        code = $("#tourCode").val().toUpperCase();
+//                    }
+//                   if (value.code.toUpperCase() === code) {
+//                        $("#tourId").val(value.id);
+//                        $("#tourName").val(value.name);
+//                    }
+//                }); //end each tourCode
+//            }); // end InputTourCode keyup
+//        }); // end AutoComplete TourCode TourName
         
 
         //Auto complete
@@ -1778,7 +1962,11 @@
             $("#tourCode").val('');
             $("#tourName").val('');
         }
-        $("#DayTourModel").modal("show");
+        $("#codepanel").removeClass("has-error");
+        $("#namepanel").removeClass("has-error");
+        $("#datepanel").removeClass("has-error");
+        $("#packagepanel").removeClass("hidden");
+//        $("#DayTourModel").modal("show");
     }
     
     function viewDayTour(){
@@ -1803,7 +1991,7 @@
         var tourDate = $("#tourDate").val();
         var row = $("#tourRow").val();
         
-        if((tourId !== '') && (tourDate !== '')){
+        if((tourId !== '')&& (tourCode !== '') && (tourDate !== '')){
             var servletName = 'PaymentTourHotelServlet';
             var servicesName = 'AJAXBean';        
             var param = 'action=' + 'text' +
@@ -1816,13 +2004,21 @@
                     '&type=' + 'checkDayToursOperationDetail';
             CallAjaxCheck(param);
         }else{
-            $("#tourId").val('');
-            $("#tourCode").val('');
-            $("#tourName").val('');
-            $("#tourDate").val('');
-            $("#tourId"+row).val('');
-            $("#tourDate"+row).val('');
-            $("#DayTourModel").modal("hide");
+//            $("#tourId").val('');
+//            $("#tourCode").val('');
+//            $("#tourName").val('');
+//            $("#tourDate").val('');
+//            $("#tourId"+row).val('');
+//            $("#tourDate"+row).val('');
+            if($("#tourCode").val() === ''){
+                $("#codepanel").addClass("has-error");
+                $("#namepanel").addClass("has-error");                
+            }
+            if($("#tourDate").val() === ''){
+                $("#datepanel").addClass("has-error");
+            }
+//            $("#packagepanel").addClass("hidden");
+//            $("#DayTourModel").modal("hide");
         }
         
     }
@@ -1843,7 +2039,8 @@
                         $("#codepanel").removeClass("has-error");
                         $("#namepanel").removeClass("has-error");
                         $("#datepanel").removeClass("has-error");
-                        $("#DayTourModel").modal("hide");
+                        $("#packagepanel").addClass("hidden");
+//                        $("#DayTourModel").modal("hide");
                     }else{                        
                         $("#codepanel").addClass("has-error");
                         $("#namepanel").addClass("has-error");
@@ -1946,5 +2143,17 @@
         } catch (e) {
             alert(e);
         }
+    }
+    
+    function closePackagePanel(){
+        $("#tourRow").val('');
+        $("#tourId").val('');
+        $("#tourDate").val('');
+        $("#tourCode").val('');
+        $("#tourName").val('');
+        $("#codepanel").removeClass("has-error");
+        $("#namepanel").removeClass("has-error");
+        $("#datepanel").removeClass("has-error");
+        $("#packagepanel").addClass("hidden");
     }
 </script>
