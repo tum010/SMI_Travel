@@ -108,26 +108,19 @@
 		<band height="160" splitType="Stretch">
 			<break>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="78" width="100" height="1" uuid="30251470-2c5a-4584-acb2-bb2ca630bae1">
-					<printWhenExpression><![CDATA[$F{packageMonthlyDetailReportDataSource} != null]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{HotelMonthlyDetailReportDataSource} != null]]></printWhenExpression>
 				</reportElement>
 			</break>
 			<subreport>
-				<reportElement x="10" y="10" width="537" height="57" uuid="034b9a4a-d0d1-4438-b422-0c20f6d7939b"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<reportElement x="10" y="11" width="537" height="57" uuid="034b9a4a-d0d1-4438-b422-0c20f6d7939b"/>
+				<dataSourceExpression><![CDATA[$F{HotelMonthlyReportDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "HotelMonthly.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="10" y="88" width="537" height="57" uuid="040f538c-7e06-4a84-9226-a9fb0f4e0513"/>
+				<dataSourceExpression><![CDATA[$F{HotelMonthlyDetailReportDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "HotelMonthlyDetail.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<lastPageFooter>
-		<band height="50"/>
-	</lastPageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>
