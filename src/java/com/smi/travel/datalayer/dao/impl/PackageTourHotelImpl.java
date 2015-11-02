@@ -487,12 +487,12 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
         hotelMonthly.setTopage(util.ConvertString(datefromto.format(util.convertStringToDate(to))));
         hotelMonthly.setSystemdate(String.valueOf(dateformat.format(new Date())));
         hotelMonthly.setPrintby(systemuser);
-        hotelMonthly.setHotelMonthlyReportDataSource(new JRBeanCollectionDataSource(getHotelMonthly(from, to, department, detail, systemuser,url)));
+        hotelMonthly.setHotelmonthlyreportdatasource(new JRBeanCollectionDataSource(getHotelMonthly(from, to, department, detail, systemuser,url)));
         
         if("1".equalsIgnoreCase(detail)){
-            hotelMonthly.setHotelMonthlyDetailReportDataSource(new JRBeanCollectionDataSource(getHotelMonthlyDetail(from, to, department, detail, systemuser,url)));
+            hotelMonthly.setHotelmonthlydetailreportdatasource(new JRBeanCollectionDataSource(getHotelMonthlyDetail(from, to, department, detail, systemuser,url)));
         }else{
-            hotelMonthly.setHotelMonthlyDetailReportDataSource(null);
+            hotelMonthly.setHotelmonthlydetailreportdatasource(null);
         }
         return hotelMonthly;
     }

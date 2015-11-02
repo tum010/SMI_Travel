@@ -82,7 +82,7 @@ public class ReportController extends SMITravelController {
     private static final String PaymentAirlineListReport = "PaymentAirlineListReport";
     private static final String PaymentTourHotelSummary = "PaymentTourHotelSummary";
     private static final String HotelSummary = "HotelSummary";
-    private static final String HotelMonthlyReport = "HotelMonthlyReport";
+    private static final String HotelMonthlyTempReport = "HotelMonthlyTempReport";
     private static final String HotelMonthlyDetailReport = "HotelMonthlyDetailReport";
     
     private static final String OtherMonthlyReport = "OtherMonthlyReport"; // Other
@@ -250,7 +250,7 @@ public class ReportController extends SMITravelController {
             data = reportservice.getPaymentTourHotelSummary(from, to, pvtype, status, invSupCode, user.getUsername()+"-"+user.getRole().getName());
         }else if(HotelSummary.equalsIgnoreCase(name)){
             data = reportservice.getHotelSummary(fromHotelSummary, toHotelSummary, departmentHotelSummary);
-        }else if(HotelMonthlyReport.equalsIgnoreCase(name)){
+        }else if(HotelMonthlyTempReport.equalsIgnoreCase(name)){
             System.out.println("Detail is : " + detailHotelMonthly);
             data = reportservice.getHotelMonthlyReport(fromHotelSummary, toHotelSummary, departmentHotelSummary,detailHotelMonthly,systemuser,getServletContext().getRealPath("/WEB-INF/report/"));         
             ((HotelMonthlyReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));  

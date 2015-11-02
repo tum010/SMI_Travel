@@ -16,7 +16,7 @@
 	<field name="child" class="java.lang.String"/>
 	<field name="infant" class="java.lang.String"/>
 	<field name="subReportDir" class="java.lang.String"/>
-	<field name="hotelMonthlyDetailSubReportDataSource" class="java.lang.String"/>
+	<field name="hotelMonthlyDetailSubReportDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
 	<group name="HotelMonthlyDetail">
 		<groupExpression><![CDATA[$F{hotel}]]></groupExpression>
 		<groupHeader>

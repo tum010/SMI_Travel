@@ -217,7 +217,7 @@
 	   <property name="url" value="/WEB-INF/report/HotelSummary.jrxml"/>
 	</bean> 
               
-        <bean id="HotelMonthlyReport"
+        <bean id="HotelMonthlyTempReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/HotelMonthlyTemp.jrxml"/>
 	</bean>  
