@@ -359,7 +359,7 @@ FROM
 				<textFieldExpression><![CDATA[$F{night}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="12" y="277" width="148" height="20" uuid="2d0df252-f691-41a7-b24d-6a0810fc210a"/>
+				<reportElement x="12" y="277" width="167" height="20" uuid="2d0df252-f691-41a7-b24d-6a0810fc210a"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -373,7 +373,7 @@ FROM
 				<textFieldExpression><![CDATA[$F{passenger2}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="12" y="289" width="148" height="20" uuid="2c3f491e-a2c3-48aa-9b85-54274edffc2b"/>
+				<reportElement x="12" y="289" width="167" height="20" uuid="2c3f491e-a2c3-48aa-9b85-54274edffc2b"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -387,7 +387,7 @@ FROM
 				<textFieldExpression><![CDATA[$F{passenger4}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="12" y="302" width="148" height="20" uuid="0d18a970-8ea8-4a03-aa9e-ebfa6efa3116"/>
+				<reportElement x="12" y="302" width="167" height="20" uuid="0d18a970-8ea8-4a03-aa9e-ebfa6efa3116"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -415,7 +415,7 @@ FROM
 				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="12" y="314" width="148" height="20" uuid="000bec1a-98e9-4193-b0af-f1053c4565d5"/>
+				<reportElement x="12" y="314" width="167" height="20" uuid="000bec1a-98e9-4193-b0af-f1053c4565d5"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
