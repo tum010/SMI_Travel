@@ -8,6 +8,7 @@ var controlGuide;
 var controlAgent;
 
 $(document).ready(function () {
+    $(".number").mask('000000000000000000', {reverse: true});
     Selectize.define( 'clear_selection', function ( options ) {
     var self = this;
     self.plugins.settings.dropdown_header = {
@@ -339,11 +340,11 @@ function printAgentCommission() {
 
 function addGuide(){
     
-    $('#action').val('addGuide');
-    var action = $('#action').val();
+    $('#addGuideAction').val('addGuide');
+    var action = $('#addGuideAction').val();
     console.log('Action Add Guide : ' + action);
     $("#AddGuideModal").hide();
-    $("#saveDaytourCommissionForm").submit();
+    $("#searchDaytourCommissionAddGuideForm").submit();
 }
 
 function getGuideCommission(tourcode,textid){

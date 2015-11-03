@@ -40,7 +40,12 @@ public class DaytourComissionController extends SMITravelController {
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String action = request.getParameter("action");
-
+        String actionAddGuide = request.getParameter("addGuideAction");
+        
+        if("addGuide".equalsIgnoreCase(actionAddGuide)){
+            action = actionAddGuide;
+        }
+        
         String dateFromS = request.getParameter("InputDateFrom");
         String dateToS = request.getParameter("InputDateTo");
         String selectGuideId = request.getParameter("SelectGuide");
@@ -93,16 +98,17 @@ public class DaytourComissionController extends SMITravelController {
             dateformat.applyPattern("dd-MM-yyyy ");
             user.setCreateDate(null);
             user.setPosition("GUIDE");
+            user.setIsExGuide(1);
             int result = 0;
             String resultTest = "";
             result  = daytourCommissionService.insertSystemUser(user);
             System.out.println("Result Add Guide : " + result);
             if(result == 0){
-                resultTest = "success";
+                resultTest = "guideunsuccess";
             }else{
-                resultTest = "unsuccess";
+                resultTest = "guidesuccess";
             }
-            request.setAttribute("result", resultTest);
+            request.setAttribute("TransactionResult", resultTest);
             return DaytourCommission;
         } else {
             setGeneralResponseAttribute(request);

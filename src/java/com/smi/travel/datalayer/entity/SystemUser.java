@@ -25,6 +25,7 @@ public class SystemUser {
      private String apCode;
      private String arCode;
      private String email;
+     private Integer isExGuide;
      private Set tourOperationDrivers = new HashSet(0);
      private Set masters = new HashSet(0);
      private Set tourOperationDescsForGuide2 = new HashSet(0);
@@ -44,7 +45,7 @@ public class SystemUser {
         this.username = username;
         this.password = password;
     }
-    public SystemUser(MDepartment MDepartment, Role role, String name, String username, String password, String position, String tel, String car,String apCode,String arCode, String status, String createBy, Date createDate, Set tourOperationDrivers, Set masters, Set tourOperationDescsForGuide2, Set transferJobsForDriverId, Set transferJobsForGuildeId, Set tourOperationDescsForGuide1, Set daytourBookings, Set airticketBookingsForIssueBy, Set airticketBookingsForOwnerBy) {
+    public SystemUser(MDepartment MDepartment, Role role, String name, String username, String password, String position, String tel, String car,String apCode,String arCode, String status, String createBy, Date createDate,int isExGuide, Set tourOperationDrivers, Set masters, Set tourOperationDescsForGuide2, Set transferJobsForDriverId, Set transferJobsForGuildeId, Set tourOperationDescsForGuide1, Set daytourBookings, Set airticketBookingsForIssueBy, Set airticketBookingsForOwnerBy) {
        this.MDepartment = MDepartment;
        this.role = role;
        this.name = name;
@@ -67,6 +68,15 @@ public class SystemUser {
        this.daytourBookings = daytourBookings;
        this.airticketBookingsForIssueBy = airticketBookingsForIssueBy;
        this.airticketBookingsForOwnerBy = airticketBookingsForOwnerBy;
+       this.isExGuide = isExGuide;
+    }
+
+    public Integer getIsExGuide() {
+        return isExGuide;
+    }
+
+    public void setIsExGuide(Integer isExGuide) {
+        this.isExGuide = isExGuide;
     }
    
     public String getId() {

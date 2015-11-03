@@ -49,7 +49,9 @@
         <property name="email" type="string">
             <column name="email" length="50" />
         </property>
-
+        <property name="isExGuide" type="java.lang.Integer">
+            <column name="is_ex_guide" length="11" />
+        </property>
         <set name="tourOperationDrivers" table="tour_operation_driver" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="driver_id" not-null="true" />
