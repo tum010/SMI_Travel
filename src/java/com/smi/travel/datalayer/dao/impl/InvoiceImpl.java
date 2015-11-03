@@ -457,7 +457,11 @@ public class InvoiceImpl implements InvoiceDao{
                 
                     for (int j = 0; j < invoiceDetail.size(); j++) {
                         invoiceView.setCurrency(invoiceDetail.get(0).getCurAmount());
-                        sumAmount =  sumAmount.add(invoiceDetail.get(j).getAmount()) ;
+                        if(invoiceDetail.get(j).getAmount() != null ){
+                            sumAmount =  sumAmount.add(invoiceDetail.get(j).getAmount()) ;
+                        }else{
+                            sumAmount =  sumAmount.add(new BigDecimal(0.0)) ;
+                        }
                     }
                     
                     invoiceView.setTotalPrice(sumAmount);

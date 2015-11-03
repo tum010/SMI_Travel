@@ -66,3 +66,41 @@ $(document).ready(function () {
     });
 
 });
+
+function selectRefundDetail(counter){
+    $("#RefundTicketDetailAdd"+counter).addClass("hidden");
+    var count = document.getElementById('countListOther');
+    for(var i = 1 ; i <= count.value ; i++){
+        $("#RefundTicketDetail"+i).addClass("hidden");
+    }
+    $('#SpanEdit'+ counter).click(function() {
+
+        if($("#RefundTicketDetail"+counter).hasClass("hidden")){
+            $("#RefundTicketDetail"+counter).removeClass("hidden");
+        }else{
+            $("#RefundTicketDetail"+counter).addClass("hidden");
+        }
+    });
+}
+
+function addRefundDetail(counter){
+    var count = document.getElementById('countListOther');
+//    console.log(count.value);
+    for(var i = 1 ; i <= count.value ; i++){
+        $("#RefundTicketDetail"+i).addClass("hidden");
+    }
+    var countadd = document.getElementById('countListAdd');
+    for(var i = 1 ; i <= countadd.value ; i++){
+        $("#RefundTicketDetailAdd"+i).addClass("hidden");
+    }
+    $("#buttonAddRefundDetail").click(function() {
+           console.log("counter : " + counter);
+        if($("#RefundTicketDetailAdd"+counter).hasClass("hidden")){
+            console.log("Show");
+            $("#RefundTicketDetailAdd"+counter).removeClass("hidden");
+        }else{
+            console.log("NotShow");
+            $("#RefundTicketDetailAdd"+counter).addClass("hidden");
+        }
+    });
+}

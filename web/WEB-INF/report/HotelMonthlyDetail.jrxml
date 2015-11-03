@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelMonthlyDetail" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="2" bottomMargin="2" uuid="6b888a5f-1019-4a41-bad4-ae57be430805">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="1.4641000000000008"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="frompage" class="java.lang.String"/>
@@ -30,63 +30,63 @@
 				<staticText>
 					<reportElement x="10" y="19" width="57" height="23" uuid="fa19b814-c077-42e1-8a3b-c2863b23cdfb"/>
 					<textElement textAlignment="Right">
-						<font fontName="TH SarabunPSK" size="20" isBold="true"/>
+						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
 					</textElement>
 					<text><![CDATA[  Hotel :  ]]></text>
 				</staticText>
 				<textField pattern="">
-					<reportElement x="77" y="19" width="463" height="23" uuid="30526c19-30d7-45c4-92fb-4fc8d422d7a0"/>
+					<reportElement x="74" y="19" width="463" height="23" uuid="30526c19-30d7-45c4-92fb-4fc8d422d7a0"/>
 					<textElement>
-						<font fontName="TH SarabunPSK" size="20" isBold="true"/>
+						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{hotel}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="435" y="53" width="52" height="20" backcolor="#FFFFFF" uuid="a8c9421e-55f5-4ac9-a87c-59760f4f5618"/>
 					<textElement textAlignment="Center">
-						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Child]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="304" y="53" width="75" height="20" backcolor="#FFFFFF" uuid="3a1e69c9-559f-4585-b0ab-8cda5853e936"/>
 					<textElement textAlignment="Center">
-						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Check Out]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="487" y="53" width="60" height="20" backcolor="#FFFFFF" uuid="dce6f677-7ab5-468c-be24-37389e2252af"/>
 					<textElement textAlignment="Center">
-						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Infant]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="379" y="53" width="56" height="20" backcolor="#FFFFFF" uuid="bda1b512-3093-4e8e-b154-c235624ea0c9"/>
 					<textElement textAlignment="Center">
-						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Adult]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="10" y="53" width="74" height="20" backcolor="#FFFFFF" uuid="6cb0ff73-e5ec-42d0-ac68-1a3ca21df41d"/>
 					<textElement textAlignment="Center">
-						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Ref No.]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="229" y="53" width="75" height="20" backcolor="#FFFFFF" uuid="4897a0ae-a149-4d92-8525-64cad5039b61"/>
 					<textElement textAlignment="Center">
-						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Check In]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="84" y="53" width="145" height="20" backcolor="#FFFFFF" uuid="ab01fe24-8653-47a0-a1e7-df169b37019e"/>
 					<textElement textAlignment="Center">
-						<font fontName="TH SarabunPSK" size="16" isBold="true"/>
+						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Leader Name]]></text>
 				</staticText>
@@ -103,58 +103,58 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="90" splitType="Stretch">
+		<band height="78" splitType="Stretch">
 			<textField isBlankWhenNull="true">
 				<reportElement x="10" y="0" width="57" height="21" uuid="01b59955-ac17-4e7a-9d4b-85f7e6c865cb"/>
 				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="16"/>
+					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{refno}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="84" y="0" width="107" height="21" uuid="da7a1d12-03d8-4bd2-aa83-0d2e27362e75"/>
+				<reportElement x="84" y="0" width="114" height="21" uuid="da7a1d12-03d8-4bd2-aa83-0d2e27362e75"/>
 				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="16"/>
+					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{leader}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="229" y="0" width="58" height="21" uuid="de29baf1-c0bd-4b10-99c7-a482600710cd"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="16"/>
+				<reportElement x="229" y="0" width="75" height="21" uuid="de29baf1-c0bd-4b10-99c7-a482600710cd"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{checkin}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="304" y="0" width="63" height="21" uuid="86510211-1c0c-4c0e-891c-4fe47c9125ab"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="16"/>
+				<reportElement x="304" y="0" width="75" height="21" uuid="86510211-1c0c-4c0e-891c-4fe47c9125ab"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{checkout}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="379" y="0" width="42" height="21" uuid="821a4b5d-6353-4964-ad86-da22103f62d2"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="16"/>
+				<reportElement x="379" y="0" width="56" height="21" uuid="821a4b5d-6353-4964-ad86-da22103f62d2"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{adult}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="435" y="0" width="40" height="21" uuid="61619d16-c18c-44d9-857d-b2a2dbe992f9"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="16"/>
+				<reportElement x="435" y="0" width="52" height="21" uuid="61619d16-c18c-44d9-857d-b2a2dbe992f9"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{child}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="485" y="0" width="47" height="21" uuid="6a6e7a8e-d048-4f41-a32a-6a61b1e686a6"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="16"/>
+				<reportElement x="487" y="0" width="60" height="21" uuid="6a6e7a8e-d048-4f41-a32a-6a61b1e686a6"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{infant}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement positionType="Float" isPrintRepeatedValues="false" x="20" y="32" width="404" height="49" isRemoveLineWhenBlank="true" uuid="ba66944d-5069-4bc2-9279-2ad161e2e345">
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="20" y="25" width="404" height="49" isRemoveLineWhenBlank="true" uuid="ba66944d-5069-4bc2-9279-2ad161e2e345">
 					<printWhenExpression><![CDATA[$F{hotelMonthlyDetailSubReportDataSource} != null]]></printWhenExpression>
 				</reportElement>
 				<subreportParameter name="REFNO_MASTER">
