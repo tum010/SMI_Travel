@@ -364,7 +364,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
                 
                 }else{
                     id = APList.get(i).getRowid().substring(1);
-                    hql = "update InvoiceDetail inv set inv.isExport = 1 , inv.exportDate = :date where inv.id = :invDetailId";
+                    hql = "update Invoice inv set inv.isExport = 1 , inv.exportDate = :date where inv.id = :invDetailId";
                 
                 }
                 

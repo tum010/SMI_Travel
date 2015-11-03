@@ -64,6 +64,12 @@
         <property name="updateDate" type="timestamp">
             <column name="update_date" length="20" />
         </property>
+        <property name="exportDate" type="date">
+            <column name="export_date" length="20" />
+        </property>
+        <property name="isExport" type="java.lang.Integer">
+            <column name="is_export" />
+        </property>
         
         <bag name="invoiceDetails" table="invoice_detail" inverse="true" lazy="true" fetch="select">
             <key>
