@@ -473,7 +473,12 @@
             });
             $('#DateTo').datetimepicker().on('dp.change', function (e) {
                 $('#InvoiceMonthlyFrom').bootstrapValidator('revalidateField', 'todate');
-            });  
+            });
+            
+            var from = setValueFromDate();
+            var to = setValueToDate();
+            $("#fromdate").val(from);
+            $("#todate").val(to);
     });   
 </script>
 <script type="text/javascript" src="js/InvoiceMonthly.js"></script> 
