@@ -91,7 +91,7 @@
                         <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="searchAction()" class="btn btn-primary "><i class="fa fa-search"></i> Search</button>
                     </div>
                     <div class="col-xs-2 text-left">
-                        <button type="button" id="ButtonAdd" name="ButtonAdd" onclick="" class="btn btn-primary" data-toggle="modal" data-target="#AddGuideModal"><i class="fa fa-print"></i> Add Guide</button>
+                        <button type="button" id="ButtonAdd" name="ButtonAdd" onclick="" class="btn btn-primary" data-toggle="modal" data-target="#AddGuideModal"><i class="fa fa-plus"></i> Add Guide</button>
                     </div>
                 </div>
                 <div class="col-xs-12 form-group">
