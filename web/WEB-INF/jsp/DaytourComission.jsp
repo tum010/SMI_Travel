@@ -20,14 +20,7 @@
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <!--Alert Save -->
-<div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Success!</strong> 
-</div>
-<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Not Success!</strong> 
-</div>
+
 <section class="content-header" >
     <h1>
         Operation - Day Tours Agent & Guide Commission
@@ -45,6 +38,23 @@
             <div ng-include="'WebContent/Book/DaytourMenu.html'"></div>
         </div>
         <div class="col-sm-10">
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Success!</strong> 
+            </div>
+
+            <div id="textAlertDivSaveAddGuide"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Guide Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSaveAddGuide"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Guide Not Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Not Success!</strong> 
+            </div>
             <!--<div ng-include="'WebContent/Book/BookNavbar.html'"></div>-->
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
@@ -90,10 +100,10 @@
                     </div>
 
                     <div class="col-xs-2 text-right">
-                        <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">Search</button>
+                        <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> Search</button>
                     </div>
-                    <div class="col-xs-2 text-right">
-                        <button type="button" id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#AddGuideModal">Add Guide</button>
+                    <div class="col-xs-2 text-left">
+                        <button type="button" id="ButtonAdd" name="ButtonAdd" onclick="" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#AddGuideModal"><i class="fa fa-plus"></i> Add Guide</button>
                     </div>
                 </div>
                 <div class="col-xs-12 form-group">
@@ -311,7 +321,7 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title"  id="Titlemodel">Agent Commssion Service</h4>
             </div>
-            <div class="modal-body" id="">
+            <div class="modal-body" id="">              
                 <div class="row">
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-2">Agent</div>
@@ -359,26 +369,29 @@
                 <button type="button" onclick="printAgentCommission();" class="btn btn-success">OK</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
-        </div><!-- /.modal-content -->
+        </div><!-- /.modal-content -->       
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
 
 <div class="modal fade" id="AddGuideModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog ">
+        <form action="DaytourCommission.smi" id="searchDaytourCommissionAddGuideForm" name="searchDaytourCommissionAddGuideForm" method="post" role="form" class="form-horizontal" >
         <div class="modal-content">
             <div class="modal-header">    
-               <h4 class="modal-title">Delete Tax Invoice Wendy</h4>                              
-            </div>
-            <div class="modal-body" id="add">
+               <h4 class="modal-title">Add Guide</h4>                              
+            </div>        
+            <div class="modal-body" id="add">   
+                
+                <input type="text" class="hidden" id="addGuideAction" name="addGuideAction" value="addGuide">
                 <div class="row">
                     <div class="col-xs-12 form-group">
-                        <div class="col-xs-3 text-right">Name</div>
-                        <div class="col-xs-7">
+                        <div class="col-xs-3 text-right">Name <font style="color: red">*</font></div>
+                        <div class="col-xs-7" style="padding-left: 0px;width: 345px;">
                             <input  name="guideName" id="guideName" type="text"  class="form-control" />
                         </div>
                     </div>
                     <div class="col-xs-12 form-group">
-                        <div class="col-xs-3 text-right">Detail</div>
+                        <div class="col-xs-3 text-right">Detail <font style="color: red">*</font></div>
                         <div class="col-xs-7 ">
                             <div class="form-group" >
                                <input  name="guideDetail" id="guideDetail" type="text"  class="form-control" />
@@ -389,17 +402,19 @@
                         <div class="col-xs-3 text-right">Tel</div>
                         <div class="col-xs-7 ">
                             <div class="form-group">
-                                <input  name="guideTel" id="guideTel" type="number"  maxlength="20" class="form-control" />
+                                <input  name="guideTel" id="guideTel" type="tel"  maxlength="100" class="form-control number" />
                             </div> 
                         </div>
                     </div>
                 </div>
+
             </div>
             <div class="modal-footer">
-                <button id="btnAdd" type="submit" onclick="addGuide()" class="btn btn-danger">Add</button>
+                <button id="btnAdd" type="submit" onclick="addGuide()" class="btn btn-primary">Add</button>
                 <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
+                      </form>
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
@@ -486,6 +501,14 @@
            $('#textAlertDivNotSave').show();
         </script>
     </c:if>
+        <c:if test="${result =='guideunsuccess'}">        
+        <script language="javascript">
+            $('#textAlertDivNotSaveAddGuide').show();
+        </script>
+    </c:if>
+    <c:if test="${result =='guidesuccess'}">        
+        <script language="javascript">
+           $('#textAlertDivSaveAddGuide').show();
+        </script>
+    </c:if>
 </c:if>
-
-

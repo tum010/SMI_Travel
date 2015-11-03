@@ -8,6 +8,7 @@ var controlGuide;
 var controlAgent;
 
 $(document).ready(function () {
+    $(".number").mask('000000000000000000', {reverse: true});
     Selectize.define( 'clear_selection', function ( options ) {
     var self = this;
     self.plugins.settings.dropdown_header = {
@@ -133,7 +134,8 @@ $(document).ready(function () {
                     data.fv.revalidateField('InputDateFrom');
                 }
             });
-    
+            
+            
 });
 
 function verifyValueToGuide(){
@@ -338,12 +340,66 @@ function printAgentCommission() {
 }
 
 function addGuide(){
-    
-    $('#action').val('addGuide');
-    var action = $('#action').val();
-    console.log('Action Add Guide : ' + action);
-    $("#AddGuideModal").hide();
-    $("#saveDaytourCommissionForm").submit();
+    var name = $('#guideName').val();
+    var detail = $('#guideDetail').val();
+    if(name !== '' && detail !== ''){
+        $('#addGuideAction').val('addGuide');
+        var action = $('#addGuideAction').val();
+        console.log('Action Add Guide : ' + action);
+        $("#AddGuideModal").hide();
+        $("#searchDaytourCommissionAddGuideForm").submit();
+    }else{
+        validateAddGuide();
+    }
+}
+
+function addGuideOtherCommission(){
+    var name = $('#guideName').val();
+    var detail = $('#guideDetail').val();
+    if(name !== '' && detail !== ''){
+        $('#addGuideAction').val('addGuide');
+        var action = $('#addGuideAction').val();
+        console.log('Action Add Guide : ' + action);
+        $("#AddGuideModal").hide();
+        $("#searchDaytourCommissionAddGuideForm").submit();
+    }else{
+        validateAddGuide();
+    }
+}
+
+function validateAddGuide(){
+    // Validate form add Guide
+            $('#searchDaytourCommissionAddGuideForm').bootstrapValidator({
+                container: 'tooltip',
+                excluded: [':disabled'],
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    guideName: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The name guide is required'
+                            }
+                        }
+                    },
+                    guideDetail: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The detail guide name is required'
+                            }
+                        }
+                    }
+
+                }
+            }).on('success.field.bv', function (e, data) {
+                if (data.bv.isValid()) {
+                    data.bv.disableSubmitButtons(false);
+                }
+            });
+
 }
 
 function getGuideCommission(tourcode,textid){

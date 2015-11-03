@@ -44,6 +44,14 @@
             <div ng-include="'WebContent/Book/OperationOther.html'"></div>
         </div>
         <div class="col-sm-10">
+            <div id="textAlertDivSaveAddGuide"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Guide Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSaveAddGuide"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Guide Not Success!</strong> 
+            </div>
             <!--<div ng-include="'WebContent/Book/BookNavbar.html'"></div>-->
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
@@ -81,6 +89,9 @@
                     </div>
                     <div class="col-xs-2 text-right">
                         <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="searchAction()" class="btn btn-primary "><i class="fa fa-search"></i> Search</button>
+                    </div>
+                    <div class="col-xs-2 text-left">
+                        <button type="button" id="ButtonAdd" name="ButtonAdd" onclick="" class="btn btn-primary" data-toggle="modal" data-target="#AddGuideModal"><i class="fa fa-plus"></i> Add Guide</button>
                     </div>
                 </div>
                 <div class="col-xs-12 form-group">
@@ -337,7 +348,50 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
+<div class="modal fade" id="AddGuideModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <form action="DayTourOtherComission.smi" id="searchDaytourCommissionAddGuideForm" name="searchDaytourCommissionAddGuideForm" method="post" role="form" class="form-horizontal" >
+        <div class="modal-content">
+            <div class="modal-header">    
+               <h4 class="modal-title">Add Guide</h4>                              
+            </div>        
+            <div class="modal-body" id="add">   
+                
+                <input type="text" class="hidden" id="addGuideAction" name="addGuideAction" value="addGuide">
+                <div class="row">
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-3 text-right">Name <font style="color: red">*</font></div>
+                        <div class="col-xs-7" style="padding-left: 0px;width: 345px;">
+                            <input  name="guideName" id="guideName" type="text"  class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-group">
+                        <div class="col-xs-3 text-right">Detail <font style="color: red">*</font></div>
+                        <div class="col-xs-7 ">
+                            <div class="form-group" >
+                               <input  name="guideDetail" id="guideDetail" type="text"  class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 form-group ">
+                        <div class="col-xs-3 text-right">Tel</div>
+                        <div class="col-xs-7 ">
+                            <div class="form-group">
+                                <input  name="guideTel" id="guideTel" type="tel"  maxlength="100" class="form-control number" />
+                            </div> 
+                        </div>
+                    </div>
+                </div>
 
+            </div>
+            <div class="modal-footer">
+                <button id="btnAdd" type="submit" onclick="addGuideOtherCommission()" class="btn btn-primary">Add</button>
+                <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+                      </form>
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <script type="text/javascript" charset="uts-8">
     $(document).ready(function () { 
@@ -398,6 +452,7 @@
 
     });
     
+    
    
 </script>
 <style>
@@ -417,6 +472,16 @@
     <c:if test="${result =='fail'}">        
         <script language="javascript">
             alert("save unsuccessful");
+        </script>
+    </c:if>
+    <c:if test="${result =='guideunsuccess'}">        
+        <script language="javascript">
+            $('#textAlertDivNotSaveAddGuide').show();
+        </script>
+    </c:if>
+    <c:if test="${result =='guidesuccess'}">        
+        <script language="javascript">
+           $('#textAlertDivSaveAddGuide').show();
         </script>
     </c:if>
 </c:if>

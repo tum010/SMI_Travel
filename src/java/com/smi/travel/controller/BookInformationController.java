@@ -14,6 +14,7 @@ public class BookInformationController extends SMITravelController {
     private static final ModelAndView BookInformation = new ModelAndView("BookInformation");
     private static final ModelAndView BookInformation_REFRESH = new ModelAndView(new RedirectView("BookInformation.smi", true));
     private static final String DATALIST = "booking_list";
+    private static final String SEARCHTYPE = "search_type";
     private WorkSpaceService workspaceService;
     private UtilityService utilservice;
     
@@ -48,8 +49,33 @@ public class BookInformationController extends SMITravelController {
             if("2".equalsIgnoreCase(bookType)){
                 List<BookingHotelSummaryView> bookingHotelSummaryViewList = new LinkedList<BookingHotelSummaryView>();
                 bookingHotelSummaryViewList = workspaceService.getListBookingHotelSummaryView(bookRefNo,bookLeader,bookDate,hotelName,hotelCheckIn,hotelCheckOut);
+                request.setAttribute(DATALIST,bookingHotelSummaryViewList);
             }          
         }
+        request.setAttribute(SEARCHTYPE,bookType);
+        request.setAttribute("bookRefNo",bookRefNo);
+        request.setAttribute("bookLeader",bookLeader);
+        request.setAttribute("bookDate",bookDate);
+        request.setAttribute("airPnr",airPnr);
+        request.setAttribute("airDeptDate",airDeptDate);
+        request.setAttribute("airFlight",airFlight);
+        request.setAttribute("hotelName",hotelName);
+        request.setAttribute("hotelCheckIn",hotelCheckIn);
+        request.setAttribute("hotelCheckOut",hotelCheckOut);
+        request.setAttribute("packageName",packageName);
+        request.setAttribute("packageAgent",packageAgent);
+        request.setAttribute("tourCode",tourCode);
+        request.setAttribute("tourName",tourName);
+        request.setAttribute("tourDate",tourDate);
+        request.setAttribute("tourPickUp",tourPickUp);
+        request.setAttribute("otherCode",otherCode);
+        request.setAttribute("otherName",otherName);
+        request.setAttribute("otherDate",otherDate);
+        request.setAttribute("otherAgent",otherAgent);
+        request.setAttribute("landOkBy",landOkBy);
+        request.setAttribute("landCategory",landCategory);
+        request.setAttribute("landAgent",landAgent);
+        
         return BookInformation;
     }
 

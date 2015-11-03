@@ -7,8 +7,10 @@ import com.smi.travel.datalayer.service.DaytourCommissionService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -36,11 +38,18 @@ public class DaytourComissionController extends SMITravelController {
     private static final String SelectGuide = "SelectGuide";
     private static final String SelectAgent = "SelectAgent";
     private static final String TransactionResult = "TransactionResult";
-
+    UtilityFunction utility = new UtilityFunction();
+    
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        String action = request.getParameter("action");
 
+        String action = request.getParameter("action");
+        String actionAddGuide = request.getParameter("addGuideAction");
+        
+        if("addGuide".equalsIgnoreCase(actionAddGuide)){
+            action = actionAddGuide;
+        }
+        
         String dateFromS = request.getParameter("InputDateFrom");
         String dateToS = request.getParameter("InputDateTo");
         String selectGuideId = request.getParameter("SelectGuide");
@@ -89,21 +98,27 @@ public class DaytourComissionController extends SMITravelController {
             user.setPassword("MD5"+name);
             SystemUser username = (SystemUser) session.getAttribute("USER");
             user.setCreateBy(username.getName());
-            SimpleDateFormat dateformat = new SimpleDateFormat();
-            dateformat.applyPattern("dd-MM-yyyy ");
-            user.setCreateDate(null);
+            
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar cal = Calendar.getInstance();
+            System.out.println(dateFormat.format(cal.getTime()));
+            String createDate = dateFormat.format(cal.getTime());
+            Date date = new Date();
+            date = utility.convertStringToDate(createDate);
+            user.setCreateDate(date);
+            
             user.setPosition("GUIDE");
+            user.setIsExGuide(1);
             int result = 0;
             String resultTest = "";
             result  = daytourCommissionService.insertSystemUser(user);
             System.out.println("Result Add Guide : " + result);
             if(result == 0){
-                resultTest = "success";
+                resultTest = "guideunsuccess";
             }else{
-                resultTest = "unsuccess";
+                resultTest = "guidesuccess";
             }
-            request.setAttribute("result", resultTest);
-            return DaytourCommission;
+            request.setAttribute("TransactionResult", resultTest);
         } else {
             setGeneralResponseAttribute(request);
         }
@@ -203,4 +218,5 @@ public class DaytourComissionController extends SMITravelController {
         }
         return updateBooking;
     }
+
 }

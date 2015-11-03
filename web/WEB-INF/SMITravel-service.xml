@@ -197,6 +197,7 @@
     <bean id="BookingOtherService" class="com.smi.travel.datalayer.service.BookingOtherService">
         <property name="otherBookDao" ref="OtherBookingDao" />
         <property name="productDao" ref="ProductDao" />
+        <property name="systemUser" ref="SystemUserDao" />
     </bean> 
     
     <bean id="PassengerService" class="com.smi.travel.datalayer.service.PassengerService">
