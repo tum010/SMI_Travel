@@ -23,7 +23,7 @@
 				<text><![CDATA[Daily Tour Report]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="271" y="0" width="239" height="27" uuid="3af06a3b-bb38-4ebc-9d17-fb02f6ed0427"/>
+				<reportElement x="271" y="0" width="275" height="27" uuid="3af06a3b-bb38-4ebc-9d17-fb02f6ed0427"/>
 				<textElement textAlignment="Center">
 					<font size="20"/>
 				</textElement>

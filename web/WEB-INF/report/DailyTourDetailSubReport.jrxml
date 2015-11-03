@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DailyTourDetailSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="2" bottomMargin="2" uuid="a7401fc2-ed95-4d44-a9fe-1bf4b8912268">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="219"/>
+	<property name="ireport.zoom" value="2.2000000000000006"/>
+	<property name="ireport.x" value="392"/>
 	<property name="ireport.y" value="0"/>
 	<field name="code" class="java.lang.String"/>
 	<field name="tour" class="java.lang.String"/>
@@ -52,13 +52,6 @@
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[TOUR :]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="369" y="0" width="29" height="20" uuid="4524aa9c-4701-417c-bdba-4814c97bfbc7"/>
-					<textElement>
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-					</textElement>
-					<text><![CDATA[PAX :]]></text>
 				</staticText>
 				<rectangle radius="10">
 					<reportElement mode="Transparent" x="0" y="20" width="555" height="20" uuid="93621ad6-088c-413a-bccf-c401cf7bbda3"/>
@@ -136,52 +129,10 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{tour}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="400" y="1" width="15" height="20" uuid="62331c87-7992-4ab2-80a9-94f1975ee5c8"/>
-					<textElement textAlignment="Center" verticalAlignment="Top">
-						<font fontName="TH SarabunPSK" size="12" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{totalad}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="446" y="1" width="15" height="20" uuid="45e8b882-1a0d-48e0-a708-554caadeac1d"/>
-					<textElement textAlignment="Center">
-						<font fontName="TH SarabunPSK" size="12" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{totalch}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="492" y="1" width="15" height="20" uuid="198cbe07-d2f1-4ae4-a2a1-fbe709e5a10d"/>
-					<textElement textAlignment="Center">
-						<font fontName="TH SarabunPSK" size="12" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{totalin}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="417" y="0" width="28" height="20" uuid="ee588e8a-77a5-4d9b-9339-03c981506bc9"/>
-					<textElement>
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-					</textElement>
-					<text><![CDATA[ADT -]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="462" y="0" width="29" height="20" uuid="6c8d6143-b573-494f-8637-94b0e31e772d"/>
-					<textElement>
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-					</textElement>
-					<text><![CDATA[CHD -]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="510" y="0" width="14" height="20" uuid="cb7db4c6-ff0e-4c5c-9b8f-76dfb4afb385"/>
-					<textElement>
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-					</textElement>
-					<text><![CDATA[INF]]></text>
-				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="44">
+			<band height="29">
 				<textField>
 					<reportElement x="112" y="0" width="17" height="20" uuid="6e501b03-e270-4d58-b71e-dd5ac26b7e14"/>
 					<textElement textAlignment="Center">
@@ -223,55 +174,6 @@
 						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="468" y="22" width="15" height="20" uuid="6b805f9e-a94b-4e6a-b51a-609b01ca01fb"/>
-					<textElement textAlignment="Center">
-						<font fontName="TH SarabunPSK" size="12" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{totalch}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="422" y="22" width="15" height="20" uuid="30e5bfe1-532b-4a43-bf4f-1fa80d27a19e"/>
-					<textElement textAlignment="Center" verticalAlignment="Top">
-						<font fontName="TH SarabunPSK" size="12" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{totalad}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="391" y="21" width="29" height="20" uuid="057f24f2-9c31-4fa5-b1fd-4578764a9a6a"/>
-					<textElement>
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-					</textElement>
-					<text><![CDATA[PAX :]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="532" y="21" width="14" height="20" uuid="bd6921e5-493a-48e2-8bc0-963589369d9f"/>
-					<textElement>
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-					</textElement>
-					<text><![CDATA[INF]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="439" y="21" width="28" height="20" uuid="f6be424e-e176-4c9b-8dec-d247643286e0"/>
-					<textElement>
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-					</textElement>
-					<text><![CDATA[ADT -]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="484" y="21" width="29" height="20" uuid="c8dd6ccc-3586-4eab-b3f6-58d9d139c158"/>
-					<textElement>
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-					</textElement>
-					<text><![CDATA[CHD -]]></text>
-				</staticText>
-				<textField>
-					<reportElement x="514" y="22" width="15" height="20" uuid="91c1c9b2-a5b6-4d6c-99ce-c1b27a626540"/>
-					<textElement textAlignment="Center">
-						<font fontName="TH SarabunPSK" size="12" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$V{totalin}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="163" y="0" width="17" height="20" uuid="86fd43ec-f74f-41b1-8ff9-fe2d08258a19"/>

@@ -33,7 +33,7 @@ public class OtherMonthlyImpl implements OtherMonthlyDao{
         UtilityFunction util = new UtilityFunction();
         OtherMonthlyReport otherMonthlyReport = new OtherMonthlyReport();
         SimpleDateFormat dateformat = new SimpleDateFormat();
-        dateformat.applyPattern("dd-MM-yyyy hh:mm");
+        dateformat.applyPattern("dd-MMM-yyyy hh:mm");
         
         SimpleDateFormat datefromto = new SimpleDateFormat();
         datefromto.applyPattern("dd-MM-yyyy");

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherMonthlyDetailReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="1" bottomMargin="20" uuid="129b46e8-179f-4605-83bd-94a84a7f154c">
 	<property name="ireport.zoom" value="2.3579476910000117"/>
 	<property name="ireport.x" value="34"/>
-	<property name="ireport.y" value="10"/>
+	<property name="ireport.y" value="0"/>
 	<field name="code" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
 	<field name="refno" class="java.lang.String"/>
@@ -137,7 +137,7 @@
 			</textField>
 			<textField>
 				<reportElement x="109" y="0" width="89" height="20" uuid="a765ef91-4e28-400d-a915-053b7f3918f0"/>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{otherdate}]]></textFieldExpression>
@@ -157,7 +157,7 @@
 				<textFieldExpression><![CDATA[($F{net} != null && !"null".equals($F{net}) && $F{net}.length() > 0 && !"".equalsIgnoreCase($F{net})) ? new BigDecimal($F{net}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="12" y="0" width="91" height="20" uuid="45eb1e27-f237-4eec-937c-0c03b4271054"/>
+				<reportElement x="31" y="0" width="72" height="20" uuid="45eb1e27-f237-4eec-937c-0c03b4271054"/>
 				<textElement textAlignment="Left">
 					<font fontName="TH SarabunPSK" size="12" isBold="false"/>
 				</textElement>

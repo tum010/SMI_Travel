@@ -57,7 +57,7 @@ public class PackageMonthlyImpl implements PackageMonthlyDao{
         UtilityFunction util = new UtilityFunction();
         PackageMonthlyReport packageMonthly = new PackageMonthlyReport();
         SimpleDateFormat dateformat = new SimpleDateFormat();
-        dateformat.applyPattern("dd-MM-yyyy hh:mm");
+        dateformat.applyPattern("dd-MMM-yyyy hh:mm");
         
         SimpleDateFormat datefromto = new SimpleDateFormat();
         datefromto.applyPattern("dd-MM-yyyy");
