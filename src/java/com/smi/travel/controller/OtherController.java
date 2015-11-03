@@ -2,16 +2,20 @@ package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.Customer;
+import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.Passenger;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.BookingOtherService;
 import com.smi.travel.datalayer.service.PassengerService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,7 +49,7 @@ public class OtherController extends SMITravelController {
         String callPageFrom = request.getParameter("callPageFrom");
         String pattern = "###,###.###";
         DecimalFormat dF = new DecimalFormat(pattern);
-
+        SystemUser user = (SystemUser) session.getAttribute("USER");
         long TotalCost = 0;
         long TotalPrice = 0;
         long Amount = 0;
@@ -107,6 +111,16 @@ public class OtherController extends SMITravelController {
             request.setAttribute(LockUnlockBooking,0);
         }
 
+        HistoryBooking historyBooking = new HistoryBooking();
+        historyBooking.setHistoryDate(new Date());
+        historyBooking.setAction("VIEW OTHER BOOKING");
+        String detail = "";
+        historyBooking.setDetail(detail);
+        historyBooking.setMaster(master);
+        historyBooking.setStaff(user);
+        int resultsave = utilservice.insertHistoryBooking(historyBooking);
+        System.out.println(" resultsave " + resultsave);
+        
         return Other;
     }
 

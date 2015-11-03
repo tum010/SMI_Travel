@@ -1,13 +1,16 @@
 package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.DaytourBooking;
+import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.OtherBooking;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingDaytourService;
 import com.smi.travel.datalayer.service.BookingOtherService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +45,7 @@ public class DaytourController extends SMITravelController {
         String daytourId = request.getParameter("daytourId");
         
         log.info("action="+action+ ", referenceNo="+refNo + " daytourId=" + daytourId);
-        
+        SystemUser user = (SystemUser) session.getAttribute("USER");
 
         
         if ("disable".equalsIgnoreCase(action)) {
@@ -66,6 +69,16 @@ public class DaytourController extends SMITravelController {
             request.setAttribute(OtherLists, OtherList);
             
             setGeneralResponseAttribute(request, refNo);
+            
+            HistoryBooking historyBooking = new HistoryBooking();
+            historyBooking.setHistoryDate(new Date());
+            historyBooking.setAction("VIEW DAY TOURS BOOKING");
+            String detail = "";
+            historyBooking.setDetail(detail);
+            historyBooking.setMaster(master);
+            historyBooking.setStaff(user);
+            int resultsave = utilservice.insertHistoryBooking(historyBooking);
+            System.out.println(" resultsave " + resultsave);
         }
         
         return Daytour;

@@ -5,6 +5,7 @@
  */
 package com.smi.travel.controller;
 
+import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.Hotel;
 import com.smi.travel.datalayer.entity.HotelBooking;
 import com.smi.travel.datalayer.entity.HotelPassenger;
@@ -15,6 +16,7 @@ import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.MMeal;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.Passenger;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.BookingHotelService;
 import com.smi.travel.datalayer.service.HotelService;
@@ -67,7 +69,7 @@ public class HotelDetailController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-
+        SystemUser user = (SystemUser) session.getAttribute("USER");
         System.out.println("HotelDetailController");
         UtilityFunction util = new UtilityFunction();
         String refNo = request.getParameter("referenceNo");
@@ -164,7 +166,7 @@ public class HotelDetailController extends SMITravelController {
                 System.out.println("instert id = " + id);
                 hotelBooking.setIsBill(0);
                 result = bookingHotelService.insertHotel(hotelBooking);
-
+                saveHistoryBooking(refNo,user,hotelBooking,"CREATE");
                 if (result == 1) {
                     return new ModelAndView(new RedirectView(HotelBooking + ".smi?referenceNo=" + refNo + "&result=1", true));
                 } else {
@@ -174,6 +176,7 @@ public class HotelDetailController extends SMITravelController {
                 hotelBooking.setId(id);
                 System.out.println("updata where id = " + id);
                 result = bookingHotelService.updateHotel(hotelBooking);
+                saveHistoryBooking(refNo,user,hotelBooking,"UPDATE");
             }
             request.setAttribute(Result, result);
             return new ModelAndView("redirect:HotelDetail.smi?referenceNo=" + refNo + "&action=edit&id="+ id + "&result=" + result);
@@ -194,6 +197,7 @@ public class HotelDetailController extends SMITravelController {
             List<HotelPassenger> hotelPassengerList = hotel.getHotelPassengers();
             request.setAttribute(HotelPassengerList, hotelPassengerList);
             setResponseAttribute(request, refNo);
+            saveHistoryBooking(refNo,user,hotel,"VIEW");
         } else if ("delete".equalsIgnoreCase(action)) {
 
         } else if ("deleterRoom".equalsIgnoreCase(action)) {
@@ -490,5 +494,34 @@ public class HotelDetailController extends SMITravelController {
     public void setPassengerService(PassengerService passengerService) {
         this.passengerService = passengerService;
     }
-
+    
+    public void saveHistoryBooking(String refNo,SystemUser user,HotelBooking hotelBooking,String action) {
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");
+        HistoryBooking historyBooking = new HistoryBooking();
+        historyBooking.setHistoryDate(new Date());
+        historyBooking.setAction(action+" HOTEL BOOKING");
+        String detail = "";
+        if(!"VIEW".equalsIgnoreCase(action)){
+            detail = "HOTEL : " ;
+            if(hotelBooking.getHotel() != null){
+                detail += hotelBooking.getHotel().getCode() + "\r\n" ;
+            }else{
+             detail += "\r\n" ;
+            }
+            detail += "PAX : ADT : " + hotelBooking.getAdult() + " CHD : " + hotelBooking.getChild() + " INF : " + hotelBooking.getInfant() + "\r\n"
+            + "CHECK IN-OUT : " ;
+            if(hotelBooking.getCheckin() != null){
+                detail += String.valueOf(df.format(hotelBooking.getCheckin()))  + " / " ;
+            }
+            if(hotelBooking.getCheckout() != null){
+                detail += String.valueOf(df.format(hotelBooking.getCheckout())) ;
+            }
+        }
+        historyBooking.setDetail(detail);
+        historyBooking.setMaster(hotelBooking.getMaster());
+        historyBooking.setStaff(user);
+        int resultsave = utilservice.insertHistoryBooking(historyBooking);
+        
+    }
 }

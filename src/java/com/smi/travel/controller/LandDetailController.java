@@ -2,13 +2,16 @@ package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.AirticketPnr;
+import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.LandBooking;
 import com.smi.travel.datalayer.entity.LandItinerary;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.Master;
+import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.PackageTour;
 import com.smi.travel.datalayer.entity.Product;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.AgentService;
 import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.BookingLandService;
@@ -16,8 +19,10 @@ import com.smi.travel.datalayer.service.ProductService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -93,7 +98,7 @@ public class LandDetailController extends SMITravelController {
         String itinerarycount = request.getParameter("itinerarycount");
         
         request.setAttribute(ISBILLSTATUS,0);
-        
+        SystemUser user = (SystemUser) session.getAttribute("USER");
         util = new UtilityFunction();
         int[] booksize = utilservice.getCountItemFromBooking(refno);
         Master master = utilservice.getbookingFromRefno(refno);
@@ -192,7 +197,13 @@ public class LandDetailController extends SMITravelController {
                 land.setId(landID);
             }
             int result = landservice.saveBookDetailLand(land, Itenarary, DelItenarary, BookType);
-
+            if(land.getId() != null){
+                land.setMaster(master);
+                saveHistoryBooking(refno,user,land,"UPDATE");
+            }else{
+                land.setMaster(master);
+                saveHistoryBooking(refno,user,land,"CREATE");
+            }
             if (result == 1) {
                 ModelAndView LAND = new ModelAndView(new RedirectView("Land.smi?referenceNo=" + refno + "&result=1", true));
                 return LAND;
@@ -204,6 +215,7 @@ public class LandDetailController extends SMITravelController {
             request.setAttribute("isEdit", "1");
             landID = request.getParameter("landid");
             LandBooking land = landservice.getBookDetailLandFromID(landID);
+            saveHistoryBooking(refno,user,land,"VIEW");
             request.setAttribute(ISBILLSTATUS,land.getIsBill());
             List<LandItinerary> ItineraryList = landservice.getListItinerary(landID);
             request.setAttribute(ITINERARYLIST, ItineraryList);
@@ -413,5 +425,27 @@ public class LandDetailController extends SMITravelController {
         }
         return false;
     }
-
+    
+    public void saveHistoryBooking(String refNo,SystemUser user,LandBooking land,String action) {
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");        
+        HistoryBooking historyBooking = new HistoryBooking();
+        historyBooking.setHistoryDate(new Date());
+        historyBooking.setAction(action+" LAND BOOKING");
+        String detail = "";
+        if(!"VIEW".equalsIgnoreCase(action)){
+            if(land.getAgent() != null){
+                detail += "AGENT : " + land.getAgent().getCode() + " : " + land.getAgent().getName() + "\r\n";
+            }else{
+                detail += "AGENT : " + "\r\n";
+            }
+                detail += "DETAIL : " + land.getOkBy() + "\r\n"
+                    + "CATEGORY : " + land.getCategory() +"\r\n"
+                    + "DESCRIPTION : " + land.getDescription();
+        }
+        historyBooking.setDetail(detail);
+        historyBooking.setMaster(land.getMaster());
+        historyBooking.setStaff(user);
+        int resultsave = utilservice.insertHistoryBooking(historyBooking);
+    }
 }

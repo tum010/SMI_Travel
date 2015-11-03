@@ -128,9 +128,7 @@ public class BookDetailController extends SMITravelController {
             HistoryBooking historyBooking = new HistoryBooking();
             historyBooking.setHistoryDate(new Date());
             historyBooking.setAction("VIEW BOOKING");
-            String detail = "Refno : " + refNo + "\r\n"
-                            + "FL : " + utilty.getCustomerName(master.getCustomer()) + "\r\n"
-                            + "Agent : " + master.getAgent().getCode() + " : " + master.getAgent().getName();
+            String detail = "";
             historyBooking.setDetail(detail);
             historyBooking.setMaster(master);
             historyBooking.setStaff(user);
@@ -186,10 +184,13 @@ public class BookDetailController extends SMITravelController {
             }
             HistoryBooking historyBooking = new HistoryBooking();
             historyBooking.setHistoryDate(new Date());
-            historyBooking.setAction("EDIT BOOKING");
+            historyBooking.setAction("UPDATE BOOKING");
             String detail = "Refno : " + dbMaster.getReferenceNo() + "\r\n"
                             + "FL : " + utilty.getCustomerName(dbMaster.getCustomer()) + "\r\n"
-                            + "Agent : " + dbMaster.getAgent().getCode() + " : " + dbMaster.getAgent().getName();
+                            + "Agent : " ;
+                            if(dbMaster.getAgent()!=null){
+                                detail += dbMaster.getAgent().getCode() + " : " + dbMaster.getAgent().getName();
+                            }
             historyBooking.setDetail(detail);
             historyBooking.setMaster(dbMaster);
             historyBooking.setStaff(users.get(0));
@@ -258,8 +259,11 @@ public class BookDetailController extends SMITravelController {
                 historyBooking.setHistoryDate(new Date());
                 historyBooking.setAction("CREATE NEW BOOKING");
                 String detail = "Refno : " + newMaster.getReferenceNo() + "\r\n"
-                                + "FL : " + utilty.getCustomerName(newMaster.getCustomer()) + "\r\n"
-                                + "Agent : " + newMaster.getAgent().getCode() + " : " + newMaster.getAgent().getName();
+                                + "FL : " + utilty.getCustomerName(newMaster.getCustomer()) + "\r\n" 
+                                + "Agent : " ;
+                                if(newMaster.getAgent()!=null){
+                                    detail += newMaster.getAgent().getCode() + " : " + newMaster.getAgent().getName();
+                                }
                 historyBooking.setDetail(detail);
                 historyBooking.setMaster(newMaster);
                 historyBooking.setStaff(user);

@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.BookingPnr;
+import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.HotelBooking;
 import com.smi.travel.datalayer.entity.MAirline;
 import com.smi.travel.datalayer.entity.MAirline;
@@ -84,6 +85,7 @@ public class AirTicketController extends SMITravelController {
         String refNo = request.getParameter("referenceNo");
         String airBookingId = request.getParameter("airBookingId");
         String airDescRows = request.getParameter("counter");
+        
         SystemUser owner = null;
         SystemUser issue = null;
         System.out.println(AirTicketController.class
@@ -138,6 +140,17 @@ public class AirTicketController extends SMITravelController {
 
                 SystemUser issueBy = airBook.getStaffByIssueBy();
                 request.setAttribute(IssueBy, issueBy);
+                
+                HistoryBooking historyBooking = new HistoryBooking();
+                historyBooking.setHistoryDate(new Date());
+                historyBooking.setAction("VIEW AIR TICKET BOOKING");
+                String detail = "";
+                historyBooking.setDetail(detail);
+                historyBooking.setMaster(airBook.getMaster());
+                historyBooking.setStaff(user);
+                int resultsave = utilservice.insertHistoryBooking(historyBooking);
+                System.out.println(" resultsavehistory " + resultsave);
+                
             } else {
                 //airBook is null;
                 request.setAttribute(OwnerBy, user);
@@ -151,7 +164,10 @@ public class AirTicketController extends SMITravelController {
             String issueName = request.getParameter("issue_username");
             String deadline = request.getParameter("get_deadline");
             String reconfirm = request.getParameter("reconfirm");
-            String remark = request.getParameter("remark");          
+            String remark = request.getParameter("remark");   
+            String issue_name = request.getParameter("issue_name");
+            String staff_name = request.getParameter("staff_name");
+            
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date deadlineDate = null;
             try {
@@ -181,7 +197,18 @@ public class AirTicketController extends SMITravelController {
 
                 setAirticketDescRows(request, airDescRows, airBook);
 
-                //                master.getAirticketBookings().add(airBook);
+                //master.getAirticketBookings().add(airBook);
+                HistoryBooking historyBooking = new HistoryBooking();
+                historyBooking.setHistoryDate(new Date());
+                historyBooking.setAction("CREATE AIR TICKET BOOKING");
+                String detail = "Owner : " + ownerName + " : " + staff_name + "\r\n"
+                                + "Issue : " + issueName + " : " + issue_name;
+                historyBooking.setDetail(detail);
+                historyBooking.setMaster(airBook.getMaster());
+                historyBooking.setStaff(user);
+                int resultsave = utilservice.insertHistoryBooking(historyBooking);
+                System.out.println(" resultsavehistory " + resultsave);
+                
                 result = bookingAirticketService.insertBookingAirTicket(airBook);
 
             } else {
@@ -197,6 +224,18 @@ public class AirTicketController extends SMITravelController {
                 airBook.setRemark(remark);                
                 setAirticketDescRows(request, airDescRows, airBook);
                 System.out.println("updateBookingAirticket-----");
+                
+                HistoryBooking historyBooking = new HistoryBooking();
+                historyBooking.setHistoryDate(new Date());
+                historyBooking.setAction("UPDATE AIR TICKET BOOKING");
+                String detail = "Owner : " + ownerName + " : " + staff_name + "\r\n"
+                                + "Issue : " + issueName + " : " + issue_name;
+                historyBooking.setDetail(detail);
+                historyBooking.setMaster(airBook.getMaster());
+                historyBooking.setStaff(user);
+                int resultsave = utilservice.insertHistoryBooking(historyBooking);
+                System.out.println(" resultsavehistory " + resultsave);
+                
                 result = bookingAirticketService.updateBookingAirTicket(airBook);
             }
             request.setAttribute(Result, result);

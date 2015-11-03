@@ -11,6 +11,8 @@ import com.smi.travel.datalayer.entity.AirticketBooking;
 import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.Billable;
 import com.smi.travel.datalayer.entity.BillableDesc;
+import com.smi.travel.datalayer.entity.HistoryBooking;
+import com.smi.travel.datalayer.entity.LandBooking;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
 import com.smi.travel.datalayer.entity.MBank;
@@ -18,6 +20,7 @@ import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.Passenger;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.AgentService;
 import com.smi.travel.datalayer.service.BillableService;
 import com.smi.travel.datalayer.service.BookingAirticketService;
@@ -111,7 +114,7 @@ public class BillableController extends SMITravelController {
         }
         
         request.setAttribute(DELETERESULT, deleteresult); 
-        
+        SystemUser user = (SystemUser) session.getAttribute("USER");
         Master master = utilservice.getbookingFromRefno(refNo);
         Billable billForm = new Billable();
         billForm.setMaster(master);
@@ -168,6 +171,13 @@ public class BillableController extends SMITravelController {
                     getBillDescListForm(request, billForm, i);
                 }
 
+            }
+            if(billForm.getId() != null){
+                billForm.setMaster(master);
+                saveHistoryBooking(refNo,user,billForm,"UPDATE");
+            }else{
+                billForm.setMaster(master);
+                saveHistoryBooking(refNo,user,billForm,"CREATE");
             }
             result = billableService.saveBillable(billForm);
             request.setAttribute(BillableList, billForm);
@@ -237,7 +247,7 @@ public class BillableController extends SMITravelController {
       
             setDefaultBill(master,billable);
             request.setAttribute(BillableList, billable);
-
+            saveHistoryBooking(refNo,user,billable,"VIEW");
             setResponseAttribute(request, refNo);
 
         } else if ("update".equalsIgnoreCase(action)) {
@@ -281,7 +291,7 @@ public class BillableController extends SMITravelController {
                 billForm.getBillableDescs().add(bILLDESC);
             }
             result = billableService.saveBillable(billForm);
-
+            saveHistoryBooking(refNo,user,billForm,"UPDATE");
             System.out.println("action update");
             return new ModelAndView("redirect:Billable.smi?referenceNo=" + refNo + "&result=" + result + "&action=edit");
         } else if ("delete".equalsIgnoreCase(action)) {
@@ -577,6 +587,39 @@ public class BillableController extends SMITravelController {
         return null;
     }
 
+    public void saveHistoryBooking(String refNo,SystemUser user,Billable bill,String action) {
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");        
+        HistoryBooking historyBooking = new HistoryBooking();
+        historyBooking.setHistoryDate(new Date());
+        historyBooking.setAction(action+" BILLABLE BOOKING");
+        String detail = "";
+        if(!"VIEW".equalsIgnoreCase(action)){
+            if(bill != null){
+            detail = "BILL : " + bill.getBillTo() + " : " + bill.getBillName()+ "\r\n"
+                    + "ADDRESS : " + bill.getBillAddress() + "\r\n";
+                    if(bill.getMAccterm() != null){
+                        detail += "TERM PAY : " + bill.getMAccterm().getName() +"\r\n";
+                    }else{
+                        detail += "TERM PAY  : "+"\r\n";
+                    }
+                    if(bill.getMAccpay() != null){
+                        detail += "PAY BY : " + bill.getMAccpay().getName() + "\r\n";
+                    }else{
+                        detail += "PAY BY :  "+"\r\n";
+                    }
+                    detail +=  "DESCRIPTION : " + bill.getRemark();
+            }
+        }
+        historyBooking.setDetail(detail);
+        if(bill != null){
+            historyBooking.setMaster(bill.getMaster());
+        }
+        historyBooking.setStaff(user);
+        int resultsave = utilservice.insertHistoryBooking(historyBooking);
+    }
+    
+    
     public ReceiptService getReceiptService() {
         return receiptService;
     }

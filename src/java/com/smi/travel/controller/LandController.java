@@ -1,12 +1,15 @@
 package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.AirticketPnr;
+import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.LandBooking;
 import com.smi.travel.datalayer.entity.Master;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.BookingLandService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +35,7 @@ public class LandController extends SMITravelController {
         String action = request.getParameter("action");
         String LandID = request.getParameter("LandID");
         System.out.println("LandController : "+refno);
-    
+        SystemUser user = (SystemUser) session.getAttribute("USER");
         if("delete".equalsIgnoreCase(action)){
             System.out.println("delete booking land");
             landservice.cancelBookDetailLand(LandID);
@@ -66,6 +69,16 @@ public class LandController extends SMITravelController {
         }else{
             request.setAttribute(LockUnlockBooking,0);
         }
+        
+        HistoryBooking historyBooking = new HistoryBooking();
+        historyBooking.setHistoryDate(new Date());
+        historyBooking.setAction("VIEW LAND BOOKING");
+        String detail = "";
+        historyBooking.setDetail(detail);
+        historyBooking.setMaster(master);
+        historyBooking.setStaff(user);
+        int resultsave = utilservice.insertHistoryBooking(historyBooking);
+        System.out.println(" resultsave " + resultsave);
         return Land;
     }
 

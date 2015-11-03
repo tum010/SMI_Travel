@@ -32,6 +32,8 @@ import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MTicketType;
 import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
+import com.smi.travel.datalayer.entity.HistoryBooking;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.util.UtilityFunction;
 import java.text.ParseException;
@@ -98,6 +100,8 @@ public class AirTicketDetailController extends SMITravelController {
         System.out.println(" ============= action ============= " + action);
         int result = 0;
         request.setAttribute(ISBILLSTATUS,0);
+        SystemUser user = (SystemUser) session.getAttribute("USER");
+
         //set pnrId
         if(!"".equalsIgnoreCase(pnr) && pnr != null){
             request.setAttribute("pnrIdTemp", pnr);
@@ -108,6 +112,7 @@ public class AirTicketDetailController extends SMITravelController {
             System.out.println(AirTicketDetailController.class.getName() + " add");
             request.setAttribute(Action, "newpnr");
             setResponseAttribute(request, null, referenceNo);
+            saveHistoryBooking(null,"CREATE",referenceNo,user);
             List<String> checkPnr = bookingAirticketService.getListPnrFromRefno(referenceNo);
             request.setAttribute(CHECKPNR, checkPnr);
         } else if ("import".equalsIgnoreCase(action)) {
@@ -130,6 +135,9 @@ public class AirTicketDetailController extends SMITravelController {
             request.setAttribute(Action, "update");
             
             setResponseAttribute(request, newAirPnr, referenceNo);
+            
+            saveHistoryBooking(newAirPnr,"IMPORT",referenceNo,user);
+            
             if("".equalsIgnoreCase(pnrIdTemp)){
                 return new ModelAndView("redirect:AirTicketDetail.smi?referenceNo=" + referenceNo + "&pnr=" + newAirPnr.getId() + "&action=edit&result=1");
             }else{
@@ -141,6 +149,7 @@ public class AirTicketDetailController extends SMITravelController {
             try {
                 result = updateAirPnr(request, airticketPnr, referenceNo);
                 request.setAttribute(Action, "update");
+                saveHistoryBooking(airticketPnr,"IMPORT",referenceNo,user);
                 //return new ModelAndView("redirect:AirTicketDetail.smi?referenceNo=" + referenceNo + "&pnr=" + pnr + "&action=edit&result=" + result);
             } catch (NonExistAirlineException ne) {
                 setResponseAttribute(request, airticketPnr, referenceNo);
@@ -160,6 +169,7 @@ public class AirTicketDetailController extends SMITravelController {
             }
             try {
                 result = buildDummyAirticketPnr(request, referenceNo, airPnr);
+                saveHistoryBooking(airPnr,"CREATE",referenceNo,user);
                 request.setAttribute(Action, "update");
                 return new ModelAndView("redirect:AirTicket.smi?referenceNo=" + referenceNo + "&action=edit&result=" + result);
             } catch (NonExistAirlineException ne) {
@@ -188,6 +198,7 @@ public class AirTicketDetailController extends SMITravelController {
             AirticketPnr airticketPnr = bookingAirticketService.getPNRDetailByID(pnr, referenceNo);
             //Error occurs when others tab is no object yet.
             setResponseAttribute(request, airticketPnr, referenceNo);
+            saveHistoryBooking(airticketPnr,"VIEW",referenceNo,user);
             request.setAttribute(Action, "update");
             List<String> checkPnr = bookingAirticketService.getListPnrFromRefno(referenceNo);
             request.setAttribute(CHECKPNR, checkPnr);
@@ -1102,5 +1113,51 @@ public class AirTicketDetailController extends SMITravelController {
 //            }
 //        }
 
+    }
+    
+    private void saveHistoryBooking(AirticketPnr airticketPnr,String action,String referenceNo,SystemUser user) {
+        TreeSet<AirticketFlight> sortedFlight = new TreeSet<AirticketFlight>(new AirticketFlightComparator());
+        String flight = "";        
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");
+        if (airticketPnr != null) {
+            List<AirticketAirline> airlines = new ArrayList<AirticketAirline>(airticketPnr.getAirticketAirlines());
+            List<AirticketFlight> allFlights = new ArrayList<AirticketFlight>();
+            List<AirticketPassenger> allPassengers = new ArrayList<AirticketPassenger>();
+            for (int i = 0; i < airlines.size(); i++) {
+                sortedFlight.addAll(airlines.get(i).getAirticketFlights());
+                allPassengers.addAll(airlines.get(i).getAirticketPassengers());
+            }
+            allFlights.addAll(sortedFlight);
+            for(int i = 0 ; i < allFlights.size() ; i++){
+                if(i == (allFlights.size()-1)){
+                    flight += allFlights.get(i).getFlightNo() + " : " + (allFlights.get(i).getDepartDate() == null ? "" : String.valueOf(df.format(allFlights.get(i).getDepartDate())))  + " - " + (allFlights.get(i).getArriveDate() == null ? "" : String.valueOf(df.format(allFlights.get(i).getArriveDate())));
+                }else{
+                    flight += allFlights.get(i).getFlightNo() + " : " + (allFlights.get(i).getDepartDate() == null ? "" : String.valueOf(df.format(allFlights.get(i).getDepartDate()))) + " - " + (allFlights.get(i).getArriveDate() == null ? "" : String.valueOf(df.format(allFlights.get(i).getArriveDate()))) + " , ";
+                }
+            }
+
+            Master master = utilservice.getMasterdao().getBookingFromRefno(referenceNo);
+            HistoryBooking historyBooking = new HistoryBooking();
+            historyBooking.setHistoryDate(new Date());
+            historyBooking.setAction(action+" AIR TICKET PNR");
+            String detail = "";
+            if(!"VIEW".equalsIgnoreCase(action)){
+                detail = "PNR : " + airticketPnr.getPnr() + "\r\n"
+                                + "FLIGHT : " + flight + "\r\n"
+                                + "PASSENGER : " ;
+                if(allPassengers.get(0).getMInitialname() != null){
+                    detail += allPassengers.get(0).getMInitialname().getName() + "" ;
+                }
+                    detail += allPassengers.get(0).getFirstName() + " " 
+                            + allPassengers.get(0).getLastName() + "  " 
+                            + allPassengers.get(0).getSeries1()+allPassengers.get(0).getSeries2()+allPassengers.get(0).getSeries3();
+            }
+            historyBooking.setDetail(detail);
+            historyBooking.setMaster(master);
+            historyBooking.setStaff(user);
+            int resultsave = utilservice.insertHistoryBooking(historyBooking);
+            System.out.println(" resultsavehistory " + resultsave);
+        }
     }
 }
