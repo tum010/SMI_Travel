@@ -133,4 +133,43 @@ function toWords(s){
     return str.replace(/\s+/g,' ').toUpperCase();
 }
 
+function setValueFromDate() {
+    var monthNames = [
+    "01", "02", "03",
+    "04", "05", "06", "07",
+    "08", "09", "10",
+    "11", "12"
+  ];
+    var date = new Date();
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+    return year+'-'+ monthNames[monthIndex] +'-01';
+}
 
+function setValueToDate() {
+    var monthNames = [
+    "01", "02", "03",
+    "04", "05", "06", "07",
+    "08", "09", "10",
+    "11", "12"
+  ];
+    var date = new Date();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+
+    var m = new Number(date.getMonth());
+    var y = new Number(date.getYear());
+
+    var tmpDate = new Date(y, m, 28);
+    var checkMonth = tmpDate.getMonth();
+    var lastDay = 27;
+
+    while(lastDay <= 31){
+        var temp = tmpDate.setDate(lastDay + 1);
+        if(checkMonth != tmpDate.getMonth())
+            break;
+        lastDay++
+    }
+    return year+'-'+ monthNames[monthIndex] +'-'+lastDay;
+}
