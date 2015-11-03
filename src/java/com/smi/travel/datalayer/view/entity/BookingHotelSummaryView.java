@@ -22,6 +22,8 @@ public class BookingHotelSummaryView {
     private String curcost;
     private String totalprice;
     private String curamount;
+    private String invoice;
+    private String receipt;
 
     public String getRefno() {
         return refno;
@@ -109,5 +111,21 @@ public class BookingHotelSummaryView {
 
     public void setCuramount(String curamount) {
         this.curamount = curamount;
+    }
+
+    public String getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(String invoice) {
+        this.invoice = invoice;
+    }
+
+    public String getReceipt() {
+        return receipt;
+    }
+
+    public void setReceipt(String receipt) {
+        this.receipt = receipt;
     }
 }

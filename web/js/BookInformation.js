@@ -10,6 +10,8 @@ $(document).ready(function() {
         console.log("positon :" + position.top);
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
     });
+
+    setSearchFormat($("#searchType").val());
 });
 
 function searchAction(){
@@ -36,6 +38,23 @@ function searchFillter() {
     } else if(type === '5'){
         $("#searchOther").removeClass("hidden");
     } else if(type === '6'){
+        $("#searchLand").removeClass("hidden");
+    }
+}
+
+function setSearchFormat(searchType){
+    $("#bookType").val(searchType);
+    if(searchType === '1'){
+        $("#searchAir").removeClass("hidden");
+    }else if(searchType === '2'){
+        $("#searchHotel").removeClass("hidden");
+    }else if(searchType === '3'){
+        $("#searchPackageTour").removeClass("hidden");
+    }else if(searchType === '4'){
+        $("#searchDayTours").removeClass("hidden"); 
+    }else if(searchType === '5'){
+        $("#searchOther").removeClass("hidden");
+    }else if(searchType === '6'){
         $("#searchLand").removeClass("hidden");
     }
 }

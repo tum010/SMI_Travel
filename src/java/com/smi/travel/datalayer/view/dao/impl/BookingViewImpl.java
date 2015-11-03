@@ -213,7 +213,7 @@ public class BookingViewImpl implements BookingViewDao{
         }
         if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
             query += (condition ? " and " : " where ");
-            query += " leader LIKE '%" + bookLeader + "'% " ;
+            query += " leader LIKE '%" + bookLeader + "%' " ;
             condition = true;
         }
         if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
@@ -223,7 +223,7 @@ public class BookingViewImpl implements BookingViewDao{
         }
         if((hotelName != null) &&(!"".equalsIgnoreCase(hotelName))){
             query += (condition ? " and " : " where ");
-            query += " `hotel = '" + hotelName + "' " ;
+            query += " hotel LIKE '%" + hotelName + "%' " ;
             condition = true;
         }
         if((hotelCheckIn != null) &&(!"".equalsIgnoreCase(hotelCheckIn))){
@@ -249,6 +249,8 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("curcost", Hibernate.STRING)
                 .addScalar("Total_price", Hibernate.STRING)
                 .addScalar("curamount", Hibernate.STRING)
+                .addScalar("invoice", Hibernate.STRING)
+                .addScalar("receipt", Hibernate.STRING)
                 .list();
         
         for (Object[] B : QueryHotel) {
@@ -264,6 +266,8 @@ public class BookingViewImpl implements BookingViewDao{
             bookingHotelSummaryView.setCurcost(B[8]== null ? "" :util.ConvertString(B[8]));
             bookingHotelSummaryView.setTotalprice(B[9]== null ? "" :util.ConvertString(B[9]));
             bookingHotelSummaryView.setCuramount(B[10]== null ? "" :util.ConvertString(B[10]));
+            bookingHotelSummaryView.setInvoice(B[11]== null ? "" :util.ConvertString(B[11]));
+            bookingHotelSummaryView.setReceipt(B[12]== null ? "" :util.ConvertString(B[12]));
             bookingHotelSummaryViewList.add(bookingHotelSummaryView);
         }
         
