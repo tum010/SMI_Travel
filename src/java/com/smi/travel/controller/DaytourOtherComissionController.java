@@ -13,7 +13,11 @@ import com.smi.travel.datalayer.service.DaytourCommissionService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,11 +45,17 @@ public class DaytourOtherComissionController extends SMITravelController {
     private static final String SelectGuide = "SelectGuide";
     private static final String SelectAgent = "SelectAgent";
     private static final String TransactionResult = "TransactionResult";
+    UtilityFunction utility = new UtilityFunction();
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String action = request.getParameter("action");
-
+        String actionAddGuide = request.getParameter("addGuideAction");
+        
+        if("addGuide".equalsIgnoreCase(actionAddGuide)){
+            action = actionAddGuide;
+        }
+        
         String dateFromS = request.getParameter("InputDateFrom");
         String dateToS = request.getParameter("InputDateTo");
         String selectGuideId = request.getParameter("SelectGuide");
@@ -80,6 +90,38 @@ public class DaytourOtherComissionController extends SMITravelController {
                 return DaytourOtherCommission;
             }
 
+        }else if("addGuide".equalsIgnoreCase(action)){
+            SystemUser user = new SystemUser();
+            String name = request.getParameter("guideName");
+            String detail = request.getParameter("guideDetail");
+            String tel = request.getParameter("guideTel");
+            user.setName(name + " " + detail);
+            user.setUsername(name);
+            user.setTel(tel);
+            user.setPassword("MD5"+name);
+            SystemUser username = (SystemUser) session.getAttribute("USER");
+            user.setCreateBy(username.getName());
+            
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar cal = Calendar.getInstance();
+            System.out.println(dateFormat.format(cal.getTime()));
+            String createDate = dateFormat.format(cal.getTime());
+            Date date = new Date();
+            date = utility.convertStringToDate(createDate);
+            user.setCreateDate(date);
+            
+            user.setPosition("GUIDE");
+            user.setIsExGuide(1);
+            int result = 0;
+            String resultTest = "";
+            result  = bookingOtherService.insertSystemUser(user);
+            System.out.println("Result Add Guide : " + result);
+            if(result == 0){
+                resultTest = "guideunsuccess";
+            }else{
+                resultTest = "guidesuccess";
+            }
+            request.setAttribute("TransactionResult", resultTest);
         } else {
             setGeneralResponseAttribute(request);
         }

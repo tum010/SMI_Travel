@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.ProductDao;
+import com.smi.travel.datalayer.dao.SystemUserDao;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.Product;
@@ -25,6 +26,7 @@ import java.util.List;
 public class BookingOtherService {
     private ProductDao productDao;
     private OtherBookingDao otherBookDao;
+     private SystemUserDao systemUser;
     
     public List<OtherBooking> getListBookingOtherFromRefno(String refno) {
         return otherBookDao.getListBookingOtherFromRefno(refno);
@@ -104,4 +106,18 @@ public class BookingOtherService {
     public String updateStockTicketStatus(String stockTicketId, String status) {
         return otherBookDao.updateStockTicketStatus(stockTicketId,status);
     }
+    
+    public int insertSystemUser(SystemUser user){
+        return systemUser.insertSystemUser(user);
+    }
+
+    public SystemUserDao getSystemUser() {
+        return systemUser;
+    }
+
+    public void setSystemUser(SystemUserDao systemUser) {
+        this.systemUser = systemUser;
+    }
+    
+    
 }

@@ -134,7 +134,8 @@ $(document).ready(function () {
                     data.fv.revalidateField('InputDateFrom');
                 }
             });
-    
+            
+            
 });
 
 function verifyValueToGuide(){
@@ -339,12 +340,66 @@ function printAgentCommission() {
 }
 
 function addGuide(){
-    
-    $('#addGuideAction').val('addGuide');
-    var action = $('#addGuideAction').val();
-    console.log('Action Add Guide : ' + action);
-    $("#AddGuideModal").hide();
-    $("#searchDaytourCommissionAddGuideForm").submit();
+    var name = $('#guideName').val();
+    var detail = $('#guideDetail').val();
+    if(name !== '' && detail !== ''){
+        $('#addGuideAction').val('addGuide');
+        var action = $('#addGuideAction').val();
+        console.log('Action Add Guide : ' + action);
+        $("#AddGuideModal").hide();
+        $("#searchDaytourCommissionAddGuideForm").submit();
+    }else{
+        validateAddGuide();
+    }
+}
+
+function addGuideOtherCommission(){
+    var name = $('#guideName').val();
+    var detail = $('#guideDetail').val();
+    if(name !== '' && detail !== ''){
+        $('#addGuideAction').val('addGuide');
+        var action = $('#addGuideAction').val();
+        console.log('Action Add Guide : ' + action);
+        $("#AddGuideModal").hide();
+        $("#searchDaytourCommissionAddGuideForm").submit();
+    }else{
+        validateAddGuide();
+    }
+}
+
+function validateAddGuide(){
+    // Validate form add Guide
+            $('#searchDaytourCommissionAddGuideForm').bootstrapValidator({
+                container: 'tooltip',
+                excluded: [':disabled'],
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    guideName: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The name guide is required'
+                            }
+                        }
+                    },
+                    guideDetail: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The detail guide name is required'
+                            }
+                        }
+                    }
+
+                }
+            }).on('success.field.bv', function (e, data) {
+                if (data.bv.isValid()) {
+                    data.bv.disableSubmitButtons(false);
+                }
+            });
+
 }
 
 function getGuideCommission(tourcode,textid){
