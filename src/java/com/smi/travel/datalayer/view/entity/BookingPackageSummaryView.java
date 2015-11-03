@@ -10,17 +10,13 @@ package com.smi.travel.datalayer.view.entity;
  *
  * @author chonnasith
  */
-public class BookingAirSummaryView {
+public class BookingPackageSummaryView {
     private String refno;
     private String refdate;
     private String agent;
     private String leader;
-    private String pax;
-    private String pnr;
-    private String dept;
-    private String arrv;
-    private String departdate;
-    private String flight;
+    private String code;
+    private String name;
     private String invoice;
     private String receipt;
 
@@ -56,44 +52,20 @@ public class BookingAirSummaryView {
         this.leader = leader;
     }
 
-    public String getPax() {
-        return pax;
+    public String getCode() {
+        return code;
     }
 
-    public void setPax(String pax) {
-        this.pax = pax;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getPnr() {
-        return pnr;
+    public String getName() {
+        return name;
     }
 
-    public void setPnr(String pnr) {
-        this.pnr = pnr;
-    }
-
-    public String getDept() {
-        return dept;
-    }
-
-    public void setDept(String dept) {
-        this.dept = dept;
-    }
-
-    public String getArrv() {
-        return arrv;
-    }
-
-    public void setArrv(String arrv) {
-        this.arrv = arrv;
-    }
-
-    public String getFlight() {
-        return flight;
-    }
-
-    public void setFlight(String flight) {
-        this.flight = flight;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getInvoice() {
@@ -110,13 +82,5 @@ public class BookingAirSummaryView {
 
     public void setReceipt(String receipt) {
         this.receipt = receipt;
-    }
-
-    public String getDepartdate() {
-        return departdate;
-    }
-
-    public void setDepartdate(String departdate) {
-        this.departdate = departdate;
     }
 }
