@@ -40,17 +40,23 @@
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
             <input type="hidden" value="${param.referenceNo}" id="getUrl" >
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
-            <form action="AirTicket.smi" method="post" id="RefundForm" role="form">
+            <form action="Refund.smi" method="post" id="RefundForm" role="form">
                 <div class="row" style="padding-left: 15px">  
                     <div class="col-md-6">
                         <h4>Refund Ticket</h4>
                     </div>
-                    <div class="col-md-5 text-right">
-                        <button type="button" onclick="printTicketOrder('${param.referenceNo}');" class="btn btn-default">
+                    <div class="col-md-3 text-right">
+                        <button type="button" onclick="" class="btn btn-default">
                             <span class="glyphicon glyphicon-print"></span> Print
                         </button>
                     </div>
                     <div class="col-md-1 text-right">
+                        <button type="button" onclick="addRefundDetail(1);" class="btn btn-primary" id="buttonAddRefundDetail" name="buttonAddRefundDetail" >
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                        </button>
+                         <input type="hidden" id="countListAdd" name="countListAdd" value="1" >
+                    </div>
+                    <div class="col-md-2 text-right" style="margin-left: 0px;">
                         <a  href="AirTicket.smi?referenceNo=${param.referenceNo}&action=edit" 
                             class="btn btn-primary">
                             <span class="glyphicon glyphicon-arrow-left"></span> Back
@@ -65,84 +71,57 @@
                     <div class="panel-body">
                         <!-- Air Table --> 
                         <div class="row-fluid">
-                            <table  class="display" id="PassengerTable">
+                            <table  class="display" id="RefundTable">
                                 <thead>
                                     <tr class="datatable-header">
-                                        <th>name</th>
-                                        <th colspan="3">Ticket</th>
-                                        <th>Routing</th>
+                                        <th>Refund No</th>
+                                        <th>Ticket</th>
+                                        <th>Section</th>
                                         <th>section refund</th>
+                                        <th>Change</th>
+                                        <th>Detail</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <!--C:if ,C:foreach, c:set >>> counter -->
                                     <tr>
-                                        <td></td>
-                                        <td>123</td>
-                                        <td>32343443</td>
-                                        <td>345</td>
+                                        <td>R0012</td>
+                                        <td>2172305640387</td>
                                         <td>BKK-HND-GTH-BKK</td>
                                         <td>GTH-BKK</td>
+                                        <td>25090</td>
+                                        <td>Test</td>
                                         <td class="text-center">
+                                            <!--<a class="carousel" data-toggle="collapse" data-parent="#accordion"--> 
+<!--                                               data-target="#passenger1" aria-expanded="true" 
+                                               aria-controls="collapseExample">-->
+                                                <span class="glyphicon glyphicon-edit editicon" id="SpanEdit1" onclick="selectRefundDetail(1)"></span>
+                                            <!--</a>-->
                                             <a class="carousel" data-toggle="collapse" data-parent="#accordion" 
                                                data-target="#passenger1" aria-expanded="true" 
                                                aria-controls="collapseExample">
-                                                <span class="glyphicon glyphicon-edit editicon"></span>
+                                                <span class="glyphicon glyphicon-remove deleteicon"></span>
                                             </a>
                                         </td>
                                     </tr>
+                                    <!--<input type="hidden" id="countListOther" name="countListOther" value="${counter}" >-->
+                                     <input type="hidden" id="countListOther" name="countListOther" value="1" >
                                 </tbody>
                             </table>  
                         </div>
-                        <%--<c:forEach var="psg" items="${passenger}" varStatus="status">--%>
-                        <div class="collapse" id="passenger1">
-                            <table  class="display" id="FlightTable">
-                                <thead>
-                                    <tr class="datatable-header">
-                                        <th>No</th>
-                                        <th>Flight</th>
-                                        <th>From</th>
-                                        <th>To</th>
-                                        <th>Refund <a id="ckeckList" href="#">CheckAll</a></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>TG001</td>
-                                        <td>BKK</td>
-                                        <td>HND</td>
-                                        <td class="text-center"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>TG002</td>
-                                        <td>HND</td>
-                                        <td>BKK</td>
-                                        <td class="text-center"><input type="checkbox"></td>
-                                    </tr>
-                                </tbody>
-                            </table>  
-                            <div class="text-center" style="padding-top: 10px">
-                                <a href="" class="btn btn-success" data-toggle="modal" data-target="#RefundModal">
-                                    <i class="fa fa-save"></i> Save
-                                </a>
-                                <a href="" class="btn btn-default" data-toggle="collapse" data-parent="#accordion" 
-                                   data-target="#passenger1" aria-expanded="true" aria-controls="collapseExample">
-                                    Close
-                                </a>
-                            </div>
-                        </div>
-                        <%--</c:forEach>--%>
                         <hr/>
-                        <div class="row" style="margin-top: 20px">
+                        <div class="row hidden" style="margin-top: 20px" id="RefundTicketDetail1" name="RefundTicketDetail1" >
                             <div class="row">
+                                <div class="col-sm-6 form-group" style="margin-left: 20px;">
+                                     <h4>Refund Ticket Detail</h4>
+                                </div>
                                 <div class="col-sm-6 form-group">
-                                    <label for="Owner" class="col-sm-3 control-label text-right">By</label>
+                                    <label for="Owner" class="col-sm-3 control-label text-right">Refund By</label>
                                     <div class="col-lg-3">
                                         <div class="">
                                             <div class="input-group ">
-                                                <input type="hidden" class="form-control" name="staff_id" id="staff_id" value="${rf.id}">
+                                                <input type="hidden" class="form-control" name="staff_id" id="staff_id" value="">
                                                 <input type="text" class="form-control" id="staff_username" name="staff_username" value="${rf.username}"
                                                        data-bv-notempty data-bv-notempty-message="The By is required">
                                                 <span class="input-group-addon" data-toggle="modal" data-target="#StaffModal">
@@ -156,11 +135,11 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    <label  class="col-sm-3 control-label text-right">Date</label>
+                                    <label  class="col-sm-3 control-label text-right">Refund Date</label>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker3'>
-                                                <input type='text' class="form-control" name="get_deadline" id="deadline" data-date-format="YYYY-MM-DD" value="${booking.deadline}"  placeholder="YYYY-MM-DD"/>
+                                                <input type='text' class="form-control" name="refundDate" id="refundDate" data-date-format="YYYY-MM-DD" value="${booking.deadline}"  placeholder="YYYY-MM-DD"/>
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -172,30 +151,182 @@
                             </div>  
                             <div class="row">
                                 <div class="col-sm-6 form-group">
-                                    <label class="col-sm-3 control-label text-right">Cancel Detail</label>
+                                    <label class="col-sm-3 control-label text-right">Address</label>
                                     <div class="col-sm-9">                                      
                                         <div class="form-group">
-                                            <input class="form-control"/>
+                                            <textarea class="form-control" id="address"  name="address"></textarea>
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label text-right">Cancel Detail</label>
+                                    <div class="col-sm-9">                                      
+                                        <div class="form-group">
+                                            <textarea class="form-control" id="cancelDetail" name="cancelDetail"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label  class="col-sm-3 control-label text-right">Charge</label>
                                     <div class="col-sm-9">  
-                                        <input type="text" class="form-control" value="${booking.reConfirm}" maxlength="255"/>
+                                        <input type="text" class="form-control" value="${booking.reConfirm}" maxlength="255" id="charge" name="charge"/>
                                     </div>
                                 </div>
+                            </div> 
+                            </br>
+                            <div class="row">
+                                <div class="col-sm-12 form-group text-center">
+                                    <table  class="display" id="RefundTable" style="width: 1000px;">
+                                        <thead>
+                                            <tr class="datatable-header">
+                                                <th style="width: 5%" >No</th>
+                                                <th>Ticket No</th>
+                                                <th>Section</th>
+                                                <th>section refund</th>
+                                                <th>Change</th>
+                                                <th style="width: 5%" >Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>2172305640387</td>
+                                                <td>BKK-HND-GTH-BKK</td>
+                                                <td>GTH-BKK</td>
+                                                <td>25090</td>
+                                                <td class="text-center">
+                                                    <a class="carousel" data-toggle="collapse" data-parent="#accordion" 
+                                                       data-target="#passenger1" aria-expanded="true" 
+                                                       aria-controls="collapseExample">
+                                                        <span class="glyphicon glyphicon-remove deleteicon"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5 form-group text-right">
+                                    <button type="submit" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
+                                </div>
+                                <div class="col-sm-1 form-group text-right">
+                                    <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                </div>
+                                <div class="col-sm-6 form-group text-left">
+                                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
+                                </div>
+                            </div>  
+                        </div>
+                        <!--Refund Add -->
+                        <div class="row hidden" style="margin-top: 20px" id="RefundTicketDetailAdd1" name="RefundTicketDetailAdd1" >
+                            <div class="row">
+                                <div class="col-sm-6 form-group" style="margin-left: 20px;">
+                                     <h4>Refund Ticket Detail</h4>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label for="Owner" class="col-sm-3 control-label text-right">Refund By</label>
+                                    <div class="col-lg-3">
+                                        <div class="">
+                                            <div class="input-group ">
+                                                <input type="hidden" class="form-control" name="staff_id" id="staff_id" value="">
+                                                <input type="text" class="form-control" id="staff_username" name="staff_username" value="${rf.username}"
+                                                       data-bv-notempty data-bv-notempty-message="The By is required">
+                                                <span class="input-group-addon" data-toggle="modal" data-target="#StaffModal">
+                                                    <span class="glyphicon-search glyphicon"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">  
+                                        <input type="text" class="form-control" id="staff_name" name="staff_name" value="${rf.name}" readonly="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label  class="col-sm-3 control-label text-right">Refund Date</label>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <div class='input-group date' id='datetimepicker3'>
+                                                <input type='text' class="form-control" name="refundDate" id="refundDate" data-date-format="YYYY-MM-DD" value="${booking.deadline}"  placeholder="YYYY-MM-DD"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
 
+                                </div>
                             </div>  
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label class="col-sm-3 control-label text-right">Address</label>
                                     <div class="col-sm-9">                                      
                                         <div class="form-group">
-                                            <textarea class="form-control"></textarea>
+                                            <textarea class="form-control" id="address"  name="address"></textarea>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label text-right">Cancel Detail</label>
+                                    <div class="col-sm-9">                                      
+                                        <div class="form-group">
+                                            <textarea class="form-control" id="cancelDetail" name="cancelDetail"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label  class="col-sm-3 control-label text-right">Charge</label>
+                                    <div class="col-sm-9">  
+                                        <input type="text" class="form-control" value="${booking.reConfirm}" maxlength="255" id="charge" name="charge"/>
+                                    </div>
+                                </div>
+                            </div> 
+                            </br>
+                            <div class="row">
+                                <div class="col-sm-12 form-group text-center">
+                                    <table  class="display" id="RefundTable" style="width: 1000px;">
+                                        <thead>
+                                            <tr class="datatable-header">
+                                                <th style="width: 5%" >No</th>
+                                                <th>Ticket No</th>
+                                                <th>Section</th>
+                                                <th>section refund</th>
+                                                <th>Change</th>
+                                                <th style="width: 5%" >Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>2172305640387</td>
+                                                <td>BKK-HND-GTH-BKK</td>
+                                                <td>GTH-BKK</td>
+                                                <td>25090</td>
+                                                <td class="text-center">
+                                                    <a class="carousel" data-toggle="collapse" data-parent="#accordion" 
+                                                       data-target="#passenger1" aria-expanded="true" 
+                                                       aria-controls="collapseExample">
+                                                        <span class="glyphicon glyphicon-remove deleteicon"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-5 form-group text-right">
+                                    <button type="submit" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
+                                </div>
+                                <div class="col-sm-1 form-group text-right">
+                                    <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                </div>
+                                <div class="col-sm-6 form-group text-left">
+                                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
                                 </div>
                             </div>  
                         </div>

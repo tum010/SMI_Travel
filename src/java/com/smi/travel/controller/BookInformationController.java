@@ -1,7 +1,12 @@
 package com.smi.travel.controller;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.service.WorkSpaceService;
+import com.smi.travel.datalayer.view.entity.BookingAirSummaryView;
+import com.smi.travel.datalayer.view.entity.BookingDayTourSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingHotelSummaryView;
+import com.smi.travel.datalayer.view.entity.BookingLandSummaryView;
+import com.smi.travel.datalayer.view.entity.BookingOtherSummaryView;
+import com.smi.travel.datalayer.view.entity.BookingPackageSummaryView;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,11 +51,36 @@ public class BookInformationController extends SMITravelController {
         String landAgent = request.getParameter("landAgent");
                
         if("search".equalsIgnoreCase(action)){
-            if("2".equalsIgnoreCase(bookType)){
+            if("1".equalsIgnoreCase(bookType)){//Air
+                List<BookingAirSummaryView> bookingAirSummaryViewList = new LinkedList<BookingAirSummaryView>();
+                bookingAirSummaryViewList = workspaceService.getListBookingAirSummaryView(bookRefNo,bookLeader,bookDate,airPnr,airDeptDate,airFlight);
+                request.setAttribute(DATALIST,bookingAirSummaryViewList);
+                
+            }else if("2".equalsIgnoreCase(bookType)){//Hotel
                 List<BookingHotelSummaryView> bookingHotelSummaryViewList = new LinkedList<BookingHotelSummaryView>();
                 bookingHotelSummaryViewList = workspaceService.getListBookingHotelSummaryView(bookRefNo,bookLeader,bookDate,hotelName,hotelCheckIn,hotelCheckOut);
                 request.setAttribute(DATALIST,bookingHotelSummaryViewList);
-            }          
+                
+            }else if("3".equalsIgnoreCase(bookType)){//Package
+                List<BookingPackageSummaryView> bookingPackageSummaryViewList = new LinkedList<BookingPackageSummaryView>();
+                bookingPackageSummaryViewList = workspaceService.getListBookingPackageSummaryView(bookRefNo,bookLeader,bookDate,packageName,packageAgent);
+                request.setAttribute(DATALIST,bookingPackageSummaryViewList);
+                
+            }else if("4".equalsIgnoreCase(bookType)){//Day tours
+                List<BookingDayTourSummaryView> bookingDayTourSummaryViewList = new LinkedList<BookingDayTourSummaryView>();
+                bookingDayTourSummaryViewList = workspaceService.getListBookingDayTourSummaryView(bookRefNo,bookLeader,bookDate,tourCode,tourName,tourDate,tourPickUp);
+                request.setAttribute(DATALIST,bookingDayTourSummaryViewList);
+                
+            }else if("5".equalsIgnoreCase(bookType)){//Other
+                List<BookingOtherSummaryView> bookingOtherSummaryViewList = new LinkedList<BookingOtherSummaryView>();
+                bookingOtherSummaryViewList = workspaceService.getListBookingOtherSummaryView(bookRefNo,bookLeader,bookDate,otherCode,otherName,otherDate,otherAgent);
+                request.setAttribute(DATALIST,bookingOtherSummaryViewList);
+                
+            }else if("6".equalsIgnoreCase(bookType)){//Land
+                List<BookingLandSummaryView> bookingLandSummaryViewList = new LinkedList<BookingLandSummaryView>();
+                bookingLandSummaryViewList = workspaceService.getListBookingLandSummaryView(bookRefNo,bookLeader,bookDate,landOkBy,landAgent,landCategory);
+                request.setAttribute(DATALIST,bookingLandSummaryViewList);
+            }                              
         }
         request.setAttribute(SEARCHTYPE,bookType);
         request.setAttribute("bookRefNo",bookRefNo);

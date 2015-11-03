@@ -9,7 +9,12 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.view.dao.BookingViewDao;
+import com.smi.travel.datalayer.view.entity.BookingAirSummaryView;
+import com.smi.travel.datalayer.view.entity.BookingDayTourSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingHotelSummaryView;
+import com.smi.travel.datalayer.view.entity.BookingLandSummaryView;
+import com.smi.travel.datalayer.view.entity.BookingOtherSummaryView;
+import com.smi.travel.datalayer.view.entity.BookingPackageSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingView;
 import com.smi.travel.util.UtilityFunction;
 import java.util.ArrayList;
@@ -206,32 +211,32 @@ public class BookingViewImpl implements BookingViewDao{
         String query = " SELECT * FROM `booking_hotel_summary` ";
         boolean condition = false;
         
-        if((!"".equalsIgnoreCase(bookRefNo)) && (bookRefNo != null)){
+        if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
             query += (condition ? " and " : " where ");
             query += " refno = '" + bookRefNo + "' " ;
             condition = true;
         }
-        if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
+        if((bookLeader != null) && (!"".equalsIgnoreCase(bookLeader))){
             query += (condition ? " and " : " where ");
             query += " leader LIKE '%" + bookLeader + "%' " ;
             condition = true;
         }
-        if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
+        if((bookDate != null) && (!"".equalsIgnoreCase(bookDate))){
             query += (condition ? " and " : " where ");
             query += " refdate = '" + bookDate + "' " ;
             condition = true;
         }
-        if((hotelName != null) &&(!"".equalsIgnoreCase(hotelName))){
+        if((hotelName != null) && (!"".equalsIgnoreCase(hotelName))){
             query += (condition ? " and " : " where ");
             query += " hotel LIKE '%" + hotelName + "%' " ;
             condition = true;
         }
-        if((hotelCheckIn != null) &&(!"".equalsIgnoreCase(hotelCheckIn))){
+        if((hotelCheckIn != null) && (!"".equalsIgnoreCase(hotelCheckIn))){
             query += (condition ? " and " : " where ");
             query += " checkin = '" + hotelCheckIn + "' " ;
             condition = true;
         }
-        if((hotelCheckOut != null) &&(!"".equalsIgnoreCase(hotelCheckOut))){
+        if((hotelCheckOut != null) && (!"".equalsIgnoreCase(hotelCheckOut))){
             query += (condition ? " and " : " where ");
             query += " checkout = '" + hotelCheckOut + "' " ;
             condition = true;
@@ -251,6 +256,7 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("curamount", Hibernate.STRING)
                 .addScalar("invoice", Hibernate.STRING)
                 .addScalar("receipt", Hibernate.STRING)
+                .addScalar("id", Hibernate.STRING)
                 .list();
         
         for (Object[] B : QueryHotel) {
@@ -268,12 +274,399 @@ public class BookingViewImpl implements BookingViewDao{
             bookingHotelSummaryView.setCuramount(B[10]== null ? "" :util.ConvertString(B[10]));
             bookingHotelSummaryView.setInvoice(B[11]== null ? "" :util.ConvertString(B[11]));
             bookingHotelSummaryView.setReceipt(B[12]== null ? "" :util.ConvertString(B[12]));
+            bookingHotelSummaryView.setId(B[13]== null ? "" :util.ConvertString(B[13]));
             bookingHotelSummaryViewList.add(bookingHotelSummaryView);
         }
         
         this.sessionFactory.close();
         session.close();
         return bookingHotelSummaryViewList;
+    }
+
+    @Override
+    public List<BookingAirSummaryView> getListBookingAirSummaryView(String bookRefNo, String bookLeader, String bookDate, String airPnr, String airDeptDate, String airFlight) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<BookingAirSummaryView> bookingAirSummaryViewList = new ArrayList<BookingAirSummaryView>();
+        
+        String query = " SELECT * FROM `booking_air_summary` ";
+        boolean condition = false;
+        
+        if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
+            query += (condition ? " and " : " where ");
+            query += " refno = '" + bookRefNo + "' " ;
+            condition = true;
+        }
+        if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
+            query += (condition ? " and " : " where ");
+            query += " leader LIKE '%" + bookLeader + "%' " ;
+            condition = true;
+        }
+        if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
+            query += (condition ? " and " : " where ");
+            query += " refdate = '" + bookDate + "' " ;
+            condition = true;
+        }
+        if((airPnr != null) &&(!"".equalsIgnoreCase(airPnr))){
+            query += (condition ? " and " : " where ");
+            query += " pnr = '" + airPnr + "' " ;
+            condition = true;
+        }
+        if((airDeptDate != null) &&(!"".equalsIgnoreCase(airDeptDate))){
+            query += (condition ? " and " : " where ");
+            query += " depart_date = '" + airDeptDate + "' " ;
+            condition = true;
+        }
+        if((airFlight != null) &&(!"".equalsIgnoreCase(airFlight))){
+            query += (condition ? " and " : " where ");
+            query += " flight = '" + airFlight + "' " ;
+            condition = true;
+        }
+
+        List<Object[]> QueryAir = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("refdate", Hibernate.STRING)
+                .addScalar("agent", Hibernate.STRING)
+                .addScalar("leader", Hibernate.STRING)
+                .addScalar("pax", Hibernate.STRING)
+                .addScalar("pnr", Hibernate.STRING)
+                .addScalar("dept", Hibernate.STRING)
+                .addScalar("arrv", Hibernate.STRING)
+                .addScalar("depart_date", Hibernate.STRING)
+                .addScalar("flight", Hibernate.STRING)
+                .addScalar("invoice", Hibernate.STRING)
+                .addScalar("receipt", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryAir) {
+            BookingAirSummaryView bookingAirSummaryView = new BookingAirSummaryView();
+            bookingAirSummaryView.setRefno(B[0]== null ? "" : util.ConvertString(B[0]));
+            bookingAirSummaryView.setRefdate(B[1]== null ? "" : util.ConvertString(B[1]));
+            bookingAirSummaryView.setAgent(B[2]== null ? "" :util.ConvertString(B[2]));
+            bookingAirSummaryView.setLeader(B[3]== null ? "" :util.ConvertString(B[3]));
+            bookingAirSummaryView.setPax(B[4]== null ? "" :util.ConvertString(B[4]));
+            bookingAirSummaryView.setPnr(B[5]== null ? "" :util.ConvertString(B[5]));
+            bookingAirSummaryView.setDept(B[6]== null ? "" :util.ConvertString(B[6]));
+            bookingAirSummaryView.setArrv(B[7]== null ? "" :util.ConvertString(B[7]));
+            bookingAirSummaryView.setDepartdate(B[8]== null ? "" :util.ConvertString(B[8]));
+            bookingAirSummaryView.setFlight(B[9]== null ? "" :util.ConvertString(B[9]));
+            bookingAirSummaryView.setInvoice(B[10]== null ? "" :util.ConvertString(B[10]));
+            bookingAirSummaryView.setReceipt(B[11]== null ? "" :util.ConvertString(B[11]));
+            bookingAirSummaryViewList.add(bookingAirSummaryView);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return bookingAirSummaryViewList;
+    }
+
+    @Override
+    public List<BookingPackageSummaryView> getListBookingPackageSummaryView(String bookRefNo, String bookLeader, String bookDate, String packageName, String packageAgent) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<BookingPackageSummaryView> bookingPackageSummaryViewList = new ArrayList<BookingPackageSummaryView>();
+        
+        String query = " SELECT * FROM `booking_package_summary` ";
+        boolean condition = false;
+        
+        if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
+            query += (condition ? " and " : " where ");
+            query += " refno = '" + bookRefNo + "' " ;
+            condition = true;
+        }
+        if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
+            query += (condition ? " and " : " where ");
+            query += " leader LIKE '%" + bookLeader + "%' " ;
+            condition = true;
+        }
+        if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
+            query += (condition ? " and " : " where ");
+            query += " refdate = '" + bookDate + "' " ;
+            condition = true;
+        }
+        if((packageName != null) &&(!"".equalsIgnoreCase(packageName))){
+            query += (condition ? " and " : " where ");
+            query += " code LIKE '%" + packageName + "%' and name LIKE '%" + packageName + "%' " ;
+            condition = true;
+        }
+        if((packageAgent != null) &&(!"".equalsIgnoreCase(packageAgent))){
+            query += (condition ? " and " : " where ");
+            query += " agent = '" + packageAgent + "' " ;
+            condition = true;
+        }
+
+        List<Object[]> QueryPackage = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("refdate", Hibernate.STRING)
+                .addScalar("agent", Hibernate.STRING)
+                .addScalar("leader", Hibernate.STRING)
+                .addScalar("code", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("invoice", Hibernate.STRING)
+                .addScalar("receipt", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryPackage) {
+            BookingPackageSummaryView bookingPackageSummaryView = new BookingPackageSummaryView();
+            bookingPackageSummaryView.setRefno(B[0]== null ? "" : util.ConvertString(B[0]));
+            bookingPackageSummaryView.setRefdate(B[1]== null ? "" : util.ConvertString(B[1]));
+            bookingPackageSummaryView.setAgent(B[2]== null ? "" :util.ConvertString(B[2]));
+            bookingPackageSummaryView.setLeader(B[3]== null ? "" :util.ConvertString(B[3]));
+            bookingPackageSummaryView.setCode(B[4]== null ? "" :util.ConvertString(B[4]));
+            bookingPackageSummaryView.setName(B[5]== null ? "" :util.ConvertString(B[5]));
+            bookingPackageSummaryView.setInvoice(B[6]== null ? "" :util.ConvertString(B[6]));
+            bookingPackageSummaryView.setReceipt(B[7]== null ? "" :util.ConvertString(B[7]));
+            bookingPackageSummaryViewList.add(bookingPackageSummaryView);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return bookingPackageSummaryViewList;
+    }
+
+    @Override
+    public List<BookingDayTourSummaryView> getListBookingDayTourSummaryView(String bookRefNo, String bookLeader, String bookDate, String tourCode, String tourName, String tourDate, String tourPickUp) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<BookingDayTourSummaryView> bookingDayTourSummaryViewList = new ArrayList<BookingDayTourSummaryView>();
+        
+        String query = " SELECT * FROM `booking_daytour_summary` ";
+        boolean condition = false;
+        
+        if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
+            query += (condition ? " and " : " where ");
+            query += " refno = '" + bookRefNo + "' " ;
+            condition = true;
+        }
+        if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
+            query += (condition ? " and " : " where ");
+            query += " leader LIKE '%" + bookLeader + "%' " ;
+            condition = true;
+        }
+        if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
+            query += (condition ? " and " : " where ");
+            query += " refdate = '" + bookDate + "' " ;
+            condition = true;
+        }
+        if((tourCode != null) &&(!"".equalsIgnoreCase(tourCode))){
+            query += (condition ? " and " : " where ");
+            query += " tour_code LIKE '%" + tourCode + "%' " ;
+            condition = true;
+        }
+        if((tourName != null) &&(!"".equalsIgnoreCase(tourName))){
+            query += (condition ? " and " : " where ");
+            query += " tour_name LIKE '%" + tourName + "%' " ;
+            condition = true;
+        }
+        if((tourDate != null) &&(!"".equalsIgnoreCase(tourDate))){
+            query += (condition ? " and " : " where ");
+            query += " tour_date = '" + tourDate + "' " ;
+            condition = true;
+        }
+        if((tourPickUp != null) &&(!"".equalsIgnoreCase(tourPickUp))){
+            query += (condition ? " and " : " where ");
+            query += " pickup LIKE '%" + tourPickUp + "%' " ;
+            condition = true;
+        }
+
+        List<Object[]> QueryDayTour = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("refdate", Hibernate.STRING)
+                .addScalar("agent", Hibernate.STRING)
+                .addScalar("leader", Hibernate.STRING)
+                .addScalar("pax", Hibernate.STRING)
+                .addScalar("tour_code", Hibernate.STRING)
+                .addScalar("tour_name", Hibernate.STRING)
+                .addScalar("tour_date", Hibernate.STRING)
+                .addScalar("pickup", Hibernate.STRING)
+                .addScalar("time", Hibernate.STRING)
+                .addScalar("adult", Hibernate.STRING)
+                .addScalar("child", Hibernate.STRING)
+                .addScalar("infant", Hibernate.STRING)
+                .addScalar("remark", Hibernate.STRING)
+                .addScalar("invoice", Hibernate.STRING)
+                .addScalar("receipt", Hibernate.STRING)
+                .addScalar("id", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryDayTour) {
+            BookingDayTourSummaryView bookingDayTourSummaryView = new BookingDayTourSummaryView();
+            bookingDayTourSummaryView.setRefno(B[0]== null ? "" : util.ConvertString(B[0]));
+            bookingDayTourSummaryView.setRefdate(B[1]== null ? "" : util.ConvertString(B[1]));
+            bookingDayTourSummaryView.setAgent(B[2]== null ? "" :util.ConvertString(B[2]));
+            bookingDayTourSummaryView.setLeader(B[3]== null ? "" :util.ConvertString(B[3]));
+            bookingDayTourSummaryView.setPax(B[4]== null ? "" :util.ConvertString(B[4]));
+            bookingDayTourSummaryView.setTourcode(B[5]== null ? "" :util.ConvertString(B[5]));
+            bookingDayTourSummaryView.setTourname(B[6]== null ? "" :util.ConvertString(B[6]));
+            bookingDayTourSummaryView.setTourdate(B[7]== null ? "" :util.ConvertString(B[7]));
+            bookingDayTourSummaryView.setPickup(B[8]== null ? "" :util.ConvertString(B[8]));
+            bookingDayTourSummaryView.setTime(B[9]== null ? "" :util.ConvertString(B[9]));
+            bookingDayTourSummaryView.setAdult(B[10]== null ? "" :util.ConvertString(B[10]));
+            bookingDayTourSummaryView.setChild(B[11]== null ? "" :util.ConvertString(B[11]));
+            bookingDayTourSummaryView.setInfant(B[12]== null ? "" :util.ConvertString(B[12]));
+            bookingDayTourSummaryView.setRemark(B[13]== null ? "" :util.ConvertString(B[13]));
+            bookingDayTourSummaryView.setInvoice(B[14]== null ? "" :util.ConvertString(B[14]));
+            bookingDayTourSummaryView.setReceipt(B[15]== null ? "" :util.ConvertString(B[15]));
+            bookingDayTourSummaryView.setId(B[16]== null ? "" :util.ConvertString(B[16]));
+            bookingDayTourSummaryViewList.add(bookingDayTourSummaryView);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return bookingDayTourSummaryViewList;
+    }
+
+    @Override
+    public List<BookingOtherSummaryView> getListBookingOtherSummaryView(String bookRefNo, String bookLeader, String bookDate, String otherCode, String otherName, String otherDate, String otherAgent) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<BookingOtherSummaryView> bookingOtherSummaryViewList = new ArrayList<BookingOtherSummaryView>();
+        
+        String query = " SELECT * FROM `booking_other_summary` ";
+        boolean condition = false;
+        
+        if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
+            query += (condition ? " and " : " where ");
+            query += " refno = '" + bookRefNo + "' " ;
+            condition = true;
+        }
+        if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
+            query += (condition ? " and " : " where ");
+            query += " leader LIKE '%" + bookLeader + "%' " ;
+            condition = true;
+        }
+        if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
+            query += (condition ? " and " : " where ");
+            query += " refdate = '" + bookDate + "' " ;
+            condition = true;
+        }
+        if((otherCode != null) &&(!"".equalsIgnoreCase(otherCode))){
+            query += (condition ? " and " : " where ");
+            query += " code LIKE '%" + otherCode + "%' " ;
+            condition = true;
+        }
+        if((otherName != null) &&(!"".equalsIgnoreCase(otherName))){
+            query += (condition ? " and " : " where ");
+            query += " name LIKE '%" + otherName + "%' " ;
+            condition = true;
+        }
+        if((otherDate != null) &&(!"".equalsIgnoreCase(otherDate))){
+            query += (condition ? " and " : " where ");
+            query += " other_date = '" + otherDate + "' " ;
+            condition = true;
+        }
+        if((otherAgent != null) &&(!"".equalsIgnoreCase(otherAgent))){
+            query += (condition ? " and " : " where ");
+            query += " agent LIKE '%" + otherAgent + "%' " ;
+            condition = true;
+        }
+
+        List<Object[]> QueryOther = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("refdate", Hibernate.STRING)
+                .addScalar("agent", Hibernate.STRING)
+                .addScalar("leader", Hibernate.STRING)
+                .addScalar("code", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("other_date", Hibernate.STRING)
+                .addScalar("invoice", Hibernate.STRING)
+                .addScalar("receipt", Hibernate.STRING)
+                .addScalar("id", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryOther) {
+            BookingOtherSummaryView bookingOtherSummaryView = new BookingOtherSummaryView();
+            bookingOtherSummaryView.setRefno(B[0]== null ? "" : util.ConvertString(B[0]));
+            bookingOtherSummaryView.setRefdate(B[1]== null ? "" : util.ConvertString(B[1]));
+            bookingOtherSummaryView.setAgent(B[2]== null ? "" :util.ConvertString(B[2]));
+            bookingOtherSummaryView.setLeader(B[3]== null ? "" :util.ConvertString(B[3]));
+            bookingOtherSummaryView.setCode(B[4]== null ? "" :util.ConvertString(B[4]));
+            bookingOtherSummaryView.setName(B[5]== null ? "" :util.ConvertString(B[5]));
+            bookingOtherSummaryView.setOtherdate(B[6]== null ? "" :util.ConvertString(B[6]));
+            bookingOtherSummaryView.setInvoice(B[7]== null ? "" :util.ConvertString(B[7]));
+            bookingOtherSummaryView.setReceipt(B[8]== null ? "" :util.ConvertString(B[8]));
+            bookingOtherSummaryView.setId(B[9]== null ? "" :util.ConvertString(B[9])); 
+            bookingOtherSummaryViewList.add(bookingOtherSummaryView);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return bookingOtherSummaryViewList;
+    }
+
+    @Override
+    public List<BookingLandSummaryView> getListBookingLandSummaryView(String bookRefNo, String bookLeader, String bookDate, String landOkBy, String landAgent, String landCategory) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<BookingLandSummaryView> bookingLandSummaryViewList = new ArrayList<BookingLandSummaryView>();
+        
+        String query = " SELECT * FROM `booking_land_summary` ";
+        boolean condition = false;
+        
+        if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
+            query += (condition ? " and " : " where ");
+            query += " refno = '" + bookRefNo + "' " ;
+            condition = true;
+        }
+        if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
+            query += (condition ? " and " : " where ");
+            query += " leader LIKE '%" + bookLeader + "%' " ;
+            condition = true;
+        }
+        if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
+            query += (condition ? " and " : " where ");
+            query += " refdate = '" + bookDate + "' " ;
+            condition = true;
+        }
+        if((landOkBy != null) &&(!"".equalsIgnoreCase(landOkBy))){
+            query += (condition ? " and " : " where ");
+            query += " ok_by = '" + landOkBy + "' " ;
+            condition = true;
+        }
+        if((landAgent != null) &&(!"".equalsIgnoreCase(landAgent))){
+            query += (condition ? " and " : " where ");
+            query += " agent LIKE '%" + landAgent + "%' " ;
+            condition = true;
+        }
+        if((landCategory != null) &&(!"".equalsIgnoreCase(landCategory))){
+            query += (condition ? " and " : " where ");
+            query += " category = '" + landCategory + "' " ;
+            condition = true;
+        }
+
+        List<Object[]> QueryLand = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("refdate", Hibernate.STRING)
+                .addScalar("agent", Hibernate.STRING)
+                .addScalar("leader", Hibernate.STRING)
+                .addScalar("ok_by", Hibernate.STRING)
+                .addScalar("description", Hibernate.STRING)
+                .addScalar("category", Hibernate.STRING)
+                .addScalar("qty", Hibernate.STRING)
+                .addScalar("invoice", Hibernate.STRING)
+                .addScalar("receipt", Hibernate.STRING)
+                .addScalar("id", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryLand) {
+            BookingLandSummaryView bookingLandSummaryView = new BookingLandSummaryView();
+            bookingLandSummaryView.setRefno(B[0]== null ? "" : util.ConvertString(B[0]));
+            bookingLandSummaryView.setRefdate(B[1]== null ? "" : util.ConvertString(B[1]));
+            bookingLandSummaryView.setAgent(B[2]== null ? "" :util.ConvertString(B[2]));
+            bookingLandSummaryView.setLeader(B[3]== null ? "" :util.ConvertString(B[3]));
+            bookingLandSummaryView.setOkby(B[4]== null ? "" :util.ConvertString(B[4]));
+            bookingLandSummaryView.setDescription(B[5]== null ? "" :util.ConvertString(B[5]));
+            bookingLandSummaryView.setCategory(B[6]== null ? "" :util.ConvertString(B[6]));
+            bookingLandSummaryView.setQty(B[7]== null ? "" :util.ConvertString(B[7]));
+            bookingLandSummaryView.setInvoice(B[8]== null ? "" :util.ConvertString(B[8]));     
+            bookingLandSummaryView.setReceipt(B[9]== null ? "" :util.ConvertString(B[9]));
+            bookingLandSummaryView.setId(B[10]== null ? "" :util.ConvertString(B[10])); 
+            bookingLandSummaryViewList.add(bookingLandSummaryView);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return bookingLandSummaryViewList;
     }
    
 }

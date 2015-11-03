@@ -11,6 +11,7 @@ package com.smi.travel.datalayer.view.entity;
  * @author chonnasith
  */
 public class BookingHotelSummaryView {
+    private String id;
     private String refno;
     private String refdate;
     private String agent;
@@ -127,5 +128,13 @@ public class BookingHotelSummaryView {
 
     public void setReceipt(String receipt) {
         this.receipt = receipt;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

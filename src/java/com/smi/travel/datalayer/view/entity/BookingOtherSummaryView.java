@@ -10,17 +10,15 @@ package com.smi.travel.datalayer.view.entity;
  *
  * @author chonnasith
  */
-public class BookingAirSummaryView {
+public class BookingOtherSummaryView {
+    private String id;
     private String refno;
     private String refdate;
     private String agent;
     private String leader;
-    private String pax;
-    private String pnr;
-    private String dept;
-    private String arrv;
-    private String departdate;
-    private String flight;
+    private String code;
+    private String name;
+    private String otherdate;
     private String invoice;
     private String receipt;
 
@@ -56,44 +54,20 @@ public class BookingAirSummaryView {
         this.leader = leader;
     }
 
-    public String getPax() {
-        return pax;
+    public String getCode() {
+        return code;
     }
 
-    public void setPax(String pax) {
-        this.pax = pax;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public String getPnr() {
-        return pnr;
+    public String getName() {
+        return name;
     }
 
-    public void setPnr(String pnr) {
-        this.pnr = pnr;
-    }
-
-    public String getDept() {
-        return dept;
-    }
-
-    public void setDept(String dept) {
-        this.dept = dept;
-    }
-
-    public String getArrv() {
-        return arrv;
-    }
-
-    public void setArrv(String arrv) {
-        this.arrv = arrv;
-    }
-
-    public String getFlight() {
-        return flight;
-    }
-
-    public void setFlight(String flight) {
-        this.flight = flight;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getInvoice() {
@@ -112,11 +86,19 @@ public class BookingAirSummaryView {
         this.receipt = receipt;
     }
 
-    public String getDepartdate() {
-        return departdate;
+    public String getOtherdate() {
+        return otherdate;
     }
 
-    public void setDepartdate(String departdate) {
-        this.departdate = departdate;
+    public void setOtherdate(String otherdate) {
+        this.otherdate = otherdate;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

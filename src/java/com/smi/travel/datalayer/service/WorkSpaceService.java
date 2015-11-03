@@ -11,7 +11,12 @@ import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.view.dao.BookingViewDao;
+import com.smi.travel.datalayer.view.entity.BookingAirSummaryView;
+import com.smi.travel.datalayer.view.entity.BookingDayTourSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingHotelSummaryView;
+import com.smi.travel.datalayer.view.entity.BookingLandSummaryView;
+import com.smi.travel.datalayer.view.entity.BookingOtherSummaryView;
+import com.smi.travel.datalayer.view.entity.BookingPackageSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingView;
 import java.util.List;
 
@@ -70,5 +75,25 @@ public class WorkSpaceService {
 
     public List<BookingHotelSummaryView> getListBookingHotelSummaryView(String bookRefNo, String bookLeader, String bookDate, String hotelName, String hotelCheckIn, String hotelCheckOut) {
         return bookingviewdao.getListBookingHotelSummaryView(bookRefNo, bookLeader, bookDate, hotelName, hotelCheckIn, hotelCheckOut);
+    }
+
+    public List<BookingAirSummaryView> getListBookingAirSummaryView(String bookRefNo, String bookLeader, String bookDate, String airPnr, String airDeptDate, String airFlight) {
+        return bookingviewdao.getListBookingAirSummaryView(bookRefNo, bookLeader, bookDate, airPnr, airDeptDate, airFlight);
+    }
+
+    public List<BookingPackageSummaryView> getListBookingPackageSummaryView(String bookRefNo, String bookLeader, String bookDate, String packageName, String packageAgent) {
+        return bookingviewdao.getListBookingPackageSummaryView(bookRefNo, bookLeader, bookDate, packageName, packageAgent);
+    }
+
+    public List<BookingDayTourSummaryView> getListBookingDayTourSummaryView(String bookRefNo, String bookLeader, String bookDate, String tourCode, String tourName, String tourDate, String tourPickUp) {
+        return bookingviewdao.getListBookingDayTourSummaryView(bookRefNo, bookLeader, bookDate, tourCode, tourName, tourDate, tourPickUp);
+    }
+
+    public List<BookingOtherSummaryView> getListBookingOtherSummaryView(String bookRefNo, String bookLeader, String bookDate, String otherCode, String otherName, String otherDate, String otherAgent) {
+        return bookingviewdao.getListBookingOtherSummaryView(bookRefNo, bookLeader, bookDate, otherCode, otherName, otherDate, otherAgent);
+    }
+
+    public List<BookingLandSummaryView> getListBookingLandSummaryView(String bookRefNo, String bookLeader, String bookDate, String landOkBy, String landAgent, String landCategory) {
+        return bookingviewdao.getListBookingLandSummaryView(bookRefNo, bookLeader, bookDate, landOkBy, landAgent, landCategory);
     }
 }
