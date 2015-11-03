@@ -4,6 +4,8 @@ import com.smi.travel.datalayer.entity.Coupon;
 import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;
+import com.smi.travel.datalayer.entity.HistoryBooking;
+import com.smi.travel.datalayer.entity.LandBooking;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.MPricecategory;
@@ -15,6 +17,7 @@ import com.smi.travel.datalayer.service.BookingDaytourService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -86,7 +89,7 @@ public class DaytourDetailController extends SMITravelController {
 
         DaytourBooking dBooking = new DaytourBooking();
         request.setAttribute(ISBILLSTATUS,0);
-        
+        SystemUser user = (SystemUser) session.getAttribute("USER");
         log.info("action[" + action + "] refNo[" + refNo + "] counterPrice(" + counterPrice + "), counterCoupon(" + counterCoupon + ")");
         if ("delete".equalsIgnoreCase(action)) {
             System.out.println("Delete me");
@@ -106,6 +109,9 @@ public class DaytourDetailController extends SMITravelController {
             // Setup new DaytourBooking;
 
             DaytourBooking bDaytour = bookingDaytourService.getBookDetailDaytourFromID(dBookingId);
+            
+            saveHistoryBooking(refNo,user,bDaytour,"VIEW");
+            
             List<DaytourBookingPrice> bookPriceList = new ArrayList(bDaytour.getDaytourBookingPrices());
             Collections.sort(bookPriceList, new Comparator<DaytourBookingPrice>(){
                 public int compare(DaytourBookingPrice one, DaytourBookingPrice two) {
@@ -173,6 +179,7 @@ public class DaytourDetailController extends SMITravelController {
                 bDaytour.setIsBill(dbDaytour.getIsBill());
 
                 request.setAttribute(ISBILLSTATUS,dbDaytour.getIsBill());
+                saveHistoryBooking(refNo,user,bDaytour,"UPDATE");
             } else {
                 MItemstatus okayStatus = new MItemstatus();
                 okayStatus.setId("1");
@@ -180,6 +187,7 @@ public class DaytourDetailController extends SMITravelController {
                 bDaytour.setIsBill(new Integer(0));
 
                 request.setAttribute(ISBILLSTATUS,bDaytour.getIsBill());
+                saveHistoryBooking(refNo,user,bDaytour,"CREATE");
             }
             setDaytourPriceRows(request, counterPrice, bDaytour);
             setDaytourCouponRows(request, counterCoupon, bDaytour);
@@ -370,7 +378,35 @@ public class DaytourDetailController extends SMITravelController {
         }
         return null;
     }
-
+    
+    public void saveHistoryBooking(String refNo,SystemUser user,DaytourBooking daytour,String action) {
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");        
+        HistoryBooking historyBooking = new HistoryBooking();
+        historyBooking.setHistoryDate(new Date());
+        historyBooking.setAction(action+" DAY TOURS BOOKING");
+        String detail = "";
+        if(!"VIEW".equalsIgnoreCase(action)){
+            if(daytour.getDaytour() != null ){
+                detail += "TOUR : " + daytour.getDaytour().getCode() + " : " +daytour.getDaytour().getName() + "\r\n" ;
+            }else{
+                detail += "TOUR : " + "\r\n" ;
+            }
+            if(daytour.getTourDate() != null){
+                detail += "DATE : " + String.valueOf(df.format(daytour.getTourDate()))  + "\r\n" ;
+            }else{
+                detail += "DATE : " + "\r\n" ;
+            }
+                detail += "PAX : ADT : " + daytour.getAdult() + " CHD : " + daytour.getChild() + " INF : " + daytour.getInfant() + "\r\n"
+                    + "PICK UP : " + daytour.getPickupDetail() +"\r\n"
+                    + "MEMO : " + daytour.getMemo() ;
+        }
+        historyBooking.setDetail(detail);
+        historyBooking.setMaster(daytour.getMaster());
+        historyBooking.setStaff(user);
+        int resultsave = utilservice.insertHistoryBooking(historyBooking);
+    }
+    
     public UtilityService getUtilservice() {
         return utilservice;
     }

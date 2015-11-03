@@ -1,6 +1,8 @@
 package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.Agent;
+import com.smi.travel.datalayer.entity.HistoryBooking;
+import com.smi.travel.datalayer.entity.HotelBooking;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.Master;
@@ -13,6 +15,8 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -117,6 +121,8 @@ public class OtherDetailController extends SMITravelController {
             }
             Product product = new Product();
             product.setId(productId);
+            product.setCode(productCode);
+            product.setName(productName);
             System.out.println("productId :"+productId);
             System.out.println("agentId :"+agentId);
             Other.setProduct(product);
@@ -130,6 +136,8 @@ public class OtherDetailController extends SMITravelController {
             if((agentId != null)&&(!"".equalsIgnoreCase(agentId))){
                 System.out.println("setup agentId :"+agentId);
                 agent.setId(agentId);
+                agent.setCode(agentCode);
+                agent.setName(agentName);
                 Other.setAgent(agent);
             }
             if((status != null)&&(!"".equalsIgnoreCase(status))){
@@ -164,7 +172,11 @@ public class OtherDetailController extends SMITravelController {
             if(!"".equalsIgnoreCase(canceldate)){
                 Other.setCancelDate(util.convertStringToTime(canceldate));
             }
-            
+            if(Other.getId() != null){
+                saveHistoryBooking(refno,user,Other,"UPDATE");
+            }else{
+                saveHistoryBooking(refno,user,Other,"CREATE");
+            }  
 //            int result = OtherService.saveBookingOther(Other,user);
             List<String> result = OtherService.saveBookingOther(Other,user,createby);
             if(("1".equalsIgnoreCase(result.get(0))) && (callpageSubmit==null || !callpageSubmit.equalsIgnoreCase("FromDayTour"))){
@@ -198,7 +210,11 @@ public class OtherDetailController extends SMITravelController {
                     
                     Other.setRemarkTicket("Require Ticket-Adult:" + ticketData[0] + " Child:" + ticketData[1] + " Infant:" + ticketData[2]);
                     List<String> resultRemarkTicket = OtherService.saveBookingOther(Other,user,createby);
-                                        
+//                    if(Other.getId() != null){
+//                        saveHistoryBooking(refno,user,Other,"UPDATE");
+//                    }else{
+//                        saveHistoryBooking(refno,user,Other,"CREATE");
+//                    }
                     request.setAttribute("adultCancel", ticketData[0]);
                     request.setAttribute("childCancel", ticketData[1]);
                     request.setAttribute("infantCancel", ticketData[2]);
@@ -234,7 +250,11 @@ public class OtherDetailController extends SMITravelController {
                     
                     Other.setRemarkTicket("Require Ticket-Adult:" + ticketData[0] + " Child:" + ticketData[1] + " Infant:" + ticketData[2]);
                     List<String> resultRemarkTicket = OtherService.saveBookingOther(Other,user,createby);
-                                        
+//                    if(Other.getId() != null){
+//                        saveHistoryBooking(refno,user,Other,"UPDATE");
+//                    }else{
+//                        saveHistoryBooking(refno,user,Other,"CREATE");
+//                    }                    
                     request.setAttribute("adultCancel", ticketData[0]);
                     request.setAttribute("childCancel", ticketData[1]);
                     request.setAttribute("infantCancel", ticketData[2]);
@@ -248,7 +268,7 @@ public class OtherDetailController extends SMITravelController {
             OtherBooking Other = OtherService.getBookDetailOtherFromID(request.getParameter("itemid"));
             System.out.println(" Other.getIsBill() " + Other.getIsBill());
             request.setAttribute(ISBILLSTATUS,Other.getIsBill());
-            
+            saveHistoryBooking(refno,user,Other,"VIEW");
             itemid = request.getParameter("itemid");
             Product pro = Other.getProduct();
             if (pro != null) {
@@ -374,5 +394,44 @@ public class OtherDetailController extends SMITravelController {
     public void setOtherService(BookingOtherService OtherService) {
         this.OtherService = OtherService;
     }
-
+    
+    public void saveHistoryBooking(String refNo,SystemUser user,OtherBooking other,String action) {
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");
+        HistoryBooking historyBooking = new HistoryBooking();
+        historyBooking.setHistoryDate(new Date());
+        historyBooking.setAction(action+" OTHER BOOKING");
+        String detail = "";
+        if(!"VIEW".equalsIgnoreCase(action)){
+            detail = "PRODUCT : " ; 
+            if(other.getProduct() != null){
+                System.out.println(" other.getProduct() " + other.getProduct().getCode());
+                detail +=  other.getProduct().getCode() + " : " + other.getProduct().getName() + "\r\n" ;
+            }else{
+                detail += "\r\n" ;
+            }
+            detail+= "AGENT : " ;
+            if(other.getAgent() != null){
+                detail +=  other.getAgent().getCode() + " : " + other.getAgent().getName() + "\r\n" ;
+            }else{
+                detail += "\r\n" ;
+            }
+            detail+= "DATE : " ;
+            if(other.getOtherDate()!=null){
+                detail += String.valueOf(df.format(other.getOtherDate())) + " : "  ;
+            }else{
+                detail += "\r\n" ;
+            }
+            if(other.getOtherTime()!=null){
+                detail += String.valueOf(df.format(other.getOtherTime())) + "\r\n" ;
+            }else{
+                detail += "\r\n" ;
+            }
+                detail += "REMARK : " + other.getRemark();
+        }
+        historyBooking.setDetail(detail);
+        historyBooking.setMaster(other.getMaster());
+        historyBooking.setStaff(user);
+        int resultsave = utilservice.insertHistoryBooking(historyBooking);
+    }
 }

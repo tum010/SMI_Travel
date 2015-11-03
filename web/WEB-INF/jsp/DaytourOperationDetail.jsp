@@ -385,7 +385,7 @@
                                                             <c:set var="refno1" value="${fn:substring(dayTourDetai.master.referenceNo, 0, 2)}" />
                                                             <c:set var="refno2" value="${fn:substring(dayTourDetai.master.referenceNo, 2,7)}" />
                                                             <td>${refno1}-${refno2}</td>
-                                                            <td>${dayTourDetai.master.customer.MInitialname.name} ${dayTourDetai.master.customer.firstName} ${dayTourDetai.master.customer.lastName}</td>
+                                                            <td>${dayTourDetai.master.customer.MInitialname.name} ${dayTourDetai.master.customer.lastName} ${dayTourDetai.master.customer.firstName}</td>
                                                             <td class="sumConfirm">${dayTourDetai.adult}</td>
                                                             <td class="sumConfirm">${dayTourDetai.child}</td>
                                                             <td class="sumConfirm">${dayTourDetai.infant}</td>

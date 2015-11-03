@@ -5,16 +5,19 @@
  */
 package com.smi.travel.controller;
 
+import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.HotelBooking;
 import com.smi.travel.datalayer.entity.HotelRequest;
 import com.smi.travel.datalayer.entity.HotelRoom;
 import com.smi.travel.datalayer.entity.Master;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.BookingHotelService;
 import com.smi.travel.datalayer.service.LockUnlockBookingService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,6 +52,8 @@ public class HotelBookingController extends SMITravelController {
         String action = request.getParameter("action");
         String refNo = request.getParameter("referenceNo");
         String hotelId = request.getParameter("HotelID");
+        SystemUser user = (SystemUser) session.getAttribute("USER");
+        
         System.out.println("HotelBookingController action=" + action);
         if ("delete".equalsIgnoreCase(action)) {
             bookingHotelService.cancelBookHotel(hotelId);
@@ -64,13 +69,23 @@ public class HotelBookingController extends SMITravelController {
             }
             request.setAttribute(HotelBookingList, hotelBookingList);
             setGeneralResponseAttribute(request, refNo);
+            Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
+            SimpleDateFormat df = new SimpleDateFormat();
+            df.applyPattern("dd-MM-yyyy");
+            HistoryBooking historyBooking = new HistoryBooking();
+            historyBooking.setHistoryDate(new Date());
+            historyBooking.setAction("VIEW HOTEL BOOKING");
+            String detail = "";
+            historyBooking.setDetail(detail);
+            historyBooking.setMaster(master);
+            historyBooking.setStaff(user);
+            int resultsave = utilservice.insertHistoryBooking(historyBooking);
+            System.out.println(" resultsave " + resultsave);
         }
         
         return HotelBooking;
     }
-    
    
-
 
     private void sumPrice(List<HotelBooking> hotelBookingList) {
         UtilityFunction util = new UtilityFunction();
