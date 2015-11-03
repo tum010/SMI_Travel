@@ -677,10 +677,10 @@
                                     <td> <input style="width: ${DescriptionSize}" maxlength ="255"  type="text" class="form-control" value="${table.description}">  </td>
                                     <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
-                                            <c:if test="${table.landBooking.isBill == 0}">
+                                            <c:if test="${isBillStatus == 0}">
                                                 <a class="remCF"><span  onclick="deletelist('${table.id}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
                                             </c:if>
-                                            <c:if test="${table.landBooking.isBill == 1}">
+                                            <c:if test="${isBillStatus == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                             </c:if>
                                         </c:if>

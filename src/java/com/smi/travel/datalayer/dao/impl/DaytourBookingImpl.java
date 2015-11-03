@@ -37,6 +37,7 @@ public class DaytourBookingImpl implements DaytourBookingDao {
 
     private SessionFactory sessionFactory;
     private Transaction transaction;
+    private UtilityFunction utilityFunction;
     private static final String TOURREFNO_QUERY = "from DaytourBooking DB where DB.daytour.id = :tourid and DB.tourDate = :date";
     private static final String TOURBOOK_FROM_REFNO_QUERY = "from DaytourBooking DB where DB.master.referenceNo = :refno";
     private static final String TOURBOOK_FROM_ID_QUERY = "from DaytourBooking DB where DB.id = :BookID";
@@ -294,10 +295,14 @@ public class DaytourBookingImpl implements DaytourBookingDao {
 
     @Override
     public DailyTourReport getDailyTourReport(String from, String to, String department, String detail, String user) {
+        UtilityFunction util = new UtilityFunction();
         DailyTourReport dailyTourReport = new DailyTourReport();
         SimpleDateFormat dateformat = new SimpleDateFormat();
-        dateformat.applyPattern("dd-MMM-yyyy HH:mm");         
-        dailyTourReport.setFromto(from+" to "+to);
+        dateformat.applyPattern("dd-MMM-yyyy HH:mm"); 
+        SimpleDateFormat datefromto = new SimpleDateFormat();
+        datefromto.applyPattern("dd-MM-yyyy");
+        dailyTourReport.setFromto(util.ConvertString(datefromto.format(util.convertStringToDate(from))) + "  to  " + 
+                                     util.ConvertString(datefromto.format(util.convertStringToDate(to))));
         dailyTourReport.setSystemdate(String.valueOf(dateformat.format(new Date())));
         dailyTourReport.setUser(user);
         dailyTourReport.setDailyTourListReportDataSource(new JRBeanCollectionDataSource(getDailyTourList(from,to,department)));
@@ -414,13 +419,15 @@ public class DaytourBookingImpl implements DaytourBookingDao {
                 .addScalar("average",Hibernate.STRING)
                 .addScalar("tourdate",Hibernate.STRING)
                 .list();
-        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
         boolean start = true;
         int paxAd = 0;
         int paxCh = 0;
         int paxInf = 0;
         String code = "";
         String tourCode = "";
+        String tourDate = "";
         for (Object[] B : QueryList) {
             DailyTourDetailView dailyTourDetailView = new DailyTourDetailView();
             dailyTourDetailView.setCode(B[0]== null ? "" : util.ConvertString(B[0]));
@@ -432,7 +439,10 @@ public class DaytourBookingImpl implements DaytourBookingDao {
             dailyTourDetailView.setNet(B[6]== null ? "" : util.ConvertString(B[6]));
             dailyTourDetailView.setProfit(B[7]== null ? "" : util.ConvertString(B[7]));
 //            dailyTourDetailView.setProfit(B[8]== null ? "" : util.ConvertString(B[8]));
-            dailyTourDetailView.setTourdate(B[9]== null ? "" : util.ConvertString(B[9]));
+            if(B[9] != null){
+                tourDate = util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[9]))));
+            }
+            dailyTourDetailView.setTourdate(tourDate);
             
             int ad = (B[2]== null ? 0 : Integer.parseInt(util.ConvertString(B[2])));
             int ch = (B[3]== null ? 0 : Integer.parseInt(util.ConvertString(B[3])));

@@ -131,7 +131,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
                 hotelSummary.setDepartmentpage("");
             }
             
-            hotelSummary.setSystemdate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(new Date()));
+            hotelSummary.setSystemdate(new SimpleDateFormat("dd-MMM-yyyy", new Locale("us", "us")).format(new Date()));
             
             hotelSummary.setCity(util.ConvertString(B[0]));
             hotelSummary.setHotel(util.ConvertString(B[1]));
@@ -407,14 +407,15 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
             }else{
                 hotelSummary.setDepartmentpage("");
             }
-            
+            SimpleDateFormat dateformat = new SimpleDateFormat();
+            dateformat.applyPattern("dd-MM-yyyy");
             hotelSummary.setSystemdate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(new Date()));
             hotelSummary.setPrintby(systemuser);
             hotelSummary.setHotel(util.ConvertString(B[0]) == null || "".equals(util.ConvertString(B[0])) ? "" : util.ConvertString(B[0]));
             hotelSummary.setRefno(util.ConvertString(B[1]) == null || "".equals(util.ConvertString(B[1])) ? "" : util.ConvertString(B[1]));
             hotelSummary.setLeader(util.ConvertString(B[2]) == null || "".equals(util.ConvertString(B[2])) ? "" : util.ConvertString(B[2]));
-            hotelSummary.setCheckin(util.ConvertString(B[3]) == null || "".equals(util.ConvertString(B[3])) ? "" : util.ConvertString(B[3]));
-            hotelSummary.setCheckout(util.ConvertString(B[4]) == null || "".equals(util.ConvertString(B[4])) ? "" : util.ConvertString(B[4]));
+            hotelSummary.setCheckin(util.ConvertString(B[3]) == null || "".equals(util.ConvertString(B[3])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[3])))));
+            hotelSummary.setCheckout(util.ConvertString(B[4]) == null || "".equals(util.ConvertString(B[4])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[4])))));
             hotelSummary.setAdult(util.ConvertString(B[5]) == null || "".equals(util.ConvertString(B[5])) ? "" : util.ConvertString(B[5]));
             hotelSummary.setChild(util.ConvertString(B[6]) == null || "".equals(util.ConvertString(B[6])) ? "" : util.ConvertString(B[6]));
             hotelSummary.setInfant(util.ConvertString(B[7]) == null || "".equals(util.ConvertString(B[7])) ? "" : util.ConvertString(B[7]));
@@ -488,7 +489,7 @@ public class PackageTourHotelImpl implements PackageTourHotelDao {
         UtilityFunction util = new UtilityFunction();
         HotelMonthlyReport hotelMonthly = new HotelMonthlyReport();
         SimpleDateFormat dateformat = new SimpleDateFormat();
-        dateformat.applyPattern("dd-MM-yyyy hh:mm");
+        dateformat.applyPattern("dd-MMM-yyyy hh:mm");
         
         SimpleDateFormat datefromto = new SimpleDateFormat();
         datefromto.applyPattern("dd-MM-yyyy");
