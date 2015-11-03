@@ -382,7 +382,7 @@
                                 <tr>
                                     <td class="hidden"><input id="tableId${i.count}" name="tableId${i.count}"  type="hidden" value="${pl.id}"></td>
                                     <td>                                   
-                                        <select class="form-control" name="select-product${i.count}" id="select-product${i.count}" onchange="checkProduct('${i.count}')">
+                                        <select class="form-control" name="select-product${i.count}" id="select-product${i.count}" onchange="checkProduct('${i.count}')" onclick="onfocusTour('${i.count}')">
                                             <option  value="" >---------</option>
                                         <c:forEach var="product" items="${product_list}" varStatus="status">                                       
                                             <c:set var="select" value="" />
@@ -393,11 +393,11 @@
                                         </c:forEach>
                                         </select>                                                                  
                                     </td>
-                                    <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.master.referenceNo}" onfocusout="checkRefNo('${i.count}')"> </td>
-                                    <td> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}">  </td>
+                                    <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.master.referenceNo}" onfocusout="checkRefNo('${i.count}')" onfocus="onfocusTour('${i.count}')"> </td>
+                                    <td> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}" onfocus="onfocusTour('${i.count}')">  </td>
                                     <td>
                                         <div class="input-group daydatepicker" id="daydatepicker${i.count}">
-                                            <input type="text" name="invDate${i.count}" id="invDate${i.count}" class="form-control datemask" data-date-format="YYYY-MM-DD" value="${pl.invDate}" />
+                                            <input type="text" name="invDate${i.count}" id="invDate${i.count}" class="form-control datemask" data-date-format="YYYY-MM-DD" value="${pl.invDate}" onfocus="onfocusTour('${i.count}')"/>
                                             <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
                                         </div>
                                     </td>
@@ -406,12 +406,12 @@
                                         <c:if test="${'T' == pl.amountType}">
                                             <c:set var="type1" value="checked" />
                                         </c:if>  
-                                        <input type="radio" name="type${i.count}" id="typeT${i.count}" value="T" ${type1}> T&nbsp;
+                                        <input type="radio" name="type${i.count}" id="typeT${i.count}" value="T" ${type1} onclick="onfocusTour('${i.count}')"> T&nbsp;
                                         <c:set var="type2" value="" />
                                         <c:if test="${'C' == pl.amountType}">
                                             <c:set var="type2" value="checked" />
                                         </c:if>  
-                                        <input type="radio" name="type${i.count}" id="typeC${i.count}" value="C" ${type2}> C
+                                        <input type="radio" name="type${i.count}" id="typeC${i.count}" value="C" ${type2} onclick="onfocusTour('${i.count}')"> C
                                     </td>
                                     <td class="hidden" align="center">
                                         <c:set var="vatChk" value="" />
@@ -426,19 +426,19 @@
                                     <td class="hidden">
                                         <input class="form-control" type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
                                     </td>
-                                    <td> <input style="width: ${Amount};text-align:right;"  id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="CalculateGrandTotal('${pl.id}')" onkeyup="insertCommas(this)" value="${pl.amount}"> </td>
-                                    <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="calculateComm('${i.count}')" onkeyup="insertCommas(this)" value="${pl.recCom}"> </td>                               
-                                    <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>
+                                    <td> <input style="width: ${Amount};text-align:right;"  id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="CalculateGrandTotal('${pl.id}')" onfocus="onfocusTour('${i.count}')" onkeyup="insertCommas(this)" value="${pl.amount}"> </td>
+                                    <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="calculateComm('${i.count}')" onfocus="onfocusTour('${i.count}')" onkeyup="insertCommas(this)" value="${pl.recCom}"> </td>                               
+                                    <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}" onfocus="onfocusTour('${i.count}')"> </td>
                                     <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
                                     <td class="text-center">
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
-                                            <span id="editSpan${i.count}" class="glyphicon glyphicon-th-list" onclick="editlist('${pl.id}','${i.count}')" ></span>
+                                            <span id="editSpan${i.count}" class="glyphicon glyphicon-th-list" onclick="editlist('${pl.id}','${i.count}'); onfocusTour('${i.count}')"></span>
                                         </a>
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
                                             <span id="editTour${i.count}" onclick="editTour('${i.count}')" class="glyphicon glyphicon glyphicon-list-alt"></span>
                                         </a>    
                                         <a href="#" onclick=""  data-toggle="modal" data-target="">
-                                            <span id="SpanRemove${i.count}" onclick="deletelist('${pl.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span>
+                                            <span id="SpanRemove${i.count}" onclick="deletelist('${pl.id}','${i.count}'); onfocusTour('${i.count}')" class="glyphicon glyphicon-remove deleteicon "></span>
                                         </a>
                                     </td>
                                     <td class="hidden"> <input id="exportDate${i.count}" name="exportDate${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.exportDate}"> </td>
@@ -1401,33 +1401,33 @@
                 '<tr style="higth 100px">' +
                 '<td class="hidden"> <input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >  </td>' +
                 '<td>' + 
-                '<select class="form-control" name="select-product' + row + '" id="select-product' + row + '" onchange="checkProduct(\''+row+'\')"><option value="">---------</option></select>' +                          
+                '<select class="form-control" name="select-product' + row + '" id="select-product' + row + '" onchange="checkProduct(\''+row+'\')" onclick="onfocusTour(\''+row+'\')"><option value="">---------</option></select>' +                          
                 '</td>' +
-                '<td><input maxlength ="10" id="refNo' + row + '" name="refNo' + row + '"   type="text" class="form-control " onfocusout="checkRefNo(\''+row+'\')"></td>' +
-                '<td><input maxlength ="15" id="invNo' + row + '" name="invNo' + row + '"   type="text" class="form-control "></td>' +
+                '<td><input maxlength ="10" id="refNo' + row + '" name="refNo' + row + '"   type="text" class="form-control " onfocusout="checkRefNo(\''+row+'\')" onfocus="onfocusTour(\''+row+'\')"></td>' +
+                '<td><input maxlength ="15" id="invNo' + row + '" name="invNo' + row + '"   type="text" class="form-control " onfocus="onfocusTour(\''+row+'\')"></td>' +
                 '<td>' +
                     '<div class="input-group daydatepicker" id="daydatepicker' + row + '">' +
-                    '<input type="text" name="invDate' + row + '" id="invDate' + row + '" class="form-control datemask" data-date-format="YYYY-MM-DD"/>' +
+                    '<input type="text" name="invDate' + row + '" id="invDate' + row + '" class="form-control datemask" data-date-format="YYYY-MM-DD" onfocus="onfocusTour(\''+row+'\')"/>' +
                     '<span class="input-group-addon spandate" style="padding : 1px 10px;" onclick="AddrowBySelect(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
                     '</div>' +            
                 '</td>' +
                 '<td align="center">' +
-                '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T"> T&nbsp;&nbsp;' +
-                '<input type="radio" name="type' + row + '" id="typeC' +row + '" value="C" > C' +
+                '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T" onclick="onfocusTour(\''+row+'\')"> T&nbsp;&nbsp;' +
+                '<input type="radio" name="type' + row + '" id="typeC' +row + '" value="C" onclick="onfocusTour(\''+row+'\')"> C' +
                 '</td>' +
-                '<td><input maxlength ="15" class="form-control numerical"  style="text-align:right;" id="amount' + row + '" name="amount' + row + '"  align="right" type="text" onfocusout="CalculateGrandTotal(\'\')" onkeyup="insertCommas(this)"></td>' +
-                '<td><input maxlength ="15" class="form-control numerical"  style="text-align:right;" id="recCom' + row + '" name="recCom' + row + '"  align="right" type="text" onfocusout="calculateComm(\''+row+'\')" onkeyup="insertCommas(this)"></td>' +
-                '<td><input class="form-control" maxlength="255" id="description' + row + '" name="description' + row + '" rows="2" ></td>' +
+                '<td><input maxlength ="15" class="form-control numerical"  style="text-align:right;" id="amount' + row + '" name="amount' + row + '"  align="right" type="text" onfocusout="CalculateGrandTotal(\'\')" onfocus="onfocusTour(\''+row+'\')" onkeyup="insertCommas(this)"></td>' +
+                '<td><input maxlength ="15" class="form-control numerical"  style="text-align:right;" id="recCom' + row + '" name="recCom' + row + '"  align="right" type="text" onfocusout="calculateComm(\''+row+'\')" onfocus="onfocusTour(\''+row+'\')" onkeyup="insertCommas(this)"></td>' +
+                '<td><input class="form-control" maxlength="255" id="description' + row + '" name="description' + row + '" rows="2" onfocus="onfocusTour(\''+row+'\')"></td>' +
                 '<td><input id="ac' + row + '" name="ac' + row + '"   type="text" class="form-control" readonly=""></td>' +
                 '<td class="text-center">' +
                     '<a href="#" onclick=""  data-toggle="modal" data-target=""> ' +
-                        '<span id="editSpan' + row + '" class="glyphicon glyphicon-th-list" onclick="editlist(\'\',\''+ row + '\')" ></span>' +
+                        '<span id="editSpan' + row + '" class="glyphicon glyphicon-th-list" onclick="editlist(\'\',\''+ row + '\'); onfocusTour(\''+row+'\')" ></span>' +
                     '</a>' +
                     '<a href="#" onclick=""  data-toggle="modal" data-target=""> ' +
                         '<span id="editTour' + row + '" onclick="editTour(\'' + row + '\')" class="glyphicon glyphicon glyphicon-list-alt"></span>' +
                     '</a>' +    
                     '<a href="#" onclick=""  data-toggle="modal" data-target=""> '+
-                        '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon" onclick="deletelist(\'\', \''+row+'\')"></span>' +
+                        '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon" onclick="deletelist(\'\', \''+row+'\'); onfocusTour(\''+row+'\')"></span>' +
                     '</a>' +
                 '</td>' +
                 '<td class="hidden"> <input id="exportDate' + row + '" name="exportDate' + row + '" maxlength ="15"  type="text" class="form-control"></td>' +
@@ -1936,6 +1936,42 @@
             }
             
             CalculateGrossTotal('',$("#counter").val());   
+        }
+    }
+    
+    function onfocusTour(row){
+        if(!$("#packagepanel").hasClass("hidden")){
+            if(row === $("#tourRow").val()){
+                var tourId = $("#tourId"+row).val();
+                var tourDate = $("#tourDate"+row).val();
+                if((tourId !== '') && (tourDate !== '')){
+                    for(var i=0;i<tourCode.length;i++){
+                        var id = tourCode[i].id;
+                        if(tourId === id){
+                            $("#tourRow").val(row);
+                            $("#tourId").val(tourId);
+                            $("#tourDate").val(tourDate);
+                            $("#tourCode").val(tourCode[i].code);
+                            $("#tourName").val(tourCode[i].name);
+                            i = tourCode.length;
+                        }    
+                    }           
+                }else{
+                    $("#tourRow").val(row);
+                    $("#tourId").val('');
+                    $("#tourDate").val('');
+                    $("#tourCode").val('');
+                    $("#tourName").val('');
+                }
+                $("#codepanel").removeClass("has-error");
+                $("#namepanel").removeClass("has-error");
+                $("#datepanel").removeClass("has-error");
+                $("#packagepanel").removeClass("hidden");
+        //        $("#DayTourModel").modal("show");
+            }else{
+                $("#tourRow").val('');
+                $("#packagepanel").addClass("hidden");
+            }
         }
     }
     
