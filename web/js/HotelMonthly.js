@@ -10,27 +10,28 @@ function printHotelMonthly(){
     var department = $('#department').val();
     var detail = $('#detail').val();
     var systemuser = $('#systemuser').val();
-    if((from === '') || (to === '')){
+   
+    if((from !== '') && (to !== '')){
+        window.open("report.smi?name=HotelMonthlyTempReport&fromdate="+from+"&todate="+to+"&department="+department+"&detail="+detail+"&systemuser="+systemuser);   
+    }else{    
         validateDate();
-    } else {    
-            window.open("report.smi?name=HotelMonthlyTempReport&fromdate="+from+"&todate="+to+"&department="+department+"&detail="+detail+"&systemuser="+systemuser);   
-    }
+    }  
 }
 
-function validateDate(date,option){
-        if(option === 'over'){
-            if(date === 'from'){
-                $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'fromdate');
-                $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'todate');
-            }
-            if(date === 'to'){
-                $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'fromdate');
-                $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'todate');
-            }           
-            $("#btnDownloadAP").addClass("disabled");
-        } else {
-            $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'fromdate');
-            $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'todate');
-            $("#btnDownloadAP").addClass("disabled");
-        }
-    }
+//function validateDate(date,option){
+//        if(option === 'over'){
+//            if(date === 'from'){
+//                $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'fromdate');
+//                $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'todate');
+//            }
+//            if(date === 'to'){
+//                $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'fromdate');
+//                $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'todate');
+//            }           
+//            $("#btnDownloadAP").addClass("disabled");
+//        } else {
+//            $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'fromdate');
+//            $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'todate');
+//            $("#btnDownloadAP").addClass("disabled");
+//        }
+//    }

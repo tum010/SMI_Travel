@@ -10,17 +10,16 @@ package com.smi.travel.datalayer.view.entity;
  *
  * @author chonnasith
  */
-public class BookingAirSummaryView {
+public class BookingLandSummaryView {
+    private String id;
     private String refno;
     private String refdate;
     private String agent;
     private String leader;
-    private String pax;
-    private String pnr;
-    private String dept;
-    private String arrv;
-    private String departdate;
-    private String flight;
+    private String okby;
+    private String description;
+    private String category;
+    private String qty;
     private String invoice;
     private String receipt;
 
@@ -56,44 +55,28 @@ public class BookingAirSummaryView {
         this.leader = leader;
     }
 
-    public String getPax() {
-        return pax;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPax(String pax) {
-        this.pax = pax;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getPnr() {
-        return pnr;
+    public String getCategory() {
+        return category;
     }
 
-    public void setPnr(String pnr) {
-        this.pnr = pnr;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getDept() {
-        return dept;
+    public String getQty() {
+        return qty;
     }
 
-    public void setDept(String dept) {
-        this.dept = dept;
-    }
-
-    public String getArrv() {
-        return arrv;
-    }
-
-    public void setArrv(String arrv) {
-        this.arrv = arrv;
-    }
-
-    public String getFlight() {
-        return flight;
-    }
-
-    public void setFlight(String flight) {
-        this.flight = flight;
+    public void setQty(String qty) {
+        this.qty = qty;
     }
 
     public String getInvoice() {
@@ -112,11 +95,21 @@ public class BookingAirSummaryView {
         this.receipt = receipt;
     }
 
-    public String getDepartdate() {
-        return departdate;
+    public String getOkby() {
+        return okby;
     }
 
-    public void setDepartdate(String departdate) {
-        this.departdate = departdate;
+    public void setOkby(String okby) {
+        this.okby = okby;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+    
 }

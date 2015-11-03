@@ -88,7 +88,6 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <select id="detail" name="detail"  class="form-control">
-                                            <option value="">--Select--</option>
                                             <option value="1">Show</option>
                                             <option value="2">Not Show</option>
                                             <!--<option value="Inbound">Inbound</option>-->
@@ -126,7 +125,11 @@
             console.log("positon :" + position.top);
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
         });
-
+        
+        var from = setValueFromDate();
+        var to = setValueToDate();
+        $("#fromdate").val(from);
+        $("#todate").val(to);
         
          $("#OtherMonthlyFrom")
             .bootstrapValidator({

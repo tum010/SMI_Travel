@@ -38,7 +38,7 @@
                                 <label class="col-md-5 control-label text-right"> From <font style="color: red;">*</font></label>
                                 <div class="col-md-4">  
                                     <div class="form-group" id="DateFrom">
-                                        <div class='input-group date'>
+                                        <div class='input-group date fromdate' id="fromdatepanel">
                                             <input type='text' id="fromdate" name="fromdate" class="form-control" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -54,7 +54,7 @@
                                 <label class="col-md-5 control-label text-right"> To <font style="color: red;">*</font></label>
                                 <div class="col-md-4">  
                                     <div class="form-group">
-                                        <div class='input-group date'>
+                                        <div class='input-group date todate' id="todatepanel">
                                             <input   type='text' id="todate" name="todate" class="form-control" data-date-format="YYYY-MM-DD"  />
                                             <span class="input-group-addon"><span  class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -88,7 +88,6 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <select id="detail" name="detail"  class="form-control">
-                                            <option value="">--Select--</option>
                                             <option value="1">Show</option>
                                             <option value="2">Not Show</option>
                                             <!--<option value="Inbound">Inbound</option>-->
@@ -102,7 +101,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <div class="col-sm-7 text-right">
-                                    <button type="submit"  class="btn btn-success"><span class="glyphicon glyphicon-print" id="btnDownloadAP"></span> Print</button>
+                                    <button type="button"  id="printbutton" name="printbutton"  class="btn btn-success"><span class="glyphicon glyphicon-print" ></span> Print</button>
                                 </div>
                                 <div class="col-sm-2 text-left">
                                     <button type="button" onclick="" class="btn btn-warning"><span class="glyphicon glyphicon-print"></span> Cancel</button>
@@ -126,58 +125,154 @@
 
         });
         
-         $("#HotelMonthlyReportFrom")
-            .bootstrapValidator({
-                framework: 'bootstrap',
-                feedbackIcons: {
-                    valid: 'uk-icon-check',
-                    invalid: 'uk-icon-times',
-                    validating: 'uk-icon-refresh'
-                },
-                fields: {
-                    fromdate: {
-                        trigger: 'focus keyup change',
-                            validators: {
-                                date: {
-                                    format: 'YYYY-MM-DD',
-                                    max: 'todate',
-                                    message: 'The Date From is not a valid'
-                                },notEmpty: {
-                                    message: 'The Date From is required'
-                                }
-                            }
-                    },
-                    todate: {
-                        trigger: 'focus keyup change',
-                            validators: {
-                                date: {
-                                    format: 'YYYY-MM-DD',
-                                    min: 'fromdate',
-                                    message: 'The Date To is not a valid'
-                                },notEmpty: {
-                                    message: 'The Date From is required'
-                                }
-                            }
-                    }
-                }
-            }).on('success.field.fv', function (e, data) {
-//                alert("1");
-                if (data.field === 'fromdate' && data.fv.isValidField('todate') === false) {
-                    data.fv.revalidateField('todate');
-                }
-
-                if (data.field === 'todate' && data.fv.isValidField('fromdate') === false) {
-                    data.fv.revalidateField('fromdate');
-                }
-            });
-            $('#DateFrom').datetimepicker().on('dp.change', function (e) {
-//                alert("1");
-                $('#HotelMonthlyReportFrom').bootstrapValidator('revalidateField', 'fromdate');
-            });
-            $('#DateTo').datetimepicker().on('dp.change', function (e) {
-                $('#HotelMonthlyReportFrom').bootstrapValidator('revalidateField', 'todate');
-            });  
+        var from = setValueFromDate();
+        var to = setValueToDate();
+        $("#fromdate").val(from);
+        $("#todate").val(to);
+        
+//         $("#HotelMonthlyReportFrom")
+//            .bootstrapValidator({
+//                framework: 'bootstrap',
+//                feedbackIcons: {
+//                    valid: 'uk-icon-check',
+//                    invalid: 'uk-icon-times',
+//                    validating: 'uk-icon-refresh'
+//                },
+//                fields: {
+//                    fromdate: {
+//                        trigger: 'focus keyup change',
+//                            validators: {
+//                                date: {
+//                                    format: 'YYYY-MM-DD',
+//                                    max: 'todate',
+//                                    message: 'The Date From is not a valid'
+//                                },notEmpty: {
+//                                    message: 'The Date From is required'
+//                                }
+//                            }
+//                    },
+//                    todate: {
+//                        trigger: 'focus keyup change',
+//                            validators: {
+//                                date: {
+//                                    format: 'YYYY-MM-DD',
+//                                    min: 'fromdate',
+//                                    message: 'The Date To is not a valid'
+//                                },notEmpty: {
+//                                    message: 'The Date From is required'
+//                                }
+//                            }
+//                    }
+//                }
+//            }).on('success.field.fv', function (e, data) {
+////                alert("1");
+//                if (data.field === 'fromdate' && data.fv.isValidField('todate') === false) {
+//                    data.fv.revalidateField('todate');
+//                }
+//
+//                if (data.field === 'todate' && data.fv.isValidField('fromdate') === false) {
+//                    data.fv.revalidateField('fromdate');
+//                }
+//            });
+//            $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+////                alert("1");
+//                $('#HotelMonthlyReportFrom').bootstrapValidator('revalidateField', 'fromdate');
+//            });
+//            $('#DateTo').datetimepicker().on('dp.change', function (e) {
+//                $('#HotelMonthlyReportFrom').bootstrapValidator('revalidateField', 'todate');
+//            });  
+        $('.fromdate').datetimepicker().change(function(){                          
+            checkFromDateField();
+        });
+        $('.todate').datetimepicker().change(function(){                          
+            checkToDateField();
+        });
     });   
+    
+    
+    function validateDate(date,option){
+        if(option === 'over'){
+            $("#fromdatepanel").removeClass("has-success");
+            $("#fromdatepanel").addClass("has-error");                                 
+            $("#todatepanel").removeClass("has-success");
+            $("#todatepanel").addClass("has-error");   
+            $("#printbutton").addClass("disabled");
+        } else {
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success"); 
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
+            $("#printbutton").addClass("disabled");
+        }
+    }
+    
+    function checkFromDateField(){      
+        var inputFromDate = document.getElementById("fromdate");
+        var InputToDate = document.getElementById("todate");
+        if(InputToDate.value === '' && inputFromDate.value === ''){
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");  
+            $("#printbutton").removeClass("disabled");
+        }else if(inputFromDate.value === '' || InputToDate.value === ''){
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success");
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
+            $("#printbutton").addClass("disabled");
+        } else {
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#issuefromdatepanel").removeClass("has-error");
+            $("#issuetodatepanel").removeClass("has-error");
+            $("#fromdatepanel").addClass("has-success");
+            $("#todatepanel").addClass("has-success");
+            $("#printbutton").removeClass("disabled");
+            checkDateValue("from","");
+        }
+    }
+    
+    function checkToDateField(){
+        var InputToDate = document.getElementById("todate");
+        var inputFromDate = document.getElementById("fromdate");
+        if(InputToDate.value === '' && inputFromDate.value === ''){
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");  
+            $("#printbutton").removeClass("disabled");
+        }else if(inputFromDate.value === '' || InputToDate.value === ''){
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success");
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
+            $("#printbutton").addClass("disabled");
+        }else{
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#issuefromdatepanel").removeClass("has-error");
+            $("#issuetodatepanel").removeClass("has-error");
+            $("#fromdatepanel").addClass("has-success");
+            $("#todatepanel").addClass("has-success");
+            $("#printbutton").removeClass("disabled");
+            checkDateValue("to","");
+        }       
+    }
+    
+    function checkDateValue(date){
+        var inputFromDate = document.getElementById("fromdate");
+        var InputToDate = document.getElementById("todate");
+        if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+            var fromDate = (inputFromDate.value).split('-');
+            var toDate = (InputToDate.value).split('-');
+            if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+                validateDate(date,"over");
+            }
+            if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+                validateDate(date,"over");
+            }
+            if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+                validateDate(date,"over");
+            }          
+        }
+    }
 </script>
 <input type="text" class="hidden" value="${printby}" id="systemuser" name="systemuser">
 <script type="text/javascript" src="js/HotelMonthly.js"></script> 
