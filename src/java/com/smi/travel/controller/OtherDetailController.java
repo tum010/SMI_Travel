@@ -121,6 +121,8 @@ public class OtherDetailController extends SMITravelController {
             }
             Product product = new Product();
             product.setId(productId);
+            product.setCode(productCode);
+            product.setName(productName);
             System.out.println("productId :"+productId);
             System.out.println("agentId :"+agentId);
             Other.setProduct(product);
@@ -134,6 +136,8 @@ public class OtherDetailController extends SMITravelController {
             if((agentId != null)&&(!"".equalsIgnoreCase(agentId))){
                 System.out.println("setup agentId :"+agentId);
                 agent.setId(agentId);
+                agent.setCode(agentCode);
+                agent.setName(agentName);
                 Other.setAgent(agent);
             }
             if((status != null)&&(!"".equalsIgnoreCase(status))){
@@ -168,7 +172,11 @@ public class OtherDetailController extends SMITravelController {
             if(!"".equalsIgnoreCase(canceldate)){
                 Other.setCancelDate(util.convertStringToTime(canceldate));
             }
-            
+            if(Other.getId() != null){
+                saveHistoryBooking(refno,user,Other,"UPDATE");
+            }else{
+                saveHistoryBooking(refno,user,Other,"CREATE");
+            }  
 //            int result = OtherService.saveBookingOther(Other,user);
             List<String> result = OtherService.saveBookingOther(Other,user,createby);
             if(("1".equalsIgnoreCase(result.get(0))) && (callpageSubmit==null || !callpageSubmit.equalsIgnoreCase("FromDayTour"))){
@@ -202,11 +210,11 @@ public class OtherDetailController extends SMITravelController {
                     
                     Other.setRemarkTicket("Require Ticket-Adult:" + ticketData[0] + " Child:" + ticketData[1] + " Infant:" + ticketData[2]);
                     List<String> resultRemarkTicket = OtherService.saveBookingOther(Other,user,createby);
-                    if(Other.getId() != null){
-                        saveHistoryBooking(refno,user,Other,"UPDATE");
-                    }else{
-                        saveHistoryBooking(refno,user,Other,"CREATE");
-                    }
+//                    if(Other.getId() != null){
+//                        saveHistoryBooking(refno,user,Other,"UPDATE");
+//                    }else{
+//                        saveHistoryBooking(refno,user,Other,"CREATE");
+//                    }
                     request.setAttribute("adultCancel", ticketData[0]);
                     request.setAttribute("childCancel", ticketData[1]);
                     request.setAttribute("infantCancel", ticketData[2]);
@@ -242,11 +250,11 @@ public class OtherDetailController extends SMITravelController {
                     
                     Other.setRemarkTicket("Require Ticket-Adult:" + ticketData[0] + " Child:" + ticketData[1] + " Infant:" + ticketData[2]);
                     List<String> resultRemarkTicket = OtherService.saveBookingOther(Other,user,createby);
-                    if(Other.getId() != null){
-                        saveHistoryBooking(refno,user,Other,"UPDATE");
-                    }else{
-                        saveHistoryBooking(refno,user,Other,"CREATE");
-                    }                    
+//                    if(Other.getId() != null){
+//                        saveHistoryBooking(refno,user,Other,"UPDATE");
+//                    }else{
+//                        saveHistoryBooking(refno,user,Other,"CREATE");
+//                    }                    
                     request.setAttribute("adultCancel", ticketData[0]);
                     request.setAttribute("childCancel", ticketData[1]);
                     request.setAttribute("infantCancel", ticketData[2]);
@@ -396,14 +404,15 @@ public class OtherDetailController extends SMITravelController {
         String detail = "";
         if(!"VIEW".equalsIgnoreCase(action)){
             detail = "PRODUCT : " ; 
-            if(other.getProduct()!=null){
-                detail+=   other.getProduct().getCode() + " : " + other.getProduct().getName() + "\r\n" ;
+            if(other.getProduct() != null){
+                System.out.println(" other.getProduct() " + other.getProduct().getCode());
+                detail +=  other.getProduct().getCode() + " : " + other.getProduct().getName() + "\r\n" ;
             }else{
                 detail += "\r\n" ;
             }
             detail+= "AGENT : " ;
-            if(other.getAgent()!=null){
-                detail +=   other.getAgent().getCode() + " : " + other.getAgent().getName() + "\r\n" ;
+            if(other.getAgent() != null){
+                detail +=  other.getAgent().getCode() + " : " + other.getAgent().getName() + "\r\n" ;
             }else{
                 detail += "\r\n" ;
             }

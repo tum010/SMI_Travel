@@ -136,6 +136,8 @@ public class LandDetailController extends SMITravelController {
             if (!"".equalsIgnoreCase(agentId)) {
                 Agent agent = new Agent();
                 agent.setId(agentId);
+                agent.setCode(agentCode);
+                agent.setName(agentName);
                 land.setAgent(agent);
             }
             land.setMaster(utilservice.getbookingFromRefno(refno));
