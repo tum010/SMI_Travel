@@ -419,6 +419,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
 //        this.sessionFactory.close();
 //        session.close();
 //        return result;
+        UtilityFunction util = new UtilityFunction(); 
         Session session = this.getSessionFactory().openSession();
         String query = "from ARNirvana ar where ar.rowid in (";
         for (int i = 0; i < ARList.size(); i++) {
@@ -429,6 +430,45 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         System.out.println(" query :: " + query);
         Query HqlQuery = session.createQuery(query);
         List<ARNirvana> result = HqlQuery.list();
+        if(result != null){
+            for (int i = 0; i < result.size() ; i++) {
+                String rowid = result.get(i).getRowid();
+                String type = rowid.substring(0, 1);
+                String row = rowid.substring(1);
+                System.out.println("Type :" + type +" Row : " + row);
+                String queryDetail = "SELECT * FROM `ar_nirvana_sale_detail` where id='"+row+"'";
+                List<Object[]> detail = session.createSQLQuery(queryDetail)
+                 .addScalar("salesaccount", Hibernate.STRING)
+                 .addScalar("salesdivision", Hibernate.STRING)
+                 .addScalar("salesproject", Hibernate.STRING)
+                 .addScalar("salesamt", Hibernate.BIG_DECIMAL)
+                 .addScalar("saleshmamt", Hibernate.BIG_DECIMAL)
+                 .list();
+                int count = 0;
+                for (Object[] B : detail) {
+                    count++;
+                    if(count == 1){
+                        result.get(i).setSalesaccount1(util.ConvertString(B[0]));
+                        result.get(i).setSalesdivision1(util.ConvertString(B[1]));
+                        result.get(i).setSalesproject1(util.ConvertString(B[2]));
+                        result.get(i).setSalesamt1((BigDecimal) B[3]);
+                        result.get(i).setSaleshmamt1((BigDecimal) B[4]);
+                    }else if(count == 2){
+                        result.get(i).setSalesaccount2(util.ConvertString(B[0]));
+                        result.get(i).setSalesdivision2(util.ConvertString(B[1]));
+                        result.get(i).setSalesproject2(util.ConvertString(B[2]));
+                        result.get(i).setSalesamt2((BigDecimal) B[3]);
+                        result.get(i).setSaleshmamt2((BigDecimal) B[4]);
+                    }else if(count == 3){
+                        result.get(i).setSalesaccount3(util.ConvertString(B[0]));
+                        result.get(i).setSalesdivision3(util.ConvertString(B[1]));
+                        result.get(i).setSalesproject3(util.ConvertString(B[2]));
+                        result.get(i).setSalesamt3((BigDecimal) B[3]);
+                        result.get(i).setSaleshmamt3((BigDecimal) B[4]);
+                    }                   
+                }
+            }
+        }
        
         this.sessionFactory.close();
         session.close();
