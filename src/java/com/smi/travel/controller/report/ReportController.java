@@ -232,7 +232,13 @@ public class ReportController extends SMITravelController {
         }else if(CreditNoteReport.equalsIgnoreCase(name)){
             data = reportservice.getCreditNoteReport(cnid);
         }else if(InvoiceMonthly.equalsIgnoreCase(name)){
-            data = reportservice.getInvoiceMonthly(BillFrom, ClientTo, ClientName, Payment, Accno, vattype, from, to, departmentInvoice);
+            String billingAttn = request.getParameter("billingAttn");
+            String billingFrom = request.getParameter("billingFrom");
+            String billingTel = request.getParameter("billingTel");
+            String billingFax = request.getParameter("billingFax");
+            String billingMail = request.getParameter("billingMail");
+            String billingDate = request.getParameter("billingDate");
+            data = reportservice.getInvoiceMonthly(ClientTo, ClientName, Accno, vattype, from, to, departmentInvoice, billingAttn, billingFrom, billingTel, billingFax, billingMail, billingDate);
         }else if(RefundAirReport.equalsIgnoreCase(name)){
             data = reportservice.getRefundAirReport(refundId);
         }else if(TicketFareReport.equalsIgnoreCase(name)){

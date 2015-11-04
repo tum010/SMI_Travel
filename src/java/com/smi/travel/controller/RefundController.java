@@ -9,6 +9,8 @@ import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.service.MStaffService;
+import com.smi.travel.datalayer.service.RefundService;
+import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,7 @@ public class RefundController extends SMITravelController {
     private static final ModelAndView Refund = new ModelAndView("Refund");
     private UtilityService utilservice;
     private MStaffService mStaffService;
+    private RefundService refundService;
     private static final String BookingSize = "BookingSize";
     private static final String Master = "Master";
     private static final String Staff = "Staff";
@@ -42,6 +45,23 @@ public class RefundController extends SMITravelController {
         } else if ("update".equalsIgnoreCase(action)) {
 
         }
+        // Refund By
+        List<CustomerAgentInfo> listRefundBy = utilservice.getListCustomerAgentInfo();
+        if(listRefundBy != null){
+            request.setAttribute("listRefundBy", listRefundBy);
+        }else{
+            request.setAttribute("listRefundBy", null);
+        }
+        
+        // Receive by
+        List<SystemUser> listReceiveBy = utilservice.getUserList();
+        if(listReceiveBy != null){
+            request.setAttribute("listReceiveBy", listReceiveBy);
+        }else{
+            request.setAttribute("listReceiveBy", null);
+        }
+        
+        
         setGeneralResponseAttribute(request, refNo);
         return Refund;
     }
@@ -70,6 +90,14 @@ public class RefundController extends SMITravelController {
 
     public void setmStaffService(MStaffService mStaffService) {
         this.mStaffService = mStaffService;
+    }
+
+    public RefundService getRefundService() {
+        return refundService;
+    }
+
+    public void setRefundService(RefundService refundService) {
+        this.refundService = refundService;
     }
 
 }
