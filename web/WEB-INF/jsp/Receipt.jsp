@@ -1222,7 +1222,7 @@
                 </div>
             </div>
             <div class="modal-footer">  
-                <button type="button" onclick="confirmPrintInvoice()" class="btn btn-success" data-dismiss="modal">OK</button>
+                <button type="button" id="confirmPrintInv" name="confirmPrintInv" onclick="confirmPrintInvoice()" class="btn btn-success" data-dismiss="modal">OK</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -1424,6 +1424,14 @@
             $("#addCredit").removeClass('hidden');
             $("#addCreditDetail").removeClass('hidden');
         });
+        
+//        $('#selectInvoiceId').on('click', function() {
+//            if($('#selectInvoiceId').val() === ''){
+//                $("#confirmPrintInv").addClass("disabled");
+//            }else{
+//                $("#confirmPrintInv").removeClass("disabled");
+//            }
+//        });
         
         $('#deleteCreditButton').on('click', function() {
             $("#addCredit").addClass('hidden');
@@ -1725,16 +1733,22 @@
         var leader =  document.getElementById('selectLeader').value;
         
         if(printtype == 3){
-            if(invType === 'T'){
-                window.open("report.smi?name=InvoiceTemp&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
+            if(invoice === ''){
             }else{
-                window.open("report.smi?name=InvoiceReport&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
+                if(invType === 'T'){
+                    window.open("report.smi?name=InvoiceTemp&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
+                }else{
+                    window.open("report.smi?name=InvoiceReport&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
+                }
             }
         }else if(printtype == 4){
-            if(invType === 'T'){
-                window.open("report.smi?name=InvoiceTemp&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
+            if(invoice === ''){
             }else{
-                window.open("SendMail.smi?reportname=Invoice&reportid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign);   
+                if(invType === 'T'){
+                    window.open("report.smi?name=InvoiceTemp&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
+                }else{
+                    window.open("SendMail.smi?reportname=Invoice&reportid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign);   
+                }
             }
         } 
     }

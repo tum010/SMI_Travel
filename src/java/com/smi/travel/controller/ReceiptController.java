@@ -136,7 +136,7 @@ public class ReceiptController extends SMITravelController {
         if("new".equalsIgnoreCase(action)){
             System.out.println(" CLEAR DATA ");
         }else if ("edit".equalsIgnoreCase(action)){
-            
+            System.out.println(" ==================== edit =======================");
         }else if ("searchReceiveNo".equalsIgnoreCase(action)) {
             Receipt receipt = new Receipt();
             request.setAttribute(SEARCHRECEIPT,"dummy");
@@ -532,17 +532,46 @@ public class ReceiptController extends SMITravelController {
                         List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
                         request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
                         request.setAttribute(RECEIPTCREDITLIST,receiptCreditList);
+                        List<ReceiptDetail> recInvId = new ArrayList<ReceiptDetail>();
                         if(receiptDetailList != null){
-                        request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
+                            for(int i = 0 ;i < receiptDetailList.size();i++){
+                                ReceiptDetail receiptD = new ReceiptDetail();
+                                receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
+                                receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
+                                receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
+                                recInvId.add(receiptD);
+                            }
+                            request.setAttribute(INVIDLIST, recInvId);
+                            request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
                         }
                         if(receiptCreditList != null){
                         request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);
                         }
                     }
+//                    request.setAttribute(SEARCHRECEIPT,"notdummy");
                     request.setAttribute(RECEIPT,receipt);
                     request.setAttribute(RECEIPTDATE,receipt.getRecDate());
                     request.setAttribute(RECEIVEDATE,receipt.getReceiveDate());
                 }
+                
+                
+//                if(receipt != null) {
+//                    if(!receipt.getId().isEmpty()){
+//                        List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
+//                        List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
+//                        request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
+//                        request.setAttribute(RECEIPTCREDITLIST,receiptCreditList);
+//                        if(receiptDetailList != null){
+//                        request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
+//                        }
+//                        if(receiptCreditList != null){
+//                        request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);
+//                        }
+//                    }
+//                    request.setAttribute(RECEIPT,receipt);
+//                    request.setAttribute(RECEIPTDATE,receipt.getRecDate());
+//                    request.setAttribute(RECEIVEDATE,receipt.getReceiveDate());
+//                }
             }
         }
         
