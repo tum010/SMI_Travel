@@ -13,13 +13,23 @@ import java.util.Date;
  * @author Kanokporn
  */
 public class RefundTicket {
+    private String airticketrefundid;
     private String refundno;
     private String refundby;
     private Date refunddate;
     private String receiveby;
-    private BigDecimal change;
+    private String change;
     private String detail;
 
+    public String getAirticketrefundid() {
+        return airticketrefundid;
+    }
+
+    public void setAirticketrefundid(String airticketrefundid) {
+        this.airticketrefundid = airticketrefundid;
+    }
+
+    
     public String getRefundno() {
         return refundno;
     }
@@ -52,14 +62,15 @@ public class RefundTicket {
         this.receiveby = receiveby;
     }
 
-    public BigDecimal getChange() {
+    public String getChange() {
         return change;
     }
 
-    public void setChange(BigDecimal change) {
+    public void setChange(String change) {
         this.change = change;
     }
 
+  
 
     public String getDetail() {
         return detail;

@@ -100,29 +100,35 @@
                             <table  class="display" id="RefundTable">
                                 <thead>
                                     <tr class="datatable-header">
+                                        <th style="width: 15%"  class="hidden">id air ticket refund</th>
                                         <th style="width: 15%" >Refund No</th>
                                         <th style="width: 15%" >Refund By</th>
                                         <th style="width: 10%" >Refund Date</th>
                                         <th style="width: 15%" >Receive</th>
-                                        <th style="width: 15%" >Change</th>
+                                        <th style="width: 15%"  >Change</th>
                                         <th>Detail</th>
                                         <th style="width: 8%" >Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <!--C:if ,C:foreach, c:set >>> counter -->
+                                    <c:if test="${listRefundTicket != null}"> 
+                                    
+                                    <c:forEach var="table" items="${listRefundTicket}" varStatus="status">
+                                    <c:set var="counter" value="${status.count}"></c:set>  
                                     <tr>
-                                        <td>R0012</td>
-                                        <td>2172305640387</td>
-                                        <td>25-07-2015</td>
-                                        <td>GTH-BKK</td>
-                                        <td>25090</td>
-                                        <td>Test</td>
+                                        <td class="hidden"><c:out value="${table.airticketrefundid}" /></td>
+                                        <td><c:out value="${table.refundno}" /></td>
+                                        <td><c:out value="${table.refundby}" /></td>
+                                        <td><c:out value="${table.refunddate}" /></td>
+                                        <td><c:out value="${table.receiveby}" /></td>
+                                        <td class="text-right "><c:out value="${table.change}" /></td>
+                                        <td><c:out value="${table.detail}" /></td>
                                         <td class="text-center">
                                             <!--<a class="carousel" data-toggle="collapse" data-parent="#accordion"--> 
 <!--                                               data-target="#passenger1" aria-expanded="true" 
                                                aria-controls="collapseExample">-->
-                                                <span class="glyphicon glyphicon-edit editicon" id="SpanEdit1" onclick="selectRefundDetail(1)"></span>
+                                                <span class="glyphicon glyphicon-edit editicon" id="SpanEdit1" onclick="selectRefundDetail(${table.airticketrefundid})"></span>
                                             <!--</a>-->
                                             <a class="carousel" data-toggle="collapse" data-parent="#accordion" 
                                                data-target="#passenger1" aria-expanded="true" 
@@ -131,8 +137,10 @@
                                             </a>
                                         </td>
                                     </tr>
-                                    <!--<input type="hidden" id="countListOther" name="countListOther" value="${counter}" >-->
-                                     <input type="hidden" id="countListOther" name="countListOther" value="1" >
+                                    </c:forEach>
+                                    </c:if>
+                                    <input type="hidden" id="countListOther" name="countListOther" value="${counter}" >
+                                     <!--<input type="hidden" id="countListOther" name="countListOther" value="1" >-->
                                 </tbody>
                             </table>  
                         </div>
