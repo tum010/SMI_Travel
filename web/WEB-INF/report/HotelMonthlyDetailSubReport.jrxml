@@ -79,19 +79,19 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{category}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
 				<reportElement stretchType="RelativeToBandHeight" x="353" y="0" width="87" height="15" uuid="8f8b2f78-456c-4aae-aaa6-a5845883225e"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{price} != null && !"null".equals($F{price}) && $F{price}.length() > 0 && !"".equalsIgnoreCase($F{price})) ? new BigDecimal($F{price}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
 				<reportElement stretchType="RelativeToBandHeight" x="268" y="2" width="79" height="15" uuid="febcb936-249f-4090-a307-6fb259dc4d13"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cost}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{cost} != null && !"null".equals($F{cost}) && $F{cost}.length() > 0 && !"".equalsIgnoreCase($F{cost})) ? new BigDecimal($F{cost}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

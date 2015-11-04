@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelMonthly" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="2" bottomMargin="2" uuid="761efd46-62b1-4401-98d7-a949e5ad9b79">
 	<property name="ireport.zoom" value="2.8531167061100087"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="659"/>
 	<property name="ireport.y" value="0"/>
 	<field name="frompage" class="java.lang.String"/>
 	<field name="topage" class="java.lang.String"/>
@@ -61,21 +61,21 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalroomnight}]]></textFieldExpression>
 				</textField>
-				<textField pattern="###0.00">
+				<textField pattern="#,##0.00">
 					<reportElement x="438" y="0" width="103" height="16" uuid="a52f5396-6498-4b54-99d8-e1f451075edd"/>
 					<textElement textAlignment="Right">
 						<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
 				</textField>
-				<textField pattern="###0.00">
+				<textField pattern="#,##0.00">
 					<reportElement x="221" y="0" width="101" height="16" uuid="f618dd84-f8d3-49cc-a16d-569a12778e5e"/>
 					<textElement textAlignment="Right">
 						<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalsellprice}]]></textFieldExpression>
 				</textField>
-				<textField pattern="###0.00">
+				<textField pattern="#,##0.00">
 					<reportElement x="329" y="0" width="102" height="16" uuid="3711a3a9-3f8d-435a-a1f9-1a72b1233a86"/>
 					<textElement textAlignment="Right">
 						<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " isPdfEmbedded="true"/>
@@ -210,21 +210,21 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{night}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="221" y="0" width="101" height="16" uuid="f893c1b7-909a-4ca7-a19f-037c0ebe634a"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf " isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sell}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="329" y="0" width="102" height="16" uuid="5d14c19d-9de8-48dd-96a0-768930b5147f"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf " isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{net}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="438" y="0" width="103" height="16" uuid="138a1717-877d-412c-86f6-12fbef9e3bcc"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf " isPdfEmbedded="true"/>
