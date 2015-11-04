@@ -1,5 +1,6 @@
 package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.MBank;
+import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
@@ -43,6 +44,27 @@ public class InvoiceMonthlyController extends SMITravelController {
         }else{
             request.setAttribute("listStaff", null);
         }
+        
+        MDefaultData billingAttn = new MDefaultData();
+        billingAttn = utilityService.getMDefaultDataFromType("billing_attn");
+        request.setAttribute("billingAttn", billingAttn.getValue());
+        
+        MDefaultData billingFrom = new MDefaultData();
+        billingFrom = utilityService.getMDefaultDataFromType("billing_from");
+        request.setAttribute("billingFrom", billingFrom.getValue());
+        
+        MDefaultData billingTel = new MDefaultData();
+        billingTel = utilityService.getMDefaultDataFromType("billing_tel");
+        request.setAttribute("billingTel", billingTel.getValue());
+        
+        MDefaultData billingFax = new MDefaultData();
+        billingFax = utilityService.getMDefaultDataFromType("billing_fax");
+        request.setAttribute("billingFax", billingFax.getValue());
+        
+        MDefaultData billingMail = new MDefaultData();
+        billingMail = utilityService.getMDefaultDataFromType("billing_mail");
+        request.setAttribute("billingMail", billingMail.getValue());
+        
         return InvoiceMonthly;
     }
 

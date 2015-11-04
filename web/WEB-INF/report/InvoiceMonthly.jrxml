@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceMonthly" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f3e0a4ca-601e-4515-90b1-1c808ba982a2">
-	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="597"/>
+	<property name="ireport.y" value="373"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="billto" class="java.lang.String"/>
 	<field name="billfrom" class="java.lang.String"/>
@@ -20,6 +20,14 @@
 	<field name="department" class="java.lang.String"/>
 	<field name="type" class="java.lang.String"/>
 	<field name="headdepartment" class="java.lang.String"/>
+	<field name="billingattn" class="java.lang.String"/>
+	<field name="billingfrom" class="java.lang.String"/>
+	<field name="billingdate" class="java.lang.String"/>
+	<field name="billingtel" class="java.lang.String"/>
+	<field name="billingfax" class="java.lang.String"/>
+	<field name="billingmail" class="java.lang.String"/>
+	<field name="remittanceto1" class="java.lang.String"/>
+	<field name="remittanceto2" class="java.lang.String"/>
 	<variable name="totalthb" class="java.math.BigDecimal" resetType="Group" resetGroup="invoice" calculation="Sum">
 		<variableExpression><![CDATA[$F{thb}]]></variableExpression>
 	</variable>
@@ -44,7 +52,7 @@
 					<text><![CDATA[Name :  ]]></text>
 				</staticText>
 				<textField pattern="">
-					<reportElement x="46" y="-1" width="260" height="19" uuid="e65b9154-2ada-4227-a58d-157c1c175ae0"/>
+					<reportElement x="52" y="-1" width="269" height="19" uuid="e65b9154-2ada-4227-a58d-157c1c175ae0"/>
 					<textElement>
 						<font fontName="TH SarabunPSK" size="14"/>
 					</textElement>
@@ -189,62 +197,6 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
-			<staticText>
-				<reportElement x="22" y="101" width="57" height="16" uuid="fba6a782-b3bb-4745-befc-9dd4243d7557"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Bill To :  ]]></text>
-			</staticText>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="79" y="101" width="110" height="16" uuid="157f0b60-629d-48fa-9b0c-a6446c890851"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{billto}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="300" y="101" width="57" height="16" uuid="17711b93-6457-41a0-bc51-c69b82330bb3"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Bill From :  ]]></text>
-			</staticText>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="357" y="101" width="110" height="16" uuid="7830399d-0413-4263-93da-ebd00dda0c7f"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{billfrom}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="300" y="114" width="57" height="16" uuid="aa5d2da8-1939-449f-87c7-274da1d554e0"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Payment :  ]]></text>
-			</staticText>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="357" y="114" width="110" height="16" uuid="2ce491de-0a69-4cad-b243-0ff5cc464df8"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{payment}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="22" y="114" width="57" height="16" uuid="82f146e5-be7d-4d33-8c4a-51f7547867ee"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Acc No :  ]]></text>
-			</staticText>
-			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="79" y="114" width="110" height="16" uuid="06a9eb11-a23d-4c6b-ad60-58cf8cb5d1f7"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{accno}]]></textFieldExpression>
-			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="436" y="65" width="109" height="13" uuid="a2084f80-44b5-49c0-b1c3-622851367151"/>
 				<textElement>
@@ -393,6 +345,90 @@
 				</textElement>
 				<text><![CDATA[Department]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="28" y="105" width="46" height="20" uuid="5f85d521-765d-40ec-b602-90bde0ec6f61"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Attn :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="125" width="46" height="20" uuid="5bc3a5cb-58ce-421e-a970-5d64e4da32c5"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="145" width="46" height="20" uuid="ac92c28c-1c33-4aa2-b74f-10ec31b73e0b"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Billing :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="105" width="46" height="20" uuid="69d91477-f1e7-42ee-b3ef-d486bb6bed03"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tel :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="125" width="46" height="20" uuid="21f6e8c9-4a35-420f-8858-bfe9fbd5fdb6"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fax :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="145" width="46" height="20" uuid="4e621029-74e0-42ba-a027-29f9b7870120"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="105" width="171" height="20" uuid="a9358aca-a151-46d2-95db-a03de6df43bc"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billingattn}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="125" width="171" height="20" uuid="a3a3d229-ad9c-40f9-9e0d-7f1b7077832b"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billingfrom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="145" width="171" height="20" uuid="7085d908-f3ee-4715-9c7d-3455ec18c0a1"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billingdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="105" width="171" height="20" uuid="170a1eb1-5575-4727-84cb-177c519c306f"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billingtel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="125" width="171" height="20" uuid="65eb30c3-7bb9-4349-8e0f-49c9693de873"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billingfax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="145" width="171" height="20" uuid="7eac52d1-0fda-4825-9cf8-2c1bbfadd0eb"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billingmail}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<detail>
@@ -516,4 +552,94 @@
 			</textField>
 		</band>
 	</detail>
+	<lastPageFooter>
+		<band height="150">
+			<line>
+				<reportElement x="139" y="128" width="100" height="1" uuid="8a31a582-8083-462f-ba34-90cb5a86cd0c"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="275" y="127" width="100" height="1" uuid="4717282f-ce5f-4265-a0ed-7b163fd7d66a"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="153" y="129" width="58" height="20" uuid="61742878-7e2e-48e4-9a6c-a72c69ce5c0d"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bill receiver]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="129" width="86" height="20" uuid="5ca0ecd2-010b-421c-9b43-1a68c17a1ba2"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date of collection]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="39" width="54" height="20" uuid="aba92b64-d9fa-432f-8aae-5a13a08ab218"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[IMPORTANT :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="138" y="39" width="322" height="20" uuid="b9d9b6a4-bd21-4574-bfb1-1a3446a852ef"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Credit accaouts are strictly net and must be settied by the due date. If an account is ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="52" width="336" height="17" uuid="15685890-dacc-43ac-b346-336423f06f03"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[overdue a delinquency charge of 2 % per month will be made on any account outstanding.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="83" width="40" height="20" uuid="2d0b3e9f-aafd-45d6-991c-a831d0b75295"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[สำคัญมาก :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="123" y="83" width="322" height="20" uuid="a6a8cff7-02bb-4bc9-a4de-0d2bcc76b2b7"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[การชำระเงินต้องชำระภายในเวลาที่ได้ทำการตกลงไว้ ถ้ามีการชำระเงินเกินจากเงื่อนไขที่ตกลงกัน]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="96" width="336" height="17" uuid="b5b77a2b-eb1b-4a77-ab17-af92735bd5d4"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ทางบริษัทฯ จะทำการคิดดอกเบี้ยด้วยอัตรา 2 % ต่อเดือน นับจากวันที่ครบบกำหนดในงวดถัดไป]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="0" width="555" height="20" uuid="9c777aa7-8e24-4171-b58b-e8c855b4dcd9">
+					<printWhenExpression><![CDATA[$F{remittanceto1} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{remittanceto1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="15" width="555" height="20" uuid="d07524d8-8b3b-46c1-b7d4-a90cda820f43">
+					<printWhenExpression><![CDATA[$F{remittanceto2} != null]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{remittanceto2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
 </jasperReport>

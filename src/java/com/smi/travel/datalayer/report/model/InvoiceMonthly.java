@@ -30,7 +30,15 @@ public class InvoiceMonthly {
     private String billto;
     private String systemdate;
     private String headdepartment;
-    
+    private String billingattn;
+    private String billingfrom;
+    private String billingdate;
+    private String billingtel;
+    private String billingfax;
+    private String billingmail;
+    private String remittanceto1;
+    private String remittanceto2;
+                   
     public String getInvname() {
         return invname;
     }
@@ -167,6 +175,70 @@ public class InvoiceMonthly {
 
     public void setHeaddepartment(String headdepartment) {
         this.headdepartment = headdepartment;
+    }
+
+    public String getBillingattn() {
+        return billingattn;
+    }
+
+    public void setBillingattn(String billingattn) {
+        this.billingattn = billingattn;
+    }
+
+    public String getBillingfrom() {
+        return billingfrom;
+    }
+
+    public void setBillingfrom(String billingfrom) {
+        this.billingfrom = billingfrom;
+    }
+
+    public String getBillingdate() {
+        return billingdate;
+    }
+
+    public void setBillingdate(String billingdate) {
+        this.billingdate = billingdate;
+    }
+
+    public String getBillingtel() {
+        return billingtel;
+    }
+
+    public void setBillingtel(String billingtel) {
+        this.billingtel = billingtel;
+    }
+
+    public String getBillingfax() {
+        return billingfax;
+    }
+
+    public void setBillingfax(String billingfax) {
+        this.billingfax = billingfax;
+    }
+
+    public String getBillingmail() {
+        return billingmail;
+    }
+
+    public void setBillingmail(String billingmail) {
+        this.billingmail = billingmail;
+    }
+
+    public String getRemittanceto1() {
+        return remittanceto1;
+    }
+
+    public void setRemittanceto1(String remittanceto1) {
+        this.remittanceto1 = remittanceto1;
+    }
+
+    public String getRemittanceto2() {
+        return remittanceto2;
+    }
+
+    public void setRemittanceto2(String remittanceto2) {
+        this.remittanceto2 = remittanceto2;
     }
 
 }

@@ -27,144 +27,175 @@
                     <h3>List Invoice monthly</h3>
                 </div>
             </div>
-            <div class="col-md-10" >
-                <form role="form" id="InvoiceMonthlyFrom" method="post" class="form-horizontal" onsubmit="printInvoiceMonthly();">
-                    <div class="row"> 
-                        <div class="col-sm-8">
-                            <div class="form-group">
-                                <label for="billFrom" class="col-sm-5 control-label text-right">Bill From</label>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                         <div class='input-group' >
-                                            <input type='text' id="billFromCode" name="billFromCode"  class="form-control" />
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-search" data-toggle="modal" data-target="#BillFromModal"></span></span>
-                                        </div>
+            <div class="col-md-12" ><br></div>
+            <div class="col-md-12" >
+                <form role="form" id="InvoiceMonthlyFrom" method="post" class="form-horizontal" onsubmit="printInvoiceMonthly();">                   
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-1" style="width: 120px">
+                                <label for="client" class="control-label">Client</label>                                                                      
+                            </div>
+                            <div class="col-sm-1" style="width: 130px">
+                                <div class="form-group">
+                                    <div class='input-group' >
+                                        <input type='text' id="clientCode" name="clientCode"  class="form-control" />
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-search" data-toggle="modal" data-target="#ClientModal"></span></span>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <input type='text' id="billFromName" name="billFromName"  class="form-control" readonly/>
-                                </div>
+                            </div>
+                            <div class="col-sm-1" style="width: 200px">
+                                <input type='text' id="clientName" name="clientName"  class="form-control" readonly/>
+                            </div>
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-1">
+                                <label for="client" class="control-label">ATTN</label>                                                                      
+                            </div>
+                            <div class="col-sm-1" style="width: 250px">
+                                <input type='text' id="billingAttn" name="billingAttn"  class="form-control" value="${requestScope['billingAttn']}"/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-8">
-                            <div class="form-group">
-                                <label for="client" class="col-sm-5 control-label text-right">Client</label>
-                                <div class="col-sm-3">
-                                    <div class="form-group">
-                                         <div class='input-group' >
-                                            <input type='text' id="clientCode" name="clientCode"  class="form-control" />
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-search" data-toggle="modal" data-target="#ClientModal"></span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type='text' id="clientName" name="clientName"  class="form-control" readonly/>
+                        <div class="col-sm-12">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-1" style="width: 120px">
+                                <label for="client" class="control-label">Vat Type</label>                                                                      
+                            </div>
+                            <div class="col-sm-1" style="width: 200px">
+                                <div class="form-group">
+                                    <select id="vatType" name="vatType"  class="form-control">
+                                        <option value="">--select--</option>
+                                        <option value="V">Vat</option>
+                                        <option value="N">No Vat</option>
+                                        <option value="T">Temp</option>
+                                        <option value="A">Ticket</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="payment" class="col-sm-5 control-label text-right">Payment</label>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <input type='text' id="payment" name="payment"  class="form-control" />
-                                    </div>
-                                </div>
+                            <div class="col-sm-1" style="width: 233px"></div>
+                            <div class="col-sm-1">
+                                <label for="client" class="control-label">From</label>                                                                      
+                            </div>
+                            <div class="col-sm-1" style="width: 250px">
+                                <input type='text' id="billingFrom" name="billingFrom"  class="form-control" value="${requestScope['billingFrom']}"/>
                             </div>
                         </div>
-                    </div>
+                    </div>   
                     <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="accNo" class="col-sm-5 control-label text-right">Acc No</label>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <select id="accNo" name="accNo"  class="form-control">
-                                            <option value="">--Select--</option>
-                                            <c:forEach var="item" items="${listAccno}" >
-                                                <c:set var="selectAccno" value="" />
-                                                <%--<c:if test="${item.id == invoice.MAccpay.id}">--%>
-                                                    <%--<c:set var="selectTerm" value="selected" />--%>
-                                                <%--</c:if>--%>
-                                                <option value="${item.code} ${item.accNo}" ${selectAccno}>${item.code} - ${item.accNo}</option>
-                                            </c:forEach>
-                                        </select>
+                        <div class="col-sm-12">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-1" style="width: 120px">
+                                <label class="control-label">From<font style="color: red;">*</font></label>                                                                      
+                            </div>
+                            <div class="col-sm-1" style="width: 200px">
+                                <div class="form-group" id="DateFrom">
+                                    <div class='input-group date'>
+                                        <input type='text' id="fromdate" name="fromdate" class="form-control" data-date-format="YYYY-MM-DD" />
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="vatType" class="col-sm-5 control-label text-right">Vat Type</label>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <select id="vatType" name="vatType"  class="form-control">
-                                            <option value="">--select--</option>
-                                            <option value="V">Vat</option>
-                                            <option value="N">No Vat</option>
-                                            <option value="T">Temp</option>
-                                            <option value="A">Ticket</option>
-                                        </select>
+                            <div class="col-sm-1" style="width: 233px"></div>
+                            <div class="col-sm-1" style="width: 117px">
+                                <label for="client" class="control-label">Bill Date</label>                                                                      
+                            </div>
+                            <div class="col-sm-1" style="width: 220px">
+                                <div class="form-group">
+                                    <div class='input-group date'>
+                                        <input type='text' id="billingDate" name="billingDate" class="form-control" data-date-format="YYYY-MM-DD" />
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label class="col-md-5 control-label text-right"> From <font style="color: red;">*</font></label>
-                                <div class="col-md-4">  
-                                    <div class="form-group" id="DateFrom">
-                                        <div class='input-group date'>
-                                            <input type='text' id="fromdate" name="fromdate" class="form-control" data-date-format="YYYY-MM-DD" />
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-1" style="width: 120px">
+                                <label class="control-label">To<font style="color: red;">*</font></label>                                                                      
+                            </div>
+                            <div class="col-sm-1" style="width: 200px">
+                                <div class="form-group" id="DateTo">
+                                    <div class='input-group date'>
+                                        <input type='text' id="todate" name="todate" class="form-control" data-date-format="YYYY-MM-DD" />
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>            
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group" id="DateTo">
-                                <label class="col-md-5 control-label text-right"> To <font style="color: red;">*</font></label>
-                                <div class="col-md-4">  
-                                    <div class="form-group">
-                                        <div class='input-group date'>
-                                            <input   type='text' id="todate" name="todate" class="form-control" data-date-format="YYYY-MM-DD"  />
-                                            <span class="input-group-addon"><span  class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-sm-1" style="width: 233px"></div>
+                            <div class="col-sm-1" >
+                                <label for="client" class="control-label">Tel</label>                                                                      
+                            </div>
+                            <div class="col-sm-1" style="width: 250px">
+                                <input type='text' id="billingTel" name="billingTel"  class="form-control" value="${requestScope['billingTel']}"/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="depart" class="col-sm-5 control-label text-right">Department</label>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <select id="departmentInvoice" name="departmentInvoice"  class="form-control">
-                                            <option value="">--Select--</option>
-                                            <option value="Wendy">Wendy</option>
-                                            <option value="Outbound">Outbound</option>
-                                            <option value="Inbound">Inbound</option>
-                                        </select>
-                                    </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-1" style="width: 120px">
+                                <label class="control-label">Department</label>                                                                      
+                            </div>
+                            <div class="col-sm-1" style="width: 200px">
+                                <div class="form-group">
+                                    <select id="departmentInvoice" name="departmentInvoice"  class="form-control">
+                                        <option value="">--Select--</option>
+                                        <option value="Wendy">Wendy</option>
+                                        <option value="Outbound">Outbound</option>
+                                        <option value="Inbound">Inbound</option>
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="col-sm-1" style="width: 233px"></div>
+                            <div class="col-sm-1" >
+                                <label for="client" class="control-label">Fax</label>                                                                      
+                            </div>
+                            <div class="col-sm-1" style="width: 250px">
+                                <input type='text' id="billingFax" name="billingFax"  class="form-control" value="${requestScope['billingFax']}"/>
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-12">                         
+                            <div class="col-sm-1" style="width: 755px"></div>
+                            <div class="col-sm-1" >
+                                <label class="control-label">Email</label>                                                                      
+                            </div>
+                            <div class="col-sm-1" style="width: 250px">
+                                <input type='text' id="billingMail" name="billingMail"  class="form-control" value="${requestScope['billingMail']}"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"><br></div>
+                    <div class="row">
+                        <div class="col-sm-12">                         
+                            <div class="col-sm-1" style="width: 700px"></div>
+                            <div class="col-sm-1" style="width: 170px">
+                                <label class="control-label">Remittance To</label>                                                                      
+                            </div>
+                            <div class="col-sm-1" style="width: 220px">
+                                <div class="form-group">
+                                    <select id="remittanceTo" name="remittanceTo"  class="form-control">
+                                        <option value="">--Select--</option>
+                                        <c:forEach var="item" items="${listAccno}" >
+                                            <c:set var="selectAccno" value="" />
+                                            <%--<c:if test="${item.id == invoice.MAccpay.id}">--%>
+                                                <%--<c:set var="selectTerm" value="selected" />--%>
+                                            <%--</c:if>--%>
+                                            <option value="${item.name},${item.branch},${item.accNo}" ${selectAccno}>${item.code} - ${item.accNo}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row"><br></div>
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
@@ -181,121 +212,6 @@
             </div>
         </div>
     </div>
-</div>
-<div class="modal fade" id="BillFromModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Bill From</h4>
-            </div>
-            <div class="modal-body">
-                <table class="display" id="BillFromTable">
-                    <thead>                        
-                        <tr class="datatable-header">
-                            <th>Code</th>
-                            <th>Name</th>
-                            
-                        </tr>
-                    </thead>
-                    <script>
-                        billFrom = [];
-                    </script>
-                    <tbody>
-                        <c:forEach var="item" items="${listStaff}">
-                            <tr>                                
-                                <td class="item-billto">${item.username}</td>
-                                <td class="item-name">${item.name}</td>                                
-               
-                            </tr>
-                        <script>
-                            billFrom.push({code: "${item.username}", name: "${item.name}"});
-                        </script>
-                        </c:forEach>
-                            
-                    </tbody>
-
-                </table>
-                <!--Script Bill To List Table-->
-                <script>
-                    $(document).ready(function () {
-                        var billF = [];
-                        $.each(billFrom, function (key, value) {
-                            billF.push(value.code);
-                            if ( !(value.name in billF) ){
-                               billF.push(value.name);
-                            }
-                        });
-
-                        $("#billFromCode").autocomplete({
-                            source: billF,
-                            close:function( event, ui ) {
-                               $("#billFromCode").trigger('keyup');
-                            }
-                        });
-                        $("#billFromCode").keyup(function () {
-                            var position = $(this).offset();
-                            $(".ui-widget").css("top", position.top + 30);
-                            $(".ui-widget").css("left", position.left);
-                            var code = this.value.toUpperCase();
-                            var name = this.value;
-                            $("#billFromName").val(null);
-                            $.each(billFrom, function (key, value) {
-                                if (value.code.toUpperCase() === code) {
-                                    $("#billFromName").val(value.name);                                   
-                                }
-                                if(name === value.name){
-                                    $("#billFromCode").val(value.code);
-                                    $("#billFromName").val(value.name);    
-                                    code = $("#billFromCode").val().toUpperCase();
-                                }
-                                
-                            });
-                        });
-                        
-                        $("#BillFromTable tr").on('click', function () {
-                            var billto = $(this).find(".item-billto").text();
-                            var billname = $(this).find(".item-name").text();
-                            var address = $(this).find(".item-address").text();
-                            var tel = $(this).find(".item-tel").text();
-                            $("#billFromCode").val(billto);
-                            $("#billFromName").val(billname);
-//                            $("#address").val(address);
-                            $("#BillFromModal").modal('hide');
-                        });
-
-                        // BillTo Table
-                        var BillToTable = $('#BillFromTable').dataTable({bJQueryUI: true,
-                            "sPaginationType": "full_numbers",
-                            "bAutoWidth": false,
-                            "bFilter": true,
-                            "bPaginate": true,
-                            "bInfo": false,
-                            "bLengthChange": false,
-                            "iDisplayLength": 10
-                        });
-                        $('#BillFromTable tbody').on('click', 'tr', function () {
-                            $('.collapse').collapse('show');
-                            if ($(this).hasClass('row_selected')) {
-                                $(this).removeClass('row_selected');
-                            }
-                            else {
-                                BillToTable.$('tr.row_selected').removeClass('row_selected');
-                                $(this).addClass('row_selected');
-                            }
-                        });
-
-                    });
-
-                </script>
-            </div>
-            <div class="modal-footer">
-                <div class="text-right">
-                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
 </div>
 <div class="modal fade" id="ClientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
