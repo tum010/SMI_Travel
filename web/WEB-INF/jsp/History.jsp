@@ -20,7 +20,10 @@
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <c:set var="staff" value="${requestScope['Staff_List']}" />
-
+<input type="hidden" value="${refno1}-${refno2}" id="getUrl">
+<input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
+<input type="hidden" value="${master.createDate}" id="master-createDate">
+<input type="hidden" value="${master.createBy}" id="master-createBy">
 <section class="content-header" >
     <h1>
         Booking - History
