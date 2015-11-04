@@ -430,6 +430,30 @@ td div .selectize-input{
 
 }
 
+.panel > .wendyheader{
+    color: #FFFFFF;
+    background-color: #11BF00;
+    border-color: #0E8F00;
+}
+
+.nav > .wendyheader{
+    border-color: #0E8F00;
+}
+
+.wendyborder{
+    border-color: #0E8F00;
+}
+
+.panel  > .outboundheader{
+    color: #FFFFFF;
+    background-color : #FF8003;
+    border-color : #F55E00;
+}
+
+.outboundborder{
+    border-color : #F55E00;
+}
+
 /*input:not([type]), input[type="text"]
 {
     text-transform: uppercase;

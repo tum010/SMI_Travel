@@ -34,6 +34,8 @@
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/FinanceAndCashier/CreditNoteMainMenu.html'"></div>
         </div>
+        <c:set var="panelheader" value=""/>
+        <c:set var="panelborder" value=""/>
         <div class="col-sm-10">
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
@@ -41,9 +43,13 @@
                     <c:choose>
                         <c:when test="${fn:contains(page , 'W')}">
                             <c:set var="type" value="Wendy"/>
+                            <c:set var="panelheader" value="wendyheader"/>
+                            <c:set var="panelborder" value="wendyborder"/>
                         </c:when>
                         <c:when test="${fn:contains(page , 'O')}">
                             <c:set var="type" value="Outbound"/>
+                            <c:set var="panelheader" value="outboundheader"/>
+                            <c:set var="panelborder" value="outboundborder"/>
                         </c:when>     
                         <c:when test="${fn:contains(page , 'I')}">
                             <c:set var="type" value="Inbound"/>
@@ -202,7 +208,7 @@
 
                 <div class="collapse" id="flight1" aria-expanded="true" style="">
                     <!--Order Panel-->
-                    <div class="panel panel-default" style="margin-top: 10px">
+                    <div class="panel panel-default ${panelborder}" style="margin-top: 10px">
                         <div class="panel-heading">
                             <h3 class="panel-title">Tax Invoice Detail</h3>
                         </div>
@@ -244,7 +250,7 @@
                 <div role="tabpanel">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane  active" id="infoButton">
-                            <div class="panel panel-default">                              
+                            <div class="panel panel-default ${panelborder}">                              
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">
                                         <div class="col-md-2 text-right ">

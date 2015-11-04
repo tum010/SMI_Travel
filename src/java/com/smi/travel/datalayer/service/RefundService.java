@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.RefundDao;
+import java.util.List;
 
 /**
  *
@@ -13,6 +14,10 @@ import com.smi.travel.datalayer.dao.RefundDao;
  */
 public class RefundService {
     private RefundDao refundDao;
+    
+    public List searchRefundTicket(String airbookingid){
+        return refundDao.searchRefundTicket(airbookingid);
+    }
 
     public RefundDao getRefundDao() {
         return refundDao;

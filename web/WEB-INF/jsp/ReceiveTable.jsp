@@ -133,7 +133,7 @@
                     </table>
                 </div>
                 <br>
-                <div class="panel panel-default hidden" id="receiveData">
+                <div class="panel panel-default" id="receiveData">
                     <div class="panel-body">
                         <div class="tab-content" id="collapseExample" aria-expanded="false">
                         <div role="tabpanel" class="tab-pane hidden active" id="receive">

@@ -90,6 +90,8 @@
             <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
                  <c:set var="textVoid" value="VOID" />
             </c:if>
+            <c:set var="panelheader" value=""/>
+            <c:set var="panelborder" value=""/>
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <c:choose>
@@ -97,45 +99,61 @@
                             <c:set var="typeInvoice" value="O/T" />
                             <c:set var="typeBooking" value="O" />
                             <h4><b>Invoice Temp Outbound  <font style="color: red;"> ${textVoid}</font></b></h4>
+                            <c:set var="panelheader" value="outboundheader"/>
+                            <c:set var="panelborder" value="outboundborder"/>
                         </c:when>
                         <c:when test="${fn:contains(page , 'OV')}">
                             <c:set var="typeInvoice" value="O/V" />
                             <c:set var="typeBooking" value="O" />
                             <c:set var="showvat" value="true" />
                             <h4><b>Invoice Vat Outbound <font style="color: red;"> ${textVoid}</font></b></h4>
+                            <c:set var="panelheader" value="outboundheader"/>
+                            <c:set var="panelborder" value="outboundborder"/>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WT')}">
                             <c:set var="typeInvoice" value="W/T" />
                             <c:set var="typeBooking" value="I" />
                             <h4><b>Invoice Temp Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
+                            <c:set var="panelheader" value="wendyheader"/>
+                            <c:set var="panelborder" value="wendyborder"/>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WV')}">
                             <c:set var="typeInvoice" value="W/V" />
                             <c:set var="typeBooking" value="I" />
                             <c:set var="showvat" value="true" />
                             <h4><b>Invoice Vat Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
+                            <c:set var="panelheader" value="wendyheader"/>
+                            <c:set var="panelborder" value="wendyborder"/>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WN')}">
                             <c:set var="typeInvoice" value="W/N" />
                             <c:set var="typeBooking" value="I" />
                             <h4><b>Invoice No Vat Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
+                            <c:set var="panelheader" value="wendyheader"/>
+                            <c:set var="panelborder" value="wendyborder"/>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'ON')}">
                             <c:set var="typeInvoice" value="O/N" />
                             <c:set var="typeBooking" value="O" />
                             <h4><b>Invoice No Vat Outbound <font style="color: red;"> ${textVoid}</font></b></h4>
+                            <c:set var="panelheader" value="outboundheader"/>
+                            <c:set var="panelborder" value="outboundborder"/>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'WA')}">
                             <c:set var="typeInvoice" value="W/A" />
                             <c:set var="invType" value="Air Ticket" />
                             <c:set var="typeBooking" value="I" />
                             <h4><b>Invoice Air Ticket Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
+                            <c:set var="panelheader" value="wendyheader"/>
+                            <c:set var="panelborder" value="wendyborder"/>
                         </c:when> 
                         <c:when test="${fn:contains(page , 'OA')}">
                             <c:set var="typeInvoice" value="O/A" />
                             <c:set var="invType" value="Air Ticket" />
                             <c:set var="typeBooking" value="O" />
                             <h4><b>Invoice Air Ticket Outbound <font style="color: red;"> ${textVoid}</font></b></h4>
+                            <c:set var="panelheader" value="outboundheader"/>
+                            <c:set var="panelborder" value="outboundborder"/>
                         </c:when> 
                     </c:choose> 
                     <input type="text" class="hidden" value="${typeInvoice}" id="InputInvoiceType" name="InputInvoiceType">
@@ -148,9 +166,9 @@
             <div class="row" style="padding-left: 15px">  
                 <div role="tabpanel">
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane  active" id="infoSearchInvoice">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
+                        <div role="tabpanel" class="tab-pane  active " id="infoSearchInvoice">
+                            <div class="panel panel-default ${panelborder}">
+                                <div class="panel-heading ${panelheader}">
                                     <h2 class="panel-title">
                                         <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="">
                                             <span id="SpanEdit${advanced.search}">Search Invoice</span>
@@ -378,8 +396,8 @@
                 <div role="tabpanel">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane  active" id="infoDetailBillable">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
+                            <div class="panel panel-default ${panelborder}">
+                                <div class="panel-heading ${panelheader}">
                                     <h4 class="panel-title">Detail Billable</h4>
                                 </div>
                                 <div class="panel-body">
@@ -611,7 +629,7 @@
                 <div role="tabpanel">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane  active" id="infoRemark">
-                            <div class="panel panel-default">                              
+                            <div class="panel panel-default ${panelborder}">                              
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">
                                         <div class="col-sm-1">
@@ -644,7 +662,7 @@
                 <div role="tabpanel">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane  active" id="infoButton">
-                            <div class="panel panel-default">                              
+                            <div class="panel panel-default ${panelborder}">                              
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">
                                         <div class="col-md-2 text-right ">
@@ -1121,7 +1139,7 @@
 <input type="hidden" id="checkTaxinvoice" name="checkTaxinvoice" value="${checkTaxinvoice}">
 <input type="hidden" id="checkRecipt" name="checkRecipt" value="${checkRecipt}">
 <input type="hidden" id="typeBooking" name="typeBooking" value="${typeBooking}">
-<input type="" id="vatBase" name="vatBase" value="${vat}">
+<input type="hidden" id="vatBase" name="vatBase" value="${vat}">
 <input type="hidden" id="typePrint" name="typePrint" value="">
 <input type="hidden" value="${textVoid}">
 <input type="hidden" id="invoiceType" name="invoiceType" value="${invoiceType}">

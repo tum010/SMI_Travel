@@ -28,6 +28,7 @@
 <c:set var="refundbyDefault" value="${requestScope['refundbyDefault']}"/>
 <c:set var="refundnameDefault" value="${requestScope['refundnameDefault']}"/>
 <c:set var="create" value="${requestScope['thisdate']}" />
+<c:set var="listRefundTicket" value="${requestScope['listRefundTicket']}" />
 
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">

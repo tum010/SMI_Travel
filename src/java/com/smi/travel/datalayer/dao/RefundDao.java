@@ -5,10 +5,12 @@
  */
 package com.smi.travel.datalayer.dao;
 
+import java.util.List;
+
 /**
  *
  * @author Kanokporn
  */
 public interface RefundDao {
-    
+    public List searchRefundTicket(String airbookingid);
 }
