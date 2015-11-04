@@ -6,13 +6,19 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script type="text/javascript" src="js/refund.js"></script>
 
 <c:set var="booking_size" value="${requestScope['BookingSize']}"/>
 <c:set var="master" value="${requestScope['Master']}"/>
 <c:set var="staff" value="${requestScope['Staff']}"/>
 <c:set var="action" value="${requestScope['Action']}"/>
-
+<c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
+<c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<input type="hidden" value="${refno1}-${refno2}" id="getUrl">
+<input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
+<input type="hidden" value="${master.createDate}" id="master-createDate">
+<input type="hidden" value="${master.createBy}" id="master-createBy">
 <!--Header-->
 <section class="content-header" >
     <h1>
@@ -35,9 +41,13 @@
             <input hidden="" value="${booking_size[3]}" id="input-land_size">
             <input hidden="" value="${booking_size[4]}" id="input-passenger_size">
             <input hidden="" value="${booking_size[5]}" id="input-billable_size">
+            <input hidden="" value="${booking_size[6]}" id="input-daytour_size">  
         </div>
         <div class="col-sm-10">
-            <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
+            <input type="hidden" value="${master.customer.MInitialname.name}" id="initialname_tmp">
+            <input type="hidden" value="${master.customer.firstName}" id="firstname_tmp">
+            <input type="hidden" value="${master.customer.lastName}" id="lastname_tmp">  
+            <div ng-include="'WebContent/Book/BookNavbar.html'"></div>       
             <input type="hidden" value="${param.referenceNo}" id="getUrl" >
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
             <form action="Refund.smi" method="post" id="RefundForm" role="form">
@@ -332,11 +342,11 @@
                         </div>
                     </div>
                 </div>
-
-                <!--Save-->
+<!--
+                Save
                 <div class="text-center" style="margin-top: 10px">
                     <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
-                </div>
+                </div>-->
             </form>
         </div>
     </div>

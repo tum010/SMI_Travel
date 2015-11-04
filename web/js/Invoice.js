@@ -242,7 +242,6 @@ function validFromInvoice(){
             }
         }
     }
-//                alert("Heeee : " + different);
     if(different > 0){          
         $('#DetailBillableTable').find('tr').each(function () { 
             $(this).find('td').each(function () { 
@@ -341,7 +340,7 @@ function AddRowDetailBillAble(row,prod,des,cos,id,price,RefNo,cur,cur_c){
     var check = "";
     var vatValue = '';
     var vathidden = '';
-    var vat = 7;
+    var vat = $('#vatBase').val();
    
     if(showvat == 'true'){
         vathidden = '';
@@ -998,7 +997,7 @@ function formatNumber(num) {
 function calculateGross(row){
     var amount = document.getElementById('InputAmount'+row).value;
     var gross = document.getElementById('InputGross'+row).value;
-    var varTemp = 7;
+    var varTemp = $('#InputVatTemp'+row).val();
     var vatDefaultData = parseFloat(varTemp);
     $('#checkUse'+row).val();
     amount = amount.replace(/,/g,"");
@@ -1233,37 +1232,16 @@ function clearScreenInvoice(){
 }
 
 function clearInvoice(){
-//    $('#SearchRefNo, #InvNo, #InputInvDate, #InputDueDate, #InvTo, #InvToName, #InvToAddress, #SaleStaffId, #SaleStaffCode, #SaleStaffName, #ARCode, #Remark, #TextAmount, #TotalNet,#InvoiceId ').val('');
-//    $('#Grpup').attr('checked', false);
-//    $('input[name="Department"]')[0].checked = false;
-//    $('input[name="Department"]')[1].checked = false;
-//    $('input[name="Department"]')[2].checked = false;
-//    $('#MasterReservation > tbody  > tr').each(function() {
-//        $(this).remove();
-//    });
-//    $('#DetailBillableTable > tbody  > tr').each(function() {
-//        $(this).remove();
-//    });
-//    $('#counterTable').val('1');
-//    AddRowDetailBillAble();
-
-$('#SearchRefNo, #InvNo, #InputDueDate, #InvTo, #InvToName, #InvToAddress, #SaleStaffId, #SaleStaffCode, #SaleStaffName, #ARCode, #Remark, #TextAmount, #TotalNet,#InvoiceId ').val('');
+    $('#SearchRefNo, #InvNo, #InputDueDate, #InvTo, #InvToName, #InvToAddress, #SaleStaffId, #SaleStaffCode, #SaleStaffName, #ARCode, #Remark, #TextAmount, #TotalNet,#InvoiceId ').val('');
     $('#Grpup').attr('checked', false);
-//    $('input[name="Department"]')[0].checked = false;
-//    $('input[name="Department"]')[1].checked = false;
-//    $('input[name="Department"]')[2].checked = false;
     $('#MasterReservation > tbody  > tr').each(function() {
         $(this).remove();
     });
-    
-//    $('#DetailBillableTable tbody').empty();
+
     $('#DetailBillableTable > tbody  > tr').each(function() {
-//        alert('!');
         $(this).remove();
     });
     $('#counterTable').val('1');
-    
-//    $("#InputDueDate").datepicker({ dateFormat: "yy-mm-dd"}).datepicker("setDate", "0");
     AddRowDetailBillAble();
 }
 function copyInvoice(){

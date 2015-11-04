@@ -103,5 +103,7 @@
     <mapping resource="resource/hibernate/ARNirvana.hbm.xml"/>
     <mapping resource="resource/hibernate/PaymentWendyReference.hbm.xml"/>
     <mapping resource="resource/hibernate/HistoryBooking.hbm.xml"/>
+    <mapping resource="resource/hibernate/AirTicketRefund.hbm.xml"/>
+    <mapping/>
   </session-factory>
 </hibernate-configuration>
