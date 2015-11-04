@@ -139,6 +139,15 @@ public class InvoiceController extends SMITravelController {
             request.setAttribute("listType", null);
         } 
        
+        //Get Vat
+        MDefaultData mDefaultVat = utilityService.getMDefaultDataFromType("vat");
+        String vat = mDefaultVat.getValue();
+        if(vat != null){
+            request.setAttribute("vat", vat);
+        }else{
+            request.setAttribute("vat", null);
+        } 
+        
         // Save Invoice And Update
         if("save".equals(action)){
 //            invoice = new Invoice();
