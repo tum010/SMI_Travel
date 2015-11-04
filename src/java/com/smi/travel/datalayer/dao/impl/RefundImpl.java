@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.view.entity.RefundTicket;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,6 +58,7 @@ public class RefundImpl implements RefundDao{
         List<RefundTicket> listRefundTicket = new LinkedList<RefundTicket>();
         for(int i = 0; i< airbookingidList.size() ; i++){
             RefundTicket refundTicket = new RefundTicket();
+            refundTicket.setAirticketrefundid(airbookingidList.get(i).getId());
             refundTicket.setRefundno(airbookingidList.get(i).getRefundAirticket().getRefundNo());
             // Refund By Name
             if(airbookingidList.get(i).getRefundAirticket().getRefundBy() != null && !"".equals(airbookingidList.get(i).getRefundAirticket().getRefundNo())){
@@ -81,6 +83,7 @@ public class RefundImpl implements RefundDao{
             List<RefundAirticketDetail> rRefundAirticketDetail = new LinkedList<RefundAirticketDetail>();
             rRefundAirticketDetail =  airbookingidList.get(i).getRefundAirticket().getRefundAirticketDetails();
             BigDecimal sumCharge = new BigDecimal(0);
+            DecimalFormat df = new DecimalFormat("#,###.00");
             for (int j = 0; j < rRefundAirticketDetail.size(); j++) {
                 if(rRefundAirticketDetail.get(j).getPayCustomer() != null ){
                     sumCharge = sumCharge.add(rRefundAirticketDetail.get(j).getPayCustomer());
@@ -88,7 +91,7 @@ public class RefundImpl implements RefundDao{
                     sumCharge = sumCharge.add(new BigDecimal(0.0));
                 }
             }
-            refundTicket.setChange(sumCharge);
+            refundTicket.setChange(df.format(sumCharge));
             listRefundTicket.add(refundTicket);
         }
            
