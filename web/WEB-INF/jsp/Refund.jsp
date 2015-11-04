@@ -15,9 +15,14 @@
 <c:set var="action" value="${requestScope['Action']}"/>
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
+<c:set var="listRefundBy" value="${requestScope['listRefundBy']}"/>
+<c:set var="listReceiveBy" value="${requestScope['listReceiveBy']}"/>
+
+
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
+<input type="hidden" value="${master.createBy}" id="master-createBy">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <!--Header-->
 <section class="content-header" >

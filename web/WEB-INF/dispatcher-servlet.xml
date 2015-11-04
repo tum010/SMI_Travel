@@ -274,6 +274,7 @@
 	<bean id="RefundController" class="com.smi.travel.controller.RefundController">
 		<property name="utilservice" ref="UtilityService" />
 		<property name="mStaffService" ref="MStaffService" />
+                <property name="refundService" ref="RefundService" />
 	</bean>
 
 	<bean id="HotelBookingController" class="com.smi.travel.controller.HotelBookingController">

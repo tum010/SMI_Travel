@@ -342,5 +342,9 @@
     <bean id="PackageTourHotelService" class="com.smi.travel.datalayer.service.PackageTourHotelService">
         <property name="packageTourHotelDao" ref="PackageTourHotelDao" />
     </bean>
+    
+    <bean id="RefundService" class="com.smi.travel.datalayer.service.RefundService">
+        <property name="refundDao" ref="RefundDao" />
+    </bean>
     <!--<add data>-->
 </beans>
