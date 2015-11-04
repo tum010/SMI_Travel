@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelMonthlyTemp" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="e4b5a90c-6d7a-4990-82ea-0b717afbeefe">
 	<property name="ireport.zoom" value="1.7715610000000015"/>
-	<property name="ireport.x" value="257"/>
+	<property name="ireport.x" value="286"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Kanokporn\\Documents\\GitHub\\New_Git\\New_Git_Last\\SMI_Travel\\web\\WEB-INF\\report\\"]]></defaultValueExpression>
@@ -17,7 +17,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="104" splitType="Stretch">
+		<band height="100" splitType="Stretch">
 			<staticText>
 				<reportElement x="141" y="9" width="128" height="26" uuid="d901868a-f586-4945-8131-88278143302a"/>
 				<textElement>
@@ -40,23 +40,23 @@
 				<textFieldExpression><![CDATA[$F{topage}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="369" y="36" width="66" height="24" uuid="c34d40c0-0e2e-496b-9d3a-de88b38ca02b"/>
+				<reportElement x="414" y="48" width="45" height="15" uuid="c34d40c0-0e2e-496b-9d3a-de88b38ca02b"/>
 				<textElement>
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[ Print Date :  ]]></text>
 			</staticText>
 			<textField pattern="">
-				<reportElement x="438" y="36" width="109" height="24" uuid="86366861-8a91-4471-b532-e85406c2dccc"/>
+				<reportElement x="465" y="49" width="125" height="14" uuid="86366861-8a91-4471-b532-e85406c2dccc"/>
 				<textElement>
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="391" y="70" width="36" height="24" uuid="16975558-94b4-4cfb-95db-9f8c2f89837c"/>
+				<reportElement x="431" y="74" width="36" height="14" uuid="16975558-94b4-4cfb-95db-9f8c2f89837c"/>
 				<textElement>
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[ Page :  ]]></text>
 			</staticText>
@@ -68,37 +68,37 @@
 				<text><![CDATA[ to]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="448" y="54" width="109" height="24" uuid="348e77dd-6136-475b-956c-99f2c6d3ca3e"/>
+				<reportElement x="464" y="62" width="109" height="14" uuid="348e77dd-6136-475b-956c-99f2c6d3ca3e"/>
 				<textElement>
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{printby}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="379" y="54" width="66" height="24" uuid="17cea226-1eea-4858-9288-75aa9b461bde"/>
+				<reportElement x="422" y="62" width="48" height="16" uuid="17cea226-1eea-4858-9288-75aa9b461bde"/>
 				<textElement>
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[ Print By :  ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="461" y="70" width="18" height="21" uuid="f5bd6e12-220b-43f3-b884-274d5c1778b0"/>
+				<reportElement x="481" y="74" width="18" height="14" uuid="f5bd6e12-220b-43f3-b884-274d5c1778b0"/>
 				<textElement>
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[of]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="433" y="70" width="22" height="23" uuid="1a31ccf2-2af4-4077-b0a4-23f2f492e4cc"/>
+				<reportElement x="458" y="74" width="22" height="14" uuid="1a31ccf2-2af4-4077-b0a4-23f2f492e4cc"/>
 				<textElement textAlignment="Center">
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="478" y="70" width="18" height="23" uuid="884c8451-eccc-4e06-9aa5-cb107475dbd2"/>
+				<reportElement x="501" y="74" width="18" height="14" uuid="884c8451-eccc-4e06-9aa5-cb107475dbd2"/>
 				<textElement textAlignment="Center">
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
