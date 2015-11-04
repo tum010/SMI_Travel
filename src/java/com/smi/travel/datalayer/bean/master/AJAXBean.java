@@ -23,10 +23,12 @@ import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
 import com.smi.travel.datalayer.dao.ReceiptDao;
+import com.smi.travel.datalayer.dao.ReceiveTableDao;
 import com.smi.travel.datalayer.dao.RefundAirticketDao;
 import com.smi.travel.datalayer.dao.TaxInvoiceDao;
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
+import com.smi.travel.datalayer.entity.AdvanceReceive;
 import com.smi.travel.datalayer.entity.Billable;
 import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Customer;
@@ -104,6 +106,7 @@ public class AJAXBean extends AbstractBean implements
     private static final String TAXINVOICE = "TaxInvoiceServlet";
     private static final String CREDITNOTE = "CreditNoteServlet";
     private static final String PAYMENTTOURHOTEL = "PaymentTourHotelServlet";
+    private static final String RECEIVETABLE = "ReceiveTableServlet";        
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -127,7 +130,8 @@ public class AJAXBean extends AbstractBean implements
     private TaxInvoiceDao taxInvoiceDao;
     private CreditNoteDao creditNoteDao;
     private MFilghtDao mFlightDao;
-    private PaymentWendytourDao paymentWendytourDao; 
+    private PaymentWendytourDao paymentWendytourDao;
+    private ReceiveTableDao receiveTableDao;
 
     public AJAXBean(List queryList) {
         super(queryList);
@@ -183,6 +187,8 @@ public class AJAXBean extends AbstractBean implements
                     mFlightDao = (MFilghtDao) obj;
                 } else if (obj instanceof PaymentWendytourDao) {
                     paymentWendytourDao = (PaymentWendytourDao) obj;
+                } else if (obj instanceof ReceiveTableDao) {
+                    receiveTableDao = (ReceiveTableDao) obj;
                 }
             }
         }
@@ -812,6 +818,20 @@ public class AJAXBean extends AbstractBean implements
             }else if("getTourCodeAutoList".equalsIgnoreCase(type)){
                 String name = map.get("tourCode").toString();
                 result = buildTourListJSON(paymentWendytourDao.searchListTourCode(name));
+            }
+        }else if (RECEIVETABLE.equalsIgnoreCase(servletName)){
+            if("checkPeriodDate".equalsIgnoreCase(type)){
+                String periodId = map.get("periodId").toString();
+                String fromDate = map.get("fromDate").toString();
+                String toDate = map.get("toDate").toString();
+                String periodDetail = map.get("periodDetail").toString();
+                String check = receiveTableDao.checkReceivePeriod(periodId,fromDate,toDate);
+                if("success".equalsIgnoreCase(check)){
+                    result = receiveTableDao.saveReceivePeriod(periodId,fromDate,toDate,periodDetail);
+                    System.out.println("Result : "+result);
+                }else{
+                    result = "fail";
+                }    
             }
         }
 

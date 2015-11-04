@@ -149,6 +149,7 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
                                 <value>resource/hibernate/AdvanceReceiveCredit.hbm.xml</value>
                                 <value>resource/hibernate/HistoryBooking.hbm.xml</value>
                                 <value>resource/hibernate/AirticketRefund.hbm.xml</value>
+                                <value>resource/hibernate/AdvanceReceivePeriod.hbm.xml</value>
 			</list>
 		</property>
 

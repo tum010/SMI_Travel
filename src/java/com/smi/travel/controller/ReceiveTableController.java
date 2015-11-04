@@ -1,6 +1,7 @@
 package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.AdvanceReceive;
 import com.smi.travel.datalayer.entity.AdvanceReceiveCredit;
+import com.smi.travel.datalayer.entity.AdvanceReceivePeriod;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
 import com.smi.travel.datalayer.entity.MCreditBank;
@@ -31,6 +32,7 @@ public class ReceiveTableController extends SMITravelController {
     private static final String ADVANCERECEIVELIST = "advanceReceiveList";
     private static final String ADVANCERECEIVE = "advanceReceive";
     private static final String ADVANCERECEIVECREDITLIST = "advanceReceiveCreditList";
+    private static final String ADVANCERECEIVEPERIOD = "advanceReceivePeriod";
     private static final String RESULT = "result";
     private ReceiveTableService receiveTableService;
     private UtilityService utilservice;
@@ -128,6 +130,7 @@ public class ReceiveTableController extends SMITravelController {
             if("success".equalsIgnoreCase(result)){
                 List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive(receiveDate,vatType,"success");
                 request.setAttribute(ADVANCERECEIVELIST, advanceReceiveList);
+                getReceivePeriod(request,receiveDate);
                 request.setAttribute("inputDate", receiveDate);
                 request.setAttribute("selectStatus", vatType);
             }
@@ -135,10 +138,11 @@ public class ReceiveTableController extends SMITravelController {
         }else if("edit".equalsIgnoreCase(action)){
             List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive("","",receiveId);
             request.setAttribute(ADVANCERECEIVE, advanceReceiveList.get(0));
+            getReceivePeriod(request,String.valueOf(advanceReceiveList.get(0).getRecDate()));
             if(advanceReceiveList.get(0).getAdvanceReceiveCredits() != null){
                 List<AdvanceReceiveCredit> advanceReceiveCreditList = new ArrayList<AdvanceReceiveCredit>();
                 advanceReceiveCreditList = advanceReceiveList.get(0).getAdvanceReceiveCredits();
-                request.setAttribute(ADVANCERECEIVECREDITLIST, advanceReceiveCreditList);
+                request.setAttribute(ADVANCERECEIVECREDITLIST, advanceReceiveCreditList);                
             }
                        
         }else if("deleteAdvanceReceive".equalsIgnoreCase(action)){
@@ -212,6 +216,12 @@ public class ReceiveTableController extends SMITravelController {
         }
     }
 
+    private void getReceivePeriod(HttpServletRequest request, String receiveDate) {
+        AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
+        advanceReceivePeriod = receiveTableService.getReceivePeriod(receiveDate);
+        request.setAttribute(ADVANCERECEIVEPERIOD, advanceReceivePeriod);
+    }
+    
     public UtilityService getUtilservice() {
         return utilservice;
     }
@@ -227,4 +237,5 @@ public class ReceiveTableController extends SMITravelController {
     public void setReceiveTableService(ReceiveTableService receiveTableService) {
         this.receiveTableService = receiveTableService;
     }    
+   
 }

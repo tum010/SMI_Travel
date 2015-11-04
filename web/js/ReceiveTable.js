@@ -16,7 +16,7 @@ $(document).ready(function() {
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
     });
-    
+
     $(".money").mask('000,000,000,000.00', {reverse: true});
 
     $('#SearchReceiveTable').dataTable({bJQueryUI: true,
@@ -164,6 +164,14 @@ $(document).ready(function() {
         $(this).val(value);
     });
 
+    //Validate Receive Period
+    $('.fromdate').datetimepicker().change(function() {
+        checkFromDateField();
+    });
+    $('.todate').datetimepicker().change(function() {
+        checkToDateField();
+    });
+
     setEnvironment();
 });
 
@@ -172,31 +180,31 @@ function setEnvironment() {
     if ($("#receiveId").val() !== '') {
         $("#receiveData").removeClass("hidden");
     }
-    if($("#receiveAmount").val() !== ''){
+    if ($("#receiveAmount").val() !== '') {
         $("#receiveAmount").val(formatNumber(parseFloat($("#receiveAmount").val())));
     }
-    if($("#cashAmount").val() !== ''){
+    if ($("#cashAmount").val() !== '') {
         $("#cashAmount").val(formatNumber(parseFloat($("#cashAmount").val())));
     }
-    if($("#bankAmount").val() !== ''){
+    if ($("#bankAmount").val() !== '') {
         $("#bankAmount").val(formatNumber(parseFloat($("#bankAmount").val())));
     }
-    if($("#chqAmount").val() !== ''){
-        $("#chqAmount").val(formatNumber(parseFloat($("#chqAmount").val()))); 
+    if ($("#chqAmount").val() !== '') {
+        $("#chqAmount").val(formatNumber(parseFloat($("#chqAmount").val())));
     }
-    if($("#chqBank").val() !== ''){
-        $("#chqBank").val(formatNumber(parseFloat($("#chqBank").val())));   
+    if ($("#chqBank").val() !== '') {
+        $("#chqBank").val(formatNumber(parseFloat($("#chqBank").val())));
     }
-    if($("#chqNo").val() !== ''){
+    if ($("#chqNo").val() !== '') {
         $("#chqNo").val(formatNumber(parseFloat($("#chqNo").val())));
     }
-    if($("#countCredit").val() !== '1'){
+    if ($("#countCredit").val() !== '1') {
         var row = parseInt($("#countCredit").val());
-        for(var i=1;i<=row;i++){
-            if($("#creditAmount"+i).val() !== ''){
-                $("#creditAmount"+i).val(formatNumber(parseFloat($("#creditAmount"+i).val())));
+        for (var i = 1; i <= row; i++) {
+            if ($("#creditAmount" + i).val() !== '') {
+                $("#creditAmount" + i).val(formatNumber(parseFloat($("#creditAmount" + i).val())));
             }
-        }      
+        }
     }
 }
 
@@ -314,10 +322,10 @@ function formatNumber(num) {
 }
 
 function calculate(num) {
-    if(num.value !== ''){
+    if (num.value !== '') {
         var number = parseFloat((num.value).replace(/,/g, ""));
         num.value = formatNumber(number);
-    }    
+    }
 }
 
 //Check value for Search
@@ -387,7 +395,7 @@ function AddRowCreditTable(row) {
             '<div class="input-group daydatepicker" id="daydatepicker' + row + '">' +
             '<input type="text" name="creditExpire' + row + '" id="creditExpire' + row + '" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />' +
             '<span class="input-group-addon spandate" style="padding : 1px 10px;" onclick="AddrowBySelect(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
-            '</div>' +            
+            '</div>' +
             '</td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="creditAmount' + row + '" name="creditAmount' + row + '" value="" onkeyup="insertCommas(this)" onfocusout="calculate(this)"></td>' +
             '<td>' +
@@ -436,13 +444,13 @@ function deleteAdvanceReceive() {
     document.getElementById("receiveForm").submit();
 }
 
-function deleteAdvanceReceiveCreditConfirm(id,row) {
+function deleteAdvanceReceiveCreditConfirm(id, row) {
     $("#receiveCreditId").val(id);
     $("#receiveCreditRow").val(row);
     $("#delReceiveCreditModal").modal("show");
 }
 
-function deleteAdvanceReceiveCredit(){
+function deleteAdvanceReceiveCredit() {
     var id = document.getElementById('receiveCreditId').value;
     var row = document.getElementById('receiveCreditRow').value;
     var count = document.getElementById('countCredit').value;
@@ -453,7 +461,7 @@ function deleteAdvanceReceiveCredit(){
 //            $("#tr_CreditTableAddRow").removeClass("hide");
 //            $("#tr_CreditTableAddRow").addClass("show");
 //        }
-        if((parseInt(count)-1) === parseInt(row)){
+        if ((parseInt(count) - 1) === parseInt(row)) {
             AddRowCreditTable(parseInt(count));
         }
 //            $("#countTaxInvoice").val(count+1);
@@ -470,7 +478,7 @@ function deleteAdvanceReceiveCredit(){
 //                    $("#tr_CreditTableAddRow").addClass("show");
 //                }
 //                    $("#countTaxInvoice").val(count+1);
-                if((parseInt(count)-1) === parseInt(row)){
+                if ((parseInt(count) - 1) === parseInt(row)) {
                     AddRowCreditTable(parseInt(count));
                 }
             },
@@ -483,13 +491,154 @@ function deleteAdvanceReceiveCredit(){
     $('#delReceiveCreditModal').modal('hide');
 }
 
-function addNewRowCreditTable(){
+function addNewRowCreditTable() {
     var count = document.getElementById('countCredit').value;
     AddRowCreditTable(parseInt(count));
 }
 
-function newReceiveTable(){
+function newReceiveTable() {
     $("#action").val("new");
     document.getElementById("receiveForm").submit();
 }
 
+function checkFromDateField() {
+    var inputFromDate = document.getElementById("fromDate");
+    var InputToDate = document.getElementById("toDate");
+    if (InputToDate.value === '' && inputFromDate.value === '') {
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");
+        $("#btnSave").removeClass("disabled");
+    } else if (inputFromDate.value === '' || InputToDate.value === '') {
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-success");
+        $("#fromdatepanel").addClass("has-error");
+        $("#todatepanel").addClass("has-error");
+        $("#btnSave").addClass("disabled");
+    } else {
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");
+        $("#fromdatepanel").addClass("has-success");
+        $("#todatepanel").addClass("has-success");
+        $("#btnSave").removeClass("disabled");
+        checkDateValue("from", "");
+    }
+}
+
+function checkToDateField() {
+    var InputToDate = document.getElementById("toDate");
+    var inputFromDate = document.getElementById("fromDate");
+    if (InputToDate.value === '' && inputFromDate.value === '') {
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");
+        $("#btnSave").removeClass("disabled");
+    } else if (inputFromDate.value === '' || InputToDate.value === '') {
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-success");
+        $("#fromdatepanel").addClass("has-error");
+        $("#todatepanel").addClass("has-error");
+        $("#btnSave").addClass("disabled");
+    } else {
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");
+        $("#fromdatepanel").addClass("has-success");
+        $("#todatepanel").addClass("has-success");
+        $("#btnSave").removeClass("disabled");
+        checkDateValue("to", "");
+    }
+}
+
+function checkDateValue(date) {
+    var inputFromDate = document.getElementById("fromDate");
+    var InputToDate = document.getElementById("toDate");
+    if ((inputFromDate.value !== '') && (InputToDate.value !== '')) {
+        var fromDate = (inputFromDate.value).split('-');
+        var toDate = (InputToDate.value).split('-');
+        if ((parseInt(fromDate[0])) > (parseInt(toDate[0]))) {
+            validateDate(date, "over");
+        }
+        if (((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))) {
+            validateDate(date, "over");
+        }
+        if (((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))) {
+            validateDate(date, "over");
+        }
+    }
+}
+
+function validateDate(date, option) {
+    if (option === 'over') {
+        $("#fromdatepanel").removeClass("has-success");
+        $("#fromdatepanel").addClass("has-error");
+        $("#todatepanel").removeClass("has-success");
+        $("#todatepanel").addClass("has-error");
+        $("#btnSave").addClass("disabled");
+    } else {
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-success");
+        $("#fromdatepanel").addClass("has-error");
+        $("#todatepanel").addClass("has-error");
+        $("#btnSave").addClass("disabled");
+    }
+}
+
+function saveReceivePeriod() {
+    $('#textAlertDivSavePeriod').hide();
+    $('#textAlertDivNotSavePeriod').hide();
+    var periodId = $("#periodId").val();
+    var fromDate = $("#fromDate").val();
+    var toDate = $("#toDate").val();
+    var periodDetail = $("#periodDetail").val();
+
+    var servletName = 'ReceiveTableServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&periodId=' + periodId +
+            '&fromDate=' + fromDate +
+            '&toDate=' + toDate +
+            '&periodDetail=' + periodDetail +
+            '&type=' + 'checkPeriodDate';
+    CallAjaxCheck(param);
+
+}
+
+function CallAjaxCheck(param) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {               
+                if(msg === 'success'){
+                    $("#fromdatepanel").removeClass("has-error");
+                    $("#fromdatepanel").addClass("has-success");
+                    $("#todatepanel").removeClass("has-error");
+                    $("#todatepanel").addClass("has-success");
+                    $('#textAlertDivSavePeriod').show();
+                }else{
+                    $("#fromdatepanel").removeClass("has-success");
+                    $("#todatepanel").removeClass("has-success");
+                    $("#fromdatepanel").addClass("has-error");
+                    $("#todatepanel").addClass("has-error");
+                    $("#btnSave").addClass("disabled");
+                    $('#textAlertDivNotSavePeriod').show();
+                }
+            }, error: function(msg) {
+                console.log('auto ERROR');
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}
+
+function hideTextAlertDivSavePeriod(){
+    $('#textAlertDivSavePeriod').hide();
+}
+
+function hideTextAlertDivNotSavePeriod(){
+    $('#textAlertDivNotSavePeriod').hide();
+}

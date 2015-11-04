@@ -464,6 +464,7 @@
                 <ref local="CreditNoteDao" />
                 <ref local="MFlightDao" />
                 <ref local="PaymentWendytourDao" />
+                <ref local="ReceiveTableDao" />
             </list>
         </constructor-arg>
     </bean>
@@ -491,6 +492,7 @@
     <bean id="TaxInvoiceServlet" class="com.smi.travel.servlet.TaxInvoiceServlet" />
     <bean id="CreditNoteServlet" class="com.smi.travel.servlet.CreditNoteServlet" />
     <bean id="PaymentTourHotelServlet" class="com.smi.travel.servlet.PaymentTourHotelServlet" />
+    <bean id="ReceiveTableServlet" class="com.smi.travel.servlet.ReceiveTableServlet" />
 	<!--<add data>-->
 	
 </beans>

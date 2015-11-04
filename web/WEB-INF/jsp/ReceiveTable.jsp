@@ -10,6 +10,7 @@
 <c:set var="advanceReceiveList" value="${requestScope['advanceReceiveList']}" />
 <c:set var="advanceReceive" value="${requestScope['advanceReceive']}" />
 <c:set var="advanceReceiveCreditList" value="${requestScope['advanceReceiveCreditList']}" />
+<c:set var="advanceReceivePeriod" value="${requestScope['advanceReceivePeriod']}" />
 
 <input type="hidden" name="result" id="result" value="${requestScope['result']}">
 
@@ -230,7 +231,8 @@
                             </div>
                         </div><!-- End Row 3--><br>
                         <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 ">
+                            <div class="col-xs-12 ">                               
+                                  
                                 <div class="col-xs-1" style="width: 135px">
                                     <label class="control-label text-left">Cash Amount</lable>        
                                 </div>
@@ -359,6 +361,14 @@
                 <input type="hidden" name="createDate" id="createDate" value=""/>
             </div>
         </div>
+        <div id="textAlertDivSavePeriod"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivSavePeriod()"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Period Success!</strong> 
+        </div>
+        <div id="textAlertDivNotSavePeriod"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivNotSavePeriod()"><span aria-hidden="true">&times;</span></button>
+                <strong>Period has already used!</strong> 
+        </div>                
         <div class="panel panel-default">
             <div class="panel-heading">
                 <label class="control-label">Total Receive</lable>
@@ -368,77 +378,94 @@
                     <div id='TextBoxesGroup'>
                         <div class="row" style="padding-left: 0px">
                             <div class="col-xs-12 ">
-                                <div class="col-xs-1 text-right" style="padding-left: 0px;width:100px;">
-                                    <label class="control-label">Date</lable>
+                                <input name="periodId" id="periodId" type="hidden" class="form-control" value="${advanceReceivePeriod.id}" />
+                                <div class="col-xs-1 " style="width:30px;"></div>
+                                <div class="col-xs-1 " style="width:125px;">
+                                    <label class="control-label">From</lable>
                                 </div>  
-                                <div class="col-md-2 form-group text-left" style="padding-left:5px;width:200px;">
-                                    <div class="col-sm-12">
-                                        <div class='input-group' style="width:165px;">
-                                            <input name="InputDateOne" id="InputDateOne" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" readonly=""/>
-                                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                        </div>
+                                <div class="col-xs-1 form-group" style="width: 180px">
+                                    <div class='input-group date fromdate' id="fromdatepanel">
+                                        <input name="fromDate" id="fromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${advanceReceivePeriod.receiveFrom}" onclick="hideTextAlertDivSavePeriod(); hideTextAlertDivNotSavePeriod();">
+                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>
-                                <div class="col-sm-1" style="width: 80px"></div>
-                                <div class="col-xs-1 text-right" style="padding-left: 0px;width:150px;">
-                                    <label class="control-label">Cash Amount</lable>
-                                </div> 
-                                <div class="col-md-2 form-group text-left" style="padding-left:5px;width:200px;">
-                                    <div class="col-sm-12">
-                                        <input name="InputCashAmount" id="InputCashAmount" type="text" class="form-control money" value="" readonly=""/>
+                                <div class="col-xs-1 " style="width:30px;"></div>
+                                <div class="col-xs-1 " style="width:115px;">
+                                    <label class="control-label">To</lable>
+                                </div>  
+                                <div class="col-xs-1 form-group" style="width: 180px">
+                                    <div class='input-group date todate' id="todatepanel">
+                                        <input name="toDate" id="toDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${advanceReceivePeriod.receiveTo}" onclick="hideTextAlertDivSavePeriod(); hideTextAlertDivNotSavePeriod();"/>
+                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
-                                </div>
-                                <div class="col-sm-1" style="width: 80px"></div>
-                                <div class="col-xs-1 text-right" style="padding-left: 0px;width:100px;">
-                                    <label class="control-label">Cash(--)</lable>
-                                </div> 
-                                <div class="col-md-2 form-group text-left" style="padding-left:5px;width:200px;">                                
-                                    <div class="col-sm-12">
-                                       <input name="InputCash" id="InputCash" type="text" class="form-control money" value="" readonly=""/>                              
-                                    </div>
-                                </div>                           
+                                </div>                                                  
                             </div>   
                         </div>                      
                     </div><!-- End Text 1-->
                     <div id="TextBoxDiv2" >                    
                         <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 ">                        
+                            <div class="col-xs-12 ">
+                                <div class="col-xs-1 text-right" style="padding-left: 0px;width:150px;">
+                                    <label class="control-label">Cash Amount</lable>
+                                </div> 
+                                <div class="col-md-2 form-group text-left" style="padding-left:5px;width:200px;">
+                                    <div class="col-sm-12">
+                                        <input name="periodCashAmount" id="periodCashAmount" type="text" class="form-control money" value="" readonly=""/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1" style="width: 30px"></div>
+                                <div class="col-xs-1" style="padding-left: 0px;width:85px;">
+                                    <label class="control-label">Cash(--)</lable>
+                                </div> 
+                                <div class="col-md-2 form-group text-left" style="width:210px;">                                
+                                    <div class="col-sm-12">
+                                       <input name="periodCash" id="periodCash" type="text" class="form-control money" value="" readonly=""/>                              
+                                    </div>
+                                </div>       
                                 <div class="col-xs-1 text-right" style="padding-left: 0px;width:100px;">
                                     <label class="control-label">Cheque</lable>
                                 </div>  
                                 <div class="col-md-2 form-group text-left" style="padding-left:20px;width:200px;">
-                                    <input name="InputCheque" id="InputCheque" type="text" class="form-control money"  placeholder="" value="" readonly=""/>
+                                    <input name="periodCheque" id="periodCheque" type="text" class="form-control money"  placeholder="" value="" readonly=""/>
                                 </div>
-                                <div class="col-sm-1" style="width: 80px"></div>
+                            </div>
+                        </div><!--End Row 2 -->
+                        <div class="row" style="padding-left: 0px">
+                            <div class="col-xs-12 ">
                                 <div class="col-xs-1 text-right" style="padding-left: 0px;width:150px;">
                                     <label class="control-label">Bank Amount</lable>
                                 </div> 
                                 <div class="col-md-2 form-group text-left" style="padding-left:5px;width:200px;">
                                     <div class="col-sm-12">
-                                        <input name="InputBankAmount" id="InputBankAmount" type="text" class="form-control money" value="" readonly=""/>
+                                        <input name="periodBankAmount" id="periodBankAmount" type="text" class="form-control money" value="" readonly=""/>
                                     </div>
                                 </div>
-                                <div class="col-sm-1" style="width: 80px"></div>
-                                <div class="col-xs-1 text-right" style="padding-left: 0px;width:100px;">
+                                <div class="col-sm-1" style="width: 20px"></div>
+                                <div class="col-xs-1 " style="padding-left: 0px;width:95px;">
                                     <label class="control-label">Credit Card</lable>
                                 </div> 
                                 <div class="col-md-2 form-group text-left" style="padding-left:5px;width:200px;">                                
                                     <div class="col-sm-12">
-                                       <input name="InputCreditCard" id="InputCreditCard" type="text" class="form-control money"  placeholder="" value="" readonly=""/>                               
+                                       <input name="periodCreditCard" id="periodCreditCard" type="text" class="form-control money"  placeholder="" value="" readonly=""/>                               
                                     </div>
-                                </div>                                                        
-                            </div>   
-                        </div><!--End Row 2 -->
-                        <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 ">  
-                                <div class="col-xs-1 text-right" style="padding-left: 0px;width:100px;">
-                                    <label class="control-label">Detail</lable>
+                                </div>
+                                <div class="col-xs-1 text-right" style="width:85px;">
+                                    <label class="control-label ">Detail</lable>
                                 </div>  
-                                <div class="col-md-2 form-group text-left" style="padding-left:20px;width:390px;">
-                                    <textarea class="form-control" rows="3" id="commentDetail" name="commentDetail" readonly=""></textarea>
-                                </div>                                                                               
+                                <div class="col-md-2 form-group text-left" style="padding-left:35px;width:370px;">
+                                    <textarea class="form-control" rows="3" id="periodDetail" name="periodDetail" onclick="hideTextAlertDivSavePeriod(); hideTextAlertDivNotSavePeriod();">
+                                        ${advanceReceivePeriod.detail}
+                                    </textarea>
+                                </div>  
                             </div>   
-                        </div>         
+                        </div><!--End Row 3 -->
+                        <div class="row" >
+                            <div class="col-xs-12 text-center">                              
+                                <button type="button" id="btnSave" name="btnSave" onclick="saveReceivePeriod()" class="btn btn-success">
+                                    <i class="fa fa-save"></i> Save
+                                </button>                   
+                            </div>
+                        </div>
                     </div>
                 </div>                
             </div>

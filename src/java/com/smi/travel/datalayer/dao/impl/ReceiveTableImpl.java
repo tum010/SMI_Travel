@@ -9,8 +9,10 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.ReceiveTableDao;
 import com.smi.travel.datalayer.entity.AdvanceReceive;
 import com.smi.travel.datalayer.entity.AdvanceReceiveCredit;
+import com.smi.travel.datalayer.entity.AdvanceReceivePeriod;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MCreditBank;
+import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -267,6 +269,84 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             result = "fail";
         }
         return result;
+    }
+
+    @Override
+    public String saveReceivePeriod(String periodId, String fromDate, String toDate, String detail) {
+        String result = "fail";
+        UtilityFunction utilty = new UtilityFunction();
+        Session session = this.sessionFactory.openSession();
+        try {
+            AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
+            advanceReceivePeriod.setReceiveFrom(utilty.convertStringToDate(fromDate));
+            advanceReceivePeriod.setReceiveTo(utilty.convertStringToDate(toDate));
+            advanceReceivePeriod.setDetail(detail);
+            transaction = session.beginTransaction();              
+            session.save(advanceReceivePeriod);     
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";            
+        } catch (Exception ex) {
+            transaction.rollback();
+            session.close();
+            ex.printStackTrace();
+            result = "fail";
+        }         
+        return result;    
+    }
+
+    @Override
+    public String checkReceivePeriod(String periodId, String fromDate, String toDate) {
+        String result = "fail";
+        StringBuffer query = new StringBuffer("from AdvanceReceivePeriod ad ");
+        boolean haveCondition = false;
+        if ((fromDate != null) && (!"".equalsIgnoreCase(fromDate))) {
+            query.append(haveCondition ? " or" : " where");
+            query.append(" (ad.receiveFrom between '" + fromDate + "' and '" + toDate + "')");
+            haveCondition = true;
+        }
+        if ((toDate != null) && (!"".equalsIgnoreCase(toDate))) {
+            query.append(haveCondition ? " or" : " where");
+            query.append(" (ad.receiveTo between '" + fromDate + "' and '" + toDate + "')");
+            haveCondition = true;
+        }
+        
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query.toString());
+        System.out.println(HqlQuery.toString());
+        HqlQuery.setMaxResults(MAX_ROW);
+        List<AdvanceReceivePeriod> advanceReceivePeriodList = HqlQuery.list();
+        if (!advanceReceivePeriodList.isEmpty()) {
+            return result;
+        }
+        result = "success";
+        this.sessionFactory.close();
+        session.close();
+        return result;
+    }
+
+    @Override
+    public AdvanceReceivePeriod getReceivePeriod(String receiveDate) {
+        StringBuffer query = new StringBuffer("from AdvanceReceivePeriod ad ");
+        boolean haveCondition = false;
+        if ((receiveDate != null) && (!"".equalsIgnoreCase(receiveDate))) {
+            query.append(haveCondition ? " or" : " where");
+            query.append(" (ad.receiveFrom <= '" + receiveDate + "' and ad.receiveTo >= '" + receiveDate + "')");
+            haveCondition = true;
+        }
+        
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query.toString());
+        System.out.println(HqlQuery.toString());
+        HqlQuery.setMaxResults(MAX_ROW);
+        List<AdvanceReceivePeriod> advanceReceivePeriodList = HqlQuery.list();
+        if (advanceReceivePeriodList.isEmpty()) {
+            return null;
+        }
+        this.sessionFactory.close();
+        session.close();
+        return advanceReceivePeriodList.get(0);
     }
        
 }
