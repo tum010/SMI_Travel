@@ -386,15 +386,15 @@ public class InvoiceImpl implements InvoiceReportDao{
             invM.setBillto(ClientName);
             invM.setDepartment(util.ConvertString(B[7]));
             invM.setDetail(util.ConvertString(B[3]));
-            invM.setHeaddepartment(department);
+            invM.setHeaddepartment((!"".equalsIgnoreCase(department)) && (department != null) ? department : "ALL");
             if(!"".equals(util.ConvertString(B[2]))){
                 String dayy[] = util.ConvertString(B[2]).split("-");
                 System.out.println("Date : " + util.ConvertString(B[2]));
-                String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
+                String date = ""+dayy[2]+"/"+dayy[1]+"/"+dayy[0];
                 try {
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                     Date dateBefore = df.parse(date);
-                    invM.setInvdate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(dateBefore));
+                    invM.setInvdate(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(dateBefore));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -408,9 +408,9 @@ public class InvoiceImpl implements InvoiceReportDao{
             invM.setRecamt((BigDecimal)(B[9]));
 //            System.out.println("Recamt : " + util.setFormatMoney(B[8]));
             invM.setRecno(util.ConvertString(B[8]));
-            invM.setType(vattype);
+            invM.setType((!"".equalsIgnoreCase(vattype)) && (vattype != null) ? vattype : "ALL");
             invM.setBillingattn(billingAttn);
-            invM.setBillingdate(billingDate);
+            invM.setBillingdate((!"".equalsIgnoreCase(billingDate) && (billingDate != null)) ? util.SetFormatDate(util.convertStringToDate(billingDate), "dd MMM yyyy") : "");
             invM.setBillingfax(billingFax);
             invM.setBillingfrom(billingFrom);
             invM.setBillingmail(billingMail);
