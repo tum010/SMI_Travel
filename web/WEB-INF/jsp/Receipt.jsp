@@ -63,7 +63,8 @@
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/FinanceAndCashier/ReceiptMenu.html'"></div>
         </div>
-        
+        <c:set var="panelheader" value=""/>
+        <c:set var="panelborder" value=""/>
         <div class="col-sm-10">
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
@@ -75,21 +76,29 @@
                             <c:set var="typeReceipt" value="T" />
                             <c:set var="typeDepartment" value="Wendy" />
                             <h4><b>Receipt Temp Wendy   <font style="color: red">${receiptVoid}</font></b></h4>
+                            <c:set var="panelheader" value="wendyheader"/>
+                            <c:set var="panelborder" value="wendyborder"/>
                         </c:when>
                         <c:when test="${fn:contains(page , 'WV')}">
                             <c:set var="typeReceipt" value="V" />
                             <c:set var="typeDepartment" value="Wendy" />
                             <h4><b>Receipt Vat Wendy   <font style="color: red">${receiptVoid}</font></b></h4>
+                            <c:set var="panelheader" value="wendyheader"/>
+                            <c:set var="panelborder" value="wendyborder"/>
                         </c:when>    
                         <c:when test="${fn:contains(page , 'OT')}">
                             <c:set var="typeReceipt" value="T" />
                             <c:set var="typeDepartment" value="Outbound" />
                             <h4><b>Receipt Temp Outbound   <font style="color: red">${receiptVoid}</font></b></h4>
+                            <c:set var="panelheader" value="outboundheader"/>
+                            <c:set var="panelborder" value="outboundborder"/>
                         </c:when>    
                         <c:when test="${fn:contains(page , 'OV')}">
                             <c:set var="typeReceipt" value="V" />
                             <c:set var="typeDepartment" value="Outbound" />
                             <h4><b>Receipt Vat Outbound   <font style="color: red">${receiptVoid}</font></b></h4>
+                            <c:set var="panelheader" value="outboundheader"/>
+                            <c:set var="panelborder" value="outboundborder"/>
                         </c:when>    
                         <c:when test="${fn:contains(page , 'IT')}">
                             <c:set var="typeReceipt" value="T" />
@@ -111,8 +120,8 @@
                 <div role="tabpanel">
                      <!-- Nav tabs -->
                      
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#inv" aria-controls="inv" role="tab" data-toggle="tab">INV</a></li>
+                    <ul class="nav nav-tabs " role="tablist">
+                        <li role="presentation" class="active "><a href="#inv" aria-controls="inv" role="tab" data-toggle="tab">INV</a></li>
                         <li role="presentation" class=""><a href="#ref" aria-controls="ref" role="tab" data-toggle="tab">REF</a></li>
                         <li role="presentation" class=""><a href="#com" aria-controls="com" role="tab" data-toggle="tab">COM</a></li>
                         <h4><a class="col-xs-9 text-right" data-toggle="collapse" href="#collapseTab" aria-expanded="false" aria-controls="collapseTab">
@@ -121,7 +130,7 @@
                     </ul>
                                 
                     <!-- Tab BL -->
-                    <div class="panel panel-default">
+                    <div class="panel panel-default ${panelborder}">
                         <div class="panel-body">
                             <div class="tab-content collapse in" id="collapseTab" aria-expanded="false">
                                 <div role="tabpanel" class="tab-pane hidden active" id="inv">
@@ -254,7 +263,7 @@
                         </div>
                     </div>
                     
-                    <div class="panel panel-default">
+                    <div class="panel panel-default ${panelborder}">
                         <div class="panel-body"  style="padding-right: 0px;">
                             <div class="col-xs-8" style="padding-top: 0px;">
                                 <div class="col-xs-1 text-right" style="width: 135px">
@@ -500,7 +509,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
+                    <div class="panel panel-default ${panelborder}">
                         <div class="panel-body"  style="padding-right: 0px;">
                             <div class="col-xs-12">
                                 <div class="row">
@@ -656,7 +665,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
+                    <div class="panel panel-default ${panelborder}">
                         <div class="panel-body"  style="padding-right: 0px;">
                             <div class="col-xs-12">
                                 <div class="col-md-1 text-left" style="width: 200px" >
