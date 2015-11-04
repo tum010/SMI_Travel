@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.service.MStaffService;
 import com.smi.travel.datalayer.service.RefundService;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
+import com.smi.travel.datalayer.view.entity.RefundTicket;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.util.Date;
@@ -74,6 +75,14 @@ public class RefundController extends SMITravelController {
         request.setAttribute("refundbyDefault", refundby);
         request.setAttribute("refundnameDefault", refundname);
         request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
+        
+        //Search Refund Ticket
+        List<RefundTicket> listRefundTicket = refundService.searchRefundTicket(airbookingid);
+        if(listRefundTicket != null){
+            request.setAttribute("listRefundTicket", listRefundTicket);
+        }else{
+            request.setAttribute("listRefundTicket", null);
+        }
         
         setGeneralResponseAttribute(request, refNo);
         return Refund;
