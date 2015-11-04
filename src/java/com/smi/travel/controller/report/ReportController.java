@@ -18,6 +18,7 @@ import com.smi.travel.datalayer.service.ReportService;
 import com.smi.travel.datalayer.view.entity.PackageSummaryDetailView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -155,6 +156,14 @@ public class ReportController extends SMITravelController {
         String departmentHotelSummary = request.getParameter("department");
         String detailHotelMonthly = request.getParameter("detail");
         
+        //Invoice Monthly
+        String billingAttn = request.getParameter("billingAttn");
+        String billingFrom = request.getParameter("billingFrom");
+        String billingTel = request.getParameter("billingTel");
+        String billingFax = request.getParameter("billingFax");
+        String billingMail = request.getParameter("billingMail");
+        String billingDate = request.getParameter("billingDate");
+        
         Map model = new HashMap();
         List data = new ArrayList();
         int PrintMethod = 0; // 0 = bean 1 = pass parameter
@@ -232,12 +241,17 @@ public class ReportController extends SMITravelController {
         }else if(CreditNoteReport.equalsIgnoreCase(name)){
             data = reportservice.getCreditNoteReport(cnid);
         }else if(InvoiceMonthly.equalsIgnoreCase(name)){
-            String billingAttn = request.getParameter("billingAttn");
-            String billingFrom = request.getParameter("billingFrom");
-            String billingTel = request.getParameter("billingTel");
-            String billingFax = request.getParameter("billingFax");
-            String billingMail = request.getParameter("billingMail");
-            String billingDate = request.getParameter("billingDate");
+            try {
+                billingAttn = new String(billingAttn.getBytes("ISO8859_1"),"UTF-8");
+                billingFrom = new String(billingFrom.getBytes("ISO8859_1"),"UTF-8");
+                billingTel = new String(billingTel.getBytes("ISO8859_1"),"UTF-8");
+                billingFax = new String(billingFax.getBytes("ISO8859_1"),"UTF-8");
+                billingMail = new String(billingMail.getBytes("ISO8859_1"),"UTF-8");
+                billingDate = new String(billingDate.getBytes("ISO8859_1"),"UTF-8");
+                System.out.println("billingAttn :  "+billingAttn);
+            } catch (UnsupportedEncodingException ex) {
+                ex.printStackTrace();
+            }
             data = reportservice.getInvoiceMonthly(ClientTo, ClientName, Accno, vattype, from, to, departmentInvoice, billingAttn, billingFrom, billingTel, billingFax, billingMail, billingDate);
         }else if(RefundAirReport.equalsIgnoreCase(name)){
             data = reportservice.getRefundAirReport(refundId);

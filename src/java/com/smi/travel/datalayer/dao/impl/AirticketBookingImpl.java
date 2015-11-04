@@ -226,5 +226,15 @@ public class AirticketBookingImpl implements AirticketBookingDao {
         }
         return airticketPassengerList;
     }
+
+    @Override
+    public List<AirticketFlight> getAirticketFlightListFromPNRId(String pnrId) {
+        Session session = this.getSessionFactory().openSession();
+        List<AirticketFlight> airticketFlights = session.createQuery("from AirticketFlight flight where flight.airticketAirline.airticketPnr.id = "+pnrId+"").list();
+        if (airticketFlights.isEmpty()) {
+            return null;
+        }
+        return airticketFlights;
+    }
    
 }

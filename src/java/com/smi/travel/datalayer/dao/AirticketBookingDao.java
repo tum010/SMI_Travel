@@ -28,4 +28,5 @@ public interface AirticketBookingDao {
     public int updateBookingAirUnlock(Master master);
     public List<AirticketFlight> getAirticketFlightList(String flightId);
     public List<AirticketPassenger> getAirticketPassengerList(String airPassengerId);
+    public List<AirticketFlight> getAirticketFlightListFromPNRId(String pnrId);
 }

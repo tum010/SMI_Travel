@@ -859,8 +859,15 @@ public class AirTicketDetailController extends SMITravelController {
     
     private int buildAirticketFlights(BookingAirline bAir, AirticketAirline airAirline) {
         int result = 1;
+        int order = 1;
         Set<BookingFlight> listFlight = bAir.getBookingFlights();
-
+        List<AirticketFlight> airticketFlightList =bookingAirticketService.getAirticketFlightListFromPNRId(airAirline.getAirticketPnr().getId());
+        if(airticketFlightList.isEmpty()){
+            order = 1;
+        }else{
+            order = airticketFlightList.size() + 1;
+        }
+        
         Iterator<BookingFlight> iteratorFlight = listFlight.iterator();
         while (iteratorFlight.hasNext()) {
             BookingFlight bFlight = iteratorFlight.next();
@@ -891,8 +898,9 @@ public class AirTicketDetailController extends SMITravelController {
             airFlight.setMFlight(flightClass);
             airFlight.setIsBill("0");
             airFlight.setMItemstatus(utilservice.getMItemstatusFromName("ok"));
-
+            airFlight.setFlightOrder(order);
             airAirline.getAirticketFlights().add(airFlight);
+            order++;
         }
         return result;
     }

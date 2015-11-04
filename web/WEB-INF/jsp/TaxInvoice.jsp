@@ -74,6 +74,8 @@
             <strong>Cannot void Tax invoice. It use in credit note no ${requestScope['cnNoList']}</strong> 
         </div>
         </c:if>
+        <c:set var="panelheader" value=""/>
+        <c:set var="panelborder" value=""/>
         <div class="row" style="padding-left: 15px">  
             <div class="col-sm-6 " style="padding-right: 15px">
                 <c:set var="outbound" value=""/>
@@ -81,9 +83,13 @@
                     <c:when test="${fn:contains(page , 'W')}">
                         <h4><b>Tax Invoice Wendy <font style="color: red">${voidTaxInvoice}</font></b></h4>
                         <c:set var="outbound" value="disabled"/>
+                        <c:set var="panelheader" value="wendyheader"/>
+                        <c:set var="panelborder" value="wendyborder"/>
                     </c:when>
                     <c:when test="${fn:contains(page , 'O')}">
-                        <h4><b>Tax Invoice Outbound <font style="color: red">${voidTaxInvoice}</font></b></h4>                       
+                        <h4><b>Tax Invoice Outbound <font style="color: red">${voidTaxInvoice}</font></b></h4> 
+                        <c:set var="panelheader" value="outboundheader"/>
+                        <c:set var="panelborder" value="outboundborder"/>
                     </c:when> 
                     <c:when test="${fn:contains(page , 'I')}">
                         <h4><b>Tax Invoice Inbound <font style="color: red">${voidTaxInvoice}</font></b></h4>
@@ -98,9 +104,9 @@
         <div class="row" style="padding-left: 15px">  
            <div role="tabpanel">
                <!-- Nav tabs -->                    
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#inv" aria-controls="inv" role="tab" data-toggle="tab">INV</a></li>
-                    <li role="presentation" class=""><a href="#ref" aria-controls="ref" role="tab" data-toggle="tab">REF</a></li>
+                <ul class="nav nav-tabs " role="tablist">
+                    <li role="presentation" class="active ${panelheader}"><a href="#inv" aria-controls="inv" role="tab" data-toggle="tab">INV</a></li>
+                    <li role="presentation" class="${panelheader}"><a href="#ref" aria-controls="ref" role="tab" data-toggle="tab">REF</a></li>
                     <h4>
                         <a data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="margin-left: 48em" onclick="">
                             <span id="arrowReservstion" class="arrowReservstion glyphicon glyphicon-chevron-up"></span> 
@@ -108,7 +114,7 @@
                     </h4>
                 </ul>
                <!-- Tab BL -->
-                <div class="panel panel-default">
+                <div class="panel panel-default ${panelborder}">
                     <div class="panel-body">
                         <div class="tab-content collapse in" id="collapseExample" aria-expanded="false">
                             <div role="tabpanel" class="tab-pane hidden active" id="inv">
@@ -353,7 +359,7 @@
             <div role="tabpanel">
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane  active" id="infoMasterProduct">
-                        <div class="panel panel-default">                              
+                        <div class="panel panel-default ${panelborder}">                              
                             <div class="panel-body">
                                 <div class="row" style="">    
                                     <div class="col-md-12">
@@ -460,7 +466,7 @@
                 <div role="tabpanel">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane  active" id="infoRemark">
-                            <div class="panel panel-default">                              
+                            <div class="panel panel-default ${panelborder}">                              
                                 <div class="panel-body">
 <!--                                    <div class="col-xs-12 ">
                                         <div class="col-sm-1">
@@ -495,7 +501,7 @@
                 <div role="tabpanel">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane  active" id="infoButton">
-                            <div class="panel panel-default">                              
+                            <div class="panel panel-default ${panelborder}">                              
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">                                       
                                         <div class="col-md-1 text-right " style="width: 200px">
