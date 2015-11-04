@@ -193,7 +193,7 @@
                         <h4><b>PNR List</b></h4>
                     </div>
                     <div class="col-md-5 text-right">
-                        <a id="ButtonRefund" href="Refund.smi?referenceNo=${param.referenceNo}&action=edit" class="btn btn-primary">
+                        <a id="ButtonRefund" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${booking.id}&action=edit" class="btn btn-primary">
                             <span id="SpanRefund" class="glyphicon glyphicon-usd"></span> refund
                         </a>
                         <button id="ButtonPrint" type="button" onclick="printTicketOrder('${param.referenceNo}');" class="btn btn-default">

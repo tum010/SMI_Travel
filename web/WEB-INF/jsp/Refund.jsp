@@ -6,8 +6,15 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" src="js/workspace.js"></script> 
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery.mask.min.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
 <script type="text/javascript" src="js/refund.js"></script>
+<script type="text/javascript" src="js/selectize.js"></script>
+<link href="css/jquery-ui.css" rel="stylesheet">
 
 <c:set var="booking_size" value="${requestScope['BookingSize']}"/>
 <c:set var="master" value="${requestScope['Master']}"/>
@@ -17,7 +24,10 @@
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <c:set var="listRefundBy" value="${requestScope['listRefundBy']}"/>
 <c:set var="listReceiveBy" value="${requestScope['listReceiveBy']}"/>
-
+<c:set var="refundbyidDefault" value="${requestScope['refundbyidDefault']}"/>
+<c:set var="refundbyDefault" value="${requestScope['refundbyDefault']}"/>
+<c:set var="refundnameDefault" value="${requestScope['refundnameDefault']}"/>
+<c:set var="create" value="${requestScope['thisdate']}" />
 
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
@@ -89,13 +99,13 @@
                             <table  class="display" id="RefundTable">
                                 <thead>
                                     <tr class="datatable-header">
-                                        <th>Refund No</th>
-                                        <th>Ticket</th>
-                                        <th>Section</th>
-                                        <th>section refund</th>
-                                        <th>Change</th>
+                                        <th style="width: 15%" >Refund No</th>
+                                        <th style="width: 15%" >Refund By</th>
+                                        <th style="width: 10%" >Refund Date</th>
+                                        <th style="width: 15%" >Receive</th>
+                                        <th style="width: 15%" >Change</th>
                                         <th>Detail</th>
-                                        <th>Action</th>
+                                        <th style="width: 8%" >Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -103,7 +113,7 @@
                                     <tr>
                                         <td>R0012</td>
                                         <td>2172305640387</td>
-                                        <td>BKK-HND-GTH-BKK</td>
+                                        <td>25-07-2015</td>
                                         <td>GTH-BKK</td>
                                         <td>25090</td>
                                         <td>Test</td>
@@ -133,20 +143,20 @@
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label for="Owner" class="col-sm-3 control-label text-right">Refund By</label>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="">
                                             <div class="input-group ">
-                                                <input type="hidden" class="form-control" name="staff_id" id="staff_id" value="">
-                                                <input type="text" class="form-control" id="staff_username" name="staff_username" value="${rf.username}"
+                                                <input type="hidden" class="form-control" name="refundById" id="refundById" value="">
+                                                <input type="text" class="form-control" id="refundBy" name="refundBy" value=""
                                                        data-bv-notempty data-bv-notempty-message="The By is required">
-                                                <span class="input-group-addon" data-toggle="modal" data-target="#StaffModal">
+                                                <span class="input-group-addon" data-toggle="modal" data-target="#refundCustModal">
                                                     <span class="glyphicon-search glyphicon"></span>
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">  
-                                        <input type="text" class="form-control" id="staff_name" name="staff_name" value="${rf.name}" readonly="">
+                                    <div class="col-sm-5">  
+                                        <input type="text" class="form-control" id="refundByName" name="refundByName" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 form-group">
@@ -163,7 +173,41 @@
                                     </div>
 
                                 </div>
-                            </div>  
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label for="Owner" class="col-sm-3 control-label text-right">Receive By</label>
+                                    <div class="col-lg-4">
+                                        <div class="">
+                                            <div class="input-group ">
+                                                <input type="hidden" class="form-control" name="receiveById" id="receiveById" value="${refundbyidDefault}">
+                                                <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${refundbyDefault}"
+                                                       data-bv-notempty data-bv-notempty-message="The By is required">
+                                                <span class="input-group-addon" data-toggle="modal" data-target="#receiveUserModal">
+                                                    <span class="glyphicon-search glyphicon"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">  
+                                        <input type="text" class="form-control" id="receiveByName" name="receiveByName" value="${refundnameDefault}" readonly="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label  class="col-sm-3 control-label text-right">Receive Date</label>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <div class='input-group date' id='datetimepicker3'>
+                                                <input type='text' class="form-control" name="refundDate" id="refundDate" data-date-format="YYYY-MM-DD" value="${create}"  placeholder="YYYY-MM-DD"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>                    
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label class="col-sm-3 control-label text-right">Address</label>
@@ -243,20 +287,20 @@
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label for="Owner" class="col-sm-3 control-label text-right">Refund By</label>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="">
                                             <div class="input-group ">
-                                                <input type="hidden" class="form-control" name="staff_id" id="staff_id" value="">
-                                                <input type="text" class="form-control" id="staff_username" name="staff_username" value="${rf.username}"
+                                                <input type="hidden" class="form-control" name="refundById" id="refundById" value="">
+                                                <input type="text" class="form-control" id="refundBy" name="refundBy" value=""
                                                        data-bv-notempty data-bv-notempty-message="The By is required">
-                                                <span class="input-group-addon" data-toggle="modal" data-target="#StaffModal">
+                                                <span class="input-group-addon" data-toggle="modal" data-target="#refundCustModal">
                                                     <span class="glyphicon-search glyphicon"></span>
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">  
-                                        <input type="text" class="form-control" id="staff_name" name="staff_name" value="${rf.name}" readonly="">
+                                    <div class="col-sm-5">  
+                                        <input type="text" class="form-control" id="refundByName" name="refundByName" value="" readonly="">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 form-group">
@@ -273,7 +317,41 @@
                                     </div>
 
                                 </div>
-                            </div>  
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label for="Owner" class="col-sm-3 control-label text-right">Receive By</label>
+                                    <div class="col-lg-4">
+                                        <div class="">
+                                            <div class="input-group ">
+                                                <input type="hidden" class="form-control" name="receiveById" id="receiveById" value="">
+                                                <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${rf.username}"
+                                                       data-bv-notempty data-bv-notempty-message="The By is required">
+                                                <span class="input-group-addon" data-toggle="modal" data-target="#receiveUserModal">
+                                                    <span class="glyphicon-search glyphicon"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">  
+                                        <input type="text" class="form-control" id="receiveByName" name="receiveByName" value="" readonly="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label  class="col-sm-3 control-label text-right">Receive Date</label>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <div class='input-group date' id='datetimepicker3'>
+                                                <input type='text' class="form-control" name="refundDate" id="refundDate" data-date-format="YYYY-MM-DD" value="${booking.deadline}"  placeholder="YYYY-MM-DD"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div> 
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label class="col-sm-3 control-label text-right">Address</label>
@@ -419,7 +497,96 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal --> 
-
+<!--Modal  Customer-->
+<div class="modal fade" id="refundCustModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Refund By</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: right"> 
+                    <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchCustFrom" name="searchCustFrom"/> 
+                </div> 
+                <table class="display" id="refundCustTable">
+                    <thead >   
+                        <tr class="datatable-header">
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="item" items="${listRefundBy}">
+                            <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">
+                                <td class="item-billto">${item.billTo}</td>
+                                <td class="item-name">${item.billName}</td>                                
+                                <td class="item-address hidden">${item.address}</td>
+                                <td class="item-tel hidden">${item.tel}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button id="rrefundCustModalClose" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!--Modal  User-->
+<div class="modal fade" id="receiveUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Receive User</h4>
+            </div>
+            <div class="modal-body">
+                <table class="display" id="receiveUserTable">
+                    <thead class="datatable-header">                     
+                        <tr>
+                            <th class="hidden">ID</th>
+                            <th>User</th>
+                            <th>Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
+                            <th class="hidden">Fax</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <script>
+                        user = [];
+                    </script>
+                    <c:forEach var="a" items="${listReceiveBy}">
+                        <tr>
+                            <td class="user-id hidden">${a.id}</td>
+                            <td class="user-user">${a.username}</td>
+                            <td class="user-name">${a.name}</td>
+                            <td class="user-addr hidden">${a.name}</td>
+                            <td class="user-tel hidden">${a.tel}</td>
+                            <td class="user-fax hidden">${a.tel}</td>
+                        </tr>
+                        <script>
+                            user.push({id: "${a.id}", code: "${a.username}", name: "${a.name}",
+                                address: "${a.name}", tel: "${a.tel}", fax: "${a.tel}"});
+                        </script>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button id="receiveUserModalClose" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <!--style-->
 <style>
     .dataTables_wrapper {

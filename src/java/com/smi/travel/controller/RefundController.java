@@ -12,6 +12,8 @@ import com.smi.travel.datalayer.service.MStaffService;
 import com.smi.travel.datalayer.service.RefundService;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,12 +34,14 @@ public class RefundController extends SMITravelController {
     private static final String Master = "Master";
     private static final String Staff = "Staff";
     private static final String Action = "Action";
+    UtilityFunction utilty = new UtilityFunction();
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         int result = 0;
         String action = request.getParameter("action");
         String refNo = request.getParameter("referenceNo");
+        String airbookingid = request.getParameter("airbookingid");
 
         if ("new".equalsIgnoreCase(action)) {
         } else if ("edit".equalsIgnoreCase(action)) {
@@ -61,6 +65,15 @@ public class RefundController extends SMITravelController {
             request.setAttribute("listReceiveBy", null);
         }
         
+        // Refund by user
+        SystemUser user = (SystemUser) session.getAttribute("USER");
+        String refundbyid = user.getId();
+        String refundby = user.getUsername();
+        String refundname = user.getName();
+        request.setAttribute("refundbyidDefault", refundbyid);
+        request.setAttribute("refundbyDefault", refundby);
+        request.setAttribute("refundnameDefault", refundname);
+        request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
         
         setGeneralResponseAttribute(request, refNo);
         return Refund;
