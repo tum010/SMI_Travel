@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+  <class name="com.smi.travel.datalayer.entity.AirTicketRefund" table="airticket_refund">
+    <many-to-one name="AirticketBooking" class="com.smi.travel.datalayer.entity.AirticketBooking" fetch="select">
+        <column name="air_booking_id" not-null="true" />
+    </many-to-one>
+    <many-to-one name="RefundAirticket" class="com.smi.travel.datalayer.entity.RefundAirticket" fetch="select">
+        <column name="refund_id" not-null="true" />
+    </many-to-one>
+  </class>
+</hibernate-mapping>

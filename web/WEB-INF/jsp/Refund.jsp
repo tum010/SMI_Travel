@@ -342,11 +342,11 @@
                         </div>
                     </div>
                 </div>
-
-                <!--Save-->
+<!--
+                Save
                 <div class="text-center" style="margin-top: 10px">
                     <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
-                </div>
+                </div>-->
             </form>
         </div>
     </div>

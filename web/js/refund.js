@@ -85,7 +85,6 @@ function selectRefundDetail(counter){
 
 function addRefundDetail(counter){
     var count = document.getElementById('countListOther');
-//    console.log(count.value);
     for(var i = 1 ; i <= count.value ; i++){
         $("#RefundTicketDetail"+i).addClass("hidden");
     }
@@ -93,6 +92,7 @@ function addRefundDetail(counter){
     for(var i = 1 ; i <= countadd.value ; i++){
         $("#RefundTicketDetailAdd"+i).addClass("hidden");
     }
+    
     $("#buttonAddRefundDetail").click(function() {
            console.log("counter : " + counter);
         if($("#RefundTicketDetailAdd"+counter).hasClass("hidden")){
