@@ -306,7 +306,7 @@ public class InvoiceImpl implements InvoiceReportDao{
     }
 
     @Override
-    public List getInvoiceMonthly(String BillFrom, String BillTo,String ClientName, String Payment, String Accno, String vattype, String from, String to, String department) {
+    public List getInvoiceMonthly(String BillTo,String ClientName, String Accno, String vattype, String from, String to, String department, String billingAttn, String billingFrom, String billingTel, String billingFax, String billingMail, String billingDate) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();  
         Date thisdate = new Date();
@@ -378,12 +378,11 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("type", Hibernate.STRING)
                 .list();
         if(QueryInvoiceMounthList != null && QueryInvoiceMounthList.size() != 0){
+        String[] billing = Accno.split(",");
         for (Object[] B : QueryInvoiceMounthList) {
             InvoiceMonthly invM = new InvoiceMonthly();
             
             invM.setSystemdate(util.SetFormatDate(thisdate, "dd MMM yyyy hh:mm:ss"));
-            invM.setAccno(Accno);
-            invM.setBillfrom(BillFrom);
             invM.setBillto(ClientName);
             invM.setDepartment(util.ConvertString(B[7]));
             invM.setDetail(util.ConvertString(B[3]));
@@ -406,11 +405,20 @@ public class InvoiceImpl implements InvoiceReportDao{
             invM.setJpy((BigDecimal) (B[5]));
             invM.setThb((BigDecimal)(B[4]));
             invM.setUsd((BigDecimal)(B[6]));
-            invM.setPayment(Payment);
             invM.setRecamt((BigDecimal)(B[9]));
 //            System.out.println("Recamt : " + util.setFormatMoney(B[8]));
             invM.setRecno(util.ConvertString(B[8]));
             invM.setType(vattype);
+            invM.setBillingattn(billingAttn);
+            invM.setBillingdate(billingDate);
+            invM.setBillingfax(billingFax);
+            invM.setBillingfrom(billingFrom);
+            invM.setBillingmail(billingMail);
+            invM.setBillingtel(billingTel);
+            if(!"".equalsIgnoreCase(Accno)){
+                invM.setRemittanceto1("REMITTANCE TO : "+billing[0].toUpperCase());
+                invM.setRemittanceto2(billing[1].toUpperCase()+" CURRENT ACCOUNT NO. "+billing[2]);
+            }          
             data.add(invM);
         }
         }

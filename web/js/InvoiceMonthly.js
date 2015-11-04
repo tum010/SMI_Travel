@@ -5,19 +5,25 @@
  */
 function printInvoiceMonthly(){
 //    validateInvoiceMonthly();
-    var BillFrom = $("#billFromName").val();
     var ClientTo = $("#clientCode").val();
-    var ClientName = $("#clientName").val();
-    var Payment  = $("#payment").val();
-    var Accno  = $("#accNo").val();
+    var ClientName = $("#clientName").val();   
     var vattype  = $("#vatType").val();
     var from  = $("#fromdate").val();
     var to  = $("#todate").val();
     var departmentInvoice = $('#departmentInvoice').val();
+    
+    var billingAttn = $("#billingAttn").val();
+    var billingFrom = $("#billingFrom").val();
+    var billingTel = $("#billingTel").val();
+    var billingFax = $("#billingFax").val();
+    var billingMail = $("#billingMail").val();
+    var billingDate = $("#billingDate").val();
+    var remittanceTo  = $("#remittanceTo").val();      
+    
     if((from === '') || (to === '')){
         validateDate();
     } else {
-        window.open("report.smi?name=InvoiceMonthlyReport&billFromName="+BillFrom+"&clientCode="+ClientTo+"&clientName="+ClientName+"&payment="+Payment+"&accNo="+Accno+"&vatType="+vattype+"&fromdate="+from+"&todate="+to+"&departmentInvoice="+departmentInvoice);   
+        window.open("report.smi?name=InvoiceMonthlyReport&clientCode="+ClientTo+"&clientName="+ClientName+"&accNo="+remittanceTo+"&vatType="+vattype+"&fromdate="+from+"&todate="+to+"&departmentInvoice="+departmentInvoice+"&billingAttn="+billingAttn+"&billingFrom="+billingFrom+"&billingTel="+billingTel+"&billingFax="+billingFax+"&billingMail="+billingMail+"&billingDate="+billingDate);   
     }
 }
 

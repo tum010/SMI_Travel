@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.dao.AirticketPnrDao;
 import com.smi.travel.datalayer.entity.AirticketBooking;
 import com.smi.travel.datalayer.entity.AirticketDesc;
 import com.smi.travel.datalayer.entity.AirticketFlight;
+import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.Master;
 import java.util.ArrayList;
@@ -204,6 +205,26 @@ public class AirticketBookingImpl implements AirticketBookingDao {
      */
     public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
+    }
+
+    @Override
+    public List<AirticketFlight> getAirticketFlightList(String flightId) {
+        Session session = this.getSessionFactory().openSession();
+        List<AirticketFlight> airticketFlights = session.createQuery("from AirticketFlight flight where flight.id = "+flightId+"").list();
+        if (airticketFlights.isEmpty()) {
+            return null;
+        }
+        return airticketFlights;
+    }
+
+    @Override
+    public List<AirticketPassenger> getAirticketPassengerList(String airPassengerId) {
+        Session session = this.getSessionFactory().openSession();
+        List<AirticketPassenger> airticketPassengerList = session.createQuery("from AirticketPassenger pass where pass.id = "+airPassengerId+"").list();
+        if (airticketPassengerList.isEmpty()) {
+            return null;
+        }
+        return airticketPassengerList;
     }
    
 }
