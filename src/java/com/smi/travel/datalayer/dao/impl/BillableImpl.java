@@ -1108,33 +1108,47 @@ public class BillableImpl implements BillableDao {
                 resultdeleted = "fail";
             }
         }
+        boolean checkresult = true;
         if(resultdelete){
             if("1".equalsIgnoreCase(billTypeId)){
-                queryupdate = "update AirticketFlight flight  set  flight.isBill = 0 where  flight.airticketAirline.id in (:refid)";
+                String[] parts = refItemId.split(",");
+                refItemId = "";
+                for(int j=0;j<parts.length;j++){
+                    if(j==(parts.length-1)){
+                        refItemId += "'"+parts[j]+"'";
+                    }else{
+                        refItemId += "'"+parts[j]+"',";
+                    }
+                }
+                queryupdate = "update AirticketFlight flight  set  flight.isBill = 0 where flight.airticketAirline.id in ( "+refItemId+" )";
             }else if("2".equalsIgnoreCase(billTypeId) || "8".equalsIgnoreCase(billTypeId)){
-                queryupdate = "update  OtherBooking  other  set  other.isBill = 0 where other.id  =  :refid";
+                queryupdate = "update  OtherBooking  other  set  other.isBill = 0 where other.id  = :refid";
             }else if("3".equalsIgnoreCase(billTypeId)){
-                queryupdate = "update  LandBooking   land  set  land.isBill = 0 where land.id  =  :refid";
+                queryupdate = "update  LandBooking   land  set  land.isBill = 0 where land.id  = :refid";
             }else if("4".equalsIgnoreCase(billTypeId)){
-                queryupdate = "update  HotelBooking   hotel  set  hotel.isBill = 0 where  hotel.id  =  :refid";
+                queryupdate = "update  HotelBooking   hotel  set  hotel.isBill = 0 where  hotel.id  = :refid";
             }else if("6".equalsIgnoreCase(billTypeId)){
-                queryupdate = "update  DaytourBooking   tour  set  tour.isBill = 0 where tour.id  =  :refid";
+                queryupdate = "update  DaytourBooking   tour  set  tour.isBill = 0 where tour.id  = :refid";
             }
-
+            
             try {
                 Query queryup = session.createQuery(queryupdate);
-                queryup.setParameter("refid", refItemId);
-                System.out.println(" query " + query);
+                if(!"1".equalsIgnoreCase(billTypeId)){
+                    queryup.setParameter("refid", refItemId);
+                }
+                System.out.println(" queryup " + queryup);
                 resulttemp = queryup.executeUpdate();
-                if(resulttemp == 1){
-                    result = "success";
-                }else{
+                System.out.println(" resulttemp " + resulttemp);
+                if(resulttemp == 0){
                     result = "fail";
+                }else{
+                    result = "success";
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
                 resulttemp = 0;
                 result = "fail";
+
             }
         }
         session.close();
