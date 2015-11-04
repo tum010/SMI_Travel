@@ -36,6 +36,7 @@ import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.util.UtilityFunction;
+import com.sun.xml.internal.fastinfoset.tools.StAX2SAXReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -861,13 +862,14 @@ public class AirTicketDetailController extends SMITravelController {
         int result = 1;
         int order = 1;
         Set<BookingFlight> listFlight = bAir.getBookingFlights();
-        List<AirticketFlight> airticketFlightList =bookingAirticketService.getAirticketFlightListFromPNRId(airAirline.getAirticketPnr().getId());
-        if(airticketFlightList.isEmpty()){
-            order = 1;
-        }else{
-            order = airticketFlightList.size() + 1;
+        if(airAirline.getAirticketPnr() != null && !"".equalsIgnoreCase(String.valueOf(airAirline.getAirticketPnr().getId())) && airAirline.getAirticketPnr().getId() != null){
+            List<AirticketFlight> airticketFlightList =bookingAirticketService.getAirticketFlightListFromPNRId(airAirline.getAirticketPnr().getId());
+            if(airticketFlightList.isEmpty()){
+                order = 1;
+            }else{
+                order = airticketFlightList.size() + 1;
+            }
         }
-        
         Iterator<BookingFlight> iteratorFlight = listFlight.iterator();
         while (iteratorFlight.hasNext()) {
             BookingFlight bFlight = iteratorFlight.next();
