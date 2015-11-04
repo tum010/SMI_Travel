@@ -1114,23 +1114,13 @@ public class BillableImpl implements BillableDao {
                 String[] parts = refItemId.split(",");
                 refItemId = "";
                 for(int j=0;j<parts.length;j++){
-                    queryupdate = "update AirticketFlight flight  set  flight.isBill = 0 where flight.airticketAirline.id ="+(parts[j]);
-                    Query queryup = session.createQuery(queryupdate);
-                    resulttemp = queryup.executeUpdate();
-                    System.out.println(" resulttemp " + resulttemp);
-                    if(resulttemp == 0){
-                        checkresult = false;
+                    if(j==(parts.length-1)){
+                        refItemId += "'"+parts[j]+"'";
+                    }else{
+                        refItemId += "'"+parts[j]+"',";
                     }
-//                    if(j==(parts.length-1)){
-//                        refItemId += "'"+parts[j]+"'";
-//                    }else{
-//                        refItemId += "'"+parts[j]+"',";
-//                    }
                 }
-                if(checkresult){
-                    result = "success";
-                }
-//                queryupdate = "update AirticketFlight flight  set  flight.isBill = 0 where flight.airticketAirline.id in ( :refid )";
+                queryupdate = "update AirticketFlight flight  set  flight.isBill = 0 where flight.airticketAirline.id in ( "+refItemId+" )";
             }else if("2".equalsIgnoreCase(billTypeId) || "8".equalsIgnoreCase(billTypeId)){
                 queryupdate = "update  OtherBooking  other  set  other.isBill = 0 where other.id  = :refid";
             }else if("3".equalsIgnoreCase(billTypeId)){
@@ -1141,25 +1131,24 @@ public class BillableImpl implements BillableDao {
                 queryupdate = "update  DaytourBooking   tour  set  tour.isBill = 0 where tour.id  = :refid";
             }
             
-            if(!"1".equalsIgnoreCase(billTypeId)){
-                try {
-                    System.out.println("  =====================  refItemId ===================== " + refItemId);
-                    Query queryup = session.createQuery(queryupdate);
+            try {
+                Query queryup = session.createQuery(queryupdate);
+                if(!"1".equalsIgnoreCase(billTypeId)){
                     queryup.setParameter("refid", refItemId);
-                    System.out.println(" queryup " + queryup);
-                    resulttemp = queryup.executeUpdate();
-                    System.out.println(" resulttemp " + resulttemp);
-                    if(resulttemp == 0){
-                        result = "fail";
-                    }else{
-                        result = "success";
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    resulttemp = 0;
-                    result = "fail";
-
                 }
+                System.out.println(" queryup " + queryup);
+                resulttemp = queryup.executeUpdate();
+                System.out.println(" resulttemp " + resulttemp);
+                if(resulttemp == 0){
+                    result = "fail";
+                }else{
+                    result = "success";
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                resulttemp = 0;
+                result = "fail";
+
             }
         }
         session.close();
