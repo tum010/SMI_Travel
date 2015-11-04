@@ -16,6 +16,8 @@ import com.smi.travel.datalayer.dao.MAirlineDao;
 import com.smi.travel.datalayer.dao.MAirportDao;
 import com.smi.travel.datalayer.dao.MListItemDao;
 import com.smi.travel.datalayer.entity.AirticketBooking;
+import com.smi.travel.datalayer.entity.AirticketFlight;
+import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.BookingPnr;
 import com.smi.travel.datalayer.entity.MFlight;
@@ -53,6 +55,14 @@ public class BookingAirticketService {
     
     public AirticketPnr getPNRDetailByID(String PNRID,String refno) {
         return airticketBooking.getPNRDetailByID(PNRID, refno);
+    }
+    
+    public List<AirticketFlight> getAirticketFlightList(String flightId){
+        return airticketBooking.getAirticketFlightList(flightId);
+    }
+    
+    public List<AirticketPassenger> getAirticketPassengerList(String airPassengerId){
+        return airticketBooking.getAirticketPassengerList(airPassengerId);
     }
     
     public List<MTicketType> getListMTicketType(){

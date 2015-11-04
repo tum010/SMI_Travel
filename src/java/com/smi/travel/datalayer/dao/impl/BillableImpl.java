@@ -1108,7 +1108,6 @@ public class BillableImpl implements BillableDao {
                 resultdeleted = "fail";
             }
         }
-        boolean checkresult = true;
         if(resultdelete){
             if("1".equalsIgnoreCase(billTypeId)){
                 String[] parts = refItemId.split(",");
@@ -1120,7 +1119,7 @@ public class BillableImpl implements BillableDao {
                         refItemId += "'"+parts[j]+"',";
                     }
                 }
-                queryupdate = "update AirticketFlight flight  set  flight.isBill = 0 where flight.airticketAirline.id in ( "+refItemId+" )";
+                queryupdate = "update AirticketFlight flight set flight.isBill = 0 where flight.airticketAirline.id in ("+refItemId+")";
             }else if("2".equalsIgnoreCase(billTypeId) || "8".equalsIgnoreCase(billTypeId)){
                 queryupdate = "update  OtherBooking  other  set  other.isBill = 0 where other.id  = :refid";
             }else if("3".equalsIgnoreCase(billTypeId)){
@@ -1128,7 +1127,7 @@ public class BillableImpl implements BillableDao {
             }else if("4".equalsIgnoreCase(billTypeId)){
                 queryupdate = "update  HotelBooking   hotel  set  hotel.isBill = 0 where  hotel.id  = :refid";
             }else if("6".equalsIgnoreCase(billTypeId)){
-                queryupdate = "update  DaytourBooking   tour  set  tour.isBill = 0 where tour.id  = :refid";
+                queryupdate = "update  DaytourBooking tour  set  tour.isBill = 0 where tour.id  = :refid";
             }
             
             try {

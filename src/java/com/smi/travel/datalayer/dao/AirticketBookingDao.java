@@ -7,6 +7,8 @@
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.AirticketBooking;
+import com.smi.travel.datalayer.entity.AirticketFlight;
+import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.Master;
 import java.util.List;
@@ -24,4 +26,6 @@ public interface AirticketBookingDao {
     public int DeleteDesc(AirticketBooking booking ,String descId);
     public int getNumberOfFlight(String refno);
     public int updateBookingAirUnlock(Master master);
+    public List<AirticketFlight> getAirticketFlightList(String flightId);
+    public List<AirticketPassenger> getAirticketPassengerList(String airPassengerId);
 }
