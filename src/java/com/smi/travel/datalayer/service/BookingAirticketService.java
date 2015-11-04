@@ -65,6 +65,10 @@ public class BookingAirticketService {
         return airticketBooking.getAirticketPassengerList(airPassengerId);
     }
     
+    public List<AirticketFlight> getAirticketFlightListFromPNRId(String pnrId){
+        return airticketBooking.getAirticketFlightListFromPNRId(pnrId);
+    }
+    
     public List<MTicketType> getListMTicketType(){
         return listItemdao.getListMTicketType();
     }
