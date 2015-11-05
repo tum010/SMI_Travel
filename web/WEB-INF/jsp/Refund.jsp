@@ -11,8 +11,6 @@
 <script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
-<script type="text/javascript" src="js/jquery.inputmask.js"></script>
-<script type="text/javascript" src="js/refund.js"></script>
 <script type="text/javascript" src="js/selectize.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
 
@@ -29,6 +27,7 @@
 <c:set var="refundnameDefault" value="${requestScope['refundnameDefault']}"/>
 <c:set var="create" value="${requestScope['thisdate']}" />
 <c:set var="listRefundTicket" value="${requestScope['listRefundTicket']}" />
+<c:set var="listTicketNo" value="${requestScope['listTicketNo']}" />
 
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
@@ -95,8 +94,9 @@
                         <h3 class="panel-title">Passenger</h3>
                     </div>
                     <div class="panel-body">
-                        <!-- Air Table --> 
+                        <!-- Refund Table --> 
                         <div class="row-fluid">
+                            <input type="text" class="hidden" id="refundid" name="refundid" value="0" /> 
                             <table  class="display" id="RefundTable">
                                 <thead>
                                     <tr class="datatable-header">
@@ -111,36 +111,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!--C:if ,C:foreach, c:set >>> counter -->
                                     <c:if test="${listRefundTicket != null}"> 
-                                    
-                                    <c:forEach var="table" items="${listRefundTicket}" varStatus="status">
-                                    <c:set var="counter" value="${status.count}"></c:set>  
-                                    <tr>
-                                        <td class="hidden"><c:out value="${table.airticketrefundid}" /></td>
-                                        <td><c:out value="${table.refundno}" /></td>
-                                        <td><c:out value="${table.refundby}" /></td>
-                                        <td><c:out value="${table.refunddate}" /></td>
-                                        <td><c:out value="${table.receiveby}" /></td>
-                                        <td class="text-right "><c:out value="${table.change}" /></td>
-                                        <td><c:out value="${table.detail}" /></td>
-                                        <td class="text-center">
-                                            <!--<a class="carousel" data-toggle="collapse" data-parent="#accordion"--> 
-<!--                                               data-target="#passenger1" aria-expanded="true" 
-                                               aria-controls="collapseExample">-->
-                                                <span class="glyphicon glyphicon-edit editicon" id="SpanEdit1" onclick="selectRefundDetail(${table.airticketrefundid})"></span>
-                                            <!--</a>-->
-                                            <a class="carousel" data-toggle="collapse" data-parent="#accordion" 
-                                               data-target="#passenger1" aria-expanded="true" 
-                                               aria-controls="collapseExample">
-                                                <span class="glyphicon glyphicon-remove deleteicon"></span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    </c:forEach>
+                                        <c:forEach var="table" items="${listRefundTicket}" varStatus="status">
+                                        <c:set var="counter" value="${status.count}"></c:set>  
+                                            <tr>
+                                                <td class="hidden"><input type="text" id="airticketrefundid${status.count}" name="airticketrefundid${status.count}" value="${table.airticketrefundid}" /></td>
+                                                <td><c:out value="${table.refundno}" /></td>
+                                                <td><c:out value="${table.refundby}" /></td>
+                                                <td><c:out value="${table.refunddate}" /></td>
+                                                <td><c:out value="${table.receiveby}" /></td>
+                                                <td class="text-right "><c:out value="${table.change}" /></td>
+                                                <td><c:out value="${table.detail}" /></td>
+                                                <td class="text-center">
+                                                    <span class="glyphicon glyphicon-edit editicon" id="SpanEdit${status.count}" onclick="selectRefundDetail(${table.airticketrefundid},${status.count})"></span>
+                                                    <a class="carousel" data-target="#DeleteRefund" onclick="DeleteRefund(${status.count},${table.refundno})" data-toggle="modal">
+                                                       <span class="glyphicon glyphicon-remove deleteicon"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
                                     </c:if>
-                                    <input type="hidden" id="countListOther" name="countListOther" value="${counter}" >
-                                     <!--<input type="hidden" id="countListOther" name="countListOther" value="1" >-->
+                                   <input type="hidden" id="counterTableRefund" name="counterTableRefund" value="${counter}" >
                                 </tbody>
                             </table>  
                         </div>
@@ -246,19 +237,20 @@
                             </br>
                             <div class="row">
                                 <div class="col-sm-12 form-group text-center">
-                                    <table  class="display" id="RefundTable" style="width: 1000px;">
+                                    <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
+                                    <table  class="display" id="RefundTicketDetailTable" style="width: 1000px;">
                                         <thead>
                                             <tr class="datatable-header">
                                                 <th style="width: 5%" >No</th>
-                                                <th>Ticket No</th>
-                                                <th>Section</th>
-                                                <th>section refund</th>
-                                                <th>Change</th>
+                                                <th style="width: 25%">Ticket No</th>
+                                                <th style="width: 25%">Section</th>
+                                                <th style="width: 25%">section refund</th>
+                                                <th style="width: 15%">Change</th>
                                                 <th style="width: 5%" >Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+<!--                                            <tr>
                                                 <td>1</td>
                                                 <td>2172305640387</td>
                                                 <td>BKK-HND-GTH-BKK</td>
@@ -271,7 +263,7 @@
                                                         <span class="glyphicon glyphicon-remove deleteicon"></span>
                                                     </a>
                                                 </td>
-                                            </tr>
+                                            </tr>-->
                                         </tbody>
                                     </table>
                                 </div>
@@ -288,7 +280,7 @@
                                 </div>
                             </div>  
                         </div>
-                        <!--Refund Add -->
+                        <!--Refund Add --> 
                         <div class="row hidden" style="margin-top: 20px" id="RefundTicketDetailAdd1" name="RefundTicketDetailAdd1" >
                             <div class="row">
                                 <div class="col-sm-6 form-group" style="margin-left: 20px;">
@@ -333,8 +325,8 @@
                                     <div class="col-lg-4">
                                         <div class="">
                                             <div class="input-group ">
-                                                <input type="hidden" class="form-control" name="receiveById" id="receiveById" value="">
-                                                <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${rf.username}"
+                                                <input type="hidden" class="form-control" name="receiveById" id="receiveById" value="${refundbyidDefault}">
+                                                <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${refundbyDefault}"
                                                        data-bv-notempty data-bv-notempty-message="The By is required">
                                                 <span class="input-group-addon" data-toggle="modal" data-target="#receiveUserModal">
                                                     <span class="glyphicon-search glyphicon"></span>
@@ -343,7 +335,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-5">  
-                                        <input type="text" class="form-control" id="receiveByName" name="receiveByName" value="" readonly="">
+                                        <input type="text" class="form-control" id="receiveByName" name="receiveByName" value="${refundnameDefault}" readonly="">
                                     </div>
                                 </div>
                                 <div class="col-sm-6 form-group">
@@ -351,7 +343,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker3'>
-                                                <input type='text' class="form-control" name="refundDate" id="refundDate" data-date-format="YYYY-MM-DD" value="${booking.deadline}"  placeholder="YYYY-MM-DD"/>
+                                                <input type='text' class="form-control" name="refundDate" id="refundDate" data-date-format="YYYY-MM-DD" value="${create}"  placeholder="YYYY-MM-DD"/>
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -434,58 +426,26 @@
                         </div>
                     </div>
                 </div>
-<!--
-                Save
-                <div class="text-center" style="margin-top: 10px">
-                    <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
-                </div>-->
             </form>
         </div>
     </div>
 </div>
 
 <!--MODAL STAFF-->
-<div class="modal fade" id="StaffModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="DeleteRefund" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Staff</h4>
+                <h4 class="modal-title">Delete Refund</h4>
             </div>
-            <div class="modal-body">
-                <table class="display" id="StaffTable">
-                    <thead>                        
-                        <tr class="datatable-header">
-                            <th class="hidden">ID</th>
-                            <th>Code</th>
-                            <th>Name</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <script>
-                        sf = [];
-                    </script>
-                    <c:forEach var="sf" items="${staff}">
-                        <tr class="departure-tr">
-                            <td class="staff-id hidden">${sf.id}</td>
-                            <td class="staff-username">${sf.username}</td>
-                            <td class="staff-name">${sf.name}</td>
-                        </tr>
-                        <script>
-                            sf.push({id: "${sf.id}", username :"${sf.username}", name: "${sf.name}"});
-                        </script>
-                    </c:forEach>
-
-                    </tbody>
-
-                </table>
+            <div class="modal-body" id="textDeleteRefund">
+                <h5 class="modal-title">Are you Delete Refund</h5>
             </div>
             <div class="modal-footer">
-                <div class="text-right">
-                    <input type="hidden" name="action" value="${action}">
-                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-                </div>
+                <input type="hidden" name="action" value="${action}">
+                <button type="button" onclick="DeleteRefundConfirm()" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -604,3 +564,220 @@
         clear: both;
     }
 </style>
+<script type="text/javascript" charset="utf-8">
+    var selectTicketNo = "<option value='' ></option>";
+    $(document).ready(function () {
+        <c:forEach var="cur" items="${listTicketNo}">
+            selectTicketNo += "<option value='${cur.id}${cur.series1}${cur.series2}${cur.series3}' ><c:out value='${cur.id}${cur.series1}${cur.series2}${cur.series3}' /></option>";      
+        </c:forEach>
+         console.log("TicketNo :" + selectTicketNo);
+    }); 
+    
+    function setBillValue(billto, billname, address, term, pay) {
+
+    $("#refundBy").val(billto);
+    $("#refundByName").val(billname);
+    $("#refundCustModal").modal('hide');
+}
+
+
+function searchCustomerAutoList(name) {
+    var servletName = 'BillableServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&name=' + name +
+            '&type=' + 'getAutoListBillto';
+
+    var url = 'AJAXServlet';
+    var billArray = [];
+    var billListId = [];
+    var billListName = [];
+    var billListAddress = [];
+    var billid, billname, billaddr;
+    $("#refundBy").autocomplete("destroy");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            beforeSend: function () {
+                $("#dataload").removeClass("hidden");
+            },
+            success: function (msg) {
+                var billJson = JSON.parse(msg);
+                var billselect = $("#refundBy").val();
+                for (var i in billJson) {
+                    if (billJson.hasOwnProperty(i)) {
+                        billid = billJson[i].id;
+                        billname = billJson[i].name;
+                        billaddr = billJson[i].address;
+                        billArray.push(billid);
+                        billArray.push(billname);
+                        billListId.push(billid);
+                        billListName.push(billname);
+                        billListAddress.push(billaddr);
+                        if ((billselect === billid) || (billselect === billname)) {
+                            $("#refundBy").val(billListId[i]);
+                            $("#refundByName").val(billListName[i]);
+                        }
+                    }
+                    $("#dataload").addClass("hidden");
+                }
+                // $("#refundBy").val(billid);
+                //$("#refundByName").val(billname);
+
+                $("#refundBy").autocomplete({
+                    source: billArray,
+                    close: function () {
+                        $("#refundBy").trigger("keyup");
+                        var billselect = $("#refundBy").val();
+                        for (var i = 0; i < billListId.length; i++) {
+                            if ((billselect == billListName[i]) || (billselect == billListId[i])) {
+                                $("#refundBy").val(billListId[i]);
+                                $("#refundByName").val(billListName[i]);
+                            }
+                        }
+                    }
+                });
+
+                var billval = $("#refundBy").val();
+                for (var i = 0; i < billListId.length; i++) {
+                    if (billval == billListName[i]) {
+                        $("#refundBy").val(billListId[i]);
+                    }
+                }
+                if (billListId.length == 1) {
+                    showflag = 0;
+                    $("#refundBy").val(billListId[0]);
+                }
+                var event = jQuery.Event('keydown');
+                event.keyCode = 40;
+                $("#refundBy").trigger(event);
+
+            }, error: function (msg) {
+                console.log('auto ERROR');
+                $("#dataload").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}
+
+function searchCustomerAgentList(name) {
+    var servletName = 'BillableServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&name=' + name +
+            '&type=' + 'getListBillto';
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+                $('#refundCustTable').dataTable().fnClearTable();
+                $('#refundCustTable').dataTable().fnDestroy();
+                $("#refundCustTable tbody").empty().append(msg);
+
+                $('#refundCustTable').dataTable({bJQueryUI: true,
+                    "sPaginationType": "full_numbers",
+                    "bAutoWidth": false,
+                    "bFilter": false,
+                    "bPaginate": true,
+                    "bInfo": false,
+                    "bLengthChange": false,
+                    "iDisplayLength": 10
+                });
+                $("#ajaxload").addClass("hidden");
+
+            }, error: function (msg) {
+                $("#ajaxload").addClass("hidden");
+                alert('error');
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}
+
+function selectRefundDetail(airbookingid,counter){
+    $("#RefundTicketDetailAdd"+counter).addClass("hidden");
+    var count = document.getElementById('counterTableRefund');
+    for(var i = 1 ; i <= count.value ; i++){
+        $("#RefundTicketDetail"+i).addClass("hidden");
+    }
+    $('#SpanEdit'+ counter).click(function() {
+
+        if($("#RefundTicketDetail"+counter).hasClass("hidden")){
+            $("#RefundTicketDetail"+counter).removeClass("hidden");
+        }else{
+            $("#RefundTicketDetail"+counter).addClass("hidden");
+        }
+    });
+}
+
+function addRefundDetail(counter){
+    var count = document.getElementById('counterTableRefund');
+    for(var i = 1 ; i <= count.value ; i++){
+        $("#RefundTicketDetail"+i).addClass("hidden");
+    }
+    var countadd = document.getElementById('countListAdd');
+    for(var i = 1 ; i <= countadd.value ; i++){
+        $("#RefundTicketDetailAdd"+i).addClass("hidden");
+    }
+    
+    $("#buttonAddRefundDetail").click(function() {
+           console.log("counter : " + counter);
+        if($("#RefundTicketDetailAdd"+counter).hasClass("hidden")){
+            console.log("Show");
+            $("#RefundTicketDetailAdd"+counter).removeClass("hidden");
+        }else{
+            console.log("NotShow");
+            $("#RefundTicketDetailAdd"+counter).addClass("hidden");
+        }
+    });
+}
+
+function addRowRefundTicketDetail(row,id){
+    var selectTicket = "";
+    selectTicket = selectTicketNo;
+    console.log("Select Ticket No : " + selectTicketNo);
+    $("#RefundTicketDetailTable tbody").append(
+        '<tr>' +
+        '<td>' + row + '</td>' +
+        '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control">'+ selectTicket +'</select> </td>' +
+        '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value=""></td>' +
+        '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value=""></td>' +
+        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right" id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' +      
+        '<td class="text-center"><a class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#DeleteRefundDetail('+row+',\'\')" aria-expanded="true" ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
+        '</tr>'    
+    );
+}
+
+function DeleteRefund(rowID,code){
+    $("#refundid").val(rowID);
+    if(code !== ""){
+        $("#textDeleteRefund").text('Are you sure to delete refund : '+ code +'..?');
+    }else{
+        $("#textDeleteRefund").text('Are you sure to delete refund  ?');
+    }
+}
+
+function DeleteRefundConfirm() {
+    var count = $('counterTableRefund').val();
+    var rowId  = $('refundid').val();
+    var RefundId  = $("#airticketrefundid"+rowId).val();
+    console.log("Refund ID : " + RefundId);
+}
+</script>
+
+<script type="text/javascript" src="js/refund.js"></script>

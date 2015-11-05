@@ -1,4 +1,26 @@
-$(document).ready(function () {
+$(document).ready(function () {  
+    // Add Row Auto key
+    $("#RefundTicketDetailTable").on("keyup", function () {
+        var rowAll = $("#RefundTicketDetailTable tr").length;
+        $("td").keyup(function () {
+            if ($(this).find("input").val() !== '') {
+                var colIndex = $(this).parent().children().index($(this));
+                var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                rowAll = $("#RefundTicketDetailTable tr").length;
+                if (rowIndex === rowAll) {
+                    console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
+                    addRowRefundTicketDetail(rowAll);
+                }
+            }
+        });
+    });
+    
+    // get row in table now
+    var rowCount = $('#RefundTicketDetailTable tr').length;
+    console.log("Row Refund Ticket Detail : " + rowCount);
+    $("#counterTable").val(rowCount);
+    addRowRefundTicketDetail(rowCount++);
+
     // PASSENGER TABLE
     $('#PassengerTable,#FlightTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
@@ -177,179 +199,6 @@ $(document).ready(function () {
         "bLengthChange": false,
         "iDisplayLength": 10
     });
-
+   
 });
 
-function setBillValue(billto, billname, address, term, pay) {
-
-    $("#refundBy").val(billto);
-    $("#refundByName").val(billname);
-    $("#refundCustModal").modal('hide');
-}
-
-
-function searchCustomerAutoList(name) {
-    var servletName = 'BillableServlet';
-    var servicesName = 'AJAXBean';
-    var param = 'action=' + 'text' +
-            '&servletName=' + servletName +
-            '&servicesName=' + servicesName +
-            '&name=' + name +
-            '&type=' + 'getAutoListBillto';
-
-    var url = 'AJAXServlet';
-    var billArray = [];
-    var billListId = [];
-    var billListName = [];
-    var billListAddress = [];
-    var billid, billname, billaddr;
-    $("#refundBy").autocomplete("destroy");
-    try {
-        $.ajax({
-            type: "POST",
-            url: url,
-            cache: false,
-            data: param,
-            beforeSend: function () {
-                $("#dataload").removeClass("hidden");
-            },
-            success: function (msg) {
-                var billJson = JSON.parse(msg);
-                var billselect = $("#refundBy").val();
-                for (var i in billJson) {
-                    if (billJson.hasOwnProperty(i)) {
-                        billid = billJson[i].id;
-                        billname = billJson[i].name;
-                        billaddr = billJson[i].address;
-                        billArray.push(billid);
-                        billArray.push(billname);
-                        billListId.push(billid);
-                        billListName.push(billname);
-                        billListAddress.push(billaddr);
-                        if ((billselect === billid) || (billselect === billname)) {
-                            $("#refundBy").val(billListId[i]);
-                            $("#refundByName").val(billListName[i]);
-                        }
-                    }
-                    $("#dataload").addClass("hidden");
-                }
-                // $("#refundBy").val(billid);
-                //$("#refundByName").val(billname);
-
-                $("#refundBy").autocomplete({
-                    source: billArray,
-                    close: function () {
-                        $("#refundBy").trigger("keyup");
-                        var billselect = $("#refundBy").val();
-                        for (var i = 0; i < billListId.length; i++) {
-                            if ((billselect == billListName[i]) || (billselect == billListId[i])) {
-                                $("#refundBy").val(billListId[i]);
-                                $("#refundByName").val(billListName[i]);
-                            }
-                        }
-                    }
-                });
-
-                var billval = $("#refundBy").val();
-                for (var i = 0; i < billListId.length; i++) {
-                    if (billval == billListName[i]) {
-                        $("#refundBy").val(billListId[i]);
-                    }
-                }
-                if (billListId.length == 1) {
-                    showflag = 0;
-                    $("#refundBy").val(billListId[0]);
-                }
-                var event = jQuery.Event('keydown');
-                event.keyCode = 40;
-                $("#refundBy").trigger(event);
-
-            }, error: function (msg) {
-                console.log('auto ERROR');
-                $("#dataload").addClass("hidden");
-            }
-        });
-    } catch (e) {
-        alert(e);
-    }
-}
-
-function searchCustomerAgentList(name) {
-    var servletName = 'BillableServlet';
-    var servicesName = 'AJAXBean';
-    var param = 'action=' + 'text' +
-            '&servletName=' + servletName +
-            '&servicesName=' + servicesName +
-            '&name=' + name +
-            '&type=' + 'getListBillto';
-    var url = 'AJAXServlet';
-    $("#ajaxload").removeClass("hidden");
-    try {
-        $.ajax({
-            type: "POST",
-            url: url,
-            cache: false,
-            data: param,
-            success: function (msg) {
-                $('#refundCustTable').dataTable().fnClearTable();
-                $('#refundCustTable').dataTable().fnDestroy();
-                $("#refundCustTable tbody").empty().append(msg);
-
-                $('#refundCustTable').dataTable({bJQueryUI: true,
-                    "sPaginationType": "full_numbers",
-                    "bAutoWidth": false,
-                    "bFilter": false,
-                    "bPaginate": true,
-                    "bInfo": false,
-                    "bLengthChange": false,
-                    "iDisplayLength": 10
-                });
-                $("#ajaxload").addClass("hidden");
-
-            }, error: function (msg) {
-                $("#ajaxload").addClass("hidden");
-                alert('error');
-            }
-        });
-    } catch (e) {
-        alert(e);
-    }
-}
-
-function selectRefundDetail(counter){
-    $("#RefundTicketDetailAdd"+counter).addClass("hidden");
-    var count = document.getElementById('countListOther');
-    for(var i = 1 ; i <= count.value ; i++){
-        $("#RefundTicketDetail"+i).addClass("hidden");
-    }
-    $('#SpanEdit'+ counter).click(function() {
-
-        if($("#RefundTicketDetail"+counter).hasClass("hidden")){
-            $("#RefundTicketDetail"+counter).removeClass("hidden");
-        }else{
-            $("#RefundTicketDetail"+counter).addClass("hidden");
-        }
-    });
-}
-
-function addRefundDetail(counter){
-    var count = document.getElementById('countListOther');
-    for(var i = 1 ; i <= count.value ; i++){
-        $("#RefundTicketDetail"+i).addClass("hidden");
-    }
-    var countadd = document.getElementById('countListAdd');
-    for(var i = 1 ; i <= countadd.value ; i++){
-        $("#RefundTicketDetailAdd"+i).addClass("hidden");
-    }
-    
-    $("#buttonAddRefundDetail").click(function() {
-           console.log("counter : " + counter);
-        if($("#RefundTicketDetailAdd"+counter).hasClass("hidden")){
-            console.log("Show");
-            $("#RefundTicketDetailAdd"+counter).removeClass("hidden");
-        }else{
-            console.log("NotShow");
-            $("#RefundTicketDetailAdd"+counter).addClass("hidden");
-        }
-    });
-}

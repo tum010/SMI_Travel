@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface RefundDao {
     public List searchRefundTicket(String airbookingid);
+    public List selectTicketNo(String refno);
+    public List listSector(String ticketid);
 }
