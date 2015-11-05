@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelMonthlyTemp" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="20" bottomMargin="20" uuid="e4b5a90c-6d7a-4990-82ea-0b717afbeefe">
-	<property name="ireport.zoom" value="1.7715610000000015"/>
-	<property name="ireport.x" value="286"/>
+	<property name="ireport.zoom" value="1.1000000000000005"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Kanokporn\\Documents\\GitHub\\New_Git\\New_Git_Last\\SMI_Travel\\web\\WEB-INF\\report\\"]]></defaultValueExpression>
@@ -19,21 +19,21 @@
 	<pageHeader>
 		<band height="100" splitType="Stretch">
 			<staticText>
-				<reportElement x="141" y="9" width="128" height="26" uuid="d901868a-f586-4945-8131-88278143302a"/>
+				<reportElement x="92" y="9" width="128" height="26" uuid="d901868a-f586-4945-8131-88278143302a"/>
 				<textElement>
 					<font fontName="SansSerif" size="20" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Hotel Report]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="254" y="9" width="132" height="35" uuid="e4a4ec39-a959-483b-891e-4a137112170f"/>
+				<reportElement x="205" y="9" width="132" height="35" uuid="e4a4ec39-a959-483b-891e-4a137112170f"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="SansSerif" size="20" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{frompage}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="413" y="9" width="132" height="35" uuid="d7afb60a-0fde-46d6-b8da-e1d3dc756d8a"/>
+				<reportElement x="364" y="9" width="132" height="35" uuid="d7afb60a-0fde-46d6-b8da-e1d3dc756d8a"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="SansSerif" size="20" isBold="true"/>
 				</textElement>
@@ -61,7 +61,7 @@
 				<text><![CDATA[ Page :  ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="386" y="9" width="27" height="26" uuid="d4fcdc9f-e60f-4ad1-95ab-0b8d52d30f80"/>
+				<reportElement x="337" y="9" width="27" height="26" uuid="d4fcdc9f-e60f-4ad1-95ab-0b8d52d30f80"/>
 				<textElement>
 					<font fontName="SansSerif" size="20" isBold="false"/>
 				</textElement>
