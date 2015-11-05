@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelSummary" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="27e30e2c-e5ab-4311-b653-9da19efab8dd">
-	<property name="ireport.zoom" value="2.8531167061100042"/>
-	<property name="ireport.x" value="123"/>
-	<property name="ireport.y" value="215"/>
+	<property name="ireport.zoom" value="1.3310000000000015"/>
+	<property name="ireport.x" value="51"/>
+	<property name="ireport.y" value="0"/>
 	<field name="frompage" class="java.lang.String"/>
 	<field name="topage" class="java.lang.String"/>
 	<field name="systemdate" class="java.lang.String"/>
@@ -59,21 +59,21 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalroomnight}]]></textFieldExpression>
 				</textField>
-				<textField pattern="###0.00">
+				<textField pattern="#,##0.00">
 					<reportElement x="440" y="0" width="103" height="16" uuid="efd5ffa6-d585-4c38-9274-f51293b1eb65"/>
 					<textElement textAlignment="Right" verticalAlignment="Top">
 						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
 				</textField>
-				<textField pattern="###0.00">
+				<textField pattern="#,##0.00">
 					<reportElement x="223" y="0" width="101" height="16" uuid="6721f51a-c028-4eba-9352-7fe17388216c"/>
 					<textElement textAlignment="Right" verticalAlignment="Top">
 						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalsellprice}]]></textFieldExpression>
 				</textField>
-				<textField pattern="###0.00">
+				<textField pattern="#,##0.00">
 					<reportElement x="331" y="0" width="102" height="16" uuid="bf14bf2a-a485-4422-b72a-1c1b42e076bf"/>
 					<textElement textAlignment="Right" verticalAlignment="Top">
 						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
@@ -126,70 +126,70 @@
 	<title>
 		<band height="74" splitType="Stretch">
 			<staticText>
-				<reportElement x="359" y="26" width="66" height="24" uuid="691aa5dc-9ce3-40cf-8f66-86f260d9ea87"/>
+				<reportElement x="398" y="38" width="54" height="12" uuid="691aa5dc-9ce3-40cf-8f66-86f260d9ea87"/>
 				<textElement>
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[ Print Date :  ]]></text>
 			</staticText>
 			<textField pattern="">
-				<reportElement x="428" y="26" width="109" height="24" uuid="1b6a8d0d-6c29-4506-b9fd-cf8f2e985cc1"/>
+				<reportElement x="445" y="38" width="101" height="12" uuid="1b6a8d0d-6c29-4506-b9fd-cf8f2e985cc1"/>
 				<textElement>
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="382" y="45" width="36" height="24" uuid="41f010a7-78f6-4bd8-a591-a4afcf033359"/>
+				<reportElement x="438" y="55" width="36" height="16" uuid="41f010a7-78f6-4bd8-a591-a4afcf033359"/>
 				<textElement>
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[ Page :  ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="124" y="-2" width="144" height="26" uuid="51f433ed-62f6-4342-bb24-ae146f81c7cf"/>
+				<reportElement x="88" y="-2" width="144" height="26" uuid="51f433ed-62f6-4342-bb24-ae146f81c7cf"/>
 				<textElement>
 					<font fontName="SansSerif" size="20" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Hotel Summary]]></text>
 			</staticText>
 			<textField evaluationTime="Report">
-				<reportElement x="462" y="45" width="18" height="23" uuid="c3b4d6ce-5527-4358-b838-6ffee351f5b9"/>
+				<reportElement x="518" y="55" width="18" height="16" uuid="c3b4d6ce-5527-4358-b838-6ffee351f5b9"/>
 				<textElement textAlignment="Center">
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="417" y="45" width="22" height="23" uuid="74531117-2811-4599-b595-407e4f427ef0"/>
+				<reportElement x="474" y="55" width="22" height="16" uuid="74531117-2811-4599-b595-407e4f427ef0"/>
 				<textElement textAlignment="Center">
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="445" y="45" width="18" height="21" uuid="e88e627d-fe90-4493-a166-0be2ddd5a190"/>
+				<reportElement x="501" y="55" width="18" height="16" uuid="e88e627d-fe90-4493-a166-0be2ddd5a190"/>
 				<textElement>
-					<font size="11"/>
+					<font size="8"/>
 				</textElement>
 				<text><![CDATA[of]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="389" y="-2" width="27" height="26" uuid="292f7612-a57d-4819-b4b3-74b40671f272"/>
+				<reportElement x="353" y="-2" width="27" height="26" uuid="292f7612-a57d-4819-b4b3-74b40671f272"/>
 				<textElement>
 					<font fontName="SansSerif" size="20" isBold="false"/>
 				</textElement>
 				<text><![CDATA[ to]]></text>
 			</staticText>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="416" y="-2" width="120" height="35" uuid="04faf436-cbb9-4ba7-ad31-ab1ad87f661e"/>
+				<reportElement x="380" y="-2" width="120" height="35" uuid="04faf436-cbb9-4ba7-ad31-ab1ad87f661e"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="SansSerif" size="20" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{topage}]]></textFieldExpression>
 			</textField>
 			<textField pattern="" isBlankWhenNull="true">
-				<reportElement x="269" y="-2" width="120" height="35" uuid="1c3de473-d07c-4a5f-a089-ea58b0575038"/>
+				<reportElement x="233" y="-2" width="120" height="35" uuid="1c3de473-d07c-4a5f-a089-ea58b0575038"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="SansSerif" size="20" isBold="true"/>
 				</textElement>
@@ -282,21 +282,21 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{night}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="223" y="0" width="101" height="17" uuid="a8fb7b48-d1b0-4ad5-872f-d89204ffccc0"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sell}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="331" y="0" width="102" height="17" uuid="0ad757df-d7df-452a-9a28-a6552444bad3"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{net}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="440" y="0" width="103" height="17" uuid="7571e2f3-cffc-4334-9eae-96f7ead3bf8f"/>
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="TH SarabunPSK" size="12"/>
