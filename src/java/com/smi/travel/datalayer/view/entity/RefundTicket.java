@@ -7,6 +7,7 @@ package com.smi.travel.datalayer.view.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -20,6 +21,17 @@ public class RefundTicket {
     private String receiveby;
     private String change;
     private String detail;
+    private List RefundTicketDetail;
+
+    public List getRefundTicketDetail() {
+        return RefundTicketDetail;
+    }
+
+    public void setRefundTicketDetail(List RefundTicketDetail) {
+        this.RefundTicketDetail = RefundTicketDetail;
+    }
+    
+    
 
     public String getAirticketrefundid() {
         return airticketrefundid;

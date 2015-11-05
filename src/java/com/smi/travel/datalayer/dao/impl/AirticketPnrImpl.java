@@ -98,7 +98,7 @@ public class AirticketPnrImpl implements AirticketPnrDao {
                             dbAirline.getAirticketFlights().add(flight);
                             session.saveOrUpdate(dbAirline);
                         } else {
-                            // update flight
+                            // update flight                       
                             AirticketFlight dbFlight = (AirticketFlight) session.get(AirticketFlight.class, flight.getId());
                             
                             //might need to update airline.
@@ -114,6 +114,7 @@ public class AirticketPnrImpl implements AirticketPnrDao {
                                 
                             }
                             BeanUtils.copyProperties(flight, dbFlight, new String[]{"id"});
+                            
                             session.saveOrUpdate(dbFlight);
                         }
                     }
@@ -137,11 +138,13 @@ public class AirticketPnrImpl implements AirticketPnrDao {
                         AirticketAirline dbAirline = (AirticketAirline) session.get(AirticketAirline.class, airline.getId());
 //                        dbAirline.getAirticketFlights().clear();
 //                        dbAirline.getAirticketPassengers().clear();
+                        
                         dbAirPnr.getAirticketAirlines().remove(dbAirline);
 //                        session.delete(dbAirline);
                     }
                 }
             }
+            
             session.update(dbAirPnr);
             transaction.commit();
             session.close();

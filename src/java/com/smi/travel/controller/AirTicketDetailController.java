@@ -36,7 +36,6 @@ import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.util.UtilityFunction;
-import com.sun.xml.internal.fastinfoset.tools.StAX2SAXReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -45,6 +44,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NavigableMap;
 import java.util.Set;
@@ -520,7 +521,11 @@ public class AirTicketDetailController extends SMITravelController {
         if (flightId == null) {
             return null;
         }
+        
         List<AirticketFlight> airticketFlightList = bookingAirticketService.getAirticketFlightList(flightId);
+        if(airticketFlightList == null){
+            return null;
+        }
         for(int i =0 ; i< airticketFlightList.size() ; i++){
             AirticketFlight flight = airticketFlightList.get(i);
             if (flightId.equalsIgnoreCase(flight.getId())) {
@@ -719,12 +724,33 @@ public class AirTicketDetailController extends SMITravelController {
                 newAirline.setTicketDate(new Date());
             } else {
                 //Might need to setup new airline. Need analysis.
-                AirticketAirline airline = getAirlineByAircode(airPnr, airlineCode);
-                airline.getAirticketFlights().add(airFlight);
+                //AirticketAirline airline = getAirlineByAircode(airPnr, airlineCode);
+                AirticketAirline airline = getAirlineByAircodeAndFlightID(airPnr, airlineCode,Id);
+                if((Id == null)||("".equalsIgnoreCase(Id))){
+                    airline.getAirticketFlights().add(airFlight);
+                }else{
+                    Set airticketFlightSet = new LinkedHashSet(0);
+                    
+                    Iterator<AirticketFlight> iterator = airline.getAirticketFlights().iterator();
+                    while (iterator.hasNext()) {
+                        AirticketFlight flight = iterator.next();
+                        if(flight.getId().equalsIgnoreCase(airFlight.getId())){
+                            airticketFlightSet.add(airFlight);
+                        }else{
+                            airticketFlightSet.add(flight);
+                        }
+                    }
+                    airline.setAirticketFlights(airticketFlightSet);
+                 //   airline.getAirticketFlights().
+                 //           add(airFlight);
+                }
+                
                 airFlight.setAirticketAirline(airline);
                 System.out.println("Existing Airline and Existing Flight");
 
             }
+            
+            
         }
 
         return result;
@@ -1089,6 +1115,21 @@ public class AirTicketDetailController extends SMITravelController {
             if (airlineCode.equalsIgnoreCase(airline.getMAirline().getCode())) {
                 return airline;
             }
+        }
+        return null;
+    }
+    
+    private AirticketAirline getAirlineByAircodeAndFlightID(AirticketPnr airPnr, String airlineCode,String FlightID) {
+        Set<AirticketAirline> airlines = airPnr.getAirticketAirlines();
+        for (AirticketAirline airline : airlines) {
+            List<AirticketFlight> flightlist = new LinkedList<AirticketFlight>(airline.getAirticketFlights());
+            System.out.println(airline.getAirticketFlights());
+            for(int i=0;i<flightlist.size();i++){
+                if ((airlineCode.equalsIgnoreCase(airline.getMAirline().getCode())) && (flightlist.get(i).getId().equalsIgnoreCase(FlightID))) {
+                    return airline;
+                }
+            }
+           
         }
         return null;
     }

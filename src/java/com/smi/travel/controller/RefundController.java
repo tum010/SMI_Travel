@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package com.smi.travel.controller;
-
+import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.UtilityService;
@@ -15,18 +15,18 @@ import com.smi.travel.datalayer.view.entity.RefundTicket;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
-
 /**
  *
  * @author top
  */
 public class RefundController extends SMITravelController {
-
+    
     private static final ModelAndView Refund = new ModelAndView("Refund");
     private UtilityService utilservice;
     private MStaffService mStaffService;
@@ -75,6 +75,15 @@ public class RefundController extends SMITravelController {
         request.setAttribute("refundbyDefault", refundby);
         request.setAttribute("refundnameDefault", refundname);
         request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
+        
+        //Select Ticket No
+        List<AirticketPassenger> listTicketNo = new LinkedList<AirticketPassenger>();
+        listTicketNo = refundService.selectTicketNo(refNo);
+        if(listTicketNo != null){
+            request.setAttribute("listTicketNo", listTicketNo);
+        }else{
+            request.setAttribute("listTicketNo", null);
+        }
         
         //Search Refund Ticket
         List<RefundTicket> listRefundTicket = refundService.searchRefundTicket(airbookingid);
