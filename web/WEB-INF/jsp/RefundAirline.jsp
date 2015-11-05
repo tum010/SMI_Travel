@@ -79,8 +79,8 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6 form-group">
-                        <div class="col-xs-1 text-right"  style="width: 140px">
-                            <label class="control-label text-right">Refund Agent <font style="color: red">*</font> </label>
+                        <div class="col-xs-1 text-right"  style="width: 140px;padding-left:10px">
+                            <label class="control-label text-right">Request Airline <font style="color: red">*</font> </label>
                         </div>
                         <div class="col-xs-1"  style="width: 150px">
                             <div class="input-group" id="refundAgentCodeValidate">
