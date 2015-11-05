@@ -1,8 +1,6 @@
 package com.smi.travel.datalayer.entity;
 // Generated Jul 9, 2015 9:38:50 AM by Hibernate Tools 4.3.1
 
-
-import com.smi.travel.datalayer.entity.Agent;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;

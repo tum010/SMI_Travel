@@ -18,6 +18,10 @@ public class RefundService {
     public List searchRefundTicket(String airbookingid){
         return refundDao.searchRefundTicket(airbookingid);
     }
+    
+    public List selectTicketNo(String refno){
+        return refundDao.selectTicketNo(refno);
+    }
 
     public RefundDao getRefundDao() {
         return refundDao;
