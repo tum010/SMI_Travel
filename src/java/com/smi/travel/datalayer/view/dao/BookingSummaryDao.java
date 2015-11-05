@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao;
 import com.smi.travel.datalayer.view.entity.BookSummary;
+import com.smi.travel.datalayer.view.entity.BookingHeaderSummaryView;
 import java.util.List;
 /**
  *
@@ -13,4 +14,5 @@ import java.util.List;
  */
 public interface BookingSummaryDao {
     public List<BookSummary>  getListBookSummary(String refno);
+    public BookingHeaderSummaryView getBookingSummaryReport(String refno);
 }

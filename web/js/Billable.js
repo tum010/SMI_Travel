@@ -250,6 +250,11 @@ function printTicketOrderReport(){
     window.open("report.smi?name=TicketOrder"+"&refno="+refno+"&pnrID="+printBtn);  
 }
 
+function printBookingSummaryReport(){
+    var refno = $('#getRealformatUrl').val(); 
+    window.open("report.smi?name=BookingSummaryReport&refno="+refno);
+}
+
 //Add New Booking
 function addNewBooking(){
     window.location.href = "BookDetail.smi?&action=new";

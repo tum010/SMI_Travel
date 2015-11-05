@@ -16,6 +16,7 @@ import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.dao.AgentCommissionReportDao;
 import com.smi.travel.datalayer.view.dao.AirlineSummaryDao;
 import com.smi.travel.datalayer.view.dao.BillAirAgentDao;
+import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
 import com.smi.travel.datalayer.view.dao.CollectionNirvanaDao;
 import com.smi.travel.datalayer.view.dao.CreditNoteReportDao;
 import com.smi.travel.datalayer.view.dao.CreditNoteSummaryReportDao;
@@ -96,6 +97,7 @@ public class ReportService {
     private OtherMonthlyDao otherMonthlyDao;
     private DaytourBookingDao daytourBookingdao;
     private PackageMonthlyDao packageMonthlyDao;
+    private BookingSummaryDao bookingSummaryDao;
     
     public List getInvoiceMonthly(String BillTo,String ClientName,String Accno,String vattype,String from,String to,String department,String billingAttn,String billingFrom,String billingTel,String billingFax,String billingMail,String billingDate){
         return invoiceReportDao.getInvoiceMonthly(BillTo, ClientName, Accno, vattype, from, to, department, billingAttn, billingFrom, billingTel, billingFax, billingMail, billingDate);
@@ -601,7 +603,7 @@ public class ReportService {
     public List getPaymentTourHotelSummary(String from, String to, String pvtype, String status, String invSupCode, String printBy) {
         return getPaymentWendytourDao().getPaymentTourHotelSummary(from,to,pvtype,status,invSupCode,printBy);
     }
-
+    
     public PaymentWendytourDao getPaymentWendytourDao() {
         return paymentWendytourDao;
     }
@@ -675,5 +677,19 @@ public class ReportService {
         List data  = new ArrayList();
         data.add(packageTourHotelDao.getHotelMonthlyReport(from, to, department, detail, systemuser, url));
         return data;
+    }
+    
+    public List getBookingSummaryReport(String refno){
+        List data  = new ArrayList();
+        data.add(bookingSummaryDao.getBookingSummaryReport(refno));
+        return data;
+    }
+    
+    public BookingSummaryDao getBookingSummaryDao() {
+        return bookingSummaryDao;
+    }
+
+    public void setBookingSummaryDao(BookingSummaryDao bookingSummaryDao) {
+        this.bookingSummaryDao = bookingSummaryDao;
     }
 }

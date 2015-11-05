@@ -15,6 +15,7 @@ import com.smi.travel.datalayer.report.model.PackageMonthlyReport;
 import com.smi.travel.datalayer.report.model.PaymentAirline;
 import com.smi.travel.datalayer.report.model.TicketOrder;
 import com.smi.travel.datalayer.service.ReportService;
+import com.smi.travel.datalayer.view.entity.BookingHeaderSummaryView;
 import com.smi.travel.datalayer.view.entity.PackageSummaryDetailView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
@@ -89,6 +90,7 @@ public class ReportController extends SMITravelController {
     private static final String OtherMonthlyReport = "OtherMonthlyReport"; // Other
     private static final String DailyTourReport = "DailyTourReport";
     private static final String PackageSummaryReport = "PackageSummaryReport"; //PackageMonthly
+    private static final String BookingSummaryReport = "BookingSummaryReport"; //PackageMonthly
     
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -294,6 +296,9 @@ public class ReportController extends SMITravelController {
             String detail = request.getParameter("detail");
             data = reportservice.getPackageMonthlyReport(datefrom,dateto,department,detail,user.getRole().getName(),getServletContext().getRealPath("/WEB-INF/report/"));
             ((PackageMonthlyReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));         
+        }else if(BookingSummaryReport.equalsIgnoreCase(name)){
+            data = reportservice.getBookingSummaryReport(refno);
+            ((BookingHeaderSummaryView) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

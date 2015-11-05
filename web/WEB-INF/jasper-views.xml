@@ -265,5 +265,31 @@
         <bean id="PackageDetailSubReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/PackageDetailSubReport.jrxml"/>
-	</bean>                                                                                                                                      
+	</bean>  
+        
+        <bean id="BookingSummaryReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/BookingSummaryReport.jrxml"/>
+	</bean>
+        <bean id="BookingSummaryFlightSubReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/BookingSummaryFlightSubReport.jrxml"/>
+	</bean> 
+        <bean id="BookingSummaryHotelSubReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/BookingSummaryHotelSubReport.jrxml"/>
+	</bean> 
+        <bean id="BookingSummaryOtherSubReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/BookingSummaryOtherSubReport.jrxml"/>
+	</bean> 
+        <bean id="BookingSummaryLandSubReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/BookingSummaryLandSubReport.jrxml"/>
+	</bean> 
+<!--        <bean id="BookingSummaryPassengerSubReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/BookingSummaryPassengerSubReport.jrxml"/>
+	</bean> -->
+                                                                                                                                      
 </beans>

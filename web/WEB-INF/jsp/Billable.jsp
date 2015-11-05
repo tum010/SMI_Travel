@@ -453,9 +453,12 @@
                     </tbody>
                 </table>    
                 <div class="text-center" style="padding-top: 10px">
+                    <button type="button" onclick="printBookingSummaryReport()" class="btn btn-default" id="btnPrintBookingSummaryReport" name="btnPrintBookingSummaryReport">
+                        <span id="SpanPrintBookingSummary" class="glyphicon glyphicon-print"></span> Booking Summary
+                    </button>
                     <input type="hidden" id="printTicketOrder" name="printTicketOrder" value="${requestScope['printTicketOrder']}" />
                     <button type="button" onclick="printTicketOrderReport()" class="btn btn-default disabled" id="btnPrintTicketOrder" name="btnPrintTicketOrder">
-                        <span id="SpanPrintTicketOrder" class="glyphicon glyphicon-print"></span> Print
+                        <span id="SpanPrintTicketOrder" class="glyphicon glyphicon-print"></span> Ticket Order
                     </button>
                     <c:if test="${lockUnlockBooking == 0}">
                         <button id="ButtonSave" name="ButtonSave" type="submit" onclick class="btn btn-success" ><span id="SpanButtonSave" class="fa fa-save"></span> Save</button>
