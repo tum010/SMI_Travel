@@ -208,48 +208,46 @@
                                 </div>
                             </div>
                         </div> 
-                    </div>
-                </div> 
-                <div class="collapse" id="flight1" aria-expanded="true" style="">
-                    <!--Order Panel-->
-                    <div class="panel panel-default ${panelborder}" style="margin-top: 10px">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Tax Invoice Detail</h3>
+                        <div class="collapse" id="flight1" aria-expanded="true" style="">
+                            Order Panel
+                            <div class="panel panel-default ${panelborder}" style="margin-top: 10px">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Tax Invoice Detail</h3>
+                                </div>
+                                <div class="panel-body">
+
+                                    <table id="taxDetail" class="display" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr class="datatable-header" >
+                                                <th style="width:10%;">No</th>
+                                                <th style="width:10%;">Product</th>
+                                                <th style="width:10%;">Refno</th>
+                                                <th style="width:10%;">Description</th>
+                                                <th style="width:10%;">Amount</th>
+                                                <th style="width:10%;">Cur</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
-                        <div class="panel-body">
-
-                            <table id="taxDetail" class="display" cellspacing="0" width="100%">
-                                <thead>
-                                    <tr class="datatable-header" >
-                                        <th style="width:10%;">No</th>
-                                        <th style="width:10%;">Product</th>
-                                        <th style="width:10%;">Refno</th>
-                                        <th style="width:10%;">Description</th>
-                                        <th style="width:10%;">Amount</th>
-                                        <th style="width:10%;">Cur</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12" style="padding-top: 15px">
-                        <div class="col-xs-1 text-right" style="width: 80px">
-                            <label class="control-label text-right">Remark</label>
-                        </div>
-                        <div class="col-xs-1 text-right" style="width: 800px">
-                            <div class="input-group">                                    
-                                <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 582%"><c:out value="${creditNote.cnRemark}"/></textarea>  
+                        <div class="row">
+                            <div class="col-md-12" style="padding-top: 15px">
+                                <div class="col-xs-1 text-right" style="width: 80px">
+                                    <label class="control-label text-right">Remark</label>
+                                </div>
+                                <div class="col-xs-1 text-right" style="width: 800px">
+                                    <div class="input-group">                                    
+                                        <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 582%"><c:out value="${creditNote.cnRemark}"/></textarea>  
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> 
                 <div class="row"><div class="col-md-12" style="padding-top: 15px"></div></div>
                 <div role="tabpanel">
                     <div class="tab-content">
