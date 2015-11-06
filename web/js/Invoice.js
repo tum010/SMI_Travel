@@ -993,7 +993,7 @@ function formatNumber(num) {
 }
 
 // American Numbering System
-
+var countVat = 0;
 function calculateGross(row){
     var amount = document.getElementById('InputAmount'+row).value;
     var gross = document.getElementById('InputGross'+row).value;
@@ -1003,9 +1003,18 @@ function calculateGross(row){
     amount = amount.replace(/,/g,"");
     var grossTotal = parseFloat(amount);
     if ($('#checkUse'+row).is(":checked")){
-       document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = vatDefaultData;
-       grossTotal = (amount*100)/(100+vatDefaultData);
-       document.getElementById('InputGross'+row).value = formatNumber(grossTotal); 
+        if(countVat !== 0){
+            var vatT= $('#vatBase').val();
+            var vatTT = parseFloat(vatT);
+            document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = vatTT;
+            grossTotal = (amount*100)/(100+vatTT);
+            document.getElementById('InputGross'+row).value = formatNumber(grossTotal); 
+        }else{
+            document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = vatDefaultData;
+            grossTotal = (amount*100)/(100+vatDefaultData);
+            document.getElementById('InputGross'+row).value = formatNumber(grossTotal); 
+        }
+        countVat++;
     }else{
        document.getElementById("DetailBillableTable").rows[row].cells[10].innerHTML = ''; 
        document.getElementById('InputGross'+row).value = '';
@@ -1090,7 +1099,7 @@ function checkVatInvoiceAll(){
                             var amount = document.getElementById('InputAmount'+i).value;
                             var gross = document.getElementById('InputGross'+i).value;
 
-                            var vatTemp = document.getElementById('InputVatTemp'+i).value;
+                            var vatTemp = $('#vatBase').val();
                             var vatDefaultData = parseFloat(vatTemp);
                             console.log("Vat : " + vatDefaultData);
                             amount = amount.replace(/,/g,"");
@@ -1134,7 +1143,7 @@ function checkVatInvoiceAll(){
                     if(amountChk !== null && amountChk !== ''){
                         var amount = document.getElementById('InputAmount'+i).value;
                         var gross = document.getElementById('InputGross'+i).value;
-                        var vatTemp = document.getElementById('InputVatTemp'+i).value;
+                        var vatTemp = $('#vatBase').val();
                         var vatDefaultData = parseFloat(vatTemp);
                         amount = amount.replace(/,/g,"");
                         var grossTotal = parseFloat(amount);
@@ -1175,7 +1184,7 @@ function checkVatInvoiceAll(){
                     if(amountChk !== null && amountChk !== ''){
                         var amount = document.getElementById('InputAmount'+i).value;
                         var gross = document.getElementById('InputGross'+i).value;
-                        var vatTemp = document.getElementById('InputVatTemp'+i).value;
+                        var vatTemp = $('#vatBase').val();
                         var vatDefaultData = parseFloat(vatTemp);
                         amount = amount.replace(/,/g,"");
                         var grossTotal = parseFloat(amount);
