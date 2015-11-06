@@ -101,7 +101,6 @@
         </div>
         <form action="TaxInvoice${page}.smi" method="post" id="TaxInvoiceForm" role="form" autocomplete="off" onsubmit="return validateForm()">
         <!--Search Invoice-->
-        <div class="row" style="padding-left: 15px">  
            <div role="tabpanel">
                <!-- Nav tabs -->                    
                 <ul class="nav nav-tabs " role="tablist">
@@ -259,15 +258,14 @@
                     </div>
                 </div>
             </div>-->
-            </div>   
-            <div class="col-xs-12 form-group"></div>             
-                <!--Search-->  
+            </div>
+            <!--Search-->  
             <div class="panel panel-default ${panelborder}">
                 <div class="panel-heading ${panelheader}">
                     <h4 class="panel-title">Tax Invoice Detail</h4>
                 </div>
                 <div class="panel-body"  style="padding-right: 0px;">
-                    <div class="col-xs-12 ">
+                    <div class="col-xs-12 " style="padding-top: 0px;">
                         <div class="col-md-2 text-left">
                             <label class="control-label" for="">Tax Invoice No</lable>
                         </div>

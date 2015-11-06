@@ -175,7 +175,7 @@
             </div>
             
             <!--Search Invoice-->
-            <div class="row" style="padding-left: 15px">  
+            <div class="row" style="padding-left: 15px;padding-right:15px">  
                 <div role="tabpanel">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane  active " id="infoSearchInvoice">
@@ -185,7 +185,7 @@
                                         <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="">
                                             <span id="SpanEdit${advanced.search}">Search Invoice</span>
                                         </a>
-                                        <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" style="margin-left: 55em" onclick="">
+                                        <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" style="margin-left: 54em" onclick="">
                                             <span id="arrowReservstion" class="arrowReservstion glyphicon glyphicon-chevron-up"></span> 
                                         </a>
                                     </h2>               
@@ -250,8 +250,9 @@
                             </div>
                         </div>
                     </div>
-                </div>                                      
-                <div class="col-xs-12 form-group"></div>
+                </div>       
+                </div>                                
+                <!--<div class="col-xs-12 form-group"></div>-->
                 <div class="panel panel-default ${panelborder}">
                     <div class="panel-heading ${panelheader}">
                         <h4 class="panel-title">Invoice Detail</h4>
