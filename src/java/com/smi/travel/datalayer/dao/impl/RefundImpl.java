@@ -180,7 +180,8 @@ public class RefundImpl implements RefundDao{
                 }else{
                     refundTicket.setRefundby("");
                 }
-            }          
+            }  
+            refundTicket.setRefundcode(airbookingidList.get(i).getRefundAirticket().getRefundBy());
             refundTicket.setRefunddate(airbookingidList.get(i).getRefundAirticket().getRefundDate());
             refundTicket.setReceivedate(airbookingidList.get(i).getRefundAirticket().getReceiveDate());
             refundTicket.setReceiveby(airbookingidList.get(i).getRefundAirticket().getReceiveBy());
@@ -197,8 +198,10 @@ public class RefundImpl implements RefundDao{
                 }
                 // Refund Detail
                 RefundTicketDetail refundTicketDetail = new RefundTicketDetail();
+                    refundTicketDetail.setRefunddetailid(rRefundAirticketDetail.get(j).getId());
                     //Ticket
-                    refundTicketDetail.setTicketno(rRefundAirticketDetail.get(j).getAirticketPassenger().getId()+""+
+                    refundTicketDetail.setTicketid(rRefundAirticketDetail.get(j).getAirticketPassenger().getId());
+                    refundTicketDetail.setTicketno(
                             rRefundAirticketDetail.get(j).getAirticketPassenger().getSeries1()+""+
                             rRefundAirticketDetail.get(j).getAirticketPassenger().getSeries2()+""+
                             rRefundAirticketDetail.get(j).getAirticketPassenger().getSeries3());
@@ -206,7 +209,9 @@ public class RefundImpl implements RefundDao{
                     List<AirticketPassenger> ticketnoList = session.createQuery(SELECT_SECTOR)
                         .setParameter("ticid", rRefundAirticketDetail.get(j).getAirticketPassenger().getId())
                         .list();
-                    refundTicketDetail.setSector("");
+                    List<AirticketFlight> list = new ArrayList<AirticketFlight>(ticketnoList.get(0).getAirticketAirline().getAirticketFlights());
+                    String sector = util.GetRounting(list);
+                    refundTicketDetail.setSector(sector);
                     //Sector Refund
                     refundTicketDetail.setSectorRefund(rRefundAirticketDetail.get(j).getSectorRefund());
                     
@@ -225,6 +230,6 @@ public class RefundImpl implements RefundDao{
             listRefundTicket.add(refundTicket);
         }
            
-        return listRefundTicketDetail;
+        return listRefundTicket;
     }
 }

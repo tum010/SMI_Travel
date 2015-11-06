@@ -27,8 +27,11 @@
 <c:set var="refundnameDefault" value="${requestScope['refundnameDefault']}"/>
 <c:set var="create" value="${requestScope['thisdate']}" />
 <c:set var="listRefundTicket" value="${requestScope['listRefundTicket']}" />
-<c:set var="listRefundTicketDetail" value="${requestScope['listRefundTicketDetail']}" />
+<c:set var="RefundTicket" value="${requestScope['RefundTicket']}" />
+<c:set var="RefundTicketDetail" value="${requestScope['RefundTicketDetail']}" />
 <c:set var="listTicketNo" value="${requestScope['listTicketNo']}" />
+<c:set var="airbookingid" value="${requestScope['airbookingid']}" />
+<c:set var="actionAdd" value="${requestScope['actionAdd']}" />
 
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
@@ -78,8 +81,10 @@
                         </button>
                     </div>
                     <div class="col-md-1 text-right">
-                        <button type="button" onclick="addRefundDetail(1);" class="btn btn-primary" id="buttonAddRefundDetail" name="buttonAddRefundDetail" >
-                            <span class="glyphicon glyphicon-plus"></span> Add
+                        <button type="button"  class="btn btn-primary" id="buttonAddRefundDetail" name="buttonAddRefundDetail" >
+                            <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=addRefund">
+                                <span class="glyphicon glyphicon-plus"></span> Add
+                            </a>              
                         </button>
                          <input type="hidden" id="countListAdd" name="countListAdd" value="1" >
                     </div>
@@ -125,7 +130,9 @@
                                                 <td class="text-right "><c:out value="${table.change}" /></td>
                                                 <td><c:out value="${table.detail}" /></td>
                                                 <td class="text-center">
-                                                    <span class="glyphicon glyphicon-edit editicon" id="SpanEdit${status.count}" onclick="selectRefundDetail(${table.airticketrefundid},${status.count})"></span>
+                                                    <a  id="SpanEdit${status.count}" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&refundid=${table.airticketrefundid}&action=searchRefund">
+                                                        <span class="glyphicon glyphicon-edit editicon"  ></span>
+                                                    </a>
                                                     <a class="carousel" data-target="#DeleteRefund" onclick="DeleteRefund(${status.count},${table.refundno})" data-toggle="modal">
                                                        <span class="glyphicon glyphicon-remove deleteicon"></span>
                                                     </a>
@@ -139,8 +146,8 @@
                         </div>
                         <hr/>
                         
-                        <c:if test="${listRefundTicket != null}"> 
-                            <c:forEach var="table1" items="${listRefundTicket}" varStatus="status1">
+                        <c:if test="${RefundTicket != null}"> 
+                            <c:forEach var="table1" items="${RefundTicket}" varStatus="status1">
                             <c:set var="counter1" value="${status1.count}"></c:set>  
                             <div class="row hidden" style="margin-top: 20px" id="RefundTicketDetail" name="RefundTicketDetail" >
                                 <div class="row">
@@ -280,7 +287,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <c:forEach var="tableDetail" items="${listRefundTicketDetail}" varStatus="statusDetail">
+                                                <c:forEach var="tableDetail" items="${RefundTicketDetail}" varStatus="statusDetail">
                                                     <tr>
                                                         <td class="hidden"><input type="text" id="airticketrefunddetailid${statusDetail.count}" name="airticketrefunddetailid${statusDetail.count}" value="${tableDetail.refunddetailid}" /></td>
                                                         <td>${statusDetail.count}</td>
@@ -335,7 +342,7 @@
                             </c:forEach>
                         </c:if>
                         <!--Refund Add --> 
-                        <div class="row hidden" style="margin-top: 20px" id="RefundTicketDetailAdd1" name="RefundTicketDetailAdd1" >
+                        <div class="row hidden" style="margin-top: 20px" id="RefundTicketDetailAdd" name="RefundTicketDetailAdd" >
                             <div class="row">
                                 <div class="col-sm-6 form-group" style="margin-left: 20px;">
                                      <h4>Refund Ticket Detail</h4>
@@ -436,7 +443,7 @@
                             </br>
                             <div class="row">
                                 <div class="col-sm-12 form-group text-center">
-                                    <table  class="display" id="RefundTicketDetailTable" style="width: 1000px;">
+                                    <table  class="display" id="RefundTicketDetailTableAdd" style="width: 1000px;">
                                         <thead>
                                             <tr class="datatable-header">
                                                 <th class="hidden" >id</th>
@@ -637,7 +644,12 @@
         <c:forEach var="cur" items="${listTicketNo}">
             selectTicketNo += "<option value='${cur.id}${cur.series1}${cur.series2}${cur.series3}' ><c:out value='${cur.id}${cur.series1}${cur.series2}${cur.series3}' /></option>";      
         </c:forEach>
-
+        <c:if test="${RefundTicket != null}">        
+            $("#RefundTicketDetail").removeClass("hidden");
+        </c:if>
+        <c:if test="${actionAdd == 'addRefund'}">        
+            $("#RefundTicketDetailAdd").removeClass("hidden");
+        </c:if>
         // Add Row Auto key
     $("#RefundTicketDetailTable").on("keyup", function () {
         var rowAll = $("#RefundTicketDetailTable tr").length;
@@ -1079,5 +1091,4 @@ function DeleteRefundDetailConfirm() {
     console.log("Refund Detail ID : " + RefundId);
 }
 </script>
-
 <script type="text/javascript" src="js/refund.js"></script>
