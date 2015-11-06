@@ -408,14 +408,16 @@
                                 <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value="${invoice.arcode}"/>
                                 <input type="text" class="form-control" id="ARCode" name="ARCode" value="${invoice.arcode}" style="background-color: #ffffff">                    
                             </div>
-                        </div>                  
+                        </div>             
                         <div role="tabpanel">
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane  active" id="infoDetailBillable">
                                     <div class="panel-body">
-                                        <div id="textAlertCurrency"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <strong>Currency is not match!!! </strong> 
+                                        <div class="col-xs-12">    
+                                            <div id="textAlertCurrency"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <strong>Currency is not match!!! </strong> 
+                                            </div> 
                                         </div>
                                         <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
                                         <input type="text" class="hidden" id="idDeleteDetailBillable" name="idDeleteDetailBillable" value="0" >
