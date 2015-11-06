@@ -259,9 +259,14 @@
                     </div>
                 </div>
             </div>-->
+            </div>   
             <div class="col-xs-12 form-group"></div>             
                 <!--Search-->  
-                
+            <div class="panel panel-default ${panelborder}">
+                <div class="panel-heading ${panelheader}">
+                    <h4 class="panel-title">Tax Invoice Detail</h4>
+                </div>
+                <div class="panel-body"  style="padding-right: 0px;">
                     <div class="col-xs-12 ">
                         <div class="col-md-2 text-left">
                             <label class="control-label" for="">Tax Invoice No</lable>
@@ -288,13 +293,13 @@
                                 <input id="InvToDate" name="InvToDate"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['invToDate']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                
+
                             </c:if>
                             <c:if test='${taxInvoice.taxInvDate == null}'>
                                 <input id="InvToDate" name="InvToDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['defaultInvToDate']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                
+
                             </c:if>                             
                             </div>               
                         </div>
@@ -352,14 +357,13 @@
                             <input type="text" class="form-control" id="ARCode" name="ARCode" value="${taxInvoice.arCode}" style="background-color: #ffffff">                              
                         </div>
                     </div>    
-                                
-            </div>
-                                            
+                </div>             
+            <!--</div>-->
             <div class="col-xs-12 form-group"></div>
-            <div role="tabpanel">
+            <!--<div role="tabpanel">-->
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane  active" id="infoMasterProduct">
-                        <div class="panel panel-default ${panelborder}">                              
+                        <!--<div class="panel panel-default ${panelborder}">-->                              
                             <div class="panel-body">
                                 <div class="row" style="">    
                                     <div class="col-md-12">
@@ -461,7 +465,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
                         
                 <div role="tabpanel">
                     <div class="tab-content">

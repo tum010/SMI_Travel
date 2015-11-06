@@ -264,6 +264,9 @@
                     </div>
                     
                     <div class="panel panel-default ${panelborder}">
+                        <div class="panel-heading ${panelheader}">
+                            <h4 class="panel-title">Receipt Detail</h4>
+                        </div>
                         <div class="panel-body"  style="padding-right: 0px;">
                             <div class="col-xs-8" style="padding-top: 0px;">
                                 <div class="col-xs-1 text-right" style="width: 135px">
