@@ -28,6 +28,7 @@ public class CollectionNirvana {
     private String type;
     private Date invdate;
     private BigDecimal withtax;
+    private String payby;
     
     private String systemdate;
     private String user;
@@ -303,6 +304,14 @@ public class CollectionNirvana {
 
     public void setTotalamountdiff(BigDecimal totalamountdiff) {
         this.totalamountdiff = totalamountdiff;
+    }
+
+    public String getPayby() {
+        return payby;
+    }
+
+    public void setPayby(String payby) {
+        this.payby = payby;
     }
     
     

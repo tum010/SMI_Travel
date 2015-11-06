@@ -166,20 +166,23 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             collectionNirvana.setCashminus(cashminus);
             
             String paybuy = util.ConvertString(CN[21]);
-            
+            collectionNirvana.setPayby(util.ConvertString(CN[21]));
+            if(!"Wait".equalsIgnoreCase(paybuy) && !"Void".equalsIgnoreCase(paybuy)){
+                totalamount = totalamount.add((BigDecimal) CN[6]);
+            }
             if("Wait".equalsIgnoreCase(paybuy)){
-            
+                totalamountwait = totalamountwait.add((BigDecimal) CN[6]);
             }
             if("Void".equalsIgnoreCase(paybuy)){
-            
+                totalamountvoid = totalamountvoid.add((BigDecimal) CN[6]);
             }
-            
-            if(!"Wait".equalsIgnoreCase(paybuy) && !"Void".equalsIgnoreCase(paybuy)){
-            
-            }
-            
-            
-            
+            totalamountinvoice = totalamountinvoice.add((BigDecimal) CN[4]);
+            totalamountdiff = totalamountdiff.add((BigDecimal) CN[8]);
+            collectionNirvana.setTotalamount(totalamount);
+            collectionNirvana.setTotalamountwait(totalamountwait);
+            collectionNirvana.setTotalamountvoid(totalamountvoid);
+            collectionNirvana.setTotalamountinvoice(totalamountinvoice);
+            collectionNirvana.setTotalamountdiff(totalamountdiff);
             
             collectionNirvana.setSystemdate(String.valueOf(dateformat.format(new Date())));
             collectionNirvana.setUser(printby);
