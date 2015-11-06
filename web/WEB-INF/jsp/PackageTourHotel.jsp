@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col-md-10" >
-                <form role="form" id="HotelSummaryReportFrom" method="post" class="form-horizontal" onsubmit="printHotelSummary();">                   
+                <form role="form" id="HotelSummaryReportFrom" method="post" class="form-horizontal" >                   
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
@@ -83,7 +83,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <div class="col-sm-7 text-right">
-                                    <button type="submit"  class="btn btn-success"><span class="glyphicon glyphicon-print" id="btnDownloadAP"></span> Print</button>
+                                    <button type="button"  class="btn btn-success" onclick="printHotelSummary();"><span class="glyphicon glyphicon-print" id="btnDownloadAP"></span> Print</button>
                                 </div>
                                 <div class="col-sm-2 text-left">
                                     <button type="button" onclick="" class="btn btn-warning"><span class="glyphicon glyphicon-print"></span> Cancel</button>

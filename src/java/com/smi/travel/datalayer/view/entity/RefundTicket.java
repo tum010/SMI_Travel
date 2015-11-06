@@ -19,9 +19,36 @@ public class RefundTicket {
     private String refundby;
     private Date refunddate;
     private String receiveby;
+    private String refundcode;
+    private Date receivedate;
     private String change;
     private String detail;
+    private String address;
     private List RefundTicketDetail;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getRefundcode() {
+        return refundcode;
+    }
+
+    public void setRefundcode(String refundcode) {
+        this.refundcode = refundcode;
+    }
+
+    public Date getReceivedate() {
+        return receivedate;
+    }
+
+    public void setReceivedate(Date receivedate) {
+        this.receivedate = receivedate;
+    }
 
     public List getRefundTicketDetail() {
         return RefundTicketDetail;
