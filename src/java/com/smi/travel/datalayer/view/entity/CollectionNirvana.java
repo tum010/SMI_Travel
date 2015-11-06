@@ -17,9 +17,10 @@ public class CollectionNirvana {
     private String invto;
     private String arcode;
     private String acccode;
-    private BigDecimal invamount;
+    private String invoiceamount;
+    private BigDecimal invamount; //sum
     private String recno;
-    private BigDecimal recamount;
+    private BigDecimal recamount; //sum
     private String cur;
     private BigDecimal diff;
     private String collectionStatus;
@@ -186,6 +187,14 @@ public class CollectionNirvana {
 
     public void setHeaderdepartment(String headerdepartment) {
         this.headerdepartment = headerdepartment;
+    }
+
+    public String getInvoiceamount() {
+        return invoiceamount;
+    }
+
+    public void setInvoiceamount(String invoiceamount) {
+        this.invoiceamount = invoiceamount;
     }
     
     

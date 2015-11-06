@@ -81,15 +81,16 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                                 .addScalar("invto",Hibernate.STRING)
                                 .addScalar("arcode",Hibernate.STRING)
                                 .addScalar("acccode",Hibernate.STRING)
-                                .addScalar("invamount",Hibernate.BIG_DECIMAL)
+                                .addScalar("suminvamount",Hibernate.BIG_DECIMAL)
                                 .addScalar("recno",Hibernate.STRING)
-                                .addScalar("recamount",Hibernate.BIG_DECIMAL)
+                                .addScalar("sumrecamount",Hibernate.BIG_DECIMAL)
                                 .addScalar("cur",Hibernate.STRING)
                                 .addScalar("diff",Hibernate.BIG_DECIMAL)
                                 .addScalar("collection_status",Hibernate.STRING)
                                 .addScalar("department",Hibernate.STRING)
                                 .addScalar("type",Hibernate.STRING)
                                 .addScalar("invdate",Hibernate.DATE)
+                                .addScalar("invamount",Hibernate.STRING)
                                 .list();
         
         List data = new ArrayList();
@@ -123,6 +124,7 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             collectionNirvana.setDepartment(util.ConvertString(CN[10]));
             collectionNirvana.setType(util.ConvertString(CN[11]));
             collectionNirvana.setInvdate(util.convertStringToDate(util.ConvertString(CN[12])));
+            collectionNirvana.setInvoiceamount(util.ConvertString(CN[13]));
             
             collectionNirvana.setSystemdate(String.valueOf(dateformat.format(new Date())));
             collectionNirvana.setUser(printby);
