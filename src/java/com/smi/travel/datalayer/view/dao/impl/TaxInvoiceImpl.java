@@ -113,7 +113,7 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
                 taxInvoiceView.setDescription(taxInvoiceView.getNondescription());
                 data.add(taxInvoiceView);
             }else if(option == 2 ){
-                //taxInvoiceView.setInvoice("");
+                taxInvoiceView.setInvoice("");
                 data.add(taxInvoiceView);
             }else if(option == 3 ){
                 taxInvoiceView.setAmount(taxInvoiceView.getGrandtotal());
