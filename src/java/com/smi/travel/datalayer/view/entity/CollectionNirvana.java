@@ -27,6 +27,7 @@ public class CollectionNirvana {
     private String department;
     private String type;
     private Date invdate;
+    private BigDecimal withtax;
     
     private String systemdate;
     private String user;
@@ -35,7 +36,18 @@ public class CollectionNirvana {
     private String no;
     private String headerdepartment;
 //    private String status;
+    private BigDecimal cash;
+    private BigDecimal chq;
+    private BigDecimal credit;
+    private BigDecimal banktransfer;
+    private BigDecimal wt;
+    private BigDecimal cashminus;
     
+    private BigDecimal totalamount;
+    private BigDecimal totalamountwait;
+    private BigDecimal totalamountvoid;
+    private BigDecimal totalamountinvoice;
+    private BigDecimal totalamountdiff;
     
     public String getInvno() {
         return invno;
@@ -195,6 +207,102 @@ public class CollectionNirvana {
 
     public void setInvoiceamount(String invoiceamount) {
         this.invoiceamount = invoiceamount;
+    }
+
+    public BigDecimal getWithtax() {
+        return withtax;
+    }
+
+    public void setWithtax(BigDecimal withtax) {
+        this.withtax = withtax;
+    }
+
+    public BigDecimal getCash() {
+        return cash;
+    }
+
+    public void setCash(BigDecimal cash) {
+        this.cash = cash;
+    }
+
+    public BigDecimal getChq() {
+        return chq;
+    }
+
+    public void setChq(BigDecimal chq) {
+        this.chq = chq;
+    }
+
+    public BigDecimal getCredit() {
+        return credit;
+    }
+
+    public void setCredit(BigDecimal credit) {
+        this.credit = credit;
+    }
+
+    public BigDecimal getBanktransfer() {
+        return banktransfer;
+    }
+
+    public void setBanktransfer(BigDecimal banktransfer) {
+        this.banktransfer = banktransfer;
+    }
+
+    public BigDecimal getWt() {
+        return wt;
+    }
+
+    public void setWt(BigDecimal wt) {
+        this.wt = wt;
+    }
+
+    public BigDecimal getCashminus() {
+        return cashminus;
+    }
+
+    public void setCashminus(BigDecimal cashminus) {
+        this.cashminus = cashminus;
+    }
+
+    public BigDecimal getTotalamount() {
+        return totalamount;
+    }
+
+    public void setTotalamount(BigDecimal totalamount) {
+        this.totalamount = totalamount;
+    }
+
+    public BigDecimal getTotalamountwait() {
+        return totalamountwait;
+    }
+
+    public void setTotalamountwait(BigDecimal totalamountwait) {
+        this.totalamountwait = totalamountwait;
+    }
+
+    public BigDecimal getTotalamountvoid() {
+        return totalamountvoid;
+    }
+
+    public void setTotalamountvoid(BigDecimal totalamountvoid) {
+        this.totalamountvoid = totalamountvoid;
+    }
+
+    public BigDecimal getTotalamountinvoice() {
+        return totalamountinvoice;
+    }
+
+    public void setTotalamountinvoice(BigDecimal totalamountinvoice) {
+        this.totalamountinvoice = totalamountinvoice;
+    }
+
+    public BigDecimal getTotalamountdiff() {
+        return totalamountdiff;
+    }
+
+    public void setTotalamountdiff(BigDecimal totalamountdiff) {
+        this.totalamountdiff = totalamountdiff;
     }
     
     

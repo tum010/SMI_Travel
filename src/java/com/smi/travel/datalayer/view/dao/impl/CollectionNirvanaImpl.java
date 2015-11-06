@@ -91,14 +91,34 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                                 .addScalar("type",Hibernate.STRING)
                                 .addScalar("invdate",Hibernate.DATE)
                                 .addScalar("invamount",Hibernate.STRING)
+                                .addScalar("wth",Hibernate.BIG_DECIMAL)
+                                .addScalar("cash",Hibernate.BIG_DECIMAL)
+                                .addScalar("chq",Hibernate.BIG_DECIMAL)
+                                .addScalar("credit",Hibernate.BIG_DECIMAL)
+                                .addScalar("banktransfer",Hibernate.BIG_DECIMAL)
+                                .addScalar("wt",Hibernate.BIG_DECIMAL)
+                                .addScalar("cashminus",Hibernate.BIG_DECIMAL)
+                                .addScalar("pay_by",Hibernate.STRING)
                                 .list();
-        
+
         List data = new ArrayList();
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("dd-MM-yyyy");
         SimpleDateFormat dateformat = new SimpleDateFormat();
         dateformat.applyPattern("dd-MM-yyyy hh:mm");
         int count = 1;
+        BigDecimal cash = new BigDecimal(BigInteger.ZERO);
+        BigDecimal chq  = new BigDecimal(BigInteger.ZERO);
+        BigDecimal credit = new BigDecimal(BigInteger.ZERO);
+        BigDecimal banktransfer = new BigDecimal(BigInteger.ZERO);
+        BigDecimal wt = new BigDecimal(BigInteger.ZERO);
+        BigDecimal cashminus = new BigDecimal(BigInteger.ZERO);
+        
+        BigDecimal totalamount = new BigDecimal(BigInteger.ZERO);
+        BigDecimal totalamountwait  = new BigDecimal(BigInteger.ZERO);
+        BigDecimal totalamountvoid = new BigDecimal(BigInteger.ZERO);
+        BigDecimal totalamountinvoice = new BigDecimal(BigInteger.ZERO);
+        BigDecimal totalamountdiff = new BigDecimal(BigInteger.ZERO);
         
         for(Object[] CN : QueryList){
             CollectionNirvana collectionNirvana = new CollectionNirvana();
@@ -125,6 +145,41 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
             collectionNirvana.setType(util.ConvertString(CN[11]));
             collectionNirvana.setInvdate(util.convertStringToDate(util.ConvertString(CN[12])));
             collectionNirvana.setInvoiceamount(util.ConvertString(CN[13]));
+            collectionNirvana.setWithtax((BigDecimal) CN[14]);
+            
+            cash = cash.add((BigDecimal) CN[15]);
+            collectionNirvana.setCash(cash);
+            
+            chq = chq.add((BigDecimal) CN[16]);
+            collectionNirvana.setChq(chq);
+            
+            credit = credit.add((BigDecimal) CN[17]);
+            collectionNirvana.setCredit(credit);
+            
+            banktransfer = banktransfer.add((BigDecimal) CN[18]);
+            collectionNirvana.setBanktransfer(banktransfer);
+            
+            wt = wt.add((BigDecimal) CN[19]);
+            collectionNirvana.setWt(wt);
+            
+            cashminus = cashminus.add((BigDecimal) CN[20]);
+            collectionNirvana.setCashminus(cashminus);
+            
+            String paybuy = util.ConvertString(CN[21]);
+            
+            if("Wait".equalsIgnoreCase(paybuy)){
+            
+            }
+            if("Void".equalsIgnoreCase(paybuy)){
+            
+            }
+            
+            if(!"Wait".equalsIgnoreCase(paybuy) && !"Void".equalsIgnoreCase(paybuy)){
+            
+            }
+            
+            
+            
             
             collectionNirvana.setSystemdate(String.valueOf(dateformat.format(new Date())));
             collectionNirvana.setUser(printby);
