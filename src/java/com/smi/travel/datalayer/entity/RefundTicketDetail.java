@@ -10,11 +10,30 @@ package com.smi.travel.datalayer.entity;
  * @author Kanokporn
  */
 public class RefundTicketDetail {
+    private String refunddetailid;
     private String ticketno;
     private String sector;
     private String sectorRefund;
     private String charge;
+    private String ticketid;
 
+    public String getTicketid() {
+        return ticketid;
+    }
+
+    public void setTicketid(String ticketid) {
+        this.ticketid = ticketid;
+    }
+
+    public String getRefunddetailid() {
+        return refunddetailid;
+    }
+
+    public void setRefunddetailid(String refunddetailid) {
+        this.refunddetailid = refunddetailid;
+    }
+
+    
     public String getTicketno() {
         return ticketno;
     }

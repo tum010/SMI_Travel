@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.RefundDao;
+import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.AirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
@@ -31,7 +32,7 @@ public class RefundImpl implements RefundDao{
     private Transaction transaction;
     private static final String SELECT_REFUND_AIRTICKET = "FROM AirticketRefund ar where ar.airticketBooking.id = :airbookingid";
     private static final String SELECT_TICKETNO = "From AirticketPassenger psg where psg.airticketAirline.airticketPnr.airticketBooking.master.referenceNo = :refno";
-    private static final String SELECT_SECTOR = "From AirticketPassenger psg where psg.id = ticid";
+    private static final String SELECT_SECTOR = "From AirticketPassenger psg where psg.id = :ticid";
     
     public SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -78,8 +79,10 @@ public class RefundImpl implements RefundDao{
                 }else{
                     refundTicket.setRefundby("");
                 }
-            }          
+            }  
+            refundTicket.setRefundcode(airbookingidList.get(i).getRefundAirticket().getRefundBy());
             refundTicket.setRefunddate(airbookingidList.get(i).getRefundAirticket().getRefundDate());
+            refundTicket.setReceivedate(airbookingidList.get(i).getRefundAirticket().getReceiveDate());
             refundTicket.setReceiveby(airbookingidList.get(i).getRefundAirticket().getReceiveBy());
             // Sum Charge
             List<RefundAirticketDetail> rRefundAirticketDetail = new LinkedList<RefundAirticketDetail>();
@@ -92,26 +95,41 @@ public class RefundImpl implements RefundDao{
                 }else{
                     sumCharge = sumCharge.add(new BigDecimal(0.0));
                 }
+                // Refund Detail
+                RefundTicketDetail refundTicketDetail = new RefundTicketDetail();
+                    refundTicketDetail.setRefunddetailid(rRefundAirticketDetail.get(j).getId());
+                    //Ticket
+                    refundTicketDetail.setTicketid(rRefundAirticketDetail.get(j).getAirticketPassenger().getId());
+                    refundTicketDetail.setTicketno(
+                            rRefundAirticketDetail.get(j).getAirticketPassenger().getSeries1()+""+
+                            rRefundAirticketDetail.get(j).getAirticketPassenger().getSeries2()+""+
+                            rRefundAirticketDetail.get(j).getAirticketPassenger().getSeries3());
+                    // Sector
+                    List<AirticketPassenger> ticketnoList = session.createQuery(SELECT_SECTOR)
+                        .setParameter("ticid", rRefundAirticketDetail.get(j).getAirticketPassenger().getId())
+                        .list();
+                    List<AirticketFlight> list = new ArrayList<AirticketFlight>(ticketnoList.get(0).getAirticketAirline().getAirticketFlights());
+                    String sector = util.GetRounting(list);
+                    refundTicketDetail.setSector(sector);
+                    //Sector Refund
+                    refundTicketDetail.setSectorRefund(rRefundAirticketDetail.get(j).getSectorRefund());
+                    
+                    //Charge
+                    if(rRefundAirticketDetail.get(j).getPayCustomer() != null ){
+                        refundTicketDetail.setCharge(df.format(rRefundAirticketDetail.get(j).getPayCustomer()));
+                    }else{
+                        refundTicketDetail.setCharge("");
+                    }
+                listRefundTicketDetail.add(refundTicketDetail);
             }
             refundTicket.setChange(df.format(sumCharge));
             refundTicket.setDetail(airbookingidList.get(i).getRefundAirticket().getRemark());
-            
-            // Refund Ticket Detail 
-            listRefundTicketDetail = getRefundTicketDetail(airbookingidList);
+            refundTicket.setRefundTicketDetail(listRefundTicketDetail);
             
             listRefundTicket.add(refundTicket);
         }
            
         return listRefundTicket;
-    }
-    
-    private List getRefundTicketDetail(List airbookingidList){
-        List<RefundTicketDetail> listRefundTicketDetail = new LinkedList<RefundTicketDetail>();
-        for(int i = 0; i< airbookingidList.size() ; i++){
-            
-        }
-        
-        return listRefundTicketDetail;
     }
 
     @Override
@@ -131,5 +149,4 @@ public class RefundImpl implements RefundDao{
     public List listSector(String ticketid) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

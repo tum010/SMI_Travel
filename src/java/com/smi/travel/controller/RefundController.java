@@ -6,6 +6,7 @@
 package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.Master;
+import com.smi.travel.datalayer.entity.RefundTicketDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.service.MStaffService;
@@ -87,8 +88,10 @@ public class RefundController extends SMITravelController {
         
         //Search Refund Ticket
         List<RefundTicket> listRefundTicket = refundService.searchRefundTicket(airbookingid);
+        List<RefundTicketDetail> listRefundTicketDetail = listRefundTicket.get(0).getRefundTicketDetail();
         if(listRefundTicket != null){
             request.setAttribute("listRefundTicket", listRefundTicket);
+            request.setAttribute("listRefundTicketDetail", listRefundTicketDetail);
         }else{
             request.setAttribute("listRefundTicket", null);
         }

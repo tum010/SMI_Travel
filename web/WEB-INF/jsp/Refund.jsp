@@ -27,6 +27,7 @@
 <c:set var="refundnameDefault" value="${requestScope['refundnameDefault']}"/>
 <c:set var="create" value="${requestScope['thisdate']}" />
 <c:set var="listRefundTicket" value="${requestScope['listRefundTicket']}" />
+<c:set var="listRefundTicketDetail" value="${requestScope['listRefundTicketDetail']}" />
 <c:set var="listTicketNo" value="${requestScope['listTicketNo']}" />
 
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
@@ -136,150 +137,202 @@
                             </table>  
                         </div>
                         <hr/>
-                        <div class="row hidden" style="margin-top: 20px" id="RefundTicketDetail1" name="RefundTicketDetail1" >
-                            <div class="row">
-                                <div class="col-sm-6 form-group" style="margin-left: 20px;">
-                                     <h4>Refund Ticket Detail</h4>
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label for="Owner" class="col-sm-3 control-label text-right">Refund By</label>
-                                    <div class="col-lg-4">
-                                        <div class="">
-                                            <div class="input-group ">
-                                                <input type="hidden" class="form-control" name="refundById" id="refundById" value="">
-                                                <input type="text" class="form-control" id="refundBy" name="refundBy" value=""
-                                                       data-bv-notempty data-bv-notempty-message="The By is required">
-                                                <span class="input-group-addon" data-toggle="modal" data-target="#refundCustModal">
-                                                    <span class="glyphicon-search glyphicon"></span>
-                                                </span>
+                        
+                        <c:if test="${listRefundTicket != null}"> 
+                            <c:forEach var="table1" items="${listRefundTicket}" varStatus="status1">
+                            <c:set var="counter1" value="${status1.count}"></c:set>  
+                            <div class="row hidden" style="margin-top: 20px" id="RefundTicketDetail${status1.count}" name="RefundTicketDetail${status1.count}" >
+                                <div class="row">
+                                    <div class="col-sm-6 form-group" style="margin-left: 20px;">
+                                         <h4>Refund Ticket Detail</h4>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label for="Owner" class="col-sm-3 control-label text-right">Refund By</label>
+                                        <div class="col-lg-4">
+                                            <div class="">
+                                                <div class="input-group ">
+                                                    <input type="hidden" class="form-control" name="refundById" id="refundById" value="">
+                                                    <input type="text" class="form-control" id="refundBy" name="refundBy" value="${table1.refundcode}"
+                                                           data-bv-notempty data-bv-notempty-message="The By is required">
+                                                    <span class="input-group-addon" data-toggle="modal" data-target="#refundCustModal">
+                                                        <span class="glyphicon-search glyphicon"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-5">  
-                                        <input type="text" class="form-control" id="refundByName" name="refundByName" value="" readonly="">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label  class="col-sm-3 control-label text-right">Refund Date</label>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <div class='input-group date' id='datetimepicker3'>
-                                                <input type='text' class="form-control" name="refundDate" id="refundDate" data-date-format="YYYY-MM-DD" value="${booking.deadline}"  placeholder="YYYY-MM-DD"/>
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
-                                            </div>
+                                        <div class="col-sm-5">  
+                                            <input type="text" class="form-control" id="refundByName" name="refundByName" value="" readonly="">
                                         </div>
                                     </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label  class="col-sm-3 control-label text-right">Refund Date</label>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <div class='input-group date' id='datetimepicker3'>
+                                                    <input type='text' class="form-control" name="refundDate" id="refundDate" data-date-format="YYYY-MM-DD" value="${table1.refunddate}"  placeholder="YYYY-MM-DD"/>
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="Owner" class="col-sm-3 control-label text-right">Receive By</label>
-                                    <div class="col-lg-4">
-                                        <div class="">
-                                            <div class="input-group ">
-                                                <input type="hidden" class="form-control" name="receiveById" id="receiveById" value="${refundbyidDefault}">
-                                                <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${refundbyDefault}"
-                                                       data-bv-notempty data-bv-notempty-message="The By is required">
-                                                <span class="input-group-addon" data-toggle="modal" data-target="#receiveUserModal">
-                                                    <span class="glyphicon-search glyphicon"></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-5">  
-                                        <input type="text" class="form-control" id="receiveByName" name="receiveByName" value="${refundnameDefault}" readonly="">
                                     </div>
                                 </div>
-                                <div class="col-sm-6 form-group">
-                                    <label  class="col-sm-3 control-label text-right">Receive Date</label>
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <div class='input-group date' id='datetimepicker3'>
-                                                <input type='text' class="form-control" name="refundDate" id="refundDate" data-date-format="YYYY-MM-DD" value="${create}"  placeholder="YYYY-MM-DD"/>
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="Owner" class="col-sm-3 control-label text-right">Receive By</label>
+                                        <div class="col-lg-4">
+                                            <div class="">
+                                                <div class="input-group ">
+                                                    <c:if test="${table1.receiveby == null}"> 
+                                                        <input type="hidden" class="form-control" name="receiveById" id="receiveById" value="${refundbyidDefault}">
+                                                        <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${refundbyDefault}"
+                                                               data-bv-notempty data-bv-notempty-message="The By is required">
+                                                        <span class="input-group-addon" data-toggle="modal" data-target="#receiveUserModal">
+                                                            <span class="glyphicon-search glyphicon"></span>
+                                                        </span>
+                                                    </c:if>
+                                                    <c:if test="${table1.receiveby != null}"> 
+                                                        <input type="hidden" class="form-control" name="receiveById" id="receiveById" value="">
+                                                        <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${table1.receiveby}"
+                                                               data-bv-notempty data-bv-notempty-message="The By is required">
+                                                        <span class="input-group-addon" data-toggle="modal" data-target="#receiveUserModal">
+                                                            <span class="glyphicon-search glyphicon"></span>
+                                                        </span>
+                                                    </c:if>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="col-sm-5"> 
+                                            <c:if test="${table1.receiveby == null}"> 
+                                                <input type="text" class="form-control" id="receiveByName" name="receiveByName" value="${refundbynameDefault}" readonly="">
+                                            </c:if>
+                                            <c:if test="${table1.receiveby != null}"> 
+                                                <input type="text" class="form-control" id="receiveByName" name="receiveByName" value="" readonly="">
+                                            </c:if>
+                                        </div>
                                     </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label  class="col-sm-3 control-label text-right">Receive Date</label>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <div class='input-group date' id='datetimepicker3'>
+                                                    <c:if test="${table1.receivedate == null}"> 
+                                                        <input type='text' class="form-control" name="receiveDate" id="receiveDate" data-date-format="YYYY-MM-DD" value="${create}"  placeholder="YYYY-MM-DD"/>
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                        </span>
+                                                    </c:if>
+                                                    <c:if test="${table1.receivedate != null}"> 
+                                                        <input type='text' class="form-control" name="receiveDate" id="receiveDate" data-date-format="YYYY-MM-DD" value="${table1.receivedate}"  placeholder="YYYY-MM-DD"/>
+                                                        <span class="input-group-addon">
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                </div>
-                            </div>                    
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label class="col-sm-3 control-label text-right">Address</label>
-                                    <div class="col-sm-9">                                      
-                                        <div class="form-group">
-                                            <textarea class="form-control" id="address"  name="address"></textarea>
+                                    </div>
+                                </div>                    
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label text-right">Address</label>
+                                        <div class="col-sm-9">                                      
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="address"  name="address"></textarea>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label class="col-sm-3 control-label text-right">Cancel Detail</label>
-                                    <div class="col-sm-9">                                      
-                                        <div class="form-group">
-                                            <textarea class="form-control" id="cancelDetail" name="cancelDetail"></textarea>
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label text-right">Cancel Detail</label>
+                                        <div class="col-sm-9">                                      
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="cancelDetail" name="cancelDetail">${table1.detail}</textarea>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>  
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label  class="col-sm-3 control-label text-right">Charge</label>
-                                    <div class="col-sm-9">  
-                                        <input type="text" class="form-control" value="${booking.reConfirm}" maxlength="255" id="charge" name="charge"/>
+                                </div>  
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label  class="col-sm-3 control-label text-right">Charge</label>
+                                        <div class="col-sm-9">  
+                                            <input type="text" class="form-control" value="${table1.change}" maxlength="255" id="charge" name="charge"/>
+                                        </div>
+                                    </div>
+                                </div> 
+                                </br>
+                                <div class="row">
+                                    <div class="col-sm-12 form-group text-center">
+                                        <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
+                                         <input type="text" class="hidden" id="refunddetailid" name="refunddetailid" value="0" />
+                                        <table  class="display" id="RefundTicketDetailTable" style="width: 1000px;">
+                                            <thead>
+                                                <tr class="datatable-header">
+                                                    <th class="hidden" >id</th>
+                                                    <th style="width: 5%" >No</th>
+                                                    <th style="width: 25%">Ticket No</th>
+                                                    <th style="width: 25%">Section</th>
+                                                    <th style="width: 25%">section refund</th>
+                                                    <th style="width: 15%">Change</th>
+                                                    <th style="width: 5%" >Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach var="tableDetail" items="${listRefundTicketDetail}" varStatus="statusDetail">
+                                                    <tr>
+                                                        <td class="hidden"><input type="text" id="airticketrefunddetailid${statusDetail.count}" name="airticketrefunddetailid${statusDetail.count}" value="${tableDetail.refunddetailid}" /></td>
+                                                        <td>${statusDetail.count}</td>
+                                                        <td>
+                                                            <select id="SelectTocketNo${statusDetail.count}" name="SelectTocketNo${statusDetail.count}" class="form-control">
+                                                                <option value='' ></option>
+                                                                <c:forEach var="typeP" items="${listTicketNo}">
+                                                                    <c:set var="selectTic" value="" />
+                                                                    <c:set var="tickno" value="" />
+                                                                    <c:if test="${tableDetail.ticketid == typeP.id}">
+                                                                        <c:set var="selectTic" value="selected" />
+                                                                    </c:if> 
+                                                                    <option value='${typeP.id}' ${selectTic}>${typeP.series1}${typeP.series2}${typeP.series3}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" maxlength ="255" class="form-control" id="inputSector${statusDetail.count}" name="inputSector${statusDetail.count}" value="${tableDetail.sector}"></td>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" class="form-control" id="inputSectorRefund${statusDetail.count}" name="inputSectorRefund${statusDetail.count}" value="${tableDetail.sectorRefund}">
+                                                        </td>
+                                                        <td>
+                                                            <input  maxlength ="15" type="text"  class="form-control numerical text-right" id="inputCharge${statusDetail.count}" name="inputCharge${statusDetail.count}" value="${tableDetail.charge}" >
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a class="carousel"  
+                                                               data-target="#DeleteRefundDetail" 
+                                                               onclick="DeleteRefundDetail(${statusDetail.count},${tableDetail.ticketno})"
+                                                                data-toggle="modal" >
+                                                                <span class="glyphicon glyphicon-remove deleteicon"></span>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-                            </div> 
-                            </br>
-                            <div class="row">
-                                <div class="col-sm-12 form-group text-center">
-                                    <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
-                                    <table  class="display" id="RefundTicketDetailTable" style="width: 1000px;">
-                                        <thead>
-                                            <tr class="datatable-header">
-                                                <th style="width: 5%" >No</th>
-                                                <th style="width: 25%">Ticket No</th>
-                                                <th style="width: 25%">Section</th>
-                                                <th style="width: 25%">section refund</th>
-                                                <th style="width: 15%">Change</th>
-                                                <th style="width: 5%" >Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-<!--                                            <tr>
-                                                <td>1</td>
-                                                <td>2172305640387</td>
-                                                <td>BKK-HND-GTH-BKK</td>
-                                                <td>GTH-BKK</td>
-                                                <td>25090</td>
-                                                <td class="text-center">
-                                                    <a class="carousel" data-toggle="collapse" data-parent="#accordion" 
-                                                       data-target="#passenger1" aria-expanded="true" 
-                                                       aria-controls="collapseExample">
-                                                        <span class="glyphicon glyphicon-remove deleteicon"></span>
-                                                    </a>
-                                                </td>
-                                            </tr>-->
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <div class="row">
+                                    <div class="col-sm-5 form-group text-right">
+                                        <button type="submit" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
+                                    </div>
+                                    <div class="col-sm-1 form-group text-right">
+                                        <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                    </div>
+                                    <div class="col-sm-6 form-group text-left">
+                                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
+                                    </div>
+                                </div>  
                             </div>
-                            <div class="row">
-                                <div class="col-sm-5 form-group text-right">
-                                    <button type="submit" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
-                                </div>
-                                <div class="col-sm-1 form-group text-right">
-                                    <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
-                                </div>
-                                <div class="col-sm-6 form-group text-left">
-                                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
-                                </div>
-                            </div>  
-                        </div>
+                            </c:forEach>
+                        </c:if>
                         <!--Refund Add --> 
                         <div class="row hidden" style="margin-top: 20px" id="RefundTicketDetailAdd1" name="RefundTicketDetailAdd1" >
                             <div class="row">
@@ -382,32 +435,20 @@
                             </br>
                             <div class="row">
                                 <div class="col-sm-12 form-group text-center">
-                                    <table  class="display" id="RefundTable" style="width: 1000px;">
+                                    <table  class="display" id="RefundTicketDetailTable" style="width: 1000px;">
                                         <thead>
                                             <tr class="datatable-header">
-                                                <th style="width: 5%" >No</th>
-                                                <th>Ticket No</th>
-                                                <th>Section</th>
-                                                <th>section refund</th>
-                                                <th>Change</th>
-                                                <th style="width: 5%" >Action</th>
+                                                <th class="hidden" >id</th>
+                                                    <th style="width: 5%" >No</th>
+                                                    <th style="width: 25%">Ticket No</th>
+                                                    <th style="width: 25%">Section</th>
+                                                    <th style="width: 25%">section refund</th>
+                                                    <th style="width: 15%">Change</th>
+                                                    <th style="width: 5%" >Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>2172305640387</td>
-                                                <td>BKK-HND-GTH-BKK</td>
-                                                <td>GTH-BKK</td>
-                                                <td>25090</td>
-                                                <td class="text-center">
-                                                    <a class="carousel" data-toggle="collapse" data-parent="#accordion" 
-                                                       data-target="#passenger1" aria-expanded="true" 
-                                                       aria-controls="collapseExample">
-                                                        <span class="glyphicon glyphicon-remove deleteicon"></span>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -445,6 +486,25 @@
             <div class="modal-footer">
                 <input type="hidden" name="action" value="${action}">
                 <button type="button" onclick="DeleteRefundConfirm()" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+                
+<div class="modal fade" id="DeleteRefundDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Delete Refund Detail</h4>
+            </div>
+            <div class="modal-body" id="textDeleteRefundDetail">
+                <h5 class="modal-title">Are you Delete Refund</h5>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" name="action" value="${action}">
+                <button type="button" onclick="DeleteRefundDetailConfirm()" class="btn btn-danger" data-dismiss="modal">Delete</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -488,6 +548,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <script>
+                            cus = [];
+                        </script>
                         <c:forEach var="item" items="${listRefundBy}">
                             <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">
                                 <td class="item-billto">${item.billTo}</td>
@@ -495,6 +558,10 @@
                                 <td class="item-address hidden">${item.address}</td>
                                 <td class="item-tel hidden">${item.tel}</td>
                             </tr>
+                            <script>
+                                cus.push({id: "${item.billTo}", code: "${item.billTo}", name: "${item.billName}",
+                                    address: "${item.address}", tel: "${item.tel}", fax: "${item.tel}"});
+                            </script>
                         </c:forEach>
                     </tbody>
                 </table>
@@ -570,7 +637,230 @@
         <c:forEach var="cur" items="${listTicketNo}">
             selectTicketNo += "<option value='${cur.id}${cur.series1}${cur.series2}${cur.series3}' ><c:out value='${cur.id}${cur.series1}${cur.series2}${cur.series3}' /></option>";      
         </c:forEach>
-         console.log("TicketNo :" + selectTicketNo);
+
+        // Add Row Auto key
+    $("#RefundTicketDetailTable").on("keyup", function () {
+        var rowAll = $("#RefundTicketDetailTable tr").length;
+        $("td").keyup(function () {
+            if ($(this).find("input").val() !== '') {
+                var colIndex = $(this).parent().children().index($(this));
+                var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                rowAll = $("#RefundTicketDetailTable tr").length;
+                if (rowIndex === rowAll) {
+                    console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
+                    addRowRefundTicketDetail(rowAll);
+                }
+            }
+        });
+    });
+    
+    // get row in table now
+    var rowCount = $('#RefundTicketDetailTable tr').length;
+    console.log("Row Refund Ticket Detail : " + rowCount);
+    $("#counterTable").val(rowCount);
+    addRowRefundTicketDetail(rowCount++);
+
+    // PASSENGER TABLE
+    $('#PassengerTable,#FlightTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": false,
+        "bPaginate": false,
+        "bInfo": false
+    });
+    // FLIGHT TABLE
+    $("#ckeckList").click(function () {
+        $("#FlightTable input:checkbox").prop('checked',true);
+    });
+    $('table').on('click', 'tr', function () {
+        $(this).addClass('row_selected').siblings().removeClass('row_selected');
+    });
+
+    $("#staff_username").on('keyup', function () {
+        $("#staff_name").val(null);
+        var code = $(this).val().toUpperCase();
+        $.each(sf, function (key, value) {
+            if (value.username.toUpperCase() === code) {
+                $("#staff_id").val(value.id);
+                $("#staff_name").val(value.name);
+            }
+        });
+    });
+
+    $('#datetimepicker3').datetimepicker({
+        pickTime: false
+    });
+    $('span').click(function () {
+        var position = $(this).offset();
+        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+    });
+
+    // STAFF TABLE
+    $('#StaffTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": true,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 10
+    });
+    $("#StaffTable tr").on('click', function () {
+        var staff_id = $(this).find(".staff-id").text();
+        var staff_username = $(this).find(".staff-username").text();
+        var staff_name = $(this).find(".staff-name").text();
+        $("#staff_id").val(staff_id);
+        $("#staff_username").val(staff_username);
+        $("#staff_name").val(staff_name);
+        $("#StaffModal").modal('hide');
+    });
+    // VALIDATOR
+    $("#RefundForm").bootstrapValidator({
+        container: 'tooltip',
+        excluded: [':disabled'],
+        feedbackIcons: {
+            required: 'glyphicon glyphicon-asterisk',
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        }
+    });
+    
+    // Refund  and Receive
+    $("#receiveUserTable tr").on('click', function () {
+        var user_id = $(this).find(".user-id").text();
+        var user_user = $(this).find(".user-user").text();
+        var user_name = $(this).find(".user-name").text();
+        $("#receiveById").val(user_id);
+        $("#receiveBy").val(user_user);
+        $("#receiveByName").val(user_name);
+        $("#receiveUserModal").modal('hide');
+    });
+
+    $("#refundCustTable tr").on('click', function () {
+        var user_id = $(this).find(".item-billto").text();
+//        var user_code = $(this).find(".user-user").text();
+        var user_name = $(this).find(".item-name").text();
+//        $("#refundById").val(user_id);
+        $("#refundBy").val(user_id);
+        $("#refundByName").val(user_name);
+        $("#refundCustModal").modal('hide');
+    });
+    
+    var userCode = [];
+    $.each(user, function (key, value) {
+        userCode.push(value.code);
+        userCode.push(value.name);
+        if ($("#receiveBy").val() === value.code) {
+            $("#receiveByName").val(value.name);
+        }
+    });
+    
+    var cusCode = [];
+    $.each(cus, function (key, value) {
+        cusCode.push(value.code);
+        cusCode.push(value.name);
+        if ($("#refundBy").val() === value.code) {
+            $("#refundByName").val(value.name);
+        }
+    });
+
+     $("#receiveBy").autocomplete({
+        source: userCode,
+        close: function (event, ui) {
+            $("#receiveBy").trigger('keyup');
+        }
+    });
+    
+    $("#receiveBy").on('keyup', function () {
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+        var code = this.value.toUpperCase();
+        var name = this.value.toUpperCase();
+        console.log("Name :" + name);
+        $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
+        $.each(user, function (key, value) {
+            if (value.code.toUpperCase() === code) {
+                $("#receiveByName").val(value.name);
+                $("#receiveBy").val(value.code);
+            }
+            else if (value.name.toUpperCase() === name) {
+                $("#receiveBy").val(value.code);
+                $("#receiveByName").val(value.name);
+            }
+        });
+    });
+    
+    $("#refundBy").autocomplete({
+        source: userCode,
+        close: function (event, ui) {
+            $("#refundBy").trigger('keyup');
+        }
+    });
+    
+    $("#refundBy").on('keyup', function () {
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+        var code = this.value.toUpperCase();
+        var name = this.value.toUpperCase();
+        console.log("Name :" + name);
+        $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
+        $.each(cus, function (key, value) {
+            if (value.code.toUpperCase() === code) {
+                $("#refundByName").val(value.name);
+                $("#refundBy").val(value.code);
+            }
+            else if (value.name.toUpperCase() === name) {
+                $("#refundBy").val(value.code);
+                $("#refundByName").val(value.name);
+            }
+        });
+    });
+
+    
+    var showflag = 1;
+    $("#refundBy").keydown(function () {
+
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+        if (showflag == 0) {
+            $(".ui-widget").css("top", -1000);
+            showflag = 1;
+        }
+    });
+
+    $("#searchCustFrom").keyup(function (event) {
+        if (event.keyCode === 13) {
+            if ($("#searchCustFrom").val() == "") {
+                // alert('please input data');
+            }
+            searchCustomerAgentList($("#searchCustFrom").val());
+        }
+    });
+    
+    $('#refundCustTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": false,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 10
+    });
+    
+    $('#receiveUserTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": false,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 10
+    });
+         
     }); 
     
     function setBillValue(billto, billname, address, term, pay) {
@@ -753,12 +1043,13 @@ function addRowRefundTicketDetail(row,id){
     console.log("Select Ticket No : " + selectTicketNo);
     $("#RefundTicketDetailTable tbody").append(
         '<tr>' +
-        '<td>' + row + '</td>' +
+        '<td class="hidden"><input type="text" id="airticketrefunddetailid' + row + '" name="airticketrefunddetailid' + row + '" value="" /></td>'+
+        '<td>' + row + '</td>' +       
         '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control">'+ selectTicket +'</select> </td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value=""></td>' +
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right" id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' +      
-        '<td class="text-center"><a class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#DeleteRefundDetail('+row+',\'\')" aria-expanded="true" ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
+        '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
     );
 }
@@ -772,11 +1063,28 @@ function DeleteRefund(rowID,code){
     }
 }
 
+function DeleteRefundDetail(rowID,code){
+    $("#refunddetailid").val(rowID);
+    if(code !== ""){
+        $("#textDeleteRefundDetail").text('Are you sure to delete refund detail : '+ code +'..?');
+    }else{
+        $("#textDeleteRefundDetail").text('Are you sure to delete refund detail ?');
+    }
+}
+
 function DeleteRefundConfirm() {
-    var count = $('counterTableRefund').val();
-    var rowId  = $('refundid').val();
+    var count = $('#counterTableRefund').val();
+    var rowId  = $('#refundid').val();
     var RefundId  = $("#airticketrefundid"+rowId).val();
     console.log("Refund ID : " + RefundId);
+}
+
+function DeleteRefundDetailConfirm() {
+    var count = $('#counterTable').val();
+    var rowId  = $('#refunddetailid').val();
+    console.log("Row Refund Detail : " + rowId);
+    var RefundId  = $("#airticketrefunddetailid"+rowId).val();
+    console.log("Refund Detail ID : " + RefundId);
 }
 </script>
 
