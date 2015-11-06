@@ -172,12 +172,11 @@
                                 <th style="width: 10%">AR Code</th>
                                 <th style="width: 15%">Inv To</th>
                                 <th style="width: 10%">Acc Code</th>
-                                <th style="width: 12%">Inv Amount</th>
-                                <th style="width: 12%">Sum Inv</th>
-                                <th style="width: 10%">Diff</th>
-                                <th style="width: 12%">Sum Rec</th>
+                                <th style="width: 15%">Inv Amount</th>
+                                <th style="width: 15%">Diff</th>
+                                <th style="width: 15%">Rec Amount</th>
                                 <th style="width: 2%">Cur</th>
-                                <th style="width: 10%">Status</th>
+                                <th style="width: 15%">Status</th>
                             </tr>
                         </thead>
                         <tbody>               
@@ -189,7 +188,6 @@
                                     <td>${table.arcode}</td>
                                     <td>${table.invto}</td>
                                     <td>${table.acccode}</td>
-                                    <td align="right">${table.invoiceamount}</td>
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.invamount}" /></td>
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.diff}" /></td>
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.recamount}" /></td>

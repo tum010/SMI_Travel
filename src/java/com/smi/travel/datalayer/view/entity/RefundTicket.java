@@ -24,6 +24,7 @@ public class RefundTicket {
     private String change;
     private String detail;
     private String address;
+    private String airbookingid;
     private List RefundTicketDetail;
 
     public String getAddress() {

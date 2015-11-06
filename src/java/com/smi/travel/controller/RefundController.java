@@ -44,7 +44,11 @@ public class RefundController extends SMITravelController {
         String action = request.getParameter("action");
         String refNo = request.getParameter("referenceNo");
         String airbookingid = request.getParameter("airbookingid");
-
+        
+        request.setAttribute("actionAdd", action);
+        request.setAttribute("airbookingid", airbookingid);
+        request.setAttribute("referenceNo", refNo);
+        
         if ("new".equalsIgnoreCase(action)) {
         } else if ("edit".equalsIgnoreCase(action)) {
             request.setAttribute(Action, "update");
@@ -93,18 +97,27 @@ public class RefundController extends SMITravelController {
         }else{
             request.setAttribute("listRefundTicket", null);
         }
-        
-        
+            
         // Action 
         if("searchRefund".equals(action)){
             String refundid = request.getParameter("refundid");
-            List<RefundTicketDetail> listRefundTicketDetail = refundService.listRefundDetail(refundid);
-            if(listRefundTicketDetail != null){
-                request.setAttribute("listRefundTicketDetail", listRefundTicketDetail);
+            List<RefundTicket> refundTicket = refundService.listRefundDetail(refundid);
+            List<RefundTicketDetail> refundTicketDetail = refundTicket.get(0).getRefundTicketDetail();
+            if(refundTicket != null){
+                request.setAttribute("RefundTicket", refundTicket);
+                request.setAttribute("listRefundTicket", refundTicket);
+                
+                if(refundTicketDetail != null ){
+                    request.setAttribute("RefundTicketDetail", refundTicketDetail);
+                }else{
+                    request.setAttribute("RefundTicketDetail", refundTicketDetail);
+                }
             }else{
-                request.setAttribute("listRefundTicketDetail", null);
+                request.setAttribute("listRefundTicket", null);
+                request.setAttribute("RefundTicket", null);
             }
         }
+        
         setGeneralResponseAttribute(request, refNo);
         return Refund;
     }
