@@ -88,14 +88,23 @@ public class RefundController extends SMITravelController {
         
         //Search Refund Ticket
         List<RefundTicket> listRefundTicket = refundService.searchRefundTicket(airbookingid);
-        List<RefundTicketDetail> listRefundTicketDetail = listRefundTicket.get(0).getRefundTicketDetail();
         if(listRefundTicket != null){
             request.setAttribute("listRefundTicket", listRefundTicket);
-            request.setAttribute("listRefundTicketDetail", listRefundTicketDetail);
         }else{
             request.setAttribute("listRefundTicket", null);
         }
         
+        
+        // Action 
+        if("searchRefund".equals(action)){
+            String refundid = request.getParameter("refundid");
+            List<RefundTicketDetail> listRefundTicketDetail = refundService.listRefundDetail(refundid);
+            if(listRefundTicketDetail != null){
+                request.setAttribute("listRefundTicketDetail", listRefundTicketDetail);
+            }else{
+                request.setAttribute("listRefundTicketDetail", null);
+            }
+        }
         setGeneralResponseAttribute(request, refNo);
         return Refund;
     }

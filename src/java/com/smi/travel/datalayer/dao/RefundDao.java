@@ -15,4 +15,5 @@ public interface RefundDao {
     public List searchRefundTicket(String airbookingid);
     public List selectTicketNo(String refno);
     public List listSector(String ticketid);
+    public List listRefundDetail(String refundid);
 }

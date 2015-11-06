@@ -66,7 +66,8 @@
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>       
             <input type="hidden" value="${param.referenceNo}" id="getUrl" >
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
-            <form action="Refund.smi" method="post" id="RefundForm" role="form">
+            <form action="Refund.smi" method="post" id="RefundForm" role="form" name="RefundForm">
+                <input type="hidden" name="action" value="" id="action">
                 <div class="row" style="padding-left: 15px">  
                     <div class="col-md-6">
                         <h4>Refund Ticket</h4>
@@ -141,7 +142,7 @@
                         <c:if test="${listRefundTicket != null}"> 
                             <c:forEach var="table1" items="${listRefundTicket}" varStatus="status1">
                             <c:set var="counter1" value="${status1.count}"></c:set>  
-                            <div class="row hidden" style="margin-top: 20px" id="RefundTicketDetail${status1.count}" name="RefundTicketDetail${status1.count}" >
+                            <div class="row hidden" style="margin-top: 20px" id="RefundTicketDetail" name="RefundTicketDetail" >
                                 <div class="row">
                                     <div class="col-sm-6 form-group" style="margin-left: 20px;">
                                          <h4>Refund Ticket Detail</h4>
@@ -484,7 +485,6 @@
                 <h5 class="modal-title">Are you Delete Refund</h5>
             </div>
             <div class="modal-footer">
-                <input type="hidden" name="action" value="${action}">
                 <button type="button" onclick="DeleteRefundConfirm()" class="btn btn-danger" data-dismiss="modal">Delete</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
@@ -1000,19 +1000,11 @@ function searchCustomerAgentList(name) {
 }
 
 function selectRefundDetail(airbookingid,counter){
-    $("#RefundTicketDetailAdd"+counter).addClass("hidden");
-    var count = document.getElementById('counterTableRefund');
-    for(var i = 1 ; i <= count.value ; i++){
-        $("#RefundTicketDetail"+i).addClass("hidden");
-    }
-    $('#SpanEdit'+ counter).click(function() {
-
-        if($("#RefundTicketDetail"+counter).hasClass("hidden")){
-            $("#RefundTicketDetail"+counter).removeClass("hidden");
-        }else{
-            $("#RefundTicketDetail"+counter).addClass("hidden");
-        }
-    });
+    var refundid = $('#airticketrefundid'+counter).val();
+    $("#refundid").val(refundid);
+    var actionG = document.getElementById('action');
+    actionG.value = 'searchRefund';
+    document.getElementById('RefundForm').submit();
 }
 
 function addRefundDetail(counter){
