@@ -11,6 +11,7 @@
 <c:set var="advanceReceive" value="${requestScope['advanceReceive']}" />
 <c:set var="advanceReceiveCreditList" value="${requestScope['advanceReceiveCreditList']}" />
 <c:set var="advanceReceivePeriod" value="${requestScope['advanceReceivePeriod']}" />
+<c:set var="advanceReceivePeriodView" value="${requestScope['advanceReceivePeriodView']}" />
 
 <input type="hidden" name="result" id="result" value="${requestScope['result']}">
 
@@ -410,7 +411,7 @@
                                 </div> 
                                 <div class="col-md-2 form-group text-left" style="padding-left:5px;width:200px;">
                                     <div class="col-sm-12">
-                                        <input name="periodCashAmount" id="periodCashAmount" type="text" class="form-control money" value="" readonly=""/>
+                                        <input name="periodCashAmount" id="periodCashAmount" type="text" class="form-control money" value="${advanceReceivePeriodView.cashamount}" readonly=""/>
                                     </div>
                                 </div>
                                 <div class="col-sm-1" style="width: 30px"></div>
@@ -419,14 +420,14 @@
                                 </div> 
                                 <div class="col-md-2 form-group text-left" style="width:210px;">                                
                                     <div class="col-sm-12">
-                                       <input name="periodCash" id="periodCash" type="text" class="form-control money" value="" readonly=""/>                              
+                                       <input name="periodCash" id="periodCash" type="text" class="form-control money" value="${advanceReceivePeriodView.cashminusamount}" readonly=""/>                              
                                     </div>
                                 </div>       
                                 <div class="col-xs-1 text-right" style="padding-left: 0px;width:100px;">
                                     <label class="control-label">Cheque</lable>
                                 </div>  
                                 <div class="col-md-2 form-group text-left" style="padding-left:20px;width:200px;">
-                                    <input name="periodCheque" id="periodCheque" type="text" class="form-control money"  placeholder="" value="" readonly=""/>
+                                    <input name="periodCheque" id="periodCheque" type="text" class="form-control money" value="${advanceReceivePeriodView.cheque}" readonly=""/>
                                 </div>
                             </div>
                         </div><!--End Row 2 -->
@@ -437,7 +438,7 @@
                                 </div> 
                                 <div class="col-md-2 form-group text-left" style="padding-left:5px;width:200px;">
                                     <div class="col-sm-12">
-                                        <input name="periodBankAmount" id="periodBankAmount" type="text" class="form-control money" value="" readonly=""/>
+                                        <input name="periodBankAmount" id="periodBankAmount" type="text" class="form-control money" value="${advanceReceivePeriodView.bankamount}" readonly=""/>
                                     </div>
                                 </div>
                                 <div class="col-sm-1" style="width: 20px"></div>
@@ -446,7 +447,7 @@
                                 </div> 
                                 <div class="col-md-2 form-group text-left" style="padding-left:5px;width:200px;">                                
                                     <div class="col-sm-12">
-                                       <input name="periodCreditCard" id="periodCreditCard" type="text" class="form-control money"  placeholder="" value="" readonly=""/>                               
+                                       <input name="periodCreditCard" id="periodCreditCard" type="text" class="form-control money" value="${advanceReceivePeriodView.creditcard}" readonly=""/>                               
                                     </div>
                                 </div>
                                 <div class="col-xs-1 text-right" style="width:85px;">

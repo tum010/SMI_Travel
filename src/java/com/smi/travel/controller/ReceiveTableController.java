@@ -8,6 +8,7 @@ import com.smi.travel.datalayer.entity.MCreditBank;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.ReceiveTableService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.AdvanceReceivePeriodView;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
@@ -33,6 +34,7 @@ public class ReceiveTableController extends SMITravelController {
     private static final String ADVANCERECEIVE = "advanceReceive";
     private static final String ADVANCERECEIVECREDITLIST = "advanceReceiveCreditList";
     private static final String ADVANCERECEIVEPERIOD = "advanceReceivePeriod";
+    private static final String ADVANCERECEIVEPERIODVIEW = "advanceReceivePeriodView";
     private static final String RESULT = "result";
     private ReceiveTableService receiveTableService;
     private UtilityService utilservice;
@@ -217,9 +219,16 @@ public class ReceiveTableController extends SMITravelController {
     }
 
     private void getReceivePeriod(HttpServletRequest request, String receiveDate) {
+        UtilityFunction utilty = new UtilityFunction();
         AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
         advanceReceivePeriod = receiveTableService.getReceivePeriod(receiveDate);
         request.setAttribute(ADVANCERECEIVEPERIOD, advanceReceivePeriod);
+        
+        if(advanceReceivePeriod != null){
+            AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
+            advanceReceivePeriodView = receiveTableService.getAdvanceReceivePeriodView(utilty.convertDateToString(advanceReceivePeriod.getReceiveFrom()),utilty.convertDateToString(advanceReceivePeriod.getReceiveTo()));
+            request.setAttribute(ADVANCERECEIVEPERIODVIEW, advanceReceivePeriodView);
+        }    
     }
     
     public UtilityService getUtilservice() {

@@ -12,10 +12,12 @@ import com.smi.travel.datalayer.entity.AdvanceReceiveCredit;
 import com.smi.travel.datalayer.entity.AdvanceReceivePeriod;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MCreditBank;
+import com.smi.travel.datalayer.view.entity.AdvanceReceivePeriodView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -347,6 +349,45 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         this.sessionFactory.close();
         session.close();
         return advanceReceivePeriodList.get(0);
+    }
+
+    @Override
+    public AdvanceReceivePeriodView getAdvanceReceivePeriodView(String from, String to) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<AdvanceReceivePeriodView> advanceReceivePeriodViewList = new ArrayList<AdvanceReceivePeriodView>();
+        boolean condition = false;
+        
+        String query = "SELECT sum(rec.cash_amount) AS cashamount, sum(rec.bank_transfer) AS bankamount, sum(rec.cash_minus_amount) AS cashminusamount, sum( rec.chq_amount_1 + rec.chq_amount_2 ) AS Cheque, sum(( SELECT sum( ifnull(cre.credit_amount, 0)) FROM receipt_credit cre WHERE cre.rec_id = rec.id )) AS creditcard FROM `receipt` rec ";
+        if((from != null) && (!"".equalsIgnoreCase(from)) && (to != null) && (!"".equalsIgnoreCase(to))){
+             query += (condition ? " AND " : " WHERE ");
+             query += " rec.rec_date BETWEEN '" + from + "' AND '" + to + "' " ;
+             condition = true;
+        }
+        
+        System.out.println(" query :::: " +query);
+               
+        List<Object[]> Query = session.createSQLQuery(query)
+                .addScalar("cashamount", Hibernate.STRING)
+                .addScalar("bankamount", Hibernate.STRING)
+                .addScalar("cashminusamount", Hibernate.STRING)
+                .addScalar("Cheque", Hibernate.STRING)
+                .addScalar("creditcard", Hibernate.STRING)   
+                .list();
+        
+        for (Object[] B : Query) {
+            AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
+            advanceReceivePeriodView.setCashamount(B[0]== null ? "" : util.ConvertString(B[0]));
+            advanceReceivePeriodView.setBankamount(B[1]== null ? "" : util.ConvertString(B[1]));
+            advanceReceivePeriodView.setCashminusamount(B[2]== null ? "" : util.ConvertString(B[2]));
+            advanceReceivePeriodView.setCheque(B[3]== null ? "" : util.ConvertString(B[3]));
+            advanceReceivePeriodView.setCreditcard(B[4]== null ? "" : util.ConvertString(B[4]));
+            advanceReceivePeriodViewList.add(advanceReceivePeriodView);
+        }               
+    
+        this.sessionFactory.close();
+        session.close();
+        return advanceReceivePeriodViewList.get(0);
     }
        
 }

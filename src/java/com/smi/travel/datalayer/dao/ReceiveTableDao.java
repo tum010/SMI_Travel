@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao;
 import com.smi.travel.datalayer.entity.AdvanceReceive;
 import com.smi.travel.datalayer.entity.AdvanceReceiveCredit;
 import com.smi.travel.datalayer.entity.AdvanceReceivePeriod;
+import com.smi.travel.datalayer.view.entity.AdvanceReceivePeriodView;
 import java.util.List;
 
 /**
@@ -24,6 +25,7 @@ public interface ReceiveTableDao {
     public String deleteAdvanceReceiveCredit(AdvanceReceiveCredit advanceReceiveCredit, String option);
     public String saveReceivePeriod(String periodId, String fromDate, String toDate, String detail);
     public String checkReceivePeriod(String periodId, String fromDate, String toDate);
+    public AdvanceReceivePeriodView getAdvanceReceivePeriodView(String from, String to);
     public AdvanceReceivePeriod getReceivePeriod(String receiveDate);
    
 }
