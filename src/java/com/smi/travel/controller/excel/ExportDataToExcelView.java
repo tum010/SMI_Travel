@@ -2875,7 +2875,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         sumTotalCompay = sumComPay.subtract(sumTotalComRefundReceive);
         vatComPay = sumTotalCompay.multiply(new BigDecimal(0.07));
         vatReceive = sumComReceive.multiply(new BigDecimal(0.07));
-        totalCom = sumComPay.add(sumComReceive);
+        totalCom = sumTotalCompay.add(sumComReceive);
         balancePayment = sumTotalPayment.add(vatComPay);
         balancePayment = balancePayment.add(vatReceive);
         balancePayment = balancePayment.subtract(sumPayRefundAmount);
@@ -2886,8 +2886,8 @@ public class ExportDataToExcelView extends AbstractExcelView {
         withHoldingTax = sumTotalCompay.add(vatComPay);
         withHoldingTax = withHoldingTax.multiply(new BigDecimal(100));
         UtilityService util = new UtilityService();
-        MDefaultData mDE = util.getMDefaultDataFromType("vat");
-        BigDecimal vatTemp =  new BigDecimal(mDE.getValue());
+//        MDefaultData mDE = util.getMDefaultDataFromType("vat");
+        BigDecimal vatTemp =  new BigDecimal(7);
         vatTemp = vatTemp.add(new BigDecimal(100));
         withHoldingTax = withHoldingTax.divide(vatTemp,MathContext.DECIMAL128);
         withHoldingTax = withHoldingTax.multiply(new BigDecimal(0.3));
@@ -3036,7 +3036,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         sheet.autoSizeColumn(9);
                         row14.createCell(10).setCellValue("");
                 HSSFCell cell144 = row14.createCell(11);
-                        cell144.setCellValue(df.format(sumTotalCompay));
+                        cell144.setCellValue(df.format(sumTotalCompay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE))));
                         cell144.setCellStyle(styleAlignRightBorderRight);
                         sheet.autoSizeColumn(11);
         HSSFRow row15 = sheet.createRow(14);
@@ -3045,7 +3045,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         cell151.setCellStyle(styleAlignRight);
                         sheet.autoSizeColumn(0);
                 HSSFCell cell1511 = row15.createCell(1);
-                        cell1511.setCellValue(df.format(sumComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE))));
+                        cell1511.setCellValue(df.format(sumTotalCompay));
                         cell1511.setCellStyle(styleAlignRight);
                         sheet.addMergedRegion(CellRangeAddress.valueOf("B15:D15"));
                         sheet.autoSizeColumn(1);
