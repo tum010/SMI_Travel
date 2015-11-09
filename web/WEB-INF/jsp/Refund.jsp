@@ -80,7 +80,7 @@
             <input type="text" class="hidden" value="${param.referenceNo}" id="getUrl" >
             
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
-            <form action="Refund.smi" method="post" id="RefundForm" role="form" name="RefundForm">
+            <form action="Refund.smi" method="post" id="RefundForm"  name="RefundForm"  role="form" onsubmit="">
                 <input type="hidden" name="action" value="" id="action">
                 <input type="text" class="hidden" value="${referenceNo}" id="referenceNo" name="referenceNo">
                 <input type="text" class="hidden"  value="${airbookingid}" id="airbookingid" name="airbookingid">
@@ -325,7 +325,7 @@
                                                             <input type="text" class="form-control" id="inputSectorRefund${statusDetail.count}" name="inputSectorRefund${statusDetail.count}" value="${tableDetail.sectorRefund}">
                                                         </td>
                                                         <td>
-                                                            <input  maxlength ="15" type="text"  class="form-control numerical text-right" id="inputCharge${statusDetail.count}" name="inputCharge${statusDetail.count}" value="${tableDetail.charge}" >
+                                                            <input  maxlength ="15" type="text"  class="form-control number text-right"  onfocusout="changeFormatChargeNumber(${statusDetail.count});"  id="inputCharge${statusDetail.count}" name="inputCharge${statusDetail.count}" value="${tableDetail.charge}" >
                                                         </td>
                                                         <td class="text-center">
                                                             <a class="carousel"  
@@ -347,7 +347,7 @@
                                     </div>
                                     <div class="col-sm-1 form-group text-right">
                                         <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=saveRefund">
-                                            <button type="submit" class="btn btn-success"  onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
+                                            <button type="submit" class="btn btn-success"  id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
                                         </a>
                                     </div>
                                     <div class="col-sm-6 form-group text-left">
@@ -484,7 +484,7 @@
                                 </div>
                                 <div class="col-sm-1 form-group text-right">
                                     <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=addRefund">
-                                    <button type="submit" class="btn btn-success"  onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
+                                    <button type="submit" class="btn btn-success" id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
                                     </a>
                                 </div>
                                 <div class="col-sm-6 form-group text-left">
@@ -660,6 +660,7 @@
 <script type="text/javascript" charset="utf-8">
     var selectTicketNo = "<option value='' ></option>";
     $(document).ready(function () {
+        $(".number").mask('000000000000000000', {reverse: true});
         <c:forEach var="cur" items="${listTicketNo}">
             selectTicketNo += "<option value='${cur.id}' ><c:out value='${cur.series1}${cur.series2}${cur.series3}' /></option>";      
         </c:forEach>
@@ -669,21 +670,80 @@
         <c:if test="${actionAdd == 'add'}">        
             $("#RefundTicketDetailAdd").removeClass("hidden");
         </c:if>
-        // Add Row Auto key
-    $("#RefundTicketDetailTable").on("keyup", function () {
-        var rowAll = $("#RefundTicketDetailTable tr").length;
-        $("td").keyup(function () {
-            if ($(this).find("input").val() !== '') {
-                var colIndex = $(this).parent().children().index($(this));
-                var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
-                rowAll = $("#RefundTicketDetailTable tr").length;
-                if (rowIndex === rowAll) {
-                    console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
-                    addRowRefundTicketDetail(rowAll);
+
+      $("#RefundForm")
+        .bootstrapValidator({
+            framework: 'bootstrap',
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {                
+                refundBy: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input refundBy '
+                        }
+                    }
+                },
+                refundByName: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input refundByName'
+                        }
+                    }
+                },
+                receiveBy: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input receiveBy'
+                        }
+                    }
+                },
+                receiveByName: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input receiveByName'
+                        }
+                    }
+                }, 
+                receiveDate: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input receiveDate'
+                        }
+                    }
                 }
-            }
+            }  
+        }).on('success.field.fv', function (e, data) {
+               $('#RefundForm').bootstrapValidator('revalidateField', 'refundBy');
+         });
+        
+        $("#RefundTicketDetailTable").on("keyup", function () {
+            var rowAll = $("#RefundTicketDetailTable tr").length;
+            $("td").keyup(function () {
+                if ($(this).find("input").val() !== '') {
+                    var colIndex = $(this).parent().children().index($(this));
+                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                    rowAll = $("#RefundTicketDetailTable tr").length;
+                    if (rowIndex === rowAll) {
+                        console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
+                        addRowRefundTicketDetail(rowAll);
+                    }
+                }
+            });
         });
-    });
+    
+    var counter = $('#RefundTicketDetailTable tbody tr').length;
+    for(var j = 1;j <= (counter) ; j++){
+        changeFormatChargeNumber(j);       
+    }
     
     // get row in table now
     var rowCount = $('#RefundTicketDetailTable tr').length;
@@ -706,6 +766,10 @@
         });
     });
     
+    var counter = $('#RefundTicketDetailTableAdd tbody tr').length;
+    for(var j = 1;j <= counter ; j++){
+        changeFormatChargeAddNumber(j);       
+    }
     var rowCountAdd = $('#RefundTicketDetailTableAdd tr').length;
     console.log("Row Refund Ticket Detail (Add): " + rowCountAdd);
     $("#counterTableAdd").val(rowCountAdd);
@@ -1059,7 +1123,16 @@ function saveRefund(){
     console.log("REf : " + refno.value +" ID : " + bookingid.value);
     $('#referenceNo').val(refno.value);
     $('#airbookingid').val(bookingid.value);
-    document.getElementById('RefundForm').submit();
+    
+    var refundby = $('#refundBy').val();
+    var refundbyname = $('#refundByName').val();
+    var receiveby = $('#receiveBy').val();
+    var receivename = $('#receiveByName').val();
+    if(refundby === '' && receiveby === ''){
+        document.getElementById("buttonSaveRefund").disabled = true;
+    }else{  
+        document.getElementById('RefundForm').submit();
+    }
 }
 
 function addRefundDetail(counter){
@@ -1095,7 +1168,7 @@ function addRowRefundTicketDetail(row,id){
         '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control">'+ selectTicket +'</select> </td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value=""></td>' +
-        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right" id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' +      
+        '<td><input  maxlength ="15" type="text"  class="form-control number text-right"  onfocusout="changeFormatChargeNumber('+row+');"  id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' +      
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
     );
@@ -1112,7 +1185,7 @@ function addRowRefundTicketDetailAdd(row,id){
         '<td><select id="SelectTocketNoadd' + row + '" name="SelectTocketNoadd' + row + '" class="form-control">'+ selectTicket +'</select> </td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSectoradd' + row + '" name="inputSectoradd' + row + '" value=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefundadd' + row + '" name="inputSectorRefundadd' + row + '" value=""></td>' +
-        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right" id="inputChargeadd' + row + '" name="inputChargeadd' + row + '" value="" ></td>' +      
+        '<td><input  maxlength ="15" type="text"  class="form-control number text-right"  onfocusout="changeFormatChargeAddNumber('+row+');"  id="inputChargeadd' + row + '" name="inputChargeadd' + row + '" value="" ></td>' +      
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
     );
@@ -1149,6 +1222,35 @@ function DeleteRefundDetailConfirm() {
     console.log("Row Refund Detail : " + rowId);
     var RefundId  = $("#airticketrefunddetailid"+rowId).val();
     console.log("Refund Detail ID : " + RefundId);
+}
+
+function changeFormatChargeAddNumber(id){
+    console.log("Id Row : " + count);
+    var count = document.getElementById('inputChargeadd'+id).value;
+    count = count.replace(/\,/g,'');
+    count  = parseFloat(count);
+    if(isNaN(count)){
+        document.getElementById('inputChargeadd' + id).value = "";
+    }else{
+        count = parseFloat(count);
+        document.getElementById('inputChargeadd' + id).value = formatNumber(count);
+    }
+}
+function changeFormatChargeNumber(id){
+    console.log("Id Row : " + count);
+    var count = document.getElementById('inputCharge'+id).value;
+    count = count.replace(/\,/g,'');
+    count  = parseFloat(count);
+    if(isNaN(count)){
+        document.getElementById('inputCharge' + id).value = "";
+    }else{
+        count = parseFloat(count);
+        document.getElementById('inputCharge' + id).value = formatNumber(count);
+    }
+}
+
+function formatNumber(num) {
+    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
 </script>
 <c:if test="${! empty requestScope['result']}">
