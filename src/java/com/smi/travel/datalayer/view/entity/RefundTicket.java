@@ -14,6 +14,7 @@ import java.util.List;
  * @author Kanokporn
  */
 public class RefundTicket {
+    private String id;
     private String airticketrefundid;
     private String refundno;
     private String refundby;
@@ -26,6 +27,22 @@ public class RefundTicket {
     private String address;
     private String airbookingid;
     private List RefundTicketDetail;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAirbookingid() {
+        return airbookingid;
+    }
+
+    public void setAirbookingid(String airbookingid) {
+        this.airbookingid = airbookingid;
+    }
 
     public String getAddress() {
         return address;

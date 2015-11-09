@@ -31,7 +31,9 @@
 <c:set var="RefundTicketDetail" value="${requestScope['RefundTicketDetail']}" />
 <c:set var="listTicketNo" value="${requestScope['listTicketNo']}" />
 <c:set var="airbookingid" value="${requestScope['airbookingid']}" />
+<c:set var="referenceNo" value="${requestScope['referenceNo']}" />
 <c:set var="actionAdd" value="${requestScope['actionAdd']}" />
+<c:set var="result" value="${requestScope['result']}" />
 
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
@@ -63,14 +65,25 @@
             <input hidden="" value="${booking_size[6]}" id="input-daytour_size">  
         </div>
         <div class="col-sm-10">
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Not  Success!</strong> 
+            </div>
             <input type="hidden" value="${master.customer.MInitialname.name}" id="initialname_tmp">
             <input type="hidden" value="${master.customer.firstName}" id="firstname_tmp">
             <input type="hidden" value="${master.customer.lastName}" id="lastname_tmp">  
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>       
-            <input type="hidden" value="${param.referenceNo}" id="getUrl" >
+            <input type="text" class="hidden" value="${param.referenceNo}" id="getUrl" >
+            
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
             <form action="Refund.smi" method="post" id="RefundForm" role="form" name="RefundForm">
                 <input type="hidden" name="action" value="" id="action">
+                <input type="text" class="hidden" value="${referenceNo}" id="referenceNo" name="referenceNo">
+                <input type="text" class="hidden"  value="${airbookingid}" id="airbookingid" name="airbookingid">
                 <div class="row" style="padding-left: 15px">  
                     <div class="col-md-6">
                         <h4>Refund Ticket</h4>
@@ -159,7 +172,8 @@
                                         <div class="col-lg-4">
                                             <div class="">
                                                 <div class="input-group ">
-                                                    <input type="hidden" class="form-control" name="refundById" id="refundById" value="">
+                                                    <input type="hidden" class="form-control" name="refundById" id="refundById" value="${table1.airticketrefundid}">
+                                                    <input type="hidden" class="form-control" name="refundticketid" id="refundticketid" value="${table1.id}">
                                                     <input type="text" class="form-control" id="refundBy" name="refundBy" value="${table1.refundcode}"
                                                            data-bv-notempty data-bv-notempty-message="The By is required">
                                                     <span class="input-group-addon" data-toggle="modal" data-target="#refundCustModal">
@@ -272,7 +286,7 @@
                                 </br>
                                 <div class="row">
                                     <div class="col-sm-12 form-group text-center">
-                                        <input type="text" class="" id="counterTable" name="counterTable" value="1" >
+                                        <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
                                          <input type="text" class="hidden" id="refunddetailid" name="refunddetailid" value="0" />
                                         <table  class="display" id="RefundTicketDetailTable" style="width: 1000px;">
                                             <thead>
@@ -332,7 +346,9 @@
                                         <button type="submit" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
                                     </div>
                                     <div class="col-sm-1 form-group text-right">
-                                        <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                        <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=saveRefund">
+                                            <button type="submit" class="btn btn-success"  onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
+                                        </a>
                                     </div>
                                     <div class="col-sm-6 form-group text-left">
                                         <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
@@ -467,7 +483,9 @@
                                     <button type="button" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
                                 </div>
                                 <div class="col-sm-1 form-group text-right">
-                                    <button type="button" class="btn btn-success" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
+                                    <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=addRefund">
+                                    <button type="submit" class="btn btn-success"  onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
+                                    </a>
                                 </div>
                                 <div class="col-sm-6 form-group text-left">
                                     <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
@@ -1035,7 +1053,12 @@ function searchCustomerAgentList(name) {
 
 function saveRefund(){
     var actionG = document.getElementById('action');
-    actionG.value = 'addRefund';
+    var refno = document.getElementById('referenceNo');
+    var bookingid = document.getElementById('airbookingid');
+    actionG.value = 'saveRefund';
+    console.log("REf : " + refno.value +" ID : " + bookingid.value);
+    $('#referenceNo').val(refno.value);
+    $('#airbookingid').val(bookingid.value);
     document.getElementById('RefundForm').submit();
 }
 
@@ -1128,4 +1151,16 @@ function DeleteRefundDetailConfirm() {
     console.log("Refund Detail ID : " + RefundId);
 }
 </script>
+<c:if test="${! empty requestScope['result']}">
+    <c:if test="${requestScope['result'] =='success'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='fail'}">        
+        <script language="javascript">
+           $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
+</c:if>
 <script type="text/javascript" src="js/refund.js"></script>

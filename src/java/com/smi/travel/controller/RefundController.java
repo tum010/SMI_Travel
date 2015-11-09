@@ -120,7 +120,53 @@ public class RefundController extends SMITravelController {
                 request.setAttribute("listRefundTicket", null);
                 request.setAttribute("RefundTicket", null);
             }
-        }else if("addRefund".equals(action)){
+        }else if("saveRefund".equals(action)){
+            String refundid = request.getParameter("refundById");
+            AirticketRefund airticketRefund = new AirticketRefund();
+            RefundAirticket refund = new RefundAirticket();
+            refund = getRefundFromPage(request);
+            
+            if(refundid != null &&  !"".equals(refundid)){
+                action = "editRefund";
+            }
+            List<RefundAirticketDetail> airticketrefundList = setRefundDetail(request,refund,action);
+            refund.setRefundAirticketDetails(airticketrefundList);
+            
+            airticketRefund.setId(refundid);
+            airticketRefund.setRefundAirticket(refund);
+            String resultsave = refundService.saveRefund(airticketRefund);
+            if(!"".equals(resultsave)){
+                request.setAttribute("result", resultsave);
+                List<RefundTicket> refundTicket = refundService.searchRefund(refund);
+                List<RefundTicketDetail> refundTicketDetail = refundTicket.get(0).getRefundTicketDetail();
+                if(refundTicket != null){
+                    request.setAttribute("RefundTicket", refundTicket);
+                    request.setAttribute("listRefundTicket", refundTicket);
+
+                    if(refundTicketDetail != null ){
+                        request.setAttribute("RefundTicketDetail", refundTicketDetail);
+                    }else{
+                        request.setAttribute("RefundTicketDetail", refundTicketDetail);
+                    }
+                }else{
+                    request.setAttribute("listRefundTicket", null);
+                    request.setAttribute("RefundTicket", null);
+                }
+            }else{
+                request.setAttribute("result", null);
+            }
+            
+            System.out.println("Result Save : " + resultsave);
+        }else if("editRefund".equals(action)){
+            
+        }
+        
+        setGeneralResponseAttribute(request, refNo);
+        return Refund;
+    }
+    
+    private RefundAirticket getRefundFromPage(HttpServletRequest request){
+            String refundticketid = request.getParameter("refundticketid");
             String refundcodePage = request.getParameter("refundBy");
             String refundnamePage = request.getParameter("refundByName");
             String receivecodePage = request.getParameter("receiveBy");
@@ -133,6 +179,11 @@ public class RefundController extends SMITravelController {
             AirticketRefund airticketRefund = new AirticketRefund();
             RefundAirticket refund = new RefundAirticket();
             refund.setId(null);
+            if(refundticketid != null && !"".equals(refundticketid)){
+                refund.setId(refundticketid);
+            }else{
+                refund.setId("");
+            }
             
             if(refundcodePage != null && !"".equals(refundcodePage)){
                 refund.setRefundBy(refundcodePage);
@@ -159,19 +210,12 @@ public class RefundController extends SMITravelController {
             }else{
                 refund.setRefundBy("");
             }
-            setRefundDetail(request,refund,action);
-            airticketRefund.setRefundAirticket(refund);
-            String resultsave = refundService.saveRefund(airticketRefund);
-            System.out.println("Result Save : " + resultsave);
-        }
-        
-        setGeneralResponseAttribute(request, refNo);
-        return Refund;
+        return refund;
     }
     
     private List setRefundDetail(HttpServletRequest request,RefundAirticket refund,String action){
         List<RefundAirticketDetail> airticketrefundList = new LinkedList<RefundAirticketDetail>();
-        if("addRefund".equals(action)){
+        if("saveRefund".equals(action)){
             String refundRowAdd = request.getParameter("counterTableAdd");
             int rowAdd = Integer.parseInt(refundRowAdd);
             
