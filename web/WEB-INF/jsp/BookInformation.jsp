@@ -38,8 +38,8 @@
                         </div>
                     </div>
                 </div>  
-                <div class="col-xs-2">
-                    <label>Type</label>
+                <div class="col-xs-2 form-group">
+                    <label>Type<font style="color: red">*</font></label>
                     <select class="form-control" id="bookType" name="bookType" onchange="searchFillter()">
                         <option value=""></option>
                         <option value="1">Air</option>
@@ -188,8 +188,8 @@
                 </div>
             </div>
             <div class="col-xs-1 text-right" style="width: 1280px">
-                <button type="button" id="btnSearch" class="btn btn-primary" onclick="searchAction()"><span class="fa fa-search"></span> Search</button>           
-                <input type="hidden" name="action" id="action" value="">
+                <button type="submit" id="btnSearch" class="btn btn-primary" ><span class="fa fa-search"></span> Search</button>           
+                <input type="hidden" name="action" id="action" value="search">
                 <a id="btnNew"  href="BookDetail.smi?&action=new" class="btn btn-success" ><span class="fa fa-plus-circle"></span> New</a>
             </div> 
         </div>

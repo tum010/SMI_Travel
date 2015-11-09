@@ -60,6 +60,25 @@ $(document).ready(function() {
         document.getElementById("pageNo").style.cursor = "pointer";
     });
 
+    $('#BookInformationSearch').bootstrapValidator({
+        container: 'tooltip',
+        excluded: [':disabled'],
+        feedbackIcons: {
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
+        },
+        fields: {
+            bookType: {
+                validators: {
+                    notEmpty: {
+                        message: 'The Book Type is required'
+                    }
+                }
+            }
+        }
+    });
+
 });
 
 function searchAction() {
@@ -107,19 +126,19 @@ function setSearchFormat(searchType) {
     }
 }
 
-function viewBooking(type,refNo,id) {
+function viewBooking(type, refNo, id) {
 //    alert(type+" "+refNo+" "+id);
-    if(type === '1'){																												
+    if (type === '1') {
         window.open("AirTicket.smi?action=edit&referenceNo=" + refNo);
-    }else if(type === '2'){																																	
-        window.open("HotelDetail.smi?action=edit&referenceNo=" + refNo +"&id=" + id);
-    }else if(type === '3'){																												
+    } else if (type === '2') {
+        window.open("HotelDetail.smi?action=edit&referenceNo=" + refNo + "&id=" + id);
+    } else if (type === '3') {
         window.open("BookDetail.smi?action=edit&referenceNo=" + refNo);
-    }else if(type === '4'){																																						
+    } else if (type === '4') {
         window.open("DaytourDetail.smi?action=edit&referenceNo=" + refNo + "&daytourBooking=" + id);
-    }else if(type === '5'){																																													
-        window.open("OtherDetail.smi?action=edit&referenceNo=" + refNo +"&itemid=" + id +"&callPageFrom=FromOther");
-    }else if(type === '6'){																														
+    } else if (type === '5') {
+        window.open("OtherDetail.smi?action=edit&referenceNo=" + refNo + "&itemid=" + id + "&callPageFrom=FromOther");
+    } else if (type === '6') {
         window.open("LandDetail.smi?action=edit&referenceNo=" + refNo + "&landid=" + id);
     }
 }
