@@ -5,9 +5,11 @@
  */
 package com.smi.travel.controller.excel;
 
+import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.report.model.BillAirAgent;
 import com.smi.travel.datalayer.report.model.TicketFareReport;
 import com.smi.travel.datalayer.report.model.TicketFareSummaryByAgentStaff;
+import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.APNirvana;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
 import com.smi.travel.datalayer.view.entity.BillAirAgentRefund;
@@ -2839,6 +2841,8 @@ public class ExportDataToExcelView extends AbstractExcelView {
         BigDecimal sumTotalPayment =  new BigDecimal(0);
         BigDecimal sumTotalCompay =  new BigDecimal(0);
         BigDecimal sumPayRefundAmount =  new BigDecimal(0);
+        BigDecimal sumVatComPay =  new BigDecimal(0);
+        BigDecimal SumVatReceive =  new BigDecimal(0);
         BigDecimal vatComPay =  new BigDecimal(0);
         BigDecimal vatReceive =  new BigDecimal(0);
         BigDecimal totalCom =  new BigDecimal(0);
@@ -2851,32 +2855,43 @@ public class ExportDataToExcelView extends AbstractExcelView {
             sumSalePrice = sumSalePrice.add(new BigDecimal(listAgent.get(i).getSaleprice()));
             sumAmountAir = sumAmountAir.add(new BigDecimal(listAgent.get(i).getAmountair()));
             sumComPay = sumComPay.add(new BigDecimal(listAgent.get(i).getCompay()));
-            sumComReceive = sumComReceive.add(new BigDecimal(listAgent.get(i).getAgentcom()));
+            sumVatComPay = sumVatComPay.add(new BigDecimal(listAgent.get(i).getCompayvat()));
             sumTotalComRefundReceive = sumTotalComRefundReceive.add(new BigDecimal(listAgent.get(i).getAgentcomrefund()));
             sumPayRefundAmount = sumPayRefundAmount.add(new BigDecimal(listAgent.get(i).getPaycusrefund()));
             System.out.println("Sale Price : " + listAgent.get(i).getSaleprice() + "  Sum Sale Price : " + sumSalePrice);
             System.out.println("Amount Air : " + listAgent.get(i).getAmountair() + "  Sum Amount Air : " + sumAmountAir);
             System.out.println("Com Pay : " + listAgent.get(i).getCompay() + "  Sum Com Pay : " + sumComPay);
-            System.out.println("Com Receive : " + listAgent.get(i).getAgentcom() + "  Sum Com Receive : " + sumComReceive);
             System.out.println("Com Reefund Receive : " + listAgent.get(i).getAgentcomrefund() + "  Sum Reefund Receive : " + sumTotalComRefundReceive);
             System.out.println("Pay Refund Amount : " + listAgent.get(i).getPaycusrefund() + "  Sum Refund Amount : " + sumPayRefundAmount);
+        }
+        
+        for (int i = 0; i < listAgentRefund.size(); i++) {
+            sumComReceive = sumComReceive.add(new BigDecimal(listAgentRefund.get(i).getComm_rec()));
+            SumVatReceive = SumVatReceive.add(new BigDecimal(listAgentRefund.get(i).getVat()));
+            System.out.println("Com Receive : " + listAgent.get(i).getAgentcom() + "  Sum Com Receive : " + sumComReceive);
         }
         DecimalFormat df = new DecimalFormat("#,###.00");
         sumTotalPayment = sumSalePrice.subtract(sumTotalComRefundReceive);
         sumTotalCompay = sumComPay.subtract(sumTotalComRefundReceive);
         vatComPay = sumTotalCompay.multiply(new BigDecimal(0.07));
         vatReceive = sumComReceive.multiply(new BigDecimal(0.07));
-        totalCom = sumComPay.subtract(sumComReceive);
+        totalCom = sumComPay.add(sumComReceive);
         balancePayment = sumTotalPayment.add(vatComPay);
         balancePayment = balancePayment.add(vatReceive);
         balancePayment = balancePayment.subtract(sumPayRefundAmount);
         checkResult = sumTotalCompay.add(vatComPay);
         midValue =  checkResult.add(balancePayment);
         midValue = midValue.add(sumPayRefundAmount);
+        
         withHoldingTax = sumTotalCompay.add(vatComPay);
         withHoldingTax = withHoldingTax.multiply(new BigDecimal(100));
-        withHoldingTax = withHoldingTax.divide(new BigDecimal(107),MathContext.DECIMAL128);
+        UtilityService util = new UtilityService();
+        MDefaultData mDE = util.getMDefaultDataFromType("vat");
+        BigDecimal vatTemp =  new BigDecimal(mDE.getValue());
+        vatTemp = vatTemp.add(new BigDecimal(100));
+        withHoldingTax = withHoldingTax.divide(vatTemp,MathContext.DECIMAL128);
         withHoldingTax = withHoldingTax.multiply(new BigDecimal(0.3));
+        
         System.out.println(">>>>>>>>>>> sumTotalPayment : " + df.format(sumTotalPayment));
         System.out.println(">>>>>>>>>>> sumTotalCompay : " + df.format(sumTotalCompay));
         System.out.println(">>>>>>>>>>> vatComPay : " + df.format(vatComPay));
@@ -3039,7 +3054,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         cell152.setCellStyle(styleAlignRight);
                         sheet.autoSizeColumn(4);
                 HSSFCell cell1521 = row15.createCell(5);
-                        cell1521.setCellValue(df.format(vatComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE))));
+                        cell1521.setCellValue(df.format(sumVatComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE))));
                         cell1521.setCellStyle(styleAlignRight);
                         row15.createCell(7).setCellStyle(styleAlignRightBorderRight);
                         sheet.autoSizeColumn(5);
@@ -3068,7 +3083,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         cell162.setCellStyle(styleAlignRight);
                         sheet.autoSizeColumn(4);
                 HSSFCell cell1621 = row16.createCell(5);
-                        cell1621.setCellValue(df.format(vatReceive));
+                        cell1621.setCellValue(df.format(SumVatReceive));
                         cell1621.setCellStyle(styleAlignRight);
                         sheet.autoSizeColumn(5);
                         row16.createCell(7).setCellStyle(styleAlignRightBorderRight);
@@ -3100,7 +3115,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         sheet.autoSizeColumn(9);
                         row9.createCell(10).setCellValue("");
                 HSSFCell cell174 = row17.createCell(11);
-                        cell174.setCellValue(df.format(vatComPay));
+                        cell174.setCellValue(df.format(sumVatComPay));
                         cell174.setCellStyle(styleAlignRightBorderRight);
                         sheet.autoSizeColumn(11);
         HSSFRow row18 = sheet.createRow(17);
