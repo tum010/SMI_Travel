@@ -241,7 +241,7 @@ public class BookingViewImpl implements BookingViewDao{
             query += " checkout = '" + hotelCheckOut + "' " ;
             condition = true;
         }
-
+        
         List<Object[]> QueryHotel = session.createSQLQuery(query)
                 .addScalar("refno", Hibernate.STRING)
                 .addScalar("refdate", Hibernate.STRING)
@@ -257,6 +257,7 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("invoice", Hibernate.STRING)
                 .addScalar("receipt", Hibernate.STRING)
                 .addScalar("id", Hibernate.STRING)
+                .setMaxResults(500)
                 .list();
         
         for (Object[] B : QueryHotel) {
@@ -336,6 +337,7 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("flight", Hibernate.STRING)
                 .addScalar("invoice", Hibernate.STRING)
                 .addScalar("receipt", Hibernate.STRING)
+                .setMaxResults(500)
                 .list();
         
         for (Object[] B : QueryAir) {
@@ -391,7 +393,7 @@ public class BookingViewImpl implements BookingViewDao{
         }
         if((packageAgent != null) &&(!"".equalsIgnoreCase(packageAgent))){
             query += (condition ? " and " : " where ");
-            query += " agent = '" + packageAgent + "' " ;
+            query += " agent LIKE '%" + packageAgent + "%' " ;
             condition = true;
         }
 
@@ -404,6 +406,7 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("name", Hibernate.STRING)
                 .addScalar("invoice", Hibernate.STRING)
                 .addScalar("receipt", Hibernate.STRING)
+                .setMaxResults(500)
                 .list();
         
         for (Object[] B : QueryPackage) {
@@ -487,6 +490,7 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("invoice", Hibernate.STRING)
                 .addScalar("receipt", Hibernate.STRING)
                 .addScalar("id", Hibernate.STRING)
+                .setMaxResults(500)
                 .list();
         
         for (Object[] B : QueryDayTour) {
@@ -572,6 +576,7 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("invoice", Hibernate.STRING)
                 .addScalar("receipt", Hibernate.STRING)
                 .addScalar("id", Hibernate.STRING)
+                .setMaxResults(500)
                 .list();
         
         for (Object[] B : QueryOther) {
@@ -646,6 +651,7 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("invoice", Hibernate.STRING)
                 .addScalar("receipt", Hibernate.STRING)
                 .addScalar("id", Hibernate.STRING)
+                .setMaxResults(500)
                 .list();
         
         for (Object[] B : QueryLand) {

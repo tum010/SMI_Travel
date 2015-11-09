@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="b94d16a0-fd3d-420a-829f-b2613a057a63">
-	<property name="ireport.zoom" value="1.652892561983471"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="241"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="649"/>
+	<property name="ireport.y" value="96"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -51,14 +51,12 @@
 	<group name="departmentGroup" isReprintHeaderOnEachPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{department}]]></groupExpression>
 		<groupHeader>
-			<band height="51">
+			<band height="50">
 				<staticText>
 					<reportElement x="0" y="18" width="420" height="16" backcolor="#FFFFFF" uuid="fbd29eb7-1001-4422-8f2f-c0ea9d5a0d6a"/>
 					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center">
 						<font isBold="true"/>
@@ -68,10 +66,8 @@
 				<staticText>
 					<reportElement x="0" y="34" width="21" height="16" uuid="c4ba20ed-2d66-4e4d-8e64-7f6b7f651edb"/>
 					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center">
 						<font isBold="true"/>
@@ -81,10 +77,8 @@
 				<staticText>
 					<reportElement x="21" y="34" width="56" height="16" uuid="61f919e3-2bc6-4785-9322-3fd662d267f4"/>
 					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center">
 						<font isBold="true"/>
@@ -94,10 +88,8 @@
 				<staticText>
 					<reportElement x="77" y="34" width="56" height="16" uuid="592351b1-7948-4db6-8f3a-b4ffb493fa2e"/>
 					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center">
 						<font isBold="true"/>
@@ -107,10 +99,8 @@
 				<staticText>
 					<reportElement x="133" y="34" width="48" height="16" uuid="51cdd792-1b20-49e2-850a-e15acbcd2cf1"/>
 					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center">
 						<font isBold="true"/>
@@ -120,10 +110,8 @@
 				<staticText>
 					<reportElement x="181" y="34" width="145" height="16" uuid="21bfd2ee-a71b-4da7-8e25-efc8eff2cb54"/>
 					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center">
 						<font isBold="true"/>
@@ -133,10 +121,8 @@
 				<staticText>
 					<reportElement x="326" y="34" width="94" height="16" uuid="8f1cdb35-8955-4bd8-8f0e-281cf75040c2"/>
 					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center">
 						<font isBold="true"/>
@@ -146,10 +132,8 @@
 				<staticText>
 					<reportElement x="420" y="18" width="68" height="32" uuid="213fbf4d-b8f0-42e3-bee7-ad4d6e24a890"/>
 					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
@@ -159,10 +143,8 @@
 				<staticText>
 					<reportElement x="488" y="18" width="68" height="32" uuid="ab74ebe1-9646-49a1-be44-953511e3cbda"/>
 					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
@@ -172,10 +154,8 @@
 				<staticText>
 					<reportElement x="556" y="18" width="68" height="32" uuid="c323e669-2087-4bda-904f-8de1affb9927"/>
 					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
@@ -185,10 +165,8 @@
 				<staticText>
 					<reportElement x="624" y="18" width="68" height="32" uuid="9ae66662-35e2-4dff-bb23-eff9d051f885"/>
 					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
@@ -198,10 +176,8 @@
 				<staticText>
 					<reportElement x="692" y="18" width="68" height="32" uuid="7c75545d-7a1b-4011-97bc-8709af9b9d60"/>
 					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
@@ -211,10 +187,9 @@
 				<staticText>
 					<reportElement x="760" y="18" width="42" height="32" uuid="ae0e0202-cf59-42e5-bb74-1b80bb43e7bb"/>
 					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
+						<leftPen lineWidth="0.25"/>
+						<bottomPen lineWidth="0.25"/>
+						<rightPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font isBold="true"/>
@@ -222,25 +197,25 @@
 					<text><![CDATA[Status]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="66" y="-2" width="739" height="16" uuid="2f4e4af1-f70c-48e2-9a7e-852f2f5d7b0c"/>
+					<reportElement x="70" y="-2" width="739" height="16" uuid="2f4e4af1-f70c-48e2-9a7e-852f2f5d7b0c"/>
 					<textElement verticalAlignment="Top">
 						<font fontName="TH SarabunPSK" size="14"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{department}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="0" width="802" height="18" uuid="666395d7-be30-4322-baec-a774feaed2e5"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
+					<reportElement x="4" y="0" width="761" height="18" uuid="666395d7-be30-4322-baec-a774feaed2e5"/>
 					<textElement>
 						<font size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Department : ]]></text>
 				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="0" y="0" width="802" height="18" forecolor="#000000" uuid="2a58a196-9eeb-4f43-a99b-52c31afe39d9"/>
+					<graphicElement>
+						<pen lineWidth="0.25" lineStyle="Solid"/>
+					</graphicElement>
+				</rectangle>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -403,14 +378,14 @@
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="645" y="54" width="71" height="14" uuid="3a46136f-267a-4ae5-aba3-76ccdc53d5d4"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{from}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement x="729" y="53" width="71" height="14" uuid="1a34fbc7-67a3-4c02-8c46-91ff898e2097"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{to}]]></textFieldExpression>
@@ -461,48 +436,6 @@
 	</pageHeader>
 	<detail>
 		<band height="17" splitType="Stretch">
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="17" uuid="ba58cdb5-fe19-42ed-9864-d84bd4e4f13d"/>
-			</line>
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="21" y="0" width="1" height="17" uuid="cc92dece-4999-4191-9fbd-ba0429702352"/>
-			</line>
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="77" y="0" width="1" height="17" uuid="06ffc837-e11d-4a23-ad90-8873049d0905"/>
-			</line>
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="133" y="0" width="1" height="17" uuid="54d85cc9-f0f1-4294-983f-e7dabfe6069d"/>
-			</line>
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="181" y="0" width="1" height="17" uuid="5edc64f9-5270-4fae-8289-9cf6f5ca2edc"/>
-			</line>
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="326" y="0" width="1" height="17" uuid="f42c11a5-567b-4fbe-a6b0-3461cd34ba87"/>
-			</line>
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="420" y="0" width="1" height="17" uuid="5664b211-7b1f-4de9-96e6-7e5ab5cc9577"/>
-			</line>
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="487" y="0" width="1" height="17" uuid="75e013ef-d90a-45af-b122-8ac464a6fb70"/>
-			</line>
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="556" y="0" width="1" height="17" uuid="9f79eba1-2ac8-4e6f-92f0-15d85c486215"/>
-			</line>
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="624" y="0" width="1" height="17" uuid="7d4bb691-ce33-4354-82da-e7a7861ff54e"/>
-			</line>
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="760" y="0" width="1" height="17" uuid="1b078409-3a96-46f2-9696-e54634f923ca"/>
-			</line>
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="692" y="0" width="1" height="17" uuid="0a95d9ff-8ec0-4172-8d67-e392421e81e0"/>
-			</line>
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="802" y="0" width="1" height="17" uuid="7bd3443a-41d4-4616-9c8c-b137ae168088"/>
-			</line>
-			<line>
-				<reportElement positionType="Float" x="1" y="16" width="801" height="1" uuid="60acc4cc-57e5-46ec-b005-15605c9cb8ce"/>
-			</line>
 			<textField>
 				<reportElement x="0" y="0" width="21" height="16" uuid="cca9c37d-dd24-4a64-a689-ec57e97a30f6"/>
 				<textElement textAlignment="Center">
@@ -525,8 +458,8 @@
 				<textFieldExpression><![CDATA[$F{taxdate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="133" y="0" width="48" height="16" uuid="ae5b8aa8-fe13-4095-874b-2c8e0ee86bc5"/>
-				<textElement textAlignment="Center">
+				<reportElement x="135" y="0" width="46" height="16" uuid="ae5b8aa8-fe13-4095-874b-2c8e0ee86bc5"/>
+				<textElement>
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{taxto}]]></textFieldExpression>
@@ -564,14 +497,14 @@
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{gross} != null && !"null".equals($F{gross}) && $F{gross}.length() > 0 && !"".equalsIgnoreCase($F{gross})) ? new BigDecimal($F{gross}) : new BigDecimal("0")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{gross} != null && !"null".equals($F{gross}) && $F{gross}.length() > 0 && !"".equalsIgnoreCase($F{gross})) ? new BigDecimal($F{gross}) : ""]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="625" y="0" width="65" height="16" uuid="f0eac28f-d8ff-451e-91a6-a09e7f24cb78"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{vat} != null && !"null".equals($F{vat}) && $F{vat}.length() > 0 && !"".equalsIgnoreCase($F{vat})) ? new BigDecimal($F{vat}) : new BigDecimal("0")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{vat} != null && !"null".equals($F{vat}) && $F{vat}.length() > 0 && !"".equalsIgnoreCase($F{vat})) ? new BigDecimal($F{vat}) : ""]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
 				<reportElement x="693" y="-1" width="65" height="17" uuid="d8ffea49-df51-49ae-a272-7df4c8039358"/>
@@ -587,19 +520,121 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="21" height="17" uuid="64b224f8-b493-418f-801d-fa09a1e50f6d"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="21" y="0" width="56" height="17" uuid="12a02014-24fe-4443-baf3-3b64dfc1c6b5"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="77" y="0" width="56" height="17" uuid="86d92e7e-b66e-46d4-abb1-5b2614146ebc"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="133" y="0" width="48" height="17" uuid="9743bea2-9445-407e-85c8-bf6ef1094e2f"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="181" y="0" width="145" height="17" uuid="d00370d4-b54e-4b13-9311-a78d1b3aafc6"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="326" y="0" width="94" height="17" uuid="d40ff265-f5a3-4524-b5e5-0ae5face58cf"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="420" y="0" width="68" height="17" uuid="128471e4-95a9-4e60-9233-61f906083a5a"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="488" y="0" width="68" height="17" uuid="7046b723-6f20-43bc-ba0a-906a7ebbb393"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="556" y="0" width="68" height="17" uuid="e4ab8c7e-6b87-4e10-9d5a-0d795d2fcbfa"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="624" y="0" width="68" height="17" uuid="bf07201e-5e97-49b5-8095-10f4c5862f87"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="692" y="0" width="68" height="17" uuid="8abe8635-3ad9-45ac-9b81-848379659459"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="760" y="0" width="42" height="17" uuid="246ead0c-902f-4259-8857-a6f2f3bc0774"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<lastPageFooter>
 		<band height="80">
 			<staticText>
-				<reportElement x="1" y="1" width="802" height="16" backcolor="#FFFFFF" uuid="e1b67ec4-b013-4831-ac88-d4d169905acf"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
-					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
-					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
-					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
-				</box>
+				<reportElement x="5" y="0" width="793" height="16" backcolor="#FFFFFF" uuid="e1b67ec4-b013-4831-ac88-d4d169905acf"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
@@ -608,7 +643,7 @@
 			<rectangle>
 				<reportElement mode="Transparent" x="0" y="1" width="802" height="16" forecolor="#000000" uuid="78399077-38b0-4e82-a448-b9df6efb289d"/>
 				<graphicElement>
-					<pen lineStyle="Solid"/>
+					<pen lineWidth="0.25" lineStyle="Solid"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
