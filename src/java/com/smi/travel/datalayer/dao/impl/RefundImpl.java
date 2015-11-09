@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.RefundDao;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.AirticketRefund;
+import com.smi.travel.datalayer.entity.RefundAirticket;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.RefundTicketDetail;
 import com.smi.travel.datalayer.view.entity.RefundTicket;
@@ -231,5 +232,37 @@ public class RefundImpl implements RefundDao{
         }
            
         return listRefundTicket;
+    }
+
+    @Override
+    public String saveRefund(AirticketRefund airticketrefund) {
+        String result = "";
+        Session session = this.sessionFactory.openSession();
+        try { 
+            transaction = session.beginTransaction();
+            session.save(airticketrefund);
+            RefundAirticket refund = airticketrefund.getRefundAirticket();
+            if(refund != null){
+                session.save(refund);
+                List<RefundAirticketDetail> refundDetail = refund.getRefundAirticketDetails();
+                if(refundDetail != null){
+                    for (int i = 0; i < refundDetail.size(); i++) {
+                        session.save(refundDetail.get(i));
+                    }
+                }
+                result = "success";
+            }
+            
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            session.close();
+            this.sessionFactory.close();
+            result = "fail";
+        }
+        return result;
     }
 }

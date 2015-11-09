@@ -81,11 +81,11 @@
                         </button>
                     </div>
                     <div class="col-md-1 text-right">
-                        <button type="button"  class="btn btn-primary" id="buttonAddRefundDetail" name="buttonAddRefundDetail" >
-                            <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=addRefund">
+                         <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=add">
+                            <button type="button"  class="btn btn-primary" id="buttonAddRefundDetail" name="buttonAddRefundDetail" >
                                 <span class="glyphicon glyphicon-plus"></span> Add
-                            </a>              
-                        </button>
+                            </button>
+                        </a>  
                          <input type="hidden" id="countListAdd" name="countListAdd" value="1" >
                     </div>
                     <div class="col-md-2 text-right" style="margin-left: 0px;">
@@ -272,7 +272,7 @@
                                 </br>
                                 <div class="row">
                                     <div class="col-sm-12 form-group text-center">
-                                        <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
+                                        <input type="text" class="" id="counterTable" name="counterTable" value="1" >
                                          <input type="text" class="hidden" id="refunddetailid" name="refunddetailid" value="0" />
                                         <table  class="display" id="RefundTicketDetailTable" style="width: 1000px;">
                                             <thead>
@@ -404,7 +404,7 @@
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker3'>
-                                                <input type='text' class="form-control" name="refundDate" id="refundDate" data-date-format="YYYY-MM-DD" value="${create}"  placeholder="YYYY-MM-DD"/>
+                                                <input type='text' class="form-control" name="receiveDate" id="receiveDate" data-date-format="YYYY-MM-DD" value="${create}"  placeholder="YYYY-MM-DD"/>
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -442,6 +442,7 @@
                             </div> 
                             </br>
                             <div class="row">
+                                <input type="text" class="hidden" id="counterTableAdd" name="counterTableAdd" value="1" >
                                 <div class="col-sm-12 form-group text-center">
                                     <table  class="display" id="RefundTicketDetailTableAdd" style="width: 1000px;">
                                         <thead>
@@ -463,13 +464,13 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-5 form-group text-right">
-                                    <button type="submit" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
+                                    <button type="button" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
                                 </div>
                                 <div class="col-sm-1 form-group text-right">
-                                    <button type="submit" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                    <button type="button" class="btn btn-success" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
                                 </div>
                                 <div class="col-sm-6 form-group text-left">
-                                    <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
+                                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
                                 </div>
                             </div>  
                         </div>
@@ -642,12 +643,12 @@
     var selectTicketNo = "<option value='' ></option>";
     $(document).ready(function () {
         <c:forEach var="cur" items="${listTicketNo}">
-            selectTicketNo += "<option value='${cur.id}${cur.series1}${cur.series2}${cur.series3}' ><c:out value='${cur.id}${cur.series1}${cur.series2}${cur.series3}' /></option>";      
+            selectTicketNo += "<option value='${cur.id}' ><c:out value='${cur.series1}${cur.series2}${cur.series3}' /></option>";      
         </c:forEach>
         <c:if test="${RefundTicket != null}">        
             $("#RefundTicketDetail").removeClass("hidden");
         </c:if>
-        <c:if test="${actionAdd == 'addRefund'}">        
+        <c:if test="${actionAdd == 'add'}">        
             $("#RefundTicketDetailAdd").removeClass("hidden");
         </c:if>
         // Add Row Auto key
@@ -671,6 +672,27 @@
     console.log("Row Refund Ticket Detail : " + rowCount);
     $("#counterTable").val(rowCount);
     addRowRefundTicketDetail(rowCount++);
+    
+    $("#RefundTicketDetailTableAdd").on("keyup", function () {
+        var rowAll = $("#RefundTicketDetailTableAdd tr").length;
+        $("td").keyup(function () {
+            if ($(this).find("input").val() !== '') {
+                var colIndex = $(this).parent().children().index($(this));
+                var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                rowAll = $("#RefundTicketDetailTableAdd tr").length;
+                if (rowIndex === rowAll) {
+                    console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
+                    addRowRefundTicketDetailAdd(rowAll);
+                }
+            }
+        });
+    });
+    
+    var rowCountAdd = $('#RefundTicketDetailTableAdd tr').length;
+    console.log("Row Refund Ticket Detail (Add): " + rowCountAdd);
+    $("#counterTableAdd").val(rowCountAdd);
+    addRowRefundTicketDetailAdd(rowCountAdd++);
+    
 
     // PASSENGER TABLE
     $('#PassengerTable,#FlightTable').dataTable({bJQueryUI: true,
@@ -1011,11 +1033,9 @@ function searchCustomerAgentList(name) {
     }
 }
 
-function selectRefundDetail(airbookingid,counter){
-    var refundid = $('#airticketrefundid'+counter).val();
-    $("#refundid").val(refundid);
+function saveRefund(){
     var actionG = document.getElementById('action');
-    actionG.value = 'searchRefund';
+    actionG.value = 'addRefund';
     document.getElementById('RefundForm').submit();
 }
 
@@ -1053,6 +1073,23 @@ function addRowRefundTicketDetail(row,id){
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value=""></td>' +
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right" id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' +      
+        '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
+        '</tr>'    
+    );
+}
+
+function addRowRefundTicketDetailAdd(row,id){
+    var selectTicket = "";
+    selectTicket = selectTicketNo;
+    console.log("Select Ticket No : " + selectTicketNo);
+    $("#RefundTicketDetailTableAdd tbody").append(
+        '<tr>' +
+        '<td class="hidden"><input type="text" id="airticketrefunddetailidadd' + row + '" name="airticketrefunddetailidadd' + row + '" value="" /></td>'+
+        '<td>' + row + '</td>' +       
+        '<td><select id="SelectTocketNoadd' + row + '" name="SelectTocketNoadd' + row + '" class="form-control">'+ selectTicket +'</select> </td>' +
+        '<td><input type="text" maxlength ="255" class="form-control" id="inputSectoradd' + row + '" name="inputSectoradd' + row + '" value=""></td>' +
+        '<td><input type="text" class="form-control" id="inputSectorRefundadd' + row + '" name="inputSectorRefundadd' + row + '" value=""></td>' +
+        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right" id="inputChargeadd' + row + '" name="inputChargeadd' + row + '" value="" ></td>' +      
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
     );

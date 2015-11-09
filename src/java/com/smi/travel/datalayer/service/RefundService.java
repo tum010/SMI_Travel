@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.RefundDao;
+import com.smi.travel.datalayer.entity.AirticketRefund;
 import java.util.List;
 
 /**
@@ -35,4 +36,7 @@ public class RefundService {
         this.refundDao = refundDao;
     }
     
+    public String saveRefund(AirticketRefund airticketrefund){
+        return refundDao.saveRefund(airticketrefund);
+    }
 }
