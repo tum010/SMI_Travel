@@ -200,7 +200,17 @@ public class OtherDetailController extends SMITravelController {
                     } else {
                        request.setAttribute("resultText", "success"); 
                     }
-                    String[] ticketData = stock.split("\\|\\|", 3);//Adult||Child||Infant
+                    String[] ticketData = stock.split("\\|\\|", 3);//Adult||Child||
+                    if(("".equalsIgnoreCase(itemid))){
+                        request.setAttribute("adultCancel", ticketData[0]);
+                        request.setAttribute("childCancel", ticketData[1]);
+                        request.setAttribute("infantCancel", ticketData[2]);
+                    }else{
+                        request.setAttribute("adultCancel", "0");
+                        request.setAttribute("childCancel", "0");
+                        request.setAttribute("infantCancel", "0");
+                    }
+                    
                     getTicket(request, Other.getId());
                     itemid = result.get(1);
                     createby = Other.getCreateBy();
@@ -215,9 +225,7 @@ public class OtherDetailController extends SMITravelController {
 //                    }else{
 //                        saveHistoryBooking(refno,user,Other,"CREATE");
 //                    }
-                    request.setAttribute("adultCancel", ticketData[0]);
-                    request.setAttribute("childCancel", ticketData[1]);
-                    request.setAttribute("infantCancel", ticketData[2]);
+                    
                 }
             }else if(("1".equalsIgnoreCase(result.get(0))) && (callpageSubmit!=null) && (callpageSubmit.equalsIgnoreCase("FromDayTour"))){
                 String stock = OtherService.saveStockDetailOther(Other, user, addticket, adTicket, chTicket, infTicket, itemid);

@@ -378,7 +378,7 @@ public class BookingViewImpl implements BookingViewDao{
         }
         if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
             query += (condition ? " and " : " where ");
-            query += " leader LIKE '%" + bookLeader + "%' " ;
+            query += " leader LIKE '%" + bookLeader + "%' COLLATE utf8_unicode_ci " ;
             condition = true;
         }
         if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
@@ -443,7 +443,7 @@ public class BookingViewImpl implements BookingViewDao{
         }
         if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
             query += (condition ? " and " : " where ");
-            query += " leader LIKE '%" + bookLeader + "%' " ;
+            query += " leader LIKE '%" + bookLeader + "%' COLLATE utf8_unicode_ci " ;
             condition = true;
         }
         if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
@@ -536,7 +536,7 @@ public class BookingViewImpl implements BookingViewDao{
         }
         if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
             query += (condition ? " and " : " where ");
-            query += " leader LIKE '%" + bookLeader + "%' " ;
+            query += " leader LIKE '%" + bookLeader + "%' COLLATE utf8_unicode_ci " ;
             condition = true;
         }
         if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
@@ -615,7 +615,7 @@ public class BookingViewImpl implements BookingViewDao{
         }
         if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
             query += (condition ? " and " : " where ");
-            query += " leader LIKE '%" + bookLeader + "%' " ;
+            query += " leader LIKE '%" + bookLeader + "%' COLLATE utf8_unicode_ci " ;
             condition = true;
         }
         if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
