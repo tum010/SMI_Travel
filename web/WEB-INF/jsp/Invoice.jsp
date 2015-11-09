@@ -64,7 +64,7 @@
             </div>
             <div id="textAlertMoney"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Money more than Billable, Please Input money</strong> 
+                <strong>Money more than Billable, Please Input Amount and Amount Local</strong> 
             </div>
             <div id="textAlertTaxinvoice"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
