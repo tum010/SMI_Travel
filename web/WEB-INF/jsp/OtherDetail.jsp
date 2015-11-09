@@ -453,7 +453,7 @@
                                         <td align="center">${table.addDate}</td>
                                         <td>${table.ticketCode}</td>
                                         <td align="center">${table.typeName}</td>
-                                        <th align="center">${table.status}
+                                        <th align="center">
                                             <c:if test="${table.status == 'REFUND'}">
                                                 <font style="color: red;"> ${table.status} </font>
                                             </c:if>
