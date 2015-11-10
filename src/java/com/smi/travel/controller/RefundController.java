@@ -157,8 +157,8 @@ public class RefundController extends SMITravelController {
             }
             
             System.out.println("Result Save : " + resultsave);
-        }else if("editRefund".equals(action)){
-            
+        }else if("add".equals(action)){
+            request.setAttribute("RefundTicket", null);
         }
         
         setGeneralResponseAttribute(request, refNo);
