@@ -103,8 +103,8 @@
                             <option value="T" ${selectedTemp}>Temp</option>
                         </select>
                     </div>
-                    <div class="col-xs-1 text-right" style="width: 40px">
-                        <label class="control-label text-right">Status </label>
+                    <div class="col-xs-1 text-right" style="width: 50px">
+                        <label class="control-label text-right">Payment </label>
                     </div>          
                     <div class="col-md-1 form-group" style="padding: 0px 0px 0px 30px;width: 150px">
                         <select class="form-control" id="status" name="status">
@@ -124,7 +124,7 @@
                     <input type="hidden" name="action" id="action" value="">                       
                 </div>
                 <div class="col-xs-12">
-                    <div class="col-xs-1" style="width: 885px"></div>
+                    <div class="col-xs-1" style="width: 890px"></div>
                     <div class="col-xs-1 text-left" >
                         <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="searchAction()" style="height:34px" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
                     </div>

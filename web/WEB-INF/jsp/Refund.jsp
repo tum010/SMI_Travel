@@ -80,7 +80,7 @@
             <input type="text" class="hidden" value="${param.referenceNo}" id="getUrl" >
             
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
-            <form action="Refund.smi" method="post" id="RefundForm"  name="RefundForm"  role="form">
+            <form action="Refund.smi" method="post" id="RefundForm"  name="RefundForm"  role="form" autocomplete="off">
                 <input type="hidden" name="action" value="" id="action">
                 <input type="text" class="hidden" value="${referenceNo}" id="referenceNo" name="referenceNo">
                 <input type="text" class="hidden"  value="${airbookingid}" id="airbookingid" name="airbookingid">
@@ -173,7 +173,7 @@
                                             <div class="">
                                                 <div class="input-group ">
                                                     <input type="hidden" class="form-control" name="refundById" id="refundById" value="${table1.airticketrefundid}">
-                                                    <input type="hidden" class="form-control" name="refundticketid" id="refundticketid" value="${table1.id}">
+                                                    <input type="hidden" class="form-control" name="refundBy" id="refundBy" value="${table1.id}">
                                                     <input type="text" class="form-control" id="refundBy" name="refundBy" value="${table1.refundcode}">
                                                     <span class="input-group-addon" data-toggle="modal" data-target="#refundCustModal">
                                                         <span class="glyphicon-search glyphicon"></span>
@@ -607,7 +607,7 @@
             <div class="modal-body">
                 <table class="display" id="receiveUserTable">
                     <thead class="datatable-header">                     
-                        <tr>
+                        <tr >
                             <th class="hidden">ID</th>
                             <th>User</th>
                             <th>Name</th>
@@ -621,7 +621,7 @@
                         user = [];
                     </script>
                     <c:forEach var="a" items="${listReceiveBy}">
-                        <tr>
+                        <tr onclick="setBillReceiveValue('${a.username}', '${a.name}', '${a.tel}', '${a.tel}', '${a.tel}');">
                             <td class="user-id hidden">${a.id}</td>
                             <td class="user-user">${a.username}</td>
                             <td class="user-name">${a.name}</td>
@@ -774,17 +774,6 @@
         $("#staff_name").val(staff_name);
         $("#StaffModal").modal('hide');
     });
-    // VALIDATOR
-    $("#RefundForm").bootstrapValidator({
-        container: 'tooltip',
-        excluded: [':disabled'],
-        feedbackIcons: {
-            required: 'glyphicon glyphicon-asterisk',
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        }
-    });
     
     // Refund  and Receive
     $("#receiveUserTable tr").on('click', function () {
@@ -925,16 +914,31 @@
     }); 
     
     function setBillValue(billto, billname, address, term, pay) {
-
-    $("#refundBy").val(billto);
-    $("#refundByName").val(billname);
-    $("#refundCustModal").modal('hide');
-}
+        $("#refundBy").val(billto);
+        $("#refundByName").val(billname);
+                
+        $('#RefundForm').bootstrapValidator('revalidateField', 'refundBy');
+        $('#RefundForm').bootstrapValidator('revalidateField', 'refundByName');
+        $('#RefundForm').modal('hide');
+        $("#refundCustModal").modal('hide');
+    }
+    
+    function setBillReceiveValue(billto, billname, address, term, pay) {
+        $("#receiveBy").val(billto);
+        $("#receiveByName").val(billname);
+                
+        $('#RefundForm').bootstrapValidator('revalidateField', 'receiveBy');
+        $('#RefundForm').bootstrapValidator('revalidateField', 'receiveByName');
+        $('#RefundForm').modal('hide');
+        $("#receiveUserModal").modal('hide');
+    }
 
 function validateRefundForm(){
+    alert("Check Add");
     $("#RefundForm")
         .bootstrapValidator({
-            framework: 'bootstrap',
+            container: 'tooltip',
+            excluded: [':disabled'],
             feedbackIcons: {
                 valid: 'uk-icon-check',
                 invalid: 'uk-icon-times',
@@ -942,7 +946,6 @@ function validateRefundForm(){
             },
             fields: {                
                 refundBy: {
-                    trigger: 'focus keyup change',
                     validators: {
                         notEmpty: {
                             message: 'Input refundBy '
@@ -950,7 +953,6 @@ function validateRefundForm(){
                     }
                 },
                 refundByName: {
-                    trigger: 'focus keyup change',
                     validators: {
                         notEmpty: {
                             message: 'Input refundByName'
@@ -958,7 +960,6 @@ function validateRefundForm(){
                     }
                 },
                 receiveBy: {
-                    trigger: 'focus keyup change',
                     validators: {
                         notEmpty: {
                             message: 'Input receiveBy'
@@ -966,7 +967,6 @@ function validateRefundForm(){
                     }
                 },
                 receiveByName: {
-                    trigger: 'focus keyup change',
                     validators: {
                         notEmpty: {
                             message: 'Input receiveByName'
@@ -974,7 +974,6 @@ function validateRefundForm(){
                     }
                 }, 
                 receiveDate: {
-                    trigger: 'focus keyup change',
                     validators: {
                         notEmpty: {
                             message: 'Input receiveDate'

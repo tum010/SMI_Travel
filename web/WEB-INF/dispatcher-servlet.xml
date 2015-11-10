@@ -214,7 +214,6 @@
 	<!-- login controller -->
 	<bean id="loginController" class="com.smi.travel.controller.LoginController">
 		<property name="loginService" ref="LoginService" />
-
 	</bean>
 	<!-- logout controller -->
 	<bean id="logoutController" class="com.smi.travel.controller.LogOutController">
@@ -753,6 +752,9 @@
 		<property name="lockUnlockBookingService" ref="LockUnlockBookingService" />
 	</bean>
         
+        <bean id="ExportDataToExcelView" class="com.smi.travel.controller.excel.ExportDataToExcelView">
+		<property name="utilityService" ref="UtilityService" />
+	</bean>
 <!--	<mvc:annotation-driven />
 	<context:annotation-config />
 	<context:component-scan base-package="com.smi.travel.controller,com.smi.travel.**.controller" />-->

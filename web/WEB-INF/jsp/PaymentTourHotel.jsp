@@ -68,7 +68,7 @@
                 <div class="col-xs-1 text-right">
                     <label class="control-label">Pay No</lable>
                 </div>
-                <div class="col-md-3 form-group text-left">
+                <div class="col-md-3 text-left">
                     <div class="col-sm-12">
                         <input name="InputPayNo" id="InputPayNo" type="text" class="form-control" value="${requestScope['InputPayNo']}" maxlength="20"/>
                     </div>
@@ -121,6 +121,7 @@
                 </c:choose>        
             </div>
         </div>
+        <div class="row"><br></div>            
         <!--Row 2 -->
         <c:set var="readonly" value="" />
         <c:set var="disabled" value="" />
@@ -193,7 +194,7 @@
                 <div class="col-xs-2 text-right" style="padding-left:5px;padding-right: 10px;">
                     <label class="control-label">Status<font style="color: red">*</font></lable>
                 </div>
-                <div class="col-md-2  text-left" style="padding-top:5px;padding-left:0px;padding-right:0px;">
+                <div class="col-md-2 form-group text-left" style="padding-top:5px;padding-left:0px;padding-right:0px;">
                     <div class="col-sm-12">
                         <select class="form-control" id="itemStatus" name="itemStatus">
                             <option id="" value="">---------</option>  
@@ -258,7 +259,7 @@
             <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:100px;">
                     <label class="control-label">Detail</lable>
             </div>
-            <div class="col-md-6 form-group text-left" style="padding-left:30px;padding-right:0px;width:520px;">
+            <div class="col-md-6 text-left" style="padding-left:30px;padding-right:0px;width:520px;">
                 <div class="col-sm-12">
                     <textarea rows="3" cols="255" class="form-control" id="Detail" name="Detail" maxlength="255" ${readonly}>${requestScope['Detail']}</textarea>
                 </div>   
@@ -639,7 +640,7 @@
                     <div class="col-xs-1 text-right">
                         <label class="control-label">Remark</lable>
                     </div>
-                    <div class="col-md-6 form-group text-left">
+                    <div class="col-md-6 text-left">
                         <textarea rows="3" cols="255" class="form-control" id="InputRemark" name="InputRemark"  maxlength="255">${requestScope['InputRemark']}</textarea>        
                     </div>
                     <c:choose>

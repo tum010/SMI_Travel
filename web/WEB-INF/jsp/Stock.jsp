@@ -263,7 +263,11 @@
                                         </td>                                
                                         <td>${pay}</td>
                                         <td class="hidden"><input type="text"  class="form-control" name="payTemp${taxdesc.count}" id="payTemp${taxdesc.count}" value="${std.payStatus}" /></td>
-                                        <td>${itemS}</td>
+                                        <c:set var="status" value=""/>
+                                        <c:if test="${itemS == 'REFUND'}">
+                                            <c:set var="status" value="red"/>
+                                        </c:if>
+                                        <td><font style="color: ${status}" >${itemS}</font></td>
                                         <td class="hidden"><input type="text"  class="form-control" name="itemTemp${taxdesc.count}" id="itemTemp${taxdesc.count}" value="${std.MStockStatus.id}" /></td>
                                         <td class="text-center">                                          
                                             <a href="#" onclick="deleteItemListRow('${taxdesc.count}','${std.code}')"  data-toggle="modal" data-target="" class="remCF" id="ButtonRemove${taxdesc.count}">
