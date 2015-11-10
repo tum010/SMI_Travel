@@ -1083,15 +1083,15 @@
             
         $("#caldiffvat").on('click', function () {
             var diffVat = document.getElementById('diffVat').value;
-            var whtax = document.getElementById('whtax').value;
-
+            //var whtax = document.getElementById('whtax').value;
+            var Mvat    = document.getElementById('vat').value;
             var diffVat = replaceAll(",","",$('#diffVat').val()); 
             if (diffVat == ""){
                 diffVat = 0;
             }
 
             var vat = parseFloat(diffVat); 
-            var tax = parseFloat(whtax);
+            var tax = parseFloat(Mvat);
             if(diffVat < 0) {
     //          Little Comm =  (Diff vat * -1)
                 var littlecomm = (vat * (-1)) ;
