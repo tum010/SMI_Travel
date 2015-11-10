@@ -59,13 +59,13 @@
         <c:if test="${requestScope['result_text'] =='cost much over'}">
         <div id="textAlertCostOver"  style="" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-           <strong>Save Unsuccess Cost Much Over!.</strong> 
+           <strong>Amount over than invoice.</strong> 
         </div>
         </c:if>  
         <c:if test="${requestScope['result_text'] =='amount much over'}">
         <div id="textAlertAmountOver"  style="" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-           <strong>Save Unsuccess Amount Much Over!.</strong> 
+           <strong>Amount over than invoice.</strong> 
         </div>
         </c:if>
         <c:if test="${requestScope['result_text'] =='disableVoid unsuccess'}">
