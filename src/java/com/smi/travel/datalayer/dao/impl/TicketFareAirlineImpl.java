@@ -955,7 +955,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             if(invoiceDetailList.get(i).getInvoice() != null){
                 invTo = invoiceDetailList.get(i).getInvoice().getInvTo();
                 if(!"".equalsIgnoreCase(invTo) && invTo != null){
-                    List<Agent> agentlist = session.createQuery("from agent agt where agt.code = :invTo").setParameter("invTo",invTo).list();
+                    List<Agent> agentlist = session.createQuery("from Agent agt where agt.code = :invTo").setParameter("invTo",invTo).list();
                     if(agentlist != null){
                         invTo = agentlist.get(0).getId();
                         invName = agentlist.get(0).getName();
