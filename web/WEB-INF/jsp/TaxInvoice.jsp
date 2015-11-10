@@ -429,6 +429,7 @@
                                                         <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" value="1" ${vatChk} onclick="CalculateGross('${i.count}')" checked>
                                                     </td>
                                                     <td align="right" id="vatShow${i.count}">${taxDetail.vat}</td>
+                                                    <td class="hidden"><input class="form-control numerical" style="text-align:right;" type="text" id="vat${i.count}" name="vat${i.count}" readonly="" value="${taxDetail.vat}"></td>
                                                     <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="gross${i.count}" name="gross${i.count}" value="0.00" readonly=""></td>
                                                     <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="amount${i.count}" name="amount${i.count}" value="${taxDetail.amount}" onfocusout="CalculateAmountTotal('${i.count}')" onkeyup="insertCommas(this)"></td>
                                                     <td>
@@ -1489,6 +1490,7 @@
             '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')" checked></td>' +
             '<td align="right" id="vatShow' + row + '"></td>' +
+            '<td class="hidden"><input class="form-control numerical" style="text-align:right;" type="text" id="vat' + row + '" name="vat' + row + '" readonly=""></td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="0.00" readonly=""></td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')" onkeyup="insertCommas(this)"></td>' +
             '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
@@ -1506,8 +1508,9 @@
         $("#select_product_list option").clone().appendTo("#product" + row);
         $("#select_currency_list option").clone().appendTo("#currencyCost" + row);
         $("#select_currency_list option").clone().appendTo("#currencyAmount" + row);
-        var vatData = parseFloat($("#vatDefault").val());
-        document.getElementById('vatShow'+row).innerHTML = formatNumber(vatData);         
+//        var vatData = parseFloat($("#vatDefault").val());
+        document.getElementById('vatShow'+row).innerHTML = parseFloat($("#vatDefault").val()); 
+        document.getElementById('vat'+row).value = parseFloat($("#vatDefault").val());
         $("#countTaxInvoice").val(row+1);
         
     }
@@ -1521,13 +1524,13 @@
         }       
     }
     
-    function AddProduct(id,product,description,cost,curCost,amount,curAmount,isVat,refNo){
+    function AddProduct(id,product,description,cost,curCost,amount,curAmount,isVat,refNo,vat){
         var count = parseInt($("#countTaxInvoice").val());
         var row = parseInt(count)+1;
         var match = CheckInvoiceProduct(id,count);
         console.log(match);
         if(match === 0){
-            AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo,'');
+            AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo,'',vat);
         }    
     }
     
@@ -1538,7 +1541,7 @@
         var isProfit = 1;
         console.log(match);
         if(match === 0){
-            AddDataRowProduct(row,count,id,product,description,cost,curcost,amount,curamount,'',refNo,isProfit);
+            AddDataRowProduct(row,count,id,product,description,cost,curcost,amount,curamount,'',refNo,isProfit,'');
         }    
     }
     
@@ -1572,7 +1575,7 @@
         return match;
     }
     
-    function AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo,isProfit) {
+    function AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo,isProfit,vat) {
         if (!row) {
             row = 1;
         }
@@ -1593,6 +1596,7 @@
                 '<td><select class="form-control" name="currencyCost' + count + '" id="currencyCost' + count + '" onchange="AddrowBySelect(\'' + count + '\')"><option  value="" >---------</option></select></td>' +
                 '<td align="center"><input type="checkbox" id="isVat' + count + '" name="isVat' + count + '" value="1" onclick="CalculateGross(\'' + count + '\')" checked></td>' +
                 '<td align="right" id="vatShow' + count + '"></td>' +
+                '<td class="hidden"><input class="form-control numerical" style="text-align:right;" type="text" id="vat' + count + '" name="vat' + count + '" readonly=""></td>' +
                 '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + count + '" name="gross' + count + '" value="0.00" readonly=""></td>' +
                 '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + count + '" name="amount' + count + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')" onkeyup="insertCommas(this)"></td>' +
                 '<td><select class="form-control" name="currencyAmount' + count + '" id="currencyAmount' + count + '" onchange="AddrowBySelect(\'' + count + '\')"><option  value="" >---------</option></select></td>' +
@@ -1622,11 +1626,13 @@
             $("#amount" + count).val(formatNumber(parseFloat(amount)));
             $('[name=currencyAmount' + count + '] option').filter(function() { 
                 return ($(this).text() === curAmount);
-            }).prop('selected', true);       
+            }).prop('selected', true);
+            document.getElementById('vatShow'+(count-1)).innerHTML = parseFloat(vat);
+            document.getElementById('vat'+(count-1)).value = parseFloat(vat);
             if (isVat === '1'){
                 $('#isVat'+count).prop('checked', true);
-                var vatData = parseFloat($("#vatDefault").val());
-                document.getElementById('vatShow'+count).innerHTML = formatNumber(vatData);
+//                var vatData = parseFloat($("#vatDefault").val());
+//                document.getElementById('vatShow'+count).innerHTML = vatData;
                 CalculateGross(count);
             }
             if(isProfit !== ''){
@@ -1641,8 +1647,8 @@
                     return ($(this).text() === product);
                 }).prop('selected', true);
             }
-            var vatData = parseFloat($("#vatDefault").val());
-            document.getElementById('vatShow'+count).innerHTML = formatNumber(vatData);
+//            var vatData = parseFloat($("#vatDefault").val());
+//            document.getElementById('vatShow'+count).innerHTML = vatData;
             $("#refNo" + count).val(refNo);
             row = count + 1;
         } else {
@@ -1669,20 +1675,22 @@
             $("#amount" + (count-1)).val(formatNumber(parseFloat(amount)));
             $('[name=currencyAmount' + (count-1) + '] option').filter(function() { 
                 return ($(this).text() === curAmount);
-            }).prop('selected', true);       
+            }).prop('selected', true);
+            document.getElementById('vatShow'+(count-1)).innerHTML = parseFloat(vat);
+            document.getElementById('vat'+(count-1)).value = parseFloat(vat);
             if (isVat === '1'){
                 $('#isVat'+(count-1)).prop('checked', true);
-                var vatData = parseFloat($("#vatDefault").val());
-                document.getElementById('vatShow'+(count-1)).innerHTML = formatNumber(vatData);
+//                var vatData = parseFloat($("#vatDefault").val());
+//                document.getElementById('vatShow'+(count-1)).innerHTML = vatData;
                 CalculateGross((count-1));
             } else {
                 $('#isVat'+(count-1)).prop('checked', true);
-                var vatData = parseFloat($("#vatDefault").val());
-                document.getElementById('vatShow'+(count-1)).innerHTML = formatNumber(vatData);
+//                var vatData = parseFloat($("#vatDefault").val());
+//                document.getElementById('vatShow'+(count-1)).innerHTML = vatData;
                 CalculateGross((count-1));
             }
-            var vatData = parseFloat($("#vatDefault").val());
-            document.getElementById('vatShow'+(count-1)).innerHTML = formatNumber(vatData);
+//            var vatData = parseFloat($("#vatDefault").val());
+//            document.getElementById('vatShow'+(count-1)).innerHTML = vatData;            
             $("#refNo" + (count-1)).val(refNo);
             row = count + 1;
         }    
@@ -1703,6 +1711,7 @@
             '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')" checked></td>' +
             '<td align="right" id="vatShow' + row + '"></td>' +
+            '<td class="hidden"><input class="form-control numerical" style="text-align:right;" type="text" id="vat' + row + '" name="vat' + row + '" readonly=""></td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="0.00" readonly=""></td>' +
             '<td><input class="form-control numerical" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')" onkeyup="insertCommas(this)"></td>' +
             '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
@@ -1720,8 +1729,9 @@
         $("#select_product_list option").clone().appendTo("#product" + row);
         $("#select_currency_list option").clone().appendTo("#currencyCost" + row);
         $("#select_currency_list option").clone().appendTo("#currencyAmount" + row);
-        var vatData = parseFloat($("#vatDefault").val());
-        document.getElementById('vatShow'+row).innerHTML = formatNumber(vatData);         
+//        var vatData = parseFloat($("#vatDefault").val());
+        document.getElementById('vatShow'+row).innerHTML = parseFloat($("#vatDefault").val());
+        document.getElementById('vat'+row).value = parseFloat($("#vatDefault").val());
         var tempCount = row+1;
         $("#countTaxInvoice").val(tempCount);
         CalculateAmountTotal();
@@ -1759,7 +1769,7 @@
         }
         document.getElementById('TotalAmount').value = formatNumber(grandTotal);
         document.getElementById('TextAmount').value = toWords(grandTotal);
-
+        
         if(row){
             if((document.getElementById("isVat"+row).checked)){
 //                if(document.getElementById("gross"+row).value === '0.00'){
@@ -1777,7 +1787,8 @@
     function CalculateGrossByGross(row){       
         var amount = document.getElementById('amount'+row).value;
         var gross = document.getElementById('gross'+row).value;
-        var vatData = parseFloat(document.getElementById('vatDefault').value);
+//        var vatData = parseFloat(document.getElementById('vatDefault').value);
+        var vatData = parseFloat(document.getElementById('vat'+row).value);
 
         amount = amount.replace(/,/g,"");
         var grossTotal = parseFloat(amount);
@@ -1786,26 +1797,31 @@
 
             grossTotal = (amount*100)/(100+vatData);
             document.getElementById('gross'+row).value = formatNumber(grossTotal);
-            document.getElementById('vatShow'+row).innerHTML = formatNumber(vatTotal);
+            document.getElementById('vatShow'+row).innerHTML = vatTotal;
+//            document.getElementById('vat'+row).value = vatTotal;
        
     }
     
     function CalculateGross(row){       
         var amount = document.getElementById('amount'+row).value;
         var gross = document.getElementById('gross'+row).value;
-        var vatData = parseFloat(document.getElementById('vatDefault').value);
+//        var vatData = parseFloat(document.getElementById('vatDefault').value);
+        var vatData = parseFloat(document.getElementById('vat'+row).value);
+        var isVat = document.getElementById('isVat'+row).checked;
 
         amount = amount.replace(/,/g,"");
         var grossTotal = parseFloat(amount);
         var vatTotal = parseFloat(vatData);
 
-        if((gross === '') || (gross === '0.00')){
+        if(isVat){
             grossTotal = (amount*100)/(100+vatData);
             document.getElementById('gross'+row).value = formatNumber(grossTotal);
-            document.getElementById('vatShow'+row).innerHTML = formatNumber(vatTotal);
+            document.getElementById('vatShow'+row).innerHTML = vatTotal;
+//            document.getElementById('vat'+row).value = vatTotal;
         } else {
             document.getElementById('gross'+row).value = '0.00';
-//            document.getElementById('vatShow'+row).innerHTML = '';
+            document.getElementById('vatShow'+row).innerHTML = '';
+//            document.getElementById('vat'+row).value = vatTotal;
         }
     }
     
@@ -1970,7 +1986,7 @@
     function checkVatAll(){
         var row = document.getElementById('countTaxInvoice').value;
 //        var row = $('#TaxInvoiceTable tr').length;
-        var vatDefaultData = parseFloat(document.getElementById('vatDefault').value);      
+//        var vatDefaultData = parseFloat(document.getElementById('vatDefault').value);      
         var check = 0;
         var unCheck = 0;
         for(var i=1;i<row;i++){          
@@ -1986,12 +2002,13 @@
 
         if(check > unCheck){
             for(var i=1;i<row;i++){
-                var isVatCheck = document.getElementById("isVat"+i);
+                var isVatCheck = document.getElementById("isVat"+i);               
                 if(isVatCheck !== null && isVatCheck !== ''){
                     if(document.getElementById("isVat"+i).checked){
                         
                     } else { 
                         document.getElementById("isVat"+i).checked = true;
+                        var vatDefaultData = parseFloat(document.getElementById('vat'+i).value);   
                         var amountChk = document.getElementById('amount'+i);
                         if(amountChk !== null && amountChk !== ''){
                             var amount = document.getElementById('amount'+i).value;
@@ -2003,7 +2020,7 @@
                             if((gross === '')){
                                 grossTotal = (amount*100)/(100+vatDefaultData);
                                 document.getElementById('gross'+i).value = formatNumber(grossTotal);
-                                document.getElementById('vatShow'+i).innerHTML = formatNumber(vatDefaultData);
+                                document.getElementById('vatShow'+i).innerHTML = vatDefaultData;
                             } else {
                                 document.getElementById('gross'+i).value = '';
                                 document.getElementById('vatShow'+i).innerHTML = '';
@@ -2027,12 +2044,13 @@
          
         if(check === 0 && unCheck !== 0){
             for(var i=1;i<row;i++){
-                var isVatCheck = document.getElementById("isVat"+i);
+                var isVatCheck = document.getElementById("isVat"+i);  
                 if(isVatCheck !== null && isVatCheck !== ''){
                     if(document.getElementById("isVat"+i).checked){
                         
                     } else { 
                         document.getElementById("isVat"+i).checked = true;
+                        var vatDefaultData = parseFloat(document.getElementById('vat'+i).value);   
                         var amountChk = document.getElementById('amount'+i);
                         if(amountChk !== null && amountChk !== ''){
                             var amount = document.getElementById('amount'+i).value;
@@ -2044,7 +2062,7 @@
                             if((gross === '')){
                                 grossTotal = (amount*100)/(100+vatDefaultData);
                                 document.getElementById('gross'+i).value = formatNumber(grossTotal);
-                                document.getElementById('vatShow'+i).innerHTML = formatNumber(vatDefaultData);
+                                document.getElementById('vatShow'+i).innerHTML = vatDefaultData;
                             } else {
                                 document.getElementById('gross'+i).value = '';
                                 document.getElementById('vatShow'+i).innerHTML = '';
@@ -2074,6 +2092,7 @@
                         
                     } else { 
                         document.getElementById("isVat"+i).checked = true;
+                        var vatDefaultData = parseFloat(document.getElementById('vat'+i).value);   
                         var amountChk = document.getElementById('amount'+i);
                         if(amountChk !== null && amountChk !== ''){
                             var amount = document.getElementById('amount'+i).value;
@@ -2085,7 +2104,7 @@
                             if((gross === '')){
                                 grossTotal = (amount*100)/(100+vatDefaultData);
                                 document.getElementById('gross'+i).value = formatNumber(grossTotal);
-                                document.getElementById('vatShow'+i).innerHTML = formatNumber(vatDefaultData);
+                                document.getElementById('vatShow'+i).innerHTML = vatDefaultData;
                             } else {
                                 document.getElementById('gross'+i).value = '';
                                 document.getElementById('vatShow'+i).innerHTML = '';
