@@ -2871,9 +2871,9 @@ public class ExportDataToExcelView extends AbstractExcelView {
         DecimalFormat df = new DecimalFormat("#,###.00");
         sumTotalPayment = sumSalePrice.add(sumComReceive);
         sumTotalCompay = sumComPay.subtract(sumComReceive);
-        sumTotalCompaySub = sumTotalCompay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
+        sumTotalCompaySub = sumComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
         
-        vatComPay = sumTotalCompay.multiply(new BigDecimal(0.07));
+        vatComPay = sumVatComPay;
         vatPay =  vatComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
         
 //        vatReceive = sumComReceive.multiply(new BigDecimal(0.07));
