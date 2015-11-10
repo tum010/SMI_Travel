@@ -664,6 +664,15 @@ public class AJAXBean extends AbstractBean implements
                     result = "null";
                 }
             }
+            if ("getMAirlineAgentByAirCode".equalsIgnoreCase(type)) {
+                String airlineCode = map.get("airlineCode").toString();
+                System.out.println("airlinecode ::: " + airlineCode);
+                result = ticketFareAirlineDao.getMAirlineAgentFromAirlineCode(airlineCode);
+                System.out.println(" ++++++++++++++++ result ++++++++++++++++" + result);
+                if (result == null) {
+                    result = "null";
+                }
+            }
         } else if (PAYMENTAIRTICKET.equalsIgnoreCase(servletName)) {
             if ("addRefund".equalsIgnoreCase(type)) {
                 String refundNo = map.get("refundNo").toString();

@@ -16,6 +16,7 @@
 <c:set var="receiptDetailList" value="${requestScope['receiptDetailList']}" />
 <c:set var="withholdingtax" value="${requestScope['withholdingtax']}" />
 <c:set var="VAT" value="${requestScope['VAT']}" />
+<c:set var="refundDetailList" value="${requestScope['refundDetailList']}" />
 
 <section class="content-header" >
     <h1>
@@ -169,9 +170,7 @@
                         </div> 
                         <div class="col-xs-1" style="width: 200px">
                             <select name="ticketAirline" id="ticketAirline" class="form-control">
-                                <c:if test="${requestScope['getMairlineAgentFromAirlineCode'] == '0' }"> 
-                                    <option value="">--- Airline ---</option> 
-                                </c:if>                               
+                                <option value="">--- Airline ---</option> 
                                 <c:forEach var="table" items="${airlineList}" >
                                     <c:set var="select" value="" />
                                     <c:set var="selectedId" value="${ticketFare.MAirlineAgent.id}" />
@@ -680,9 +679,40 @@
                         </table>
                     </div>
                 </div> 
-                    
-                    
-                    
+                <!----- Refund Detail ----->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Refund Detail</h4>
+                    </div> 
+                    <div class="panel-body">
+                        <table class="display" id="RefundDetailTable">
+                            <thead class="datatable-header">
+                                <tr>
+                                    <th style="width:5%;">No</th>
+                                    <th style="width:16%;">Airline Receive</th>
+                                    <th style="width:15%;">Receive Date</th>
+                                    <th style="width:17%;">Air Comm Receive</th>
+                                    <th style="width:15%;">Pay Date</th>
+                                    <th style="width:17%;">Agent Comm Receive</th>
+                                    <th style="width:15%;">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="table" items="${refundDetailList}" varStatus="dataStatus">
+                                    <tr>
+                                        <td align="center">${dataStatus.count}</td>
+                                        <td class="money">${table.receiveAirline}</td>
+                                        <td align="center">${table.refundAirticket.receiveDate}</td>
+                                        <td class="money">${table.airComission}</td>
+                                        <td align="center">${table.receiveDate}</td>
+                                        <td class="money">${table.agentComission}</td>
+                                        <td align="center">${table.expenseDate}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>    
             </form>                
         </div>
         
@@ -1867,12 +1897,45 @@ function insertCommas(nField){
     }
 }
 
-function getMAirlineAgent(airlinecode){
-    var action = document.getElementById('action');
-    action.value = 'search';
+//function getMAirlineAgent(airlinecode){
+//
+//    document.getElementById('airlinecode').value = airlinecode;
+////    document.getElementById('ticketAirline').value = "1";
+////    document.getElementById('AddTicketFareForm').submit();
+//}
+
+function getMAirlineAgent(airlinecode) {
     document.getElementById('airlinecode').value = airlinecode;
-    document.getElementById('AddTicketFareForm').submit();
+    alert(airlinecode);
+    var servletName = 'TicketFareAirlineServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&airlineCode=' + airlinecode +
+            '&type=' + 'getMAirlineAgentByAirCode';
+    CallGetMAirlineAgent(param);
 }
+
+function CallGetMAirlineAgent(param) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+               document.getElementById('ticketAirline').value = msg;
+            }, error: function (msg) {
+                 $("#ajaxloadInvno").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}   
+
 
 function checkboxIsWaitPay(e) {
     if(e.checked) {

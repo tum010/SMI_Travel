@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
+import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.AirticketAirline;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketFlightView;
@@ -202,13 +203,15 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         String initialname = "";
         String department = "";
         String masterId = "";
-        
+        String ticketType = "";
         String mpricecategoryname = "";
         if (ticketPassList.isEmpty()) {
             System.out.println(" ticketPassList.isEmpty() ");
             return null;
         }else{ 
             for(int i = 0 ; i < ticketPassList.size() ; i++ ){
+                ticketType = ticketPassList.get(i).getTicketType();
+                
                 AirticketAirline airticketAirline = ticketPassList.get(i).getAirticketAirline();
                 MInitialname mInitialname = ticketPassList.get(i).getMInitialname();
                 if(airticketAirline.getMAirline() != null){
@@ -235,43 +238,38 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 }
                 int ticketfare = 0;
                 int tickettax = 0;
-                if(airticketAirline.getAirticketFlights() != null){
-                    List<AirticketFlight> flightList = new ArrayList<AirticketFlight>(airticketAirline.getAirticketFlights());
-                    for(int j = 0 ; j < flightList.size() ; j++ ){
-                        if("ADULT".equals(mpricecategoryname)){
-                            if(flightList.get(j).getAdCost() != null){
-                               ticketfare = ticketfare + flightList.get(j).getAdCost();
+                if("I".equalsIgnoreCase(ticketType)){
+                    if(airticketAirline.getAirticketFlights() != null){
+                        List<AirticketFlight> flightList = new ArrayList<AirticketFlight>(airticketAirline.getAirticketFlights());
+                        for(int j = 0 ; j < flightList.size() ; j++ ){
+                            if("ADULT".equals(mpricecategoryname)){
+                                if(flightList.get(j).getAdCost() != null){
+                                   ticketfare = ticketfare + flightList.get(j).getAdCost();
+                                }
+                            }else if("CHILD".equals(mpricecategoryname)){
+                                if(flightList.get(j).getChCost()!= null){
+                                   ticketfare = ticketfare + flightList.get(j).getChCost();
+                                }
+                            }else if("INFANT".equals(mpricecategoryname)){
+                                if(flightList.get(j).getInCost() != null){
+                                   ticketfare = ticketfare + flightList.get(j).getInCost();
+                                }
                             }
-//                            if(flightList.get(j).getAdTax() != null){
-//                               tickettax = tickettax + flightList.get(j).getAdTax();
-//                            }
-                        }else if("CHILD".equals(mpricecategoryname)){
-                            if(flightList.get(j).getChCost()!= null){
-                               ticketfare = ticketfare + flightList.get(j).getChCost();
+                            if(flightList.get(j).getAdTaxCost() != null){
+                                tickettax = tickettax + flightList.get(j).getAdTaxCost();
                             }
-//                            if(flightList.get(j).getChTax() != null){
-//                               tickettax = tickettax + flightList.get(j).getChTax();
-//                            }
-                        }else if("INFANT".equals(mpricecategoryname)){
-                            if(flightList.get(j).getInCost() != null){
-                               ticketfare = ticketfare + flightList.get(j).getInCost();
+                            if(flightList.get(j).getChTaxCost() != null){
+                                tickettax = tickettax + flightList.get(j).getChTaxCost();
                             }
-//                            if(flightList.get(j).getInTax() != null){
-//                               tickettax = tickettax + flightList.get(j).getInTax();
-//                            }
-                        }
-                        if(flightList.get(j).getAdTaxCost() != null){
-                            tickettax = tickettax + flightList.get(j).getAdTaxCost();
-                        }
-                        if(flightList.get(j).getChTaxCost() != null){
-                            tickettax = tickettax + flightList.get(j).getChTaxCost();
-                        }
-                        if(flightList.get(j).getInTaxCost() != null){
-                            tickettax = tickettax + flightList.get(j).getInTaxCost();
+                            if(flightList.get(j).getInTaxCost() != null){
+                                tickettax = tickettax + flightList.get(j).getInTaxCost();
+                            }
                         }
                     }
+                }else if("D".equalsIgnoreCase(ticketType)){
+                    ticketfare = ticketPassList.get(i).getTicketFare();
+                    tickettax  = ticketPassList.get(i).getTicketTax();
                 }
-                
                 
                 result = ticketfare + "," 
                         + tickettax + "," 
@@ -885,6 +883,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         int invamount = 0;
         int price = 0;
         int tax = 0;
+        String invTo = "";
+        String invName = "";
         List<InvoiceDetail> invoiceDetailList = new ArrayList<InvoiceDetail>();
         List<InvoiceDetail> invoiceDetailTempList = new ArrayList<InvoiceDetail>();
         List<InvoiceDetailView> invoiceDetailViewList = new ArrayList<InvoiceDetailView>();
@@ -940,6 +940,9 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             invoiceDetailView.setOwner(owner);
             invoiceDetailView.setRouting(routing);
             invoiceDetailView.setInvAmount(new BigDecimal(String.valueOf(invamount)));
+            
+//            invoiceDetailView.getInvTo();
+            
             invoiceDetailViewList.add(invoiceDetailView);
             return invoiceDetailViewList;
         }
@@ -950,6 +953,14 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             invoiceDetailView.setInvAmount(new BigDecimal(String.valueOf(invamount)));
 //            invoiceDetailView.setId(invoiceDetailList.get(i).getId());
             if(invoiceDetailList.get(i).getInvoice() != null){
+                invTo = invoiceDetailList.get(i).getInvoice().getInvTo();
+                if(!"".equalsIgnoreCase(invTo) && invTo != null){
+                    List<Agent> agentlist = session.createQuery("from agent agt where agt.code = :invTo").setParameter("invTo",invTo).list();
+                    if(agentlist != null){
+                        invTo = agentlist.get(0).getId();
+                        invName = agentlist.get(0).getName();
+                    }
+                }
                 BigDecimal invamounttemp = new BigDecimal(0);
                 invoiceDetailTempList = session.createQuery(InvDetailQuery).setParameter("invoiceId", invoiceDetailList.get(i).getInvoice().getId()).list();
                 for (int j = 0; j < invoiceDetailTempList.size() ; j++) {
@@ -958,6 +969,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                         invoiceDetailView.setAmountInvoice(invamounttemp);
                     }
                 }
+                invoiceDetailView.setInvTo(invTo);
+                invoiceDetailView.setInvName(invName);
                 invoiceDetailView.setInvoiceId(invoiceDetailList.get(i).getInvoice().getId());
                 invoiceDetailView.setInvNo(invoiceDetailList.get(i).getInvoice().getInvNo());
                 invoiceDetailView.setInvDate(invoiceDetailList.get(i).getInvoice().getInvDate());
@@ -1065,5 +1078,31 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         }
         return html.toString();
     }
-   
+
+    @Override
+    public List<RefundAirticketDetail> getRefundAirticketDetailFromTicketNo(String ticketNo) {
+        String query = "From RefundAirticketDetail refd where refd.ticketNo = :ticketNo";
+        Session session = this.sessionFactory.openSession();
+        List<RefundAirticketDetail> refundAirticketDetails  = session.createQuery(query).setParameter("ticketNo", ticketNo).list();
+        if (refundAirticketDetails.isEmpty()) {
+            return null;
+        }
+//        session.close();
+//        this.sessionFactory.close();
+        return refundAirticketDetails;   
+    }
+    
+    
+    @Override
+    public String getMAirlineAgentFromAirlineCode(String airlineCode) {
+        String query = "From MAirlineAgent air where air.airlineCode = :aircode";
+        Session session = this.sessionFactory.openSession();
+        List<MAirlineAgent> MAirlineAgentList = session.createQuery(query).setParameter("aircode", airlineCode).list();
+        if (MAirlineAgentList.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return MAirlineAgentList.get(0).getId();
+    }
 }

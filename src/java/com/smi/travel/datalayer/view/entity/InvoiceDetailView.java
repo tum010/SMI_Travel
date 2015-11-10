@@ -26,7 +26,8 @@ public class InvoiceDetailView {
     private String invoiceId;
     private BigDecimal amountInvoice;
     private String creditValue;
-    
+    private String invTo;
+    private String invName;
     public String getId() {
         return id;
     }
@@ -130,4 +131,20 @@ public class InvoiceDetailView {
     public void setCreditValue(String creditValue) {
         this.creditValue = creditValue;
     }     
+
+    public String getInvTo() {
+        return invTo;
+    }
+
+    public void setInvTo(String invTo) {
+        this.invTo = invTo;
+    }
+
+    public String getInvName() {
+        return invName;
+    }
+
+    public void setInvName(String invName) {
+        this.invName = invName;
+    }
 }
