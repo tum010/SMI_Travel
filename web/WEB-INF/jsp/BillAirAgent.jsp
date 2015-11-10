@@ -1,8 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/BillAirAgent.js"></script> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" src="js/workspace.js"></script> 
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery.mask.min.js"></script>
+<script type="text/javascript" src="js/selectize.js"></script>
 <c:set var="userList" value="${requestScope['userList']}" />
 <c:set var="listAgent" value="${requestScope['listAgent']}" />
 <c:set var="listTermPay" value="${requestScope['listTermPay']}" />
@@ -33,8 +36,8 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Agent</label>
-                                <div class="col-md-3 form-group">  
+                                <label class="col-md-6 control-label text-right" >Agent <font style="color: red">*</font></label>
+                                <div class="col-md-3 form-group" id="agentcodepanel">  
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="agentId" name="agentId" value=""/>
                                         <input type="text" class="form-control" id="agentCode" name="agentCode" value="" />
@@ -43,7 +46,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-3" id="agentnamepanel">
                                     <input type="text" class="form-control" id="agentName" name="agentName" value="" readonly="">
                                 </div>
                             </div> 
@@ -52,7 +55,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="invfromdatepanel">
-                                <label class="col-md-6 control-label text-right">Inv From</label>
+                                <label class="col-md-6 control-label text-right">Inv From <font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date invfromdate' id='invDateFrom'>
@@ -68,7 +71,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="invtodatepanel">
-                                <label class="col-md-6 control-label text-right">Inv To</label>
+                                <label class="col-md-6 control-label text-right">Inv To <font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date invtodate' id='invDateTo'>
@@ -84,7 +87,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="issuefromdatepanel">
-                                <label class="col-md-6 control-label text-right">Issue From</label>
+                                <label class="col-md-6 control-label text-right">Issue From <font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date issuefromdate' id='DateFromIssue'>
@@ -100,7 +103,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="issuetodatepanel">
-                                <label class="col-md-6 control-label text-right">Issue To</label>
+                                <label class="col-md-6 control-label text-right">Issue To <font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date issuetodate' id='DateToIssue'>
@@ -133,7 +136,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="refundfromdatepanel">
-                                <label class="col-md-6 control-label text-right">Refund Receive From</label>
+                                <label class="col-md-6 control-label text-right">Refund Receive From <font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date refundfromdate' id='DateFromRefund'>
@@ -149,7 +152,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="refundtodatepanel">
-                                <label class="col-md-6 control-label text-right">Refund Receive To</label>
+                                <label class="col-md-6 control-label text-right">Refund Receive To <font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date refundtodate' id='DateToRefund'>
@@ -298,7 +301,7 @@
                         agent = [];
                     </script>
                     <c:forEach var="ag" items="${listAgent}">
-                        <tr>
+                        <tr onclick="setBillAgentValue('${ag.id}', '${ag.code}', '${ag.name}');">
                             <td class="agent-id hidden">${ag.id}</td>
                             <td class="agent-user">${ag.code}</td>
                             <td class="agent-name">${ag.name}</td>
@@ -318,4 +321,51 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>          
-                               
+<script type="text/javascript">
+    function setBillAgentValue(id, code, name) {
+        $("#agentId").val(id);
+        $("#agentCode").val(code);
+        $("#agentName").val(name);
+                
+        $('#BillAirAgent').bootstrapValidator('revalidateField', 'agentCode');
+        $('#BillAirAgent').bootstrapValidator('revalidateField', 'agentName');
+        $("#AgentModal").modal('hide');
+    }
+    
+    function validateBillAirAgent(){
+        
+        $("#BillAirAgent").bootstrapValidator({
+        framework: 'bootstrap',
+        feedbackIcons: {
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
+        },
+        fields: {
+            agentCode: {
+                trigger: 'focus keyup change',
+                validators: {
+                    notEmpty: {
+                            message: 'Input agentCode '
+                        }
+                }
+            },
+            agentName: {
+                trigger: 'focus keyup change',
+                validators: {
+                    notEmpty: {
+                            message: 'Input agentName '
+                        }
+                }
+            }
+        }
+        });
+        $("#agentcodepanel").removeClass("has-success"); 
+        $("#agentnamepanel").removeClass("has-success"); 
+        
+        $("#agentcodepanel").addClass("has-error"); 
+        $("#agentnamepanel").addClass("has-error"); 
+//        $("#printbutton").addClass("disabled");
+    }
+</script>  
+<script type="text/javascript" src="js/BillAirAgent.js"></script> 

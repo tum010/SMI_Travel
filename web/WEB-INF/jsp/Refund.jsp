@@ -934,7 +934,7 @@
     }
 
 function validateRefundForm(){
-    alert("Check Add");
+//    alert("Check Add");
     $("#RefundForm")
         .bootstrapValidator({
             container: 'tooltip',
