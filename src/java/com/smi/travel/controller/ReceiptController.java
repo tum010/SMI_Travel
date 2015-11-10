@@ -448,6 +448,19 @@ public class ReceiptController extends SMITravelController {
             if(receiptCreditList != null){
                 request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);
             }
+
+            List<ReceiptDetail> recInvId = new ArrayList<ReceiptDetail>();
+            if(receiptDetailList != null){
+                for(int i = 0 ;i < receiptDetailList.size();i++){
+                    ReceiptDetail receiptD = new ReceiptDetail();
+                    receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
+                    receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
+                    receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
+                    recInvId.add(receiptD);
+                }
+                request.setAttribute(INVIDLIST, recInvId);
+            }
+                
         }else if("deleteReceiptDetail".equalsIgnoreCase(action)) {
             String receiptDetailIdDelete = request.getParameter("receiptDetailIdDelete");
             System.out.println("receiptDetailIdDelete ::: "+ receiptDetailIdDelete);
