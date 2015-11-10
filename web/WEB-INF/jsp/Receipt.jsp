@@ -512,6 +512,10 @@
                             </div>
                         </div>
                     </div>
+                    <div id="textAlertReceiveAmount"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Incorrect Receive Amount!</strong> 
+                    </div>     
                     <div class="panel panel-default ${panelborder}">
                         <div class="panel-body"  style="padding-right: 0px;">
                             <div class="col-xs-12">
@@ -756,10 +760,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="textAlertReceiveAmount"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <strong>Incorrect Receive Amount!</strong> 
-                    </div>            
+                           
                                 
                 </div>                          
             </form>
@@ -1750,7 +1751,7 @@
                 if(invType === 'T'){
                     window.open("report.smi?name=InvoiceTemp&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
                 }else{
-                    window.open("SendMail.smi?reportname=Invoice&reportid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign);   
+                    window.open("report.smi?name=InvoiceEmail&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign);   
                 }
             }
         } 
