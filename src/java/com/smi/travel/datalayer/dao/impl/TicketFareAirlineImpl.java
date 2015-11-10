@@ -167,11 +167,20 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     }
 
     @Override
-    public TicketFareAirline getTicketFareFromTicketNo(String TicketNo) {
+    public TicketFareAirline getTicketFareFromTicketNo(String TicketNo,String TicketId) {
         TicketFareAirline ticketFare = new TicketFareAirline();
-        String query = "from TicketFareAirline t where t.ticketNo = :ticketNo";
+        String query = "from TicketFareAirline t where t.ticketNo = :ticketNo ";
+        if(!"".equalsIgnoreCase(TicketId)){
+            query = "from TicketFareAirline t where t.id = :ticketId";
+        }
         Session session = this.sessionFactory.openSession();
-        List<TicketFareAirline> ticketFareList = session.createQuery(query).setParameter("ticketNo", TicketNo).list();
+        List<TicketFareAirline> ticketFareList = new ArrayList<TicketFareAirline>();
+         if(!"".equalsIgnoreCase(TicketId)){
+             ticketFareList = session.createQuery(query).setParameter("ticketId", TicketId).list();
+         }else{
+            ticketFareList = session.createQuery(query).setParameter("ticketNo", TicketNo).list();
+         }        
+
         if (ticketFareList.isEmpty()) {
             return null;
         }else{
@@ -492,9 +501,9 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         String result = "";
         String query = "from TicketFareAirline t where t.ticketNo = :TicketNo";
         Session session = this.sessionFactory.openSession();
-        List<TicketFareAirline> ticketFareList = session.createQuery(query).setParameter("TicketNo",ticket.getTicketNo()).list();
+//        List<TicketFareAirline> ticketFareList = session.createQuery(query).setParameter("TicketNo",ticket.getTicketNo()).list();
         System.out.println("query : "+query );
-        if (ticketFareList.isEmpty()){
+        if ("".equalsIgnoreCase(ticket.getId())){
             System.out.println("+++++++++++ InsertTicketFare ++++++++++++");
             result = InsertTicketFare(ticket);
         }else{
@@ -1006,5 +1015,55 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         this.sessionFactory.close();
         return result;
     }
+
+    @Override
+    public String getListTicketFareFromTicketNo(String ticketNo) {
+        String result ="";
+        System.out.println(" ticketNo ::: "+ticketNo);
+        String query = " from TicketFareAirline t where t.ticketNo = :ticketNo";
+        Session session = this.sessionFactory.openSession();
+        List<TicketFareAirline> ticketFareAirlineList = session.createQuery(query).setParameter("ticketNo", ticketNo).list();
+        
+        if (ticketFareAirlineList.isEmpty()){
+            return null;
+        }else{
+            result =  buildTicketNoListHTML(ticketFareAirlineList,ticketNo);
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    }
     
+    public String buildTicketNoListHTML(List<TicketFareAirline> ticketFareAirlineList,String ticketNo){
+        StringBuffer html = new StringBuffer();
+        if (ticketFareAirlineList == null || ticketFareAirlineList.size() == 0) {
+            return html.toString();
+        } 
+        int no = 1;
+        String ticketid = "";
+        String ticketno = "";
+        String invamount = "";
+        
+        for(int i = 0 ; i < ticketFareAirlineList.size() ; i++ ){
+            TicketFareAirline ticket = ticketFareAirlineList.get(i);
+            ticketid = ticket.getId();
+            ticketno = ticket.getTicketNo();
+            invamount = String.valueOf(ticket.getInvAmount());
+            if(!"".equalsIgnoreCase(ticketno)){
+                String newrow
+                    = "<tr>"
+                    + "<td>" + no + "</td>"
+                    + "<td>" + (ticketno == "null" ? "" : ticketno ) + "</td>"
+                    + "<td class='money' >" + (invamount == "null" ? "" : invamount ) + "</td>"
+                    + "<td class=\"text-center\" onclick=\"setSelectTicketNoDetail('" + ticketno + "','" + ticketid + "','" + invamount + "')\">"
+                    + "<a href=\"\"><span class=\"glyphicon glyphicon-check\"></span></a>" + "</td>"
+                    + "</tr>";
+                System.out.println("newrow [[[[[[[ "+newrow +" ]]]]");
+                html.append(newrow);
+            }
+            no++;
+        }
+        return html.toString();
+    }
+   
 }
