@@ -145,7 +145,7 @@
                                 <th style="width:15%;">Name</th>
                                 <th style="width:10%;">Invoice No</th>
                                 <th style="width:10%;">Amount</th>
-                                <th style="width:7%;">Term Pay</th>
+                                <th style="width:7%;">Status</th>
                                 <th style="width:7%;">Department</th>
                                 <th style="width:7%;">Status</th>
                                 <th style="width:1%;">Action</th>
