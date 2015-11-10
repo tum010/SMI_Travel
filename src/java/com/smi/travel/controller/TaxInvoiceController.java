@@ -315,7 +315,7 @@ public class TaxInvoiceController extends SMITravelController {
         return new ModelAndView(LINKNAME+callPageFrom);
     }
     
-    private void setTaxInvoiceDetails(HttpServletRequest request, String count, TaxInvoice taxInvoice, String username, Date date, String vat, String createBy, Date createDate) {
+    private void setTaxInvoiceDetails(HttpServletRequest request, String count, TaxInvoice taxInvoice, String username, Date date, String vatDefault, String createBy, Date createDate) {
         util = new UtilityFunction();
         int rows = Integer.parseInt(count);
         if(taxInvoice.getTaxInvoiceDetails() == null){
@@ -335,7 +335,7 @@ public class TaxInvoiceController extends SMITravelController {
             String cost = request.getParameter("cost" + i);
             String currencyCost = request.getParameter("currencyCost" + i);
             String isVat = request.getParameter("isVat" + i);
-//            String vat = request.getParameter("vat" + i);
+            String vat = request.getParameter("vat" + i);
             String amount = request.getParameter("amount" + i);
             String currencyAmount = request.getParameter("currencyAmount" + i);
             

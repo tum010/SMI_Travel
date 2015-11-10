@@ -899,6 +899,7 @@ public class AJAXBean extends AbstractBean implements
         String curAmount = "";
         String isVat = "";
         String refNo = "";
+        BigDecimal vat = new BigDecimal(0);
 
         UtilityFunction utilty = new UtilityFunction();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -939,6 +940,12 @@ public class AJAXBean extends AbstractBean implements
             } else {
                 amountInvoice = new BigDecimal(0);
             }
+            if (invoiceDetail.getVat()!= null) {
+                vat = invoiceDetail.getVat();
+            } else {
+                vat = new BigDecimal(0);
+            }
+            
             
             if(invoiceDetail.getBillableDesc() != null){
                 refNo = invoiceDetail.getBillableDesc().getBillable().getMaster().getReferenceNo();
@@ -968,7 +975,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td style=\"text-align:center;\">" + curCost + "</td>"
                         + "<td class='money' style=\"text-align:right;\">" + amount + "</td>"
                         + "<td style=\"text-align:center;\">" + curAmount + "</td>"
-                        + "<td><center><a href=\"\"><span onclick=\"AddProduct('"+invDetailId+"','"+product+"','"+description+"','"+cost+"','"+curCost+"','"+amount+"','"+curAmount+"','"+isVat+"','"+refNo+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"\"><span onclick=\"AddProduct('"+invDetailId+"','"+product+"','"+description+"','"+cost+"','"+curCost+"','"+amount+"','"+curAmount+"','"+isVat+"','"+refNo+"','"+vat+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                     html.append(newrow);
             }
