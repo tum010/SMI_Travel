@@ -60,6 +60,10 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Not add duplicate detail!</strong> 
         </div>
+        <div id="textAlertAmountOver"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Amount much over!.</strong> 
+        </div>
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/FinanceAndCashier/ReceiptMenu.html'"></div>
         </div>
@@ -2235,11 +2239,11 @@ function saveReceipt(){
         amount = replaceAll(",","",amount.toString());
         
         if(amount > amountTemp){
-            $('#textAlertReceiveAmount').show();
+//            $('#textAlertReceiveAmount').show();
+            $('#textAlertAmountOver').show();
             checksave = 2;
         }else{
             if(inputStatus !== '7'){
-                alert('111111');
                 var sumAmountBeforeSave = document.getElementById('sumAmountBeforeSave').value;
                 var grandTotal = document.getElementById('grandTotal').value;
 
@@ -2261,7 +2265,6 @@ function saveReceipt(){
                     $('#textAlertReceiveAmount').hide();
                 }
             }else{
-                alert('22222');
                 if(checksave === 1){
                     $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
                     $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
