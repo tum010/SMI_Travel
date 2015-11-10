@@ -29,13 +29,11 @@ import com.smi.travel.datalayer.view.entity.TicketSummaryAirlineView;
 import com.smi.travel.datalayer.view.entity.TicketSummaryCommissionView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.MathContext;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -48,10 +46,6 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.CellRangeAddress;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormat;
-import org.apache.poi.ss.usermodel.RichTextString;
-import org.apache.taglibs.standard.tag.common.core.Util;
 import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 /**
@@ -78,6 +72,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
     private static final String SummaryAirlinePax = "SummaryAirlinePax";
     private static final String TicketProfitLoss = "TicketProfitLoss"; 
     private static final String TicketSummaryCommission = "TicketSummaryCommission"; 
+    private UtilityService utilityService;
     
     @Override
     protected void buildExcelDocument(Map model, HSSFWorkbook workbook,
@@ -1026,6 +1021,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         HSSFCell cell11 = row.createCell(11);
             cell11.setCellFormula(sumVatCompay);
             cell11.setCellStyle(styleNumber);
+            sheet.autoSizeColumn(11);
         row.createCell(12).setCellStyle(styleNumberBorderRight);
             
         HSSFRow row11 = sheet.createRow(row2);;
@@ -1041,6 +1037,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         HSSFCell cell12 = row11.createCell(12);
             cell12.setCellFormula(sumReceive);
             cell12.setCellStyle(styleNumberBorderRight);
+            sheet.autoSizeColumn(12);
     }
     
     private void createCell(HSSFRow row,List<BillAirAgent> listAgent,int num,HSSFCellStyle styleNumber,HSSFCellStyle styleDetail){
@@ -2661,8 +2658,6 @@ public class ExportDataToExcelView extends AbstractExcelView {
             listAgentRefund = null;
         }
         
-
-        
         String sheetName = "Summary";// name of sheet
         String sheetName1 = "Detail";
         String sheetName2 = "Refund";
@@ -2874,8 +2869,8 @@ public class ExportDataToExcelView extends AbstractExcelView {
             System.out.println("Com Receive : " + listAgent.get(i).getAgentcom() + "  Sum Com Receive : " + sumComReceive);
         }
         DecimalFormat df = new DecimalFormat("#,###.00");
-        sumTotalPayment = sumSalePrice.add(sumTotalComRefundReceive);
-        sumTotalCompay = sumComPay.subtract(sumTotalComRefundReceive);
+        sumTotalPayment = sumSalePrice.add(sumComReceive);
+        sumTotalCompay = sumComPay.subtract(sumComReceive);
         sumTotalCompaySub = sumTotalCompay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
         
         vatComPay = sumTotalCompay.multiply(new BigDecimal(0.07));
@@ -2896,12 +2891,16 @@ public class ExportDataToExcelView extends AbstractExcelView {
         
         withHoldingTax = sumTotalCompay.add(vatComPay);
         withHoldingTax = withHoldingTax.multiply(new BigDecimal(100));
-        UtilityService util = new UtilityService();
-//        MDefaultData mDE = util.getMDefaultDataFromType("vat");
+//        UtilityService util = new UtilityService();
+//        MDefaultData mDE = utilityService.getMDefaultDataFromType("vat");
+//        MDefaultData mDE2 = utilityService.getMDefaultDataFromType("withholding tax");
+//        String vatMDE = mDE.getValue();
+//        String whtMDE = mDE2.getValue();
+//        System.out.println("Vat :::: " + vatMDE + "Wht :::: " + whtMDE);
         BigDecimal vatTemp =  new BigDecimal(7);
         vatTemp = vatTemp.add(new BigDecimal(100));
         withHoldingTax = withHoldingTax.divide(vatTemp,MathContext.DECIMAL128);
-        withHoldingTax = withHoldingTax.multiply(new BigDecimal(0.3));
+        withHoldingTax = withHoldingTax.multiply(new BigDecimal(0.03));
         
         System.out.println(">>>>>>>>>>> Total Sale Price : " + df.format(sumSalePrice));
         System.out.println(">>>>>>>>>>> Total Com Refund Receive : " + df.format(sumTotalComRefundReceive));
@@ -2972,7 +2971,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         sheet.addMergedRegion(CellRangeAddress.valueOf("A10:E10"));
                         sheet.autoSizeColumn(0);
                 HSSFCell cell102 = row10.createCell(5);
-                        cell102.setCellValue(df.format(sumTotalComRefundReceive));
+                        cell102.setCellValue(df.format(sumComReceive));
                         cell102.setCellStyle(styleAlignRight);
                         sheet.addMergedRegion(CellRangeAddress.valueOf("F10:H10"));
                         sheet.autoSizeColumn(5);
@@ -3321,11 +3320,11 @@ public class ExportDataToExcelView extends AbstractExcelView {
             cell71.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(10);
         HSSFCell cell72 = row6.createCell(11);
-            cell72.setCellValue("Vat");
+            cell72.setCellValue("    Vat    ");
             cell72.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(11);
         HSSFCell cell73 = row6.createCell(12);
-            cell73.setCellValue("Receive");
+            cell73.setCellValue("    Receive    ");
             cell73.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(11);
             
@@ -3645,7 +3644,10 @@ public class ExportDataToExcelView extends AbstractExcelView {
             rowTotalRefund.createCell(2).setCellStyle(styleAlignRightBorderAll);
             rowTotalRefund.createCell(3).setCellStyle(styleAlignRightBorderAll);
             rowTotalRefund.createCell(4).setCellStyle(styleAlignRightBorderAll);
-            rowTotalRefund.createCell(5).setCellStyle(styleAlignRightBorderAll);
+            HSSFCell cell4 = rowTotalRefund.createCell(5);
+                cell4.setCellValue("TOTAL");
+                cell4.setCellStyle(styleAlignRightBorderAllHeaderTable);  
+                sheet2.autoSizeColumn(5);
             HSSFCell cell5 = rowTotalRefund.createCell(6);
                 cell5.setCellFormula(sumAmountReceive);
                 cell5.setCellStyle(styleAlignRightBorderAllNumber);  
@@ -9702,4 +9704,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
 	 rowLLL.createCell(14).setCellStyle(styleBorderTop);    
          rowLLL.createCell(15).setCellStyle(styleBorderTop);            
     }
+
+    public UtilityService getUtilityService() {
+        return utilityService;
+    }
+
+    public void setUtilityService(UtilityService utilityService) {
+        this.utilityService = utilityService;
+    }
+     
+    
 }
