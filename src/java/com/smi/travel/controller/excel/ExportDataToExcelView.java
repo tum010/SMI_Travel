@@ -2887,7 +2887,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         checkResult = sumTotalCompay.add(vatComPay);
         
         midValue =  checkResult.add(balancePayment);
-        midValue = midValue.add(sumPayRefundAmount);
+        midValue = midValue.add(sumPayRefundAmount.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE)));
         
         withHoldingTax = sumTotalCompay.add(vatComPay);
         withHoldingTax = withHoldingTax.multiply(new BigDecimal(100));
