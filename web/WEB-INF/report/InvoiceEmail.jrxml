@@ -644,9 +644,9 @@
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="13" y="57" width="208" height="32" uuid="606580e8-0632-46bc-a83c-297e7417026b"/>
+				<reportElement x="13" y="56" width="208" height="32" uuid="606580e8-0632-46bc-a83c-297e7417026b"/>
 				<textElement>
-					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{textmoney}]]></textFieldExpression>
 			</textField>

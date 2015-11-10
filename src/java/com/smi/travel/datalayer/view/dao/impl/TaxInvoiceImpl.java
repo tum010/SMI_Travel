@@ -76,7 +76,7 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             taxInvoiceView.setCuramount(util.ConvertString(B[16]));
             String curamount = "";
             if("THB".equalsIgnoreCase(util.ConvertString(B[16]))){
-                curamount = " baht ";
+                curamount = " BAHT ";
             } else {
                 curamount = " "+util.ConvertString(B[16])+" ";
             }

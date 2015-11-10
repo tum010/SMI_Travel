@@ -398,7 +398,7 @@ public class UtilityFunction {
       result =  result + tradThousand;
 
       // remove extra spaces!
-      return result.replaceAll("^\\s+", "").replaceAll("\\b\\s{2,}\\b", " ");
+      return result.replaceAll("^\\s+", "").replaceAll("\\b\\s{2,}\\b", " ").toUpperCase();
     }
      public static String changPoint(String point){
         String text = " point ";

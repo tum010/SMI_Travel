@@ -148,17 +148,17 @@ public class InvoiceImpl implements InvoiceReportDao{
             String textmoneypoint = (utilityFunction.changPoint(String.valueOf(part2)));
             String currency = util.ConvertString(B[17]);
             if("JPY".equals(currency)){
-                currency = " yen" ;
+                currency = " YEN" ;
             }else if("THB".equals(currency)){
-                currency = " baht" ;
+                currency = " BAHT" ;
             }else if("USD".equals(currency)){
-                currency = " dollar" ;
+                currency = " DOLLAR" ;
             }else{
-                currency = " baht" ;
+                currency = " BAHT" ;
             }        
             String totalWord = textmoney +currency+ textmoneypoint;
             if("".equalsIgnoreCase(textmoneypoint.trim())){
-                totalWord = textmoney +currency+" only";
+                totalWord = textmoney +currency+" ONLY";
             }
             System.out.println(" totalWord " + totalWord);
             invoice.setTextmoney(totalWord.substring(0,1).toUpperCase() + totalWord.substring(1));
