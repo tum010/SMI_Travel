@@ -201,7 +201,7 @@ public class OtherDetailController extends SMITravelController {
                        request.setAttribute("resultText", "success"); 
                     }
                     String[] ticketData = stock.split("\\|\\|", 3);//Adult||Child||
-                    if(("".equalsIgnoreCase(itemid))){
+                    if(("".equalsIgnoreCase(itemid)) || (!"".equalsIgnoreCase(addticket))){
                         request.setAttribute("adultCancel", ticketData[0]);
                         request.setAttribute("childCancel", ticketData[1]);
                         request.setAttribute("infantCancel", ticketData[2]);
@@ -249,6 +249,16 @@ public class OtherDetailController extends SMITravelController {
                        request.setAttribute("resultText", "success"); 
                     }
                     String[] ticketData = stock.split("\\|\\|", 3);//Adult||Child||Infant
+                    if(("".equalsIgnoreCase(itemid)) || (!"".equalsIgnoreCase(addticket))){
+                        request.setAttribute("adultCancel", ticketData[0]);
+                        request.setAttribute("childCancel", ticketData[1]);
+                        request.setAttribute("infantCancel", ticketData[2]);
+                    }else{
+                        request.setAttribute("adultCancel", "0");
+                        request.setAttribute("childCancel", "0");
+                        request.setAttribute("infantCancel", "0");
+                    }
+                    
                     getTicket(request, Other.getId());
                     itemid = result.get(1);
                     createby = Other.getCreateBy();

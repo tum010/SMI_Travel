@@ -85,9 +85,10 @@
                 <c:if test="${alert == ''}">
                     <c:set var="alert" value="alert-success"/>
                 </c:if>
-            <div id="textAlertDivSave"  style="" class="alert ${alert} alert-dismissible" role="alert">
+            <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Save Success! ${require} ${adultCancel} ${childCancel} ${infantCancel}</strong> 
+                    <strong>Save Success! </strong><br>
+                    <strong><font style="color: red">${require} ${adultCancel} ${childCancel} ${infantCancel}</font></strong> 
             </div>
             </c:if>
             <c:if test="${requestScope['resultText'] == 'unsuccess'}">
