@@ -167,6 +167,11 @@
                                         <input type='hidden' class="form-control"  id="checkdate" name="checkdate" data-date-format="YYYY-MM-DD" value="${requestScope['otherdate']}"/>                                                                              
                                 </div>
                             </div>
+                            <div class="col-md-3 ">
+                                <div class="form-group">
+                                    <a class="btn btn-primary" id="btnCheckStock" onclick="showStock()"><i class="glyphicon "></i> Check Stock</a>
+                                </div>
+                            </div>    
                         </div>
                                 
                         <div class="row">
@@ -743,6 +748,40 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div class="modal fade" id="Stock" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title"  id="Titlemodel">Booking - Other </h4>
+            </div>
+            <div class="modal-body">
+                <table class="display" id="StockTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th style="width: 33%">Adult</th>
+                            <th style="width: 33%">Child</th>
+                            <th style="width: 33%">Infant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                                    
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                
+            </div>
+            <div class="hidden">
+                
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->      
 
 <c:if test="${! empty requestScope['result']}">
     <script language="javascript">

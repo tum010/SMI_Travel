@@ -17,12 +17,12 @@ function setupproductvalue(id, code, name, booktype) {
     document.getElementById('product_code').value = code;
     document.getElementById('product_name').value = name;
     document.getElementById('product_code').focus();
-    
-    var product_code = document.getElementById('product_code').value; 
-    var otherdate = document.getElementById('otherdate').value; 
-    
-    if((product_code !== '') && (otherdate !== '')){
-        getvalueProduct('product',booktype);   
+
+    var product_code = document.getElementById('product_code').value;
+    var otherdate = document.getElementById('otherdate').value;
+
+    if ((product_code !== '') && (otherdate !== '')) {
+        getvalueProduct('product', booktype);
     } else {
         document.getElementById('ad_cost').value = '0';
         document.getElementById('ad_price').value = '0';
@@ -31,7 +31,7 @@ function setupproductvalue(id, code, name, booktype) {
         document.getElementById('in_cost').value = '0';
         document.getElementById('in_price').value = '0';
     }
-    
+
 }
 
 function setupagentvalue(id, code, name) {
@@ -43,18 +43,18 @@ function setupagentvalue(id, code, name) {
 }
 
 function setupotherdatevalue(booktype) {
-    var product_code = document.getElementById('product_code').value; 
+    var product_code = document.getElementById('product_code').value;
     var otherdate = document.getElementById('otherdate').value;
-    var todaydate = document.getElementById('todaydate').value; 
+    var todaydate = document.getElementById('todaydate').value;
     var checkdate = document.getElementById('checkdate').value;
-    if((product_code !== '') && (otherdate !== '')){
-        if(checkdate !== ''){
-            if(checkdate !== otherdate){
-                getvalueProduct('date',booktype);  
+    if ((product_code !== '') && (otherdate !== '')) {
+        if (checkdate !== '') {
+            if (checkdate !== otherdate) {
+                getvalueProduct('date', booktype);
             }
-        } else if(otherdate !== todaydate){
-            getvalueProduct('date',booktype);     
-        }        
+        } else if (otherdate !== todaydate) {
+            getvalueProduct('date', booktype);
+        }
     } else {
         document.getElementById('ad_cost').value = '0';
         document.getElementById('ad_price').value = '0';
@@ -66,13 +66,13 @@ function setupotherdatevalue(booktype) {
 }
 
 $(document).ready(function() {
-
-
+    
+    checkStock()
     var codeProduct = [];
-    $.each(product, function (key, value) {
+    $.each(product, function(key, value) {
         codeProduct.push(value.code);
-        if ( !(value.name in codeProduct) ){
-            if(value.code !== value.name){
+        if (!(value.name in codeProduct)) {
+            if (value.code !== value.name) {
                 codeProduct.push(value.name);
             }
         }
@@ -80,73 +80,73 @@ $(document).ready(function() {
 
     $("#product_code").autocomplete({
         source: codeProduct,
-        close:function( event, ui ) {
-           $("#product_code").trigger('keyup');
+        close: function(event, ui) {
+            $("#product_code").trigger('keyup');
         }
     });
-    $("#product_code").on('keyup', function () {
+    $("#product_code").on('keyup', function() {
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
         $("#product_id").val(null);
         var code = this.value.toUpperCase();
         var name = this.value;
-        $.each(product, function (key, value) {
-            if (value.code.toUpperCase() === code  ) {   
-                    $("#product_id").val(value.id);
-                    $("#product_name").val(value.name); 
+        $.each(product, function(key, value) {
+            if (value.code.toUpperCase() === code) {
+                $("#product_id").val(value.id);
+                $("#product_name").val(value.name);
             }
-            if(name === value.name){
+            if (name === value.name) {
                 $("#product_code").val(value.code);
-                $("#product_name").val(value.name); 
+                $("#product_name").val(value.name);
                 $("#product_id").val(value.id);
                 code = $("#product_code").val().toUpperCase();
 
             }
         });
-        
-        var code = event.keyCode || event.which; 
 
-        if (code  == 13) { 
-           getvalueProduct('product',$('#bookingtype').val());
+        var code = event.keyCode || event.which;
+
+        if (code == 13) {
+            getvalueProduct('product', $('#bookingtype').val());
         }
-       
+
     });
-    
-        $("#product_code").on('blur', function () {
-       var delay=500;//1 seconds
-        setTimeout(function(){
-          $.each(product, function (key, value) {
-            if($("#product_code").val() == value.code){
-                $("#product_id").val(value.id);
-                $("#product_name").val(value.name);
-                getvalueProduct('product',$('#bookingtype').val());
-            }     
-         });   
-       
-        },delay); 
-       
+
+    $("#product_code").on('blur', function() {
+        var delay = 500;//1 seconds
+        setTimeout(function() {
+            $.each(product, function(key, value) {
+                if ($("#product_code").val() == value.code) {
+                    $("#product_id").val(value.id);
+                    $("#product_name").val(value.name);
+                    getvalueProduct('product', $('#bookingtype').val());
+                }
+            });
+
+        }, delay);
+
     });
-    
-    $("#product_code").on('keyup',  function(e) { 
-        var keyCode  = e.keyCode || e.which; 
-        
-        if (keyCode == 9) { 
-            if($('#product_code').val() != ''){
-                getvalueProduct('product',$('#bookingtype').val());
+
+    $("#product_code").on('keyup', function(e) {
+        var keyCode = e.keyCode || e.which;
+
+        if (keyCode == 9) {
+            if ($('#product_code').val() != '') {
+                getvalueProduct('product', $('#bookingtype').val());
             }
-            
-        }      
+
+        }
     });
-    
-   
-    
+
+
+
 
     var codeAgent = [];
-    $.each(agent, function (key, value) {
+    $.each(agent, function(key, value) {
         codeAgent.push(value.code);
-        if ( !(value.name in codeAgent) ){
-            if(value.code !== value.name){ 
+        if (!(value.name in codeAgent)) {
+            if (value.code !== value.name) {
                 codeAgent.push(value.name);
             }
         }
@@ -154,33 +154,33 @@ $(document).ready(function() {
 
     $("#agent_code").autocomplete({
         source: codeAgent,
-        close:function( event, ui ) {
-           $("#agent_code").trigger('keyup');
+        close: function(event, ui) {
+            $("#agent_code").trigger('keyup');
         }
     });
-    
-    $("#agent_code").on('keyup', function () {
+
+    $("#agent_code").on('keyup', function() {
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
         $("#agent_id").val(null);
         var code = this.value.toUpperCase();
         var name = this.value;
-        $.each(agent, function (key, value) {
-            if (value.code.toUpperCase() === code  ) {   
-                    $("#agent_id").val(value.id);
-                    $("#agent_name").val(value.name); 
+        $.each(agent, function(key, value) {
+            if (value.code.toUpperCase() === code) {
+                $("#agent_id").val(value.id);
+                $("#agent_name").val(value.name);
             }
-            if(name === value.name){
+            if (name === value.name) {
                 $("#agent_code").val(value.code);
-                $("#agent_name").val(value.name); 
+                $("#agent_name").val(value.name);
                 $("#agent_id").val(value.id);
                 code = $("#agent_code").val().toUpperCase();
-               
+
             }
         });
     });
-    
+
 
     $('#otherForm').bootstrapValidator({
         container: 'tooltip',
@@ -200,7 +200,7 @@ $(document).ready(function() {
                     }
                 }
             }
-           
+
         }
     }).on('success.field.bv', function(e, data) {
         if (data.bv.isValid()) {
@@ -212,26 +212,27 @@ $(document).ready(function() {
 });
 
 
-function getvalueProduct(order,booktype) {
-    var product_code = document.getElementById('product_code').value; 
+function getvalueProduct(order, booktype) {
+    $("#btnCheckStock").addClass("disabled");
+    var product_code = document.getElementById('product_code').value;
     var otherdate = document.getElementById('otherdate').value;
-    var todaydate = document.getElementById('todaydate').value; 
+    var todaydate = document.getElementById('todaydate').value;
     var checkdate = document.getElementById('checkdate').value;
-    if((product_code !== '') && (otherdate !== '')){
-        if((order === 'product')){
-                var servletName = 'BookOtherServlet';
-                var servicesName = 'AJAXBean';
-                var productid = document.getElementById('product_id').value;
-                var otherdate = document.getElementById('otherdate').value;
-                var param = 'action=' + 'text' +
-                        '&servletName=' + servletName +
-                        '&servicesName=' + servicesName +
-                        '&productid=' + productid +
-                        '&otherdate=' + otherdate +
-                        '&type=' + 'getvalueProduct';
-                CallAjax(param, booktype);
-        }else if(checkdate !== ''){
-            if(checkdate !== otherdate){
+    if ((product_code !== '') && (otherdate !== '')) {
+        if ((order === 'product')) {
+            var servletName = 'BookOtherServlet';
+            var servicesName = 'AJAXBean';
+            var productid = document.getElementById('product_id').value;
+            var otherdate = document.getElementById('otherdate').value;
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&productid=' + productid +
+                    '&otherdate=' + otherdate +
+                    '&type=' + 'getvalueProduct';
+            CallAjax(param, booktype);
+        } else if (checkdate !== '') {
+            if (checkdate !== otherdate) {
                 var servletName = 'BookOtherServlet';
                 var servicesName = 'AJAXBean';
                 var productid = document.getElementById('product_id').value;
@@ -244,7 +245,7 @@ function getvalueProduct(order,booktype) {
                         '&type=' + 'getvalueProduct';
                 CallAjax(param, booktype);
             }
-        } else if(otherdate !== todaydate){
+        } else if (otherdate !== todaydate) {
             var servletName = 'BookOtherServlet';
             var servicesName = 'AJAXBean';
             var productid = document.getElementById('product_id').value;
@@ -255,9 +256,28 @@ function getvalueProduct(order,booktype) {
                     '&productid=' + productid +
                     '&otherdate=' + otherdate +
                     '&type=' + 'getvalueProduct';
-            CallAjax(param, booktype);     
+            CallAjax(param, booktype);
         }
-    }    
+    }
+}
+
+function checkStock() {
+    $("#btnCheckStock").addClass("disabled");
+    var servletName = 'BookOtherServlet';
+    var servicesName = 'AJAXBean';
+    var productid = document.getElementById('product_id').value;
+    var otherdate = document.getElementById('otherdate').value;
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&productid=' + productid +
+            '&otherdate=' + otherdate +
+            '&type=' + 'getStock';
+    CallAjaxCheckStock(param);
+}
+
+function showStock(){
+    $("#Stock").modal("show");
 }
 
 function calculateVatvalue() {
@@ -286,10 +306,42 @@ function calculateVatvalue() {
 
 function returnvat(input) {
     input = replaceComma(input);
-    if(input != 0){
+    if (input != 0) {
         return numberWithCommas(Math.round(input * (100 / 107)));
     } else {
         return null;
+    }
+}
+
+function CallAjaxCheckStock(param) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                $('#StockTable > tbody  > tr').each(function() {
+                    $(this).remove();
+                });
+                if (msg !== 'notStock') {
+                    var stock = msg.split(",");
+                    $("#StockTable tbody").append(
+                            '<tr>' +
+                            '<td style="text-align:right;" >' + stock[0] + '</td>' +
+                            '<td style="text-align:right;" >' + stock[1] + '</td>' +
+                            '<td style="text-align:right;" >' + stock[2] + '</td>' +                           
+                            '</tr>'
+                            );
+                    $("#btnCheckStock").removeClass("disabled");
+                }
+            }, error: function(msg) {
+                //alert('error');
+            }
+        });
+    } catch (e) {
+        alert(e);
     }
 }
 
@@ -309,30 +361,42 @@ function CallAjax(param, booktype) {
                 var CH_Price = document.getElementById('ch_price').value;
                 var IN_Cost = document.getElementById('in_cost').value;
                 var IN_Price = document.getElementById('in_price').value;
-                var AD_CostRP = AD_Cost.replace(',','');
-                var AD_PriceRP = AD_Price.replace(',','');
-                var CH_CostRP = CH_Cost.replace(',','');
-                var CH_PriceRP = CH_Price.replace(',','');
-                var IN_CostRP = IN_Cost.replace(',','');
-                var IN_PriceRP = IN_Price.replace(',','');
+                var AD_CostRP = AD_Cost.replace(',', '');
+                var AD_PriceRP = AD_Price.replace(',', '');
+                var CH_CostRP = CH_Cost.replace(',', '');
+                var CH_PriceRP = CH_Price.replace(',', '');
+                var IN_CostRP = IN_Cost.replace(',', '');
+                var IN_PriceRP = IN_Price.replace(',', '');
 
-                if(AD_CostRP === ''){ AD_CostRP = '0'; }
-                if(AD_PriceRP === ''){ AD_PriceRP = '0'; }
-                if(CH_CostRP === ''){ CH_CostRP = '0'; }
-                if(CH_PriceRP === ''){ CH_PriceRP = '0'; }
-                if(IN_CostRP === ''){IN_CostRP = '0'; }
-                if(IN_PriceRP === ''){IN_PriceRP = '0'; }
-                
-                if (booktype === 'i') {                
-                    if((AD_CostRP === '0') && (CH_CostRP === '0') && (IN_CostRP === '0') && (AD_PriceRP === '0') && (CH_PriceRP === '0') && (IN_PriceRP === '0')){
-                        setformatNumber('ad_cost',path[0]);
-                        setformatNumber('ch_cost',path[1]);
-                        setformatNumber('in_cost',path[2]);
-                        setformatNumber('ad_price',path[3]);
-                        setformatNumber('ch_price',path[4]);
-                        setformatNumber('in_price',path[5]);
-                    }else if((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2]) && (AD_PriceRP === path[3]) && (CH_PriceRP === path[4]) && (IN_PriceRP === path[5])){
-                        
+                if (AD_CostRP === '') {
+                    AD_CostRP = '0';
+                }
+                if (AD_PriceRP === '') {
+                    AD_PriceRP = '0';
+                }
+                if (CH_CostRP === '') {
+                    CH_CostRP = '0';
+                }
+                if (CH_PriceRP === '') {
+                    CH_PriceRP = '0';
+                }
+                if (IN_CostRP === '') {
+                    IN_CostRP = '0';
+                }
+                if (IN_PriceRP === '') {
+                    IN_PriceRP = '0';
+                }
+
+                if (booktype === 'i') {
+                    if ((AD_CostRP === '0') && (CH_CostRP === '0') && (IN_CostRP === '0') && (AD_PriceRP === '0') && (CH_PriceRP === '0') && (IN_PriceRP === '0')) {
+                        setformatNumber('ad_cost', path[0]);
+                        setformatNumber('ch_cost', path[1]);
+                        setformatNumber('in_cost', path[2]);
+                        setformatNumber('ad_price', path[3]);
+                        setformatNumber('ch_price', path[4]);
+                        setformatNumber('in_price', path[5]);
+                    } else if ((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2]) && (AD_PriceRP === path[3]) && (CH_PriceRP === path[4]) && (IN_PriceRP === path[5])) {
+
                     } else {
                         document.getElementById('path0').value = path[0];
                         document.getElementById('path1').value = path[1];
@@ -341,19 +405,19 @@ function CallAjax(param, booktype) {
                         document.getElementById('path4').value = path[4];
                         document.getElementById('path5').value = path[5];
                         $('#Confirm').modal('show');
-                     }                                     
+                    }
                 }
 
                 if (booktype === 'o') {
-                    if((AD_CostRP === 0) && (CH_CostRP === 0) && (IN_CostRP === 0) && (AD_PriceRP === 0) && (CH_PriceRP === 0) && (IN_PriceRP === 0)){
-                        setformatNumber('ad_cost',path[0]);
-                        setformatNumber('ch_cost',path[1]);
-                        setformatNumber('in_cost',path[2]);
-                        setformatNumber('ad_price',path[3]);
-                        setformatNumber('ch_price',path[4]);
-                        setformatNumber('in_price',path[5]);
-                    }else if((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2]) && (AD_PriceRP === path[3]) && (CH_PriceRP === path[4]) && (IN_PriceRP === path[5])){
-                        
+                    if ((AD_CostRP === 0) && (CH_CostRP === 0) && (IN_CostRP === 0) && (AD_PriceRP === 0) && (CH_PriceRP === 0) && (IN_PriceRP === 0)) {
+                        setformatNumber('ad_cost', path[0]);
+                        setformatNumber('ch_cost', path[1]);
+                        setformatNumber('in_cost', path[2]);
+                        setformatNumber('ad_price', path[3]);
+                        setformatNumber('ch_price', path[4]);
+                        setformatNumber('in_price', path[5]);
+                    } else if ((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2]) && (AD_PriceRP === path[3]) && (CH_PriceRP === path[4]) && (IN_PriceRP === path[5])) {
+
                     } else {
                         document.getElementById('path0').value = path[0];
                         document.getElementById('path1').value = path[1];
@@ -362,7 +426,7 @@ function CallAjax(param, booktype) {
                         document.getElementById('path4').value = path[4];
                         document.getElementById('path5').value = path[5];
                         $('#Confirm').modal('show');
-                     }                           
+                    }
 //                    if((AD_CostRP == path[0]) && (CH_CostRP == path[1]) && (IN_CostRP == path[2]) && (AD_PriceRP == path[3]) && (CH_PriceRP == path[4]) && (IN_PriceRP == path[5])){
 //                            
 //                    } else {
@@ -374,8 +438,9 @@ function CallAjax(param, booktype) {
 //                        document.getElementById('path5').value = path[5];
 //                        $('#Confirm').modal('show');
 //                    }                                   
-                //calculateVat();
+                    //calculateVat();
                 }
+                checkStock();
             }, error: function(msg) {
                 //alert('error');
             }
@@ -385,26 +450,26 @@ function CallAjax(param, booktype) {
     }
 }
 
-function Confirm(){
+function Confirm() {
     var path0 = document.getElementById('path0').value;
-    var path1 = document.getElementById('path1').value; 
-    var path2 = document.getElementById('path2').value; 
-    var path3 = document.getElementById('path3').value; 
-    var path4 = document.getElementById('path4').value; 
+    var path1 = document.getElementById('path1').value;
+    var path2 = document.getElementById('path2').value;
+    var path3 = document.getElementById('path3').value;
+    var path4 = document.getElementById('path4').value;
     var path5 = document.getElementById('path5').value;
-    setformatNumber('ad_cost',path0);
-    setformatNumber('ch_cost',path1);
-    setformatNumber('in_cost',path2);
-    setformatNumber('ad_price',path3);
-    setformatNumber('ch_price',path4);
-    setformatNumber('in_price',path5);
+    setformatNumber('ad_cost', path0);
+    setformatNumber('ch_cost', path1);
+    setformatNumber('in_cost', path2);
+    setformatNumber('ad_price', path3);
+    setformatNumber('ch_price', path4);
+    setformatNumber('in_price', path5);
     $('#Confirm').modal('hide');
 }
 
-function setformatNumber(id,data){
-    if(data == 0){
+function setformatNumber(id, data) {
+    if (data == 0) {
         document.getElementById(id).value = '0';
-    }else{
+    } else {
         document.getElementById(id).value = numberWithCommas(data);
     }
 }
@@ -424,46 +489,47 @@ function calculateVat() {
     tempadprice = replaceComma(adprice.value);
     tempchprice = replaceComma(chprice.value);
     tempinprice = replaceComma(inprice.value);
-          
-    adcost.value = numberWithCommas(parseInt((tempadcost * 7 / 100)) + parseInt(tempadcost));      
-    chcost.value = numberWithCommas(parseInt((tempchcost * 7 / 100)) + parseInt(tempchcost));       
+
+    adcost.value = numberWithCommas(parseInt((tempadcost * 7 / 100)) + parseInt(tempadcost));
+    chcost.value = numberWithCommas(parseInt((tempchcost * 7 / 100)) + parseInt(tempchcost));
     incost.value = numberWithCommas(parseInt((tempincost * 7 / 100)) + parseInt(tempincost));
     adprice.value = numberWithCommas(parseInt((tempadprice * 7 / 100)) + parseInt(tempadprice));
     chprice.value = numberWithCommas(parseInt((tempchprice * 7 / 100)) + parseInt(tempchprice));
     inprice.value = numberWithCommas(parseInt((tempinprice * 7 / 100)) + parseInt(replaceComma(tempinprice)));
 
-    var AD_Cost = document.getElementById('ad_cost').value; 
+    var AD_Cost = document.getElementById('ad_cost').value;
     var CH_Cost = document.getElementById('ch_cost').value;
     var IN_Cost = document.getElementById('in_cost').value;
 
-   
+
 }
 
 function replaceComma(input) {
-    if(input=='') return '0';
+    if (input == '')
+        return '0';
     return input.replace(',', '');
 }
 
-function setStockTicket(){
+function setStockTicket() {
     $("#reuse").prop("checked", false);
     $("#void").prop("checked", false);
-    $("#refund").prop("checked", false);   
+    $("#refund").prop("checked", false);
     $("#stockTicketModal").modal("show");
 }
 
-function cancelStockTicket(){
+function cancelStockTicket() {
     var row = $('#TicketTable tr').length;
     var check = 0;
-    for(var i=1;i<row;i++){          
-        var selectAll = document.getElementById("selectAll"+i);
-        if(selectAll !== null && selectAll !== ''){
-            if(document.getElementById("selectAll"+i).checked){
+    for (var i = 1; i < row; i++) {
+        var selectAll = document.getElementById("selectAll" + i);
+        if (selectAll !== null && selectAll !== '') {
+            if (document.getElementById("selectAll" + i).checked) {
                 check++;
-            } 
-        }   
+            }
+        }
     }
-    if(check !== 0){
-        $('#counter').val(row);       
+    if (check !== 0) {
+        $('#counter').val(row);
         var ticketstatus = document.getElementById('ticketstatus');
         if (document.getElementById('reuse').checked) {
             var reuseTicket = document.getElementById('reuse').value;
@@ -479,98 +545,98 @@ function cancelStockTicket(){
             document.getElementById('otherForm').submit();
         } else {
 
-        }         
+        }
     } else {
         document.getElementById('alertCheckbox').innerHTML = 'Please select check box!.';
     }
     $("#stockTicketModal").modal("hide");
 }
 
-function addStockTicket(){
+function addStockTicket() {
     var productCode = document.getElementById("product_code").value;
     var addticket = document.getElementById("addticket");
-    if(productCode !== ''){
+    if (productCode !== '') {
         addticket.value = "addTicket";
         document.getElementById('otherForm').submit();
-    }   
+    }
 }
 
-function selectAll(){
-    var row = $('#TicketTable tr').length;     
+function selectAll() {
+    var row = $('#TicketTable tr').length;
     var check = 0;
     var unCheck = 0;
-    for(var i=1;i<row;i++){          
-        var selectAll = document.getElementById("selectAll"+i);
-        if(selectAll !== null && selectAll !== ''){
-            if(document.getElementById("selectAll"+i).checked){
+    for (var i = 1; i < row; i++) {
+        var selectAll = document.getElementById("selectAll" + i);
+        if (selectAll !== null && selectAll !== '') {
+            if (document.getElementById("selectAll" + i).checked) {
                 check++;
             } else {
                 unCheck++;
             }
-        }   
+        }
     }
 
-    if(check > unCheck){
-        for(var i=1;i<row;i++){
-            var selectAll = document.getElementById("selectAll"+i);
-            if(selectAll !== null && selectAll !== ''){
-                if(document.getElementById("selectAll"+i).checked){
-                        
-                } else { 
-                    document.getElementById("selectAll"+i).checked = true;                   
-                }    
-            }   
-        }
-    }
-            
-    if(check < unCheck){
-        for(var i=1;i<row;i++){
-            var selectAll = document.getElementById("selectAll"+i);
-            if(selectAll !== null && selectAll !== ''){
-                document.getElementById("selectAll"+i).checked = false;
-            }   
-        }
-    }
-         
-    if(check === 0 && unCheck !== 0){
-        for(var i=1;i<row;i++){
-            var selectAll = document.getElementById("selectAll"+i);
-            if(selectAll !== null && selectAll !== ''){
-                if(document.getElementById("selectAll"+i).checked){
-                        
-                } else { 
-                    document.getElementById("selectAll"+i).checked = true;
-                        
+    if (check > unCheck) {
+        for (var i = 1; i < row; i++) {
+            var selectAll = document.getElementById("selectAll" + i);
+            if (selectAll !== null && selectAll !== '') {
+                if (document.getElementById("selectAll" + i).checked) {
+
+                } else {
+                    document.getElementById("selectAll" + i).checked = true;
                 }
-            }    
-        }    
-    }
-            
-    if(check !== 0 && unCheck === 0){
-        for(var i=1;i<row;i++){
-            var selectAll = document.getElementById("selectAll"+i);
-            if(selectAll !== null && selectAll !== ''){
-                document.getElementById("selectAll"+i).checked = false;
-            }   
+            }
         }
     }
-            
-    if(check === unCheck){
-        for(var i=1;i<row;i++){
-            var selectAll = document.getElementById("selectAll"+i);
-            if(selectAll !== null && selectAll !== ''){
-                if(document.getElementById("selectAll"+i).checked){
-                        
-                } else { 
-                    document.getElementById("selectAll"+i).checked = true;                        
-                }    
-            }             
-        }            
+
+    if (check < unCheck) {
+        for (var i = 1; i < row; i++) {
+            var selectAll = document.getElementById("selectAll" + i);
+            if (selectAll !== null && selectAll !== '') {
+                document.getElementById("selectAll" + i).checked = false;
+            }
+        }
+    }
+
+    if (check === 0 && unCheck !== 0) {
+        for (var i = 1; i < row; i++) {
+            var selectAll = document.getElementById("selectAll" + i);
+            if (selectAll !== null && selectAll !== '') {
+                if (document.getElementById("selectAll" + i).checked) {
+
+                } else {
+                    document.getElementById("selectAll" + i).checked = true;
+
+                }
+            }
+        }
+    }
+
+    if (check !== 0 && unCheck === 0) {
+        for (var i = 1; i < row; i++) {
+            var selectAll = document.getElementById("selectAll" + i);
+            if (selectAll !== null && selectAll !== '') {
+                document.getElementById("selectAll" + i).checked = false;
+            }
+        }
+    }
+
+    if (check === unCheck) {
+        for (var i = 1; i < row; i++) {
+            var selectAll = document.getElementById("selectAll" + i);
+            if (selectAll !== null && selectAll !== '') {
+                if (document.getElementById("selectAll" + i).checked) {
+
+                } else {
+                    document.getElementById("selectAll" + i).checked = true;
+                }
+            }
+        }
     }
     removeAlertCheckbox();
 }
 
-function removeAlertCheckbox(){
+function removeAlertCheckbox() {
     document.getElementById('alertCheckbox').innerHTML = '';
 }
 

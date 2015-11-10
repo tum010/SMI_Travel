@@ -853,4 +853,46 @@ public class OtherBookingImpl implements OtherBookingDao{
         }
         return result;
     }   
+
+    @Override
+    public String checkStock(String productId, String date) {
+        util = new UtilityFunction();
+        String result = "notStock";
+        try {       
+            Session session = this.sessionFactory.openSession();
+            List<Stock> stockList = getIsStock(productId, date, session);
+            if(stockList.isEmpty()){
+                result = "notStock";
+                session.close();
+                return result;
+            }                       
+            
+            int ad = 0;
+            int ch = 0;
+            int inf = 0;
+            
+            List<StockDetail> stockDetailList = getStockByDate(productId, date, session);
+            for(int i=0;i<stockDetailList.size();i++){
+                String typeName = stockDetailList.get(i).getTypeId().getName();
+                if("ADULT".equalsIgnoreCase(typeName)){
+                    ad++;
+                    
+                } else if("CHILD".equalsIgnoreCase(typeName)){
+                    ch++;
+                    
+                } else if("INFANT".equalsIgnoreCase(typeName)){
+                    inf++;
+                } 
+            }
+
+            session.close();
+            result = ad+","+ch+","+inf;
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "notStock";
+        }
+        
+        return result;
+    }
 }

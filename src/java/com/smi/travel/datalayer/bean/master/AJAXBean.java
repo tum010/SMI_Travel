@@ -330,6 +330,16 @@ public class AJAXBean extends AbstractBean implements
                 }
                 result = otherBookingDao.searchOtherBooking(customer, filter);
             }
+            if ("getStock".equalsIgnoreCase(type)){
+                String productID = map.get("productid").toString();
+                String otherdate = map.get("otherdate").toString();
+                if ("".equalsIgnoreCase(productID) || "".equalsIgnoreCase(otherdate)) {
+                    result = "notStock";
+                } else {
+                    result = otherBookingDao.checkStock(productID, otherdate);
+                }               
+            }
+            
         } else if (BOOKLAND.equalsIgnoreCase(servletName)) {
             //result = customerdao.isExistCustomer(initialID, first, last);
             System.out.println("ajax : " + BOOKLAND);
