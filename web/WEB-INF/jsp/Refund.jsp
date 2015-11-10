@@ -80,7 +80,7 @@
             <input type="text" class="hidden" value="${param.referenceNo}" id="getUrl" >
             
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
-            <form action="Refund.smi" method="post" id="RefundForm"  name="RefundForm"  role="form" onsubmit="">
+            <form action="Refund.smi" method="post" id="RefundForm"  name="RefundForm"  role="form">
                 <input type="hidden" name="action" value="" id="action">
                 <input type="text" class="hidden" value="${referenceNo}" id="referenceNo" name="referenceNo">
                 <input type="text" class="hidden"  value="${airbookingid}" id="airbookingid" name="airbookingid">
@@ -174,8 +174,7 @@
                                                 <div class="input-group ">
                                                     <input type="hidden" class="form-control" name="refundById" id="refundById" value="${table1.airticketrefundid}">
                                                     <input type="hidden" class="form-control" name="refundticketid" id="refundticketid" value="${table1.id}">
-                                                    <input type="text" class="form-control" id="refundBy" name="refundBy" value="${table1.refundcode}"
-                                                           data-bv-notempty data-bv-notempty-message="The By is required">
+                                                    <input type="text" class="form-control" id="refundBy" name="refundBy" value="${table1.refundcode}">
                                                     <span class="input-group-addon" data-toggle="modal" data-target="#refundCustModal">
                                                         <span class="glyphicon-search glyphicon"></span>
                                                     </span>
@@ -209,16 +208,14 @@
                                                 <div class="input-group ">
                                                     <c:if test="${table1.receiveby == null}"> 
                                                         <input type="hidden" class="form-control" name="receiveById" id="receiveById" value="${refundbyidDefault}">
-                                                        <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${refundbyDefault}"
-                                                               data-bv-notempty data-bv-notempty-message="The By is required">
+                                                        <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${refundbyDefault}">
                                                         <span class="input-group-addon" data-toggle="modal" data-target="#receiveUserModal">
                                                             <span class="glyphicon-search glyphicon"></span>
                                                         </span>
                                                     </c:if>
                                                     <c:if test="${table1.receiveby != null}"> 
                                                         <input type="hidden" class="form-control" name="receiveById" id="receiveById" value="">
-                                                        <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${table1.receiveby}"
-                                                               data-bv-notempty data-bv-notempty-message="The By is required">
+                                                        <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${table1.receiveby}">
                                                         <span class="input-group-addon" data-toggle="modal" data-target="#receiveUserModal">
                                                             <span class="glyphicon-search glyphicon"></span>
                                                         </span>
@@ -369,8 +366,7 @@
                                         <div class="">
                                             <div class="input-group ">
                                                 <input type="hidden" class="form-control" name="refundById" id="refundById" value="">
-                                                <input type="text" class="form-control" id="refundBy" name="refundBy" value=""
-                                                       data-bv-notempty data-bv-notempty-message="The By is required">
+                                                <input type="text" class="form-control" id="refundBy" name="refundBy" value="">
                                                 <span class="input-group-addon" data-toggle="modal" data-target="#refundCustModal">
                                                     <span class="glyphicon-search glyphicon"></span>
                                                 </span>
@@ -671,59 +667,7 @@
             $("#RefundTicketDetailAdd").removeClass("hidden");
         </c:if>
 
-      $("#RefundForm")
-        .bootstrapValidator({
-            framework: 'bootstrap',
-            feedbackIcons: {
-                valid: 'uk-icon-check',
-                invalid: 'uk-icon-times',
-                validating: 'uk-icon-refresh'
-            },
-            fields: {                
-                refundBy: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        notEmpty: {
-                            message: 'Input refundBy '
-                        }
-                    }
-                },
-                refundByName: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        notEmpty: {
-                            message: 'Input refundByName'
-                        }
-                    }
-                },
-                receiveBy: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        notEmpty: {
-                            message: 'Input receiveBy'
-                        }
-                    }
-                },
-                receiveByName: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        notEmpty: {
-                            message: 'Input receiveByName'
-                        }
-                    }
-                }, 
-                receiveDate: {
-                    trigger: 'focus keyup change',
-                    validators: {
-                        notEmpty: {
-                            message: 'Input receiveDate'
-                        }
-                    }
-                }
-            }  
-        }).on('success.field.fv', function (e, data) {
-               $('#RefundForm').bootstrapValidator('revalidateField', 'refundBy');
-         });
+      validateRefundForm();
         
         $("#RefundTicketDetailTable").on("keyup", function () {
             var rowAll = $("#RefundTicketDetailTable tr").length;
@@ -861,6 +805,7 @@
         $("#refundBy").val(user_id);
         $("#refundByName").val(user_name);
         $("#refundCustModal").modal('hide');
+        validateRefundForm();
     });
     
     var userCode = [];
@@ -986,7 +931,59 @@
     $("#refundCustModal").modal('hide');
 }
 
-
+function validateRefundForm(){
+    $("#RefundForm")
+        .bootstrapValidator({
+            framework: 'bootstrap',
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {                
+                refundBy: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input refundBy '
+                        }
+                    }
+                },
+                refundByName: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input refundByName'
+                        }
+                    }
+                },
+                receiveBy: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input receiveBy'
+                        }
+                    }
+                },
+                receiveByName: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input receiveByName'
+                        }
+                    }
+                }, 
+                receiveDate: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Input receiveDate'
+                        }
+                    }
+                }
+            }  
+        });
+}
 function searchCustomerAutoList(name) {
     var servletName = 'BillableServlet';
     var servicesName = 'AJAXBean';
@@ -1123,16 +1120,6 @@ function saveRefund(){
     console.log("REf : " + refno.value +" ID : " + bookingid.value);
     $('#referenceNo').val(refno.value);
     $('#airbookingid').val(bookingid.value);
-    
-    var refundby = $('#refundBy').val();
-    var refundbyname = $('#refundByName').val();
-    var receiveby = $('#receiveBy').val();
-    var receivename = $('#receiveByName').val();
-    if(refundby === '' && receiveby === ''){
-        document.getElementById("buttonSaveRefund").disabled = true;
-    }else{  
-        document.getElementById('RefundForm').submit();
-    }
 }
 
 function addRefundDetail(counter){
