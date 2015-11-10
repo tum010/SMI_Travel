@@ -66,4 +66,6 @@ public interface MListItemDao {
     public List<MCreditBank> getListCreditBank();
     public List<MAirline> getListMAirlineCode();
     public List<MFinanceItemstatus> getListMFinanceItemstatus();
+    
+    public List<MAirlineAgent> getMAirlineAgentFromAirlineCode(String airlineCode);
 }

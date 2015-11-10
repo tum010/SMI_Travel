@@ -39,8 +39,8 @@ public class RefundAirlineService {
         this.ticketFareAirlineDao = ticketFareAirlineDao;
     }
 
-    public TicketFareAirline getTicketFareBookingFromTicketNo(String ticketNo) {
-        return this.ticketFareAirlineDao.getTicketFareFromTicketNo(ticketNo);
+    public TicketFareAirline getTicketFareBookingFromTicketNo(String ticketNo,String ticketId) {
+        return this.ticketFareAirlineDao.getTicketFareFromTicketNo(ticketNo,ticketId);
     }
 
     public RefundAirticket getRefundAirTicketFromRefundNo(String refundNo) {

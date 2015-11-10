@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.RefundDao;
+import com.smi.travel.datalayer.entity.AirticketBooking;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.AirticketRefund;
@@ -122,6 +123,11 @@ public class RefundImpl implements RefundDao{
                 }
                 result = "success";
             }
+            AirticketBooking airticketBooking = airticketrefund.getAirticketBooking();
+            if(refund != null){
+                session.save(airticketBooking);
+                 result = "success";
+            }
             
             transaction.commit();
             session.close();
@@ -158,6 +164,11 @@ public class RefundImpl implements RefundDao{
                     }
                 }
                 result = "success";
+            }
+            AirticketBooking airticketBooking = airticketrefund.getAirticketBooking();
+            if(refund != null){
+                session.save(airticketBooking);
+                 result = "success";
             }
             transaction.commit();
             session.close();

@@ -10,6 +10,8 @@ import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketFlightView;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
+import com.smi.travel.datalayer.entity.MAirlineAgent;
+import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.entity.TicketFareAirline;
 import com.smi.travel.datalayer.view.entity.InvoiceDetailView;
 import com.smi.travel.datalayer.view.entity.TicketFareView;
@@ -34,8 +36,8 @@ public class TicketFareAirlineService {
         return ticketFareAirlineDao.DeleteTicketFare(ticket);
     }
     
-    public TicketFareAirline getTicketFareFromTicketNo(String TicketNo){
-        return ticketFareAirlineDao.getTicketFareFromTicketNo(TicketNo);
+    public TicketFareAirline getTicketFareFromTicketNo(String TicketNo,String ticketId){
+        return ticketFareAirlineDao.getTicketFareFromTicketNo(TicketNo,ticketId);
     }
     
     public List<TicketFareView> getListTicketFare(TicketFareView ticket,int option){
@@ -76,7 +78,9 @@ public class TicketFareAirlineService {
         return ticketFareAirlineDao.getInvoiceDetailFromTicketNo(ticketNo);
     }
     
-
+    public List<RefundAirticketDetail> getRefundAirticketDetailFromTicketNo(String ticketNo){
+        return ticketFareAirlineDao.getRefundAirticketDetailFromTicketNo(ticketNo);
+    }
     //------------------------ Getter Setter TicketFareAirlineDao ------------------------ 
     
     public TicketFareAirlineDao getTicketFareAirlineDao() {

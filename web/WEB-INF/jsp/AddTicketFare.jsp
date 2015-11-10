@@ -15,6 +15,8 @@
 <c:set var="invoiceDetailList" value="${requestScope['invoiceDetailList']}" />
 <c:set var="receiptDetailList" value="${requestScope['receiptDetailList']}" />
 <c:set var="withholdingtax" value="${requestScope['withholdingtax']}" />
+<c:set var="VAT" value="${requestScope['VAT']}" />
+<c:set var="refundDetailList" value="${requestScope['refundDetailList']}" />
 
 <section class="content-header" >
     <h1>
@@ -54,8 +56,10 @@
             <hr/>
             
             <form action="AddTicketFare.smi" method="post" id="AddTicketFareForm" name="AddTicketFareForm" role="form">
+                <input type="hidden" name="isTempTicket" id="isTempTicket" value="${ticketFare.isTempTicket}">
                 <input type="hidden" name="masterId" id="masterId" value="${ticketFare.master.id}">
                 <input type="hidden" name="whtax" id="whtax" value="${withholdingtax}">
+                <input type="hidden" name="vat" id="vat" value="${VAT}">
                 <input type="hidden" name="ticketTemp" id="ticketTemp" value="">
                 <input type="hidden" name="ticketFareTemp" id="ticketFareTemp" value="">
                 <input type="hidden" name="ticketTaxTemp" id="ticketTaxTemp" value="">
@@ -120,6 +124,19 @@
                                     </c:when>
                                 </c:choose>
                                 <option value="A" ${selectedA}>AGENT</option>
+                                <c:choose>
+                                    <c:when test="${requestScope['TicketType'] == 'TI'}">
+                                        <c:set var="selectedTI" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                                <option value="TI" ${selectedTI}>TG Inter</option>
+                                
+                                <c:choose>
+                                    <c:when test="${requestScope['TicketType'] == 'TD'}">
+                                        <c:set var="selectedTD" value="selected" />
+                                    </c:when>
+                                </c:choose>
+                                <option value="TD" ${selectedTD}>TG Domestic</option>
                             </select>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
@@ -327,7 +344,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">
-                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control money" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" value="${ticketFare.invAmount}" readonly="">
+                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control money" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" value="${ticketFare.invAmount}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -344,7 +361,7 @@
                             <div class="col-xs-1" style="width: 200px">
                                 <div class="input-group">                                    
                                     <input id="diffVat" name="diffVat" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" onkeypress="return isNumberKey(event)" value="${ticketFare.diffVat}">
-                                    <span class="input-group-addon" id="caldiffvat"><span class="glyphicon glyphicon-usd"></span></span>
+                                    <span class="input-group-addon" id="caldiffvat"><span class=" glyphicon glyphicon-info-sign"></span></span>
                                 </div>
                             </div>
                         </div>
@@ -369,6 +386,20 @@
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
+                                    <div class="col-xs-1 text-right"  style="width: 136px"></div>
+                            <div class="col-xs-1 text-right"  style="width: 50px">
+                                <c:choose>
+                                    <c:when test="${ticketFare.isWaitPay == 1}">
+                                        <input type="checkbox" class="form-control" id="isWaitPay" name="isWaitPay" onclick="checkboxIsWaitPay(this)" value="1" checked/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="checkbox" class="form-control" id="isWaitPay" name="isWaitPay" onclick="checkboxIsWaitPay(this)" value="0"/>
+                                    </c:otherwise>
+                                </c:choose> 
+                            </div>
+                            <div class="col-xs-1"  style="width: 100px">
+                                <label class="control-label text-right">Wait Pay</label>
+                            </div>        
                         </div>        
                         <div class="col-xs-12" style="padding-top: 20px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
@@ -477,6 +508,8 @@
                                     </div>
                                 </div>
                             </div>         
+                        </div>                
+                        <div div class="col-sm-4" style="border-right:solid 1px #D9D9D9">
                             <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-4 control-label text-right">Little Comm </label>
                                 <div class="col-sm-6">
@@ -493,8 +526,8 @@
                                     </div>
                                 </div>                            
                             </div>
-                        </div>                
-                        <div div class="col-sm-4" style="border-right:solid 1px #D9D9D9">
+                        </div>
+                        <div div class="col-sm-4" >
                             <div class="row" style="padding-top: 20px">
                                 <label class="col-lg-4 control-label text-right">Add Pay </label>
                                 <div class="col-sm-6">
@@ -513,68 +546,13 @@
                                 </div>
                                 </div>
                             </div>
-                            <div class="row" style="padding-top: 20px">
-                                <label class="col-lg-4 control-label text-right">Dec Pay </label>
-                                <div class="col-sm-6"> 
-                                    <div class="input-group">                                    
-                                        <input id="decPay" name="decPay" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.decPay}" tabindex="7"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" style="padding-top: 20px">
-                                <label class="col-lg-4 control-label text-right">Date </label>
-                                <div class="col-sm-6"> 
-                                    <div class='input-group date' id='date1'>
-                                        <input id="decPayDate" name="decPayDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['decPayDate']}" tabindex="8"/>
-                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div div class="col-sm-4" >
-                            <div class="row" style="padding-top: 20px">
-                                <label class="col-lg-6 control-label text-right">Agent Comm Pay </label>
-                                <div class="col-sm-6"> 
-                                    <div class="input-group">                                    
-                                        <input id="agentComPay" name="agentComPay" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComPay}" tabindex="9"/>
-                                    </div>
-                                </div>
-                            </div>                            
-                            <div class="row" style="padding-top: 20px">
-                                <label class="col-lg-6 control-label text-right">Date </label>
-                                <div class="col-sm-6"> 
-                                    <div class='input-group date'>
-                                        <input id="agentPayDate" name="agentPayDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['agentPayDate']}" tabindex="10"/>
-                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" style="padding-top: 20px">
-                                <label class="col-lg-6 control-label text-right">Agent Comm Receive </label>
-                                <div class="col-sm-6"> 
-                                    <div class="input-group">                                    
-                                        <input id="agentComReceive" name="agentComReceive" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.agentComReceive}" tabindex="11"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" style="padding-top: 20px">
-                                <label class="col-lg-6 control-label text-right">Date </label>
-                                <div class="col-sm-6"> 
-                                    <div class='input-group date' id='date2'>
-                                        <input id="agentReceiveDate" name="agentReceiveDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['agentReceiveDate']}" tabindex="12"/>
-                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
-                                    </div>
-                                </div>   
-                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row" style="padding-bottom: 20px">
                     <div class="col-xs-12">
                         <div class="col-xs-12 text-center" >  
+                            <input type="hidden" name="airlinecode" id="airlinecode" value="">
                             <input type="hidden" name="action" id="action" value="">
                             <input type="hidden" name="temp" id="temp" value="">
                             <input type="hidden" name="invno" id="invno" value="${requestScope['invNo']}"> 
@@ -701,9 +679,40 @@
                         </table>
                     </div>
                 </div> 
-                    
-                    
-                    
+                <!----- Refund Detail ----->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Refund Detail</h4>
+                    </div> 
+                    <div class="panel-body">
+                        <table class="display" id="RefundDetailTable">
+                            <thead class="datatable-header">
+                                <tr>
+                                    <th style="width:5%;">No</th>
+                                    <th style="width:16%;">Airline Receive</th>
+                                    <th style="width:15%;">Receive Date</th>
+                                    <th style="width:17%;">Air Comm Receive</th>
+                                    <th style="width:15%;">Pay Date</th>
+                                    <th style="width:17%;">Agent Comm Receive</th>
+                                    <th style="width:15%;">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="table" items="${refundDetailList}" varStatus="dataStatus">
+                                    <tr>
+                                        <td align="center">${dataStatus.count}</td>
+                                        <td class="money">${table.receiveAirline}</td>
+                                        <td align="center">${table.refundAirticket.receiveDate}</td>
+                                        <td class="money">${table.airComission}</td>
+                                        <td align="center">${table.receiveDate}</td>
+                                        <td class="money">${table.agentComission}</td>
+                                        <td align="center">${table.expenseDate}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>    
             </form>                
         </div>
         
@@ -845,6 +854,38 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
+<!--List Refno Modal-->
+<div class="modal fade" id="ListTicketNoDuplicateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 40%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">List Ticket No</h4>
+            </div>
+            <div class="modal-body">
+                <table class="display" id="ListTicketNoDuplicateTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th style="width:15%;">No</th>
+                            <th style="width:35%;">Ticket No</th>
+                            <th style="width:35%;">Inv Amount</th>
+                            <th style="width:15%;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="ListTicketNoDuplicateOK" name="ListTicketNoDuplicateOK" type="button"  onclick="searchTicketNoNew()" class="btn btn-success" data-dismiss="modal">NEW</button>
+                <button id="ListTicketNoDuplicateClose" name="ListTicketNoDuplicateClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal-dialog -->
+
 <c:if test="${! empty requestScope['saveresult']}">
     <c:if test="${requestScope['saveresult'] =='save successful'}">        
         <script language="javascript">
@@ -859,12 +900,11 @@
         <!--<META HTTP-EQUIV="Refresh" CONTENT="0;URL=http://localhost:8080/SMITravel/AddTicketFare.smi">-->
     </c:if>
 </c:if>
-       
-        
-       
+
 <script type="text/javascript">
     setTicketDetailTemp = [];
     setTicketDetailByInvTemp = [];
+    setSelectTicketNoTemp = [];
     $(document).ready(function () {
         $('.datemask').mask('0000-00-00');
         
@@ -912,6 +952,16 @@
             "bLengthChange": false,
             "iDisplayLength": 10
         });
+        $('#ListTicketNoDuplicateTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+        });
+        
         
         //on modal List Ticket
         $("#filtercusInvno").keyup(function (event) {
@@ -1043,13 +1093,15 @@
             var vat = parseFloat(diffVat); 
             var tax = parseFloat(whtax);
             if(diffVat < 0) {
-    //          Little Comm =  (Diff vat * -1) *(100/(100+wh))
-                var littlecomm = (vat * (-1)) * (100/(100+tax));
+    //          Little Comm =  (Diff vat * -1)
+                var littlecomm = (vat * (-1)) ;
                 document.getElementById("litterCommission").value = formatNumber(littlecomm);
+                document.getElementById("litterDate").value = document.getElementById("invoiceDate").value ;
             }else if(diffVat > 0){
     //          Over Comm  =  (Diff vat ) *(100/(100+wh))
                 var overcomm = (vat) * (100/(100+tax));
                 document.getElementById("overCommission").value = formatNumber(overcomm);
+                document.getElementById("overDate").value = document.getElementById("invoiceDate").value ;
             }
         });
             
@@ -1075,20 +1127,7 @@
             setDataCurrency();
             calculateVat();
         });
-        
-        $("#agentComReceive").focusout(function(){
-            setFormatCurrency();
-            setDataCurrency();
-        });
-        $("#agentComPay").focusout(function(){
-            setFormatCurrency();
-            setDataCurrency();
-        });
         $("#addPay").focusout(function(){
-            setFormatCurrency();
-            setDataCurrency();
-        });
-        $("#decPay").focusout(function(){
             setFormatCurrency();
             setDataCurrency();
         });
@@ -1324,33 +1363,12 @@ function setFormatCurrency(){
     litterCommission = parseFloat(litterCommission); 
     document.getElementById("litterCommission").value = formatNumber(litterCommission);
     
-    var decPay = replaceAll(",","",$('#decPay').val()); 
-    if (decPay == ""){
-        decPay = 0;
-    }
-    decPay = parseFloat(decPay); 
-    document.getElementById("decPay").value = formatNumber(decPay);    
-    
     var addPay = replaceAll(",","",$('#addPay').val()); 
     if (addPay == ""){
         addPay = 0;
     }
     addPay = parseFloat(addPay); 
-    document.getElementById("addPay").value = formatNumber(addPay);    
-    
-    var agentComPay = replaceAll(",","",$('#agentComPay').val()); 
-    if (agentComPay == ""){
-        agentComPay = 0;
-    }
-    agentComPay = parseFloat(agentComPay); 
-    document.getElementById("agentComPay").value = formatNumber(agentComPay);
-    
-    var agentComReceive = replaceAll(",","",$('#agentComReceive').val()); 
-    if (agentComReceive == ""){
-        agentComReceive = 0;
-    }
-    agentComReceive = parseFloat(agentComReceive); 
-    document.getElementById("agentComReceive").value = formatNumber(agentComReceive);    
+    document.getElementById("addPay").value = formatNumber(addPay); 
     
     var airlineCharge = replaceAll(",","",$('#airlineCharge').val()); 
     if (airlineCharge == ""){
@@ -1410,24 +1428,9 @@ function setDataCurrency(){
         document.getElementById("litterCommission").value = ""; 
     }
     
-    var decPay = replaceAll(",","",$('#decPay').val()); 
-    if (decPay == "" || decPay == 0){
-        document.getElementById("decPay").value = ""; 
-    }
-    
     var addPay = replaceAll(",","",$('#addPay').val()); 
     if (addPay == "" || addPay == 0){
         document.getElementById("addPay").value = ""; 
-    }
-    
-    var agentComPay = replaceAll(",","",$('#agentComPay').val()); 
-    if (agentComPay == "" || agentComPay == 0){
-        document.getElementById("agentComPay").value = ""; 
-    }
-    
-    var agentComReceive = replaceAll(",","",$('#agentComReceive').val()); 
-    if (agentComReceive == "" || agentComReceive == 0){
-        document.getElementById("agentComReceive").value = ""; 
     }
     
     var airlineCharge = replaceAll(",","",$('#airlineCharge').val()); 
@@ -1487,26 +1490,14 @@ function saveAction(optionsave){
     overCommission.value = $("#overCommission").val();
     var litterCommission = document.getElementById('litterCommission');
     litterCommission.value = $("#litterCommission").val();
-    var decPay = document.getElementById('decPay');
-    decPay.value = $("#decPay").val();
     var addPay = document.getElementById('addPay');
     addPay.value = $("#addPay").val();
-    var agentComPay = document.getElementById('agentComPay');
-    agentComPay.value = $("#agentComPay").val();
-    var agentComReceive = document.getElementById('agentComReceive');
-    agentComReceive.value = $("#agentComReceive").val();
     var overDate = document.getElementById('overDate');
     overDate.value = $("#overDate").val();
     var litterDate = document.getElementById('litterDate');
     litterDate.value = $("#litterDate").val();
-    var decPayDate = document.getElementById('decPayDate');
-    decPayDate.value = $("#decPayDate").val();
     var addPayDate = document.getElementById('addPayDate');
     addPayDate.value = $("#addPayDate").val();
-    var agentPayDate = document.getElementById('agentPayDate');
-    agentPayDate.value = $("#agentPayDate").val();
-    var agentReceiveDate = document.getElementById('agentReceiveDate');
-    agentReceiveDate.value = $("#agentReceiveDate").val();
     var pvCode = document.getElementById('pvCode');
     pvCode.value = $("#pvCode").val(); 
     var pvType = document.getElementById('pvType');
@@ -1525,23 +1516,92 @@ function saveAction(optionsave){
 
 function searchTicketNo() {
     var ticketNo = $("#ticketNo").val();
-    var ticketnopanel = $("#ticketnopanel").val();
-    if(ticketNo == ""){
-        if(!$('#ticketnopanel').hasClass('has-feedback')) {
-            $('#ticketnopanel').addClass('has-feedback');
-        }
-        $('#ticketnopanel').removeClass('has-success');
-        $('#ticketnopanel').addClass('has-error');
-    }
-    else{
-        $('#ticketNo').focus();
-        var action = document.getElementById('action');
-        action.value = 'search';
-        var ticketNo = document.getElementById('ticketNo');
-        ticketNo.value = $("#ticketNo").val();
-        document.getElementById('AddTicketFareForm').submit();
-    }
+    FilterCheckTicketNoList(ticketNo);
+    
+//    var ticketnopanel = $("#ticketnopanel").val();
+//    if(ticketNo == ""){
+//        if(!$('#ticketnopanel').hasClass('has-feedback')) {
+//            $('#ticketnopanel').addClass('has-feedback');
+//        }
+//        $('#ticketnopanel').removeClass('has-success');
+//        $('#ticketnopanel').addClass('has-error');
+//    }
+//    else{
+//        $('#ticketNo').focus();
+//        var action = document.getElementById('action');
+//        action.value = 'search';
+//        var ticketNo = document.getElementById('ticketNo');
+//        ticketNo.value = $("#ticketNo").val();
+//        var ticketId = document.getElementById('ticketId');
+//        ticketId.value = $("#ticketId").val();
+//        document.getElementById('AddTicketFareForm').submit();
+//    }
 }
+
+function FilterCheckTicketNoList(ticketNo) {
+    var servletName = 'TicketFareAirlineServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&ticketNo=' + ticketNo +
+            '&type=' + 'checkTicketNo';
+    CallFilterCheckTicketNoList(param);
+}
+
+function CallFilterCheckTicketNoList(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+                
+                try { 
+                    if(msg == "null"){
+                        $('#ListTicketNoDuplicateTable').dataTable().fnClearTable();
+                        $('#ListTicketNoDuplicateTable').dataTable().fnDestroy();
+                        $('#ListTicketNoDuplicateTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": false,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 10
+                        });
+                    }else{
+                        $('#ListTicketNoDuplicateTable').dataTable().fnClearTable();
+                        $('#ListTicketNoDuplicateTable').dataTable().fnDestroy();
+                        $("#ListTicketNoDuplicateTable tbody").empty().append(msg);
+                        $('#ListTicketNoDuplicateTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": false,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength":10
+                        });
+                        $('#ListTicketNoDuplicateModal').modal('show');
+                        $("#ajaxload").addClass("hidden");
+                    }
+                } catch (e) {
+                    alert(e);
+                }
+
+            }, error: function (msg) {
+                 $("#ajaxload").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+    
+}   
 
 function FilterTicketList(referNo) {
     var servletName = 'TicketFareAirlineServlet';
@@ -1737,16 +1797,10 @@ function clearData(){
     $("#remark").val("");
     $("#overCommission").val("");
     $("#litterCommission").val("");
-    $("#decPay").val("");
     $("#addPay").val("");
-    $("#agentComPay").val("");
-    $("#agentComReceive").val("");
     $("#overDate").val("");
     $("#litterDate").val("");
-    $("#decPayDate").val("");
     $("#addPayDate").val("");
-    $("#agentPayDate").val("");
-    $("#agentReceiveDate").val("");
     $("#ticketCommDate").val("");
     $("#agentCommDate").val("");
     $('#FlightDeailTable').dataTable().fnClearTable();
@@ -1756,9 +1810,16 @@ function clearData(){
 }
 function calculateVat() {
 //Diff Vat = Inv Amount - Fare - Tax - Ins (ค่า Diff vat สามารถติดลบได้)
-//    Diffvat = INV Amount – Fare – Tax – Insurance – Ticcom
+//Diffvat = INV Amount – Fare – Tax – Insurance – Ticcom
     var ticketType = document.getElementById('ticketType').value;
-    if(ticketType == "A" || ticketType == "B"){
+    var ticketNo = document.getElementById('ticketNo').value;
+    
+    if(ticketType == "A" && ticketNo != ""){
+        var aircode = ticketNo.substr(0,3);
+        getMAirlineAgent(aircode);
+    }
+    
+    if(ticketType == "A" || ticketType == "B" || ticketType == "TI"){
         var invAmount = replaceAll(",","",$('#invoiceAmount').val()); 
         if (invAmount == ""){
             invAmount = 0;
@@ -1789,7 +1850,7 @@ function calculateVat() {
        var ticketComm = parseFloat(ticketCommission);
        var diffvat = inv - fare - tax - ins - ticketComm;
        document.getElementById("diffVat").value = formatNumber(diffvat);
-    } else if(ticketType == "D"){
+    } else if(ticketType == "D" || ticketType == "TD"){
         var invAmount = replaceAll(",","",$('#invoiceAmount').val()); 
         if (invAmount == ""){
             invAmount = 0;
@@ -1834,6 +1895,102 @@ function insertCommas(nField){
     }else{
         nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
     }
+}
+
+//function getMAirlineAgent(airlinecode){
+//
+//    document.getElementById('airlinecode').value = airlinecode;
+////    document.getElementById('ticketAirline').value = "1";
+////    document.getElementById('AddTicketFareForm').submit();
+//}
+
+function getMAirlineAgent(airlinecode) {
+    document.getElementById('airlinecode').value = airlinecode;
+    alert(airlinecode);
+    var servletName = 'TicketFareAirlineServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&airlineCode=' + airlinecode +
+            '&type=' + 'getMAirlineAgentByAirCode';
+    CallGetMAirlineAgent(param);
+}
+
+function CallGetMAirlineAgent(param) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+               document.getElementById('ticketAirline').value = msg;
+            }, error: function (msg) {
+                 $("#ajaxloadInvno").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}   
+
+
+function checkboxIsWaitPay(e) {
+    if(e.checked) {
+        document.getElementById("isWaitPay").value = "1";
+    }else{
+        document.getElementById("isWaitPay").value = "0";
+    }
+}
+
+function setSelectTicketNoDetail(ticketno,ticketid,invamount){
+    $('#ListTicketNoDuplicateModal').modal('hide');
+    setSelectTicketNoTemp.push({no:ticketno,id:ticketid,amount:invamount});
+    if(ticketid != "" ){
+        $.each(setSelectTicketNoTemp, function (key, value) {
+            $("#ticketNo").val(value.no);
+            $("#ticketId").val(value.id);
+            $("#invoiceAmount").val(value.amount);
+            $('#AddTicketFareForm').bootstrapValidator('revalidateField', 'ticketNo');
+            searchTicketNoAction();
+        });
+    }else{
+        $("#ticketNo").val(ticketno);
+        $("#ticketId").val(ticketid);
+        $("#invoiceAmount").val(invamount);
+        searchTicketNoAction();
+    }
+}
+
+function searchTicketNoAction(){
+    var ticketnopanel = $("#ticketnopanel").val();
+    if(ticketNo == ""){
+        if(!$('#ticketnopanel').hasClass('has-feedback')) {
+            $('#ticketnopanel').addClass('has-feedback');
+        }
+        $('#ticketnopanel').removeClass('has-success');
+        $('#ticketnopanel').addClass('has-error');
+    }
+    else{
+        $('#ticketNo').focus();
+        var action = document.getElementById('action');
+        action.value = 'search';
+        var ticketNo = document.getElementById('ticketNo');
+        ticketNo.value = $("#ticketNo").val();
+        var ticketId = document.getElementById('ticketId');
+        ticketId.value = $("#ticketId").val();
+        document.getElementById('AddTicketFareForm').submit();
+    }
+}
+
+function searchTicketNoNew(){
+    var ticketNo = document.getElementById('ticketNo');
+    ticketNo.value = $("#ticketNo").val();
+    var action = document.getElementById('action');
+    action.value = 'searchTicketnoNew';   
+    document.getElementById('AddTicketFareForm').submit();    
 }
 
 </script>

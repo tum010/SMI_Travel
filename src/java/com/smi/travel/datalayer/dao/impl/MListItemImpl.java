@@ -481,6 +481,19 @@ public class MListItemImpl implements MListItemDao {
         return mFinanceItemstatusList; 
     }
 
+    @Override
+    public List<MAirlineAgent> getMAirlineAgentFromAirlineCode(String airlineCode) {
+        String query = "From MAirlineAgent air where air.airlineCode = :aircode";
+        Session session = this.sessionFactory.openSession();
+        List<MAirlineAgent> MAirlineAgentList = session.createQuery(query).setParameter("aircode", airlineCode).list();
+        if (MAirlineAgentList.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return MAirlineAgentList;
+    }
+
     
   
 }

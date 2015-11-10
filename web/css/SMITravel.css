@@ -60,6 +60,10 @@ body{
     min-height: 0px;
 }
 
+#ListTicketNoDuplicateTable_wrapper{
+    min-height: 0px;
+}
+
 table.display , table.display th , table.display th tr, table.display  tr td{
     border: solid 1px #AAA; 
 }

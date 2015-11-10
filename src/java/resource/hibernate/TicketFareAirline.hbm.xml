@@ -20,7 +20,7 @@
             <column name="ticket_no" length="20" />
         </property>
         <property name="ticketType" type="string">
-            <column name="ticket_type" length="1" />
+            <column name="ticket_type" length="2" />
         </property>
         <property name="ticketBuy" type="string">
             <column name="ticket_buy" length="1" />
@@ -130,6 +130,15 @@
         </property>
         <property name="agentCommissionDate" type="date">
             <column name="agent_commission_date" length="10" />
+        </property>
+        <property name="isWaitPay" type="java.lang.Integer">
+            <column name="is_wait_pay" />
+        </property>
+        <property name="wht" type="big_decimal">
+            <column name="wht" precision="10" />
+        </property>
+        <property name="isTempTicket" type="java.lang.Integer">
+            <column name="is_temp_ticket" />
         </property>
         <bag name="paymentAirticketFares" table="payment_airticket_fare" inverse="true" lazy="true" fetch="select">
             <key>

@@ -54,6 +54,9 @@ public class TicketFareAirline {
      private Date ticketCommissionDate;
      private Date agentCommissionDate;
      private BigDecimal vat;
+     private Integer isWaitPay;
+     private BigDecimal wht;
+     private Integer isTempTicket;
      private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
      private List refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
      private List ticketFareInvoices = new LinkedList<TicketFareInvoice>();
@@ -434,6 +437,30 @@ public class TicketFareAirline {
 
     public void setVat(BigDecimal vat) {
         this.vat = vat;
+    }
+
+    public Integer getIsWaitPay() {
+        return isWaitPay;
+    }
+
+    public void setIsWaitPay(Integer isWaitPay) {
+        this.isWaitPay = isWaitPay;
+    }
+
+    public BigDecimal getWht() {
+        return wht;
+    }
+
+    public void setWht(BigDecimal wht) {
+        this.wht = wht;
+    }
+
+    public Integer getIsTempTicket() {
+        return isTempTicket;
+    }
+
+    public void setIsTempTicket(Integer isTempTicket) {
+        this.isTempTicket = isTempTicket;
     }
 
     

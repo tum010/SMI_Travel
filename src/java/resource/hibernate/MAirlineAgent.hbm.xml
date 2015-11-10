@@ -13,6 +13,9 @@
         <property name="name" type="string">
             <column name="name" length="100" not-null="true" />
         </property>
+        <property name="airlineCode" type="string">
+            <column name="airline_code" length="3" />
+        </property>
         <bag name="ticketFareAirlines" table="ticket_fare_airline" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="airline_agent_id" />

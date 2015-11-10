@@ -238,6 +238,10 @@ public class UtilityService {
         return listitemdao.getListMAirLineAgent();
     }
     
+    public List<MAirlineAgent> getMAirlineAgentFromAirlineCode(String airlineCode){
+        return listitemdao.getMAirlineAgentFromAirlineCode(airlineCode);
+    }
+    
     public List<MAirline> getListMAirlineCode() {
         return listitemdao.getListMAirlineCode();
     }

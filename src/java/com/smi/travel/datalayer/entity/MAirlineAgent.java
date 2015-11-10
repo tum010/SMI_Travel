@@ -14,19 +14,22 @@ public class MAirlineAgent {
      private String id;
      private String code;
      private String name;
+     private String airlineCode;
      private List ticketFareAirlines = new LinkedList<TicketFareAirline>();
 
     public MAirlineAgent() {
     }
 
-    public MAirlineAgent(String code, String name) {
+    public MAirlineAgent(String code, String name , String airlineCode) {
         this.code = code;
         this.name = name;
+        this.airlineCode = airlineCode;
     }
     
-    public MAirlineAgent(String code, String name, List ticketFareAirlines) {
+    public MAirlineAgent(String code, String name , String airlineCode , List ticketFareAirlines) {
        this.code = code;
        this.name = name;
+       this.airlineCode = airlineCode;
        this.ticketFareAirlines = ticketFareAirlines;
     }
    
@@ -60,6 +63,14 @@ public class MAirlineAgent {
 
     public void setTicketFareAirlines(List ticketFareAirlines) {
         this.ticketFareAirlines = ticketFareAirlines;
+    }
+
+    public String getAirlineCode() {
+        return airlineCode;
+    }
+
+    public void setAirlineCode(String airlineCode) {
+        this.airlineCode = airlineCode;
     }
 
 }
