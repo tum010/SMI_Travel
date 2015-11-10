@@ -28,6 +28,12 @@
         <property name="receiveDate" type="date">
             <column name="receive_date" length="10" />
         </property>
+        <property name="address" type="string">
+            <column name="address" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="status" />
+        </property>
         <bag name="refundAirticketDetails" table="refund_airticket_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="refund_id" />

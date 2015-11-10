@@ -165,6 +165,7 @@
                         <table id="RefundAirlineTable" class="display" cellspacing="0" width="100%">
                             <thead>
                                 <tr class="datatable-header" >
+                                    <th style="width:5%;" rowspan="2" >Chg</th>
                                     <th style="width:13%;">Ticket No</th>
                                     <th style="width:22%;">Sector Refund</th>
                                     <th style="width:10%;" >Receive</th>
@@ -190,6 +191,16 @@
                                     <tr row="${index}">
                                 <input type="hidden" name="detailId${index}" id="detailId${index}" colName="detailId" value="${detail.id}">
                                 <input type="hidden" id="ticketId${index}" name="ticketId${index}" colName="ticketId" value="${detail.airticketPassenger.id}">
+                                <td rowspan='2' class="text-center">
+                                    <c:choose>
+                                        <c:when test="${detail.refundCharge == 1}">
+                                            <input type="checkbox" class="form-control" id="checkCharge${varRefundAirline.count}" name="checkCharge${varRefundAirline.count}" onclick="checkboxCharge(this)" value="1" checked/>
+                                        </c:when>
+                                        <c:when test="${detail.refundCharge == 0}">
+                                            <input type="checkbox" class="form-control" id="checkCharge${varRefundAirline.count}" name="checkCharge${varRefundAirline.count}" onclick="checkboxCharge(this)" value="0"/>
+                                        </c:when>
+                                    </c:choose>    
+                                </td>
                                 <td style="text-align:center"> <input id="ticketNo${index}" name="ticketNo${index}" colName="ticketNo" type="text" class="form-control" value="${detail.ticketFareAirline["TicketNo"]}"></td>
                                 <td style="text-align:center"> <input id="refund${index}" name="refund${index}" colName="refund" type="text" class="form-control" value="${detail.sectorRefund}" onfocusout="checkRefund(this)"></td>
                                 <td style="text-align:center"> <input id="Receive${index}" name="receive${index}" colName="receive" onfocusout="calculateProfit(this)" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.receiveAirline}"></td>
@@ -424,6 +435,7 @@
             <tr>
         <input type="hidden" name="detailId" id="detailId" colName="detailId" value="">
         <input type="hidden" id="ticketId" name="ticketId" colName="ticketId" value="">
+        <td rowspan='2'> <input id="checkCharge" name="checkCharge" colName="checkCharge" type="checkbox" class="form-control text-center" onclick="checkboxCharge(this)" value=""></td>
         <td style="text-align:center"> <input id="ticketNo" name="ticketNo" colName="ticketNo" type="text" class="form-control" value=""></td>
         <td style="text-align:center"> <input id="refund" name="refund" colName="refund" type="text" maxlength="255" class="form-control" value="" onfocusout="checkRefund(this)"></td>
         <td style="text-align:center"> <input id="receive" name="receive" colName="receive" onfocusout="calculateProfit(this)" type="text" class="form-control text-right decimal" value=""></td>
@@ -526,6 +538,7 @@
                 '<tr>' +
                 '<td class="hidden"><input id="refundId' + row + '" name="refundId' + row + '"  type="text">' +
                 '<td class="hidden"><input id="refundCount' + row + '" name="refundCount"  type="text" value="' + row + '">' +
+                '<td><input id="checkCharge-' + row + '" name="checkCharge-' + row + '" type="text" class="form-control" value="' + row + '"  onclick="checkboxCharge(this)" ></td>' +
                 '<td><input id="ticketNo-' + row + '" name="ticketNo-' + row + '"  type="text" class="form-control" maxlength="20"></td>' +
                 '<td><div class="input-group daydatepicker" id="daydatepicker-' + row + '" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="ticketDate-' + row + '" name="ticketDate-' + row + '" data-date-format="YYYY-MM-DD"/><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
                 '<td><input id="dept-' + row + '" name="dept-' + row + '"  type="text" class="form-control" maxlength="20"></td>' +

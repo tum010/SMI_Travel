@@ -37,6 +37,12 @@
         <property name="receiveDate" type="date">
             <column name="receive_date"   />
         </property>
+        <property name="refundCharge" type="java.lang.Integer">
+            <column name="refund_charge" />
+        </property>
+        <property name="ticketNo" type="string">
+            <column name="ticket_no" length="50" />
+        </property>
         <bag name="paymentAirticketRefunds" table="payment_airticket_refund" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="refund_detail_id" />

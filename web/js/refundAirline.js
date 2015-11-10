@@ -623,3 +623,13 @@ function calculateProfit(e){
 function replaceAll(find, replace, str) {
   return str.replace(new RegExp(find, 'g'), replace);
 }
+
+function checkboxCharge(e) {
+    var charge = e.value;
+    var row = $(e).parent().parent().attr("row");
+    if(e.checked) {
+        document.getElementById("checkCharge"+row).value = "1";
+    }else{
+        document.getElementById("checkCharge"+row).value = "0";
+    }
+}

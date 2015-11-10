@@ -428,7 +428,7 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         
         session.close();
         this.sessionFactory.close();
-        return code;
+        return "A"+code;
     }
     
     private boolean IsExistPaymentAirticketFare(String paymentAirId) {

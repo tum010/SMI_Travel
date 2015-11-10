@@ -151,6 +151,16 @@ public class RefundAirlineController extends SMITravelController {
                     String agentCom = request.getParameter("agentCom" + i);
                     String paydate = request.getParameter("paydate" + i);
                     String receivedate = request.getParameter("receivedate" + i);
+                    String checkCharge = request.getParameter("checkCharge" + i);
+                    String ticketNo = request.getParameter("ticketNo" + i);
+                    
+                    detail.setTicketNo(ticketNo);
+                    System.out.println(" checkCharge " + checkCharge);
+                    if("1".equalsIgnoreCase(checkCharge)){
+                        detail.setRefundCharge(1);
+                    }else{
+                        detail.setRefundCharge(0);
+                    }
                     detail.setId(detailId);
                     AirticketPassenger ticket = new AirticketPassenger();
                     ticket.setId(ticketId);

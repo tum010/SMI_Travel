@@ -67,6 +67,13 @@ public class RefundAirticketImpl implements RefundAirticketDao{
             dbRefund.setAgent(refund.getAgent());
             dbRefund.setReceiveBy(refund.getReceiveBy());
             dbRefund.setReceiveDate(refund.getReceiveDate());
+            if(dbRefund.getStatus() == null || "".equalsIgnoreCase(String.valueOf(dbRefund.getStatus()))){
+                dbRefund.setStatus(2);
+                dbRefund.setRemark("ทำ Refund โดยไม่ผ่านจากทาง sale");
+            }else if(dbRefund.getStatus() == 0){
+                dbRefund.setStatus(1);
+                dbRefund.setRemark("เปลี่ยนสถานะจาก Refund ฝั่ง sale มาเป็นฝั่ง Refund แล้ว");
+            }
             session.update(dbRefund);
             for (int i = 0; i < refund.getRefundAirticketDetails().size(); i++) {
                 RefundAirticketDetail detail = (RefundAirticketDetail) refund.getRefundAirticketDetails().get(i);

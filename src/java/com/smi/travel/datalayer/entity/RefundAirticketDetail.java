@@ -26,6 +26,8 @@ public class RefundAirticketDetail {
      private BigDecimal profit;
      private Date receiveDate;
      private Date expenseDate;
+     private Integer refundCharge;
+     private String ticketNo;
      
      private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
      private Map<String, Object> ticketFareAirline;
@@ -159,6 +161,22 @@ public class RefundAirticketDetail {
      */
     public void setTicketFareAirline(Map<String, Object> ticketFareAirline) {
         this.ticketFareAirline = ticketFareAirline;
+    }
+
+    public Integer getRefundCharge() {
+        return refundCharge;
+    }
+
+    public void setRefundCharge(Integer refundCharge) {
+        this.refundCharge = refundCharge;
+    }
+
+    public String getTicketNo() {
+        return ticketNo;
+    }
+
+    public void setTicketNo(String ticketNo) {
+        this.ticketNo = ticketNo;
     }
 
 }

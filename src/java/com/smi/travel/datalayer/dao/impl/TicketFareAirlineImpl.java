@@ -144,7 +144,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         }
         session.close();
         this.sessionFactory.close();
-        return PVCode.replace("-","");
+        return "R"+PVCode.replace("-","");
     }
         
     @Override

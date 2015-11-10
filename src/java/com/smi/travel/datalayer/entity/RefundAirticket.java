@@ -19,6 +19,8 @@ public class RefundAirticket {
      private String remark;
      private String receiveBy;
      private Date receiveDate;
+     private String address;
+     private Integer status;
      private List<RefundAirticketDetail> refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
 
     public RefundAirticket() {
@@ -110,6 +112,22 @@ public class RefundAirticket {
      */
     public void setReceiveBy(String receiveBy) {
         this.receiveBy = receiveBy;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
 }
