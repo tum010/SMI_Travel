@@ -135,77 +135,9 @@ $(document).ready(function() {
             console.log("positon :" + position.top);
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
         });
-        
-//    $("#BillAirAgent").bootstrapValidator({
-//        framework: 'bootstrap',
-//        feedbackIcons: {
-//            valid: 'uk-icon-check',
-//            invalid: 'uk-icon-times',
-//            validating: 'uk-icon-refresh'
-//        },
-//        fields: {
-//            invoiceFromDate: {
-//                trigger: 'focus keyup change',
-//                validators: {
-//                    date: {
-//                        format: 'YYYY-MM-DD',
-//                        max: 'InvoiceToDate',
-//                        message: 'The Date From is not a valid'
-//                    }
-//                }
-//            },
-//            InvoiceToDate: {
-//                trigger: 'focus keyup change',
-//                validators: {
-//                    date: {
-//                        format: 'YYYY-MM-DD',
-//                        min: 'invoiceFromDate',
-//                        message: 'The Date To is not a valid'
-//                    }
-//                }
-//            },
-//            issueFrom: {
-//                trigger: 'focus keyup change',
-//                validators: {
-//                    date: {
-//                        format: 'YYYY-MM-DD',
-//                        min: 'issueTo',
-//                        message: 'The Date To is not a valid'
-//                    }
-//                }
-//            },
-//            issueTo: {
-//                trigger: 'focus keyup change',
-//                validators: {
-//                    date: {
-//                        format: 'YYYY-MM-DD',
-//                        min: 'issueFrom',
-//                        message: 'The Date To is not a valid'
-//                    }
-//                }
-//            },
-//            refundFrom: {
-//                trigger: 'focus keyup change',
-//                validators: {
-//                    date: {
-//                        format: 'YYYY-MM-DD',
-//                        min: 'refundTo',
-//                        message: 'The Date To is not a valid'
-//                    }
-//                }
-//            },
-//            refundTo: {
-//                trigger: 'focus keyup change',
-//                validators: {
-//                    date: {
-//                        format: 'YYYY-MM-DD',
-//                        min: 'refundFrom',
-//                        message: 'The Date To is not a valid'
-//                    }
-//                }
-//            }
-//        }
-//    }).on('success.field.fv', function (e, data) {
+//        validateBillAirAgent();
+    
+//            .on('success.field.fv', function (e, data) {
 //        if (data.field === 'invoiceFromDate' && data.fv.isValidField('InvoiceToDate') === false) {
 //                data.fv.revalidateField('InvoiceToDate');
 //        }
@@ -280,15 +212,19 @@ function printBillAirAgent(){
     var salebyUsers = document.getElementById("salebyUser").value;
     var termPays = document.getElementById("termPay").value;
     var paymentType = document.getElementById("paymentType").value;
-    
-    if((invoiceFrom !== '') && (invoiceTo !== '')){
-        window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays +"$paymentType="+paymentType);
-    }else if((issueFrom !== '') && (issueTo !== '')){
-        window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays);
-    }else if((refundFrom !== '') && (refundFrom !== '')){
-    window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo + "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays);
-    }else {
-        validateDate();  
+    console.log("Agent : " + agentCode);
+    if(agentCode !== ''){
+        if((invoiceFrom !== '') && (invoiceTo !== '')){
+            window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays +"$paymentType="+paymentType);
+        }else if((issueFrom !== '') && (issueTo !== '')){
+            window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays);
+        }else if((refundFrom !== '') && (refundFrom !== '')){
+            window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo + "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays);
+        }else {
+            validateDate();  
+        }
+    }else{
+        validateBillAirAgent();  
     }
     
 //    if(reportType == 1){
@@ -526,6 +462,8 @@ function validateDate(date,option){
         $("#issuetodatepanel").removeClass("has-success"); 
         $("#refundfromdatepanel").removeClass("has-success");
         $("#refundtodatepanel").removeClass("has-success"); 
+        $("#agentcodepanel").removeClass("has-success"); 
+        $("#agentnamepanel").removeClass("has-success"); 
         
         $("#invfromdatepanel").addClass("has-error");
         $("#invtodatepanel").addClass("has-error");
@@ -533,7 +471,10 @@ function validateDate(date,option){
         $("#issuetodatepanel").addClass("has-error");
         $("#refundfromdatepanel").addClass("has-error");
         $("#refundtodatepanel").addClass("has-error");
+        $("#agentcodepanel").addClass("has-error"); 
+        $("#agentnamepanel").addClass("has-error"); 
         $("#printbutton").addClass("disabled");
     }
+   
 }
     
