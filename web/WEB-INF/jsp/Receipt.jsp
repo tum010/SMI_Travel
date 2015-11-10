@@ -2229,47 +2229,53 @@ function saveReceipt(){
     var receiveFromDate = document.getElementById('receiveFromDate').value;
     var inputStatus = document.getElementById('inputStatus').value;
     
-    if(inputStatus !== '7'){
-        var sumAmountBeforeSave = document.getElementById('sumAmountBeforeSave').value;
-        var grandTotal = document.getElementById('grandTotal').value;
+    for(i = 1 ; i < counter.value-1 ; i++ ){
+        var amountTemp = document.getElementById('receiveAmountTemp'+i).value;
+        var amount = document.getElementById('receiveAmount'+i).value;
+        amount = replaceAll(",","",amount.toString());
+        
+        if(amount > amountTemp){
+            $('#textAlertReceiveAmount').show();
+            checksave = 2;
+        }else{
+            if(inputStatus !== '7'){
+                alert('111111');
+                var sumAmountBeforeSave = document.getElementById('sumAmountBeforeSave').value;
+                var grandTotal = document.getElementById('grandTotal').value;
 
-        for(i = 1 ; i < counter.value-1 ; i++ ){
-            var amountTemp = document.getElementById('receiveAmountTemp'+i).value;
-            var amount = document.getElementById('receiveAmount'+i).value;
-            if(amount > amountTemp){
-                $('#textAlertReceiveAmount').show();
-                checksave = 2;
-            }else{
                 if(grandTotal === sumAmountBeforeSave){
                     $('#textAlertReceiveAmount').hide();
                 }else{
                     $('#textAlertReceiveAmount').show();
                     checksave = 2;
                 }
-            }
-        }
 
-        if(checksave === 1){
-            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
-            $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
-            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
-            $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
-            if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
-                document.getElementById('ReceiptForm').submit();
+                if(checksave === 1){
+                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
+                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
+                    if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
+                        document.getElementById('ReceiptForm').submit();
+                    }
+                    $('#textAlertReceiveAmount').hide();
+                }
+            }else{
+                alert('22222');
+                if(checksave === 1){
+                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
+                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
+
+                    if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
+                        document.getElementById('ReceiptForm').submit();
+                    }
+
+                    $('#textAlertReceiveAmount').hide();
+                }
             }
-            $('#textAlertReceiveAmount').hide();
         }
-    }else{
-        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
-        $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
-        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
-        $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
-        
-        if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
-            document.getElementById('ReceiptForm').submit();
-        }
-        
-        $('#textAlertReceiveAmount').hide();
     }
 }
 
