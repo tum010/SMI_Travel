@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="45"/>
-	<property name="ireport.y" value="60"/>
+	<property name="ireport.y" value="252"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -435,7 +435,7 @@
 			<textField>
 				<reportElement x="76" y="68" width="280" height="28" uuid="8ff6f4f1-b2a6-458d-b125-2c974c401d32"/>
 				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="13" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{textamount}]]></textFieldExpression>
 			</textField>

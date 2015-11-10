@@ -29,8 +29,14 @@ public class DefineVarImpl extends HibernateDaoSupport implements DefineVarDao {
 	public String saveVariable(List<MDefaultData> datas) {
 		int result = 0;
 		try {
+                        int i = 0;
 			for (MDefaultData data : datas) {
-				getHibernateTemplate().save(data);
+                            if((!"".equalsIgnoreCase(datas.get(i).getId())) && (datas.get(i).getId() != null)){
+				getHibernateTemplate().update(data);
+                            }else{
+                                getHibernateTemplate().save(data);
+                            }
+                            i++;
 			}
 			result = 1;
 		} catch (Exception e) {

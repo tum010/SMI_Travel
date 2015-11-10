@@ -51,7 +51,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
             List<TaxInvoiceDetail> taxInvoiceDetail = tax.getTaxInvoiceDetails();
             if(taxInvoiceDetail != null){
                 for (int i = 0; i < taxInvoiceDetail.size(); i++) {
-                    System.out.println("Tax Invoice Detail Id : "+taxInvoiceDetail.get(i).getInvoiceDetail().getId());
+//                    System.out.println("Tax Invoice Detail Id : "+taxInvoiceDetail.get(i).getInvoiceDetail().getId());
                     session.save(taxInvoiceDetail.get(i));
                 }
             }

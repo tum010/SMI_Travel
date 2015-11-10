@@ -2840,10 +2840,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
         BigDecimal sumTotalComRefundReceive =  new BigDecimal(0);
         BigDecimal sumTotalPayment =  new BigDecimal(0);
         BigDecimal sumTotalCompay =  new BigDecimal(0);
+        BigDecimal sumTotalCompaySub =  new BigDecimal(0);
         BigDecimal sumPayRefundAmount =  new BigDecimal(0);
         BigDecimal sumVatComPay =  new BigDecimal(0);
         BigDecimal SumVatReceive =  new BigDecimal(0);
         BigDecimal vatComPay =  new BigDecimal(0);
+        BigDecimal vatPay =  new BigDecimal(0);
         BigDecimal vatReceive =  new BigDecimal(0);
         BigDecimal totalCom =  new BigDecimal(0);
         BigDecimal balancePayment =  new BigDecimal(0);
@@ -2857,7 +2859,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
             sumComPay = sumComPay.add(new BigDecimal(listAgent.get(i).getCompay()));
             sumVatComPay = sumVatComPay.add(new BigDecimal(listAgent.get(i).getCompayvat()));
             sumTotalComRefundReceive = sumTotalComRefundReceive.add(new BigDecimal(listAgent.get(i).getAgentcomrefund()));
-            sumPayRefundAmount = sumPayRefundAmount.add(new BigDecimal(listAgent.get(i).getPaycusrefund()));
+           
             System.out.println("Sale Price : " + listAgent.get(i).getSaleprice() + "  Sum Sale Price : " + sumSalePrice);
             System.out.println("Amount Air : " + listAgent.get(i).getAmountair() + "  Sum Amount Air : " + sumAmountAir);
             System.out.println("Com Pay : " + listAgent.get(i).getCompay() + "  Sum Com Pay : " + sumComPay);
@@ -2867,18 +2869,24 @@ public class ExportDataToExcelView extends AbstractExcelView {
         
         for (int i = 0; i < listAgentRefund.size(); i++) {
             sumComReceive = sumComReceive.add(new BigDecimal(listAgentRefund.get(i).getComm_rec()));
+            sumPayRefundAmount = sumPayRefundAmount.add(new BigDecimal(listAgentRefund.get(i).getAmountpay()));
             SumVatReceive = SumVatReceive.add(new BigDecimal(listAgentRefund.get(i).getVat()));
             System.out.println("Com Receive : " + listAgent.get(i).getAgentcom() + "  Sum Com Receive : " + sumComReceive);
         }
         DecimalFormat df = new DecimalFormat("#,###.00");
         sumTotalPayment = sumSalePrice.add(sumTotalComRefundReceive);
         sumTotalCompay = sumComPay.subtract(sumTotalComRefundReceive);
+        sumTotalCompaySub = sumTotalCompay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
+        
         vatComPay = sumTotalCompay.multiply(new BigDecimal(0.07));
-        vatReceive = sumComReceive.multiply(new BigDecimal(0.07));
-        totalCom = sumComPay.add(sumComReceive);
+        vatPay =  vatComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
+        
+//        vatReceive = sumComReceive.multiply(new BigDecimal(0.07));
+        totalCom = sumTotalCompaySub.add(sumComReceive);
+        sumPayRefundAmount = sumPayRefundAmount.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
         
         balancePayment = sumTotalPayment.subtract(vatComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE)));
-        balancePayment = balancePayment.add(vatReceive);
+        balancePayment = balancePayment.add(SumVatReceive);
         balancePayment = balancePayment.subtract(sumPayRefundAmount);
         
         checkResult = sumTotalCompay.add(vatComPay);
@@ -2895,14 +2903,24 @@ public class ExportDataToExcelView extends AbstractExcelView {
         withHoldingTax = withHoldingTax.divide(vatTemp,MathContext.DECIMAL128);
         withHoldingTax = withHoldingTax.multiply(new BigDecimal(0.3));
         
-        System.out.println(">>>>>>>>>>> sumTotalPayment : " + df.format(sumTotalPayment));
-        System.out.println(">>>>>>>>>>> sumTotalCompay : " + df.format(sumTotalCompay));
-        System.out.println(">>>>>>>>>>> vatComPay : " + df.format(vatComPay));
-        System.out.println(">>>>>>>>>>> totalCom : " + df.format(totalCom));
-        System.out.println(">>>>>>>>>>> balancePayment : " + df.format(balancePayment));
-        System.out.println(">>>>>>>>>>> checkResult : " + df.format(checkResult));
-        System.out.println(">>>>>>>>>>> midValue : " + df.format(midValue));
-        System.out.println(">>>>>>>>>>> withHoldingTax : " + df.format(withHoldingTax));
+        System.out.println(">>>>>>>>>>> Total Sale Price : " + df.format(sumSalePrice));
+        System.out.println(">>>>>>>>>>> Total Com Refund Receive : " + df.format(sumTotalComRefundReceive));
+        System.out.println(">>>>>>>>>>> Total Payment : " + df.format(sumTotalPayment));
+        System.out.println(">>>>>>>>>>> Com Pay (Less) : " + df.format(sumTotalCompaySub));
+        System.out.println(">>>>>>>>>>> Com Receive (Less) : " + df.format(sumComReceive));
+        System.out.println(">>>>>>>>>>> Total Com : " + df.format(totalCom));
+        System.out.println(">>>>>>>>>>> Vat pay (Less) : " + df.format(vatPay));
+        System.out.println(">>>>>>>>>>> Vat receive (Less) : " + df.format(SumVatReceive));
+        System.out.println(">>>>>>>>>>> Pay Refund Amount (Less): " + df.format(sumPayRefundAmount));
+        System.out.println(">>>>>>>>>>> Balance payment : " + df.format(balancePayment));
+        System.out.println(">>>>>>>>>>> Amount Air Sale : " + df.format(sumAmountAir));
+        System.out.println(">>>>>>>>>>> Com Pay : " + df.format(sumComPay));
+        System.out.println(">>>>>>>>>>> Com Receive : " + df.format(sumComReceive));
+        System.out.println(">>>>>>>>>>> Total Com Pay : " + df.format(sumTotalCompay));
+        System.out.println(">>>>>>>>>>> Vat Com Pay : " + df.format(vatComPay));
+        System.out.println(">>>>>>>>>>> With holding : " + df.format(withHoldingTax));
+        System.out.println(">>>>>>>>>>> Mid Value : " + df.format(midValue));
+        System.out.println(">>>>>>>>>>> Check Result : " + df.format(checkResult));
         
         HSSFRow row8 = sheet.createRow(7);
                 HSSFCell cell81 = row8.createCell(0);
@@ -3048,7 +3066,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         cell151.setCellStyle(styleAlignRight);
                         sheet.autoSizeColumn(0);
                 HSSFCell cell1511 = row15.createCell(1);
-                        cell1511.setCellValue(df.format(sumTotalCompay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE))));
+                        cell1511.setCellValue(df.format(sumTotalCompaySub));
                         cell1511.setCellStyle(styleAlignRight);
                         sheet.addMergedRegion(CellRangeAddress.valueOf("B15:D15"));
                         sheet.autoSizeColumn(1);
@@ -3057,7 +3075,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         cell152.setCellStyle(styleAlignRight);
                         sheet.autoSizeColumn(4);
                 HSSFCell cell1521 = row15.createCell(5);
-                        cell1521.setCellValue(df.format(sumVatComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE))));
+                        cell1521.setCellValue(df.format(vatPay));
                         cell1521.setCellStyle(styleAlignRight);
                         row15.createCell(7).setCellStyle(styleAlignRightBorderRight);
                         sheet.autoSizeColumn(5);
@@ -3077,7 +3095,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         cell161.setCellStyle(styleAlignRight);
                         sheet.autoSizeColumn(0);
                 HSSFCell cell1611 = row16.createCell(1);
-                        cell1611.setCellValue("");
+                        cell1611.setCellValue(df.format(sumComReceive));
                         cell1611.setCellStyle(styleAlignRight);
                         sheet.addMergedRegion(CellRangeAddress.valueOf("B16:D16"));
                         sheet.autoSizeColumn(1);
@@ -3118,7 +3136,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         sheet.autoSizeColumn(9);
                         row9.createCell(10).setCellValue("");
                 HSSFCell cell174 = row17.createCell(11);
-                        cell174.setCellValue(df.format(sumVatComPay));
+                        cell174.setCellValue(df.format(vatComPay));
                         cell174.setCellStyle(styleAlignRightBorderRight);
                         sheet.autoSizeColumn(11);
         HSSFRow row18 = sheet.createRow(17);
@@ -3551,7 +3569,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 sheet2.autoSizeColumn(7);
 
                 HSSFCell cell3110 = row39.createCell(8);
-                cell3110.setCellValue("Amount_pat");
+                cell3110.setCellValue("Amount_pay");
                 cell3110.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(8);
 
@@ -3561,15 +3579,17 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 sheet2.autoSizeColumn(9);
 
                 HSSFCell cell3116 = row39.createCell(10);
-                cell3116.setCellValue("Vat");
+                cell3116.setCellValue("  Vat    ");
                 cell3116.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(10);             
 
             int count2 = 4 + listAgentRefund.size();
-//              int count2 = 2;
+            int startrefund  = listAgentRefund.size();
+            int endrefund = 5 + listAgentRefund.size();
+            System.out.println("Start Refund : " + startrefund + " End Refund : " + endrefund +" Size : " + listAgentRefund.size() );
 
         if(listAgentRefund != null){
-            for (int r = 5; r < count2; r++) {
+            for (int r = 5; r <= count2; r++) {
                 HSSFRow row = sheet2.createRow(r);
                 HSSFCell cell00 = row.createCell(0);
                     cell00.setCellValue(listAgentRefund.get(r-5).getRefundno());
@@ -3613,6 +3633,40 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     sheet2.autoSizeColumn(i);
                 }
             }
+            String sumAmountReceive = "SUM(G" + startrefund+":G"+endrefund+")";
+            String sumRefundChange = "SUM(H" + startrefund+":H"+endrefund+")";
+            String sumAmount_pay = "SUM(I" + startrefund+":I"+endrefund+")";
+            String sumCommRcc = "SUM(J" + startrefund+":J"+endrefund+")";
+            String sumVat = "SUM(K" + startrefund+":K"+endrefund+")";
+
+            HSSFRow rowTotalRefund = sheet2.createRow(count2+1);
+            rowTotalRefund.createCell(0).setCellStyle(styleAlignRightBorderAll);
+            rowTotalRefund.createCell(1).setCellStyle(styleAlignRightBorderAll);
+            rowTotalRefund.createCell(2).setCellStyle(styleAlignRightBorderAll);
+            rowTotalRefund.createCell(3).setCellStyle(styleAlignRightBorderAll);
+            rowTotalRefund.createCell(4).setCellStyle(styleAlignRightBorderAll);
+            rowTotalRefund.createCell(5).setCellStyle(styleAlignRightBorderAll);
+            HSSFCell cell5 = rowTotalRefund.createCell(6);
+                cell5.setCellFormula(sumAmountReceive);
+                cell5.setCellStyle(styleAlignRightBorderAllNumber);  
+                sheet2.autoSizeColumn(6);
+            HSSFCell cell7 = rowTotalRefund.createCell(7);
+                cell7.setCellFormula(sumRefundChange);
+                cell7.setCellStyle(styleAlignRightBorderAllNumber);
+                sheet2.autoSizeColumn(7);
+            HSSFCell cell9 = rowTotalRefund.createCell(8);
+                cell9.setCellFormula(sumAmount_pay);
+                cell9.setCellStyle(styleAlignRightBorderAllNumber);
+                sheet2.autoSizeColumn(8);
+            HSSFCell cell11 = rowTotalRefund.createCell(9);
+                cell11.setCellFormula(sumCommRcc);
+                cell11.setCellStyle(styleAlignRightBorderAllNumber);
+                sheet2.autoSizeColumn(9);
+            HSSFCell cell13 = rowTotalRefund.createCell(10);
+                cell13.setCellFormula(sumVat);
+                cell13.setCellStyle(styleAlignRightBorderAllNumber);
+                sheet2.autoSizeColumn(10);
+            
       }else{
         HSSFRow row55 = sheet2.createRow(5);
 
@@ -3620,20 +3674,6 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell55.setCellValue("No Data");
         sheet2.autoSizeColumn(0);
       }
-
-        System.out.println(count2);
-        HSSFRow rowLLL = sheet2.createRow(count2);
-         rowLLL.createCell(0).setCellStyle(styleBorderTop);
-         rowLLL.createCell(1).setCellStyle(styleBorderTop);
-         rowLLL.createCell(2).setCellStyle(styleBorderTop);
-         rowLLL.createCell(3).setCellStyle(styleBorderTop);
-         rowLLL.createCell(4).setCellStyle(styleBorderTop);
-         rowLLL.createCell(5).setCellStyle(styleBorderTop);
-         rowLLL.createCell(6).setCellStyle(styleBorderTop);
-         rowLLL.createCell(7).setCellStyle(styleBorderTop);
-         rowLLL.createCell(8).setCellStyle(styleBorderTop);
-         rowLLL.createCell(9).setCellStyle(styleBorderTop);
-         rowLLL.createCell(10).setCellStyle(styleBorderTop); 
     }
     
     

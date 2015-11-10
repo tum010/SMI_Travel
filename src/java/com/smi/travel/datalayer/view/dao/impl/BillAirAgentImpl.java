@@ -141,7 +141,8 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         String query = "";
         String query2 = "";
         int checkQuery = 0;
-        if( agentCode == null  && invoiceFromDate == null  && InvoiceToDate== null  && issueFrom == null  && issueTo == null  && department == null && paymentType == null){
+        int checkQuery2 = 0;
+        if( agentCode == null  && invoiceFromDate == null  && InvoiceToDate== null  && issueFrom == null  && issueTo == null  && department == null && paymentType == null && refundFrom == null && refundTo == null ){
             query = "SELECT * FROM `bill_air_agent`  invm   ";
             query2 = "SELECT * FROM `bill_air_refund`  invm   ";
         }else{
@@ -149,68 +150,104 @@ public class BillAirAgentImpl implements BillAirAgentDao{
             query2 = "SELECT * FROM `bill_air_refund`  invm  Where  ";
         }
         
-        if ((invoiceFromDate != null )&&(!"".equalsIgnoreCase(InvoiceToDate))) {
+        if ((invoiceFromDate != null )&&(!"".equalsIgnoreCase(invoiceFromDate))) {
             if ((InvoiceToDate != null )&&(!"".equalsIgnoreCase(InvoiceToDate))) {
                 if(checkQuery == 1){
                      query += " and invm.invdate  BETWEEN  '" + invoiceFromDate + "' AND '" + InvoiceToDate + "' ";
-                     query2 += " and invm.invdate  BETWEEN  '" + invoiceFromDate + "' AND '" + InvoiceToDate + "' ";
                 }else{
                     checkQuery = 1;
                      query += " invm.invdate  BETWEEN  '" + invoiceFromDate + "' AND '" + InvoiceToDate + "' ";
-                     query2 += " invm.invdate  BETWEEN  '" + invoiceFromDate + "' AND '" + InvoiceToDate + "' ";
                 }
             }
         }
         
-        if ((issueFrom != null )&&(!"".equalsIgnoreCase(issueTo))) {
+      
+        if ((issueFrom != null )&&(!"".equalsIgnoreCase(issueFrom))) {
             if ((issueTo != null )&&(!"".equalsIgnoreCase(issueTo))) {
                 if(checkQuery == 1){
                      query += " and invm.issuedate  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
-                     query2 += " and invm.issuedate  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
                 }else{
                     checkQuery = 1;
                      query += " invm.issuedate  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
-                     query2 += " invm.issuedate  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
                 }
             }
         }
+      
         
         if ((agentCode != null )&&(!"".equalsIgnoreCase(agentCode))) {
             if(checkQuery == 1){
                  query += " and invm.agentid  = '" + agentCode + "' ";
-                 query2 += " and invm.agent_id  = '" + agentCode + "' ";
             }else{
                 checkQuery = 1;
                  query += " invm.agentid  = '" + agentCode + "' ";
-                 query2 += " invm.agent_id  = '" + agentCode + "' ";
             }
         }
         
         if ((department != null )&&(!"".equalsIgnoreCase(department))) {
             if(checkQuery == 1){
                  query += " and invm.department  = '" + department + "' ";
-                 query2 += " and invm.department  = '" + department + "' ";
             }else{
                 checkQuery = 1;
                  query += " invm.department  = '" + department + "' ";
+            }
+        }
+        
+           
+        if ((refundFrom != null )&&(!"".equalsIgnoreCase(refundFrom))) {
+            if ((refundTo != null )&&(!"".equalsIgnoreCase(refundTo))) {
+                if(checkQuery2 == 1){
+                     query2 += " and invm.refund_receive_date  BETWEEN  '" + refundFrom + "' AND '" + refundTo + "' ";
+                }else{
+                    checkQuery2 = 1;
+                     query2 += " invm.refund_receive_date  BETWEEN  '" + refundFrom + "' AND '" + refundTo + "' ";
+                }
+            }
+        }
+        
+        if ((issueFrom != null )&&(!"".equalsIgnoreCase(issueFrom))) {
+            if ((issueTo != null )&&(!"".equalsIgnoreCase(issueTo))) {
+                if(checkQuery2 == 1){
+                     query2 += " and invm.issuedate  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+                }else{
+                    checkQuery2 = 1;
+                     query2 += " invm.issuedate  BETWEEN  '" + issueFrom + "' AND '" + issueTo + "' ";
+                }
+            }
+        }
+      
+        
+        if ((agentCode != null )&&(!"".equalsIgnoreCase(agentCode))) {
+            if(checkQuery2 == 1){
+                 query2 += " and invm.agent_id  = '" + agentCode + "' ";
+            }else{
+                checkQuery2 = 1;
+                 query2 += " invm.agent_id  = '" + agentCode + "' ";
+            }
+        }
+        
+        if ((department != null )&&(!"".equalsIgnoreCase(department))) {
+            if(checkQuery2 == 1){
+                 query2 += " and invm.department  = '" + department + "' ";
+            }else{
+                checkQuery2 = 1;
                  query2 += " invm.department  = '" + department + "' ";
             }
         }
         
         if ((termPay != null )&&(!"".equalsIgnoreCase(termPay))) {
-            if(checkQuery == 1){
+            if(checkQuery2 == 1){
                  query2 += " and invm.term_pay  = '" + termPay + "' ";
             }else{
-                checkQuery = 1;
+                checkQuery2 = 1;
                  query2 += " invm.term_pay  = '" + termPay + "' ";
             }
         }
         
         if ((paymentType != null )&&(!"".equalsIgnoreCase(paymentType))) {
-            if(checkQuery == 1){
+            if(checkQuery2 == 1){
                  query2 += " and invm.payment_type  = '" + paymentType + "' ";
             }else{
-                checkQuery = 1;
+                checkQuery2 = 1;
                  query2 += " invm.payment_type  = '" + paymentType + "' ";
             }
         }
@@ -347,6 +384,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
                 .addScalar("amountpay",Hibernate.STRING)
                 .addScalar("comm_rec",Hibernate.STRING)
                 .addScalar("vat",Hibernate.STRING)
+                .addScalar("refund_receive_date",Hibernate.STRING)
                 .list();
         for (Object[] B : QueryList2) {
             BillAirAgentRefund bil = new BillAirAgentRefund();

@@ -108,9 +108,9 @@ public class ReceiptImpl implements ReceiptDao{
             String part2 = parts[1]; // point
             String textmoney = (utilityFunction.convert(Integer.parseInt(part1)));
             String textmoneypoint = (utilityFunction.changPoint(String.valueOf(part2)));
-            String totalWord = textmoney +" baht"+ textmoneypoint;
+            String totalWord = textmoney +" BAHT"+ textmoneypoint;
             if("".equalsIgnoreCase(textmoneypoint.trim())){
-                totalWord = textmoney +" baht only";
+                totalWord = textmoney +" BAHT ONLY";
             }
             System.out.println(" totalWord " + totalWord);
             receiptView.setTextmoney(totalWord.substring(0,1).toUpperCase() + totalWord.substring(1));

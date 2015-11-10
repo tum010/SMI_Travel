@@ -1667,66 +1667,68 @@
     }
     
     function clearScreen(){
-        $('#paymentId, #InputPayNo, #InputPayDate, #itemPvType, #itemStatus, #InputInvoiceSupId, #InputInvoiceSupCode, #InputInvoiceSupName, #InputAPCode, #Detail, #itemPayment, #InputRemark, #InputGrandTotal, #InputCash, #InputChqNo, #InputChqAmount, #InputCurrency, #createBy').val('');
-        document.getElementById("account1").checked = false;
-        document.getElementById("account2").checked = false;
-        document.getElementById("InputGrandTotal").value = "0.00";
-        var count = document.getElementById("counter").value;
-        var i ;
-        for(i=0;i<=count;i++){
-           var select_product = document.getElementById("select-product" + i);
-           var select_currency = document.getElementById("select-currency" + i);
-           var refNo = document.getElementById("refNo"+i); 
-           var invNo = document.getElementById("invNo"+i); 
-           var code = document.getElementById("code"+i); 
-           var amount = document.getElementById("amount"+i); 
-           var description = document.getElementById("description"+i); 
-           var ac = document.getElementById("ac"+i);
-           var typeT = document.getElementById("typeT"+i);
-           var typeC = document.getElementById("typeC"+i);
-           var isVat = document.getElementById("isVat"+i);
-           var vat = document.getElementById("vat"+i);
-           var gross = document.getElementById("gross"+i);
-           
-           if(select_product !== null){
-               document.getElementById("select-product"+i).value = '';
-           }
-           if(select_currency !== null){
-               document.getElementById("select-currency"+i).value = '';
-           }
-           if(refNo !== null){
-               document.getElementById("refNo"+i).value = ''; 
-           }
-           if(invNo !== null){
-               document.getElementById("invNo"+i).value = ''; 
-           }
-           if(code !== null){
-               document.getElementById("code"+i).value = '';
-           }
-           if(amount !== null){
-               document.getElementById("amount"+i).value = '';
-           }
-           if(description !== null){
-               document.getElementById("description"+i).value = '';
-           }
-           if(ac !== null){
-               document.getElementById("ac"+i).value = '';
-           }
-           if((typeT !== null) && (typeC !== null)){
-               document.getElementById("typeT"+i).checked = false;
-               document.getElementById("typeC"+i).checked = false;
-           }
-           if((isVat !== null) && (isVat !== null)){
-               document.getElementById("isVat"+i).checked = false;
-           }
-           if(vat !== null){
-               document.getElementById("vat"+i).value = '';
-           }
-           if(gross !== null){
-               document.getElementById("gross"+i).value = '';
-           }
-             
-        }    
+        var action = document.getElementById('action');
+        action.value = 'new';
+        document.getElementById('PaymentTourHotelForm').submit();
+//        $('#paymentId, #InputPayNo, #InputPayDate, #itemPvType, #itemStatus, #InputInvoiceSupId, #InputInvoiceSupCode, #InputInvoiceSupName, #InputAPCode, #Detail, #itemPayment, #InputRemark, #InputGrandTotal, #InputCash, #InputChqNo, #InputChqAmount, #InputCurrency, #createBy').val('');
+//        document.getElementById("account1").checked = false;
+//        document.getElementById("account2").checked = false;
+//        document.getElementById("InputGrandTotal").value = "0.00";
+//        var count = document.getElementById("counter").value;
+//        var i ;
+//        for(i=0;i<=count;i++){
+//           var select_product = document.getElementById("select-product" + i);
+//           var select_currency = document.getElementById("select-currency" + i);
+//           var refNo = document.getElementById("refNo"+i); 
+//           var invNo = document.getElementById("invNo"+i); 
+//           var code = document.getElementById("code"+i); 
+//           var amount = document.getElementById("amount"+i); 
+//           var description = document.getElementById("description"+i); 
+//           var ac = document.getElementById("ac"+i);
+//           var typeT = document.getElementById("typeT"+i);
+//           var typeC = document.getElementById("typeC"+i);
+//           var isVat = document.getElementById("isVat"+i);
+//           var vat = document.getElementById("vat"+i);
+//           var gross = document.getElementById("gross"+i);
+//           
+//           if(select_product !== null){
+//               document.getElementById("select-product"+i).value = '';
+//           }
+//           if(select_currency !== null){
+//               document.getElementById("select-currency"+i).value = '';
+//           }
+//           if(refNo !== null){
+//               document.getElementById("refNo"+i).value = ''; 
+//           }
+//           if(invNo !== null){
+//               document.getElementById("invNo"+i).value = ''; 
+//           }
+//           if(code !== null){
+//               document.getElementById("code"+i).value = '';
+//           }
+//           if(amount !== null){
+//               document.getElementById("amount"+i).value = '';
+//           }
+//           if(description !== null){
+//               document.getElementById("description"+i).value = '';
+//           }
+//           if(ac !== null){
+//               document.getElementById("ac"+i).value = '';
+//           }
+//           if((typeT !== null) && (typeC !== null)){
+//               document.getElementById("typeT"+i).checked = false;
+//               document.getElementById("typeC"+i).checked = false;
+//           }
+//           if((isVat !== null) && (isVat !== null)){
+//               document.getElementById("isVat"+i).checked = false;
+//           }
+//           if(vat !== null){
+//               document.getElementById("vat"+i).value = '';
+//           }
+//           if(gross !== null){
+//               document.getElementById("gross"+i).value = '';
+//           }            
+//        }    
     }
     
     function calculateGross(row){
