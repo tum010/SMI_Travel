@@ -339,7 +339,7 @@
                                     </div>  
                                 </div>
                                 <div class="col-xs-1 text-right" style="width: 130px">
-                                    <label class="control-label text-right">Status <font style="color: red">*</font></label>
+                                    <label class="control-label text-right">Payment <font style="color: red">*</font></label>
                                 </div>
                                 <div class="form-group col-xs-1" style="width: 170px">
                                     <select name="inputStatus" id="inputStatus" class="form-control">
