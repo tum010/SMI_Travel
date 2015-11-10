@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.AirticketBooking;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.AirticketRefund;
 import com.smi.travel.datalayer.entity.Master;
@@ -123,8 +124,9 @@ public class RefundController extends SMITravelController {
         }else if("saveRefund".equals(action)){
             String refundid = request.getParameter("refundById");
             AirticketRefund airticketRefund = new AirticketRefund();
+            AirticketBooking airticketBooking = new AirticketBooking();
             RefundAirticket refund = new RefundAirticket();
-            refund = getRefundFromPage(request);
+            refund = getRefundFromPage(request,airbookingid);
             
             if(refundid != null &&  !"".equals(refundid)){
                 action = "editRefund";
@@ -132,17 +134,21 @@ public class RefundController extends SMITravelController {
             List<RefundAirticketDetail> airticketrefundList = setRefundDetail(request,refund,action);
             refund.setRefundAirticketDetails(airticketrefundList);
             
+            airticketBooking.setId(airbookingid);
+            
             airticketRefund.setId(refundid);
             airticketRefund.setRefundAirticket(refund);
+            airticketRefund.setAirticketBooking(airticketBooking);
+            
             String resultsave = refundService.saveRefund(airticketRefund);
             if(!"".equals(resultsave)){
                 request.setAttribute("result", resultsave);
                 List<RefundTicket> refundTicket = refundService.searchRefund(refund);
-                List<RefundTicketDetail> refundTicketDetail = refundTicket.get(0).getRefundTicketDetail();
+                List<RefundTicketDetail> refundTicketDetail = new LinkedList<RefundTicketDetail>();
                 if(refundTicket != null){
                     request.setAttribute("RefundTicket", refundTicket);
                     request.setAttribute("listRefundTicket", refundTicket);
-
+                    refundTicketDetail = refundTicket.get(0).getRefundTicketDetail();
                     if(refundTicketDetail != null ){
                         request.setAttribute("RefundTicketDetail", refundTicketDetail);
                     }else{
@@ -165,7 +171,7 @@ public class RefundController extends SMITravelController {
         return Refund;
     }
     
-    private RefundAirticket getRefundFromPage(HttpServletRequest request){
+    private RefundAirticket getRefundFromPage(HttpServletRequest request,String airbookingid){
             String refundticketid = request.getParameter("refundticketid");
             String refundcodePage = request.getParameter("refundBy");
             String refundnamePage = request.getParameter("refundByName");
@@ -210,6 +216,8 @@ public class RefundController extends SMITravelController {
             }else{
                 refund.setRefundBy("");
             }
+            
+            refund.setStatus(0);
         return refund;
     }
     
