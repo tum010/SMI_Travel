@@ -145,7 +145,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         }
         session.close();
         this.sessionFactory.close();
-        return "R"+PVCode.replace("-","");
+        return PVCode.replace("-","");
     }
         
     @Override
@@ -187,8 +187,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         }else{
             ticketFare =  ticketFareList.get(0);
         }
-        session.close();
-        this.sessionFactory.close();
+//        session.close();
+//        this.sessionFactory.close();
         return ticketFare;
     }
 
@@ -930,7 +930,6 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             String masterId = airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId();
             System.out.println(" masterId " + masterId);
             invoiceDetailList = session.createQuery(InvoiceDetailQuery).setParameter("masterId", masterId).list();
-            
         }
         
         if (invoiceDetailList.isEmpty()) {
@@ -979,7 +978,6 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 invoiceDetailView.setStaffName(invoiceDetailList.get(i).getInvoice().getStaff() != null ? invoiceDetailList.get(i).getInvoice().getStaff().getName() : "");
                 invoiceDetailView.setCredit(invoiceDetailList.get(i).getInvoice().getMAccTerm() != null ? invoiceDetailList.get(i).getInvoice().getMAccTerm().getName() : "");
                 invoiceDetailView.setCreditValue(invoiceDetailList.get(i).getInvoice().getMAccTerm() != null ? String.valueOf(invoiceDetailList.get(i).getInvoice().getMAccTerm().getValue()) : "");
-                
                 invoiceDetailViewList.add(invoiceDetailView);
             }
         }

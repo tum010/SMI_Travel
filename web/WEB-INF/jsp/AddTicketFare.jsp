@@ -56,6 +56,8 @@
             <hr/>
             
             <form action="AddTicketFare.smi" method="post" id="AddTicketFareForm" name="AddTicketFareForm" role="form">
+                <input type="hidden" name="selectInvId" id="selectInvId" value="">
+                <input type="hidden" name="invoiceDetailTableId" id="invoiceDetailTableId" value="${requestScope['invDetailTableId']}">
                 <input type="hidden" name="isTempTicket" id="isTempTicket" value="${ticketFare.isTempTicket}">
                 <input type="hidden" name="masterId" id="masterId" value="${ticketFare.master.id}">
                 <input type="hidden" name="whtax" id="whtax" value="${withholdingtax}">
@@ -565,7 +567,40 @@
                         </div>
                     </div>
                 </div>
-                            
+                <!----- Refund Detail ----->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Refund Detail</h4>
+                    </div> 
+                    <div class="panel-body">
+                        <table class="display" id="RefundDetailTable">
+                            <thead class="datatable-header">
+                                <tr>
+                                    <th style="width:5%;">No</th>
+                                    <th style="width:16%;">Airline Receive</th>
+                                    <th style="width:15%;">Receive Date</th>
+                                    <th style="width:17%;">Air Comm Receive</th>
+                                    <th style="width:15%;">Pay Date</th>
+                                    <th style="width:17%;">Agent Comm Receive</th>
+                                    <th style="width:15%;">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="table" items="${refundDetailList}" varStatus="dataStatus">
+                                    <tr>
+                                        <td align="center">${dataStatus.count}</td>
+                                        <td class="money">${table.receiveAirline}</td>
+                                        <td align="center">${table.refundAirticket.receiveDate}</td>
+                                        <td class="money">${table.airComission}</td>
+                                        <td align="center">${table.receiveDate}</td>
+                                        <td class="money">${table.agentComission}</td>
+                                        <td align="center">${table.expenseDate}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>             
                 <!----- Invoice Detail ----->
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -575,6 +610,7 @@
                         <table class="display" id="InvoiceDeailTable">
                             <thead class="datatable-header">
                                 <tr>
+                                    <th style="width:5%;">Select Inv</th>
                                     <th style="width:5%;">No</th>
                                     <th style="width:15%;">Invoice No</th>
                                     <th style="width:15%;">Invoice Date</th>
@@ -587,8 +623,15 @@
                             <tbody>
                                <c:forEach var="table" items="${invoiceDetailList}" varStatus="dataStatus">
                                     <tr>
-                                        <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}">
+                                        <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}"> 
                                         <input type="hidden" name="invoiceId${dataStatus.count}" id="invoiceId${dataStatus.count}" value="${table.invoiceId}">
+                                        <td align="center">
+                                            <c:set var="invRadio" value="" />
+                                            <c:if test="${requestScope['selectInvIdTemp']  == table.invoiceId}">
+                                                <c:set var="invRadio" value="checked" /> 
+                                            </c:if>  
+                                            <input type="radio" name="selectInvoiceDetail" id="selectInvoiceDetail${dataStatus.count}" value="${table.invoiceId}" ${invRadio} onclick="selectInvoiceDetailRadio('${dataStatus.count}')">
+                                        </td>
                                         <td align="center">${dataStatus.count}</td>
                                         <td align="center">${table.invNo}</td>
                                         <td align="center">${table.invDate}</td>
@@ -679,40 +722,7 @@
                         </table>
                     </div>
                 </div> 
-                <!----- Refund Detail ----->
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">Refund Detail</h4>
-                    </div> 
-                    <div class="panel-body">
-                        <table class="display" id="RefundDetailTable">
-                            <thead class="datatable-header">
-                                <tr>
-                                    <th style="width:5%;">No</th>
-                                    <th style="width:16%;">Airline Receive</th>
-                                    <th style="width:15%;">Receive Date</th>
-                                    <th style="width:17%;">Air Comm Receive</th>
-                                    <th style="width:15%;">Pay Date</th>
-                                    <th style="width:17%;">Agent Comm Receive</th>
-                                    <th style="width:15%;">Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="table" items="${refundDetailList}" varStatus="dataStatus">
-                                    <tr>
-                                        <td align="center">${dataStatus.count}</td>
-                                        <td class="money">${table.receiveAirline}</td>
-                                        <td align="center">${table.refundAirticket.receiveDate}</td>
-                                        <td class="money">${table.airComission}</td>
-                                        <td align="center">${table.receiveDate}</td>
-                                        <td class="money">${table.agentComission}</td>
-                                        <td align="center">${table.expenseDate}</td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>    
+                   
             </form>                
         </div>
         
@@ -907,7 +917,6 @@
     setSelectTicketNoTemp = [];
     $(document).ready(function () {
         $('.datemask').mask('0000-00-00');
-        
         $("#flightPanel").addClass('hidden');
         if($('#flightDetailFlag').val() == "notdummy"){
             $("#flightPanel").removeClass('hidden');  
@@ -1559,7 +1568,6 @@ function CallFilterCheckTicketNoList(param) {
             cache: false,
             data: param,
             success: function (msg) {
-                
                 try { 
                     if(msg == "null"){
                         $('#ListTicketNoDuplicateTable').dataTable().fnClearTable();
@@ -1573,6 +1581,8 @@ function CallFilterCheckTicketNoList(param) {
                             "bLengthChange": false,
                             "iDisplayLength": 10
                         });
+                        $("#ajaxload").addClass("hidden");
+                        searchTicketNoAction();
                     }else{
                         $('#ListTicketNoDuplicateTable').dataTable().fnClearTable();
                         $('#ListTicketNoDuplicateTable').dataTable().fnDestroy();
@@ -1743,7 +1753,6 @@ function selectTicketNo(){
     setFormatCurrency();
     setDataCurrency();
     $("#ListRefnoModal").modal('hide');
-    alert(invno);
     if(invno === ''){
         $("#ListRefnoModal").modal('hide');
     }else{
@@ -1897,16 +1906,8 @@ function insertCommas(nField){
     }
 }
 
-//function getMAirlineAgent(airlinecode){
-//
-//    document.getElementById('airlinecode').value = airlinecode;
-////    document.getElementById('ticketAirline').value = "1";
-////    document.getElementById('AddTicketFareForm').submit();
-//}
-
 function getMAirlineAgent(airlinecode) {
     document.getElementById('airlinecode').value = airlinecode;
-    alert(airlinecode);
     var servletName = 'TicketFareAirlineServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
@@ -1993,4 +1994,8 @@ function searchTicketNoNew(){
     document.getElementById('AddTicketFareForm').submit();    
 }
 
+function selectInvoiceDetailRadio(row){
+   document.getElementById('selectInvId').value = $("#selectInvoiceDetail"+row).val();
+}    
 </script>
+  
