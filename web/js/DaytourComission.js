@@ -336,7 +336,7 @@ function printAgentCommission() {
     var agentPrintFrom = document.getElementById("agentPrintFrom").value;
     var agentPrintTo = document.getElementById("agentPrintTo").value;
     var selAgentReport = document.getElementById("selAgentReport").value;
-    window.open("report.smi?name=AgentCommission&startdate=" + agentPrintFrom + "&enddate=" + agentPrintTo+"&agentID="+selAgentReport);
+    window.open("report.smi?name=OtherAgentCommission&startdate=" + agentPrintFrom + "&enddate=" + agentPrintTo+"&agentID="+selAgentReport);
 }
 
 function addGuide(){

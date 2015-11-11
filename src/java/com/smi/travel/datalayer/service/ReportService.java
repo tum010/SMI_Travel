@@ -708,4 +708,10 @@ public class ReportService {
         data.add(otherBookingDao.getOtherGuideCommissionInfoReport(datefrom, dateto, username,guideid));
         return data;
     }
+    
+    public List getOtherAgentCommissionReport(String datefrom,String dateto,String user,String agentid){
+        List data  = new ArrayList();
+        data.add(otherBookingDao.getOtherAgentCommissionReport(datefrom, dateto, user,agentid));
+        return data;
+    }
 }

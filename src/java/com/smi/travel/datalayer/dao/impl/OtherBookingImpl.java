@@ -11,11 +11,12 @@ import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.OtherBooking;
-import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
-import com.smi.travel.datalayer.report.model.GuideCommissionSummaryHeader;
+import com.smi.travel.datalayer.report.model.OtherAgentCommission;
+import com.smi.travel.datalayer.report.model.OtherAgentCommissionReport;
+import com.smi.travel.datalayer.report.model.OtherAgentCommissionSummaryReport;
 import com.smi.travel.datalayer.report.model.OtherGuideCommissionInfo;
 import com.smi.travel.datalayer.report.model.OtherGuideCommissionSummary;
 import com.smi.travel.datalayer.report.model.OtherGuideCommissionSummaryHeader;
@@ -48,7 +49,14 @@ public class OtherBookingImpl implements OtherBookingDao{
                                                         "ot.guide_id " +
                                                         "FROM `other_booking` ot " +
                                                         "INNER JOIN staff st on st.id = ot.guide_id " ;
-    
+    private static final String AGENTCOM_SUMMARY_QUERY = "SELECT agt.`code` AS `code`,"
+            + "agt.`name` AS `name`,"
+            + "count((mt.id)) AS count_booking,"
+            + "SUM(db.agent_comission) AS comission "
+            + "FROM daytour_booking db "
+            + "INNER JOIN agent agt ON db.agent_id = agt.id "
+//            + "INNER JOIN daytour_booking_price dp ON dp.daytour_booking_id = db.id "
+            + "INNER JOIN `master` mt ON mt.id = db.master_id ";
     
     @Override
     public List<OtherBooking> getListBookingOtherFromRefno(String refno) {
@@ -1057,5 +1065,93 @@ public class OtherBookingImpl implements OtherBookingDao{
          this.sessionFactory.close();
         session.close();
         return data;
+    }
+
+    @Override
+    public OtherAgentCommission getOtherAgentCommissionReport(String datefrom, String dateto, String user, String agentid) {
+        OtherAgentCommission agentCommission = new OtherAgentCommission();
+        Date thisdate = new Date();
+        UtilityFunction util = new UtilityFunction();
+        System.out.println(" From Date : " + datefrom +  " To Date : " + dateto);
+        agentCommission.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
+        agentCommission.setUser(user);
+        agentCommission.setDatefrom(!"".equalsIgnoreCase(datefrom) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+        agentCommission.setDateto(!"".equalsIgnoreCase(dateto)  ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
+        agentCommission.setOtherAgentCommissionInfoDataSource(new JRBeanCollectionDataSource(getOtherAgentReportInfo(datefrom, dateto, user,agentid)));
+        agentCommission.setOtherAgentCommissionSummaryDataSource(new JRBeanCollectionDataSource(getOtherAgentReportSummary(datefrom, dateto, user,agentid)));
+        return agentCommission;
+    }
+    
+    private List getOtherAgentReportInfo(String datefrom, String dateto, String user,String agentid) {
+        Session session = this.sessionFactory.openSession();
+        List data = new ArrayList();
+        Date thisdate = new Date();
+        UtilityFunction util = new UtilityFunction();
+        String query ="SELECT * FROM `agent_commission_info` where tourdate >= '"+datefrom+"' and tourdate <= '"+dateto+"'";
+        if((agentid != null)&&(!"".equalsIgnoreCase(agentid))){
+            query += " and agentid = "+agentid;
+        }
+        List<Object[]> QueryAgentComList = session.createSQLQuery(query)
+                .addScalar("tourdate", Hibernate.DATE)
+                .addScalar("tourcode", Hibernate.STRING)
+                .addScalar("customer", Hibernate.STRING)
+                .addScalar("pax", Hibernate.STRING)
+                .addScalar("comission", Hibernate.INTEGER)
+                .addScalar("sell", Hibernate.INTEGER)
+                .addScalar("name", Hibernate.STRING)
+                .list();
+                
+        for (Object[] B : QueryAgentComList) {
+             OtherAgentCommissionReport   report = new  OtherAgentCommissionReport(); 
+             report.setTourdate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(B[0]));
+             report.setTourcode(util.ConvertString(B[1]));
+             report.setClient(util.ConvertString(B[2]));
+             report.setPax("".equals(util.ConvertString(B[3])) ? 0 : Integer.parseInt(util.ConvertString(B[3])));
+             report.setCommission(B[4]== null ? 0:(Integer)B[4]);
+             report.setSell(B[5]== null ? 0:(Integer)B[5]);
+             report.setAgent(util.ConvertString(B[6]));
+             report.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
+             report.setDatefrom(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)));
+             report.setDateto(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)));
+             report.setUser(user);
+             data.add(report);
+        }              
+                
+        return data;
+    }
+    
+    private List getOtherAgentReportSummary(String datefrom, String dateto, String user,String agentid) {
+        Session session = this.sessionFactory.openSession();
+        List data = new ArrayList();
+        Date thisdate = new Date();
+        UtilityFunction util = new UtilityFunction();
+        String sql = AGENTCOM_SUMMARY_QUERY+" where db.tour_date >= '"+datefrom+"' and db.tour_date <= '"+dateto+"'" ;
+        
+        if((agentid != null)&&(!"".equalsIgnoreCase(agentid))){
+            sql += " and agt.id ="+agentid;
+        }
+        sql += " GROUP BY agt.`code`,agt.`name` HAVING  comission <> 0 ORDER BY `agt`.`name`";
+        System.out.println("sql :" +sql);
+        List<Object[]> QueryAgentComSummaryList = session.createSQLQuery(sql)
+                .addScalar("code", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("count_booking", Hibernate.STRING)
+                .addScalar("comission", Hibernate.INTEGER)
+                .list();
+  
+        System.out.println("QueryAgentComSummaryList.size : "+QueryAgentComSummaryList.size());
+        for (Object[] B : QueryAgentComSummaryList) {
+             OtherAgentCommissionSummaryReport   report = new  OtherAgentCommissionSummaryReport(); 
+             report.setCode(util.ConvertString(B[0]));
+             report.setName(util.ConvertString(B[1]));
+             report.setCountbook("".equals(util.ConvertString(B[2])) ? 0 : Integer.parseInt(util.ConvertString(B[2])));
+             report.setCommission(B[3]== null ? 0:(Integer)B[3]);
+             report.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
+             report.setDatefrom(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)));
+             report.setDateto(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)));
+             report.setUser(user);
+             data.add(report);
+        }      
+        return data;  
     }
 }
