@@ -41,6 +41,11 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
     @Override
     public GuideCommissionInfo getGuideCommissionInfoReport(String datefrom, String dateto, String username, String guideid) {
         GuideCommissionInfo guideCommissionInfo = new GuideCommissionInfo();
+        UtilityFunction util = new UtilityFunction();
+        guideCommissionInfo.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(new Date()));
+        guideCommissionInfo.setUser(username);
+        guideCommissionInfo.setDatefrom(!"".equalsIgnoreCase(datefrom) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+        guideCommissionInfo.setDateto(!"".equalsIgnoreCase(dateto) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
         guideCommissionInfo.setGuideCommissionSummaryDataSource(new JRBeanCollectionDataSource(getGuideComissionSummaryReport(datefrom, dateto, username, guideid)));
         guideCommissionInfo.setGuideCommissionDataSource(new JRBeanCollectionDataSource(getGuideComissionReport(datefrom, dateto, username, guideid)));
         return guideCommissionInfo;

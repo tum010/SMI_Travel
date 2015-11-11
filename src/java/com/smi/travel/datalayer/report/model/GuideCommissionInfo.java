@@ -15,6 +15,10 @@ public class GuideCommissionInfo {
     private JRDataSource guideCommissionDataSource;
     private JRDataSource guideCommissionSummaryDataSource;
     private String subReportDir;
+    private String datefrom;
+    private String dateto;
+    private String systemdate;
+    private String user;
 
     public GuideCommissionInfo(){
         this.guideCommissionDataSource = null;
@@ -44,6 +48,38 @@ public class GuideCommissionInfo {
 
     public void setSubReportDir(String subReportDir) {
         this.subReportDir = subReportDir;
+    }
+
+    public String getDatefrom() {
+        return datefrom;
+    }
+
+    public void setDatefrom(String datefrom) {
+        this.datefrom = datefrom;
+    }
+
+    public String getDateto() {
+        return dateto;
+    }
+
+    public void setDateto(String dateto) {
+        this.dateto = dateto;
+    }
+
+    public String getSystemdate() {
+        return systemdate;
+    }
+
+    public void setSystemdate(String systemdate) {
+        this.systemdate = systemdate;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
     
 }

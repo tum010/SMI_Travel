@@ -49,7 +49,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="fromdatepanel">
                                         <div class='input-group date fromdate' id='DateFrom'>
-                                            <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -58,7 +58,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="todatepanel">
                                         <div class='input-group date todate' id='DateTo'>
-                                            <input type='text' id="invoiceToDate" name="invoiceToDate"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="invoiceToDate" name="invoiceToDate"  class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -74,7 +74,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="issuefromdatepanel">
                                         <div class='input-group date issuefromdate' id='DateFromIssue'>
-                                            <input type='text' id="issueFrom" name="issueFrom" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="issueFrom" name="issueFrom" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -83,7 +83,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="issuetodatepanel">
                                         <div class='input-group date issuetodate' id='DateToIssue'>
-                                            <input type='text' id="issueTo" name="issueTo"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="issueTo" name="issueTo" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -215,7 +215,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="overfromdatepanel">
                                         <div class='input-group date overfromdate' id='DateFromOver'>
-                                            <input type='text' id="overFrom" name="overFrom" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="overFrom" name="overFrom" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -224,7 +224,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="overtodatepanel">
                                         <div class='input-group date overtodate' id='DateToOver'>
-                                            <input type='text' id="overTo" name="overTo"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="overTo" name="overTo"  class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -240,7 +240,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="littlefromdatepanel">
                                         <div class='input-group date littlefromdate' id='DateFromLittle'>
-                                            <input type='text' id="littleFrom" name="littleFrom" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="littleFrom" name="littleFrom" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -249,7 +249,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="littletodatepanel">
                                         <div class='input-group date littletodate' id='DateToLittle'>
-                                            <input type='text' id="littleTo" name="littleTo"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="littleTo" name="littleTo" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -265,7 +265,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="agentcomreceivefromdatepanel">
                                         <div class='input-group date agentcomreceivefromdate' id='DateFromAgentComReceive'>
-                                            <input type='text' id="agentcomreceiveFrom" name="agentcomreceiveFrom" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="agentcomreceiveFrom" name="agentcomreceiveFrom" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -274,7 +274,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="agentcomreceivetodatepanel">
                                         <div class='input-group date agentcomreceivetodate' id='DateToAgentComReceive'>
-                                            <input type='text' id="agentcomreceiveTo" name="agentcomreceiveTo"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="agentcomreceiveTo" name="agentcomreceiveTo"  class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -290,7 +290,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="comrefundfromdatepanel">
                                         <div class='input-group date comrefundfromdate' id='DateFromComRefund'>
-                                            <input type='text' id="comrefundFrom" name="comrefundFrom" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="comrefundFrom" name="comrefundFrom" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -299,7 +299,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="comrefundtodatepanel">
                                         <div class='input-group date comrefundtodate' id='DateToComRefund'>
-                                            <input type='text' id="comrefundTo" name="comrefundTo"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="comrefundTo" name="comrefundTo"  class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -315,7 +315,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="addpayfromdatepanel">
                                         <div class='input-group date addpayfromdate' id='DateFromAddPay'>
-                                            <input type='text' id="addpayFrom" name="addpayFrom" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="addpayFrom" name="addpayFrom" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -324,7 +324,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="addpaytodatepanel">
                                         <div class='input-group date addpaytodate' id='DateToAddPay'>
-                                            <input type='text' id="addpayTo" name="addpayTo"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="addpayTo" name="addpayTo"  class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -340,7 +340,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="decreasepayfromdatepanel">
                                         <div class='input-group date decreasepayfromdate' id='DateFromDecreasePay'>
-                                            <input type='text' id="decreasepayFrom" name="decreasepayFrom" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="decreasepayFrom" name="decreasepayFrom" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -349,7 +349,7 @@
                                 <div class="col-md-3">  
                                     <div class="form-group" id="decreasepaytodatepanel">
                                         <div class='input-group date decreasepaytodate' id='DateToDecreasePay'>
-                                            <input type='text' id="decreasepayTo" name="decreasepayTo"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="decreasepayTo" name="decreasepayTo"  class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -534,7 +534,7 @@ $(document).ready(function() {
     
     $('.date').datetimepicker({
     });
-
+     $('.datemask').mask('0000-00-00');
     $('span').click(function() {
         var position = $(this).offset();
         console.log("positon :" + position.top);

@@ -197,7 +197,7 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $("#ReceiptListTable").removeClass('hidden');
-        
+        $('.datemask').mask('0000-00-00');
         var table = $('#ReceiptListTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,

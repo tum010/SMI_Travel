@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
-	<property name="ireport.zoom" value="1.8150000000000024"/>
-	<property name="ireport.x" value="377"/>
+	<property name="ireport.zoom" value="1.0245201830476072"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
@@ -192,68 +192,6 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<pageHeader>
-		<band height="61">
-			<staticText>
-				<reportElement x="406" y="10" width="60" height="15" uuid="056c1a7e-0a28-4761-b79b-f10feb61d8b9"/>
-				<text><![CDATA[Print Date : ]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="373" y="40" width="163" height="15" uuid="898c8598-7f99-46b4-a720-c90deace44dc"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Page : "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="536" y="40" width="17" height="15" uuid="4589b701-ec7d-45ba-b39d-a826dffd959a"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="69" y="24" width="18" height="15" uuid="70e992ac-82ce-4a48-91b4-ca97f31cbd02"/>
-				<textElement textAlignment="Center">
-					<font size="11"/>
-				</textElement>
-				<text><![CDATA[to]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="5" width="283" height="24" uuid="a446b14a-b304-43e1-b062-958696b8b692"/>
-				<textElement>
-					<font size="13"/>
-				</textElement>
-				<text><![CDATA[Report Days Tour Guide Commission Service]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="406" y="25" width="60" height="15" uuid="3868d06e-c577-478a-ad69-9ff550481f4d"/>
-				<text><![CDATA[Print By : ]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="466" y="25" width="87" height="15" uuid="049331ee-9f5f-4491-ad3d-a97d36afa1a6"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
-			</textField>
-			<textField pattern="">
-				<reportElement x="466" y="10" width="87" height="15" uuid="91508eef-8f7b-4300-bff0-4adc68e3970c"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
-			</textField>
-			<textField pattern="">
-				<reportElement x="0" y="25" width="69" height="15" uuid="39148466-8ccd-43ff-9104-008d0e29488a"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{datefrom}]]></textFieldExpression>
-			</textField>
-			<textField pattern="">
-				<reportElement x="87" y="25" width="90" height="15" uuid="2ce5823c-81e8-466b-9467-e018ed793cc9"/>
-				<textElement>
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{dateto}]]></textFieldExpression>
-			</textField>
-		</band>
-	</pageHeader>
 	<detail>
 		<band height="20" splitType="Stretch">
 			<rectangle>

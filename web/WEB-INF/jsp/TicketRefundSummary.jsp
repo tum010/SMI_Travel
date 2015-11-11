@@ -100,7 +100,7 @@
                                 <div class="col-md-1" style="width: 170px">  
                                     <div class="form-group" id="receivefromdatepanel">
                                         <div class='input-group date receivefromdate' id='receiveDateFrom'>
-                                            <input type='text' id="receiveFromDate" name="receiveFromDate" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="receiveFromDate" name="receiveFromDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -110,7 +110,7 @@
                                 <div class="col-md-1" style="width: 170px">
                                     <div class="form-group" id="receivetodatepanel">
                                         <div class='input-group date receivetodate' id='receiveDateTo'>
-                                            <input type='text' id="receiveToDate" name="receiveToDate" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="receiveToDate" name="receiveToDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -126,7 +126,7 @@
                                 <div class="col-md-1" style="width: 170px">  
                                     <div class="form-group" id="paidfromdatepanel">
                                         <div class='input-group date paidfromdate' id='paidDateFrom'>
-                                            <input type='text' id="paidFromDate" name="paidFromDate" class="form-control datemask" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="paidFromDate" name="paidFromDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -136,7 +136,7 @@
                                 <div class="col-md-1" style="width: 170px">
                                     <div class="form-group" id="paidtodatepanel">
                                         <div class='input-group date paidtodate' id='paidDateTo'>
-                                            <input type='text' id="paidToDate" name="paidToDate" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="paidToDate" name="paidToDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -274,6 +274,7 @@
 
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
+         $('.datemask').mask('0000-00-00');
         $('.date').datetimepicker();
         $('.spandate').click(function() {
             var position = $(this).offset();
