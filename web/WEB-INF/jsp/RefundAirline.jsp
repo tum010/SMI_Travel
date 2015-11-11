@@ -196,9 +196,9 @@
                                         <c:when test="${detail.refundCharge == 1}">
                                             <input type="checkbox" class="form-control" id="checkCharge${varRefundAirline.count}" name="checkCharge${varRefundAirline.count}" onclick="checkboxCharge(this)" value="1" checked/>
                                         </c:when>
-                                        <c:when test="${detail.refundCharge == 0}">
+                                        <c:otherwise>
                                             <input type="checkbox" class="form-control" id="checkCharge${varRefundAirline.count}" name="checkCharge${varRefundAirline.count}" onclick="checkboxCharge(this)" value="0"/>
-                                        </c:when>
+                                        </c:otherwise>
                                     </c:choose>    
                                 </td>
                                 <td style="text-align:center"> <input id="ticketNo${index}" name="ticketNo${index}" colName="ticketNo" type="text" class="form-control" value="${detail.ticketFareAirline["TicketNo"]}"></td>

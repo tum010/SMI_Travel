@@ -35,7 +35,7 @@ public class MRunningCodeImpl implements MRunningCodeDao{
         for(int i=code.length();i<Digit;i++){
             code = "0"+code;
         }
-        
+        code = "R"+code;
         Query query = session.createQuery("update MRunningCode run set run.running = :running" +
     				" where run.type = :type");
         query.setParameter("running", list.get(0).getRunning()+1);
