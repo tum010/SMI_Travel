@@ -877,10 +877,11 @@
                 <table class="display" id="ListTicketNoDuplicateTable">
                     <thead class="datatable-header">
                         <tr>
-                            <th style="width:15%;">No</th>
-                            <th style="width:35%;">Ticket No</th>
-                            <th style="width:35%;">Inv Amount</th>
-                            <th style="width:15%;">Action</th>
+                            <th style="width:7%;">No</th>
+                            <th style="width:30%;">Ticket No</th>
+                            <th style="width:25%;">Invoice No</th>
+                            <th style="width:25%;">Inv Amount</th>
+                            <th style="width:13%;">Action</th>
                         </tr>
                     </thead>
                     <tbody>

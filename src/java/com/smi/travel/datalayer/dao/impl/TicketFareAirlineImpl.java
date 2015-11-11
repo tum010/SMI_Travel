@@ -1054,17 +1054,24 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         String ticketid = "";
         String ticketno = "";
         String invamount = "";
-        
+        String invno = "";
         for(int i = 0 ; i < ticketFareAirlineList.size() ; i++ ){
             TicketFareAirline ticket = ticketFareAirlineList.get(i);
             ticketid = ticket.getId();
             ticketno = ticket.getTicketNo();
             invamount = String.valueOf(ticket.getInvAmount());
+            List<TicketFareInvoice> ticketFareInvoices = ticket.getTicketFareInvoices();
+            if(ticketFareInvoices != null){
+                if(ticketFareInvoices.get(0).getInvoice() != null){
+                    invno = ticketFareInvoices.get(0).getInvoice().getInvNo();
+                }
+            }
             if(!"".equalsIgnoreCase(ticketno)){
                 String newrow
                     = "<tr>"
                     + "<td>" + no + "</td>"
                     + "<td>" + (ticketno == "null" ? "" : ticketno ) + "</td>"
+                    + "<td>" + (invno == "null" ? "" : invno ) + "</td>"
                     + "<td class='money' >" + (invamount == "null" ? "" : invamount ) + "</td>"
                     + "<td class=\"text-center\" onclick=\"setSelectTicketNoDetail('" + ticketno + "','" + ticketid + "','" + invamount + "')\">"
                     + "<a href=\"\"><span class=\"glyphicon glyphicon-check\"></span></a>" + "</td>"

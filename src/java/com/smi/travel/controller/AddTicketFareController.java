@@ -465,7 +465,7 @@ public class AddTicketFareController extends SMITravelController {
         } else if ("edit".equalsIgnoreCase(action)){
             System.out.print("ticketId : " +ticketId);
             ticketFareAirline = ticketFareAirlineService.getTicketFareFromId(ticketId);
-            List<TicketFareInvoice> ticketFareInvoiceList = new ArrayList<TicketFareInvoice>(ticketFareAirline.getTicketFareInvoices());
+            List<TicketFareInvoice> ticketFareInvoiceList = ticketFareAirline.getTicketFareInvoices();
             if(ticketFareInvoiceList != null){
                 request.setAttribute(INVDETAILID,ticketFareInvoiceList.get(0).getId());
             }
@@ -558,7 +558,7 @@ public class AddTicketFareController extends SMITravelController {
                 System.out.print("ticketNo is null");
             }else{
                 ticketFareAirline = ticketFareAirlineService.getTicketFareFromTicketNo(ticketNo,ticketId);
-                List<TicketFareInvoice> ticketFareInvoiceList = new ArrayList<TicketFareInvoice>(ticketFareAirline.getTicketFareInvoices());
+                List<TicketFareInvoice> ticketFareInvoiceList = ticketFareAirline.getTicketFareInvoices();
                 if(ticketFareInvoiceList != null){
                     System.out.println(" ==== ticketFareInvoiceList.get(0).getId() ==== " + ticketFareInvoiceList.get(0).getId());
                     request.setAttribute(INVDETAILID,ticketFareInvoiceList.get(0).getId());
