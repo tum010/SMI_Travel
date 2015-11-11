@@ -56,7 +56,6 @@
             <hr/>
             
             <form action="AddTicketFare.smi" method="post" id="AddTicketFareForm" name="AddTicketFareForm" role="form">
-                <input type="hidden" name="selectInvId" id="selectInvId" value="">
                 <input type="hidden" name="invoiceDetailTableId" id="invoiceDetailTableId" value="${requestScope['invDetailTableId']}">
                 <input type="hidden" name="isTempTicket" id="isTempTicket" value="${ticketFare.isTempTicket}">
                 <input type="hidden" name="masterId" id="masterId" value="${ticketFare.master.id}">
@@ -577,18 +576,20 @@
                             <thead class="datatable-header">
                                 <tr>
                                     <th style="width:5%;">No</th>
-                                    <th style="width:16%;">Airline Receive</th>
-                                    <th style="width:15%;">Receive Date</th>
-                                    <th style="width:17%;">Air Comm Receive</th>
-                                    <th style="width:15%;">Pay Date</th>
-                                    <th style="width:17%;">Agent Comm Receive</th>
-                                    <th style="width:15%;">Date</th>
+                                    <th style="width:20%;">Refund No</th>
+                                    <th style="width:15%;">Airline Receive</th>
+                                    <th style="width:10%;">Receive Date</th>
+                                    <th style="width:15%;">Air Comm Receive</th>
+                                    <th style="width:10%;">Pay Date</th>
+                                    <th style="width:15%;">Agent Comm Receive</th>
+                                    <th style="width:10%;">Date</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="table" items="${refundDetailList}" varStatus="dataStatus">
                                     <tr>
                                         <td align="center">${dataStatus.count}</td>
+                                        <td >${table.refundAirticket.refundNo}</td>
                                         <td class="money">${table.receiveAirline}</td>
                                         <td align="center">${table.refundAirticket.receiveDate}</td>
                                         <td class="money">${table.airComission}</td>
@@ -623,6 +624,7 @@
                             <tbody>
                                <c:forEach var="table" items="${invoiceDetailList}" varStatus="dataStatus">
                                     <tr>
+                                        <input type="hidden" name="selectInvId" id="selectInvId" value="${table.invoiceId}">
                                         <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}"> 
                                         <input type="hidden" name="invoiceId${dataStatus.count}" id="invoiceId${dataStatus.count}" value="${table.invoiceId}">
                                         <td align="center">
@@ -1769,6 +1771,7 @@ function setTicketFareDetail(ticket,refno,invno){
         $('#AddTicketByRefModal').modal('show');
     }else{
         $("#ticketNo").val(ticket);
+        $("#ticketId").val("");
         $("#refno").val(refno);
         $("#invno").val(invno);
         searchTicketNo();
@@ -1813,6 +1816,10 @@ function clearData(){
     $("#addPayDate").val("");
     $("#ticketCommDate").val("");
     $("#agentCommDate").val("");
+    $("#ticketId").val("");
+    $("#invoiceId").val("");
+    $("#invoiceDetailTableId").val("");
+    $("#isTempTicket").val("");
     $('#FlightDeailTable').dataTable().fnClearTable();
     $('#FlightDeailTable').dataTable().fnDestroy();
     $("#FlightDeailTable tbody").empty();
@@ -1968,7 +1975,8 @@ function setSelectTicketNoDetail(ticketno,ticketid,invamount){
 
 function searchTicketNoAction(){
     var ticketnopanel = $("#ticketnopanel").val();
-    if(ticketNo == ""){
+    var ticketNumber = $("#ticketNo").val(); 
+    if(ticketNumber == ""){
         if(!$('#ticketnopanel').hasClass('has-feedback')) {
             $('#ticketnopanel').addClass('has-feedback');
         }

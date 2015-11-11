@@ -364,12 +364,14 @@ public class AddTicketFareController extends SMITravelController {
 //            }
             
             
-            
             if(invoiceId != null && !"".equalsIgnoreCase(ticketId)){
                 TicketFareInvoice ticketFareInvoice = new TicketFareInvoice();
                 Invoice invoice = new Invoice();
+                System.out.println(" invoiceId " + invoiceId);
                 invoice.setId(invoiceId);
-                ticketFareInvoice.setId(invoiceDetailTableId);
+                if(!"".equalsIgnoreCase(invoiceDetailTableId) && !invoiceDetailTableId.isEmpty()){
+                    ticketFareInvoice.setId(invoiceDetailTableId);
+                }
                 ticketFareInvoice.setInvoice(invoice);
                 ticketFareInvoice.setTicketFareAirline(ticketFareAirline);
                 ticketFareAirline.getTicketFareInvoices().add(ticketFareInvoice);
