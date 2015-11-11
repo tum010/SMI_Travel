@@ -105,6 +105,8 @@ public class TaxInvoiceController extends SMITravelController {
         String count = request.getParameter("countTaxInvoice");
         String vatDefault = request.getParameter("vatDefault");
         String department = request.getParameter("department");
+        String wildCardSearch = request.getParameter("wildCardSearch");
+        String keyCode = request.getParameter("keyCode");
         String checkInvoiceDetail = "";
         String page = "";
         String result = "";
@@ -187,7 +189,7 @@ public class TaxInvoiceController extends SMITravelController {
             request.setAttribute("invToDate", taxInvoice.getTaxInvDate());
             request.setAttribute("createDate", taxInvoice.getCreateDate());
             request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
-            
+                       
         } else if("deleteTaxInvoiceDetail".equalsIgnoreCase(action)){
             String taxInvoiceDetailId = request.getParameter("taxInvoiceDetailId");
             TaxInvoiceDetail taxInvoiceDetail = new TaxInvoiceDetail();
@@ -306,12 +308,40 @@ public class TaxInvoiceController extends SMITravelController {
                 request.setAttribute("invToDate", taxInvoice.getTaxInvDate());
                 request.setAttribute("createDate", taxInvoice.getCreateDate());
                 request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
-            }         
-        } else if("new".equalsIgnoreCase(action)){
+            }  
             
+        } else if("wildCardSearch".equalsIgnoreCase(action)){
+            TaxInvoice taxInvoice = new TaxInvoice();
+            taxInvoice = taxInvoiceService.getTaxInvoiceByWildCardSearch(taxInvId,taxInvNo,wildCardSearch,keyCode,page);            
+            List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
+            taxInvoiceList = (taxInvoice != null ? taxInvoice.getTaxInvoiceDetails() : null);
+            request.setAttribute(TAXINVOICE, taxInvoice);
+            request.setAttribute("invToDate", taxInvoice.getTaxInvDate());
+            request.setAttribute("createDate", taxInvoice.getCreateDate());
+            request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
+                       
         }
         
-               
+        if((!"".equalsIgnoreCase(taxInvNo)) && (taxInvNo != null)){
+            if("search".equalsIgnoreCase(action)){
+                if((taxInvNo.indexOf("%") == 0)){
+                    request.setAttribute("wildCardSearch", taxInvNo);
+                }else{
+                    request.setAttribute("wildCardSearch", ""); 
+                }
+            }else if("119".equalsIgnoreCase(keyCode)){
+                request.setAttribute("wildCardSearch", ""); 
+            }else{
+                if((taxInvNo.indexOf("%") == 0)){
+                    request.setAttribute("wildCardSearch", taxInvNo);
+                }else if((!"".equalsIgnoreCase(wildCardSearch)) && (wildCardSearch.indexOf("%") == 0)){
+                    request.setAttribute("wildCardSearch", wildCardSearch);
+                }else{
+                    request.setAttribute("wildCardSearch", ""); 
+                }
+            }
+        }
+        
         return new ModelAndView(LINKNAME+callPageFrom);
     }
     

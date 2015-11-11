@@ -150,13 +150,37 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     public TaxInvoice getTaxInvoiceFromTaxInvNo(String TaxInvNo, String Page) {
         Session session = this.sessionFactory.openSession();
         TaxInvoice taxInvoice = new TaxInvoice();
-        List<TaxInvoice> taxInvoiceList = session.createQuery(GET_TAXINVOICE).setParameter("TaxInvNo", TaxInvNo).setParameter("Page", Page).list();
-        if(taxInvoiceList.isEmpty()){
-            return null;
-        } 
+        StringBuffer query = new StringBuffer(" FROM TaxInvoice t ");
+        int a = TaxInvNo.indexOf("%");
+        if((TaxInvNo.indexOf("%")) == 0){
+            TaxInvNo = TaxInvNo.replace("%", "");
+            query.append(" where ");
+            query.append(" t.taxNo like '%" + TaxInvNo + "%' and t.department = :Page ORDER BY t.id desc ");
+            
+            List<TaxInvoice> taxInvoiceList = session.createQuery(query.toString())
+                .setParameter("Page", Page)
+                .setMaxResults(1)
+                .list();
+            if(taxInvoiceList.isEmpty()){
+                return null;
+            }        
+            taxInvoice = taxInvoiceList.get(0);
+            
+        }else{
+            query.append(" where ");
+            query.append(" t.taxNo = :TaxInvNo and t.department = :Page ");
+            
+            List<TaxInvoice> taxInvoiceList = session.createQuery(query.toString())
+                .setParameter("TaxInvNo", TaxInvNo)
+                .setParameter("Page", Page)
+                .list();
+            if(taxInvoiceList.isEmpty()){
+                return null;
+            }       
+            taxInvoice = taxInvoiceList.get(0);
         
-        taxInvoice = taxInvoiceList.get(0);
-               
+        }
+                             
         return taxInvoice;
     }
 
@@ -472,5 +496,54 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         session.close();
         this.sessionFactory.close();
         return list;
+    }
+
+    @Override
+    public TaxInvoice getTaxInvoiceByWildCardSearch(String taxInvId, String taxInvNo, String wildCardSearch, String keyCode, String department) {
+        StringBuffer query = new StringBuffer(" from TaxInvoice taxInv ");
+        //Up
+        if ("38".equalsIgnoreCase(keyCode)) {
+            if("".equalsIgnoreCase(wildCardSearch)){
+                query.append(" where ");
+                query.append(" taxInv.id > '" + taxInvId + "' and taxInv.department = '" + department + "' ORDER BY taxInv.id asc ");
+            }else{
+                query.append(" where ");
+                query.append(" taxInv.id > '" + taxInvId + "' and taxInv.department = '" + department + "' and taxInv.taxNo like '%" + wildCardSearch + "%' ORDER BY taxInv.id asc ");
+            }    
+        }
+        //Down
+        if ("40".equalsIgnoreCase(keyCode)) {
+            if("".equalsIgnoreCase(wildCardSearch)){
+                query.append(" where ");
+                query.append(" taxInv.id < '" + taxInvId + "' and taxInv.department = '" + department + "' ORDER BY taxInv.id desc ");
+            }else{
+                query.append(" where ");
+                query.append(" taxInv.id < '" + taxInvId + "' and taxInv.department = '" + department + "' and taxInv.taxNo like '%" + wildCardSearch + "%' ORDER BY taxInv.id desc ");
+            }           
+        }
+        //Lastest
+        if ("119".equalsIgnoreCase(keyCode)) {
+            query.append(" where ");
+            query.append(" taxInv.department = '" + department + "' ORDER BY taxInv.id desc ");
+        }
+        
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query.toString());
+        System.out.println(HqlQuery.toString());
+        HqlQuery.setMaxResults(1);
+        List<TaxInvoice> taxInvoiceList = HqlQuery.list();
+        if (taxInvoiceList.isEmpty()) {
+            StringBuffer queryTemp = new StringBuffer(" from TaxInvoice taxInv ");
+            queryTemp.append(" where ");
+            queryTemp.append(" taxInv.id = '" + taxInvId + "' and taxInv.department = '" + department + "' ");
+            HqlQuery = session.createQuery(queryTemp.toString());
+            HqlQuery.setMaxResults(1);
+            List<TaxInvoice> taxInvoiceListTemp = HqlQuery.list();
+            return taxInvoiceListTemp.get(0);
+        }
+        
+//        this.sessionFactory.close();
+//        session.close();
+        return taxInvoiceList.get(0);
     }
 }
