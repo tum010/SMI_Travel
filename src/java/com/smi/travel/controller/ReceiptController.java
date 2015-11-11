@@ -96,6 +96,8 @@ public class ReceiptController extends SMITravelController {
         String InputDepartment = request.getParameter("InputDepartment");
         String searchId = request.getParameter("Id");
         String receiveDate = request.getParameter("receiveDate");
+        String wildCardSearch = request.getParameter("wildCardSearch");
+        String keyCode = request.getParameter("keyCode");
         
         System.out.println(" callPageFrom " + callPageFrom);
         if(!"".equals(callPageFrom)){
@@ -534,6 +536,39 @@ public class ReceiptController extends SMITravelController {
                     request.setAttribute(RECEIVEDATE,receipt.getReceiveDate());
                 }
             }
+        }else if("wildCardSearch".equalsIgnoreCase(action)){
+            Receipt receipt = new Receipt();                
+            if(!"".equals(receiveNo)){
+                receipt = receiptService.getReceiptByWildCardSearch(receiveId,receiveNo,wildCardSearch,keyCode,InputDepartment,InputReceiptType);       
+                if(receipt != null) {
+                    if(!receipt.getId().isEmpty()){
+                        List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
+                        List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
+                        request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
+                        request.setAttribute(RECEIPTCREDITLIST,receiptCreditList);
+                        List<ReceiptDetail> recInvId = new ArrayList<ReceiptDetail>();
+                        if(receiptDetailList != null){
+                            for(int i = 0 ;i < receiptDetailList.size();i++){
+                                ReceiptDetail receiptD = new ReceiptDetail();
+                                receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
+                                receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
+                                receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
+                                recInvId.add(receiptD);
+                            }
+                            request.setAttribute(INVIDLIST, recInvId);
+                            request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
+                        }
+                        if(receiptCreditList != null){
+                        request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);
+                        }
+                    }
+                    request.setAttribute(SEARCHRECEIPT,"notdummy");
+                    request.setAttribute(RECEIPT,receipt);
+                    request.setAttribute(RECEIPTDATE,receipt.getRecDate());
+                    request.setAttribute(RECEIVEDATE,receipt.getReceiveDate());
+                }
+            }
+                       
         }else if (!"".equalsIgnoreCase(searchId)) {
             System.out.println(" Id ::: "+ searchId);
             Receipt receipt = new Receipt();
@@ -585,6 +620,28 @@ public class ReceiptController extends SMITravelController {
 //                    request.setAttribute(RECEIPTDATE,receipt.getRecDate());
 //                    request.setAttribute(RECEIVEDATE,receipt.getReceiveDate());
 //                }
+            }
+        }
+        
+        if((!"".equalsIgnoreCase(receiveNo)) && (receiveNo != null)){
+            if("searchReceiveNo".equalsIgnoreCase(action)){
+                if((receiveNo.indexOf("%") >= 0)){
+                    request.setAttribute("wildCardSearch", receiveNo);
+                }else{
+                    request.setAttribute("wildCardSearch", ""); 
+                }
+            }else if("118".equalsIgnoreCase(keyCode)){
+                request.setAttribute("wildCardSearch", ""); 
+            }else if("119".equalsIgnoreCase(keyCode)){
+                request.setAttribute("wildCardSearch", ""); 
+            }else{
+                if((receiveNo.indexOf("%") == 0)){
+                    request.setAttribute("wildCardSearch", receiveNo);
+                }else if((!"".equalsIgnoreCase(wildCardSearch)) && (wildCardSearch.indexOf("%") == 0)){
+                    request.setAttribute("wildCardSearch", wildCardSearch);
+                }else{
+                    request.setAttribute("wildCardSearch", ""); 
+                }
             }
         }
         

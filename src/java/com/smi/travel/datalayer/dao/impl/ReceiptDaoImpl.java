@@ -43,22 +43,44 @@ import org.hibernate.Transaction;
 
     @Override
     public Receipt getReceiptfromReceiptNo(String receiptNo,String department,String recType) {
-        Receipt receipt = new Receipt();
-        String query = "from Receipt r where r.recNo =:recNo and r.department =:department and r.recType =:recType";
         Session session = this.sessionFactory.openSession();
-        List<Receipt> receiptList = session.createQuery(query)
+        Receipt receipt = new Receipt();
+        String query = "from Receipt r ";
+        
+        if((receiptNo.indexOf("%")) >= 0){
+            query += " where ";
+            query += " r.recNo like '" + receiptNo + "' and r.department = :department and r.recType =:recType ORDER BY r.id desc ";
+            
+            List<Receipt> receiptList = session.createQuery(query.toString())
+                .setParameter("department", department)
+                .setParameter("recType", recType)
+                .setMaxResults(1)
+                .list();
+            if(receiptList.isEmpty()){
+                return null;
+            }        
+            receipt = receiptList.get(0);
+            
+        }else{
+            query += " where ";
+            query += " r.recNo =:recNo and r.department =:department and r.recType =:recType ";
+            
+            List<Receipt> receiptList = session.createQuery(query.toString())
                 .setParameter("recNo", receiptNo)
                 .setParameter("department", department)
                 .setParameter("recType", recType)
                 .list();
-        if (receiptList.isEmpty()) {
-            return null;
-        }else{
-            receipt =  receiptList.get(0);
+            if(receiptList.isEmpty()){
+                return null;
+            }       
+            receipt = receiptList.get(0);
+            
         }
+
         session.close();
         this.sessionFactory.close();
-        return receipt;   
+        return receipt; 
+                      
     }
 
     @Override
@@ -646,6 +668,55 @@ import org.hibernate.Transaction;
         session.close();
         this.sessionFactory.close();
         return receiptDetailViewList;    
+    }
+
+    @Override
+    public Receipt getReceiptByWildCardSearch(String receiveId, String receiveNo, String wildCardSearch, String keyCode, String department, String recType) {
+        StringBuffer query = new StringBuffer(" from Receipt r ");
+        //Up
+        if ("38".equalsIgnoreCase(keyCode)) {
+            if("".equalsIgnoreCase(wildCardSearch)){
+                query.append(" where ");
+                query.append(" r.id > '" + receiveId + "' and r.department = '" + department + "' and r.recType = '" + recType + "' ORDER BY r.id asc ");
+            }else{
+                query.append(" where ");
+                query.append(" r.id > '" + receiveId + "' and r.department = '" + department + "' and r.recType = '" + recType + "' and r.recNo like '" + wildCardSearch + "' ORDER BY r.id asc ");
+            }    
+        }
+        //Down
+        if ("40".equalsIgnoreCase(keyCode)) {
+            if("".equalsIgnoreCase(wildCardSearch)){               
+                query.append(" where ");
+                query.append(" r.id < '" + receiveId + "' and r.department = '" + department + "' and r.recType = '" + recType + "' ORDER BY r.id desc ");
+            }else{
+                query.append(" where ");
+                query.append(" r.id < '" + receiveId + "' and r.department = '" + department + "' and r.recType = '" + recType + "' and r.recNo like '" + wildCardSearch + "' ORDER BY r.id desc ");
+            }           
+        }
+        //Lastest
+        if ("119".equalsIgnoreCase(keyCode)) {
+            query.append(" where ");
+            query.append(" r.department = '" + department + "' and r.recType = '" + recType + "' ORDER BY r.id desc ");
+        }
+        
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query.toString());
+        System.out.println(HqlQuery.toString());
+        HqlQuery.setMaxResults(1);
+        List<Receipt> receiptList = HqlQuery.list();
+        if (receiptList.isEmpty()) {
+            StringBuffer queryTemp = new StringBuffer(" from Receipt r ");
+            queryTemp.append(" where ");
+            queryTemp.append(" r.id = '" + receiveId + "' and r.department = '" + department + "' and r.recType = '" + recType + "' ");
+            HqlQuery = session.createQuery(queryTemp.toString());
+            HqlQuery.setMaxResults(1);
+            List<Receipt> receiptListTemp = HqlQuery.list();
+            return receiptListTemp.get(0);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return receiptList.get(0);
     }
     
 }
