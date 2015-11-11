@@ -274,8 +274,10 @@
                             <input type="hidden" class="form-control" id="TaxInvId" name="TaxInvId" value="${taxInvoice.id}"/>
                             <input type="hidden" class="form-control" id="TaxInvStatus" name="TaxInvStatus" value="${taxInvoice.MFinanceItemstatus.id}"/>
                             <input type="hidden" class="form-control" id="createDate" name="createDate" value="${requestScope['createDate']}"/>
-                            <input type="hidden" class="form-control" id="createBy" name="createBy" value="${taxInvoice.createBy}"/>                           
-                            <input type="text" style="text-transform:uppercase" class="form-control" id="TaxInvNo" name="TaxInvNo"  value="${taxInvoice.taxNo}" >
+                            <input type="hidden" class="form-control" id="createBy" name="createBy" value="${taxInvoice.createBy}"/>
+                            <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
+                            <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
+                            <input type="text" style="text-transform:uppercase" class="form-control" id="TaxInvNo" name="TaxInvNo" value="${taxInvoice.taxNo}" >
                         </div>
                         <div class="col-md-1" >
                             <button type="button"  id="btnSearchTaxInvoiceNo"  name="btnSearchTaxInvoiceNo" onclick="searchTaxInvoiceNo()" class="btn btn-primary btn-sm">
@@ -988,9 +990,43 @@
             }
         });
         
-        $("#TaxInvNo").keyup(function (event) {
+        var wildCardSearch = ($("#wildCardSearch").val()).indexOf("%");
+        if($("#TaxInvId").val() !== ''){
+            $("#TaxInvNo").focus();
+        }        
+        $("#TaxInvNo").keyup(function (event) {           
+//            var wildCardSearch = ($("#TaxInvNo").val()).indexOf("%");
             if (event.keyCode === 13) {
                 searchTaxInvoiceNo();
+            
+            } else if(event.keyCode === 38){
+                if((parseInt(wildCardSearch) === 0) || ($("#TaxInvId").val() !== '')){
+                    $("#keyCode").val(event.keyCode);
+                    var action = document.getElementById('action');
+                    action.value = 'wildCardSearch';
+                    document.getElementById('TaxInvoiceForm').submit();
+                }
+            
+            } else if(event.keyCode === 40){
+                if((parseInt(wildCardSearch) === 0) || ($("#TaxInvId").val() !== '')){
+                    $("#keyCode").val(event.keyCode);
+                    var action = document.getElementById('action');
+                    action.value = 'wildCardSearch';
+                    document.getElementById('TaxInvoiceForm').submit();
+                }
+            
+            } else if(event.keyCode === 118){
+                $("#keyCode").val(event.keyCode);
+                var action = document.getElementById('action');
+                action.value = 'new';
+                document.getElementById('TaxInvoiceForm').submit();
+            
+            } else if(event.keyCode === 119){
+                $("#keyCode").val(event.keyCode);
+                var action = document.getElementById('action');
+                action.value = 'wildCardSearch';
+                document.getElementById('TaxInvoiceForm').submit();
+
             }
         });
         

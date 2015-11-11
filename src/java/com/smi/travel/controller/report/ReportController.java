@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.report.model.AgentCommission;
 import com.smi.travel.datalayer.report.model.DailyTourReport;
 import com.smi.travel.datalayer.report.model.GuideCommissionInfo;
 import com.smi.travel.datalayer.report.model.HotelMonthlyReport;
+import com.smi.travel.datalayer.report.model.OtherGuideCommissionInfo;
 import com.smi.travel.datalayer.report.model.OtherMonthlyReport;
 import com.smi.travel.datalayer.report.model.PackageMonthlyReport;
 import com.smi.travel.datalayer.report.model.PaymentAirline;
@@ -91,6 +92,7 @@ public class ReportController extends SMITravelController {
     private static final String DailyTourReport = "DailyTourReport";
     private static final String PackageSummaryReport = "PackageSummaryReport"; //PackageMonthly
     private static final String BookingSummaryReport = "BookingSummaryReport"; //PackageMonthly
+    private static final String OtherGuideCommission = "OtherGuideCommission";
     
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -299,6 +301,10 @@ public class ReportController extends SMITravelController {
         }else if(BookingSummaryReport.equalsIgnoreCase(name)){
             data = reportservice.getBookingSummaryReport(refno);
             ((BookingHeaderSummaryView) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
+        }else if (OtherGuideCommission.equalsIgnoreCase(name)) {
+            data = reportservice.getOtherGuideCommissionInfoReport(startdate, enddate, user.getName(), guideID);
+            // set path for loading sub-report file
+            ((OtherGuideCommissionInfo) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

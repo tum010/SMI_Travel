@@ -91,7 +91,7 @@
                         <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="searchAction()" class="btn btn-primary "><i class="fa fa-search"></i> Search</button>
                     </div>
                     <div class="col-xs-2 text-left">
-                        <button type="button" id="ButtonAdd" name="ButtonAdd" onclick="" class="btn btn-primary" data-toggle="modal" data-target="#AddGuideModal"><i class="fa fa-plus"></i> Add Guide</button>
+                        <button type="button" id="ButtonAdd" name="ButtonAdd" onclick="setValueInModalGuide();" class="btn btn-primary" data-toggle="modal" data-target="#AddGuideModal"><i class="fa fa-plus"></i> Add Guide</button>
                     </div>
                 </div>
                 <div class="col-xs-12 form-group">
@@ -358,6 +358,10 @@
             <div class="modal-body" id="add">   
                 
                 <input type="text" class="hidden" id="addGuideAction" name="addGuideAction" value="addGuide">
+                <input type="text" class="hidden" id="fromdateAdd" name="fromdateAdd" value="">
+                <input type="text" class="hidden" id="todateAdd" name="todateAdd" value="">
+                <input type="text" class="hidden" id="agentAdd" name="agentAdd" value="">
+                <input type="text" class="hidden" id="guideAdd" name="guideAdd" value="">
                 <div class="row">
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-3 text-right">Name <font style="color: red">*</font></div>
@@ -447,12 +451,19 @@
             var editCheckBox = $(this).closest('tr').find('td.edited').children();
             $(editCheckBox).attr("checked", true);
         });
-        
-        
-
     });
     
-    
+    function setValueInModalGuide(){
+        var fromdate = $('#InputDateFrom').val();
+        var todate = $('#InputDateTo').val();
+        var agent = $('#SelectAgent').val();
+        var guide = $('#SelectGuide').val();
+        $('#fromdateAdd').val(fromdate);
+        $('#todateAdd').val(todate);
+        $('#agentAdd').val(agent);
+        $('#guideAdd').val(guide);
+        console.log("Add Guide : " + fromdate + " " + todate + " " + agent + " " + guide );
+    }
    
 </script>
 <style>
@@ -466,12 +477,12 @@
 <c:if test="${! empty result}">
     <c:if test="${result =='success'}">        
         <script language="javascript">
-            alert("save successful");
+            $('#textAlertDivSaveAddGuide').show();
         </script>
     </c:if>
     <c:if test="${result =='fail'}">        
         <script language="javascript">
-            alert("save unsuccessful");
+            $('#textAlertDivNotSaveAddGuide').show();
         </script>
     </c:if>
     <c:if test="${result =='guideunsuccess'}">        

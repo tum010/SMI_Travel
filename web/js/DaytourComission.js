@@ -329,7 +329,7 @@ function printGuideCommission() {
     var guidePrintFrom = document.getElementById("guidePrintFrom").value;
     var guidePrintTo = document.getElementById("guidePrintTo").value;
     var selGuideReport = document.getElementById("selGuideReport").value;
-    window.open("report.smi?name=GuideCommission&startdate=" + guidePrintFrom + "&enddate=" + guidePrintTo+"&GuideID="+selGuideReport);
+    window.open("report.smi?name=OtherGuideCommission&startdate=" + guidePrintFrom + "&enddate=" + guidePrintTo+"&GuideID="+selGuideReport);
 }
 
 function printAgentCommission() {
@@ -356,8 +356,17 @@ function addGuide(){
 function addGuideOtherCommission(){
     var name = $('#guideName').val();
     var detail = $('#guideDetail').val();
+    var fromdate = $('#fromdateAdd').val();
+    var todate = $('#todateAdd').val();
+    var agent = $('#agentAdd').val();
+    var guide = $('#guideAdd').val();
+    console.log("Add Guide  Confirm : " + fromdate + " " + todate + " " + agent + " " + guide );
     if(name !== '' && detail !== ''){
         $('#addGuideAction').val('addGuide');
+        $('#fromdateAdd').val(fromdate);
+        $('#todateAdd').val(todate);
+        $('#agentAdd').val(agent);
+        $('#guideAdd').val(guide);
         var action = $('#addGuideAction').val();
         console.log('Action Add Guide : ' + action);
         $("#AddGuideModal").hide();

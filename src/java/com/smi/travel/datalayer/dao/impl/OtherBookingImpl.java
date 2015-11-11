@@ -15,11 +15,18 @@ import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.report.model.GuideCommissionSummaryHeader;
+import com.smi.travel.datalayer.report.model.OtherGuideCommissionInfo;
+import com.smi.travel.datalayer.report.model.OtherGuideCommissionSummary;
+import com.smi.travel.datalayer.report.model.OtherGuideCommissionSummaryHeader;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -35,6 +42,13 @@ public class OtherBookingImpl implements OtherBookingDao{
     private Transaction transaction;
     private UtilityFunction util;
     private static final String GET_BOOKOTHER_QUERY = "from OtherBooking ot where ot.otherDate >= :startdate and ot.otherDate <= :enddate ";
+    private final  String GUIDECOM_SUMMARY_QUERY = "SELECT st.name , " +
+                                                        "sum(ot.ad_qty + ot.ch_qty + ot.in_qty) as pax, " +
+                                                        "sum(ifnull(ot.guide_commission,0)) , " +
+                                                        "ot.guide_id " +
+                                                        "FROM `other_booking` ot " +
+                                                        "INNER JOIN staff st on st.id = ot.guide_id " ;
+    
     
     @Override
     public List<OtherBooking> getListBookingOtherFromRefno(String refno) {
@@ -894,5 +908,147 @@ public class OtherBookingImpl implements OtherBookingDao{
         }
         
         return result;
+    }
+
+    @Override
+    public OtherGuideCommissionInfo getOtherGuideCommissionInfoReport(String datefrom, String dateto, String username, String guideid) {
+        OtherGuideCommissionInfo guideCommissionInfo = new OtherGuideCommissionInfo();
+        guideCommissionInfo.setOtherGuideCommissionSummaryDataSource(new JRBeanCollectionDataSource(getOtherGuideComissionSummaryReport(datefrom, dateto, username, guideid)));
+        guideCommissionInfo.setOtherGuideCommissionDataSource(new JRBeanCollectionDataSource(getOtherGuideComissionReport(datefrom, dateto, username, guideid)));
+        return guideCommissionInfo;
+    }
+    
+    private List getOtherGuideComissionSummaryReport(String datefrom, String dateto, String username,String guideid) {
+       org.hibernate.Session session = this.sessionFactory.openSession();
+        List data = new ArrayList();
+        Date thisdate = new Date();
+        String query = "";
+        UtilityFunction util = new UtilityFunction();
+        int checkQuery = 0;
+        
+        if( "".equals(datefrom)  && "".equals(dateto) && "".equals(guideid)){
+            query = GUIDECOM_SUMMARY_QUERY + " ";
+        }else{  
+            if( datefrom == null  && dateto == null && guideid == null){
+                query = GUIDECOM_SUMMARY_QUERY + " ";
+            }else{
+                query = GUIDECOM_SUMMARY_QUERY + "  where ";
+            }
+        }
+        
+        if ((datefrom != null )&&(!"".equalsIgnoreCase(datefrom))) {
+            if ((dateto != null )&&(!"".equalsIgnoreCase(dateto))) {
+                if(checkQuery == 1){
+                     query += " and ot.other_date   BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                }else{
+                    checkQuery = 1;
+                     query += " ot.other_date  BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                }
+            }
+        }
+        if ((guideid != null )&&(!"".equalsIgnoreCase(guideid))) {
+            if(checkQuery == 1){
+                 query += " and guide_id = "+guideid;
+            }else{
+                checkQuery = 1;
+                 query += " guide_id = "+guideid;
+            }
+        }
+        
+        query += "  GROUP BY ot.guide_id ";     
+        query += "  having  sum(ifnull(ot.guide_commission,0))  <> 0 ";
+        System.out.println("query : "+ query);
+        List<Object[]> QueryGuideComList = session.createSQLQuery(query)
+                .addScalar("guide", Hibernate.STRING)
+                .addScalar("pax", Hibernate.INTEGER)
+                .addScalar("comission", Hibernate.INTEGER)
+
+                .list();
+        
+        for (Object[] B : QueryGuideComList) {
+             OtherGuideCommissionSummaryHeader guidecom = new OtherGuideCommissionSummaryHeader();
+             guidecom.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
+             guidecom.setUser(username);
+             guidecom.setDatefrom(!"".equalsIgnoreCase(datefrom) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+             guidecom.setDateto(!"".equalsIgnoreCase(dateto) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
+             guidecom.setGuidename(util.ConvertString(B[0]));
+             guidecom.setPax(B[1]== null ? 0:(Integer)B[1]);
+             guidecom.setCommission(B[2]== null ? 0:(Integer)B[2]);
+             data.add(guidecom);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+    
+    private List getOtherGuideComissionReport(String datefrom, String dateto, String username,String guideid) {
+        Session session = this.sessionFactory.openSession();
+        List data = new ArrayList();
+        Date thisdate = new Date();
+        String query = "";
+        UtilityFunction util = new UtilityFunction();
+        int checkQuery = 0;
+        if( "".equals(datefrom)  && "".equals(dateto) && "".equals(guideid)){
+            query = "SELECT * FROM `guide_commission_other` gc ";
+        }else{  
+            if( datefrom == null  && dateto == null && guideid == null){
+                query = "SELECT * FROM `guide_commission_other` gc ";
+            }else{
+                query = "SELECT * FROM `guide_commission_other` gc  where ";
+            }
+        }
+        
+        if ((datefrom != null )&&(!"".equalsIgnoreCase(datefrom))) {
+            if ((dateto != null )&&(!"".equalsIgnoreCase(dateto))) {
+                if(checkQuery == 1){
+                     query += " and gc.tourdate BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                }else{
+                    checkQuery = 1;
+                     query += " gc.tourdate  BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                }
+            }
+        }
+        if ((guideid != null )&&(!"".equalsIgnoreCase(guideid))) {
+            if(checkQuery == 1){
+                 query += " and gc.guideid = "+guideid;
+            }else{
+                checkQuery = 1;
+                 query += " gc.guideid = "+guideid;
+            }
+        }
+        
+        query += " ORDER BY gc.guide , gc.tourdate , gc.tourcode";
+        System.out.println(" Query GuideCommission : " + query );
+        List<Object[]> QueryGuideComList = session.createSQLQuery(query)
+                .addScalar("tourdate", Hibernate.DATE)
+                .addScalar("tourcode", Hibernate.STRING)
+                .addScalar("customer", Hibernate.STRING)
+                .addScalar("pax", Hibernate.INTEGER)
+                .addScalar("comission", Hibernate.INTEGER)
+                .addScalar("sell", Hibernate.INTEGER)
+                .addScalar("guide", Hibernate.STRING)
+                .addScalar("remark", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryGuideComList) {
+             OtherGuideCommissionSummary guidecom = new OtherGuideCommissionSummary();
+             guidecom.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
+             guidecom.setUser(username);
+             guidecom.setDatefrom(!"".equalsIgnoreCase(datefrom) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+             guidecom.setDateto(!"".equalsIgnoreCase(dateto) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
+             guidecom.setTourdate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(B[0]));
+             guidecom.setCode(util.ConvertString(B[1]));
+             guidecom.setCustomer(util.ConvertString(B[2]));
+             guidecom.setPax(B[3]== null ? 0:(Integer)B[3]);
+             guidecom.setComission(B[4]== null ? 0:(Integer)B[4]);
+             guidecom.setSelling(B[5]== null ? 0:(Integer)B[5]);
+             guidecom.setGuide(util.ConvertString(B[6]));
+             guidecom.setRemark(util.ConvertString(B[7]));
+             data.add(guidecom);
+        }
+         this.sessionFactory.close();
+        session.close();
+        return data;
     }
 }
