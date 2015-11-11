@@ -6,19 +6,13 @@
 
 package com.smi.travel.datalayer.view.dao.impl;
 
-import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.view.dao.ReceiptDao;
 import com.smi.travel.datalayer.view.entity.ReceiptView;
 import com.smi.travel.util.UtilityFunction;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

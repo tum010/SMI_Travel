@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.DaytourBookingDao;
+import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.PackageTourHotelDao;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
@@ -98,6 +99,7 @@ public class ReportService {
     private DaytourBookingDao daytourBookingdao;
     private PackageMonthlyDao packageMonthlyDao;
     private BookingSummaryDao bookingSummaryDao;
+    private OtherBookingDao otherBookingDao;
     
     public List getInvoiceMonthly(String BillTo,String ClientName,String Accno,String vattype,String from,String to,String department,String billingAttn,String billingFrom,String billingTel,String billingFax,String billingMail,String billingDate){
         return invoiceReportDao.getInvoiceMonthly(BillTo, ClientName, Accno, vattype, from, to, department, billingAttn, billingFrom, billingTel, billingFax, billingMail, billingDate);
@@ -691,5 +693,19 @@ public class ReportService {
 
     public void setBookingSummaryDao(BookingSummaryDao bookingSummaryDao) {
         this.bookingSummaryDao = bookingSummaryDao;
+    }
+
+    public OtherBookingDao getOtherBookingDao() {
+        return otherBookingDao;
+    }
+
+    public void setOtherBookingDao(OtherBookingDao otherBookingDao) {
+        this.otherBookingDao = otherBookingDao;
+    }
+    
+    public List getOtherGuideCommissionInfoReport(String datefrom,String dateto,String username,String guideid){
+        List data  = new ArrayList();
+        data.add(otherBookingDao.getOtherGuideCommissionInfoReport(datefrom, dateto, username,guideid));
+        return data;
     }
 }
