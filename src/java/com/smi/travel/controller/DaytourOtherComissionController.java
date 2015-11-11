@@ -79,7 +79,11 @@ public class DaytourOtherComissionController extends SMITravelController {
             if (StringUtils.isNotEmpty(dateFromS) && StringUtils.isNotEmpty(dateToS)) {
                 List<OtherBooking> dBookingList = bookingOtherService.getListBookingDaytourComission(dateFromS, dateToS, selectAgentId, selectGuideId);
                 
-                request.setAttribute(BookingList, dBookingList);
+                if(dBookingList != null){
+                    request.setAttribute(BookingList, dBookingList);
+                }else{
+                    request.setAttribute(BookingList, dBookingList);
+                }
                 
                 if (dBookingList!=null) {
                     log.info("DaytourBooking size(" + dBookingList.size() + ")");
@@ -95,6 +99,30 @@ public class DaytourOtherComissionController extends SMITravelController {
             String name = request.getParameter("guideName");
             String detail = request.getParameter("guideDetail");
             String tel = request.getParameter("guideTel");
+            // Search Booking
+            String fromdateAdd =  request.getParameter("fromdateAdd");
+            String todateAdd =  request.getParameter("todateAdd");
+            String agentAdd =  request.getParameter("agentAdd");
+            String guideAdd =  request.getParameter("guideAdd");
+            if (StringUtils.isNotEmpty(fromdateAdd) && StringUtils.isNotEmpty(todateAdd)) {
+                List<OtherBooking> dBookingList = bookingOtherService.getListBookingDaytourComission(fromdateAdd, todateAdd, agentAdd, guideAdd);
+                if(dBookingList != null){
+                    request.setAttribute(BookingList, dBookingList);
+                    dateFromS = fromdateAdd;
+                    dateToS = todateAdd;
+                    selectAgentId = agentAdd;
+                    selectGuideId = guideAdd;
+                }else{
+                    request.setAttribute(BookingList, dBookingList);
+                }
+                
+                if (dBookingList!=null) {
+                    log.info("DaytourBooking size(" + dBookingList.size() + ")");
+                } else {
+                    log.info("Search not found any matched DaytourBooking!!");
+                }
+            }
+            
             user.setName(name + " " + detail);
             user.setUsername(name);
             user.setTel(tel);
@@ -112,6 +140,7 @@ public class DaytourOtherComissionController extends SMITravelController {
             
             user.setPosition("GUIDE");
             user.setIsExGuide(1);
+            user.setStatus("active");
             int result = 0;
             String resultTest = "";
             result  = bookingOtherService.insertSystemUser(user);
@@ -119,6 +148,7 @@ public class DaytourOtherComissionController extends SMITravelController {
             if(result == 0){
                 resultTest = "guideunsuccess";
             }else{
+                
                 resultTest = "guidesuccess";
             }
             request.setAttribute("TransactionResult", resultTest);

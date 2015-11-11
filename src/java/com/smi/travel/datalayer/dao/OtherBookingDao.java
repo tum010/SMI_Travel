@@ -8,9 +8,8 @@ package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.OtherBooking;
-import com.smi.travel.datalayer.entity.Product;
-import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.report.model.OtherGuideCommissionInfo;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import java.util.List;
 
@@ -34,4 +33,5 @@ public interface OtherBookingDao {
     public List<OtherTicketView> getListStockDetail(String otherBookingId);
     public String updateStockTicketStatus(String stockTicketId,String status);
     public String checkStock(String productID, String otherdate);
+    public OtherGuideCommissionInfo getOtherGuideCommissionInfoReport(String datefrom,String dateto,String username,String guideid);
 }

@@ -51,12 +51,40 @@ public class GuideCommissionReportImpl implements GuideCommissionReportDao{
         Session session = this.sessionFactory.openSession();
         List data = new ArrayList();
         Date thisdate = new Date();
+        String query = "";
         UtilityFunction util = new UtilityFunction();
-        String query = "SELECT * FROM `guide_commission` gc where gc.tourdate >= '"+datefrom+"' and gc.tourdate <= '"+dateto+"'";
-        if((guideid != null)&&(!"".equalsIgnoreCase(guideid))){
-            query += " and gc.guideid = "+guideid;
+        int checkQuery = 0;
+        if( "".equals(datefrom)  && "".equals(dateto) && "".equals(guideid)){
+            query = "SELECT * FROM `guide_commission` gc ";
+        }else{  
+            if( datefrom == null  && dateto == null && guideid == null){
+                query = "SELECT * FROM `guide_commission` gc ";
+            }else{
+                query = "SELECT * FROM `guide_commission` gc  where ";
+            }
         }
+        
+        if ((datefrom != null )&&(!"".equalsIgnoreCase(datefrom))) {
+            if ((dateto != null )&&(!"".equalsIgnoreCase(dateto))) {
+                if(checkQuery == 1){
+                     query += " and gc.tourdate BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                }else{
+                    checkQuery = 1;
+                     query += " gc.tourdate  BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                }
+            }
+        }
+        if ((guideid != null )&&(!"".equalsIgnoreCase(guideid))) {
+            if(checkQuery == 1){
+                 query += " and gc.guideid = "+guideid;
+            }else{
+                checkQuery = 1;
+                 query += " gc.guideid = "+guideid;
+            }
+        }
+        
         query += " ORDER BY gc.guide , gc.tourdate , gc.tourcode";
+        System.out.println(" Query GuideCommission : " + query );
         List<Object[]> QueryGuideComList = session.createSQLQuery(query)
                 .addScalar("tourdate", Hibernate.DATE)
                 .addScalar("tourcode", Hibernate.STRING)
