@@ -55,6 +55,10 @@ public class TaxInvoiceService {
     public String checkCreditNote(String id) {
         return taxInvoiceDao.checkCreditNote(id);
     }
+
+    public TaxInvoice getTaxInvoiceByWildCardSearch(String taxInvId, String taxInvNo, String wildCardSearch, String keyCode, String department) {
+        return taxInvoiceDao.getTaxInvoiceByWildCardSearch(taxInvId,taxInvNo,wildCardSearch,keyCode,department);
+    }
     
     
 }
