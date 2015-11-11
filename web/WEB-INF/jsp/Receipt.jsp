@@ -280,6 +280,8 @@
                                     <label class="control-label text-right">Receive No </label>                                    
                                 </div>
                                 <div class="col-xs-1" style="width: 150px" id='receivenumber'>
+                                    <input type="text" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
+                                    <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                                     <input id="receiveId" name="receiveId" type="hidden" class="form-control" maxlength="11" value="${receipt.id}">
                                     <input id="receiveNo" name="receiveNo" type="text" style="width: 150px" class="form-control" maxlength="20" value="${receipt.recNo}">
                                 </div>
@@ -1352,9 +1354,42 @@
             $('#textAlertReceiveNo').show();
         }      
 //        $(".moneyformat").mask('000,000,000', {reverse: true});
+        
+        var wildCardSearch = ($("#wildCardSearch").val()).indexOf("%");
+        if($("#receiveId").val() !== ''){
+            $("#receiveNo").focus();
+        }     
         $("#receiveNo").keyup(function (event) {
             if(event.keyCode === 13){
                searchReceiveNo();
+            } else if(event.keyCode === 38){
+                if((parseInt(wildCardSearch) >= 0) || ($("#receiveId").val() !== '')){
+                    $("#keyCode").val(event.keyCode);
+                    var action = document.getElementById('action');
+                    action.value = 'wildCardSearch';
+                    document.getElementById('ReceiptForm').submit();
+                }
+            
+            } else if(event.keyCode === 40){
+                if((parseInt(wildCardSearch) >= 0) || ($("#receiveId").val() !== '')){
+                    $("#keyCode").val(event.keyCode);
+                    var action = document.getElementById('action');
+                    action.value = 'wildCardSearch';
+                    document.getElementById('ReceiptForm').submit();
+                }
+            
+            } else if(event.keyCode === 118){
+                $("#keyCode").val(event.keyCode);
+                var action = document.getElementById('action');
+                action.value = 'new';
+                document.getElementById('ReceiptForm').submit();
+            
+            } else if(event.keyCode === 119){
+                $("#keyCode").val(event.keyCode);
+                var action = document.getElementById('action');
+                action.value = 'wildCardSearch';
+                document.getElementById('ReceiptForm').submit();
+
             }
         });
         $("#invoiceNo").keyup(function (event) {

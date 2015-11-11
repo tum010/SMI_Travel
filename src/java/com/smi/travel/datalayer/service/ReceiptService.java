@@ -78,5 +78,9 @@ public class ReceiptService {
     public void setReceiptDao(ReceiptDao receiptDao) {
         this.receiptDao = receiptDao;
     }
+
+    public Receipt getReceiptByWildCardSearch(String receiveId, String receiveNo, String wildCardSearch, String keyCode, String InputDepartment, String InputReceiptType) {
+        return receiptDao.getReceiptByWildCardSearch(receiveId, receiveNo, wildCardSearch, keyCode, InputDepartment, InputReceiptType);
+    }
     
 }

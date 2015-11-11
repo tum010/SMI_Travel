@@ -106,10 +106,9 @@ public class CreditNoteImpl implements CreditNoteDao {
         String query = "from  CreditNote crditNote ";
         Session session = this.getSessionFactory().openSession();
         CreditNote result = new CreditNote();
-        if((cnNo.indexOf("%")) == 0){
-            cnNo = cnNo.replace("%", "");
+        if((cnNo.indexOf("%")) >= 0){
             query += " where ";
-            query += " crditNote.cnNo like '%" + cnNo + "%' and crditNote.department = :department ORDER BY crditNote.id desc ";
+            query += " crditNote.cnNo like '" + cnNo + "' and crditNote.department = :department ORDER BY crditNote.id desc ";
             
             List<CreditNote> creditNoteList = session.createQuery(query.toString())
                 .setParameter("department", department)
@@ -322,7 +321,7 @@ public class CreditNoteImpl implements CreditNoteDao {
                 query.append(" cn.id > '" + cnId + "' and cn.department = '" + department + "' ORDER BY cn.id asc ");
             }else{
                 query.append(" where ");
-                query.append(" cn.id > '" + cnId + "' and cn.department = '" + department + "' and cn.cnNo like '%" + wildCardSearch + "%' ORDER BY cn.id asc ");
+                query.append(" cn.id > '" + cnId + "' and cn.department = '" + department + "' and cn.cnNo like '" + wildCardSearch + "' ORDER BY cn.id asc ");
             }    
         }
         //Down
@@ -332,7 +331,7 @@ public class CreditNoteImpl implements CreditNoteDao {
                 query.append(" cn.id < '" + cnId + "' and cn.department = '" + department + "' ORDER BY cn.id desc ");
             }else{
                 query.append(" where ");
-                query.append(" cn.id < '" + cnId + "' and cn.department = '" + department + "' and cn.cnNo like '%" + wildCardSearch + "%' ORDER BY cn.id desc ");
+                query.append(" cn.id < '" + cnId + "' and cn.department = '" + department + "' and cn.cnNo like '" + wildCardSearch + "' ORDER BY cn.id desc ");
             }           
         }
         //Lastest
