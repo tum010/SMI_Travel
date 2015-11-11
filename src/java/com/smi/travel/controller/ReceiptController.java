@@ -320,7 +320,7 @@ public class ReceiptController extends SMITravelController {
                            System.out.println(" SAVE INVOICE FAIL ");
                        }else{
                            System.out.println("invoiceNo " + invoiceNo);
-                           Invoice inv = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo);
+                           Invoice inv = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo,"","");
                            List<InvoiceDetail> invDetaill = new ArrayList<InvoiceDetail>(inv.getInvoiceDetails());
                            for(int j=0 ; j < inv.getInvoiceDetails().size() ;j++){
                                InvoiceDetail invD = new InvoiceDetail();

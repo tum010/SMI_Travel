@@ -263,35 +263,62 @@ public class InvoiceImpl implements InvoiceDao{
     }
    
     @Override
-    public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber) {
+    public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber, String department, String invType) {
         Session session = this.sessionFactory.openSession();
         Invoice invoice = new Invoice();
-        List<Invoice> invoiceList = session.createQuery(GET_INVOICE)
+        String query = "";
+       
+        if((InvoiceNumber.indexOf("%")) >= 0){
+            query = " FROM Invoice inv where inv.invNo LIKE '" + InvoiceNumber + "'";
+            query += " AND inv.department = :department ";
+            query += " AND inv.invType = :invType ORDER BY inv.id desc ";
+            
+            if("W".equalsIgnoreCase(department)){
+                department = "Wendy";
+            }else if("O".equalsIgnoreCase(department)){
+                department = "Outbound";
+            }else if("I".equalsIgnoreCase(department)){
+                department = "Inbound";
+            }
+            
+            List<Invoice> invoiceList = session.createQuery(query.toString())
+                .setParameter("department", department)
+                .setParameter("invType", invType)
+                .setMaxResults(1)
+                .list();
+            if(invoiceList.isEmpty()){
+                return invoice;
+            }        
+            invoice = invoiceList.get(0);
+            
+        }else{
+            List<Invoice> invoiceList = session.createQuery(GET_INVOICE)
                 .setParameter("invoiceNo", InvoiceNumber)
                 .list();
-        if(!invoiceList.isEmpty()){
-            invoice.setId(invoiceList.get(0).getId());
-            invoice.setInvNo(invoiceList.get(0).getInvNo());
-            invoice.setInvTo(invoiceList.get(0).getInvTo());
-            invoice.setInvName(invoiceList.get(0).getInvName());
-            invoice.setInvType(invoiceList.get(0).getInvType());
-            invoice.setInvDate(invoiceList.get(0).getInvDate());
-            invoice.setInvAddress(invoiceList.get(0).getInvAddress());
-            invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
-            invoice.setArcode(invoiceList.get(0).getArcode());
-            invoice.setCreateBy(invoiceList.get(0).getCreateBy());
-            invoice.setCreateDate(invoiceList.get(0).getCreateDate());
-            invoice.setDepartment(invoiceList.get(0).getDepartment());
-            invoice.setDueDate(invoiceList.get(0).getDueDate());
-            invoice.setIsGroup(invoiceList.get(0).getIsGroup());
-            invoice.setIsLock(invoiceList.get(0).getIsLock());
-            invoice.setMAccTerm(invoiceList.get(0).getMAccTerm());
-            invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
-            invoice.setRemark(invoiceList.get(0).getRemark());
-            invoice.setStaff(invoiceList.get(0).getStaff());
-            invoice.setSubDepartment(invoiceList.get(0).getSubDepartment());
+            if(!invoiceList.isEmpty()){
+                invoice.setId(invoiceList.get(0).getId());
+                invoice.setInvNo(invoiceList.get(0).getInvNo());
+                invoice.setInvTo(invoiceList.get(0).getInvTo());
+                invoice.setInvName(invoiceList.get(0).getInvName());
+                invoice.setInvType(invoiceList.get(0).getInvType());
+                invoice.setInvDate(invoiceList.get(0).getInvDate());
+                invoice.setInvAddress(invoiceList.get(0).getInvAddress());
+                invoice.setInvoiceDetails(invoiceList.get(0).getInvoiceDetails());
+                invoice.setArcode(invoiceList.get(0).getArcode());
+                invoice.setCreateBy(invoiceList.get(0).getCreateBy());
+                invoice.setCreateDate(invoiceList.get(0).getCreateDate());
+                invoice.setDepartment(invoiceList.get(0).getDepartment());
+                invoice.setDueDate(invoiceList.get(0).getDueDate());
+                invoice.setIsGroup(invoiceList.get(0).getIsGroup());
+                invoice.setIsLock(invoiceList.get(0).getIsLock());
+                invoice.setMAccTerm(invoiceList.get(0).getMAccTerm());
+                invoice.setMFinanceItemstatus(invoiceList.get(0).getMFinanceItemstatus());
+                invoice.setRemark(invoiceList.get(0).getRemark());
+                invoice.setStaff(invoiceList.get(0).getStaff());
+                invoice.setSubDepartment(invoiceList.get(0).getSubDepartment());
+            }           
         }
-        
+                       
         return invoice;
     }
 
@@ -834,5 +861,54 @@ public class InvoiceImpl implements InvoiceDao{
         session.close();
         this.sessionFactory.close();
         return isCheck;
+    }
+
+    @Override
+    public Invoice getInvoiceByWildCardSearch(String invoiceId, String invoiceNo, String wildCardSearch, String keyCode, String department, String invType) {
+        StringBuffer query = new StringBuffer(" from Invoice inv ");
+        //Up
+        if ("38".equalsIgnoreCase(keyCode)) {
+            if("".equalsIgnoreCase(wildCardSearch)){
+                query.append(" where ");
+                query.append(" inv.id > '" + invoiceId + "' and inv.department = '" + department + "' and inv.invType = '" + invType + "' ORDER BY inv.id asc ");
+            }else{
+                query.append(" where ");
+                query.append(" inv.id > '" + invoiceId + "' and inv.department = '" + department + "' and inv.invType = '" + invType + "' and inv.invNo like '" + wildCardSearch + "' ORDER BY inv.id asc ");
+            }    
+        }
+        //Down
+        if ("40".equalsIgnoreCase(keyCode)) {
+            if("".equalsIgnoreCase(wildCardSearch)){               
+                query.append(" where ");
+                query.append(" inv.id < '" + invoiceId + "' and inv.department = '" + department + "' and inv.invType = '" + invType + "' ORDER BY inv.id desc ");
+            }else{
+                query.append(" where ");
+                query.append(" inv.id < '" + invoiceId + "' and inv.department = '" + department + "' and inv.invType = '" + invType + "' and inv.invNo like '" + wildCardSearch + "' ORDER BY inv.id desc ");
+            }           
+        }
+        //Lastest
+        if ("119".equalsIgnoreCase(keyCode)) {
+            query.append(" where ");
+            query.append(" inv.department = '" + department + "' and inv.invType = '" + invType + "' ORDER BY inv.id desc ");
+        }
+        
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query.toString());
+        System.out.println(HqlQuery.toString());
+        HqlQuery.setMaxResults(1);
+        List<Invoice> invoiceList = HqlQuery.list();
+        if (invoiceList.isEmpty()) {
+            StringBuffer queryTemp = new StringBuffer(" from Invoice inv ");
+            queryTemp.append(" where ");
+            queryTemp.append(" inv.id = '" + invoiceId + "' and inv.department = '" + department + "' and inv.invType = '" + invType + "' ");
+            HqlQuery = session.createQuery(queryTemp.toString());
+            HqlQuery.setMaxResults(1);
+            List<Invoice> invoiceListTemp = HqlQuery.list();
+            return invoiceListTemp.get(0);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return invoiceList.get(0);
     }
 }

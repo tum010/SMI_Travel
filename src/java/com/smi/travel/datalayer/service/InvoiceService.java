@@ -50,8 +50,8 @@ public class InvoiceService {
         return  invoiceDao.DeleteInvoiceDetail(InvoiceDetailId);
     }
     
-    public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber){
-        return  invoiceDao.getInvoiceFromInvoiceNumber(InvoiceNumber);
+    public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber,String department,String invType){
+        return  invoiceDao.getInvoiceFromInvoiceNumber(InvoiceNumber, department, invType);
     }
 
     public void setInvoiceDao(InvoiceDao invoiceDao) {
@@ -88,5 +88,9 @@ public class InvoiceService {
     
     public String checkTaxInvoice(String refno){
         return  invoiceDao.taxInvoice(refno);
+    }
+
+    public Invoice getInvoiceByWildCardSearch(String invoiceId, String invoiceNo, String wildCardSearch, String keyCode, String department, String invoiceType) {
+        return invoiceDao.getInvoiceByWildCardSearch(invoiceId, invoiceNo, wildCardSearch, keyCode, department, invoiceType);
     }
 }

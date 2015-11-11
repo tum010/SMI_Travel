@@ -24,7 +24,7 @@ public interface InvoiceDao {
     public String LockAndUnLockInvoice(String InvoiceId , int LockStatus);
     //UPDATE Invoice inv set inv.isLock = :LockStatus where inv.id = :InvoiceId
     public String DeleteInvoiceDetail(String InvoiceDetailId);
-    public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber);
+    public Invoice getInvoiceFromInvoiceNumber(String InvoiceNumber,String department,String invType);
     public String searchInvoiceNum(String department,String invoiceType,String invoiceNo);
     public Invoice searchInvoiceNo(String invoiceId,String department,String invoiceType);
     public Invoice getInvoiceFromId(String invoiceId);
@@ -43,4 +43,5 @@ public interface InvoiceDao {
     public String insertInvoiceDetail(Invoice invoice);
     public String updateInvoiceDetail(Invoice invoice);
     public List<InvoiceDetail> getInvoiceDetailFromBillDescId(String billableDescId); //for ajax check invoice detail 
+    public Invoice getInvoiceByWildCardSearch(String invoiceId, String invoiceNo, String wildCardSearch, String keyCode, String department, String invoiceType);
 }

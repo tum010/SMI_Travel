@@ -67,6 +67,8 @@ public class InvoiceController extends SMITravelController {
         String isGroup[] = request.getParameterValues("Grpup");
         String result = "";  
         String subDepartment = request.getParameter("Department");
+        String wildCardSearch = request.getParameter("wildCardSearch");
+        String keyCode = request.getParameter("keyCode");
         
         if(callPageFrom != null){
            //String[] type = callPageFrom.split("\\?");
@@ -160,7 +162,7 @@ public class InvoiceController extends SMITravelController {
             if("okMoney".equals(checkOverFlow)){
                 result = invoiceService.saveInvoice(invoice);
                 System.out.println("ddddd result : "+result);
-                saveAction(result, invoiceNo, invoice, request);
+                saveAction(result, invoiceNo, invoice, "", request);
             }else{
                 result = invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails());
                 request.setAttribute("listInvoiceDetail", invoice.getInvoiceDetails());
@@ -185,9 +187,13 @@ public class InvoiceController extends SMITravelController {
                     type = "A";
                 }
             }
+            if((invoiceNo.indexOf("%") >= 0)){
+                depart = department;
+                type = invoiceType;
+            }
             System.out.println("Search Invoice : Depart >>>> " + depart +  "  Typee >>> " + type);
             if(depart.equals(department) && type.equals(invoiceType)){
-                invoice = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo);
+                invoice = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo,depart,type);
                 System.out.println(invoiceNo);
                 System.out.println("1");
                 listInvoiceDetail = invoice.getInvoiceDetails();
@@ -281,7 +287,7 @@ public class InvoiceController extends SMITravelController {
             String rowId  = request.getParameter("idDeleteDetailBillable");
             result = invoiceService.DeleteInvoiceDetail(rowId);
             if("success".equals(result)){
-                invoice = invoiceService.getInvoiceFromInvoiceNumber(invoice.getInvNo());
+                invoice = invoiceService.getInvoiceFromInvoiceNumber(invoice.getInvNo(),"","");
                 listInvoiceDetail = invoice.getInvoiceDetails();
                 if(invoice != null){
                     request.setAttribute("invoice", invoice);
@@ -302,7 +308,7 @@ public class InvoiceController extends SMITravelController {
             invoice.setId(null);
             result = invoiceService.saveInvoice(invoice);
             System.out.println("Copy Invoice result : "+result);
-            saveAction(result, invoice.getInvNo(), invoice, request);
+            saveAction(result, invoice.getInvNo(), invoice, "", request);
         }else if("new".equals(action)){
 //            invoice = setValueInvoice(action, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, request,null);
             invoice.setInvoiceDetails(null);
@@ -310,24 +316,61 @@ public class InvoiceController extends SMITravelController {
             request.setAttribute("listInvoiceDetail", null);
             result = "NEW";
             request.setAttribute("result", result);
+        }else if("wildCardSearch".equalsIgnoreCase(action)){
+            Invoice invoice = new Invoice();
+            if(department != null){
+                if(department.equals("W")){
+                    department = "Wendy";
+                } else if(department.equals("O")){
+                    department = "Outbound";
+                } else if(department.equals("I")){
+                    department = "Inbound";
+                } 
+            } 
+            invoice = invoiceService.getInvoiceByWildCardSearch(invoiceId,invoiceNo,wildCardSearch,keyCode,department,invoiceType);            
+            saveAction(invoice.getInvNo(), invoiceNo, invoice, "wildCardSearch", request);
+                       
         }
+        
+        if((!"".equalsIgnoreCase(invoiceNo)) && (invoiceNo != null)){
+            if("searchInvoice".equalsIgnoreCase(action)){
+                if((invoiceNo.indexOf("%") >= 0)){
+                    request.setAttribute("wildCardSearch", invoiceNo);
+                }else{
+                    request.setAttribute("wildCardSearch", ""); 
+                }
+            }else if("118".equalsIgnoreCase(keyCode)){
+                request.setAttribute("wildCardSearch", ""); 
+            }else if("119".equalsIgnoreCase(keyCode)){
+                request.setAttribute("wildCardSearch", ""); 
+            }else{
+                if((invoiceNo.indexOf("%") >= 0)){
+                    request.setAttribute("wildCardSearch", invoiceNo);
+                }else if((!"".equalsIgnoreCase(wildCardSearch)) && (wildCardSearch.indexOf("%") == 0)){
+                    request.setAttribute("wildCardSearch", wildCardSearch);
+                }else{
+                    request.setAttribute("wildCardSearch", ""); 
+                }
+            }
+        }
+        
         request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
         request.setAttribute("page", callPageFrom);
         return new ModelAndView(LINKNAME+callPageFrom);
     }   
     
-    public void saveAction(String result ,String invoiceNo, Invoice invoice ,HttpServletRequest request){
+    public void saveAction(String result ,String invoiceNo, Invoice invoice ,String wildCardSearch ,HttpServletRequest request){
         if(result.equals("update success")){
             result = "success";
             request.setAttribute("listInvoiceDetail", listInvoiceDetail);
-            invoice = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo);
+            invoice = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo,"","");
             request.setAttribute("invoice", invoice);
             request.setAttribute("result", result);
                    
         }else if(!result.equals("fail")){ // Save New Success
             // search invoice from invoice no
             System.out.println("save result : "+result); 
-            Invoice newInvoice = invoiceService.getInvoiceFromInvoiceNumber(result);
+            Invoice newInvoice = invoiceService.getInvoiceFromInvoiceNumber(result,"","");
             result = "success";
             // set invoice detail in list
             List<InvoiceDetail> listInvoiceDetailNew = newInvoice.getInvoiceDetails();
@@ -341,8 +384,12 @@ public class InvoiceController extends SMITravelController {
                 request.setAttribute("listInvoiceDetail", listInvoiceDetailNew);
             }else{
                 request.setAttribute("listInvoiceDetail", null);
-            }               
-            request.setAttribute("result", result);
+            }
+            
+            if("".equalsIgnoreCase(wildCardSearch)){
+                request.setAttribute("result", result);
+            }
+                      
         }else{
             request.setAttribute("result", result);
             request.setAttribute("invoice", invoice);

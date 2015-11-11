@@ -259,6 +259,8 @@
                     </div>
                     <div class="panel-body"  style="padding-right: 0px;">
                         <input type="hidden"  class="form-control" id="InvoiceId" name="InvoiceId"  value="${invoice.id}" >
+                        <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
+                        <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                         <div class="col-xs-12 ">
                             <div class="col-xs-1 text-right">
                                 <label class="control-label" for="">INV no</lable>
