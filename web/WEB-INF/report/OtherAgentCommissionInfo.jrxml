@@ -1,27 +1,269 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherAgentCommissionInfo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a07b30d8-d6be-4458-9b61-35a08e376a84">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherAgentCommissionInfo" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="a07b30d8-d6be-4458-9b61-35a08e376a84">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="tourdate" class="java.lang.String"/>
+	<field name="systemdate" class="java.lang.String"/>
+	<field name="user" class="java.lang.String"/>
+	<field name="datefrom" class="java.lang.String"/>
+	<field name="dateto" class="java.lang.String"/>
+	<field name="tourcode" class="java.lang.String"/>
+	<field name="client" class="java.lang.String"/>
+	<field name="agent" class="java.lang.String"/>
+	<field name="pax" class="java.lang.Integer"/>
+	<field name="commission" class="java.lang.Integer"/>
+	<field name="sell" class="java.lang.Integer"/>
+	<variable name="totalpax" class="java.lang.Integer" resetType="Group" resetGroup="OtherAgent" calculation="Sum">
+		<variableExpression><![CDATA[$F{pax}]]></variableExpression>
+	</variable>
+	<variable name="totalcom" class="java.lang.Integer" resetType="Group" resetGroup="OtherAgent" calculation="Sum">
+		<variableExpression><![CDATA[$F{commission}]]></variableExpression>
+	</variable>
+	<variable name="totalselling" class="java.lang.Integer" resetType="Group" resetGroup="OtherAgent" calculation="Sum">
+		<variableExpression><![CDATA[$F{sell}]]></variableExpression>
+	</variable>
+	<group name="OtherAgent" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{agent}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<rectangle>
+					<reportElement x="1" y="31" width="555" height="18" backcolor="#E6E6E6" uuid="013823fe-070f-4c98-914b-9972353f8d1b"/>
+					<graphicElement>
+						<pen lineWidth="0.25" lineColor="#CCCCCC"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="1" y="31" width="70" height="18" backcolor="#FFFFFF" uuid="0d9ee86b-c3cf-48fb-bb0e-88dec16292bb"/>
+					<box>
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+						<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+						<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+						<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOUR DATE]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="48" y="10" width="249" height="20" uuid="e7bc5f0a-a36b-445e-beb6-c20c6f70870d"/>
+					<textElement>
+						<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{agent}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="444" y="31" width="112" height="18" backcolor="#FFFFFF" uuid="ffdd8ee7-9758-44fe-abf9-47ce1c552aec"/>
+					<box>
+						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+						<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+						<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[SELLING]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="71" y="31" width="79" height="18" uuid="05ca17fd-7b6d-4b10-899f-05262c84f18c"/>
+					<box>
+						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+						<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+						<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOUR CODE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="348" y="31" width="96" height="18" uuid="65d8f6ed-300e-4efa-90d7-f27d9d44ab9e"/>
+					<box>
+						<pen lineColor="#CCCCFF"/>
+						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+						<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+						<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[COMMISSION]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="150" y="31" width="147" height="18" uuid="a8d2e970-3094-4e2f-aca0-19a2948dd4ec"/>
+					<box>
+						<pen lineWidth="0.25"/>
+						<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+						<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+						<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+						<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[CLIENT NAME]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="6" y="11" width="43" height="15" uuid="80baf91c-c29f-4120-b683-b17ad14761bd"/>
+					<text><![CDATA[Agent : ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="297" y="31" width="51" height="18" uuid="fbc1c47c-0e13-4470-bbaa-cac43d0733c2"/>
+					<box>
+						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+						<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+						<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[PAX]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21">
+				<rectangle>
+					<reportElement x="1" y="3" width="555" height="13" backcolor="#E6E6E6" uuid="815d9d81-9563-42ab-af0f-f7865cd23229"/>
+					<graphicElement>
+						<pen lineWidth="0.25" lineColor="#CCCCCC"/>
+					</graphicElement>
+				</rectangle>
+				<rectangle>
+					<reportElement mode="Transparent" x="348" y="2" width="96" height="14" forecolor="#CCCCCC" uuid="906f0289-910c-4a1e-81a6-e2ffe1a58764"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<textField pattern="#,##0">
+					<reportElement x="444" y="2" width="112" height="14" uuid="b5cf78ca-34d0-4b6e-ba49-a0a404536235"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalselling}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="297" y="2" width="51" height="14" uuid="33c88666-4f33-4ab6-b36c-dd7c937c4372"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalpax}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Transparent" x="297" y="2" width="51" height="14" forecolor="#CCCCCC" uuid="1f08345f-bebd-444f-8d0c-d4d9c41b6c6c"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="231" y="2" width="66" height="14" uuid="a188b297-a166-4e9d-ab1e-62351fd845e3"/>
+					<text><![CDATA[Grand Total :]]></text>
+				</staticText>
+				<rectangle>
+					<reportElement mode="Transparent" x="444" y="2" width="112" height="14" forecolor="#CCCCCC" uuid="311005dc-c3d2-489b-ab50-d6d723f7d3e2"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</rectangle>
+				<textField pattern="#,##0">
+					<reportElement x="348" y="2" width="96" height="14" uuid="f2e01964-2c2c-4707-9b1d-6a90ff39a4b6"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalcom}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="79" splitType="Stretch"/>
-	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="61" splitType="Stretch"/>
-	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="23" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="1" y="2" width="70" height="20" forecolor="#CCCCCC" uuid="876806e1-a8d7-4e95-ba18-46ce2720f3c5"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="1" y="2" width="70" height="15" uuid="9cbdbd8d-e5d2-4751-a01a-bf35a87bd88e"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tourdate}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="71" y="2" width="79" height="20" forecolor="#CCCCCC" uuid="e93be3f6-c5e8-44d8-bbd5-df3c89cb11e4"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="71" y="2" width="79" height="15" uuid="e373585e-f728-4bd0-a721-a918deb33cfa"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tourcode}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="150" y="2" width="147" height="20" forecolor="#CCCCCC" uuid="88c444be-a3c5-4b90-a9b1-1b538645216d"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="150" y="2" width="147" height="15" uuid="bb04f8ae-3f95-416e-98ac-f841d8565fa1"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{client}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="444" y="2" width="110" height="15" uuid="a133aaeb-eadb-4a3e-ab51-ffbec00fb889"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sell}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="444" y="2" width="112" height="20" forecolor="#CCCCCC" uuid="7d8b8dee-5f58-42be-ba82-9b1bdf8ad1ce"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="#,##0">
+				<reportElement x="348" y="2" width="96" height="15" uuid="e841bc38-a3a7-4f9d-9900-42ed91d491d7"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{commission}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="348" y="2" width="96" height="20" forecolor="#CCCCCC" uuid="7dbc20c1-32f3-4cb0-bec7-9beca366c090"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="297" y="2" width="51" height="15" uuid="acf51d29-3ea1-408d-921b-3414a532f860"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pax}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="297" y="2" width="51" height="20" forecolor="#CCCCCC" uuid="135ad75b-59b8-46f1-935f-02b74c01cebc"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

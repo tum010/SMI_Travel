@@ -1,27 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherAgentCommission" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="baa4262f-f190-4eee-b5ef-3a32175d1eb3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="subReportDir" class="java.lang.String"/>
+	<field name="otherAgentCommissionSummaryDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="otherAgentCommissionInfoDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="systemdate" class="java.lang.String"/>
+	<field name="user" class="java.lang.String"/>
+	<field name="datefrom" class="java.lang.String"/>
+	<field name="dateto" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="79" splitType="Stretch"/>
-	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="64">
+			<textField>
+				<reportElement x="374" y="43" width="163" height="15" uuid="2246bc2d-5e1c-4f94-a925-79aa3da3b28b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page : "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="537" y="43" width="17" height="15" uuid="bb8ae993-5b16-4a01-9ee1-5386dfc91146"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="3" width="329" height="24" uuid="53faeb84-f4d8-4e9e-a127-454114f55edd"/>
+				<textElement>
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Report Other Agent Commission Service]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="13" width="60" height="15" uuid="6a500063-3ac5-419d-adfb-be5b2f56a937"/>
+				<text><![CDATA[Print Date : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="469" y="28" width="87" height="15" uuid="7a4bb6f6-e646-4dcd-a241-48ff9f5c528c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="469" y="13" width="87" height="15" uuid="256a2183-948f-4e5b-8e5a-619efa633a62"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="409" y="28" width="60" height="15" uuid="bebad293-c87a-4c4d-8a39-daf99493bcdd"/>
+				<text><![CDATA[Print By : ]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="89" y="28" width="90" height="15" uuid="68cb5731-87e9-42c5-8d36-017be225d182"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="2" y="28" width="69" height="15" uuid="a9329903-fbe7-4657-9ecd-14eba2747e9c"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datefrom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="71" y="27" width="18" height="15" uuid="4f5c2ca5-2a8a-4a92-b44e-6895336c0dc6"/>
+				<textElement textAlignment="Center">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[to]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
-	<columnHeader>
-		<band height="61" splitType="Stretch"/>
-	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="164" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="76" uuid="3099e518-3985-46c3-88f9-3fecb5e30e64"/>
+				<dataSourceExpression><![CDATA[$F{otherAgentCommissionSummaryDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/OtherAgentCommissionSummary.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="87" width="555" height="76" uuid="a06d5ac6-08f5-4698-969d-4ffa55fa8a07"/>
+				<dataSourceExpression><![CDATA[$F{otherAgentCommissionInfoDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/OtherAgentCommissionInfo.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="83" width="100" height="1" uuid="d7ec5236-da5f-478c-9589-03198288e636"/>
+			</break>
+		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

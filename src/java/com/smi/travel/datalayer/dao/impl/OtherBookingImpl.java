@@ -1070,6 +1070,13 @@ public class OtherBookingImpl implements OtherBookingDao{
     @Override
     public OtherAgentCommission getOtherAgentCommissionReport(String datefrom, String dateto, String user, String agentid) {
         OtherAgentCommission agentCommission = new OtherAgentCommission();
+        Date thisdate = new Date();
+        UtilityFunction util = new UtilityFunction();
+        System.out.println(" From Date : " + datefrom +  " To Date : " + dateto);
+        agentCommission.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
+        agentCommission.setUser(user);
+        agentCommission.setDatefrom(!"".equalsIgnoreCase(datefrom) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+        agentCommission.setDateto(!"".equalsIgnoreCase(dateto)  ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
         agentCommission.setOtherAgentCommissionInfoDataSource(new JRBeanCollectionDataSource(getOtherAgentReportInfo(datefrom, dateto, user,agentid)));
         agentCommission.setOtherAgentCommissionSummaryDataSource(new JRBeanCollectionDataSource(getOtherAgentReportSummary(datefrom, dateto, user,agentid)));
         return agentCommission;
