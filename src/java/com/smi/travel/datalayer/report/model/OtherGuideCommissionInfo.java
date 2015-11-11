@@ -12,9 +12,45 @@ import net.sf.jasperreports.engine.JRDataSource;
  * @author Kanokporn
  */
 public class OtherGuideCommissionInfo {
+    private String systemdate;
+    private String user;
+    private String datefrom;
+    private String dateto;
     private JRDataSource otherGuideCommissionDataSource;
     private JRDataSource otherGuideCommissionSummaryDataSource;
     private String subReportDir;
+
+    public String getSystemdate() {
+        return systemdate;
+    }
+
+    public void setSystemdate(String systemdate) {
+        this.systemdate = systemdate;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getDatefrom() {
+        return datefrom;
+    }
+
+    public void setDatefrom(String datefrom) {
+        this.datefrom = datefrom;
+    }
+
+    public String getDateto() {
+        return dateto;
+    }
+
+    public void setDateto(String dateto) {
+        this.dateto = dateto;
+    }
     
     public OtherGuideCommissionInfo(){
         this.otherGuideCommissionDataSource = null;

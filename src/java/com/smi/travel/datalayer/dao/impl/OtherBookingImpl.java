@@ -44,7 +44,7 @@ public class OtherBookingImpl implements OtherBookingDao{
     private static final String GET_BOOKOTHER_QUERY = "from OtherBooking ot where ot.otherDate >= :startdate and ot.otherDate <= :enddate ";
     private final  String GUIDECOM_SUMMARY_QUERY = "SELECT st.name , " +
                                                         "sum(ot.ad_qty + ot.ch_qty + ot.in_qty) as pax, " +
-                                                        "sum(ifnull(ot.guide_commission,0)) , " +
+                                                        "sum(ifnull(ot.guide_commission,0)) AS commission , " +
                                                         "ot.guide_id " +
                                                         "FROM `other_booking` ot " +
                                                         "INNER JOIN staff st on st.id = ot.guide_id " ;
@@ -913,6 +913,13 @@ public class OtherBookingImpl implements OtherBookingDao{
     @Override
     public OtherGuideCommissionInfo getOtherGuideCommissionInfoReport(String datefrom, String dateto, String username, String guideid) {
         OtherGuideCommissionInfo guideCommissionInfo = new OtherGuideCommissionInfo();
+        Date thisdate = new Date();
+        UtilityFunction util = new UtilityFunction();
+        System.out.println(" From Date : " + datefrom +  " To Date : " + dateto);
+        guideCommissionInfo.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
+        guideCommissionInfo.setUser(username);
+        guideCommissionInfo.setDatefrom(!"".equalsIgnoreCase(datefrom) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+        guideCommissionInfo.setDateto(!"".equalsIgnoreCase(dateto)  ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
         guideCommissionInfo.setOtherGuideCommissionSummaryDataSource(new JRBeanCollectionDataSource(getOtherGuideComissionSummaryReport(datefrom, dateto, username, guideid)));
         guideCommissionInfo.setOtherGuideCommissionDataSource(new JRBeanCollectionDataSource(getOtherGuideComissionReport(datefrom, dateto, username, guideid)));
         return guideCommissionInfo;
@@ -959,9 +966,9 @@ public class OtherBookingImpl implements OtherBookingDao{
         query += "  having  sum(ifnull(ot.guide_commission,0))  <> 0 ";
         System.out.println("query : "+ query);
         List<Object[]> QueryGuideComList = session.createSQLQuery(query)
-                .addScalar("guide", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
                 .addScalar("pax", Hibernate.INTEGER)
-                .addScalar("comission", Hibernate.INTEGER)
+                .addScalar("commission", Hibernate.INTEGER)
 
                 .list();
         
@@ -1002,32 +1009,32 @@ public class OtherBookingImpl implements OtherBookingDao{
         if ((datefrom != null )&&(!"".equalsIgnoreCase(datefrom))) {
             if ((dateto != null )&&(!"".equalsIgnoreCase(dateto))) {
                 if(checkQuery == 1){
-                     query += " and gc.tourdate BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                     query += " and gc.otherdate BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
                 }else{
                     checkQuery = 1;
-                     query += " gc.tourdate  BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                     query += " gc.otherdate  BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
                 }
             }
         }
         if ((guideid != null )&&(!"".equalsIgnoreCase(guideid))) {
             if(checkQuery == 1){
-                 query += " and gc.guideid = "+guideid;
+                 query += " and gc.guideId = "+guideid;
             }else{
                 checkQuery = 1;
-                 query += " gc.guideid = "+guideid;
+                 query += " gc.guideId = "+guideid;
             }
         }
         
-        query += " ORDER BY gc.guide , gc.tourdate , gc.tourcode";
+        query += " ORDER BY gc.guidename , gc.otherdate , gc.tour";
         System.out.println(" Query GuideCommission : " + query );
         List<Object[]> QueryGuideComList = session.createSQLQuery(query)
-                .addScalar("tourdate", Hibernate.DATE)
-                .addScalar("tourcode", Hibernate.STRING)
-                .addScalar("customer", Hibernate.STRING)
+                .addScalar("otherdate", Hibernate.DATE)
+                .addScalar("tour", Hibernate.STRING)
+                .addScalar("leder", Hibernate.STRING)
                 .addScalar("pax", Hibernate.INTEGER)
-                .addScalar("comission", Hibernate.INTEGER)
-                .addScalar("sell", Hibernate.INTEGER)
-                .addScalar("guide", Hibernate.STRING)
+                .addScalar("commission", Hibernate.INTEGER)
+                .addScalar("selling", Hibernate.INTEGER)
+                .addScalar("guidename", Hibernate.STRING)
                 .addScalar("remark", Hibernate.STRING)
                 .list();
         

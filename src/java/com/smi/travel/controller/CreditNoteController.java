@@ -53,7 +53,10 @@ public class CreditNoteController extends SMITravelController {
         }
         String action = request.getParameter("action");
         String creditNo = request.getParameter("cnNo");
+        String creditId = request.getParameter("cnId");
         SystemUser user = (SystemUser) session.getAttribute("USER");
+        String wildCardSearch = request.getParameter("wildCardSearch");
+        String keyCode = request.getParameter("keyCode");
 
         if ("search".equalsIgnoreCase(action)) {
             CreditNote creditNote = new CreditNote();
@@ -106,6 +109,19 @@ public class CreditNoteController extends SMITravelController {
 //            CreditNote creditNote = creditNoteService.getCreditNote(cnNo, type.get(department));
             CreditNote creditNote = creditNoteService.getCreditNote(cnNo, department);
             request.setAttribute("creditNote", creditNote);
+        }else if("wildCardSearch".equalsIgnoreCase(action)){
+            String cnId = request.getParameter("cnId");
+            String cnNo = request.getParameter("cnNo");
+            CreditNote creditNote = new CreditNote();
+            creditNote = creditNoteService.getCreditNoteByWildCardSearch(cnId,cnNo,wildCardSearch,keyCode,department);            
+            if (creditNote == null) {
+                request.setAttribute("failStatus", true);
+                request.setAttribute("failMessage", "Credit note no:" + creditNo + " not available !");
+            } else {
+                request.setAttribute("creditNote", creditNote);
+                request.setAttribute("enableVoid", true);
+            }
+                       
         }
 //        CreditNote cn = (CreditNote) request.getAttribute("creditNote");
 //        if (cn != null && cn.getId() != null && !"".equals(cn.getId())) {
@@ -120,6 +136,29 @@ public class CreditNoteController extends SMITravelController {
         request.setAttribute("productTypeList", getUtilityService().getListMPayType());
         request.setAttribute("vat", getUtilityService().getMDefaultDataFromType("vat").getValue());
         request.setAttribute("page", callPageFrom);
+        
+        if((!"".equalsIgnoreCase(creditNo)) && (creditNo != null)){
+            if("search".equalsIgnoreCase(action)){
+                if((creditNo.indexOf("%") == 0)){
+                    request.setAttribute("wildCardSearch", creditNo);
+                }else{
+                    request.setAttribute("wildCardSearch", ""); 
+                }
+            }else if("118".equalsIgnoreCase(keyCode)){
+                request.setAttribute("wildCardSearch", ""); 
+            }else if("119".equalsIgnoreCase(keyCode)){
+                request.setAttribute("wildCardSearch", ""); 
+            }else{
+                if((creditNo.indexOf("%") == 0)){
+                    request.setAttribute("wildCardSearch", creditNo);
+                }else if((!"".equalsIgnoreCase(wildCardSearch)) && (wildCardSearch.indexOf("%") == 0)){
+                    request.setAttribute("wildCardSearch", wildCardSearch);
+                }else{
+                    request.setAttribute("wildCardSearch", ""); 
+                }
+            }
+        }
+        
         return new ModelAndView(LINKNAME + callPageFrom);
     }
 
