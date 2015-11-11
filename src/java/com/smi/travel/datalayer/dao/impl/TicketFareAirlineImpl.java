@@ -86,8 +86,9 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     @Override
     public String UpdateTicketFare(TicketFareAirline ticket) {
         String result = "success";
+        Session session = this.sessionFactory.openSession();
         try {
-            Session session = this.sessionFactory.openSession();
+            
             transaction = session.beginTransaction();
             if(ticket.getMPaymentDoctype() != null){
                 if((ticket.getMPaymentDoctype().getId() != null || !"".equals(ticket.getMPaymentDoctype().getId())) 
@@ -114,6 +115,10 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         } catch (Exception ex) {
             ex.printStackTrace();
             result = "fail";
+            transaction.rollback();
+            session.close();
+            this.sessionFactory.close();
+            
         }
         return result;    
     }
@@ -955,7 +960,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 invTo = invoiceDetailList.get(i).getInvoice().getInvTo();
                 if(!"".equalsIgnoreCase(invTo) && invTo != null){
                     List<Agent> agentlist = session.createQuery("from Agent agt where agt.code = :invTo").setParameter("invTo",invTo).list();
-                    if(agentlist != null){
+                    if(!agentlist.isEmpty()){
                         invTo = agentlist.get(0).getId();
                         invName = agentlist.get(0).getName();
                     }
@@ -1061,7 +1066,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             ticketno = ticket.getTicketNo();
             invamount = String.valueOf(ticket.getInvAmount());
             List<TicketFareInvoice> ticketFareInvoices = ticket.getTicketFareInvoices();
-            if(ticketFareInvoices != null){
+            if(!ticketFareInvoices.isEmpty()){
                 if(ticketFareInvoices.get(0).getInvoice() != null){
                     invno = ticketFareInvoices.get(0).getInvoice().getInvNo();
                 }

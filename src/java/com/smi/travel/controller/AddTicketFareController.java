@@ -558,8 +558,12 @@ public class AddTicketFareController extends SMITravelController {
                 System.out.print("ticketNo is null");
             }else{
                 ticketFareAirline = ticketFareAirlineService.getTicketFareFromTicketNo(ticketNo,ticketId);
-                List<TicketFareInvoice> ticketFareInvoiceList = ticketFareAirline.getTicketFareInvoices();
-                if(ticketFareInvoiceList != null){
+                List<TicketFareInvoice> ticketFareInvoiceList = null;
+                if(ticketFareAirline != null){
+                    ticketFareInvoiceList = ticketFareAirline.getTicketFareInvoices();
+                }
+                        
+                if((ticketFareInvoiceList != null)&&(!ticketFareInvoiceList.isEmpty())){
                     System.out.println(" ==== ticketFareInvoiceList.get(0).getId() ==== " + ticketFareInvoiceList.get(0).getId());
                     request.setAttribute(INVDETAILID,ticketFareInvoiceList.get(0).getId());
                 }
