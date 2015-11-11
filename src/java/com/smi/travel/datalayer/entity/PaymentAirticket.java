@@ -39,6 +39,8 @@ public class PaymentAirticket  {
      private BigDecimal debitAmount;
      private Date updateDate;
      private Date exportDate;
+     private BigDecimal wht;
+     private BigDecimal vat;
 //     private BigDecimal creditAmount;
     private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
     private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
@@ -47,7 +49,7 @@ public class PaymentAirticket  {
     public PaymentAirticket() {
     }
 
-    public PaymentAirticket(MAccpay MAccpay,String payTo ,String payNo, Date payDate, Date dueDate, String invoiceSup, String apCode, String detail, BigDecimal agentAmount, BigDecimal cash, BigDecimal witholdingTax, String chqNo, BigDecimal chqAmount, BigDecimal ticketInsurance, String creditNote, String debitNote, String createBy, Date createDate, List paymentAirticketRefunds, List paymentAirticketFares,Integer isExport,String department,BigDecimal totalAmount,BigDecimal debitAmount,BigDecimal creditAmount) {
+    public PaymentAirticket(MAccpay MAccpay,String payTo ,String payNo, Date payDate, Date dueDate, String invoiceSup, String apCode, String detail, BigDecimal agentAmount, BigDecimal cash, BigDecimal witholdingTax, String chqNo, BigDecimal chqAmount, BigDecimal ticketInsurance, String creditNote, String debitNote, String createBy, Date createDate, List paymentAirticketRefunds, List paymentAirticketFares,Integer isExport,String department,BigDecimal totalAmount,BigDecimal debitAmount,BigDecimal creditAmount,BigDecimal wht , BigDecimal vat) {
        this.MAccpay = MAccpay;
        this.payNo = payNo;
        this.payDate = payDate;
@@ -72,6 +74,8 @@ public class PaymentAirticket  {
        this.department = department;
        this.totalAmount = totalAmount; 
        this.debitAmount = debitAmount;
+       this.wht = wht;
+       this.vat = vat;
 //       this.creditAmount = creditAmount;
     }
    
@@ -296,6 +300,24 @@ public class PaymentAirticket  {
         this.exportDate = exportDate;
     }
 
+    public BigDecimal getWht() {
+        return wht;
+    }
+
+    public void setWht(BigDecimal wht) {
+        this.wht = wht;
+    }
+
+    public BigDecimal getVat() {
+        return vat;
+    }
+
+    public void setVat(BigDecimal vat) {
+        this.vat = vat;
+    }
+
+    
+    
 }
 
 
