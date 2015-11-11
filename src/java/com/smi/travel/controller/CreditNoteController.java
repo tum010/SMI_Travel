@@ -139,7 +139,7 @@ public class CreditNoteController extends SMITravelController {
         
         if((!"".equalsIgnoreCase(creditNo)) && (creditNo != null)){
             if("search".equalsIgnoreCase(action)){
-                if((creditNo.indexOf("%") == 0)){
+                if((creditNo.indexOf("%") >= 0)){
                     request.setAttribute("wildCardSearch", creditNo);
                 }else{
                     request.setAttribute("wildCardSearch", ""); 
@@ -149,7 +149,7 @@ public class CreditNoteController extends SMITravelController {
             }else if("119".equalsIgnoreCase(keyCode)){
                 request.setAttribute("wildCardSearch", ""); 
             }else{
-                if((creditNo.indexOf("%") == 0)){
+                if((creditNo.indexOf("%") >= 0)){
                     request.setAttribute("wildCardSearch", creditNo);
                 }else if((!"".equalsIgnoreCase(wildCardSearch)) && (wildCardSearch.indexOf("%") == 0)){
                     request.setAttribute("wildCardSearch", wildCardSearch);

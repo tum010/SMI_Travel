@@ -32,7 +32,7 @@ $(document).ready(function() {
             action.value = 'search';
             document.getElementById('CreditNoteForm').submit();
         } else if (keycode == '38') {
-            if ((parseInt(wildCardSearch) === 0) || ($("#cnId").val() !== '')) {
+            if ((parseInt(wildCardSearch) >= 0) || ($("#cnId").val() !== '')) {
                 $("#keyCode").val(keycode);
                 var action = document.getElementById('action');
                 action.value = 'wildCardSearch';
@@ -40,7 +40,7 @@ $(document).ready(function() {
             }
 
         } else if (keycode == '40') {
-            if ((parseInt(wildCardSearch) === 0) || ($("#cnId").val() !== '')) {
+            if ((parseInt(wildCardSearch) >= 0) || ($("#cnId").val() !== '')) {
                 $("#keyCode").val(keycode);
                 var action = document.getElementById('action');
                 action.value = 'wildCardSearch';
