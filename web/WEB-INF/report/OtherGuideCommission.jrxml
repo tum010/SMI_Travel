@@ -186,68 +186,6 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<pageHeader>
-		<band height="62" splitType="Stretch">
-			<staticText>
-				<reportElement x="408" y="8" width="60" height="15" uuid="04da19ce-8bef-400f-af33-94cb4bdd12b5"/>
-				<text><![CDATA[Print Date : ]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="375" y="38" width="163" height="15" uuid="edcc5db5-0f3d-4c27-89e1-b7dc221c89a8"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Page : "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="538" y="38" width="17" height="15" uuid="41e3a5a4-6e1f-40d5-8d1d-9e1962849092"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="71" y="22" width="18" height="15" uuid="7ff40da1-d85b-4125-a8fe-5073eb0e5265"/>
-				<textElement textAlignment="Center">
-					<font size="11"/>
-				</textElement>
-				<text><![CDATA[to]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="2" y="3" width="283" height="24" uuid="1b25d6e3-b178-4210-b8f6-4174adc41fb4"/>
-				<textElement>
-					<font size="13"/>
-				</textElement>
-				<text><![CDATA[Report Other Guide Commission Service]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="408" y="23" width="60" height="15" uuid="5dda4a6f-9f93-4de7-bd15-3377e6674489"/>
-				<text><![CDATA[Print By : ]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="468" y="23" width="87" height="15" uuid="fcfd87c6-6c87-4a72-b0da-116c2b61ecdc"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
-			</textField>
-			<textField pattern="">
-				<reportElement x="468" y="8" width="87" height="15" uuid="5cef66f4-052c-4519-b3f5-1fc7f6f66a61"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
-			</textField>
-			<textField pattern="">
-				<reportElement x="2" y="23" width="69" height="15" uuid="992c8f5a-8cc1-4c0f-ae07-9620ce2a1e0e"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{datefrom}]]></textFieldExpression>
-			</textField>
-			<textField pattern="">
-				<reportElement x="89" y="23" width="90" height="15" uuid="2f9a1b74-300c-4cc9-916a-953e0ed8ddc9"/>
-				<textElement>
-					<font size="10"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{dateto}]]></textFieldExpression>
-			</textField>
-		</band>
-	</pageHeader>
 	<detail>
 		<band height="23" splitType="Stretch">
 			<rectangle>
