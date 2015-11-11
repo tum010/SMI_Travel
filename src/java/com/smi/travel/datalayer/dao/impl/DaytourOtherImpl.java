@@ -47,6 +47,7 @@ public class DaytourOtherImpl implements DaytourOtherDao{
                 .addScalar("passenger", Hibernate.STRING)
                 .addScalar("remark", Hibernate.STRING)
                 .list();
+        System.out.println("Size Report Other Day tour : " + QueryDaytourOtherList.size());
         for (Object[] B : QueryDaytourOtherList) {
              DaytourOther daytourother = new DaytourOther();
              

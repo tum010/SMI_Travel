@@ -50,7 +50,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
- $('#PacketTable').dataTable({bJQueryUI: true,
+ oTable = $('#PacketTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": false,
         "bFilter": false,
@@ -59,6 +59,7 @@ $(document).ready(function () {
         "bLengthChange": false,
         "iDisplayLength": 10
     });
+    oTable.fnSort( [ [0,'desc'] ] ); 
 });
     
 // Search Ajax Booking List

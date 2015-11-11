@@ -638,9 +638,9 @@ public class OtherBookingImpl implements OtherBookingDao{
 
     @Override
     public List<OtherBooking> getListBookingAll() {
-        String query = "from OtherBooking other order by other.id DESC";
+        String query = "from OtherBooking other order by other.master.referenceNo DESC";
         Session session = this.sessionFactory.openSession();
-
+        System.out.println("Query Booking List : " + query);
         Query OtherList = session.createQuery(query);  
         OtherList.setFirstResult(0);
         OtherList.setMaxResults(500);

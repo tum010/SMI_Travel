@@ -88,9 +88,13 @@ public class DaytourOperationOtherController extends SMITravelController {
         //Bookig List
         listOtherBookingAll = otherBookingService.getListBookingAll();
         if(listOtherBookingAll == null){
+
             request.setAttribute("ListBookingAll", null);
         }else{
             System.out.println("List Booking All");
+            for (int i = 0; i < listOtherBookingAll.size(); i++) {
+                System.out.println("Ref no : " + listOtherBookingAll.get(i).getMaster().getReferenceNo());
+            }
             request.setAttribute("ListBookingAll", listOtherBookingAll);
         }
         return DaytourOperationOther;
