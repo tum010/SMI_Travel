@@ -324,7 +324,7 @@ public class TaxInvoiceController extends SMITravelController {
         
         if((!"".equalsIgnoreCase(taxInvNo)) && (taxInvNo != null)){
             if("search".equalsIgnoreCase(action)){
-                if((taxInvNo.indexOf("%") == 0)){
+                if((taxInvNo.indexOf("%") >= 0)){
                     request.setAttribute("wildCardSearch", taxInvNo);
                 }else{
                     request.setAttribute("wildCardSearch", ""); 
@@ -334,7 +334,7 @@ public class TaxInvoiceController extends SMITravelController {
             }else if("119".equalsIgnoreCase(keyCode)){
                 request.setAttribute("wildCardSearch", ""); 
             }else{
-                if((taxInvNo.indexOf("%") == 0)){
+                if((taxInvNo.indexOf("%") >= 0)){
                     request.setAttribute("wildCardSearch", taxInvNo);
                 }else if((!"".equalsIgnoreCase(wildCardSearch)) && (wildCardSearch.indexOf("%") == 0)){
                     request.setAttribute("wildCardSearch", wildCardSearch);

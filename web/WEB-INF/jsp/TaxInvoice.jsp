@@ -1000,7 +1000,7 @@
                 searchTaxInvoiceNo();
             
             } else if(event.keyCode === 38){
-                if((parseInt(wildCardSearch) === 0) || ($("#TaxInvId").val() !== '')){
+                if((parseInt(wildCardSearch) >= 0) || ($("#TaxInvId").val() !== '')){
                     $("#keyCode").val(event.keyCode);
                     var action = document.getElementById('action');
                     action.value = 'wildCardSearch';
@@ -1008,7 +1008,7 @@
                 }
             
             } else if(event.keyCode === 40){
-                if((parseInt(wildCardSearch) === 0) || ($("#TaxInvId").val() !== '')){
+                if((parseInt(wildCardSearch) >= 0) || ($("#TaxInvId").val() !== '')){
                     $("#keyCode").val(event.keyCode);
                     var action = document.getElementById('action');
                     action.value = 'wildCardSearch';

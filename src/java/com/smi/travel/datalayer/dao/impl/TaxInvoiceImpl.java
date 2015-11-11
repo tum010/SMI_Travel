@@ -152,10 +152,9 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         TaxInvoice taxInvoice = new TaxInvoice();
         StringBuffer query = new StringBuffer(" FROM TaxInvoice t ");
         int a = TaxInvNo.indexOf("%");
-        if((TaxInvNo.indexOf("%")) == 0){
-            TaxInvNo = TaxInvNo.replace("%", "");
+        if((TaxInvNo.indexOf("%")) >= 0){
             query.append(" where ");
-            query.append(" t.taxNo like '%" + TaxInvNo + "%' and t.department = :Page ORDER BY t.id desc ");
+            query.append(" t.taxNo like '" + TaxInvNo + "' and t.department = :Page ORDER BY t.id desc ");
             
             List<TaxInvoice> taxInvoiceList = session.createQuery(query.toString())
                 .setParameter("Page", Page)
@@ -508,7 +507,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                 query.append(" taxInv.id > '" + taxInvId + "' and taxInv.department = '" + department + "' ORDER BY taxInv.id asc ");
             }else{
                 query.append(" where ");
-                query.append(" taxInv.id > '" + taxInvId + "' and taxInv.department = '" + department + "' and taxInv.taxNo like '%" + wildCardSearch + "%' ORDER BY taxInv.id asc ");
+                query.append(" taxInv.id > '" + taxInvId + "' and taxInv.department = '" + department + "' and taxInv.taxNo like '" + wildCardSearch + "' ORDER BY taxInv.id asc ");
             }    
         }
         //Down
@@ -518,7 +517,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                 query.append(" taxInv.id < '" + taxInvId + "' and taxInv.department = '" + department + "' ORDER BY taxInv.id desc ");
             }else{
                 query.append(" where ");
-                query.append(" taxInv.id < '" + taxInvId + "' and taxInv.department = '" + department + "' and taxInv.taxNo like '%" + wildCardSearch + "%' ORDER BY taxInv.id desc ");
+                query.append(" taxInv.id < '" + taxInvId + "' and taxInv.department = '" + department + "' and taxInv.taxNo like '" + wildCardSearch + "' ORDER BY taxInv.id desc ");
             }           
         }
         //Lastest
