@@ -102,10 +102,13 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             List<TicketFareInvoice> ticketFareInvoices = ticket.getTicketFareInvoices();
             if(ticketFareInvoices != null && !ticketFareInvoices.isEmpty()){
                 for(int i = 0; i < ticketFareInvoices.size(); i++){
-                    if(ticketFareInvoices.get(i).getId() == null){
-                        session.save(ticketFareInvoices.get(i));
-                    } else {
+                    if(ticketFareInvoices.get(i).getId() != null && !ticketFareInvoices.get(i).getId().isEmpty() && !"".equalsIgnoreCase(String.valueOf(ticketFareInvoices.get(i).getId()))){
+                        System.out.println("ticketFareInvoices.get(i).getId() update" + ticketFareInvoices.get(i).getId());
                         session.update(ticketFareInvoices.get(i));
+                    } else {
+                        System.out.println("ticketFareInvoices.get(i).getId() save" + ticketFareInvoices.get(i).getId());
+                        System.out.println("ticketFareInvoices.get(i).getInvoice().getId() save" + ticketFareInvoices.get(i).getInvoice().getId());
+                        session.save(ticketFareInvoices.get(i));
                     }             
                 }
             }

@@ -56,7 +56,6 @@
             <hr/>
             
             <form action="AddTicketFare.smi" method="post" id="AddTicketFareForm" name="AddTicketFareForm" role="form">
-                <input type="hidden" name="selectInvId" id="selectInvId" value="">
                 <input type="hidden" name="invoiceDetailTableId" id="invoiceDetailTableId" value="${requestScope['invDetailTableId']}">
                 <input type="hidden" name="isTempTicket" id="isTempTicket" value="${ticketFare.isTempTicket}">
                 <input type="hidden" name="masterId" id="masterId" value="${ticketFare.master.id}">
@@ -623,6 +622,7 @@
                             <tbody>
                                <c:forEach var="table" items="${invoiceDetailList}" varStatus="dataStatus">
                                     <tr>
+                                        <input type="hidden" name="selectInvId" id="selectInvId" value="${table.invoiceId}">
                                         <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}"> 
                                         <input type="hidden" name="invoiceId${dataStatus.count}" id="invoiceId${dataStatus.count}" value="${table.invoiceId}">
                                         <td align="center">
