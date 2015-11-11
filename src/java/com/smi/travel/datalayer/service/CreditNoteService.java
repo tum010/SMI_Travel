@@ -60,5 +60,9 @@ public class CreditNoteService {
     public List<CreditNoteView> getCreditNoteFromFilter(String dateFrom, String dateTo, String department, String status) {
         return this.creditNoteDao.getCreditNoteFromFilter(dateFrom, dateTo, department, status);
     }
+
+    public CreditNote getCreditNoteByWildCardSearch(String cnId, String cnNo, String wildCardSearch, String keyCode, String department) {
+        return this.creditNoteDao.getCreditNoteByWildCardSearch(cnId, cnNo, wildCardSearch, keyCode, department);
+    }
     
 }

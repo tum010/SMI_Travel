@@ -26,4 +26,5 @@ public interface CreditNoteDao {
     public List<CreditNoteView> getCreditNoteFromFilter(String from,String to,String Department,String status);
     // UPDATE CreditNote cn set cn.MFinanceItemstatus.id = :status  WHERE cn.id = :CNId
     //public TaxInvoiceView SearchTaxInvoiceFromFilter(String from,String To,String Department);
+    public CreditNote getCreditNoteByWildCardSearch(String cnId, String cnNo, String wildCardSearch, String keyCode, String department);
 }

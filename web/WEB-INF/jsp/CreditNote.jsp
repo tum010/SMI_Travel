@@ -70,6 +70,8 @@
                 </div>
                 <input type="hidden" name="action" id="action" value="search">
                 <input type="hidden" name="cnId" id="cnId" value="${creditNote.id}"/>
+                <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
+                <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                 <div class="panel panel-default ${panelborder}">
                     <div class="panel-heading ${panelheader}">
                         <h4 class="panel-title">Credit Note Detail</h4>
@@ -80,7 +82,7 @@
                                 <div class="col-xs-1 text-right" style="width: 120px">
                                     <label class="control-label text-right">CN No. </label>
                                 </div>
-                                <div class="col-xs-1" style="width: 200px">
+                                <div class="col-xs-1" style="width: 200px">                                    
                                     <input id="cnNo" name="cnNo" type="text" class="form-control" value="${creditNote.cnNo}">
                                 </div>
                                 <div class="col-md-1 text-right ">

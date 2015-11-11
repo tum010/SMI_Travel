@@ -103,16 +103,40 @@ public class CreditNoteImpl implements CreditNoteDao {
     @Override
     public CreditNote getCreditNoteFromCNNo(String cnNo, String department) {
 
-        String query = "from  CreditNote crditNote where  crditNote.cnNo = :cnNo and crditNote.department = :department";
+        String query = "from  CreditNote crditNote ";
         Session session = this.getSessionFactory().openSession();
         CreditNote result = new CreditNote();
-        List<CreditNote> List = session.createQuery(query).setParameter("cnNo", cnNo).setParameter("department", department).list();
-        if (List.isEmpty()) {
-            return null;
+        if((cnNo.indexOf("%")) == 0){
+            cnNo = cnNo.replace("%", "");
+            query += " where ";
+            query += " crditNote.cnNo like '%" + cnNo + "%' and crditNote.department = :department ORDER BY crditNote.id desc ";
+            
+            List<CreditNote> creditNoteList = session.createQuery(query.toString())
+                .setParameter("department", department)
+                .setMaxResults(1)
+                .list();
+            if(creditNoteList.isEmpty()){
+                return null;
+            }        
+            result = creditNoteList.get(0);
+            
+        }else{
+            query += " where ";
+            query += " crditNote.cnNo = :cnNo and crditNote.department = :department ";
+            
+            List<CreditNote> creditNoteList = session.createQuery(query.toString())
+                .setParameter("cnNo", cnNo)
+                .setParameter("department", department)
+                .setMaxResults(1)
+                .list();
+            if(creditNoteList.isEmpty()){
+                return null;
+            }        
+            result = creditNoteList.get(0);
         }
-
-        result = List.get(0);
+        
         return result;
+        
     }
 
     @Override
@@ -286,6 +310,55 @@ public class CreditNoteImpl implements CreditNoteDao {
         noteview.setSubtotal(util.setFormatMoney(subtotal));
         noteview.setGrandTotal(util.setFormatMoney(grandtotal));
         return noteview;
+    }
+
+    @Override
+    public CreditNote getCreditNoteByWildCardSearch(String cnId, String cnNo, String wildCardSearch, String keyCode, String department) {
+        StringBuffer query = new StringBuffer(" from CreditNote cn ");
+        //Up
+        if ("38".equalsIgnoreCase(keyCode)) {
+            if("".equalsIgnoreCase(wildCardSearch)){
+                query.append(" where ");
+                query.append(" cn.id > '" + cnId + "' and cn.department = '" + department + "' ORDER BY cn.id asc ");
+            }else{
+                query.append(" where ");
+                query.append(" cn.id > '" + cnId + "' and cn.department = '" + department + "' and cn.cnNo like '%" + wildCardSearch + "%' ORDER BY cn.id asc ");
+            }    
+        }
+        //Down
+        if ("40".equalsIgnoreCase(keyCode)) {
+            if("".equalsIgnoreCase(wildCardSearch)){
+                query.append(" where ");
+                query.append(" cn.id < '" + cnId + "' and cn.department = '" + department + "' ORDER BY cn.id desc ");
+            }else{
+                query.append(" where ");
+                query.append(" cn.id < '" + cnId + "' and cn.department = '" + department + "' and cn.cnNo like '%" + wildCardSearch + "%' ORDER BY cn.id desc ");
+            }           
+        }
+        //Lastest
+        if ("119".equalsIgnoreCase(keyCode)) {
+            query.append(" where ");
+            query.append(" cn.department = '" + department + "' ORDER BY cn.id desc ");
+        }
+        
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query.toString());
+        System.out.println(HqlQuery.toString());
+        HqlQuery.setMaxResults(1);
+        List<CreditNote> creditNoteList = HqlQuery.list();
+        if (creditNoteList.isEmpty()) {
+            StringBuffer queryTemp = new StringBuffer(" from CreditNote cn ");
+            queryTemp.append(" where ");
+            queryTemp.append(" cn.id = '" + cnId + "' and cn.department = '" + department + "' ");
+            HqlQuery = session.createQuery(queryTemp.toString());
+            HqlQuery.setMaxResults(1);
+            List<CreditNote> creditNoteListTemp = HqlQuery.list();
+            return creditNoteListTemp.get(0);
+        }
+        
+//        this.sessionFactory.close();
+//        session.close();
+        return creditNoteList.get(0);
     }
 
 }

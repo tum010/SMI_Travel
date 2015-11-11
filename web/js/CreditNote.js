@@ -1,6 +1,6 @@
 var rowIndex;
 var taxNoShow = "";
-$(document).ready(function () {
+$(document).ready(function() {
     $('.datemask').mask('0000-00-00');
     var inputDate = $("#inputDate").val();
     if (inputDate === "") {
@@ -18,7 +18,11 @@ $(document).ready(function () {
         $("#inputDate").val(today);
     }
 
-    $("#cnNo").on("keyup", function (event) {
+    var wildCardSearch = ($("#wildCardSearch").val()).indexOf("%");
+    if ($("#cnId").val() !== '') {
+        $("#cnNo").focus();
+    }
+    $("#cnNo").on("keyup", function(event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
             if ($("#cnNo").val() === "") {
@@ -27,9 +31,38 @@ $(document).ready(function () {
             var action = document.getElementById('action');
             action.value = 'search';
             document.getElementById('CreditNoteForm').submit();
+        } else if (keycode == '38') {
+            if ((parseInt(wildCardSearch) === 0) || ($("#cnId").val() !== '')) {
+                $("#keyCode").val(keycode);
+                var action = document.getElementById('action');
+                action.value = 'wildCardSearch';
+                document.getElementById('CreditNoteForm').submit();
+            }
+
+        } else if (keycode == '40') {
+            if ((parseInt(wildCardSearch) === 0) || ($("#cnId").val() !== '')) {
+                $("#keyCode").val(keycode);
+                var action = document.getElementById('action');
+                action.value = 'wildCardSearch';
+                document.getElementById('CreditNoteForm').submit();
+            }
+
+        } else if (keycode == '118') {
+            $("#keyCode").val(keycode);
+            var action = document.getElementById('action');
+            action.value = 'new';
+            document.getElementById('CreditNoteForm').submit();
+
+        } else if (keycode == '119') {
+            $("#keyCode").val(keycode);
+            var action = document.getElementById('action');
+            action.value = 'wildCardSearch';
+            document.getElementById('CreditNoteForm').submit();
+
         }
+
     });
-    $("#buttonSearch").click(function () {
+    $("#buttonSearch").click(function() {
         if ($("#cnNo").val() === "") {
             return;
         }
@@ -37,7 +70,7 @@ $(document).ready(function () {
         action.value = 'search';
         document.getElementById('CreditNoteForm').submit();
     });
-    $("#buttonSave").click(function () {
+    $("#buttonSave").click(function() {
         var result = true;
         $('#CreditNoteForm').bootstrapValidator('revalidateField', 'name');
         $('#CreditNoteForm').bootstrapValidator('revalidateField', 'inputDate');
@@ -49,8 +82,8 @@ $(document).ready(function () {
         action.value = 'save';
         document.getElementById('CreditNoteForm').submit();
     });
-    
-    $("#buttonNew").click(function (){
+
+    $("#buttonNew").click(function() {
         var action = document.getElementById('action');
         action.value = 'new';
         document.getElementById('CreditNoteForm').submit();
@@ -58,6 +91,7 @@ $(document).ready(function () {
 
     addRow();
     validFrom();
+
 });
 
 function addRow() {
@@ -65,9 +99,9 @@ function addRow() {
     $("#addRow").addClass("hide");
     var clone = $('#tempTable tbody tr:lt(2)').clone();
     $('#ItemCreditTable tbody').append(clone);
-    $("input[name='taxNo']").each(function () {
+    $("input[name='taxNo']").each(function() {
         $(this).off();
-        $(this).on("keyup", function (event) {
+        $(this).on("keyup", function(event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == '13') {
                 getTaxInv(this);
@@ -75,9 +109,9 @@ function addRow() {
         });
     });
 
-    $("input[id='taxReal']").each(function () {
+    $("input[id='taxReal']").each(function() {
         $(this).off();
-        $(this).on("keyup", function (event) {
+        $(this).on("keyup", function(event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == '13') {
                 var realAmount = this.value.replace(",", "");
@@ -85,9 +119,9 @@ function addRow() {
                 realAmountHidden.val(realAmount);
                 var vatAmount = $(this).parent().parent().find("[name='taxVat']");
                 var vatAmountID = $(this).parent().parent().find("[id='taxVat']");
-                var calVat = realAmount -(realAmount * 100 / (vat + 100));
+                var calVat = realAmount - (realAmount * 100 / (vat + 100));
                 vatAmount.val(calVat);
-                vatAmountID.val(Math.round(calVat * 100)/100);
+                vatAmountID.val(Math.round(calVat * 100) / 100);
             }
         });
     });
@@ -111,7 +145,7 @@ function getTaxInv(input) {
     var ticketNo = ""
     ticketNo = input.value;
     var duplicate = false;
-    $('#ItemCreditTable tbody [name="taxNo"]').each(function () {
+    $('#ItemCreditTable tbody [name="taxNo"]').each(function() {
         if (this != input && ticketNo !== "" && ticketNo === input.value) {
             input.style.borderColor = "Red";
             $("#alertTextFail").html("Duplicated tax invoice no " + ticketNo);
@@ -120,7 +154,7 @@ function getTaxInv(input) {
             return;
         }
     });
-    if(!duplicate){
+    if (!duplicate) {
         var url = 'AJAXServlet';
         var servletName = 'TaxInvoiceServlet';
         var servicesName = 'AJAXBean';
@@ -129,19 +163,19 @@ function getTaxInv(input) {
                 '&servicesName=' + servicesName +
                 '&type=getTaxInvoice' +
                 '&invoiceNo=' + ticketNo;
-    //    var row = parseInt($(input).parent().parent().attr("row"));
+        //    var row = parseInt($(input).parent().parent().attr("row"));
         try {
             $.ajax({
                 type: "POST",
                 url: url,
                 cache: false,
                 data: param,
-                beforeSend: function () {
+                beforeSend: function() {
                     $("#dataload").removeClass("hidden");
                 },
-                success: function (msg) {
+                success: function(msg) {
                     var tax = JSON.parse(msg);
-                    if(tax.status === "1"){
+                    if (tax.status === "1") {
                         var taxDate = $(input).parent().parent().find("[name='taxDate']");
                         var amount = $(input).parent().parent().find("[name='taxAmount']");
                         var amountId = $(input).parent().parent().find("[id='taxAmount']");
@@ -162,13 +196,13 @@ function getTaxInv(input) {
                         if (index == (count - 1)) {
                             addRow();
                         }
-                    }else{
-                        
+                    } else {
+
                         $("#alertTextFail").html("Tax invoice no " + ticketNo + " has been void!");
                         $("#alertFail").show();
                         $("#alertSuccess").hide();
                     }
-                }, error: function (msg) {
+                }, error: function(msg) {
                     input.style.borderColor = "Red";
                     $("#alertTextFail").html("Cannot find tax invoice no " + ticketNo);
                     $("#alertFail").show();
@@ -191,7 +225,7 @@ function setDeletRow(btn) {
 
     } else {
         row.remove();
-        if($('#ItemCreditTable tbody tr').length < 1){
+        if ($('#ItemCreditTable tbody tr').length < 1) {
             $("#addRow").removeClass("hide");
             $("#addRow").addClass("show");
         }
@@ -218,9 +252,9 @@ function deleteCreditNotedetail() {
             url: url,
             cache: false,
             data: param,
-            beforeSend: function () {
+            beforeSend: function() {
             },
-            success: function (msg) {
+            success: function(msg) {
                 var result = JSON.parse(msg);
                 if (result) {
                     row.remove();
@@ -228,7 +262,7 @@ function deleteCreditNotedetail() {
                     $("#alertSuccess").show();
                     $("#alertFail").hide();
                     $('#DeleteDetail').modal('hide');
-                    if($('#ItemCreditTable tbody tr').length < 1){
+                    if ($('#ItemCreditTable tbody tr').length < 1) {
                         $("#addRow").removeClass("hide");
                         $("#addRow").addClass("show");
                     }
@@ -239,7 +273,7 @@ function deleteCreditNotedetail() {
                     $('#DeleteDetail').modal('hide');
                 }
 
-            }, error: function (msg) {
+            }, error: function(msg) {
                 console.log('auto ERROR');
             }
         });
@@ -288,10 +322,10 @@ function show(taxNo) {
                 url: url,
                 cache: false,
                 data: param,
-                beforeSend: function () {
+                beforeSend: function() {
                     $("#dataload").removeClass("hidden");
                 },
-                success: function (msg) {
+                success: function(msg) {
                     console.log("getAutoListBillto ==" + msg);
                     var tax = JSON.parse(msg);
 
@@ -311,7 +345,7 @@ function show(taxNo) {
                     }
                     $('.collapse').collapse('show');
 
-                }, error: function (msg) {
+                }, error: function(msg) {
                 }
             });
         } catch (e) {
