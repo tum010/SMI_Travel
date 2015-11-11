@@ -65,7 +65,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             
             List<TicketFareInvoice> ticketFareInvoices = ticket.getTicketFareInvoices();
             
-            if(ticketFareInvoices != null){
+            if(ticketFareInvoices != null && !ticketFareInvoices.isEmpty()){
                 for(int i = 0; i < ticketFareInvoices.size(); i++){
                    session.save(ticketFareInvoices.get(i));
                 }
@@ -100,7 +100,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             session.update(ticket);
             
             List<TicketFareInvoice> ticketFareInvoices = ticket.getTicketFareInvoices();
-            if(ticketFareInvoices != null){
+            if(ticketFareInvoices != null && !ticketFareInvoices.isEmpty()){
                 for(int i = 0; i < ticketFareInvoices.size(); i++){
                     if(ticketFareInvoices.get(i).getId() == null){
                         session.save(ticketFareInvoices.get(i));
