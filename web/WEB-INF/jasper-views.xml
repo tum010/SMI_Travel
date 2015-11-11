@@ -292,6 +292,10 @@
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/OtherGuideCommissionInfo.jrxml"/>
          </bean>
+         <bean id="OtherAgentCommission"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/OtherAgentCommission.jrxml"/>
+         </bean>
 <!--        <bean id="BookingSummaryPassengerSubReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/BookingSummaryPassengerSubReport.jrxml"/>
