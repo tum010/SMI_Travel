@@ -93,4 +93,12 @@ public class InvoiceService {
     public Invoice getInvoiceByWildCardSearch(String invoiceId, String invoiceNo, String wildCardSearch, String keyCode, String department, String invoiceType) {
         return invoiceDao.getInvoiceByWildCardSearch(invoiceId, invoiceNo, wildCardSearch, keyCode, department, invoiceType);
     }
+    
+    public String checkFlagBooking(Invoice invoice){
+        return invoiceDao.checkFlagBooking(invoice);
+    }
+    
+    public String setBookingStatus(Invoice invoice){
+        return invoiceDao.setBookingStatus(invoice);
+    }
 }

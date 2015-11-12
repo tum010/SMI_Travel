@@ -163,6 +163,15 @@ public class InvoiceController extends SMITravelController {
                 result = invoiceService.saveInvoice(invoice);
                 System.out.println("ddddd result : "+result);
                 saveAction(result, invoiceNo, invoice, "", request);
+                if(invoice.getInvoiceDetails() != null){
+                    // Check Flag Booking
+                    String checkFlag = invoiceService.checkFlagBooking(invoice);
+                    System.out.println("Check Flag :" + checkFlag);
+
+                    //Set Booking Status
+                    String setBookingStatus = invoiceService.setBookingStatus(invoice);
+                    System.out.println("Set Booking Status : " + setBookingStatus);
+                }
             }else{
                 result = invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails());
                 request.setAttribute("listInvoiceDetail", invoice.getInvoiceDetails());
@@ -276,6 +285,13 @@ public class InvoiceController extends SMITravelController {
                 request.setAttribute("invoice", invoice);
                 if(listInvoiceDetail != null){
                     request.setAttribute("listInvoiceDetail", listInvoiceDetail);
+                    // Check Flag Booking
+//                    String checkFlag = invoiceService.checkFlagBooking(invoice);
+//                    System.out.println("Check Flag :" + checkFlag);
+//
+//                    //Set Booking Status
+//                    String setBookingStatus = invoiceService.setBookingStatus(invoice);
+//                    System.out.println("Set Booking Status : " + setBookingStatus);
                 }else{
                     request.setAttribute("listInvoiceDetail", null);
                 }
