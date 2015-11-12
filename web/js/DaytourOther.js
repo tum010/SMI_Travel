@@ -60,6 +60,7 @@ $(document).ready(function () {
         "iDisplayLength": 10
     });
     oTable.fnSort( [ [0,'desc'] ] ); 
+    oTable.column( 0 ).data().unique();
 });
     
 // Search Ajax Booking List
