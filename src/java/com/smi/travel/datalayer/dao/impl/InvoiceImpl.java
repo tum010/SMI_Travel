@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.entity.InvoiceView;
+import com.smi.travel.model.NonBillableView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -20,6 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -44,6 +46,14 @@ public class InvoiceImpl implements InvoiceDao{
     private static final String GET_BILLDESC = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId  and inv.invoice.MFinanceItemstatus.id != 2";
     private static final String GET_BILLDESC_FILTER = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId and inv.id != :invdID";
     private static final String GET_BILL_AMOUNT = "from BillableDesc bill where bill.id = :descid";
+    private static final String GET_BILLDESC_FLAG = "From  BillableDesc  billd  where billd.id = :billddesid";
+    private static final String UPDATE_FILG17 = "UPDATE Master mas set  mas.flagAir = 1  WHERE id = :masterid";
+    private static final String UPDATE_FILG28 = "UPDATE Master mas set  mas.flagOther = 1  WHERE id = :masterid";
+    private static final String UPDATE_FILG3 = "UPDATE Master mas set  mas.flagLand = 1  WHERE id = :masterid";
+    private static final String UPDATE_FILG4 = "UPDATE Master mas set  mas.flagHotel = 1  WHERE id = :masterid";
+    private static final String UPDATE_FILG6 = "UPDATE Master mas set  mas.flagDaytour = 1  WHERE id = :masterid";
+    private static final String UPDATE_BOOKING_STATUS = "UPDATE Master mas set  mas.Mbookingstatus.id = 5  WHERE id = :masterbillid";
+    
     
     @Override
     public synchronized String insertInvoice(Invoice invoice) {
@@ -910,5 +920,97 @@ public class InvoiceImpl implements InvoiceDao{
         this.sessionFactory.close();
         session.close();
         return invoiceList.get(0);
+    }
+
+    @Override
+    public String checkFlagBooking(Invoice invoice) {
+        String result = "";
+        Session session = this.sessionFactory.openSession();
+        List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
+        for (int i = 0; i < invoiceDetail.size(); i++) {
+            if(invoiceDetail.get(i).getBillableDesc() != null){
+                String billid = invoiceDetail.get(i).getBillableDesc().getId();
+                List<BillableDesc> billDescList = session.createQuery(GET_BILLDESC_FLAG)
+                    .setParameter("billddesid", billid)
+                    .list();
+                if(billDescList != null){
+                    String masterid = billDescList.get(0).getBillable().getMaster().getId();
+                    String mBillTypeId =  invoiceDetail.get(i).getMbillType().getId();
+
+                    if("1".equals(mBillTypeId) || "7".equals(mBillTypeId)){
+                        Query query = session.createQuery(UPDATE_FILG17);
+                        query.setParameter("masterid", masterid);
+                        System.out.println("update master 17: "+query.executeUpdate());  
+                        result  = "update success";
+                    }else if("2".equals(mBillTypeId) || "8".equals(mBillTypeId)){
+                        Query query = session.createQuery(UPDATE_FILG28);
+                        query.setParameter("masterid", masterid);
+                        System.out.println("update master 28: "+query.executeUpdate());
+                        result  = "update success";
+                    }else if("3".equals(mBillTypeId)){
+                        Query query = session.createQuery(UPDATE_FILG3);
+                        query.setParameter("masterid", masterid);
+                        System.out.println("update master 3: "+query.executeUpdate());
+                        result  = "update success";
+                    }else if("4".equals(mBillTypeId)){
+                        Query query = session.createQuery(UPDATE_FILG4);
+                        query.setParameter("masterid", masterid);
+                        System.out.println("update master 4: "+query.executeUpdate());
+                        result  = "update success";
+                    }else if("6".equals(mBillTypeId)){
+                        Query query = session.createQuery(UPDATE_FILG6);
+                        query.setParameter("masterid", masterid);
+                        System.out.println("update master 6: "+query.executeUpdate());
+                        result  = "update success";
+                    }else{
+                        result  = "update unsuccess";
+                    }
+                }else{
+                    result  = "update unsuccess";
+                }
+            }else{
+                result  = "update success";
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public String setBookingStatus(Invoice invoice) {
+        String result = "";
+        Session session = this.sessionFactory.openSession();
+        List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
+        for (int i = 0; i < invoiceDetail.size(); i++) {
+            if(invoiceDetail.get(i).getBillableDesc() != null){
+                String billid = invoiceDetail.get(i).getBillableDesc().getId();
+                // Get Bill ID
+                List<BillableDesc> billDescList = session.createQuery(GET_BILLDESC_FLAG)
+                    .setParameter("billddesid", billid)
+                    .list();
+                if(billDescList != null){
+                    String masterid = billDescList.get(0).getBillable().getMaster().getId();
+                    if(masterid != null && !"".equals(masterid)){
+                        String queryText = "select * from  `non_billable_view`  non  where non.masterid = " + masterid;
+                        List<Object[]> nonBillableViews = session.createSQLQuery(queryText)
+                            .addScalar("masterid", Hibernate.STRING)
+                            .addScalar("invoice_detail_id", Hibernate.STRING)
+                            .list();
+                        if(nonBillableViews == null){
+                            Query query = session.createQuery(UPDATE_BOOKING_STATUS);
+                            query.setParameter("masterbillid", masterid);
+                            System.out.println("update booking status: "+query.executeUpdate());
+                        }
+                        result = "update booking success";
+                    }else{
+                        result = "update booking unsuccess";
+                    }
+                }else{
+                    result = "update booking unsuccess";
+                }
+            }else{
+                result = "update booking success";
+            }
+        }
+        return result;
     }
 }

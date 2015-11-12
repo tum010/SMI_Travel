@@ -38,6 +38,8 @@ public interface InvoiceDao {
     public String checkOverflowValueOfInvoice(List<InvoiceDetail> invoiceDetail);
     public String checkRecipt(String refNo);
     public String taxInvoice(String refNo);
+    public String checkFlagBooking(Invoice invoice);
+    public String setBookingStatus(Invoice invoice);
     
     //for save receipt 
     public String insertInvoiceDetail(Invoice invoice);
