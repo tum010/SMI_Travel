@@ -33,6 +33,7 @@ public class TicketFareView {
     private String referenceNo;
     private Date issueDateFrom;
     private Date issueDateTo;
+    private BigDecimal ticketFareAmount;
     
     public TicketFareView(){
         
@@ -188,6 +189,14 @@ public class TicketFareView {
 
     public void setIssueDateTo(Date issueDateTo) {
         this.issueDateTo = issueDateTo;
+    }
+
+    public BigDecimal getTicketFareAmount() {
+        return ticketFareAmount;
+    }
+
+    public void setTicketFareAmount(BigDecimal ticketFareAmount) {
+        this.ticketFareAmount = ticketFareAmount;
     }
 
 

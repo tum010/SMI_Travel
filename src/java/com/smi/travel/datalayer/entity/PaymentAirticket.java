@@ -45,6 +45,7 @@ public class PaymentAirticket  {
     private List paymentAirticketRefunds = new LinkedList<PaymentAirticketRefund>();
     private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
     private List paymentAirCredits = new LinkedList<PaymentAirCredit>();
+    private List paymentAirDebits = new LinkedList<PaymentAirDebit>();
     
     public PaymentAirticket() {
     }
@@ -314,6 +315,14 @@ public class PaymentAirticket  {
 
     public void setVat(BigDecimal vat) {
         this.vat = vat;
+    }
+
+    public List getPaymentAirDebits() {
+        return paymentAirDebits;
+    }
+
+    public void setPaymentAirDebits(List paymentAirDebits) {
+        this.paymentAirDebits = paymentAirDebits;
     }
 
     
