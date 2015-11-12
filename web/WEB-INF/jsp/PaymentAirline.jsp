@@ -434,7 +434,7 @@
                                         <input type="hidden" name="creditId${i.count}" id="creditId${i.count}" value="${table.id}">
                                         <td align="center">${i.count}</td>
                                         <td><input maxlength="255" id="creditNote${i.count}" name="creditNote${i.count}" type="text" class="form-control" value="${table.creditNote}"></td>
-                                        <td><input maxlength="10" id="creditAmount${i.count}"  name="creditAmount${i.count}"  type="text" class="form-control text-right"  value="${table.creditAmount}" onkeyup="insertCommas(this)"></td>
+                                        <td><input maxlength="10" id="creditAmount${i.count}"  name="creditAmount${i.count}"  type="text" class="form-control text-right"  value="${table.creditAmount}" onkeydown="calculateTotalCreditAmount()" onkeyup="insertCommas(this)"></td>
                                         <td> 
                                             <center> 
                                                 <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteCreditList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -463,7 +463,6 @@
                     </div>
                 </div>
                             
-                            
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">Debit Note</h4>
@@ -479,12 +478,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="table" items="${DebitList}" varStatus="i">
+                                <c:forEach var="table" items="${debitList}" varStatus="i">
                                     <tr>
                                         <input type="hidden" name="debitId${i.count}" id="debitId${i.count}" value="${table.id}">
                                         <td align="center">${i.count}</td>
                                         <td><input maxlength="255" id="debitNote${i.count}" name="debitNote${i.count}" type="text" class="form-control" value="${table.debitNote}"></td>
-                                        <td><input maxlength="10" id="debitAmount${i.count}"  name="debitAmount${i.count}"  type="text" class="form-control text-right"  value="${table.debitAmount}" onkeyup="insertCommas(this)"></td>
+                                        <td><input maxlength="10" id="debitAmount${i.count}"  name="debitAmount${i.count}"  type="text" class="form-control text-right"  value="${table.debitAmount}" onkeydown="calculateTotalDebitAmount()" onkeyup="insertCommas(this)"></td>
                                         <td> 
                                             <center> 
                                                 <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteDebitList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -902,9 +901,9 @@
         <script language="javascript">
             $(document).ready(function() {
                 $("#vat").val(${vat});
-                var detaillength = $("#DebitDetailTable tr").length ;
-                if(detaillength > 1) {
-                    for(var i = 1;i<detaillength;i++){
+                var debitdetaillength = $("#DebitDetailTable tr").length ;
+                if(debitdetaillength > 1) {
+                    for(var i = 1;i<debitdetaillength;i++){
                         if( $('#debitAmount'+i).val() != "" ){
                             var debitAmount = replaceAll(",","",$('#debitAmount'+i).val()); 
                             if (debitAmount == ""){
@@ -1023,7 +1022,6 @@ for(var i = 0; i < rad.length; i++) {
                     }
                 },
                 paymentDate: {
-                    trigger: 'focus keyup change',
                     validators: {
                         notEmpty: {
                             message: 'Payment Date is required'
@@ -1738,11 +1736,17 @@ function calculateAmount() {
     if (totalPay == ""){
         totalPay = 0;
     }
+    
+    var debit = replaceAll(",","",$('#totalDebitAmount').val()); 
+    if (debit == ""){
+        debit = 0;
+    }
 
     var tax = parseFloat(withholding); 
     var pay = parseFloat(totalPay);
+    var sumdebitAmount = parseFloat(debit);
     
-    var amount = pay+tax;
+    var amount = pay+sumdebitAmount+tax;
     document.getElementById("amount").value = formatNumber(amount);
 }
 
@@ -1794,7 +1798,8 @@ function calculateTotalPayment() {
     if(payto == 'A' || payto == ''){
 //      Total Payment = Total Amount - TotalComission - Total Refund + Total Amount Refund Vat - Credit Amount
 //      Total Payment = Total Amount - TotalComission - Total Refund + Total Amount Refund Vat – Sum(Credit Amount)  +Debit + With Tax
-        var totalPayment = amountTotal - comTotal - refundTotal + refundVat - sumcreditAmount + debitAmount + withholdingTax;
+//        var totalPayment = amountTotal - comTotal - refundTotal + refundVat - sumcreditAmount + debitAmount + withholdingTax;
+        var totalPayment = amountTotal - comTotal - refundTotal + refundVat - sumcreditAmount;
         document.getElementById("totalPayment").value = formatNumber(totalPayment);
     }else if (payto == 'C'){
         var refundTable = $("#RefundTicketTable tr").length;
@@ -1862,6 +1867,12 @@ function calculateTotalRefundVat() {
 }
 
 function calculateTotalCommission() {
+    var vatValue = replaceAll(",","",$('#vat').val()); 
+    if (vatValue == ""){
+        vatValue = 0;
+    }
+    var vat = parseFloat(vatValue);
+    
     var temp = 0;
     var commissionTemp = parseFloat(0);
     var tableTicket = document.getElementById('TicketFareTable');
@@ -1880,7 +1891,7 @@ function calculateTotalCommission() {
 
             }
        document.getElementById("sumCommissionTicket").value = formatNumber(commission);
-       document.getElementById("totalCommissionTicketFare").value = formatNumber(commission +(commission *(7/100)));
+       document.getElementById("totalCommissionTicketFare").value = formatNumber(commission +(commission *( vat/100)));
     }
     calculateWithodingTax();
     calculateTotalPayment();
@@ -1905,7 +1916,8 @@ function calculateTotalAmount(){
             amountTemp = amount;
 
         }
-        document.getElementById("totalAmountTicketFare").value = formatNumber(amount  +(amount *(7/100)));
+//        document.getElementById("totalAmountTicketFare").value = formatNumber(amount  +(amount *(7/100)));
+        document.getElementById("totalAmountTicketFare").value = formatNumber(amount);
     }
     calculateWithodingTax();
     calculateTotalPayment();
@@ -1998,7 +2010,6 @@ function validateSaveButton(){
         totalPayment = 0;
     }
     var payment = parseFloat(totalPayment); 
-    
     if(payment < 0){
         $('#textAlertTotalPayment').show();
     }else{
@@ -2009,9 +2020,9 @@ function validateSaveButton(){
         $("#ButtonSave").removeAttr("disabled");
         $("#ButtonSaveAndNew").removeAttr("disabled");
         $("#ButtonSearch").removeAttr("disabled");
+//        $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'paymentDate');
         $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode'); 
         $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
-        $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'paymentDate');
     }else{
         $("#ButtonSave").attr("disabled", "disabled");
         $("#ButtonSaveAndNew").attr("disabled", "disabled");
@@ -2136,8 +2147,9 @@ function calculateTotalDebitAmount(){
         }
         document.getElementById("totalDebitAmount").value = formatNumber(amount);
     }
-    calculateTotalPayment();
+//    calculateTotalPayment();
 }
+
 function calculateWithodingTax(){
     var sumCommissionTicket = replaceAll(",","",$('#sumCommissionTicket').val()); 
     if (sumCommissionTicket == ""){
@@ -2160,7 +2172,8 @@ function calculateWithodingTax(){
     var tax = document.getElementById('whtax').value;
     var whtax = parseFloat(tax);
 
-    var withholdingTax = ( (sumcomm + sumCommRefund ) * (whtax / 100));
+//    var withholdingTax = ( (sumcomm + sumCommRefund ) * (whtax / 100));
+    var withholdingTax = ( (sumcomm - sumCommRefund ) * (3 / 100));
     document.getElementById("withholdingTax").value = formatNumber(withholdingTax);
 }
 function deleteCreditList(id,Ccount) {
