@@ -30,6 +30,7 @@ public class SummaryTicketCostAndIncomeView {
    private String cost;
    private String inbound;
    private String wendy;
+   private String outbound;
    private String refund;
    private String businesstrip;
    private String annualleave;
@@ -453,6 +454,14 @@ public class SummaryTicketCostAndIncomeView {
 
     public void setPage(String page) {
         this.page = page;
+    }
+
+    public String getOutbound() {
+        return outbound;
+    }
+
+    public void setOutbound(String outbound) {
+        this.outbound = outbound;
     }
 
 

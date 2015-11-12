@@ -452,6 +452,7 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
                 .addScalar("invbusinesstrip", Hibernate.STRING)
                 .addScalar("invannualleave", Hibernate.STRING)
                 .addScalar("invnoinvoice", Hibernate.STRING)
+                .addScalar("outbound", Hibernate.STRING)
                 .list();
         for (Object[] B : SummaryTicketCostAndIncome) {
             SummaryTicketCostAndIncomeView sumticket = new SummaryTicketCostAndIncomeView();
@@ -486,6 +487,7 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
             sumticket.setInvbusinesstrip(util.ConvertString(B[17])== null ? "" : util.ConvertString(B[17]));
             sumticket.setInvannualleave(util.ConvertString(B[18])== null ? "" : util.ConvertString(B[18]));
             sumticket.setInvnoinvoice(util.ConvertString(B[19])== null ? "" : util.ConvertString(B[19]));
+            sumticket.setOutbound(util.ConvertString(B[20])== null ? "" : util.ConvertString(B[20]));
             sumticket.setPage("income");
             data.add(sumticket);
         }
@@ -509,6 +511,7 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
                 .addScalar("invbusinesstrip", Hibernate.STRING)
                 .addScalar("invannualleave", Hibernate.STRING)
                 .addScalar("invnoinvoice", Hibernate.STRING)
+                .addScalar("outbound", Hibernate.STRING)
                 .list();
         for (Object[] B : SummaryTicketCostAndIncomeSummary) {
             SummaryTicketCostAndIncomeView sumticket = new SummaryTicketCostAndIncomeView();
@@ -542,6 +545,7 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
             sumticket.setInvbusinesstripSum(util.ConvertString(B[16])== null ? "" : util.ConvertString(B[16]));
             sumticket.setInvannualleaveSum(util.ConvertString(B[17])== null ? "" : util.ConvertString(B[17]));
             sumticket.setInvnoinvoiceSum(util.ConvertString(B[18])== null ? "" : util.ConvertString(B[18]));
+            sumticket.setOutbound(util.ConvertString(B[19])== null ? "" : util.ConvertString(B[19]));
             sumticket.setPage("incomesum");
             data.add(sumticket);
         }
