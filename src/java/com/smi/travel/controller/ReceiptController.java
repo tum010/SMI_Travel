@@ -538,35 +538,33 @@ public class ReceiptController extends SMITravelController {
             }
         }else if("wildCardSearch".equalsIgnoreCase(action)){
             Receipt receipt = new Receipt();                
-            if(!"".equals(receiveNo)){
-                receipt = receiptService.getReceiptByWildCardSearch(receiveId,receiveNo,wildCardSearch,keyCode,InputDepartment,InputReceiptType);       
-                if(receipt != null) {
-                    if(!receipt.getId().isEmpty()){
-                        List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
-                        List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
-                        request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
-                        request.setAttribute(RECEIPTCREDITLIST,receiptCreditList);
-                        List<ReceiptDetail> recInvId = new ArrayList<ReceiptDetail>();
-                        if(receiptDetailList != null){
-                            for(int i = 0 ;i < receiptDetailList.size();i++){
-                                ReceiptDetail receiptD = new ReceiptDetail();
-                                receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
-                                receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
-                                receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
-                                recInvId.add(receiptD);
-                            }
-                            request.setAttribute(INVIDLIST, recInvId);
-                            request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
+            receipt = receiptService.getReceiptByWildCardSearch(receiveId,receiveNo,wildCardSearch,keyCode,InputDepartment,InputReceiptType);       
+            if(receipt != null) {
+                if(!receipt.getId().isEmpty()){
+                    List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
+                    List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
+                    request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
+                    request.setAttribute(RECEIPTCREDITLIST,receiptCreditList);
+                    List<ReceiptDetail> recInvId = new ArrayList<ReceiptDetail>();
+                    if(receiptDetailList != null){
+                        for(int i = 0 ;i < receiptDetailList.size();i++){
+                            ReceiptDetail receiptD = new ReceiptDetail();
+                            receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
+                            receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
+                            receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
+                            recInvId.add(receiptD);
                         }
-                        if(receiptCreditList != null){
-                        request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);
-                        }
+                        request.setAttribute(INVIDLIST, recInvId);
+                        request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
                     }
-                    request.setAttribute(SEARCHRECEIPT,"notdummy");
-                    request.setAttribute(RECEIPT,receipt);
-                    request.setAttribute(RECEIPTDATE,receipt.getRecDate());
-                    request.setAttribute(RECEIVEDATE,receipt.getReceiveDate());
+                    if(receiptCreditList != null){
+                        request.setAttribute(CREDITROWCOUNT, receiptCreditList.size()+1);
+                    }
                 }
+                request.setAttribute(SEARCHRECEIPT,"notdummy");
+                request.setAttribute(RECEIPT,receipt);
+                request.setAttribute(RECEIPTDATE,receipt.getRecDate());
+                request.setAttribute(RECEIVEDATE,receipt.getReceiveDate());
             }
                        
         }else if (!"".equalsIgnoreCase(searchId)) {

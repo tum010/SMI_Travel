@@ -49,14 +49,16 @@ public class OtherBookingImpl implements OtherBookingDao{
                                                         "ot.guide_id " +
                                                         "FROM `other_booking` ot " +
                                                         "INNER JOIN staff st on st.id = ot.guide_id " ;
-    private static final String AGENTCOM_SUMMARY_QUERY = "SELECT agt.`code` AS `code`,"
-            + "agt.`name` AS `name`,"
-            + "count((mt.id)) AS count_booking,"
-            + "SUM(db.agent_comission) AS comission "
-            + "FROM daytour_booking db "
-            + "INNER JOIN agent agt ON db.agent_id = agt.id "
-//            + "INNER JOIN daytour_booking_price dp ON dp.daytour_booking_id = db.id "
-            + "INNER JOIN `master` mt ON mt.id = db.master_id ";
+    private static final String AGENTCOM_SUMMARY_QUERY = "SELECT " +
+                                                        " `agt`.`code` AS `code`, " +
+                                                        " `agt`.`name` AS `name`, " +
+                                                        " count(DISTINCT `mt`.`id`) AS `count_booking`, " +
+                                                        " sum(`ot`.agent_commission) AS `commission`, " +
+                                                        " agt.id " +
+                                                        "FROM " +
+                                                        "`other_booking` `ot` " +
+                                                        "JOIN `agent` `agt` ON (`ot`.agent_id = `agt`.`id`) " +
+                                                        "JOIN `master` `mt` ON (`mt`.`id` = `ot`.`master_id`)";
     
     @Override
     public List<OtherBooking> getListBookingOtherFromRefno(String refno) {
@@ -926,8 +928,8 @@ public class OtherBookingImpl implements OtherBookingDao{
         System.out.println(" From Date : " + datefrom +  " To Date : " + dateto);
         guideCommissionInfo.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
         guideCommissionInfo.setUser(username);
-        guideCommissionInfo.setDatefrom(!"".equalsIgnoreCase(datefrom) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
-        guideCommissionInfo.setDateto(!"".equalsIgnoreCase(dateto)  ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
+        guideCommissionInfo.setDatefrom(!"".equalsIgnoreCase(datefrom) && datefrom != null ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+        guideCommissionInfo.setDateto(!"".equalsIgnoreCase(dateto) && dateto != null ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
         guideCommissionInfo.setOtherGuideCommissionSummaryDataSource(new JRBeanCollectionDataSource(getOtherGuideComissionSummaryReport(datefrom, dateto, username, guideid)));
         guideCommissionInfo.setOtherGuideCommissionDataSource(new JRBeanCollectionDataSource(getOtherGuideComissionReport(datefrom, dateto, username, guideid)));
         return guideCommissionInfo;
@@ -984,8 +986,8 @@ public class OtherBookingImpl implements OtherBookingDao{
              OtherGuideCommissionSummaryHeader guidecom = new OtherGuideCommissionSummaryHeader();
              guidecom.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
              guidecom.setUser(username);
-             guidecom.setDatefrom(!"".equalsIgnoreCase(datefrom) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
-             guidecom.setDateto(!"".equalsIgnoreCase(dateto) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
+             guidecom.setDatefrom(!"".equalsIgnoreCase(datefrom)&& datefrom != null  ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+             guidecom.setDateto(!"".equalsIgnoreCase(dateto) && dateto != null ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
              guidecom.setGuidename(util.ConvertString(B[0]));
              guidecom.setPax(B[1]== null ? 0:(Integer)B[1]);
              guidecom.setCommission(B[2]== null ? 0:(Integer)B[2]);
@@ -1050,8 +1052,8 @@ public class OtherBookingImpl implements OtherBookingDao{
              OtherGuideCommissionSummary guidecom = new OtherGuideCommissionSummary();
              guidecom.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
              guidecom.setUser(username);
-             guidecom.setDatefrom(!"".equalsIgnoreCase(datefrom) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
-             guidecom.setDateto(!"".equalsIgnoreCase(dateto) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
+             guidecom.setDatefrom(!"".equalsIgnoreCase(datefrom) && datefrom != null  ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+             guidecom.setDateto(!"".equalsIgnoreCase(dateto) && dateto != null ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
              guidecom.setTourdate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(B[0]));
              guidecom.setCode(util.ConvertString(B[1]));
              guidecom.setCustomer(util.ConvertString(B[2]));
@@ -1075,8 +1077,8 @@ public class OtherBookingImpl implements OtherBookingDao{
         System.out.println(" From Date : " + datefrom +  " To Date : " + dateto);
         agentCommission.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
         agentCommission.setUser(user);
-        agentCommission.setDatefrom(!"".equalsIgnoreCase(datefrom) ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
-        agentCommission.setDateto(!"".equalsIgnoreCase(dateto)  ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
+        agentCommission.setDatefrom(!"".equalsIgnoreCase(datefrom) && datefrom != null ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+        agentCommission.setDateto(!"".equalsIgnoreCase(dateto) && dateto != null  ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
         agentCommission.setOtherAgentCommissionInfoDataSource(new JRBeanCollectionDataSource(getOtherAgentReportInfo(datefrom, dateto, user,agentid)));
         agentCommission.setOtherAgentCommissionSummaryDataSource(new JRBeanCollectionDataSource(getOtherAgentReportSummary(datefrom, dateto, user,agentid)));
         return agentCommission;
@@ -1086,18 +1088,44 @@ public class OtherBookingImpl implements OtherBookingDao{
         Session session = this.sessionFactory.openSession();
         List data = new ArrayList();
         Date thisdate = new Date();
+        String query = "";
         UtilityFunction util = new UtilityFunction();
-        String query ="SELECT * FROM `agent_commission_info` where tourdate >= '"+datefrom+"' and tourdate <= '"+dateto+"'";
-        if((agentid != null)&&(!"".equalsIgnoreCase(agentid))){
-            query += " and agentid = "+agentid;
+        int checkQuery = 0;
+        if( "".equals(datefrom)  && "".equals(dateto) && "".equals(agentid)){
+            query = "SELECT * FROM `agent_commission_other` gc ";
+        }else{  
+            if( datefrom == null  && dateto == null && agentid == null){
+                query = "SELECT * FROM `agent_commission_other` gc ";
+            }else{
+                query = "SELECT * FROM `agent_commission_other` gc  where ";
+            }
+        }
+        
+        if ((datefrom != null )&&(!"".equalsIgnoreCase(datefrom))) {
+            if ((dateto != null )&&(!"".equalsIgnoreCase(dateto))) {
+                if(checkQuery == 1){
+                     query += " and gc.otherdate BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                }else{
+                    checkQuery = 1;
+                     query += " gc.otherdate  BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                }
+            }
+        }
+        if ((agentid != null )&&(!"".equalsIgnoreCase(agentid))) {
+            if(checkQuery == 1){
+                 query += " and gc.id = "+agentid;
+            }else{
+                checkQuery = 1;
+                 query += " gc.id = "+agentid;
+            }
         }
         List<Object[]> QueryAgentComList = session.createSQLQuery(query)
-                .addScalar("tourdate", Hibernate.DATE)
-                .addScalar("tourcode", Hibernate.STRING)
+                .addScalar("otherdate", Hibernate.DATE)
+                .addScalar("code", Hibernate.STRING)
                 .addScalar("customer", Hibernate.STRING)
                 .addScalar("pax", Hibernate.STRING)
-                .addScalar("comission", Hibernate.INTEGER)
-                .addScalar("sell", Hibernate.INTEGER)
+                .addScalar("commission", Hibernate.INTEGER)
+                .addScalar("selling", Hibernate.INTEGER)
                 .addScalar("name", Hibernate.STRING)
                 .list();
                 
@@ -1111,8 +1139,8 @@ public class OtherBookingImpl implements OtherBookingDao{
              report.setSell(B[5]== null ? 0:(Integer)B[5]);
              report.setAgent(util.ConvertString(B[6]));
              report.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
-             report.setDatefrom(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)));
-             report.setDateto(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)));
+             report.setDatefrom(!"".equalsIgnoreCase(datefrom) && datefrom != null ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+             report.setDateto(!"".equalsIgnoreCase(dateto) && dateto != null ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
              report.setUser(user);
              data.add(report);
         }              
@@ -1124,19 +1152,51 @@ public class OtherBookingImpl implements OtherBookingDao{
         Session session = this.sessionFactory.openSession();
         List data = new ArrayList();
         Date thisdate = new Date();
+        String query = "";
         UtilityFunction util = new UtilityFunction();
-        String sql = AGENTCOM_SUMMARY_QUERY+" where db.tour_date >= '"+datefrom+"' and db.tour_date <= '"+dateto+"'" ;
+        int checkQuery = 0;
         
-        if((agentid != null)&&(!"".equalsIgnoreCase(agentid))){
-            sql += " and agt.id ="+agentid;
+        if( "".equals(datefrom)  && "".equals(dateto) && "".equals(agentid)){
+            query = AGENTCOM_SUMMARY_QUERY + " ";
+        }else{  
+            if( datefrom == null  && dateto == null && agentid == null){
+                query = AGENTCOM_SUMMARY_QUERY + " ";
+            }else{
+                query = AGENTCOM_SUMMARY_QUERY + "  where ";
+            }
         }
-        sql += " GROUP BY agt.`code`,agt.`name` HAVING  comission <> 0 ORDER BY `agt`.`name`";
-        System.out.println("sql :" +sql);
-        List<Object[]> QueryAgentComSummaryList = session.createSQLQuery(sql)
+        
+        if ((datefrom != null )&&(!"".equalsIgnoreCase(datefrom))) {
+            if ((dateto != null )&&(!"".equalsIgnoreCase(dateto))) {
+                if(checkQuery == 1){
+                     query += " and ot.otherdate   BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                }else{
+                    checkQuery = 1;
+                     query += " ot.otherdate  BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                }
+            }
+        }
+        if ((agentid != null )&&(!"".equalsIgnoreCase(agentid))) {
+            if(checkQuery == 1){
+                 query += " and agt.id  = "+agentid;
+            }else{
+                checkQuery = 1;
+                 query += " agt.id  = "+agentid;
+            }
+        }
+        query += " GROUP BY " +
+        " `agt`.`code`, " +
+        " `agt`.`name` " +
+        " HAVING " +
+        " ( " +
+        " sum(`ot`.`agent_commission`) <> 0 " +
+        " )";
+        System.out.println("sql :" +query);
+        List<Object[]> QueryAgentComSummaryList = session.createSQLQuery(query)
                 .addScalar("code", Hibernate.STRING)
                 .addScalar("name", Hibernate.STRING)
                 .addScalar("count_booking", Hibernate.STRING)
-                .addScalar("comission", Hibernate.INTEGER)
+                .addScalar("commission", Hibernate.INTEGER)
                 .list();
   
         System.out.println("QueryAgentComSummaryList.size : "+QueryAgentComSummaryList.size());
@@ -1147,8 +1207,8 @@ public class OtherBookingImpl implements OtherBookingDao{
              report.setCountbook("".equals(util.ConvertString(B[2])) ? 0 : Integer.parseInt(util.ConvertString(B[2])));
              report.setCommission(B[3]== null ? 0:(Integer)B[3]);
              report.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(thisdate));
-             report.setDatefrom(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)));
-             report.setDateto(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)));
+             report.setDatefrom(!"".equalsIgnoreCase(datefrom) && datefrom != null ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(datefrom)) : "");
+             report.setDateto(!"".equalsIgnoreCase(dateto) && dateto != null ? new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(dateto)) : "");
              report.setUser(user);
              data.add(report);
         }      

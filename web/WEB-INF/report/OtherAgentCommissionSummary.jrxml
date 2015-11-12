@@ -94,7 +94,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="0" y="3" width="76" height="15" uuid="03f942a7-b8f4-426b-8129-4322987d0006"/>
+				<reportElement x="0" y="1" width="76" height="21" uuid="03f942a7-b8f4-426b-8129-4322987d0006"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
@@ -107,7 +107,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="78" y="1" width="295" height="15" uuid="b0764bfe-dae2-4066-87d4-02f5cb6eb7a9"/>
+				<reportElement x="78" y="1" width="295" height="21" uuid="b0764bfe-dae2-4066-87d4-02f5cb6eb7a9"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="13" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -120,8 +120,8 @@
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="373" y="3" width="86" height="15" uuid="26d55ab9-882e-4f57-932e-20492bbedad6"/>
-				<textElement textAlignment="Center">
+				<reportElement x="373" y="1" width="86" height="21" uuid="26d55ab9-882e-4f57-932e-20492bbedad6"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{countbook}]]></textFieldExpression>
@@ -133,7 +133,7 @@
 				</graphicElement>
 			</rectangle>
 			<textField pattern="#,##0">
-				<reportElement x="458" y="4" width="96" height="15" uuid="79e688ef-6f95-467a-9cc2-bcbb66388123"/>
+				<reportElement x="458" y="1" width="96" height="21" uuid="79e688ef-6f95-467a-9cc2-bcbb66388123"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>

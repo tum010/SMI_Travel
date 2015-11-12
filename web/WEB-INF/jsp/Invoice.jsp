@@ -82,11 +82,13 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Currency Amount Not Empty</strong> 
             </div>
+             
             <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form" onsubmit="return validFromInvoice();">
             <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Void Success </strong> 
             </div>
+            
             <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
                  <c:set var="textVoid" value="VOID" />
             </c:if>
@@ -175,7 +177,24 @@
             </div>
             
             <!--Search Invoice-->
-            <div class="row" style="padding-left: 15px;padding-right:15px">  
+            <div class="row" style="padding-left: 15px;padding-right:15px"> 
+                <input type="text" class="hidden" value="${typeBooking}">
+                 <c:choose>
+                    <c:when test="${typeBooking == 'O'}">
+                        <div id="AlertBookingRefno"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong><font color="red">This Ref No can get billable detail from wendy only</font></strong> 
+                        </div>
+                    </c:when>
+                    <c:when test="${typeBooking == 'I'}">
+                        <div id="AlertBookingRefno"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong><font color="red">This Ref No can get billable detail from outbound only</font></strong> 
+                        </div>
+                    </c:when>
+                </c:choose>
+            </div>
+            <div class="row" style="padding-left: 15px;padding-right:15px"> 
                 <div role="tabpanel">
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane  active " id="infoSearchInvoice">
@@ -206,6 +225,7 @@
                                                 </button>   
                                             </div>  
                                             <div class="col-md-5 ">
+                                               
                                                 <c:choose>
                                                     <c:when test="${typeBooking == 'O'}">
                                                         <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from wendy only</font></div>
