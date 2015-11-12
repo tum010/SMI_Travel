@@ -103,10 +103,7 @@ public class PaymentAirlineController extends SMITravelController {
         String optionSave = request.getParameter("optionSave");
         // Add PayTo radio
         String payto = request.getParameter("payto");
-        
-        String whtax = request.getParameter("whtax");
-        String vat = request.getParameter("vat");
-        
+
         String exportDate = request.getParameter("exportDate");
         String isExport = request.getParameter("isExport");
         System.out.println("  exportDate " + exportDate);

@@ -20,6 +20,8 @@
 <c:set var="creditList" value="${requestScope['creditList']}" />
 <c:set var="withholdingtax" value="${requestScope['withholdingtax']}" />
 <c:set var="debitList" value="${requestScope['debitList']}" />
+<c:set var="ticketwhtax" value="${requestScope['ticketwhtax']}" />
+<c:set var="ticketvat" value="${requestScope['ticketvat']}" />
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -82,9 +84,8 @@
                 <input type="hidden" name="checksearchticket" id="checksearchticket" value="">
                 <input type="hidden" name="sumCommissionRefund" id="sumCommissionRefund" value="">
                 <input type="hidden" name="sumCommissionTicket" id="sumCommissionTicket" value="">
-                <input type="hidden" name="whtax" id="whtax" value="${withholdingtax}">
-                <input type="hidden" name="vat" id="vat" value="${vat}">
-                
+                <input type="hidden" name="whtax" id="whtax" value="${paymentAirticket.wht}">
+                <input type="hidden" name="vat" id="vat" value="${paymentAirticket.vat}">
                 <input type="hidden" class="form-control" id="countRowDebit" name="countRowDebit" value="${requestScope['debitRowCount']}" />
                 <input type="hidden" name="debitIdDelete" id="debitIdDelete" value="">
                 <input type="hidden" name="debitRowDelete" id="debitRowDelete" value="">
@@ -518,7 +519,7 @@
                         <h4 class="panel-title">Ticket Detail</h4>
                     </div> -->
                     <div class="panel-body" style="width: 100%">
-                        <div class="col-xs-12" style="padding-top: 5px">
+                        <div class="col-xs-12" style="padding-top: 15px">
                             <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Agent Amount </label>
                             </div>
@@ -528,34 +529,6 @@
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 155px">
-                                <label class="control-label text-right">Debit Note </label>
-                            </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="debitNote" name="debitNote" type="text" cmaxlength="50" lass="form-control" value="${paymentAirticket.debitNote}">
-                                </div>
-                            </div>
-                            <div class="col-xs-1 text-right"  style="width: 140px">
-                                <label class="control-label text-right">Debit Amount </label>
-                            </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="debitAmount" name="debitAmount" type="text" maxlength="8" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.debitAmount}">
-                                </div>
-                            </div>    
-                        </div>
-                        
-                        <div class="col-xs-12" style="padding-top: 15px">
-<!--                            <div class="col-xs-1 text-right"  style="width: 150px">
-                                <label class="control-label text-right">Commission Vat </label>
-                            </div>
-                            <div class="col-xs-1"  style="width: 200px">
-                                <div class="input-group">                                    
-                                    <input id="commissionVat" name="commissionVat" type="text" maxlength="12" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="">
-                                </div>
-                            </div>-->
-
-                            <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Withholding Tax </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
@@ -563,7 +536,7 @@
                                     <input id="withholdingTax" name="withholdingTax" type="text" maxlength="12" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" value="${paymentAirticket.witholdingTax}" >
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 155px">
+                            <div class="col-xs-1 text-right"  style="width: 140px">
                                 <label class="control-label text-right">Cash </label>
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
@@ -846,7 +819,6 @@
     <c:if test="${requestScope['setCalculateTicket'] == 1 }">        
         <script language="javascript">
             $(document).ready(function() {
-                $("#vat").val(${vat});
                 calculateTotalAmount();
                 calculateTotalCommission();
                 calculateWithodingTax();
@@ -860,7 +832,6 @@
     <c:if test="${requestScope['setCalculateRefund'] == 1 }">        
         <script language="javascript">
             $(document).ready(function() {
-                $("#vat").val(${vat});
                 calculateTotalAmountRefund();
                 calculateTotalRefundVat();
                 calculateWithodingTax();
@@ -874,7 +845,6 @@
     <c:if test="${requestScope['setCalculateCredit'] == 1 }">        
         <script language="javascript">
             $(document).ready(function() {
-                $("#vat").val(${vat});
                 var detaillength = $("#CreditDetailTable tr").length ;
                 if(detaillength > 1) {
                     for(var i = 1;i<detaillength;i++){
@@ -900,7 +870,6 @@
     <c:if test="${requestScope['setCalculateDebit'] == 1 }">        
         <script language="javascript">
             $(document).ready(function() {
-                $("#vat").val(${vat});
                 var debitdetaillength = $("#DebitDetailTable tr").length ;
                 if(debitdetaillength > 1) {
                     for(var i = 1;i<debitdetaillength;i++){
@@ -943,7 +912,6 @@ for(var i = 0; i < rad.length; i++) {
         $('.date').datetimepicker();
         $(".moneyformat").mask('000,000,000', {reverse: true});
         $(".money").mask('000,000,000.00', {reverse: true});
-        $("#vat").val(${vat});
         $("#countRow").val("0");
 
         if($('#searchPaymentNoFlag').val() == "dummy"){
@@ -1156,12 +1124,7 @@ for(var i = 0; i < rad.length; i++) {
             setFormatCurrency();
             setDataCurrency();    
         });    
-        $("#debitAmount").focusout(function(){
-            setFormatCurrency();
-            setDataCurrency();
-            calculateTotalPayment();
-            calculateAmount();
-        });
+
         $("#amount").focusout(function(){
             setFormatCurrency();
             setDataCurrency();
@@ -1303,12 +1266,6 @@ function setFormatCurrency(){
     var agentAmount = parseFloat(agentAmount); 
     document.getElementById("agentAmount").value = formatNumber(agentAmount);
     
-    var debitAmount = replaceAll(",","",$('#debitAmount').val()); 
-    if (debitAmount == ""){
-        debitAmount = 0;
-    }
-    var debitAmount = parseFloat(debitAmount); 
-    document.getElementById("debitAmount").value = formatNumber(debitAmount);
 }
 
 function setDataCurrency(){
@@ -1327,12 +1284,6 @@ function setDataCurrency(){
         document.getElementById("agentAmount").value = "";  
     }
             
-    
-    var debitAmount = replaceAll(",","",$('#debitAmount').val()); 
-    if (debitAmount == "" || debitAmount == 0){
-        document.getElementById("debitAmount").value = ""; 
-    }
-      
     var amount = replaceAll(",","",$('#amount').val()); 
     if (amount == "" || amount == 0){
         document.getElementById("amount").value = "";  
@@ -1389,8 +1340,6 @@ function searchTicketFareCF() {
     payBy.value = $("#payBy").val();
     var agentAmount = document.getElementById('agentAmount');
     agentAmount.value = $("#agentAmount").val();
-    var debitNote = document.getElementById('debitNote');
-    debitNote.value = $("#debitNote").val();
     var cash = document.getElementById('cash');
     cash.value = $("#cash").val();
     var withholdingTax = document.getElementById('withholdingTax');
@@ -1401,9 +1350,6 @@ function searchTicketFareCF() {
     amount.value = $("#amount").val();
     var totalPayment = document.getElementById('totalPayment');
     totalPayment.value = $("#totalPayment").val();
-    var debitAmount = document.getElementById('debitAmount');
-    debitAmount.value = $("#debitAmount").val();
-    
     var ticketFrom = document.getElementById('ticketFrom');
     ticketFrom.value = $("#ticketFrom").val();
     var typeAirline = document.getElementById('typeAirline');
@@ -1578,8 +1524,6 @@ function saveAction(optionsave){
         payBy.value = $("#payBy").val();
         var agentAmount = document.getElementById('agentAmount');
         agentAmount.value = $("#agentAmount").val();
-        var debitNote = document.getElementById('debitNote');
-        debitNote.value = $("#debitNote").val();
         var cash = document.getElementById('cash');
         cash.value = $("#cash").val();
         var withholdingTax = document.getElementById('withholdingTax');
@@ -1590,8 +1534,6 @@ function saveAction(optionsave){
         amount.value = $("#amount").val();
         var totalPayment = document.getElementById('totalPayment');
         totalPayment.value = $("#totalPayment").val();
-        var debitAmount = document.getElementById('debitAmount');
-        debitAmount.value = $("#debitAmount").val();
         var ticketFrom = document.getElementById('ticketFrom');
         ticketFrom.value = $("#ticketFrom").val();
         var typeAirline = document.getElementById('typeAirline');
@@ -1986,11 +1928,9 @@ function clearData(){
     $("#detail").val("");
     $("#payBy").val("");
     $("#agentAmount").val("");
-    $("#debitNote").val("");
     $("#cash").val("");
     $("#withholdingTax").val("");
     $("#chqNo").val("");
-    $("#debitAmount").val("");
     $("#ticketFrom").val("");
     $("#typeAirline").val("");
     $("#dateFrom").val("");
@@ -2042,7 +1982,7 @@ function getTicketNoFromTicketFare() {
     document.getElementById("ticketNoList").value = ticeketList;
 }
 
-function AddRowCredit(row) {
+function AddRowCredit(row) {    
     $("#CreditDetailTable tbody").append(
         '<tr style="higth 100px">' +
         '<td class="text-center">' + row + '</td>' +
@@ -2070,10 +2010,10 @@ function AddRowCredit(row) {
         
     var tempCount = parseInt($("#countRowCredit").val()) + 1;
     $("#countRowCredit").val(tempCount);
-    
 }
 
 function AddRowDebit(row) {
+  
     $("#DebitDetailTable tbody").append(
         '<tr style="higth 100px">' +
         '<td class="text-center">' + row + '</td>' +
@@ -2101,7 +2041,6 @@ function AddRowDebit(row) {
         
     var tempCount = parseInt($("#countRowDebit").val()) + 1;
     $("#countRowDebit").val(tempCount);
-    
 }
 function calculateTotalCreditAmount(){
     var temp = 0;
@@ -2109,7 +2048,7 @@ function calculateTotalCreditAmount(){
     var amountTemp = parseFloat(0);
     var tableProduct = $("#CreditDetailTable tr").length;
     if(tableProduct > 1){
-        for (i ; i < tableProduct ; i++) {
+        for (i ; i < tableProduct+1 ; i++) {
             temp = document.getElementById("creditAmount" + i);
             if(temp !== null){
                 temp = temp.value;
@@ -2129,9 +2068,9 @@ function calculateTotalCreditAmount(){
 function calculateTotalDebitAmount(){
     var temp = 0;
     var i = 1;
-    var amountTemp = parseFloat(0);
+    var amountTemp = parseFloat(0) ;
     var tableProduct = $("#DebitDetailTable tr").length;
-    if(tableProduct > 1){
+    if(tableProduct > 1 ){
         for (i ; i < tableProduct ; i++) {
             temp = document.getElementById("debitAmount" + i);
             if(temp !== null){
@@ -2147,7 +2086,8 @@ function calculateTotalDebitAmount(){
         }
         document.getElementById("totalDebitAmount").value = formatNumber(amount);
     }
-//    calculateTotalPayment();
+    calculateTotalPayment();
+    calculateAmount();
 }
 
 function calculateWithodingTax(){
@@ -2171,7 +2111,6 @@ function calculateWithodingTax(){
     var sumcomm = parseFloat(sumCommissionTicket);
     var tax = document.getElementById('whtax').value;
     var whtax = parseFloat(tax);
-
 //    var withholdingTax = ( (sumcomm + sumCommRefund ) * (whtax / 100));
     var withholdingTax = ( (sumcomm - sumCommRefund ) * (3 / 100));
     document.getElementById("withholdingTax").value = formatNumber(withholdingTax);
@@ -2199,7 +2138,17 @@ function DeleteRowCredit(){
             countrow = countrow+1;
             $("#countRowCredit").val(countrow);
         });
-        calculateTotalCreditAmount();
+        
+        for(var i =1; i<rowAll+1 ;i++){
+            if($("#creditNote"+i).val() !== '' || $("#creditAmount"+i).val() !== '' ){
+
+            }else{
+                $("#creditNote" +i).parent().parent().remove();
+                $("#countRowCredit").val(rowAll-1);
+                AddRowCredit(rowAll-1);
+            }
+        }
+//        calculateTotalCreditAmount();
     }else {
         $.ajax({
             url: 'PaymentAirline.smi?action=deleteCredit',
@@ -2218,7 +2167,17 @@ function DeleteRowCredit(){
                     countrow = countrow+1;
                     $("#countRowCredit").val(countrow);
                 });
-                calculateTotalCreditAmount();
+                
+                for(var i =1; i<rowAll+1 ;i++){
+                    if($("#creditNote"+i).val() !== '' || $("#creditAmount"+i).val() !== '' ){
+
+                    }else{
+                        $("#creditNote" +i).parent().parent().remove();
+                        $("#countRowCredit").val(rowAll-1);
+                        AddRowCredit(rowAll-1);
+                    }
+                }
+//                calculateTotalCreditAmount();
             },
             error: function () {
                 console.log("error");
@@ -2227,6 +2186,7 @@ function DeleteRowCredit(){
         }); 
     }
     $('#DeleteCreditNote').modal('hide');
+    calculateTotalCreditAmount();
 }
 function deleteDebitList(id,Ccount) {
     document.getElementById('debitIdDelete').value = id;
@@ -2251,7 +2211,17 @@ function DeleteRowDebit(){
             countrow = countrow+1;
             $("#countRowDebit").val(countrow);
         });
-        calculateTotalDebitAmount();
+        for(var i =1; i<rowAll+1 ;i++){
+            if(cCount !== i){
+               if($("#debitNote"+i).val() !== '' || $("#debitAmount"+i).val() !== '' ){
+               }else{
+                   $("#debitNote" +i).parent().parent().remove();
+                   $("#countRowDebit").val(rowAll-1);
+                   AddRowDebit(rowAll-1);
+               }
+           }
+        }
+//        calculateTotalDebitAmount();
     }else {
         $.ajax({
             url: 'PaymentAirline.smi?action=deleteDebit',
@@ -2270,7 +2240,17 @@ function DeleteRowDebit(){
                     countrow = countrow+1;
                     $("#countRowDebit").val(countrow);
                 });
-                calculateTotalDebitAmount();
+                for(var i =1; i<rowAll+1 ;i++){
+                    if(cCount !== i){
+                       if($("#debitNote"+i).val() !== '' || $("#debitAmount"+i).val() !== '' ){
+                       }else{
+                           $("#debitNote" +i).parent().parent().remove();
+                           $("#countRowDebit").val(rowAll-1);
+                           AddRowDebit(rowAll-1);
+                       }
+                   }
+                }
+//                calculateTotalDebitAmount();
             },
             error: function () {
                 console.log("error");
@@ -2279,6 +2259,7 @@ function DeleteRowDebit(){
         }); 
     }
     $('#DeleteDebitNote').modal('hide');
+    calculateTotalDebitAmount();
 }
 
 function printReport(){
