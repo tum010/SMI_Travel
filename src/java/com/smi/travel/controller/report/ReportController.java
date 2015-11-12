@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.report.model.AgentCommission;
 import com.smi.travel.datalayer.report.model.DailyTourReport;
 import com.smi.travel.datalayer.report.model.GuideCommissionInfo;
 import com.smi.travel.datalayer.report.model.HotelMonthlyReport;
+import com.smi.travel.datalayer.report.model.OtherAgentCommission;
 import com.smi.travel.datalayer.report.model.OtherGuideCommissionInfo;
 import com.smi.travel.datalayer.report.model.OtherMonthlyReport;
 import com.smi.travel.datalayer.report.model.PackageMonthlyReport;
@@ -308,7 +309,7 @@ public class ReportController extends SMITravelController {
         }else if (OtherAgentCommission.equalsIgnoreCase(name)) {
             data = reportservice.getOtherAgentCommissionReport(startdate, enddate, user.getName(), agentid);
             // set path for loading sub-report file
-            ((AgentCommission) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
+            ((OtherAgentCommission) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);
