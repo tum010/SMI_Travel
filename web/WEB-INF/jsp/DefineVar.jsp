@@ -56,7 +56,7 @@
 					</div>
 					<div class="row" style="padding-left: 0px">
 						<div class="col-xs-1 text-right" style="padding-left: 0px; width: 100px;">
-							<label class="control-label">bank chart</label>
+							<label class="control-label">bank charge</label>
 						</div>
 						<div class="col-md-2 form-group text-left" style="padding-left: 0px; padding-right: 0px; width: 150px;">
 							<div class="col-sm-12">
