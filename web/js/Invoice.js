@@ -528,7 +528,7 @@ function changeFormatAmountLocalNumber(id) {
     if (isNaN(count)) {
         document.getElementById('InputAmountLocal' + id).value = "";
     } else {
-        count = parseFloat(document.getElementById('InputAmountLocal' + id).value);
+        count = parseFloat((document.getElementById('InputAmountLocal' + id).value).replace(/,/g,""));
         document.getElementById('InputAmountLocal' + id).value = formatNumber(count);
     }
 }
