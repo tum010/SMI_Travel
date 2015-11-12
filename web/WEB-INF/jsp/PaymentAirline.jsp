@@ -19,6 +19,7 @@
 <c:set var="addRefundList" value="${requestScope['addRefundList']}" />
 <c:set var="creditList" value="${requestScope['creditList']}" />
 <c:set var="withholdingtax" value="${requestScope['withholdingtax']}" />
+<c:set var="debitList" value="${requestScope['debitList']}" />
 <section class="content-header" >
     <h1>
         Checking - Air Ticket
@@ -72,8 +73,6 @@
                 <input id="paymentAirFareId" name="paymentAirFareId" type="hidden" class="form-control" maxlength="11" value="${paymentAirFare.id}">
                 <input id="paymentAirRefundId" name="paymentAirRefundId" type="hidden" class="form-control" maxlength="11" value="${paymentAirRefund.id}">
                 <input type="hidden" name="action" id="action" value="">
-                <input type="hidden" name="vat" id="vat" value="">
-                <input type="hidden" name="whtax" id="whtax" value="${withholdingtax}">
                 <input type="hidden" name="flagSearch" id="flagSearch" value="${flagSearch}">
                 <input type="hidden" name="paytoTemp"  id="paytoTemp" value="${paymentAirticket.payTo}">
                 <input type="hidden" name="ticketNoList" id="ticketNoList" value="">
@@ -83,7 +82,13 @@
                 <input type="hidden" name="checksearchticket" id="checksearchticket" value="">
                 <input type="hidden" name="sumCommissionRefund" id="sumCommissionRefund" value="">
                 <input type="hidden" name="sumCommissionTicket" id="sumCommissionTicket" value="">
-
+                <input type="hidden" name="whtax" id="whtax" value="${withholdingtax}">
+                <input type="hidden" name="vat" id="vat" value="${vat}">
+                
+                <input type="hidden" class="form-control" id="countRowDebit" name="countRowDebit" value="${requestScope['debitRowCount']}" />
+                <input type="hidden" name="debitIdDelete" id="debitIdDelete" value="">
+                <input type="hidden" name="debitRowDelete" id="debitRowDelete" value="">
+                
                 <div class="panel panel-default">
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
                         <div class="col-xs-12">
@@ -103,10 +108,10 @@
                                 <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchPaymentNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 140px">
-                                <label class="control-label text-right">Payment Date </label>
+                                <label class="control-label text-right">Payment Date<font style="color: red">*</font></label>
                             </div>
-                            <div class="col-xs-1" style="width: 170px">
-                                <div class='input-group date'>
+                            <div class="form-group col-xs-1" style="width: 170px">
+                                <div class='input-group date' id="PaymentDate">
                                     <input id="paymentDate" name="paymentDate"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['payDate']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -291,7 +296,7 @@
                                         <td class="money">${table.tax}</td>
                                         <td class="money">${table.ticketIns}</td>
                                         <td class="money">${table.ticketCommission}</td>
-                                        <td class="money">${table.salePrice}</td>
+                                        <td class="money">${table.ticketFareAmount}</td>
                                         <td> 
                                             <center> 
                                                 <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteTicket('${table.id}','${table.ticketNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -457,6 +462,58 @@
                         </div>  
                     </div>
                 </div>
+                            
+                            
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Debit Note</h4>
+                    </div> 
+                    <div class="panel-body" style="width: 100%;">    
+                        <table class="display" id="DebitDetailTable">
+                            <thead class="datatable-header">
+                                <tr>
+                                    <th style="width:10%;">No</th>
+                                    <th style="width:35%;">Debit Note</th>
+                                    <th style="width:35%;">Debit Amount</th>
+                                    <th style="width:20;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="table" items="${DebitList}" varStatus="i">
+                                    <tr>
+                                        <input type="hidden" name="debitId${i.count}" id="debitId${i.count}" value="${table.id}">
+                                        <td align="center">${i.count}</td>
+                                        <td><input maxlength="255" id="debitNote${i.count}" name="debitNote${i.count}" type="text" class="form-control" value="${table.debitNote}"></td>
+                                        <td><input maxlength="10" id="debitAmount${i.count}"  name="debitAmount${i.count}"  type="text" class="form-control text-right"  value="${table.debitAmount}" onkeyup="insertCommas(this)"></td>
+                                        <td> 
+                                            <center> 
+                                                <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteDebitList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                            </center>
+                                        </td>                                     
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                        
+                        <div id="tr_DebitDetailAddRow" class="text-center hide" style="padding-top: 10px">
+                            <a class="btn btn-success" onclick="AddRowDebit(1)">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
+                        </div>     
+                        <div class="col-xs-12 form-group" style="padding-top: 15px">
+                                <div class="col-xs-1 text-right"  style="width: 820px">
+                                <label class="control-label text-right">Total Debit Amount</label>
+                            </div>
+                            <div class="col-xs-1"  style="width: 170px">
+                                <div class="input-group">                                    
+                                    <input type="text" class="form-control money" id="totalDebitAmount" name="totalDebitAmount" readonly="" value="" />
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                </div>            
+                            
+                            
                 <div class="panel panel-default">
 <!--                    <div class="panel-heading">
                         <h4 class="panel-title">Ticket Detail</h4>
@@ -744,6 +801,24 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+<!--DELETE MODAL-->
+<div class="modal fade" id="DeleteDebitNote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Debit Note</h4>
+            </div>
+            <div class="modal-body" id="delDebit">
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" onclick="DeleteRowDebit()" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>               
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <c:if test="${! empty requestScope['saveresult']}">
     <c:if test="${requestScope['saveresult'] =='save successful'}">        
         <script language="javascript">
@@ -820,7 +895,34 @@
             });
         </script>
     </c:if>
-</c:if>    
+</c:if>
+        
+<c:if test="${! empty requestScope['setCalculateDebit']}">
+    <c:if test="${requestScope['setCalculateDebit'] == 1 }">        
+        <script language="javascript">
+            $(document).ready(function() {
+                $("#vat").val(${vat});
+                var detaillength = $("#DebitDetailTable tr").length ;
+                if(detaillength > 1) {
+                    for(var i = 1;i<detaillength;i++){
+                        if( $('#debitAmount'+i).val() != "" ){
+                            var debitAmount = replaceAll(",","",$('#debitAmount'+i).val()); 
+                            if (debitAmount == ""){
+                                debitAmount = 0;
+                            }
+                            debitAmount = parseFloat(debitAmount); 
+                            document.getElementById("debitAmount"+i).value = formatNumber(debitAmount);
+                        }
+                    }
+                }
+                calculateTotalDebitAmount();
+                calculateTotalPayment();
+                calculateAmount();
+            });
+        </script>
+    </c:if>
+</c:if>          
+        
 <script>
 var rad = document.PaymentAirlineForm.payto;
 var prev = null;
@@ -873,6 +975,10 @@ for(var i = 0; i < rad.length; i++) {
             }
         });
         
+        $('#PaymentDate').datetimepicker().on('dp.change', function (e) {
+            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'paymentDate');
+        });
+        
         $('#PaymentAirlineForm').bootstrapValidator({
             container: 'tooltip',
             excluded: [':disabled'],
@@ -913,6 +1019,14 @@ for(var i = 0; i < rad.length; i++) {
                             format: 'YYYY-MM-DD',
                             min: 'dateFrom',
                             message: 'The Date To is not a valid'
+                        }
+                    }
+                },
+                paymentDate: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Payment Date is required'
                         }
                     }
                 }
@@ -1118,6 +1232,49 @@ for(var i = 0; i < rad.length; i++) {
             $(this).parent().addClass("hide");
         });
         
+        
+        
+        
+        // +++++++++++++++++++++ Debit Detail Table +++++++++++++++++++++ //
+        AddRowDebit(parseInt($("#countRowDebit").val()));
+
+        $("#DebitDetailTable").on("keyup", function() {
+            var rowAll = $("#DebitDetailTable tr").length;
+            $("td").keyup(function() {
+                if ($(this).find("input").val() != '') {
+                    var colIndex = $(this).parent().children().index($(this));
+                    var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                    rowAll = $("#DebitDetailTable tr").length;
+                    //console.log('Row: ' + rowIndex + ', Column: ' + colIndex + ', All Row ' + rowAll);
+                    if (rowIndex == rowAll) {
+                        AddRowDebit(parseInt($("#countRowDebit").val()));
+                    }
+                    if (rowAll < 2) {
+                        $("#tr_DebitDetailAddRow").removeClass("hide");
+                        $("#tr_DebitDetailAddRow").addClass("show");
+                    }
+                 }
+            });
+        });
+        
+        $("#DebitDetailTable").on("change", "select:last", function () {
+            var row = parseInt($("#countRowDebit").val());
+            AddRowDebit(row);
+        });
+        
+        $("#DebitDetailTable").on('click', '.newRemCF', function () {
+            $(this).parent().parent().remove();
+                var rowAll = $("#DebitDetailTable tr").length;
+                if (rowAll < 2) {
+                    $("#tr_DebitDetailAddRow").removeClass("hide");
+                    $("#tr_DebitDetailAddRow").addClass("show");
+            }
+        });
+        
+        $("#tr_DebitDetailAddRow a").click(function () {
+            $(this).parent().removeClass("show");
+            $(this).parent().addClass("hide");
+        });
     });
 
 function refundnoValidate(){
@@ -1614,7 +1771,7 @@ function calculateTotalPayment() {
         credit = 0;
     }
     
-    var debit = replaceAll(",","",$('#debitAmount').val()); 
+    var debit = replaceAll(",","",$('#totalDebitAmount').val()); 
     if (debit == ""){
         debit = 0;
     }
@@ -1848,12 +2005,13 @@ function validateSaveButton(){
         $('#textAlertTotalPayment').hide();
     }
     
-    if($("#invoiceSupCode").val() != "" & $("#apCode").val() != "" && (payment > 0 || payment == 0)){
+    if($("#invoiceSupCode").val() != "" && $("#apCode").val() != "" && $("#paymentDate").val() != "" && (payment > 0 || payment == 0)){
         $("#ButtonSave").removeAttr("disabled");
         $("#ButtonSaveAndNew").removeAttr("disabled");
         $("#ButtonSearch").removeAttr("disabled");
         $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode'); 
         $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
+        $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'paymentDate');
     }else{
         $("#ButtonSave").attr("disabled", "disabled");
         $("#ButtonSaveAndNew").attr("disabled", "disabled");
@@ -1903,6 +2061,37 @@ function AddRowCredit(row) {
     $("#countRowCredit").val(tempCount);
     
 }
+
+function AddRowDebit(row) {
+    $("#DebitDetailTable tbody").append(
+        '<tr style="higth 100px">' +
+        '<td class="text-center">' + row + '</td>' +
+        '<td><input maxlength="20" id="debitNote' + row + '" name="debitNote' + row + '" type="text" class="form-control" ></td>' +
+        '<td><input id="debitAmount' + row + '" name="debitAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
+        '<td class="text-center">' +
+        '<a class="remCF" onclick="deleteDebitList(\'\', \''+row+'\')">  '+
+        '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+        '</tr>'
+    );
+    
+    $("#debitAmount"+row).focusout(function(){
+        var debitAmount = replaceAll(",","",$('#debitAmount'+row).val()); 
+        if (debitAmount == ""){
+            debitAmount = 0;
+        }
+        debitAmount = parseFloat(debitAmount); 
+        document.getElementById("debitAmount"+row).value = formatNumber(debitAmount);
+
+        if (debitAmount == "" || debitAmount == 0){
+            document.getElementById("debitAmount"+row).value = "";
+        }
+        calculateTotalDebitAmount();
+    }); 
+        
+    var tempCount = parseInt($("#countRowDebit").val()) + 1;
+    $("#countRowDebit").val(tempCount);
+    
+}
 function calculateTotalCreditAmount(){
     var temp = 0;
     var i = 1;
@@ -1926,7 +2115,29 @@ function calculateTotalCreditAmount(){
     }
     calculateTotalPayment();
 }
-
+function calculateTotalDebitAmount(){
+    var temp = 0;
+    var i = 1;
+    var amountTemp = parseFloat(0);
+    var tableProduct = $("#DebitDetailTable tr").length;
+    if(tableProduct > 1){
+        for (i ; i < tableProduct ; i++) {
+            temp = document.getElementById("debitAmount" + i);
+            if(temp !== null){
+                temp = temp.value;
+                if(temp == '') {
+                    temp = 0;
+                }
+                temp = replaceAll(",","",temp.toString());
+                var value = parseFloat(temp) ;
+                var amount = amountTemp + value ;
+                amountTemp = amount;
+            }
+        }
+        document.getElementById("totalDebitAmount").value = formatNumber(amount);
+    }
+    calculateTotalPayment();
+}
 function calculateWithodingTax(){
     var sumCommissionTicket = replaceAll(",","",$('#sumCommissionTicket').val()); 
     if (sumCommissionTicket == ""){
@@ -2003,6 +2214,58 @@ function DeleteRowCredit(){
         }); 
     }
     $('#DeleteCreditNote').modal('hide');
+}
+function deleteDebitList(id,Ccount) {
+    document.getElementById('debitIdDelete').value = id;
+    document.getElementById('debitRowDelete').value = Ccount;
+    $("#delDebit").text('Are you sure delete this debit ?');
+    $('#DeleteDebitNote').modal('show');
+}
+
+function DeleteRowDebit(){
+    var cCount = document.getElementById('debitRowDelete').value;
+    var id = document.getElementById('debitIdDelete').value;
+    if(id === ''){
+        var countrow=1;
+        $("#debitNote" + cCount).parent().parent().remove();
+        var rowAll = $("#DebitDetailTable tr").length;
+        if (rowAll <= 1) {
+            $("#tr_DebitDetailAddRow").removeClass("hide");
+            $("#tr_DebitDetailAddRow").addClass("show");
+        }
+        $('#DebitDetailTable tr:gt(0) ').each(function() {
+            $(this).find('td:eq(0)').html(countrow) ; 
+            countrow = countrow+1;
+            $("#countRowDebit").val(countrow);
+        });
+        calculateTotalDebitAmount();
+    }else {
+        $.ajax({
+            url: 'PaymentAirline.smi?action=deleteDebit',
+            type: 'get',
+            data: {debitIdDelete: id},
+            success: function () {
+                var countrow=1;
+                $("#debitNote" + cCount).parent().parent().remove();
+                var rowAll = $("#DebitDetailTable tr").length;
+                if (rowAll <= 1) {
+                    $("#tr_DebitDetailAddRow").removeClass("hide");
+                    $("#tr_DebitDetailAddRow").addClass("show");
+                }
+                $('#DebitDetailTable tr:gt(0) ').each(function() {
+                    $(this).find('td:eq(0)').html(countrow) ; 
+                    countrow = countrow+1;
+                    $("#countRowDebit").val(countrow);
+                });
+                calculateTotalDebitAmount();
+            },
+            error: function () {
+                console.log("error");
+                result =0;
+            }
+        }); 
+    }
+    $('#DeleteDebitNote').modal('hide');
 }
 
 function printReport(){

@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.entity.MAirlineAgent;
 import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.PaymentAirCredit;
+import com.smi.travel.datalayer.entity.PaymentAirDebit;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
@@ -78,6 +79,14 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                 }
             }
             
+            List<PaymentAirDebit> paymentAirDebits = payAir.getPaymentAirDebits();
+            
+            if(paymentAirDebits != null){
+                for(int i = 0; i < paymentAirDebits.size(); i++){
+                   session.save(paymentAirDebits.get(i));
+                }
+            }
+            
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -130,6 +139,18 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                         session.save(paymentAirCredits.get(i));
                     } else {
                         session.update(paymentAirCredits.get(i));
+                    }             
+                }
+            }
+            
+            List<PaymentAirDebit> paymentAirDebits = payAir.getPaymentAirDebits();
+            
+            if(paymentAirDebits != null){
+                for(int i = 0; i < paymentAirDebits.size(); i++){
+                    if(paymentAirDebits.get(i).getId() == null){
+                        session.save(paymentAirDebits.get(i));
+                    } else {
+                        session.update(paymentAirDebits.get(i));
                     }             
                 }
             }
@@ -376,22 +397,18 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                     ticketFareView.setTicketIns(listAirline.get(i).getTicketIns());
                     //Ticket Fare --> amount
                     BigDecimal amount = new BigDecimal(BigInteger.ZERO);
-                    if("B".equalsIgnoreCase(String.valueOf(listAirline.get(i).getTicketType()))){
+                    if("B".equalsIgnoreCase(String.valueOf(listAirline.get(i).getTicketType())) || "TI".equalsIgnoreCase(String.valueOf(listAirline.get(i).getTicketType()))){
                         amount = amount.add(listAirline.get(i).getTicketFare());
                         amount = amount.add(listAirline.get(i).getTicketTax());
                         amount = amount.add(listAirline.get(i).getTicketIns());
                         amount = amount.add(listAirline.get(i).getTicketCommission());
-                    }else if("D".equalsIgnoreCase(String.valueOf(listAirline.get(i).getTicketType()))){
-                        amount = amount.add(listAirline.get(i).getTicketFare());
-                        amount = amount.add(listAirline.get(i).getTicketTax());
-                        amount = amount.add(listAirline.get(i).getTicketIns());
-                    }else if("A".equalsIgnoreCase(String.valueOf(listAirline.get(i).getTicketType()))){
+                    }else if("D".equalsIgnoreCase(String.valueOf(listAirline.get(i).getTicketType())) || "TD".equalsIgnoreCase(String.valueOf(listAirline.get(i).getTicketType())) || "A".equalsIgnoreCase(String.valueOf(listAirline.get(i).getTicketType()))){
                         amount = amount.add(listAirline.get(i).getTicketFare());
                         amount = amount.add(listAirline.get(i).getTicketTax());
                         amount = amount.add(listAirline.get(i).getTicketIns());
                     }
-                    
-                    ticketFareView.setSalePrice(amount);
+                    ticketFareView.setTicketFareAmount(amount);
+//                    ticketFareView.setSalePrice(amount);
                     if(listAirline.get(i).getMaster() != null){
                         ticketFareView.setReferenceNo(listAirline.get(i).getMaster().getReferenceNo());
                     }
@@ -542,6 +559,11 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                     && refundAirticketDetails.get(i).getAirticketPassenger().getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null
                     ){
                     department = String.valueOf(refundAirticketDetails.get(i).getAirticketPassenger().getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
+                    if("I".equalsIgnoreCase(department)){
+                        department = "Wendy";
+                    }else if("O".equalsIgnoreCase(department)){
+                        department = "Outbound";
+                    }
                 }
             }
             String[] ticketNoTicketFare = ticketNoList.split(",");
@@ -616,13 +638,19 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         List<TicketFareView> listView = new ArrayList<TicketFareView>();
         List<PaymentAirticketFare> PaymentAirticketFareList = session.createQuery(query).setParameter("paymentAirId", paymentAirId).list();
         System.out.println(" PaymentAirticketFareList size "+PaymentAirticketFareList.size());
+        
+        
         if (PaymentAirticketFareList.isEmpty()) {
             return null;
         }else{
             for(int i=0;i<PaymentAirticketFareList.size();i++){
+                String ticketType = "";
+                BigDecimal ticketfareamount = new BigDecimal(BigInteger.ZERO);
+                
                 TicketFareView ticketFareView = new TicketFareView();
                 TicketFareAirline ticketFareAirline = PaymentAirticketFareList.get(i).getTicketFareAirline() ;
                 if(ticketFareAirline != null){
+                    
                     ticketFareView.setId(String.valueOf(ticketFareAirline.getId()));
                     ticketFareView.setType(String.valueOf(ticketFareAirline.getTicketType()));
                     ticketFareView.setBuy(String.valueOf(ticketFareAirline.getTicketBuy()));
@@ -644,6 +672,19 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
                     ticketFareView.setDiffVat(ticketFareAirline.getDiffVat());
                     ticketFareView.setTicketIns(ticketFareAirline.getTicketIns());
                     ticketFareView.setSalePrice(ticketFareAirline.getSalePrice());
+                    ticketType = String.valueOf(ticketFareAirline.getTicketType());
+                    System.out.println(" +++++++++++++ ticketType +++++++++++++ "+ ticketType);
+                    if("B".equalsIgnoreCase(ticketType) || "TI".equalsIgnoreCase(ticketType)){
+                        ticketfareamount = ticketfareamount.add(ticketFareAirline.getTicketFare());
+                        ticketfareamount = ticketfareamount.add(ticketFareAirline.getTicketTax());
+                        ticketfareamount = ticketfareamount.add(ticketFareAirline.getTicketIns());
+                        ticketfareamount = ticketfareamount.add(ticketFareAirline.getTicketCommission());
+                    }else if("D".equalsIgnoreCase(ticketType) || "A".equalsIgnoreCase(ticketType) || "TD".equalsIgnoreCase(ticketType)){
+                        ticketfareamount = ticketfareamount.add(ticketFareAirline.getTicketFare());
+                        ticketfareamount = ticketfareamount.add(ticketFareAirline.getTicketTax());
+                        ticketfareamount = ticketfareamount.add(ticketFareAirline.getTicketIns());
+                    }
+                    ticketFareView.setTicketFareAmount(ticketfareamount);
                     if(ticketFareAirline.getMaster() != null){
                         ticketFareView.setReferenceNo(ticketFareAirline.getMaster().getReferenceNo());
                     }
@@ -1070,5 +1111,68 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     }
     
     
-    
+    @Override
+    public List<PaymentAirDebit> getPaymentAirDebitByPaymentAirId(String paymentAirId) {
+        String query = "from PaymentAirDebit pay where pay.paymentAirticket.id = :paymentAirId";
+        Session session = this.sessionFactory.openSession();
+        List<PaymentAirDebit> list = session.createQuery(query).setParameter("paymentAirId", paymentAirId).list();
+
+        if (list.isEmpty()){
+            return null;
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return list;
+    }
+
+    @Override
+    public String DeletePaymentAirDebit(String paymentAirId, String paymentDebitId) {
+        String result = "";
+        PaymentAirDebit paymentAirDebit = new PaymentAirDebit();
+        List<PaymentAirDebit> paymentAirDebitList = new ArrayList<PaymentAirDebit>();
+        Session session = this.sessionFactory.openSession();
+        if(paymentAirId.isEmpty() || "".equals(paymentAirId)){
+            String query = "from PaymentAirDebit pay where pay.id = :paymentDebitId";
+            paymentAirDebitList = session.createQuery(query).setParameter("paymentDebitId", paymentDebitId).list();
+            System.out.println(" Delete paymentAirDebitList size (1) "+paymentAirDebitList.size());
+            if (paymentAirDebitList.isEmpty()) {
+                return null;
+            }else{
+                paymentAirDebit =  paymentAirDebitList.get(0);
+                try {
+                    transaction = session.beginTransaction();
+                    session.delete(paymentAirDebit);
+                    transaction.commit();
+                    result = "success";
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    result = "fail";
+                }
+            }
+        } else { 
+            String query = "from PaymentAirDebit pay where pay.id = :paymentDebitId and pay.paymentAirticket.id =:paymentAirId ";
+            paymentAirDebitList = session.createQuery(query).setParameter("paymentDebitId", paymentDebitId).setParameter("paymentAirId", paymentAirId).list();
+            System.out.println(" Delete ReceiptDetailList size "+paymentAirDebitList.size());
+            if (paymentAirDebitList.isEmpty()) {
+                return null;
+            }else{
+                for(int i = 0; i < paymentAirDebitList.size(); i++){
+                    paymentAirDebit = paymentAirDebitList.get(i);
+                    try {
+                        transaction = session.beginTransaction();
+                        session.delete(paymentAirDebit);
+                        transaction.commit();
+                        result = "success";
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        result = "fail";
+                    }
+                }
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    }
 }

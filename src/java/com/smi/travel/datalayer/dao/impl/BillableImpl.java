@@ -48,7 +48,7 @@ public class BillableImpl implements BillableDao {
 
     private SessionFactory sessionFactory;
     private Transaction transaction;
-    private static final String BillQuery = "from Billable B where B.master.referenceNo =:refno ";
+    private static final String BillQuery = "from Billable B where B.master.referenceNo =:refno and B.master.MBookingstatus.id != 3";
     private static final String QUERY_AIRTICKET = "from AirticketAirline AA where AA.id in ";
     private static final String QUERY_OTHERS = "from OtherBooking ot where ot.id = :refitemid";
     private static final String QUERY_LAND = "from LandBooking lb where lb.id =   :refitemid";

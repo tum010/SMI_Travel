@@ -879,6 +879,7 @@ function CallAjaxAdd(param) {
                 BookintType = array[0];
                 if (BookintType == $('#typeBooking').val()) {
                     $('#AlertBooking').hide();
+                    $('#AlertBookingRefno').hide();
                     setBillableInvoice(array[1]);
                     try {
                         $("#MasterReservation tbody").append(array[2]);
@@ -887,6 +888,7 @@ function CallAjaxAdd(param) {
                     }
                 } else {
                     $('#AlertBooking').show();
+                    $('#AlertBookingRefno').show();
 
                 }
 

@@ -7,6 +7,7 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.entity.PaymentAirCredit;
+import com.smi.travel.datalayer.entity.PaymentAirDebit;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
 import com.smi.travel.datalayer.entity.PaymentAirticketFare;
 import com.smi.travel.datalayer.entity.PaymentAirticketRefund;
@@ -72,9 +73,18 @@ public class PaymentAirTicketService {
         return paymentairticketdao.getPaymentAirCreditByPaymentAirId(paymentAirId);
     }
     
+    public List<PaymentAirDebit> getPaymentAirDebitByPaymentAirId(String paymentAirId){
+        return paymentairticketdao.getPaymentAirDebitByPaymentAirId(paymentAirId);
+    }
+    
     public String DeletePaymentAirCredit(String paymentAirId,String paymentCreditId){
         return paymentairticketdao.DeletePaymentAirCredit(paymentAirId,paymentCreditId);
     }
+    
+    public String DeletePaymentAirDebit(String paymentAirId,String paymentDebitId){
+        return paymentairticketdao.DeletePaymentAirDebit(paymentAirId,paymentDebitId);
+    }
+    
     public PaymentAirTicketDao getPaymentairticketdao() {
         return paymentairticketdao;
     }
