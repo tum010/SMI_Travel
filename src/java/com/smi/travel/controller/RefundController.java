@@ -169,12 +169,11 @@ public class RefundController extends SMITravelController {
         return Refund;
     }
     private void searchRefundAction(String refundid,HttpServletRequest request){
-        List<RefundTicket> refundTicket = refundService.listRefundDetail(refundid);
-        List<RefundTicketDetail> refundTicketDetail = refundTicket.get(0).getRefundTicketDetail();
+        List<RefundTicket> refundTicket = refundService.listRefundDetail(refundid);    
         if(refundTicket != null){
+            List<RefundTicketDetail> refundTicketDetail = refundTicket.get(0).getRefundTicketDetail();
             request.setAttribute("RefundTicket", refundTicket);
             request.setAttribute("listRefundTicket", refundTicket);
-
             if(refundTicketDetail != null ){
                 request.setAttribute("RefundTicketDetail", refundTicketDetail);
             }else{
