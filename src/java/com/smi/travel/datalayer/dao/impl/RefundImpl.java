@@ -38,6 +38,9 @@ public class RefundImpl implements RefundDao{
     private static final String SELECT_SECTOR = "From AirticketPassenger psg where psg.id = :ticid";
     private static final String GET_REFUND = "FROM AirticketRefund ar where ar.refundAirticket.refundDate = :refundDate and ar.refundAirticket.refundBy = :refundBy and ar.refundAirticket.receiveBy = :receiveBy and ar.refundAirticket.receiveDate = :receiveDate" ;
     private static final String DELETE_AIRTICKET_REFUND = "DELETE FROM AirticketRefund ar where ar.id = :airticketrefundid";
+    private static final String DELETE_REFUND = "DELETE FROM RefundAirticket ar where ar.id = :refundid";
+    private static final String DELETE_REFUND_DETAIL_BYREFUND_ID = "DELETE FROM RefundAirticketDetail ar where ar.refundAirticket.id = :refundid";
+    private static final String DELETE_REFUND_DETAIL = "DELETE FROM RefundAirticketDetail ar where ar.id = :refunddetailid";
     
     public SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -273,9 +276,20 @@ public class RefundImpl implements RefundDao{
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
+                // Delete Airticket Refund
                 Query query = session.createQuery(DELETE_AIRTICKET_REFUND);
                 query.setParameter("airticketrefundid", airticketRefund);
                 System.out.println("Delete  airticket refund: "+query.executeUpdate());
+                // Delete Refund Detail
+                Query query2 = session.createQuery(DELETE_REFUND_DETAIL_BYREFUND_ID);
+                query2.setParameter("refundid", refundid);
+                System.out.println("Delete refund: "+query2.executeUpdate());
+                // Delete Refund
+                Query query3 = session.createQuery(DELETE_REFUND);
+                query3.setParameter("refundid", refundid);
+                System.out.println("Delete refund detail : "+query3.executeUpdate());
+                
+                
                 transaction.commit();
                 session.close();
                 this.sessionFactory.close();
@@ -289,8 +303,26 @@ public class RefundImpl implements RefundDao{
     }
 
     @Override
-    public String deleteAirticketRefundDetail(String airticketRefund, String refundid) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String deleteAirticketRefundDetail(String airticketRefund, String refundid,String refunddetailid) {
+        String result = "";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+                // Delete Airticket Refund
+                Query query = session.createQuery(DELETE_REFUND_DETAIL);
+                query.setParameter("refunddetailid", refunddetailid);
+                System.out.println("Delete  refund detail : "+query.executeUpdate());
+          
+                transaction.commit();
+                session.close();
+                this.sessionFactory.close();
+                result = "delete success";      
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            result = "delete fail";
+        }
+        return result;
     }
 
    
