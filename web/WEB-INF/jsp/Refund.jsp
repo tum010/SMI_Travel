@@ -183,7 +183,7 @@
                                             <div class="">
                                                 <div class="input-group ">
                                                     <input type="hidden" class="form-control" name="refundById" id="refundById" value="${table1.airticketrefundid}">
-                                                    <input type="hidden" class="form-control" name="refundBy" id="refundBy" value="${table1.id}">
+                                                    <input type="hidden" class="form-control" name="refundByTableId" id="refundByTableId" value="${table1.id}">
                                                     <input type="text" class="form-control" id="refundBy" name="refundBy" value="${table1.refundcode}">
                                                     <span class="input-group-addon" data-toggle="modal" data-target="#refundCustModal">
                                                         <span class="glyphicon-search glyphicon"></span>
@@ -246,22 +246,21 @@
                                         <label  class="col-sm-3 control-label text-right">Receive Date</label>
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                <div class='input-group date' id='datetimepicker3'>
+                                                <div class='input-group date' id='datetimepicker4'>
                                                     <c:if test="${table1.receivedate == null}"> 
-                                                        <input type='text' class="form-control" name="receiveDate" id="receiveDate" data-date-format="YYYY-MM-DD" value="${create}"  placeholder="YYYY-MM-DD"/>
+                                                        <input type='text' class="form-control datemask" name="receiveDate" id="receiveDate" data-date-format="YYYY-MM-DD" value="${create}"  placeholder="YYYY-MM-DD"/>
                                                         <span class="input-group-addon">
                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                         </span>
                                                     </c:if>
                                                     <c:if test="${table1.receivedate != null}"> 
-                                                        <input type='text' class="form-control" name="receiveDate" id="receiveDate" data-date-format="YYYY-MM-DD" value="${table1.receivedate}"  placeholder="YYYY-MM-DD"/>
+                                                        <input type='text' class="form-control datemask" name="receiveDate" id="receiveDate" data-date-format="YYYY-MM-DD" value="${table1.receivedate}"  placeholder="YYYY-MM-DD"/>
                                                         <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                            <span class="glyphicon glyphicon-calendar"></span></span>
                                                     </c:if>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>                    
                                 <div class="row">
@@ -424,7 +423,7 @@
                                     <label  class="col-sm-3 control-label text-right">Receive Date</label>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <div class='input-group date' id='datetimepicker3'>
+                                            <div class='input-group date' id='datetimepicker4'>
                                                 <input type='text' class="form-control" name="receiveDate" id="receiveDate" data-date-format="YYYY-MM-DD" value="${create}"  placeholder="YYYY-MM-DD"/>
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -485,7 +484,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-5 form-group text-right">
-                                    <button type="button" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
+                                    <button type="button" id="buttonPrintRefund"  name="buttonPrintRefund" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
                                 </div>
                                 <div class="col-sm-1 form-group text-right">
                                     <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=addRefund">
@@ -493,7 +492,7 @@
                                     </a>
                                 </div>
                                 <div class="col-sm-6 form-group text-left">
-                                    <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
+                                    <button type="button" id="buttonCloseRefund"  name="buttonCloseRefund" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
                                 </div>
                             </div>  
                         </div> <!-- Refund Add --> 
@@ -676,8 +675,11 @@
         if(addAction === "add"){
             $("#RefundTicketDetailAdd").removeClass("hidden");
         }
-
-        validateRefundForm();
+        
+        $('.datemask').mask('0000-00-00');
+        $('.date').datetimepicker();
+        
+        validateRefundForm(); 
         
         $("#RefundTicketDetailTable").on("keyup", function () {
             var rowAll = $("#RefundTicketDetailTable tr").length;
@@ -733,10 +735,17 @@
         $(this).addClass('row_selected').siblings().removeClass('row_selected');
     });
 
-    $('#datetimepicker3').datetimepicker({
-        pickTime: false
+//    $('#datetimepicker3').datetimepicker({
+//        pickTime: false
+//    });
+//    
+//    $('#datetimepicker4').datetimepicker({
+//        pickTime: false
+//    });
+     $('#datetimepicker4').datetimepicker().on('dp.change', function (e) {
+        $('#RefundForm').bootstrapValidator('revalidateField', 'receiveDate');
     });
-    
+        
     $('span').click(function () {
         var position = $(this).offset();
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
@@ -875,6 +884,22 @@ function setBillValue(billto, billname, address, term, pay) {
 
     $('#RefundForm').bootstrapValidator('revalidateField', 'refundBy');
     $('#RefundForm').bootstrapValidator('revalidateField', 'refundByName');
+//    $('#RefundForm').bootstrapValidator('revalidateField', 'receiveBy');
+//    $('#RefundForm').bootstrapValidator('revalidateField', 'receiveByName');
+
+    if($("#receiveBy").val() != "" && $("#receiveByName").val() != "" && $("#receiveDate").val() != "" && $("#refundBy").val() != "" && $("#refundByName").val() != ""){
+        $('#RefundForm').bootstrapValidator('revalidateField', 'receiveBy');
+        $('#RefundForm').bootstrapValidator('revalidateField', 'receiveByName');
+        $('#RefundForm').bootstrapValidator('revalidateField', 'receiveDate');
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+        $("#buttonCloseRefund").removeAttr("disabled");
+    }else{
+        $("#buttonSaveRefund").attr("disabled", "disabled");
+        $("#buttonPrintRefund").attr("disabled", "disabled");
+        $("#buttonCloseRefund").attr("disabled", "disabled");
+    }
+
     $('#RefundForm').modal('hide');
     $("#refundCustModal").modal('hide');
 }
