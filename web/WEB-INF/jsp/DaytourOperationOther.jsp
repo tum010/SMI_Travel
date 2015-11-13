@@ -13,6 +13,7 @@
 <c:set var="listPassenger" value="${requestScope['listPassenger']}" />
 <c:set var="RefNo" value="${requestScope['RefNo']}" />
 <c:set var="ListBookingAll" value="${requestScope['ListBookingAll']}" />
+<c:set var="ListBookingAllView" value="${requestScope['ListBookingAllView']}" />
 <c:set var="isDuplicate" value="${requestScope['Duplicate']}" />
 
 <input type="hidden" value="${param.referenceNo}" id="getUrl">
@@ -236,15 +237,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="table1" items="${ListBookingAll}" varStatus="dayStatus">
+                        <c:forEach var="table1" items="${ListBookingAllView}" varStatus="dayStatus">
                             <tr class="packet">
-                                <td class="pack-date">${table1.master.referenceNo}</td>
-                                <td>${table1.otherDate}</td>
-                                <td class="text-center"> ${table1.master.customer.firstName}</td>
-                                <td class="text-center">${table1.product.name}</td>
-                                <td class="text-center">${table1.master.MBookingstatus.name}</td>
+                                <td class="pack-date">${table1.refno}</td>
+                                <td>${table1.createdate}</td>
+                                <td class="text-center"> ${table1.leader}</td>
+                                <td class="text-center">${table1.product}</td>
+                                <td class="text-center">${table1.status}</td>
                                 <td class="text-center">
-                                    <a href="DaytourOperationOther.smi?InputRefNo=${table1.master.referenceNo}&action=search">
+                                    <a href="DaytourOperationOther.smi?InputRefNo=${table1.refno}&action=search">
                                         <span class="glyphicon glyphicon-check"></span>
                                     </a>
                                 </td>
