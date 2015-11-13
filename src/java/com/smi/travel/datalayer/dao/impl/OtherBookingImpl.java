@@ -20,11 +20,13 @@ import com.smi.travel.datalayer.report.model.OtherAgentCommissionSummaryReport;
 import com.smi.travel.datalayer.report.model.OtherGuideCommissionInfo;
 import com.smi.travel.datalayer.report.model.OtherGuideCommissionSummary;
 import com.smi.travel.datalayer.report.model.OtherGuideCommissionSummaryHeader;
+import com.smi.travel.datalayer.view.entity.OtherBookingView;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -660,6 +662,32 @@ public class OtherBookingImpl implements OtherBookingDao{
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
+    public List<OtherBookingView> getListBookingAllView() {
+        UtilityFunction util = new UtilityFunction();
+        Session session = this.sessionFactory.openSession();
+        List<OtherBookingView> data = new LinkedList<OtherBookingView>();
+        String query = "SELECT * FROM `other_operation_view` ";
+        List<Object[]> listBookingAll = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("create_date", Hibernate.STRING)
+                .addScalar("leader", Hibernate.STRING)
+                .addScalar("product", Hibernate.STRING)
+                .addScalar("status", Hibernate.STRING)
+                .list();
+        System.out.println("Query Booking List : " + query);
+        for (Object[] B : listBookingAll) {
+             OtherBookingView   otherBooking = new  OtherBookingView(); 
+             otherBooking.setRefno(!"".equals(util.ConvertString(B[0])) ? util.ConvertString(B[0]) : "");
+             otherBooking.setCreatedate(!"".equals(util.ConvertString(B[1]))  ? util.ConvertString(B[1]) : "");
+             otherBooking.setLeader(!"".equals(util.ConvertString(B[2]))  ? util.ConvertString(B[2]) : "");
+             otherBooking.setProduct(!"".equals(util.ConvertString(B[3]))  ? util.ConvertString(B[3]) : "");
+             otherBooking.setStatus(!"".equals(util.ConvertString(B[4]))  ? util.ConvertString(B[4]) : "");
+             data.add(otherBooking);
+        }              
+        return data;
+    }
+    
     @Override
     public List<OtherBooking> getListBookingAll() {
         String query = "from OtherBooking other order by other.master.referenceNo DESC";

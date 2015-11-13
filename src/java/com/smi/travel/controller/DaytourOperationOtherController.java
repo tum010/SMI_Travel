@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.Passenger;
 import com.smi.travel.datalayer.service.BookingOtherService;
 import com.smi.travel.datalayer.service.PassengerService;
+import com.smi.travel.datalayer.view.entity.OtherBookingView;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,6 +35,7 @@ public class DaytourOperationOtherController extends SMITravelController {
         System.out.println(""+refNo);
         List<OtherBooking> listOtherBooking = new LinkedList<OtherBooking>();
         List<OtherBooking> listOtherBookingAll = new LinkedList<OtherBooking>();
+        List<OtherBookingView> listOtherBookingAllView = new LinkedList<OtherBookingView>();
         List<Passenger> listPassenger = new LinkedList<Passenger>();
         
         if("search".equalsIgnoreCase(action)){
@@ -96,6 +98,19 @@ public class DaytourOperationOtherController extends SMITravelController {
                 System.out.println("Ref no : " + listOtherBookingAll.get(i).getMaster().getReferenceNo());
             }
             request.setAttribute("ListBookingAll", listOtherBookingAll);
+        }
+        
+        //Bookig List View 
+        listOtherBookingAllView = otherBookingService.getListBookingAllView();
+        if(listOtherBookingAllView == null){
+
+            request.setAttribute("ListBookingAllView", null);
+        }else{
+            System.out.println("List Booking All View");
+            for (int i = 0; i < listOtherBookingAllView.size(); i++) {
+                System.out.println("Ref no : " + listOtherBookingAllView.get(i).getRefno());
+            }
+            request.setAttribute("ListBookingAllView", listOtherBookingAllView);
         }
         return DaytourOperationOther;
     }
