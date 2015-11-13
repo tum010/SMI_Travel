@@ -79,6 +79,7 @@
                 <input type="hidden" name="paytoTemp"  id="paytoTemp" value="${paymentAirticket.payTo}">
                 <input type="hidden" name="ticketNoList" id="ticketNoList" value="">
                 <input type="hidden" class="form-control" id="countRowCredit" name="countRowCredit" value="${requestScope['creditRowCount']}" />
+                <input type="hidden" class="form-control" id="countRowCreditNo" name="countRowCreditNo" value="${requestScope['creditRowCount']}" />
                 <input type="hidden" name="creditIdDelete" id="creditIdDelete" value="">
                 <input type="hidden" name="creditRowDelete" id="creditRowDelete" value="">
                 <input type="hidden" name="checksearchticket" id="checksearchticket" value="">
@@ -1983,6 +1984,10 @@ function getTicketNoFromTicketFare() {
 }
 
 function AddRowCredit(row) {    
+    if (!row) {
+        row = 1;
+    }
+    
     $("#CreditDetailTable tbody").append(
         '<tr style="higth 100px">' +
         '<td class="text-center">' + row + '</td>' +
@@ -2007,13 +2012,25 @@ function AddRowCredit(row) {
         }
         calculateTotalCreditAmount();
     }); 
-        
-    var tempCount = parseInt($("#countRowCredit").val()) + 1;
-    $("#countRowCredit").val(tempCount);
+    
+    var countrow=1;
+    var rowAll = $("#CreditDetailTable tr").length;
+    if (rowAll <= 1) {
+        $("#tr_CreditDetailAddRow").removeClass("hide");
+        $("#tr_CreditDetailAddRow").addClass("show");
+    }
+    $('#CreditDetailTable tr:gt(0) ').each(function() {
+        $(this).find('td:eq(0)').html(countrow) ;
+        countrow = countrow+1;
+    });    
+//    var tempCount = parseInt($("#countRowCredit").val()) + 1;
+    $("#countRowCredit").val(row+1);
 }
 
 function AddRowDebit(row) {
-  
+    if (!row) {
+        row = 1;
+    }
     $("#DebitDetailTable tbody").append(
         '<tr style="higth 100px">' +
         '<td class="text-center">' + row + '</td>' +
@@ -2038,54 +2055,56 @@ function AddRowDebit(row) {
         }
         calculateTotalDebitAmount();
     }); 
-        
-    var tempCount = parseInt($("#countRowDebit").val()) + 1;
-    $("#countRowDebit").val(tempCount);
+    
+    var countrow=1;
+    var rowAll = $("#DebitDetailTable tr").length;
+    if (rowAll <= 1) {
+        $("#tr_DebitDetailAddRow").removeClass("hide");
+        $("#tr_DebitDetailAddRow").addClass("show");
+    }
+    $('#DebitDetailTable tr:gt(0) ').each(function() {
+        $(this).find('td:eq(0)').html(countrow) ;
+        countrow = countrow+1;
+    });     
+//    var tempCount = parseInt($("#countRowDebit").val()) + 1;
+    $("#countRowDebit").val(row+1);
 }
 function calculateTotalCreditAmount(){
-    var temp = 0;
-    var i = 1;
-    var amountTemp = parseFloat(0);
-    var tableProduct = $("#CreditDetailTable tr").length;
-    if(tableProduct > 1){
-        for (i ; i < tableProduct+1 ; i++) {
-            temp = document.getElementById("creditAmount" + i);
-            if(temp !== null){
-                temp = temp.value;
-                if(temp == '') {
-                    temp = 0;
-                }
-                temp = replaceAll(",","",temp.toString());
-                var value = parseFloat(temp) ;
-                var amount = amountTemp + value ;
-                amountTemp = amount;
+    var count = parseInt(document.getElementById('countRowCredit').value);
+    var i;
+    var grandTotal = 0;
+    for(i=1;i<count+1;i++){
+        var amount = document.getElementById("creditAmount" + i);
+        if (amount !== null){
+            var value = amount.value;
+            if(value !== ''){
+                value = value.replace(/,/g,"");
+                var total = parseFloat(value);
+                grandTotal += total;
+                document.getElementById('creditAmount' + i).value = formatNumber(total);
             }
         }
-        document.getElementById("totalCreditAmount").value = formatNumber(amount);
     }
+    document.getElementById('totalCreditAmount').value = formatNumber(grandTotal);
     calculateTotalPayment();
 }
 function calculateTotalDebitAmount(){
-    var temp = 0;
-    var i = 1;
-    var amountTemp = parseFloat(0) ;
-    var tableProduct = $("#DebitDetailTable tr").length;
-    if(tableProduct > 1 ){
-        for (i ; i < tableProduct ; i++) {
-            temp = document.getElementById("debitAmount" + i);
-            if(temp !== null){
-                temp = temp.value;
-                if(temp == '') {
-                    temp = 0;
-                }
-                temp = replaceAll(",","",temp.toString());
-                var value = parseFloat(temp) ;
-                var amount = amountTemp + value ;
-                amountTemp = amount;
+    var count = parseInt(document.getElementById('countRowDebit').value);
+    var i;
+    var grandTotal = 0;
+    for(i=1;i<count+1;i++){
+        var amount = document.getElementById("debitAmount" + i);
+        if (amount !== null){
+            var value = amount.value;
+            if(value !== ''){
+                value = value.replace(/,/g,"");
+                var total = parseFloat(value);
+                grandTotal += total;
+                document.getElementById('debitAmount' + i).value = formatNumber(total);
             }
         }
-        document.getElementById("totalDebitAmount").value = formatNumber(amount);
     }
+    document.getElementById('totalDebitAmount').value = formatNumber(grandTotal);
     calculateTotalPayment();
     calculateAmount();
 }
@@ -2112,7 +2131,7 @@ function calculateWithodingTax(){
     var tax = document.getElementById('whtax').value;
     var whtax = parseFloat(tax);
 //    var withholdingTax = ( (sumcomm + sumCommRefund ) * (whtax / 100));
-    var withholdingTax = ( (sumcomm - sumCommRefund ) * (3 / 100));
+    var withholdingTax = ( (sumcomm - sumCommRefund ) * (whtax / 100));
     document.getElementById("withholdingTax").value = formatNumber(withholdingTax);
 }
 function deleteCreditList(id,Ccount) {
@@ -2136,20 +2155,8 @@ function DeleteRowCredit(){
         $('#CreditDetailTable tr:gt(0) ').each(function() {
             $(this).find('td:eq(0)').html(countrow) ; 
             countrow = countrow+1;
-            $("#countRowCredit").val(countrow);
         });
-        
-        for(var i =1; i<rowAll+1 ;i++){
-            if($("#creditNote"+i).val() !== '' || $("#creditAmount"+i).val() !== '' ){
-
-            }else{
-                $("#creditNote" +i).parent().parent().remove();
-                $("#countRowCredit").val(rowAll-1);
-                AddRowCredit(rowAll-1);
-            }
-        }
-//        calculateTotalCreditAmount();
-    }else {
+     }else {
         $.ajax({
             url: 'PaymentAirline.smi?action=deleteCredit',
             type: 'get',
@@ -2163,21 +2170,9 @@ function DeleteRowCredit(){
                     $("#tr_CreditDetailAddRow").addClass("show");
                 }
                 $('#CreditDetailTable tr:gt(0) ').each(function() {
-                    $(this).find('td:eq(0)').html(countrow) ; 
+                    $(this).find('td:eq(0)').html(countrow) ;
                     countrow = countrow+1;
-                    $("#countRowCredit").val(countrow);
                 });
-                
-                for(var i =1; i<rowAll+1 ;i++){
-                    if($("#creditNote"+i).val() !== '' || $("#creditAmount"+i).val() !== '' ){
-
-                    }else{
-                        $("#creditNote" +i).parent().parent().remove();
-                        $("#countRowCredit").val(rowAll-1);
-                        AddRowCredit(rowAll-1);
-                    }
-                }
-//                calculateTotalCreditAmount();
             },
             error: function () {
                 console.log("error");
@@ -2209,19 +2204,7 @@ function DeleteRowDebit(){
         $('#DebitDetailTable tr:gt(0) ').each(function() {
             $(this).find('td:eq(0)').html(countrow) ; 
             countrow = countrow+1;
-            $("#countRowDebit").val(countrow);
         });
-        for(var i =1; i<rowAll+1 ;i++){
-            if(cCount !== i){
-               if($("#debitNote"+i).val() !== '' || $("#debitAmount"+i).val() !== '' ){
-               }else{
-                   $("#debitNote" +i).parent().parent().remove();
-                   $("#countRowDebit").val(rowAll-1);
-                   AddRowDebit(rowAll-1);
-               }
-           }
-        }
-//        calculateTotalDebitAmount();
     }else {
         $.ajax({
             url: 'PaymentAirline.smi?action=deleteDebit',
@@ -2238,19 +2221,7 @@ function DeleteRowDebit(){
                 $('#DebitDetailTable tr:gt(0) ').each(function() {
                     $(this).find('td:eq(0)').html(countrow) ; 
                     countrow = countrow+1;
-                    $("#countRowDebit").val(countrow);
                 });
-                for(var i =1; i<rowAll+1 ;i++){
-                    if(cCount !== i){
-                       if($("#debitNote"+i).val() !== '' || $("#debitAmount"+i).val() !== '' ){
-                       }else{
-                           $("#debitNote" +i).parent().parent().remove();
-                           $("#countRowDebit").val(rowAll-1);
-                           AddRowDebit(rowAll-1);
-                       }
-                   }
-                }
-//                calculateTotalDebitAmount();
             },
             error: function () {
                 console.log("error");
