@@ -49,7 +49,7 @@ public class RefundService {
         return refundDao.searchRefund(refund);
     }
     
-    public String deleteAirticketRefund(String airticketRefund){
-        return refundDao.deleteAirticketRefund(airticketRefund);
+    public String deleteAirticketRefund(String airticketRefund,String refundid){
+        return refundDao.deleteAirticketRefund(airticketRefund,refundid);
     }
 }

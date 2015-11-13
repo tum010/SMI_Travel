@@ -156,7 +156,7 @@
                                                     <a  id="SpanEdit${status.count}" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&refundid=${table.airticketrefundid}&action=searchRefund">
                                                         <span class="glyphicon glyphicon-edit editicon"  ></span>
                                                     </a>
-                                                    <a class="carousel" data-target="#DeleteRefund" onclick="DeleteRefund(${status.count},${table.refundno},${param.referenceNo},${airbookingid},${table.airticketrefundid})" data-toggle="modal">
+                                                    <a class="carousel" data-target="#DeleteRefund" onclick="DeleteRefund(${status.count},${param.referenceNo},${airbookingid},${table.airticketrefundid},${table.id})" data-toggle="modal">
                                                        <span class="glyphicon glyphicon-remove deleteicon"></span>
                                                     </a>
                                                 </td>
@@ -183,7 +183,7 @@
                                             <div class="">
                                                 <div class="input-group ">
                                                     <input type="hidden" class="form-control" name="refundById" id="refundById" value="${table1.airticketrefundid}">
-                                                    <input type="hidden" class="form-control" name="refundBy" id="refundBy" value="${table1.id}">
+                                                    <input type="hidden" class="form-control" name="refundid" id="refundid" value="${table1.id}">
                                                     <input type="text" class="form-control" id="refundBy" name="refundBy" value="${table1.refundcode}">
                                                     <span class="input-group-addon" data-toggle="modal" data-target="#refundCustModal">
                                                         <span class="glyphicon-search glyphicon"></span>
@@ -337,7 +337,7 @@
                                                         <td class="text-center">
                                                             <a class="carousel"  
                                                                data-target="#DeleteRefundDetail" 
-                                                               onclick="DeleteRefundDetail(${statusDetail.count},${tableDetail.ticketno})"
+                                                               onclick="DeleteRefundDetail(${statusDetail.count},${tableDetail.ticketno},${param.referenceNo},${airbookingid},${tableDetail.refunddetailid})"
                                                                 data-toggle="modal" >
                                                                 <span class="glyphicon glyphicon-remove deleteicon"></span>
                                                             </a>
@@ -1133,27 +1133,41 @@ function addRowRefundTicketDetailAdd(row,id){
     );
 }
 
-function DeleteRefund(rowID,code,refno,airbookingid,airticketrefundid){
+function DeleteRefund(rowID,refno,airbookingid,airticketrefundid,refundid){
     $("#refundid").val(rowID);
-    if(code !== ""){
-        $("#textDeleteRefund").text('Are you sure to delete refund : '+ code +'..?');
+        $("#textDeleteRefund").text('Are you sure to delete refund ..?');
         $("#action").val("deleteAirTicketRefund");
         $("#referenceNo").val(refno);
         $("#airbookingid").val(airbookingid);
-        $("refundById").val(airticketrefundid);
-
-    }else{
-        $("#textDeleteRefund").text('Are you sure to delete refund  ?');
-    }
+        $("#refundById").val(airticketrefundid);
+        $("#refundid").val(refundid);
+        var action = $("#action").val();
+        var refno0 = $("#referenceNo").val();
+        var airid0 = $("#airbookingid").val();
+        var airticketbookingid0 = $("#refundById").val();
+        var refundid0 = $("#refundid").val();
+        console.log("Action : " + action + "   Ref No : " + refno0 + " Air Booking ID : " + airid0 + " Air Ticket id : " + airticketbookingid0 + " Refund Id : " + refundid0 );
 }
 
-function DeleteRefundDetail(rowID,code){
-    $("#refunddetailid").val(rowID);
-    if(code !== ""){
-        $("#textDeleteRefundDetail").text('Are you sure to delete refund detail : '+ code +'..?');
-    }else{
-        $("#textDeleteRefundDetail").text('Are you sure to delete refund detail ?');
-    }
+function DeleteRefundDetail(rowID,code,refno,airbookingid,refundetailid){
+    var refundid0 = $("#refundid").val();
+    $("#refunddetailid").val(refundetailid);
+    $("#action").val("deleteAirTicketRefundDetail");
+    $("#referenceNo").val(refno);
+    $("#airbookingid").val(airbookingid);
+    $("#refundid").val(refundid0);
+    var action = $("#action").val();
+    var refno0 = $("#referenceNo").val();
+    var airid0 = $("#airbookingid").val();
+    var airticketbookingid0 = $("#refundById").val();
+    var refundid0 = $("#refundid").val();
+    var refunddetailid =  $("#refunddetailid").val();
+    console.log("Action : " + action + "   Ref No : " + refno0 + " Air Booking ID : " + airid0 + " Air Ticket id : " + airticketbookingid0 + " Refund Id : " + refundid0  + " Refund Detail id : " + refunddetailid);
+//    if(code !== ""){
+        $("#textDeleteRefundDetail").text('Are you sure to delete refund detail ..?');
+//    }else{
+//        $("#textDeleteRefundDetail").text('Are you sure to delete refund detail ?');
+//    }
 }
 
 function DeleteRefundConfirm() {
@@ -1170,6 +1184,7 @@ function DeleteRefundDetailConfirm() {
     console.log("Row Refund Detail : " + rowId);
     var RefundId  = $("#airticketrefunddetailid"+rowId).val();
     console.log("Refund Detail ID : " + RefundId);
+    document.getElementById('RefundForm').submit();
 }
 
 function changeFormatChargeAddNumber(id){

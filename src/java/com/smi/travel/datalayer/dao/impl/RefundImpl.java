@@ -268,7 +268,7 @@ public class RefundImpl implements RefundDao{
     }
 
     @Override
-    public String deleteAirticketRefund(String airticketRefund) {
+    public String deleteAirticketRefund(String airticketRefund,String refundid) {
         String result = "";
         try {
             Session session = this.sessionFactory.openSession();
@@ -286,6 +286,11 @@ public class RefundImpl implements RefundDao{
             result = "delete fail";
         }
         return result;
+    }
+
+    @Override
+    public String deleteAirticketRefundDetail(String airticketRefund, String refundid) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
    
