@@ -1019,7 +1019,24 @@ for(var i = 0; i < rad.length; i++) {
             $(this).val(value)
         });
         
-        $('#InvoiceSupTable').dataTable({bJQueryUI: true,
+       
+        
+        $("#InvoiceSupTable tr").on('click', function () {
+            var invoice_id = $(this).find(".invoice-id").text();
+            var invoice_code = $(this).find(".invoice-code").text();
+            var invoice_name = $(this).find(".invoice-name").text();
+            var invoice_apcode = $(this).find(".invoice-apcode").text();
+            $("#invoiceSupId").val(invoice_id);
+            $("#invoiceSupCode").val(invoice_code);
+            $("#invoiceSupName").val(invoice_name);
+            $("#apCode").val(invoice_apcode);
+            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
+            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
+            validateSaveButton();
+            $("#InvoiceSupModal").modal('hide');
+        });
+        
+         $('#InvoiceSupTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": true,
@@ -1036,20 +1053,6 @@ for(var i = 0; i < rad.length; i++) {
             validateSaveButton();
         });
         
-        $("#InvoiceSupTable tr").on('click', function () {
-            var invoice_id = $(this).find(".invoice-id").text();
-            var invoice_code = $(this).find(".invoice-code").text();
-            var invoice_name = $(this).find(".invoice-name").text();
-            var invoice_apcode = $(this).find(".invoice-apcode").text();
-            $("#invoiceSupId").val(invoice_id);
-            $("#invoiceSupCode").val(invoice_code);
-            $("#invoiceSupName").val(invoice_name);
-            $("#apCode").val(invoice_apcode);
-            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'invoiceSupCode');
-            $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
-            validateSaveButton();
-            $("#InvoiceSupModal").modal('hide');
-        });
         var invoiceSupCode = [];
         $.each(invoiceSup, function (key, value) {
             invoiceSupCode.push(value.code);
