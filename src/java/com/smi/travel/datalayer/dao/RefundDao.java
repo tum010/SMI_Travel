@@ -15,6 +15,7 @@ import java.util.List;
  */
 public interface RefundDao {
     public List searchRefundTicket(String airbookingid);
+    public List searchRefundTicket(String airbookingid,String refundid);
     public List selectTicketNo(String refno);
     public List listSector(String ticketid);
     public List listRefundDetail(String refundid);

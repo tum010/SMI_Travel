@@ -21,6 +21,10 @@ public class RefundService {
         return refundDao.searchRefundTicket(airbookingid);
     }
     
+    public List searchRefundTicket(String airbookingid,String refundid){
+        return refundDao.searchRefundTicket(airbookingid,refundid);
+    }
+    
     public List listRefundDetail(String refundid){
         return refundDao.listRefundDetail(refundid);
     }
@@ -51,5 +55,9 @@ public class RefundService {
     
     public String deleteAirticketRefund(String airticketRefund,String refundid){
         return refundDao.deleteAirticketRefund(airticketRefund,refundid);
+    }
+    
+    public String deleteAirticketRefundDetail(String airticketRefund,String refundid,String refunddetailid){
+        return refundDao.deleteAirticketRefundDetail(airticketRefund, refundid, refunddetailid);
     }
 }

@@ -33,6 +33,7 @@ public class RefundImpl implements RefundDao{
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private static final String SELECT_REFUND_AIRTICKET = "FROM AirticketRefund ar where ar.airticketBooking.id = :airbookingid";
+    private static final String SELECT_REFUND_AIRTICKET2 = "FROM AirticketRefund ar where ar.airticketBooking.id = :airbookingid  and ar.refundAirticket.id = :refundid";
     private static final String SELECT_REFUND_DETAIL = "FROM AirticketRefund ar where ar.id = :refundid";
     private static final String SELECT_TICKETNO = "From AirticketPassenger psg where psg.airticketAirline.airticketPnr.airticketBooking.master.referenceNo = :refno";
     private static final String SELECT_SECTOR = "From AirticketPassenger psg where psg.id = :ticid";
@@ -61,9 +62,25 @@ public class RefundImpl implements RefundDao{
     @Override
     public List searchRefundTicket(String airbookingid) {
         Session session = this.sessionFactory.openSession();
-        UtilityFunction util = new UtilityFunction();  
         List<AirticketRefund> airbookingidList = session.createQuery(SELECT_REFUND_AIRTICKET)
                 .setParameter("airbookingid", airbookingid)
+                .list();
+        if (airbookingidList.isEmpty()) {
+            return null;
+        }
+        else{
+            List<RefundTicket> listRefundTicket = new LinkedList<RefundTicket>();
+            listRefundTicket = setRefundAndRefundDetail(airbookingidList);
+            return listRefundTicket;
+        }   
+    }
+    
+    @Override
+    public List searchRefundTicket(String airbookingid, String refundid) {
+        Session session = this.sessionFactory.openSession();
+        List<AirticketRefund> airbookingidList = session.createQuery(SELECT_REFUND_AIRTICKET2)
+                .setParameter("airbookingid", airbookingid)
+                .setParameter("refundid", refundid)
                 .list();
         if (airbookingidList.isEmpty()) {
             return null;
@@ -289,7 +306,6 @@ public class RefundImpl implements RefundDao{
                 query3.setParameter("refundid", refundid);
                 System.out.println("Delete refund detail : "+query3.executeUpdate());
                 
-                
                 transaction.commit();
                 session.close();
                 this.sessionFactory.close();
@@ -325,5 +341,4 @@ public class RefundImpl implements RefundDao{
         return result;
     }
 
-   
 }
