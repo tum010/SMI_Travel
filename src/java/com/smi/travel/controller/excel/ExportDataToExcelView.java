@@ -4629,6 +4629,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
         styleC30.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC30.setAlignment(styleC22.ALIGN_CENTER);
 
+        
+        HSSFCellStyle stylebordertotal = wb.createCellStyle();
+        stylebordertotal.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        
+        HSSFCellStyle stylebordertotalleft = wb.createCellStyle();
+        stylebordertotalleft.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        stylebordertotalleft.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        
         if(!ticketSummaryAirline.isEmpty()){
             dataheader = (TicketSummaryAirlineView)ticketSummaryAirline.get(0);
             for(int x = 1 ; x < 4 ; x++){
@@ -4945,6 +4953,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
             int count = 9;
             int tempcount = 0 ;
             int tempcount2 = 0 ;
+            int tempcount3 = 0 ;
             int rowdetail = 0;
             int rowrouting = 0;
             int x = 0;
@@ -5294,10 +5303,100 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     celldata25.setCellValue("".equalsIgnoreCase(String.valueOf(data.getDiffD())) ? 0 : (new BigDecimal(data.getDiffD())).doubleValue());
                     celldata25.setCellStyle(styleC25);
                     x ++ ;
-//                    tempcount2 = count + i + 4;
                 }
                 
                 if("routing".equalsIgnoreCase(data.getPage())){
+                    tempcount2 = count+x;
+                    HSSFRow rowtotal = sheetDetail.createRow(tempcount2);
+                    String totalPax = "SUM(J" + 10+":J"+(tempcount2)+")";
+                    String totalNet = "SUM(O" + 10+":O"+(tempcount2)+")";
+                    String totalTax = "SUM(P" + 10+":P"+(tempcount2)+")";
+                    String totalIns = "SUM(Q" + 10+":Q"+(tempcount2)+")";
+                    String totalComms = "SUM(R" + 10+":R"+(tempcount2)+")";
+                    String totalAmountWen = "SUM(S" + 10+":S"+(tempcount2)+")";
+                    String totalAmountIn = "SUM(T" + 10+":T"+(tempcount2)+")";
+                    String totalAmountNoInv = "SUM(U" + 10+":U"+(tempcount2)+")";
+                    String totalAmountBuss = "SUM(V" + 10+":V"+(tempcount2)+")";
+                    String totalAmountAnn = "SUM(W" + 10+":W"+(tempcount2)+")";
+                    String totalAmountRef = "SUM(X" + 10+":X"+(tempcount2)+")";
+                    String totalAmountDiff = "SUM(Z" + 10+":Z"+(tempcount2)+")";
+                    
+                    HSSFCellStyle styleTotal = wb.createCellStyle();
+                    styleTotal.setFont(getHeaderTable(wb.createFont()));
+                    styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+                    styleTotal.setBorderRight(HSSFCellStyle.BORDER_THIN);
+                    styleTotal.setBorderTop(HSSFCellStyle.BORDER_THIN);
+                    styleTotal.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+                    styleTotal.setAlignment(styleC22.ALIGN_RIGHT);
+
+                    HSSFCell cellTotal000 = rowtotal.createCell(0);
+                    cellTotal000.setCellStyle(stylebordertotalleft);
+                    
+                    HSSFCell cellTotal001 = rowtotal.createCell(1);
+                    cellTotal001.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotal002 = rowtotal.createCell(2);
+                    cellTotal002.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotal003 = rowtotal.createCell(3);
+                    cellTotal003.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotal004 = rowtotal.createCell(4);
+                    cellTotal004.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotal005 = rowtotal.createCell(5);
+                    cellTotal005.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotal006 = rowtotal.createCell(6);
+                    cellTotal006.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotal007 = rowtotal.createCell(7);
+                    cellTotal007.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotal008 = rowtotal.createCell(10);
+                    cellTotal008.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotal009 = rowtotal.createCell(11);
+                    cellTotal009.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotal010 = rowtotal.createCell(12);
+                    cellTotal010.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotal011 = rowtotal.createCell(13);
+                    cellTotal011.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotal012 = rowtotal.createCell(24);
+                    cellTotal012.setCellStyle(stylebordertotal);
+
+                    HSSFCell cellTotal00 = rowtotal.createCell(8);
+                    cellTotal00.setCellValue("Total");
+                    cellTotal00.setCellStyle(styleTotal);
+                    HSSFCell cellTotal01 = rowtotal.createCell(9);
+                    cellTotal01.setCellFormula(totalPax);
+                    cellTotal01.setCellStyle(styleC26);
+                    HSSFCell cellTotal02 = rowtotal.createCell(14);
+                    cellTotal02.setCellFormula(totalNet);
+                    cellTotal02.setCellStyle(styleC25);
+                    HSSFCell cellTotal03 = rowtotal.createCell(15);
+                    cellTotal03.setCellFormula(totalTax);
+                    cellTotal03.setCellStyle(styleC25);
+                    HSSFCell cellTotal04 = rowtotal.createCell(16);
+                    cellTotal04.setCellFormula(totalIns);
+                    cellTotal04.setCellStyle(styleC25);
+                    HSSFCell cellTotal05 = rowtotal.createCell(17);
+                    cellTotal05.setCellFormula(totalComms);
+                    cellTotal05.setCellStyle(styleC25);
+                    HSSFCell cellTotal06 = rowtotal.createCell(18);
+                    cellTotal06.setCellFormula(totalAmountWen);
+                    cellTotal06.setCellStyle(styleC25);
+                    HSSFCell cellTotal07 = rowtotal.createCell(19);
+                    cellTotal07.setCellFormula(totalAmountIn);
+                    cellTotal07.setCellStyle(styleC25);
+                    HSSFCell cellTotal08 = rowtotal.createCell(20);
+                    cellTotal08.setCellFormula(totalAmountNoInv);
+                    cellTotal08.setCellStyle(styleC25);
+                    HSSFCell cellTotal09 = rowtotal.createCell(21);
+                    cellTotal09.setCellFormula(totalAmountBuss);
+                    cellTotal09.setCellStyle(styleC25);
+                    HSSFCell cellTotal10 = rowtotal.createCell(22);
+                    cellTotal10.setCellFormula(totalAmountAnn);
+                    cellTotal10.setCellStyle(styleC25);
+                    HSSFCell cellTotal11 = rowtotal.createCell(23);
+                    cellTotal11.setCellFormula(totalAmountRef);
+                    cellTotal11.setCellStyle(styleC25);
+                    HSSFCell cellTotal12 = rowtotal.createCell(25);
+                    cellTotal12.setCellFormula(totalAmountDiff);
+                    cellTotal12.setCellStyle(styleC25);
+                    
 //                    if(tempcount2 != 0){
 //                        rowrouting = tempcount2+3;
 //                    }
@@ -5379,6 +5478,55 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getDiffR())) ? 0 : (new BigDecimal(data.getDiffR())).doubleValue());
                     celldata8.setCellStyle(styleC25);
                     y++;
+                }
+                
+                if(i==(ticketSummaryAirline.size()-1)){
+                    tempcount3 = count+y;
+                    HSSFRow rowtotal = sheetRounting.createRow(tempcount3);
+                    String totalPax = "SUM(B" + 10+":B"+(tempcount3)+")";
+                    String totalNet = "SUM(C" + 10+":C"+(tempcount3)+")";
+                    String totalTax = "SUM(D" + 10+":D"+(tempcount3)+")";
+                    String totalIns = "SUM(E" + 10+":E"+(tempcount3)+")";
+                    String totalComms = "SUM(F" + 10+":F"+(tempcount3)+")";
+                    String totalAmountWen = "SUM(G" + 10+":G"+(tempcount3)+")";
+                    String totalAmountIn = "SUM(H" + 10+":H"+(tempcount3)+")";
+                    String totalAmountDiff = "SUM(I" + 10+":I"+(tempcount3)+")";
+
+                    HSSFCellStyle styleTotal = wb.createCellStyle();
+                    styleTotal.setFont(getHeaderTable(wb.createFont()));
+                    styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+                    styleTotal.setBorderRight(HSSFCellStyle.BORDER_THIN);
+                    styleTotal.setBorderTop(HSSFCellStyle.BORDER_THIN);
+                    styleTotal.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+                    styleTotal.setAlignment(styleC22.ALIGN_RIGHT);
+
+                    HSSFCell cellTotal00 = rowtotal.createCell(0);
+                    cellTotal00.setCellValue("Total");
+                    cellTotal00.setCellStyle(styleTotal);
+                    HSSFCell cellTotal01 = rowtotal.createCell(1);
+                    cellTotal01.setCellFormula(totalPax);
+                    cellTotal01.setCellStyle(styleC26);
+                    HSSFCell cellTotal02 = rowtotal.createCell(2);
+                    cellTotal02.setCellFormula(totalNet);
+                    cellTotal02.setCellStyle(styleC25);
+                    HSSFCell cellTotal03 = rowtotal.createCell(3);
+                    cellTotal03.setCellFormula(totalTax);
+                    cellTotal03.setCellStyle(styleC25);
+                    HSSFCell cellTotal04 = rowtotal.createCell(4);
+                    cellTotal04.setCellFormula(totalIns);
+                    cellTotal04.setCellStyle(styleC25);
+                    HSSFCell cellTotal05 = rowtotal.createCell(5);
+                    cellTotal05.setCellFormula(totalComms);
+                    cellTotal05.setCellStyle(styleC25);
+                    HSSFCell cellTotal06 = rowtotal.createCell(6);
+                    cellTotal06.setCellFormula(totalAmountWen);
+                    cellTotal06.setCellStyle(styleC25);
+                    HSSFCell cellTotal07 = rowtotal.createCell(7);
+                    cellTotal07.setCellFormula(totalAmountIn);
+                    cellTotal07.setCellStyle(styleC25);
+                    HSSFCell cellTotal08 = rowtotal.createCell(8);
+                    cellTotal08.setCellFormula(totalAmountDiff);
+                    cellTotal08.setCellStyle(styleC25);
                 }
             }
             for (int i = 0; i < 30; i++) {
@@ -7612,7 +7760,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     celldata10.setCellStyle(styleC25);
 
                     HSSFCell celldata11 = row.createCell(11); // No inv amount
-//                    celldata11.setCellValue("".equalsIgnoreCase(String.valueOf(data.getInvamount())) ? 0 : (new BigDecimal(data.getInvamount())).doubleValue());
+                    celldata11.setCellValue("".equalsIgnoreCase(String.valueOf(data.getNoinvamount())) ? 0 : (new BigDecimal(data.getNoinvamount())).doubleValue());
                     celldata11.setCellStyle(styleC25);
 
                     HSSFCell celldata12 = row.createCell(12);

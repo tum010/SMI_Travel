@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" src="js/TicketSummaryCommission.js"></script> 
 <link href="css/jquery-ui.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-ui.js"></script> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -127,7 +128,7 @@
                                 <label class="col-md-6 control-label text-right" >Air</label>
                                 <div class="col-md-6">  
                                     <div class="form-group">
-                                        <select name="airlineCode" id="airlineCode"  class="form-control">
+                                        <select name="airlineCode" id="airlineCode"  class="selectize form-control">
                                             <option value=""  selected="selected">-- ALL --</option>
                                             <c:forEach var="table" items="${airlineCodeList}" >
                                                 <c:set var="select" value=""/>
@@ -138,7 +139,42 @@
                                 </div>   
                             </div>
                         </div>
-                    </div> 
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            Selectize.define( 'clear_selection', function ( options ) {
+                                var self = this;
+                                self.plugins.settings.dropdown_header = {
+                                    title: 'Clear Selection'
+                                };
+                                this.require( 'dropdown_header' );
+                                self.setup = (function () {
+                                    var original = self.setup;
+                                    return function () {
+                                        original.apply( this, arguments );
+                                        this.$dropdown.on( 'mousedown', '.selectize-dropdown-header', function ( e ) {
+                                            self.setValue( '' );
+                                            self.close();
+                                            self.blur();
+                                            return false;
+                                        });
+                                    };
+                                })();
+                            });
+
+                            var name = "#airlineCode";
+
+                            $(name).selectize({
+                                removeItem: '',
+                                sortField: 'text' ,
+                                create: false ,
+                                dropdownParent: 'body',
+                                plugins: {
+                                    'clear_selection': {}
+                                }
+                            });
+                        });
+                    </script>
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">

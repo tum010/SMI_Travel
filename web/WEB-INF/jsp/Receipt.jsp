@@ -1858,8 +1858,8 @@
             $("#receiveCost"+row).focusout(function(){
                 setFormatCurrency(row);
             }); 
-            var tempCount = parseInt($("#counter").val()) + 1;
-            $("#counter").val(tempCount);
+//            var tempCount = parseInt($("#counter").val()) + 1;
+            $("#counter").val(row+1);
 //        }
         
     }
@@ -2569,25 +2569,25 @@ function DeleteRowProduct(){
     }    
     $('#DeleteProduct').modal('hide');
     
-    var tempcount = parseInt($("#ReceiptListTable tr").length);
-    
-    if(tempcount == 1){
-        $("#ButtonSearchRefNo").removeAttr("disabled");
-        $("#ButtonSearchInvoice").removeAttr("disabled");
-        $("#searchPaymentNoAir").removeAttr("disabled");
-        $("#searchPaymentNoTour").removeAttr("disabled");
-    }else if(tempcount == 2){
-        $("#receiveProduct" + tempcount).parent().parent().remove();
-        $("#counter").val(1);
-        AddRowProduct(1);
-        var amount = document.getElementById('receiveAmount1').value;
-        if(amount === ""){
-            $("#ButtonSearchRefNo").removeAttr("disabled");
-            $("#ButtonSearchInvoice").removeAttr("disabled");
-            $("#searchPaymentNoAir").removeAttr("disabled");
-            $("#searchPaymentNoTour").removeAttr("disabled");
-        }
-    }
+//    var tempcount = parseInt($("#ReceiptListTable tr").length);
+//    
+//    if(tempcount == 1){
+//        $("#ButtonSearchRefNo").removeAttr("disabled");
+//        $("#ButtonSearchInvoice").removeAttr("disabled");
+//        $("#searchPaymentNoAir").removeAttr("disabled");
+//        $("#searchPaymentNoTour").removeAttr("disabled");
+//    }else if(tempcount == 2){
+//        $("#receiveProduct" + tempcount).parent().parent().remove();
+//        $("#counter").val(1);
+//        AddRowProduct(1);
+//        var amount = document.getElementById('receiveAmount1').value;
+//        if(amount === ""){
+//            $("#ButtonSearchRefNo").removeAttr("disabled");
+//            $("#ButtonSearchInvoice").removeAttr("disabled");
+//            $("#searchPaymentNoAir").removeAttr("disabled");
+//            $("#searchPaymentNoTour").removeAttr("disabled");
+//        }
+//    }
     calculateGrandTotal();
 }
 
@@ -2705,24 +2705,41 @@ function confirmCopyReceipt(){
 }
 
 function calculateGrandTotal(){
-    var temp = 0;
-    var i = 1;
-    var amountTemp = parseFloat(0);
-    var tableProduct = $("#ReceiptListTable tr").length;
-    for (i ; i < tableProduct ; i++) {
-        temp = document.getElementById("receiveAmount" + i);
-        if(temp !== null){
-            temp = temp.value;
-            if(temp == '') {
-                temp = 0;
+//    var temp = 0;
+//    var i = 1;
+//    var amountTemp = parseFloat(0);
+//    var tableProduct = $("#ReceiptListTable tr").length;
+//    for (i ; i < tableProduct ; i++) {
+//        temp = document.getElementById("receiveAmount" + i);
+//        if(temp !== null){
+//            temp = temp.value;
+//            if(temp == '') {
+//                temp = 0;
+//            }
+//            temp = replaceAll(",","",temp.toString());
+//            var value = parseFloat(temp) ;
+//            var amount = amountTemp + value ;
+//            amountTemp = amount;
+//        }   
+//    }
+//    document.getElementById("grandTotal").value = formatNumber(amount);
+    
+    var count = parseInt(document.getElementById('counter').value);
+    var i;
+    var grandTotal = 0;
+    for(i=1;i<count+1;i++){
+        var amount = document.getElementById("receiveAmount" + i);
+        if (amount !== null){
+            var value = amount.value;
+            if(value !== ''){
+                value = value.replace(/,/g,"");
+                var total = parseFloat(value);
+                grandTotal += total;
+                document.getElementById('receiveAmount' + i).value = formatNumber(total);
             }
-            temp = replaceAll(",","",temp.toString());
-            var value = parseFloat(temp) ;
-            var amount = amountTemp + value ;
-            amountTemp = amount;
-        }   
+        }
     }
-    document.getElementById("grandTotal").value = formatNumber(amount);
+    document.getElementById('grandTotal').value = formatNumber(grandTotal);
 }
 
 

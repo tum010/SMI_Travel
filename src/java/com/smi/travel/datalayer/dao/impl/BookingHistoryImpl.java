@@ -20,7 +20,7 @@ public class BookingHistoryImpl implements BookingHistoryDao{
     private SessionFactory sessionFactory;
     private Transaction transaction;
     
-    private static final String HISTORYFROMREFNO = "from HistoryBooking h where h.master.referenceNo = :refno";
+    private static final String HISTORYFROMREFNO = "from HistoryBooking h where h.master.referenceNo = :refno order by h.historyDate desc";
     
     @Override
     public List<HistoryBooking> getHistoryFromRefno(String refno) {

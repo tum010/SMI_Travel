@@ -426,8 +426,15 @@ public class AirlineSummaryImpl implements AirlineSummaryDao {
                     ticket.setCost(util.ConvertString(B[9]));
                     ticket.setPfloss(util.ConvertString(B[10]));
                     ticket.setDiff(util.ConvertString(B[11]));
-                    ticket.setInvamount(util.ConvertString(B[12]));
+                    
                     ticket.setInvno(util.ConvertString(B[13]));
+                    if("".equalsIgnoreCase(util.ConvertString(B[13]))){
+                        ticket.setNoinvamount(util.ConvertString(B[12]));
+                        ticket.setInvamount("");
+                    }else{
+                        ticket.setInvamount(util.ConvertString(B[12]));
+                        ticket.setNoinvamount("");
+                    }
 //                    ticket.setTaxD(util.ConvertString(B[14]));
                     ticket.setPage("detail");
                 }

@@ -42,7 +42,7 @@ public class SummaryAirlinePaxView {
     private String diff;
     private String invamount;
     private String invno;
-
+    private String noinvamount;
     private String page;
 
     public String getHeaderissuedatefrom() {
@@ -283,6 +283,14 @@ public class SummaryAirlinePaxView {
 
     public void setPage(String page) {
         this.page = page;
+    }
+
+    public String getNoinvamount() {
+        return noinvamount;
+    }
+
+    public void setNoinvamount(String noinvamount) {
+        this.noinvamount = noinvamount;
     }
     
     
