@@ -21,4 +21,5 @@ public interface RefundDao {
     public String saveRefund(AirticketRefund airticketrefund);
     public String updateRefund(AirticketRefund airticketrefund);
     public List searchRefund(RefundAirticket refund);
+    public String deleteAirticketRefund(String airticketRefund);
 }

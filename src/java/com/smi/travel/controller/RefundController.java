@@ -106,21 +106,7 @@ public class RefundController extends SMITravelController {
         // Action 
         if("searchRefund".equals(action)){
             String refundid = request.getParameter("refundid");
-            List<RefundTicket> refundTicket = refundService.listRefundDetail(refundid);
-            List<RefundTicketDetail> refundTicketDetail = refundTicket.get(0).getRefundTicketDetail();
-            if(refundTicket != null){
-                request.setAttribute("RefundTicket", refundTicket);
-                request.setAttribute("listRefundTicket", refundTicket);
-                
-                if(refundTicketDetail != null ){
-                    request.setAttribute("RefundTicketDetail", refundTicketDetail);
-                }else{
-                    request.setAttribute("RefundTicketDetail", refundTicketDetail);
-                }
-            }else{
-                request.setAttribute("listRefundTicket", null);
-                request.setAttribute("RefundTicket", null);
-            }
+            searchRefundAction(refundid,request);
         }else if("saveRefund".equals(action)){
             String refundid = request.getParameter("refundById");
             AirticketRefund airticketRefund = new AirticketRefund();
@@ -161,14 +147,36 @@ public class RefundController extends SMITravelController {
             }else{
                 request.setAttribute("result", null);
             }
-            
             System.out.println("Result Save : " + resultsave);
+            
         }else if("add".equals(action)){
             request.setAttribute("RefundTicket", null);
+        }else if("deleteAirTicketRefund".equals(action)){
+            String airbookingid_del = request.getParameter("refundById");
+            String result_delete = refundService.deleteAirticketRefund(airbookingid_del);
+            System.out.println("Result Delete Airticket Refund : " + result_delete);
+            request.setAttribute("result", result_delete);
         }
         
         setGeneralResponseAttribute(request, refNo);
         return Refund;
+    }
+    private void searchRefundAction(String refundid,HttpServletRequest request){
+        List<RefundTicket> refundTicket = refundService.listRefundDetail(refundid);
+        List<RefundTicketDetail> refundTicketDetail = refundTicket.get(0).getRefundTicketDetail();
+        if(refundTicket != null){
+            request.setAttribute("RefundTicket", refundTicket);
+            request.setAttribute("listRefundTicket", refundTicket);
+
+            if(refundTicketDetail != null ){
+                request.setAttribute("RefundTicketDetail", refundTicketDetail);
+            }else{
+                request.setAttribute("RefundTicketDetail", refundTicketDetail);
+            }
+        }else{
+            request.setAttribute("listRefundTicket", null);
+            request.setAttribute("RefundTicket", null);
+        }
     }
     
     private RefundAirticket getRefundFromPage(HttpServletRequest request,String airbookingid){

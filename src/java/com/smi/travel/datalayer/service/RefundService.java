@@ -48,4 +48,8 @@ public class RefundService {
     public List searchRefund(RefundAirticket refund){
         return refundDao.searchRefund(refund);
     }
+    
+    public String deleteAirticketRefund(String airticketRefund){
+        return refundDao.deleteAirticketRefund(airticketRefund);
+    }
 }

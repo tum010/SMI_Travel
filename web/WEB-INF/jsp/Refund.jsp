@@ -11,6 +11,7 @@
 <script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
 <script type="text/javascript" src="js/selectize.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
 
@@ -71,7 +72,15 @@
             </div>
             <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Save Not  Success!</strong> 
+                <strong>Save Not Success!</strong> 
+            </div>
+            <div id="textAlertDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Delete Success!</strong> 
+            </div>
+            <div id="textAlertNotDelete"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Delete Not Success!</strong> 
             </div>
             <input type="hidden" value="${master.customer.MInitialname.name}" id="initialname_tmp">
             <input type="hidden" value="${master.customer.firstName}" id="firstname_tmp">
@@ -82,6 +91,7 @@
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
             <form action="Refund.smi" method="post" id="RefundForm"  name="RefundForm"  role="form" autocomplete="off">
                 <input type="hidden" name="action" value="" id="action">
+                <input type="text" class="hidden" value="${actionAdd}" name="actionAdd" id="actionAdd">
                 <input type="text" class="hidden" value="${referenceNo}" id="referenceNo" name="referenceNo">
                 <input type="text" class="hidden"  value="${airbookingid}" id="airbookingid" name="airbookingid">
                 <div class="row" style="padding-left: 15px">  
@@ -146,7 +156,7 @@
                                                     <a  id="SpanEdit${status.count}" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&refundid=${table.airticketrefundid}&action=searchRefund">
                                                         <span class="glyphicon glyphicon-edit editicon"  ></span>
                                                     </a>
-                                                    <a class="carousel" data-target="#DeleteRefund" onclick="DeleteRefund(${status.count},${table.refundno})" data-toggle="modal">
+                                                    <a class="carousel" data-target="#DeleteRefund" onclick="DeleteRefund(${status.count},${table.refundno},${param.referenceNo},${airbookingid},${table.airticketrefundid})" data-toggle="modal">
                                                        <span class="glyphicon glyphicon-remove deleteicon"></span>
                                                     </a>
                                                 </td>
@@ -399,8 +409,7 @@
                                         <div class="">
                                             <div class="input-group ">
                                                 <input type="hidden" class="form-control" name="receiveById" id="receiveById" value="${refundbyidDefault}">
-                                                <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${refundbyDefault}"
-                                                       data-bv-notempty data-bv-notempty-message="The By is required">
+                                                <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${refundbyDefault}">
                                                 <span class="input-group-addon" data-toggle="modal" data-target="#receiveUserModal">
                                                     <span class="glyphicon-search glyphicon"></span>
                                                 </span>
@@ -487,7 +496,7 @@
                                     <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
                                 </div>
                             </div>  
-                        </div>
+                        </div> <!-- Refund Add --> 
                     </div>
                 </div>
             </form>
@@ -571,7 +580,7 @@
                     </thead>
                     <tbody>
                         <script>
-                            cus = [];
+                            customerRefund = [];
                         </script>
                         <c:forEach var="item" items="${listRefundBy}">
                             <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">
@@ -581,7 +590,7 @@
                                 <td class="item-tel hidden">${item.tel}</td>
                             </tr>
                             <script>
-                                cus.push({id: "${item.billTo}", code: "${item.billTo}", name: "${item.billName}",
+                                customerRefund.push({id: "${item.billTo}", code: "${item.billTo}", name: "${item.billName}",
                                     address: "${item.address}", tel: "${item.tel}", fax: "${item.tel}"});
                             </script>
                         </c:forEach>
@@ -663,11 +672,12 @@
         <c:if test="${RefundTicket != null}">        
             $("#RefundTicketDetail").removeClass("hidden");
         </c:if>
-        <c:if test="${actionAdd == 'add'}">        
+        var addAction = $("#actionAdd").val();
+        if(addAction === "add"){
             $("#RefundTicketDetailAdd").removeClass("hidden");
-        </c:if>
+        }
 
-      validateRefundForm();
+        validateRefundForm();
         
         $("#RefundTicketDetailTable").on("keyup", function () {
             var rowAll = $("#RefundTicketDetailTable tr").length;
@@ -719,84 +729,31 @@
     $("#counterTableAdd").val(rowCountAdd);
     addRowRefundTicketDetailAdd(rowCountAdd++);
     
-
-    // PASSENGER TABLE
-    $('#PassengerTable,#FlightTable').dataTable({bJQueryUI: true,
-        "sPaginationType": "full_numbers",
-        "bAutoWidth": false,
-        "bFilter": false,
-        "bPaginate": false,
-        "bInfo": false
-    });
-    // FLIGHT TABLE
-    $("#ckeckList").click(function () {
-        $("#FlightTable input:checkbox").prop('checked',true);
-    });
     $('table').on('click', 'tr', function () {
         $(this).addClass('row_selected').siblings().removeClass('row_selected');
-    });
-
-    $("#staff_username").on('keyup', function () {
-        $("#staff_name").val(null);
-        var code = $(this).val().toUpperCase();
-        $.each(sf, function (key, value) {
-            if (value.username.toUpperCase() === code) {
-                $("#staff_id").val(value.id);
-                $("#staff_name").val(value.name);
-            }
-        });
     });
 
     $('#datetimepicker3').datetimepicker({
         pickTime: false
     });
+    
     $('span').click(function () {
         var position = $(this).offset();
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
     });
-
-    // STAFF TABLE
-    $('#StaffTable').dataTable({bJQueryUI: true,
-        "sPaginationType": "full_numbers",
-        "bAutoWidth": false,
-        "bFilter": true,
-        "bPaginate": true,
-        "bInfo": false,
-        "bLengthChange": false,
-        "iDisplayLength": 10
-    });
-    $("#StaffTable tr").on('click', function () {
-        var staff_id = $(this).find(".staff-id").text();
-        var staff_username = $(this).find(".staff-username").text();
-        var staff_name = $(this).find(".staff-name").text();
-        $("#staff_id").val(staff_id);
-        $("#staff_username").val(staff_username);
-        $("#staff_name").val(staff_name);
-        $("#StaffModal").modal('hide');
-    });
     
-    // Refund  and Receive
+    //  Receive
     $("#receiveUserTable tr").on('click', function () {
         var user_id = $(this).find(".user-id").text();
         var user_user = $(this).find(".user-user").text();
         var user_name = $(this).find(".user-name").text();
+        console.log("User : " + user_user + "Name : " + user_name);
         $("#receiveById").val(user_id);
         $("#receiveBy").val(user_user);
         $("#receiveByName").val(user_name);
         $("#receiveUserModal").modal('hide');
     });
 
-    $("#refundCustTable tr").on('click', function () {
-        var user_id = $(this).find(".item-billto").text();
-//        var user_code = $(this).find(".user-user").text();
-        var user_name = $(this).find(".item-name").text();
-//        $("#refundById").val(user_id);
-        $("#refundBy").val(user_id);
-        $("#refundByName").val(user_name);
-        $("#refundCustModal").modal('hide');
-        validateRefundForm();
-    });
-    
     var userCode = [];
     $.each(user, function (key, value) {
         userCode.push(value.code);
@@ -806,16 +763,7 @@
         }
     });
     
-    var cusCode = [];
-    $.each(cus, function (key, value) {
-        cusCode.push(value.code);
-        cusCode.push(value.name);
-        if ($("#refundBy").val() === value.code) {
-            $("#refundByName").val(value.name);
-        }
-    });
-
-     $("#receiveBy").autocomplete({
+    $("#receiveBy").autocomplete({
         source: userCode,
         close: function (event, ui) {
             $("#receiveBy").trigger('keyup');
@@ -829,7 +777,7 @@
         var code = this.value.toUpperCase();
         var name = this.value.toUpperCase();
         console.log("Name :" + name);
-        $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
+        $("#receiveBy,#receiveByName").val(null);
         $.each(user, function (key, value) {
             if (value.code.toUpperCase() === code) {
                 $("#receiveByName").val(value.name);
@@ -840,24 +788,43 @@
                 $("#receiveByName").val(value.name);
             }
         });
+    }); 
+
+    // Refund 
+    $("#refundCustTable tr").on('click', function () {
+        var user_id = $(this).find(".item-billto").text();
+        var user_name = $(this).find(".item-name").text();
+        console.log("User : " + user_id + "Name : " + user_name);
+        $("#refundBy").val(user_id);
+        $("#refundByName").val(user_name);
+        $("#refundCustModal").modal('hide');
+    });
+    
+    var customerCode = [];
+    $.each(customerRefund, function (key, value) {
+        customerCode.push(value.code);
+        customerCode.push(value.name);
+        if ($("#refundBy").val() === value.code) {
+            $("#refundByName").val(value.name);
+        }
     });
     
     $("#refundBy").autocomplete({
-        source: userCode,
+        source: customerCode,
         close: function (event, ui) {
             $("#refundBy").trigger('keyup');
         }
     });
     
-    $("#refundBy").on('keyup', function () {
+    $("#refundBy").on('keyup', function(){
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
         var code = this.value.toUpperCase();
         var name = this.value.toUpperCase();
         console.log("Name :" + name);
-        $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
-        $.each(cus, function (key, value) {
+        $("#refundBy,#refundByName").val(null);
+        $.each(customerRefund, function (key, value) {
             if (value.code.toUpperCase() === code) {
                 $("#refundByName").val(value.name);
                 $("#refundBy").val(value.code);
@@ -867,25 +834,14 @@
                 $("#refundByName").val(value.name);
             }
         });
-    });
-
+    }); 
     
-    var showflag = 1;
-    $("#refundBy").keydown(function () {
-
-        var position = $(this).offset();
-        $(".ui-widget").css("top", position.top + 30);
-        $(".ui-widget").css("left", position.left);
-        if (showflag == 0) {
-            $(".ui-widget").css("top", -1000);
-            showflag = 1;
-        }
-    });
+    
 
     $("#searchCustFrom").keyup(function (event) {
         if (event.keyCode === 13) {
-            if ($("#searchCustFrom").val() == "") {
-                // alert('please input data');
+            if ($("#searchCustFrom").val() === "") {
+                
             }
             searchCustomerAgentList($("#searchCustFrom").val());
         }
@@ -911,77 +867,77 @@
         "iDisplayLength": 10
     });
          
-    }); 
+ }); 
     
-    function setBillValue(billto, billname, address, term, pay) {
-        $("#refundBy").val(billto);
-        $("#refundByName").val(billname);
-                
-        $('#RefundForm').bootstrapValidator('revalidateField', 'refundBy');
-        $('#RefundForm').bootstrapValidator('revalidateField', 'refundByName');
-        $('#RefundForm').modal('hide');
-        $("#refundCustModal").modal('hide');
-    }
-    
-    function setBillReceiveValue(billto, billname, address, term, pay) {
-        $("#receiveBy").val(billto);
-        $("#receiveByName").val(billname);
-                
-        $('#RefundForm').bootstrapValidator('revalidateField', 'receiveBy');
-        $('#RefundForm').bootstrapValidator('revalidateField', 'receiveByName');
-        $('#RefundForm').modal('hide');
-        $("#receiveUserModal").modal('hide');
-    }
+function setBillValue(billto, billname, address, term, pay) {
+    $("#refundBy").val(billto);
+    $("#refundByName").val(billname);
+
+    $('#RefundForm').bootstrapValidator('revalidateField', 'refundBy');
+    $('#RefundForm').bootstrapValidator('revalidateField', 'refundByName');
+    $('#RefundForm').modal('hide');
+    $("#refundCustModal").modal('hide');
+}
+
+function setBillReceiveValue(billto, billname, address, term, pay) {
+    $("#receiveBy").val(billto);
+    $("#receiveByName").val(billname);
+
+    $('#RefundForm').bootstrapValidator('revalidateField', 'receiveBy');
+    $('#RefundForm').bootstrapValidator('revalidateField', 'receiveByName');
+    $('#RefundForm').modal('hide');
+    $("#receiveUserModal").modal('hide');
+}
 
 function validateRefundForm(){
 //    alert("Check Add");
     $("#RefundForm")
         .bootstrapValidator({
-            container: 'tooltip',
-            excluded: [':disabled'],
-            feedbackIcons: {
-                valid: 'uk-icon-check',
-                invalid: 'uk-icon-times',
-                validating: 'uk-icon-refresh'
-            },
-            fields: {                
-                refundBy: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Input refundBy '
-                        }
-                    }
-                },
-                refundByName: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Input refundByName'
-                        }
-                    }
-                },
-                receiveBy: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Input receiveBy'
-                        }
-                    }
-                },
-                receiveByName: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Input receiveByName'
-                        }
-                    }
-                }, 
-                receiveDate: {
-                    validators: {
-                        notEmpty: {
-                            message: 'Input receiveDate'
-                        }
+        container: 'tooltip',
+        excluded: [':disabled'],
+        feedbackIcons: {
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
+        },
+        fields: {                
+            refundBy: {
+                validators: {
+                    notEmpty: {
+                        message: 'Input refundBy '
                     }
                 }
-            }  
-        });
+            },
+            refundByName: {
+                validators: {
+                    notEmpty: {
+                        message: 'Input refundByName'
+                    }
+                }
+            },
+            receiveBy: {
+                validators: {
+                    notEmpty: {
+                        message: 'Input receiveBy'
+                    }
+                }
+            },
+            receiveByName: {
+                validators: {
+                    notEmpty: {
+                        message: 'Input receiveByName'
+                    }
+                }
+            }, 
+            receiveDate: {
+                validators: {
+                    notEmpty: {
+                        message: 'Input receiveDate'
+                    }
+                }
+            }
+        }  
+    });
 }
 function searchCustomerAutoList(name) {
     var servletName = 'BillableServlet';
@@ -1177,10 +1133,15 @@ function addRowRefundTicketDetailAdd(row,id){
     );
 }
 
-function DeleteRefund(rowID,code){
+function DeleteRefund(rowID,code,refno,airbookingid,airticketrefundid){
     $("#refundid").val(rowID);
     if(code !== ""){
         $("#textDeleteRefund").text('Are you sure to delete refund : '+ code +'..?');
+        $("#action").val("deleteAirTicketRefund");
+        $("#referenceNo").val(refno);
+        $("#airbookingid").val(airbookingid);
+        $("refundById").val(airticketrefundid);
+
     }else{
         $("#textDeleteRefund").text('Are you sure to delete refund  ?');
     }
@@ -1200,6 +1161,7 @@ function DeleteRefundConfirm() {
     var rowId  = $('#refundid').val();
     var RefundId  = $("#airticketrefundid"+rowId).val();
     console.log("Refund ID : " + RefundId);
+    document.getElementById('RefundForm').submit();
 }
 
 function DeleteRefundDetailConfirm() {
@@ -1250,5 +1212,14 @@ function formatNumber(num) {
            $('#textAlertDivNotSave').show();
         </script>
     </c:if>
+    <c:if test="${requestScope['result'] =='delete success'}">        
+        <script language="javascript">
+           $('#textAlertDelete').show();
+        </script>
+    </c:if>   
+    <c:if test="${requestScope['result'] =='delete fail'}">        
+        <script language="javascript">
+           $('#textAlertNotDelete').show();
+        </script>
+    </c:if>    
 </c:if>
-<script type="text/javascript" src="js/refund.js"></script>

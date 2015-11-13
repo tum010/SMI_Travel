@@ -6,7 +6,6 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.RefundDao;
-import com.smi.travel.datalayer.entity.AirticketBooking;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.AirticketRefund;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -37,6 +37,7 @@ public class RefundImpl implements RefundDao{
     private static final String SELECT_TICKETNO = "From AirticketPassenger psg where psg.airticketAirline.airticketPnr.airticketBooking.master.referenceNo = :refno";
     private static final String SELECT_SECTOR = "From AirticketPassenger psg where psg.id = :ticid";
     private static final String GET_REFUND = "FROM AirticketRefund ar where ar.refundAirticket.refundDate = :refundDate and ar.refundAirticket.refundBy = :refundBy and ar.refundAirticket.receiveBy = :receiveBy and ar.refundAirticket.receiveDate = :receiveDate" ;
+    private static final String DELETE_AIRTICKET_REFUND = "DELETE FROM AirticketRefund ar where ar.id = :airticketrefundid";
     
     public SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -264,6 +265,27 @@ public class RefundImpl implements RefundDao{
                 listRefundTicket.add(refundTicket);
             }
          return listRefundTicket;
+    }
+
+    @Override
+    public String deleteAirticketRefund(String airticketRefund) {
+        String result = "";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+                Query query = session.createQuery(DELETE_AIRTICKET_REFUND);
+                query.setParameter("airticketrefundid", airticketRefund);
+                System.out.println("Delete  airticket refund: "+query.executeUpdate());
+                transaction.commit();
+                session.close();
+                this.sessionFactory.close();
+                result = "delete success";      
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            result = "delete fail";
+        }
+        return result;
     }
 
    
