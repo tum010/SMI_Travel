@@ -111,7 +111,7 @@ public class RefundImpl implements RefundDao{
         Session session = this.sessionFactory.openSession();
         try { 
             transaction = session.beginTransaction();
-            session.save(airticketrefund);
+            
             RefundAirticket refund = airticketrefund.getRefundAirticket();
             if(refund != null){
                 session.save(refund);
@@ -121,14 +121,9 @@ public class RefundImpl implements RefundDao{
                         session.save(refundDetail.get(i));
                     }
                 }
+                session.save(airticketrefund);
                 result = "success";
             }
-            AirticketBooking airticketBooking = airticketrefund.getAirticketBooking();
-            if(refund != null){
-                session.save(airticketBooking);
-                 result = "success";
-            }
-            
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -148,8 +143,6 @@ public class RefundImpl implements RefundDao{
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.update(airticketrefund);
-            
             RefundAirticket refund = airticketrefund.getRefundAirticket();
             if(refund != null){
                 session.update(refund);
@@ -163,12 +156,8 @@ public class RefundImpl implements RefundDao{
                         }
                     }
                 }
+                session.update(airticketrefund);
                 result = "success";
-            }
-            AirticketBooking airticketBooking = airticketrefund.getAirticketBooking();
-            if(refund != null){
-                session.save(airticketBooking);
-                 result = "success";
             }
             transaction.commit();
             session.close();
