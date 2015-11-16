@@ -615,9 +615,58 @@ function calculateProfit(e){
     }
     
     var paytemp = parseFloat(pay);
+    if(paytemp > receivetemp){
+        var receiveField = document.getElementById('receive'+row);
+        receiveField.style.borderColor = "Red";
+        var payField = document.getElementById('pay'+row);
+        payField.style.borderColor = "Red";
+        
+        $("#buttonSave").addClass("disabled");
+        $("#ButtonSaveAndNew").addClass("disabled");
+        $("#buttonPrint").addClass("disabled");
+        
+        document.getElementById("profit"+row).value = (0);
+    }else{
+        var receiveField = document.getElementById('receive'+row);
+        receiveField.style.borderColor = "";
+        var payField = document.getElementById('pay'+row);
+        payField.style.borderColor = "";
+        
+        $("#buttonSave").removeClass("disabled");
+        $("#ButtonSaveAndNew").removeClass("disabled");
+        $("#buttonPrint").removeClass("disabled");
+        var profit = receivetemp - paytemp ;
+        document.getElementById("profit"+row).value = (profit);
+    }
     
-    var profit = receivetemp - paytemp ;
-    document.getElementById("profit"+row).value = (profit);
+    
+    var count = parseInt(document.getElementById('counter').value);
+    var checksave = false;
+    for(var i=1;i<count+1;i++){
+        var tempreceive = document.getElementById("receive" + i);
+        var temppay = document.getElementById("pay" + i);
+        if (tempreceive !== null && temppay !== null){
+            var valuereceive = tempreceive.value;
+            var valuepay = temppay.value;
+            if(valuereceive !== '' && valuepay !== ''){
+                valuereceive = valuereceive.replace(/,/g,"");
+                valuepay = valuepay.replace(/,/g,"");
+                if(valuepay > valuereceive){
+                    checksave = true;
+                }
+            }
+        }
+    }
+    
+    if(checksave){
+        $("#buttonSave").addClass("disabled");
+        $("#ButtonSaveAndNew").addClass("disabled");
+        $("#buttonPrint").addClass("disabled");
+    }else{
+        $("#buttonSave").removeClass("disabled");
+        $("#ButtonSaveAndNew").removeClass("disabled");
+        $("#buttonPrint").removeClass("disabled");
+    }
 }
 
 function replaceAll(find, replace, str) {

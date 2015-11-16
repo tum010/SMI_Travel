@@ -762,19 +762,39 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             Initialname = ticketFare.getMInitialname().getName();
         }
         //AirticketPassenger.airticketAirline.airticketPnr.airticketBooking.master.bookingType
-        String queryrefundby = "from TicketFareInvoice finv where finv.ticketFareAirline.ticketNo = :ticketno";
-        List<TicketFareInvoice> ticketFareInvoices = session.createQuery(queryrefundby).setParameter("ticketno", TicketNo).list();
+//        String queryrefundby = "from TicketFareInvoice finv where finv.ticketFareAirline.ticketNo = :ticketno";
+//        List<TicketFareInvoice> ticketFareInvoices = session.createQuery(queryrefundby).setParameter("ticketno", TicketNo).list();
+//        String invTo = "";
+//        String invName = "";
+//        if (ticketFareInvoices.isEmpty()){
+//            System.out.println(" ticketFareInvoices isEmpty ");
+//        }else{
+//            if(ticketFareInvoices.get(0).getInvoice() != null){
+//                invTo =  String.valueOf(ticketFareInvoices.get(0).getInvoice().getInvTo());
+//                invName = String.valueOf(ticketFareInvoices.get(0).getInvoice().getInvName());
+//            }
+//        }
+        
+        String queryrefundby = "from TicketFareAirline ticket where ticket.ticketNo = :ticketno";
+        List<TicketFareAirline> ticketFareAirlines = session.createQuery(queryrefundby).setParameter("ticketno", TicketNo).list();
+        String agentId = "";
         String invTo = "";
         String invName = "";
-        if (ticketFareInvoices.isEmpty()){
+        if (ticketFareAirlines.isEmpty()){
             System.out.println(" ticketFareInvoices isEmpty ");
         }else{
-            if(ticketFareInvoices.get(0).getInvoice() != null){
-                invTo =  String.valueOf(ticketFareInvoices.get(0).getInvoice().getInvTo());
-                invName = String.valueOf(ticketFareInvoices.get(0).getInvoice().getInvName());
+            if(ticketFareAirlines.get(0) != null){
+                agentId =  String.valueOf(ticketFareAirlines.get(0).getAgentId());
+                Agent agent = new Agent();
+                String queryagent = "from Agent a where a.id= :agentid";
+                List<Agent> agentList = session.createQuery(queryagent).setParameter("agentid", agentId).list();
+                if (!agentList.isEmpty()) {
+                    agent =  agentList.get(0);
+                    invTo = String.valueOf(agent.getCode());
+                    invName = String.valueOf(agent.getName());
+                }
             }
         }
-        
         
         //AirticketPassenger.airticketAirline.airticketPnr.airticketBooking.master.bookingType
         String queryticketno = "From RefundAirticketDetail ref where ( ref.airticketPassenger.series1 || ref.airticketPassenger.series2 || ref.airticketPassenger.series3) = :ticketno";
