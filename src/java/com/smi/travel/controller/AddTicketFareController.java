@@ -420,10 +420,10 @@ public class AddTicketFareController extends SMITravelController {
                         request.setAttribute(SELECTINVID,invoiceDetailViewList.get(0).getInvoiceId());
                     }
                     
-                    if (StringUtils.isNotEmpty(invTo)){
-                        agents = agentService.getAgentFromID(String.valueOf(invTo));
-                        request.setAttribute(SELECTEDAGENT, agents);
-                    }
+//                    if (StringUtils.isNotEmpty(invTo)){
+//                        agents = agentService.getAgentFromID(String.valueOf(invTo));
+//                        request.setAttribute(SELECTEDAGENT, agents);
+//                    }
                     receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(invoiceDetailViewList.get(i).getId());
                     if(receiptDetailViewListTemp != null){
                         for (int j = 0; j < receiptDetailViewListTemp.size() ; j++) {

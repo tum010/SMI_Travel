@@ -244,7 +244,7 @@
 
                 <div class="col-xs-12 text-center" style="padding-top: 10px">
                     <!--<div class="col-md-2 text-right ">-->
-                    <button type="button" onclick="window.open('report.smi?name=RefundAirReport&refundId=${refundAirline.id}')" class="btn btn-default">
+                    <button type="button" id="buttonPrint" name="buttonPrint" onclick="window.open('report.smi?name=RefundAirReport&refundId=${refundAirline.id}')" class="btn btn-default">
                         <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print
                     </button>
                     <!--</div>-->
