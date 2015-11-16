@@ -992,7 +992,7 @@ public class AJAXBean extends AbstractBean implements
                     + "<input type='hidden' name='receiveInvToName' id='receiveInvToName' value='" + receiveInvToName + "'>"
                     + "<input type='hidden' name='receiveInvToAddress' id='receiveInvToAddress' value='" + receiveInvToAddress + "'>"
                     + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>"
-                    + "<input type='hidden' name='receiveInvToDate' id='receiveInvToDate' value='" + receiveInvToDate + "'>";
+                    + "<input type='hidden' name='receiveInvToDate' id='receiveInvToDate' value='" + receiveInvToDate + "'></tr>";
             return html.toString();
         }
         for (int i = 0; i < invoiceDetaillList.size(); i++) {
@@ -1231,10 +1231,10 @@ public class AJAXBean extends AbstractBean implements
         System.out.println("invoiceDetaill.size() " + String.valueOf(invoiceDetaill.size()));
         if (invoiceDetaill == null || invoiceDetaill.size() == 0) {
             String newrow = "";
-            newrow += "<input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='" + receiveFrom + "'>"
+            newrow += "<tr><input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='" + receiveFrom + "'>"
                     + "<input type='hidden' name='receiveNameInvoice' id='receiveNameInvoice' value='" + receiveName + "'>"
                     + "<input type='hidden' name='receiveAddressInvoice' id='receiveAddressInvoice' value='" + receiveAddress + "'>"
-                    + "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='" + arcode + "'>";
+                    + "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='" + arcode + "'></tr>";
             html.append(newrow);
             return html.toString();
         }
@@ -1318,13 +1318,12 @@ public class AJAXBean extends AbstractBean implements
                 No++;
             } else {
                 String newrow = "";
-                newrow +=  "<input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='" + receiveFrom + "'>"
+                newrow += "<tr><input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='" + receiveFrom + "'>"
                         + "<input type='hidden' name='receiveNameInvoice' id='receiveNameInvoice' value='" + receiveName + "'>"
                         + "<input type='hidden' name='receiveAddressInvoice' id='receiveAddressInvoice' value='" + receiveAddress + "'>"
-                        + "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='" + arcode + "'>"
+                        + "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='" + arcode + "'></tr>"
                         ;
                 html.append(newrow);
-
             }
         }
         return html.toString();
