@@ -254,9 +254,8 @@
                                                 <thead>
                                                     <tr class="datatable-header" >
                                                         <th style="width:10%;">No</th>
-                                                        <th style="width:10%;">Airline</th>
-                                                        <th style="width:10%;">Commission</th>
-                                                        <th style="width:10%;">Is Use</th>
+                                                        <th style="width:15%;">Commission</th>
+                                                        <th style="width:15%;">Is Use</th>
                                                         <th style="width:10%;">Action</th>
                                                     </tr>
                                                 </thead>
@@ -2084,7 +2083,7 @@ function invoicenoValidate(){
     $('#invoicenopanel').addClass('has-success');
     $('#invoicenopanel').removeClass('has-error');  
 }
-function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,checkadd,disdescription,number){
+function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,checkadd,disdescription,number,paymentTourId){
     $('#textAlertDuplicateProduct').hide();
     var tempCount = parseInt($("#counter").val());
     var checkAddDuplicate = false;
@@ -2127,14 +2126,27 @@ function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId
             } 
         }
         
+    }else if(checkadd == 4){
+        $("#ButtonSearchRefNo").attr("disabled", "disabled");
+        $("#ButtonSearchInvoice").attr("disabled", "disabled");
+        $("#searchPaymentNoAir").attr("disabled", "disabled");
+        
+        var rowAll = tempCount;
+        for(var i =1; i<rowAll ;i++){
+            var paymentTour = $("#paymentTourId"+i).val();
+            if(paymentTour != "" && paymentTourId === paymentTour){
+                checkAddDuplicate = true;
+            } 
+        }
+        
     }
     if(!checkAddDuplicate){
-        AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number);
+        AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number,paymentTourId);
     }else{
         $('#textAlertDuplicateProduct').show();
     }
 }
-function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number) {
+function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number,paymentTourId) {
     var rowAll = row+1;
     for(var i =1; i<rowAll ;i++){
         if($("#receiveProduct"+i).val() != "" 
@@ -2159,6 +2171,7 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
         '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
         '<input id="billDescId' + row + '" name="billDescId' + row + '"  type="hidden" value="'+billDescId+'" >' +
         '<input id="paymentId' + row + '" name="paymentId' + row + '"  type="hidden" value="'+paymentId+'" >' +
+        '<input id="paymentTourId' + row + '" name="paymentTourId' + row + '"  type="hidden" value="'+paymentTourId+'" >' +
         '<input id="airlineCode' + row + '" name="airlineCode' + row + '"  type="hidden" value="'+airlineCode+'" >' +
         '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="'+amount+'" >' +
         '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" value="'+disdescription+'" >' +

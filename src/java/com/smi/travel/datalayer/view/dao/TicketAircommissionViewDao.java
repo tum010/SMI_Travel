@@ -5,6 +5,7 @@
  */
 package com.smi.travel.datalayer.view.dao;
 
+import com.smi.travel.datalayer.view.entity.PaymentTourCommissionView;
 import com.smi.travel.datalayer.view.entity.TicketAircommissionView;
 import java.util.List;
 
@@ -14,4 +15,5 @@ import java.util.List;
  */
 public interface TicketAircommissionViewDao {
      public List<TicketAircommissionView> getListTicketAircommissionView(String paymentNo);
+     public List<PaymentTourCommissionView> getListPaymentTourCommissionView(String paymentNo);
 }

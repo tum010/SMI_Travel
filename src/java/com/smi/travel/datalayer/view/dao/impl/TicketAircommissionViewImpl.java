@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.view.dao.TicketAircommissionViewDao;
+import com.smi.travel.datalayer.view.entity.PaymentTourCommissionView;
 import com.smi.travel.datalayer.view.entity.TicketAircommissionView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -25,7 +26,7 @@ public class TicketAircommissionViewImpl implements TicketAircommissionViewDao{
     public List<TicketAircommissionView> getListTicketAircommissionView(String paymentNo) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
-        List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `ticket_air_comission_view` where `ticket_air_comission_view`.pay_no =  "+paymentNo)
+        List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `ticket_air_comission_view` where `ticket_air_comission_view`.pay_no = '"+paymentNo+"'")
                 .addScalar("payment_id",Hibernate.STRING)
                 .addScalar("pay_no",Hibernate.STRING)
                 .addScalar("detail",Hibernate.STRING)
@@ -53,7 +54,38 @@ public class TicketAircommissionViewImpl implements TicketAircommissionViewDao{
         session.close();
         return ticketAircommissionViewList;
     }
-
+    
+    @Override
+    public List<PaymentTourCommissionView> getListPaymentTourCommissionView(String paymentNo) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `payment_tour_commission_view` pay where pay.payno = '"+paymentNo+"'")
+                .addScalar("paymentid",Hibernate.STRING)
+                .addScalar("payno",Hibernate.STRING)
+                .addScalar("detail",Hibernate.STRING)
+                .addScalar("commission",Hibernate.BIG_DECIMAL)
+                .addScalar("is_use",Hibernate.STRING)
+                .list();
+              
+        List<PaymentTourCommissionView> paymentTourCommissionViewList =  new LinkedList<PaymentTourCommissionView>();
+        for(Object[] T : QueryList){
+            PaymentTourCommissionView payment = new PaymentTourCommissionView();
+            payment.setPaymentId(util.ConvertString(T[0]));
+            payment.setPayNo(util.ConvertString(T[1]));
+            payment.setDetail(util.ConvertString(T[2]));
+            payment.setCommision(new BigDecimal(String.valueOf(T[3])));
+            payment.setIsUse(util.ConvertString(T[4]));
+            paymentTourCommissionViewList.add(payment); 
+        }
+       
+        if (paymentTourCommissionViewList.isEmpty()) {
+            return null;
+        }
+        
+        session.close();
+        return paymentTourCommissionViewList;
+    }
+    
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }
@@ -61,5 +93,5 @@ public class TicketAircommissionViewImpl implements TicketAircommissionViewDao{
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-    
+
 }

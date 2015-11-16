@@ -15,6 +15,7 @@ public class ReceiptDetail {
      private Receipt receipt;
      private InvoiceDetail invoiceDetail;
      private MBilltype MBilltype;
+     private PaymentDetailWendy paymentDetailWendy;
      private String description;
      private String displayDescription;
      private BigDecimal cost;
@@ -32,7 +33,7 @@ public class ReceiptDetail {
     public ReceiptDetail() {
     }
 
-    public ReceiptDetail(PaymentAirticket paymentAirticket, Receipt receipt, InvoiceDetail invoiceDetail, MBilltype MBilltype, String description, String displayDescription, BigDecimal cost, String curCost, Integer isVat, BigDecimal vat, BigDecimal amount, String curAmount, String airlineCode, String remark) {
+    public ReceiptDetail(PaymentAirticket paymentAirticket, Receipt receipt, InvoiceDetail invoiceDetail, MBilltype MBilltype, String description, String displayDescription, BigDecimal cost, String curCost, Integer isVat, BigDecimal vat, BigDecimal amount, String curAmount, String airlineCode, String remark,PaymentDetailWendy paymentDetailWendy) {
        this.paymentAirticket = paymentAirticket;
        this.receipt = receipt;
        this.invoiceDetail = invoiceDetail;
@@ -47,6 +48,7 @@ public class ReceiptDetail {
        this.curAmount = curAmount;
        this.airlineCode = airlineCode;
        this.remark = remark;
+       this.paymentDetailWendy = paymentDetailWendy;
     }
    
     public String getId() {
@@ -177,6 +179,14 @@ public class ReceiptDetail {
 
     public void setInvoiceType(String invoiceType) {
         this.invoiceType = invoiceType;
+    }
+
+    public PaymentDetailWendy getPaymentDetailWendy() {
+        return paymentDetailWendy;
+    }
+
+    public void setPaymentDetailWendy(PaymentDetailWendy paymentDetailWendy) {
+        this.paymentDetailWendy = paymentDetailWendy;
     }
 
 

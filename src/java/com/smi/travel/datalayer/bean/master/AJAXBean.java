@@ -56,6 +56,7 @@ import com.smi.travel.datalayer.view.dao.CustomerAgentInfoDao;
 import com.smi.travel.datalayer.view.dao.TicketAircommissionViewDao;
 import com.smi.travel.datalayer.view.entity.BookSummary;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
+import com.smi.travel.datalayer.view.entity.PaymentTourCommissionView;
 import com.smi.travel.datalayer.view.entity.TicketAircommissionView;
 import com.smi.travel.util.Mail;
 import com.smi.travel.util.UtilityFunction;
@@ -785,7 +786,12 @@ public class AJAXBean extends AbstractBean implements
             } else if ("searchPaymentNoTour".equalsIgnoreCase(type)) {
                 String paymentNoTour = map.get("paymentNo").toString();
                 System.out.println(" paymentNoTour :::  " + paymentNoTour + "::: ");
-
+                List<PaymentTourCommissionView> paymentList = ticketAircommissionViewDao.getListPaymentTourCommissionView(paymentNoTour);
+                if (paymentList == null) {
+                    result = "null";
+                } else {
+                    result = buildPaymentTourCommissionViewListHTML(paymentList);
+                }
             }
         } else if (TAXINVOICE.equalsIgnoreCase(servletName)) {
             if ("searchInvoiceNo".equalsIgnoreCase(type)) {
@@ -901,7 +907,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
                         + "<td class='text-center'>" + isUse + "</td>"
-                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','','','" + commission + "','" + currency + "','','','" + paymentId + "','" + airline + "','3','" + description + "','" + payNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','','','" + commission + "','" + currency + "','','','" + paymentId + "','" + airline + "','3','" + description + "','" + payNo + "','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
             }
             html.append(newrow);
@@ -909,7 +915,51 @@ public class AJAXBean extends AbstractBean implements
 
         return html.toString();
     }
+    
+    public String buildPaymentTourCommissionViewListHTML(List<PaymentTourCommissionView> paymentTourList) {
+        StringBuffer html = new StringBuffer();
+        int No = 0;
+        String airline = "";
+        String commission = "";
+        String isUse = "";
+        String paymentTourId = "";
+        String description = "";
+        String payNo = "";
+        String product = "";
+        String currency = "";
+        for (int i = 0; i < paymentTourList.size(); i++) {
+            No = i + 1;
+            product = "6";
+            currency = "THB";
+            paymentTourId = paymentTourList.get(i).getPaymentId();
+            payNo = paymentTourList.get(i).getPayNo();
+            commission = String.valueOf(paymentTourList.get(i).getCommision());
+            isUse = String.valueOf(paymentTourList.get(i).getIsUse());
+            description = String.valueOf(paymentTourList.get(i).getDetail());
+            String newrow = "";
+            if ("U".equals(isUse)) {
+                newrow += "<tr>"
+                        + "<td class='text-center'>" + No + "</td>"
+//                        + "<td>" + airline + "</td>"
+                        + "<td class='money'>" + commission + "</td>"
+                        + "<td class='text-center'>" + isUse + "</td>"
+                        + "<td><center><span class='glyphicon glyphicon-plus disable'></span></center></td>"
+                        + "</tr>";
+            } else if ("N".equals(isUse)) {
+                newrow += "<tr>"
+                        + "<td class='text-center'>" + No + "</td>"
+//                        + "<td>" + airline + "</td>"
+                        + "<td class='money'>" + commission + "</td>"
+                        + "<td class='text-center'>" + isUse + "</td>"
+                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','','','" + commission + "','" + currency + "','','','','" + airline + "','4','" + description + "','" + payNo + "','" + paymentTourId + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "</tr>";
+            }
+            html.append(newrow);
+        }
 
+        return html.toString();
+    }
+    
     private String buildTaxInvoiceListHTML(Invoice invoice) {
         StringBuffer html = new StringBuffer();
         List<InvoiceDetail> invoiceDetaillList = new ArrayList<InvoiceDetail>(invoice.getInvoiceDetails());
@@ -1262,7 +1312,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td>" + displaydescription + "</td>"
                         + "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
-                        + "<td><center><a href=\"#/inv\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','" + isVat + "','" + vat + "','" + amount + "','" + currency + "','" + invId + "','','','','1','" + displaydescription + "','" + invNo + "' )\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/inv\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','" + isVat + "','" + vat + "','" + amount + "','" + currency + "','" + invId + "','','','','1','" + displaydescription + "','" + invNo + "','' )\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;
@@ -1389,7 +1439,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td>" + displaydescription + "</td>"
                         + "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
-                        + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + currency + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + currency + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;

@@ -19,6 +19,9 @@
         <many-to-one name="MBilltype" class="com.smi.travel.datalayer.entity.MBilltype" fetch="select">
             <column name="item_type_id" />
         </many-to-one>
+        <many-to-one name="paymentDetailWendy" class="com.smi.travel.datalayer.entity.PaymentDetailWendy" fetch="select">
+            <column name="payment_tour_id" />
+        </many-to-one>
         <property name="description" type="string">
             <column name="description" />
         </property>

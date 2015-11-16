@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.MFinanceItemstatus;
 import com.smi.travel.datalayer.entity.PaymentAirticket;
+import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.entity.ReceiptCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
@@ -224,6 +225,7 @@ public class ReceiptController extends SMITravelController {
                 String paymentId = request.getParameter("paymentId" + i);
                 String airlineCode = request.getParameter("airlineCode" + i);
                 String displayDescription = request.getParameter("DescriptionReceiptDetail" + i);
+                String paymentTourId = request.getParameter("paymentTourId" + i);
 //                System.out.println(" invId " + invId);
 //                System.out.println(" billDescId " + billDescId);
 //                System.out.println(" paymentId " + paymentId);
@@ -339,6 +341,19 @@ public class ReceiptController extends SMITravelController {
                            }
                            receiptDetail.setCurAmount("THB");
                        }
+                       
+                       if(StringUtils.isNotEmpty(paymentTourId)){
+                           PaymentDetailWendy pay = new PaymentDetailWendy();
+                           pay.setId(paymentTourId);
+                           receiptDetail.setPaymentDetailWendy(pay);
+                           receiptDetail.setRemark(receiveDes);
+                           if(StringUtils.isNotEmpty(airlineCode)){
+                               receiptDetail.setAirlineCode(airlineCode);
+                           }
+                           receiptDetail.setCurAmount("THB");
+                       }
+                       
+                       
                    }
                 }
                 if( (receiveProduct!="" && receiveProduct!=null) || 
