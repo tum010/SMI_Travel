@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BookingSummaryReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="776e7cd6-bc31-4545-bb08-ebac64a260b8">
-	<property name="ireport.zoom" value="1.0000000000000056"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="261"/>
+	<property name="ireport.y" value="192"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="refno" class="java.lang.String"/>
 	<field name="agent" class="java.lang.String"/>
@@ -285,65 +285,30 @@
 	<detail>
 		<band height="520" splitType="Stretch">
 			<subreport>
-				<reportElement positionType="Float" x="0" y="25" width="555" height="75" uuid="9de27651-e4df-4e99-b0f9-8a1488f96b4f"/>
+				<reportElement positionType="Float" x="0" y="18" width="555" height="3" uuid="9de27651-e4df-4e99-b0f9-8a1488f96b4f"/>
 				<dataSourceExpression><![CDATA[$F{bookingSummaryFlightSubReportDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/BookingSummaryFlightSubReport.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="130" width="555" height="75" uuid="873fa14a-c7b5-4794-9ed8-83ba66c34e9a"/>
+				<reportElement positionType="Float" x="0" y="22" width="555" height="3" uuid="873fa14a-c7b5-4794-9ed8-83ba66c34e9a"/>
 				<dataSourceExpression><![CDATA[$F{bookingSummaryHotelSubReportDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/BookingSummaryHotelSubReport.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="235" width="555" height="75" uuid="7714894e-d582-40b7-861b-5d0cc54d0071"/>
+				<reportElement positionType="Float" x="0" y="26" width="555" height="3" uuid="7714894e-d582-40b7-861b-5d0cc54d0071"/>
 				<dataSourceExpression><![CDATA[$F{bookingSummaryOtherSubReportDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/BookingSummaryOtherSubReport.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="341" width="555" height="75" uuid="d37c2866-3f69-4ca7-8859-57814875cacc"/>
+				<reportElement positionType="Float" x="0" y="30" width="555" height="3" uuid="d37c2866-3f69-4ca7-8859-57814875cacc"/>
 				<dataSourceExpression><![CDATA[$F{bookingSummaryLandSubReportDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/BookingSummaryLandSubReport.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="443" width="555" height="75" uuid="27e8a145-45bc-4fa3-9e82-786320b6919d"/>
+				<reportElement positionType="Float" x="1" y="34" width="555" height="3" uuid="27e8a145-45bc-4fa3-9e82-786320b6919d"/>
 				<dataSourceExpression><![CDATA[$F{bookingSummaryPassengerSubReportDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/BookingSummaryPassengerSubReport.jasper"]]></subreportExpression>
 			</subreport>
-			<staticText>
-				<reportElement positionType="Float" x="47" y="0" width="110" height="26" uuid="d346424b-5911-4fa4-8063-dccf7d2ac88c"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="20" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Flight Detail]]></text>
-			</staticText>
-			<staticText>
-				<reportElement positionType="Float" x="47" y="104" width="110" height="26" uuid="0eb69f77-8c06-43a9-a8d3-8afa7f33ccaf"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="20" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Hotel Detail]]></text>
-			</staticText>
-			<staticText>
-				<reportElement positionType="Float" x="47" y="209" width="110" height="26" uuid="c951766c-1c60-425c-982f-4df1284758e7"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="20" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Product Detail]]></text>
-			</staticText>
-			<staticText>
-				<reportElement positionType="Float" x="47" y="314" width="110" height="26" uuid="93daa4c8-7677-41ae-b9ae-26d0816ffd86"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="20" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Land Detail]]></text>
-			</staticText>
-			<staticText>
-				<reportElement positionType="Float" x="47" y="420" width="110" height="26" uuid="6b8cc23b-ded3-4469-a4c8-3add714c2903"/>
-				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="20" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Passenger]]></text>
-			</staticText>
 		</band>
 	</detail>
 </jasperReport>
