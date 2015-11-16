@@ -208,7 +208,7 @@ public class ReceiptController extends SMITravelController {
             MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
             mFinanceItemstatus.setId("1"); // 1 = Normal
             invoice.setMFinanceItemstatus(mFinanceItemstatus);
-                       
+
             for (int i = 0; i < rowsProduct ; i++) {
                 String tableId = request.getParameter("tableId" + i);
                 String receiveProduct = request.getParameter("receiveProduct" + i);
@@ -227,8 +227,6 @@ public class ReceiptController extends SMITravelController {
                 String displayDescription = request.getParameter("DescriptionReceiptDetail" + i);
                 String paymentTourId = request.getParameter("paymentTourId" + i);
 //                System.out.println(" invId " + invId);
-//                System.out.println(" billDescId " + billDescId);
-//                System.out.println(" paymentId " + paymentId);
 //                System.out.println(" airlineCode " + airlineCode);
                 ReceiptDetail receiptDetail = new ReceiptDetail();
                 receiptDetail.setId(tableId);
@@ -330,32 +328,31 @@ public class ReceiptController extends SMITravelController {
                                receiptDetail.setInvoiceDetail(invD);
                            }
                        }
-
-                       if(StringUtils.isNotEmpty(paymentId)){
-                           PaymentAirticket pay = new PaymentAirticket();
-                           pay.setId(paymentId);
-                           receiptDetail.setPaymentAirticket(pay);
-                           receiptDetail.setRemark(receiveDes);
-                           if(StringUtils.isNotEmpty(airlineCode)){
-                               receiptDetail.setAirlineCode(airlineCode);
-                           }
-                           receiptDetail.setCurAmount("THB");
-                       }
-                       
-                       if(StringUtils.isNotEmpty(paymentTourId)){
-                           PaymentDetailWendy pay = new PaymentDetailWendy();
-                           pay.setId(paymentTourId);
-                           receiptDetail.setPaymentDetailWendy(pay);
-                           receiptDetail.setRemark(receiveDes);
-                           if(StringUtils.isNotEmpty(airlineCode)){
-                               receiptDetail.setAirlineCode(airlineCode);
-                           }
-                           receiptDetail.setCurAmount("THB");
-                       }
-                       
-                       
                    }
                 }
+                
+                if(StringUtils.isNotEmpty(paymentId)){
+                    PaymentAirticket pay = new PaymentAirticket();
+                    pay.setId(paymentId);
+                    receiptDetail.setPaymentAirticket(pay);
+                    receiptDetail.setRemark(receiveDes);
+                    if(StringUtils.isNotEmpty(airlineCode)){
+                        receiptDetail.setAirlineCode(airlineCode);
+                    }
+                    receiptDetail.setCurAmount("THB");
+                }
+                       
+                if(StringUtils.isNotEmpty(paymentTourId)){
+                    PaymentDetailWendy pays = new PaymentDetailWendy();
+                    pays.setId(paymentTourId);
+                    receiptDetail.setPaymentDetailWendy(pays);
+                    receiptDetail.setRemark(receiveDes);
+                    if(StringUtils.isNotEmpty(airlineCode)){
+                        receiptDetail.setAirlineCode(airlineCode);
+                    }
+                    receiptDetail.setCurAmount("THB");
+                }
+                
                 if( (receiveProduct!="" && receiveProduct!=null) || 
                     (receiveDes!="" && receiveDes!=null) || 
                     (receiveCost!="" && receiveCost!=null) || 

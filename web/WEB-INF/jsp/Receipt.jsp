@@ -394,8 +394,10 @@
                                                 <input id="invId${i.count}"  name="invId${i.count}"   type="hidden" value="${table.invoiceDetail.id}" >
                                                 <input type="hidden" name="tableId${i.count}" id="tableId${i.count}" value="${table.id}">
                                                 <input id="receiveAmountTemp${i.count}" name="receiveAmountTemp${i.count}"  type="hidden" value="${table.amount}" >
+                                                <input id="paymentTourId${i.count}" name="paymentTourId${i.count}"  type="hidden" value="${table.paymentDetailWendy.id}" >
+                                                <input id="paymentId${i.count}" name="paymentId${i.count}"  type="hidden" value="${table.paymentAirticket.id}" >
                                                 <input id="DescriptionReceiptDetail${i.count}" name="DescriptionReceiptDetail${i.count}"  type="hidden" value="${table.displayDescription}" >
-                                                <td>                                   
+                                                <td>
                                                     <select class="form-control" name="receiveProduct${i.count}" id="receiveProduct${i.count}">
                                                         <option  value="" >---------</option>
                                                         <c:forEach var="product" items="${billTypeList}" varStatus="status">                                       
