@@ -2285,52 +2285,61 @@ function saveReceipt(){
     var arCode = document.getElementById('arCode').value;
     var receiveFromDate = document.getElementById('receiveFromDate').value;
     var inputStatus = document.getElementById('inputStatus').value;
-    
-    for(i = 1 ; i < counter.value-1 ; i++ ){
-        var amountTemp = document.getElementById('receiveAmountTemp'+i).value;
-        var amount = document.getElementById('receiveAmount'+i).value;
-        amount = replaceAll(",","",amount.toString());
-        
-        if(amount > amountTemp){
-//            $('#textAlertReceiveAmount').show();
-            $('#textAlertAmountOver').show();
-            checksave = 2;
-        }else{
-            if(inputStatus !== '7'){
-                var sumAmountBeforeSave = document.getElementById('sumAmountBeforeSave').value;
-                var grandTotal = document.getElementById('grandTotal').value;
+    if(counter.value > 2){
+        for(i = 1 ; i < counter.value-1 ; i++ ){
+            var amountTemp = document.getElementById('receiveAmountTemp'+i).value;
+            var amount = document.getElementById('receiveAmount'+i).value;
+            amount = replaceAll(",","",amount.toString());
 
-                if(grandTotal === sumAmountBeforeSave){
-                    $('#textAlertReceiveAmount').hide();
-                }else{
-                    $('#textAlertReceiveAmount').show();
-                    checksave = 2;
-                }
-
-                if(checksave === 1){
-                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
-                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
-                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
-                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
-                    if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
-                        document.getElementById('ReceiptForm').submit();
-                    }
-                    $('#textAlertReceiveAmount').hide();
-                }
+            if(amount > amountTemp){
+    //            $('#textAlertReceiveAmount').show();
+                $('#textAlertAmountOver').show();
+                checksave = 2;
             }else{
-                if(checksave === 1){
-                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
-                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
-                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
-                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
+                if(inputStatus !== '7'){
+                    var sumAmountBeforeSave = document.getElementById('sumAmountBeforeSave').value;
+                    var grandTotal = document.getElementById('grandTotal').value;
 
-                    if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
-                        document.getElementById('ReceiptForm').submit();
+                    if(grandTotal === sumAmountBeforeSave){
+                        $('#textAlertReceiveAmount').hide();
+                    }else{
+                        $('#textAlertReceiveAmount').show();
+                        checksave = 2;
                     }
 
-                    $('#textAlertReceiveAmount').hide();
+                    if(checksave === 1){
+                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
+                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
+                        if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
+                            document.getElementById('ReceiptForm').submit();
+                        }
+                        $('#textAlertReceiveAmount').hide();
+                    }
+                }else{
+                    if(checksave === 1){
+                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
+                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
+
+                        if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
+                            document.getElementById('ReceiptForm').submit();
+                        }
+
+                        $('#textAlertReceiveAmount').hide();
+                    }
                 }
             }
+        }
+    }else{
+        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+        $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
+        $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
+        if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
+            document.getElementById('ReceiptForm').submit();
         }
     }
 }
