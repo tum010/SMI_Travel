@@ -45,7 +45,7 @@
 				</div>
 				<div class="panel-body">
 					<div class="row" style="padding-left: 0px">
-						<div class="col-xs-2 text-right" style="padding-left: 0px; width: 100px;">
+						<div class="col-xs-2 text-right" style="padding-left: 10px; width: 130px;">
 							<label class="control-label">Vat<span style="color: red;"></span></label>
 						</div>
 						<div class="col-md-2 form-group text-left" style="padding-left: 0px; padding-right: 0px; width: 150px;">
@@ -55,8 +55,8 @@
 						</div>
 					</div>
 					<div class="row" style="padding-left: 0px">
-						<div class="col-xs-1 text-right" style="padding-left: 0px; width: 100px;">
-							<label class="control-label">bank charge</label>
+						<div class="col-xs-2 text-right" style="padding-left: 1px; width: 130px;">
+							<label class="control-label">Bank charge</label>
 						</div>
 						<div class="col-md-2 form-group text-left" style="padding-left: 0px; padding-right: 0px; width: 150px;">
 							<div class="col-sm-12">
@@ -65,8 +65,8 @@
 						</div>
 					</div>
 					<div class="row" style="padding-left: 0px">
-						<div class="col-xs-1 text-right" style="padding-left: 0px; width: 100px;">
-							<label class="control-label">withholding tax</lable>
+						<div class="col-xs-2 text-right" style="padding-left: 10px; width: 130px;">
+							<label class="control-label">Withholding tax</lable>
 						</div>
 						<div class="col-md-2 form-group text-left" style="padding-left: 0px; padding-right: 0px; width: 150px;">
 							<div class="col-sm-12">

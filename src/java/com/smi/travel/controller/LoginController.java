@@ -65,6 +65,12 @@ public class LoginController extends SMITravelController {
                         log.info("Login fail!!");
                         return LOG_IN;
                     }
+                    
+                    if (UserAuthen.getMDepartment() == null) {
+                        request.setAttribute("ResultLogin", "Department is null.Please contact admin.");
+                        log.info("Login fail!!");
+                        return LOG_IN;
+                    }
                     if (role != null) {
                         Set menuActivate = role.getRoleMappings();
                         System.out.println("menuActivate size : " + menuActivate.size());
