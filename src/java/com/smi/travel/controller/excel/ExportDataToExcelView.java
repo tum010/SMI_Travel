@@ -5537,7 +5537,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         }
     }
     
-     private void getSummaryTicketAdjustCostAndIncome(HSSFWorkbook wb, List summaryTicketCostIncome){
+    private void getSummaryTicketAdjustCostAndIncome(HSSFWorkbook wb, List summaryTicketCostIncome){
         List<ListSummaryTicketAdjustCostAndIncome> listTotal = summaryTicketCostIncome;
 
         String sheetName = "income";// name of sheet
@@ -5545,6 +5545,40 @@ public class ExportDataToExcelView extends AbstractExcelView {
         HSSFSheet sheet = wb.createSheet(sheetName);
         HSSFSheet sheet1 = wb.createSheet(sheetName1);
         HSSFDataFormat currency = wb.createDataFormat();
+		
+		//Style sum
+		HSSFCellStyle styleSum = wb.createCellStyle();
+        styleSum.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleSum.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleSum.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleSum.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleSum.setAlignment(styleSum.ALIGN_RIGHT);
+		styleSum.setDataFormat(currency.getFormat("#,##0.00"));
+		
+		//Style total
+		HSSFCellStyle styleTotal = wb.createCellStyle();
+        styleTotal.setFont(getHeaderTable(wb.createFont()));
+        styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleTotal.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleTotal.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleTotal.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleTotal.setAlignment(styleTotal.ALIGN_RIGHT);
+		
+		//Style Pax
+		HSSFCellStyle stylePax = wb.createCellStyle();
+        stylePax.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        stylePax.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        stylePax.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        stylePax.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        stylePax.setDataFormat(currency.getFormat("#,##0"));
+        stylePax.setAlignment(stylePax.ALIGN_CENTER);
+		
+		//Style Pax Table
+		HSSFCellStyle stylePaxTable = wb.createCellStyle();
+        stylePaxTable.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        stylePaxTable.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        stylePaxTable.setDataFormat(currency.getFormat("#,##0"));
+        stylePaxTable.setAlignment(stylePaxTable.ALIGN_CENTER);				
     
         // line table
         HSSFCellStyle styleBorderTop = wb.createCellStyle();// use
@@ -5568,8 +5602,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
             styleDetailTableNumber.setBorderLeft(styleDetailTableNumber.BORDER_THIN);
             styleDetailTableNumber.setBorderRight(styleDetailTableNumber.BORDER_THIN);
         HSSFCellStyle styleDetailTableBorderBottomTop = wb.createCellStyle(); // use
-                styleDetailTableBorderBottomTop.setBorderTop(styleDetailTableBorderBottomTop.BORDER_THIN);
-                styleDetailTableBorderBottomTop.setBorderRight(styleDetailTableBorderBottomTop.BORDER_THIN);
+            styleDetailTableBorderBottomTop.setBorderTop(styleDetailTableBorderBottomTop.BORDER_THIN);
+            styleDetailTableBorderBottomTop.setBorderRight(styleDetailTableBorderBottomTop.BORDER_THIN);
+		HSSFCellStyle styleDetailTableCenter = wb.createCellStyle();
+			styleDetailTableCenter.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+			styleDetailTableCenter.setBorderRight(HSSFCellStyle.BORDER_THIN);
+			styleDetailTableCenter.setAlignment(styleDetailTableCenter.ALIGN_CENTER);		
 
         // Sheet Detail (2)
         // set Header Report (Row 1)
@@ -5723,20 +5761,132 @@ public class ExportDataToExcelView extends AbstractExcelView {
         int start = 11;
         int end = 0;
         int num = 0;
+		
+		BigDecimal interpax = new BigDecimal(0);
+		BigDecimal intercostinv = new BigDecimal(0);
+		BigDecimal interinvoicewendy = new BigDecimal(0);
+		BigDecimal interinvoiceoutbound = new BigDecimal(0);
+		BigDecimal interover = new BigDecimal(0);
+		BigDecimal interlittle = new BigDecimal(0);
+		BigDecimal interdiscount = new BigDecimal(0);
+		BigDecimal intercancel = new BigDecimal(0);
+		BigDecimal interwaitpay = new BigDecimal(0);
+		BigDecimal interrcagcom = new BigDecimal(0);
+		BigDecimal intertotalbalance = new BigDecimal(0);
+			
+		BigDecimal domesticpax = new BigDecimal(0);
+		BigDecimal domesticcostinv = new BigDecimal(0);
+		BigDecimal domesticinvoicewendy = new BigDecimal(0);
+		BigDecimal domesticinvoiceoutbound = new BigDecimal(0);
+		BigDecimal domesticover = new BigDecimal(0);
+		BigDecimal domesticlittle = new BigDecimal(0);
+		BigDecimal domesticdiscount = new BigDecimal(0);
+		BigDecimal domesticcancel = new BigDecimal(0);
+		BigDecimal domesticwaitpay = new BigDecimal(0);
+		BigDecimal domesticrcagcom = new BigDecimal(0);
+		BigDecimal domestictotalbalance = new BigDecimal(0);	
+
+		BigDecimal cancelpax = new BigDecimal(0);
+		BigDecimal cancelcostinv = new BigDecimal(0);
+		BigDecimal cancelinvoicewendy = new BigDecimal(0);
+		BigDecimal cancelinvoiceoutbound = new BigDecimal(0);
+		BigDecimal cancelover = new BigDecimal(0);
+		BigDecimal cancellittle = new BigDecimal(0);
+		BigDecimal canceldiscount = new BigDecimal(0);
+		BigDecimal cancelcancel = new BigDecimal(0);
+		BigDecimal cancelwaitpay = new BigDecimal(0);
+		BigDecimal cancelrcagcom = new BigDecimal(0);
+		BigDecimal canceltotalbalance = new BigDecimal(0);
 
         for (int r = 9; r < count; r++) {
             if(num < listSummaryTicketCostIncome.size()){
+			
+				if("I".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getTyperounting())){
+					BigDecimal interpaxtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getPax()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getPax()) : new BigDecimal(0));
+					interpax = interpax.add(interpaxtemp);
+					BigDecimal intercostinvtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getCostinv()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getCostinv()) : new BigDecimal(0));
+					intercostinv = intercostinv.add(intercostinvtemp);
+					BigDecimal interinvoicewendytemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getInvoicewendy()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getInvoicewendy()) : new BigDecimal(0));
+					interinvoicewendy = interinvoicewendy.add(interinvoicewendytemp);
+					BigDecimal interinvoiceoutboundtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getInvoiceoutbound()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getInvoiceoutbound()) : new BigDecimal(0));
+					interinvoiceoutbound = interinvoiceoutbound.add(interinvoiceoutboundtemp);
+					BigDecimal interovertemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getOver()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getOver()) : new BigDecimal(0));
+					interover = interover.add(interovertemp);
+					BigDecimal interlittletemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getLitter()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getLitter()) : new BigDecimal(0));
+					interlittle = interlittle.add(interlittletemp);
+					BigDecimal interdiscounttemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getDiscount()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getDiscount()) : new BigDecimal(0));
+					interdiscount = interdiscount.add(interdiscounttemp);
+					BigDecimal intercanceltemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getCancel()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getCancel()) : new BigDecimal(0));
+					intercancel = intercancel.add(intercanceltemp);
+					BigDecimal interwaitpaytemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getWait_pay()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getWait_pay()) : new BigDecimal(0));
+					interwaitpay = interwaitpay.add(interwaitpaytemp);
+					BigDecimal interrcagcomtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getRcagcom()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getRcagcom()) : new BigDecimal(0));
+					interrcagcom = interrcagcom.add(interrcagcomtemp);
+					BigDecimal intertotalbalancetemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getTotal_balance()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getTotal_balance()) : new BigDecimal(0));
+					intertotalbalance = intertotalbalance.add(intertotalbalancetemp);
+																												
+						
+				}else if("D".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getTyperounting())){
+					BigDecimal domesticpaxtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getPax()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getPax()) : new BigDecimal(0));
+					domesticpax = domesticpax.add(domesticpaxtemp);
+					BigDecimal domesticcostinvtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getCostinv()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getCostinv()) : new BigDecimal(0));
+					domesticcostinv = domesticcostinv.add(domesticcostinvtemp);
+					BigDecimal domesticinvoicewendytemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getInvoicewendy()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getInvoicewendy()) : new BigDecimal(0));
+					domesticinvoicewendy = domesticinvoicewendy.add(domesticinvoicewendytemp);
+					BigDecimal domesticinvoiceoutboundtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getInvoiceoutbound()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getInvoiceoutbound()) : new BigDecimal(0));
+					domesticinvoiceoutbound = domesticinvoiceoutbound.add(domesticinvoiceoutboundtemp);
+					BigDecimal domesticovertemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getOver()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getOver()) : new BigDecimal(0));
+					domesticover = domesticover.add(domesticovertemp);
+					BigDecimal domesticlittletemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getLitter()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getLitter()) : new BigDecimal(0));
+					domesticlittle = domesticlittle.add(domesticlittletemp);
+					BigDecimal domesticdiscounttemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getDiscount()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getDiscount()) : new BigDecimal(0));
+					domesticdiscount = domesticdiscount.add(domesticdiscounttemp);
+					BigDecimal domesticcanceltemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getCancel()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getCancel()) : new BigDecimal(0));
+					domesticcancel = domesticcancel.add(domesticcanceltemp);
+					BigDecimal domesticwaitpaytemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getWait_pay()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getWait_pay()) : new BigDecimal(0));
+					domesticwaitpay = domesticwaitpay.add(domesticwaitpaytemp);
+					BigDecimal domesticrcagcomtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getRcagcom()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getRcagcom()) : new BigDecimal(0));
+					domesticrcagcom = domesticrcagcom.add(domesticrcagcomtemp);
+					BigDecimal domestictotalbalancetemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getTotal_balance()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getTotal_balance()) : new BigDecimal(0));
+					domestictotalbalance = domestictotalbalance.add(domestictotalbalancetemp);				
+						
+				}else if("C".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getTyperounting())){
+					BigDecimal cancelpaxtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getPax()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getPax()) : new BigDecimal(0));
+					cancelpax = cancelpax.add(cancelpaxtemp);
+					BigDecimal cancelcostinvtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getCostinv()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getCostinv()) : new BigDecimal(0));
+					cancelcostinv =cancelcostinv.add(cancelcostinvtemp);
+					BigDecimal cancelinvoicewendytemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getInvoicewendy()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getInvoicewendy()) : new BigDecimal(0));
+					cancelinvoicewendy = cancelinvoicewendy.add(cancelinvoicewendytemp);
+					BigDecimal cancelinvoiceoutboundtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getInvoiceoutbound()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getInvoiceoutbound()) : new BigDecimal(0));
+					cancelinvoiceoutbound = cancelinvoiceoutbound.add(cancelinvoiceoutboundtemp);
+					BigDecimal cancelovertemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getOver()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getOver()) : new BigDecimal(0));
+					cancelover = cancelover.add(cancelovertemp);
+					BigDecimal cancellittletemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getLitter()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getLitter()) : new BigDecimal(0));
+					cancellittle = cancellittle.add(cancellittletemp);
+					BigDecimal canceldiscounttemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getDiscount()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getDiscount()) : new BigDecimal(0));
+					canceldiscount = canceldiscount.add(canceldiscounttemp);
+					BigDecimal cancelcanceltemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getCancel()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getCancel()) : new BigDecimal(0));
+					cancelcancel = cancelcancel.add(cancelcanceltemp);
+					BigDecimal cancelwaitpaytemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getWait_pay()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getWait_pay()) : new BigDecimal(0));
+					cancelwaitpay = cancelwaitpay.add(cancelwaitpaytemp);
+					BigDecimal cancelrcagcomtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getRcagcom()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getRcagcom()) : new BigDecimal(0));
+					cancelrcagcom = cancelrcagcom.add(cancelrcagcomtemp);
+					BigDecimal canceltotalbalancetemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncome.get(num).getTotal_balance()) ? new BigDecimal(listSummaryTicketCostIncome.get(num).getTotal_balance()) : new BigDecimal(0));
+					canceltotalbalance = canceltotalbalance.add(canceltotalbalancetemp);
+					
+				}
+			
                 HSSFRow row = sheet.createRow(r);
                 HSSFCell cell1 = row.createCell(0);
                     cell1.setCellValue(listSummaryTicketCostIncome.get(num).getTypepayment());
                     cell1.setCellStyle(styleDetailTable);
                 HSSFCell cell2 = row.createCell(1);
                     cell2.setCellValue(listSummaryTicketCostIncome.get(num).getTyperounting());
-                    cell2.setCellStyle(styleDetailTable);
+                    cell2.setCellStyle(styleDetailTableCenter);
                 HSSFCell cell3 = row.createCell(2);
                         BigDecimal pax = new BigDecimal(listSummaryTicketCostIncome.get(num).getPax());
                     cell3.setCellValue((pax != null) ? pax.doubleValue() : new BigDecimal("0").doubleValue() );
-                    cell3.setCellStyle(styleDetailTableNumber);
+                    cell3.setCellStyle(stylePaxTable);
                 HSSFCell cell4 = row.createCell(3);
                     cell4.setCellValue(listSummaryTicketCostIncome.get(num).getAir());
                     cell4.setCellStyle(styleDetailTable);
@@ -5837,38 +5987,162 @@ public class ExportDataToExcelView extends AbstractExcelView {
             }
         }
         System.out.println(count);
-        HSSFRow rowL = sheet.createRow(count);
-        rowL.createCell(0).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(1).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(2).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(3).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(4).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(5).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(6).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(7).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(8).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(9).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(10).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(11).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(12).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(13).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL.createCell(14).setCellStyle(styleDetailTableBorderBottomTop);
+		
+		//Inter
+		HSSFRow rowsinter1 = sheet.createRow(count);
+		sheet.addMergedRegion(CellRangeAddress.valueOf("A"+(count + 1)+":B"+(count + 1)));
+		HSSFCell cellInter00C = rowsinter1.createCell(0);
+        cellInter00C.setCellValue("Total Inter");
+        cellInter00C.setCellStyle(styleTotal);		
+		HSSFCell cellInter01C = rowsinter1.createCell(2);
+        cellInter01C.setCellValue(interpax.doubleValue());
+        cellInter01C.setCellStyle(stylePax);
+		HSSFCell cellInter02C = rowsinter1.createCell(5);
+        cellInter02C.setCellValue(intercostinv.doubleValue());
+        cellInter02C.setCellStyle(styleSum);
+		HSSFCell cellInter03C = rowsinter1.createCell(6);
+        cellInter03C.setCellValue(interinvoicewendy.doubleValue());
+        cellInter03C.setCellStyle(styleSum);
+		HSSFCell cellInter04C = rowsinter1.createCell(7);
+        cellInter04C.setCellValue(interinvoiceoutbound.doubleValue());
+        cellInter04C.setCellStyle(styleSum);
+		HSSFCell cellInter05C = rowsinter1.createCell(8);
+        cellInter05C.setCellValue("");
+        cellInter05C.setCellStyle(styleSum);
+		HSSFCell cellInter06C = rowsinter1.createCell(9);
+        cellInter06C.setCellValue(interlittle.doubleValue());
+        cellInter06C.setCellStyle(styleSum);
+		HSSFCell cellInter07C = rowsinter1.createCell(10);
+        cellInter07C.setCellValue(interdiscount.doubleValue());
+        cellInter07C.setCellStyle(styleSum);
+		HSSFCell cellInter08C = rowsinter1.createCell(11);
+        cellInter08C.setCellValue(intercancel.doubleValue());
+        cellInter08C.setCellStyle(styleSum);
+		HSSFCell cellInter09C = rowsinter1.createCell(12);
+        cellInter09C.setCellValue(interwaitpay.doubleValue());
+        cellInter09C.setCellStyle(styleSum);
+		HSSFCell cellInter10C = rowsinter1.createCell(13);
+        cellInter10C.setCellValue(interrcagcom.doubleValue());
+        cellInter10C.setCellStyle(styleSum);
+		HSSFCell cellInter11C = rowsinter1.createCell(14);
+        cellInter11C.setCellValue(intertotalbalance.doubleValue());
+        cellInter11C.setCellStyle(styleSum);
+		HSSFCell cellInter12C = rowsinter1.createCell(1);
+        cellInter12C.setCellStyle(styleTotal);
+		HSSFCell cellInter13C = rowsinter1.createCell(3);
+        cellInter13C.setCellStyle(styleTotal);
+		HSSFCell cellInter14C = rowsinter1.createCell(4);
+        cellInter14C.setCellStyle(styleTotal);	
+		
+		//Domestic
+		HSSFRow rowsdomestic1 = sheet.createRow(count + 1);
+		sheet.addMergedRegion(CellRangeAddress.valueOf("A"+(count + 2)+":B"+(count + 2)));
+		HSSFCell cellDomestic00C = rowsdomestic1.createCell(0);
+        cellDomestic00C.setCellValue("Total Domestic");
+        cellDomestic00C.setCellStyle(styleTotal);		
+		HSSFCell cellDomestic01C = rowsdomestic1.createCell(2);
+        cellDomestic01C.setCellValue(domesticpax.doubleValue());
+        cellDomestic01C.setCellStyle(stylePax);
+		HSSFCell cellDomestic02C = rowsdomestic1.createCell(5);
+        cellDomestic02C.setCellValue(domesticcostinv.doubleValue());
+        cellDomestic02C.setCellStyle(styleSum);
+		HSSFCell cellDomestic03C = rowsdomestic1.createCell(6);
+        cellDomestic03C.setCellValue(domesticinvoicewendy.doubleValue());
+        cellDomestic03C.setCellStyle(styleSum);
+		HSSFCell cellDomestic04C = rowsdomestic1.createCell(7);
+        cellDomestic04C.setCellValue(domesticinvoiceoutbound.doubleValue());
+        cellDomestic04C.setCellStyle(styleSum);
+		HSSFCell cellDomestic05C = rowsdomestic1.createCell(8);
+        cellDomestic05C.setCellValue("");
+        cellDomestic05C.setCellStyle(styleSum);
+		HSSFCell cellDomestic06C = rowsdomestic1.createCell(9);
+        cellDomestic06C.setCellValue(domesticlittle.doubleValue());
+        cellDomestic06C.setCellStyle(styleSum);
+		HSSFCell cellDomestic07C = rowsdomestic1.createCell(10);
+        cellDomestic07C.setCellValue(domesticdiscount.doubleValue());
+        cellDomestic07C.setCellStyle(styleSum);
+		HSSFCell cellDomestic08C = rowsdomestic1.createCell(11);
+        cellDomestic08C.setCellValue(domesticcancel.doubleValue());
+        cellDomestic08C.setCellStyle(styleSum);
+		HSSFCell cellDomestic09C = rowsdomestic1.createCell(12);
+        cellDomestic09C.setCellValue(domesticwaitpay.doubleValue());
+        cellDomestic09C.setCellStyle(styleSum);
+		HSSFCell cellDomestic10C = rowsdomestic1.createCell(13);
+        cellDomestic10C.setCellValue(domesticrcagcom.doubleValue());
+        cellDomestic10C.setCellStyle(styleSum);
+		HSSFCell cellDomestic11C = rowsdomestic1.createCell(14);
+        cellDomestic11C.setCellValue(domestictotalbalance.doubleValue());
+        cellDomestic11C.setCellStyle(styleSum);
+		HSSFCell cellDomestic12C = rowsdomestic1.createCell(1);
+        cellDomestic12C.setCellStyle(styleTotal);
+		HSSFCell cellDomestic13C = rowsdomestic1.createCell(3);
+        cellDomestic13C.setCellStyle(styleTotal);
+		HSSFCell cellDomestic14C = rowsdomestic1.createCell(4);
+        cellDomestic14C.setCellStyle(styleTotal);		
+		
+		//Cancel
+		HSSFRow rowscancel1 = sheet.createRow(count + 2);
+		sheet.addMergedRegion(CellRangeAddress.valueOf("A"+(count + 3)+":B"+(count + 3)));
+		HSSFCell cellCancel00C = rowscancel1.createCell(0);
+        cellCancel00C.setCellValue("Total Cancel");
+        cellCancel00C.setCellStyle(styleTotal);		
+		HSSFCell cellCancel01C = rowscancel1.createCell(2);
+        cellCancel01C.setCellValue(cancelpax.doubleValue());
+        cellCancel01C.setCellStyle(stylePax);
+		HSSFCell cellCancel02C = rowscancel1.createCell(5);
+        cellCancel02C.setCellValue(cancelcostinv.doubleValue());
+        cellCancel02C.setCellStyle(styleSum);
+		HSSFCell cellCancel03C = rowscancel1.createCell(6);
+        cellCancel03C.setCellValue(cancelinvoicewendy.doubleValue());
+        cellCancel03C.setCellStyle(styleSum);
+		HSSFCell cellCancel04C = rowscancel1.createCell(7);
+        cellCancel04C.setCellValue(cancelinvoiceoutbound.doubleValue());
+        cellCancel04C.setCellStyle(styleSum);
+		HSSFCell cellCancel05C = rowscancel1.createCell(8);
+        cellCancel05C.setCellValue("");
+        cellCancel05C.setCellStyle(styleSum);
+		HSSFCell cellCancel06C = rowscancel1.createCell(9);
+        cellCancel06C.setCellValue(cancellittle.doubleValue());
+        cellCancel06C.setCellStyle(styleSum);
+		HSSFCell cellCancel07C = rowscancel1.createCell(10);
+        cellCancel07C.setCellValue(canceldiscount.doubleValue());
+        cellCancel07C.setCellStyle(styleSum);
+		HSSFCell cellCancel08C = rowscancel1.createCell(11);
+        cellCancel08C.setCellValue(cancelcancel.doubleValue());
+        cellCancel08C.setCellStyle(styleSum);
+		HSSFCell cellCancel09C = rowscancel1.createCell(12);
+        cellCancel09C.setCellValue(cancelwaitpay.doubleValue());
+        cellCancel09C.setCellStyle(styleSum);
+		HSSFCell cellCancel10C = rowscancel1.createCell(13);
+        cellCancel10C.setCellValue(cancelrcagcom.doubleValue());
+        cellCancel10C.setCellStyle(styleSum);
+		HSSFCell cellCancel11C = rowscancel1.createCell(14);
+        cellCancel11C.setCellValue(canceltotalbalance.doubleValue());
+        cellCancel11C.setCellStyle(styleSum);
+		HSSFCell cellCancel12C = rowscancel1.createCell(1);
+        cellCancel12C.setCellStyle(styleTotal);
+		HSSFCell cellCancel13C = rowscancel1.createCell(3);
+        cellCancel13C.setCellStyle(styleTotal);
+		HSSFCell cellCancel14C = rowscancel1.createCell(4);
+        cellCancel14C.setCellStyle(styleTotal);
 
         String sumPax = "SUM(C" + 10+":C"+(count)+")";
         String sumCosInv = "SUM(F" + 10+":F"+(count)+")";
         String sumInvWendy = "SUM(G" + 10+":G"+(count)+")";
         String sumInvOutbound = "SUM(H" + 10+":H"+(count)+")";
+		String sumOver = "SUM(I" + 10+":I"+(count)+")";
         String sumLittle = "SUM(J" + 10+":J"+(count)+")";
         String sumDiscount = "SUM(K" + 10+":K"+(count)+")";
         String sumCancel = "SUM(L" + 10+":L"+(count)+")";
         String sumRC = "SUM(N" + 10+":N"+(count)+")";
         String sumWait = "SUM(M" + 10+":M"+(count)+")";
         String sumBlance = "SUM(O" + 10+":O"+(count)+")";
-
-        HSSFRow row = sheet.createRow(count+1);
+		
+        HSSFRow row = sheet.createRow(count+3);
+		sheet.addMergedRegion(CellRangeAddress.valueOf("A"+(count + 4)+":B"+(count + 4)));
         HSSFCell cell60Sum = row.createCell(0);
-                cell60Sum.setCellValue("");
-                cell60Sum.setCellStyle(styleDetailTableNumber);
+                cell60Sum.setCellValue("Total");
+                cell60Sum.setCellStyle(styleTotal);
                 sheet.autoSizeColumn(0);
         HSSFCell cell6Sum = row.createCell(1);
             cell6Sum.setCellValue("");
@@ -5877,7 +6151,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         HSSFCell cell7Sum = row.createCell(2);
             cell7Sum.setCellFormula(sumPax);
             sheet.autoSizeColumn(2);
-            cell7Sum.setCellStyle(styleDetailTableNumber);
+            cell7Sum.setCellStyle(stylePax);
         HSSFCell cell8Sum = row.createCell(3);
             cell8Sum.setCellValue("");
             sheet.autoSizeColumn(3);
@@ -5891,7 +6165,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
             cell10Sum.setCellStyle(styleDetailTableNumber);
             sheet.autoSizeColumn(5);
         HSSFCell cell11Sum = row.createCell(6);
-            cell11Sum.setCellValue("");
+            cell11Sum.setCellFormula(sumInvWendy);
             cell11Sum.setCellStyle(styleDetailTableNumber);
             sheet.autoSizeColumn(6);
         HSSFCell cell12Sum = row.createCell(7);
@@ -5899,7 +6173,6 @@ public class ExportDataToExcelView extends AbstractExcelView {
             cell12Sum.setCellStyle(styleDetailTableNumber);
             sheet.autoSizeColumn(7);
         HSSFCell cell13Sum = row.createCell(8);
-            cell13Sum.setCellValue("");
             cell13Sum.setCellStyle(styleDetailTableNumber);
             sheet.autoSizeColumn(8);
         HSSFCell cell14Sum = row.createCell(9);
@@ -5907,7 +6180,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                cell14Sum.setCellStyle(styleDetailTableNumber);
                sheet.autoSizeColumn(9);
         HSSFCell cell15Sum = row.createCell(10);
-                cell15Sum.setCellValue("");
+                cell15Sum.setCellFormula(sumDiscount);
                 cell15Sum.setCellStyle(styleDetailTableNumber);
                 sheet.autoSizeColumn(10);
         HSSFCell cell16Sum = row.createCell(11);
@@ -5915,7 +6188,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 cell16Sum.setCellStyle(styleDetailTableNumber);
                 sheet.autoSizeColumn(11);
         HSSFCell cell17Sum = row.createCell(12);
-                cell17Sum.setCellValue("");
+                cell17Sum.setCellFormula(sumWait);
                 cell17Sum.setCellStyle(styleDetailTableNumber);
                 sheet.autoSizeColumn(12);
         HSSFCell cell18Sum = row.createCell(13);
@@ -5923,75 +6196,27 @@ public class ExportDataToExcelView extends AbstractExcelView {
                 cell18Sum.setCellStyle(styleDetailTableNumber);
                 sheet.autoSizeColumn(13);
         HSSFCell cell19Sum = row.createCell(14);
-                cell19Sum.setCellValue("");
+                cell19Sum.setCellFormula(sumBlance);
                 cell19Sum.setCellStyle(styleDetailTableNumber);
                 sheet.autoSizeColumn(14);
+		
+		HSSFRow rowL1 = sheet.createRow(count+4);
+        rowL1.createCell(0).setCellStyle(styleBorderTop);
+        rowL1.createCell(1).setCellStyle(styleBorderTop);
+        rowL1.createCell(2).setCellStyle(styleBorderTop);
+        rowL1.createCell(3).setCellStyle(styleBorderTop);
+        rowL1.createCell(4).setCellStyle(styleBorderTop);
+        rowL1.createCell(5).setCellStyle(styleBorderTop);
+        rowL1.createCell(6).setCellStyle(styleBorderTop);
+        rowL1.createCell(7).setCellStyle(styleBorderTop);
+        rowL1.createCell(8).setCellStyle(styleBorderTop);
+        rowL1.createCell(9).setCellStyle(styleBorderTop);
+        rowL1.createCell(10).setCellStyle(styleBorderTop);
+        rowL1.createCell(11).setCellStyle(styleBorderTop);
+        rowL1.createCell(12).setCellStyle(styleBorderTop);
+        rowL1.createCell(13).setCellStyle(styleBorderTop);
+        rowL1.createCell(14).setCellStyle(styleBorderTop);
 
-        HSSFRow row2 = sheet.createRow(count+2);
-        HSSFCell cellSum100 = row2.createCell(0);
-                cellSum100.setCellValue("");
-                cellSum100.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell11Sum101 = row2.createCell(1);
-                cell11Sum101.setCellValue("");
-                cell11Sum101.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell7Sum101 = row2.createCell(2);
-                cell7Sum101.setCellValue("");
-                cell7Sum101.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell8Sum102 = row2.createCell(3);
-                cell8Sum102.setCellValue("");
-                cell8Sum102.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell9Sum103 = row2.createCell(4);
-                cell9Sum103.setCellValue("");
-                cell9Sum103.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell10Sum104 = row2.createCell(5);
-                cell10Sum104.setCellValue("");
-                cell10Sum104.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell11Sum105 = row2.createCell(6);
-                cell11Sum105.setCellFormula(sumInvWendy);
-                cell11Sum105.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell12Sum106 = row2.createCell(7);
-                cell12Sum106.setCellValue("");
-                cell12Sum106.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell13Sum107 = row2.createCell(8);
-                cell13Sum107.setCellValue("");
-                cell13Sum107.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell14Sum108 = row2.createCell(9);
-                cell14Sum108.setCellValue("");
-                cell14Sum108.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell15Sum109 = row2.createCell(10);
-                cell15Sum109.setCellFormula(sumDiscount);
-                cell15Sum109.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell16Sum110 = row2.createCell(11);
-                cell16Sum110.setCellValue("");
-                cell16Sum110.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell17Sum111 = row2.createCell(12);
-                cell17Sum111.setCellFormula(sumWait);
-                cell17Sum111.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell18Sum112 = row2.createCell(13);
-                cell18Sum112.setCellValue("");
-                cell18Sum112.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell19Sum113 = row2.createCell(14);
-                cell19Sum113.setCellFormula(sumBlance);
-                cell19Sum113.setCellStyle(styleDetailTableNumber);
-
-        HSSFRow rowLL = sheet.createRow(count+3);
-        rowLL.createCell(0).setCellStyle(styleBorderTop);
-        rowLL.createCell(1).setCellStyle(styleBorderTop);
-        rowLL.createCell(2).setCellStyle(styleBorderTop);
-        rowLL.createCell(3).setCellStyle(styleBorderTop);
-        rowLL.createCell(4).setCellStyle(styleBorderTop);
-        rowLL.createCell(5).setCellStyle(styleBorderTop);
-        rowLL.createCell(6).setCellStyle(styleBorderTop);
-        rowLL.createCell(7).setCellStyle(styleBorderTop);
-        rowLL.createCell(8).setCellStyle(styleBorderTop);
-        rowLL.createCell(9).setCellStyle(styleBorderTop);
-        rowLL.createCell(10).setCellStyle(styleBorderTop);
-        rowLL.createCell(11).setCellStyle(styleBorderTop);
-        rowLL.createCell(12).setCellStyle(styleBorderTop);
-        rowLL.createCell(13).setCellStyle(styleBorderTop);
-        rowLL.createCell(14).setCellStyle(styleBorderTop);
-        
-        
         // Sheet
          // set Header Report (Row 1)
         HSSFCellStyle styleC110Sum = wb.createCellStyle();
@@ -6144,27 +6369,138 @@ public class ExportDataToExcelView extends AbstractExcelView {
         int start2 = 11;
         int end2 = 0;
         int num2 = 0;
+		
+		BigDecimal interpax1 = new BigDecimal(0);
+		BigDecimal intercostinv1 = new BigDecimal(0);
+		BigDecimal interinvoicewendy1 = new BigDecimal(0);
+		BigDecimal interinvoiceinbound1 = new BigDecimal(0);
+		BigDecimal interinvoiceoutbound1 = new BigDecimal(0);
+		BigDecimal interover1 = new BigDecimal(0);
+		BigDecimal interlittle1 = new BigDecimal(0);
+		BigDecimal interdiscount1 = new BigDecimal(0);
+		BigDecimal intercancel1 = new BigDecimal(0);
+		BigDecimal interwaitpay1 = new BigDecimal(0);
+		BigDecimal interrcagcom1 = new BigDecimal(0);
+		BigDecimal intertotalbalance1 = new BigDecimal(0);
+			
+		BigDecimal domesticpax1 = new BigDecimal(0);
+		BigDecimal domesticcostinv1 = new BigDecimal(0);
+		BigDecimal domesticinvoicewendy1 = new BigDecimal(0);
+		BigDecimal domesticinvoiceinbound1 = new BigDecimal(0);
+		BigDecimal domesticinvoiceoutbound1 = new BigDecimal(0);
+		BigDecimal domesticover1 = new BigDecimal(0);
+		BigDecimal domesticlittle1 = new BigDecimal(0);
+		BigDecimal domesticdiscount1 = new BigDecimal(0);
+		BigDecimal domesticcancel1 = new BigDecimal(0);
+		BigDecimal domesticwaitpay1 = new BigDecimal(0);
+		BigDecimal domesticrcagcom1 = new BigDecimal(0);
+		BigDecimal domestictotalbalance1 = new BigDecimal(0);	
+
+		BigDecimal cancelpax1 = new BigDecimal(0);
+		BigDecimal cancelcostinv1 = new BigDecimal(0);
+		BigDecimal cancelinvoicewendy1 = new BigDecimal(0);
+		BigDecimal cancelinvoiceinbound1 = new BigDecimal(0);
+		BigDecimal cancelinvoiceoutbound1 = new BigDecimal(0);
+		BigDecimal cancelover1 = new BigDecimal(0);
+		BigDecimal cancellittle1 = new BigDecimal(0);
+		BigDecimal canceldiscount1 = new BigDecimal(0);
+		BigDecimal cancelcancel1 = new BigDecimal(0);
+		BigDecimal cancelwaitpay1 = new BigDecimal(0);
+		BigDecimal cancelrcagcom1 = new BigDecimal(0);
+		BigDecimal canceltotalbalance1 = new BigDecimal(0);
 
         for (int r = 9; r < count2; r++) {
             if(num2 < listSummaryTicketCostIncomeSum.size()){
+				if("I".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getTyperounting())){
+					BigDecimal interpaxtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getPax()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getPax()) : new BigDecimal(0));
+					interpax1 = interpax1.add(interpaxtemp);
+					BigDecimal intercostinvtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getCostinv()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getCostinv()) : new BigDecimal(0));
+					intercostinv1 = intercostinv1.add(intercostinvtemp);
+					BigDecimal interinvoicewendytemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getInvoicewendy()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getInvoicewendy()) : new BigDecimal(0));
+					interinvoicewendy1 = interinvoicewendy1.add(interinvoicewendytemp);
+					BigDecimal interinvoiceoutboundtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getInvoiceoutbound()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getInvoiceoutbound()) : new BigDecimal(0));
+					interinvoiceoutbound1 = interinvoiceoutbound1.add(interinvoiceoutboundtemp);
+					BigDecimal interinvoiceinboundtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getInvoiceinbound()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getInvoiceinbound()) : new BigDecimal(0));
+					interinvoiceinbound1 = interinvoiceinbound1.add(interinvoiceinboundtemp);
+					BigDecimal interlittletemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getLitter()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getLitter()) : new BigDecimal(0));
+					interlittle1 = interlittle1.add(interlittletemp);
+					BigDecimal interdiscounttemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getDiscount()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getDiscount()) : new BigDecimal(0));
+					interdiscount1 = interdiscount1.add(interdiscounttemp);
+					BigDecimal intercanceltemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getCancel()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getCancel()) : new BigDecimal(0));
+					intercancel1 = intercancel1.add(intercanceltemp);
+					BigDecimal interwaitpaytemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getWait_pay()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getWait_pay()) : new BigDecimal(0));
+					interwaitpay1 = interwaitpay1.add(interwaitpaytemp);
+					BigDecimal interrcagcomtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getRcagcom()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getRcagcom()) : new BigDecimal(0));
+					interrcagcom1 = interrcagcom1.add(interrcagcomtemp);
+					BigDecimal intertotalbalancetemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getTotal_balance()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getTotal_balance()) : new BigDecimal(0));
+					intertotalbalance1 = intertotalbalance1.add(intertotalbalancetemp);
+																												
+						
+				}else if("D".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getTyperounting())){
+					BigDecimal domesticpaxtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getPax()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getPax()) : new BigDecimal(0));
+					domesticpax1 = domesticpax1.add(domesticpaxtemp);
+					BigDecimal domesticcostinvtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getCostinv()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getCostinv()) : new BigDecimal(0));
+					domesticcostinv1 = domesticcostinv1.add(domesticcostinvtemp);
+					BigDecimal domesticinvoicewendytemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getInvoicewendy()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getInvoicewendy()) : new BigDecimal(0));
+					domesticinvoicewendy1 = domesticinvoicewendy1.add(domesticinvoicewendytemp);
+					BigDecimal domesticinvoiceoutboundtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getInvoiceoutbound()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getInvoiceoutbound()) : new BigDecimal(0));
+					domesticinvoiceoutbound1 = domesticinvoiceoutbound1.add(domesticinvoiceoutboundtemp);
+					BigDecimal domesticinvoiceinboundtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getInvoiceinbound()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getInvoiceinbound()) : new BigDecimal(0));
+					domesticinvoiceinbound1 = domesticinvoiceinbound1.add(domesticinvoiceinboundtemp);
+					BigDecimal domesticlittletemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getLitter()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getLitter()) : new BigDecimal(0));
+					domesticlittle1 = domesticlittle1.add(domesticlittletemp);
+					BigDecimal domesticdiscounttemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getDiscount()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getDiscount()) : new BigDecimal(0));
+					domesticdiscount1 = domesticdiscount1.add(domesticdiscounttemp);
+					BigDecimal domesticcanceltemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getCancel()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getCancel()) : new BigDecimal(0));
+					domesticcancel1 = domesticcancel1.add(domesticcanceltemp);
+					BigDecimal domesticwaitpaytemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getWait_pay()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getWait_pay()) : new BigDecimal(0));
+					domesticwaitpay1 = domesticwaitpay1.add(domesticwaitpaytemp);
+					BigDecimal domesticrcagcomtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getRcagcom()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getRcagcom()) : new BigDecimal(0));
+					domesticrcagcom1 = domesticrcagcom1.add(domesticrcagcomtemp);
+					BigDecimal domestictotalbalancetemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getTotal_balance()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getTotal_balance()) : new BigDecimal(0));
+					domestictotalbalance1 = domestictotalbalance1.add(domestictotalbalancetemp);				
+						
+				}else if("C".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getTyperounting())){
+					BigDecimal cancelpaxtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getPax()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getPax()) : new BigDecimal(0));
+					cancelpax1 = cancelpax1.add(cancelpaxtemp);
+					BigDecimal cancelcostinvtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getCostinv()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getCostinv()) : new BigDecimal(0));
+					cancelcostinv1 =cancelcostinv1.add(cancelcostinvtemp);
+					BigDecimal cancelinvoicewendytemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getInvoicewendy()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getInvoicewendy()) : new BigDecimal(0));
+					cancelinvoicewendy1 = cancelinvoicewendy1.add(cancelinvoicewendytemp);
+					BigDecimal cancelinvoiceoutboundtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getInvoiceoutbound()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getInvoiceoutbound()) : new BigDecimal(0));
+					cancelinvoiceoutbound1 = cancelinvoiceoutbound1.add(cancelinvoiceoutboundtemp);
+					BigDecimal cancelinvoiceinboundtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getInvoiceinbound()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getInvoiceinbound()) : new BigDecimal(0));
+					cancelinvoiceinbound1 = cancelinvoiceinbound1.add(cancelinvoiceinboundtemp);
+					BigDecimal cancellittletemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getLitter()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getLitter()) : new BigDecimal(0));
+					cancellittle1 = cancellittle1.add(cancellittletemp);
+					BigDecimal canceldiscounttemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getDiscount()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getDiscount()) : new BigDecimal(0));
+					canceldiscount1 = canceldiscount1.add(canceldiscounttemp);
+					BigDecimal cancelcanceltemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getCancel()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getCancel()) : new BigDecimal(0));
+					cancelcancel1 = cancelcancel1.add(cancelcanceltemp);
+					BigDecimal cancelwaitpaytemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getWait_pay()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getWait_pay()) : new BigDecimal(0));
+					cancelwaitpay1 = cancelwaitpay1.add(cancelwaitpaytemp);
+					BigDecimal cancelrcagcomtemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getRcagcom()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getRcagcom()) : new BigDecimal(0));
+					cancelrcagcom1 = cancelrcagcom1.add(cancelrcagcomtemp);
+					BigDecimal canceltotalbalancetemp = (!"".equalsIgnoreCase(listSummaryTicketCostIncomeSum.get(num2).getTotal_balance()) ? new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getTotal_balance()) : new BigDecimal(0));
+					canceltotalbalance1 = canceltotalbalance1.add(canceltotalbalancetemp);
+					
+				}
+				
                 HSSFRow row22 = sheet1.createRow(r);
                 HSSFCell cell1 = row22.createCell(0);
                     cell1.setCellValue(listSummaryTicketCostIncomeSum.get(num2).getTypepayment());
                     cell1.setCellStyle(styleDetailTable);
                 HSSFCell cell2 = row22.createCell(1);
                     cell2.setCellValue(listSummaryTicketCostIncomeSum.get(num2).getTyperounting());
-                    cell2.setCellStyle(styleDetailTable);
+                    cell2.setCellStyle(styleDetailTableCenter);
                 HSSFCell cell3 = row22.createCell(2);
                         BigDecimal pax = new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getPax());
                     cell3.setCellValue((pax != null) ? pax.doubleValue() : new BigDecimal("0").doubleValue() );
-                    cell3.setCellStyle(styleDetailTableNumber);
+                    cell3.setCellStyle(stylePaxTable);
                 HSSFCell cell4 = row22.createCell(3);
-                    cell4.setCellValue(listSummaryTicketCostIncomeSum.get(num2).getAir());
+                    cell4.setCellValue(listSummaryTicketCostIncomeSum.get(num2).getInvno());
                     cell4.setCellStyle(styleDetailTable);
-                HSSFCell cell55 = row22.createCell(4);
-                    cell55.setCellValue(listSummaryTicketCostIncomeSum.get(num2).getInvno());
-                    cell55.setCellStyle(styleDetailTable);
-                HSSFCell cell5 = row22.createCell(5);
+                HSSFCell cell5 = row22.createCell(4);
                     System.out.println("Cost : " +listSummaryTicketCostIncomeSum.get(num2).getCostinv());
                     BigDecimal costinv = null;
                     if("".equals(listSummaryTicketCostIncomeSum.get(num2).getCostinv())){
@@ -6174,7 +6510,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     }
                     cell5.setCellValue((costinv != null && !"0".equals(costinv)) ? costinv.doubleValue() : new BigDecimal("0").doubleValue() );
                     cell5.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell6 = row22.createCell(6);
+                HSSFCell cell6 = row22.createCell(5);
                     BigDecimal invwendy = null;
                     if("".equals(listSummaryTicketCostIncomeSum.get(num2).getInvoicewendy())){
                         invwendy = new BigDecimal(0);
@@ -6183,30 +6519,29 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     }
                     cell6.setCellValue((invwendy != null) ? invwendy.doubleValue() : new BigDecimal("0").doubleValue());
                     cell6.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell7 = row22.createCell(7);
+				HSSFCell cell7 = row22.createCell(6);
+                    BigDecimal invinbound = null;
+                    if("".equals(listSummaryTicketCostIncomeSum.get(num2).getInvoiceinbound())){
+                        invinbound = new BigDecimal(0);
+                    }else{
+                        invinbound = new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getInvoiceinbound());
+                    }
+                    cell7.setCellValue((invinbound != null) ? invinbound.doubleValue() : new BigDecimal("0").doubleValue());
+                    cell7.setCellStyle(styleDetailTableNumber);	
+                HSSFCell cell8 = row22.createCell(7);
                     BigDecimal invoutbound = null;
                     if("".equals(listSummaryTicketCostIncomeSum.get(num2).getInvoiceoutbound())){
                         invoutbound = new BigDecimal(0);
                     }else{
                         invoutbound = new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getInvoiceoutbound());
                     }
-                    cell7.setCellValue((invoutbound != null) ? invoutbound.doubleValue() : new BigDecimal("0").doubleValue());
-                    cell7.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell8 = row22.createCell(8);
-                    cell8.setCellValue(listSummaryTicketCostIncomeSum.get(num2).getOver());
-                    cell8.setCellStyle(styleDetailTable);
-                HSSFCell cell9 = row22.createCell(9);
-                    BigDecimal little = null;
-                    if("".equals(listSummaryTicketCostIncomeSum.get(num2).getLitter())){
-                        little = new BigDecimal(0);
-                    }else{
-                        little = new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getLitter());
-                    }
-                    cell9.setCellValue((little != null) ? little.doubleValue() : new BigDecimal("0").doubleValue());
-                    cell9.setCellStyle(styleDetailTableNumber);
-                    sheet.autoSizeColumn(9);
-                HSSFCell cell10 = row22.createCell(10);
-                    BigDecimal discount  = null;
+                    cell8.setCellValue((invoutbound != null) ? invoutbound.doubleValue() : new BigDecimal("0").doubleValue());
+                    cell8.setCellStyle(styleDetailTableNumber);
+                HSSFCell cell9 = row22.createCell(8);
+                    cell9.setCellValue(listSummaryTicketCostIncomeSum.get(num2).getOver());
+                    cell9.setCellStyle(styleDetailTable);
+                HSSFCell cell10 = row22.createCell(9);
+                    BigDecimal discount = null; 
                     if("".equals(listSummaryTicketCostIncomeSum.get(num2).getDiscount())){
                         discount = new BigDecimal(0);
                     }else{
@@ -6214,104 +6549,233 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     }
                     cell10.setCellValue((discount != null) ? discount.doubleValue() : new BigDecimal("0").doubleValue());
                     cell10.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell11 = row22.createCell(11);
+                    sheet.autoSizeColumn(9);
+                HSSFCell cell11 = row22.createCell(10);
+                    BigDecimal little  = null;
+                    if("".equals(listSummaryTicketCostIncomeSum.get(num2).getLitter())){
+                        little = new BigDecimal(0);
+                    }else{
+                        little = new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getLitter());
+                    }
+                    cell11.setCellValue((little != null) ? little.doubleValue() : new BigDecimal("0").doubleValue());
+                    cell11.setCellStyle(styleDetailTableNumber);
+                HSSFCell cell12 = row22.createCell(11);
                     BigDecimal cancel = null;
                     if("".equals(listSummaryTicketCostIncomeSum.get(num2).getCancel())){
                         cancel = new BigDecimal(0);
                     }else{
                         cancel = new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getCancel());
                     }
-                    cell11.setCellValue((cancel != null) ? cancel.doubleValue() : new BigDecimal("0").doubleValue());
-                    cell11.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell12 = row22.createCell(12);
+                    cell12.setCellValue((cancel != null) ? cancel.doubleValue() : new BigDecimal("0").doubleValue());
+                    cell12.setCellStyle(styleDetailTableNumber);
+                HSSFCell cell13 = row22.createCell(12);
                     BigDecimal wait = null;
                     if("".equals(listSummaryTicketCostIncomeSum.get(num2).getWait_pay())){
                         wait = new BigDecimal(0);
                     }else{
                         wait = new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getWait_pay());
                     }
-                    cell12.setCellValue((wait != null) ? wait.doubleValue() : new BigDecimal("0").doubleValue());
-                    cell12.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell13 = row22.createCell(13);
+                    cell13.setCellValue((wait != null) ? wait.doubleValue() : new BigDecimal("0").doubleValue());
+                    cell13.setCellStyle(styleDetailTableNumber);
+                HSSFCell cell14 = row22.createCell(13);
                     BigDecimal rc = null;
                     if("".equals(listSummaryTicketCostIncomeSum.get(num2).getRcagcom())){
                         rc = new BigDecimal(0);
                     }else{
                         rc = new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getRcagcom());
                     }
-                    cell13.setCellValue((rc != null) ? rc.doubleValue() : new BigDecimal("0").doubleValue());
-                    cell13.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell14 = row22.createCell(14);
+                    cell14.setCellValue((rc != null) ? rc.doubleValue() : new BigDecimal("0").doubleValue());
+                    cell14.setCellStyle(styleDetailTableNumber);
+                HSSFCell cell15 = row22.createCell(14);
                     BigDecimal balance = null;
                     if("".equals(listSummaryTicketCostIncomeSum.get(num2).getTotal_balance())){
                         balance = new BigDecimal(0);
                     }else{
                         balance = new BigDecimal(listSummaryTicketCostIncomeSum.get(num2).getTotal_balance());
                     }
-                    cell14.setCellValue((balance != null) ? balance.doubleValue() : new BigDecimal("0").doubleValue());
-                    cell14.setCellStyle(styleDetailTableNumber);
+                    cell15.setCellValue((balance != null) ? balance.doubleValue() : new BigDecimal("0").doubleValue());
+                    cell15.setCellStyle(styleDetailTableNumber);
                 num2++;
             }
             for (int i = 0; i < listSummaryTicketCostIncomeSum.size(); i++) {
                     sheet1.autoSizeColumn(i);
             }
         }
-        System.out.println(count2);
-        HSSFRow rowL2 = sheet1.createRow(count2);
-        rowL2.createCell(0).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(1).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(2).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(3).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(4).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(5).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(6).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(7).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(8).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(9).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(10).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(11).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(12).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(13).setCellStyle(styleDetailTableBorderBottomTop);
-        rowL2.createCell(14).setCellStyle(styleDetailTableBorderBottomTop);
 
+		//Inter
+		HSSFRow rowsinter2 = sheet1.createRow(count2);
+		sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count2 + 1)+":B"+(count2 + 1)));
+		HSSFCell cellInter00 = rowsinter2.createCell(0);
+        cellInter00.setCellValue("Total Inter");
+        cellInter00.setCellStyle(styleTotal);		
+		HSSFCell cellInter01 = rowsinter2.createCell(2);
+        cellInter01.setCellValue(interpax1.doubleValue());
+        cellInter01.setCellStyle(stylePax);
+		HSSFCell cellInter02 = rowsinter2.createCell(4);
+        cellInter02.setCellValue(intercostinv1.doubleValue());
+        cellInter02.setCellStyle(styleSum);
+		HSSFCell cellInter03 = rowsinter2.createCell(5);
+        cellInter03.setCellValue(interinvoicewendy1.doubleValue());
+        cellInter03.setCellStyle(styleSum);
+		HSSFCell cellInter04 = rowsinter2.createCell(6);
+        cellInter04.setCellValue(interinvoiceinbound1.doubleValue());
+        cellInter04.setCellStyle(styleSum);
+		HSSFCell cellInter05 = rowsinter2.createCell(7);
+        cellInter05.setCellValue(interinvoiceoutbound1.doubleValue());
+        cellInter05.setCellStyle(styleSum);
+		HSSFCell cellInter06 = rowsinter2.createCell(9);
+        cellInter06.setCellValue(interdiscount1.doubleValue());
+        cellInter06.setCellStyle(styleSum);
+		HSSFCell cellInter07 = rowsinter2.createCell(10);
+        cellInter07.setCellValue(interlittle1.doubleValue());
+        cellInter07.setCellStyle(styleSum);
+		HSSFCell cellInter08 = rowsinter2.createCell(11);
+        cellInter08.setCellValue(intercancel1.doubleValue());
+        cellInter08.setCellStyle(styleSum);
+		HSSFCell cellInter09 = rowsinter2.createCell(12);
+        cellInter09.setCellValue(interwaitpay1.doubleValue());
+        cellInter09.setCellStyle(styleSum);
+		HSSFCell cellInter10 = rowsinter2.createCell(13);
+        cellInter10.setCellValue(interrcagcom1.doubleValue());
+        cellInter10.setCellStyle(styleSum);
+		HSSFCell cellInter11 = rowsinter2.createCell(14);
+        cellInter11.setCellValue(intertotalbalance1.doubleValue());
+        cellInter11.setCellStyle(styleSum);
+		HSSFCell cellInter12 = rowsinter2.createCell(1);
+        cellInter12.setCellStyle(styleSum);
+		HSSFCell cellInter13 = rowsinter2.createCell(3);
+		cellInter13.setCellStyle(styleSum);
+		HSSFCell cellInter15 = rowsinter2.createCell(8);       
+        cellInter15.setCellStyle(styleSum);
+
+		//Domestic
+		HSSFRow rowsdomestic2 = sheet1.createRow(count2 + 1);
+		sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count2 + 2)+":B"+(count2 + 2)));
+		HSSFCell cellDomestic00 = rowsdomestic2.createCell(0);
+        cellDomestic00.setCellValue("Total Domestic");
+        cellDomestic00.setCellStyle(styleTotal);		
+		HSSFCell cellDomestic01 = rowsdomestic2.createCell(2);
+        cellDomestic01.setCellValue(domesticpax1.doubleValue());
+        cellDomestic01.setCellStyle(stylePax);
+		HSSFCell cellDomestic02 = rowsdomestic2.createCell(4);
+        cellDomestic02.setCellValue(domesticcostinv1.doubleValue());
+        cellDomestic02.setCellStyle(styleSum);
+		HSSFCell cellDomestic03 = rowsdomestic2.createCell(5);
+        cellDomestic03.setCellValue(domesticinvoicewendy1.doubleValue());
+        cellDomestic03.setCellStyle(styleSum);
+		HSSFCell cellDomestic04 = rowsdomestic2.createCell(6);
+        cellDomestic04.setCellValue(domesticinvoiceinbound1.doubleValue());
+        cellDomestic04.setCellStyle(styleSum);
+		HSSFCell cellDomestic05 = rowsdomestic2.createCell(7);
+        cellDomestic05.setCellValue(domesticinvoiceoutbound1.doubleValue());
+        cellDomestic05.setCellStyle(styleSum);
+		HSSFCell cellDomestic06 = rowsdomestic2.createCell(9);
+        cellDomestic06.setCellValue(domesticdiscount1.doubleValue());
+        cellDomestic06.setCellStyle(styleSum);
+		HSSFCell cellDomestic07 = rowsdomestic2.createCell(10);
+        cellDomestic07.setCellValue(domesticlittle1.doubleValue());
+        cellDomestic07.setCellStyle(styleSum);
+		HSSFCell cellDomestic08 = rowsdomestic2.createCell(11);
+        cellDomestic08.setCellValue(domesticcancel1.doubleValue());
+        cellDomestic08.setCellStyle(styleSum);
+		HSSFCell cellDomestic09 = rowsdomestic2.createCell(12);
+        cellDomestic09.setCellValue(domesticwaitpay1.doubleValue());
+        cellDomestic09.setCellStyle(styleSum);
+		HSSFCell cellDomestic10 = rowsdomestic2.createCell(13);
+        cellDomestic10.setCellValue(domesticrcagcom1.doubleValue());
+        cellDomestic10.setCellStyle(styleSum);
+		HSSFCell cellDomestic11 = rowsdomestic2.createCell(14);
+        cellDomestic11.setCellValue(domestictotalbalance1.doubleValue());
+        cellDomestic11.setCellStyle(styleSum);
+		HSSFCell cellDomestic12 = rowsdomestic2.createCell(1);
+        cellDomestic12.setCellStyle(styleSum);
+		HSSFCell cellDomestic13 = rowsdomestic2.createCell(3);
+        cellDomestic13.setCellStyle(styleSum);
+		HSSFCell cellDomestic15 = rowsdomestic2.createCell(8);
+        cellDomestic15.setCellStyle(styleSum);
+
+		//Cancel
+		HSSFRow rowscancel2 = sheet1.createRow(count2 + 2);
+		sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count2 + 3)+":B"+(count2 + 3)));
+		HSSFCell cellCancel00 = rowscancel2.createCell(0);
+        cellCancel00.setCellValue("Total Cancel");
+        cellCancel00.setCellStyle(styleTotal);		
+		HSSFCell cellCancel01 = rowscancel2.createCell(2);
+        cellCancel01.setCellValue(cancelpax1.doubleValue());
+        cellCancel01.setCellStyle(stylePax);
+		HSSFCell cellCancel02 = rowscancel2.createCell(4);
+        cellCancel02.setCellValue(cancelcostinv1.doubleValue());
+        cellCancel02.setCellStyle(styleSum);
+		HSSFCell cellCancel03 = rowscancel2.createCell(5);
+        cellCancel03.setCellValue(cancelinvoicewendy1.doubleValue());
+        cellCancel03.setCellStyle(styleSum);
+		HSSFCell cellCancel04 = rowscancel2.createCell(6);
+        cellCancel04.setCellValue(cancelinvoiceoutbound1.doubleValue());
+        cellCancel04.setCellStyle(styleSum);
+		HSSFCell cellCancel05 = rowscancel2.createCell(7);
+        cellCancel05.setCellValue(cancelinvoiceinbound1.doubleValue());
+        cellCancel05.setCellStyle(styleSum);
+		HSSFCell cellCancel06 = rowscancel2.createCell(9);
+        cellCancel06.setCellValue(canceldiscount1.doubleValue());
+        cellCancel06.setCellStyle(styleSum);
+		HSSFCell cellCancel07 = rowscancel2.createCell(10);
+        cellCancel07.setCellValue(cancellittle1.doubleValue());
+        cellCancel07.setCellStyle(styleSum);
+		HSSFCell cellCancel08 = rowscancel2.createCell(11);
+        cellCancel08.setCellValue(cancelcancel1.doubleValue());
+        cellCancel08.setCellStyle(styleSum);
+		HSSFCell cellCancel09 = rowscancel2.createCell(12);
+        cellCancel09.setCellValue(cancelwaitpay1.doubleValue());
+        cellCancel09.setCellStyle(styleSum);
+		HSSFCell cellCancel10 = rowscancel2.createCell(13);
+        cellCancel10.setCellValue(cancelrcagcom1.doubleValue());
+        cellCancel10.setCellStyle(styleSum);
+		HSSFCell cellCancel11 = rowscancel2.createCell(14);
+        cellCancel11.setCellValue(canceltotalbalance1.doubleValue());
+        cellCancel11.setCellStyle(styleSum);
+		HSSFCell cellCancel12 = rowscancel2.createCell(1);
+        cellCancel12.setCellStyle(styleSum);
+		HSSFCell cellCancel13 = rowscancel2.createCell(3);
+        cellCancel13.setCellStyle(styleSum);	
+		HSSFCell cellCancel15 = rowscancel2.createCell(8);
+        cellCancel15.setCellStyle(styleSum);
+		
         String sumPax2 = "SUM(C" + 10+":C"+(count2)+")";
-        String sumCosInv2 = "SUM(F" + 10+":F"+(count2)+")";
-        String sumInvWendy2 = "SUM(G" + 10+":G"+(count2)+")";
+        String sumCosInv2 = "SUM(E" + 10+":E"+(count2)+")";
+        String sumInvWendy2 = "SUM(F" + 10+":F"+(count2)+")";
+		String sumInvInbound2 = "SUM(G" + 10+":G"+(count2)+")";
         String sumInvOutbound2 = "SUM(H" + 10+":H"+(count2)+")";
-        String sumLittle2 = "SUM(J" + 10+":J"+(count2)+")";
-        String sumDiscount2 = "SUM(K" + 10+":K"+(count2)+")";
+        String sumDiscount2 = "SUM(J" + 10+":J"+(count2)+")";
+        String sumLittle2 = "SUM(K" + 10+":K"+(count2)+")";
         String sumCancel2 = "SUM(L" + 10+":L"+(count2)+")";
         String sumRC2 = "SUM(N" + 10+":N"+(count2)+")";
         String sumWait2 = "SUM(M" + 10+":M"+(count2)+")";
         String sumBlance2 = "SUM(O" + 10+":O"+(count2)+")";
 
-        HSSFRow row20 = sheet1.createRow(count2+1);
+        HSSFRow row20 = sheet1.createRow(count2 + 3);
+		sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count2 + 4)+":B"+(count2 + 4)));
         HSSFCell cell60Sum2 = row20.createCell(0);
-            cell60Sum2.setCellValue("");
-            cell60Sum2.setCellStyle(styleDetailTableNumber);
+            cell60Sum2.setCellValue("Total");
+            cell60Sum2.setCellStyle(styleTotal);
             sheet1.autoSizeColumn(0);
-        HSSFCell cell6Sum2 = row20.createCell(1);
-            cell6Sum2.setCellValue("");
-            cell6Sum2.setCellStyle(styleDetailTableNumber);
-            sheet1.autoSizeColumn(1);
         HSSFCell cell7Sum2 = row20.createCell(2);
             cell7Sum2.setCellFormula(sumPax2);
             sheet1.autoSizeColumn(2);
-            cell7Sum2.setCellStyle(styleDetailTableNumber);
+            cell7Sum2.setCellStyle(stylePax);
         HSSFCell cell8Sum2 = row20.createCell(3);
             cell8Sum2.setCellValue("");
             sheet1.autoSizeColumn(3);
             cell8Sum2.setCellStyle(styleDetailTableNumber);
         HSSFCell cell9Sum2 = row20.createCell(4);
-            cell9Sum2.setCellValue("");
+            cell9Sum2.setCellFormula(sumCosInv2);
             cell9Sum2.setCellStyle(styleDetailTableNumber);
             sheet1.autoSizeColumn(4);
         HSSFCell cell10Sum2 = row20.createCell(5);
-            cell10Sum2.setCellFormula(sumCosInv2);
+            cell10Sum2.setCellFormula(sumInvWendy2);
             cell10Sum2.setCellStyle(styleDetailTableNumber);
             sheet1.autoSizeColumn(5);
         HSSFCell cell11Sum2 = row20.createCell(6);
-            cell11Sum2.setCellValue("");
+            cell11Sum2.setCellFormula(sumInvInbound2);
             cell11Sum2.setCellStyle(styleDetailTableNumber);
             sheet1.autoSizeColumn(6);
         HSSFCell cell12Sum2 = row20.createCell(7);
@@ -6323,11 +6787,11 @@ public class ExportDataToExcelView extends AbstractExcelView {
             cell13Sum2.setCellStyle(styleDetailTableNumber);
             sheet1.autoSizeColumn(8);
         HSSFCell cell14Sum2 = row20.createCell(9);
-            cell14Sum2.setCellFormula(sumLittle2);
+            cell14Sum2.setCellFormula(sumDiscount2);
             cell14Sum2.setCellStyle(styleDetailTableNumber);
             sheet1.autoSizeColumn(9);
         HSSFCell cell15Sum2 = row20.createCell(10);
-            cell15Sum2.setCellValue("");
+            cell15Sum2.setCellFormula(sumLittle2);
             cell15Sum2.setCellStyle(styleDetailTableNumber);
             sheet1.autoSizeColumn(10);
         HSSFCell cell16Sum2 = row20.createCell(11);
@@ -6335,7 +6799,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
             cell16Sum2.setCellStyle(styleDetailTableNumber);
             sheet1.autoSizeColumn(11);
         HSSFCell cell17Sum2 = row20.createCell(12);
-            cell17Sum2.setCellValue("");
+            cell17Sum2.setCellFormula(sumWait2);
             cell17Sum2.setCellStyle(styleDetailTableNumber);
             sheet1.autoSizeColumn(12);
         HSSFCell cell18Sum2 = row20.createCell(13);
@@ -6343,58 +6807,11 @@ public class ExportDataToExcelView extends AbstractExcelView {
             cell18Sum2.setCellStyle(styleDetailTableNumber);
             sheet1.autoSizeColumn(13);
         HSSFCell cell19Sum2 = row20.createCell(14);
-            cell19Sum2.setCellValue("");
+            cell19Sum2.setCellFormula(sumBlance2);
             cell19Sum2.setCellStyle(styleDetailTableNumber);
-            sheet1.autoSizeColumn(14);
+            sheet1.autoSizeColumn(14);       
 
-        HSSFRow row200 = sheet1.createRow(count2+2);
-        HSSFCell cellSum1002 = row200.createCell(0);
-                cellSum1002.setCellValue("");
-                cellSum1002.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell11Sum1012 = row200.createCell(1);
-                cell11Sum1012.setCellValue("");
-                cell11Sum1012.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell7Sum1012 = row200.createCell(2);
-                cell7Sum1012.setCellValue("");
-                cell7Sum1012.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell8Sum1022 = row200.createCell(3);
-                cell8Sum1022.setCellValue("");
-                cell8Sum1022.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell9Sum1032 = row200.createCell(4);
-                cell9Sum1032.setCellValue("");
-                cell9Sum1032.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell10Sum1042 = row200.createCell(5);
-                cell10Sum1042.setCellValue("");
-                cell10Sum1042.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell11Sum1052 = row200.createCell(6);
-                cell11Sum1052.setCellFormula(sumInvWendy2);
-                cell11Sum1052.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell12Sum1062 = row200.createCell(7);
-                cell12Sum1062.setCellValue("");
-                cell12Sum1062.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell13Sum1072 = row200.createCell(8);
-                cell13Sum1072.setCellValue("");
-                cell13Sum1072.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell14Sum1082 = row200.createCell(9);
-                cell14Sum1082.setCellValue("");
-                cell14Sum1082.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell15Sum1092 = row200.createCell(10);
-                cell15Sum1092.setCellFormula(sumDiscount2);
-                cell15Sum1092.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell16Sum1102 = row200.createCell(11);
-                cell16Sum1102.setCellValue("");
-                cell16Sum1102.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell17Sum1112 = row200.createCell(12);
-                cell17Sum1112.setCellFormula(sumWait2);
-                cell17Sum1112.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell18Sum1122 = row200.createCell(13);
-                cell18Sum1122.setCellValue("");
-                cell18Sum1122.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell19Sum1132 = row200.createCell(14);
-                cell19Sum1132.setCellFormula(sumBlance2);
-                cell19Sum1132.setCellStyle(styleDetailTableNumber);
-
-        HSSFRow rowLL2 = sheet1.createRow(count2+3);
+        HSSFRow rowLL2 = sheet1.createRow(count2+4);
         rowLL2.createCell(0).setCellStyle(styleBorderTop);
         rowLL2.createCell(1).setCellStyle(styleBorderTop);
         rowLL2.createCell(2).setCellStyle(styleBorderTop);
@@ -6410,7 +6827,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         rowLL2.createCell(12).setCellStyle(styleBorderTop);
         rowLL2.createCell(13).setCellStyle(styleBorderTop);
         rowLL2.createCell(14).setCellStyle(styleBorderTop);
-    }
+    } 
     
     private void getTicketCommissionReceive(HSSFWorkbook wb, List TicketCommissionReceive) {
         List<ListTicketCommissionReceive> listTotal = TicketCommissionReceive;
