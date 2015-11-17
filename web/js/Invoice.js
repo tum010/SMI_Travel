@@ -924,6 +924,7 @@ function addInvoiceDetail(rowId) {
     var countTable = $("#counter").val();
     var RefNo = $("#SearchRefNo").val();
     var count = 1;
+    var curChk = "";
     $('#MasterReservation > tbody  > tr').each(function() {
         if (count === rowId) {
             var id = $('#invoiceIdSearch' + rowId).val();
@@ -935,6 +936,7 @@ function addInvoiceDetail(rowId) {
             var cur_c = $(this).find("td").eq(6).html();
             var price = $(this).find("td").eq(7).html();
             var cur = $(this).find("td").eq(8).html();
+            curChk = cur;
             checkDuplicateInvoiceDetail(id, rowId);
             console.log("Duplicate : " + isDuplicateInvoiceDetail);
             if (isDuplicateInvoiceDetail === 0) {
@@ -958,7 +960,7 @@ function addInvoiceDetail(rowId) {
             } else if (isDuplicateInvoiceDetail !== 0) {
 //                alert("Duplicate");
                 $('#textAlertDuplicate').show();
-            }
+            }            
         }
         count++;
     });
@@ -966,6 +968,9 @@ function addInvoiceDetail(rowId) {
         countTable++;
         $("#counter").val(countTable);
         AddRowDetailBillAble(countTable);
+    }
+    if(curChk === ''){
+        validFromInvoice(); 
     }
 }
 
