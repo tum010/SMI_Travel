@@ -275,8 +275,10 @@
                             <input type="hidden" class="form-control" id="TaxInvStatus" name="TaxInvStatus" value="${taxInvoice.MFinanceItemstatus.id}"/>
                             <input type="hidden" class="form-control" id="createDate" name="createDate" value="${requestScope['createDate']}"/>
                             <input type="hidden" class="form-control" id="createBy" name="createBy" value="${taxInvoice.createBy}"/>
+                            <input type="hidden" class="form-control" id="postDate" name="postDate" value="${requestScope['postDate']}"/>
+                            <input type="hidden" class="form-control" id="outputTaxStatus" name="outputTaxStatus" value="${taxInvoice.outputTaxStatus}"/>
                             <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
-                            <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
+                            <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >                           
                             <input type="text" style="text-transform:uppercase" class="form-control" id="TaxInvNo" name="TaxInvNo" value="${taxInvoice.taxNo}" >
                         </div>
                         <div class="col-md-1" >
@@ -394,8 +396,13 @@
                                                     <td class="hidden"><input class="form-control" type="text" id="invoiceDetailCost${i.count}" name="invoiceDetailCost${i.count}" value="${taxDetail.invoiceDetail.cost}"></td>
                                                     <td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount${i.count}" name="invoiceDetailAmount${i.count}" value="${taxDetail.invoiceDetail.amount}"></td>
                                                     <td class="hidden"><input class="form-control" type="text" id="isExport${i.count}" name="isExport${i.count}" value="${taxDetail.isExport}"></td>
-                                                    <td class="hidden"><input class="form-control" type="text" id="exportDate${i.count}" name="exportDate${i.count}" value="${taxDetail.exportDate}"></td>
                                                     <td class="hidden"><input class="form-control" type="text" id="isProfit${i.count}" name="isProfit${i.count}" value="${taxDetail.isProfit}"></td>
+                                                    <td class="hidden">
+                                                        <input class="form-control" type="text" id="exportDate${i.count}" name="exportDate${i.count}" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd HH:mm:ss' value="${taxDetail.exportDate}" />">
+                                                    </td>
+                                                    <td class="hidden">
+                                                        <input class="form-control" type="text" id="createDateDetail${i.count}" name="createDateDetail${i.count}" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd' value="${taxDetail.createDate}" />">
+                                                    </td>
                                                     <td>
                                                         <select class="form-control" name="product${i.count}" id="product${i.count}" onchange="AddrowBySelect('${i.count}')">
                                                             <option  value="" >---------</option>
@@ -428,11 +435,15 @@
                                                         <c:if test="${'1' == taxDetail.isVat}">
                                                             <c:set var="vatChk" value="checked" />
                                                         </c:if>  
-                                                        <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" value="1" ${vatChk} onclick="CalculateGross('${i.count}')" checked>
+                                                        <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" value="1" ${vatChk} onclick="CalculateGross('${i.count}')">
                                                     </td>
-                                                    <td align="right" id="vatShow${i.count}">${taxDetail.vat}</td>
+                                                    <td align="right" id="vatShow${i.count}">
+                                                        <c:if test="${'1' == taxDetail.isVat}">
+                                                            ${taxDetail.vat}
+                                                        </c:if>    
+                                                    </td>
                                                     <td class="hidden"><input class="form-control numerical" style="text-align:right;" type="text" id="vat${i.count}" name="vat${i.count}" readonly="" value="${taxDetail.vat}"></td>
-                                                    <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="gross${i.count}" name="gross${i.count}" value="0.00" readonly=""></td>
+                                                    <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="gross${i.count}" name="gross${i.count}" value="${taxDetail.gross}" readonly=""></td>
                                                     <td align="right"><input class="form-control numerical" style="text-align:right;" type="text" id="amount${i.count}" name="amount${i.count}" value="${taxDetail.amount}" onfocusout="CalculateAmountTotal('${i.count}')" onkeyup="insertCommas(this)"></td>
                                                     <td>
                                                         <select class="form-control" name="currencyAmount${i.count}" id="currencyAmount${i.count}" onchange="AddrowBySelect(${i.count})">
@@ -1862,17 +1873,17 @@
     }
     
     function setGross(){
-        var row = $('#TaxInvoiceTable tr').length;
-        for(var i=1;i<=row;i++){          
-            var isVatCheck = document.getElementById("isVat"+i);
-            if(isVatCheck !== null && isVatCheck !== ''){
-                if(document.getElementById("isVat"+i).checked){
-                    CalculateGross(i);
-                } else {
-                    
-                }
-            }   
-        }
+//        var row = $('#TaxInvoiceTable tr').length;
+//        for(var i=1;i<=row;i++){          
+//            var isVatCheck = document.getElementById("isVat"+i);
+//            if(isVatCheck !== null && isVatCheck !== ''){
+//                if(document.getElementById("isVat"+i).checked){
+//                    CalculateGross(i);
+//                } else {
+//                    
+//                }
+//            }   
+//        }
     }   
                
     function checkRefNo(row){

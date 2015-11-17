@@ -29,13 +29,15 @@ public class TaxInvoice   {
      private Date createDate;
      private String department;
      private Date updateDate;
+     private Date postDate;
+     private Integer outputTaxStatus;
      private List creditNoteDetails = new LinkedList<CreditNoteDetail>();
      private List taxInvoiceDetails = new LinkedList<TaxInvoiceDetail>();
 
     public TaxInvoice() {
     }
 
-    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, String taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, String remark, String department, List creditNoteDetails, List taxInvoiceDetails, Date updateDate) {
+    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, String taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, String remark, String department, List creditNoteDetails, List taxInvoiceDetails, Date updateDate, Date postDate, Integer outputTaxStatus) {
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.passenger = passenger;
        this.taxNo = taxNo;
@@ -52,6 +54,8 @@ public class TaxInvoice   {
        this.creditNoteDetails = creditNoteDetails;
        this.taxInvoiceDetails = taxInvoiceDetails;
        this.updateDate = updateDate;
+       this.postDate = postDate;
+       this.outputTaxStatus = outputTaxStatus;
     }
    
     public String getId() {
@@ -191,6 +195,22 @@ public class TaxInvoice   {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public Date getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(Date postDate) {
+        this.postDate = postDate;
+    }
+
+    public Integer getOutputTaxStatus() {
+        return outputTaxStatus;
+    }
+
+    public void setOutputTaxStatus(Integer outputTaxStatus) {
+        this.outputTaxStatus = outputTaxStatus;
     }
 
 }

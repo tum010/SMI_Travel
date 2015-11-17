@@ -58,5 +58,8 @@
         <property name="exportDate" type="timestamp">
             <column name="export_date"/>
         </property>
+        <property name="gross" type="big_decimal">
+            <column name="gross" precision="10" />
+        </property>
     </class>
 </hibernate-mapping>
