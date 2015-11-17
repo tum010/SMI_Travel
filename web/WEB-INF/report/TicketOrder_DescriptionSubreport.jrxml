@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketOrder_DescriptionSubreport" language="groovy" pageWidth="410" pageHeight="45" columnWidth="410" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="dbba4a5c-5b64-4164-ba12-0418c68e33d6">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="description1" class="java.lang.String"/>
+	<field name="description2" class="java.lang.String"/>
+	<field name="net1" class="java.lang.String"/>
+	<field name="net2" class="java.lang.String"/>
+	<field name="sell1" class="java.lang.String"/>
+	<field name="sell2" class="java.lang.String"/>
+	<detail>
+		<band height="45" splitType="Stretch">
+			<rectangle>
+				<reportElement positionType="Float" x="0" y="29" width="410" height="15" uuid="fa1e194f-bfd7-4f29-8126-35d9ad1e212e"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement positionType="Float" x="0" y="14" width="410" height="15" uuid="093e2f80-9a42-446e-8c98-51134aaa98fc"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement positionType="Float" x="0" y="0" width="410" height="15" uuid="d96bbc00-7588-4227-9b95-80bfa6a90aa7"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="4" y="1" width="237" height="15" uuid="1652b4f1-8c66-4630-a8e1-76f3c8deb48d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPTION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="246" y="1" width="78" height="15" uuid="998dbb92-2bae-4c9a-b7a8-dbd9439a203a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NET]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="328" y="1" width="79" height="15" uuid="8514681c-e33f-48f0-b613-13f4927c8680"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SELL]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="242" y="0" width="1" height="45" uuid="c579d49f-3b8a-4aa6-bdd8-5ccdbce12483"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="324" y="0" width="1" height="45" uuid="cba13a20-9b16-40c7-a5fb-2f29908da0c3"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement positionType="Float" x="4" y="14" width="237" height="15" uuid="e2c2436a-17d2-4487-9a90-48b58721bd02"/>
+				<textFieldExpression><![CDATA[$F{description1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" x="4" y="30" width="237" height="15" uuid="4e105dd7-3703-47c8-aa2d-6675311ea533"/>
+				<textFieldExpression><![CDATA[$F{description2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement positionType="Float" x="246" y="14" width="78" height="15" uuid="bcf55c9e-7fa5-45f0-a850-c9426684264f"/>
+				<textFieldExpression><![CDATA[$F{description1}.equalsIgnoreCase("") ? "":
+Double.valueOf($F{net1} != null && $F{net1}.length() > 0 ? Double.valueOf($F{net1}) : 0)]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement positionType="Float" x="246" y="29" width="78" height="15" uuid="3c8efe0c-5b43-409b-a0be-7b9cb8d0c7d8"/>
+				<textFieldExpression><![CDATA[$F{description2}.equalsIgnoreCase("") ? "":
+Double.valueOf($F{net2} != null && $F{net2}.length() > 0 ? Double.valueOf($F{net2}) : 0)]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement positionType="Float" x="329" y="14" width="78" height="15" uuid="32b72b0e-38aa-4837-8c35-72ad0922f1ec"/>
+				<textFieldExpression><![CDATA[$F{description1}.equalsIgnoreCase("") ? "":
+Double.valueOf($F{sell1} != null && $F{sell1}.length() > 0 ? Double.valueOf($F{sell1}) : 0)]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement positionType="Float" x="329" y="29" width="78" height="15" uuid="fc9e2fd0-b21d-48d6-b3ad-73f9bcab80ce"/>
+				<textFieldExpression><![CDATA[$F{description2}.equalsIgnoreCase("") ? "":
+Double.valueOf($F{sell2} != null && $F{sell2}.length() > 0 ? Double.valueOf($F{sell2}) : 0)]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

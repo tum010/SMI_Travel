@@ -47,8 +47,14 @@
             <column name="department" length="20"/>
         </property>
         <property name="updateDate" type="timestamp">
-            <column name="update_date"/>
+            <column name="update_date" length="20"/>
         </property>
+        <property name="postDate" type="timestamp">
+            <column name="post_date" length="20"/>
+        </property>
+        <property name="outputTaxStatus" type="java.lang.Integer">
+            <column name="output_tax_status" />
+        </property>       
         <property name="postDate" type="timestamp">
             <column name="post_date" length="19" />
         </property>

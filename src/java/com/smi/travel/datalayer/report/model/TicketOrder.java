@@ -43,6 +43,8 @@ public class TicketOrder {
     private String issueby;
     private JRDataSource passengerNameAndTicketDataSource;
     private JRDataSource flightDataSource;
+    private JRDataSource infoDataSource;
+    private JRDataSource descriptionDataSource;
     private String subReportDir;
 
     public TicketOrder(){
@@ -334,6 +336,22 @@ public class TicketOrder {
 
     public void setIssueby(String issueby) {
         this.issueby = issueby;
+    }
+
+    public JRDataSource getInfoDataSource() {
+        return infoDataSource;
+    }
+
+    public void setInfoDataSource(JRDataSource infoDataSource) {
+        this.infoDataSource = infoDataSource;
+    }
+
+    public JRDataSource getDescriptionDataSource() {
+        return descriptionDataSource;
+    }
+
+    public void setDescriptionDataSource(JRDataSource descriptionDataSource) {
+        this.descriptionDataSource = descriptionDataSource;
     }
     
 }

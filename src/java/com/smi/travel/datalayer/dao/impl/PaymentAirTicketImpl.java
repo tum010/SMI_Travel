@@ -912,9 +912,28 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
     @Override
     public PaymentAirline getPaymentAirlineReport(String payno,String printby) {
         PaymentAirline paymentAirline = new PaymentAirline();
-        paymentAirline.setPaymentAirlineReportDataSource(new JRBeanCollectionDataSource(getPaymentAirline(payno,printby)));
-        paymentAirline.setPaymentAirlineListReportDataSource(new JRBeanCollectionDataSource(getPaymentAirlineList(payno,printby)));
-        paymentAirline.setPaymentAirlineRefundReportDataSource(new JRBeanCollectionDataSource(getPaymentAirlineRefund(payno,printby)));
+        
+        List paymentAirlineReportList = getPaymentAirline(payno,printby);
+        if(paymentAirlineReportList.size() > 0){
+            paymentAirline.setPaymentAirlineReportDataSource(new JRBeanCollectionDataSource(paymentAirlineReportList));
+        }else{
+            paymentAirline.setPaymentAirlineReportDataSource(null);
+        }
+               
+        List paymentAirlineList = getPaymentAirlineList(payno,printby);
+        if(paymentAirlineList.size() > 0){
+            paymentAirline.setPaymentAirlineListReportDataSource(new JRBeanCollectionDataSource(paymentAirlineList));
+        }else{
+            paymentAirline.setPaymentAirlineListReportDataSource(null);
+        }       
+        
+        List paymentAirlineRefundList = getPaymentAirlineRefund(payno,printby);
+        if(paymentAirlineRefundList.size() > 0){
+            paymentAirline.setPaymentAirlineRefundReportDataSource(new JRBeanCollectionDataSource(paymentAirlineRefundList));
+        }else{
+            paymentAirline.setPaymentAirlineRefundReportDataSource(null);
+        }
+        
         return paymentAirline; 
            
 //        GuideCommissionInfo guideCommissionInfo = new GuideCommissionInfo();

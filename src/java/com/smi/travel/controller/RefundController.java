@@ -199,7 +199,7 @@ public class RefundController extends SMITravelController {
     }
     
     private RefundAirticket getRefundFromPage(HttpServletRequest request,String airbookingid){
-            String refundticketid = request.getParameter("refundticketid");
+            String refundticketid = request.getParameter("refundid");
             String refundcodePage = request.getParameter("refundBy");
             String refundnamePage = request.getParameter("refundByName");
             String receivecodePage = request.getParameter("receiveBy");

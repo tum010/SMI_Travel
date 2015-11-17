@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentAirlineReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4d2fe6ff-f331-48e0-bee1-d99e57a64a42">
 	<property name="ireport.zoom" value="1.2100000000000048"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="31"/>
+	<property name="ireport.y" value="96"/>
 	<style name="style1"/>
 	<field name="payno" class="java.lang.String"/>
 	<field name="totalpay" class="java.lang.String"/>
@@ -177,7 +177,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{payno}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="157" y="211" width="151" height="19" uuid="b90e5edf-467a-44b3-ad59-3fbf58f69f45"/>
 				<box>
 					<topPen lineWidth="0.0"/>
@@ -188,9 +188,9 @@
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{debitnote}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{debitnote} != null && !"null".equals($F{debitnote}) && $F{debitnote}.length() > 0 && !"".equalsIgnoreCase($F{debitnote})) ? new BigDecimal($F{debitnote}) : ""]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="157" y="32" width="151" height="20" uuid="11d46f1e-cbee-4995-9f95-702d003a720e"/>
 				<box>
 					<pen lineWidth="0.0" lineColor="#CCCCCC"/>
@@ -202,9 +202,9 @@
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{totalpay}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{totalpay} != null && !"null".equals($F{totalpay}) && $F{totalpay}.length() > 0 && !"".equalsIgnoreCase($F{totalpay})) ? new BigDecimal($F{totalpay}) : ""]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="157" y="52" width="151" height="20" uuid="b81c01f5-5504-4c3d-87f9-d4496c7c46d0"/>
 				<box>
 					<topPen lineWidth="0.0"/>
@@ -215,9 +215,9 @@
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{totalcom}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{totalcom} != null && !"null".equals($F{totalcom}) && $F{totalcom}.length() > 0 && !"".equalsIgnoreCase($F{totalcom})) ? new BigDecimal($F{totalcom}) : ""]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="157" y="72" width="151" height="20" uuid="43f4182d-6f39-47de-993e-f15835940c1a"/>
 				<box>
 					<topPen lineWidth="0.0"/>
@@ -228,7 +228,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cash}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{cash} != null && !"null".equals($F{cash}) && $F{cash}.length() > 0 && !"".equalsIgnoreCase($F{cash})) ? new BigDecimal($F{cash}) : ""]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="157" y="93" width="151" height="20" uuid="71dca289-162d-4198-83ce-f216e229bae3"/>
@@ -243,7 +243,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{chqno}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="157" y="113" width="151" height="20" uuid="c911c26c-2a22-4df0-a3da-04ec081a6291"/>
 				<box>
 					<topPen lineWidth="0.0"/>
@@ -254,9 +254,9 @@
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{amount} != null && !"null".equals($F{amount}) && $F{amount}.length() > 0 && !"".equalsIgnoreCase($F{amount})) ? new BigDecimal($F{amount}) : ""]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="157" y="133" width="151" height="20" uuid="ab04c578-828f-4c3d-8644-a45e4c0193fb"/>
 				<box>
 					<topPen lineWidth="0.0"/>
@@ -267,9 +267,9 @@
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{refund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{refund} != null && !"null".equals($F{refund}) && $F{refund}.length() > 0 && !"".equalsIgnoreCase($F{refund})) ? new BigDecimal($F{refund}) : ""]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="157" y="153" width="151" height="19" uuid="ff1656e9-0ffd-4b6e-8a84-8a6e66e30b5c"/>
 				<box>
 					<topPen lineWidth="0.0"/>
@@ -280,9 +280,9 @@
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{comrefund}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{comrefund} != null && !"null".equals($F{comrefund}) && $F{comrefund}.length() > 0 && !"".equalsIgnoreCase($F{comrefund})) ? new BigDecimal($F{comrefund}) : ""]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="157" y="172" width="151" height="20" uuid="431ce8bc-15eb-48d8-b530-53583623df8a"/>
 				<box>
 					<topPen lineWidth="0.0"/>
@@ -293,9 +293,9 @@
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{withtax}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{withtax} != null && !"null".equals($F{withtax}) && $F{withtax}.length() > 0 && !"".equalsIgnoreCase($F{withtax})) ? new BigDecimal($F{withtax}) : ""]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="157" y="192" width="151" height="19" uuid="fd2c2fdc-07b3-430c-83ef-c0e0fdb99252"/>
 				<box>
 					<topPen lineWidth="0.0"/>
@@ -306,7 +306,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{creditnote}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{creditnote} != null && !"null".equals($F{creditnote}) && $F{creditnote}.length() > 0 && !"".equalsIgnoreCase($F{creditnote})) ? new BigDecimal($F{creditnote}) : ""]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="11" y="27" width="534" height="1" uuid="8bb1737c-5794-49b4-b6f6-0864bd3c9112"/>
@@ -314,7 +314,7 @@
 					<pen lineWidth="1.5"/>
 				</graphicElement>
 			</line>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="157" y="243" width="151" height="20" uuid="48bcad1d-f251-4996-ab29-7a1a0f4fa319"/>
 				<box>
 					<topPen lineWidth="0.0"/>
@@ -325,7 +325,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{totalpaymentamount}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{totalpaymentamount} != null && !"null".equals($F{totalpaymentamount}) && $F{totalpaymentamount}.length() > 0 && !"".equalsIgnoreCase($F{totalpaymentamount})) ? new BigDecimal($F{totalpaymentamount}) : ""]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="243" width="147" height="20" backcolor="#FFFFFF" uuid="6dae7971-99b6-4326-a47b-ed6ef8f8604b"/>
@@ -340,7 +340,7 @@
 				</textElement>
 				<text><![CDATA[Total Payment Amount :   ]]></text>
 			</staticText>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="157" y="263" width="151" height="20" uuid="2561d0dc-a0a3-4b20-ba5f-a4971b2899d3"/>
 				<box>
 					<topPen lineWidth="0.0"/>
@@ -351,7 +351,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Top">
 					<font fontName="SansSerif" size="12" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{receivefromair}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{receivefromair} != null && !"null".equals($F{receivefromair}) && $F{receivefromair}.length() > 0 && !"".equalsIgnoreCase($F{receivefromair})) ? new BigDecimal($F{receivefromair}) : ""]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="263" width="147" height="20" backcolor="#FFFFFF" uuid="49d246cb-2cbc-452d-a16f-ef77fc930714"/>

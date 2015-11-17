@@ -113,8 +113,10 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat dateformat = new SimpleDateFormat();
         dateformat.applyPattern("yyyy-MM-dd HH:mm:ss");
-        String updateDate = dateformat.format(date);
-        tax.setUpdateDate(utilfunction.convertStringToDate(updateDate));
+        String updateDateTemp = dateformat.format(date);
+        Date updateDate = new Date(); 
+        updateDate = utilfunction.convertStringToDateS(updateDateTemp);
+        tax.setUpdateDate(new Date());
         try {
             Session session = this.getSessionFactory().openSession();
             setTransaction(session.beginTransaction());

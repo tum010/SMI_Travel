@@ -29,11 +29,12 @@ public class TaxInvoiceDetail  {
      private Integer isProfit;
      private Integer isExport;
      private Date exportDate;
+     private BigDecimal gross;
 
     public TaxInvoiceDetail() {
     }
 
-    public TaxInvoiceDetail(TaxInvoice taxInvoice, InvoiceDetail invoiceDetail, Character vatType, BigDecimal vat, BigDecimal amount, BigDecimal cost, String createBy, Date createDate, Integer isVat, String curCost, String curAmount, MBilltype mbillType, Master master, String description, Integer isProfit, Integer isExport, Date exportDate) {
+    public TaxInvoiceDetail(TaxInvoice taxInvoice, InvoiceDetail invoiceDetail, Character vatType, BigDecimal vat, BigDecimal amount, BigDecimal cost, String createBy, Date createDate, Integer isVat, String curCost, String curAmount, MBilltype mbillType, Master master, String description, Integer isProfit, Integer isExport, Date exportDate, BigDecimal gross) {
        this.taxInvoice = taxInvoice;
        this.invoiceDetail = invoiceDetail;
        this.vatType = vatType;
@@ -51,6 +52,7 @@ public class TaxInvoiceDetail  {
        this.isProfit = isProfit;
        this.isExport = isExport;
        this.exportDate = exportDate;
+       this.gross = gross;
     }
    
     public String getId() {
@@ -188,6 +190,14 @@ public class TaxInvoiceDetail  {
 
     public void setExportDate(Date exportDate) {
         this.exportDate = exportDate;
+    }
+
+    public BigDecimal getGross() {
+        return gross;
+    }
+
+    public void setGross(BigDecimal gross) {
+        this.gross = gross;
     }
 
 }

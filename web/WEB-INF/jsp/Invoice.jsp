@@ -183,7 +183,7 @@
                     <c:when test="${typeBooking == 'O'}">
                         <div id="AlertBookingRefno"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <strong><font color="red">This Ref No can get billable detail from wendy only</font></strong> 
+                            <strong>This Ref No can get billable detail from wendy only</strong> 
                         </div>
                     </c:when>
                     <c:when test="${typeBooking == 'I'}">
@@ -228,7 +228,7 @@
                                                
                                                 <c:choose>
                                                     <c:when test="${typeBooking == 'O'}">
-                                                        <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from wendy only</font></div>
+                                                        <div id='AlertBooking' style='display:none'></div>
                                                     </c:when>
                                                     <c:when test="${typeBooking == 'I'}">
                                                         <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from outbound only</font></div>

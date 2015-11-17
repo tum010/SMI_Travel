@@ -13,52 +13,24 @@ import java.util.Date;
  * @author Surachai
  */
 public class TicketOrderInfo {
-    private String refno;
-    private String firstname;
-    private String leadername;
-    private Date billDate;
+    private String issuedate;
     private String companyname;
     private String tel;
     private String pnr;
     private String inv;
-    private String sell;
-    private String sell_tax;
-    private String net;
-    private String net_tax;
-    private String teamOfPayment;
+    private String price;
+    private String cost;
+    private String pricetax;
+    private String costtax;
+    private String termpay;
     private String remark;
-    private String prepareBy;
 
-    public String getRefno() {
-        return refno;
+    public String getIssuedate() {
+        return issuedate;
     }
 
-    public void setRefno(String refno) {
-        this.refno = refno;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLeadername() {
-        return leadername;
-    }
-
-    public void setLeadername(String leadername) {
-        this.leadername = leadername;
-    }
-
-    public Date getBillDate() {
-        return billDate;
-    }
-
-    public void setBillDate(Date billDate) {
-        this.billDate = billDate;
+    public void setIssuedate(String issuedate) {
+        this.issuedate = issuedate;
     }
 
     public String getCompanyname() {
@@ -93,44 +65,44 @@ public class TicketOrderInfo {
         this.inv = inv;
     }
 
-    public String getSell() {
-        return sell;
+    public String getPrice() {
+        return price;
     }
 
-    public void setSell(String sell) {
-        this.sell = sell;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public String getSell_tax() {
-        return sell_tax;
+    public String getCost() {
+        return cost;
     }
 
-    public void setSell_tax(String sell_tax) {
-        this.sell_tax = sell_tax;
+    public void setCost(String cost) {
+        this.cost = cost;
     }
 
-    public String getNet() {
-        return net;
+    public String getPricetax() {
+        return pricetax;
     }
 
-    public void setNet(String net) {
-        this.net = net;
+    public void setPricetax(String pricetax) {
+        this.pricetax = pricetax;
     }
 
-    public String getNet_tax() {
-        return net_tax;
+    public String getCosttax() {
+        return costtax;
     }
 
-    public void setNet_tax(String net_tax) {
-        this.net_tax = net_tax;
+    public void setCosttax(String costtax) {
+        this.costtax = costtax;
     }
 
-    public String getTeamOfPayment() {
-        return teamOfPayment;
+    public String getTermpay() {
+        return termpay;
     }
 
-    public void setTeamOfPayment(String teamOfPayment) {
-        this.teamOfPayment = teamOfPayment;
+    public void setTermpay(String termpay) {
+        this.termpay = termpay;
     }
 
     public String getRemark() {
@@ -141,16 +113,4 @@ public class TicketOrderInfo {
         this.remark = remark;
     }
 
-    public String getPrepareBy() {
-        return prepareBy;
-    }
-
-    public void setPrepareBy(String prepareBy) {
-        this.prepareBy = prepareBy;
-    }
-    
-    
-    
-    
-    
 }
