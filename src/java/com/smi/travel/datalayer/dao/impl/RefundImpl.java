@@ -132,7 +132,6 @@ public class RefundImpl implements RefundDao{
         Session session = this.sessionFactory.openSession();
         try { 
             transaction = session.beginTransaction();
-            
             RefundAirticket refund = airticketrefund.getRefundAirticket();
             if(refund != null){
                 session.save(refund);
@@ -161,8 +160,8 @@ public class RefundImpl implements RefundDao{
      @Override
     public String updateRefund(AirticketRefund airticketrefund) {
         String result = "";
+        Session session = this.sessionFactory.openSession();
         try {
-            Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
             RefundAirticket refund = airticketrefund.getRefundAirticket();
             if(refund != null){

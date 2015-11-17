@@ -126,7 +126,6 @@
                     <div class="panel-body">
                         <!-- Refund Table --> 
                         <div class="row-fluid">
-                            <input type="text" class="hidden" id="refundid" name="refundid" value="0" /> 
                             <table  class="display" id="RefundTable">
                                 <thead>
                                     <tr class="datatable-header">
@@ -135,7 +134,7 @@
                                         <th style="width: 15%" >Refund By</th>
                                         <th style="width: 10%" >Refund Date</th>
                                         <th style="width: 15%" >Receive</th>
-                                        <th style="width: 15%"  >Change</th>
+                                        <th style="width: 15%" >Change</th>
                                         <th>Detail</th>
                                         <th style="width: 8%" >Action</th>
                                     </tr>
@@ -181,7 +180,7 @@
                                         <label for="Owner" class="col-sm-3 control-label text-right">Refund By</label>
                                         <div class="col-lg-4">
                                             <div class="">
-                                                <div class="input-group ">
+                                                <div class="input-group" id="refundpanel">
                                                     <input type="hidden" class="form-control" name="refundById" id="refundById" value="${table1.airticketrefundid}">
                                                     <input type="hidden" class="form-control" name="refundid" id="refundid" value="${table1.id}">
                                                     <input type="text" class="form-control" id="refundBy" name="refundBy" value="${table1.refundcode}">
@@ -191,7 +190,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-5">  
+                                        <div class="col-sm-5" >  
                                             <input type="text" class="form-control" id="refundByName" name="refundByName" value="" readonly="">
                                         </div>
                                     </div>
@@ -215,7 +214,7 @@
                                         <label for="Owner" class="col-sm-3 control-label text-right">Receive By</label>
                                         <div class="col-lg-4">
                                             <div class="">
-                                                <div class="input-group ">
+                                                <div class="input-group" id="receivepanel">
                                                     <c:if test="${table1.receiveby == null}"> 
                                                         <input type="hidden" class="form-control" name="receiveById" id="receiveById" value="${refundbyidDefault}">
                                                         <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${refundbyDefault}">
@@ -245,7 +244,7 @@
                                     <div class="col-sm-6 form-group">
                                         <label  class="col-sm-3 control-label text-right">Receive Date</label>
                                         <div class="col-lg-4">
-                                            <div class="form-group">
+                                            <div class="form-group" id="receivedatepanel">
                                                 <div class='input-group date' id='datetimepicker4'>
                                                     <c:if test="${table1.receivedate == null}"> 
                                                         <input type='text' class="form-control datemask" name="receiveDate" id="receiveDate" data-date-format="YYYY-MM-DD" value="${create}"  placeholder="YYYY-MM-DD"/>
@@ -328,10 +327,10 @@
                                                             <input type="text" maxlength ="255" class="form-control" id="inputSector${statusDetail.count}" name="inputSector${statusDetail.count}" value="${tableDetail.sector}"></td>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="form-control" id="inputSectorRefund${statusDetail.count}" name="inputSectorRefund${statusDetail.count}" value="${tableDetail.sectorRefund}">
+                                                            <input type="text" class="form-control" id="inputSectorRefund${statusDetail.count}" name="inputSectorRefund${statusDetail.count}" value="${tableDetail.sectorRefund}" onfocusout="checkRefund(this,${statusDetail.count})">
                                                         </td>
                                                         <td>
-                                                            <input  maxlength ="15" type="text"  class="form-control number text-right"  onfocusout="changeFormatChargeNumber(${statusDetail.count});"  id="inputCharge${statusDetail.count}" name="inputCharge${statusDetail.count}" value="${tableDetail.charge}" >
+                                                            <input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeNumber(${statusDetail.count});"  id="inputCharge${statusDetail.count}" name="inputCharge${statusDetail.count}" value="${tableDetail.charge}" >
                                                         </td>
                                                         <td class="text-center">
                                                             <a class="carousel"  
@@ -347,9 +346,9 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-5 form-group text-right">
-                                        <button type="submit" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
+                                    <div class="row">
+                                        <div class="col-sm-5 form-group text-right">
+                                        <button type="button" id="buttonPrintRefund"  name="buttonPrintRefund" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
                                     </div>
                                     <div class="col-sm-1 form-group text-right">
                                         <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=saveRefund">
@@ -357,7 +356,7 @@
                                         </a>
                                     </div>
                                     <div class="col-sm-6 form-group text-left">
-                                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
+                                        <button type="button" id="buttonCloseRefund"  name="buttonCloseRefund" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
                                     </div>
                                 </div>  
                             </div>
@@ -663,8 +662,17 @@
 </style>
 <script type="text/javascript" charset="utf-8">
     var selectTicketNo = "<option value='' ></option>";
+    var counterror = 0;
     $(document).ready(function () {
-        $(".number").mask('000000000000000000', {reverse: true});
+        $(".numerical").on('input', function() {
+            var value = $(this).val().replace(/[^0-9.,]*/g, '');
+            value = value.replace(/\.{2,}/g, '.');
+            value = value.replace(/\.,/g, ',');
+            value = value.replace(/\,\./g, ',');
+            value = value.replace(/\,{2,}/g, ',');
+            value = value.replace(/\.[0-9]+\./g, '.');
+            $(this).val(value);
+        });
         <c:forEach var="cur" items="${listTicketNo}">
             selectTicketNo += "<option value='${cur.id}' ><c:out value='${cur.series1}${cur.series2}${cur.series3}' /></option>";      
         </c:forEach>
@@ -679,7 +687,7 @@
         $('.datemask').mask('0000-00-00');
         $('.date').datetimepicker();
         
-        validateRefundForm(); 
+//        validateRefundForm(); 
         
         $("#RefundTicketDetailTable").on("keyup", function () {
             var rowAll = $("#RefundTicketDetailTable tr").length;
@@ -735,13 +743,6 @@
         $(this).addClass('row_selected').siblings().removeClass('row_selected');
     });
 
-//    $('#datetimepicker3').datetimepicker({
-//        pickTime: false
-//    });
-//    
-//    $('#datetimepicker4').datetimepicker({
-//        pickTime: false
-//    });
      $('#datetimepicker4').datetimepicker().on('dp.change', function (e) {
         $('#RefundForm').bootstrapValidator('revalidateField', 'receiveDate');
     });
@@ -756,7 +757,7 @@
         var user_id = $(this).find(".user-id").text();
         var user_user = $(this).find(".user-user").text();
         var user_name = $(this).find(".user-name").text();
-        console.log("User : " + user_user + "Name : " + user_name);
+//        console.log("User : " + user_user + "Name : " + user_name);
         $("#receiveById").val(user_id);
         $("#receiveBy").val(user_user);
         $("#receiveByName").val(user_name);
@@ -803,7 +804,7 @@
     $("#refundCustTable tr").on('click', function () {
         var user_id = $(this).find(".item-billto").text();
         var user_name = $(this).find(".item-name").text();
-        console.log("User : " + user_id + "Name : " + user_name);
+//        console.log("User : " + user_id + "Name : " + user_name);
         $("#refundBy").val(user_id);
         $("#refundByName").val(user_name);
         $("#refundCustModal").modal('hide');
@@ -845,8 +846,6 @@
         });
     }); 
     
-    
-
     $("#searchCustFrom").keyup(function (event) {
         if (event.keyCode === 13) {
             if ($("#searchCustFrom").val() === "") {
@@ -875,19 +874,97 @@
         "bLengthChange": false,
         "iDisplayLength": 10
     });
-         
+//     validateRefundForm();    
+    $("#RefundForm")
+        .bootstrapValidator({
+//                framework: 'bootstrap',
+            container: 'tooltip',
+            excluded: [':disabled', ':hidden', ':not(:visible)'],
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {
+                refundBy: {
+                     excluded: 'false',
+                    validators: {
+                        notEmpty: {
+                            message: ' refundBy is required'
+                        }
+                    }
+                },
+                refundByName: {
+                    trigger: 'focus keyup',
+                    validators: {
+                        notEmpty: {trigger: 'change',
+                            message: ' refundByName is required'
+                        }
+                    }
+                },
+                receiveBy: {
+                    validators: {
+                        notEmpty: {
+                            message: ' receiveBy is required'
+                        }
+                    }
+                },
+                receiveByName: {
+                    validators: {
+                        notEmpty: {
+                            message: ' receiveByName is required'
+                        }
+                    }
+                },
+                receiveDate: {
+                    validators: {
+                        notEmpty: {
+                            message: ' receiveDate is required'
+                        }
+                    }
+                }
+            }
+        })
+        .on('success.field.fv', function (e, data) {
+            if (data.field === 'refundBy' && data.fv.isValidField('refundBy') === false) {
+                data.fv.revalidateField('refundBy');
+            }
+            if (data.field === 'refundByName' && data.fv.isValidField('refundByName') === false) {
+                data.fv.revalidateField('refundByName');
+            }
+            if (data.field === 'receiveBy' && data.fv.isValidField('receiveBy') === false) {
+                data.fv.revalidateField('receiveBy');
+            }
+            if (data.field === 'receiveByName' && data.fv.isValidField('receiveByName') === false) {
+                data.fv.revalidateField('receiveByName');
+            }
+             if (data.field === 'receiveDate' && data.fv.isValidField('receiveDate') === false) {
+                data.fv.revalidateField('receiveDate');
+            }
+        });
+           
+        var countTableRefundDetail = $('#RefundTicketDetailTable tr').length;
+        console.log("RefundTicketDetailTable : " + countTableRefundDetail);
+        for(var i = 1 ; i <= (countTableRefundDetail-1) ; i++){
+            checkRefundReady(i);
+        }  
+        if(counterror === 0){
+            $("#buttonSaveRefund").removeAttr("disabled");
+            $("#buttonPrintRefund").removeAttr("disabled");
+        }else{
+            $("#buttonSaveRefund").attr("disabled", "disabled");
+            $("#buttonPrintRefund").attr("disabled", "disabled");
+        }
  }); 
-    
+  
 function setBillValue(billto, billname, address, term, pay) {
     $("#refundBy").val(billto);
     $("#refundByName").val(billname);
 
     $('#RefundForm').bootstrapValidator('revalidateField', 'refundBy');
     $('#RefundForm').bootstrapValidator('revalidateField', 'refundByName');
-//    $('#RefundForm').bootstrapValidator('revalidateField', 'receiveBy');
-//    $('#RefundForm').bootstrapValidator('revalidateField', 'receiveByName');
 
-    if($("#receiveBy").val() != "" && $("#receiveByName").val() != "" && $("#receiveDate").val() != "" && $("#refundBy").val() != "" && $("#refundByName").val() != ""){
+    if($("#receiveBy").val() !== "" && $("#receiveByName").val() !== "" && $("#receiveDate").val() !== "" && $("#refundBy").val() !== "" && $("#refundByName").val() !== ""){
         $('#RefundForm').bootstrapValidator('revalidateField', 'receiveBy');
         $('#RefundForm').bootstrapValidator('revalidateField', 'receiveByName');
         $('#RefundForm').bootstrapValidator('revalidateField', 'receiveDate');
@@ -915,54 +992,48 @@ function setBillReceiveValue(billto, billname, address, term, pay) {
 }
 
 function validateRefundForm(){
-//    alert("Check Add");
-    $("#RefundForm")
-        .bootstrapValidator({
-        container: 'tooltip',
-        excluded: [':disabled'],
-        feedbackIcons: {
-            valid: 'uk-icon-check',
-            invalid: 'uk-icon-times',
-            validating: 'uk-icon-refresh'
-        },
-        fields: {                
-            refundBy: {
-                validators: {
-                    notEmpty: {
-                        message: 'Input refundBy '
-                    }
-                }
-            },
-            refundByName: {
-                validators: {
-                    notEmpty: {
-                        message: 'Input refundByName'
-                    }
-                }
-            },
-            receiveBy: {
-                validators: {
-                    notEmpty: {
-                        message: 'Input receiveBy'
-                    }
-                }
-            },
-            receiveByName: {
-                validators: {
-                    notEmpty: {
-                        message: 'Input receiveByName'
-                    }
-                }
-            }, 
-            receiveDate: {
-                validators: {
-                    notEmpty: {
-                        message: 'Input receiveDate'
-                    }
-                }
-            }
-        }  
-    });
+    var refundby = $("#refundBy").val();
+    var refundname = $("#refundByName").val();
+    var receiveby = $("#receiveBy").val();
+    var receivename = $("#receiveByName").val();
+    var receivedate = $("#receiveDate").val();
+    console.log("Refund By : " + refundby + " Refund Name : " + refundname + " Receive By : " + receiveby + " Receive Name : " + receivename + "Rceive date : " + receivedate);
+    if(refundby === '' && refundname === ''){
+        $("#refundpanel").addClass("has-error");
+        $("#buttonSaveRefund").attr("disabled", "disabled");
+        $("#buttonPrintRefund").attr("disabled", "disabled");
+        $("#buttonCloseRefund").attr("disabled", "disabled");
+    }else if(refundby !== '' && refundname !== ''){
+        $("#refundpanel").removeClass("has-success");
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+        $("#buttonCloseRefund").removeAttr("disabled");
+    }else if(receiveby === '' && receivename === ''){
+        $("#receivepanel").addClass("has-error");
+        $("#buttonSaveRefund").attr("disabled", "disabled");
+        $("#buttonPrintRefund").attr("disabled", "disabled");
+        $("#buttonCloseRefund").attr("disabled", "disabled");
+    }else if(receiveby !== '' && receivename !== ''){
+        $("#receivepanel").removeClass("has-success");
+        $("#refundpanel").removeClass("has-success");
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+        $("#buttonCloseRefund").removeAttr("disabled");
+    }else if(receivedate === '' ){
+        $("#receivedatepanel").addClass("has-error");
+        $("#buttonSaveRefund").attr("disabled", "disabled");
+        $("#buttonPrintRefund").attr("disabled", "disabled");
+        $("#buttonCloseRefund").attr("disabled", "disabled");
+    }else if(receivedate !== '' ){
+        $("#receivedatepanel").removeClass("has-success");
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+        $("#buttonCloseRefund").removeAttr("disabled");
+    }else{
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+        $("#buttonCloseRefund").removeAttr("disabled");
+    }
 }
 function searchCustomerAutoList(name) {
     var servletName = 'BillableServlet';
@@ -1092,6 +1163,7 @@ function searchCustomerAgentList(name) {
     }
 }
 
+
 function saveRefund(){
     var actionG = document.getElementById('action');
     var refno = document.getElementById('referenceNo');
@@ -1100,6 +1172,40 @@ function saveRefund(){
     console.log("REf : " + refno.value +" ID : " + bookingid.value);
     $('#referenceNo').val(refno.value);
     $('#airbookingid').val(bookingid.value);
+    
+    var refundby = $("#refundBy").val();
+    var refundname = $("#refundByName").val();
+    var receiveby = $("#receiveBy").val();
+    var receivename = $("#receiveByName").val();
+    var receivedate = $("#receiveDate").val();
+    if(refundby !== '' && refundname !== '' && receiveby !== '' &&  receivename !== '' && receivedate !== ''){
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+        $("#buttonCloseRefund").removeAttr("disabled");
+        document.getElementById('RefundForm').submit();
+    }
+    // Check Change
+   
+}
+function checkRefundReady(row) {
+    var refund = $("#inputSectorRefund" + row).val();
+    var issue = $("#inputSector" + row).val();
+    console.log("Row Refund detail id : " + row + " Value issue : " + issue + " Refund : " + refund);
+    if (issue.indexOf(refund) >= 0) {
+//        $("#inputSectorRefund" + row).style.borderColor = "Green";
+        $("#inputSectorRefund"+row).addClass("has-success");
+        $("#inputSectorRefund"+row).css('border-color','green');
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+    } else {
+//        $("#inputSectorRefund" + row).style.borderColor = "Red";
+        counterror++;
+        $("#inputSectorRefund"+row).addClass("has-error");
+        $("#inputSectorRefund"+row).css('border-color','red');
+        $("#buttonSaveRefund").attr("disabled", "disabled");
+        $("#buttonPrintRefund").attr("disabled", "disabled");
+        return;
+    }
 }
 
 function addRefundDetail(counter){
@@ -1135,7 +1241,7 @@ function addRowRefundTicketDetail(row,id){
         '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control">'+ selectTicket +'</select> </td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value=""></td>' +
-        '<td><input  maxlength ="15" type="text"  class="form-control number text-right"  onfocusout="changeFormatChargeNumber('+row+');"  id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' +      
+        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeNumber('+row+');"  id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' +      
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
     );
@@ -1152,7 +1258,7 @@ function addRowRefundTicketDetailAdd(row,id){
         '<td><select id="SelectTocketNoadd' + row + '" name="SelectTocketNoadd' + row + '" class="form-control">'+ selectTicket +'</select> </td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSectoradd' + row + '" name="inputSectoradd' + row + '" value=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefundadd' + row + '" name="inputSectorRefundadd' + row + '" value=""></td>' +
-        '<td><input  maxlength ="15" type="text"  class="form-control number text-right"  onfocusout="changeFormatChargeAddNumber('+row+');"  id="inputChargeadd' + row + '" name="inputChargeadd' + row + '" value="" ></td>' +      
+        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeAddNumber('+row+');"  id="inputChargeadd' + row + '" name="inputChargeadd' + row + '" value="" ></td>' +      
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
     );
@@ -1234,6 +1340,22 @@ function changeFormatChargeNumber(id){
     }else{
         count = parseFloat(count);
         document.getElementById('inputCharge' + id).value = formatNumber(count);
+    }
+}
+
+function checkRefund(e,row) {
+    var refund = e.value;
+    var issue = $("#inputSector" + row).val();
+    console.log("Row Refund detail id : " + row + " Value issue : " + issue);
+    if (issue.indexOf(refund) >= 0) {
+        e.style.borderColor = "Green";
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+    } else {
+        e.style.borderColor = "Red";
+        $("#buttonSaveRefund").attr("disabled", "disabled");
+        $("#buttonPrintRefund").attr("disabled", "disabled");
+        return;
     }
 }
 
