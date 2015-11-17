@@ -112,7 +112,7 @@
                          <input type="hidden" id="countListAdd" name="countListAdd" value="1" >
                     </div>
                     <div class="col-md-2 text-right" style="margin-left: 0px;">
-                        <a  href="AirTicket.smi?referenceNo=${param.referenceNo}&action=edit" 
+                        <a  href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}"
                             class="btn btn-primary">
                             <span class="glyphicon glyphicon-arrow-left"></span> Back
                         </a>
@@ -1194,7 +1194,9 @@ function checkRefundReady(row) {
     if (issue.indexOf(refund) >= 0) {
 //        $("#inputSectorRefund" + row).style.borderColor = "Green";
         $("#inputSectorRefund"+row).addClass("has-success");
-        $("#inputSectorRefund"+row).css('border-color','green');
+        if(refund !== ''){
+            $("#inputSectorRefund"+row).css('border-color','green');
+        }
         $("#buttonSaveRefund").removeAttr("disabled");
         $("#buttonPrintRefund").removeAttr("disabled");
     } else {
