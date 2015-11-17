@@ -7355,7 +7355,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         cell0312.setCellValue("Issue Date : ");
         cell0312.setCellStyle(styleC21);
         HSSFCell cell0322 = row032.createCell(1);
-        cell0322.setCellValue(receiveSum.getInvoicedatePage());
+        cell0322.setCellValue(receiveSum.getIssuedatePage());
         cell0322.setCellStyle(styleC22);
         sheet1.addMergedRegion(CellRangeAddress.valueOf("B3:D3"));
         HSSFCell cell0332 = row032.createCell(4);
