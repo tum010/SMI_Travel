@@ -1283,6 +1283,8 @@ public class AJAXBean extends AbstractBean implements
                         displaydescription += parts[9] + " : " + parts[4] + " : " + parts[5];
 
                     }
+                }else{
+                    displaydescription = description;
                 }
             } else if ("3".equals(product)) {
                 displaydescription = billTypeName;
@@ -1297,6 +1299,8 @@ public class AJAXBean extends AbstractBean implements
                         displaydescription += parts[4] + " : " + parts[5] + " : " + parts[6];
                         System.out.println("displaydescription" + displaydescription);
                     }
+                }else{
+                    displaydescription = description;
                 }
             }
 
