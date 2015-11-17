@@ -8,6 +8,11 @@
 <link href="css/jquery-ui.css" rel="stylesheet">
 
 <c:set var="page" value="${requestScope['page']}" />
+<c:set var="listCurrency" value="${requestScope['listCurrency']}" />
+<c:set var="listCustomerAgentInfo" value="${requestScope['listCustomerAgentInfo']}" />
+<c:set var="vat" value="${requestScope['vat']}" />
+<c:set var="roleName" value="${requestScope['roleName']}" />
+<c:set var="create" value="${requestScope['thisdate']}" />
 
 <section class="content-header" >
     <h1>
@@ -68,12 +73,12 @@
                             <div class='input-group date' id='InputDatePicker'>    
                                 <c:if test='${invoice.invDate != null}'>
                                     <input id="InputInvDate" name="InputInvDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${invoice.invDate}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                         
                                 </c:if>
                                 <c:if test='${invoice.invDate == null}'>
                                     <input id="InputInvDate" name="InputInvDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${create}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                              
                                 </c:if>  
                             </div>
@@ -96,7 +101,7 @@
                             <label class="control-label" for="">AR Code</lable>
                         </div>
                         <div class="col-md-2 form-group">                      
-                            <input  type="text" id="InputArCode" name="InputArCode" class="form-control" value="" readonly >
+                            <input  type="text" id="ARCode" name="ARCode" class="form-control" value="" readonly >
                         </div>
                     </div>
                     <div class="col-xs-12 ">
@@ -131,13 +136,17 @@
                                     <div id="textAlertCurrency"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                         <strong>Currency is not match!!! </strong> 
-                                    </div>   
+                                    </div>
+                                    <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
+                                    <input type="text" class="hidden" id="idDeleteDetailBillable" name="idDeleteDetailBillable" value="0" >
+                                    <input type="text" class="hidden" id="action" name="action" value="save" >
                                     <table class="display" id="DetailBillableTable">
                                         <thead class="datatable-header">
                                             <tr>
                                                 <th class="hidden"> Id</th>
                                                 <th style="width:30%;" align="left">Description</th>
-                                                <th style="width: 3%" onclick="checkVatInvoiceAll()" align="center"><u>Is vat</u></th> 
+                                                <th style="width: 3%" onclick="checkVatInvoiceInboundAll()" align="center"><u>Is vat</u></th> 
+                                                <th style="width: 3%" align="center" hidden="">Vat Temp</th>
                                                 <th style="width: 3%" align="center">Vat</th>
                                                 <th style="width: 8%" align="center">Gross</th>
                                                 <th style="width: 8%" align="center">Amount</th>
@@ -146,13 +155,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr> 
+<!--                                            <tr> 
                                                 <td class="hidden"><input type="text" class="form-control" id="detailId${taxdesc.count}" name="detailId${taxdesc.count}" value="" > </td>
                                                 <td><input type="text" class="form-control" id="BillDescriptionTemp${taxdesc.count}" name="BillDescriptionTemp${taxdesc.count}"  onkeyup="" value=""></td>                                              
-                                                <td><input type="checkbox" id="checkUse${taxdesc.count}" name="checkUse${taxdesc.count}"  onclick="" value=""></td>
+                                                <td><input type="checkbox" id="checkUse1" name="checkUse1" onclick="calculateGross(1)" value=""></td>
+                                                <td class="hidden" ><input type="text" id="vatTemp1" name="vatTemp1"  value=""></td>
                                                 <td>7</td>                                            
-                                                <td ><input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})" class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="" ></td>
-                                                <td><input type="text" maxlength ="15" class="form-control numerical text-right" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');"  value=""></td>
+                                                <td ><input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(1)" class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="0.0" ></td>
+                                                <td><input type="text" maxlength ="15" class="form-control numerical text-right" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" onfocusout="changeFormatAmountNumber(1);"  value="0.0"></td>
                                                 <td class="priceCurrencyAmount">
                                                     <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="validFromInvoice()">
                                                         <option value='' ></option>
@@ -169,7 +179,7 @@
                                                     <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="" id="InputDescription${taxdesc.count}"></span>
                                                     <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}','${ind.description}')" data-toggle="modal" data-target="#DelDetailBill" >  </span>        
                                                 </td>                                         
-                                            </tr>
+                                            </tr>-->
                                         </tbody>
                                     </table>                                                                                        
                             <div id="tr_FormulaAddRow" class="text-center" style="padding-top: 10px;display: none;">
@@ -356,24 +366,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="modal fade " id="CopyModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Copy Invoice</h4>
-            </div>
-            
-            <div class="modal-body" >
-                You want copy invoice ? If copy click OK
-            </div>
-            <div class="modal-footer">  
-                <button type="button" onclick="copyInvoice()" class="btn btn-success" data-dismiss="modal">OK</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 <div class="modal fade " id="PrintModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -478,49 +470,6 @@
     </div><!-- /.modal-dialog --> <!-- /.modal-dialog -->
 </div>
 
-<!--Sale Staff To Modal-->
-<div class="modal fade" id="SaleStaffModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Sale Staff</h4>
-            </div>
-            <div class="modal-body">
-                <script>
-                    staff = [];
-                </script>
-                <table class="display" id="SaleStaffTable">
-                    <thead class="datatable-header">
-                        <tr>
-                            <th class="hidden">ID</th>
-                            <th>Code</th>
-                            <th>staff Name</th>
-                        </tr>
-                    </thead>                  
-                    <tbody>                  
-                        <c:forEach var="item" items="${listStaff}" varStatus="loop">
-                            <tr class="packet">
-                                <td class="staff-id hidden"><c:out value="${item.id}" /></td>
-                                <td class="staff-code"><c:out value="${item.username}" /></td>
-                                <td class="staff-name"><c:out value="${item.name}" /></td>                            
-                            </tr>
-                            <script>
-                                staff.push({id: "${item.id}", code: "${item.username}", name: "${item.name}"});
-                            </script>
-                        </c:forEach>
-                    </tbody>
-                </table>             
-            </div>
-            <div class="modal-footer">
-                <div  class="text-right">
-                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>                                                
-<!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
        $('.date').datetimepicker();
@@ -531,29 +480,6 @@
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
        });
-//       $('#MasterReservation tbody').on('click', 'tr', function () {
-//            if ($(this).hasClass('row_selected')) {
-//                $(this).removeClass('row_selected');
-//                $('#hdGridSelected').val('');
-//            }
-//            else {
-//                table.$('tr.row_selected').removeClass('row_selected');
-//                $(this).addClass('row_selected');
-//                $('#hdGridSelected').val($('#MasterReservation tbody tr.row_selected').attr("id"));
-//            }
-//        });
-    
-//        $('#DetailBillableTable tbody').on('click', 'tr', function () {
-//            if ($(this).hasClass('row_selected')) {
-//                $(this).removeClass('row_selected');
-//                $('#hdGridSelected').val('');
-//            }
-//            else {
-//                table.$('tr.row_selected').removeClass('row_selected');
-//                $(this).addClass('row_selected');
-//                $('#hdGridSelected').val($('#DetailBillableTable tbody tr.row_selected').attr("id"));
-//            }
-//        });
         
         $('#collapseExample${advanced.search}').on('shown.bs.collapse', function () {
             $(".arrowReservstion").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
@@ -564,7 +490,7 @@
         });
     });
     
-            $("#InvoiceForm")
+    $("#InvoiceForm")
         .bootstrapValidator({
             framework: 'bootstrap',
             feedbackIcons: {
@@ -610,16 +536,10 @@
 </script>
 <script type="text/javascript" charset="utf-8">
     var select = "<option value='' ></option>";
-    var select_cost = "<option value='' ></option>";
-    var selectType = "<option value='' ></option>";
     var defaultD = "";
     $(document).ready(function () {
         <c:forEach var="cur" items="${listCurrency}">
             select += "<option value='${cur.code}' ><c:out value='${cur.code}' /></option>";
-            select_cost += "<option value='${cur.code}' ><c:out value='${cur.code}' /></option>";
-        </c:forEach>
-        <c:forEach var="ty" items="${listType}">
-            selectType += "<option value='${ty.id}' ><c:out value='${ty.name}' /></option>";
         </c:forEach>
         
         var recipt = $('#checkRecipt').val();
@@ -654,4 +574,6 @@
 <input type="hidden" id="typePrint" name="typePrint" value="">
 <input type="hidden" value="${textVoid}">
 <input type="hidden" id="invoiceType" name="invoiceType" value="${invoiceType}">
+<input type="hidden" id="vatBase" name="vatBase" value="${vat}">
+<script type="text/javascript" src="js/invoiceinbound.js"></script>
 
