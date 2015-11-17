@@ -35,6 +35,7 @@ import com.smi.travel.datalayer.view.dao.PackageMonthlyDao;
 import com.smi.travel.datalayer.view.dao.ReceiptDao;
 import com.smi.travel.datalayer.view.dao.ReceiveListDao;
 import com.smi.travel.datalayer.view.dao.RefundAirReportDao;
+import com.smi.travel.datalayer.view.dao.SaleVatReportDao;
 import com.smi.travel.datalayer.view.dao.StaffSummaryDao;
 import com.smi.travel.datalayer.view.dao.TaxInvoiceEmailReportDao;
 import com.smi.travel.datalayer.view.dao.TaxInvoiceReportDao;
@@ -100,6 +101,7 @@ public class ReportService {
     private PackageMonthlyDao packageMonthlyDao;
     private BookingSummaryDao bookingSummaryDao;
     private OtherBookingDao otherBookingDao;
+    private SaleVatReportDao saleVatReportDao;
     
     public List getInvoiceMonthly(String BillTo,String ClientName,String Accno,String vattype,String from,String to,String department,String billingAttn,String billingFrom,String billingTel,String billingFax,String billingMail,String billingDate){
         return invoiceReportDao.getInvoiceMonthly(BillTo, ClientName, Accno, vattype, from, to, department, billingAttn, billingFrom, billingTel, billingFax, billingMail, billingDate);
@@ -713,5 +715,17 @@ public class ReportService {
         List data  = new ArrayList();
         data.add(otherBookingDao.getOtherAgentCommissionReport(datefrom, dateto, user,agentid));
         return data;
+    }
+    
+    public List getSaleVatReportList(String month,String year,String department){
+        return saleVatReportDao.getSaleVatReportList(month, year, department);
+    }
+    
+    public SaleVatReportDao getSaleVatReportDao() {
+        return saleVatReportDao;
+    }
+
+    public void setSaleVatReportDao(SaleVatReportDao saleVatReportDao) {
+        this.saleVatReportDao = saleVatReportDao;
     }
 }

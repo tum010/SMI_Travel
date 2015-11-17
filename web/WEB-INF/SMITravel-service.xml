@@ -175,6 +175,7 @@
         <property name="packageMonthlyDao" ref="PackageMonthlyDao" />
         <property name="bookingSummaryDao" ref="BookingSummaryDao" />
         <property name="otherBookingDao" ref="OtherBookingDao" />
+        <property name="saleVatReportDao" ref="SaleVatReportDao" />
     </bean> 
     
     
@@ -347,6 +348,14 @@
     
     <bean id="RefundService" class="com.smi.travel.datalayer.service.RefundService">
         <property name="refundDao" ref="RefundDao" />
+    </bean>
+    
+    <bean id="PostSaleVatService" class="com.smi.travel.datalayer.service.PostSaleVatService">
+        <property name="postSaleVatDao" ref="PostSaleVatDao" />
+    </bean>
+    
+    <bean id="SaleVatReportService" class="com.smi.travel.datalayer.service.SaleVatReportService">
+        <property name="saleVatReportDao" ref="SaleVatReportDao" />
     </bean>
     <!--<add data>-->
 </beans>

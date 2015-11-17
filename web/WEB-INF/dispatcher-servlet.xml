@@ -151,6 +151,8 @@
                                 <prop key="PackageMonthly.smi">PackageMonthlyController</prop>
                                 <prop key="OtherMonthly.smi">OtherMonthlyController</prop>
                                 <prop key="BookInformation.smi">BookInformationController</prop>
+                                <prop key="PostSaleVat.smi">PostSaleVatController</prop>
+                                <prop key="SaleVatReport.smi">SaleVatReportController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -598,7 +600,7 @@
         <property name="utilityService" ref="UtilityService" />
         <property name="arMonitorService" ref="ARMonitorService" />
     </bean>
-    
+   
     <bean id="CollectionMonitorController" class="com.smi.travel.controller.CollectionMonitorController">
         <property name="collectionNirvanaService" ref="CollectionNirvanaService" />
         <property name="utilityService" ref="UtilityService" />
@@ -660,6 +662,17 @@
         <property name="workspaceService" ref="WorkSpaceService" />
         <property name="utilservice" ref="UtilityService" />
     </bean>
+    
+    <bean id="PostSaleVatController" class="com.smi.travel.controller.PostSaleVatController">
+        <property name="utilservice" ref="UtilityService" />
+        <property name="postsalevatservice" ref="PostSaleVatService" />
+    </bean>
+    
+    <bean id="SaleVatReportController" class="com.smi.travel.controller.SaleVatReportController">
+        <property name="utilservice" ref="UtilityService" />
+        <property name="salevatreportservice" ref="SaleVatReportService" />
+    </bean>
+    
 	<!-- add bean id controller -->
 
 	<bean id="monitorGalileo" class="com.smi.travel.monitor.MonitorGalileo"

@@ -6,12 +6,9 @@
 package com.smi.travel.controller.excel;
 
 import com.smi.travel.datalayer.entity.SystemUser;
-import com.smi.travel.datalayer.service.ARMonitorService;
 import com.smi.travel.datalayer.service.ReportService;
-import com.smi.travel.datalayer.view.entity.ARNirvana;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,8 +43,8 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String RefundTicketDetail = "RefundTicketDetail";
     private static final String SummaryAirlinePax = "SummaryAirlinePax"; //Ticket Summary Airline -> List Summary Airline Issue --> Summary airline
     private static final String TicketProfitLoss = "TicketProfitLoss";
-     private static final String TicketSummaryCommission = "TicketSummaryCommission";
-    
+    private static final String TicketSummaryCommission = "TicketSummaryCommission";
+    private static final String SaleVatReport = "SaleVatReport";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String output =  request.getParameter("output");
@@ -239,6 +236,12 @@ public class ExportDataToExcelController  extends SMITravelController{
                     agemtcomreceivefromdate, agemtcomreceivetodate, comrefundfromdate, comrefundtodate, addpayfromdate, addpaytodate, 
                     decreasepayfromdate, decreasepaytodate, typeRoutings, routingDetails, airlineCodes, agentCodes, agentName, ticketno,
                     departmentts, salebyUserts, salebyName, termPayts, printby);
+        }else if(SaleVatReport.equals(name)){
+            System.out.println("get excel data SaleVatReport");
+            String selectMonth   = request.getParameter("selectMonth");   
+            String selectYear   = request.getParameter("selectYear");   
+            String selectDepartment   = request.getParameter("selectDepartment");   
+            data = reportservice.getSaleVatReportList(selectMonth, selectYear, selectDepartment);
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);

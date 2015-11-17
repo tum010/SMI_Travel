@@ -109,7 +109,8 @@
                                             "<li><a href='ReceiveTable.smi'> Receive Table</a></li>",
                                             "<li><a href='LockUnlockBooking.smi'>Lock And UnLock Booking</a></li>" ];
                             var AccountMenu = [
-                                            "<li><a href='APMonitor.smi'> Nirvana Interface </a></li>"];                
+                                            "<li><a href='APMonitor.smi'> Nirvana Interface </a></li>",
+                                            "<li><a href='PostSaleVat.smi'> Tax Invoice Report </a></li>" ];                
                             var menuString = getActiveMenuString(
                                             masterMenuList, masterMenu);
                             document.getElementById("menuMaster").innerHTML = menuString;

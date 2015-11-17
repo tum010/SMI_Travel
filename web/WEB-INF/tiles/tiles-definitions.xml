@@ -661,5 +661,14 @@
         <put-attribute name="title" value="Report : OtherMonthly" />
         <put-attribute name="body" value="/WEB-INF/jsp/OtherMonthly.jsp" />
     </definition>
-	
+    
+    <definition name="PostSaleVat" extends="baseLayout">
+        <put-attribute name="title" value="Tax Invoice Report : PostSaleVat" />
+        <put-attribute name="body" value="/WEB-INF/jsp/PostSaleVat.jsp" />
+    </definition>
+    
+    <definition name="SaleVatReport" extends="baseLayout">
+        <put-attribute name="title" value="Tax Invoice Report : SaleVatReport" />
+        <put-attribute name="body" value="/WEB-INF/jsp/SaleVatReport.jsp" />
+    </definition>
 </tiles-definitions>
