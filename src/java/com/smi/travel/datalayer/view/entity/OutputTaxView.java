@@ -15,6 +15,7 @@ public class OutputTaxView {
     private String headerMonth;
     private String headerYear;
     private String headerDepartment;
+    private String order;
     private String taxid;
     private String taxno;
     private String taxdate;
@@ -164,5 +165,13 @@ public class OutputTaxView {
 
     public void setHeaderDepartment(String headerDepartment) {
         this.headerDepartment = headerDepartment;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
     }
 }
