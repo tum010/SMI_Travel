@@ -27,6 +27,7 @@ $(document).ready(function() {
         "bLengthChange": false,
         "iDisplayLength": 10
     });
+    
     $('#InvToTable tbody').on('click', 'tr', function() {
         $('.collapse').collapse('show');
         if ($(this).hasClass('row_selected')) {
@@ -70,7 +71,6 @@ $(document).ready(function() {
         }
     });
     $("#InvTo").keydown(function() {
-
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
@@ -98,7 +98,64 @@ $(document).ready(function() {
     var rowCount = $('#DetailBillableTable tr').length;
     $("#counterTable").val(rowCount);
     addRowInvoiceInboundDetail(rowCount++);
+    
+    // Invoice No Key Up
+    var wildCardSearch = ($("#wildCardSearch").val()).indexOf("%");
+    if ($("#InvoiceId").val() !== '') {
+        $("#InvNo").focus();
+    }
+    $("#InvNo").keyup(function(event) {
+        if (event.keyCode === 13) {
+            searchInvoiceFromInvoiceNo();
+        } else if (event.keyCode === 38) {
+            if ((parseInt(wildCardSearch) >= 0) || ($("#InvoiceId").val() !== '')) {
+                $("#keyCode").val(event.keyCode);
+                var action = document.getElementById('action');
+                action.value = 'wildCardSearch';
+                document.getElementById('InvoiceInboundForm').submit();
+            }
+
+        } else if (event.keyCode === 40) {
+            if ((parseInt(wildCardSearch) >= 0) || ($("#InvoiceId").val() !== '')) {
+                $("#keyCode").val(event.keyCode);
+                var action = document.getElementById('action');
+                action.value = 'wildCardSearch';
+                document.getElementById('InvoiceInboundForm').submit();
+            }
+
+        } else if (event.keyCode === 118) {
+            $("#keyCode").val(event.keyCode);
+            var action = document.getElementById('action');
+            action.value = 'new';
+            document.getElementById('InvoiceInboundForm').submit();
+
+        } else if (event.keyCode === 119) {
+            $("#keyCode").val(event.keyCode);
+            var action = document.getElementById('action');
+            action.value = 'wildCardSearch';
+            document.getElementById('InvoiceInboundForm').submit();
+
+        }
+    });
+
+    CalculateGrandTotal('');
+    var counter = $('#DetailBillableTable tbody tr').length;
+    for (var j = 1; j <= (counter - 1); j++) {
+        changeFormatAmountNumber(j);
+    }
+    
+    var invoiceNumber = $('#InvNo').val();
+    if (invoiceNumber === '') {
+        document.getElementById("printButton").disabled = true;
+        document.getElementById("sendEmailButton").disabled = true;
+    }
 });
+
+function searchInvoiceFromInvoiceNo() {
+    var action = document.getElementById('action');
+    action.value = 'searchInvoice';
+    document.getElementById('InvoiceInboundForm').submit();
+}
 
 function searchCustomerAgentList(name) {
     var servletName = 'BillableServlet';
@@ -512,7 +569,7 @@ function addRowInvoiceInboundDetail(row){
     '<td '+ textHidden+'><input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
     '<td><input type="text" maxlength ="15" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" onfocusout="changeFormatAmountNumber(' + row + ');"  value=""></td>' +
     '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" >' + select + '</select></td>' +              
-    '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +           
+    '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBillInbound(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +           
     '</tr>'
     );
     var count = document.getElementById('counterTable');
@@ -523,6 +580,82 @@ function saveInvoiceInbound(){
     var actionG = document.getElementById('action');
     actionG.value = 'save';
     document.getElementById('InvoiceInboundForm').submit();
+}
+
+function clearScreenInvoiceInbound() {
+    var action = document.getElementById('action');
+    action.value = 'new';
+    document.getElementById('InvoiceInboundForm').submit();
+
+}
+
+function DeleteDetailBillInbound(rowID, code) {
+    $("#idDeleteDetailBillable").val(rowID);
+    if (code !== "") {
+        $("#DeleteDetailBillable").text('Are you sure to delete detail billable : ' + code + '..?');
+    } else {
+        $("#DeleteDetailBillable").text('Are you sure to delete detail billable ?');
+    }
+}
+
+function DeleteBill() {
+    var count = document.getElementById('counterTable');
+    var rowId = document.getElementById('idDeleteDetailBillable');
+    var row = rowId.value;
+    var DetailBillId = $("#detailId" + rowId.value).val();
+    if ((DetailBillId !== "") && (DetailBillId !== undefined)) {
+        rowId.value = DetailBillId;
+        console.log("Row : " + rowId.value);
+        var servletName = 'BillableServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&name=' + DetailBillId +
+                '&type=' + 'deleteInvoiceDetail';
+        CallAjaxDeleteBill(param, row);
+
+    } else {
+        $("#BillDescriptionTemp" + rowId.value).parent().parent().remove();
+        $('#DelDetailBill').modal('hide');
+        console.log("Row 0  : " + count.value);
+        if (count.value <= 1) {
+            console.log("show button tr_FormulaAddRow : ");
+            $("#tr_FormulaAddRow").css("display", "block");
+        }
+        count.value = count.value - 1;
+    }
+}
+
+function CallAjaxDeleteBill(param, row) {
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                console.log("Message : " + msg);
+                $('#resultText').val(msg);
+                if (msg === 'success') {
+                    console.log("Delete Detail");
+                    $("#BillDescriptionTemp" + row).parent().parent().remove();
+                    $('#textAlertInvoiceNotEmpty').hide();
+                } else if (msg === 'notDeleteReciptAndTax') {
+                    $('#textAlertInvoiceNotEmpty').show();
+                }
+                $("#ajaxload").addClass("hidden");
+
+            }, error: function(msg) {
+                $("#ajaxload").addClass("hidden");
+                alert('error');
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
 }
 
 $(document).ready(function() {

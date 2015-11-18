@@ -138,6 +138,100 @@ public class InvoiceInboundController extends SMITravelController {
                 request.setAttribute("result", result);
             }
             System.out.println("invoiceService checkOverflowValueOfInvoice:"+invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()));
+        }else if("searchInvoice".equals(action)){ // search invoice when input invoice no
+            String depart = invoiceNo.substring(0,1);
+            String type = invoiceNo.substring(1,2);
+            System.out.println("Department : " + depart + " Type : " + type);
+            if("I".equals(depart)){
+                if("V".equals(type)){
+                    type = "V";
+                }else {
+                    type = "M";
+                }
+            }
+            if((invoiceNo.indexOf("%") >= 0)){
+                depart = department;
+                type = invoiceType;
+            }
+            System.out.println("Search Invoice : Depart >>>> " + depart +  "  Typee >>> " + type);
+            if( type.equals(invoiceType)){
+                if("M".equals(type)){
+                  type = "T";
+                }
+                invoice = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo,depart,type);
+                System.out.println(invoiceNo);
+                System.out.println("1");
+                listInvoiceDetail = invoice.getInvoiceDetails();
+                if(invoice != null){
+                    System.out.println("2");
+                    System.out.println(invoice.getId());
+                    System.out.println(invoice.getInvNo());
+                    request.setAttribute("invoice", invoice);
+                    //result = "success";
+                }else{
+                    System.out.println("3");
+                    request.setAttribute("invoice", null);
+                }
+                if(listInvoiceDetail != null){
+                    request.setAttribute("listInvoiceDetail", listInvoiceDetail);
+                    //result = "success";
+                }else{
+                    request.setAttribute("listInvoiceDetail", null);
+                }
+                result="yesInvoice";
+                System.out.println("result : "+result);
+                request.setAttribute("result", result);
+            }else{
+                result = "notInvoice";
+                System.out.println("result : "+result);
+                request.setAttribute("result", result);
+            }
+        }else if("wildCardSearch".equalsIgnoreCase(action)){
+            Invoice invoice = new Invoice();
+            if(department != null){
+                if(department.equals("W")){
+                    department = "Wendy";
+                } else if(department.equals("O")){
+                    department = "Outbound";
+                } else if(department.equals("P")){
+                    department = "Inbound";
+                } else if(department.equals("R")){
+                    department = "Inbound";
+                } 
+            } 
+            if(!"V".equals(invoiceType)){
+               invoiceType = "T";
+            }
+            invoice = invoiceService.getInvoiceByWildCardSearch(invoiceId,invoiceNo,wildCardSearch,keyCode,department,invoiceType);            
+            saveAction(invoice.getInvNo(), invoiceNo, invoice, "wildCardSearch", request);                     
+        }else if("new".equals(action)){
+            invoice.setInvoiceDetails(null);
+            request.setAttribute("invoice",null);
+            request.setAttribute("listInvoiceDetail", null);
+            result = "NEW";
+            request.setAttribute("result", result);
+        }
+        
+        if((!"".equalsIgnoreCase(invoiceNo)) && (invoiceNo != null)){
+            if("searchInvoice".equalsIgnoreCase(action)){
+                if((invoiceNo.indexOf("%") >= 0)){
+                    request.setAttribute("wildCardSearch", invoiceNo);
+                }else{
+                    request.setAttribute("wildCardSearch", ""); 
+                }
+            }else if("118".equalsIgnoreCase(keyCode)){
+                request.setAttribute("wildCardSearch", ""); 
+            }else if("119".equalsIgnoreCase(keyCode)){
+                request.setAttribute("wildCardSearch", ""); 
+            }else{
+                if((invoiceNo.indexOf("%") >= 0)){
+                    request.setAttribute("wildCardSearch", invoiceNo);
+                }else if((!"".equalsIgnoreCase(wildCardSearch)) && (wildCardSearch.indexOf("%") == 0)){
+                    request.setAttribute("wildCardSearch", wildCardSearch);
+                }else{
+                    request.setAttribute("wildCardSearch", ""); 
+                }
+            }
         }
        
         request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
@@ -274,7 +368,7 @@ public class InvoiceInboundController extends SMITravelController {
                 date = utilty.convertStringToDate(InputInvDate);
 
                 SimpleDateFormat df = new SimpleDateFormat();
-                df.applyPattern("MMyy");
+                df.applyPattern("yyMM");
                 String month = day[1];
                 String year = day[0];
                 String da = day[2];

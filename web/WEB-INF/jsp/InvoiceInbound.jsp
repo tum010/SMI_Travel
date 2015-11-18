@@ -52,6 +52,10 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Duplicate</strong> 
             </div>
+            <div id="textAlertInvoiceNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Invoice Not Empty</strong> 
+            </div>
         <form action="InvoiceInbound${page}.smi" method="post" id="InvoiceInboundForm" name="InvoiceInboundForm" role="form" onsubmit="">
             <input type="text" class="hidden" id="action" name="action" value="save" >
                 <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
@@ -91,7 +95,7 @@
                             <input type="text"  class="form-control" id="InvNo" name="InvNo"  value="${invoice.invNo}" >
                         </div>
                         <div class="col-md-1 form-group" style="width: 120px;">
-                            <button type="button"  id="ButtonSearchInvoiceInboundNo"  name="ButtonSearchInvoiceInboundNo" onclick="" class="btn btn-primary btn-sm">
+                            <button type="button"  id="ButtonSearchInvoiceInboundNo"  name="ButtonSearchInvoiceInboundNo" onclick="searchInvoiceFromInvoiceNo();" class="btn btn-primary btn-sm">
                                 <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                             </button>
                         </div>
@@ -245,7 +249,7 @@
                                                     onfocusout="changeFormatAmountNumber(${taxdesc.count});"  value="${ind.amount}">
                                                 </td>
                                                 <td class="priceCurrencyAmount">
-                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount' + row + '" class="form-control" >
+                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" >
                                                         <option value='' ></option>
                                                         <c:forEach var="cur" items="${listCurrency}">
                                                             <c:set var="selectA" value="" />
@@ -260,7 +264,7 @@
                                                     <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" 
                                                            onclick="getDescriptionDetail(${taxdesc.count})" id="InputDescription${taxdesc.count}">
                                                     </span>
-                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}','${ind.description}')" 
+                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBillInbound('${taxdesc.count}','${ind.description}')" 
                                                            data-toggle="modal" data-target="#DelDetailBill" >  
                                                     </span>
                                                 </td>          
@@ -268,11 +272,11 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>                                                                                        
-                            <div id="tr_FormulaAddRow" class="text-center" style="padding-top: 10px;display: none;">
-                            <a class="btn btn-success" onclick="addRowInvoiceInboundDetail()">
-                                <i class="glyphicon glyphicon-plus"></i> Add
-                            </a>
-                            </div>       
+                                    <div id="tr_FormulaAddRow" class="text-center" style="padding-top: 10px;display: none;">
+                                        <a class="btn btn-success" onclick="addRowInvoiceInboundDetail()">
+                                            <i class="glyphicon glyphicon-plus"></i> Add
+                                        </a>
+                                    </div>       
                         </div>
                     </div>
                 </div>
@@ -297,7 +301,7 @@
                                             <label class="control-label" for="">Grand Total&nbsp;Net&nbsp;:</lable>                                     
                                         </div>
                                         <div class="col-sm-3" >
-                                            <input  rows="3" cols="200" id="GrandTotal" name="GrandTotal" class="form-control" value="" readonly="">
+                                            <input  rows="3" cols="200" id="GrandTotal" name="GrandTotal" class="form-control" value="" readonly=""  onfocus="CalculateGrandTotal();">
                                         </div>  
                                     </div>
                                     <div class="col-xs-12 "><br></div>
@@ -377,7 +381,7 @@
                                     </button>
                                 </div>
                                 <div class="col-md-1 text-right ">
-                                    <button type="button" onclick="" class="btn btn-success" id="newInvoiceInbound" name="newInvoiceInbound"  >
+                                    <button type="button" onclick="clearScreenInvoiceInbound();" class="btn btn-success" id="newInvoiceInbound" name="newInvoiceInbound"  >
                                         <span id="SpanNew" class="fa fa-plus-circle"></span> New 
                                     </button>
                                 </div>
