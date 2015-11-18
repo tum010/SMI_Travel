@@ -512,7 +512,8 @@
             <property name="paymentAirTicketService" ref="PaymentAirTicketService" />
 	</bean> 
 	<bean id="PaymentOutboundController" class="com.smi.travel.controller.PaymentOutboundController">
-
+            <property name="utilservice" ref="UtilityService" />
+	</bean>
 	</bean>
 	<bean id="PaymentTourHotelController" class="com.smi.travel.controller.PaymentTourHotelController">
 		<property name="paymentTourHotelService" ref="PaymentTourHotelService" />
@@ -524,9 +525,8 @@
 		<property name="utilityService" ref="UtilityService" />
 		<property name="paymentTourHotelService" ref="PaymentTourHotelService" />
 	</bean>
-	<bean id="SearchPaymentOutboundController"
-		class="com.smi.travel.controller.SearchPaymentOutboundController">
-
+	<bean id="SearchPaymentOutboundController" class="com.smi.travel.controller.SearchPaymentOutboundController">
+            <property name="utilservice" ref="UtilityService" />
 	</bean>
 
 	<bean id="SearchInvoiceController" class="com.smi.travel.controller.SearchInvoiceController">
