@@ -16,6 +16,9 @@
 <c:set var="vat" value="${requestScope['vat']}" />
 <c:set var="roleName" value="${requestScope['roleName']}" />
 <c:set var="create" value="${requestScope['thisdate']}" />
+<c:set var="invoice" value="${requestScope['invoice']}" />
+<c:set var="listInvoiceDetail" value="${requestScope['listInvoiceDetail']}" />
+<c:set var="result" value="${requestScope['result']}" />
 
 <section class="content-header" >
     <h1>
@@ -33,9 +36,25 @@
         <div ng-include="'WebContent/FinanceAndCashier/InvoiceMenu.html'"></div>
     </div>
         <div class="col-sm-10">
-            <form action="Invoice${page}.smi" method="post" id="InvoiceInboundForm" name="InvoiceInboundForm" role="form" onsubmit="">
-                <!--<input type="text" id="action" name="action" value="Action">--> 
-            <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Save Not  Success!</strong> 
+            </div>
+            <div id="textAlertNotInvoice"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Not have Invoice In Page!!</strong> 
+            </div>
+            <div id="textAlertDuplicate"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Duplicate</strong> 
+            </div>
+        <form action="InvoiceInbound${page}.smi" method="post" id="InvoiceInboundForm" name="InvoiceInboundForm" role="form" onsubmit="">
+            <input type="text" class="hidden" id="action" name="action" value="save" >
+                <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Void Success </strong> 
             </div>
@@ -43,26 +62,33 @@
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <c:choose>
                         <c:when test="${fn:contains(page , 'PM')}">
+                            <c:set var="typeInvoiceInboubd" value="PM" />
                             <h4><b>Proforma Invoice  </h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'RV')}">
+                            <c:set var="typeInvoiceInboubd" value="RV" />
                             <h4><b>Revenue Invoice  </h4>
                         </c:when>                        
                     </c:choose> 
                 </div>
+                <input type="text" class="hidden" value="${typeInvoiceInboubd}" id="InputTypeInvoiceInbound" name="InputTypeInvoiceInbound">
                 <div class="col-xs-12 form-group"><hr/></div>
             </div>
             
             <!--Search Invoice-->
             <div class="row" style="padding-left: 15px">                         
                 <div class="col-xs-12 form-group"></div>   
-                <input type="hidden"  class="form-control" id="InvoiceInboundId" name="InvoiceInboundId"  value="" >
+                <input type="hidden"  class="form-control" id="InvoiceInboundId" name="InvoiceInboundId"  value="${invoice.id}" >
+                <input type="hidden"  class="form-control" id="InvoiceIsExport" name="InvoiceIsExport"  value="${invoice.isExport}" >
+                <input type="hidden"  class="form-control" id="InvoiceExportDate" name="InvoiceExportDate"  value="${invoice.exportDate}" >
+                <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
+                <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                     <div class="col-xs-12 ">
                         <div class="col-xs-1 text-right">
                             <label class="control-label" for="">INV no</lable>
                         </div>
                         <div class="col-md-1 form-group" style="width: 125px;">
-                            <input type="text"  class="form-control" id="InvNo" name="InvNo"  value="" >
+                            <input type="text"  class="form-control" id="InvNo" name="InvNo"  value="${invoice.invNo}" >
                         </div>
                         <div class="col-md-1 form-group" style="width: 120px;">
                             <button type="button"  id="ButtonSearchInvoiceInboundNo"  name="ButtonSearchInvoiceInboundNo" onclick="" class="btn btn-primary btn-sm">
@@ -93,8 +119,8 @@
                         </div>
                         <div class="col-md-6 form-group">
                             <div class="input-group">
-                            <input type="hidden" class="form-control" id="InvToId" name="InvToId" value=""/>
-                            <input type="text" class="form-control" id="InvTo" name="InvTo" value="" style="background-color: #ffffff">
+                            <input type="hidden" class="form-control" id="InvToId" name="InvToId" value="${invoice.invTo}"/>
+                            <input type="text" class="form-control" id="InvTo" name="InvTo" value="${invoice.invTo}" style="background-color: #ffffff">
                             <span class="input-group-addon" id="InvTo_Modal"  data-toggle="modal" data-target="#InvToModal">
                                 <span class="glyphicon-search glyphicon"></span>
                             </span>
@@ -104,7 +130,7 @@
                             <label class="control-label" for="">AR Code</lable>
                         </div>
                         <div class="col-md-2 form-group">                      
-                            <input  type="text" id="ARCode" name="ARCode" class="form-control" value="" readonly >
+                            <input  type="text" id="ARCode" name="ARCode" class="form-control" value="${invoice.arcode}"  >
                         </div>
                     </div>
                     <div class="col-xs-12 ">
@@ -136,32 +162,90 @@
                                     </div>
                                     <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
                                     <input type="text" class="hidden" id="idDeleteDetailBillable" name="idDeleteDetailBillable" value="0" >
-                                    <input type="text" class="hidden" id="action" name="action" value="save" >
                                     <table class="display" id="DetailBillableTable">
                                         <thead class="datatable-header">
                                             <tr>
                                                 <th class="hidden"> Id</th>
                                                 <th style="width:30%;" align="left">Description</th>
-                                                <th style="width: 3%" onclick="checkVatInvoiceInboundAll()" align="center"><u>Is vat</u></th> 
-                                                <th style="width: 3%" align="center" hidden="">Vat Temp</th>
-                                                <th style="width: 3%" align="center">Vat</th>
-                                                <th style="width: 8%" align="center">Gross</th>
+                                                <c:choose>
+                                                    <c:when test="${fn:contains(page , 'PM')}">
+                                                        <th style="width: 3%" hidden="" onclick="checkVatInvoiceInboundAll()" align="center"><u>Is vat</u></th> 
+                                                        <th style="width: 3%" align="center" hidden="">Vat Temp</th>
+                                                        <th style="width: 3%" align="center" hidden="" >Vat</th>
+                                                        <th style="width: 8%" align="center" hidden="" >Gross</th>
+                                                    </c:when>
+                                                    <c:when test="${fn:contains(page , 'RV')}">
+                                                        <th style="width: 3%" onclick="checkVatInvoiceInboundAll()" align="center"><u>Is vat</u></th> 
+                                                        <th style="width: 3%" align="center" hidden="">Vat Temp</th>
+                                                        <th style="width: 3%" align="center">Vat</th>
+                                                        <th style="width: 8%" align="center">Gross</th>
+                                                    </c:when>                        
+                                                </c:choose>
                                                 <th style="width: 8%" align="center">Amount</th>
                                                 <th style="width: 7%" align="center" class="" >Cur</th>
                                                 <th style="width: 3%" align="center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-<!--                                            <tr> 
-                                                <td class="hidden"><input type="text" class="form-control" id="detailId${taxdesc.count}" name="detailId${taxdesc.count}" value="" > </td>
-                                                <td><input type="text" class="form-control" id="BillDescriptionTemp${taxdesc.count}" name="BillDescriptionTemp${taxdesc.count}"  onkeyup="" value=""></td>                                              
-                                                <td><input type="checkbox" id="checkUse1" name="checkUse1" onclick="calculateGross(1)" value=""></td>
-                                                <td class="hidden" ><input type="text" id="vatTemp1" name="vatTemp1"  value=""></td>
-                                                <td>7</td>                                            
-                                                <td ><input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(1)" class="form-control numerical" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="0.0" ></td>
-                                                <td><input type="text" maxlength ="15" class="form-control numerical text-right" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" onfocusout="changeFormatAmountNumber(1);"  value="0.0"></td>
+                                            <c:forEach var="ind" items="${listInvoiceDetail}" varStatus="taxdesc">
+                                            <tr>
+                                                <td class="hidden">
+                                                    <input type="text" class="form-control" id="detailId${taxdesc.count}" name="detailId${taxdesc.count}" 
+                                                    value="${ind.id}" > 
+                                                </td> 
+                                                <td>
+                                                    <input type="text" class="form-control" id="BillDescriptionTemp${taxdesc.count}" 
+                                                    name="BillDescriptionTemp${taxdesc.count}"  value="${ind.description}">
+                                                </td>
+                                                <c:choose>
+                                                    <c:when test="${fn:contains(page , 'PM')}">
+                                                        <td class="hidden" >
+                                                            <c:set var="checkIsVat" value="" />
+                                                            <c:if test="${ind.isVat == 1}">
+                                                                <c:set var="checkIsVat" value="checked" />
+                                                            </c:if> 
+                                                            <input type="checkbox" id="checkUse${taxdesc.count}" name="checkUse${taxdesc.count}"  
+                                                            onclick="calculateGross('${taxdesc.count}')"  ${checkIsVat}>
+                                                        </td>
+                                                        <td class="hidden">
+                                                            <input type="text" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}"  
+                                                            value="${ind.vat}">
+                                                        </td>
+                                                        <td class="hidden">${ind.vat}</td>
+                                                        <td class="hidden">
+                                                            <input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})" 
+                                                            class="form-control numerical" id="InputGross${taxdesc.count}" 
+                                                            name="InputGross${taxdesc.count}" value="${ind.gross}" >
+                                                        </td>
+                                                    </c:when>
+                                                    <c:when test="${fn:contains(page , 'RV')}">
+                                                        <td >
+                                                            <c:set var="checkIsVat" value="" />
+                                                            <c:if test="${ind.isVat == 1}">
+                                                                <c:set var="checkIsVat" value="checked" />
+                                                            </c:if> 
+                                                            <input type="checkbox" id="checkUse${taxdesc.count}" name="checkUse${taxdesc.count}"  
+                                                            onclick="calculateGross('${taxdesc.count}')"  ${checkIsVat}>
+                                                        </td>
+                                                        <td class="hidden" >
+                                                            <input type="text" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}"  
+                                                            value="${ind.vat}">
+                                                        </td>
+                                                        <td>${ind.vat}</td>
+                                                        <td>
+                                                            <input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})"
+                                                            class="form-control numerical" id="InputGross${taxdesc.count}" 
+                                                            name="InputGross${taxdesc.count}" value="${ind.gross}" >
+                                                        </td>
+                                                    </c:when>                        
+                                                </c:choose>                             
+                                                <td>
+                                                    <input type="text" maxlength ="15" class="form-control numerical text-right" 
+                                                    id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" 
+                                                    onfocusout="changeFormatAmountNumber(${taxdesc.count});"  value="${ind.amount}">
+                                                </td>
                                                 <td class="priceCurrencyAmount">
-                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="validFromInvoice()">
+                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount' + row + '" class="form-control" >
                                                         <option value='' ></option>
                                                         <c:forEach var="cur" items="${listCurrency}">
                                                             <c:set var="selectA" value="" />
@@ -171,18 +255,23 @@
                                                             <option value='${cur.code}' ${selectA}>${cur.code}</option>
                                                         </c:forEach>
                                                     </select>
-                                                </td>                                             
+                                                </td>              
                                                 <td align="center" >
-                                                    <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="" id="InputDescription${taxdesc.count}"></span>
-                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}','${ind.description}')" data-toggle="modal" data-target="#DelDetailBill" >  </span>        
-                                                </td>                                         
-                                            </tr>-->
+                                                    <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" 
+                                                           onclick="getDescriptionDetail(${taxdesc.count})" id="InputDescription${taxdesc.count}">
+                                                    </span>
+                                                    <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill('${taxdesc.count}','${ind.description}')" 
+                                                           data-toggle="modal" data-target="#DelDetailBill" >  
+                                                    </span>
+                                                </td>          
+                                            </tr>
+                                            </c:forEach>
                                         </tbody>
                                     </table>                                                                                        
                             <div id="tr_FormulaAddRow" class="text-center" style="padding-top: 10px;display: none;">
-                                <a class="btn btn-success" onclick="AddRowDetailBillAble()">
-                                    <i class="glyphicon glyphicon-plus"></i> Add
-                                </a>
+                            <a class="btn btn-success" onclick="addRowInvoiceInboundDetail()">
+                                <i class="glyphicon glyphicon-plus"></i> Add
+                            </a>
                             </div>       
                         </div>
                     </div>
@@ -192,45 +281,70 @@
         <div role="tabpanel">
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane  active" id="infoRemark">
-                    <div class="panel panel-default">                              
-                        <div class="panel-body">                   
-                            <div class="col-xs-12 form-group"></div>
-                            <div class="col-xs-12 ">
-                                <div class="col-sm-1">
-                                    <label class="control-label" for="">Text&nbsp;Amount&nbsp;:</lable>                                         
-                                </div>                                      
-                                <div class="col-sm-5" style="padding-left: 50px">
-                                    <input  rows="3" cols="200" id="TextAmount" name="TextAmount" class="form-control" value="" readonly="">
+                    <div class="panel panel-default">
+                        <c:choose>
+                            <c:when test="${fn:contains(page , 'PM')}">
+                                <div class="panel-body">                   
+                                    <div class="col-xs-12 form-group"></div>
+                                    <div class="col-xs-12 ">
+                                        <div class="col-sm-1">
+                                            <label class="control-label" for="">Text&nbsp;Amount&nbsp;:</lable>                                         
+                                        </div>                                      
+                                        <div class="col-sm-5" style="padding-left: 50px">
+                                            <input  rows="3" cols="200" id="TextAmount" name="TextAmount" class="form-control" value="" readonly="">
+                                        </div>  
+                                        <div class="col-sm-2 text-right" >
+                                            <label class="control-label" for="">Grand Total&nbsp;Net&nbsp;:</lable>                                     
+                                        </div>
+                                        <div class="col-sm-3" >
+                                            <input  rows="3" cols="200" id="GrandTotal" name="GrandTotal" class="form-control" value="" readonly="">
+                                        </div>  
+                                    </div>
+                                    <div class="col-xs-12 "><br></div>
                                 </div>
-                                <div class="col-sm-2 text-right" >
-                                    <label class="control-label" for="">Total&nbsp;Net&nbsp;:</lable>                                         
+                            </c:when>
+                            <c:when test="${fn:contains(page , 'RV')}">
+                                <div class="panel-body">                   
+                                    <div class="col-xs-12 form-group"></div>
+                                    <div class="col-xs-12 ">
+                                        <div class="col-sm-1">
+                                            <label class="control-label" for="">Text&nbsp;Amount&nbsp;:</lable>                                         
+                                        </div>                                      
+                                        <div class="col-sm-5" style="padding-left: 50px">
+                                            <input  rows="3" cols="200" id="TextAmount" name="TextAmount" class="form-control" value="" readonly="">
+                                        </div>
+                                        <div class="col-sm-2 text-right" >
+                                            <label class="control-label" for="">Total&nbsp;Net&nbsp;:</lable>                                         
+                                        </div>
+                                        <div class="col-sm-3" >
+                                            <input  rows="3" cols="200" id="TotalNet" name="TotalNet" class="form-control" value="" readonly="">
+                                        </div>                      
+                                    </div>
+                                    <div class="col-xs-12 "><br></div>
+                                    <div class="col-xs-12 ">                                     
+                                        <div class="col-sm-6" style="padding-left: 50px"></div>
+                                        <div class="col-sm-2 text-right">
+                                            <label class="control-label" for="">Vat&nbsp;Net&nbsp;:</lable>                                         
+                                        </div>
+                                        <div class="col-sm-3" >
+                                            <input  rows="3" cols="200" id="VatNet" name="VatNet" class="form-control" value="" readonly="">
+                                        </div>
+                                    </div> 
+                                    <div class="col-xs-12 "><br></div>
+                                    <div class="col-xs-12 ">                                     
+                                        <div class="col-sm-6" style="padding-left: 50px"></div>
+                                        <div class="col-sm-2 text-right">
+                                            <label class="control-label" for="">Grand Total&nbsp;Net&nbsp;:</lable>                                         
+                                        </div>
+                                        <div class="col-sm-3" >
+                                            <input  rows="3" cols="200" id="GrandTotal" name="GrandTotal" class="form-control" value="" readonly="">
+                                        </div>
+                                    </div> 
                                 </div>
-                                <div class="col-sm-3" >
-                                    <input  rows="3" cols="200" id="TotalNet" name="TotalNet" class="form-control" value="" readonly="">
-                                </div>
-                            </div>
-                            <div class="col-xs-12 "><br></div>
-                            <div class="col-xs-12 ">                                     
-                                <div class="col-sm-6" style="padding-left: 50px"></div>
-                                <div class="col-sm-2 text-right">
-                                    <label class="control-label" for="">Vat&nbsp;Net&nbsp;:</lable>                                         
-                                </div>
-                                <div class="col-sm-3" >
-                                    <input  rows="3" cols="200" id="VatNet" name="VatNet" class="form-control" value="" readonly="">
-                                </div>
-                            </div> 
-                            <div class="col-xs-12 "><br></div>
-                            <div class="col-xs-12 ">                                     
-                                <div class="col-sm-6" style="padding-left: 50px"></div>
-                                <div class="col-sm-2 text-right">
-                                    <label class="control-label" for="">Grand Total&nbsp;Net&nbsp;:</lable>                                         
-                                </div>
-                                <div class="col-sm-3" >
-                                    <input  rows="3" cols="200" id="GrandTotal" name="GrandTotal" class="form-control" value="" readonly="">
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
+                            </c:when>                        
+                        </c:choose>    
+                        
+                    </div><!--End -->
                 </div>
             </div>
         </div>
@@ -258,7 +372,7 @@
                                     </button>
                                 </div>
                                 <div class="col-md-1 text-right ">
-                                    <button type="submit"  id="saveInvoice" name="saveInvoice" class="btn btn-success" >
+                                    <button type="submit"  id="saveInvoice" name="saveInvoice" class="btn btn-success"  onclick="saveInvoiceInbound()">
                                         <span id="SpanSave" class="fa fa-save"></span> Save 
                                     </button>
                                 </div>
@@ -466,10 +580,14 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog --> <!-- /.modal-dialog -->
 </div>
-
 <script type="text/javascript" charset="utf-8">
+    var select = "<option value='' ></option>";
+    var defaultD = "";
     $(document).ready(function () {
-       $('.date').datetimepicker();
+         <c:forEach var="cur" items="${listCurrency}">
+            select += "<option value='${cur.code}' ><c:out value='${cur.code}' /></option>";
+        </c:forEach>
+        $('.date').datetimepicker();
        $('.datemask').mask('0000-00-00');
        $('.spandate').click(function() {
             var position = $(this).offset();
@@ -544,15 +662,6 @@
             if (data.field === 'InputInvDate' && data.fv.isValidField('InputInvDate') === false) {
                 data.fv.revalidateField('InputInvDate');
             }
-        });
-</script>
-<script type="text/javascript" charset="utf-8">
-    var select = "<option value='' ></option>";
-    var defaultD = "";
-    $(document).ready(function () {
-        <c:forEach var="cur" items="${listCurrency}">
-            select += "<option value='${cur.code}' ><c:out value='${cur.code}' /></option>";
-        </c:forEach>
         
         var recipt = $('#checkRecipt').val();
         if(recipt === "yesReceipt"){
@@ -566,51 +675,7 @@
             $('#textAlertTaxinvoice').show();
         }else if(taxin === "noTaxinvoice"){
              $('#textAlertTaxinvoice').hide();
-        }
-        
-        $("#InvoiceForm")
-            .bootstrapValidator({
-                framework: 'bootstrap',
-                feedbackIcons: {
-                    valid: 'uk-icon-check',
-                    invalid: 'uk-icon-times',
-                    validating: 'uk-icon-refresh'
-                },
-                fields: {                
-                    InvTo: {
-                        trigger: 'focus keyup change',
-                        validators: {
-                            notEmpty: {
-                                message: 'Input Invoice To'
-                            }
-                        }
-                    },
-                    InvToName: {
-                        trigger: 'focus keyup change',
-                        validators: {
-                            notEmpty: {
-                                message: 'Input Invoice To Name'
-                            }
-                        }
-                    },
-                    ARCode: {
-                        trigger: 'focus keyup change',
-                        validators: {
-                            notEmpty: {
-                                message: 'Input A/R Code'
-                            }
-                        }
-                    },
-                    InputInvDate: {
-                        trigger: 'focus keyup change',
-                        validators: {
-                            notEmpty: {
-                                message: 'Input Invoice Date'
-                            }
-                        }
-                    } 
-                }  
-            });
+        }       
     }); 
 </script>
 <c:if test="${defaultData != null}">        

@@ -1271,8 +1271,12 @@ public class AJAXBean extends AbstractBean implements
 
             String displaydescription = "";
             String displaydesTemp = "";
-            if ("1".equals(product)) {
-                displaydescription = billTypeName;
+            if ("1".equals(product)) {                
+                if (!"".equals(refItemId)) {
+                    displaydescription = billTypeName;
+                }else{
+                    displaydescription = description;
+                }
             } else if ("2".equals(product) || "8".equals(product)) {
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " #-- ";
@@ -1287,9 +1291,17 @@ public class AJAXBean extends AbstractBean implements
                     displaydescription = description;
                 }
             } else if ("3".equals(product)) {
-                displaydescription = billTypeName;
+                if (!"".equals(refItemId)) {
+                    displaydescription = billTypeName;
+                }else{
+                    displaydescription = description;
+                }
             } else if ("4".equals(product)) {
-                displaydescription = billTypeName;
+                if (!"".equals(refItemId)) {
+                    displaydescription = billTypeName;
+                }else{
+                    displaydescription = description;
+                }
             } else if ("6".equals(product)) {
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " ";
@@ -1302,6 +1314,8 @@ public class AJAXBean extends AbstractBean implements
                 }else{
                     displaydescription = description;
                 }
+            } else {
+                displaydescription = description;
             }
 
             if (amount.compareTo(BigDecimal.ZERO) != 0) {

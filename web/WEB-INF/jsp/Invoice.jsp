@@ -496,7 +496,7 @@
                                                     <td class="priceCurrencyCost">
                                                         <select id="SelectCurrencyCost${taxdesc.count}" name="SelectCurrencyCost${taxdesc.count}" class="form-control">
                                                              <option value='' ></option>
-                                                            <c:forEach var="cur" items="${listCurrency}">
+                                                                <c:forEach var="cur" items="${listCurrency}">
                                                                 <c:set var="select" value="" />
                                                                 <c:if test="${cur.code == ind.curCost}">
                                                                     <c:set var="select" value="selected" />
