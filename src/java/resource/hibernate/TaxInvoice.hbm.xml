@@ -55,12 +55,6 @@
         <property name="outputTaxStatus" type="java.lang.Integer">
             <column name="output_tax_status" />
         </property>       
-        <property name="postDate" type="timestamp">
-            <column name="post_date" length="19" />
-        </property>
-        <property name="outputTaxStatus" type="java.lang.Integer">
-            <column name="output_tax_status" />
-        </property>
         <bag name="creditNoteDetails" table="credit_note_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="tax_invoice_id" />
