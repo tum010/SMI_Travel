@@ -11268,7 +11268,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
         
         HSSFFont symbolcheck = wb.createFont();
         symbolcheck.setFontName("Wingdings");
-        symbolcheck.setFontHeightInPoints((short) 16);
+        symbolcheck.setFontHeightInPoints((short) 18);
         
         HSSFFont symbol = wb.createFont();
         symbol.setFontName("Wingdings");
@@ -11443,6 +11443,9 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     HSSFCell cell34 = row3.createCell(7);
                     cell34.setCellValue("สาขา");
                     cell34.setCellStyle(styleC21);
+                    HSSFCell cell35 = row3.createCell(8);
+                    cell35.setCellValue("");
+                    cell35.setCellStyle(styleSymbolCheck);
 
                     // Row 4
                     HSSFRow row4 = sheetWendy.createRow(3);
@@ -11693,6 +11696,9 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     HSSFCell cell34 = row3.createCell(7);
                     cell34.setCellValue("สาขา");
                     cell34.setCellStyle(styleC21);
+                    HSSFCell cell35 = row3.createCell(8);
+                    cell35.setCellValue("");
+                    cell35.setCellStyle(styleSymbolCheck);
 
                     // Row 4
                     HSSFRow row4 = sheetOutbound.createRow(3);
@@ -11940,7 +11946,10 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     HSSFCell cell34 = row3.createCell(7);
                     cell34.setCellValue("สาขา");
                     cell34.setCellStyle(styleC21);
-
+                    HSSFCell cell35 = row3.createCell(8);
+                    cell35.setCellValue("");
+                    cell35.setCellStyle(styleSymbolCheck);
+                    
                     // Row 4
                     HSSFRow row4 = sheetInbound.createRow(3);
                     HSSFCell cell41 = row4.createCell(0);
