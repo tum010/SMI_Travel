@@ -174,39 +174,76 @@ public class SaleVatReportImpl implements SaleVatReportDao{
         SimpleDateFormat dateformat = new SimpleDateFormat();
         dateformat.applyPattern("dd-MM-yyyy");
         String monthThai = "";
+        String monthMM = "";
         int yearThai = 0;
         
         if("1".equalsIgnoreCase(month)){
             monthThai = "มกราคม";
+            monthMM = "01";
         }else if("2".equalsIgnoreCase(month)){
             monthThai = "กุมภาพันธ์";
+            monthMM = "02";
         }else if("3".equalsIgnoreCase(month)){
             monthThai = "มีนาคม";
+            monthMM = "03";
         }else if("4".equalsIgnoreCase(month)){
             monthThai = "เมษายน";
+            monthMM = "04";
         }else if("5".equalsIgnoreCase(month)){
             monthThai = "พฤษภาคม";
+            monthMM = "05";
         }else if("6".equalsIgnoreCase(month)){
             monthThai = "มิถุนายน";
+            monthMM = "06";
         }else if("7".equalsIgnoreCase(month)){
             monthThai = "กรกฎาคม";
+            monthMM = "07";
         }else if("8".equalsIgnoreCase(month)){
             monthThai = "สิงหาคม";
+            monthMM = "08";
         }else if("9".equalsIgnoreCase(month)){
             monthThai = "กันยายน";
+            monthMM = "09";
         }else if("10".equalsIgnoreCase(month)){
             monthThai = "ตุลาคม";
+            monthMM = "10";
         }else if("11".equalsIgnoreCase(month)){
             monthThai = "พฤศจิกายน";
+            monthMM = "11";
         }else if("12".equalsIgnoreCase(month)){
             monthThai = "ธันวาคม";
+            monthMM = "12";
         }
         
         yearThai = Integer.parseInt(year) + 543 ;
-        
-        
+        String orderNo = "";
+        String departmentTemp = "";
         for (Object[] B : QueryList){
             OutputTaxView otv = new OutputTaxView();
+            
+            if("".equalsIgnoreCase(departmentTemp) || !departmentTemp.equalsIgnoreCase(util.ConvertString(B[8]))){
+                orderNo = "0001";
+            }else{
+                int running = Integer.parseInt(orderNo) + 1;
+                String temp = String.valueOf(running);
+                for (int i = temp.length(); i < 4; i++) {
+                    temp = "0" + temp;
+                }
+                orderNo = temp;
+            }
+            
+            if("Wendy".equalsIgnoreCase(util.ConvertString(B[8]))){
+                departmentTemp = "Wendy" ;
+            }
+            if("Outbound".equalsIgnoreCase(util.ConvertString(B[8]))){
+                departmentTemp = "Outbound" ; 
+            }
+            if("Inbound".equalsIgnoreCase(util.ConvertString(B[8]))){
+                departmentTemp = "Inbound" ;
+            }
+            
+            
+            otv.setOrder(monthMM+"/"+orderNo);
             otv.setHeaderMonth(monthThai);
             otv.setHeaderYear(String.valueOf(yearThai));
             otv.setHeaderDepartment(department);
