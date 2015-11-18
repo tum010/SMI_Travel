@@ -12,15 +12,13 @@ $(document).ready(function() {
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
     });
-
     $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": true,
         "bFilter": true,
         "bPaginate": true,
         "bInfo": false,
-        "bLengthChange": false,
-        "iDisplayLength": 3
+        "bLengthChange": false
     });
     $('#SearchAPCodeTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
@@ -70,6 +68,61 @@ $(document).ready(function() {
                 }
             }
         });
+    });
+
+    var codeInvoiceSup = [];
+    $.each(invoiceSup, function(key, value) {
+        codeInvoiceSup.push(value.code);
+        if (!(value.name in codeInvoiceSup)) {
+            codeInvoiceSup.push(value.name);
+        }
+    });
+
+    $("#invSupCode").autocomplete({
+        source: codeInvoiceSup,
+        close: function(event, ui) {
+            $("#invSupCode").trigger('keyup');
+        }
+    });
+
+    $("#invSupCode").on('keyup', function() {
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+        var code = this.value.toUpperCase();
+        var name = this.value;
+        $("#invSupId,#invSupName,#invSupApCode").val(null);
+
+        $.each(invoiceSup, function(key, value) {
+            if (value.code.toUpperCase() === code) {
+                $("#invSupId").val(value.id);
+                $("#invSupName").val(value.name);
+                $("#invSupApCode").val(value.apcode);
+            }
+            if (name === value.name) {
+                $("#invSupCode").val(value.code);
+                $("#invSupId").val(value.id);
+                $("#invSupName").val(value.name);
+                $("#invSupApCode").val(value.apcode);
+                code = $("#invSupCode").val().toUpperCase();
+            }
+        });
+    });
+
+    $("#invSupCode").on('blur', function() {
+        var delay = 500;//1 seconds
+        setTimeout(function() {
+            $.each(invoiceSup, function(key, value) {
+                //alert(value.code);
+                if ($("#invSupCode").val() === value.code) {
+                    $("#invSupId").val(value.id);
+                    $("#invSupName").val(value.name);
+                    $("#invSupApCode").val(value.apcode);
+                }
+            });
+
+        }, delay);
+
     });
 
 });
@@ -191,5 +244,16 @@ function insertCommas(nField) {
     } else {
         nField.value = nField.value.replace(/[^\d\,\.]/g, "").replace(/ /, "");
     }
+}
+
+function setupInvSupValue(id, code, name, apcode) {
+    $('#SearchInvoiceSup').modal('hide');
+    document.getElementById('invSupId').value = id;
+    document.getElementById('invSupCode').value = code;
+    document.getElementById('invSupName').value = name;
+    document.getElementById('invSupApCode').value = apcode;
+    document.getElementById('invSupCode').focus();
+//        $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputInvoiceSupCode');
+//        $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
 }
 

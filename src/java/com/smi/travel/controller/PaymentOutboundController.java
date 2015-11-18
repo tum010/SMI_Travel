@@ -3,7 +3,9 @@ import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.MPaytype;
+import com.smi.travel.datalayer.service.PaymentTourHotelService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.master.controller.SMITravelController;
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,7 +21,9 @@ public class PaymentOutboundController extends SMITravelController {
     private static final String PAYTYPE = "payTypeList";
     private static final String CURRENCY = "currencyList";
     private static final String MVAT = "mVat";
+    private static final String INVOICESUPLIST = "invSupList";        
     private UtilityService utilservice;
+    private PaymentTourHotelService paymentTourHotelService;
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -32,6 +36,8 @@ public class PaymentOutboundController extends SMITravelController {
         MDefaultData mDefaultData = utilservice.getMDefaultDataFromType("vat");
         BigDecimal mVat = new BigDecimal(mDefaultData.getValue());
         request.setAttribute(MVAT, mVat);
+        List<InvoiceSupplier> invoiceSupplierList = getPaymentTourHotelService().getListInvoiceSuppiler();
+        request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
         return PaymentOutbound;
     }
 
@@ -41,5 +47,13 @@ public class PaymentOutboundController extends SMITravelController {
 
     public void setUtilservice(UtilityService utilservice) {
         this.utilservice = utilservice;
+    }
+
+    public PaymentTourHotelService getPaymentTourHotelService() {
+        return paymentTourHotelService;
+    }
+
+    public void setPaymentTourHotelService(PaymentTourHotelService paymentTourHotelService) {
+        this.paymentTourHotelService = paymentTourHotelService;
     }
 }

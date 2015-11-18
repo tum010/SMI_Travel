@@ -6,6 +6,7 @@
 <c:set var="statusList" value="${requestScope['statusList']}" />
 <c:set var="payTypeList" value="${requestScope['payTypeList']}" />
 <c:set var="currencyList" value="${requestScope['currencyList']}" />
+<c:set var="invSupList" value="${requestScope['invSupList']}" />
 <c:set var="mVat" value="${requestScope['mVat']}" />
 <input type="hidden" id="mVat" name="mVat" value="${mVat}"/>
 
@@ -165,15 +166,16 @@
                         <label class="control-label">Invoice Sup</lable>
                     </div>
                     <div class="col-md-2 form-group text-left" > 
-                        <div class="input-group" id="gr" >
-                            <input type="text" class="form-control" id="InputSup" name="InputSup" value="" />
+                        <div class="input-group">
+                            <input type="hidden" class="form-control" id="invSupId" name="invSupId" value="" />
+                            <input type="text" class="form-control" id="invSupCode" name="invSupCode" value="" />
                             <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchInvoiceSup">
                                 <span class="glyphicon-search glyphicon"></span>
                             </span>
                         </div>
                     </div>
                     <div class="col-md-2 form-group text-left" >
-                        <input name="InputSupName" id="InputSupName" type="text" class="form-control" value="" />
+                        <input name="invSupName" id="invSupName" type="text" class="form-control" value="" readonly=""/>
                     </div>
                     <div class="col-xs-1 text-left" style="width:78px;padding-right: 0px;">
                         <label class="control-label">A/P Code</lable>
@@ -181,7 +183,7 @@
                     <div class="col-md-1 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 180px;">
                         <div class="col-sm-12">
                             <div class="input-group" id="CodeValidate">
-                                <input name="InputAPCode" id="InputAPCode" type="text" class="form-control" value="" />
+                                <input name="invSupApCode" id="invSupApCode" type="text" class="form-control" value="" />
                                 <span class="input-group-addon" data-toggle="modal" data-target="#SearchAPCode">
                                     <span class="glyphicon-search glyphicon"></span>
                                 </span>    
@@ -481,21 +483,33 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title"  id="Titlemodel">Search Invoice Sup</h4>
+                <h4 class="modal-title"  id="Titlemodel">Invoice Supplier</h4>
             </div>
             <div class="modal-body">
                 <table class="display" id="SearchInvoicSupTable">
                     <thead class="datatable-header">
+                        <script>
+                            var invoiceSup = [];
+                        </script>
                         <tr>
+                            <th class="hidden">Id</th>
                             <th>Code</th>
                             <th>Name</th>
+                            <th>AP code</th>
                         </tr>
                     </thead>
                     <tbody>
-                            <tr class="packet">
-                                <td class="">XXX
-                                <td>XXXXX</td>
+                        <c:forEach var="invSup" items="${invSupList}">
+                            <tr onclick ="setupInvSupValue('${invSup.id}', '${invSup.code}', '${invSup.name}', '${invSup.apcode}')" >
+                                <td class="hidden">${invSup.id}</td>
+                                <td>${invSup.code}</td>
+                                <td>${invSup.name}</td>
+                                <td>${invSup.apcode}</td> 
                             </tr>
+                            <script>
+                                invoiceSup.push({id: "${invSup.id}", code: "${invSup.code}", name: "${invSup.name}", apcode: "${invSup.apcode}"});
+                            </script>
+                        </c:forEach>    
                     </tbody>
                 </table>
             </div>
