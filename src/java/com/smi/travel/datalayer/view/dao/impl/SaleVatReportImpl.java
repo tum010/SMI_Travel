@@ -258,9 +258,9 @@ public class SaleVatReportImpl implements SaleVatReportDao{
             otv.setDepartment(util.ConvertString(B[8]));
             otv.setDescription(util.ConvertString(B[9]));
             otv.setStatus(util.ConvertString(B[10]));
-            otv.setAgttaxno(util.ConvertString(B[10]));
-            otv.setMain(util.ConvertString(B[10]));
-            otv.setBranchno(util.ConvertString(B[10]));
+            otv.setAgttaxno(util.ConvertString(B[11]));
+            otv.setMain(util.ConvertString(B[12]));
+            otv.setBranchno(util.ConvertString(B[13]));
             data.add(otv);
         }
         
