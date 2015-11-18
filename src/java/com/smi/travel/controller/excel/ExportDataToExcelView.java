@@ -11266,6 +11266,14 @@ public class ExportDataToExcelView extends AbstractExcelView {
         fontHeaderTable.setFontHeightInPoints((short) 10);
         fontHeaderTable.setBoldweight(fontHeaderTable.BOLDWEIGHT_BOLD);
         
+        HSSFFont symbolcheck = wb.createFont();
+        symbolcheck.setFontName("Wingdings");
+        symbolcheck.setFontHeightInPoints((short) 16);
+        
+        HSSFFont symbol = wb.createFont();
+        symbol.setFontName("Wingdings");
+        symbol.setFontHeightInPoints((short) 12);
+        
         HSSFDataFormat currency = wb.createDataFormat();
         // Set align Text
         HSSFCellStyle styleC21 = wb.createCellStyle();
@@ -11385,6 +11393,19 @@ public class ExportDataToExcelView extends AbstractExcelView {
             sheetInbound.setColumnWidth(7, 256*11);
             sheetInbound.setColumnWidth(8, 256*12);
             
+            HSSFCellStyle styleSymbol = wb.createCellStyle();
+            styleSymbol.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+            styleSymbol.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+            styleSymbol.setBorderRight(HSSFCellStyle.BORDER_THIN);
+            styleSymbol.setBorderTop(HSSFCellStyle.BORDER_THIN);
+            styleSymbol.setAlignment(styleSymbol.ALIGN_CENTER);
+            styleSymbol.setVerticalAlignment(styleSymbol.VERTICAL_CENTER);
+            styleSymbol.setFont(symbol);
+            
+            HSSFCellStyle styleSymbolCheck = wb.createCellStyle();
+            styleSymbolCheck.setFont(symbolcheck);
+            styleSymbolCheck.setAlignment(styleSymbolCheck.ALIGN_CENTER);
+            
             for(int i=0;i<outputTaxViewList.size();i++){
                 OutputTaxView data = (OutputTaxView)outputTaxViewList.get(i);
                 if("Wendy".equalsIgnoreCase(data.getDepartment())){
@@ -11416,9 +11437,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell32.setCellValue("สำนักงานใหญ่ ");
                     cell32.setCellStyle(styleC21);
                     sheetWendy.addMergedRegion(CellRangeAddress.valueOf("E3:F3"));
-                    HSSFCell cell33 = row3.createCell(7);
-                    cell33.setCellValue("สาขา");
-                    cell33.setCellStyle(styleC21);
+                    HSSFCell cell33 = row3.createCell(6);
+                    cell33.setCellValue("");
+                    cell33.setCellStyle(styleSymbolCheck);
+                    HSSFCell cell34 = row3.createCell(7);
+                    cell34.setCellValue("สาขา");
+                    cell34.setCellStyle(styleC21);
 
                     // Row 4
                     HSSFRow row4 = sheetWendy.createRow(3);
@@ -11562,8 +11586,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     celldata4.setCellStyle(styleC25);
 
                     HSSFCell celldata5 = row.createCell(5);
-                    celldata5.setCellValue(String.valueOf(data.getMain()));
-                    celldata5.setCellStyle(styleC30);
+                    if("1".equalsIgnoreCase(String.valueOf(data.getMain()))){
+                        celldata5.setCellValue("");
+                    }else{
+                        celldata5.setCellValue("");
+                    }
+                    celldata5.setCellStyle(styleSymbol);
 
                     HSSFCell celldata6 = row.createCell(6);
                     celldata6.setCellValue(String.valueOf(data.getBranchno()));
@@ -11658,10 +11686,13 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     HSSFCell cell32 = row3.createCell(4);
                     cell32.setCellValue("สำนักงานใหญ่ ");
                     cell32.setCellStyle(styleC21);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("E3:F3"));
-                    HSSFCell cell33 = row3.createCell(7);
-                    cell33.setCellValue("สาขา");
-                    cell33.setCellStyle(styleC22);
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("E3:F3"));
+                    HSSFCell cell33 = row3.createCell(6);
+                    cell33.setCellValue("");
+                    cell33.setCellStyle(styleSymbolCheck);
+                    HSSFCell cell34 = row3.createCell(7);
+                    cell34.setCellValue("สาขา");
+                    cell34.setCellStyle(styleC21);
 
                     // Row 4
                     HSSFRow row4 = sheetOutbound.createRow(3);
@@ -11804,8 +11835,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     celldata4.setCellStyle(styleC25);
 
                     HSSFCell celldata5 = row.createCell(5);
-                    celldata5.setCellValue(String.valueOf(data.getMain()));
-                    celldata5.setCellStyle(styleC30);
+                    if("1".equalsIgnoreCase(String.valueOf(data.getMain()))){
+                        celldata5.setCellValue("");
+                    }else{
+                        celldata5.setCellValue("");
+                    }
+                    celldata5.setCellStyle(styleSymbol);
 
                     HSSFCell celldata6 = row.createCell(6);
                     celldata6.setCellValue(String.valueOf(data.getBranchno()));
@@ -11898,10 +11933,13 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     HSSFCell cell32 = row3.createCell(4);
                     cell32.setCellValue("สำนักงานใหญ่ ");
                     cell32.setCellStyle(styleC21);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("E3:F3"));
-                    HSSFCell cell33 = row3.createCell(7);
-                    cell33.setCellValue("สาขา");
-                    cell33.setCellStyle(styleC22);
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("E3:F3"));
+                    HSSFCell cell33 = row3.createCell(6);
+                    cell33.setCellValue("");
+                    cell33.setCellStyle(styleSymbolCheck);
+                    HSSFCell cell34 = row3.createCell(7);
+                    cell34.setCellValue("สาขา");
+                    cell34.setCellStyle(styleC21);
 
                     // Row 4
                     HSSFRow row4 = sheetInbound.createRow(3);
@@ -12044,8 +12082,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     celldata4.setCellStyle(styleC25);
 
                     HSSFCell celldata5 = row.createCell(5);
-                    celldata5.setCellValue(String.valueOf(data.getMain()));
-                    celldata5.setCellStyle(styleC30);
+                    if("1".equalsIgnoreCase(String.valueOf(data.getMain()))){
+                        celldata5.setCellValue("");
+                    }else{
+                        celldata5.setCellValue("");
+                    }
+                    celldata5.setCellStyle(styleSymbol);
 
                     HSSFCell celldata6 = row.createCell(6);
                     celldata6.setCellValue(String.valueOf(data.getBranchno()));
