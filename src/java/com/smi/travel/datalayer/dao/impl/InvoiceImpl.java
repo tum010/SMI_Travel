@@ -358,11 +358,12 @@ public class InvoiceImpl implements InvoiceDao{
                 .setParameter("invoiceNo", "%"+invoiceNo+"%")
                 .list();
         if (invoiceList.isEmpty()) {
-            return null;
+            invoiceNoLast = "";
         }
         for(int i=0;i<invoiceList.size();i++){
            invoiceNoLast = invoiceList.get(0).getInvNo();
         }    
+        System.out.println(" Invoice Inbound Last : " + invoiceNoLast);
         return invoiceNoLast;
     }
 

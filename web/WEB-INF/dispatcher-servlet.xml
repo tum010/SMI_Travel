@@ -626,6 +626,7 @@
     </bean>
     <bean id="InvoiceInboundController" class="com.smi.travel.controller.InvoiceInboundController">
        <property name="utilityService" ref="UtilityService" />
+       <property name="invoiceService" ref="InvoiceService" />
     </bean>
     <bean id="TicketRefundSummaryController" class="com.smi.travel.controller.TicketRefundSummaryController">
         <property name="utilityService" ref="UtilityService" />

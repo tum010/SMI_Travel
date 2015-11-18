@@ -241,7 +241,7 @@ function setBillValue(billto, billname, address, term, pay) {
     $("#ARCode").val(billto);
 
     if($("#InvTo").val() !== "" && $("#InvToName").val() !== ""  && $("#ARCode").val() !== "" && $("#InputInvDate").val() !== ""){
-        alert("1");
+//        alert("1");
         $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvTo');
         $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvToName');
         $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'ARCode');
@@ -249,7 +249,7 @@ function setBillValue(billto, billname, address, term, pay) {
         $("#disableVoidButton").removeAttr("disabled");
         $("#newInvoiceInbound").removeAttr("disabled");
     }else{
-         alert("2");
+//         alert("2");
         $("#saveInvoice").attr("disabled", "disabled");
         $("#disableVoidButton").attr("disabled", "disabled");
         $("#newInvoiceInbound").attr("disabled", "disabled");
@@ -455,7 +455,7 @@ function CalculateGrandTotal(id) {
         if (id !== '') {
         }
 
-        document.getElementById('TotalNet').value = formatNumber(grandTotal);
+        document.getElementById('GrandTotal').value = formatNumber(grandTotal);
         if (grandTotal !== 0) {
             var bathString = toWords((grandTotal));
             document.getElementById('TextAmount').value = bathString;
@@ -479,10 +479,8 @@ function changeFormatAmountNumber(id) {
     var curamount = document.getElementById('SelectCurrencyAmount' + id).value;
     if (curamount === '') {
         $('#textAlertCurrencyAmountNotEmpty').show();
-        document.getElementById("saveInvoice").disabled = true;
     } else {
         $('#textAlertInvoiceNotEmpty').hide();
-        document.getElementById("saveInvoice").disabled = false;
     }
 
     count = count.replace(/\,/g, '');
@@ -498,15 +496,20 @@ function changeFormatAmountNumber(id) {
 }
 
 function addRowInvoiceInboundDetail(row){
+    var typeInvoiceInbound = $("#InputTypeInvoiceInbound").val();
+    var textHidden = "";
+    if(typeInvoiceInbound === "PM"){
+        textHidden = 'class="hidden"';
+    }
     var vat = $('#vatBase').val();
     $("#DetailBillableTable tbody").append(
     '<tr>' +
     '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
     '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '"   value=""></td>' +
-    '<td><input type="checkbox" id="checkUse' + row + '" name="checkUse' + row + '" onclick="calculateGross(' + row + ')" value=""></td>' +
+    '<td '+ textHidden+'><input type="checkbox" id="checkUse' + row + '" name="checkUse' + row + '" onclick="calculateGross(' + row + ')" value=""></td>' +
     '<td class="hidden" ><input type="text" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '"  value="' + vat + '"></td>' +
-    '<td ></td>' +
-    '<td ><input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
+    '<td '+ textHidden+'></td>' +
+    '<td '+ textHidden+'><input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
     '<td><input type="text" maxlength ="15" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" onfocusout="changeFormatAmountNumber(' + row + ');"  value=""></td>' +
     '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" >' + select + '</select></td>' +              
     '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +           
@@ -515,3 +518,32 @@ function addRowInvoiceInboundDetail(row){
     var count = document.getElementById('counterTable');
     count.value = row++;
 }
+
+function saveInvoiceInbound(){
+    var actionG = document.getElementById('action');
+    actionG.value = 'save';
+    document.getElementById('InvoiceInboundForm').submit();
+}
+
+$(document).ready(function() {
+    var bla = $('#resultText').val();
+    if (bla === "success") {
+        $('#textAlertDivSave').show();
+    } else if (bla === "") {
+        $('#textAlertDivSave').hide();
+    } else if (bla === "notInvoice") {
+        $('#textAlertNotInvoice').show();
+    } else if (bla === "yesInvoice") {
+        $('#textAlertNotInvoice').hide();
+    } else if (bla === "moreMoney") {
+        $('#textAlertMoney').show();
+    } else if (bla === "okMoney") {
+        $('#textAlertMoney').hide();
+    } else if (bla === "fail") {
+        $('#textAlertDivNotSave').show();
+    } else if (bla === "NEW") {
+        clearInvoice();
+    } else if (bla === "notDeleteReciptAndTax") {
+        $("#textAlertInvoiceNotEmpty").show();
+    }
+});

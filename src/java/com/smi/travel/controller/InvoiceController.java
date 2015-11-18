@@ -594,23 +594,23 @@ public class InvoiceController extends SMITravelController {
         numberAsString = String.format ("%04d", (count+1));
         if(department.equals("Wendy")){
             if(invoiceType.equals("T")){
-                invoiceNum = "W"+month+""+year+""+numberAsString;
+                invoiceNum = "W"+year+""+month+""+numberAsString;
             }else if(invoiceType.equals("V")){
-                invoiceNum = "WV"+month+""+year+""+numberAsString;
+                invoiceNum = "WV"+year+""+month+""+numberAsString;
             }else if(invoiceType.equals("N")){
-                invoiceNum = "WN"+month+""+year+""+numberAsString;
+                invoiceNum = "WN"+year+""+month+""+numberAsString;
             }else if(invoiceType.equals("A")){
-                invoiceNum = "WT"+month+""+year+""+numberAsString;
+                invoiceNum = "WT"+year+""+month+""+numberAsString;
             }
         }else if (department.equals("Outbound")){
             if(invoiceType.equals("T")){
-                invoiceNum = "O"+month+""+year+""+numberAsString;
+                invoiceNum = "O"+year+""+month+""+numberAsString;
             }else if(invoiceType.equals("V")){
-                invoiceNum = "OV"+month+""+year+""+numberAsString;
+                invoiceNum = "OV"+year+""+month+""+numberAsString;
             }else if(invoiceType.equals("N")){
-                invoiceNum = "ON"+month+""+year+""+numberAsString;
+                invoiceNum = "ON"+year+""+month+""+numberAsString;
             }else if(invoiceType.equals("A")){
-                invoiceNum = "OT"+month+""+year+""+numberAsString;
+                invoiceNum = "OT"+year+""+month+""+numberAsString;
             }
         }
 

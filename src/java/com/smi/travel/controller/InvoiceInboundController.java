@@ -1,13 +1,23 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.Invoice;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
+import com.smi.travel.datalayer.entity.MAccterm;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDefaultData;
+import com.smi.travel.datalayer.entity.MFinanceItemstatus;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.service.InvoiceService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +30,12 @@ public class InvoiceInboundController extends SMITravelController {
     private UtilityService utilityService;
     UtilityFunction utilty = new UtilityFunction();
     private static final String LINKNAME = "InvoiceInbound";
+    private InvoiceService invoiceService;
+    Invoice invoice = null;
+    List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
+    SystemUser staff = new SystemUser();
+    MFinanceItemstatus mStatus = new MFinanceItemstatus();
+    MAccterm type = new MAccterm();
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -28,7 +44,26 @@ public class InvoiceInboundController extends SMITravelController {
         //Attribute Invoice
         String department = request.getParameter("Department");
         String invoiceType = request.getParameter("InputInvoiceType");
-         String action = request.getParameter("action");
+        String action = request.getParameter("action");
+        String invoiceId = request.getParameter("InvoiceInboundId");
+        String invoiceNo = request.getParameter("InvNo");
+        String invoiceTo = request.getParameter("InvTo");
+        String invoiceName = request.getParameter("InvToName");
+        String invoiceAddress = request.getParameter("InvToAddress");
+        String InputInvDate = request.getParameter("InputInvDate");
+        String arCode = request.getParameter("ARCode");
+        
+        String dueDate = "";
+        String termPay = "";
+        String staffId =  "";
+        String staffCode = "";
+        String staffName = "";
+        String remark = "";
+        String isGroup[] = request.getParameterValues("Grpup");
+        String result = "";  
+        String subDepartment = "";
+        String wildCardSearch = request.getParameter("wildCardSearch");
+        String keyCode = request.getParameter("keyCode");
          
         System.out.println("callPageFrom : "+callPageFrom);
         if(callPageFrom != null){
@@ -75,18 +110,310 @@ public class InvoiceInboundController extends SMITravelController {
             request.setAttribute("listCustomerAgentInfo", null);
         } 
         
+        // Action 
+        if("save".equals(action)){       
+            if(invoiceId != null && !"".equals(invoiceId)){
+                invoice.setId(invoiceId);
+                action = "update";
+            }
+            invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
+            String checkOverFlow = invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails());
+            if("okMoney".equals(checkOverFlow)){
+                result = invoiceService.saveInvoice(invoice);
+                System.out.println("ddddd result : "+result);
+                saveAction(result, invoiceNo, invoice, "", request);
+                if(invoice.getInvoiceDetails() != null){
+                    // Check Flag Booking
+                    String checkFlag = invoiceService.checkFlagBooking(invoice);
+                    System.out.println("Check Flag :" + checkFlag);
+
+                    //Set Booking Status
+                    String setBookingStatus = invoiceService.setBookingStatus(invoice);
+                    System.out.println("Set Booking Status : " + setBookingStatus);
+                }
+            }else{
+                result = invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails());
+                request.setAttribute("listInvoiceDetail", invoice.getInvoiceDetails());
+                request.setAttribute("invoice", invoice);
+                request.setAttribute("result", result);
+            }
+            System.out.println("invoiceService checkOverflowValueOfInvoice:"+invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()));
+        }
+       
         request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
         request.setAttribute("page", callPageFrom);
         return new ModelAndView(LINKNAME+callPageFrom);
+    }
+    
+    public void saveAction(String result ,String invoiceNo, Invoice invoice ,String wildCardSearch ,HttpServletRequest request){
+        if(result.equals("update success")){
+            result = "success";
+            request.setAttribute("listInvoiceDetail", listInvoiceDetail);
+            invoice = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo,"","");
+            request.setAttribute("invoice", invoice);
+            request.setAttribute("result", result);
+                   
+        }else if(!result.equals("fail")){ // Save New Success
+            // search invoice from invoice no
+            System.out.println("save result : "+result); 
+            Invoice newInvoice = invoiceService.getInvoiceFromInvoiceNumber(result,"","");
+            result = "success";
+            // set invoice detail in list
+            List<InvoiceDetail> listInvoiceDetailNew = newInvoice.getInvoiceDetails();
+            if(newInvoice != null){
+                request.setAttribute("invoice", newInvoice);             
+            }else{
+                request.setAttribute("invoice", null);    
+            }
+            
+            if(listInvoiceDetailNew != null){
+                request.setAttribute("listInvoiceDetail", listInvoiceDetailNew);
+            }else{
+                request.setAttribute("listInvoiceDetail", null);
+            } 
+            
+            if("".equalsIgnoreCase(wildCardSearch)){
+                request.setAttribute("result", result);
+            }                    
+        }else{
+            request.setAttribute("result", result);
+            request.setAttribute("invoice", invoice);
+            request.setAttribute("listInvoiceDetail", null);
+        }  
+    }
+    
+    public Invoice setValueInvoice(String action , String username,String invoiceType,String invoiceId, String invoiceTo,String invoiceName,String invoiceAddress,
+            String isGroup[],String termPay ,String dueDate,String department,String staffCode,String staffName,String staffId,String arCode,
+            String remark,String invoiceNo,String InputInvDate,HttpServletRequest request,String subDepartment){
+        Invoice invoice = new Invoice();
+        if(username != null && !"".equals(username)){
+                invoice.setCreateBy(username);
+            }else{
+                invoice.setCreateBy(null);
+            }
+            
+            invoice.setIsLock(0);
+            
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Calendar cal = Calendar.getInstance();
+            System.out.println(dateFormat.format(cal.getTime()));
+            String createDate = dateFormat.format(cal.getTime());
+            Date date = new Date();
+            date = utilty.convertStringToDate(createDate);
+            // Create Date
+            invoice.setCreateDate(date);
+          
+           DateFormat dateFormat2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+	   Date date2 = new Date();
+	   System.out.println("Date 2 : "+dateFormat2.format(date2));
+           String updateDate = dateFormat2.format(date2);
+           System.out.println("String Date 2 : "+dateFormat2.format(date2));
+           date2 = utilty.convertStringToDateS(updateDate);
+            if("update".equals(action)){
+                invoice.setUpdateDate(new Date());
+            }            
+            // Status
+            if("disableVoid".equals(action)){
+                mStatus.setId("2");
+                mStatus.setName("VOID");
+                invoice.setMFinanceItemstatus(mStatus);
+            }else{
+                mStatus.setId("1");
+                mStatus.setName("NORMAL");
+                invoice.setMFinanceItemstatus(mStatus);
+            }           
+            // Invoice Type 
+            if(invoiceType != null && !"".equals(invoiceType) ){
+                if("M".equals(invoiceType)){
+                    invoiceType = "T";
+                }else{
+                    invoiceType = "V";                 
+                }
+                invoice.setInvType(invoiceType);
+            }
+            if(!"".equals(invoiceId) && invoiceId != null){
+                invoice.setId(invoiceId);
+            }else{
+                invoice.setId(null);
+            }
+          
+            if(invoiceTo != null){
+                invoice.setInvTo(invoiceTo);
+            }
+            if(invoiceName != null){
+                invoice.setInvName(invoiceName);
+            }
+            if(invoiceAddress != null){
+                invoice.setInvAddress(invoiceAddress);
+            }
+            
+            if(InputInvDate != null){
+                Date duee = utilty.convertStringToDate(InputInvDate);
+                invoice.setInvDate(duee);
+            }
+
+            if(department != null){
+               if(department.equals("P")){
+                    invoice.setDepartment("Inbound");
+                    department = "Inbound";
+                }else if(department.equals("R")){
+                    invoice.setDepartment("Inbound");
+                    department = "Inbound";
+                }   
+            }
+            
+            if(arCode != null && !arCode.equals("")){
+                invoice.setArcode(arCode);
+            }
+            // Invoice No
+            if(invoiceNo != null && !invoiceNo.equals("")){
+                invoice.setInvNo(invoiceNo);         
+            }else{
+                String day[] = new String[2];
+                day = InputInvDate.split("-");
+                date = utilty.convertStringToDate(InputInvDate);
+
+                SimpleDateFormat df = new SimpleDateFormat();
+                df.applyPattern("MMyy");
+                String month = day[1];
+                String year = day[0];
+                String da = day[2];
+                year = year.substring(2);
+                System.out.println("Date MMYY : " + df.format(date));
+                String lastInvoiceType = invoiceService.searchInvoiceNum(department, invoiceType,df.format(date));
+                String invoiceNoNew ="";
+                if(lastInvoiceType != null && !lastInvoiceType.equals("")){
+                   invoiceNoNew = generateInvoiceNo(department, invoiceType, month, year,lastInvoiceType,da);
+                   if(invoiceNoNew != null && !invoiceNoNew.equals("")){
+                        invoice.setInvNo(invoiceNoNew);
+                   }else{
+                        invoice.setInvNo("");
+                   }
+                }else{
+                    invoiceNoNew = generateInvoiceNo(department, invoiceType, month, year,null,da);
+                    if(invoiceNoNew != null && !invoiceNoNew.equals("")){
+                         invoice.setInvNo(invoiceNoNew);
+                    }else{
+                         invoice.setInvNo("");
+                    }
+                }
+            }
+            invoice.setIsExport(0);
+            listInvoiceDetail = setInvoiceDetailList(request, invoice,action);
+            if(listInvoiceDetail != null){
+                invoice.setInvoiceDetails(listInvoiceDetail);
+            }
+        return invoice;
+    }
+    
+    public String generateInvoiceNo(String department,String invoiceType,String month ,String year,String lastInvoiceType,String date){
+        String invoiceNum = "";
+        String invoiceLast = "";
+        int count = 0;
+        if(lastInvoiceType != null && !"".equals(lastInvoiceType) ){
+            count = lastInvoiceType.length();
+            count = count-4;
+            invoiceLast = lastInvoiceType.substring(count);    
+            count = Integer.parseInt(invoiceLast);
+           
+        }
+        String numberAsString = "";
+        numberAsString = String.format ("%04d", (count+1));
+        if (department.equals("Inbound")){
+            if(invoiceType.equals("T")){
+                invoiceNum = "I"+year+""+month+""+numberAsString;
+            }else if(invoiceType.equals("V")){
+                invoiceNum = "IV"+year+""+month+""+numberAsString;
+            }
+        }
+
+        return invoiceNum;
+    }
+    
+    public List<InvoiceDetail> setInvoiceDetailList(HttpServletRequest request,Invoice invoice,String action){
+        List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
+        
+        String invoiceDetailRows = request.getParameter("counterTable");
+        if (invoiceDetailRows == null) {
+            return null;
+        }
+        int driverRows = Integer.parseInt(invoiceDetailRows);
+        if (driverRows == 1) {
+            return null;
+        }
+        for (int i = 1; i <= driverRows; i++) {
+            InvoiceDetail invoiceDetail = new InvoiceDetail();
+            String idDetail = request.getParameter("detailId"+i);
+            String description = request.getParameter("BillDescriptionTemp"+i);
+            String vat = request.getParameter("InputVatTemp"+i);
+            String gross = request.getParameter("InputGross"+i);
+            String amount = request.getParameter("InputAmount"+i);
+            String amountCurren = request.getParameter("SelectCurrencyAmount"+i);
+            String isVat = request.getParameter("checkUse"+i);          
+            request.getParameterMap();
+            System.out.println("isvat : ["+i+"]"+isVat);
+            if(idDetail != null && !idDetail.equals("")){
+                 invoiceDetail.setId(idDetail);
+            }
+
+            if(amount != null && !amount.equals("")){
+                System.out.println(""+amount);
+                BigDecimal amountInt = new BigDecimal(amount.replaceAll(",", ""));
+                invoiceDetail.setAmount(amountInt);
+            }
+            
+            if(gross != null && !gross.equals("")){
+                    System.out.println("Gross"+gross);  
+                    BigDecimal grossInt = new BigDecimal(gross.replaceAll(",", ""));
+                    invoiceDetail.setGross(grossInt);
+            }
+
+            if(amountCurren != null){
+                invoiceDetail.setCurAmount(amountCurren);
+            }
+
+            if(vat != null && !vat.equals("")){
+                BigDecimal vatInt =  new BigDecimal(vat);
+                invoiceDetail.setVat(vatInt);
+            }
+            
+            if(isVat == null){
+                invoiceDetail.setIsVat(0);
+                invoiceDetail.setGross(null);
+                invoiceDetail.setVat(null);
+            }else{
+                invoiceDetail.setIsVat(1);
+            }
+
+            if(description != null && !"".equals(description)){
+                invoiceDetail.setDescription(description);
+                invoiceDetail.setInvoice(invoice);
+                listInvoiceDetail.add(invoiceDetail);
+            }
+
+            if("update".equals(action)){
+               invoiceDetail.setIsExport(1);
+            }else{
+               invoiceDetail.setIsExport(0);
+            }
+        }       
+        return listInvoiceDetail;
+    }
+
+    public void setUtilityService(UtilityService utilityService) {
+        this.utilityService = utilityService;
     }
 
     public UtilityService getUtilityService() {
         return utilityService;
     }
 
-    public void setUtilityService(UtilityService utilityService) {
-        this.utilityService = utilityService;
+    public void setInvoiceService(InvoiceService invoiceService) {
+        this.invoiceService = invoiceService;
     }
-    
+
+    public InvoiceService getInvoiceService() {
+        return invoiceService;
+    }
     
 }
