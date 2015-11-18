@@ -1304,7 +1304,21 @@ function copyInvoice() {
 
 function setBillValue(billto, billname, address, term, pay) {
     $("#InvTo").val(billto);
-    $("#InvName").val(billname);
+    $("#InvToName").val(billname);
     $("#InvToAddress").val(address);
+    $("#ARCode").val(billto);
+
+    if($("#InvTo").val() !== "" && $("#InvToName").val() !== ""  && $("#ARCode").val() !== "" && $("#InputInvDate").val() !== ""){
+        alert("1");
+        $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvTo');
+        $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvToName');
+        $('#InvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
+        $("#saveInvoice").removeAttr("disabled");
+        $("#disableVoidButton").removeAttr("disabled");
+    }else{
+         alert("2");
+        $("#saveInvoice").attr("disabled", "disabled");
+        $("#disableVoidButton").attr("disabled", "disabled");
+    }
     $("#InvToModal").modal('hide');
 }

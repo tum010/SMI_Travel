@@ -2,7 +2,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" src="js/workspace.js"></script> 
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
 <script type="text/javascript" src="js/selectize.js"></script>
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
@@ -30,7 +33,7 @@
         <div ng-include="'WebContent/FinanceAndCashier/InvoiceMenu.html'"></div>
     </div>
         <div class="col-sm-10">
-            <form action="Invoice${page}.smi" method="post" id="InvoiceInboundForm" role="form" onsubmit="">
+            <form action="Invoice${page}.smi" method="post" id="InvoiceInboundForm" name="InvoiceInboundForm" role="form" onsubmit="">
                 <!--<input type="text" id="action" name="action" value="Action">--> 
             <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -110,12 +113,6 @@
                         </div>    
                         <div class="col-md-6 form-group">
                             <input  type="text" id="InvToName" name="InvToName" class="form-control" value="${invoice.invName}" >
-                        </div>
-                        <div class="col-xs-2 text-right">
-                            <label class="control-label" for="">System Date</lable>
-                        </div>
-                        <div class="col-md-2 form-group">                      
-                            <input  type="text" id="InputSystemDate" name="InputSystemDate" class="form-control" value="" readonly >
                         </div>
                     </div>
                     <div class="col-xs-12 ">
@@ -266,7 +263,7 @@
                                     </button>
                                 </div>
                                 <div class="col-md-1 text-right ">
-                                    <button type="button" onclick="" class="btn btn-success"  >
+                                    <button type="button" onclick="" class="btn btn-success" id="newInvoiceInbound" name="newInvoiceInbound"  >
                                         <span id="SpanNew" class="fa fa-plus-circle"></span> New 
                                     </button>
                                 </div>
@@ -490,9 +487,11 @@
         });
     });
     
-    $("#InvoiceForm")
+    $("#InvoiceInboundForm")
         .bootstrapValidator({
-            framework: 'bootstrap',
+//                framework: 'bootstrap',
+            container: 'tooltip',
+            excluded: [':disabled', ':hidden', ':not(:visible)'],
             feedbackIcons: {
                 valid: 'uk-icon-check',
                 invalid: 'uk-icon-times',
@@ -532,6 +531,19 @@
                     }
                 } 
             }  
+        }).on('success.field.fv', function (e, data) {
+            if (data.field === 'InvTo' && data.fv.isValidField('InvTo') === false) {
+                data.fv.revalidateField('InvTo');
+            }
+            if (data.field === 'InvToName' && data.fv.isValidField('InvToName') === false) {
+                data.fv.revalidateField('InvToName');
+            }
+            if (data.field === 'ARCode' && data.fv.isValidField('ARCode') === false) {
+                data.fv.revalidateField('ARCode');
+            }
+            if (data.field === 'InputInvDate' && data.fv.isValidField('InputInvDate') === false) {
+                data.fv.revalidateField('InputInvDate');
+            }
         });
 </script>
 <script type="text/javascript" charset="utf-8">
@@ -555,6 +567,50 @@
         }else if(taxin === "noTaxinvoice"){
              $('#textAlertTaxinvoice').hide();
         }
+        
+        $("#InvoiceForm")
+            .bootstrapValidator({
+                framework: 'bootstrap',
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {                
+                    InvTo: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            notEmpty: {
+                                message: 'Input Invoice To'
+                            }
+                        }
+                    },
+                    InvToName: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            notEmpty: {
+                                message: 'Input Invoice To Name'
+                            }
+                        }
+                    },
+                    ARCode: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            notEmpty: {
+                                message: 'Input A/R Code'
+                            }
+                        }
+                    },
+                    InputInvDate: {
+                        trigger: 'focus keyup change',
+                        validators: {
+                            notEmpty: {
+                                message: 'Input Invoice Date'
+                            }
+                        }
+                    } 
+                }  
+            });
     }); 
 </script>
 <c:if test="${defaultData != null}">        

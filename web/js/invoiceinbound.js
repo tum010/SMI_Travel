@@ -236,8 +236,24 @@ function CallAjaxAuto(param) {
 
 function setBillValue(billto, billname, address, term, pay) {
     $("#InvTo").val(billto);
-    $("#InvName").val(billname);
+    $("#InvToName").val(billname);
     $("#InvToAddress").val(address);
+    $("#ARCode").val(billto);
+
+    if($("#InvTo").val() !== "" && $("#InvToName").val() !== ""  && $("#ARCode").val() !== "" && $("#InputInvDate").val() !== ""){
+        alert("1");
+        $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvTo');
+        $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvToName');
+        $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'ARCode');
+        $("#saveInvoice").removeAttr("disabled");
+        $("#disableVoidButton").removeAttr("disabled");
+        $("#newInvoiceInbound").removeAttr("disabled");
+    }else{
+         alert("2");
+        $("#saveInvoice").attr("disabled", "disabled");
+        $("#disableVoidButton").attr("disabled", "disabled");
+        $("#newInvoiceInbound").attr("disabled", "disabled");
+    }
     $("#InvToModal").modal('hide');
 }
 
@@ -264,11 +280,11 @@ function calculateGross(row) {
             var vatT = $('#vatBase').val();
             var vatTT = parseFloat(vatT);
             console.log("Vat : " + vatTT);
-            document.getElementById("DetailBillableTable").rows[row].cells[3].innerHTML = vatTT;
+            document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = vatTT;
             grossTotal = (amount * 100) / (100 + vatTT);
             document.getElementById('InputGross' + row).value = formatNumber(grossTotal);
         } else {
-            document.getElementById("DetailBillableTable").rows[row].cells[3].innerHTML = vatDefaultData;
+            document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = vatDefaultData;
             if(amount !== 0){
                 grossTotal = (amount * 100) / (100 + vatDefaultData);
             }else{
@@ -280,7 +296,7 @@ function calculateGross(row) {
         countVat++;
     } else {
          console.log("Vat : " + vatTT);
-        document.getElementById("DetailBillableTable").rows[row].cells[3].innerHTML = '';
+        document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = '';
         document.getElementById('InputGross' + row).value = '';
     }
 }
@@ -489,7 +505,7 @@ function addRowInvoiceInboundDetail(row){
     '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '"   value=""></td>' +
     '<td><input type="checkbox" id="checkUse' + row + '" name="checkUse' + row + '" onclick="calculateGross(' + row + ')" value=""></td>' +
     '<td class="hidden" ><input type="text" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '"  value="' + vat + '"></td>' +
-    '<td >'+vat +'</td>' +
+    '<td ></td>' +
     '<td ><input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
     '<td><input type="text" maxlength ="15" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" onfocusout="changeFormatAmountNumber(' + row + ');"  value=""></td>' +
     '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" >' + select + '</select></td>' +              
