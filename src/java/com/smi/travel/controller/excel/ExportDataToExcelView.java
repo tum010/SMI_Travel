@@ -11349,7 +11349,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
             styleC4.setBorderRight(HSSFCellStyle.BORDER_THIN);
             styleC4.setBorderTop(HSSFCellStyle.BORDER_THIN);
 
-            int count = 9;
+            int count = 10;
             int tempcountW = 0 ;
             int tempcountI = 0 ;
             int tempcountO = 0 ;
@@ -11366,32 +11366,65 @@ public class ExportDataToExcelView extends AbstractExcelView {
             sheetWendy.setColumnWidth(0, 256*6);
             sheetWendy.setColumnWidth(1, 256*9);
             sheetWendy.setColumnWidth(2, 256*7);
-            sheetWendy.setColumnWidth(3, 256*30);
+            sheetWendy.setColumnWidth(3, 256*27);
             sheetWendy.setColumnWidth(4, 256*13);
             sheetWendy.setColumnWidth(5, 256*8);
             sheetWendy.setColumnWidth(6, 256*5);
-            sheetWendy.setColumnWidth(7, 256*11);
-            sheetWendy.setColumnWidth(8, 256*12);
-            
+            sheetWendy.setColumnWidth(7, 256*2);
+            sheetWendy.setColumnWidth(8, 256*2);
+            sheetWendy.setColumnWidth(9, 256*2);
+            sheetWendy.setColumnWidth(10, 256*2);
+            sheetWendy.setColumnWidth(11, 256*2);
+            sheetWendy.setColumnWidth(12, 256*2);
+            sheetWendy.setColumnWidth(13, 256*2);
+            sheetWendy.setColumnWidth(14, 256*2);
+            sheetWendy.setColumnWidth(15, 256*2);
+            sheetWendy.setColumnWidth(16, 256*2);
+            sheetWendy.setColumnWidth(17, 256*2);
+            sheetWendy.setColumnWidth(18, 256*2);
+            sheetWendy.setColumnWidth(19, 256*2);
+
             sheetOutbound.setColumnWidth(0, 256*6);
             sheetOutbound.setColumnWidth(1, 256*9);
             sheetOutbound.setColumnWidth(2, 256*7);
-            sheetOutbound.setColumnWidth(3, 256*30);
+            sheetOutbound.setColumnWidth(3, 256*27);
             sheetOutbound.setColumnWidth(4, 256*13);
             sheetOutbound.setColumnWidth(5, 256*8);
             sheetOutbound.setColumnWidth(6, 256*5);
-            sheetOutbound.setColumnWidth(7, 256*11);
-            sheetOutbound.setColumnWidth(8, 256*12);
+            sheetOutbound.setColumnWidth(7, 256*2);
+            sheetOutbound.setColumnWidth(8, 256*2);
+            sheetOutbound.setColumnWidth(9, 256*2);
+            sheetOutbound.setColumnWidth(10, 256*2);
+            sheetOutbound.setColumnWidth(11, 256*2);
+            sheetOutbound.setColumnWidth(12, 256*2);
+            sheetOutbound.setColumnWidth(13, 256*2);
+            sheetOutbound.setColumnWidth(14, 256*2);
+            sheetOutbound.setColumnWidth(15, 256*2);
+            sheetOutbound.setColumnWidth(16, 256*2);
+            sheetOutbound.setColumnWidth(17, 256*2);
+            sheetOutbound.setColumnWidth(18, 256*2);
+            sheetOutbound.setColumnWidth(19, 256*2);
             
             sheetInbound.setColumnWidth(0, 256*6);
             sheetInbound.setColumnWidth(1, 256*9);
             sheetInbound.setColumnWidth(2, 256*7);
-            sheetInbound.setColumnWidth(3, 256*30);
+            sheetInbound.setColumnWidth(3, 256*27);
             sheetInbound.setColumnWidth(4, 256*13);
             sheetInbound.setColumnWidth(5, 256*8);
             sheetInbound.setColumnWidth(6, 256*5);
-            sheetInbound.setColumnWidth(7, 256*11);
-            sheetInbound.setColumnWidth(8, 256*12);
+            sheetInbound.setColumnWidth(7, 256*2);
+            sheetInbound.setColumnWidth(8, 256*2);
+            sheetInbound.setColumnWidth(9, 256*2);
+            sheetInbound.setColumnWidth(10, 256*2);
+            sheetInbound.setColumnWidth(11, 256*2);
+            sheetInbound.setColumnWidth(12, 256*2);
+            sheetInbound.setColumnWidth(13, 256*2);
+            sheetInbound.setColumnWidth(14, 256*2);
+            sheetInbound.setColumnWidth(15, 256*2);
+            sheetInbound.setColumnWidth(16, 256*2);
+            sheetInbound.setColumnWidth(17, 256*2);
+            sheetInbound.setColumnWidth(18, 256*2);
+            sheetInbound.setColumnWidth(19, 256*2);
             
             HSSFCellStyle styleSymbol = wb.createCellStyle();
             styleSymbol.setBorderBottom(HSSFCellStyle.BORDER_THIN);
@@ -11417,7 +11450,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell1.setCellValue("รายงานภาษีขาย");
                     styleC1.setFont(fontHeader);
                     cell1.setCellStyle(styleC1);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("A1:I1"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("A1:T1"));
 
                     // Row 2
                     HSSFRow row2 = sheetWendy.createRow(1);
@@ -11425,7 +11458,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell21.setCellValue("เดือนภาษี  " + data.getHeaderMonth() + " ปี " +data.getHeaderYear());
                     styleC23.setFont(fontHeaderDetail);
                     cell21.setCellStyle(styleC23);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("A2:I2"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("A2:T2"));
 
                     // Row 3
                     HSSFRow row3 = sheetWendy.createRow(2);
@@ -11433,88 +11466,153 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell31.setCellValue("ชื่อผู้ประกอบการ บริษัท เอส.เอ็ม.ไอ แทรเวล จำกัด");
                     cell31.setCellStyle(styleC22);
                     sheetWendy.addMergedRegion(CellRangeAddress.valueOf("A3:D3"));
-                    HSSFCell cell32 = row3.createCell(4);
+                    HSSFCell cell32 = row3.createCell(5);
                     cell32.setCellValue("สำนักงานใหญ่ ");
                     cell32.setCellStyle(styleC21);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("E3:F3"));
-                    HSSFCell cell33 = row3.createCell(6);
-                    cell33.setCellValue("");
-                    cell33.setCellStyle(styleSymbolCheck);
-                    HSSFCell cell34 = row3.createCell(7);
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("F3:J3"));
+                    HSSFCell cell33 = row3.createCell(11);
+                    cell33.setCellValue("");
+                    cell33.setCellStyle(styleSymbol);
+                    HSSFCell cell34 = row3.createCell(12);
                     cell34.setCellValue("สาขา");
                     cell34.setCellStyle(styleC21);
-                    HSSFCell cell35 = row3.createCell(8);
-                    cell35.setCellValue("");
-                    cell35.setCellStyle(styleSymbolCheck);
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("M3:O3"));
+                    HSSFCell cell35 = row3.createCell(16);
+                    cell35.setCellStyle(styleSymbol);
+                    HSSFCell cell36 = row3.createCell(17);
+                    cell36.setCellStyle(styleSymbol);
+                    HSSFCell cell37 = row3.createCell(18);
+                    cell37.setCellStyle(styleSymbol);
 
+                    HSSFRow rowX = sheetWendy.createRow(3);
+                    rowX.setHeightInPoints((short) 2);
+                    
                     // Row 4
-                    HSSFRow row4 = sheetWendy.createRow(3);
+                    HSSFRow row4 = sheetWendy.createRow(4);
                     HSSFCell cell41 = row4.createCell(0);
                     cell41.setCellValue("ชื่อสถานประกอบการ บริษัท เอส.เอ็ม.ไอ แทรเวล จำกัด");
                     cell41.setCellStyle(styleC22);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("A4:D4"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("A5:D5"));
                     HSSFCell cell42 = row4.createCell(4);
                     cell42.setCellValue("เลขประจำตัวผู้เสียภาษีอากร  ");
                     cell42.setCellStyle(styleC21);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("E4:G4"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("E5:G5"));
                     HSSFCell cell43 = row4.createCell(7);
-                    cell43.setCellValue("0105523020132");
-                    cell43.setCellStyle(styleC22);                
+                    cell43.setCellValue("0");
+                    cell43.setCellStyle(styleC26);
+                    HSSFCell cell44 = row4.createCell(8);
+                    cell44.setCellValue("1");
+                    cell44.setCellStyle(styleC26);
+                    HSSFCell cell45 = row4.createCell(9);
+                    cell45.setCellValue("0");
+                    cell45.setCellStyle(styleC26);
+                    HSSFCell cell46 = row4.createCell(10);
+                    cell46.setCellValue("5");
+                    cell46.setCellStyle(styleC26);
+                    HSSFCell cell47 = row4.createCell(11);
+                    cell47.setCellValue("5");
+                    cell47.setCellStyle(styleC26);
+                    HSSFCell cell48 = row4.createCell(12);
+                    cell48.setCellValue("2");
+                    cell48.setCellStyle(styleC26);
+                    HSSFCell cell49 = row4.createCell(13);
+                    cell49.setCellValue("3");
+                    cell49.setCellStyle(styleC26);
+                    HSSFCell cell50 = row4.createCell(14);
+                    cell50.setCellValue("0");
+                    cell50.setCellStyle(styleC26);
+                    HSSFCell cell51 = row4.createCell(15);
+                    cell51.setCellValue("2");
+                    cell51.setCellStyle(styleC26);
+                    HSSFCell cell52 = row4.createCell(16);
+                    cell52.setCellValue("0");
+                    cell52.setCellStyle(styleC26);
+                    HSSFCell cell53 = row4.createCell(17);
+                    cell53.setCellValue("1");
+                    cell53.setCellStyle(styleC26);
+                    HSSFCell cell54 = row4.createCell(18);
+                    cell54.setCellValue("3");
+                    cell54.setCellStyle(styleC26);
+                    HSSFCell cell55 = row4.createCell(19);
+                    cell55.setCellValue("2");
+                    cell55.setCellStyle(styleC26);
                     
                     //wendy
-                    HSSFRow row5 = sheetWendy.createRow(5);
+                    HSSFRow row5 = sheetWendy.createRow(6);
                     HSSFCell cell81 = row5.createCell(0);
                     cell81.setCellValue("ลำดับที่");
                     cell81.setCellStyle(styleC3);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("A6:A9"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("A7:A10"));
                     HSSFCell cell82 = row5.createCell(1);
                     cell82.setCellValue("ใบกำกับภาษี");
                     cell82.setCellStyle(styleC3);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("B6:C7"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("B7:C8"));
                     HSSFCell cell83 = row5.createCell(3);
                     cell83.setCellValue("รายการ");
                     cell83.setCellStyle(styleC3);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("D6:D9"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("D7:D10"));
                     HSSFCell cell84 = row5.createCell(4);
                     cell84.setCellValue("เลขประจำตัวผู้เสียภาษีของผู้ซื้อสินค้า/ผู้รับบริการ");
                     cell84.setCellStyle(styleC3);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("E6:E9"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("E7:E10"));
                     HSSFCell cell85 = row5.createCell(5);
                     cell85.setCellValue("สถานประกอบการ");
                     cell85.setCellStyle(styleC3);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("F6:G7"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("F7:G8"));
                     HSSFCell cell86 = row5.createCell(7);
                     cell86.setCellValue("มูลค่าสินค้าหรือบริการ");
                     cell86.setCellStyle(styleC3);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("H6:H9"));
-                    HSSFCell cell87 = row5.createCell(8);
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("H7:N10"));
+                    HSSFCell cell87 = row5.createCell(14);
                     cell87.setCellValue("จำนวนเงินภาษีมูลค่าเพิ่ม");
                     cell87.setCellStyle(styleC3);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("I6:I9"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("O7:T10"));
                                        
-                    HSSFRow row7 = sheetWendy.createRow(7);
+                    HSSFRow row7 = sheetWendy.createRow(8);
                     HSSFCell cell88 = row7.createCell(1);
                     cell88.setCellValue("วัน/เดือน/ปี");
                     cell88.setCellStyle(styleC3);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("B8:B9"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("B9:B10"));
                     HSSFCell cell89 = row7.createCell(2);
                     cell89.setCellValue("เลขที่");
                     cell89.setCellStyle(styleC3);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("C8:C9"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("C9:C10"));
                     HSSFCell cell90 = row7.createCell(5);
                     cell90.setCellValue("สำนักงานใหญ่");
                     cell90.setCellStyle(styleC3);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("F8:F9"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("F9:F10"));
                     HSSFCell cell91 = row7.createCell(6);
                     cell91.setCellValue("สาขาที่");
                     cell91.setCellStyle(styleC3);
-                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("G8:G9"));
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("G9:G10"));
                     
                     HSSFCell cell92 = row5.createCell(2);
                     cell92.setCellStyle(styleC3);
                     HSSFCell cell93 = row5.createCell(6);
                     cell93.setCellStyle(styleC3);
-                    
+                    HSSFCell cell008 = row5.createCell(8);
+                    cell008.setCellStyle(styleC3);
+                    HSSFCell cell009 = row5.createCell(9);
+                    cell009.setCellStyle(styleC3);
+                    HSSFCell cell010 = row5.createCell(10);
+                    cell010.setCellStyle(styleC3);
+                    HSSFCell cell011 = row5.createCell(11);
+                    cell011.setCellStyle(styleC3);
+                    HSSFCell cell012 = row5.createCell(12);
+                    cell012.setCellStyle(styleC3);
+                    HSSFCell cell013 = row5.createCell(13);
+                    cell013.setCellStyle(styleC3);
+                    HSSFCell cell014 = row5.createCell(15);
+                    cell014.setCellStyle(styleC3);
+                    HSSFCell cell015 = row5.createCell(16);
+                    cell015.setCellStyle(styleC3);
+                    HSSFCell cell016 = row5.createCell(17);
+                    cell016.setCellStyle(styleC3);
+                    HSSFCell cell017 = row5.createCell(18);
+                    cell017.setCellStyle(styleC3);
+                    HSSFCell cell018 = row5.createCell(19);
+                    cell018.setCellStyle(styleC3);
+                                        
                     HSSFCell cell94 = row7.createCell(0);
                     cell94.setCellStyle(styleC3);
                     HSSFCell cell95 = row7.createCell(3);
@@ -11525,8 +11623,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell97.setCellStyle(styleC3);
                     HSSFCell cell98 = row7.createCell(8);
                     cell98.setCellStyle(styleC3);
+                    HSSFCell cell99 = row7.createCell(13);
+                    cell99.setCellStyle(styleC3);
+                    HSSFCell cell100 = row7.createCell(19);
+                    cell100.setCellStyle(styleC3);
                     
-                    HSSFRow row6 = sheetWendy.createRow(6);
+                    HSSFRow row6 = sheetWendy.createRow(7);
                     HSSFCell cell000 = row6.createCell(0);
                     cell000.setCellStyle(styleC3);
                     HSSFCell cell001 = row6.createCell(1);
@@ -11543,29 +11645,16 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell006.setCellStyle(styleC3);
                     HSSFCell cell007 = row6.createCell(7);
                     cell007.setCellStyle(styleC3);
-                    HSSFCell cell008 = row6.createCell(8);
-                    cell008.setCellStyle(styleC3);
+                    HSSFCell cell00008 = row6.createCell(13);
+                    cell00008.setCellStyle(styleC3);
+                    HSSFCell cell00009 = row6.createCell(19);
+                    cell00009.setCellStyle(styleC3);
                     
-                    HSSFRow row8 = sheetWendy.createRow(8);
-                    HSSFCell cell0000 = row8.createCell(0);
-                    cell0000.setCellStyle(styleC3);
-                    HSSFCell cell0001 = row8.createCell(1);
-                    cell0001.setCellStyle(styleC3);
-                    HSSFCell cell0002 = row8.createCell(2);
-                    cell0002.setCellStyle(styleC3);
-                    HSSFCell cell0003 = row8.createCell(3);
-                    cell0003.setCellStyle(styleC3);
-                    HSSFCell cell0004 = row8.createCell(4);
-                    cell0004.setCellStyle(styleC3);
-                    HSSFCell cell0005 = row8.createCell(5);
-                    cell0005.setCellStyle(styleC3);
-                    HSSFCell cell0006 = row8.createCell(6);
-                    cell0006.setCellStyle(styleC3);
-                    HSSFCell cell0007 = row8.createCell(7);
-                    cell0007.setCellStyle(styleC3);
-                    HSSFCell cell0008 = row8.createCell(8);
-                    cell0008.setCellStyle(styleC3);
-                    
+                    HSSFRow row8 = sheetWendy.createRow(9);
+                    for(int k = 0 ; k < 20 ; k++){
+                        HSSFCell cell0000 = row8.createCell(k);
+                        cell0000.setCellStyle(styleC3);
+                    }
                     
                     HSSFRow row = sheetWendy.createRow(count + i);
                     HSSFCell celldata0 = row.createCell(0);
@@ -11603,10 +11692,19 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     HSSFCell celldata7 = row.createCell(7);
                     celldata7.setCellValue("".equalsIgnoreCase(String.valueOf(data.getGross())) ? 0 : (data.getGross()).doubleValue());
                     celldata7.setCellStyle(styleC25);
-
-                    HSSFCell celldata8 = row.createCell(8);
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("H"+(count+i+1)+":N"+(count+i+1)));
+                    
+                    HSSFCell celldata8 = row.createCell(14);
                     celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getVat())) ? 0 : (data.getVat()).doubleValue());
                     celldata8.setCellStyle(styleC25);
+                    sheetWendy.addMergedRegion(CellRangeAddress.valueOf("O"+(count+i+1)+":T"+(count+i+1)));
+                    
+                    for(int k = 8 ; k < 20 ; k++){
+                        if(k != 7 && k != 14){
+                            HSSFCell cell0000 = row.createCell(k);
+                            cell0000.setCellStyle(styleC25);
+                        }
+                    }
                     
                     if(data.getGross() != null){
                         grossW = grossW.add(data.getGross());
@@ -11629,7 +11727,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     if(tempcountW != 0){
                         HSSFRow rowtotal = sheetWendy.createRow(tempcountW);
                         String totalGross = "SUM(H" +8+":H"+(tempcountW)+")";
-                        String totalVat = "SUM(I" + 8+":I"+(tempcountW)+")";
+                        String totalVat = "SUM(O" + 8+":O"+(tempcountW)+")";
 
                         HSSFCellStyle styleTotal = wb.createCellStyle();
                         styleTotal.setFont(getHeaderTable(wb.createFont()));
@@ -11657,9 +11755,18 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         HSSFCell cellTotal06 = rowtotal.createCell(7);
                         cellTotal06.setCellFormula(totalGross);
                         cellTotal06.setCellStyle(styleC25);
-                        HSSFCell cellTotal07 = rowtotal.createCell(8);
+                        HSSFCell cellTotal07 = rowtotal.createCell(14);
                         cellTotal07.setCellFormula(totalVat);
                         cellTotal07.setCellStyle(styleC25);
+                        sheetWendy.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountW+1)+":N"+(tempcountW+1)));
+                        sheetWendy.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountW+1)+":T"+(tempcountW+1)));
+                        
+                        for(int k = 8 ; k < 20 ; k++){
+                            if(k != 7 && k != 14){
+                                HSSFCell cell0000 = rowtotal.createCell(k);
+                                cell0000.setCellStyle(styleC25);
+                            }
+                        }
                     }
                     
                     // set Header Report (Row 1)
@@ -11670,7 +11777,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell1.setCellValue("รายงานภาษีขาย");
                     styleC1.setFont(fontHeader);
                     cell1.setCellStyle(styleC1);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("A1:I1"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("A1:T1"));
 
                     // Row 2
                     HSSFRow row2 = sheetOutbound.createRow(1);
@@ -11678,7 +11785,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell21.setCellValue("เดือนภาษี  " + data.getHeaderMonth() + " ปี " +data.getHeaderYear());
                     styleC23.setFont(fontHeaderDetail);
                     cell21.setCellStyle(styleC23);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("A2:I2"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("A2:T2"));
 
                     // Row 3
                     HSSFRow row3 = sheetOutbound.createRow(2);
@@ -11686,88 +11793,153 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell31.setCellValue("ชื่อผู้ประกอบการ บริษัท เอส.เอ็ม.ไอ แทรเวล จำกัด");
                     cell31.setCellStyle(styleC22);
                     sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("A3:D3"));
-                    HSSFCell cell32 = row3.createCell(4);
+                    HSSFCell cell32 = row3.createCell(5);
                     cell32.setCellValue("สำนักงานใหญ่ ");
                     cell32.setCellStyle(styleC21);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("E3:F3"));
-                    HSSFCell cell33 = row3.createCell(6);
-                    cell33.setCellValue("");
-                    cell33.setCellStyle(styleSymbolCheck);
-                    HSSFCell cell34 = row3.createCell(7);
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("F3:J3"));
+                    HSSFCell cell33 = row3.createCell(11);
+                    cell33.setCellValue("");
+                    cell33.setCellStyle(styleSymbol);
+                    HSSFCell cell34 = row3.createCell(12);
                     cell34.setCellValue("สาขา");
                     cell34.setCellStyle(styleC21);
-                    HSSFCell cell35 = row3.createCell(8);
-                    cell35.setCellValue("");
-                    cell35.setCellStyle(styleSymbolCheck);
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("M3:O3"));
+                    HSSFCell cell35 = row3.createCell(16);
+                    cell35.setCellStyle(styleSymbol);
+                    HSSFCell cell36 = row3.createCell(17);
+                    cell36.setCellStyle(styleSymbol);
+                    HSSFCell cell37 = row3.createCell(18);
+                    cell37.setCellStyle(styleSymbol);
 
+                    HSSFRow rowX = sheetOutbound.createRow(3);
+                    rowX.setHeightInPoints((short) 2);
+                    
                     // Row 4
-                    HSSFRow row4 = sheetOutbound.createRow(3);
+                    HSSFRow row4 = sheetOutbound.createRow(4);
                     HSSFCell cell41 = row4.createCell(0);
                     cell41.setCellValue("ชื่อสถานประกอบการ บริษัท เอส.เอ็ม.ไอ แทรเวล จำกัด");
                     cell41.setCellStyle(styleC22);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("A4:D4"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("A5:D5"));
                     HSSFCell cell42 = row4.createCell(4);
                     cell42.setCellValue("เลขประจำตัวผู้เสียภาษีอากร  ");
                     cell42.setCellStyle(styleC21);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("E4:G4"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("E5:G5"));
                     HSSFCell cell43 = row4.createCell(7);
-                    cell43.setCellValue("0105523020132");
-                    cell43.setCellStyle(styleC22);                
+                    cell43.setCellValue("0");
+                    cell43.setCellStyle(styleC26);
+                    HSSFCell cell44 = row4.createCell(8);
+                    cell44.setCellValue("1");
+                    cell44.setCellStyle(styleC26);
+                    HSSFCell cell45 = row4.createCell(9);
+                    cell45.setCellValue("0");
+                    cell45.setCellStyle(styleC26);
+                    HSSFCell cell46 = row4.createCell(10);
+                    cell46.setCellValue("5");
+                    cell46.setCellStyle(styleC26);
+                    HSSFCell cell47 = row4.createCell(11);
+                    cell47.setCellValue("5");
+                    cell47.setCellStyle(styleC26);
+                    HSSFCell cell48 = row4.createCell(12);
+                    cell48.setCellValue("2");
+                    cell48.setCellStyle(styleC26);
+                    HSSFCell cell49 = row4.createCell(13);
+                    cell49.setCellValue("3");
+                    cell49.setCellStyle(styleC26);
+                    HSSFCell cell50 = row4.createCell(14);
+                    cell50.setCellValue("0");
+                    cell50.setCellStyle(styleC26);
+                    HSSFCell cell51 = row4.createCell(15);
+                    cell51.setCellValue("2");
+                    cell51.setCellStyle(styleC26);
+                    HSSFCell cell52 = row4.createCell(16);
+                    cell52.setCellValue("0");
+                    cell52.setCellStyle(styleC26);
+                    HSSFCell cell53 = row4.createCell(17);
+                    cell53.setCellValue("1");
+                    cell53.setCellStyle(styleC26);
+                    HSSFCell cell54 = row4.createCell(18);
+                    cell54.setCellValue("3");
+                    cell54.setCellStyle(styleC26);
+                    HSSFCell cell55 = row4.createCell(19);
+                    cell55.setCellValue("2");
+                    cell55.setCellStyle(styleC26);
                     
                     //wendy
-                    HSSFRow row5 = sheetOutbound.createRow(5);
+                    HSSFRow row5 = sheetOutbound.createRow(6);
                     HSSFCell cell81 = row5.createCell(0);
                     cell81.setCellValue("ลำดับที่");
                     cell81.setCellStyle(styleC3);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("A6:A9"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("A7:A10"));
                     HSSFCell cell82 = row5.createCell(1);
                     cell82.setCellValue("ใบกำกับภาษี");
                     cell82.setCellStyle(styleC3);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("B6:C7"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("B7:C8"));
                     HSSFCell cell83 = row5.createCell(3);
                     cell83.setCellValue("รายการ");
                     cell83.setCellStyle(styleC3);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("D6:D9"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("D7:D10"));
                     HSSFCell cell84 = row5.createCell(4);
                     cell84.setCellValue("เลขประจำตัวผู้เสียภาษีของผู้ซื้อสินค้า/ผู้รับบริการ");
                     cell84.setCellStyle(styleC3);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("E6:E9"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("E7:E10"));
                     HSSFCell cell85 = row5.createCell(5);
                     cell85.setCellValue("สถานประกอบการ");
                     cell85.setCellStyle(styleC3);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("F6:G7"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("F7:G8"));
                     HSSFCell cell86 = row5.createCell(7);
                     cell86.setCellValue("มูลค่าสินค้าหรือบริการ");
                     cell86.setCellStyle(styleC3);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("H6:H9"));
-                    HSSFCell cell87 = row5.createCell(8);
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("H7:N10"));
+                    HSSFCell cell87 = row5.createCell(14);
                     cell87.setCellValue("จำนวนเงินภาษีมูลค่าเพิ่ม");
                     cell87.setCellStyle(styleC3);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("I6:I9"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("O7:T10"));
                                        
-                    HSSFRow row7 = sheetOutbound.createRow(7);
+                    HSSFRow row7 = sheetOutbound.createRow(8);
                     HSSFCell cell88 = row7.createCell(1);
                     cell88.setCellValue("วัน/เดือน/ปี");
                     cell88.setCellStyle(styleC3);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("B8:B9"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("B9:B10"));
                     HSSFCell cell89 = row7.createCell(2);
                     cell89.setCellValue("เลขที่");
                     cell89.setCellStyle(styleC3);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("C8:C9"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("C9:C10"));
                     HSSFCell cell90 = row7.createCell(5);
                     cell90.setCellValue("สำนักงานใหญ่");
                     cell90.setCellStyle(styleC3);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("F8:F9"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("F9:F10"));
                     HSSFCell cell91 = row7.createCell(6);
                     cell91.setCellValue("สาขาที่");
                     cell91.setCellStyle(styleC3);
-                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("G8:G9"));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("G9:G10"));
                     
                     HSSFCell cell92 = row5.createCell(2);
                     cell92.setCellStyle(styleC3);
                     HSSFCell cell93 = row5.createCell(6);
                     cell93.setCellStyle(styleC3);
-                    
+                    HSSFCell cell008 = row5.createCell(8);
+                    cell008.setCellStyle(styleC3);
+                    HSSFCell cell009 = row5.createCell(9);
+                    cell009.setCellStyle(styleC3);
+                    HSSFCell cell010 = row5.createCell(10);
+                    cell010.setCellStyle(styleC3);
+                    HSSFCell cell011 = row5.createCell(11);
+                    cell011.setCellStyle(styleC3);
+                    HSSFCell cell012 = row5.createCell(12);
+                    cell012.setCellStyle(styleC3);
+                    HSSFCell cell013 = row5.createCell(13);
+                    cell013.setCellStyle(styleC3);
+                    HSSFCell cell014 = row5.createCell(15);
+                    cell014.setCellStyle(styleC3);
+                    HSSFCell cell015 = row5.createCell(16);
+                    cell015.setCellStyle(styleC3);
+                    HSSFCell cell016 = row5.createCell(17);
+                    cell016.setCellStyle(styleC3);
+                    HSSFCell cell017 = row5.createCell(18);
+                    cell017.setCellStyle(styleC3);
+                    HSSFCell cell018 = row5.createCell(19);
+                    cell018.setCellStyle(styleC3);
+                                        
                     HSSFCell cell94 = row7.createCell(0);
                     cell94.setCellStyle(styleC3);
                     HSSFCell cell95 = row7.createCell(3);
@@ -11778,8 +11950,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell97.setCellStyle(styleC3);
                     HSSFCell cell98 = row7.createCell(8);
                     cell98.setCellStyle(styleC3);
+                    HSSFCell cell99 = row7.createCell(13);
+                    cell99.setCellStyle(styleC3);
+                    HSSFCell cell100 = row7.createCell(19);
+                    cell100.setCellStyle(styleC3);
                     
-                    HSSFRow row6 = sheetOutbound.createRow(6);
+                    HSSFRow row6 = sheetOutbound.createRow(7);
                     HSSFCell cell000 = row6.createCell(0);
                     cell000.setCellStyle(styleC3);
                     HSSFCell cell001 = row6.createCell(1);
@@ -11796,28 +11972,16 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell006.setCellStyle(styleC3);
                     HSSFCell cell007 = row6.createCell(7);
                     cell007.setCellStyle(styleC3);
-                    HSSFCell cell008 = row6.createCell(8);
-                    cell008.setCellStyle(styleC3);
+                    HSSFCell cell00008 = row6.createCell(13);
+                    cell00008.setCellStyle(styleC3);
+                    HSSFCell cell00009 = row6.createCell(19);
+                    cell00009.setCellStyle(styleC3);
                     
-                    HSSFRow row8 = sheetOutbound.createRow(8);
-                    HSSFCell cell0000 = row8.createCell(0);
-                    cell0000.setCellStyle(styleC3);
-                    HSSFCell cell0001 = row8.createCell(1);
-                    cell0001.setCellStyle(styleC3);
-                    HSSFCell cell0002 = row8.createCell(2);
-                    cell0002.setCellStyle(styleC3);
-                    HSSFCell cell0003 = row8.createCell(3);
-                    cell0003.setCellStyle(styleC3);
-                    HSSFCell cell0004 = row8.createCell(4);
-                    cell0004.setCellStyle(styleC3);
-                    HSSFCell cell0005 = row8.createCell(5);
-                    cell0005.setCellStyle(styleC3);
-                    HSSFCell cell0006 = row8.createCell(6);
-                    cell0006.setCellStyle(styleC3);
-                    HSSFCell cell0007 = row8.createCell(7);
-                    cell0007.setCellStyle(styleC3);
-                    HSSFCell cell0008 = row8.createCell(8);
-                    cell0008.setCellStyle(styleC3);
+                    HSSFRow row8 = sheetOutbound.createRow(9);
+                    for(int k = 0 ; k < 20 ; k++){
+                        HSSFCell cell0000 = row8.createCell(k);
+                        cell0000.setCellStyle(styleC3);
+                    }
                     
                     HSSFRow row = sheetOutbound.createRow(count + x);
                     HSSFCell celldata0 = row.createCell(0);
@@ -11856,9 +12020,18 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     celldata7.setCellValue("".equalsIgnoreCase(String.valueOf(data.getGross())) ? 0 : (data.getGross()).doubleValue());
                     celldata7.setCellStyle(styleC25);
 
-                    HSSFCell celldata8 = row.createCell(8);
+                    HSSFCell celldata8 = row.createCell(14);
                     celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getVat())) ? 0 : (data.getVat()).doubleValue());
                     celldata8.setCellStyle(styleC25);
+                    
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("H"+(count + x+1)+":N"+(count + x +1)));
+                    sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("O"+(count + x+1)+":T"+(count + x +1)));
+                    for(int k = 8 ; k < 20 ; k++){
+                        if(k != 7 && k != 14){
+                            HSSFCell cell0000 = row.createCell(k);
+                            cell0000.setCellStyle(styleC25);
+                        }
+                    }
                     
                     if(data.getGross() != null){
                         grossO = grossO.add(data.getGross());
@@ -11879,7 +12052,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         tempcountO = count+x;
                         HSSFRow rowtotal = sheetOutbound.createRow(tempcountO);
                         String totalGross = "SUM(H" + 8+":H"+(tempcountO)+")";
-                        String totalVat = "SUM(I" + 8+":I"+(tempcountO)+")";
+                        String totalVat = "SUM(O" + 8+":O"+(tempcountO)+")";
 
                         HSSFCellStyle styleTotal = wb.createCellStyle();
                         styleTotal.setFont(getHeaderTable(wb.createFont()));
@@ -11907,9 +12080,19 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         HSSFCell cellTotal06 = rowtotal.createCell(7);
                         cellTotal06.setCellFormula(totalGross);
                         cellTotal06.setCellStyle(styleC25);
-                        HSSFCell cellTotal07 = rowtotal.createCell(8);
+                        HSSFCell cellTotal07 = rowtotal.createCell(14);
                         cellTotal07.setCellFormula(totalVat);
                         cellTotal07.setCellStyle(styleC25);
+                        
+                        sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountO+1)+":N"+(tempcountO+1)));
+                        sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountO+1)+":T"+(tempcountO+1)));
+                        
+                        for(int k = 8 ; k < 20 ; k++){
+                            if(k != 7 && k != 14){
+                                HSSFCell cell0000 = rowtotal.createCell(k);
+                                cell0000.setCellStyle(styleC25);
+                            }
+                        }
                     }
 
                     // set Header Report (Row 1)
@@ -11920,7 +12103,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell1.setCellValue("รายงานภาษีขาย");
                     styleC1.setFont(fontHeader);
                     cell1.setCellStyle(styleC1);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("A1:I1"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("A1:T1"));
 
                     // Row 2
                     HSSFRow row2 = sheetInbound.createRow(1);
@@ -11928,7 +12111,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell21.setCellValue("เดือนภาษี  " + data.getHeaderMonth() + " ปี " +data.getHeaderYear());
                     styleC23.setFont(fontHeaderDetail);
                     cell21.setCellStyle(styleC23);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("A2:I2"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("A2:T2"));
 
                     // Row 3
                     HSSFRow row3 = sheetInbound.createRow(2);
@@ -11936,88 +12119,153 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell31.setCellValue("ชื่อผู้ประกอบการ บริษัท เอส.เอ็ม.ไอ แทรเวล จำกัด");
                     cell31.setCellStyle(styleC22);
                     sheetInbound.addMergedRegion(CellRangeAddress.valueOf("A3:D3"));
-                    HSSFCell cell32 = row3.createCell(4);
+                    HSSFCell cell32 = row3.createCell(5);
                     cell32.setCellValue("สำนักงานใหญ่ ");
                     cell32.setCellStyle(styleC21);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("E3:F3"));
-                    HSSFCell cell33 = row3.createCell(6);
-                    cell33.setCellValue("");
-                    cell33.setCellStyle(styleSymbolCheck);
-                    HSSFCell cell34 = row3.createCell(7);
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("F3:J3"));
+                    HSSFCell cell33 = row3.createCell(11);
+                    cell33.setCellValue("");
+                    cell33.setCellStyle(styleSymbol);
+                    HSSFCell cell34 = row3.createCell(12);
                     cell34.setCellValue("สาขา");
                     cell34.setCellStyle(styleC21);
-                    HSSFCell cell35 = row3.createCell(8);
-                    cell35.setCellValue("");
-                    cell35.setCellStyle(styleSymbolCheck);
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("M3:O3"));
+                    HSSFCell cell35 = row3.createCell(16);
+                    cell35.setCellStyle(styleSymbol);
+                    HSSFCell cell36 = row3.createCell(17);
+                    cell36.setCellStyle(styleSymbol);
+                    HSSFCell cell37 = row3.createCell(18);
+                    cell37.setCellStyle(styleSymbol);
+
+                    HSSFRow rowX = sheetInbound.createRow(3);
+                    rowX.setHeightInPoints((short) 2);
                     
                     // Row 4
-                    HSSFRow row4 = sheetInbound.createRow(3);
+                    HSSFRow row4 = sheetInbound.createRow(4);
                     HSSFCell cell41 = row4.createCell(0);
                     cell41.setCellValue("ชื่อสถานประกอบการ บริษัท เอส.เอ็ม.ไอ แทรเวล จำกัด");
                     cell41.setCellStyle(styleC22);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("A4:D4"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("A5:D5"));
                     HSSFCell cell42 = row4.createCell(4);
                     cell42.setCellValue("เลขประจำตัวผู้เสียภาษีอากร  ");
                     cell42.setCellStyle(styleC21);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("E4:G4"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("E5:G5"));
                     HSSFCell cell43 = row4.createCell(7);
-                    cell43.setCellValue("0105523020132");
-                    cell43.setCellStyle(styleC22);                
+                    cell43.setCellValue("0");
+                    cell43.setCellStyle(styleC26);
+                    HSSFCell cell44 = row4.createCell(8);
+                    cell44.setCellValue("1");
+                    cell44.setCellStyle(styleC26);
+                    HSSFCell cell45 = row4.createCell(9);
+                    cell45.setCellValue("0");
+                    cell45.setCellStyle(styleC26);
+                    HSSFCell cell46 = row4.createCell(10);
+                    cell46.setCellValue("5");
+                    cell46.setCellStyle(styleC26);
+                    HSSFCell cell47 = row4.createCell(11);
+                    cell47.setCellValue("5");
+                    cell47.setCellStyle(styleC26);
+                    HSSFCell cell48 = row4.createCell(12);
+                    cell48.setCellValue("2");
+                    cell48.setCellStyle(styleC26);
+                    HSSFCell cell49 = row4.createCell(13);
+                    cell49.setCellValue("3");
+                    cell49.setCellStyle(styleC26);
+                    HSSFCell cell50 = row4.createCell(14);
+                    cell50.setCellValue("0");
+                    cell50.setCellStyle(styleC26);
+                    HSSFCell cell51 = row4.createCell(15);
+                    cell51.setCellValue("2");
+                    cell51.setCellStyle(styleC26);
+                    HSSFCell cell52 = row4.createCell(16);
+                    cell52.setCellValue("0");
+                    cell52.setCellStyle(styleC26);
+                    HSSFCell cell53 = row4.createCell(17);
+                    cell53.setCellValue("1");
+                    cell53.setCellStyle(styleC26);
+                    HSSFCell cell54 = row4.createCell(18);
+                    cell54.setCellValue("3");
+                    cell54.setCellStyle(styleC26);
+                    HSSFCell cell55 = row4.createCell(19);
+                    cell55.setCellValue("2");
+                    cell55.setCellStyle(styleC26);
                     
                     //wendy
-                    HSSFRow row5 = sheetInbound.createRow(5);
+                    HSSFRow row5 = sheetInbound.createRow(6);
                     HSSFCell cell81 = row5.createCell(0);
                     cell81.setCellValue("ลำดับที่");
                     cell81.setCellStyle(styleC3);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("A6:A9"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("A7:A10"));
                     HSSFCell cell82 = row5.createCell(1);
                     cell82.setCellValue("ใบกำกับภาษี");
                     cell82.setCellStyle(styleC3);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("B6:C7"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("B7:C8"));
                     HSSFCell cell83 = row5.createCell(3);
                     cell83.setCellValue("รายการ");
                     cell83.setCellStyle(styleC3);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("D6:D9"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("D7:D10"));
                     HSSFCell cell84 = row5.createCell(4);
                     cell84.setCellValue("เลขประจำตัวผู้เสียภาษีของผู้ซื้อสินค้า/ผู้รับบริการ");
                     cell84.setCellStyle(styleC3);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("E6:E9"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("E7:E10"));
                     HSSFCell cell85 = row5.createCell(5);
                     cell85.setCellValue("สถานประกอบการ");
                     cell85.setCellStyle(styleC3);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("F6:G7"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("F7:G8"));
                     HSSFCell cell86 = row5.createCell(7);
                     cell86.setCellValue("มูลค่าสินค้าหรือบริการ");
                     cell86.setCellStyle(styleC3);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("H6:H9"));
-                    HSSFCell cell87 = row5.createCell(8);
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("H7:N10"));
+                    HSSFCell cell87 = row5.createCell(14);
                     cell87.setCellValue("จำนวนเงินภาษีมูลค่าเพิ่ม");
                     cell87.setCellStyle(styleC3);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("I6:I9"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("O7:T10"));
                                        
-                    HSSFRow row7 = sheetInbound.createRow(7);
+                    HSSFRow row7 = sheetInbound.createRow(8);
                     HSSFCell cell88 = row7.createCell(1);
                     cell88.setCellValue("วัน/เดือน/ปี");
                     cell88.setCellStyle(styleC3);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("B8:B9"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("B9:B10"));
                     HSSFCell cell89 = row7.createCell(2);
                     cell89.setCellValue("เลขที่");
                     cell89.setCellStyle(styleC3);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("C8:C9"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("C9:C10"));
                     HSSFCell cell90 = row7.createCell(5);
                     cell90.setCellValue("สำนักงานใหญ่");
                     cell90.setCellStyle(styleC3);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("F8:F9"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("F9:F10"));
                     HSSFCell cell91 = row7.createCell(6);
                     cell91.setCellValue("สาขาที่");
                     cell91.setCellStyle(styleC3);
-                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("G8:G9"));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("G9:G10"));
                     
                     HSSFCell cell92 = row5.createCell(2);
                     cell92.setCellStyle(styleC3);
                     HSSFCell cell93 = row5.createCell(6);
                     cell93.setCellStyle(styleC3);
-                    
+                    HSSFCell cell008 = row5.createCell(8);
+                    cell008.setCellStyle(styleC3);
+                    HSSFCell cell009 = row5.createCell(9);
+                    cell009.setCellStyle(styleC3);
+                    HSSFCell cell010 = row5.createCell(10);
+                    cell010.setCellStyle(styleC3);
+                    HSSFCell cell011 = row5.createCell(11);
+                    cell011.setCellStyle(styleC3);
+                    HSSFCell cell012 = row5.createCell(12);
+                    cell012.setCellStyle(styleC3);
+                    HSSFCell cell013 = row5.createCell(13);
+                    cell013.setCellStyle(styleC3);
+                    HSSFCell cell014 = row5.createCell(15);
+                    cell014.setCellStyle(styleC3);
+                    HSSFCell cell015 = row5.createCell(16);
+                    cell015.setCellStyle(styleC3);
+                    HSSFCell cell016 = row5.createCell(17);
+                    cell016.setCellStyle(styleC3);
+                    HSSFCell cell017 = row5.createCell(18);
+                    cell017.setCellStyle(styleC3);
+                    HSSFCell cell018 = row5.createCell(19);
+                    cell018.setCellStyle(styleC3);
+                                        
                     HSSFCell cell94 = row7.createCell(0);
                     cell94.setCellStyle(styleC3);
                     HSSFCell cell95 = row7.createCell(3);
@@ -12028,8 +12276,12 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell97.setCellStyle(styleC3);
                     HSSFCell cell98 = row7.createCell(8);
                     cell98.setCellStyle(styleC3);
+                    HSSFCell cell99 = row7.createCell(13);
+                    cell99.setCellStyle(styleC3);
+                    HSSFCell cell100 = row7.createCell(19);
+                    cell100.setCellStyle(styleC3);
                     
-                    HSSFRow row6 = sheetInbound.createRow(6);
+                    HSSFRow row6 = sheetInbound.createRow(7);
                     HSSFCell cell000 = row6.createCell(0);
                     cell000.setCellStyle(styleC3);
                     HSSFCell cell001 = row6.createCell(1);
@@ -12046,28 +12298,16 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     cell006.setCellStyle(styleC3);
                     HSSFCell cell007 = row6.createCell(7);
                     cell007.setCellStyle(styleC3);
-                    HSSFCell cell008 = row6.createCell(8);
-                    cell008.setCellStyle(styleC3);
+                    HSSFCell cell00008 = row6.createCell(13);
+                    cell00008.setCellStyle(styleC3);
+                    HSSFCell cell00009 = row6.createCell(19);
+                    cell00009.setCellStyle(styleC3);
                     
-                    HSSFRow row8 = sheetInbound.createRow(8);
-                    HSSFCell cell0000 = row8.createCell(0);
-                    cell0000.setCellStyle(styleC3);
-                    HSSFCell cell0001 = row8.createCell(1);
-                    cell0001.setCellStyle(styleC3);
-                    HSSFCell cell0002 = row8.createCell(2);
-                    cell0002.setCellStyle(styleC3);
-                    HSSFCell cell0003 = row8.createCell(3);
-                    cell0003.setCellStyle(styleC3);
-                    HSSFCell cell0004 = row8.createCell(4);
-                    cell0004.setCellStyle(styleC3);
-                    HSSFCell cell0005 = row8.createCell(5);
-                    cell0005.setCellStyle(styleC3);
-                    HSSFCell cell0006 = row8.createCell(6);
-                    cell0006.setCellStyle(styleC3);
-                    HSSFCell cell0007 = row8.createCell(7);
-                    cell0007.setCellStyle(styleC3);
-                    HSSFCell cell0008 = row8.createCell(8);
-                    cell0008.setCellStyle(styleC3);
+                    HSSFRow row8 = sheetInbound.createRow(9);
+                    for(int k = 0 ; k < 20 ; k++){
+                        HSSFCell cell0000 = row8.createCell(k);
+                        cell0000.setCellStyle(styleC3);
+                    }
                     
                     HSSFRow row = sheetInbound.createRow(count + y);
                     HSSFCell celldata0 = row.createCell(0);
@@ -12106,9 +12346,19 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     celldata7.setCellValue("".equalsIgnoreCase(String.valueOf(data.getGross())) ? 0 : (data.getGross()).doubleValue());
                     celldata7.setCellStyle(styleC25);
 
-                    HSSFCell celldata8 = row.createCell(8);
+                    HSSFCell celldata8 = row.createCell(14);
                     celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getVat())) ? 0 : (data.getVat()).doubleValue());
                     celldata8.setCellStyle(styleC25);
+                    
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("H"+(count+y+1)+":N"+(count+y+1)));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("O"+(count+y+1)+":T"+(count+y+1)));
+                    
+                    for(int k = 8 ; k < 20 ; k++){
+                        if(k != 7 && k != 14){
+                            HSSFCell cell0000 = row.createCell(k);
+                            cell0000.setCellStyle(styleC25);
+                        }
+                    }
                     
                     if(data.getGross() != null){
                         grossI = grossI.add(data.getGross());
@@ -12131,7 +12381,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         HSSFRow rowtotal = sheetInbound.createRow(tempcountI);
                         
                         String totalGross = "SUM(H" + 8+":H"+(tempcountI)+")";
-                        String totalVat = "SUM(I" + 8+":I"+(tempcountI)+")";
+                        String totalVat = "SUM(O" + 8+":O"+(tempcountI)+")";
 
                         HSSFCellStyle styleTotal = wb.createCellStyle();
                         styleTotal.setFont(getHeaderTable(wb.createFont()));
@@ -12159,9 +12409,20 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         HSSFCell cellTotal06 = rowtotal.createCell(7);
                         cellTotal06.setCellFormula(totalGross);
                         cellTotal06.setCellStyle(styleC25);
-                        HSSFCell cellTotal07 = rowtotal.createCell(8);
+                        HSSFCell cellTotal07 = rowtotal.createCell(14);
                         cellTotal07.setCellFormula(totalVat);
                         cellTotal07.setCellStyle(styleC25);
+                        
+                        					
+			sheetInbound.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountI+1)+":N"+(tempcountI+1)));
+                        sheetInbound.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountI+1)+":T"+(tempcountI+1)));
+                        
+                        for(int k = 8 ; k < 20 ; k++){
+                            if(k != 7 && k != 14){
+                                HSSFCell cell0000 = rowtotal.createCell(k);
+                                cell0000.setCellStyle(styleC25);
+                            }
+                        }
                         
                         HSSFRow rowtotalbor = sheetInbound.createRow(tempcountI+1);
                         HSSFCell cellTotalBor0 = rowtotalbor.createCell(0);
@@ -12196,9 +12457,19 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         HSSFCell cellTotalWen06 = rowtotalwen.createCell(7);
                         cellTotalWen06.setCellValue((grossW).doubleValue());
                         cellTotalWen06.setCellStyle(styleC25);
-                        HSSFCell cellTotalWen07 = rowtotalwen.createCell(8);
+                        HSSFCell cellTotalWen07 = rowtotalwen.createCell(14);
                         cellTotalWen07.setCellValue((vatW).doubleValue());
                         cellTotalWen07.setCellStyle(styleC25);
+                        
+                        sheetInbound.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountI+3)+":N"+(tempcountI+3)));
+                        sheetInbound.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountI+3)+":T"+(tempcountI+3)));
+                        
+                        for(int k = 8 ; k < 20 ; k++){
+                            if(k != 7 && k != 14){
+                                HSSFCell cell0000 = rowtotalwen.createCell(k);
+                                cell0000.setCellStyle(styleC25);
+                            }
+                        }
                         
                         
                         HSSFRow rowtotalout = sheetInbound.createRow(tempcountI+3);
@@ -12220,9 +12491,19 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         HSSFCell cellTotalOut06 = rowtotalout.createCell(7);
                         cellTotalOut06.setCellValue((grossO).doubleValue());
                         cellTotalOut06.setCellStyle(styleC25);
-                        HSSFCell cellTotalOut07 = rowtotalout.createCell(8);
+                        HSSFCell cellTotalOut07 = rowtotalout.createCell(14);
                         cellTotalOut07.setCellValue((vatO).doubleValue());
                         cellTotalOut07.setCellStyle(styleC25);
+                        
+                        sheetInbound.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountI+4)+":N"+(tempcountI+4)));
+                        sheetInbound.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountI+4)+":T"+(tempcountI+4)));
+                        
+                        for(int k = 8 ; k < 20 ; k++){
+                            if(k != 7 && k != 14){
+                                HSSFCell cell0000 = rowtotalout.createCell(k);
+                                cell0000.setCellStyle(styleC25);
+                            }
+                        }
                         
                         HSSFRow rowtotalin = sheetInbound.createRow(tempcountI+4);
                         HSSFCell cellTotalIn0 = rowtotalin.createCell(0);
@@ -12243,12 +12524,22 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         HSSFCell cellTotalIn06 = rowtotalin.createCell(7);
                         cellTotalIn06.setCellValue((grossI).doubleValue());
                         cellTotalIn06.setCellStyle(styleC25);
-                        HSSFCell cellTotalIn07 = rowtotalin.createCell(8);
+                        HSSFCell cellTotalIn07 = rowtotalin.createCell(14);
                         cellTotalIn07.setCellValue((vatI).doubleValue());
                         cellTotalIn07.setCellStyle(styleC25);
                         
+                        sheetInbound.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountI+5)+":N"+(tempcountI+5)));
+                        sheetInbound.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountI+5)+":T"+(tempcountI+5)));
+                        
+                        for(int k = 8 ; k < 20 ; k++){
+                            if(k != 7 && k != 14){
+                                HSSFCell cell0000 = rowtotalin.createCell(k);
+                                cell0000.setCellStyle(styleC25);
+                            }
+                        }
+                        
                         String totalGrossAll = "SUM(H" + (tempcountI+3)+":H"+(tempcountI+5)+")";
-                        String totalVatAll = "SUM(I" + (tempcountI+3)+":I"+(tempcountI+5)+")";
+                        String totalVatAll = "SUM(O" + (tempcountI+3)+":O"+(tempcountI+5)+")";
                         
                         HSSFRow rowtotalall = sheetInbound.createRow(tempcountI+5);
                         HSSFCell cellTotalAll0 = rowtotalall.createCell(0);
@@ -12269,9 +12560,19 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         HSSFCell cellTotalAll06 = rowtotalall.createCell(7);
                         cellTotalAll06.setCellFormula(totalGrossAll);
                         cellTotalAll06.setCellStyle(styleC25);
-                        HSSFCell cellTotalAll07 = rowtotalall.createCell(8);
+                        HSSFCell cellTotalAll07 = rowtotalall.createCell(14);
                         cellTotalAll07.setCellFormula(totalVatAll);
                         cellTotalAll07.setCellStyle(styleC25);
+                        
+                        sheetInbound.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountI+6)+":N"+(tempcountI+6)));
+                        sheetInbound.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountI+6)+":T"+(tempcountI+6)));
+                        
+                        for(int k = 8 ; k < 20 ; k++){
+                            if(k != 7 && k != 14){
+                                HSSFCell cell0000 = rowtotalall.createCell(k);
+                                cell0000.setCellStyle(styleC25);
+                            }
+                        }
                         
                     }
                 }
