@@ -15,6 +15,7 @@ $(document).ready(function() {
         value = value.replace(/\.[0-9]+\./g, '.');
         $(this).val(value);
     });
+    $(".numerical").mask('000000000000000000', {reverse: true});
     
     // Invoice To Modal
     var showflag = 1;
@@ -569,7 +570,7 @@ function addRowInvoiceInboundDetail(row){
     '<td '+ textHidden+'><input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
     '<td><input type="text" maxlength ="15" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" onfocusout="changeFormatAmountNumber(' + row + ');"  value=""></td>' +
     '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" >' + select + '</select></td>' +              
-    '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBillInbound(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +           
+    '<td align="center" ><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBillInbound(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +           
     '</tr>'
     );
     var count = document.getElementById('counterTable');
@@ -656,6 +657,28 @@ function CallAjaxDeleteBill(param, row) {
     } catch (e) {
         alert(e);
     }
+}
+
+function DisableVoidInvoice() {
+    var InvNo = document.getElementById('InvNo');
+    document.getElementById('disableVoidModal').innerHTML = "Are you sure to delete booking other : " + InvNo.value + " ?";
+}
+
+function DisableInvoice() {
+    var action = document.getElementById('action');
+    action.value = 'disableVoid';
+    document.getElementById('InvoiceInboundForm').submit();
+}
+
+function Enable() {
+    var action = document.getElementById('action');
+    action.value = 'enableVoid';
+    document.getElementById('InvoiceInboundForm').submit();
+}
+
+function EnableVoidInvoice() {
+    var InvNo = document.getElementById('InvNo');
+    document.getElementById('enableVoid').innerHTML = "Are you sure to enable booking other : " + InvNo.value + " ?";
 }
 
 $(document).ready(function() {
