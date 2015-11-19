@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ConfirmSlipHotelSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="1" bottomMargin="5" uuid="db08ed59-2d2f-46c2-b26b-6211f47e18d9">
+	<property name="ireport.zoom" value="4.177248169415695"/>
+	<property name="ireport.x" value="1278"/>
+	<property name="ireport.y" value="50"/>
+	<field name="order" class="java.lang.String"/>
+	<field name="hotel" class="java.lang.String"/>
+	<field name="checkinout" class="java.lang.String"/>
+	<field name="category" class="java.lang.String"/>
+	<field name="amount" class="java.lang.String"/>
+	<field name="curamount" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="48" splitType="Stretch">
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="28" y="22" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="c73b62d5-2c28-4de9-92df-5cf16dbe634f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="0" y="22" width="555" height="1" isPrintWhenDetailOverflows="true" uuid="7f96f232-3844-4857-869d-2ad556c62ccb"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="28" y="22" width="155" height="25" uuid="40593982-b8cf-4d14-9b79-ba56f5db99c3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hotel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="22" width="29" height="25" uuid="7fa484f1-56e1-4e7d-bce2-19b736f01fb9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="22" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="44ac1750-6ddd-4ae9-9ea6-335730942fbd"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="182" y="22" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="bb0331f8-c6a5-4225-9daf-69e411390cec"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="380" y="22" width="174" height="25" uuid="6d7dcab3-8739-44c9-99ce-1e1b46e4993c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="306" y="22" width="75" height="25" uuid="7707422c-6c46-4798-a04f-f89f692fe75d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="380" y="22" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="cc2f8e90-5654-4218-8edc-4ea55cfecf42"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="306" y="22" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="27e482c2-c8a3-4d89-8c9c-46ae6dfc4e3e"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="554" y="22" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="12df396e-b2ae-420a-b864-836718902db7"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="182" y="22" width="125" height="25" uuid="29b47602-a237-4db5-83ec-1ad4fecfb9b8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Check In-Out]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="Float" x="0" y="47" width="555" height="1" isPrintWhenDetailOverflows="true" uuid="5c03f820-af9a-4dc6-81db-611f0a6a1a72"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement positionType="Float" x="6" y="0" width="122" height="26" uuid="db59464e-7efb-4342-88dc-c04a97c932b0"/>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hotel Requested]]></text>
+			</staticText>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="dd11270d-464e-4898-8fd8-5482195b835f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="128" y="0" width="1" height="23" isPrintWhenDetailOverflows="true" uuid="fd8de877-6575-4c5a-ac49-1495a612b752"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="Float" x="0" y="0" width="129" height="1" isPrintWhenDetailOverflows="true" uuid="dcdf47ad-b82b-4e25-a255-f1872005f8a8"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="-2" width="29" height="20" uuid="bfe621c8-bf34-469f-81de-2e24c85232fa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="18" width="555" height="1" isPrintWhenDetailOverflows="true" uuid="2bb133e8-1656-498f-bea0-2da97a6dc5c4"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="28" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="e6becaf3-2cc1-4647-81e6-c62f78002a40"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="182" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="8d62bdda-d462-4a3e-9e05-40bfb9f34df1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="306" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="289c1e20-d40b-4bed-a117-f9b4e893ebd6"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="554" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="32bf7a73-a6c6-43b0-9637-4fd26ec07fc8"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="311" y="-1" width="70" height="19" uuid="611de7f6-9a7f-456e-a19f-164cbfb4d37e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{category}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="515" y="-1" width="39" height="19" uuid="aec99893-b37e-44ca-8f82-21ded6b7888f"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{curamount}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="380" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="bda4c36d-2fe7-4943-9f31-169e84fb548f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="96dcaecf-4a98-40e5-9f21-0a897cc8dc78"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="187" y="-1" width="120" height="19" uuid="b0907880-87c3-46db-9540-7e80f6870b3c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkinout}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="33" y="-1" width="150" height="19" uuid="7095b0ef-be32-4cf2-a063-c48a22f4ef01"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{hotel}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="381" y="-1" width="132" height="19" uuid="0f315746-024f-4e12-a69a-41b0ad7de972"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{amount} != null && !"null".equals($F{amount}) && $F{amount}.length() > 0) ? new BigDecimal($F{amount}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
