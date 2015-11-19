@@ -15,7 +15,7 @@ $(document).ready(function() {
         value = value.replace(/\.[0-9]+\./g, '.');
         $(this).val(value);
     });
-    $(".numerical").mask('000000000000000000', {reverse: true});
+//    $(".numerical").mask('00000000', {reverse: true});
     
     // Invoice To Modal
     var showflag = 1;
