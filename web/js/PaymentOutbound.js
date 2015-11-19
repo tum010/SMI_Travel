@@ -58,13 +58,13 @@ $(document).ready(function() {
                 var colIndex = $(this).parent().children().index($(this));
                 var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 3;
                 rowAll = ($("#PaymentDetailTable tr").length);
-                if (rowIndex == rowAll) {
+                if ((rowIndex == rowAll) || ((rowIndex - 1) == rowAll)) {
                     console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
                     AddRowPaymentDetailTable(parseInt($("#countPaymentDetail").val()));
                 }
                 if (rowAll < 2) {
-                    $("#tr_TaxInvoiceDetailAddRow").removeClass("hide");
-                    $("#tr_TaxInvoiceDetailAddRow").addClass("show");
+                    $("#tr_PaymentOutboundDetailAddRow").removeClass("hide");
+                    $("#tr_PaymentOutboundDetailAddRow").addClass("show");
                 }
             }
         });
@@ -153,9 +153,9 @@ function AddRowPaymentDetailTable(row) {
         row = 1;
     }
     $("#PaymentDetailTable tbody").append(
-            '<tr bgcolor="' + color + '">' +
+            '<tr >' +
             '<td>' +
-            '<select class="form-control" name="type' + row + '" id="type' + row + '">' +
+            '<select class="form-control" name="type' + row + '" id="type' + row + '" onchange="addRow()">' +
             '<option  value="" ></option>' +
             '</select>' +
             '</td>' +
@@ -169,7 +169,7 @@ function AddRowPaymentDetailTable(row) {
             '<input type="text" name="cost' + row + '" id="cost' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" value=""/>' +
             '</td>' +
             '<td>' +
-            '<input type="text" name="gross' + row + '" id="gross' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" value=""/>' +
+            '<input type="text" name="gross' + row + '" id="gross' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="calculateGrossTotal();calculateVatTotal();" value=""/>' +
             '</td>' +
             '<td align="center">' +
             '<input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" onclick="" value="">' +
@@ -178,13 +178,13 @@ function AddRowPaymentDetailTable(row) {
             '<input type="hidden" name="vat' + row + '" id="vat' + row + '" class="form-control" value=""/>' +
             '</td>' +
             '<td>' +
-            '<input type="text" name="amount' + row + '" id="amount' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" value=""/>' +
+            '<input type="text" name="amount' + row + '" id="amount' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="calculateGrandTotal();calculateVatTotal();" value=""/>' +
             '</td>' +
             '<td>' +
             '<input type="text" name="comm' + row + '" id="comm' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" value=""/>' +
             '</td>' +
             '<td>' +
-            '<select class="form-control" name="cur' + row + '" id="cur' + row + '">' +
+            '<select class="form-control" name="cur' + row + '" id="cur' + row + '" onchange="addRow()">' +
             '<option  value="" ></option>' +
             '</select>' +
             '</td>' +
@@ -194,20 +194,20 @@ function AddRowPaymentDetailTable(row) {
             '</a>' +
             '</td>' +
             '</tr>' +
-            '<tr bgcolor="' + color + '">' +
-            '<td colspan="1" align="right">' +
+            '<tr>' +
+            '<td colspan="1" align="right" bgcolor="#E8EAFF" >' +
             '<b>Description</b>' +
             '</td>' +
             '<td colspan="2">' +
             '<input type="text" name="description' + row + '" id="description' + row + '" class="form-control" value=""/>' +
             '</td>' +
-            '<td colspan="1" align="right">' +
+            '<td colspan="1" align="right" bgcolor="#E8EAFF">' +
             '<b>Pay Stock</b>' +
             '</td>' +
             '<td colspan="3">' +
             '<input type="text" name="payStock' + row + '" id="payStock' + row + '" class="form-control" value=""/>' +
             '</td>' +
-            '<td colspan="1" align="right">' +
+            '<td colspan="1" align="right" bgcolor="#E8EAFF">' +
             '<b>Value</b>' +
             '</td>' +
             '<td colspan="2">' +
@@ -216,8 +216,8 @@ function AddRowPaymentDetailTable(row) {
             '</tr>'
 
             );
-    $("#tr_TaxInvoiceDetailAddRow").removeClass("show");
-    $("#tr_TaxInvoiceDetailAddRow").addClass("hide");
+    $("#tr_PaymentOutboundDetailAddRow").removeClass("show");
+    $("#tr_PaymentOutboundDetailAddRow").addClass("hide");
     $("#typeClone option").clone().appendTo("#type" + row);
     $("#curClone option").clone().appendTo("#cur" + row);
 //        var vatData = parseFloat($("#vatDefault").val());
@@ -257,3 +257,61 @@ function setupInvSupValue(id, code, name, apcode) {
 //        $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
 }
 
+function addRow() {
+    AddRowPaymentDetailTable(parseInt($("#countPaymentDetail").val()));
+}
+
+function deletePaymentDetailList(id, row) {
+    $("#delPaymentDetailId").val(id);
+    $("#delPaymentDetailRow").val(row);
+    $("#delPaymentOutboundModal").modal("show");
+}
+
+function confirmDeletePaymentDetailList() {
+    var row = document.getElementById('delPaymentDetailRow').value;
+    var id = document.getElementById('delPaymentDetailId').value;
+
+    if (id === '') {
+        $("#type" + row).parent().parent().remove();
+        $("#description" + row).parent().parent().remove();
+        var rowAll = $("#PaymentDetailTable tr").length;
+        if (rowAll <= 1) {
+            $("#tr_PaymentOutboundDetailAddRow").removeClass("hide");
+            $("#tr_PaymentOutboundDetailAddRow").addClass("show");
+        }
+
+    } else {
+        $.ajax({
+            url: 'PaymentOutbound.smi?action=deletePaymentOutboundDetail',
+            type: 'get',
+            data: {ProductDetail: id},
+            success: function() {
+                $("#type" + row).parent().parent().remove();
+                $("#description" + row).parent().parent().remove();
+                var rowAll = $("#PaymentDetailTable tr").length;
+                if (rowAll <= 1) {
+                    $("#tr_PaymentOutboundDetailAddRow").removeClass("hide");
+                    $("#tr_PaymentOutboundDetailAddRow").addClass("show");
+                }
+            },
+            error: function() {
+                console.log("error");
+                result = 0;
+            }
+        });
+    }
+    $('#delPaymentOutboundModal').modal('hide');
+//    CalculateGrandTotal('');
+}
+
+function calculateGrossTotal() {
+
+}
+
+function calculateVatTotal() {
+
+}
+
+function calculateGrandTotal() {
+
+}

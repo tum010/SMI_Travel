@@ -26,12 +26,13 @@ public class PaymentOutboundDetail {
      private BigDecimal recCom;
      private BigDecimal value;
      private String accCode;
+     private String bookDetailType;
      private Integer payStockId;
 
     public PaymentOutboundDetail() {
     }
 
-    public PaymentOutboundDetail(String id, Master master, PaymentOutbound paymentOutbound, MPaytype MPaytype, Integer bookDetailId, String description, String invoiceCreditor, BigDecimal cost, BigDecimal gross, BigDecimal vat, Integer isVat, BigDecimal amount, String currency, BigDecimal recCom, BigDecimal value, String accCode, Integer payStockId) {
+    public PaymentOutboundDetail(String id, Master master, PaymentOutbound paymentOutbound, MPaytype MPaytype, Integer bookDetailId, String description, String invoiceCreditor, BigDecimal cost, BigDecimal gross, BigDecimal vat, Integer isVat, BigDecimal amount, String currency, BigDecimal recCom, BigDecimal value, String accCode, String bookDetailType, Integer payStockId) {
        this.id = id;
        this.master = master;
        this.paymentOutbound = paymentOutbound;
@@ -48,6 +49,7 @@ public class PaymentOutboundDetail {
        this.recCom = recCom;
        this.value = value;
        this.accCode = accCode;
+       this.bookDetailType = bookDetailType;
        this.payStockId = payStockId;
     }
      
@@ -170,6 +172,14 @@ public class PaymentOutboundDetail {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getBookDetailType() {
+        return bookDetailType;
+    }
+
+    public void setBookDetailType(String bookDetailType) {
+        this.bookDetailType = bookDetailType;
     }
 
 

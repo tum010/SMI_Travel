@@ -7,6 +7,8 @@
 <c:set var="payTypeList" value="${requestScope['payTypeList']}" />
 <c:set var="currencyList" value="${requestScope['currencyList']}" />
 <c:set var="invSupList" value="${requestScope['invSupList']}" />
+<c:set var="paymentOutbound" value="${requestScope['paymentOutbound']}" />
+<c:set var="paymentOutboundDetail" value="${requestScope['paymentOutboundDetail']}" />
 <c:set var="mVat" value="${requestScope['mVat']}" />
 <input type="hidden" id="mVat" name="mVat" value="${mVat}"/>
 
@@ -138,17 +140,17 @@
                         <label class="control-label">PV No</lable>
                     </div>
                     <div class="col-md-4 form-group text-left" >
-                        <input name="payId" id="payId" type="hidden" class="form-control" value="" />
-                        <input name="createBy" id="createBy" type="hidden" class="form-control" value="" />
-                        <input name="createDate" id="createDate" type="hidden" class="form-control" value="" />
-                        <input name="payNo" id="payNo" type="text" class="form-control" value="" />
+                        <input name="payId" id="payId" type="hidden" class="form-control" value="${paymentOutbound.id}" />
+                        <input name="createBy" id="createBy" type="hidden" class="form-control" value="${paymentOutbound.createBy}" />
+                        <input name="createDate" id="createDate" type="hidden" class="form-control" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.createDate}"/>" />
+                        <input name="payNo" id="payNo" type="text" class="form-control" value="${paymentOutbound.payNo}" />
                     </div>
-                    <div class="col-xs-1 text-left" style="width:90px;">
+                    <div class="col-xs-1 text-right" style="width:93px;">
                         <label class="control-label">Pay Date</lable>
                     </div>
                     <div class="col-md-3 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 150px;">
                         <div class='input-group date' >
-                            <input name="payDate" id="payDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                            <input name="payDate" id="payDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.payDate}"/>" />
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
@@ -156,11 +158,21 @@
                         <label class="control-label">Account</lable>
                     </div>
                     <div class="col-md-3 text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
+                        <c:set var="account1" value=""/>
+                        <c:set var="account2" value=""/>
+                        <c:choose>
+                            <c:when test="${paymentOutbound.account == 1}">
+                                <c:set var="account1" value="checked"/>
+                            </c:when>
+                            <c:when test="${paymentOutbound.account == 2}">
+                                <c:set var="account2" value="checked"/>
+                            </c:when>
+                        </c:choose>
                         <div class="col-sm-6 text-left" >
-                            <input type="radio" name="account"  id="account" value="1" checked /> &nbsp;account(1)
+                            <input type="radio" name="account"  id="account" value="1" ${account1}/>&nbsp;account(1)
                         </div>
                         <div class="col-sm-6 text-left" >
-                            <input type="radio" name="account"  id="account" value="2" />&nbsp;account(2)
+                            <input type="radio" name="account"  id="account" value="2" ${account1}/>&nbsp;account(2)
                         </div>
                     </div>
                 </div><!--End row 1-->
@@ -171,7 +183,7 @@
                     <div class="col-md-2 form-group text-left" style="width:150px;"> 
                         <div class="input-group">
                             <input type="hidden" class="form-control" id="invSupId" name="invSupId" value="" />
-                            <input type="text" class="form-control" id="invSupCode" name="invSupCode" value="" />
+                            <input type="text" class="form-control" id="invSupCode" name="invSupCode" value="${paymentOutbound.invSupCode}" />
                             <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchInvoiceSup">
                                 <span class="glyphicon-search glyphicon"></span>
                             </span>
@@ -186,7 +198,7 @@
                     <div class="col-md-1 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 180px;">
                         <div class="col-sm-12">
                             <div class="input-group" id="CodeValidate">
-                                <input name="invSupApCode" id="invSupApCode" type="text" class="form-control" value="" />
+                                <input name="invSupApCode" id="invSupApCode" type="text" class="form-control" value="${paymentOutbound.invSupApCode}" />
                                 <span class="input-group-addon" data-toggle="modal" data-target="#SearchAPCode">
                                     <span class="glyphicon-search glyphicon"></span>
                                 </span>    
@@ -202,7 +214,7 @@
                                 <option  value="" >---------</option>
                                 <c:forEach var="status" items="${statusList}">                                       
                                     <c:set var="select" value="" />
-                                    <c:if test="${status.id == taxDetail.mbillType.id}">
+                                    <c:if test="${status.id == paymentOutbound.MItemstatus.id}">
                                         <c:set var="select" value="selected" />
                                     </c:if>
                                     <option  value="${status.id}" ${select}>${status.name}</option>
@@ -223,7 +235,7 @@
                                         <th style="width: 10%">Invoice</th>
                                         <th style="width: 9%">Cost</th>
                                         <th style="width: 9%">Gross</th>
-                                        <th style="width: 2%">Is Vat</th>                                                                      
+                                        <th style="width: 4%">Is Vat</th>                                                                      
                                         <th style="width: 2%">Vat</th>
                                         <th style="width: 9%">Amount</th>
                                         <th style="width: 9%">Comm</th>
@@ -236,18 +248,21 @@
                                     </tr>-->
                                 </thead>
                                 <tbody>
-                                    <c:forEach var="detail" items="${refundAirline.refundAirticketDetails}" varStatus="i">
+                                    <c:forEach var="detail" items="${paymentOutboundDetail}" varStatus="i">
                                     <tr>
                                         <td class="hidden">
-                                            <input type="text" name="detailId${i.count}" id="detailId${i.count}" class="form-control" value=""/>
-                                            <input type="text" name="payId${i.count}" id="payId${i.count}" class="form-control" value=""/>
+                                            <input type="text" name="detailId${i.count}" id="detailId${i.count}" class="form-control" value="${detail.id}"/>
+                                            <input type="text" name="payId${i.count}" id="payId${i.count}" class="form-control" value="${detail.paymentOutbound.id}"/>
+                                            <input type="text" name="bookDetailId${i.count}" id="payId${i.count}" class="form-control" value="${detail.bookDetailId}"/>
+                                            <input type="text" name="bookDetailType${i.count}" id="bookDetailType${i.count}" class="form-control" value="${detail.bookDetailType}"/>
+                                            <input type="text" name="accCode${i.count}" id="accCode${i.count}" class="form-control" value="${detail.accCode}"/>
                                         </td>
                                         <td>
-                                            <select class="form-control" name="type${i.count}" id="type${i.count}">
+                                            <select class="form-control" name="type${i.count}" id="type${i.count}" onchange="addRow()">
                                                 <option  value="" >---------</option>
                                                 <c:forEach var="payType" items="${payTypeList}">                                       
                                                     <c:set var="select" value="" />
-                                                    <c:if test="${payType.id == taxDetail.mbillType.id}">
+                                                    <c:if test="${payType.id == detail.MPaytype.id}">
                                                         <c:set var="select" value="selected" />
                                                     </c:if>
                                                     <option  value="${payType.id}" ${select}>${payType.name}</option>
@@ -258,32 +273,38 @@
                                             <input type="text" name="refNo${i.count}" id="refNo${i.count}" class="form-control" value=""/>
                                         </td>
                                         <td>
-                                            <input type="text" name="invoice${i.count}" id="invoice${i.count}" class="form-control" value=""/>
+                                            <input type="text" name="invoice${i.count}" id="invoice${i.count}" class="form-control" value="${detail.invoiceCreditor}"/>
                                         </td>                                                                   
                                         <td>
-                                           <input type="text" name="cost${i.count}" id="cost${i.count}" class="form-control" value=""/> 
+                                           <input type="text" name="cost${i.count}" id="cost${i.count}" class="form-control" value="${detail.cost}"/> 
                                         </td>
                                         <td>
-                                            <input type="text" name="gross${i.count}" id="gross${i.count}" class="form-control" value=""/>
+                                            <input type="text" name="gross${i.count}" id="gross${i.count}" class="form-control" value="${detail.gross}"/>
                                         </td>                                
                                         <td>
-                                            <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" class="form-control text-center" onclick="" value="">
-                                        </td>
+                                            <c:set var="isVat" value=""/>
+                                            <c:if test="${detail.isVat == 1}">
+                                                <c:set var="isVat" value="checked"/>
+                                            </c:if>
+                                            <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" class="form-control text-center"  onclick="" value="" ${isVat}>
                                         <td align="right" id="vatShow${i.count}">
-                                            <input type="hidden" name="vat${i.count}" id="vat${i.count}" class="form-control" value=""/>
+                                            <c:if test="${detail.isVat == 1}">
+                                                ${detail.vat}
+                                            </c:if>
+                                            <input type="hidden" name="vat${i.count}" id="vat${i.count}" class="form-control" value="${detail.vat}"/>
                                         </td>
                                         <td>
-                                            <input type="text" name="amount${i.count}" id="amount${i.count}" class="form-control" value=""/>
+                                            <input type="text" name="amount${i.count}" id="amount${i.count}" class="form-control" value="${detail.amount}"/>
                                         </td>
                                         <td>
-                                            <input type="text" name="comm${i.count}" id="comm${i.count}" class="form-control" value=""/>
+                                            <input type="text" name="comm${i.count}" id="comm${i.count}" class="form-control" value="${detail.comm}"/>
                                         </td>
                                         <td>
-                                            <select class="form-control" name="cur${i.count}" id="cur${i.count}">
+                                            <select class="form-control" name="cur${i.count}" id="cur${i.count}" onchange="addRow()">
                                                 <option  value="" >---------</option>
                                                 <c:forEach var="currency" items="${currencyList}">                                       
                                                     <c:set var="select" value="" />
-                                                    <c:if test="${currency.code == taxDetail.mbillType.id}">
+                                                    <c:if test="${currency.code == detail.currency}">
                                                         <c:set var="select" value="selected" />
                                                     </c:if>
                                                     <option  value="${currency.code}" ${select}>${currency.code}</option>
@@ -292,7 +313,7 @@
                                         </td>
                                         <td class="text-center" rowspan="2">                                 
                                             <a href="#" onclick=""  data-toggle="modal" data-target="">
-                                                <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delPaymentOutboundModal"></span>
+                                                <span id="spanDelete${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentDetailList('${detail.id}','${i.count}'')" data-toggle="modal"></span>
                                             </a>
                                         </td>
                                     </tr>
@@ -301,24 +322,29 @@
                                             <b>Description</b>
                                         </td>
                                         <td colspan="2">
-                                            <input type="text" name="description${i.count}" id="description${i.count}" class="form-control" value=""/>
+                                            <input type="text" name="description${i.count}" id="description${i.count}" class="form-control" value="${detail.description}"/>
                                         </td>
                                         <td colspan="1" align="right">
                                             <b>Pay Stock</b>
                                         </td>
                                         <td colspan="3">
-                                            <input type="text" name="payStock${i.count}" id="payStock${i.count}" class="form-control" value=""/>
+                                            <input type="text" name="payStock${i.count}" id="payStock${i.count}" class="form-control" value="${detail.payStockId}"/>
                                         </td>
                                         <td colspan="1" align="right">
                                             <b>Value</b>
                                         </td>
                                         <td colspan="2">
-                                            <input type="text" name="value${i.count}" id="value${i.count}" class="form-control" value=""/>
+                                            <input type="text" name="value${i.count}" id="value${i.count}" class="form-control" value="${detail.value}"/>
                                         </td>
                                     </tr>
                                     </c:forEach>
                                 </tbody>
-                            </table>    
+                            </table>
+                            <div id="tr_PaymentOutboundDetailAddRow" class="text-center hide" style="padding-top: 10px">
+                                <a class="btn btn-success" onclick="AddRowPaymentDetailTable()">
+                                    <i class="glyphicon glyphicon-plus"></i> Add
+                                </a>
+                            </div>
                         </div>   
                     </div><!-- End Row 1-->
                 </div>            
@@ -341,7 +367,7 @@
                                 <label class="control-label">Gross Total</lable>
                             </div>
                             <div class="col-md-3 text-right" style="width: 210px;padding-left:0px;padding-right: 0px;">
-                                <input name="grossTotal" id="grossTotal" type="text" class="form-control text-right" value="" />
+                                <input name="grossTotal" id="grossTotal" type="text" class="form-control text-right" value="" readonly=""/>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -349,7 +375,7 @@
                                 <label class="control-label">Vat Total</lable>
                             </div>
                             <div class="col-md-3 text-right" style="width: 210px;padding-left:0px;padding-right: 0px;padding-top: 15px">
-                                <input name="vatTotal" id="vatTotal" type="text" class="form-control text-right" value="" />
+                                <input name="vatTotal" id="vatTotal" type="text" class="form-control text-right" value="" readonly=""/>
                             </div>
                         </div>                       
                     </div>                     
@@ -361,7 +387,7 @@
                                 <label class="control-label">Grand Total</lable>
                             </div>
                             <div class="col-md-3 text-right" style="width: 210px;padding-left:0px;padding-right: 0px;">
-                                <input name="grandTotal" id="grandTotal" type="text" class="form-control text-right" value="" />
+                                <input name="grandTotal" id="grandTotal" type="text" class="form-control text-right" value="" readonly=""/>
                             </div>
                         </div>
                     </div>
@@ -384,15 +410,19 @@
 </div>
 <!--Delete Payment Outbound Modal-->
 <div class="modal fade" id="delPaymentOutboundModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Delete Payment Outbound</h4>
+                <h4 class="modal-title">Payment Outbound</h4>
             </div>
-            <div class="modal-body" id="delCode"></div>
-            <div class="modal-footer">
-                <button id="btnDelete" type="button" onclick="Delete()" class="btn btn-danger">Delete</button>
+            <div class="modal-body" id="delCode">
+                Are you sure to delete this payment detail outbound ?
+            </div>
+            <div class="modal-footer">              
+                <input type="hidden" id="delPaymentDetailId" name="delPaymentDetailId" value=""/>
+                <input type="hidden" id="delPaymentDetailRow" name="delPaymentDetailRow" value=""/>
+                <button id="btnDelete" type="button" onclick="confirmDeletePaymentDetailList()" class="btn btn-danger">Delete</button>
                 <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
