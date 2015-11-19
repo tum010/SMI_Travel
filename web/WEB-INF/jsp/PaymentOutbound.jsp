@@ -138,14 +138,17 @@
                         <label class="control-label">PV No</lable>
                     </div>
                     <div class="col-md-4 form-group text-left" >
-                        <input name="InputPayNo" id="InputPayNo" type="text" class="form-control" value="" />
+                        <input name="payId" id="payId" type="hidden" class="form-control" value="" />
+                        <input name="createBy" id="createBy" type="hidden" class="form-control" value="" />
+                        <input name="createDate" id="createDate" type="hidden" class="form-control" value="" />
+                        <input name="payNo" id="payNo" type="text" class="form-control" value="" />
                     </div>
                     <div class="col-xs-1 text-left" style="width:90px;">
                         <label class="control-label">Pay Date</lable>
                     </div>
                     <div class="col-md-3 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 150px;">
                         <div class='input-group date' >
-                            <input name="InputPayDate" id="InputPayDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                            <input name="payDate" id="payDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
@@ -154,10 +157,10 @@
                     </div>
                     <div class="col-md-3 text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
                         <div class="col-sm-6 text-left" >
-                            <input type="radio" name="account1"  id="account1" value="account1" checked /> &nbsp;account(1)
+                            <input type="radio" name="account"  id="account" value="1" checked /> &nbsp;account(1)
                         </div>
                         <div class="col-sm-6 text-left" >
-                            <input type="radio" name="account1"  id="account1" value="account2" />&nbsp;account(2)
+                            <input type="radio" name="account"  id="account" value="2" />&nbsp;account(2)
                         </div>
                     </div>
                 </div><!--End row 1-->
@@ -165,7 +168,7 @@
                     <div class="col-xs-1 text-right" style="width:100px;padding-right: 0px;padding-left: 0px;">
                         <label class="control-label">Invoice Sup</lable>
                     </div>
-                    <div class="col-md-2 form-group text-left" > 
+                    <div class="col-md-2 form-group text-left" style="width:150px;"> 
                         <div class="input-group">
                             <input type="hidden" class="form-control" id="invSupId" name="invSupId" value="" />
                             <input type="text" class="form-control" id="invSupCode" name="invSupCode" value="" />
@@ -174,7 +177,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-md-2 form-group text-left" >
+                    <div class="col-md-2 form-group text-left" style="width:200px;padding-left: 0px;">
                         <input name="invSupName" id="invSupName" type="text" class="form-control" value="" readonly=""/>
                     </div>
                     <div class="col-xs-1 text-left" style="width:78px;padding-right: 0px;">
@@ -235,6 +238,10 @@
                                 <tbody>
                                     <c:forEach var="detail" items="${refundAirline.refundAirticketDetails}" varStatus="i">
                                     <tr>
+                                        <td class="hidden">
+                                            <input type="text" name="detailId${i.count}" id="detailId${i.count}" class="form-control" value=""/>
+                                            <input type="text" name="payId${i.count}" id="payId${i.count}" class="form-control" value=""/>
+                                        </td>
                                         <td>
                                             <select class="form-control" name="type${i.count}" id="type${i.count}">
                                                 <option  value="" >---------</option>

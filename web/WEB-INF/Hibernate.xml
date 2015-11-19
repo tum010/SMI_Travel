@@ -150,7 +150,9 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
                                 <value>resource/hibernate/HistoryBooking.hbm.xml</value>
                                 <value>resource/hibernate/AirticketRefund.hbm.xml</value>
                                 <value>resource/hibernate/AdvanceReceivePeriod.hbm.xml</value>
-                                <value>resource/hibernate/PaymentAirDebit.hbm.xml</value>  
+                                <value>resource/hibernate/PaymentAirDebit.hbm.xml</value>
+                                <value>resource/hibernate/PaymentOutbound.hbm.xml</value>  
+                                <value>resource/hibernate/PaymentOutboundDetail.hbm.xml</value>    
 			</list>
 		</property>
 
