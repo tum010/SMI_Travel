@@ -153,6 +153,7 @@
                                 <prop key="BookInformation.smi">BookInformationController</prop>
                                 <prop key="PostSaleVat.smi">PostSaleVatController</prop>
                                 <prop key="SaleVatReport.smi">SaleVatReportController</prop>
+                                <prop key="PaymentStock.smi">PaymentStockController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -674,6 +675,10 @@
     <bean id="SaleVatReportController" class="com.smi.travel.controller.SaleVatReportController">
         <property name="utilservice" ref="UtilityService" />
         <property name="salevatreportservice" ref="SaleVatReportService" />
+    </bean>
+    
+    <bean id="PaymentStockController" class="com.smi.travel.controller.PaymentStockController">
+        <property name="utilservice" ref="UtilityService" />
     </bean>
     
 	<!-- add bean id controller -->

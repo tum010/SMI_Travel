@@ -355,9 +355,14 @@
         <put-attribute name="body" value="/WEB-INF/jsp/SearchPaymentOutbound.jsp" />
     </definition>
     
-        <definition name="SearchPaymentOutbound" extends="baseLayout">
+    <definition name="SearchPaymentOutbound" extends="baseLayout">
         <put-attribute name="title" value="Chk : Search Payment Outbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchPaymentOutbound.jsp" />
+    </definition>
+    
+    <definition name="PaymentStock" extends="baseLayout">
+        <put-attribute name="title" value="Chk : Payment Stock" />
+        <put-attribute name="body" value="/WEB-INF/jsp/PaymentStock.jsp" />
     </definition>
     
     <definition name="SearchInvoice" extends="baseLayout">
@@ -670,5 +675,5 @@
     <definition name="SaleVatReport" extends="baseLayout">
         <put-attribute name="title" value="Tax Invoice Report : SaleVatReport" />
         <put-attribute name="body" value="/WEB-INF/jsp/SaleVatReport.jsp" />
-    </definition>
+    </definition>    
 </tiles-definitions>

@@ -12,6 +12,12 @@
             <span class="menu-text"> Search Payment Outbound</span>
         </a>
     </li>
+    <li>
+        <a href="PaymentStock.smi" id="paymentStock" >
+            <i class="menu-icon fa fa-exchange"></i>
+            <span class="menu-text"> Payment Stock</span>
+        </a>
+    </li>
 </ul>
 <script>
     $(document).ready(function () {
@@ -21,7 +27,9 @@
         if(path.indexOf('PaymentOutbound') == 11){
             $("#payment").css('background-color', '#ccc');
         }else if(path.indexOf('PaymentOutbound') == 17){
-             $("#paymentSearch").css('background-color', '#ccc');
+            $("#paymentSearch").css('background-color', '#ccc');
+        }else if(path.indexOf('PaymentOutbound') == -1){
+            $("#paymentStock").css('background-color', '#ccc');
         }
         
         $("#PaymentOutbound a").one('mouseover', function () {
