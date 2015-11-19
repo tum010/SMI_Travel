@@ -99,7 +99,7 @@
                         <h4>Refund Ticket</h4>
                     </div>
                     <div class="col-md-3 text-right">
-                        <button type="button" onclick="" class="btn btn-default">
+                        <button type="button" class="btn btn-default" onclick="printAirticketRefund();">
                             <span class="glyphicon glyphicon-print"></span> Print
                         </button>
                     </div>
@@ -143,7 +143,7 @@
                                     <c:if test="${listRefundTicket != null}"> 
                                         <c:forEach var="table" items="${listRefundTicket}" varStatus="status">
                                         <c:set var="counter" value="${status.count}"></c:set>  
-                                            <tr>
+                                            <tr id="${table.id}">
                                                 <td class="hidden"><input type="text" id="airticketrefundid${status.count}" name="airticketrefundid${status.count}" value="${table.airticketrefundid}" /></td>
                                                 <td><c:out value="${table.refundno}" /></td>
                                                 <td><c:out value="${table.refundby}" /></td>
@@ -184,6 +184,7 @@
                                                     <input type="hidden" class="form-control" name="refundById" id="refundById" value="${table1.airticketrefundid}">
                                                     <input type="hidden" class="form-control" name="refundid" id="refundid" value="${table1.id}">
                                                     <input type="text" class="form-control" id="refundBy" name="refundBy" value="${table1.refundcode}">
+                                                    <input type="hidden" class="form-control" id="refundNo" name="refundNo" value="${table1.refundno}">
                                                     <span class="input-group-addon" data-toggle="modal" data-target="#refundCustModal">
                                                         <span class="glyphicon-search glyphicon"></span>
                                                     </span>
@@ -267,7 +268,7 @@
                                         <label class="col-sm-3 control-label text-right">Address</label>
                                         <div class="col-sm-9">                                      
                                             <div class="form-group">
-                                                <textarea class="form-control" id="address"  name="address"></textarea>
+                                                <textarea class="form-control" id="address"  name="address">${table1.address}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -346,11 +347,11 @@
                                         </table>
                                     </div>
                                 </div>
-                                    <div class="row">
+<!--                                    <div class="row">
                                         <div class="col-sm-5 form-group text-right">
                                         <button type="button" id="buttonPrintRefund"  name="buttonPrintRefund" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
-                                    </div>
-                                    <div class="col-sm-1 form-group text-right">
+                                    </div>-->
+                                    <div class="col-sm-6 form-group text-right">
                                         <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=saveRefund">
                                             <button type="submit" class="btn btn-success"  id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
                                         </a>
@@ -482,10 +483,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-5 form-group text-right">
-                                    <button type="button" id="buttonPrintRefund"  name="buttonPrintRefund" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
-                                </div>
-                                <div class="col-sm-1 form-group text-right">
+<!--                                <div class="col-sm-5 form-group text-right">
+                                    <button type="button" id="buttonPrintRefund"  name="buttonPrintRefund" class="btn btn-primary" ><span class="fa fa-print"></span> Print</button>
+                                </div>-->
+                                <div class="col-sm-6 form-group text-right">
                                     <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=addRefund">
                                     <button type="submit" class="btn btn-success" id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
                                     </a>
@@ -663,7 +664,17 @@
 <script type="text/javascript" charset="utf-8">
     var selectTicketNo = "<option value='' ></option>";
     var counterror = 0;
-    $(document).ready(function () {
+    $(document).ready(function () {         
+        $('table').on('click', 'tr', function () {
+            $(this).addClass('row_selected').siblings().removeClass('row_selected');
+        });
+        $('#RefundTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
+            "bPaginate": false,
+            "bInfo": false
+        });
         $(".numerical").on('input', function() {
             var value = $(this).val().replace(/[^0-9.,]*/g, '');
             value = value.replace(/\.{2,}/g, '.');
@@ -738,12 +749,8 @@
     console.log("Row Refund Ticket Detail (Add): " + rowCountAdd);
     $("#counterTableAdd").val(rowCountAdd);
     addRowRefundTicketDetailAdd(rowCountAdd++);
-    
-    $('table').on('click', 'tr', function () {
-        $(this).addClass('row_selected').siblings().removeClass('row_selected');
-    });
-
-     $('#datetimepicker4').datetimepicker().on('dp.change', function (e) {
+   
+    $('#datetimepicker4').datetimepicker().on('dp.change', function (e) {
         $('#RefundForm').bootstrapValidator('revalidateField', 'receiveDate');
     });
         
@@ -1089,7 +1096,7 @@ function searchCustomerAutoList(name) {
                         $("#refundBy").trigger("keyup");
                         var billselect = $("#refundBy").val();
                         for (var i = 0; i < billListId.length; i++) {
-                            if ((billselect == billListName[i]) || (billselect == billListId[i])) {
+                            if ((billselect === billListName[i]) || (billselect === billListId[i])) {
                                 $("#refundBy").val(billListId[i]);
                                 $("#refundByName").val(billListName[i]);
                             }
@@ -1099,11 +1106,11 @@ function searchCustomerAutoList(name) {
 
                 var billval = $("#refundBy").val();
                 for (var i = 0; i < billListId.length; i++) {
-                    if (billval == billListName[i]) {
+                    if (billval === billListName[i]) {
                         $("#refundBy").val(billListId[i]);
                     }
                 }
-                if (billListId.length == 1) {
+                if (billListId.length === 1) {
                     showflag = 0;
                     $("#refundBy").val(billListId[0]);
                 }
@@ -1363,6 +1370,19 @@ function checkRefund(e,row) {
 
 function formatNumber(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+}
+
+function printAirticketRefund(){
+    var PnrID = "";
+    $('#RefundTable tr.row_selected').each(function () {
+        PnrID = $(this).attr('id');
+    });
+//    alert("ID : " + PnrID);
+    if (PnrID === "") {
+        alert("please select airticket refund");
+    } else {
+        window.open("report.smi?name=RefundAirReport&refundId="+PnrID);
+    }
 }
 </script>
 <c:if test="${! empty requestScope['result']}">

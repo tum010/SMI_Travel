@@ -37,7 +37,7 @@ public class RefundImpl implements RefundDao{
     private static final String SELECT_REFUND_DETAIL = "FROM AirticketRefund ar where ar.id = :refundid";
     private static final String SELECT_TICKETNO = "From AirticketPassenger psg where psg.airticketAirline.airticketPnr.airticketBooking.master.referenceNo = :refno";
     private static final String SELECT_SECTOR = "From AirticketPassenger psg where psg.id = :ticid";
-    private static final String GET_REFUND = "FROM AirticketRefund ar where ar.refundAirticket.refundDate = :refundDate and ar.refundAirticket.refundBy = :refundBy and ar.refundAirticket.receiveBy = :receiveBy and ar.refundAirticket.receiveDate = :receiveDate" ;
+    private static final String GET_REFUND = "FROM AirticketRefund ar where ar.refundAirticket.id = :refundId  and ar.refundAirticket.refundNo = :refundNo" ;
     private static final String DELETE_AIRTICKET_REFUND = "DELETE FROM AirticketRefund ar where ar.id = :airticketrefundid";
     private static final String DELETE_REFUND = "DELETE FROM RefundAirticket ar where ar.id = :refundid";
     private static final String DELETE_REFUND_DETAIL_BYREFUND_ID = "DELETE FROM RefundAirticketDetail ar where ar.refundAirticket.id = :refundid";
@@ -193,13 +193,10 @@ public class RefundImpl implements RefundDao{
 
     @Override
     public List searchRefund(RefundAirticket refund) {
-        Session session = this.sessionFactory.openSession();
-        UtilityFunction util = new UtilityFunction();  
+        Session session = this.sessionFactory.openSession(); 
         List<AirticketRefund> airbookingidList = session.createQuery(GET_REFUND)
-                .setParameter("refundDate", refund.getRefundDate())
-                .setParameter("refundBy", refund.getRefundBy())
-                .setParameter("receiveBy", refund.getReceiveBy())
-                .setParameter("receiveDate", refund.getReceiveDate())
+                .setParameter("refundId", refund.getId())
+                .setParameter("refundNo", refund.getRefundNo())
                 .list();
         if (airbookingidList.isEmpty()) {
             return null;
@@ -279,6 +276,7 @@ public class RefundImpl implements RefundDao{
                 }
                 refundTicket.setChange(df.format(sumCharge));
                 refundTicket.setDetail(airbookingidList.get(i).getRefundAirticket().getRemark());
+                refundTicket.setAddress(airbookingidList.get(i).getRefundAirticket().getAddress());
                 refundTicket.setRefundTicketDetail(listRefundTicketDetail);
 
                 listRefundTicket.add(refundTicket);

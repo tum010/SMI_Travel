@@ -201,7 +201,7 @@ public class RefundController extends SMITravelController {
     private RefundAirticket getRefundFromPage(HttpServletRequest request,String airbookingid){
             String refundticketid = request.getParameter("refundid");
             String refundcodePage = request.getParameter("refundBy");
-            String refundnamePage = request.getParameter("refundByName");
+            String refundno = request.getParameter("refundNo");
             String receivecodePage = request.getParameter("receiveBy");
             String receivenamePage = request.getParameter("receiveByName");
             String refunddatePage = request.getParameter("refundDate");
@@ -211,7 +211,12 @@ public class RefundController extends SMITravelController {
             String chargePage = request.getParameter("charge");
             AirticketRefund airticketRefund = new AirticketRefund();
             RefundAirticket refund = new RefundAirticket();
-            refund.setId(null);
+            if(refundno != null && !"".equals(refundno)){
+                refund.setRefundNo(refundno);
+            }else{
+                refund.setRefundNo("");
+            }
+            
             if(refundticketid != null && !"".equals(refundticketid)){
                 refund.setId(refundticketid);
             }else{
@@ -228,20 +233,32 @@ public class RefundController extends SMITravelController {
                 Date due = utilty.convertStringToDate(refunddatePage);
                 refund.setRefundDate(due);
             }else{
-                refund.setRefundBy("");
+                refund.setRefundDate(null);
             }
             
             if(receivecodePage != null && !"".equals(receivecodePage)){
                 refund.setReceiveBy(receivecodePage);
             }else{
-                refund.setRefundBy("");
+                refund.setReceiveBy("");
             }
             
             if(receivedatePage != null && !"".equals(receivedatePage)){
                 Date due = utilty.convertStringToDate(receivedatePage);
                 refund.setReceiveDate(due);
             }else{
-                refund.setRefundBy("");
+                refund.setReceiveDate(null);
+            }
+            
+            if(addressPage != null && !"".equals(addressPage)){
+                refund.setAddress(addressPage);
+            }else{
+                refund.setAddress("");
+            }
+            
+            if(cancelDetailPage != null && !"".equals(cancelDetailPage)){
+                refund.setRemark(cancelDetailPage);
+            }else{
+                refund.setRemark("");
             }
             
             refund.setStatus(0);
@@ -290,10 +307,10 @@ public class RefundController extends SMITravelController {
                     refundAirticketDetail.setPayCustomer(new BigDecimal(0.0));
                 }
                 // Add List Not Null from web page
-                if(ticketnoadd != null && !"".equals(ticketnoadd)){
-                    refundAirticketDetail.setRefundAirticket(refund);
+                if(ticketnoadd != null && !"".equals(ticketnoadd)){             
                     airticketrefundList.add(refundAirticketDetail);
                 }
+                 refundAirticketDetail.setRefundAirticket(refund);
             }
         }else{
             String refundRow = request.getParameter("counterTable");

@@ -5,6 +5,7 @@
  */
 package com.smi.travel.datalayer.service;
 
+import com.smi.travel.datalayer.dao.MRunningCodeDao;
 import com.smi.travel.datalayer.dao.RefundDao;
 import com.smi.travel.datalayer.entity.AirticketRefund;
 import com.smi.travel.datalayer.entity.RefundAirticket;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 public class RefundService {
     private RefundDao refundDao;
+    private MRunningCodeDao mRunningCodeDao;
     
     public List searchRefundTicket(String airbookingid){
         return refundDao.searchRefundTicket(airbookingid);
@@ -42,9 +44,12 @@ public class RefundService {
     }
     
     public String saveRefund(AirticketRefund airticketrefund){
+        String refundNo = "";
         if(airticketrefund.getId() != null && !"".equals(airticketrefund.getId())){
             return refundDao.updateRefund(airticketrefund);
         }else{
+            refundNo = getmRunningCodeDao().gennarateRunningCode("RA", 6);
+            airticketrefund.getRefundAirticket().setRefundNo(refundNo);
             return refundDao.saveRefund(airticketrefund);
         }  
     }
@@ -60,4 +65,13 @@ public class RefundService {
     public String deleteAirticketRefundDetail(String airticketRefund,String refundid,String refunddetailid){
         return refundDao.deleteAirticketRefundDetail(airticketRefund, refundid, refunddetailid);
     }
+
+    public MRunningCodeDao getmRunningCodeDao() {
+        return mRunningCodeDao;
+    }
+
+    public void setmRunningCodeDao(MRunningCodeDao mRunningCodeDao) {
+        this.mRunningCodeDao = mRunningCodeDao;
+    }
+    
 }

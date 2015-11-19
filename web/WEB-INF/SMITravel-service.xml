@@ -348,6 +348,7 @@
     
     <bean id="RefundService" class="com.smi.travel.datalayer.service.RefundService">
         <property name="refundDao" ref="RefundDao" />
+        <property name="mRunningCodeDao" ref="MRunningCodeDao" />
     </bean>
     
     <bean id="PostSaleVatService" class="com.smi.travel.datalayer.service.PostSaleVatService">
