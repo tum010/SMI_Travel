@@ -50,9 +50,8 @@
     <bean id="MCurrencyDao" class="com.smi.travel.datalayer.dao.impl.MCurrencyImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
-     <bean id="DefineVarDao" class="com.smi.travel.datalayer.dao.impl.DefineVarImpl">
-        	<property name="sessionFactory" ref="sessionFactory"></property>
-        	
+    <bean id="DefineVarDao" class="com.smi.travel.datalayer.dao.impl.DefineVarImpl">
+            <property name="sessionFactory" ref="sessionFactory"></property>        	
     </bean>
     <bean id="MFlightDao" class="com.smi.travel.datalayer.dao.impl.MFlightDaoImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
@@ -441,6 +440,10 @@
     </bean>
     
     <bean id="SaleVatReportDao" class="com.smi.travel.datalayer.view.dao.impl.SaleVatReportImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="PaymentOutboundDao" class="com.smi.travel.datalayer.dao.impl.PaymentOutboundImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     

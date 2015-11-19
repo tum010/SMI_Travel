@@ -4,6 +4,7 @@ import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.service.PaymentTourHotelService;
+import com.smi.travel.datalayer.service.PaymentOutboundService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.master.controller.SMITravelController;
@@ -24,6 +25,7 @@ public class PaymentOutboundController extends SMITravelController {
     private static final String INVOICESUPLIST = "invSupList";        
     private UtilityService utilservice;
     private PaymentTourHotelService paymentTourHotelService;
+    private PaymentOutboundService paymentOutboundService;        
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -55,5 +57,13 @@ public class PaymentOutboundController extends SMITravelController {
 
     public void setPaymentTourHotelService(PaymentTourHotelService paymentTourHotelService) {
         this.paymentTourHotelService = paymentTourHotelService;
+    }
+
+    public PaymentOutboundService getPaymentOutboundService() {
+        return paymentOutboundService;
+    }
+
+    public void setPaymentOutboundService(PaymentOutboundService paymentOutboundService) {
+        this.paymentOutboundService = paymentOutboundService;
     }
 }
