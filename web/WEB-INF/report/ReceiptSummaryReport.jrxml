@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="058d4e5f-08d6-4dca-b53c-91fb30f0f189">
-	<property name="ireport.zoom" value="3.6300000000000114"/>
-	<property name="ireport.x" value="1307"/>
-	<property name="ireport.y" value="340"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="1745"/>
+	<property name="ireport.y" value="388"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -27,14 +27,15 @@
 	<field name="wt" class="java.lang.String"/>
 	<field name="cashminus" class="java.lang.String"/>
 	<variable name="totalamount" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[new BigDecimal($F{recamount})]]></variableExpression>
+		<variableExpression><![CDATA[($F{payby} != null && !"null".equals($F{payby}) && !"Wait".equals($F{payby}) && !"Void".equals($F{payby}))
+? new BigDecimal($F{recamount}) : new BigDecimal("0.00")]]></variableExpression>
 	</variable>
 	<variable name="totalwait" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[($F{payby} != null && !"null".equals($F{payby}) && !"Wait".equals($F{payby})) ?
+		<variableExpression><![CDATA[($F{payby} != null && !"null".equals($F{payby}) && "Wait".equals($F{payby})) ?
 new BigDecimal($F{recamount}) : new BigDecimal("0.00")]]></variableExpression>
 	</variable>
 	<variable name="totalvoid" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[($F{payby} != null && !"null".equals($F{payby}) && !"Void".equals($F{payby})) ?
+		<variableExpression><![CDATA[($F{payby} != null && !"null".equals($F{payby}) && "Void".equals($F{payby})) ?
 new BigDecimal($F{recamount}) : new BigDecimal("0.00")]]></variableExpression>
 	</variable>
 	<variable name="totalinv" class="java.math.BigDecimal" calculation="Sum">
