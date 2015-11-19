@@ -1197,10 +1197,10 @@ public class OtherBookingImpl implements OtherBookingDao{
         if ((datefrom != null )&&(!"".equalsIgnoreCase(datefrom))) {
             if ((dateto != null )&&(!"".equalsIgnoreCase(dateto))) {
                 if(checkQuery == 1){
-                     query += " and ot.otherdate   BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                     query += " and ot.other_date   BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
                 }else{
                     checkQuery = 1;
-                     query += " ot.otherdate  BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
+                     query += " ot.other_date  BETWEEN  '" + datefrom + "' AND '" + dateto + "' ";
                 }
             }
         }
