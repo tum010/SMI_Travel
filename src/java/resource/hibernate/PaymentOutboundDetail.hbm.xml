@@ -52,6 +52,9 @@
         <property name="accCode" type="string">
             <column name="acc_code" length="10" />
         </property>
+        <property name="bookDetailType" type="string">
+            <column name="book_detail_type" length="20" />
+        </property>
         <property name="payStockId" type="java.lang.Integer">
             <column name="pay_stock_id" />
         </property>

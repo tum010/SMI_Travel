@@ -22,7 +22,9 @@ public class PaymentOutboundController extends SMITravelController {
     private static final String PAYTYPE = "payTypeList";
     private static final String CURRENCY = "currencyList";
     private static final String MVAT = "mVat";
-    private static final String INVOICESUPLIST = "invSupList";        
+    private static final String INVOICESUPLIST = "invSupList";
+    private static final String PAYMENTOUTBOUND = "paymentOutbound";   
+    private static final String PAYMENTOUTBOUNDDETAIL = "paymentOutboundDetail";   
     private UtilityService utilservice;
     private PaymentTourHotelService paymentTourHotelService;
     private PaymentOutboundService paymentOutboundService;        
@@ -40,6 +42,18 @@ public class PaymentOutboundController extends SMITravelController {
         request.setAttribute(MVAT, mVat);
         List<InvoiceSupplier> invoiceSupplierList = getPaymentTourHotelService().getListInvoiceSuppiler();
         request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
+        
+        String payId = request.getParameter("payId");
+        String payNo = request.getParameter("payNo");
+        String payDate = request.getParameter("payDate");
+        String account = request.getParameter("account");
+        String invSupCode = request.getParameter("invSupCode");
+        String invSupApCode = request.getParameter("invSupApCode");
+        String detail = request.getParameter("detail");
+        String createBy = request.getParameter("createBy");
+        String createDate = request.getParameter("createDate");
+        String status = request.getParameter("status");
+                
         return PaymentOutbound;
     }
 
