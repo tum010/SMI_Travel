@@ -15,6 +15,7 @@ $(document).ready(function() {
         value = value.replace(/\.[0-9]+\./g, '.');
         $(this).val(value);
     });
+//    $(".numerical").mask('00000000', {reverse: true});
 
     // Invoice To Modal
     var showflag = 1;
@@ -584,7 +585,7 @@ function DeleteDetailBill(rowID, code) {
 
 function DisableVoidInvoice() {
     var InvNo = document.getElementById('InvNo');
-    document.getElementById('disableVoid').innerHTML = "Are you sure to delete booking other : " + InvNo.value + " ?";
+    document.getElementById('disableVoidModal').innerHTML = "Are you sure to delete booking other : " + InvNo.value + " ?";
 }
 
 function EnableVoidInvoice() {
@@ -1309,14 +1310,14 @@ function setBillValue(billto, billname, address, term, pay) {
     $("#ARCode").val(billto);
 
     if($("#InvTo").val() !== "" && $("#InvToName").val() !== ""  && $("#ARCode").val() !== "" && $("#InputInvDate").val() !== ""){
-        alert("1");
+//        alert("1");
         $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvTo');
         $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvToName');
         $('#InvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
         $("#saveInvoice").removeAttr("disabled");
         $("#disableVoidButton").removeAttr("disabled");
     }else{
-         alert("2");
+//         alert("2");
         $("#saveInvoice").attr("disabled", "disabled");
         $("#disableVoidButton").attr("disabled", "disabled");
     }

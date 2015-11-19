@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentAirlineListReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="792adf01-0aeb-418b-a1c7-431013152c6f">
 	<property name="ireport.zoom" value="2.357947691000035"/>
-	<property name="ireport.x" value="408"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="173"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
@@ -434,7 +434,7 @@
 			</textField>
 			<textField>
 				<reportElement x="0" y="0" width="27" height="20" uuid="f0dd600b-f154-4806-8d75-79fb8f432fac"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{air}]]></textFieldExpression>
@@ -447,7 +447,7 @@
 				<textFieldExpression><![CDATA[$F{refno}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="27" y="0" width="71" height="20" uuid="6ee9129e-61cb-4af1-8da0-f77b66ca584b"/>
+				<reportElement x="38" y="0" width="60" height="20" uuid="6ee9129e-61cb-4af1-8da0-f77b66ca584b"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>

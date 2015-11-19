@@ -514,6 +514,7 @@
 	<bean id="PaymentOutboundController" class="com.smi.travel.controller.PaymentOutboundController">
             <property name="utilservice" ref="UtilityService" />
             <property name="paymentTourHotelService" ref="PaymentTourHotelService" />
+            <property name="paymentOutboundService" ref="PaymentOutboundService" />
 	</bean>
 	<bean id="PaymentTourHotelController" class="com.smi.travel.controller.PaymentTourHotelController">
 		<property name="paymentTourHotelService" ref="PaymentTourHotelService" />

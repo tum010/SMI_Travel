@@ -210,6 +210,51 @@ public class InvoiceInboundController extends SMITravelController {
             request.setAttribute("listInvoiceDetail", null);
             result = "NEW";
             request.setAttribute("result", result);
+        }else if("disableVoid".equals(action)){
+            //checck Tax invoice
+            int checkReciptAndTaxInvoice = 0;
+            if("yesTaxinvoice".equals(invoiceService.checkTaxInvoice(invoiceNo))){
+                checkReciptAndTaxInvoice++;
+                request.setAttribute("checkTaxinvoice", "yesTaxinvoice");
+            }else{
+                checkReciptAndTaxInvoice += 0;
+                request.setAttribute("checkTaxinvoice", "noTaxinvoice");
+            }
+            // check Recipt
+            if("yesReceipt".equals(invoiceService.checkReceipt(invoiceNo))){
+                checkReciptAndTaxInvoice++;
+                request.setAttribute("checkRecipt", "yesReceipt");
+            }else{
+                checkReciptAndTaxInvoice += 0;
+                request.setAttribute("checkRecipt", "noReceipt");
+            }
+            if(checkReciptAndTaxInvoice == 0){ 
+                invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
+                result = invoiceService.saveInvoice(invoice);
+                if(result.equals("update success")){
+                   result = "void";
+                   request.setAttribute("listInvoiceDetail", listInvoiceDetail);
+                   request.setAttribute("invoice", invoice);
+                   request.setAttribute("result", result);
+                }
+            }else{
+                invoice = setValueInvoice("", user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
+                mStatus.setId("1");
+                mStatus.setName("NORMAL");
+                invoice.setMFinanceItemstatus(mStatus);
+                request.setAttribute("listInvoiceDetail", listInvoiceDetail);
+                request.setAttribute("invoice", invoice);
+            }
+                     
+        }else if("enableVoid".equals(action)){      
+            invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
+            result = invoiceService.saveInvoice(invoice);
+            if(result.equals("update success")){
+                   result = "cancelvoid";
+                   request.setAttribute("listInvoiceDetail", listInvoiceDetail);
+                   request.setAttribute("invoice", invoice);
+                   request.setAttribute("result", result);    
+            }
         }
         
         if((!"".equalsIgnoreCase(invoiceNo)) && (invoiceNo != null)){

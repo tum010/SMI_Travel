@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 19, 2015 9:34:00 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.PaymentOutbound" table="payment_outbound" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="MItemstatus" class="com.smi.travel.datalayer.entity.MItemstatus" fetch="select">
+            <column name="status" />
+        </many-to-one>
+        <property name="payNo" type="string">
+            <column name="pay_no" length="20" />
+        </property>
+        <property name="payDate" type="date">
+            <column name="pay_date" length="10" />
+        </property>
+        <property name="account" type="java.lang.Integer">
+            <column name="account" />
+        </property>
+        <property name="invoiceSup" type="string">
+            <column name="invoice_sup" length="30" />
+        </property>
+        <property name="apCode" type="string">
+            <column name="ap_code" length="30" />
+        </property>
+        <property name="detail" type="string">
+            <column name="detail" />
+        </property>
+        <property name="createBy" type="string">
+            <column name="create_by" length="30" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" length="10" />
+        </property>
+        <bag name="paymentOutboundDetails" table="payment_outbound_detail" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="payment_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.PaymentOutboundDetail" />
+        </bag>
+    </class>
+</hibernate-mapping>

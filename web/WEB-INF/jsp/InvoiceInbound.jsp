@@ -19,6 +19,7 @@
 <c:set var="invoice" value="${requestScope['invoice']}" />
 <c:set var="listInvoiceDetail" value="${requestScope['listInvoiceDetail']}" />
 <c:set var="result" value="${requestScope['result']}" />
+<c:set var="textVoid" value="" />
 
 <section class="content-header" >
     <h1>
@@ -56,6 +57,17 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Invoice Not Empty</strong> 
             </div>
+            <div id="textAlertCurrencyAmountNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Currency Amount Not Empty</strong> 
+            </div>
+            <div id="textAlertInvoiceNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Invoice Not Empty</strong> 
+            </div>
+            <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
+                 <c:set var="textVoid" value="VOID" />
+            </c:if>
         <form action="InvoiceInbound${page}.smi" method="post" id="InvoiceInboundForm" name="InvoiceInboundForm" role="form" onsubmit="">
             <input type="text" class="hidden" id="action" name="action" value="save" >
                 <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
@@ -67,11 +79,11 @@
                     <c:choose>
                         <c:when test="${fn:contains(page , 'PM')}">
                             <c:set var="typeInvoiceInboubd" value="PM" />
-                            <h4><b>Proforma Invoice  </h4>
+                            <h4><b>Proforma Invoice <font style="color: red;"> ${textVoid}</font></b></h4>
                         </c:when>
                         <c:when test="${fn:contains(page , 'RV')}">
                             <c:set var="typeInvoiceInboubd" value="RV" />
-                            <h4><b>Revenue Invoice  </h4>
+                            <h4><b>Revenue Invoice  <font style="color: red;"> ${textVoid}</font></b></h4>
                         </c:when>                        
                     </c:choose> 
                 </div>
@@ -261,9 +273,9 @@
                                                     </select>
                                                 </td>              
                                                 <td align="center" >
-                                                    <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" 
+<!--                                                    <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" 
                                                            onclick="getDescriptionDetail(${taxdesc.count})" id="InputDescription${taxdesc.count}">
-                                                    </span>
+                                                    </span>-->
                                                     <span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBillInbound('${taxdesc.count}','${ind.description}')" 
                                                            data-toggle="modal" data-target="#DelDetailBill" >  
                                                     </span>
@@ -371,12 +383,38 @@
                                 </div>
 
                                 <div class="col-md-1 text-right ">                                      
-                                    <button type="button" class="btn btn-danger" onclick="" data-toggle="modal" data-target="#DisableVoid" id="disableVoidButton" name="disableVoidButton"  >
+                                    <c:set var="isDisableVoid" value="disabled='true'" />
+                                    <c:set var="isEnableVoid" value="style='display: none;'" />
+                                    <c:set var="isSaveVoid" value="" />
+                                    <c:if test="${result =='success'}">        
+                                        <c:set var="isDisableVoid" value="" />
+                                    </c:if>
+                                    <c:if test="${result =='void'}">        
+                                        <c:set var="isDisableVoid" value="style='display: none;'" />
+                                        <c:set var="isEnableVoid" value="style='display: block;'" />
+                                        <c:set var="isSaveVoid" value="disabled='true'" />
+                                    </c:if>
+                                    <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
+                                        <c:set var="isDisableVoid" value="style='display: none;'" />
+                                        <c:set var="isEnableVoid" value="style='display: block;'" />
+                                        <c:set var="isSaveVoid" value="disabled='true'" />
+                                    </c:if>
+                                    <c:if test="${result =='cancelvoid'}">        
+                                        <c:set var="isDisableVoid" value="" />
+                                    </c:if>
+                                    <c:if test="${invoice.MFinanceItemstatus.id == '1'}">        
+                                        <c:set var="isDisableVoid" value="" />
+                                    </c:if>
+                                    <button type="button" class="btn btn-primary" onclick="EnableVoidInvoice();" data-toggle="modal" data-target="#EnableVoid" id="enableVoidButton" name="enableVoidButton"  ${isEnableVoid} >
+                                        <span id="SpanEnableVoid" class="glyphicon glyphicon-ok" ></span>Cancel
+                                    </button>
+
+                                    <button type="button" class="btn btn-danger" onclick="DisableVoidInvoice();" data-toggle="modal" data-target="#DisableVoid" id="disableVoidButton" name="disableVoidButton" ${isDisableVoid} >
                                         <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Void
                                     </button>
                                 </div>
                                 <div class="col-md-1 text-right ">
-                                    <button type="submit"  id="saveInvoice" name="saveInvoice" class="btn btn-success"  onclick="saveInvoiceInbound()">
+                                    <button type="submit"  id="saveInvoice" name="saveInvoice" class="btn btn-success"  onclick="saveInvoiceInbound()" ${isSaveVoid}>
                                         <span id="SpanSave" class="fa fa-save"></span> Save 
                                     </button>
                                 </div>
@@ -408,7 +446,7 @@
                 Are you confirm to void invoice ?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" onclick='' data-dismiss="modal">Void</button>               
+                <button type="button" class="btn btn-danger" onclick='DisableInvoice()' data-dismiss="modal" >Void</button>               
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->

@@ -357,5 +357,9 @@
     <bean id="SaleVatReportService" class="com.smi.travel.datalayer.service.SaleVatReportService">
         <property name="saleVatReportDao" ref="SaleVatReportDao" />
     </bean>
+    
+    <bean id="PaymentOutboundService" class="com.smi.travel.datalayer.service.PaymentOutboundService">
+        <property name="paymentOutboundDao" ref="PaymentOutboundDao" />
+    </bean>
     <!--<add data>-->
 </beans>

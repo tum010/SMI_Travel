@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Nov 19, 2015 9:34:00 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.PaymentOutboundDetail" table="payment_outbound_detail" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="master" class="com.smi.travel.datalayer.entity.Master" fetch="select">
+            <column name="master_id" />
+        </many-to-one>
+        <many-to-one name="paymentOutbound" class="com.smi.travel.datalayer.entity.PaymentOutbound" fetch="select">
+            <column name="payment_id" />
+        </many-to-one>
+        <many-to-one name="MPaytype" class="com.smi.travel.datalayer.entity.MPaytype" fetch="select">
+            <column name="product_type" />
+        </many-to-one>
+        <property name="bookDetailId" type="java.lang.Integer">
+            <column name="book_detail_id" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" />
+        </property>
+        <property name="invoiceCreditor" type="string">
+            <column name="invoice_creditor" />
+        </property>
+        <property name="cost" type="big_decimal">
+            <column name="cost" precision="10" />
+        </property>
+        <property name="gross" type="big_decimal">
+            <column name="gross" precision="10" />
+        </property>
+        <property name="vat" type="big_decimal">
+            <column name="vat" precision="10" />
+        </property>
+        <property name="isVat" type="java.lang.Integer">
+            <column name="is_vat" />
+        </property>
+        <property name="amount" type="big_decimal">
+            <column name="amount" precision="10" />
+        </property>
+        <property name="currency" type="string">
+            <column name="currency" length="3" />
+        </property>
+        <property name="recCom" type="big_decimal">
+            <column name="rec_com" precision="10" />
+        </property>
+        <property name="value" type="big_decimal">
+            <column name="value" precision="10" />
+        </property>
+        <property name="accCode" type="string">
+            <column name="acc_code" length="10" />
+        </property>
+        <property name="payStockId" type="java.lang.Integer">
+            <column name="pay_stock_id" />
+        </property>
+    </class>
+</hibernate-mapping>
