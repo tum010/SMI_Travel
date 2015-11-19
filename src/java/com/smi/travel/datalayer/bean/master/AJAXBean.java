@@ -1272,14 +1272,11 @@ public class AJAXBean extends AbstractBean implements
             String displaydescription = "";
             String displaydesTemp = "";
             if ("1".equals(product)) {                
-                if (!"".equals(refItemId)) {
-                    displaydescription = billTypeName;
-                }else{
-                    displaydescription = description;
-                }
+                displaydescription = billTypeName + " : "+description;
+
             } else if ("2".equals(product) || "8".equals(product)) {
                 if (!"".equals(refItemId)) {
-                    displaydescription += billTypeName + " #-- ";
+                    displaydescription += billTypeName + " :- ";
                     displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
                     System.out.println("displaydesTemp" + displaydesTemp);
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
@@ -1288,23 +1285,15 @@ public class AJAXBean extends AbstractBean implements
 
                     }
                 }else{
-                    displaydescription = description;
+                    displaydescription = billTypeName + " : "+description;
                 }
             } else if ("3".equals(product)) {
-                if (!"".equals(refItemId)) {
-                    displaydescription = billTypeName;
-                }else{
-                    displaydescription = description;
-                }
+                displaydescription = billTypeName + " : "+description;
             } else if ("4".equals(product)) {
-                if (!"".equals(refItemId)) {
-                    displaydescription = billTypeName;
-                }else{
-                    displaydescription = description;
-                }
+                displaydescription = billTypeName + " : "+description;
             } else if ("6".equals(product)) {
                 if (!"".equals(refItemId)) {
-                    displaydescription += billTypeName + " ";
+                    displaydescription += billTypeName + " : ";
                     displaydesTemp = billableDao.getDescriptionInvoiceDayTourFromRefId(refItemId);
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
                         String[] parts = displaydesTemp.split("\\|");
@@ -1312,10 +1301,10 @@ public class AJAXBean extends AbstractBean implements
                         System.out.println("displaydescription" + displaydescription);
                     }
                 }else{
-                    displaydescription = description;
+                   displaydescription = billTypeName + " : "+description;
                 }
             } else {
-                displaydescription = description;
+                displaydescription = billTypeName + " : "+description;
             }
 
             if (amount.compareTo(BigDecimal.ZERO) != 0) {
