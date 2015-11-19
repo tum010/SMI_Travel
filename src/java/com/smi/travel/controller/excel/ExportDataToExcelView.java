@@ -11726,8 +11726,8 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     //Total Wendy
                     if(tempcountW != 0){
                         HSSFRow rowtotal = sheetWendy.createRow(tempcountW);
-                        String totalGross = "SUM(H" +8+":H"+(tempcountW)+")";
-                        String totalVat = "SUM(O" + 8+":O"+(tempcountW)+")";
+                        String totalGross = "SUM(H" +11+":H"+(tempcountW)+")";
+                        String totalVat = "SUM(O" + 11+":O"+(tempcountW)+")";
 
                         HSSFCellStyle styleTotal = wb.createCellStyle();
                         styleTotal.setFont(getHeaderTable(wb.createFont()));
@@ -12051,8 +12051,8 @@ public class ExportDataToExcelView extends AbstractExcelView {
                     if(x != 0){
                         tempcountO = count+x;
                         HSSFRow rowtotal = sheetOutbound.createRow(tempcountO);
-                        String totalGross = "SUM(H" + 8+":H"+(tempcountO)+")";
-                        String totalVat = "SUM(O" + 8+":O"+(tempcountO)+")";
+                        String totalGross = "SUM(H" + 11+":H"+(tempcountO)+")";
+                        String totalVat = "SUM(O" + 11+":O"+(tempcountO)+")";
 
                         HSSFCellStyle styleTotal = wb.createCellStyle();
                         styleTotal.setFont(getHeaderTable(wb.createFont()));
@@ -12380,8 +12380,8 @@ public class ExportDataToExcelView extends AbstractExcelView {
                         tempcountI = count+y;
                         HSSFRow rowtotal = sheetInbound.createRow(tempcountI);
                         
-                        String totalGross = "SUM(H" + 8+":H"+(tempcountI)+")";
-                        String totalVat = "SUM(O" + 8+":O"+(tempcountI)+")";
+                        String totalGross = "SUM(H" + 11+":H"+(tempcountI)+")";
+                        String totalVat = "SUM(O" + 11+":O"+(tempcountI)+")";
 
                         HSSFCellStyle styleTotal = wb.createCellStyle();
                         styleTotal.setFont(getHeaderTable(wb.createFont()));
