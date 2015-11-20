@@ -706,7 +706,7 @@
                                             <select id="SelectTypePrint" name="SelectTypePrint" class="form-control">
                                                 <option value="InvoiceReport">Invoice</option>
                                                 <option value="InvoiceEmail">Invoice Email</option>
-                                                <option value="Package">Package</option>
+                                                <!--<option value="Package">Package</option>-->
                                             </select>          
                                         </div>
                                         <div class="col-md-1 text-left " style="padding-left: 0px">
