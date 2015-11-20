@@ -312,7 +312,7 @@
                                                         <td class="hidden"><input type="text" id="airticketrefunddetailid${statusDetail.count}" name="airticketrefunddetailid${statusDetail.count}" value="${tableDetail.refunddetailid}" /></td>
                                                         <td>${statusDetail.count}</td>
                                                         <td>
-                                                            <select id="SelectTocketNo${statusDetail.count}" name="SelectTocketNo${statusDetail.count}" class="form-control">
+                                                            <select id="SelectTocketNo${statusDetail.count}" name="SelectTocketNo${statusDetail.count}" class="form-control" onchange="setSectorRefund(${statusDetail.count});">
                                                                 <option value='' ></option>
                                                                 <c:forEach var="typeP" items="${listTicketNo}">
                                                                     <c:set var="selectTic" value="" />
@@ -962,6 +962,7 @@
             $("#buttonSaveRefund").attr("disabled", "disabled");
             $("#buttonPrintRefund").attr("disabled", "disabled");
         }
+        
  }); 
   
 function setBillValue(billto, billname, address, term, pay) {
@@ -1247,7 +1248,7 @@ function addRowRefundTicketDetail(row,id){
         '<tr>' +
         '<td class="hidden"><input type="text" id="airticketrefunddetailid' + row + '" name="airticketrefunddetailid' + row + '" value="" /></td>'+
         '<td>' + row + '</td>' +       
-        '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control">'+ selectTicket +'</select> </td>' +
+        '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control" >'+ selectTicket +'</select> </td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value=""></td>' +
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeNumber('+row+');"  id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' +      
@@ -1264,13 +1265,52 @@ function addRowRefundTicketDetailAdd(row,id){
         '<tr>' +
         '<td class="hidden"><input type="text" id="airticketrefunddetailidadd' + row + '" name="airticketrefunddetailidadd' + row + '" value="" /></td>'+
         '<td>' + row + '</td>' +       
-        '<td><select id="SelectTocketNoadd' + row + '" name="SelectTocketNoadd' + row + '" class="form-control">'+ selectTicket +'</select> </td>' +
+        '<td><select id="SelectTocketNoadd' + row + '" name="SelectTocketNoadd' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> </td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSectoradd' + row + '" name="inputSectoradd' + row + '" value=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefundadd' + row + '" name="inputSectorRefundadd' + row + '" value=""></td>' +
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeAddNumber('+row+');"  id="inputChargeadd' + row + '" name="inputChargeadd' + row + '" value="" ></td>' +      
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
     );
+}
+
+function setSectorRefund(row){
+//    alert("1");
+    var txt = $("#SelectTocketNoadd"+ row + " option:selected").text();
+    console.log("Text : " + txt);
+    if(txt !== ''){
+        var url = 'AJAXServlet';
+        var servletName = 'RefundAirlineServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&type=getTicketFare' +
+                '&ticketNo=' + txt ;
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                beforeSend: function () {
+                    $("#dataload").removeClass("hidden");
+                },
+                success: function (msg) {
+                    if (msg !== "") {
+                        var fare = JSON.parse(msg);
+                        console.log("Sector : "+fare.Sector);
+                        $("#inputSectoradd" + row).val(fare.Sector);
+                    } 
+                }, error: function (msg) {
+                    console.log('auto ERROR');
+                    $("#dataload").addClass("hidden");
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
 }
 
 function DeleteRefund(rowID,refno,airbookingid,airticketrefundid,refundid){
