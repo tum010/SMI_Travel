@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ConfirmSlipDaytourSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="5" bottomMargin="5" uuid="04a881ae-242a-427b-bd1e-9866c4ca547a">
-	<property name="ireport.zoom" value="6.727499949325668"/>
-	<property name="ireport.x" value="3161"/>
-	<property name="ireport.y" value="171"/>
+	<property name="ireport.zoom" value="3.138428376721037"/>
+	<property name="ireport.x" value="710"/>
+	<property name="ireport.y" value="0"/>
 	<field name="order" class="java.lang.String"/>
 	<field name="code" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
@@ -253,6 +253,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pickuptime}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="-1" width="1" height="18" isPrintWhenDetailOverflows="true" uuid="07d1dbeb-32d4-40bc-a936-a73a32e15a1f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="464" y="17" width="57" height="15" uuid="ce5c8282-c6f5-4873-a14c-5e1894c33388"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -260,6 +266,36 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{carno}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="16" width="555" height="1" isPrintWhenDetailOverflows="true" uuid="a60476a9-15d9-4d5d-b4da-a47b1dfe5aae"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="28" y="0" width="1" height="17" isPrintWhenDetailOverflows="true" uuid="1005fed3-1edc-4aa2-bddf-ebc3e0d70c76"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="297" y="-1" width="1" height="18" isPrintWhenDetailOverflows="true" uuid="c35027b6-71a3-4e1a-b3cc-a28e292bd77f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="379" y="-1" width="1" height="18" isPrintWhenDetailOverflows="true" uuid="c1ea2a4a-d303-470c-ae7c-28e5c3933b31"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="447" y="-1" width="1" height="18" isPrintWhenDetailOverflows="true" uuid="85b0645b-d3e9-4a0e-a855-008a4f9bd918"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
 		</band>
 	</detail>
 </jasperReport>
