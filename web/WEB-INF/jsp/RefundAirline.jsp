@@ -475,11 +475,12 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
 
-//        $('.date').datetimepicker();
-//        
-//        $(".daydatepicker").datetimepicker({
-//            pickTime: false   
-//        }); 
+        var refundid =  $("#refundId").val();
+        if(refundid === ""){
+            $("#buttonPrint").addClass("disabled");
+        }else{
+            $("#buttonPrint").removeClass("disabled");
+        }
         var RefundAgentTable = $('#RefundAgentTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
