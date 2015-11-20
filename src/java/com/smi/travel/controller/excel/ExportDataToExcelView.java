@@ -3593,7 +3593,7 @@ public class ExportDataToExcelView extends AbstractExcelView {
             int endrefund = 5 + listAgentRefund.size();
             System.out.println("Start Refund : " + startrefund + " End Refund : " + endrefund +" Size : " + listAgentRefund.size() );
 
-        if(listAgentRefund != null){
+        if(listAgentRefund != null && listAgentRefund.size() != 0){
             for (int r = 5; r <= count2; r++) {
                 HSSFRow row = sheet2.createRow(r);
                 HSSFCell cell00 = row.createCell(0);
