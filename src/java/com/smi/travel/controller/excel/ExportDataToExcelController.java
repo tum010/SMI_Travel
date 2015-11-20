@@ -133,6 +133,7 @@ public class ExportDataToExcelController  extends SMITravelController{
         }else if(ChangeARReport.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
             data = reportservice.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status,accno);
+            return new ModelAndView("AccountReportSummary",name,data).addObject(ReportName, name);
         }else if(BillAirAgentSummary.equalsIgnoreCase(name)){
             System.out.println("get excel data BillAirAgentSummary");
             String agentCode = request.getParameter("agentCode");
@@ -158,11 +159,13 @@ public class ExportDataToExcelController  extends SMITravelController{
             String invno = request.getParameter("invno");
             System.out.println("get excel data collection report");
             data = reportservice.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, printby); 
+            return new ModelAndView("AccountReportSummary",name,data).addObject(ReportName, name);
         }else if(ApReport.equals(name)){
             status = request.getParameter("status");
             String payment = request.getParameter("payment");
             System.out.println("get excel data ap ApReport");
             data = reportservice.getApNirvanaReport(payment, ticketType, status, dateFrom, dateTo, printby);
+            return new ModelAndView("AccountReportSummary",name,data).addObject(ReportName, name);
         }else if(SummaryAirline.equals(name)){
             System.out.println("get excel data ap SummaryAirline");
             data = reportservice.listSummaryAirline();
@@ -205,10 +208,6 @@ public class ExportDataToExcelController  extends SMITravelController{
             String invoicetodate = request.getParameter("invoiceToDate");
             String issuefromdate = request.getParameter("issueFrom");
             String issuetodate = request.getParameter("issueTo");
-//            String agentcomfromdate = request.getParameter("agentcomFrom");
-//            String agentcomtodate = request.getParameter("agentcomTo");
-//            String ticketcomfromdate = request.getParameter("ticketcomFrom");
-//            String ticketcomtodate = request.getParameter("ticketcomTo");
             String overfromdate = request.getParameter("overFrom");
             String overtodate = request.getParameter("overTo");
             String littlefromdate = request.getParameter("littleFrom");
@@ -242,6 +241,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             String selectYear   = request.getParameter("selectYear");   
             String selectDepartment   = request.getParameter("selectDepartment");   
             data = reportservice.getSaleVatReportList(selectMonth, selectYear, selectDepartment);
+            return new ModelAndView("AccountReportSummary",name,data).addObject(ReportName, name);
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);

@@ -776,6 +776,10 @@
         <bean id="ExportDataToExcelView" class="com.smi.travel.controller.excel.ExportDataToExcelView">
 		<property name="utilityService" ref="UtilityService" />
 	</bean>
+        
+        <bean id="AccountReportSummary" class="com.smi.travel.controller.excel.account.AccountReportSummary">
+		<!--<property name="utilityService" ref="UtilityService" />-->
+	</bean>
 <!--	<mvc:annotation-driven />
 	<context:annotation-config />
 	<context:component-scan base-package="com.smi.travel.controller,com.smi.travel.**.controller" />-->
