@@ -1321,7 +1321,7 @@ function setSectorRefund(row){
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
                 '&type=getTicketFare' +
-                '&ticketNo=' + txt ;
+                '&ticketNo=' + txtNo ;
         try {
             $.ajax({
                 type: "POST",
