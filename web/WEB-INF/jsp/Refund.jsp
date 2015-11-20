@@ -1277,7 +1277,9 @@ function addRowRefundTicketDetailAdd(row,id){
 function setSectorRefund(row){
 //    alert("1");
     var txt = $("#SelectTocketNoadd"+ row + " option:selected").text();
+    var txtNo = $("#SelectTocketNo"+ row + " option:selected").text();
     console.log("Text : " + txt);
+    console.log("Text : " + txtNo);
     if(txt !== ''){
         var url = 'AJAXServlet';
         var servletName = 'RefundAirlineServlet';
@@ -1301,6 +1303,39 @@ function setSectorRefund(row){
                         var fare = JSON.parse(msg);
                         console.log("Sector : "+fare.Sector);
                         $("#inputSectoradd" + row).val(fare.Sector);
+                    } 
+                }, error: function (msg) {
+                    console.log('auto ERROR');
+                    $("#dataload").addClass("hidden");
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
+    if(txtNo !== ''){
+        var url = 'AJAXServlet';
+        var servletName = 'RefundAirlineServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&type=getTicketFare' +
+                '&ticketNo=' + txt ;
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                beforeSend: function () {
+                    $("#dataload").removeClass("hidden");
+                },
+                success: function (msg) {
+                    if (msg !== "") {
+                        var fare = JSON.parse(msg);
+                        console.log("Sector : "+fare.Sector);
+                        $("#inputSector" + row).val(fare.Sector);
                     } 
                 }, error: function (msg) {
                     console.log('auto ERROR');
