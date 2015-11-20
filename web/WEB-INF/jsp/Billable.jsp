@@ -453,6 +453,9 @@
                     </tbody>
                 </table>    
                 <div class="text-center" style="padding-top: 10px">
+                    <button type="button" onclick="printConfirmSlipReport()" class="btn btn-default" id="btnPrintConfirmSlipReport" name="btnPrintConfirmSlipReport">
+                        <span id="SpanPrintConfirmSlip" class="glyphicon glyphicon-print"></span> Confirm Slip 
+                    </button>
                     <button type="button" onclick="printBookingSummaryReport()" class="btn btn-default" id="btnPrintBookingSummaryReport" name="btnPrintBookingSummaryReport">
                         <span id="SpanPrintBookingSummary" class="glyphicon glyphicon-print"></span> Booking Summary
                     </button>

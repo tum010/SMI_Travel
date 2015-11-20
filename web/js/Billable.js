@@ -250,6 +250,11 @@ function printTicketOrderReport(){
     window.open("report.smi?name=TicketOrder"+"&refno="+refno+"&pnrID="+printBtn);  
 }
 
+function printConfirmSlipReport(){
+    var refno = $('#getRealformatUrl').val(); 
+    window.open("report.smi?name=ConfirmSlipReport&refno="+refno);
+}
+
 function printBookingSummaryReport(){
     var refno = $('#getRealformatUrl').val(); 
     window.open("report.smi?name=BookingSummaryReport&refno="+refno);
