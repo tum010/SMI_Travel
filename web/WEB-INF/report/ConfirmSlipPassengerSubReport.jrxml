@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ConfirmSlipPassengerSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="1" bottomMargin="5" uuid="256c5dce-3283-4952-b8bb-06fa6120853f">
-	<property name="ireport.zoom" value="5.559917313492282"/>
-	<property name="ireport.x" value="2311"/>
-	<property name="ireport.y" value="1"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ConfirmSlipPassengerSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="5" bottomMargin="5" uuid="256c5dce-3283-4952-b8bb-06fa6120853f">
+	<property name="ireport.zoom" value="1.464100000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<field name="order" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
 	<field name="age" class="java.lang.String"/>
@@ -32,7 +32,7 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement positionType="Float" x="0" y="0" width="129" height="1" isPrintWhenDetailOverflows="true" uuid="2b7da653-9756-4836-8b5c-b49a198eb9d9"/>
+				<reportElement positionType="Float" x="0" y="0" width="100" height="1" isPrintWhenDetailOverflows="true" uuid="2b7da653-9756-4836-8b5c-b49a198eb9d9"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -58,9 +58,9 @@
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="6" y="0" width="122" height="26" uuid="e6d0979c-0d9d-4312-bb77-d9a3b300babb"/>
+				<reportElement positionType="Float" x="6" y="0" width="94" height="26" uuid="e6d0979c-0d9d-4312-bb77-d9a3b300babb"/>
 				<textElement textAlignment="Left">
-					<font fontName="TH SarabunPSK" size="20" isBold="true"/>
+					<font fontName="TH SarabunPSK" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Passenger]]></text>
 			</staticText>
@@ -89,7 +89,7 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="128" y="0" width="1" height="23" isPrintWhenDetailOverflows="true" uuid="fca021f5-2dbf-4f4f-ad97-959c4deb4136"/>
+				<reportElement stretchType="RelativeToBandHeight" x="99" y="0" width="1" height="23" isPrintWhenDetailOverflows="true" uuid="fca021f5-2dbf-4f4f-ad97-959c4deb4136"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -131,7 +131,7 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="259" y="-1" width="49" height="20" uuid="90ac42b1-c8f0-458b-a471-0949b7689347"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
@@ -150,7 +150,7 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="-1" width="29" height="20" uuid="85ca619a-5c10-4170-a8a6-a6141d906203"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
@@ -163,7 +163,7 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="325" y="-1" width="126" height="20" uuid="70cc5f13-ac82-4a51-bddd-09c6e9a4d5cb"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
@@ -182,7 +182,7 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
-			<textField isStretchWithOverflow="true">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" x="33" y="-1" width="227" height="20" uuid="fa985c1f-9422-4fba-9941-fb9e62c2ec53"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
