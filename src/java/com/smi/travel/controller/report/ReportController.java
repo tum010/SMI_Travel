@@ -18,6 +18,7 @@ import com.smi.travel.datalayer.report.model.PaymentAirline;
 import com.smi.travel.datalayer.report.model.TicketOrder;
 import com.smi.travel.datalayer.service.ReportService;
 import com.smi.travel.datalayer.view.entity.BookingHeaderSummaryView;
+import com.smi.travel.datalayer.view.entity.ConfirmSlipHeaderReport;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.io.UnsupportedEncodingException;
@@ -94,6 +95,7 @@ public class ReportController extends SMITravelController {
     private static final String BookingSummaryReport = "BookingSummaryReport"; //PackageMonthly
     private static final String OtherGuideCommission = "OtherGuideCommission"; 
     private static final String OtherAgentCommission = "OtherAgentCommission";
+    private static final String ConfirmSlipReport = "ConfirmSlipReport";
     
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -310,6 +312,10 @@ public class ReportController extends SMITravelController {
             data = reportservice.getOtherAgentCommissionReport(startdate, enddate, user.getName(), agentid);
             // set path for loading sub-report file
             ((OtherAgentCommission) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
+        }else if(ConfirmSlipReport.equalsIgnoreCase(name)){
+            System.out.println(" user.getUsername()+\"-\"+user.getRole().getName() " + user.getUsername()+"-"+user.getRole().getName());
+            data = reportservice.getConfirmSlipHeaderReport(refno,user.getUsername()+"-"+user.getRole().getName());
+            ((ConfirmSlipHeaderReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

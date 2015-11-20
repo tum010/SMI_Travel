@@ -300,5 +300,34 @@
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/BookingSummaryPassengerSubReport.jrxml"/>
 	</bean> -->
+        
+        <bean id="ConfirmSlipReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/ConfirmSlipReport.jrxml"/>
+	</bean>
+        <bean id="ConfirmSlipFlightSubReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/ConfirmSlipFlightSubReport.jrxml"/>
+	</bean> 
+        <bean id="ConfirmSlipHotelSubReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/ConfirmSlipHotelSubReport.jrxml"/>
+	</bean> 
+        <bean id="ConfirmSlipDaytourSubReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/ConfirmSlipDaytourSubReport.jrxml"/>
+	</bean> 
+        <bean id="ConfirmSlipOtherSubReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/ConfirmSlipOtherSubReport.jrxml"/>
+	</bean> 
+        <bean id="ConfirmSlipLandSubReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/ConfirmSlipLandSubReport.jrxml"/>
+	</bean> 
+        <bean id="ConfirmSlipPassengerSubReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/ConfirmSlipPassengerSubReport.jrxml"/>
+	</bean> 
                                                                                                                                       
 </beans>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ConfirmSlipLandSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="1" bottomMargin="5" uuid="4400fe1d-81db-4f15-af7e-779dc25a9c86">
-	<property name="ireport.zoom" value="3.45227121439311"/>
-	<property name="ireport.x" value="5"/>
+	<property name="ireport.zoom" value="1.6105100000000039"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<field name="curamount" class="java.lang.String"/>
-	<field name="amount" class="java.lang.String"/>
+	<field name="cursell" class="java.lang.String"/>
+	<field name="sell" class="java.lang.String"/>
 	<field name="category" class="java.lang.String"/>
 	<field name="okby" class="java.lang.String"/>
 	<background>
@@ -94,26 +94,6 @@
 				</textElement>
 				<text><![CDATA[Amount]]></text>
 			</staticText>
-			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="311" y="47" width="70" height="19" uuid="684d71e3-53e2-4f7b-961f-1fb010ef378a"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{category}]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="182" y="46" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="6f33abd6-bab0-4a2e-a4ce-759a9c18d579"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</line>
-			<textField pattern="#,##0.00">
-				<reportElement x="381" y="47" width="132" height="19" uuid="f08f4c34-6419-4c56-a723-095b28134d89"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{amount} != null && !"null".equals($F{amount}) && $F{amount}.length() > 0) ? new BigDecimal($F{amount}) : new BigDecimal("0")]]></textFieldExpression>
-			</textField>
 		</band>
 	</columnHeader>
 	<detail>
@@ -154,7 +134,7 @@
 				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{curamount}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cursell}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement stretchType="RelativeToBandHeight" x="247" y="-1" width="134" height="19" uuid="8175af7f-c8f0-49c1-8262-f0a05f5b82de"/>
@@ -174,7 +154,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{amount} != null && !"null".equals($F{amount}) && $F{amount}.length() > 0) ? new BigDecimal($F{amount}) : new BigDecimal("0")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{sell} != null && !"null".equals($F{sell}) && $F{sell}.length() > 0) ? new BigDecimal($F{sell}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

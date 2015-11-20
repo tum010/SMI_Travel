@@ -10,7 +10,8 @@ import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
 import com.smi.travel.datalayer.view.entity.BookSummary;
 import com.smi.travel.datalayer.view.entity.BookingHeaderSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingSummaryDetailView;
-import com.smi.travel.datalayer.view.entity.OtherMonthlyView;
+import com.smi.travel.datalayer.view.entity.ConfirmSlipDetailReport;
+import com.smi.travel.datalayer.view.entity.ConfirmSlipHeaderReport;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -333,4 +334,300 @@ public class BookingSummaryImpl implements BookingSummaryDao{
         this.transaction = transaction;
     }
 
+    @Override
+    public ConfirmSlipHeaderReport getConfirmSlipHeaderReport(String refno,String user) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        ConfirmSlipHeaderReport confirmSlip = new ConfirmSlipHeaderReport();
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy hh:mm");
+        
+        String query = "SELECT * FROM `booking_header_summary` where  refno = '"+refno+"'";
+        
+        System.out.println(" query :::: " +query);
+        
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("agent", Hibernate.STRING)
+                .addScalar("leader", Hibernate.STRING)
+                .addScalar("address", Hibernate.STRING)
+                .addScalar("telfax", Hibernate.STRING)
+                .addScalar("bookstatus", Hibernate.STRING)
+                .addScalar("sale", Hibernate.STRING)
+                .addScalar("firstdept", Hibernate.STRING)
+                .addScalar("package", Hibernate.STRING)
+                .list();
+
+        for (Object[] B : QueryStaffList) {
+            confirmSlip.setUser(user);
+            System.out.println("confirmSlip " +confirmSlip.getUser());
+            confirmSlip.setSystemdate(String.valueOf(dateformat.format(new Date())));
+            confirmSlip.setRefno(B[0]== null ? "" :util.ConvertString(B[0]));
+            confirmSlip.setAgent(B[1]== null ? "" :util.ConvertString(B[1]));
+            confirmSlip.setLeader(B[2]== null ? "" :util.ConvertString(B[2]));
+            confirmSlip.setAddress(B[3]== null ? "" :util.ConvertString(B[3]));
+            confirmSlip.setTelfax(B[4]== null ? "" :util.ConvertString(B[4]));
+            confirmSlip.setBookstatus(B[5]== null ? "" :util.ConvertString(B[5]));
+            confirmSlip.setIncharge(B[6]== null ? "" :util.ConvertString(B[6]));
+            confirmSlip.setFirstdept(B[7]== null ? "" :util.ConvertString(B[7]));
+            confirmSlip.setPackages(B[8]== null ? "" :util.ConvertString(B[8]));
+        }
+        
+        confirmSlip.setConfirmSlipFlightSubReportDataSource(new JRBeanCollectionDataSource(getConfirmSlipFlightSubReport(refno)));
+        confirmSlip.setConfirmSlipHotelSubReportDataSource(new JRBeanCollectionDataSource(getConfirmSlipHotelSubReport(refno)));
+        confirmSlip.setConfirmSlipDaytourSubReportDataSource(new JRBeanCollectionDataSource(getConfirmSlipDaytourSubReport(refno))); 
+        confirmSlip.setConfirmSlipOtherSubReportDataSource(new JRBeanCollectionDataSource(getConfirmSlipOtherSubReport(refno)));
+        confirmSlip.setConfirmSlipLandSubReportDataSource(new JRBeanCollectionDataSource(getConfirmSlipLandSubReport(refno)));
+        confirmSlip.setConfirmSlipPassengerSubReportDataSource(new JRBeanCollectionDataSource(getConfirmSlipPassengerSubReport(refno)));
+        
+        this.sessionFactory.close();
+        session.close();
+        return confirmSlip;    
+    }
+
+    public List getConfirmSlipFlightSubReport(String refno) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        
+        String query = "SELECT * FROM `airticket_booking_view` a WHERE a.refno = '"+refno+"'";
+
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("airline", Hibernate.STRING)
+                .addScalar("pnr", Hibernate.STRING)
+                .addScalar("flight", Hibernate.STRING)
+                .addScalar("dept", Hibernate.STRING)
+                .addScalar("deptname", Hibernate.STRING)
+                .addScalar("depart_time", Hibernate.STRING)
+                .addScalar("arrv", Hibernate.STRING)
+                .addScalar("arrvname", Hibernate.STRING)
+                .addScalar("arrive_time", Hibernate.STRING)
+                .addScalar("price", Hibernate.STRING)
+                .list();
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd MMM yyyy");
+        int order = 1 ;
+        for (Object[] B : QueryStaffList) {
+            ConfirmSlipDetailReport confirmdetail = new ConfirmSlipDetailReport();
+            confirmdetail.setOrder(String.valueOf(order));
+            order ++ ;
+            
+            confirmdetail.setAirline(B[0]== null ? "" :util.ConvertString(B[0]));
+            confirmdetail.setPnr(B[1]== null ? "" :util.ConvertString(B[1]));
+            confirmdetail.setFlight(B[2]== null ? "" :util.ConvertString(B[2]));
+            confirmdetail.setDepart(B[3]== null ? "" :util.ConvertString(B[3]));
+            confirmdetail.setDepartname(B[4]== null ? "" :util.ConvertString(B[4]));
+            confirmdetail.setDeparttime(B[5]== null ? "" :util.ConvertString(B[5]));
+            confirmdetail.setArrive(B[6]== null ? "" :util.ConvertString(B[6]));
+            confirmdetail.setArrivename(B[7]== null ? "" :util.ConvertString(B[7]));
+            confirmdetail.setArrivetime(B[8]== null ? "" :util.ConvertString(B[8]));
+            confirmdetail.setPrice(B[9]== null ? "" :util.ConvertString(B[9]));
+            data.add(confirmdetail);
+        }
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+    
+    public List getConfirmSlipHotelSubReport(String refno) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+
+        String query = "SELECT * FROM `hotel_booking_view` a where a.refno = '"+refno+"' GROUP BY a.`name` ,  a.`checkin` ,  a.`checkout` ";
+        
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("checkin", Hibernate.STRING)
+                .addScalar("checkout", Hibernate.STRING)
+                .addScalar("room", Hibernate.STRING)
+                .addScalar("sell", Hibernate.STRING)
+                .addScalar("cur", Hibernate.STRING)
+                .list();
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MMM-yyyy");
+        String checkinout = "";
+        int order = 1 ;
+        for (Object[] B : QueryStaffList) {
+            ConfirmSlipDetailReport confirmdetail = new ConfirmSlipDetailReport();
+            confirmdetail.setOrder(String.valueOf(order));
+            order ++ ;
+            
+            confirmdetail.setHotel(B[0]== null ? "" :util.ConvertString(B[0]));
+            if(B[1] != null && B[2] != null){
+                checkinout = util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[1]))))
+                        + " - " + util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[2]))));
+            }
+            
+            confirmdetail.setCheckinout(checkinout);
+            confirmdetail.setCategory(B[3]== null ? "" :util.ConvertString(B[3]));
+            confirmdetail.setAmount(B[4]== null ? "" :util.ConvertString(B[4]));
+            confirmdetail.setCuramount(B[5]== null ? "" :util.ConvertString(B[5]));
+            data.add(confirmdetail);
+        }
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+    
+    public List getConfirmSlipDaytourSubReport(String refno) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        
+        String query = "SELECT * FROM `daytour_booking_view` WHERE refno = '"+refno+"'";
+        
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("code", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("tour_date", Hibernate.STRING)
+                .addScalar("qty", Hibernate.STRING)
+                .addScalar("total", Hibernate.STRING)
+                .addScalar("curamount", Hibernate.STRING)
+                .addScalar("pickup", Hibernate.STRING)
+                .addScalar("pickup_time", Hibernate.STRING)
+                .addScalar("guide", Hibernate.STRING)
+                .addScalar("carno", Hibernate.STRING)
+                .list();
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        
+        int order = 1 ;
+        for (Object[] B : QueryStaffList) {
+            ConfirmSlipDetailReport confirmdetail = new ConfirmSlipDetailReport();
+            confirmdetail.setOrder(String.valueOf(order));
+            order ++ ;
+            
+            confirmdetail.setCode(B[0]== null ? "" :util.ConvertString(B[0]));
+            confirmdetail.setName(B[1]== null ? "" :util.ConvertString(B[1]));
+            
+            String datetime = "" ;
+            if(B[2] != null){
+                datetime = util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[2]))));
+            }
+
+            confirmdetail.setDate(datetime);
+            confirmdetail.setConfirmQty(B[3]== null ? "" :util.ConvertString(B[3]));
+            confirmdetail.setAmount(B[4]== null ? "" :util.ConvertString(B[4]));
+            confirmdetail.setCuramount(B[5]== null ? "" :util.ConvertString(B[5]));
+            confirmdetail.setPickup(B[6]== null ? "" :util.ConvertString(B[6]));
+            confirmdetail.setPickuptime(B[7]== null ? "" :util.ConvertString(B[7]));
+            confirmdetail.setGuide(B[8]== null ? "" :util.ConvertString(B[8]));
+            confirmdetail.setCarno(B[9]== null ? "" :util.ConvertString(B[9]));
+            data.add(confirmdetail);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+    
+    public List getConfirmSlipOtherSubReport(String refno) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        
+        String query = "SELECT * FROM `other_booking_view` WHERE refno = '"+refno+"'";
+        
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("code", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("other_date", Hibernate.STRING)
+                .addScalar("other_time", Hibernate.STRING)
+                .addScalar("qty", Hibernate.STRING)
+                .addScalar("sell", Hibernate.STRING)
+                .addScalar("cur_amount", Hibernate.STRING)
+                .list();
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        
+         for (Object[] B : QueryStaffList) {
+            ConfirmSlipDetailReport confirmdetail = new ConfirmSlipDetailReport();
+            confirmdetail.setCode(B[0]== null ? "" :util.ConvertString(B[0]));
+            confirmdetail.setDescription(B[1]== null ? "" :util.ConvertString(B[1]));
+            String datetime = "" ;
+            if(B[2] != null){
+                datetime = util.ConvertString(dateformat.format(util.convertStringToDate(util.ConvertString(B[2]))));
+            }
+            if(B[3] != null){
+                datetime +=  " " + util.ConvertString(B[3]);
+            }
+            confirmdetail.setOtherdate(datetime);
+            confirmdetail.setQty(B[4]== null ? "" :util.ConvertString(B[4]));
+            confirmdetail.setTotalsell(B[5]== null ? "" :util.ConvertString(B[5]));
+            confirmdetail.setCuramount(B[6]== null ? "" :util.ConvertString(B[6]));
+            data.add(confirmdetail);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+    public List getConfirmSlipLandSubReport(String refno) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        
+        String query = "SELECT * FROM `land_booking_view` where refno = '"+refno+"'";
+        
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("category", Hibernate.STRING)
+                .addScalar("okby", Hibernate.STRING)
+                .addScalar("sell", Hibernate.STRING)
+                .addScalar("cur_amount", Hibernate.STRING)
+                .list();
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd MMM yyyy");
+        
+        for (Object[] B : QueryStaffList) {
+            ConfirmSlipDetailReport confirmdetail = new ConfirmSlipDetailReport();
+            confirmdetail.setCategory(B[0]== null ? "" :util.ConvertString(B[0]));
+            confirmdetail.setOkby(B[1]== null ? "" :util.ConvertString(B[1]));
+            confirmdetail.setSell(B[2]== null ? "" : util.ConvertString(B[2]));
+            confirmdetail.setCursell(B[3]== null ? "" :util.ConvertString(B[3]));
+            data.add(confirmdetail);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+    public List getConfirmSlipPassengerSubReport(String refno) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        
+        
+        String query = "SELECT * FROM `booking_passenger_view` where refno = '"+refno+"'";
+        
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("tel", Hibernate.STRING)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("age", Hibernate.STRING)
+                .addScalar("isleader", Hibernate.STRING)
+                .list();
+        
+        int order = 1 ;
+        for (Object[] B : QueryStaffList) {
+            ConfirmSlipDetailReport confirmdetail = new ConfirmSlipDetailReport();
+            confirmdetail.setOrder(String.valueOf(order));
+            order ++ ;
+            confirmdetail.setTel(B[0]== null ? "" :util.ConvertString(B[0]));
+            confirmdetail.setName(B[1]== null ? "" :util.ConvertString(B[1]));
+            confirmdetail.setAge(B[2]== null ? "" : util.ConvertString(B[2]));
+            confirmdetail.setLeader(B[3]== null ? "" : util.ConvertString(B[3]));
+            data.add(confirmdetail);
+        }
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+    
+    
 }

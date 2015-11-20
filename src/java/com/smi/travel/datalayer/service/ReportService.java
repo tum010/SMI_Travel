@@ -689,6 +689,12 @@ public class ReportService {
         return data;
     }
     
+    public List getConfirmSlipHeaderReport(String refno,String user){
+        List data  = new ArrayList();
+        data.add(bookingSummaryDao.getConfirmSlipHeaderReport(refno,user));
+        return data;
+    }
+    
     public BookingSummaryDao getBookingSummaryDao() {
         return bookingSummaryDao;
     }
