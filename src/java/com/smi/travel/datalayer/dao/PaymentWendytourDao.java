@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.Daytour;
+import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
@@ -41,4 +42,5 @@ public interface PaymentWendytourDao {
     public List getPaymentTourHotelSummary(String from, String to, String pvtype, String status, String invSupCode, String printBy);
     public String checkDayTourOperationDetail(String tourId,String tourDate);
     public List<Daytour> searchListTourCode(String name);
+    public MPaytype getMPayTypeFromPayTypeId(String payTypeId);
 }

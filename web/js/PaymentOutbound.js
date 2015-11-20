@@ -47,7 +47,7 @@ $(document).ready(function() {
         value = value.replace(/\.[0-9]+\./g, '.');
         $(this).val(value);
     });
-
+    
     var rowPaymentDetailTable = parseInt($("#countPaymentDetail").val());
     AddRowPaymentDetailTable(rowPaymentDetailTable);
 
@@ -92,12 +92,14 @@ $(document).ready(function() {
         var code = this.value.toUpperCase();
         var name = this.value;
         $("#invSupId,#invSupName,#invSupApCode").val(null);
+        $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'invSupApCode');
 
         $.each(invoiceSup, function(key, value) {
             if (value.code.toUpperCase() === code) {
                 $("#invSupId").val(value.id);
                 $("#invSupName").val(value.name);
                 $("#invSupApCode").val(value.apcode);
+                $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'invSupApCode');
             }
             if (name === value.name) {
                 $("#invSupCode").val(value.code);
@@ -105,6 +107,7 @@ $(document).ready(function() {
                 $("#invSupName").val(value.name);
                 $("#invSupApCode").val(value.apcode);
                 code = $("#invSupCode").val().toUpperCase();
+                $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'invSupApCode');
             }
         });
     });
@@ -118,6 +121,7 @@ $(document).ready(function() {
                     $("#invSupId").val(value.id);
                     $("#invSupName").val(value.name);
                     $("#invSupApCode").val(value.apcode);
+                    $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'invSupApCode');
                 }
             });
 
@@ -154,6 +158,15 @@ function AddRowPaymentDetailTable(row) {
     }
     $("#PaymentDetailTable tbody").append(
             '<tr >' +
+            '<td class="hidden">' +
+                '<input type="text" name="detailId' + row + '" id="detailId' + row + '" class="form-control" value=""/>' +
+                '<input type="text" name="payId' + row + '" id="payId' + row + '" class="form-control" value=""/>' +
+                '<input type="text" name="bookDetailId' + row + '" id="payId' + row + '" class="form-control" value=""/>' +
+                '<input type="text" name="bookDetailType' + row + '" id="bookDetailType' + row + '" class="form-control" value=""/>' +
+                '<input type="text" name="accCode' + row + '" id="accCode' + row + '" class="form-control" value=""/>' +
+                '<input type="text" name="exportDate' + row + '" id="exportDate' + row + '" class="form-control" value=""/>"/>' +
+                '<input type="text" name="isExport' + row + '" id="isExport' + row + '" class="form-control" value=""/>' +
+            '</td>' +
             '<td>' +
             '<select class="form-control" name="type' + row + '" id="type' + row + '" onchange="addRow()">' +
             '<option  value="" ></option>' +
@@ -253,8 +266,7 @@ function setupInvSupValue(id, code, name, apcode) {
     document.getElementById('invSupName').value = name;
     document.getElementById('invSupApCode').value = apcode;
     document.getElementById('invSupCode').focus();
-//        $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputInvoiceSupCode');
-//        $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
+    $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'invSupApCode');
 }
 
 function addRow() {

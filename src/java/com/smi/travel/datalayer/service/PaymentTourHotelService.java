@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.service;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
+import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
 import com.smi.travel.datalayer.entity.PaymentWendy;
@@ -108,5 +109,9 @@ public class PaymentTourHotelService {
 
     public String InsertPaymentWendyReference(PaymentWendyReference paymentWendyReference) {
         return this.paymentWendytourDao.InsertPaymentWendyReference(paymentWendyReference);
+    }
+
+    public MPaytype getMPayTypeFromPayTypeId(String payTypeId) {
+        return this.paymentWendytourDao.getMPayTypeFromPayTypeId(payTypeId);
     }
 }

@@ -10,6 +10,12 @@
         <property name="name" type="string">
             <column name="name" length="50" not-null="true" />
         </property>
+        <property name="accCode" type="string">
+            <column name="acc_code" length="50" not-null="true" />
+        </property>
+        <property name="accName" type="string">
+            <column name="acc_name" length="100" not-null="true" />
+        </property>
         <bag name="paymentDetailWendies" table="payment_detail_wendy" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="product_type" />

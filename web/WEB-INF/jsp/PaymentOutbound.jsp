@@ -27,6 +27,7 @@
         <div ng-include="'WebContent/Checking/CheckingOutboundMenu.html'"></div>
     </div>
     <!--Content -->
+    <form action="PaymentOutbound.smi" method="post" id="PaymentOutboundForm" autocomplete="off" role="form">
     <div class="col-sm-10">
         <div class="row" style="padding-left: 0px">  
             <div class="col-sm-6" style="padding-right: 15px">
@@ -128,6 +129,7 @@
         
         <!--Hidden Value-->
         <input type="hidden" id="countPaymentDetail" name="countPaymentDetail" value=""/>
+        <input type="hidden" id="action" name="action" value="save"/>
                                        
         <!--Row 1 -->
         <div class="panel panel-default outboundborder">
@@ -139,23 +141,29 @@
                     <div class="col-xs-1 text-right" style="width:100px;padding-right: 0px;padding-left: 0px;">
                         <label class="control-label">PV No</lable>
                     </div>
-                    <div class="col-md-4 form-group text-left" >
+                    <div class="col-md-1 form-group text-left"style="width: 245px" >
                         <input name="payId" id="payId" type="hidden" class="form-control" value="${paymentOutbound.id}" />
                         <input name="createBy" id="createBy" type="hidden" class="form-control" value="${paymentOutbound.createBy}" />
                         <input name="createDate" id="createDate" type="hidden" class="form-control" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.createDate}"/>" />
+                        <input name="updateDate" id="updateDate" type="hidden" class="form-control" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd HH:mm:ss' value="${paymentOutbound.updateDate}"/>" />
                         <input name="payNo" id="payNo" type="text" class="form-control" value="${paymentOutbound.payNo}" />
                     </div>
-                    <div class="col-xs-1 text-right" style="width:93px;">
-                        <label class="control-label">Pay Date</lable>
+                    <div class="col-xs-1 text-left"  style="width: 100px">
+                        <button type="button"  id="btnSearchPayNo"  name="btnSearchPayNo" onclick="searchPayNo()" class="btn btn-primary btn-sm">
+                            <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
+                        </button> 
+                    </div>
+                    <div class="col-xs-1 text-right" style="width:105px;">
+                        <label class="control-label">Pay Date<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-3 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 150px;">
-                        <div class='input-group date' >
+                        <div class='input-group date' id="payDateCheck">
                             <input name="payDate" id="payDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.payDate}"/>" />
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
                     <div class="col-xs-1 text-right" style="width:80px;padding-left:10px;padding-right:0px;">
-                        <label class="control-label">Account</lable>
+                        <label class="control-label">Account<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-3 text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
                         <c:set var="account1" value=""/>
@@ -168,11 +176,11 @@
                                 <c:set var="account2" value="checked"/>
                             </c:when>
                         </c:choose>
-                        <div class="col-sm-6 text-left" >
-                            <input type="radio" name="account"  id="account" value="1" ${account1}/>&nbsp;account(1)
+                        <div class="col-sm-6 text-left " >
+                            <input type="radio" name="account" value="1" ${account1}/>&nbsp;account(1)
                         </div>
                         <div class="col-sm-6 text-left" >
-                            <input type="radio" name="account"  id="account" value="2" ${account1}/>&nbsp;account(2)
+                            <input type="radio" name="account" value="2" ${account1}/>&nbsp;temp
                         </div>
                     </div>
                 </div><!--End row 1-->
@@ -192,21 +200,18 @@
                     <div class="col-md-2 form-group text-left" style="width:200px;padding-left: 0px;">
                         <input name="invSupName" id="invSupName" type="text" class="form-control" value="" readonly=""/>
                     </div>
-                    <div class="col-xs-1 text-left" style="width:78px;padding-right: 0px;">
-                        <label class="control-label">A/P Code</lable>
+                    <div class="col-xs-1 text-right" style="width:85px;padding-right: 0px;">
+                        <label class="control-label">A/P Code<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-1 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 180px;">
                         <div class="col-sm-12">
                             <div class="input-group" id="CodeValidate">
-                                <input name="invSupApCode" id="invSupApCode" type="text" class="form-control" value="${paymentOutbound.invSupApCode}" />
-                                <span class="input-group-addon" data-toggle="modal" data-target="#SearchAPCode">
-                                    <span class="glyphicon-search glyphicon"></span>
-                                </span>    
+                                <input name="invSupApCode" id="invSupApCode" type="text" class="form-control" value="${paymentOutbound.invSupApCode}" />   
                             </div>    
                         </div> 
                     </div>
                     <div class="col-xs-1 text-right" style="width:60px;padding-right: 0px;">
-                        <label class="control-label">Status</lable>
+                        <label class="control-label">Status<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-1 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 180px;">
                         <div class="col-sm-12">
@@ -256,6 +261,8 @@
                                             <input type="text" name="bookDetailId${i.count}" id="payId${i.count}" class="form-control" value="${detail.bookDetailId}"/>
                                             <input type="text" name="bookDetailType${i.count}" id="bookDetailType${i.count}" class="form-control" value="${detail.bookDetailType}"/>
                                             <input type="text" name="accCode${i.count}" id="accCode${i.count}" class="form-control" value="${detail.accCode}"/>
+                                            <input type="text" name="exportDate${i.count}" id="exportDate${i.count}" class="form-control" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd HH:mm:ss' value="${detail.exportDate}"/>"/>
+                                            <input type="text" name="isExport${i.count}" id="isExport${i.count}" class="form-control" value="${detail.isExport}"/>
                                         </td>
                                         <td>
                                             <select class="form-control" name="type${i.count}" id="type${i.count}" onchange="addRow()">
@@ -286,7 +293,7 @@
                                             <c:if test="${detail.isVat == 1}">
                                                 <c:set var="isVat" value="checked"/>
                                             </c:if>
-                                            <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" class="form-control text-center"  onclick="" value="" ${isVat}>
+                                            <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" class="form-control text-center"  onclick="" value="1" ${isVat}>
                                         <td align="right" id="vatShow${i.count}">
                                             <c:if test="${detail.isVat == 1}">
                                                 ${detail.vat}
@@ -353,7 +360,7 @@
         <div class="panel panel-default outboundborder">
             <div class="panel-body"  style="padding-right: 0px;">                                               
                 <div class="row" >
-                    <div class="col-md-12 form-group">
+                    <div class="col-md-12 ">
                         <div class="col-sm-6">
                             <div class="col-md-1 text-right" style="width:70px;padding-right: 0px;padding-left: 0px;">
                                 <label class="control-label">Detail</lable>
@@ -383,10 +390,10 @@
                 <div class="row" >
                     <div class="col-md-12 form-group">
                         <div class="col-sm-12">
-                            <div class="col-md-9 text-right" style="width: 703px;">
+                            <div class="col-md-9 text-right" style="width: 703px;padding-top: 15px">
                                 <label class="control-label">Grand Total</lable>
                             </div>
-                            <div class="col-md-3 text-right" style="width: 210px;padding-left:0px;padding-right: 0px;">
+                            <div class="col-md-3 text-right" style="width: 210px;padding-left:0px;padding-right: 0px;padding-top: 15px">
                                 <input name="grandTotal" id="grandTotal" type="text" class="form-control text-right" value="" readonly=""/>
                             </div>
                         </div>
@@ -407,6 +414,7 @@
             </div>                         
         </div><!--End Button -->
     </div>
+    </form>                        
 </div>
 <!--Delete Payment Outbound Modal-->
 <div class="modal fade" id="delPaymentOutboundModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -598,4 +606,54 @@
         <option  value="${currency.code}">${currency.code}</option>
     </c:forEach>
 </select>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#payDateCheck').datetimepicker().on('dp.change', function(e) {
+            $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'payDate');
+        });
+        $('#PaymentOutboundForm').bootstrapValidator({
+            container: 'tooltip',
+            excluded: [':disabled', ':hidden', ':not(:visible)'],
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {
+                payDate: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Pay Date is required.'
+                        }
+                    }
+                },
+                status: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Status is required.'
+                        }
+                    }
+                },
+                invSupApCode: {
+                    validators: {
+                        notEmpty: {
+                            message: 'A/P Code is required.'
+                        }
+                    }
+                },
+                account: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Account is required.'
+                        }
+                    }
+                }                        
+            }
+        }).on('success.field.fv', function(e, data) {
+            if (data.field === 'payDate' === false) {
+                data.fv.revalidateField('payDate');
+            }
+        });
+    });
+</script>    
 

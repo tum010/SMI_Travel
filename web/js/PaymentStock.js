@@ -4,14 +4,14 @@
  * and open the template in the editor.
  */
 $(document).ready(function() {
-//    $('#StockDetailTable').dataTable({bJQueryUI: true,
-//        "sPaginationType": "full_numbers",
-//        "bAutoWidth": true,
-//        "bFilter": true,
-//        "bPaginate": true,
-//        "bInfo": false,
-//        "bLengthChange": false
-//    });
+    $('#StockDetailTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": true,
+        "bFilter": true,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false
+    });
     $('#SearchStockTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": true,

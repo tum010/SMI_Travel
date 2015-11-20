@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
 import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
+import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
@@ -625,6 +626,18 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         session.close();
         this.sessionFactory.close();
         return daytourList;
+    }
+
+    @Override
+    public MPaytype getMPayTypeFromPayTypeId(String payTypeId) {
+        String query = "from MPaytype mp where mp.id =  :payTypeId";
+        Session session = this.sessionFactory.openSession();
+        List<MPaytype> list = session.createQuery(query).setParameter("payTypeId", payTypeId).list();
+        if (list.isEmpty()) {
+            return null;
+        }
+        session.close();
+        return list.get(0);
     }
     
 }

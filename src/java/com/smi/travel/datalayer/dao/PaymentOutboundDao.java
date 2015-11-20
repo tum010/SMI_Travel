@@ -6,10 +6,15 @@
 
 package com.smi.travel.datalayer.dao;
 
+import com.smi.travel.datalayer.entity.PaymentOutbound;
+
 /**
  *
  * @author chonnasith
  */
 public interface PaymentOutboundDao {
+
+    public String updatePaymentOutbound(PaymentOutbound paymentOutbound);
+    public String insertPaymentOutbound(PaymentOutbound paymentOutbound);
     
 }

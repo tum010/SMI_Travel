@@ -14,6 +14,8 @@ public class MPaytype   {
 
      private String id;
      private String name;
+     private String accCode;
+     private String accName;
      private List paymentDetailWendies = new LinkedList<PaymentDetailWendy>();
 
     public MPaytype() {
@@ -50,8 +52,21 @@ public class MPaytype   {
         this.paymentDetailWendies = paymentDetailWendies;
     }
 
+    public String getAccCode() {
+        return accCode;
+    }
 
+    public void setAccCode(String accCode) {
+        this.accCode = accCode;
+    }
 
+    public String getAccName() {
+        return accName;
+    }
+
+    public void setAccName(String accName) {
+        this.accName = accName;
+    }
 
 }
 

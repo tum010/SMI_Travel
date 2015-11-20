@@ -58,5 +58,11 @@
         <property name="payStockId" type="java.lang.Integer">
             <column name="pay_stock_id" />
         </property>
+        <property name="exportDate" type="timestamp">
+            <column name="export_date" length="10"/>
+        </property>
+        <property name="isExport" type="java.lang.Integer">
+            <column name="is_export" />
+        </property>
     </class>
 </hibernate-mapping>

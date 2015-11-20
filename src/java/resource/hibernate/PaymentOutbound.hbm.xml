@@ -34,6 +34,9 @@
         <property name="createDate" type="date">
             <column name="create_date" length="10" />
         </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="20" />
+        </property>
         <bag name="paymentOutboundDetails" table="payment_outbound_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="payment_id" />
