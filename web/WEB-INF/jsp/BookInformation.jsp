@@ -205,18 +205,14 @@
                                 <th style="width: 5%">Ref No</th>
                                 <th style="width: 6%">Ref Date</th>
                                 <th style="width: 15%">Agent</th>
-                                <th style="width: 15%">Leader</th>
+                                <th style="width: 10%">Leader</th>
                                 <th style="width: 2%">Flight</th>
-                                <th style="width: 2%">Pax</th>
-                                <th style="width: 2%">Pnr</th>
-                                <th style="width: 2%">Dept</th>
-                                <th style="width: 2%">Arrv</th>
-                                <th style="width: 6%">Depart Date</th>
-                                <th rowspan="2" style="width: 3%">Action</th>   
-                            </tr>
-                            <tr class="datatable-header">
-                                <th colspan="5" style="width:100%">Invoice</th>
-                                <th colspan="6" style="width:100%">Receipt</th>
+                                <th style="width: 3%">Pax</th>
+                                <th style="width: 3%">Pnr</th>
+                                <th style="width: 3%">Dept</th>
+                                <th style="width: 3%">Arrv</th>
+                                <th style="width: 7%">Depart Date</th>
+                                <th style="width: 3%">Action</th>   
                             </tr>
                         </thead>
                         <tbody>
@@ -244,8 +240,10 @@
                                 </td>
                             </tr>
                             <tr style="height: 1.8em;" bgcolor="${color}">
-                                <td colspan="5">${air.invoice}</td>
-                                <td colspan="6">${air.receipt}</td>
+                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Invoice</b></td>
+                                <td colspan="4">${air.invoice}</td>
+                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Receipt</b></td>
+                                <td colspan="5">${air.receipt}</td>
                             </tr>
                             </c:forEach>
                         </tbody>
@@ -267,11 +265,7 @@
                                 <th style="width: 2%">Cur</th>
                                 <th style="width: 5%">Total Price</th>
                                 <th style="width: 2%">Cur</th>
-                                <th rowspan="2" style="width: 3%">Action</th>
-                            </tr>
-                            <tr class="datatable-header">
-                                <th colspan="6">Invoice</th>
-                                <th colspan="6">Receipt</th>
+                                <th style="width: 3%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -300,7 +294,9 @@
                                 </td>
                             </tr>
                             <tr style="height: 1.8em;" bgcolor="${color}">
-                                <td colspan="6">${hotel.invoice}</td>
+                                <td colspan="2" align="right" bgcolor="#E8EAFF"><b>Invoice</b></td>
+                                <td colspan="3">${hotel.invoice}</td>
+                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Receipt</b></td>
                                 <td colspan="6">${hotel.receipt}</td>
                             </tr>
                             </c:forEach>
@@ -318,11 +314,7 @@
                                 <th style="width: 18%">Leader</th>
                                 <th style="width: 10%">Code</th>
                                 <th style="width: 10%">Name</th>
-                                <th rowspan="2" style="width: 3%">Action</th>   
-                            </tr>
-                            <tr class="datatable-header">
-                                <th colspan="4">Invoice</th>
-                                <th colspan="3">Receipt</th>
+                                <th style="width: 3%">Action</th>   
                             </tr>
                         </thead>
                         <tbody>
@@ -346,8 +338,10 @@
                                 </td>
                             </tr>
                             <tr style="height: 1.8em;" bgcolor="${color}">
-                                <td colspan="4">${pack.invoice}</td>
-                                <td colspan="3">${pack.receipt}</td>
+                                <td colspan="2" align="right" bgcolor="#E8EAFF"><b>Invoice</b></td>
+                                <td colspan="2">${pack.invoice}</td>
+                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Receipt</b></td>
+                                <td colspan="2">${pack.receipt}</td>
                             </tr>
                             </c:forEach>
                         </tbody>
@@ -372,11 +366,7 @@
                                 <th style="width: 2%">Ch</th>
                                 <th style="width: 2%">Inf</th>
                                 <th style="width: 5%">Remark</th>
-                                <th rowspan="2" style="width: 4%">Action</th>   
-                            </tr>
-                            <tr class="datatable-header">
-                                <th colspan="7">Invoice</th>
-                                <th colspan="8">Receipt</th>
+                                <th style="width: 4%">Action</th>   
                             </tr>
                         </thead>
                         <tbody>
@@ -408,8 +398,10 @@
                                 </td>
                             </tr>
                             <tr style="height: 1.8em;" bgcolor="${color}">
-                                <td colspan="7">${daytour.invoice}</td>
-                                <td colspan="8">${daytour.receipt}</td>
+                                <td colspan="2" align="right" bgcolor="#E8EAFF"><b>Invoice</b></td>
+                                <td colspan="5">${daytour.invoice}</td>
+                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Receipt</b></td>
+                                <td colspan="7">${daytour.receipt}</td>
                             </tr>
                             </c:forEach>
                         </tbody>
@@ -427,11 +419,7 @@
                                 <th style="width: 6%">Code</th>
                                 <th style="width: 12%">Name</th>
                                 <th style="width: 5%">Other Date</th>      
-                                <th rowspan="2" style="width: 3%">Action</th>   
-                            </tr>
-                            <tr class="datatable-header">
-                                <th colspan="4">Invoice</th>
-                                <th colspan="4">Receipt</th>
+                                <th style="width: 3%">Action</th>   
                             </tr>
                         </thead>
                         <tbody>
@@ -456,8 +444,10 @@
                                 </td>
                             </tr>
                             <tr style="height: 1.8em;" bgcolor="${color}">
-                                <td colspan="4">${other.invoice}</td>
-                                <td colspan="4">${other.receipt}</td>
+                                <td colspan="2" align="right" bgcolor="#E8EAFF"><b>Invoice</b></td>
+                                <td colspan="2">${other.invoice}</td>
+                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Receipt</b></td>
+                                <td colspan="3">${other.receipt}</td>
                             </tr>
                             </c:forEach>
                         </tbody>
@@ -476,11 +466,7 @@
                                 <th style="width: 10%">Description</th>
                                 <th style="width: 4%">Category</th>
                                 <th style="width: 3%">Qty</th>   
-                                <th rowspan="2" style="width: 3%">Action</th>   
-                            </tr>
-                            <tr class="datatable-header">
-                                <th colspan="4">Invoice</th>
-                                <th colspan="5">Receipt</th>
+                                <th style="width: 3%">Action</th>   
                             </tr>
                         </thead>
                         <tbody>
@@ -506,8 +492,10 @@
                                 </td>
                             </tr>
                             <tr style="height: 1.8em;" bgcolor="${color}">
-                                <td colspan="4">${land.invoice}</td>
-                                <td colspan="5">${land.receipt}</td>
+                                <td colspan="2" align="right" bgcolor="#E8EAFF"><b>Invoice</b></td>
+                                <td colspan="3">${land.invoice}</td>
+                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Receipt</b></td>
+                                <td colspan="3">${land.receipt}</td>
                             </tr>
                             </c:forEach>
                         </tbody>

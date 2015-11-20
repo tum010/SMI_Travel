@@ -72,7 +72,7 @@
                     
                     <div class="col-xs-2">
                        <div class=" form-group">     
-                            <div class="input-group date" id="DateFrom">
+                            <div class="input-group date fromDate" id="DateFrom">
                                 <input  id="InputDateFrom" name="InputDateFrom" type="text" 
                                         data-date-format="YYYY-MM-DD" class="form-control datemask" 
                                         placeholder="YYYY-MM-DD" value="${dateFrom}">
@@ -89,7 +89,7 @@
                         <label class="control-label text-right">To <font style="color: red">*</font></label>
                     </div>
                     <div class="col-xs-2 form-group">
-                        <div class="input-group  date" id="DateTo">
+                        <div class="input-group date todate" id="DateTo">
                             <input id="InputDateTo" name="InputDateTo" type="text"
                                    data-date-format="YYYY-MM-DD" class="form-control datemask"
                                    placeholder="YYYY-MM-DD" value="${dateTo}">
@@ -246,8 +246,8 @@
                     <input type="hidden" id="filterGuide" name="SelectGuide" >                        
                     <input type="hidden" id="filterAgent" name="SelectAgent" >                        
                     <input type="hidden" id="action" name="action" value="save"> 
-                    <a id="ButtonPrintGuide" name="ButtonPrintGuide" onclick="verifyValueToGuide();" class="btn btn-primary" data-toggle="modal" ><i class="fa fa-print"></i> Print Guide</a>
-                    <a id="ButtonPrintAgent" name="ButtonPrintAgent" onclick="verifyValueToAgent();" class="btn btn-primary" data-toggle="modal"><i class="fa fa-print"></i> Print Agent</a>
+                    <a id="ButtonPrintGuide" name="ButtonPrintGuide" onclick="printGuideCommission();" class="btn btn-primary" data-toggle="modal" ><i class="fa fa-print"></i> Print Guide</a>
+                    <a id="ButtonPrintAgent" name="ButtonPrintAgent" onclick="printAgentCommission();" class="btn btn-primary" data-toggle="modal"><i class="fa fa-print"></i> Print Agent</a>
                    <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveDaytourCommission();"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                 </div>
             </form>
@@ -280,7 +280,7 @@
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-2">From</div>
                         <div class="col-xs-5">
-                            <div class="input-group date">
+                            <div class="input-group date guideFromDate" id="guideFromDatePanel">
                                 <input  name="guidePrintFrom" id="guidePrintFrom" type="text"
                                         data-date-format="YYYY-MM-DD" class="form-control" 
                                         placeholder="YYYY-MM-DD" />
@@ -293,7 +293,7 @@
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-2">To</div>
                         <div class="col-xs-5">
-                            <div class="input-group date ">
+                            <div class="input-group date guideToDate" id="guideToDatePanel">
                                 <input  name="guidetPrintTo" id="guidePrintTo" type="text" 
                                         data-date-format="YYYY-MM-DD" class="form-control" 
                                         placeholder="YYYY-MM-DD" />
@@ -306,7 +306,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="printGuideCommission();" class="btn btn-success">OK</button>
+                <button type="button" id="btnPrintGuideCommission" name="btnPrintGuideCommission" onclick="" class="btn btn-success">OK</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -337,7 +337,7 @@
                     <div class="col-xs-12 form-group">
                         <div class="col-xs-2">From</div>
                         <div class="col-xs-5 ">
-                            <div class="input-group date" >
+                            <div class="input-group date agentFromDate" id="agentFromDatePanel">
                                 <input  name="agentPrintFrom" id="agentPrintFrom" type="text" 
                                         data-date-format="YYYY-MM-DD" class="form-control"
                                         placeholder="YYYY-MM-DD" />
@@ -351,7 +351,7 @@
                         <div class="col-xs-2">To</div>
                         <div class="col-xs-5 ">
                             <div class="form-group">
-                                 <div class="input-group date " >
+                                 <div class="input-group date agentToDate" id="agentToDatePanel">
                                     <input  name="agentPrintTo" id="agentPrintTo" type="text"
                                             data-date-format="YYYY-MM-DD" class="form-control" 
                                             placeholder="YYYY-MM-DD" />
@@ -366,7 +366,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="printAgentCommission();" class="btn btn-success">OK</button>
+                <button type="button" id="btnPrintAgentCommission" name="btnPrintAgentCommission" onclick="" class="btn btn-success">OK</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->       

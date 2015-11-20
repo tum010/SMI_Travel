@@ -293,7 +293,8 @@
                                 <div class="row">
                                     <div class="col-sm-12 form-group text-center">
                                         <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
-                                         <input type="text" class="hidden" id="refunddetailid" name="refunddetailid" value="0" />
+                                        <input type="text" class="hidden" id="refunddetailid" name="refunddetailid" value="0" />
+                                        <input type="text" class="hidden" id="setRow" name="setRow" value="0" />
                                         <table  class="display" id="RefundTicketDetailTable" style="width: 1000px;">
                                             <thead>
                                                 <tr class="datatable-header">
@@ -312,7 +313,7 @@
                                                         <td class="hidden"><input type="text" id="airticketrefunddetailid${statusDetail.count}" name="airticketrefunddetailid${statusDetail.count}" value="${tableDetail.refunddetailid}" /></td>
                                                         <td>${statusDetail.count}</td>
                                                         <td>
-                                                            <select id="SelectTocketNo${statusDetail.count}" name="SelectTocketNo${statusDetail.count}" class="form-control">
+                                                            <select id="SelectTocketNo${statusDetail.count}" name="SelectTocketNo${statusDetail.count}" class="form-control" onchange="setSectorRefund(${statusDetail.count});">
                                                                 <option value='' ></option>
                                                                 <c:forEach var="typeP" items="${listTicketNo}">
                                                                     <c:set var="selectTic" value="" />
@@ -345,6 +346,11 @@
                                                 </c:forEach>
                                             </tbody>
                                         </table>
+                                         <div id="tr_FormulaAddRow" class="text-center" style="padding-top: 10px;display: none;">
+                                             <a class="btn btn-success" onclick="addRowRefundTicketDetail()">
+                                                <i class="glyphicon glyphicon-plus"></i> Add
+                                            </a>
+                                        </div> 
                                     </div>
                                 </div>
 <!--                                    <div class="row">
@@ -463,6 +469,7 @@
                             </br>
                             <div class="row">
                                 <input type="text" class="hidden" id="counterTableAdd" name="counterTableAdd" value="1" >
+                                <input type="text" class="hidden" id="refunddetailidadd" name="refunddetailidadd" value="0" />
                                 <div class="col-sm-12 form-group text-center">
                                     <table  class="display" id="RefundTicketDetailTableAdd" style="width: 1000px;">
                                         <thead>
@@ -480,6 +487,11 @@
                                             
                                         </tbody>
                                     </table>
+                                    <div id="tr_FormulaAddRowAdd" class="text-center" style="padding-top: 10px;display: none;">
+                                        <a class="btn btn-success" onclick="addRowRefundTicketDetailAdd(1)">
+                                            <i class="glyphicon glyphicon-plus"></i> Add
+                                        </a>
+                                    </div>  
                                 </div>
                             </div>
                             <div class="row">
@@ -535,6 +547,25 @@
             <div class="modal-footer">
                 <input type="hidden" name="action" value="${action}">
                 <button type="button" onclick="DeleteRefundDetailConfirm()" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+                
+<div class="modal fade" id="DeleteRefundDetailAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Delete Refund Detail</h4>
+            </div>
+            <div class="modal-body" id="textDeleteRefundDetailAdd">
+                <h5 class="modal-title">Are you Delete Refund</h5>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" name="action" value="${action}">
+                <button type="button" onclick="DeleteRefundDetailConfirmAdd()" class="btn btn-danger" data-dismiss="modal">Delete</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -962,6 +993,7 @@
             $("#buttonSaveRefund").attr("disabled", "disabled");
             $("#buttonPrintRefund").attr("disabled", "disabled");
         }
+        
  }); 
   
 function setBillValue(billto, billname, address, term, pay) {
@@ -1247,13 +1279,14 @@ function addRowRefundTicketDetail(row,id){
         '<tr>' +
         '<td class="hidden"><input type="text" id="airticketrefunddetailid' + row + '" name="airticketrefunddetailid' + row + '" value="" /></td>'+
         '<td>' + row + '</td>' +       
-        '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control">'+ selectTicket +'</select> </td>' +
+        '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> </td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value=""></td>' +
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeNumber('+row+');"  id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' +      
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
     );
+    $("#counterTable").val(row++);
 }
 
 function addRowRefundTicketDetailAdd(row,id){
@@ -1264,13 +1297,88 @@ function addRowRefundTicketDetailAdd(row,id){
         '<tr>' +
         '<td class="hidden"><input type="text" id="airticketrefunddetailidadd' + row + '" name="airticketrefunddetailidadd' + row + '" value="" /></td>'+
         '<td>' + row + '</td>' +       
-        '<td><select id="SelectTocketNoadd' + row + '" name="SelectTocketNoadd' + row + '" class="form-control">'+ selectTicket +'</select> </td>' +
+        '<td><select id="SelectTocketNoadd' + row + '" name="SelectTocketNoadd' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> </td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSectoradd' + row + '" name="inputSectoradd' + row + '" value=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefundadd' + row + '" name="inputSectorRefundadd' + row + '" value=""></td>' +
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeAddNumber('+row+');"  id="inputChargeadd' + row + '" name="inputChargeadd' + row + '" value="" ></td>' +      
-        '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
+        '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetailAdd" onclick="DeleteRefundDetailAdd('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
     );
+    $("#counterTableAdd").val(row++);
+}
+
+function setSectorRefund(row){
+//    alert("1");
+    var txt = $("#SelectTocketNoadd"+ row + " option:selected").text();
+    var txtNo = $("#SelectTocketNo"+ row + " option:selected").text();
+    console.log("Text : " + txt);
+    console.log("Text : " + txtNo);
+    if(txt !== ''){
+        var url = 'AJAXServlet';
+        var servletName = 'RefundAirlineServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&type=getTicketFare' +
+                '&ticketNo=' + txt ;
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                beforeSend: function () {
+                    $("#dataload").removeClass("hidden");
+                },
+                success: function (msg) {
+                    if (msg !== "") {
+                        var fare = JSON.parse(msg);
+                        console.log("Sector : "+fare.Sector);
+                        $("#inputSectoradd" + row).val(fare.Sector);
+                    } 
+                }, error: function (msg) {
+                    console.log('auto ERROR');
+                    $("#dataload").addClass("hidden");
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
+    if(txtNo !== ''){
+        var url = 'AJAXServlet';
+        var servletName = 'RefundAirlineServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&type=getTicketFare' +
+                '&ticketNo=' + txtNo ;
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                beforeSend: function () {
+                    $("#dataload").removeClass("hidden");
+                },
+                success: function (msg) {
+                    if (msg !== "") {
+                        var fare = JSON.parse(msg);
+                        console.log("Sector : "+fare.Sector);
+                        $("#inputSector" + row).val(fare.Sector);
+                    } 
+                }, error: function (msg) {
+                    console.log('auto ERROR');
+                    $("#dataload").addClass("hidden");
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
 }
 
 function DeleteRefund(rowID,refno,airbookingid,airticketrefundid,refundid){
@@ -1291,6 +1399,7 @@ function DeleteRefund(rowID,refno,airbookingid,airticketrefundid,refundid){
 
 function DeleteRefundDetail(rowID,code,refno,airbookingid,refundetailid){
     var refundid0 = $("#refundid").val();
+    $("#setRow").val(rowID);
     $("#refunddetailid").val(refundetailid);
     $("#action").val("deleteAirTicketRefundDetail");
     $("#referenceNo").val(refno);
@@ -1310,6 +1419,11 @@ function DeleteRefundDetail(rowID,code,refno,airbookingid,refundetailid){
 //    }
 }
 
+function DeleteRefundDetailAdd(rowID){
+    $("#refunddetailidadd").val(rowID);
+    $("#textDeleteRefundDetailAdd").text('Are you sure to delete refund detail row '+rowID +'?');
+}
+
 function DeleteRefundConfirm() {
     var count = $('#counterTableRefund').val();
     var rowId  = $('#refundid').val();
@@ -1320,11 +1434,37 @@ function DeleteRefundConfirm() {
 
 function DeleteRefundDetailConfirm() {
     var count = $('#counterTable').val();
-    var rowId  = $('#refunddetailid').val();
+    var rowId  = $('#setRow').val();
     console.log("Row Refund Detail : " + rowId);
     var RefundId  = $("#airticketrefunddetailid"+rowId).val();
     console.log("Refund Detail ID : " + RefundId);
-    document.getElementById('RefundForm').submit();
+    
+    if(RefundId === ''  && RefundId !== undefined ){
+        $("#inputSector" + rowId).parent().parent().remove();
+        count = count - 1;
+        $('#DeleteRefundDetail').modal('hide');
+        if (count  <= 1) {
+            console.log("show button tr_FormulaAddRow : ");
+            $("#tr_FormulaAddRow").css("display", "block");
+        }
+    }else{
+        document.getElementById('RefundForm').submit();
+    }
+}
+
+function DeleteRefundDetailConfirmAdd() {
+    var count = $('#counterTableAdd').val();
+    var rowId  = $('#refunddetailidadd').val();
+    console.log("Row Refund Detail : " + rowId);
+    console.log("Count Table : " + count);
+    $("#inputSectoradd" + rowId).parent().parent().remove();
+    count = count - 1;
+    console.log("Count Table : " + count);
+    $('#DeleteRefundDetailAdd').modal('hide');
+    if (count <= 1) {
+        console.log("show button tr_FormulaAddRow : ");
+        $("#tr_FormulaAddRowAdd").css("display", "block");
+    }
 }
 
 function changeFormatChargeAddNumber(id){
