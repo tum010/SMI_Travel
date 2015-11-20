@@ -177,32 +177,35 @@ public class DaytourImpl implements DaytourDao{
     @Override
     public String DeleteTour(Daytour tour) {
         String result = "";
+        String resultTourPrice = "";
+        String resultTourExpense = "";
+        
         if(CheckUsabilityTour(tour)){
-            result = "delete unsuccessful.Tour is active in booking";
+            result = "Use Booking";
             return result;
         }
         if(IsExistTourPrice(tour.getId())){
-            
-            result = "delete unsuccessful.Please delete all price in this tour";
-            return result;
+            resultTourPrice = "Use Tour Price";
+            return resultTourPrice;
         }
         if(IsExistTourExpense(tour.getId())){
-
-            result = "delete unsuccessful.Please delete all expense in this tour";
-            return result;
+            resultTourExpense = "Use Tour Expense";
+            return resultTourExpense;
         }
         
-        try {
-            Session session = this.sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            session.delete(tour);
-            transaction.commit();
-            session.close();
-            this.sessionFactory.close();
-            result = "delete successful"; 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result = "delete unsuccessful";
+        if(!"".equals(result) && !"".equals(resultTourExpense) && !"".equals(resultTourPrice)){
+            try {
+                Session session = this.sessionFactory.openSession();
+                transaction = session.beginTransaction();
+                session.delete(tour);
+                transaction.commit();
+                session.close();
+                this.sessionFactory.close();
+                result = "delete successful"; 
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                result = "delete unsuccessful";
+            }
         }
         return result;
     }
