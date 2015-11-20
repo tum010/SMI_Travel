@@ -19,6 +19,7 @@
 <div class ="container"  style="padding-top: 15px;"> 
     <form action="MDaytour.smi" method="post" id="DaytourSearch" role="form" >
         <div class="row">
+            <div class="col-md-8  col-md-offset-2">
             <!--Alert Save --> 
             <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -28,7 +29,20 @@
             <div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Delete Success!</strong> 
-            </div> 
+            </div>
+            <div id="textAlertDivDeleteUseBooking"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Delete Not Success : Use Booking !</strong> 
+            </div>
+            <div id="textAlertDivDeleteUseExpense"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Delete Not Success : Use Tour Expense !</strong> 
+            </div>
+            <div id="textAlertDivDeleteUsePrice"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Delete Not Success : Use Tour Price !</strong> 
+            </div>
+            </div>
             <div class="col-md-4  col-md-offset-2">
                 <div class="form-group">
                     <label for="tourCode">Tour code</label>
@@ -163,6 +177,21 @@
     <c:if test="${requestScope['result'] =='delete successful'}">        
         <script language="javascript">
             $('#textAlertDivDelete').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='Use Booking'}">        
+        <script language="javascript">
+            $('#textAlertDivDeleteUseBooking').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='Use Tour Price'}">        
+        <script language="javascript">
+            $('#textAlertDivDeleteUsePrice').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='Use Tour Expense'}">        
+        <script language="javascript">
+            $('#textAlertDivDeleteUseExpense').show();
         </script>
     </c:if>
     <c:if test="${requestScope['result'] =='tour code already exist'}">        

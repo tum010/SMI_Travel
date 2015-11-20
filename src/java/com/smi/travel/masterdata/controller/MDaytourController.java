@@ -1,9 +1,6 @@
 package com.smi.travel.masterdata.controller;
 
-import com.smi.travel.controller.DaytourController;
 import com.smi.travel.datalayer.entity.Daytour;
-import com.smi.travel.datalayer.entity.Hotel;
-import com.smi.travel.datalayer.service.HotelService;
 import com.smi.travel.datalayer.service.MDaytourService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
@@ -46,6 +43,9 @@ public class MDaytourController extends SMITravelController {
             request.setAttribute(DATALIST, list);
         } else if ("delete".equalsIgnoreCase(action)) {
             String transactionResult = daytourService.DeleteTour(daytour);
+            List<Daytour> list = daytourService.searchTourList(daytour, 2);
+            request.setAttribute(DaytourSearch, daytour);
+            request.setAttribute(DATALIST, list);
             request.setAttribute(TransectionResult, transactionResult);
         }
         request.setAttribute(Stafftour, daytourService.getStafftour());
