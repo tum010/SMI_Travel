@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.dao.DaytourDao;
 import com.smi.travel.datalayer.dao.DefineVarDao;
 import com.smi.travel.datalayer.dao.MBankDao;
 import com.smi.travel.datalayer.dao.MCityDao;
+import com.smi.travel.datalayer.dao.MCountryDao;
 import com.smi.travel.datalayer.dao.MListItemDao;
 import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.dao.PlaceDao;
@@ -29,6 +30,7 @@ import com.smi.travel.datalayer.entity.MBank;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.MCity;
+import com.smi.travel.datalayer.entity.MCountry;
 import com.smi.travel.datalayer.entity.MCreditBank;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDefaultData;
@@ -72,6 +74,7 @@ public class UtilityService {
     private InvoiceSuppilerDao invoicesuppilerdao;
     private DefineVarDao defineVardao;
     private BookingHistoryDao bookinghistorydao;
+    private MCountryDao mCountryDao;
     
     public int[] getCountItemFromBooking(String refno) {
         int[] Booking_size = new int[7];
@@ -162,6 +165,11 @@ public class UtilityService {
     public List<MCity> getListMCity(){
         return citydao.getListCity();
     }
+    
+    public List<MCountry> getListMCountry(){
+        return mCountryDao.getListCountry();
+    }
+    
     
     public List<MBank> getListBank(MBank bank){
         return mbankdao.getListBank(bank, 1);
@@ -417,6 +425,14 @@ public class UtilityService {
 
     public void setBookinghistorydao(BookingHistoryDao bookinghistorydao) {
         this.bookinghistorydao = bookinghistorydao;
+    }
+
+    public MCountryDao getmCountryDao() {
+        return mCountryDao;
+    }
+
+    public void setmCountryDao(MCountryDao mCountryDao) {
+        this.mCountryDao = mCountryDao;
     }
     
     

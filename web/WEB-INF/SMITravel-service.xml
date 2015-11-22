@@ -228,6 +228,8 @@
         <property name="customeragentinfodao" ref="CustomerAgentInfoDao" />
         <property name="invoicesuppilerdao" ref="InvoiceSuppilerDao" />
         <property name="bookinghistorydao" ref="BookingHistoryDao" />
+        <property name="mCountryDao" ref="MCountryDao" />
+        
     </bean> 
      
     <bean id="MProductTypeService" class="com.smi.travel.datalayer.service.MProductTypeService">
