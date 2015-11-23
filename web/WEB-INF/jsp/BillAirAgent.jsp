@@ -55,7 +55,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="invfromdatepanel">
-                                <label class="col-md-6 control-label text-right">Inv From <font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right">Inv From</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date invfromdate' id='invDateFrom'>
@@ -71,7 +71,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="invtodatepanel">
-                                <label class="col-md-6 control-label text-right">Inv To <font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right">Inv To</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date invtodate' id='invDateTo'>
@@ -87,7 +87,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="issuefromdatepanel">
-                                <label class="col-md-6 control-label text-right">Issue From <font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right">Issue From</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date issuefromdate' id='DateFromIssue'>
@@ -103,7 +103,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="issuetodatepanel">
-                                <label class="col-md-6 control-label text-right">Issue To <font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right">Issue To</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date issuetodate' id='DateToIssue'>
@@ -136,7 +136,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="refundfromdatepanel">
-                                <label class="col-md-6 control-label text-right">Refund Receive From <font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right">Refund Receive From </label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date refundfromdate' id='DateFromRefund'>
@@ -152,7 +152,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="refundtodatepanel">
-                                <label class="col-md-6 control-label text-right">Refund Receive To <font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right">Refund Receive To</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date refundtodate' id='DateToRefund'>

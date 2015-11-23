@@ -115,7 +115,25 @@
         </bean> 
         
         <bean id="AccountReportSummary" class="com.smi.travel.controller.excel.account.AccountReportSummary">
-        </bean> 
+        </bean>
+        
+        <bean id="CheckingAirOthersummary" class="com.smi.travel.controller.excel.checking.airticket.CheckingAirOthersummary">
+	</bean>
+        
+        <bean id="RefundAirsummary" class="com.smi.travel.controller.excel.checking.airticket.RefundAirsummary">
+	</bean>
+        
+        <bean id="CostIncomeSummary" class="com.smi.travel.controller.excel.checking.airticket.CostIncomeSummary">
+	</bean>
+        
+        <bean id="AirlineSummaryReport" class="com.smi.travel.controller.excel.checking.airticket.AirlineSummary">
+	</bean>
+        
+        <bean id="BillAirAgentSummary" class="com.smi.travel.controller.excel.checking.airticket.BillAirAgentSummary">
+	</bean>
+        
+        <bean id="TicketFareSummary" class="com.smi.travel.controller.excel.checking.airticket.TicketFareSummary">
+	</bean>
         
         <bean id="ReceiptEmail"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">

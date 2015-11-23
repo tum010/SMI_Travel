@@ -99,22 +99,28 @@ public class ExportDataToExcelController  extends SMITravelController{
         if(TicketFareReport.equalsIgnoreCase(name)){
             System.out.println("get excel data");
             data = reportservice.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,dateFrom,dateTo,department,staff,termPay,printby,invdateFrom,invdateTo);
+            return new ModelAndView("TicketFareSummary",name,data).addObject(ReportName, name);
         }else if(TicketFareAirlineReport.equalsIgnoreCase(name)){
             System.out.println("get excel data");
             data = reportservice.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,issuedateFrom,issuedateTo,department,staff,termPay,printby,invdateFrom,invdateTo);
+            return new ModelAndView("TicketFareSummary",name,data).addObject(ReportName, name);
         }else if(TicketFareInvoicReport.equalsIgnoreCase(name)){
             System.out.println("get excel data");
             data = reportservice.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,issuedateFrom,issuedateTo,department,staff,termPay,printby,invdateFrom,invdateTo);
             System.out.println(" data size " + String.valueOf(data.size()));
+            return new ModelAndView("TicketFareSummary",name,data).addObject(ReportName, name);
         }else if(TicketFareAgentReport.equalsIgnoreCase(name)){
             System.out.println("get excel data");
             data = reportservice.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,issuedateFrom,issuedateTo,department,staff,termPay,printby,invdateFrom,invdateTo);
+            return new ModelAndView("TicketFareSummary",name,data).addObject(ReportName, name);
         }else if(TicketFareSummaryByStaff.equalsIgnoreCase(name)){
             System.out.println("get excel data staff");
             data = reportservice.getTicketFareSumAgentStaff(ticketType, ticketBuy, airline, airlineCode, department, staff, termPay, printby, issuedateFrom, issuedateTo, invdateFrom, invdateTo,"staff");
+            return new ModelAndView("TicketFareSummary",name,data).addObject(ReportName, name);
         }else if(TicketFareSummaryByAgent.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
             data = reportservice.getTicketFareSumAgentStaff(ticketType, ticketBuy, airline, airlineCode, department, staff, termPay, printby, issuedateFrom, issuedateTo, invdateFrom, invdateTo,"agent");
+            return new ModelAndView("TicketFareSummary",name,data).addObject(ReportName, name);
         }else if(BillAirAgent.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
             String agentCode = request.getParameter("agentCode");
@@ -130,6 +136,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             String paymentTypes = request.getParameter("paymentType");
             System.out.println("termPays : "+termPays);
             data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays,printby,paymentTypes);
+            return new ModelAndView("BillAirAgentSummary",name,data).addObject(ReportName, name);
         }else if(ChangeARReport.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
             data = reportservice.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status,accno);
@@ -148,8 +155,8 @@ public class ExportDataToExcelController  extends SMITravelController{
             String termPays = "";
             String paymentTypes = request.getParameter("paymentType");
             System.out.println("termPays : "+termPays);
-           
             data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays, printby,paymentTypes);
+            return new ModelAndView("BillAirAgentSummary",name,data).addObject(ReportName, name);
         }else if(CollectionReport.equalsIgnoreCase(name)){
             //Collectipn Report
             type = request.getParameter("type");
@@ -169,23 +176,29 @@ public class ExportDataToExcelController  extends SMITravelController{
         }else if(SummaryAirline.equals(name)){
             System.out.println("get excel data ap SummaryAirline");
             data = reportservice.listSummaryAirline();
+            return new ModelAndView("AirlineSummaryReport",name,data).addObject(ReportName, name);
         }else if(TicketFareSummaryAirline.equals(name)){
             System.out.println("get excel data TicketFareSummaryAirline");
             data = reportservice.getTicketFareSumAirline(typeRouting,routingDetail,issuedateFrom,issuedateTo,invdateFrom,invdateTo,airlineCode,passenger,agentId,department,staff,termPay,printby);
+            return new ModelAndView("AirlineSummaryReport",name,data).addObject(ReportName, name);
         }else if(SummaryAirlinePax.equals(name)){
             System.out.println("get excel data SummaryAirlinePax");
             data = reportservice.getSumAirlinePax(typeRouting,routingDetail,issuedateFrom,issuedateTo,invdateFrom,invdateTo,airlineCode,passenger,agentId,department,staff,termPay,printby);
+            return new ModelAndView("AirlineSummaryReport",name,data).addObject(ReportName, name);
         }else if(SummaryTicketAdjustCostAndIncome.equals(name)){
             System.out.println("get excel data ap SummaryTicketAdjustCostAndIncome");
             System.out.println("Term : " + termPayt);          
             data = reportservice.getSummaryTicketAdjustCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt,printby);
+            return new ModelAndView("CostIncomeSummary",name,data).addObject(ReportName, name);
         }else if(SummaryTicketCostAndIncome.equals(name)){
             System.out.println("get excel data ap SummaryTicketCostAndIncome");
             data = reportservice.getSummaryTicketCostAndIncome(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt,printby);
+            return new ModelAndView("CostIncomeSummary",name,data).addObject(ReportName, name);
         }else if(SummaryTicketCommissionReceive.equals(name)){
             System.out.println("get excel data ap SummaryTicketCommissionReceive");
             System.out.println("Term : " + termPayt);       
             data = reportservice.getTicketCommissionReceive(reportType, invoiceFromDate, invoiceToDate, issueFrom, issueTo, paymentType, departmentt, salebyUser, termPayt,printby);
+            return new ModelAndView("CostIncomeSummary",name,data).addObject(ReportName, name);
         }else if(RefundTicketDetail.equals(name)){
             System.out.println("get excel data ap RefundTicketDetail");
             System.out.println("Term : " + termPayt);    
@@ -200,8 +213,10 @@ public class ExportDataToExcelController  extends SMITravelController{
             String typeprint = request.getParameter("typePrint");
             String sectortoberef = request.getParameter("sectortoberef");
             data = reportservice.getRefundTicketDetail(refundagent, refundnameby, passengername, receivefrom, receiveto, paidfrom, paidto, typeprint,printby,refundBy,sectortoberef);
+            return new ModelAndView("RefundAirsummary",name,data).addObject(ReportName, name);
         }else if(TicketProfitLoss.equals(name)){
             data = reportservice.getTicketProfitLoss(invoiceFromDate,invoiceToDate,printby);
+            return new ModelAndView("CheckingAirOthersummary",name,data).addObject(ReportName, name);
         }else if(TicketSummaryCommission.equals(name)){
             // Ticket commission summary
             String invoicefromdate = request.getParameter("invoiceFromDate");
@@ -235,6 +250,7 @@ public class ExportDataToExcelController  extends SMITravelController{
                     agemtcomreceivefromdate, agemtcomreceivetodate, comrefundfromdate, comrefundtodate, addpayfromdate, addpaytodate, 
                     decreasepayfromdate, decreasepaytodate, typeRoutings, routingDetails, airlineCodes, agentCodes, agentName, ticketno,
                     departmentts, salebyUserts, salebyName, termPayts, printby);
+            return new ModelAndView("CheckingAirOthersummary",name,data).addObject(ReportName, name);
         }else if(SaleVatReport.equals(name)){
             System.out.println("get excel data SaleVatReport");
             String selectMonth   = request.getParameter("selectMonth");   
