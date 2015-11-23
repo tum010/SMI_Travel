@@ -183,17 +183,25 @@ public class InvoiceController extends SMITravelController {
             String depart = invoiceNo.substring(0,1);
             String type = invoiceNo.substring(1,2);
             if("W".equals(depart)){
-                if("0".equals(type)){
-                    type = "T";
+                if("V".equals(type)){
+                    type = "V";
                 }else if("T".equals(type)){
                     type = "A";
+                }else if("N".equals(type)){
+                    type = "N";
+                }else{
+                    type = "T";
                 }
             }
             if("O".equals(depart)){
-                if("0".equals(type)){
-                    type = "T";
+                if("V".equals(type)){
+                    type = "V";
                 }else if("T".equals(type)){
                     type = "A";
+                }else if("N".equals(type)){
+                    type = "N";
+                }else{
+                    type = "T";
                 }
             }
             if((invoiceNo.indexOf("%") >= 0)){
