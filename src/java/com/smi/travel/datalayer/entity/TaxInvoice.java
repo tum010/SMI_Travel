@@ -182,8 +182,10 @@ public class TaxInvoice   {
             if(detail.getVat() != null){
                 vat = detail.getVat();
             }
-            BigDecimal hundred = new BigDecimal("100.0000");
-            sumAmount = sumAmount.add(amount.multiply(hundred).divide(vat.add(hundred), BigDecimal.ROUND_HALF_UP));
+            if(amount != null){
+                BigDecimal hundred = new BigDecimal("100.0000");
+                sumAmount = sumAmount.add(amount.multiply(hundred).divide(vat.add(hundred), BigDecimal.ROUND_HALF_UP));
+            }
 
         }
         return sumAmount;
