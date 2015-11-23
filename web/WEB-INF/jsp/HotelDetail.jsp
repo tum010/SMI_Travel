@@ -503,20 +503,19 @@
                     <input name="id" value="${param.id}"type="hidden">
                     <input name="referenceNo" value="${param.referenceNo}"type="hidden">
                     <c:if test="${lockUnlockBooking == 0}">
-                        <%--<c:if test="${isBillStatus == 0}">--%>
-                        <c:choose>
-                            <c:when test="${enableSave == 0}">
-                                <button id="hotelSave" name="hotelSave" type="submit" class="btn btn-success" ><span class="fa fa-save"></span> Save</button>
-                            </c:when>
-                            <c:when test="${enableSave == 1}">
-                                <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                            </c:when>
-                        </c:choose> 
-                        
-                        <%--</c:if>--%>
-                        <%--<c:if test="${isBillStatus == 1}">--%>
-                            <!--<button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>-->
-                        <%--</c:if>--%>
+                        <c:if test="${isBillStatus == 0}">
+                            <button id="hotelSave" name="hotelSave" type="submit" class="btn btn-success" ><span class="fa fa-save"></span> Save</button>
+                        </c:if>
+                        <c:if test="${isBillStatus == 1}">
+                            <c:choose>
+                                <c:when test="${enableSave == 0}">
+                                    <button id="hotelSave" name="hotelSave" type="submit" class="btn btn-success" ><span class="fa fa-save"></span> Save</button>
+                                </c:when>
+                                <c:when test="${enableSave == 1}">
+                                    <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                </c:when>
+                            </c:choose> 
+                        </c:if>
                     </c:if>
                     <c:if test="${lockUnlockBooking == 1}">
                         <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>

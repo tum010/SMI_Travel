@@ -15,6 +15,7 @@ import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingDaytourService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
@@ -55,7 +56,7 @@ public class DaytourDetailController extends SMITravelController {
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String MCurrency = "MCurrency";
     private static final String ISBILLSTATUS = "IsBillStatus";
-
+    private static final String EnableSave = "EnableSave";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
@@ -103,7 +104,7 @@ public class DaytourDetailController extends SMITravelController {
         } else if ("new".equalsIgnoreCase(action)) {
             request.setAttribute(ACTION, "update");
             setGeneralResponseAttribute(request, refNo);
-
+            request.setAttribute(EnableSave,0);
         } else if ("edit".equalsIgnoreCase(action)) {
             log.info("dBookingId " + dBookingId);
             // Setup new DaytourBooking;
@@ -125,6 +126,16 @@ public class DaytourDetailController extends SMITravelController {
             
             request.setAttribute(DAYTOURBOOKING, bDaytour);
             setGeneralResponseAttribute(request, refNo);
+            
+            String billDescId = utilservice.getBillableDescId(dBookingId, "6");
+            if("".equalsIgnoreCase(billDescId)){
+                request.setAttribute(EnableSave,1);
+            }else{
+                request.setAttribute(EnableSave,0);
+                BillableView billableView = utilservice.getBillableDescByBookId(dBookingId);
+                int resultupdate = utilservice.updateBillableDesc(billableView,billDescId);
+            }
+            
         } else if ("save".equalsIgnoreCase(action)) {
             System.out.println("Save me");
             log.info("dBookingId " + dBookingId + ", tourId " + tourId + "; pay" + pay + ";time" + time + ";pickupId=" + pickupId + ";pickupOther=" + pickupOther);
@@ -196,6 +207,16 @@ public class DaytourDetailController extends SMITravelController {
             log.info("saveBookingDaytour result " + result);
 
             setGeneralResponseAttribute(request, refNo);
+            
+            String billDescId = utilservice.getBillableDescId(dBookingId, "6");
+            if("".equalsIgnoreCase(billDescId)){
+                request.setAttribute(EnableSave,1);
+            }else{
+                request.setAttribute(EnableSave,0);
+                BillableView billableView = utilservice.getBillableDescByBookId(dBookingId);
+                int resultupdate = utilservice.updateBillableDesc(billableView,billDescId);
+            }
+            
             if (StringUtils.isNotEmpty(dBookingId)) {
                 return new ModelAndView("redirect:DaytourDetail.smi?referenceNo=" + refNo + "&action=edit&daytourBooking=" + dBookingId + "&result=" + result);
             } else {

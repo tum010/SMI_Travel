@@ -30,6 +30,7 @@
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
+<c:set var="enableSave" value="${requestScope['EnableSave']}" />
 
 <section class="content-header" >
     <h1>
@@ -418,7 +419,14 @@
                             <button id="ButtonSave" type="submit" onclick="submitAction();" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                         </c:if>
                         <c:if test="${isBillStatus == 1}">
-                            <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                            <c:choose>
+                                <c:when test="${enableSave == 0}">
+                                    <button id="ButtonSave" type="submit" onclick="submitAction();" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                </c:when>
+                                <c:when test="${enableSave == 1}">
+                                    <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                </c:when>
+                            </c:choose> 
                         </c:if>
                     </c:if>
                     <c:if test="${lockUnlockBooking == 1}">
