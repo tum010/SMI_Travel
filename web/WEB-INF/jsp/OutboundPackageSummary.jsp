@@ -1,6 +1,6 @@
 <%-- 
-    Document   : OutboundSummary
-    Created on : Nov 23, 2015, 5:04:17 PM
+    Document   : OutboundPackageSummary
+    Created on : Nov 23, 2015, 5:39:50 PM
     Author     : Kanokporn
 --%>
 
@@ -10,11 +10,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <section class="content-header"  >
     <h4>
-        <b>Report : Outbound Hotel Summary </b>
+        <b>Report : Outbound Package Summary </b>
     </h4>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Report</a></li>          
-        <li class="active"><a href="#">Outbound Hotel Summary</a></li>
+        <li class="active"><a href="#">Outbound Package Summary</a></li>
     </ol>
 </section>
 <div class="container" style="padding-top: 30px;" ng-app="">
@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-6">
-                    <h3>Outbound Hotel Summary Report</h3>
+                    <h3>Outbound Package Summary Report</h3>
                 </div>
             </div>
             <div class="col-md-10" >
