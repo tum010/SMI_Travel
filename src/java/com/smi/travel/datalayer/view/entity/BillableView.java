@@ -20,6 +20,7 @@ public class BillableView {
     private String curCost;
     private String curAmount;
     private String id;
+    private String refItemId;
 
     public String getBillID() {
         return billID;
@@ -92,6 +93,14 @@ public class BillableView {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getRefItemId() {
+        return refItemId;
+    }
+
+    public void setRefItemId(String refItemId) {
+        this.refItemId = refItemId;
     }
 
    

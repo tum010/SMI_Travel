@@ -32,9 +32,11 @@ import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MTicketType;
 import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
+import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.util.UtilityFunction;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -89,7 +91,7 @@ public class AirTicketDetailController extends SMITravelController {
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String CHECKPNR = "checkPnr_list";
     private static final String ISBILLSTATUS = "IsBillStatus";
-
+    private static final String EnableSave = "EnableSave";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -161,6 +163,55 @@ public class AirTicketDetailController extends SMITravelController {
                 //return new ModelAndView("redirect:AirTicketDetail.smi?referenceNo=" + referenceNo + "&pnr=" + pnr + "&action=edit&result=" + result);
             }
             request.setAttribute(Result, result);
+            
+            String refItemIdTemp="";
+            String refItemId = utilservice.getRefitemIdFromRefNo(referenceNo);
+            if("".equalsIgnoreCase(refItemId)){
+                request.setAttribute(EnableSave,1);
+            }else{
+                request.setAttribute(EnableSave,0);
+                String[] parts = refItemId.split(",");
+                refItemId = "";
+                for(int i = 0 ; i < parts.length ; i++){
+                    refItemId += ",'"+parts[i]+"'";
+                }
+                System.out.println(" ============ refItemId ============ "+ refItemId);
+                List<BillableView> billableViews = utilservice.getBillableDescFromRefItemId(refItemId.substring(1));
+                List<BillableDesc> billableDescList = utilservice.getBillableDescIdFromRefNo(referenceNo);
+                if(billableDescList != null){
+                    for(int j = 0 ; j < billableDescList.size() ; j++){
+                        BillableDesc bd = billableDescList.get(j);
+                        refItemIdTemp = bd.getRefItemId();
+                        String[] refItemIdTempParts = refItemIdTemp.split(",");
+                        if(refItemIdTempParts.length == 0){
+                            for(int k = 0 ; k < billableViews.size() ; k++){
+                                if(String.valueOf(refItemIdTemp).equalsIgnoreCase(billableViews.get(k).getRefItemId())){
+                                    int resultupdate = utilservice.updateBillableDesc(billableViews.get(k),""); //billdescId
+                                }
+                            }
+                        }else{
+                            for(int k = 0 ; k < refItemIdTempParts.length ; k++){
+                            
+                            
+                            }
+                        }
+                        
+//                        for(int k = 0 ; k < billableViews.size() ; k++){
+//                            BillableView bv = billableViews.get(k);
+//                            if(String.valueOf(bd.getRefItemId()).equalsIgnoreCase(bv.getRefItemId())){
+//                                
+//                            }
+//                        }
+                    }
+
+                }
+                
+                
+//                BillableView billableView = utilservice.getBillableDescByBookId(id,"4");
+//                int resultupdate = utilservice.updateBillableDesc(billableView,refItemId);
+            }
+            
+            
             return new ModelAndView("redirect:AirTicketDetail.smi?referenceNo=" + referenceNo + "&pnr=" + pnr + "&action=edit&result=" + result);
         } else if ("newpnr".equalsIgnoreCase(action)) {
             System.out.println(action);
@@ -198,6 +249,13 @@ public class AirTicketDetailController extends SMITravelController {
             bookingAirticketService.deletePassenger(passengerId);
         } else {
             System.out.println(" ==================== action ====================" + action);
+            String refItemId = utilservice.getRefitemIdFromRefNo(referenceNo);
+            if("".equalsIgnoreCase(refItemId)){
+                request.setAttribute(EnableSave,1);
+            }else{
+                request.setAttribute(EnableSave,0);
+            }
+                        
             System.out.println(AirTicketDetailController.class.getName() + " action=" + action + "[pnr=" + pnr + "]");
             AirticketPnr airticketPnr = bookingAirticketService.getPNRDetailByID(pnr, referenceNo);
             //Error occurs when others tab is no object yet.

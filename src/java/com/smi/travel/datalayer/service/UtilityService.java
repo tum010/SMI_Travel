@@ -54,7 +54,7 @@ import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-
+import com.smi.travel.datalayer.entity.BillableDesc;
 /**
  *
  * @author Surachai
@@ -319,6 +319,18 @@ public class UtilityService {
         return listitemdao.getBillableDescByBookId(bookId,billType);
     }
     
+    public String getRefitemIdFromRefNo(String refno){
+        return listitemdao.getRefitemIdFromRefNo(refno);
+    }
+    
+    public List<BillableView> getBillableDescFromRefItemId(String refItemId){
+        return listitemdao.getBillableDescFromRefItemId(refItemId);
+    }
+    
+    public List<BillableDesc> getBillableDescIdFromRefNo(String refno){
+        return listitemdao.getBillableDescIdFromRefNo(refno);
+    }
+
     public int updateBillableDesc(BillableView billableView,String billDescId){
         return listitemdao.updateBillableDesc(billableView,billDescId);
     }

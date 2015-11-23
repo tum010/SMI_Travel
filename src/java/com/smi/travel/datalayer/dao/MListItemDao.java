@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.dao;
 
+import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Function;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
@@ -73,4 +74,8 @@ public interface MListItemDao {
     public String getBillableDescId(String bookId , String billType);
     public BillableView getBillableDescByBookId(String bookId,String billType);
     public int updateBillableDesc(BillableView billableView,String billDescId);
+    
+    public String getRefitemIdFromRefNo(String refno);
+    public List<BillableView> getBillableDescFromRefItemId(String refItemId);
+    public List<BillableDesc> getBillableDescIdFromRefNo(String refno);
 }
