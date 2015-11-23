@@ -148,22 +148,19 @@ $(document).ready(function() {
         $('#textAlertDivSave').show();
     } else if (result === 'fail') {
         $('#textAlertDivNotSave').show();
-    } else if (result === 'delete success') {
-        $('#textAlertDivDelete').show();
-    } else if (result === 'delete fail') {
-        $('#textAlertDivNotDelete').show();
+    } else if (result === 'not found') {
+        $('#textAlertNotFound').show();
     } else if (result === "") {
         $('#textAlertDivSave').hide();
         $('#textAlertDivNotSave').hide();
-        $('#textAlertDivDelete').hide();
-        $('#textAlertDivNotDelete').hide();
+        $('#textAlertNotFound').hide();
     }
 
     setEnvironment()
 
 });
 
-function reloadPage(){
+function reloadPage() {
     var action = document.getElementById('action');
     action.value = 'new';
     document.getElementById('PaymentOutboundForm').submit();
@@ -171,6 +168,13 @@ function reloadPage(){
 
 //Set Data at start
 function setEnvironment() {
+    for(var i = 0; i < invoiceSup.length; i++){
+        if(invoiceSup[i].code === $("#invSupCode").val()){
+            $("#invSupName").val(invoiceSup[i].name);
+            i = invoiceSup.length;
+        }
+    }
+    
     var row = parseInt($("#countPaymentDetail").val());
     for (var i = 1; i <= row; i++) {
         if ($("#cost" + i).val() !== '') {
@@ -189,9 +193,9 @@ function setEnvironment() {
             $("#value" + i).val(formatNumber(parseFloat($("#value" + i).val())));
         }
     }
-    calculateGrossTotal()
-    calculateGrandTotal()
-    calculateVatTotal()
+    calculateGrossTotal();
+    calculateGrandTotal();
+    calculateVatTotal();
 }
 
 function formatNumber(num) {
@@ -251,6 +255,16 @@ function CallAjaxSearchRef(param) {
                             $(this).remove();
                         });
                         $("#RefNoTable tbody").append(msg);
+                        var rowAll = ($("#RefNoTable tr").length);
+                        for(var i = 1; i<rowAll; i++){
+                            var mCost = document.getElementById("mCost"+i);
+                            if(mCost !== null){
+                                var mCostTemp = mCost.innerHTML;
+                                if(mCostTemp !== ''){
+                                    mCost.innerHTML = formatNumber(parseFloat(mCostTemp));
+                                }
+                            }
+                        }
 
                     }
                     $("#ajaxloadRefNo").addClass("hidden");
@@ -303,7 +317,7 @@ function addRowPaymentDetailTable(row) {
             '</select>' +
             '</td>' +
             '<td>' +
-            '<input type="text" name="refNo' + row + '" id="refNo' + row + '" class="form-control" onfocusout="checkRefNo(\'' + row + '\')" value=""/>' +
+            '<input type="text" maxlength="6" name="refNo' + row + '" id="refNo' + row + '" class="form-control" onfocusout="checkRefNo(\'' + row + '\')" value=""/>' +
             '</td>' +
             '<td>' +
             '<input type="text" name="invoice' + row + '" id="invoice' + row + '" class="form-control" value=""/>' +
@@ -455,15 +469,9 @@ function searchPvNo() {
 }
 
 function checkRefNo(row) {
+    var count = parseInt(document.getElementById('countPaymentDetail').value);
     var list = document.getElementById('refNoList').value;
     var refNo = document.getElementById('refNo' + row).value;
-
-    if (refNo === '') {
-        var refNoField = document.getElementById('refNo' + row);
-        refNoField.style.borderColor = "";
-        $("#btnSave").removeClass("disabled");
-        return;
-    }
 
     list = list.replace("[", "");
     list = list.replace("]", "");
@@ -475,11 +483,28 @@ function checkRefNo(row) {
             var refNoField = document.getElementById('refNo' + row);
             refNoField.style.borderColor = "Green";
             $("#btnSave").removeClass("disabled");
-            return;
-        } else {
+            i = refNo_list.length;
+            
+        }else if(refNo === ''){
+            var refNoField = document.getElementById('refNo' + row);
+            refNoField.style.borderColor = "";
+            i = refNo_list.length;
+            
+        }else{
             var refNoField = document.getElementById('refNo' + row);
             refNoField.style.borderColor = "Red";
             $("#btnSave").addClass("disabled");
+        }
+    }
+    for(var i = 1; i < count; i++){
+        var refNoField = document.getElementById('refNo' + i);
+        if(refNoField !== null){
+            if(refNoField.style.borderColor === "red"){
+               $("#btnSave").addClass("disabled");
+               i = count;
+            }else{
+               $("#btnSave").removeClass("disabled");
+            }
         }
     }
 }
@@ -500,7 +525,7 @@ function calculateGross(row) {
         document.getElementById('vatShow' + row).innerHTML = vatTotal;
 
     } else {
-        document.getElementById('gross' + row).value = '0.00';
+        document.getElementById('gross' + row).value = '';
         document.getElementById('vatShow' + row).innerHTML = '';
         document.getElementById('vat' + row).value = mVat;
 
@@ -590,7 +615,7 @@ function calculateGrandTotal() {
 function addRefNo(refNo, type, description, billType, cost, cur, bookId) {
     var countPaymentDetail = parseInt($("#countPaymentDetail").val());
     var count = 0;
-    for (var i = 1; i < countPaymentDetail-1; i++) {
+    for (var i = 1; i < countPaymentDetail - 1; i++) {
         var countTemp = document.getElementById("count" + i);
         if (countTemp !== null) {
             count = parseInt(countTemp.value);
@@ -617,90 +642,147 @@ function addRowPaymentDetailTableByRefNo(refNo, type, description, billType, cos
     $("[name=cur" + row + "] option").filter(function() {
         return ($(this).text() === cur);
     }).prop('selected', true);
-    
+
     row = row + 1;
+    addRowPaymentDetailTable(row);
+}
 
-    $("#PaymentDetailTable tbody").append(
-            '<tr >' +
-            '<td class="hidden">' +
-            '<input type="text" name="count' + row + '" id="count' + row + '" class="form-control" value="' + row + '"/>' +
-            '<input type="text" name="detailId' + row + '" id="detailId' + row + '" class="form-control" value=""/>' +
-            '<input type="text" name="payId' + row + '" id="payId' + row + '" class="form-control" value=""/>' +
-            '<input type="text" name="bookDetailId' + row + '" id="payId' + row + '" class="form-control" value=""/>' +
-            '<input type="text" name="bookDetailType' + row + '" id="bookDetailType' + row + '" class="form-control" value=""/>' +
-            '<input type="text" name="accCode' + row + '" id="accCode' + row + '" class="form-control" value=""/>' +
-            '<input type="text" name="exportDate' + row + '" id="exportDate' + row + '" class="form-control" value=""/>"/>' +
-            '<input type="text" name="isExport' + row + '" id="isExport' + row + '" class="form-control" value=""/>' +
-            '</td>' +
-            '<td>' +
-            '<select class="form-control" name="type' + row + '" id="type' + row + '" onchange="addRow(\'' + row + '\')">' +
-            '<option  value="" ></option>' +
-            '</select>' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" name="refNo' + row + '" id="refNo' + row + '" class="form-control" onfocusout="checkRefNo(\'' + row + '\')" value=""/>' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" name="invoice' + row + '" id="invoice' + row + '" class="form-control" value=""/>' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" name="cost' + row + '" id="cost' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'cost\',\'' + row + '\')" value=""/>' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" name="gross' + row + '" id="gross' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" value="" readonly=""/>' +
-            '</td>' +
-            '<td align="center">' +
-            '<input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" onclick="calculateGross(\'' + row + '\')" value="">' +
-            '</td>' +
-            '<td align="right" id="vatShow' + row + '"></td>' +
-            '<td class="hidden">' +
-            '<input type="text" id="vat' + row + '" name="vat' + row + '" value=""/>' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" name="amount' + row + '" id="amount' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'amount\',\'' + row + '\')" value=""/>' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" name="comm' + row + '" id="comm' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'comm\',\'' + row + '\')" value=""/>' +
-            '</td>' +
-            '<td>' +
-            '<select class="form-control" name="cur' + row + '" id="cur' + row + '" onchange="addRow(\'' + row + '\')">' +
-            '<option  value="" ></option>' +
-            '</select>' +
-            '</td>' +
-            '<td class="text-center" rowspan="2">' +
-            '<a href="#" onclick=""  data-toggle="modal" data-target="">' +
-            '<span id="spanDelete' + row + '" class="glyphicon glyphicon-remove deleteicon"  onclick="deletePaymentDetailList(\'\',\'' + row + '\')" data-toggle="modal" ></span>' +
-            '</a>' +
-            '</td>' +
-            '</tr>' +
-            '<tr>' +
-            '<td colspan="1" align="right" bgcolor="#E8EAFF" >' +
-            '<b>Description</b>' +
-            '</td>' +
-            '<td colspan="2">' +
-            '<input type="text" name="description' + row + '" id="description' + row + '" class="form-control" value=""/>' +
-            '</td>' +
-            '<td colspan="1" align="right" bgcolor="#E8EAFF">' +
-            '<b>Pay Stock</b>' +
-            '</td>' +
-            '<td colspan="3">' +
-            '<input type="text" name="payStock' + row + '" id="payStock' + row + '" class="form-control" value=""/>' +
-            '</td>' +
-            '<td colspan="1" align="right" bgcolor="#E8EAFF">' +
-            '<b>Value</b>' +
-            '</td>' +
-            '<td colspan="2">' +
-            '<input type="text" name="value' + row + '" id="value' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'value\',\'' + row + '\')" value=""/>' +
-            '</td>' +
-            '</tr>'
+function checkVatAll() {
+    var row = document.getElementById('countPaymentDetail').value;
+    var mVat = document.getElementById('mVat').value;
+    var check = 0;
+    var unCheck = 0;
+    for (var i = 1; i < row; i++) {
+        var isVatCheck = document.getElementById("isVat" + i);
+        if (isVatCheck !== null && isVatCheck !== '') {
+            if (document.getElementById("isVat" + i).checked) {
+                check++;
+            } else {
+                unCheck++;
+            }
+        }
+    }
 
-            );
-    $("#tr_PaymentOutboundDetailAddRow").removeClass("show");
-    $("#tr_PaymentOutboundDetailAddRow").addClass("hide");
-    $("#typeClone option").clone().appendTo("#type" + row);
-    $("#curClone option").clone().appendTo("#cur" + row);
-//    document.getElementById('vatShow' + row).innerHTML = parseFloat($("#mVat").val());
-    document.getElementById('vat' + row).value = parseFloat($("#mVat").val());
-    $("#countPaymentDetail").val(row + 1);
+    if (check === 0 && unCheck !== 0) {
+        for (var i = 1; i < row; i++) {
+            var isVatCheck = document.getElementById("isVat" + i);
+            if (isVatCheck !== null && isVatCheck !== '') {
+                if (document.getElementById("isVat" + i).checked) {
 
+                } else {
+                    document.getElementById("isVat" + i).checked = true;
+                    var vatDefaultData = parseFloat(document.getElementById('vat' + i).value);
+                    var amountChk = document.getElementById('amount' + i);
+                    if (amountChk !== null && amountChk !== '') {
+                        var amount = document.getElementById('amount' + i).value;
+                        var gross = document.getElementById('gross' + i).value;
+
+                        amount = amount.replace(/,/g, "");
+                        var grossTotal = parseFloat(amount);
+
+                        if ((gross === '')) {
+                            grossTotal = (amount * 100) / (100 + vatDefaultData);
+                            document.getElementById('gross' + i).value = formatNumber(grossTotal);
+                            document.getElementById('vatShow' + i).innerHTML = vatDefaultData;
+                        } else {
+                            document.getElementById('gross' + i).value = '';
+                            document.getElementById('vatShow' + i).innerHTML = '';
+                        }
+                    }
+                }
+            }
+        }
+        calculateGrossTotal();
+        return;
+    }else if (check > unCheck && unCheck !== 0) {
+        for (var i = 1; i < row; i++) {
+            var isVatCheck = document.getElementById("isVat" + i);
+            if (isVatCheck !== null && isVatCheck !== '') {
+                if (document.getElementById("isVat" + i).checked) {
+
+                } else {
+                    document.getElementById("isVat" + i).checked = true;
+                    var vatDefaultData = parseFloat(document.getElementById('vat' + i).value);
+                    var amountChk = document.getElementById('amount' + i);
+                    if (amountChk !== null && amountChk !== '') {
+                        var amount = document.getElementById('amount' + i).value;
+                        var gross = document.getElementById('gross' + i).value;
+
+                        amount = amount.replace(/,/g, "");
+                        var grossTotal = parseFloat(amount);
+
+                        if ((gross === '')) {
+                            grossTotal = (amount * 100) / (100 + vatDefaultData);
+                            document.getElementById('gross' + i).value = formatNumber(grossTotal);
+                            document.getElementById('vatShow' + i).innerHTML = vatDefaultData;
+                        } else {
+                            document.getElementById('gross' + i).value = '';
+                            document.getElementById('vatShow' + i).innerHTML = '';
+                        }
+                    }
+                }
+            }
+        }
+        calculateGrossTotal();
+        return;
+    }
+
+    if (check !== 0 && unCheck === 0) {
+        for (var i = 1; i < row; i++) {
+            var isVatCheck = document.getElementById("isVat" + i);
+            if (isVatCheck !== null && isVatCheck !== '') {
+                document.getElementById("isVat" + i).checked = false;
+                document.getElementById('vatShow' + i).innerHTML = '';
+                document.getElementById("gross" + i).value = '';
+                document.getElementById('vat' + i).value = mVat;
+            }
+        }
+        calculateGrossTotal();
+        return;
+    }else if (check < unCheck && check !== 0) {
+        for (var i = 1; i < row; i++) {
+            var isVatCheck = document.getElementById("isVat" + i);
+            if (isVatCheck !== null && isVatCheck !== '') {
+                document.getElementById("isVat" + i).checked = false;
+                document.getElementById("vatShow" + i).innerHTML = '';
+                document.getElementById("gross" + i).value = '';
+                document.getElementById('vat' + i).value = mVat;
+            }
+        }
+        calculateGrossTotal();
+        return;
+    }
+
+    if (check === unCheck) {
+        for (var i = 1; i < row; i++) {
+            var isVatCheck = document.getElementById("isVat" + i);
+            if (isVatCheck !== null && isVatCheck !== '') {
+                if (document.getElementById("isVat" + i).checked) {
+
+                } else {
+                    document.getElementById("isVat" + i).checked = true;
+                    var vatDefaultData = parseFloat(document.getElementById('vat' + i).value);
+                    var amountChk = document.getElementById('amount' + i);
+                    if (amountChk !== null && amountChk !== '') {
+                        var amount = document.getElementById('amount' + i).value;
+                        var gross = document.getElementById('gross' + i).value;
+
+                        amount = amount.replace(/,/g, "");
+                        var grossTotal = parseFloat(amount);
+
+                        if ((gross === '')) {
+                            grossTotal = (amount * 100) / (100 + vatDefaultData);
+                            document.getElementById('gross' + i).value = formatNumber(grossTotal);
+                            document.getElementById('vatShow' + i).innerHTML = vatDefaultData;
+                        } else {
+                            document.getElementById('gross' + i).value = '';
+                            document.getElementById('vatShow' + i).innerHTML = '';
+                        }
+                    }
+                }
+            }
+        }
+        calculateGrossTotal();
+    }
+    
 }

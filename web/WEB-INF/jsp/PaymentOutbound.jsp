@@ -40,6 +40,10 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Save Not Success!</strong> 
         </div>
+        <div id="textAlertNotFound"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Pay No. is not found!</strong> 
+        </div>
     </div>    
     <!--Content -->
     <form action="PaymentOutbound.smi" method="post" id="PaymentOutboundForm" autocomplete="off" role="form">
@@ -73,7 +77,7 @@
                                 </div>
                                 <div class="col-md-2 form-group" id="refnopanel" style="width: 200px">
                                     <div class="input-group">
-                                        <input type="text" style="text-transform:uppercase" class="form-control" id="refNo" name="refNo" value="" onkeydown="refNoValidate()">
+                                        <input type="text" maxlength="6" style="text-transform:uppercase" class="form-control" id="refNo" name="refNo" value="" onkeydown="refNoValidate()">
                                     </div>
                                 </div>
                                 <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxloadRefNo"  class="fa fa-spinner fa-spin hidden"></i></div>
@@ -161,7 +165,7 @@
                         <input name="createBy" id="createBy" type="hidden" class="form-control" value="${paymentOutbound.createBy}" />
                         <input name="createDate" id="createDate" type="hidden" class="form-control" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.createDate}"/>" />
                         <input name="updateDate" id="updateDate" type="hidden" class="form-control" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd HH:mm:ss' value="${paymentOutbound.updateDate}"/>" />
-                        <input name="payNo" id="payNo" type="text" class="form-control" style="text-transform:uppercase" value="${paymentOutbound.payNo}" />
+                        <input name="payNo" id="payNo" type="text" maxlength="6" class="form-control" style="text-transform:uppercase" value="${paymentOutbound.payNo}" />
                     </div>
                     <div class="col-xs-1 text-left"  style="width: 100px">
                         <button type="button"  id="btnSearchPayNo"  name="btnSearchPayNo" onclick="searchPvNo()" class="btn btn-primary btn-sm">
@@ -255,7 +259,7 @@
                                         <th style="width: 9%">Invoice</th>
                                         <th style="width: 9%">Cost</th>
                                         <th style="width: 9%">Gross</th>
-                                        <th style="width: 4%">Is Vat</th>                                                                      
+                                        <th style="width: 4%" onclick="checkVatAll()"><u>Is Vat</u></th>                                                                      
                                         <th style="width: 2%">Vat</th>
                                         <th style="width: 9%">Amount</th>
                                         <th style="width: 9%">Comm</th>
@@ -293,7 +297,7 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="text" name="refNo${i.count}" id="refNo${i.count}" class="form-control" onfocusout="checkRefNo('${i.count}')" value="${detail.refNo}"/>
+                                            <input type="text" maxlength="6" name="refNo${i.count}" id="refNo${i.count}" class="form-control" onfocusout="checkRefNo('${i.count}')" value="${detail.refNo}"/>
                                         </td>
                                         <td>
                                             <input type="text" name="invoice${i.count}" id="invoice${i.count}" class="form-control" value="${detail.invoice}"/>
@@ -385,7 +389,7 @@
                                 <label class="control-label">Detail</lable>
                             </div>
                             <div class="col-md-1 text-left" style="width: 350px">
-                                <textarea rows="3" cols="255" class="form-control" id="detail" name="detail" maxlength="255" data-bv-field="detail"></textarea>
+                                <textarea rows="3" cols="255" class="form-control" id="detail" name="detail" maxlength="255" data-bv-field="detail">${paymentOutbound.detail}</textarea>
                             </div>
                         </div>
                         <div class="col-sm-6">
