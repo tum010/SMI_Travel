@@ -29,6 +29,7 @@ import com.smi.travel.datalayer.entity.MProductType;
 import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.MTicketType;
 import com.smi.travel.datalayer.entity.PackageTour;
+import com.smi.travel.datalayer.view.entity.BillableView;
 import java.util.List;
 
 /**
@@ -68,4 +69,8 @@ public interface MListItemDao {
     public List<MFinanceItemstatus> getListMFinanceItemstatus();
     
     public List<MAirlineAgent> getMAirlineAgentFromAirlineCode(String airlineCode);
+    
+    public String getBillableDescId(String bookId , String billType);
+    public BillableView getBillableDescByBookId(String bookId);
+    public int updateBillableDesc(BillableView billableView,String billDescId);
 }

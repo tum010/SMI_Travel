@@ -29,7 +29,12 @@ import com.smi.travel.datalayer.entity.MPricecategory;
 import com.smi.travel.datalayer.entity.MProductType;
 import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.MTicketType;
+import com.smi.travel.datalayer.view.entity.BillableView;
+import com.smi.travel.util.UtilityFunction;
+import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -494,6 +499,83 @@ public class MListItemImpl implements MListItemDao {
         return MAirlineAgentList;
     }
 
-    
-  
+    @Override
+    public String getBillableDescId(String bookId, String billType) {
+        Session session = this.sessionFactory.openSession();
+        String query = "SELECT bi.billdesc_id  FROM bill_invoice_view bi  where bi.refitem = '"+bookId+"' and bi.billtype = '"+billType+"'";
+        String billDescId = "";
+        List<String> QueryList =  session.createSQLQuery(query)
+                .addScalar("billdesc_id",Hibernate.STRING)
+                .list();
+        
+        if(QueryList.isEmpty()){
+            return "";
+        }
+        
+        if( QueryList.get(0) == null){
+            billDescId = "";
+        }else{
+            billDescId =  QueryList.get(0);
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return billDescId;
+    }
+
+    @Override
+    public BillableView getBillableDescByBookId(String bookId) {
+        UtilityFunction util = new UtilityFunction();
+        Session session = this.sessionFactory.openSession();
+        String query = "SELECT * FROM `billable_view_all` where id = '"+bookId+"'";
+        List<BillableView> billableViewList = new ArrayList<BillableView>();
+        List<Object[]> QueryList = session.createSQLQuery(query)
+                .addScalar("cost",Hibernate.STRING)
+                .addScalar("price",Hibernate.STRING)
+                .addScalar("cur_cost",Hibernate.STRING)
+                .addScalar("cur_amount",Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryList) {
+            BillableView billableView = new BillableView();
+            billableView.setCost(B[0] == null ? 0 : util.convertStringToInteger(String.valueOf(B[0])));
+            billableView.setPrice(B[1] == null ? 0 : util.convertStringToInteger(String.valueOf(B[1])));
+            billableView.setCurCost(B[2] == null ? "" : util.ConvertString(B[2]));
+            billableView.setCurAmount(B[3] == null ? "" : util.ConvertString(B[3]));
+            billableViewList.add(billableView);
+        }
+        
+        if(billableViewList.isEmpty()){
+            return null;
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return billableViewList.get(0);
+    }
+
+    @Override
+    public int updateBillableDesc(BillableView billableView,String billDescId) {
+        int result = 0;
+        String hql = "UPDATE BillableDesc billd Set billd.cost = :cost , billd.price = :price , billd.currency = :curprice , billd.curCost = :curcost  where billd.id = :billdesc_id  " ;
+        try {
+            Session session = this.sessionFactory.openSession();
+            Query query = session.createQuery(hql);
+            query.setParameter("cost", billableView.getCost());
+            query.setParameter("price", billableView.getPrice());
+            query.setParameter("curprice",  billableView.getCurAmount());
+            query.setParameter("curcost",  billableView.getCurCost());
+            query.setParameter("billdesc_id",  billDescId);
+            result = query.executeUpdate();
+            System.out.println("Rows affected: " + result);
+            session.close();
+            this.sessionFactory.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+
+        return result;
+    }
+
 }

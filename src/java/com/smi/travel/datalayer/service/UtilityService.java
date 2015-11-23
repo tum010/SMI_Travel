@@ -49,6 +49,7 @@ import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.view.dao.CustomerAgentInfoDao;
 import com.smi.travel.datalayer.view.dao.InvoiceSuppilerDao;
+import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import java.util.List;
@@ -310,6 +311,18 @@ public class UtilityService {
         return bookinghistorydao.UpdateHistoryBooking(historyBooking);
     }
 
+    public String getBillableDescId(String bookId , String billType){
+        return listitemdao.getBillableDescId(bookId,billType);
+    }
+    
+    public BillableView getBillableDescByBookId(String bookId){
+        return listitemdao.getBillableDescByBookId(bookId);
+    }
+    
+    public int updateBillableDesc(BillableView billableView,String billDescId){
+        return listitemdao.updateBillableDesc(billableView,billDescId);
+    }
+    
     public MasterDao getMasterdao() {
         return masterdao;
     }

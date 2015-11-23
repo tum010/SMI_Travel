@@ -22,6 +22,7 @@ import com.smi.travel.datalayer.service.BookingHotelService;
 import com.smi.travel.datalayer.service.HotelService;
 import com.smi.travel.datalayer.service.PassengerService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.text.ParseException;
@@ -66,7 +67,7 @@ public class HotelDetailController extends SMITravelController {
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String MCurrency = "MCurrency";
     private static final String ISBILLSTATUS = "IsBillStatus";
-    
+    private static final String EnableSave = "EnableSave";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         SystemUser user = (SystemUser) session.getAttribute("USER");
@@ -104,6 +105,12 @@ public class HotelDetailController extends SMITravelController {
         System.out.println("orderNO : " + orderNo);
         
         request.setAttribute(ISBILLSTATUS,0);
+        String billDescId = utilservice.getBillableDescId(id, "4");
+        if("".equalsIgnoreCase(billDescId)){
+            request.setAttribute(EnableSave,1);
+        }else{
+            request.setAttribute(EnableSave,0);
+        }
         
         if ("new".equalsIgnoreCase(action)) {
             System.out.println("add");
@@ -179,6 +186,14 @@ public class HotelDetailController extends SMITravelController {
                 saveHistoryBooking(refNo,user,hotelBooking,"UPDATE");
             }
             request.setAttribute(Result, result);
+            
+            if("".equalsIgnoreCase(billDescId)){
+                request.setAttribute(EnableSave,1);
+            }else{
+                request.setAttribute(EnableSave,0);
+                BillableView billableView = utilservice.getBillableDescByBookId(id);
+                int resultupdate = utilservice.updateBillableDesc(billableView,billDescId);
+            }
             return new ModelAndView("redirect:HotelDetail.smi?referenceNo=" + refNo + "&action=edit&id="+ id + "&result=" + result);
         } else if ("edit".equalsIgnoreCase(action)) {
             HotelBooking hotel = bookingHotelService.getHotelFromID(request.getParameter("id"));
