@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketSummaryAirline" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isTitleNewPage="true" uuid="aead4a18-a210-4c34-a9ce-3eb73e00e8ca">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="414"/>
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="billingname" class="java.lang.String"/>
 	<field name="airline" class="java.lang.String"/>
@@ -253,21 +253,21 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ticketnum}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00">
+			<textField pattern="#,##0.00">
 				<reportElement x="200" y="0" width="102" height="20" uuid="60dde522-2ff1-41ab-a8c5-e51942720707"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="13" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totalsalefare}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00">
+			<textField pattern="#,##0.00">
 				<reportElement x="643" y="0" width="90" height="20" uuid="63997136-cd91-48bd-bc50-49602070e7f2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf&gt;" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{profitavg}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="528" y="0" width="100" height="20" uuid="8700f84b-8fc2-47f8-ae4f-898953e42e28"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
@@ -281,7 +281,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totaltax}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0.00">
+			<textField pattern="#,##0.00">
 				<reportElement x="315" y="0" width="89" height="20" uuid="19e18b6b-4687-4cc7-a768-ea75cf2c5018"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>

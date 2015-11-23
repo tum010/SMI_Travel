@@ -173,12 +173,12 @@
 	<detail>
 		<band height="165" splitType="Stretch">
 			<subreport>
-				<reportElement positionType="Float" x="0" y="87" width="803" height="76" uuid="3618a560-5328-44f7-9d3f-491f682db626"/>
+				<reportElement positionType="Float" x="0" y="87" width="803" height="76" isRemoveLineWhenBlank="true" uuid="3618a560-5328-44f7-9d3f-491f682db626"/>
 				<dataSourceExpression><![CDATA[$F{ticketSummaryAirlineDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/TicketSummaryAirline.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="0" y="0" width="802" height="76" uuid="5e0fd47b-980a-4f86-a808-df4058d1cb30"/>
+				<reportElement x="0" y="0" width="802" height="76" isRemoveLineWhenBlank="true" uuid="5e0fd47b-980a-4f86-a808-df4058d1cb30"/>
 				<dataSourceExpression><![CDATA[$F{ticketSummaryDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/TicketSummary.jasper"]]></subreportExpression>
 			</subreport>
