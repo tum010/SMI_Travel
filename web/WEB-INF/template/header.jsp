@@ -96,6 +96,7 @@
                                             "<li><a href=''>Land</a></li>",
                                             "<li><a href=''>Others</a></li>",
                                             "<li><a href='InvoiceMonthly.smi'>Finance And Account</a></li>",
+                                            "<li><a href='OutboundSummary.smi'>Outbound Summary</a></li>",
                                             "<li><a href='PackageTourHotel.smi'>Booking Summary</a></li>"];
                             var CheckingMenu = [
                                             "<li><a href='PaymentTourHotel.smi'> PackageTour/Hotel </a></li>",
