@@ -187,7 +187,7 @@ public class HotelDetailController extends SMITravelController {
                 request.setAttribute(EnableSave,1);
             }else{
                 request.setAttribute(EnableSave,0);
-                BillableView billableView = utilservice.getBillableDescByBookId(id);
+                BillableView billableView = utilservice.getBillableDescByBookId(id,"4");
                 int resultupdate = utilservice.updateBillableDesc(billableView,billDescId);
             }
             return new ModelAndView("redirect:HotelDetail.smi?referenceNo=" + refNo + "&action=edit&id="+ id + "&result=" + result);

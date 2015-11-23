@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingOtherService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
@@ -35,6 +36,7 @@ public class OtherDetailController extends SMITravelController {
     private static final String CurrencyList = "currency_list";
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String ISBILLSTATUS = "IsBillStatus";
+    private static final String EnableSave = "EnableSave";
     private UtilityService utilservice;
     private BookingOtherService OtherService;
     private UtilityFunction util;
@@ -101,19 +103,23 @@ public class OtherDetailController extends SMITravelController {
             adQty = String.valueOf(master.getAdult());
             chQty = String.valueOf(master.getChild());
             inQty = String.valueOf(master.getInfant());
+            request.setAttribute(EnableSave,0);
         }
-        
+        String bookTypeNo = "";
         request.setAttribute("Master", master);
         System.out.println("agentId : "+agentId);
         String BookType = master.getBookingType();
         if("I".equalsIgnoreCase(BookType)){
             request.setAttribute(BOOKINGTYPE,"i");
+            bookTypeNo = "2";
         }else{
             request.setAttribute(BOOKINGTYPE,"o");
+            bookTypeNo = "8";
         }
+
         request.setAttribute("currency", master.getCurrency());
         request.setAttribute("currencycost", master.getCurrency());
-    
+           
         if ("save".equalsIgnoreCase(action)) {
             OtherBooking Other = new OtherBooking();
             if(!"".equalsIgnoreCase(itemid)){
@@ -281,6 +287,14 @@ public class OtherDetailController extends SMITravelController {
                 request.setAttribute(TransectionResult, "save unsuccessful");
             }
             
+            String billDescId = utilservice.getBillableDescId(itemid, bookTypeNo);
+            if("".equalsIgnoreCase(billDescId)){
+                request.setAttribute(EnableSave,1);
+            }else{
+                request.setAttribute(EnableSave,0);
+                BillableView billableView = utilservice.getBillableDescByBookId(itemid,bookTypeNo);
+                int resultupdate = utilservice.updateBillableDesc(billableView,billDescId);
+            }
         }
         if ("edit".equalsIgnoreCase(action)) {
             OtherBooking Other = OtherService.getBookDetailOtherFromID(request.getParameter("itemid"));
@@ -340,6 +354,13 @@ public class OtherDetailController extends SMITravelController {
             request.setAttribute("currency", currency);
             request.setAttribute("currencycost", currencycost);
             getTicket(request, Other.getId());
+            
+            String billDescId = utilservice.getBillableDescId(itemid, bookTypeNo);
+            if("".equalsIgnoreCase(billDescId)){
+                request.setAttribute(EnableSave,1);
+            }else{
+                request.setAttribute(EnableSave,0);
+            }
         }
         
         if("1".equalsIgnoreCase(isbill)){

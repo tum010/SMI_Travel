@@ -132,8 +132,6 @@ public class DaytourDetailController extends SMITravelController {
                 request.setAttribute(EnableSave,1);
             }else{
                 request.setAttribute(EnableSave,0);
-                BillableView billableView = utilservice.getBillableDescByBookId(dBookingId);
-                int resultupdate = utilservice.updateBillableDesc(billableView,billDescId);
             }
             
         } else if ("save".equalsIgnoreCase(action)) {
@@ -213,7 +211,7 @@ public class DaytourDetailController extends SMITravelController {
                 request.setAttribute(EnableSave,1);
             }else{
                 request.setAttribute(EnableSave,0);
-                BillableView billableView = utilservice.getBillableDescByBookId(dBookingId);
+                BillableView billableView = utilservice.getBillableDescByBookId(dBookingId,"6");
                 int resultupdate = utilservice.updateBillableDesc(billableView,billDescId);
             }
             

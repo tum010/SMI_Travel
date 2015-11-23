@@ -524,10 +524,10 @@ public class MListItemImpl implements MListItemDao {
     }
 
     @Override
-    public BillableView getBillableDescByBookId(String bookId) {
+    public BillableView getBillableDescByBookId(String bookId ,String billType) {
         UtilityFunction util = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
-        String query = "SELECT * FROM `billable_view_all` where id = '"+bookId+"'";
+        String query = "SELECT * FROM `billable_view_all` where id = '"+bookId+"' and bill_type_id = '"+billType+"'";
         List<BillableView> billableViewList = new ArrayList<BillableView>();
         List<Object[]> QueryList = session.createSQLQuery(query)
                 .addScalar("cost",Hibernate.STRING)

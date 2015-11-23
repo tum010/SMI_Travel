@@ -315,8 +315,8 @@ public class UtilityService {
         return listitemdao.getBillableDescId(bookId,billType);
     }
     
-    public BillableView getBillableDescByBookId(String bookId){
-        return listitemdao.getBillableDescByBookId(bookId);
+    public BillableView getBillableDescByBookId(String bookId, String billType){
+        return listitemdao.getBillableDescByBookId(bookId,billType);
     }
     
     public int updateBillableDesc(BillableView billableView,String billDescId){
