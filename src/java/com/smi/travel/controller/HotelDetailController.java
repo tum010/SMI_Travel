@@ -105,17 +105,12 @@ public class HotelDetailController extends SMITravelController {
         System.out.println("orderNO : " + orderNo);
         
         request.setAttribute(ISBILLSTATUS,0);
-        String billDescId = utilservice.getBillableDescId(id, "4");
-        if("".equalsIgnoreCase(billDescId)){
-            request.setAttribute(EnableSave,1);
-        }else{
-            request.setAttribute(EnableSave,0);
-        }
+
         
         if ("new".equalsIgnoreCase(action)) {
             System.out.println("add");
             setResponseAttribute(request, refNo);
-
+            request.setAttribute(EnableSave,0);
         } else if ("insert".equalsIgnoreCase(action) || "update".equalsIgnoreCase(action)) {
             HotelBooking hotelBooking;
             if ("insert".equalsIgnoreCase(action)) {
@@ -187,6 +182,7 @@ public class HotelDetailController extends SMITravelController {
             }
             request.setAttribute(Result, result);
             
+            String billDescId = utilservice.getBillableDescId(id, "4");
             if("".equalsIgnoreCase(billDescId)){
                 request.setAttribute(EnableSave,1);
             }else{
@@ -213,6 +209,13 @@ public class HotelDetailController extends SMITravelController {
             request.setAttribute(HotelPassengerList, hotelPassengerList);
             setResponseAttribute(request, refNo);
             saveHistoryBooking(refNo,user,hotel,"VIEW");
+            
+            String billDescId = utilservice.getBillableDescId(id, "4");
+            if("".equalsIgnoreCase(billDescId)){
+                request.setAttribute(EnableSave,1);
+            }else{
+                request.setAttribute(EnableSave,0);
+            }
         } else if ("delete".equalsIgnoreCase(action)) {
 
         } else if ("deleterRoom".equalsIgnoreCase(action)) {
