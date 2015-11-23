@@ -175,7 +175,7 @@ public class AirTicketDetailController extends SMITravelController {
                 for(int i = 0 ; i < parts.length ; i++){
                     refItemId += ",'"+parts[i]+"'";
                 }
-                System.out.println(" ============ refItemId ============ "+ refItemId);
+
                 List<BillableView> billableViews = utilservice.getBillableDescFromRefItemId(refItemId.substring(1));
                 List<BillableDesc> billableDescList = utilservice.getBillableDescIdFromRefNo(referenceNo);
                 if(billableDescList != null){
@@ -186,13 +186,17 @@ public class AirTicketDetailController extends SMITravelController {
                         if(refItemIdTempParts.length == 0){
                             for(int k = 0 ; k < billableViews.size() ; k++){
                                 if(String.valueOf(refItemIdTemp).equalsIgnoreCase(billableViews.get(k).getRefItemId())){
-                                    int resultupdate = utilservice.updateBillableDesc(billableViews.get(k),""); //billdescId
+                                    int resultupdate = utilservice.updateBillableDesc(billableViews.get(k),billableDescList.get(j).getId()); //billdescId
                                 }
                             }
                         }else{
                             for(int k = 0 ; k < refItemIdTempParts.length ; k++){
-                            
-                            
+                                for(int x = 0 ; x < billableViews.size() ; x++){
+                                    if(String.valueOf(refItemIdTempParts[k]).equalsIgnoreCase(billableViews.get(k).getRefItemId())){
+                                        
+                                    }
+                                }
+//                                int resultupdate = utilservice.updateBillableDesc(billableViews.get(k),billableDescList.get(j).getId()); //billdescId
                             }
                         }
                         
