@@ -3,6 +3,8 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.PaymentOutboundDao;
 import com.smi.travel.datalayer.entity.PaymentOutbound;
+import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -31,5 +33,21 @@ public class PaymentOutboundService {
         }else{
             return paymentOutboundDao.insertPaymentOutbound(paymentOutbound);
         }
+    }
+
+    public List<PaymentOutboundDetailView> getPaymentOutboundDetail(String paymentOutboundId) {
+        return paymentOutboundDao.getPaymentOutboundDetail(paymentOutboundId); 
+    }
+
+    public PaymentOutbound searchPaymentOutbound(String payNo) {
+        return paymentOutboundDao.searchPaymentOutbound(payNo);
+    }
+
+    public List<String> getRefNoOutbound() {
+        return paymentOutboundDao.getRefNoOutbound();
+    }
+
+    public String deletePaymentOutboundDetail(String paymentOutboundDetailId) {
+        return paymentOutboundDao.deletePaymentOutboundDetail(paymentOutboundDetailId);
     }
 }

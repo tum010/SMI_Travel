@@ -20,6 +20,7 @@ import com.smi.travel.datalayer.dao.MasterDao;
 import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
+import com.smi.travel.datalayer.dao.PaymentOutboundDao;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
 import com.smi.travel.datalayer.dao.ReceiptDao;
@@ -55,6 +56,7 @@ import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
 import com.smi.travel.datalayer.view.dao.CustomerAgentInfoDao;
 import com.smi.travel.datalayer.view.dao.TicketAircommissionViewDao;
 import com.smi.travel.datalayer.view.entity.BookSummary;
+import com.smi.travel.datalayer.view.entity.BookingOutboundView;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.PaymentTourCommissionView;
 import com.smi.travel.datalayer.view.entity.TicketAircommissionView;
@@ -107,7 +109,8 @@ public class AJAXBean extends AbstractBean implements
     private static final String TAXINVOICE = "TaxInvoiceServlet";
     private static final String CREDITNOTE = "CreditNoteServlet";
     private static final String PAYMENTTOURHOTEL = "PaymentTourHotelServlet";
-    private static final String RECEIVETABLE = "ReceiveTableServlet";        
+    private static final String RECEIVETABLE = "ReceiveTableServlet";
+    private static final String PAYMENTOUTBOUND = "PaymentOutboundServlet"; 
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -133,6 +136,7 @@ public class AJAXBean extends AbstractBean implements
     private MFilghtDao mFlightDao;
     private PaymentWendytourDao paymentWendytourDao;
     private ReceiveTableDao receiveTableDao;
+    private PaymentOutboundDao paymentOutboundDao;
 
     public AJAXBean(List queryList) {
         super(queryList);
@@ -190,6 +194,8 @@ public class AJAXBean extends AbstractBean implements
                     paymentWendytourDao = (PaymentWendytourDao) obj;
                 } else if (obj instanceof ReceiveTableDao) {
                     receiveTableDao = (ReceiveTableDao) obj;
+                } else if (obj instanceof PaymentOutboundDao) {
+                    paymentOutboundDao = (PaymentOutboundDao) obj;
                 }
             }
         }
@@ -866,6 +872,16 @@ public class AJAXBean extends AbstractBean implements
                     result = "fail";
                 }    
             }
+        }else if(PAYMENTOUTBOUND.equalsIgnoreCase(servletName)){
+            if("searchRefNo".equalsIgnoreCase(type)){
+                String searchRefNo = map.get("refNo").toString();
+                List<BookingOutboundView> bookingOutboundViewList = paymentOutboundDao.getBookingOutboundView(searchRefNo);
+                if (bookingOutboundViewList.size() > 0) {
+                    result = buildPaymentOutboundViewHTML(bookingOutboundViewList);
+                } else {
+                    result = "null";
+                }
+            }          
         }
 
         return result;
@@ -1058,6 +1074,43 @@ public class AJAXBean extends AbstractBean implements
             }
             row++;
         }
+        return html.toString();
+    }
+    
+    private String buildPaymentOutboundViewHTML(List<BookingOutboundView> bookingOutboundViewList) {
+        StringBuffer html = new StringBuffer();      
+        int no = 1;
+        String refNo = "";
+        String type = "";
+        String description = "";
+        String billType = "";
+        BigDecimal cost = new BigDecimal(0);
+        String cur = "";
+        String bookId = "";
+                
+        for (int i = 0; i < bookingOutboundViewList.size(); i++) {
+            BookingOutboundView bookingOutboundView = new BookingOutboundView();
+            bookingOutboundView = bookingOutboundViewList.get(i);
+            refNo = bookingOutboundView.getRefNo();
+            type = bookingOutboundView.getType();
+            description = bookingOutboundView.getDescription();
+            billType = bookingOutboundView.getBilltype();
+            cost = (!"".equalsIgnoreCase(bookingOutboundView.getCost()) ? new BigDecimal(bookingOutboundView.getCost()) : new BigDecimal(0));
+            cur = bookingOutboundView.getCur();
+            bookId = bookingOutboundView.getBookid();
+                       
+            String newrow = "";              
+            newrow += "<tr>"
+                    + "<td class='text-center'>" + no + "</td>"
+                    + "<td class='text-center'>" + type + "</td>"
+                    + "<td>" + description + "</td>"
+                    + "<td class='text-right money'>" + cost + "</td>"
+                    + "<td class='text-center'>" + cur + "</td>"
+                    + "<td><center><a href=\"#/ref\"><span onclick=\"addRefNo('" + refNo + "','" + type + "','" + description + "','" + billType + "','" + cost + "','" + cur + "','" + bookId + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                    + "</tr>";
+            html.append(newrow);
+            no++;
+        } 
         return html.toString();
     }
     
@@ -2174,6 +2227,5 @@ public class AJAXBean extends AbstractBean implements
     public void setmFlightDao(MFilghtDao mFlightDao) {
         this.mFlightDao = mFlightDao;
     }
-
-    
+       
 }
