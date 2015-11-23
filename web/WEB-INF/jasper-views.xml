@@ -53,7 +53,7 @@
         
         <bean id="TicketSummary"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
-	   <property name="url" value="/WEB-INF/report/TicketSummary.jrxml"/>
+	   <property name="url" value="/WEB-INF/report/TicketSummaryList.jrxml"/>
 	</bean>
         
          <bean id="StaffSummary"

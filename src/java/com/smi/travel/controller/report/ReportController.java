@@ -16,6 +16,7 @@ import com.smi.travel.datalayer.report.model.OtherMonthlyReport;
 import com.smi.travel.datalayer.report.model.PackageMonthlyReport;
 import com.smi.travel.datalayer.report.model.PaymentAirline;
 import com.smi.travel.datalayer.report.model.TicketOrder;
+import com.smi.travel.datalayer.report.model.TicketSummaryList;
 import com.smi.travel.datalayer.service.ReportService;
 import com.smi.travel.datalayer.view.entity.BookingHeaderSummaryView;
 import com.smi.travel.datalayer.view.entity.ConfirmSlipHeaderReport;
@@ -195,6 +196,7 @@ public class ReportController extends SMITravelController {
             ((TicketOrder) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         } else if (TicketSummary.equalsIgnoreCase(name)) {
             data = reportservice.getTicketSummary(ticketfrom, tickettype, startdate, enddate, billto, passenger, user.getName());
+            ((TicketSummaryList) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         } else if (AirlineSummary.equalsIgnoreCase(name)) {
             data = reportservice.getAirlineSummary(ticketfrom, tickettype, startdate, enddate, user.getName());
         } else if (StaffSummary.equalsIgnoreCase(name)) {

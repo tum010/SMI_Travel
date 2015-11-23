@@ -146,7 +146,9 @@ public class ReportService {
     }
     
     public List getTicketSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username){
-        return ticketsummaryDao.getTicketSummary(ticketfrom, tickettype, startdate, enddate, billto, passenger,username);
+        List data  = new ArrayList();
+        data.add(ticketsummaryDao.getTicketSummaryReport(ticketfrom, tickettype, startdate, enddate, billto, passenger, username));
+        return data;
     }
     
 //    public List getInvoiceSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username){
