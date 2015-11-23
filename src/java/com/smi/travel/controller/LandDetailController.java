@@ -17,6 +17,7 @@ import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.BookingLandService;
 import com.smi.travel.datalayer.service.ProductService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
@@ -45,6 +46,7 @@ public class LandDetailController extends SMITravelController {
     private static final String CurrencyList = "CurrencyList";
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String ISBILLSTATUS = "IsBillStatus";
+    private static final String EnableSave = "EnableSave";
     private UtilityService utilservice;
     private AgentService agentservice;
     private ProductService productservice;
@@ -130,6 +132,7 @@ public class LandDetailController extends SMITravelController {
         }
         if("add".equalsIgnoreCase(action)){
             request.setAttribute("isEdit", "0");
+            request.setAttribute(EnableSave,0);
         }
         if ("save".equalsIgnoreCase(action)) {
             LandBooking land = new LandBooking();
@@ -213,6 +216,16 @@ public class LandDetailController extends SMITravelController {
             } else {
                 request.setAttribute(TransectionResult, "save unsuccessful");
             }
+            
+            String billDescId = utilservice.getBillableDescId(landID, "3");
+            if("".equalsIgnoreCase(billDescId)){
+                request.setAttribute(EnableSave,1);
+            }else{
+                request.setAttribute(EnableSave,0);
+                BillableView billableView = utilservice.getBillableDescByBookId(landID,"3");
+                int resultupdate = utilservice.updateBillableDesc(billableView,billDescId);
+            }
+            
         } else if ("edit".equalsIgnoreCase(action)) {
             request.setAttribute("isEdit", "1");
             landID = request.getParameter("landid");
@@ -281,6 +294,13 @@ public class LandDetailController extends SMITravelController {
                 System.out.println("departDate : "+departDate);
                 remark = land.getRemark();
 
+            }
+            
+            String billDescId = utilservice.getBillableDescId(landID, "3");
+            if("".equalsIgnoreCase(billDescId)){
+                request.setAttribute(EnableSave,1);
+            }else{
+                request.setAttribute(EnableSave,0);
             }
 
         }

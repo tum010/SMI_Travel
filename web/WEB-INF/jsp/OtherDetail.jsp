@@ -33,6 +33,7 @@
     <c:set var="checkVat" value="" />
 </c:if>
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
+<c:set var="enableSave" value="${requestScope['EnableSave']}" />
 
 <section class="content-header" >
     <h1>
@@ -386,7 +387,14 @@
                                             <button type="submit"  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
                                         </c:if>
                                         <c:if test="${isBillStatus == 1}">
-                                            <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                            <c:choose>
+                                                <c:when test="${enableSave == 0}">
+                                                    <button type="submit"  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                                </c:when>
+                                                <c:when test="${enableSave == 1}">
+                                                    <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                                </c:when>
+                                            </c:choose> 
                                         </c:if>
                                     </c:if>
                                     <c:if test="${lockUnlockBooking == 1}">

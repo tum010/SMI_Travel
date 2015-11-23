@@ -71,6 +71,6 @@ public interface MListItemDao {
     public List<MAirlineAgent> getMAirlineAgentFromAirlineCode(String airlineCode);
     
     public String getBillableDescId(String bookId , String billType);
-    public BillableView getBillableDescByBookId(String bookId);
+    public BillableView getBillableDescByBookId(String bookId,String billType);
     public int updateBillableDesc(BillableView billableView,String billDescId);
 }
