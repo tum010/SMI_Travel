@@ -24,6 +24,13 @@ public class SearchPaymentOutboundController extends SMITravelController {
         request.setAttribute(STATUS, mItemstatusList);
         List<InvoiceSupplier> invoiceSupplierList = getPaymentTourHotelService().getListInvoiceSuppiler();
         request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
+        
+        String fromDate = request.getParameter("fromDate");
+        String toDate = request.getParameter("toDate");
+        String status = request.getParameter("status");
+        String invSupCode = request.getParameter("invSupCode");
+        String refNo = request.getParameter("refNo");
+        
         return SearchPaymentOutbound;
     }
 

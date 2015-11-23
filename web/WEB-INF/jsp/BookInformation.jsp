@@ -196,7 +196,9 @@
                 <div class="col-md-12 "><br></div>
         <div class="row">
             <div class="col-md-12 ">
-                <c:choose>
+                <c:set var="colorTrHead" value="#C5F1C2"/>
+                <c:set var="colorTr" value="#D6F1D4"/>
+                <c:choose>                  
                     <c:when test="${requestScope['search_type'] == '1'}">
                         <table id="BookList" class="display paginated" cellspacing="0" width="100%">
                         <thead>
@@ -221,7 +223,7 @@
                                 <c:if test="${i.count%2 == 0}">
                                     <c:set var="color" value="#F2F2F2"/>
                                 </c:if>
-                            <tr id="trTable${i.count}" bgcolor="${color}">
+                            <tr id="trTable${i.count}" bgcolor="">
                                 <td align="center">${i.count}</td>
                                 <td align="center">${air.refno}</td>
                                 <td align="center">${air.refdate}</td>
@@ -239,10 +241,10 @@
                                     </a>
                                 </td>
                             </tr>
-                            <tr style="height: 1.8em;" bgcolor="${color}">
-                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Invoice</b></td>
+                            <tr style="height: 1.8em;" bgcolor="${colorTr}">
+                                <td colspan="1" align="right" bgcolor="${colorTrHead}"><b>Invoice</b></td>
                                 <td colspan="4">${air.invoice}</td>
-                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Receipt</b></td>
+                                <td colspan="1" align="right" bgcolor="${colorTrHead}"><b>Receipt</b></td>
                                 <td colspan="5">${air.receipt}</td>
                             </tr>
                             </c:forEach>
@@ -274,7 +276,7 @@
                                 <c:if test="${i.count%2 == 0}">
                                     <c:set var="color" value="#F2F2F2"/>
                                 </c:if>
-                            <tr bgcolor="${color}">
+                            <tr bgcolor="">
                                 <td align="center">${i.count}</td>
                                 <td align="center">${hotel.refno}</td>
                                 <td align="center">${hotel.refdate}</td>
@@ -293,10 +295,10 @@
                                     </a>
                                 </td>
                             </tr>
-                            <tr style="height: 1.8em;" bgcolor="${color}">
-                                <td colspan="2" align="right" bgcolor="#E8EAFF"><b>Invoice</b></td>
+                            <tr style="height: 1.8em;" bgcolor="${colorTr}">
+                                <td colspan="2" align="right" bgcolor="${colorTrHead}"><b>Invoice</b></td>
                                 <td colspan="3">${hotel.invoice}</td>
-                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Receipt</b></td>
+                                <td colspan="1" align="right" bgcolor="${colorTrHead}"><b>Receipt</b></td>
                                 <td colspan="6">${hotel.receipt}</td>
                             </tr>
                             </c:forEach>
@@ -323,7 +325,7 @@
                             <c:if test="${i.count%2 == 0}">
                                 <c:set var="color" value="#F2F2F2"/>
                             </c:if>    
-                            <tr bgcolor="${color}">
+                            <tr bgcolor="">
                                 <td align="center">${i.count}</td>
                                 <td align="center">${pack.refno}</td>
                                 <td align="center">${pack.refdate}</td>
@@ -337,10 +339,10 @@
                                     </a>
                                 </td>
                             </tr>
-                            <tr style="height: 1.8em;" bgcolor="${color}">
-                                <td colspan="2" align="right" bgcolor="#E8EAFF"><b>Invoice</b></td>
+                            <tr style="height: 1.8em;" bgcolor="${colorTr}">
+                                <td colspan="2" align="right" bgcolor="${colorTrHead}"><b>Invoice</b></td>
                                 <td colspan="2">${pack.invoice}</td>
-                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Receipt</b></td>
+                                <td colspan="1" align="right" bgcolor="${colorTrHead}"><b>Receipt</b></td>
                                 <td colspan="2">${pack.receipt}</td>
                             </tr>
                             </c:forEach>
@@ -375,7 +377,7 @@
                             <c:if test="${i.count%2 == 0}">
                                 <c:set var="color" value="#F2F2F2"/>
                             </c:if>    
-                            <tr bgcolor="${color}">
+                            <tr bgcolor="">
                                 <td align="center">${i.count}</td>
                                 <td align="center">${daytour.refno}</td>
                                 <td align="center">${daytour.refdate}</td>
@@ -397,10 +399,10 @@
                                     </a>
                                 </td>
                             </tr>
-                            <tr style="height: 1.8em;" bgcolor="${color}">
-                                <td colspan="2" align="right" bgcolor="#E8EAFF"><b>Invoice</b></td>
+                            <tr style="height: 1.8em;" bgcolor="${colorTr}">
+                                <td colspan="2" align="right" bgcolor="${colorTrHead}"><b>Invoice</b></td>
                                 <td colspan="5">${daytour.invoice}</td>
-                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Receipt</b></td>
+                                <td colspan="1" align="right" bgcolor="${colorTrHead}"><b>Receipt</b></td>
                                 <td colspan="7">${daytour.receipt}</td>
                             </tr>
                             </c:forEach>
@@ -428,7 +430,7 @@
                             <c:if test="${i.count%2 == 0}">
                                 <c:set var="color" value="#F2F2F2"/>
                             </c:if>    
-                            <tr bgcolor="${color}"> 
+                            <tr bgcolor=""> 
                                 <td align="center">${i.count}</td>
                                 <td align="center">${other.refno}</td>
                                 <td align="center">${other.refdate}</td>
@@ -443,11 +445,11 @@
                                     </a>
                                 </td>
                             </tr>
-                            <tr style="height: 1.8em;" bgcolor="${color}">
-                                <td colspan="2" align="right" bgcolor="#E8EAFF"><b>Invoice</b></td>
-                                <td colspan="2">${other.invoice}</td>
-                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Receipt</b></td>
-                                <td colspan="3">${other.receipt}</td>
+                            <tr style="height: 1.8em;" bgcolor="${colorTr}">
+                                <td colspan="2" align="right" bgcolor="${colorTrHead}"><b>Invoice</b></td>
+                                <td colspan="3">${other.invoice}</td>
+                                <td colspan="1" align="right" bgcolor="${colorTrHead}"><b>Receipt</b></td>
+                                <td colspan="2">${other.receipt}</td>
                             </tr>
                             </c:forEach>
                         </tbody>
@@ -475,7 +477,7 @@
                             <c:if test="${i.count%2 == 0}">
                                 <c:set var="color" value="#F2F2F2"/>
                             </c:if>    
-                            <tr bgcolor="${color}">
+                            <tr bgcolor="">
                                 <td align="center">${i.count}</td>
                                 <td align="center">${land.refno}</td>
                                 <td align="center">${land.refdate}</td>
@@ -491,10 +493,10 @@
                                     </a>
                                 </td>
                             </tr>
-                            <tr style="height: 1.8em;" bgcolor="${color}">
-                                <td colspan="2" align="right" bgcolor="#E8EAFF"><b>Invoice</b></td>
+                            <tr style="height: 1.8em;" bgcolor="${colorTr}">
+                                <td colspan="2" align="right" bgcolor="${colorTrHead}"><b>Invoice</b></td>
                                 <td colspan="3">${land.invoice}</td>
-                                <td colspan="1" align="right" bgcolor="#E8EAFF"><b>Receipt</b></td>
+                                <td colspan="1" align="right" bgcolor="${colorTrHead}"><b>Receipt</b></td>
                                 <td colspan="3">${land.receipt}</td>
                             </tr>
                             </c:forEach>
