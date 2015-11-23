@@ -5,6 +5,8 @@
  */
 package com.smi.travel.datalayer.report.model;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Kanokporn
@@ -12,12 +14,12 @@ package com.smi.travel.datalayer.report.model;
 public class TicketSummaryAirline {
     private String billingname;
     private String airline;
-    private String ticketnum;
-    private String totalsalefare;
-    private String totalnetfare;
-    private String totaltax;
-    private String profit;
-    private String profitavg;
+    private BigDecimal ticketnum;
+    private BigDecimal totalsalefare;
+    private BigDecimal totalnetfare;
+    private BigDecimal totaltax;
+    private BigDecimal profit;
+    private BigDecimal profitavg;
 
     public String getBillingname() {
         return billingname;
@@ -35,51 +37,51 @@ public class TicketSummaryAirline {
         this.airline = airline;
     }
 
-    public String getTicketnum() {
+    public BigDecimal getTicketnum() {
         return ticketnum;
     }
 
-    public void setTicketnum(String ticketnum) {
+    public void setTicketnum(BigDecimal ticketnum) {
         this.ticketnum = ticketnum;
     }
 
-    public String getTotalsalefare() {
+    public BigDecimal getTotalsalefare() {
         return totalsalefare;
     }
 
-    public void setTotalsalefare(String totalsalefare) {
+    public void setTotalsalefare(BigDecimal totalsalefare) {
         this.totalsalefare = totalsalefare;
     }
 
-    public String getTotalnetfare() {
+    public BigDecimal getTotalnetfare() {
         return totalnetfare;
     }
 
-    public void setTotalnetfare(String totalnetfare) {
+    public void setTotalnetfare(BigDecimal totalnetfare) {
         this.totalnetfare = totalnetfare;
     }
 
-    public String getTotaltax() {
+    public BigDecimal getTotaltax() {
         return totaltax;
     }
 
-    public void setTotaltax(String totaltax) {
+    public void setTotaltax(BigDecimal totaltax) {
         this.totaltax = totaltax;
     }
 
-    public String getProfit() {
+    public BigDecimal getProfit() {
         return profit;
     }
 
-    public void setProfit(String profit) {
+    public void setProfit(BigDecimal profit) {
         this.profit = profit;
     }
 
-    public String getProfitavg() {
+    public BigDecimal getProfitavg() {
         return profitavg;
     }
 
-    public void setProfitavg(String profitavg) {
+    public void setProfitavg(BigDecimal profitavg) {
         this.profitavg = profitavg;
     }
     

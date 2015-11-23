@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketSummaryAirline" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="aead4a18-a210-4c34-a9ce-3eb73e00e8ca">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketSummaryAirline" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isTitleNewPage="true" uuid="aead4a18-a210-4c34-a9ce-3eb73e00e8ca">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="414"/>
 	<property name="ireport.y" value="0"/>
 	<field name="billingname" class="java.lang.String"/>
 	<field name="airline" class="java.lang.String"/>
-	<field name="ticketnum" class="java.lang.String"/>
-	<field name="totalsalefare" class="java.lang.String"/>
-	<field name="totalnetfare" class="java.lang.String"/>
-	<field name="totaltax" class="java.lang.String"/>
-	<field name="profit" class="java.lang.String"/>
-	<field name="profitavg" class="java.lang.String"/>
+	<field name="ticketnum" class="java.lang.Integer"/>
+	<field name="totalsalefare" class="java.math.BigDecimal"/>
+	<field name="totalnetfare" class="java.math.BigDecimal"/>
+	<field name="totaltax" class="java.math.BigDecimal"/>
+	<field name="profit" class="java.math.BigDecimal"/>
+	<field name="profitavg" class="java.math.BigDecimal"/>
 	<variable name="sumticketnum" class="java.lang.Integer" resetType="Group" resetGroup="TicketSummaryAirline" calculation="Sum">
 		<variableExpression><![CDATA[$F{ticketnum}]]></variableExpression>
 	</variable>
-	<variable name="sumtotalsalefare" class="java.lang.Integer" resetType="Group" resetGroup="TicketSummaryAirline" calculation="Sum">
+	<variable name="sumtotalsalefare" class="java.math.BigDecimal" resetType="Group" resetGroup="TicketSummaryAirline" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalsalefare}]]></variableExpression>
 	</variable>
-	<variable name="sumtotalnetfare" class="java.lang.Integer" resetType="Group" resetGroup="TicketSummaryAirline" calculation="Sum">
+	<variable name="sumtotalnetfare" class="java.math.BigDecimal" resetType="Group" resetGroup="TicketSummaryAirline" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalnetfare}]]></variableExpression>
 	</variable>
-	<variable name="sumtotaltax" class="java.lang.Integer" resetType="Group" resetGroup="TicketSummaryAirline" calculation="Sum">
+	<variable name="sumtotaltax" class="java.math.BigDecimal" resetType="Group" resetGroup="TicketSummaryAirline" calculation="Sum">
 		<variableExpression><![CDATA[$F{totaltax}]]></variableExpression>
 	</variable>
-	<variable name="sumprofit" class="java.lang.Integer" resetType="Group" resetGroup="TicketSummaryAirline" calculation="Sum">
+	<variable name="sumprofit" class="java.math.BigDecimal" resetType="Group" resetGroup="TicketSummaryAirline" calculation="Sum">
 		<variableExpression><![CDATA[$F{profit}]]></variableExpression>
 	</variable>
-	<variable name="sumprofitavg" class="java.lang.Integer" resetType="Group" resetGroup="TicketSummaryAirline" calculation="Sum">
+	<variable name="sumprofitavg" class="java.math.BigDecimal" resetType="Group" resetGroup="TicketSummaryAirline" calculation="Sum">
 		<variableExpression><![CDATA[$F{profitavg}]]></variableExpression>
 	</variable>
-	<group name="TicketSummaryAirline" isStartNewPage="true">
+	<group name="TicketSummaryAirline">
 		<groupExpression><![CDATA[$F{billingname}]]></groupExpression>
 		<groupHeader>
-			<band height="41">
+			<band height="69">
 				<rectangle>
-					<reportElement x="0" y="22" width="842" height="18" backcolor="#E6E6E6" uuid="e87d54aa-4b5c-4f9b-9e03-a3d367caf65e"/>
+					<reportElement x="0" y="50" width="750" height="18" backcolor="#E6E6E6" uuid="e87d54aa-4b5c-4f9b-9e03-a3d367caf65e"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineColor="#CCCCCC"/>
 					</graphicElement>
 				</rectangle>
 				<staticText>
-					<reportElement x="0" y="22" width="92" height="18" backcolor="#FFFFFF" uuid="b51532dd-599d-4f0d-8a73-1823d361d4fb"/>
+					<reportElement x="0" y="50" width="92" height="18" backcolor="#FFFFFF" uuid="b51532dd-599d-4f0d-8a73-1823d361d4fb"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -54,7 +54,7 @@
 					<text><![CDATA[Airline]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="92" y="22" width="108" height="18" uuid="d7a96ae7-08b4-494a-ab14-525f07dcffc2"/>
+					<reportElement x="92" y="50" width="108" height="18" uuid="d7a96ae7-08b4-494a-ab14-525f07dcffc2"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -67,7 +67,7 @@
 					<text><![CDATA[Ticket Num]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="200" y="22" width="127" height="18" uuid="8ebc32de-60a8-45a3-9b32-b8397c59caea"/>
+					<reportElement x="200" y="50" width="115" height="18" uuid="8ebc32de-60a8-45a3-9b32-b8397c59caea"/>
 					<box>
 						<pen lineWidth="0.25"/>
 						<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -81,7 +81,7 @@
 					<text><![CDATA[Total Sale Fare]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="327" y="22" width="122" height="18" uuid="eee50a03-eb4b-415a-9108-b8a085f67a5f"/>
+					<reportElement x="315" y="50" width="103" height="18" uuid="eee50a03-eb4b-415a-9108-b8a085f67a5f"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -94,7 +94,7 @@
 					<text><![CDATA[Total Net Fare]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="449" y="22" width="126" height="18" uuid="f83b66b0-2986-4e22-9db5-6e7bdc97e829"/>
+					<reportElement x="418" y="50" width="110" height="18" uuid="f83b66b0-2986-4e22-9db5-6e7bdc97e829"/>
 					<box>
 						<pen lineColor="#CCCCFF"/>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -108,7 +108,7 @@
 					<text><![CDATA[Total Tax]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="575" y="22" width="134" height="18" backcolor="#FFFFFF" uuid="8520c29c-2e26-47fd-8a1c-43dae63f76d2"/>
+					<reportElement x="528" y="50" width="115" height="18" backcolor="#FFFFFF" uuid="8520c29c-2e26-47fd-8a1c-43dae63f76d2"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -121,7 +121,7 @@
 					<text><![CDATA[Profit]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="709" y="22" width="133" height="18" backcolor="#FFFFFF" uuid="291da09a-e9f0-4bd6-a452-968b7bb20435"/>
+					<reportElement x="643" y="50" width="107" height="18" backcolor="#FFFFFF" uuid="291da09a-e9f0-4bd6-a452-968b7bb20435"/>
 					<box>
 						<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 						<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -134,12 +134,12 @@
 					<text><![CDATA[Profit AVG]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="11" y="3" width="81" height="15" uuid="ff90cc01-086a-4c15-a177-06552a1318fc"/>
+					<reportElement x="11" y="31" width="81" height="19" uuid="ff90cc01-086a-4c15-a177-06552a1318fc"/>
 					<text><![CDATA[Billing Name : ]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="92" y="3" width="383" height="16" uuid="33490cea-d4ec-4b48-8683-daf5c5adbddd"/>
-					<textElement>
+					<reportElement x="92" y="31" width="383" height="19" uuid="33490cea-d4ec-4b48-8683-daf5c5adbddd"/>
+					<textElement verticalAlignment="Top">
 						<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{billingname}]]></textFieldExpression>
@@ -149,7 +149,7 @@
 		<groupFooter>
 			<band height="27">
 				<rectangle>
-					<reportElement x="0" y="0" width="842" height="24" backcolor="#E6E6E6" uuid="7e1a31d9-67a0-4e2e-8988-6a4438fd3537"/>
+					<reportElement x="0" y="0" width="750" height="24" backcolor="#E6E6E6" uuid="7e1a31d9-67a0-4e2e-8988-6a4438fd3537"/>
 					<graphicElement>
 						<pen lineWidth="0.25" lineColor="#CCCCCC"/>
 					</graphicElement>
@@ -167,35 +167,35 @@
 					<textFieldExpression><![CDATA[$V{sumticketnum}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0">
-					<reportElement x="200" y="0" width="115" height="24" uuid="39346d20-c942-4975-bfa6-980b40da8768"/>
+					<reportElement x="200" y="0" width="102" height="24" uuid="39346d20-c942-4975-bfa6-980b40da8768"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{sumtotalsalefare}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0">
-					<reportElement x="327" y="0" width="110" height="24" uuid="189fdfd4-395c-473a-954d-d380e80ed64b"/>
+					<reportElement x="315" y="0" width="89" height="24" uuid="189fdfd4-395c-473a-954d-d380e80ed64b"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{sumtotalnetfare}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0">
-					<reportElement x="449" y="0" width="114" height="24" uuid="38ab703c-0513-4bc4-9683-6364ad7a146e"/>
+					<reportElement x="418" y="0" width="97" height="24" uuid="38ab703c-0513-4bc4-9683-6364ad7a146e"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{sumtotaltax}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0">
-					<reportElement x="575" y="0" width="120" height="24" uuid="fc3308ad-5c72-440b-921c-2224daf6317e"/>
+					<reportElement x="528" y="0" width="100" height="24" uuid="fc3308ad-5c72-440b-921c-2224daf6317e"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{sumprofit}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0">
-					<reportElement x="709" y="0" width="118" height="24" uuid="42f77b35-74a8-452a-8ca3-5463a5d2c2b2"/>
+					<reportElement x="643" y="0" width="90" height="24" uuid="42f77b35-74a8-452a-8ca3-5463a5d2c2b2"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
@@ -208,7 +208,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="22" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<rectangle>
 				<reportElement mode="Transparent" x="0" y="0" width="92" height="20" forecolor="#CCCCCC" uuid="9ebe977f-a87e-436d-b115-e5c70c835d3d"/>
 				<graphicElement>
@@ -222,25 +222,19 @@
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="200" y="0" width="127" height="20" forecolor="#CCCCCC" uuid="144131c4-7b7a-4224-b65f-138e280d9c6b"/>
+				<reportElement mode="Transparent" x="200" y="0" width="115" height="20" forecolor="#CCCCCC" uuid="144131c4-7b7a-4224-b65f-138e280d9c6b"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="449" y="0" width="126" height="20" forecolor="#CCCCCC" uuid="3f11c966-ef18-4eed-a205-7be11ab6d1ae"/>
+				<reportElement mode="Transparent" x="418" y="0" width="110" height="20" forecolor="#CCCCCC" uuid="3f11c966-ef18-4eed-a205-7be11ab6d1ae"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="575" y="0" width="134" height="20" forecolor="#CCCCCC" uuid="12584ba4-214c-4a81-8293-b7f934a35b9f"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="709" y="0" width="133" height="20" forecolor="#CCCCCC" uuid="2f9c3e37-df5d-4e3b-9637-5f6cf10e9bb2"/>
+				<reportElement mode="Transparent" x="643" y="0" width="107" height="20" forecolor="#CCCCCC" uuid="2f9c3e37-df5d-4e3b-9637-5f6cf10e9bb2"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -252,43 +246,43 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{airline}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="###0">
 				<reportElement x="92" y="0" width="108" height="20" uuid="0426be40-aaa1-4276-a917-68ac75ce9f46"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ticketnum}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="200" y="0" width="115" height="20" uuid="60dde522-2ff1-41ab-a8c5-e51942720707"/>
+			<textField pattern="###0.00">
+				<reportElement x="200" y="0" width="102" height="20" uuid="60dde522-2ff1-41ab-a8c5-e51942720707"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="13" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totalsalefare}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="709" y="0" width="118" height="20" uuid="63997136-cd91-48bd-bc50-49602070e7f2"/>
+			<textField pattern="###0.00">
+				<reportElement x="643" y="0" width="90" height="20" uuid="63997136-cd91-48bd-bc50-49602070e7f2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf&gt;" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{profitavg}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
-				<reportElement x="575" y="0" width="120" height="20" uuid="8700f84b-8fc2-47f8-ae4f-898953e42e28"/>
+			<textField>
+				<reportElement x="528" y="0" width="100" height="20" uuid="8700f84b-8fc2-47f8-ae4f-898953e42e28"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{profit}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
-				<reportElement x="449" y="0" width="114" height="20" uuid="ab864ee2-155b-49c2-b295-c1d6cb7e4d6a"/>
+			<textField pattern="#,##0.00">
+				<reportElement x="418" y="0" width="97" height="20" uuid="ab864ee2-155b-49c2-b295-c1d6cb7e4d6a"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totaltax}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="327" y="0" width="110" height="20" uuid="19e18b6b-4687-4cc7-a768-ea75cf2c5018"/>
+			<textField pattern="###0.00">
+				<reportElement x="315" y="0" width="89" height="20" uuid="19e18b6b-4687-4cc7-a768-ea75cf2c5018"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -301,7 +295,13 @@
 				<textFieldExpression><![CDATA[$F{totalnetfare}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="327" y="0" width="122" height="20" forecolor="#CCCCCC" uuid="6abcf0ea-1edf-4781-bade-6ade055a6720"/>
+				<reportElement mode="Transparent" x="315" y="0" width="103" height="20" forecolor="#CCCCCC" uuid="6abcf0ea-1edf-4781-bade-6ade055a6720"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="528" y="0" width="115" height="20" forecolor="#CCCCCC" uuid="12584ba4-214c-4a81-8293-b7f934a35b9f"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>

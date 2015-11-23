@@ -6,9 +6,12 @@
 package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.report.model.TicketSummary;
+import com.smi.travel.datalayer.report.model.TicketSummaryAirline;
 import com.smi.travel.datalayer.report.model.TicketSummaryList;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -170,14 +173,92 @@ public class TicketSummaryImpl implements TicketSummaryDao {
         UtilityFunction util = new UtilityFunction();
         guideCommissionInfo.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(new Date()));
         guideCommissionInfo.setUsername(username);
+        guideCommissionInfo.setStartdate(startdate);
+        guideCommissionInfo.setEnddate(enddate);
+        guideCommissionInfo.setFrom(ticketfrom);
+        guideCommissionInfo.setType(tickettype);
         guideCommissionInfo.setTicketSummaryDataSource(new JRBeanCollectionDataSource(getTicketSummary(ticketfrom, tickettype, startdate, enddate, billto, passenger, username)));
         guideCommissionInfo.setTicketSummaryAirlineDataSource(new JRBeanCollectionDataSource(getTicketSummaryAirline(ticketfrom, tickettype, startdate, enddate, billto, passenger, username)));
         return guideCommissionInfo;
     }
     
     private List getTicketSummaryAirline(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger,String username){
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        Date thisDate = new Date();
         List data = new ArrayList();
+        String Query ="SELECT bill_to as billingname, air as airline , COUNT(ticket_no)  as ticketnum , SUM(sale_fare) as totalsalefare ,SUM(net_fare) as totalnetfare ,SUM(tax) as totaltax " +
+                      ",SUM(profit) as totalprofit  FROM `airticket_ticket` ";
+        Query += createTicketSummaryQuery(ticketfrom,tickettype,startdate,enddate,billto,passenger);
+        Query += "GROUP BY bill_to,air " +
+                 "ORDER BY bill_to ";
+        System.out.println("Query Ticket Summary Airline : "+Query);
+        int no = 0;
+        List<Object[]> QueryTicketList = session.createSQLQuery(Query )
+                .addScalar("airline", Hibernate.STRING)
+                .addScalar("ticketnum", Hibernate.STRING)
+                .addScalar("totalsalefare", Hibernate.STRING)
+                .addScalar("totalnetfare", Hibernate.STRING)
+                .addScalar("totaltax", Hibernate.STRING)
+                .addScalar("totalprofit", Hibernate.STRING)
+                .addScalar("billingname", Hibernate.STRING)
+                .list();
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        for (Object[] B : QueryTicketList) {
+            TicketSummaryAirline sum = new TicketSummaryAirline();
+            no +=1;
+            sum.setBillingname(util.ConvertString(B[6]));
+            sum.setAirline(util.ConvertString(B[0]));
+            if(B[1] != null){
+                BigDecimal ticknum = new BigDecimal(util.ConvertString(B[1]));
+                sum.setTicketnum(ticknum);
+            }else{
+                sum.setTicketnum(new BigDecimal("0.0"));
+            }
+            if(B[2] != null){
+                BigDecimal salefare = new BigDecimal(util.ConvertString(B[2]));
+                sum.setTotalsalefare(salefare);
+            }else{
+                sum.setTotalsalefare(new BigDecimal("0.0"));
+            }
+            if(B[3] != null){
+                BigDecimal netfare = new BigDecimal(util.ConvertString(B[3]));
+                sum.setTotalnetfare(netfare);
+            }else{
+                sum.setTotalnetfare(new BigDecimal("0.0"));
+            }
+            if(B[4] != null){
+                BigDecimal tax = new BigDecimal(util.ConvertString(B[4]));
+                sum.setTotaltax(tax);
+            }else{
+                sum.setTotaltax(new BigDecimal("0.0"));
+            }
+            if(B[5] != null){
+                BigDecimal profit = new BigDecimal(util.ConvertString(B[5]));
+                sum.setProfit(profit);
+            }else{
+                sum.setProfit(new BigDecimal("0.0"));
+            }
+            
+            if(B[5] != null && B[1] != null){
+                BigDecimal profit = new BigDecimal(util.ConvertString(B[5]));
+                BigDecimal ticketnum = new BigDecimal(util.ConvertString(B[1]));
+                System.out.println("Profit : " + profit  + "  Ticket Num : " + ticketnum);
+                BigDecimal sumProfitAvg = profit.divide(ticketnum, MathContext.DECIMAL128);
+                System.out.println("Sum Total Profit Avg : " + sumProfitAvg);
+                sum.setProfitavg(sumProfitAvg);
+            }else{
+                sum.setProfitavg(new BigDecimal("0.0"));
+            }
+            
+            data.add(sum);
+            System.out.println("sum data :");
+            
+        }
         
+        session.close();
+        this.sessionFactory.close();
         return data;
     }
 
