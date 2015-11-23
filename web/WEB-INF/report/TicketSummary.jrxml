@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="16"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[]]>
@@ -42,171 +42,6 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="96" splitType="Stretch">
-			<image>
-				<reportElement x="0" y="5" width="65" height="48" uuid="240b0ec2-c6f3-48c2-9334-452ce61385bf"/>
-				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="70" y="5" width="149" height="13" uuid="cf11e9df-f5be-45c9-8db7-2c51e21bf3cc"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[S.M.I TRAVEL CO., LTD]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="70" y="18" width="221" height="22" uuid="2633b5ad-75f1-40bd-a192-f5e72e1bbc4b"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[9th Floor, Siam at Siam Hotel Building 865 Rama 1 Rd.,]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="70" y="28" width="221" height="12" uuid="985d65ea-7e13-4c3d-be71-fe5a913abd3b"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="70" y="48" width="221" height="12" uuid="6257b692-6b6a-48f2-a10c-733def8c0fee"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Tel: +66(0)-2162201 Fax: +66(0)-216-2202]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="70" y="60" width="158" height="15" uuid="2bb72731-db8d-43aa-b2bf-3181e72a42ed"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[http://www.wendytour.com]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="70" y="72" width="158" height="13" uuid="5fa04161-7bc6-40ba-82a5-ca06eea3e170"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[e-mail: yoyaku@wendytour.com]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="684" y="0" width="118" height="25" uuid="f5166cf2-3ee8-441b-a467-266353099c98"/>
-				<textElement textAlignment="Right">
-					<font size="16" isBold="true"/>
-				</textElement>
-				<text><![CDATA[List Ticket No.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="650" y="40" width="43" height="13" uuid="45845433-558e-44d0-a57c-a6e105faa226"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Report of: ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="650" y="28" width="42" height="12" uuid="056c1a7e-0a28-4761-b79b-f10feb61d8b9"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Print on:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="660" y="72" width="131" height="12" uuid="898c8598-7f99-46b4-a720-c90deace44dc"/>
-				<textElement textAlignment="Right">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="791" y="72" width="11" height="10" uuid="4589b701-ec7d-45ba-b39d-a826dffd959a"/>
-				<textElement textAlignment="Right">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="378" y="55" width="59" height="15" uuid="d2614abb-a1be-4d94-ad78-af6a25008866"/>
-				<textElement>
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Ticket Use : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="378" y="70" width="59" height="15" uuid="019aece0-538b-40f9-808b-5e09a7342312"/>
-				<textElement>
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Ticket Type :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="650" y="53" width="42" height="12" uuid="0ae268c5-dc85-4924-ac9f-f1f47a75d4cd"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[Print by :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="749" y="40" width="11" height="13" uuid="c2c2ab8f-076a-43f9-ab0e-51067fb480f7"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<text><![CDATA[to]]></text>
-			</staticText>
-			<textField pattern="">
-				<reportElement x="689" y="40" width="53" height="13" uuid="7cc752e6-a506-4ac9-accb-124c54e81fed"/>
-				<textElement textAlignment="Right">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{startdate}]]></textFieldExpression>
-			</textField>
-			<textField pattern="">
-				<reportElement x="748" y="40" width="54" height="13" uuid="5c04fc8b-370d-4181-a793-b04b762a9501"/>
-				<textElement textAlignment="Right">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{enddate}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="437" y="70" width="44" height="15" uuid="a082b9eb-50f5-4528-a0c0-4c87d6d6c97a"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="437" y="56" width="44" height="14" uuid="9368e358-fb7e-48a5-9f93-1a9f2dc850cc"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{from}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="692" y="53" width="110" height="12" uuid="b9d5966f-599c-4a33-9e59-745eb80601a8"/>
-				<textElement textAlignment="Right">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
-			</textField>
-			<textField pattern="">
-				<reportElement x="692" y="28" width="110" height="13" uuid="78e0dbd8-c45e-458b-8724-a3a01cbdb31e"/>
-				<textElement textAlignment="Right">
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
-			</textField>
-		</band>
-	</title>
-	<pageHeader>
-		<band height="5" splitType="Stretch">
-			<line>
-				<reportElement x="0" y="0" width="802" height="1" uuid="56c4cad2-16e3-4d8f-96e0-464b7c0d1633"/>
-				<graphicElement>
-					<pen lineWidth="3.5"/>
-				</graphicElement>
-			</line>
-		</band>
-	</pageHeader>
 	<columnHeader>
 		<band height="13" splitType="Stretch">
 			<rectangle>
@@ -556,12 +391,6 @@
 			</rectangle>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="14" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="4" splitType="Stretch"/>
-	</pageFooter>
 	<summary>
 		<band height="14" splitType="Stretch">
 			<rectangle>

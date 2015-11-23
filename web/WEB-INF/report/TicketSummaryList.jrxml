@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketSummaryList" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dcfc7980-ab02-4c1f-9967-385a3abf56ed">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="type" class="java.lang.String"/>
+	<field name="from" class="java.lang.String"/>
+	<field name="enddate" class="java.lang.String"/>
+	<field name="startdate" class="java.lang.String"/>
+	<field name="username" class="java.lang.String"/>
+	<field name="systemdate" class="java.lang.String"/>
+	<field name="ticketSummaryDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="ticketSummaryAirlineDataSource" class="net.sf.jasperreports.engine.JRDataSource"/>
+	<field name="subReportDir" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<image>
+				<reportElement x="1" y="3" width="65" height="48" uuid="2e45b091-cdad-4ed3-9853-0783520e6c3d"/>
+				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="71" y="3" width="149" height="13" uuid="b9fa42a4-1c11-43cb-b241-c561b99366f5"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[S.M.I TRAVEL CO., LTD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="16" width="221" height="22" uuid="77fd7740-1775-4be8-a82b-41cc11773814"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[9th Floor, Siam at Siam Hotel Building 865 Rama 1 Rd.,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="26" width="221" height="12" uuid="8c7c89ba-f03c-43ba-9489-58785fe13f09"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="46" width="221" height="12" uuid="7876c8f4-477c-4c08-8dfc-d4c0c7b7ff39"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tel: +66(0)-2162201 Fax: +66(0)-216-2202]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="58" width="158" height="15" uuid="3016e581-ee7a-4040-bee6-fc818621fa1a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[http://www.wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="70" width="158" height="13" uuid="d6f845d8-a885-43c4-a285-bfc2760071c1"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[e-mail: yoyaku@wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="685" y="-2" width="118" height="25" uuid="2bab3416-f658-4f5a-b910-f2609e1c155f"/>
+				<textElement textAlignment="Right">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[List Ticket No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="651" y="38" width="43" height="13" uuid="6e2c8019-80b8-4119-ae39-34cf8a066500"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Report of: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="651" y="26" width="42" height="12" uuid="590a70e0-ad44-4b74-bd2d-a3bb197ce096"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Print on:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="661" y="70" width="131" height="12" uuid="9a57f8f8-1e56-46e1-b13f-6a3370ae78c9"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="792" y="70" width="11" height="10" uuid="42645c69-d964-4aee-8b0f-5a0cac315237"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="379" y="53" width="59" height="15" uuid="4abe8ff0-5f63-407a-8f62-aa0bebe9ecf8"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ticket Use : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="68" width="59" height="15" uuid="4f7460ca-48ad-4f37-a6c9-a7cadb9c248d"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ticket Type :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="651" y="51" width="42" height="12" uuid="568fc1a9-71db-4d05-a0f8-37d879a08096"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Print by :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="750" y="38" width="11" height="13" uuid="8246499a-4c36-44b4-a007-903e45da2844"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[to]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="690" y="38" width="53" height="13" uuid="c2418f05-c6b6-4e73-b4c7-a522f6d9b9ec"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{startdate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="749" y="38" width="54" height="13" uuid="b20163c1-e3dd-4604-8e65-cf774ce15700"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{enddate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="438" y="68" width="44" height="15" uuid="825f5eaf-b154-415e-ab31-f3dae91f4fc2"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="438" y="54" width="44" height="14" uuid="a53cfacc-de29-4c2c-8c72-22fba5099134"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{from}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="693" y="51" width="110" height="12" uuid="b17d6bf0-4f25-4f9b-819b-543efaf4f5a7"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="693" y="26" width="110" height="13" uuid="ad19492d-0168-4531-8110-b7dfcdd56660"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="165" splitType="Stretch">
+			<subreport>
+				<reportElement positionType="Float" x="0" y="87" width="803" height="76" uuid="3618a560-5328-44f7-9d3f-491f682db626"/>
+				<dataSourceExpression><![CDATA[$F{ticketSummaryAirlineDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/TicketSummaryAirline.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="0" width="802" height="76" uuid="5e0fd47b-980a-4f86-a808-df4058d1cb30"/>
+				<dataSourceExpression><![CDATA[$F{ticketSummaryDataSource}]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$F{subReportDir} + "/TicketSummary.jasper"]]></subreportExpression>
+			</subreport>
+			<break>
+				<reportElement x="0" y="83" width="100" height="1" uuid="306278aa-e340-474c-99dd-3180ff86d8ba"/>
+			</break>
+		</band>
+	</detail>
+</jasperReport>

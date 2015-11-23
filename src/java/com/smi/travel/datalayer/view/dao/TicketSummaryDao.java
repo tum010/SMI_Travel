@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao;
 
+import com.smi.travel.datalayer.report.model.TicketSummaryList;
 import java.util.List;
 
 /**
@@ -14,4 +15,5 @@ import java.util.List;
  */
 public interface TicketSummaryDao {
     public List getTicketSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username);
+    public TicketSummaryList getTicketSummaryReport(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username);
 }

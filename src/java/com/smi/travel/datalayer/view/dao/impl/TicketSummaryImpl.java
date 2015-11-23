@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.report.model.TicketSummary;
+import com.smi.travel.datalayer.report.model.TicketSummaryList;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -160,6 +162,23 @@ public class TicketSummaryImpl implements TicketSummaryDao {
         }
         System.out.println("query : " + query);
         return query;
+    }
+
+    @Override
+    public TicketSummaryList getTicketSummaryReport(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger, String username) {
+        TicketSummaryList guideCommissionInfo = new TicketSummaryList();
+        UtilityFunction util = new UtilityFunction();
+        guideCommissionInfo.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(new Date()));
+        guideCommissionInfo.setUsername(username);
+        guideCommissionInfo.setTicketSummaryDataSource(new JRBeanCollectionDataSource(getTicketSummary(ticketfrom, tickettype, startdate, enddate, billto, passenger, username)));
+        guideCommissionInfo.setTicketSummaryAirlineDataSource(new JRBeanCollectionDataSource(getTicketSummaryAirline(ticketfrom, tickettype, startdate, enddate, billto, passenger, username)));
+        return guideCommissionInfo;
+    }
+    
+    private List getTicketSummaryAirline(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger,String username){
+        List data = new ArrayList();
+        
+        return data;
     }
 
 }
