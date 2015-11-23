@@ -702,7 +702,7 @@ public class TicketFareSummary extends AbstractExcelView {
         HSSFCellStyle styleC22 = wb.createCellStyle();
         styleC22.setAlignment(styleC22.ALIGN_LEFT);       
         
-        if(TicketAgent != null){
+        if(TicketAgent.size() > 0){
             dataheader = (TicketFareReport)TicketAgent.get(0);
         }
 

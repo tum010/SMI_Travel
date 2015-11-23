@@ -675,5 +675,23 @@
     <definition name="SaleVatReport" extends="baseLayout">
         <put-attribute name="title" value="Tax Invoice Report : SaleVatReport" />
         <put-attribute name="body" value="/WEB-INF/jsp/SaleVatReport.jsp" />
-    </definition>    
+    </definition> 
+    
+    <definition name="OutboundSummary" extends="baseLayout">
+        <put-attribute name="title" value="OutboundSummary Report : OutboundSummary" />
+        <put-attribute name="body" value="/WEB-INF/jsp/OutboundSummary.jsp" />
+    </definition> 
+    
+    <definition name="OutboundPackageSummary" extends="baseLayout">
+        <put-attribute name="title" value="OutboundPackageSummary Report : OutboundPackageSummary" />
+        <put-attribute name="body" value="/WEB-INF/jsp/OutboundPackageSummary.jsp" />
+    </definition>   
+    <definition name="OutboundProductSummary" extends="baseLayout">
+        <put-attribute name="title" value="OutboundProductSummary Report : OutboundProductSummary" />
+        <put-attribute name="body" value="/WEB-INF/jsp/OutboundProductSummary.jsp" />
+    </definition> 
+    <definition name="OutboundStaffSummary" extends="baseLayout">
+        <put-attribute name="title" value="OutboundStaffSummary Report : OutboundStaffSummary" />
+        <put-attribute name="body" value="/WEB-INF/jsp/OutboundStaffSummary.jsp" />
+    </definition>  
 </tiles-definitions>

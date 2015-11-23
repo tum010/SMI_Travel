@@ -1104,7 +1104,7 @@ public class AJAXBean extends AbstractBean implements
                     + "<td class='text-center'>" + no + "</td>"
                     + "<td class='text-center'>" + type + "</td>"
                     + "<td>" + description + "</td>"
-                    + "<td class='text-right money'>" + cost + "</td>"
+                    + "<td id='mCost" + no + "' class='text-right'>" + cost + "</td>"
                     + "<td class='text-center'>" + cur + "</td>"
                     + "<td><center><a href=\"#/ref\"><span onclick=\"addRefNo('" + refNo + "','" + type + "','" + description + "','" + billType + "','" + cost + "','" + cur + "','" + bookId + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                     + "</tr>";

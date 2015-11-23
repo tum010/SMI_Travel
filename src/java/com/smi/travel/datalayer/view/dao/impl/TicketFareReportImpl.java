@@ -295,7 +295,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
 
         if((airlineCode != null) &&(!"".equalsIgnoreCase(airlineCode))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-            query += prefix+ " SUBSTR(`fare`.`ticket_no,1,3`) = '"+airlineCode+"'";
+            query += prefix+ " SUBSTR(`fare`.`ticket_no`,1,3) = '"+airlineCode+"'";
         }
         
         if((department != null) &&(!"".equalsIgnoreCase(department))){
