@@ -417,15 +417,15 @@ function printTicketRefundSummary(){
     
     if((receiveFromDate !== '') && (receiveToDate !== '')){
 //        if(typePrint === 1){
-            window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
-                + "&refundAgentName=" + refundAgentName 
-                + "&refundBy=" + refundBy 
-                + "&passenger=" + passenger 
-                + "&receiveFromDate=" + receiveFromDate 
-                + "&receiveToDate=" + receiveToDate 
-                + "&paidFromDate=" + paidFromDate 
-                + "&paidToDate=" + paidToDate
-                + "&sectortoberef=" + sectortoberef);
+//            window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
+//                + "&refundAgentName=" + refundAgentName 
+//                + "&refundBy=" + refundBy 
+//                + "&passenger=" + passenger 
+//                + "&receiveFromDate=" + receiveFromDate 
+//                + "&receiveToDate=" + receiveToDate 
+//                + "&paidFromDate=" + paidFromDate 
+//                + "&paidToDate=" + paidToDate
+//                + "&sectortoberef=" + sectortoberef);
 //        }else if(typePrint === 2){
             window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
                 + "&refundAgentName=" + refundAgentName 
@@ -453,15 +453,15 @@ function printTicketRefundSummary(){
                 + "&paidToDate=" + paidToDate
                 + "&sectortoberef=" + sectortoberef);
 //        }else if(typePrint === 2){
-            window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
-                + "&refundAgentName=" + refundAgentName 
-                + "&refundBy=" + refundBy 
-                + "&passenger=" + passenger 
-                + "&receiveFromDate=" + receiveFromDate 
-                + "&receiveToDate=" + receiveToDate 
-                + "&paidFromDate=" + paidFromDate 
-                + "&paidToDate=" + paidToDate
-                + "&sectortoberef=" + sectortoberef);   
+//            window.open("Excel.smi?name=RefundTicketDetail&refundAgentId=" + refundAgentId 
+//                + "&refundAgentName=" + refundAgentName 
+//                + "&refundBy=" + refundBy 
+//                + "&passenger=" + passenger 
+//                + "&receiveFromDate=" + receiveFromDate 
+//                + "&receiveToDate=" + receiveToDate 
+//                + "&paidFromDate=" + paidFromDate 
+//                + "&paidToDate=" + paidToDate
+//                + "&sectortoberef=" + sectortoberef);   
 //        }else{
 //            $("#reporttypepanel").removeClass("has-success");
 //            $("#reporttypepanel").addClass("has-error");
