@@ -185,6 +185,10 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             ticketType = "DOMESTIC";
         }else if("A".equalsIgnoreCase(ticketType)){
             ticketType = "AGENT";
+        }else if("TI".equalsIgnoreCase(ticketType)){
+            ticketType = "TG INTER";
+        }else if("TD".equalsIgnoreCase(ticketType)){
+            ticketType = "TG DOMESTIC";
         }
         
         for (Object[] B : QueryList) {
@@ -396,6 +400,10 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             ticketType = "DOMESTIC";
         }else if("A".equalsIgnoreCase(ticketType)){
             ticketType = "AGENT";
+        }else if("TI".equalsIgnoreCase(ticketType)){
+            ticketType = "TG INTER";
+        }else if("TD".equalsIgnoreCase(ticketType)){
+            ticketType = "TG DOMESTIC";
         }
         
         for (Object[] B : QueryList) {

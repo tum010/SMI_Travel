@@ -59,6 +59,8 @@
                                             <option value="B" >BSP</option>
                                             <option value="D" >DOMESTIC</option>
                                             <option value="A" >AGENT</option>
+                                            <option value="TI" >TG INTER</option>
+                                            <option value="TD" >TG DOMESTIC</option>
                                         </select>
                                     </div>
                                 </div>   

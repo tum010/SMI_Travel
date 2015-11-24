@@ -137,6 +137,19 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         ListBillAirAgent listBillAirAgent = new ListBillAirAgent();
         List dataAgent = new ArrayList<BillAirAgent>();
         List dataRefund = new ArrayList<BillAirAgentRefund>();
+        String paymentTypeTemp = "";
+        
+        if("B".equalsIgnoreCase(paymentType)){
+            paymentTypeTemp = "BSP";
+        }else if("D".equalsIgnoreCase(paymentType)){
+            paymentTypeTemp = "DOMESTIC";
+        }else if("A".equalsIgnoreCase(paymentType)){
+            paymentTypeTemp = "AGENT";
+        }else if("TI".equalsIgnoreCase(paymentType)){
+            paymentTypeTemp = "TG INTER";
+        }else if("TD".equalsIgnoreCase(paymentType)){
+            paymentTypeTemp = "TG DOMESTIC";
+        }
         
         String query = "";
         String query2 = "";
@@ -300,7 +313,8 @@ public class BillAirAgentImpl implements BillAirAgentDao{
                 bil.setInvoicedatePage("");
             }
             bil.setPrintbyPage(printby);
-            bil.setPaymenttypePage(paymentType);
+            
+            bil.setPaymenttypePage(paymentTypeTemp);
             
             bil.setAgentname(util.ConvertString(B[0]));
             bil.setAgentid(util.ConvertString(B[1]));
@@ -409,7 +423,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
                 bil.setInvoicedatePage("");
             }
             bil.setPrintbyPage(printby);
-            bil.setPaymenttypePage(paymentType);
+            bil.setPaymenttypePage(paymentTypeTemp);
             
             bil.setRefundno(util.ConvertString(B[0]));
             bil.setReceivedate(util.ConvertString(B[1]));

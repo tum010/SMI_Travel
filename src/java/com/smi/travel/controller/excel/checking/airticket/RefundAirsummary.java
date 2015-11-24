@@ -86,6 +86,14 @@ public class RefundAirsummary extends AbstractExcelView {
             styleDetailTableNumber.setBorderRight(styleDetailTableNumber.BORDER_THIN);
         HSSFCellStyle styleBorderTop = wb.createCellStyle();
             styleBorderTop.setBorderTop(styleBorderTop.BORDER_THIN);
+            
+            HSSFCellStyle styletotal = wb.createCellStyle();
+            styletotal.setDataFormat(currency.getFormat("#,##0.00"));
+            styletotal.setAlignment(styletotal.ALIGN_RIGHT);
+            styletotal.setBorderLeft(styletotal.BORDER_THIN);
+            styletotal.setBorderRight(styletotal.BORDER_THIN);
+            styletotal.setBorderTop(styletotal.BORDER_THIN);
+            styletotal.setBorderBottom(styletotal.BORDER_THIN);
         
         List<RefundTicketView> list = null;
        
@@ -335,26 +343,65 @@ public class RefundAirsummary extends AbstractExcelView {
                 cell15.setCellValue((profit != null) ? profit.doubleValue() : new BigDecimal("0").doubleValue());
                 cell15.setCellStyle(styleDetailTableNumber);
                 sheet.autoSizeColumn(15);
-        }
         
-        System.out.println(count);
-        HSSFRow rowL = sheet.createRow(count);
-        rowL.createCell(0).setCellStyle(styleBorderTop);
-        rowL.createCell(1).setCellStyle(styleBorderTop);
-        rowL.createCell(2).setCellStyle(styleBorderTop);
-        rowL.createCell(3).setCellStyle(styleBorderTop);
-        rowL.createCell(4).setCellStyle(styleBorderTop);
-        rowL.createCell(5).setCellStyle(styleBorderTop);
-        rowL.createCell(6).setCellStyle(styleBorderTop);
-        rowL.createCell(7).setCellStyle(styleBorderTop);
-        rowL.createCell(8).setCellStyle(styleBorderTop);
-        rowL.createCell(9).setCellStyle(styleBorderTop);
-        rowL.createCell(10).setCellStyle(styleBorderTop);
-        rowL.createCell(11).setCellStyle(styleBorderTop);
-        rowL.createCell(12).setCellStyle(styleBorderTop);
-        rowL.createCell(13).setCellStyle(styleBorderTop);
-        rowL.createCell(14).setCellStyle(styleBorderTop);
-        rowL.createCell(15).setCellStyle(styleBorderTop);
+        
+        
+            if(r == (count-1)){
+                    HSSFRow rows = sheet.createRow(r+1);
+
+                    String totalRec = "SUM(I" + 10+":I"+(count)+")";
+                    String totalPay = "SUM(N" + 10+":N"+(count)+")";
+                    String totalCom  = "SUM(O" + 10+":O"+(count)+")";
+                    String totalPro = "SUM(P" + 10+":P"+(count)+")";
+                    
+                    HSSFCellStyle styletotalword = wb.createCellStyle();
+                    styletotalword.setAlignment(styletotal.ALIGN_CENTER);
+                    styletotalword.setBorderTop(styletotal.BORDER_THIN);
+                    styletotalword.setBorderBottom(styletotal.BORDER_THIN);
+
+                    HSSFCell celldatas01 = rows.createCell(7);
+                    celldatas01.setCellValue("Total");
+                    celldatas01.setCellStyle(styletotalword);
+                    HSSFCell celldatas02 = rows.createCell(8);
+                    celldatas02.setCellFormula(totalRec);
+                    celldatas02.setCellStyle(styletotal);
+                    HSSFCell celldatas03 = rows.createCell(13);
+                    celldatas03.setCellFormula(totalPay);
+                    celldatas03.setCellStyle(styletotal);
+                    HSSFCell celldatas04 = rows.createCell(14);
+                    celldatas04.setCellFormula(totalCom);
+                    celldatas04.setCellStyle(styletotal);
+                    HSSFCell celldatas05 = rows.createCell(15);
+                    celldatas05.setCellFormula(totalPro);
+                    celldatas05.setCellStyle(styletotal);
+                    
+                    rows.createCell(0).setCellStyle(styleBorderTop);
+                    rows.createCell(1).setCellStyle(styleBorderTop);
+                    rows.createCell(2).setCellStyle(styleBorderTop);
+                    rows.createCell(3).setCellStyle(styleBorderTop);
+                    rows.createCell(4).setCellStyle(styleBorderTop);
+                    rows.createCell(5).setCellStyle(styleBorderTop);
+                    rows.createCell(6).setCellStyle(styleBorderTop);
+                    
+                    rows.createCell(9).setCellStyle(styleBorderTop);
+                    rows.createCell(10).setCellStyle(styleBorderTop);
+                    rows.createCell(11).setCellStyle(styleBorderTop);
+                    rows.createCell(12).setCellStyle(styleBorderTop);
+                   
+                    HSSFRow rowL = sheet.createRow(r+2);
+                    rowL.createCell(0).setCellStyle(styleBorderTop);
+                    rowL.createCell(1).setCellStyle(styleBorderTop);
+                    rowL.createCell(2).setCellStyle(styleBorderTop);
+                    rowL.createCell(3).setCellStyle(styleBorderTop);
+                    rowL.createCell(4).setCellStyle(styleBorderTop);
+                    rowL.createCell(5).setCellStyle(styleBorderTop);
+                    rowL.createCell(6).setCellStyle(styleBorderTop);
+                    rowL.createCell(9).setCellStyle(styleBorderTop);
+                    rowL.createCell(10).setCellStyle(styleBorderTop);
+                    rowL.createCell(11).setCellStyle(styleBorderTop);
+                    rowL.createCell(12).setCellStyle(styleBorderTop);
+            }
+        }
         }else{
             HSSFRow row02_2 = sheet.createRow(1);
             HSSFCell cell021 = row02_2.createCell(0);

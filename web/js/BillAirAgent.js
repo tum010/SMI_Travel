@@ -215,11 +215,11 @@ function printBillAirAgent(){
     console.log("Agent : " + agentCode);
     if(agentCode !== ''){
         if((invoiceFrom !== '') && (invoiceTo !== '')){
-            window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays +"$paymentType="+paymentType);
+            window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays +"&paymentType="+paymentType);
         }else if((issueFrom !== '') && (issueTo !== '')){
-            window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays);
+            window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays+"&paymentType="+paymentType);
         }else if((refundFrom !== '') && (refundFrom !== '')){
-            window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo + "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays);
+            window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo + "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays+"&paymentType="+paymentType);
         }else {
             validateDate();  
         }
