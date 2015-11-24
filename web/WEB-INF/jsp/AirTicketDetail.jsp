@@ -40,7 +40,7 @@
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
-
+<c:set var="enableSave" value="${requestScope['EnableSave']}" />
 <!--Header-->
 <section class="content-header" >
     <h1>

@@ -155,6 +155,9 @@
                                 <prop key="SaleVatReport.smi">SaleVatReportController</prop>
                                 <prop key="PaymentStock.smi">PaymentStockController</prop>
                                 <prop key="OutboundSummary.smi">OutboundSummaryController</prop>
+                                <prop key="OutboundPackageSummary.smi">OutboundPackageSummaryController</prop>
+                                <prop key="OutboundProductSummary.smi">OutboundProductSummaryController</prop>
+                                <prop key="OutboundStaffSummary.smi">OutboundStaffSummaryController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -683,6 +686,16 @@
     </bean>
     
     <bean id="OutboundSummaryController" class="com.smi.travel.controller.OutboundSummaryController">
+
+    </bean>
+    
+    <bean id="OutboundPackageSummaryController" class="com.smi.travel.controller.OutboundPackageSummaryController">
+
+    </bean>
+    <bean id="OutboundProductSummaryController" class="com.smi.travel.controller.OutboundProductSummaryController">
+
+    </bean>
+    <bean id="OutboundStaffSummaryController" class="com.smi.travel.controller.OutboundStaffSummaryController">
 
     </bean>
     

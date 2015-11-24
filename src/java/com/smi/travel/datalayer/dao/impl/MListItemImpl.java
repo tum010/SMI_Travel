@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.MListItemDao;
+import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Function;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
@@ -576,6 +577,78 @@ public class MListItemImpl implements MListItemDao {
         }
 
         return result;
+    }
+
+    @Override
+    public String getRefitemIdFromRefNo(String refno) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        String refItemId ="";
+        String query = "SELECT * FROM `bill_invoice_view` bi  where bi.billtype = '1' and bi.refno = '"+refno+"'";
+        
+        List<Object[]> QueryList = session.createSQLQuery(query)
+                .addScalar("refitem",Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryList) {
+            if(B[0] == null){
+            
+            }else{
+                refItemId += "," + util.ConvertString(B[0]);
+            }
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return refItemId.substring(1);
+    }
+
+    @Override
+    public List<BillableView> getBillableDescFromRefItemId(String refItemId) {
+        UtilityFunction util = new UtilityFunction();
+        Session session = this.sessionFactory.openSession();
+        String query = "SELECT * FROM `billable_view_airline` where id in ("+refItemId+")";
+        List<BillableView> billableViewList = new ArrayList<BillableView>();
+        List<Object[]> QueryList = session.createSQLQuery(query)
+                .addScalar("cost",Hibernate.STRING)
+                .addScalar("price",Hibernate.STRING)
+                .addScalar("cur_cost",Hibernate.STRING)
+                .addScalar("cur_amount",Hibernate.STRING)
+                .addScalar("id",Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryList) {
+            BillableView billableView = new BillableView();
+            billableView.setCost(B[0] == null ? 0 : util.convertStringToInteger(String.valueOf(B[0])));
+            billableView.setPrice(B[1] == null ? 0 : util.convertStringToInteger(String.valueOf(B[1])));
+            billableView.setCurCost(B[2] == null ? "" : util.ConvertString(B[2]));
+            billableView.setCurAmount(B[3] == null ? "" : util.ConvertString(B[3]));
+            billableView.setBillID(B[4] == null ? "" : util.ConvertString(B[4]));
+            billableViewList.add(billableView);
+        }
+        
+        if(billableViewList.isEmpty()){
+            return null;
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return billableViewList;
+    }
+    
+    @Override
+    public List<BillableDesc> getBillableDescIdFromRefNo(String refno) {
+        Session session = this.sessionFactory.openSession();
+        String query = "from BillableDesc billd where bills.MBilltype.id = 1 and billd.billable.master.referenceNo = '"+refno+"'";
+        List<BillableDesc> billableDescList = session.createQuery(query).list();
+
+        if(billableDescList.isEmpty()){
+            return null;
+        }
+               
+        session.close();
+        this.sessionFactory.close();
+        return billableDescList;
     }
 
 }
