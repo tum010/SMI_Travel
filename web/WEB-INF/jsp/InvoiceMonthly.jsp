@@ -213,15 +213,17 @@
         </div>
     </div>
 </div>
+                            
 <div class="modal fade" id="ClientModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Client </h4>
+                <h4 class="modal-title">Client</h4>
             </div>
             <div class="modal-body">
                 <!--Bill To List Table-->
+                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchClientFrom" name="searchClientFrom"/> </div> 
                 <table class="display" id="ClientTable">
                     <thead>                        
                         <tr class="datatable-header">
@@ -231,104 +233,27 @@
                             <th class="hidden">Tel</th>
                         </tr>
                     </thead>
-                    <script>
-                        bill = [];
-                    </script>
                     <tbody>
                         <c:forEach var="client" items="${listClient}">
-                            <tr>                                
+                            <tr onclick="setBillValue('${client.billTo}', '${client.billName}');">                                
                                 <td class="item-billto">${client.billTo}</td>
                                 <td class="item-name">${client.billName}</td>                                
                                 <td class="item-address hidden">${client.address}</td>
                                 <td class="item-tel hidden">${client.tel}</td>
                             </tr>
-                        <script>
-                            bill.push({code: "${client.billTo}", name: "${client.billName}"});
-                        </script>
                         </c:forEach>
-                            
                     </tbody>
-
                 </table>
-                <!--Script Bill To List Table-->
-                <script>
-                    $(document).ready(function () {
-                        var billTo = [];
-                        $.each(bill, function (key, value) {
-                            billTo.push(value.code);
-                            if ( !(value.name in billTo) ){
-                               billTo.push(value.name);
-                            }
-                        });
-
-                        $("#clientCode").autocomplete({
-                            source: billTo,
-                            close:function( event, ui ) {
-                               $("#clientCode").trigger('keyup');
-                            }
-                        });
-                        $("#clientCode").keyup(function () {
-                            var position = $(this).offset();
-                            $(".ui-widget").css("top", position.top + 30);
-                            $(".ui-widget").css("left", position.left);
-                            var code = this.value.toUpperCase();
-                            var name = this.value;
-                            $("#clientName").val(null);
-                            $.each(bill, function (key, value) {
-                                if (value.code.toUpperCase() === code) {
-                                    $("#clientName").val(value.name);                                   
-                                }
-                                if(name === value.name){
-                                    $("#clientCode").val(value.code);
-                                    $("#clientName").val(value.name);    
-                                    code = $("#clientCode").val().toUpperCase();
-                                }
-                                
-                            });
-                        });
-                        
-                        $("#ClientTable tr").on('click', function () {
-                            var billto = $(this).find(".item-billto").text();
-                            var billname = $(this).find(".item-name").text();
-//                            var address = $(this).find(".item-address").text();
-//                            var tel = $(this).find(".item-tel").text();
-                            $("#clientCode").val(billto);
-                            $("#clientName").val(billname);
-//                            $("#address").val(address);
-                            $("#ClientModal").modal('hide');
-                        });
-
-                        // BillTo Table
-                        var BillToTable = $('#ClientTable').dataTable({bJQueryUI: true,
-                            "sPaginationType": "full_numbers",
-                            "bAutoWidth": false,
-                            "bFilter": true,
-                            "bPaginate": true,
-                            "bInfo": false,
-                            "bLengthChange": false,
-                            "iDisplayLength": 10
-                        });
-                        $('#ClientTable tbody').on('click', 'tr', function () {
-                            $('.collapse').collapse('show');
-                            if ($(this).hasClass('row_selected')) {
-                                $(this).removeClass('row_selected');
-                            }
-                            else {
-                                BillToTable.$('tr.row_selected').removeClass('row_selected');
-                                $(this).addClass('row_selected');
-                            }
-                        });
-                    });
-                </script>
             </div>
             <div class="modal-footer">
-                <div class="text-right">
+                <div  class="text-right">
                     <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+    </div><!-- /.modal-dialog --> <!-- /.modal-dialog -->
 </div>
+
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () { 
@@ -395,6 +320,205 @@
             var to = setValueToDate();
             $("#fromdate").val(from);
             $("#todate").val(to);
+            
+            
+            var showflag = 1;
+            var ClientTable = $('#ClientTable').dataTable({bJQueryUI: true,
+                "sPaginationType": "full_numbers",
+                "bAutoWidth": false,
+                "bFilter": false,
+                "bPaginate": true,
+                "bInfo": false,
+                "bLengthChange": false,
+                "iDisplayLength": 10
+            });
+
+            $('#ClientTable tbody').on('click', 'tr', function() {
+                $('.collapse').collapse('show');
+                if ($(this).hasClass('row_selected')) {
+                    $(this).removeClass('row_selected');
+                }
+                else {
+                    ClientTable.$('tr.row_selected').removeClass('row_selected');
+                    var staff_code = $(this).find("td").eq(0).html();
+                    var staff_name = $(this).find("td").eq(1).html();
+        //            alert("Herree" + staff_code);
+                    $("#clientCode").val(staff_code);
+                    $("#clientName").val(staff_name);
+                    $(this).addClass('row_selected');
+                }
+            });
+
+            $("#searchClientFrom").keyup(function(event) {
+                if (event.keyCode === 13) {
+                    if ($("#searchClientFrom").val() == "") {
+                        // alert('please input data');
+                    }
+                    searchCustomerAgentList($("#searchClientFrom").val());
+                }
+            });
+
+            //autocomplete
+            $("#clientCode").keyup(function(event) {
+                var position = $(this).offset();
+                $(".ui-widget").css("top", position.top + 30);
+                $(".ui-widget").css("left", position.left);
+                if ($(this).val() === "") {
+                     $("#clientCode").val("");
+                    $("#clientName").val("");
+                } else {
+                    if (event.keyCode === 13) {
+                        searchCustomerAutoList(this.value);
+                    }
+                }
+            });
+
+            $("#clientCode").keydown(function() {
+
+                var position = $(this).offset();
+                $(".ui-widget").css("top", position.top + 30);
+                $(".ui-widget").css("left", position.left);
+                if (showflag == 0) {
+                    $(".ui-widget").css("top", -1000);
+                    showflag = 1;
+                }
+            });
     });   
+    
+    function searchCustomerAgentList(name) {
+        var servletName = 'BillableServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&name=' + name +
+                '&type=' + 'getListBillto';
+        CallAjax(param);
+    }
+
+    function CallAjax(param) {
+        var url = 'AJAXServlet';
+        $("#ajaxload").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    $('#ClientTable').dataTable().fnClearTable();
+                    $('#ClientTable').dataTable().fnDestroy();
+                    $("#ClientTable tbody").empty().append(msg);
+
+                    $('#ClientTable').dataTable({bJQueryUI: true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": false,
+                        "bPaginate": true,
+                        "bInfo": false,
+                        "bLengthChange": false,
+                        "iDisplayLength": 10
+                    });
+                    $("#ajaxload").addClass("hidden");
+
+                }, error: function(msg) {
+                    $("#ajaxload").addClass("hidden");
+                    alert('error');
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
+    
+    
+    function searchCustomerAutoList(name) {
+        var servletName = 'BillableServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&name=' + name +
+                '&type=' + 'getAutoListBillto';
+        CallAjaxAuto(param);
+    }
+
+    function CallAjaxAuto(param) {
+        var url = 'AJAXServlet';
+        var billArray = [];
+        var billListId = [];
+        var billListName = [];
+        var billid, billname;
+        $("#clientCode").autocomplete("destroy");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                beforeSend: function() {
+                    $("#dataload").removeClass("hidden");
+                },
+                success: function(msg) {
+                    var billJson = JSON.parse(msg);
+                    for (var i in billJson) {
+                        if (billJson.hasOwnProperty(i)) {
+                            billid = billJson[i].id;
+                            billname = billJson[i].name;
+                            billArray.push(billid);
+                            billArray.push(billname);
+                            billListId.push(billid);
+                            billListName.push(billname);
+                        }
+                        $("#dataload").addClass("hidden");
+                    }
+//                    $("#clientCode").val(billid);
+                    $("#clientName").val(billname);
+                    $("#clientCode").autocomplete({
+                        source: billArray,
+                        close: function() {
+                            $("#clientCode").trigger("keyup");
+                            var billselect = $("#clientCode").val();
+                            for (var i = 0; i < billListId.length; i++) {
+                                if ((billselect == billListName[i]) || (billselect == billListId[i])) {
+                                    $("#clientCode").val(billListId[i]);
+                                    $("#clientName").val(billListName[i]);
+                                }
+                            }
+                        }
+                    });
+
+                    var invoiceTo = $("#clientCode").val();
+                    for (var i = 0; i < billListId.length; i++) {
+                        if (invoiceTo == billListName[i]) {
+                            $("#clientCode").val(billListId[i]);
+                        }
+                    }
+                    if (billListId.length == 1) {
+                        showflag = 0;
+                        $("#clientCode").val(billListId[0]);
+                    }
+                    var event = jQuery.Event('keydown');
+                    event.keyCode = 40;
+                    $("#clientCode").trigger(event);
+
+                }, error: function(msg) {
+                    console.log('auto ERROR');
+                    $("#dataload").addClass("hidden");
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
+
+    
+    function setBillValue(billto, billname) {
+        $("#clientCode").val(billto);
+        $("#clientName").val(billname);
+
+        $("#ClientModal").modal('hide');
+    }
+
 </script>
 <script type="text/javascript" src="js/InvoiceMonthly.js"></script> 

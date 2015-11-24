@@ -540,7 +540,7 @@
                                         <input class="form-control" type="text" id="amountCal${i.count}" name="amountCal$${i.count}" value="${pl.amount}">
                                     </td>
                                     <td> <input style="width: ${Amount};text-align:right;" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" value="${pl.amount}" readonly=""> </td>
-                                    <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" maxlength ="15"  type="text" class="form-control money2" value="${pl.recCom}" readonly=""> </td>
+                                    <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" maxlength ="15"  type="text" class="form-control numerical" value="${pl.recCom}" readonly=""> </td>
                                     <td>${pl.description}</td>
                                     <td class="hidden"> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>                                   
                                     <td align="center">${pl.accCode}</td>
