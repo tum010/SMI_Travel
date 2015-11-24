@@ -209,6 +209,17 @@ public class LandDetailController extends SMITravelController {
                 land.setMaster(master);
                 saveHistoryBooking(refno,user,land,"CREATE");
             }
+            
+            String billDescId = utilservice.getBillableDescId(landID, "3");
+            System.out.println(" ======== billDescId ======== " + billDescId);
+            if("".equalsIgnoreCase(billDescId)){
+                request.setAttribute(EnableSave,1);
+            }else{
+                request.setAttribute(EnableSave,0);
+                BillableView billableView = utilservice.getBillableDescByBookId(landID,"3");
+                int resultupdate = utilservice.updateBillableDesc(billableView,billDescId);
+            }
+            
             if (result == 1) {
                 ModelAndView LAND = new ModelAndView(new RedirectView("Land.smi?referenceNo=" + refno + "&result=1", true));
                 return LAND;
@@ -217,14 +228,7 @@ public class LandDetailController extends SMITravelController {
                 request.setAttribute(TransectionResult, "save unsuccessful");
             }
             
-            String billDescId = utilservice.getBillableDescId(landID, "3");
-            if("".equalsIgnoreCase(billDescId)){
-                request.setAttribute(EnableSave,1);
-            }else{
-                request.setAttribute(EnableSave,0);
-                BillableView billableView = utilservice.getBillableDescByBookId(landID,"3");
-                int resultupdate = utilservice.updateBillableDesc(billableView,billDescId);
-            }
+
             
         } else if ("edit".equalsIgnoreCase(action)) {
             request.setAttribute("isEdit", "1");

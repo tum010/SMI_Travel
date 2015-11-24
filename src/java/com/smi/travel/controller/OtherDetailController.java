@@ -111,10 +111,10 @@ public class OtherDetailController extends SMITravelController {
         String BookType = master.getBookingType();
         if("I".equalsIgnoreCase(BookType)){
             request.setAttribute(BOOKINGTYPE,"i");
-            bookTypeNo = "2";
+            bookTypeNo = "8";
         }else{
             request.setAttribute(BOOKINGTYPE,"o");
-            bookTypeNo = "8";
+            bookTypeNo = "2";
         }
 
         request.setAttribute("currency", master.getCurrency());
@@ -354,7 +354,7 @@ public class OtherDetailController extends SMITravelController {
             request.setAttribute("currency", currency);
             request.setAttribute("currencycost", currencycost);
             getTicket(request, Other.getId());
-            
+
             String billDescId = utilservice.getBillableDescId(itemid, bookTypeNo);
             if("".equalsIgnoreCase(billDescId)){
                 request.setAttribute(EnableSave,1);
