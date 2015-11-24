@@ -299,7 +299,8 @@ public class RefundAirsummary extends AbstractExcelView {
                 cell7.setCellStyle(styleDetailTable);
                 sheet.autoSizeColumn(7);
             HSSFCell cell8 = row.createCell(8);
-                BigDecimal cancel = new BigDecimal(listRefund.get(r-9).getReceiveairline());
+                System.out.println("(listRefund.get(r-9).getReceiveairline() : "+listRefund.get(r-9).getReceiveairline());
+                BigDecimal cancel = new BigDecimal((listRefund.get(r-9).getReceiveairline()== null) || ("".equalsIgnoreCase(listRefund.get(r-9).getReceiveairline()))? "0":listRefund.get(r-9).getReceiveairline());
                 cell8.setCellValue((cancel != null) ? cancel.doubleValue() : new BigDecimal("0").doubleValue());
                 cell8.setCellStyle(styleDetailTableNumber);
                 sheet.autoSizeColumn(8);
