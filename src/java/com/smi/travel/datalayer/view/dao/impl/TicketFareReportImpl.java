@@ -465,7 +465,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
             }else if(i == 1){ //detail
                 query = "select `inv`.`inv_no` AS `invno`,`inv`.`inv_date` AS `invdate`,`fare`.`department` AS `department`,`fare`.`owner` AS `staff`,`term`.`name` AS `termpay`,`fare`.`passenger` AS `passenger`,(case when (`fare`.`ticket_type` = 'B') then 'BSP' when (`fare`.`ticket_type` = 'A') then 'AGENT' when (`fare`.`ticket_type` = 'D') then 'DOMESTIC' when (`fare`.`ticket_type` = 'T') then 'TG' else `fare`.`ticket_type` end) AS `typepayment`,(case when (`fare`.`ticket_rounting` = 'I') then 'INTER' when (`fare`.`ticket_rounting` = 'D') then 'DOMESTIC' when (`fare`.`ticket_rounting` = 'C') then 'CANCELLED' end) AS `typerounting`,`fare`.`routing_detail` AS `rounting`,count(`fare`.`ticket_no`) AS `pax`,substr(`fare`.`ticket_no`,1,3) AS `air`,substr(`fare`.`ticket_no`,4) AS `ticketno`,`mt`.`Reference No` AS `refno`,`fare`.`issue_date` AS `issuedate`,sum(ifnull(`fare`.`ticket_fare`,0)) AS `netsales`,sum(ifnull(`fare`.`ticket_tax`,0)) AS `tax`,sum(ifnull(`fare`.`ticket_ins`,0)) AS `ins`,sum(ifnull(`fare`.`ticket_commission`,0)) AS `comms`,sum(ifnull(`fare`.`diff_vat`,0)) AS `diff`,(case when (`fare`.`department` = 'wendy') then `fare`.`inv_amount` else NULL end) AS `amountwendy`,(case when (`fare`.`department` = 'inbound') then `fare`.`inv_amount` else NULL end) AS `amountinbound`,(case when (`fare`.`department` = 'outbound') then `fare`.`inv_amount` else NULL end) AS `amountoutbound`,(case when (`fare`.`pv_type` = 10) then `fare`.`inv_amount` else NULL end) AS `amount_noinvoice`,(case when (`fare`.`pv_type` = 7) then `fare`.`inv_amount` else NULL end) AS `amount_businesstrip`,(case when (`fare`.`pv_type` = 8) then `fare`.`inv_amount` else NULL end) AS `amount_annualleave`,(case when (`fare`.`pv_type` = 9) then `fare`.`inv_amount` else NULL end) AS `amount_refund`,`fare`.`remark` AS `remark` from ((((`ticket_fare_airline` `fare` join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) join `invoice` `inv` on((`inv`.`id` = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `master` `mt` on((`mt`.`id` = `fare`.`master_id`)) LEFT JOIN `staff` `st` ON ((`st`.`name` = `fare`.`owner`))) TEMPS";
             }else if(i == 2){ //routing
-                query = "select `fare`.`routing_detail` AS `routing`,count(0) AS `pax`,sum(`fare`.`ticket_fare`) AS `netsales`,sum(`fare`.`ticket_tax`) AS `tax`,sum(`fare`.`ticket_ins`) AS `ins`,sum(`fare`.`ticket_commission`) AS `comms`,(case when (`fare`.`department` = 'wendy') then sum(`fare`.`sale_price`) else 0 end) AS `amountwendy`,(case when (`fare`.`department` = 'inbound') then sum(`fare`.`sale_price`) else 0 end) AS `amountinbound`,(sum(`fare`.`sale_price`) - (((sum(`fare`.`ticket_fare`) + sum(`fare`.`ticket_tax`)) + sum(`fare`.`ticket_ins`)) + sum(`fare`.`ticket_commission`))) AS `diff` from ((((`ticket_fare_airline` `fare` join `ticket_fare_invoice` `finv` on((`finv`.`ticket_fare_id` = `fare`.`id`))) join `invoice` `inv` on((`inv`.`id`  = `finv`.`invoice_id`))) left join `m_accterm` `term` on((`term`.`id` = `inv`.`term_pay`))) left join `staff` `st` on((`st`.`name` = `fare`.`owner`)))  TEMPS";
+                query = "SELECT `fare`.`routing_detail` AS `routing`, count(0) AS `pax`, sum(`fare`.`ticket_fare`) AS `netsales`, sum(`fare`.`ticket_tax`) AS `tax`, sum(`fare`.`ticket_ins`) AS `ins`, sum(`fare`.`ticket_commission`) AS `comms`, ( CASE WHEN ( `fare`.`department` = 'wendy' ) THEN sum(`fare`.`sale_price`) ELSE 0 END ) AS `amountwendy`, ( CASE WHEN ( `fare`.`department` = 'inbound' ) THEN sum(`fare`.`sale_price`) ELSE 0 END ) AS `amountinbound`, ( CASE WHEN ( `fare`.`department` = 'outbound' ) THEN sum(`fare`.`sale_price`) ELSE 0 END ) AS `amountoutbound`, ( sum(`fare`.`sale_price`) - ((( sum(`fare`.`ticket_fare`) + sum(`fare`.`ticket_tax`)) + sum(`fare`.`ticket_ins`)) + sum(`fare`.`ticket_commission`))) AS `diff` FROM (((( `ticket_fare_airline` `fare` JOIN `ticket_fare_invoice` `finv` ON (( `finv`.`ticket_fare_id` = `fare`.`id` ))) JOIN `invoice` `inv` ON (( `inv`.`id` = `finv`.`invoice_id` ))) LEFT JOIN `m_accterm` `term` ON (( `term`.`id` = `inv`.`term_pay` ))) LEFT JOIN `staff` `st` ON ((`st`.`name` = `fare`.`owner`))) TEMPS";
             }
 
             int checkQuery = 0;
@@ -618,6 +618,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                             .addScalar("amountwendy",Hibernate.STRING)
                             .addScalar("amountinbound",Hibernate.STRING)
                             .addScalar("diff",Hibernate.STRING)
+                            .addScalar("amountoutbound",Hibernate.STRING)
                             .list();        
             }
 
@@ -694,6 +695,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                     ticket.setCommsP(util.ConvertString(B[6]));
                     ticket.setAmountwendyP(util.ConvertString(B[7]));
                     ticket.setAmountinboundP(util.ConvertString(B[8]));
+                    ticket.setAmountoutboundP(util.ConvertString(B[9]));
                     ticket.setPage("pax");
                 }else if(i == 1){ //detail
                     ticket.setInvnoD(util.ConvertString(B[0]));
@@ -716,6 +718,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                     ticket.setDiffD(util.ConvertString(B[17]));
                     ticket.setAmountwendyD(util.ConvertString(B[18]));
                     ticket.setAmountinboundD(util.ConvertString(B[19]));
+                    ticket.setAmountoutboundD(util.ConvertString(B[20]));
                     ticket.setRemarksD(util.ConvertString(B[21]));
                     ticket.setAmtnoinvoiceD(util.ConvertString(B[22]));
                     ticket.setAmtbusinesstripD(util.ConvertString(B[23]));
@@ -733,6 +736,7 @@ public class TicketFareReportImpl implements TicketFareReportDao {
                     ticket.setAmountwendyR(util.ConvertString(B[6]));
                     ticket.setAmountinboundR(util.ConvertString(B[7]));
                     ticket.setDiffR(util.ConvertString(B[8]));
+                    ticket.setAmountoutboundR(util.ConvertString(B[9]));
                     ticket.setPage("routing");
                 }
                 data.add(ticket);

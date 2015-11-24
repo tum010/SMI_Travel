@@ -790,9 +790,13 @@ public class AirlineSummary extends AbstractExcelView {
                     cell88.setCellStyle(styleC3);
                     sheetPax.autoSizeColumn(7);
                     HSSFCell cell89 = row8.createCell(8);
-                    cell89.setCellValue("Amount Inbound");
+                    cell89.setCellValue("Amount Outbound");
                     cell89.setCellStyle(styleC3);
                     sheetPax.autoSizeColumn(8);
+                    HSSFCell cell90 = row8.createCell(9);
+                    cell90.setCellValue("Amount Inbound");
+                    cell90.setCellStyle(styleC3);
+                    sheetPax.autoSizeColumn(9);
                     
                     HSSFRow row = sheetPax.createRow(count + i);
                     HSSFCell celldata0 = row.createCell(0);
@@ -828,8 +832,13 @@ public class AirlineSummary extends AbstractExcelView {
                     celldata7.setCellStyle(styleC25);
 
                     HSSFCell celldata8 = row.createCell(8);
-                    celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountinboundP())) ? 0 : (new BigDecimal(data.getAmountinboundP())).doubleValue());
+                    celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountoutboundP())) ? 0 : (new BigDecimal(data.getAmountoutboundP())).doubleValue());
                     celldata8.setCellStyle(styleC25);
+                    
+                    HSSFCell celldata9= row.createCell(9);
+                    celldata9.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountinboundP())) ? 0 : (new BigDecimal(data.getAmountinboundP())).doubleValue());
+                    celldata9.setCellStyle(styleC25);
+                    
                     tempcount = count + i + 1;
                 }
                 
@@ -843,8 +852,9 @@ public class AirlineSummary extends AbstractExcelView {
                     String totalIns = "SUM(F" + 10+":F"+(tempcount)+")";
                     String totalComms = "SUM(G" + 10+":G"+(tempcount)+")";
                     String totalAmountWen = "SUM(H" + 10+":H"+(tempcount)+")";
-                    String totalAmountIn = "SUM(I" + 10+":I"+(tempcount)+")";
-
+                    String totalAmountOut = "SUM(I" + 10+":I"+(tempcount)+")";
+                    String totalAmountIn = "SUM(J" + 10+":J"+(tempcount)+")";
+                    
                     HSSFCellStyle styleTotal = wb.createCellStyle();
                     styleTotal.setFont(excelFunction.getHeaderTable(wb.createFont()));
                     styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -877,12 +887,16 @@ public class AirlineSummary extends AbstractExcelView {
                     cellTotal06.setCellFormula(totalAmountWen);
                     cellTotal06.setCellStyle(styleC25);
                     HSSFCell cellTotal07 = rowtotal.createCell(8);
-                    cellTotal07.setCellFormula(totalAmountIn);
+                    cellTotal07.setCellFormula(totalAmountOut);
                     cellTotal07.setCellStyle(styleC25);
+                    HSSFCell cellTotal08 = rowtotal.createCell(9);
+                    cellTotal08.setCellFormula(totalAmountIn);
+                    cellTotal08.setCellStyle(styleC25);
                     
 //                    if(tempcount != 0){
 //                        rowdetail = tempcount+3;
 //                    }
+                    
                     HSSFRow row8 = sheetDetail.createRow(8);
                     HSSFCell cell81 = row8.createCell(0);
                     cell81.setCellValue("Invoice No");
@@ -962,34 +976,39 @@ public class AirlineSummary extends AbstractExcelView {
                     cell99.setCellStyle(styleC3);
                     sheetDetail.autoSizeColumn(18);
                     HSSFCell cell910 = row8.createCell(19);
-                    cell910.setCellValue("Amount Inbound");
+                    cell910.setCellValue("Amount Outbound");
                     cell910.setCellStyle(styleC3);
                     sheetDetail.autoSizeColumn(19);
                     HSSFCell cell911 = row8.createCell(20);
-                    cell911.setCellValue("Amt No Invoice");
+                    cell911.setCellValue("Amount Inbound");
                     cell911.setCellStyle(styleC3);
                     sheetDetail.autoSizeColumn(20);
                     HSSFCell cell912 = row8.createCell(21);
-                    cell912.setCellValue("Amt Business Trip");
+                    cell912.setCellValue("Amt No Invoice");
                     cell912.setCellStyle(styleC3);
                     sheetDetail.autoSizeColumn(21);
                     HSSFCell cell913 = row8.createCell(22);
-                    cell913.setCellValue("Amt Annual Leave");
+                    cell913.setCellValue("Amt Business Trip");
                     cell913.setCellStyle(styleC3);
                     sheetDetail.autoSizeColumn(22);
                     HSSFCell cell914 = row8.createCell(23);
-                    cell914.setCellValue("Amt Refund");
+                    cell914.setCellValue("Amt Annual Leave");
                     cell914.setCellStyle(styleC3);
                     sheetDetail.autoSizeColumn(23);
                     HSSFCell cell915 = row8.createCell(24);
-                    cell915.setCellValue("Remarks");
+                    cell915.setCellValue("Amt Refund");
                     cell915.setCellStyle(styleC3);
                     sheetDetail.autoSizeColumn(24);
                     HSSFCell cell916 = row8.createCell(25);
-                    cell916.setCellValue("Diff");
+                    cell916.setCellValue("Remarks");
                     cell916.setCellStyle(styleC3);
                     sheetDetail.autoSizeColumn(25);
-                
+                    HSSFCell cell917 = row8.createCell(26);
+                    cell917.setCellValue("Diff");
+                    cell917.setCellStyle(styleC3);
+                    sheetDetail.autoSizeColumn(26);
+                    
+                    
                     HSSFRow row = sheetDetail.createRow(count + x);
                     HSSFCell celldata0 = row.createCell(0);
 
@@ -1069,32 +1088,36 @@ public class AirlineSummary extends AbstractExcelView {
                     celldata18.setCellStyle(styleC25);
                     
                     HSSFCell celldata19 = row.createCell(19);
-                    celldata19.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountinboundD())) ? 0 : (new BigDecimal(data.getAmountinboundD())).doubleValue());
+                    celldata19.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountoutboundD())) ? 0 : (new BigDecimal(data.getAmountoutboundD())).doubleValue());
                     celldata19.setCellStyle(styleC25);
 
                     HSSFCell celldata20 = row.createCell(20);
-                    celldata20.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmtnoinvoiceD())) ? 0 : (new BigDecimal(data.getAmtnoinvoiceD())).doubleValue());
+                    celldata20.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountinboundD())) ? 0 : (new BigDecimal(data.getAmountinboundD())).doubleValue());
                     celldata20.setCellStyle(styleC25);
                     
                     HSSFCell celldata21 = row.createCell(21);
-                    celldata21.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmtbusinesstripD())) ? 0 : (new BigDecimal(data.getAmtbusinesstripD())).doubleValue());
+                    celldata21.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmtnoinvoiceD())) ? 0 : (new BigDecimal(data.getAmtnoinvoiceD())).doubleValue());
                     celldata21.setCellStyle(styleC25);
                     
                     HSSFCell celldata22 = row.createCell(22);
-                    celldata22.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmtannualleaveD())) ? 0 : (new BigDecimal(data.getAmtannualleaveD())).doubleValue());
+                    celldata22.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmtbusinesstripD())) ? 0 : (new BigDecimal(data.getAmtbusinesstripD())).doubleValue());
                     celldata22.setCellStyle(styleC25);
                     
                     HSSFCell celldata23 = row.createCell(23);
-                    celldata23.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmtrefundD())) ? 0 : (new BigDecimal(data.getAmtrefundD())).doubleValue());
+                    celldata23.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmtannualleaveD())) ? 0 : (new BigDecimal(data.getAmtannualleaveD())).doubleValue());
                     celldata23.setCellStyle(styleC25);
 
                     HSSFCell celldata24 = row.createCell(24);
-                    celldata24.setCellValue(String.valueOf(data.getRemarksD()));
-                    celldata24.setCellStyle(styleC29);
+                    celldata24.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmtrefundD())) ? 0 : (new BigDecimal(data.getAmtrefundD())).doubleValue());
+                    celldata24.setCellStyle(styleC25);
 
                     HSSFCell celldata25 = row.createCell(25);
-                    celldata25.setCellValue("".equalsIgnoreCase(String.valueOf(data.getDiffD())) ? 0 : (new BigDecimal(data.getDiffD())).doubleValue());
-                    celldata25.setCellStyle(styleC25);
+                    celldata25.setCellValue(String.valueOf(data.getRemarksD()));
+                    celldata25.setCellStyle(styleC29);
+                    
+                    HSSFCell celldata26 = row.createCell(26);
+                    celldata26.setCellValue("".equalsIgnoreCase(String.valueOf(data.getDiffD())) ? 0 : (new BigDecimal(data.getDiffD())).doubleValue());
+                    celldata26.setCellStyle(styleC25);
                     x ++ ;
                 }
                 
@@ -1107,12 +1130,13 @@ public class AirlineSummary extends AbstractExcelView {
                     String totalIns = "SUM(Q" + 10+":Q"+(tempcount2)+")";
                     String totalComms = "SUM(R" + 10+":R"+(tempcount2)+")";
                     String totalAmountWen = "SUM(S" + 10+":S"+(tempcount2)+")";
-                    String totalAmountIn = "SUM(T" + 10+":T"+(tempcount2)+")";
-                    String totalAmountNoInv = "SUM(U" + 10+":U"+(tempcount2)+")";
-                    String totalAmountBuss = "SUM(V" + 10+":V"+(tempcount2)+")";
-                    String totalAmountAnn = "SUM(W" + 10+":W"+(tempcount2)+")";
-                    String totalAmountRef = "SUM(X" + 10+":X"+(tempcount2)+")";
-                    String totalAmountDiff = "SUM(Z" + 10+":Z"+(tempcount2)+")";
+                    String totalAmountOut = "SUM(T" + 10+":T"+(tempcount2)+")";
+                    String totalAmountIn = "SUM(U" + 10+":U"+(tempcount2)+")";
+                    String totalAmountNoInv = "SUM(V" + 10+":V"+(tempcount2)+")";
+                    String totalAmountBuss = "SUM(W" + 10+":W"+(tempcount2)+")";
+                    String totalAmountAnn = "SUM(X" + 10+":X"+(tempcount2)+")";
+                    String totalAmountRef = "SUM(Z" + 10+":Z"+(tempcount2)+")";
+                    String totalAmountDiff = "SUM(AA" + 10+":AA"+(tempcount2)+")";
                     
                     HSSFCellStyle styleTotal = wb.createCellStyle();
                     styleTotal.setFont(excelFunction.getHeaderTable(wb.createFont()));
@@ -1147,8 +1171,9 @@ public class AirlineSummary extends AbstractExcelView {
                     cellTotal010.setCellStyle(stylebordertotal);
                     HSSFCell cellTotal011 = rowtotal.createCell(13);
                     cellTotal011.setCellStyle(stylebordertotal);
-                    HSSFCell cellTotal012 = rowtotal.createCell(24);
+                    HSSFCell cellTotal012 = rowtotal.createCell(25);
                     cellTotal012.setCellStyle(stylebordertotal);
+                   
 
                     HSSFCell cellTotal00 = rowtotal.createCell(8);
                     cellTotal00.setCellValue("Total");
@@ -1172,24 +1197,26 @@ public class AirlineSummary extends AbstractExcelView {
                     cellTotal06.setCellFormula(totalAmountWen);
                     cellTotal06.setCellStyle(styleC25);
                     HSSFCell cellTotal07 = rowtotal.createCell(19);
-                    cellTotal07.setCellFormula(totalAmountIn);
+                    cellTotal07.setCellFormula(totalAmountOut);
                     cellTotal07.setCellStyle(styleC25);
                     HSSFCell cellTotal08 = rowtotal.createCell(20);
-                    cellTotal08.setCellFormula(totalAmountNoInv);
+                    cellTotal08.setCellFormula(totalAmountIn);
                     cellTotal08.setCellStyle(styleC25);
                     HSSFCell cellTotal09 = rowtotal.createCell(21);
-                    cellTotal09.setCellFormula(totalAmountBuss);
+                    cellTotal09.setCellFormula(totalAmountNoInv);
                     cellTotal09.setCellStyle(styleC25);
                     HSSFCell cellTotal10 = rowtotal.createCell(22);
-                    cellTotal10.setCellFormula(totalAmountAnn);
+                    cellTotal10.setCellFormula(totalAmountBuss);
                     cellTotal10.setCellStyle(styleC25);
                     HSSFCell cellTotal11 = rowtotal.createCell(23);
-                    cellTotal11.setCellFormula(totalAmountRef);
+                    cellTotal11.setCellFormula(totalAmountAnn);
                     cellTotal11.setCellStyle(styleC25);
-                    HSSFCell cellTotal12 = rowtotal.createCell(25);
-                    cellTotal12.setCellFormula(totalAmountDiff);
+                    HSSFCell cellTotal12 = rowtotal.createCell(24);
+                    cellTotal12.setCellFormula(totalAmountRef);
                     cellTotal12.setCellStyle(styleC25);
-                    
+                    HSSFCell cellTotal13 = rowtotal.createCell(26);
+                    cellTotal13.setCellFormula(totalAmountDiff);
+                    cellTotal13.setCellStyle(styleC25);
 //                    if(tempcount2 != 0){
 //                        rowrouting = tempcount2+3;
 //                    }
@@ -1224,13 +1251,17 @@ public class AirlineSummary extends AbstractExcelView {
                     cell87.setCellStyle(styleC3);
                     sheetRounting.autoSizeColumn(6);
                     HSSFCell cell88 = row8.createCell(7);
-                    cell88.setCellValue("Amount Inbound");
+                    cell88.setCellValue("Amount Outbound");
                     cell88.setCellStyle(styleC3);
                     sheetRounting.autoSizeColumn(7);
                     HSSFCell cell89 = row8.createCell(8);
-                    cell89.setCellValue("Diff");
+                    cell89.setCellValue("Amount Inbound");
                     cell89.setCellStyle(styleC3);
                     sheetRounting.autoSizeColumn(8);
+                    HSSFCell cell90 = row8.createCell(9);
+                    cell90.setCellValue("Diff");
+                    cell90.setCellStyle(styleC3);
+                    sheetRounting.autoSizeColumn(9);
                     
                     
                     HSSFRow row = sheetRounting.createRow(count + y);
@@ -1264,12 +1295,16 @@ public class AirlineSummary extends AbstractExcelView {
                     celldata6.setCellStyle(styleC25);
 
                     HSSFCell celldata7 = row.createCell(7);
-                    celldata7.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountinboundR())) ? 0 : (new BigDecimal(data.getAmountinboundR())).doubleValue());
+                    celldata7.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountoutboundR())) ? 0 : (new BigDecimal(data.getAmountoutboundR())).doubleValue());
                     celldata7.setCellStyle(styleC25);
 
                     HSSFCell celldata8 = row.createCell(8);
-                    celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getDiffR())) ? 0 : (new BigDecimal(data.getDiffR())).doubleValue());
+                    celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountinboundR())) ? 0 : (new BigDecimal(data.getAmountinboundR())).doubleValue());
                     celldata8.setCellStyle(styleC25);
+                    
+                    HSSFCell celldata9 = row.createCell(9);
+                    celldata9.setCellValue("".equalsIgnoreCase(String.valueOf(data.getDiffR())) ? 0 : (new BigDecimal(data.getDiffR())).doubleValue());
+                    celldata9.setCellStyle(styleC25);
                     y++;
                 }
                 
@@ -1282,9 +1317,10 @@ public class AirlineSummary extends AbstractExcelView {
                     String totalIns = "SUM(E" + 10+":E"+(tempcount3)+")";
                     String totalComms = "SUM(F" + 10+":F"+(tempcount3)+")";
                     String totalAmountWen = "SUM(G" + 10+":G"+(tempcount3)+")";
-                    String totalAmountIn = "SUM(H" + 10+":H"+(tempcount3)+")";
-                    String totalAmountDiff = "SUM(I" + 10+":I"+(tempcount3)+")";
-
+                    String totalAmountOut = "SUM(H" + 10+":H"+(tempcount3)+")";
+                    String totalAmountIn = "SUM(I" + 10+":I"+(tempcount3)+")";
+                    String totalAmountDiff = "SUM(J" + 10+":J"+(tempcount3)+")";
+                    
                     HSSFCellStyle styleTotal = wb.createCellStyle();
                     styleTotal.setFont(excelFunction.getHeaderTable(wb.createFont()));
                     styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -1315,11 +1351,14 @@ public class AirlineSummary extends AbstractExcelView {
                     cellTotal06.setCellFormula(totalAmountWen);
                     cellTotal06.setCellStyle(styleC25);
                     HSSFCell cellTotal07 = rowtotal.createCell(7);
-                    cellTotal07.setCellFormula(totalAmountIn);
+                    cellTotal07.setCellFormula(totalAmountOut);
                     cellTotal07.setCellStyle(styleC25);
                     HSSFCell cellTotal08 = rowtotal.createCell(8);
-                    cellTotal08.setCellFormula(totalAmountDiff);
+                    cellTotal08.setCellFormula(totalAmountIn);
                     cellTotal08.setCellStyle(styleC25);
+                    HSSFCell cellTotal09 = rowtotal.createCell(9);
+                    cellTotal09.setCellFormula(totalAmountDiff);
+                    cellTotal09.setCellStyle(styleC25);
                 }
             }
             for (int i = 0; i < 30; i++) {
@@ -1327,6 +1366,12 @@ public class AirlineSummary extends AbstractExcelView {
                 sheetDetail.autoSizeColumn(i);
                 sheetRounting.autoSizeColumn(i);
             }
+            
+            sheetDetail.setColumnWidth(15, 256*10);
+            sheetDetail.setColumnWidth(16, 256*10);
+            
+            sheetPax.setColumnWidth(5, 256*10);
+
         }
     }
     
@@ -1336,7 +1381,7 @@ public class AirlineSummary extends AbstractExcelView {
         HSSFSheet sheetInv = wb.createSheet(sheetNameInv);
         HSSFSheet sheetDetail = wb.createSheet(sheetNameDetail);
         UtilityExcelFunction excelFunction = new UtilityExcelFunction();
-        
+
         SummaryAirlinePaxView dataheader = new SummaryAirlinePaxView();
 
         HSSFDataFormat currency = wb.createDataFormat();
@@ -1603,9 +1648,13 @@ public class AirlineSummary extends AbstractExcelView {
                     cell82.setCellStyle(styleC3);
                     sheetInv.autoSizeColumn(1);
                     HSSFCell cell83 = row8.createCell(2);
-                    cell83.setCellValue("Amount Inbound");
+                    cell83.setCellValue("Amount Outbound");
                     sheetInv.autoSizeColumn(2);
                     cell83.setCellStyle(styleC3);
+                    HSSFCell cell84 = row8.createCell(3);
+                    cell84.setCellValue("Amount Inbound");
+                    sheetInv.autoSizeColumn(3);
+                    cell84.setCellStyle(styleC3);
                     
                     HSSFRow row = sheetInv.createRow(count + i);
                     HSSFCell celldata0 = row.createCell(0);
@@ -1617,9 +1666,13 @@ public class AirlineSummary extends AbstractExcelView {
                     celldata1.setCellStyle(styleC25);
 
                     HSSFCell celldata2 = row.createCell(2);
-                    celldata2.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountinbound())) ? 0 : (new BigDecimal(data.getAmountinbound())).doubleValue());
+                    celldata2.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountoutbound())) ? 0 : (new BigDecimal(data.getAmountoutbound())).doubleValue());
                     celldata2.setCellStyle(styleC25);
-
+                    
+                    HSSFCell celldata3 = row.createCell(3);
+                    celldata3.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountinbound())) ? 0 : (new BigDecimal(data.getAmountinbound())).doubleValue());
+                    celldata3.setCellStyle(styleC25);
+                    
                     tempcount = count + i + 1;
                 }
                 //detail
@@ -1627,8 +1680,9 @@ public class AirlineSummary extends AbstractExcelView {
                     //Total inv
                     HSSFRow rowtotal = sheetInv.createRow(tempcount);
                     String totalwendy = "SUM(B" + 10+":B"+(tempcount)+")";
-                    String totalinbound = "SUM(C" + 10+":C"+(tempcount)+")";
-
+                    String totaloutbound = "SUM(C" + 10+":C"+(tempcount)+")";
+                    String totalinbound = "SUM(D" + 10+":D"+(tempcount)+")";
+                    
                     HSSFCellStyle styleTotal = wb.createCellStyle();
                     styleTotal.setFont(excelFunction.getHeaderTable(wb.createFont()));
                     styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -1645,8 +1699,11 @@ public class AirlineSummary extends AbstractExcelView {
                     cellTotal01.setCellFormula(totalwendy);
                     cellTotal01.setCellStyle(styleC25);
                     HSSFCell cellTotal02 = rowtotal.createCell(2);
-                    cellTotal02.setCellFormula(totalinbound);
+                    cellTotal02.setCellFormula(totaloutbound);
                     cellTotal02.setCellStyle(styleC25);
+                    HSSFCell cellTotal03 = rowtotal.createCell(3);
+                    cellTotal03.setCellFormula(totalinbound);
+                    cellTotal03.setCellStyle(styleC25);
                     
 //                    if(tempcount != 0){
 //                        rowdetail = tempcount+3;
@@ -1829,6 +1886,14 @@ public class AirlineSummary extends AbstractExcelView {
                 sheetInv.autoSizeColumn(j);
                 sheetDetail.autoSizeColumn(j);
             }
+            
+            sheetDetail.setColumnWidth(5, 256*12);
+            sheetDetail.setColumnWidth(6, 256*12);
+            sheetDetail.setColumnWidth(7, 256*12);
+            sheetDetail.setColumnWidth(8, 256*12);
+            sheetDetail.setColumnWidth(9, 256*12);
+            sheetDetail.setColumnWidth(10, 256*12);
+            sheetDetail.setColumnWidth(13, 256*12);
         }
     }
 }

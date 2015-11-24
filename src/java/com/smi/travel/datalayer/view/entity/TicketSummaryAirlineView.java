@@ -36,6 +36,7 @@ public class TicketSummaryAirlineView {
     private String commsR;
     private String amountwendyR;
     private String amountinboundR;
+    private String amountoutboundR;
     private String diffR;
     
     //pax
@@ -48,7 +49,7 @@ public class TicketSummaryAirlineView {
     private String commsP;
     private String amountwendyP;
     private String amountinboundP;
-    
+    private String amountoutboundP;
     
 
     //detail
@@ -72,6 +73,7 @@ public class TicketSummaryAirlineView {
     private String commsD;
     private String amountwendyD;
     private String amountinboundD;
+    private String amountoutboundD;
     private String amtnoinvoiceD;
     private String amtbusinesstripD;
     private String amtannualleaveD;
@@ -535,5 +537,29 @@ public class TicketSummaryAirlineView {
 
     public void setAmtrefundD(String amtrefundD) {
         this.amtrefundD = amtrefundD;
+    }
+
+    public String getAmountoutboundR() {
+        return amountoutboundR;
+    }
+
+    public void setAmountoutboundR(String amountoutboundR) {
+        this.amountoutboundR = amountoutboundR;
+    }
+
+    public String getAmountoutboundP() {
+        return amountoutboundP;
+    }
+
+    public void setAmountoutboundP(String amountoutboundP) {
+        this.amountoutboundP = amountoutboundP;
+    }
+
+    public String getAmountoutboundD() {
+        return amountoutboundD;
+    }
+
+    public void setAmountoutboundD(String amountoutboundD) {
+        this.amountoutboundD = amountoutboundD;
     }
 }
