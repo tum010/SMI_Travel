@@ -421,7 +421,7 @@ function printGuideCommission() {
     var guidePrintTo = document.getElementById("InputDateTo").value;
     var selGuideReport = document.getElementById("SelectGuide").value;
     if ((guidePrintFrom !== '') && (guidePrintTo !== '')) {
-        window.open("report.smi?name=OtherGuideCommission&startdate=" + guidePrintFrom + "&enddate=" + guidePrintTo + "&GuideID=" + selGuideReport);
+        window.open("report.smi?name=GuideCommission&startdate=" + guidePrintFrom + "&enddate=" + guidePrintTo + "&GuideID=" + selGuideReport);
     } else {
         validateDate();
     }
@@ -436,7 +436,7 @@ function printAgentCommission() {
     var agentPrintTo = document.getElementById("InputDateTo").value;
     var selAgentReport = document.getElementById("SelectAgent").value;
     if ((agentPrintFrom !== '') && (agentPrintTo !== '')) {
-        window.open("report.smi?name=OtherAgentCommission&startdate=" + agentPrintFrom + "&enddate=" + agentPrintTo + "&agentID=" + selAgentReport);
+        window.open("report.smi?name=AgentCommission&startdate=" + agentPrintFrom + "&enddate=" + agentPrintTo + "&agentID=" + selAgentReport);
     } else {
         validateDate();
     }    
