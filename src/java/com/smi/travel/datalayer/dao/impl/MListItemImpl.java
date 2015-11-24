@@ -583,11 +583,12 @@ public class MListItemImpl implements MListItemDao {
     public String getRefitemIdFromRefNo(String refno) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
-        String refItemId ="";
+        String refItemId =",";
         String query = "SELECT * FROM `bill_invoice_view` bi  where bi.billtype = '1' and bi.refno = '"+refno+"'";
         
         List<Object[]> QueryList = session.createSQLQuery(query)
                 .addScalar("refitem",Hibernate.STRING)
+                .addScalar("refno",Hibernate.STRING)
                 .list();
         
         for (Object[] B : QueryList) {
@@ -623,7 +624,7 @@ public class MListItemImpl implements MListItemDao {
             billableView.setPrice(B[1] == null ? 0 : util.convertStringToInteger(String.valueOf(B[1])));
             billableView.setCurCost(B[2] == null ? "" : util.ConvertString(B[2]));
             billableView.setCurAmount(B[3] == null ? "" : util.ConvertString(B[3]));
-            billableView.setBillID(B[4] == null ? "" : util.ConvertString(B[4]));
+            billableView.setRefItemId(B[4] == null ? "" : util.ConvertString(B[4]));
             billableViewList.add(billableView);
         }
         
@@ -639,7 +640,7 @@ public class MListItemImpl implements MListItemDao {
     @Override
     public List<BillableDesc> getBillableDescIdFromRefNo(String refno) {
         Session session = this.sessionFactory.openSession();
-        String query = "from BillableDesc billd where bills.MBilltype.id = 1 and billd.billable.master.referenceNo = '"+refno+"'";
+        String query = "from BillableDesc billd where billd.MBilltype.id = 1 and billd.billable.master.referenceNo = '"+refno+"'";
         List<BillableDesc> billableDescList = session.createQuery(query).list();
 
         if(billableDescList.isEmpty()){

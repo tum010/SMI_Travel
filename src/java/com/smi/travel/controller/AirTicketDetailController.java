@@ -38,6 +38,8 @@ import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -104,6 +106,7 @@ public class AirTicketDetailController extends SMITravelController {
         System.out.println(" ============= action ============= " + action);
         int result = 0;
         request.setAttribute(ISBILLSTATUS,0);
+        request.setAttribute(EnableSave,0);
         SystemUser user = (SystemUser) session.getAttribute("USER");
 
         //set pnrId
@@ -183,39 +186,53 @@ public class AirTicketDetailController extends SMITravelController {
                         BillableDesc bd = billableDescList.get(j);
                         refItemIdTemp = bd.getRefItemId();
                         String[] refItemIdTempParts = refItemIdTemp.split(",");
-                        if(refItemIdTempParts.length == 0){
+                        System.out.println(" refItemIdTempParts.length " + refItemIdTempParts.length);
+                        if(refItemIdTempParts.length == 1){
                             for(int k = 0 ; k < billableViews.size() ; k++){
+                                System.out.println(" refItemIdTemp " + refItemIdTemp);
+                                System.out.println(" billableViews.get(k).getRefItemId() " + billableViews.get(k).getRefItemId());
                                 if(String.valueOf(refItemIdTemp).equalsIgnoreCase(billableViews.get(k).getRefItemId())){
                                     int resultupdate = utilservice.updateBillableDesc(billableViews.get(k),billableDescList.get(j).getId()); //billdescId
                                 }
                             }
-                        }else{
+                        }else if (refItemIdTempParts.length > 1){
+                            int cost = 0;
+                            int price = 0;
+                            String curcost = "";
+                            String curamout = "";
                             for(int k = 0 ; k < refItemIdTempParts.length ; k++){
                                 for(int x = 0 ; x < billableViews.size() ; x++){
-                                    if(String.valueOf(refItemIdTempParts[k]).equalsIgnoreCase(billableViews.get(k).getRefItemId())){
+                                    System.out.println(" refItemIdTempParts[k] " + refItemIdTempParts[k]);
+                                    System.out.println(" billableViews.get(x).getRefItemId() " + billableViews.get(x).getRefItemId());
+                                    if(String.valueOf(refItemIdTempParts[k]).equalsIgnoreCase(billableViews.get(x).getRefItemId())){
+                                        cost = cost + billableViews.get(x).getCost();
+                                        price = price + billableViews.get(x).getPrice();
+                                        curcost =  billableViews.get(x).getCurCost();
+                                        curamout =  billableViews.get(x).getCurAmount();
                                         
+                                        System.out.println(" cost " + cost);
+                                        System.out.println(" price " + price);
+                                        System.out.println(" curcost " + curcost);
+                                        System.out.println(" curamout " + curamout);
                                     }
                                 }
-//                                int resultupdate = utilservice.updateBillableDesc(billableViews.get(k),billableDescList.get(j).getId()); //billdescId
                             }
+                            
+                            System.out.println(" ++++ cost ++++ " + cost);
+                            System.out.println(" ++++ price ++++ " + price);
+                            System.out.println(" curcost " + curcost);
+                            System.out.println(" curamout " + curamout);
+                            BillableView billableView = new BillableView();
+                            billableView.setCost(cost);
+                            billableView.setPrice(price);
+                            billableView.setCurCost(curcost);
+                            billableView.setCurAmount(curamout);
+                            int resultupdate = utilservice.updateBillableDesc(billableView,billableDescList.get(j).getId()); //billdescId
                         }
-                        
-//                        for(int k = 0 ; k < billableViews.size() ; k++){
-//                            BillableView bv = billableViews.get(k);
-//                            if(String.valueOf(bd.getRefItemId()).equalsIgnoreCase(bv.getRefItemId())){
-//                                
-//                            }
-//                        }
                     }
-
                 }
-                
-                
-//                BillableView billableView = utilservice.getBillableDescByBookId(id,"4");
-//                int resultupdate = utilservice.updateBillableDesc(billableView,refItemId);
             }
-            
-            
+
             return new ModelAndView("redirect:AirTicketDetail.smi?referenceNo=" + referenceNo + "&pnr=" + pnr + "&action=edit&result=" + result);
         } else if ("newpnr".equalsIgnoreCase(action)) {
             System.out.println(action);
