@@ -93,7 +93,7 @@ public class InvoiceImpl implements InvoiceDao{
         List<String> list = new LinkedList<String>();
         Date thisdate = new Date();
         SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("MMyy");
+        df.applyPattern("yyMM");
         Query query = session.createSQLQuery("SELECT RIGHT(inv_no, 4) as invnum  FROM invoice where department = :department and inv_type = :invoiceType and inv_no Like :invno  ORDER BY RIGHT(inv_no, 4) desc");
         query.setParameter("invno", "%"+ df.format(thisdate) + "%");
         query.setParameter("department", department);
@@ -108,6 +108,8 @@ public class InvoiceImpl implements InvoiceDao{
                 departtype = "WV";
             }else if("N".equals(invoiceType)){
                 departtype = "WN";
+            }else if("A".equals(invoiceType)){
+                departtype = "WT";
             }
         }else if("Inbound".equals(department)){
             if("T".equals(invoiceType)){
@@ -124,6 +126,8 @@ public class InvoiceImpl implements InvoiceDao{
                 departtype = "OV";
             }else if("N".equals(invoiceType)){
                 departtype = "ON";
+            }else if("A".equals(invoiceType)){
+                departtype = "OT";
             }
         }
         
@@ -352,6 +356,9 @@ public class InvoiceImpl implements InvoiceDao{
     public String searchInvoiceNum(String department,String invoiceType,String invoiceNo) {
         String invoiceNoLast = "";
         Session session = this.sessionFactory.openSession();
+        System.out.println("department : "+department);
+        System.out.println("invoiceType : "+invoiceType);
+        System.out.println("invoiceNo : "+invoiceNo);
         List<Invoice> invoiceList = session.createQuery(SEARCH_INVOICE_TYPE)
                 .setParameter("invoiceDepartment", department)
                 .setParameter("invoiceType", invoiceType)
@@ -736,6 +743,7 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         try { 
             transaction = session.beginTransaction();
+            System.out.println("generateInvoiceNo : "+invoice.getDepartment() +" : "+invoice.getInvType());
             result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
 //            result = invoice.getInvNo();
             invoice.setInvNo(result);
