@@ -1367,11 +1367,13 @@ public class AirlineSummary extends AbstractExcelView {
                 sheetRounting.autoSizeColumn(i);
             }
             
-            sheetDetail.setColumnWidth(15, 256*10);
-            sheetDetail.setColumnWidth(16, 256*10);
+            sheetDetail.setColumnWidth(15, 256*12);
+            sheetDetail.setColumnWidth(16, 256*12);
             
-            sheetPax.setColumnWidth(5, 256*10);
-
+            sheetPax.setColumnWidth(5, 256*12);
+            
+            sheetRounting.setColumnWidth(5, 256*12);
+            sheetRounting.setColumnWidth(9, 256*12);
         }
     }
     
