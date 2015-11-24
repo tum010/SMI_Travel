@@ -185,6 +185,17 @@ public class OtherDetailController extends SMITravelController {
             }  
 //            int result = OtherService.saveBookingOther(Other,user);
             List<String> result = OtherService.saveBookingOther(Other,user,createby);
+            
+            
+            String billDescId = utilservice.getBillableDescId(itemid, bookTypeNo);
+            if("".equalsIgnoreCase(billDescId)){
+                request.setAttribute(EnableSave,1);
+            }else{
+                request.setAttribute(EnableSave,0);
+                BillableView billableView = utilservice.getBillableDescByBookId(itemid,bookTypeNo);
+                int resultupdate = utilservice.updateBillableDesc(billableView,billDescId);
+            }
+            
             if(("1".equalsIgnoreCase(result.get(0))) && (callpageSubmit==null || !callpageSubmit.equalsIgnoreCase("FromDayTour"))){
                 String stock = OtherService.saveStockDetailOther(Other, user, addticket, adTicket, chTicket, infTicket, itemid);
                 if("notStock".equalsIgnoreCase(stock)){
@@ -287,14 +298,6 @@ public class OtherDetailController extends SMITravelController {
                 request.setAttribute(TransectionResult, "save unsuccessful");
             }
             
-            String billDescId = utilservice.getBillableDescId(itemid, bookTypeNo);
-            if("".equalsIgnoreCase(billDescId)){
-                request.setAttribute(EnableSave,1);
-            }else{
-                request.setAttribute(EnableSave,0);
-                BillableView billableView = utilservice.getBillableDescByBookId(itemid,bookTypeNo);
-                int resultupdate = utilservice.updateBillableDesc(billableView,billDescId);
-            }
         }
         if ("edit".equalsIgnoreCase(action)) {
             OtherBooking Other = OtherService.getBookDetailOtherFromID(request.getParameter("itemid"));
