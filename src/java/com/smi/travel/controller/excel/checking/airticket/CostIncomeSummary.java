@@ -2754,7 +2754,9 @@ public class CostIncomeSummary extends AbstractExcelView {
 
         List<TicketCommissionReceive>  receiveTemp = listTotal.get(0).getTicketCommmissionReceive();
         TicketCommissionReceive  receive = new TicketCommissionReceive();
-        receive = (TicketCommissionReceive)receiveTemp.get(0);
+        if(!receiveTemp.isEmpty()){
+            receive = (TicketCommissionReceive) receiveTemp.get(0);
+        }
         // Row 2
         HSSFRow row02 = sheet.createRow(1);
         HSSFCell cell021 = row02.createCell(0);
@@ -3174,7 +3176,9 @@ public class CostIncomeSummary extends AbstractExcelView {
         
         List<TicketCommissionReceive>  receiveSumTemp = listTotal.get(0).getTicketCommmissionReceiveSum();
         TicketCommissionReceive  receiveSum = new TicketCommissionReceive();
-        receiveSum = (TicketCommissionReceive)receiveSumTemp.get(0);
+        if(!receiveSumTemp.isEmpty()){
+            receiveSum = (TicketCommissionReceive)receiveSumTemp.get(0);
+        }
         // Row 2
         HSSFRow row022 = sheet1.createRow(1);
         HSSFCell cell0212 = row022.createCell(0);
@@ -3251,31 +3255,31 @@ public class CostIncomeSummary extends AbstractExcelView {
         cell632.setCellValue("Pax");
         sheet1.autoSizeColumn(2);
         cell632.setCellStyle(styleAlignRightBorderAllHeaderTable);
-        HSSFCell cell652 = row62.createCell(3);
-        cell652.setCellValue("Air");
-        cell652.setCellStyle(styleAlignRightBorderAllHeaderTable);
+//        HSSFCell cell652 = row62.createCell(3);
+//        cell652.setCellValue("Air");
+//        cell652.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet1.autoSizeColumn(3);
-        HSSFCell cell662 = row62.createCell(4);
+        HSSFCell cell662 = row62.createCell(3);
         cell662.setCellValue("Comm Airline");
         cell662.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet1.autoSizeColumn(5);
-        HSSFCell cell672 = row62.createCell(5);
+        HSSFCell cell672 = row62.createCell(4);
         cell672.setCellValue("Little Com");
         cell672.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet1.autoSizeColumn(5);
-        HSSFCell cell6722 = row62.createCell(6);
+        HSSFCell cell6722 = row62.createCell(5);
         cell6722.setCellValue("Pay [Agent]");
         cell6722.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet1.autoSizeColumn(6);
-        HSSFCell cell682 = row62.createCell(7);
+        HSSFCell cell682 = row62.createCell(6);
         cell682.setCellValue("RC [Agent]");
         cell682.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet1.autoSizeColumn(7);
-        HSSFCell cell692 = row62.createCell(8);
+        HSSFCell cell692 = row62.createCell(7);
         cell692.setCellValue("Pay Refund");
         cell692.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet1.autoSizeColumn(8);
-        HSSFCell cell712 = row62.createCell(9);
+        HSSFCell cell712 = row62.createCell(8);
         cell712.setCellValue("Comm Receive");
         cell712.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet1.autoSizeColumn(9);
@@ -3324,10 +3328,10 @@ public class CostIncomeSummary extends AbstractExcelView {
                     BigDecimal pax = new BigDecimal(listTicketCommissionReceiveSum.get(num2).getPax());
                     cell3.setCellValue((pax != null) ? pax.doubleValue() : new BigDecimal("0").doubleValue() );
                     cell3.setCellStyle(styleDetailPax);
-                HSSFCell cell4 = row2.createCell(3);
-                    cell4.setCellValue(listTicketCommissionReceiveSum.get(num2).getAir());
-                    cell4.setCellStyle(styleDetailTable);
-                HSSFCell cell55 = row2.createCell(4);
+//                HSSFCell cell4 = row2.createCell(3);
+//                    cell4.setCellValue(listTicketCommissionReceiveSum.get(num2).getAir());
+//                    cell4.setCellStyle(styleDetailTable);
+                HSSFCell cell55 = row2.createCell(3);
                     BigDecimal comair = null;
                     if("".equals(listTicketCommissionReceiveSum.get(num2).getComairline())){
                         comair = new BigDecimal(0);
@@ -3336,7 +3340,7 @@ public class CostIncomeSummary extends AbstractExcelView {
                     }
                     cell55.setCellValue((comair != null && !"0".equals(comair)) ? comair.doubleValue() : new BigDecimal("0").doubleValue() );
                     cell55.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell5 = row2.createCell(5);
+                HSSFCell cell5 = row2.createCell(4);
                     BigDecimal littlecom = null;
                     if("".equals(listTicketCommissionReceiveSum.get(num2).getLittlecom())){
                         littlecom = new BigDecimal(0);
@@ -3345,7 +3349,7 @@ public class CostIncomeSummary extends AbstractExcelView {
                     }
                     cell5.setCellValue((littlecom != null && !"0".equals(littlecom)) ? littlecom.doubleValue() : new BigDecimal("0").doubleValue());
                     cell5.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell6 = row2.createCell(6);
+                HSSFCell cell6 = row2.createCell(5);
                     BigDecimal payagent = null;
                     if("".equals(listTicketCommissionReceiveSum.get(num2).getPayagent())){
                         payagent = new BigDecimal(0);
@@ -3354,7 +3358,7 @@ public class CostIncomeSummary extends AbstractExcelView {
                     }
                     cell6.setCellValue((payagent != null) ? payagent.doubleValue() : new BigDecimal("0").doubleValue());
                     cell6.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell7 = row2.createCell(7);
+                HSSFCell cell7 = row2.createCell(6);
                     BigDecimal rcagent = null;
                     if("".equals(listTicketCommissionReceiveSum.get(num2).getRcagent())){
                         rcagent = new BigDecimal(0);
@@ -3363,7 +3367,7 @@ public class CostIncomeSummary extends AbstractExcelView {
                     }
                     cell7.setCellValue((rcagent != null) ? rcagent.doubleValue() : new BigDecimal("0").doubleValue());
                     cell7.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell8 = row2.createCell(8);
+                HSSFCell cell8 = row2.createCell(7);
                     BigDecimal payrefund = null;
                     if("".equals(listTicketCommissionReceiveSum.get(num2).getPayrefund())){
                         payrefund = new BigDecimal(0);
@@ -3372,7 +3376,7 @@ public class CostIncomeSummary extends AbstractExcelView {
                     }
                     cell8.setCellValue((payrefund != null) ? payrefund.doubleValue() : new BigDecimal("0").doubleValue());
                     cell8.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell9 = row2.createCell(9);
+                HSSFCell cell9 = row2.createCell(8);
                     BigDecimal comreceive = null;
                     if("".equals(listTicketCommissionReceiveSum.get(num2).getComreceive())){
                         comreceive = new BigDecimal(0);
@@ -3381,7 +3385,7 @@ public class CostIncomeSummary extends AbstractExcelView {
                     }
                     cell9.setCellValue((comreceive != null) ? comreceive.doubleValue() : new BigDecimal("0").doubleValue());
                     cell9.setCellStyle(styleDetailTableNumber);
-                    sheet1.autoSizeColumn(9);
+                    sheet1.autoSizeColumn(8);
                     
                     if("I".equalsIgnoreCase(String.valueOf(listTicketCommissionReceiveSum.get(num2).getTyperounting()))){
                         interpax2 = interpax2.add(pax);
@@ -3437,25 +3441,25 @@ public class CostIncomeSummary extends AbstractExcelView {
         HSSFCell s2cell002Sum = rowS2.createCell(2);
         s2cell002Sum.setCellValue(interpax2.doubleValue());
         s2cell002Sum.setCellStyle(styleTotalPax);
-        HSSFCell s2cell003Sum = rowS2.createCell(3);
-        s2cell003Sum.setCellValue("");
-        s2cell003Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell004Sum = rowS2.createCell(4);
+//        HSSFCell s2cell003Sum = rowS2.createCell(3);
+//        s2cell003Sum.setCellValue("");
+//        s2cell003Sum.setCellStyle(styleDetailTotal);
+        HSSFCell s2cell004Sum = rowS2.createCell(3);
         s2cell004Sum.setCellValue(intercommairline2.doubleValue());
         s2cell004Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell005Sum = rowS2.createCell(5);
+        HSSFCell s2cell005Sum = rowS2.createCell(4);
         s2cell005Sum.setCellValue(interlittlecom2.doubleValue());
         s2cell005Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell006Sum = rowS2.createCell(6);
+        HSSFCell s2cell006Sum = rowS2.createCell(5);
         s2cell006Sum.setCellValue(interpay2.doubleValue());
         s2cell006Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell007Sum = rowS2.createCell(7);
+        HSSFCell s2cell007Sum = rowS2.createCell(6);
         s2cell007Sum.setCellValue(interrc2.doubleValue());
         s2cell007Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell008Sum = rowS2.createCell(8);
+        HSSFCell s2cell008Sum = rowS2.createCell(7);
         s2cell008Sum.setCellValue(interpayref2.doubleValue());
         s2cell008Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell009Sum = rowS2.createCell(9);
+        HSSFCell s2cell009Sum = rowS2.createCell(8);
         s2cell009Sum.setCellValue(intercommrec2.doubleValue());
         s2cell009Sum.setCellStyle(styleDetailTotal);
         
@@ -3469,25 +3473,25 @@ public class CostIncomeSummary extends AbstractExcelView {
         HSSFCell s2cell012Sum = rowS2.createCell(2);
         s2cell012Sum.setCellValue(domesticpax2.doubleValue());
         s2cell012Sum.setCellStyle(styleTotalPax);
-        HSSFCell s2cell013Sum = rowS2.createCell(3);
-        s2cell013Sum.setCellValue("");
-        s2cell013Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell014Sum = rowS2.createCell(4);
+//        HSSFCell s2cell013Sum = rowS2.createCell(3);
+//        s2cell013Sum.setCellValue("");
+//        s2cell013Sum.setCellStyle(styleDetailTotal);
+        HSSFCell s2cell014Sum = rowS2.createCell(3);
         s2cell014Sum.setCellValue(domesticcommairline2.doubleValue());
         s2cell014Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell015Sum = rowS2.createCell(5);
+        HSSFCell s2cell015Sum = rowS2.createCell(4);
         s2cell015Sum.setCellValue(domesticlittlecom2.doubleValue());
         s2cell015Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell016Sum = rowS2.createCell(6);
+        HSSFCell s2cell016Sum = rowS2.createCell(5);
         s2cell016Sum.setCellValue(domesticpay2.doubleValue());
         s2cell016Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell017Sum = rowS2.createCell(7);
+        HSSFCell s2cell017Sum = rowS2.createCell(6);
         s2cell017Sum.setCellValue(domesticrc2.doubleValue());
         s2cell017Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell018Sum = rowS2.createCell(8);
+        HSSFCell s2cell018Sum = rowS2.createCell(7);
         s2cell018Sum.setCellValue(domesticpayref2.doubleValue());
         s2cell018Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell019Sum = rowS2.createCell(9);
+        HSSFCell s2cell019Sum = rowS2.createCell(8);
         s2cell019Sum.setCellValue(domesticcommrec2.doubleValue());
         s2cell019Sum.setCellStyle(styleDetailTotal);
         
@@ -3501,35 +3505,36 @@ public class CostIncomeSummary extends AbstractExcelView {
         HSSFCell s2cell022Sum = rowS2.createCell(2);
         s2cell022Sum.setCellValue(cancelpax2.doubleValue());
         s2cell022Sum.setCellStyle(styleTotalPax);
-        HSSFCell s2cell023Sum = rowS2.createCell(3);
-        s2cell023Sum.setCellValue("");
-        s2cell023Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell024Sum = rowS2.createCell(4);
+//        HSSFCell s2cell023Sum = rowS2.createCell(3);
+//        s2cell023Sum.setCellValue("");
+//        s2cell023Sum.setCellStyle(styleDetailTotal);
+        HSSFCell s2cell024Sum = rowS2.createCell(3);
         s2cell024Sum.setCellValue(cancelcommairline2.doubleValue());
         s2cell024Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell025Sum = rowS2.createCell(5);
+        HSSFCell s2cell025Sum = rowS2.createCell(4);
         s2cell025Sum.setCellValue(cancellittlecom2.doubleValue());
         s2cell025Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell026Sum = rowS2.createCell(6);
+        HSSFCell s2cell026Sum = rowS2.createCell(5);
         s2cell026Sum.setCellValue(cancelpay2.doubleValue());
         s2cell026Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell027Sum = rowS2.createCell(7);
+        HSSFCell s2cell027Sum = rowS2.createCell(6);
         s2cell027Sum.setCellValue(cancelrc2.doubleValue());
         s2cell027Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell028Sum = rowS2.createCell(8);
+        HSSFCell s2cell028Sum = rowS2.createCell(7);
         s2cell028Sum.setCellValue(cancelpayref2.doubleValue());
         s2cell028Sum.setCellStyle(styleDetailTotal);
-        HSSFCell s2cell029Sum = rowS2.createCell(9);
+        HSSFCell s2cell029Sum = rowS2.createCell(8);
         s2cell029Sum.setCellValue(cancelcommrec2.doubleValue());
         s2cell029Sum.setCellStyle(styleDetailTotal);
         
         String sumPax2 = "SUM(C" + 10+":C"+(count2)+")";
-        String sumComair2 = "SUM(E" + 10+":E"+(count2)+")";
-        String sumlitttlecom2 = "SUM(F" + 10+":F"+(count2)+")";
-        String sumPayagent2 = "SUM(G" + 10+":G"+(count2)+")";
-        String sumRcagent2 = "SUM(H" + 10+":H"+(count2)+")";
-        String sumPayRefund2 = "SUM(I" + 10+":I"+(count2)+")";
-        String sumComReceive2 = "SUM(J" + 10+":J"+(count2)+")";
+        String sumComair2 = "SUM(D" + 10+":D"+(count2)+")";
+        String sumlitttlecom2 = "SUM(E" + 10+":E"+(count2)+")";
+        String sumPayagent2 = "SUM(F" + 10+":F"+(count2)+")";
+        String sumRcagent2 = "SUM(G" + 10+":G"+(count2)+")";
+        String sumPayRefund2 = "SUM(H" + 10+":H"+(count2)+")";
+        String sumComReceive2 = "SUM(I" + 10+":I"+(count2)+")";
+        
 
         HSSFRow row20 = sheet1.createRow(count2+3);
         HSSFCell cell60Sum2 = row20.createCell(0);
@@ -3544,34 +3549,34 @@ public class CostIncomeSummary extends AbstractExcelView {
             cell7Sum2.setCellFormula(sumPax2);
             sheet1.autoSizeColumn(2);
             cell7Sum2.setCellStyle(styleTotalPax);
-        HSSFCell cell8Sum2 = row20.createCell(3);
-            cell8Sum2.setCellValue("");
-            sheet1.autoSizeColumn(3);
-            cell8Sum2.setCellStyle(styleDetailTableNumber);
-        HSSFCell cell9Sum2 = row20.createCell(4);
+//        HSSFCell cell8Sum2 = row20.createCell(3);
+//            cell8Sum2.setCellValue("");
+//            sheet1.autoSizeColumn(3);
+//            cell8Sum2.setCellStyle(styleDetailTableNumber);
+        HSSFCell cell9Sum2 = row20.createCell(3);
             cell9Sum2.setCellFormula(sumComair2);
             cell9Sum2.setCellStyle(styleDetailTableNumber);
-            sheet1.autoSizeColumn(4);
-        HSSFCell cell10Sum2 = row20.createCell(5);
+            sheet1.autoSizeColumn(3);
+        HSSFCell cell10Sum2 = row20.createCell(4);
             cell10Sum2.setCellFormula(sumlitttlecom2);
             cell10Sum2.setCellStyle(styleDetailTableNumber);
-            sheet1.autoSizeColumn(5);
-        HSSFCell cell11Sum2 = row20.createCell(6);
+            sheet1.autoSizeColumn(4);
+        HSSFCell cell11Sum2 = row20.createCell(5);
             cell11Sum2.setCellFormula(sumPayagent2);
             cell11Sum2.setCellStyle(styleDetailTableNumber);
-            sheet1.autoSizeColumn(6);
-        HSSFCell cell12Sum2 = row20.createCell(7);
+            sheet1.autoSizeColumn(5);
+        HSSFCell cell12Sum2 = row20.createCell(6);
             cell12Sum2.setCellFormula(sumRcagent2);
             cell12Sum2.setCellStyle(styleDetailTableNumber);
-            sheet1.autoSizeColumn(7);
-        HSSFCell cell13Sum2 = row20.createCell(8);
+            sheet1.autoSizeColumn(6);
+        HSSFCell cell13Sum2 = row20.createCell(7);
             cell13Sum2.setCellFormula(sumPayRefund2);
             cell13Sum2.setCellStyle(styleDetailTableNumber);
-            sheet1.autoSizeColumn(8);
-        HSSFCell cell14Sum2 = row20.createCell(9);
+            sheet1.autoSizeColumn(7);
+        HSSFCell cell14Sum2 = row20.createCell(8);
             cell14Sum2.setCellFormula(sumComReceive2);
             cell14Sum2.setCellStyle(styleDetailTableNumber);
-            sheet1.autoSizeColumn(9);
+            sheet1.autoSizeColumn(8);
 
         HSSFRow rowLL2 = sheet1.createRow(count2+4);
         rowLL2.createCell(0).setCellStyle(styleBorderTop);
@@ -3583,7 +3588,7 @@ public class CostIncomeSummary extends AbstractExcelView {
         rowLL2.createCell(6).setCellStyle(styleBorderTop);
         rowLL2.createCell(7).setCellStyle(styleBorderTop);
         rowLL2.createCell(8).setCellStyle(styleBorderTop);
-        rowLL2.createCell(9).setCellStyle(styleBorderTop);
+//        rowLL2.createCell(9).setCellStyle(styleBorderTop);
         
         sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count2+1)+":B"+(count2+1)));
         sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count2+2)+":B"+(count2+2)));

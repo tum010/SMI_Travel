@@ -694,17 +694,17 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
         query += " group by `fare`.`ticket_type`,`fare`.`ticket_rounting`,substr(`fare`.`ticket_no`,1,3)";
         System.out.println("query sum : " + querySum);
         System.out.println("query : " + query);
-        List<Object[]> TicketCommissionReceive = session.createSQLQuery(query )
+        List<Object[]> TicketCommissionReceive = session.createSQLQuery(query)
                 .addScalar("typepayment", Hibernate.STRING)
                 .addScalar("typerounting", Hibernate.STRING)
                 .addScalar("pax", Hibernate.STRING)
                 .addScalar("air", Hibernate.STRING)
                 .addScalar("comairline", Hibernate.STRING)
-//                .addScalar("littlecom", Hibernate.STRING)
                 .addScalar("payagent", Hibernate.STRING)
                 .addScalar("rcagent", Hibernate.STRING)
                 .addScalar("payrefund", Hibernate.STRING)
                 .addScalar("comreceive", Hibernate.STRING)
+                .addScalar("littlecom", Hibernate.STRING)
                 .list();
         for (Object[] B : TicketCommissionReceive) {
             TicketCommissionReceive ar = new TicketCommissionReceive();
@@ -739,11 +739,11 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
             ar.setPax(util.ConvertString(B[2])== null ? "" : util.ConvertString(B[2]));
             ar.setAir(util.ConvertString(B[3])== null ? "" : util.ConvertString(B[3]));
             ar.setComairline(util.ConvertString(B[4])== null ? "" : util.ConvertString(B[4]));
-            ar.setLittlecom("");
             ar.setPayagent(util.ConvertString(B[5])== null ? "" : util.ConvertString(B[5]));
             ar.setRcagent(util.ConvertString(B[6])== null ? "" : util.ConvertString(B[6]));
             ar.setPayrefund(util.ConvertString(B[7])== null ? "" : util.ConvertString(B[7]));
             ar.setComreceive(util.ConvertString(B[8])== null ? "" : util.ConvertString(B[8]));
+            ar.setLittlecom(util.ConvertString(B[9])== null ? "" : util.ConvertString(B[9]));
             data.add(ar);
         }
         
@@ -753,11 +753,11 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
                 .addScalar("pax", Hibernate.STRING)
                 .addScalar("air", Hibernate.STRING)
                 .addScalar("comairline", Hibernate.STRING)
-//                .addScalar("littlecom", Hibernate.STRING)
                 .addScalar("payagent", Hibernate.STRING)
                 .addScalar("rcagent", Hibernate.STRING)
                 .addScalar("payrefund", Hibernate.STRING)
                 .addScalar("comreceive", Hibernate.STRING)
+                .addScalar("littlecom", Hibernate.STRING)
                 .list();
         
         for (Object[] B : TicketCommissionReceiveSum) {
@@ -793,11 +793,11 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
             ar.setPax(util.ConvertString(B[2])== null ? "" : util.ConvertString(B[2]));
             ar.setAir(util.ConvertString(B[3])== null ? "" : util.ConvertString(B[3]));
             ar.setComairline(util.ConvertString(B[4])== null ? "" : util.ConvertString(B[4]));
-            ar.setLittlecom("");
             ar.setPayagent(util.ConvertString(B[5])== null ? "" : util.ConvertString(B[5]));
             ar.setRcagent(util.ConvertString(B[6])== null ? "" : util.ConvertString(B[6]));
             ar.setPayrefund(util.ConvertString(B[7])== null ? "" : util.ConvertString(B[7]));
             ar.setComreceive(util.ConvertString(B[8])== null ? "" : util.ConvertString(B[8]));
+            ar.setLittlecom(util.ConvertString(B[9])== null ? "" : util.ConvertString(B[9]));
             dataSum.add(ar);
         }
         
