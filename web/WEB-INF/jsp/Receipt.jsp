@@ -2410,18 +2410,16 @@ function CallAjaxSearchRef(param) {
                         });
 
                     }else{
-                        var strx = msg.split('||');
-                        var array = [];
-                        array = array.concat(strx);
-                        BookintType = array[0];
                         
+                        $("#RefNoListTable tbody").empty().append(msg);
+                        BookintType = $("#masterBookType").val();
                         if(BookintType == $('#typeBooking').val()) {
                             $('#RefNoListTable > tbody  > tr').each(function() {
                                 $(this).remove();
                             });
                             $('#AlertBookingRefno').hide();
                             try {
-                                $("#RefNoListTable tbody").empty().append(array[1]);
+                                $("#RefNoListTable tbody").empty().append(msg);
                                 document.getElementById("receiveFromCode").value = $("#receiveFromBillable").val();
                                 document.getElementById("receiveFromName").value = $("#receiveNameBillable").val();
                                 document.getElementById("receiveFromAddress").value = $("#receiveAddressBillable").val();
@@ -2431,14 +2429,12 @@ function CallAjaxSearchRef(param) {
                                 alert(e);
                             }
                         } else {
+                            $('#RefNoListTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
                             $('#AlertBookingRefno').show();
-
                         }
-                        
-                        
-                        
-                        
-                        
+
                     }
                     $("#ajaxload2").addClass("hidden");
                      

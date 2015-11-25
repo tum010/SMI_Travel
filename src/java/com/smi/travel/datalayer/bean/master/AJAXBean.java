@@ -1421,8 +1421,9 @@ public class AJAXBean extends AbstractBean implements
         }
         if (billableDescs == null || billableDescs.size() == 0) {
             String newrow = "";
-            newrow += billable.getMaster().getBookingType() + "||" +
-                    "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
+            newrow += 
+                    "<input type='hidden' name='masterBookType' id='masterBookType' value='" + billable.getMaster().getBookingType() + "'>"
+                    + "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
                     + "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='" + receiveName + "'>"
                     + "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='" + receiveAddress + "'>"
                     + "<input type='hidden' name='arcodeBillable' id='arcodeBillable' value='" + arcode + "'>"
@@ -1488,8 +1489,9 @@ public class AJAXBean extends AbstractBean implements
 
             if (amount.compareTo(BigDecimal.ZERO) != 0) {
                 String newrow = "";
-                newrow += billable.getMaster().getBookingType() + "||" +
+                newrow +=
                         "<tr>"
+                        + "<input type='hidden' name='masterBookType' id='masterBookType' value='" + billable.getMaster().getBookingType() + "'>"
                         + "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
                         + "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='" + receiveName + "'>"
                         + "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='" + receiveAddress + "'>"
@@ -1505,8 +1507,8 @@ public class AJAXBean extends AbstractBean implements
                 No++;
             } else {
                 String newrow = "";
-                newrow += billable.getMaster().getBookingType() + "||" +
-                        "<tr>" 
+                newrow += "<tr>" 
+                        + "<input type='hidden' name='masterBookType' id='masterBookType' value='" + billable.getMaster().getBookingType() + "'>"
                         + "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
                         + "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='" + receiveName + "'>"
                         + "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='" + receiveAddress + "'>"
