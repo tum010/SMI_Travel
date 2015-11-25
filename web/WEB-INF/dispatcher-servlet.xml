@@ -686,14 +686,15 @@
     </bean>
     
     <bean id="OutboundSummaryController" class="com.smi.travel.controller.OutboundSummaryController">
-
+        
     </bean>
     
     <bean id="OutboundPackageSummaryController" class="com.smi.travel.controller.OutboundPackageSummaryController">
 
     </bean>
     <bean id="OutboundProductSummaryController" class="com.smi.travel.controller.OutboundProductSummaryController">
-
+        <property name="utilityService" ref="UtilityService" />
+        <property name="bookingOtherService" ref="BookingOtherService" />
     </bean>
     <bean id="OutboundStaffSummaryController" class="com.smi.travel.controller.OutboundStaffSummaryController">
 
