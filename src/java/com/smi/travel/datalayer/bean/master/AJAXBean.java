@@ -1421,7 +1421,7 @@ public class AJAXBean extends AbstractBean implements
         }
         if (billableDescs == null || billableDescs.size() == 0) {
             String newrow = "";
-            newrow += 
+            newrow += billable.getMaster().getBookingType() + "||" +
                     "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
                     + "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='" + receiveName + "'>"
                     + "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='" + receiveAddress + "'>"
@@ -1488,7 +1488,8 @@ public class AJAXBean extends AbstractBean implements
 
             if (amount.compareTo(BigDecimal.ZERO) != 0) {
                 String newrow = "";
-                newrow += "<tr>"
+                newrow += billable.getMaster().getBookingType() + "||" +
+                        "<tr>"
                         + "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
                         + "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='" + receiveName + "'>"
                         + "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='" + receiveAddress + "'>"
@@ -1504,13 +1505,14 @@ public class AJAXBean extends AbstractBean implements
                 No++;
             } else {
                 String newrow = "";
-                newrow += "<tr>" 
+                newrow += billable.getMaster().getBookingType() + "||" +
+                        "<tr>" 
                         + "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
                         + "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='" + receiveName + "'>"
                         + "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='" + receiveAddress + "'>"
                         + "<input type='hidden' name='arcodeBillable' id='arcodeBillable' value='" + arcode + "'>"
                         + "<input type='hidden' name='mAccPayBillable' id='mAccPayBillable' value='" + mAccPay + "'>"
-                         + "</tr>";
+                        + "</tr>";
                         
                 html.append(newrow);
             }

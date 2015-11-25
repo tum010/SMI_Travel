@@ -22,8 +22,10 @@
 <c:set var="receiptDetailList" value="${requestScope['receiptDetailList']}" />
 <c:set var="receiptCreditList" value="${requestScope['receiptCreditList']}" />
 <c:set var="invoiceIdList" value="${requestScope['invoiceIdList']}" />
-
 <c:set var="roleName" value="${requestScope['roleName']}" />
+<c:set var="typeBooking" value="" />
+
+
 <section class="content-header" >
     <h1>
         Finance & Cashier - Receipt 
@@ -82,6 +84,7 @@
                         <c:when test="${fn:contains(page , 'WT')}">
                             <c:set var="typeReceipt" value="T" />
                             <c:set var="typeDepartment" value="Wendy" />
+                            <c:set var="typeBooking" value="I" />
                             <h4><b>Receipt Temp Wendy   <font style="color: red">${receiptVoid}</font></b></h4>
                             <c:set var="panelheader" value="wendyheader"/>
                             <c:set var="panelborder" value="wendyborder"/>
@@ -89,6 +92,7 @@
                         <c:when test="${fn:contains(page , 'WV')}">
                             <c:set var="typeReceipt" value="V" />
                             <c:set var="typeDepartment" value="Wendy" />
+                            <c:set var="typeBooking" value="I" />
                             <h4><b>Receipt Vat Wendy   <font style="color: red">${receiptVoid}</font></b></h4>
                             <c:set var="panelheader" value="wendyheader"/>
                             <c:set var="panelborder" value="wendyborder"/>
@@ -96,6 +100,7 @@
                         <c:when test="${fn:contains(page , 'OT')}">
                             <c:set var="typeReceipt" value="T" />
                             <c:set var="typeDepartment" value="Outbound" />
+                            <c:set var="typeBooking" value="O" />
                             <h4><b>Receipt Temp Outbound   <font style="color: red">${receiptVoid}</font></b></h4>
                             <c:set var="panelheader" value="outboundheader"/>
                             <c:set var="panelborder" value="outboundborder"/>
@@ -103,6 +108,7 @@
                         <c:when test="${fn:contains(page , 'OV')}">
                             <c:set var="typeReceipt" value="V" />
                             <c:set var="typeDepartment" value="Outbound" />
+                            <c:set var="typeBooking" value="O" />
                             <h4><b>Receipt Vat Outbound   <font style="color: red">${receiptVoid}</font></b></h4>
                             <c:set var="panelheader" value="outboundheader"/>
                             <c:set var="panelborder" value="outboundborder"/>
@@ -110,19 +116,37 @@
                         <c:when test="${fn:contains(page , 'IT')}">
                             <c:set var="typeReceipt" value="T" />
                             <c:set var="typeDepartment" value="Inbound" />
+                            <c:set var="typeBooking" value="I" />
                             <h4><b>Receipt Temp Inbound   <font style="color: red">${receiptVoid}</font></b></h4>
                         </c:when>   
                         <c:when test="${fn:contains(page , 'IV')}">
                             <c:set var="typeReceipt" value="V" />
                             <c:set var="typeDepartment" value="Inbound" />
+                            <c:set var="typeBooking" value="I" />
                             <h4><b>Receipt Vat Inbound   <font style="color: red">${receiptVoid}</font></b></h4>
                         </c:when>    
                     </c:choose>
                 </div>
                 <div class="col-xs-12 form-group"><hr/></div>
             </div>
-            <hr/>
-
+            <!--<hr/>-->
+            <div class="row" style="padding-left: 15px;padding-right:15px"> 
+                <input type="text" class="hidden" value="${typeBooking}">
+                 <c:choose>
+                    <c:when test="${typeBooking == 'O'}">
+                        <div id="AlertBookingRefno"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>This Ref No can get billable detail from wendy only</strong> 
+                        </div>
+                    </c:when>
+                    <c:when test="${typeBooking == 'I'}">
+                        <div id="AlertBookingRefno"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>This Ref No can get billable detail from outbound only</strong> 
+                        </div>
+                    </c:when>
+                </c:choose>
+            </div>
             <form action="${callPage}" method="post" id="ReceiptForm" name="ReceiptForm" role="form">
                 <div role="tabpanel">
                      <!-- Nav tabs -->
@@ -480,6 +504,7 @@
                         </div> 
                         <input type="hidden" id="InputDescriptionDetailId" name="InputDescriptionDetailId" value="">
                         <!--<input type="hidden" name="mAccPayBillable" id="mAccPayBillable" value="">-->
+                        <input type="hidden" id="typeBooking" name="typeBooking" value="${typeBooking}">
                         <input type="hidden" name="sumCreditAmountTemp" id="sumCreditAmountTemp" value="">
                         <input type="hidden" name="sumAmountBeforeSave" id="sumAmountBeforeSave" value="">
                         <input type="hidden" name="amountTemp" id="amountTemp" value="">
@@ -2367,6 +2392,7 @@ function searchRefNo() {
 
 function CallAjaxSearchRef(param) {
     var url = 'AJAXServlet';
+    var BookintType = "";
     $("#ajaxload2").removeClass("hidden");
     try {
         $.ajax({
@@ -2384,18 +2410,35 @@ function CallAjaxSearchRef(param) {
                         });
 
                     }else{
-//                        $('#RefNoListTable').dataTable().fnClearTable();
-//                        $('#RefNoListTable').dataTable().fnDestroy();
-                        $('#RefNoListTable > tbody  > tr').each(function() {
-                            $(this).remove();
-                        });
-                        $("#RefNoListTable tbody").empty().append(msg);
+                        var strx = msg.split('||');
+                        var array = [];
+                        array = array.concat(strx);
+                        BookintType = array[0];
                         
-                        document.getElementById("receiveFromCode").value = $("#receiveFromBillable").val();
-                        document.getElementById("receiveFromName").value = $("#receiveNameBillable").val();
-                        document.getElementById("receiveFromAddress").value = $("#receiveAddressBillable").val();
-                        document.getElementById("arCode").value = $("#arcodeBillable").val();
-                        document.getElementById("inputStatus").value = $("#mAccPayBillable").val();
+                        if(BookintType == $('#typeBooking').val()) {
+                            $('#RefNoListTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
+                            $('#AlertBookingRefno').hide();
+                            try {
+                                $("#RefNoListTable tbody").empty().append(array[1]);
+                                document.getElementById("receiveFromCode").value = $("#receiveFromBillable").val();
+                                document.getElementById("receiveFromName").value = $("#receiveNameBillable").val();
+                                document.getElementById("receiveFromAddress").value = $("#receiveAddressBillable").val();
+                                document.getElementById("arCode").value = $("#arcodeBillable").val();
+                                document.getElementById("inputStatus").value = $("#mAccPayBillable").val();
+                            } catch (e) {
+                                alert(e);
+                            }
+                        } else {
+                            $('#AlertBookingRefno').show();
+
+                        }
+                        
+                        
+                        
+                        
+                        
                     }
                     $("#ajaxload2").addClass("hidden");
                      

@@ -106,6 +106,15 @@ public class DaytourDetailController extends SMITravelController {
             setGeneralResponseAttribute(request, refNo);
             request.setAttribute(EnableSave,0);
         } else if ("edit".equalsIgnoreCase(action)) {
+            
+            String billDescId = utilservice.getBillableDescId(dBookingId, "6");
+            System.out.println(" billDescId "  + billDescId);
+            if("".equalsIgnoreCase(billDescId)){
+                request.setAttribute(EnableSave,1);
+            }else{
+                request.setAttribute(EnableSave,0);
+            }
+            
             log.info("dBookingId " + dBookingId);
             // Setup new DaytourBooking;
 
@@ -126,13 +135,6 @@ public class DaytourDetailController extends SMITravelController {
             
             request.setAttribute(DAYTOURBOOKING, bDaytour);
             setGeneralResponseAttribute(request, refNo);
-            
-            String billDescId = utilservice.getBillableDescId(dBookingId, "6");
-            if("".equalsIgnoreCase(billDescId)){
-                request.setAttribute(EnableSave,1);
-            }else{
-                request.setAttribute(EnableSave,0);
-            }
             
         } else if ("save".equalsIgnoreCase(action)) {
             System.out.println("Save me");

@@ -1064,7 +1064,7 @@ public class BillableImpl implements BillableDao {
         String result = "fail";
         String queryupdate = "";
         String resultdeleted = "";
-        
+        String invno = "";
         Session session = this.sessionFactory.openSession();   
         List<BillableDesc> billableDescs = new ArrayList<BillableDesc>();
         List<InvoiceDetail> invoiceDetails = new ArrayList<InvoiceDetail>();
@@ -1088,21 +1088,24 @@ public class BillableImpl implements BillableDao {
                     for(int i = 0 ; i < invoiceDetails.size() ; i++){
                         InvoiceDetail invoiceDetail = new InvoiceDetail();
                         invoiceDetail = invoiceDetails.get(i);
-                        List<ReceiptDetail> receiptDetailList = invoiceDetail.getReceiptDetails();
-                        if(!receiptDetailList.isEmpty()){
-                            for(int j = 0 ; j < receiptDetailList.size() ; j++){
-                                ReceiptDetail receiptDetail = new ReceiptDetail();
-                                receiptDetail = receiptDetailList.get(j);
-                                session.delete(receiptDetail);
-                            }
-                        }
-                        session.delete(invoiceDetail);
+                        invno = invoiceDetail.getInvoice().getInvNo();
+//                        List<ReceiptDetail> receiptDetailList = invoiceDetail.getReceiptDetails();
+//                        if(!receiptDetailList.isEmpty()){
+//                            for(int j = 0 ; j < receiptDetailList.size() ; j++){
+//                                ReceiptDetail receiptDetail = new ReceiptDetail();
+//                                receiptDetail = receiptDetailList.get(j);
+//                                session.delete(receiptDetail);
+//                            }
+//                        }
+//                        session.delete(invoiceDetail);
                     }
+                    return invno;
+                }else{
+                    session.delete(billableDesc);
+                    transaction.commit();
+                    resultdelete = true;
+                    resultdeleted = "success";
                 }
-                session.delete(billableDesc);
-                transaction.commit();
-                resultdelete = true;
-                resultdeleted = "success";
             } catch (Exception ex) {
                 ex.printStackTrace();
                 resultdeleted = "fail";

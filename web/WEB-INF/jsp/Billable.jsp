@@ -32,7 +32,6 @@
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <c:set var="ReceiptDetailList" value="${requestScope['ReceiptDetailList']}" />
 
-<input type="hidden" value="${requestScope['deleteresult']}" id="deleteresultText">
 <input type="hidden" value="${requestScope['result']}" id="resultText">
 <section class="content-header" >
     <h1>
@@ -84,6 +83,10 @@
 <div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <strong>Delete Unsuccess!</strong> 
+</div>
+<div id="textAlertDivNotDeleteIsUseInInv"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Delete Unsuccess. Billable is use in invoice !</strong>
 </div> 
                 <div class="row" style="padding-left: 15px">  
                     <div class="col-md-6">
@@ -798,6 +801,11 @@
     <c:if test="${requestScope['deleteresult'] =='unsuccessful'}">        
         <script language="javascript">
            $('#textAlertDivNotDelete').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['deleteresult'] == 'isuseininv'}">        
+        <script language="javascript">
+           $('#textAlertDivNotDeleteIsUseInInv').show();
         </script>
     </c:if>
 </c:if>

@@ -80,7 +80,7 @@ public class BillableController extends SMITravelController {
     private static final String ReceiptDetailList = "ReceiptDetailList";
     private static final String ISBILLSTATUS = "IsBillStatus";
     private static final String DELETERESULT = "deleteresult";
-    
+    private static final String invno = "invno";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         int result = 0;
@@ -309,9 +309,13 @@ public class BillableController extends SMITravelController {
             if (resultdelete == "fail"){ 
                 request.setAttribute(DELETERESULT, "unsuccessful");
                 return new ModelAndView("redirect:Billable.smi?referenceNo=" + refNo + "&deleteresult=unsuccessful&action=edit");
-            } else {
+            } else if (resultdelete == "success") { 
                 request.setAttribute(DELETERESULT, "successful");
                 return new ModelAndView("redirect:Billable.smi?referenceNo=" + refNo + "&deleteresult=successful&action=edit");
+            }else{
+                request.setAttribute(invno, String.valueOf(resultdelete));
+                request.setAttribute(DELETERESULT, "isuseininv");
+                return new ModelAndView("redirect:Billable.smi?referenceNo=" + refNo + "&deleteresult=isuseininv&invno="+resultdelete+"&action=edit");
             }
         } else {
             System.out.println("no action");
