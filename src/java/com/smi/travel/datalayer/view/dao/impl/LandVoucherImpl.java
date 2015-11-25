@@ -50,7 +50,7 @@ public class LandVoucherImpl implements  LandVoucherDao{
                 .addScalar("leader_name", Hibernate.STRING)
                 .list();
          for (Object[] B : QueryLandList) {
-             voucher.setRefno(util.ConvertString(B[0]));
+             voucher.setRefno(util.ConvertString(B[0]).substring(0, 2)+"-"+util.ConvertString(B[0]).substring(2, 6));
              voucher.setAdult(util.ConvertString(B[1]));
              voucher.setChild(util.ConvertString(B[2]));
              voucher.setInfant(util.ConvertString(B[3]));

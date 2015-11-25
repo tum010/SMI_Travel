@@ -199,7 +199,7 @@ FROM
 			<textField>
 				<reportElement x="15" y="78" width="376" height="20" uuid="a82e96b7-aa5c-44f2-9d7a-f325d2999228"/>
 				<textElement>
-					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
@@ -248,7 +248,7 @@ FROM
 			<textField>
 				<reportElement x="15" y="141" width="252" height="20" uuid="536f9fca-db24-4b6c-bb42-269c1523596b"/>
 				<textElement>
-					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{leadername}]]></textFieldExpression>
 			</textField>

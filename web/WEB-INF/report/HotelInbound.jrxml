@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="595" pageHeight="842" columnWidth="540" leftMargin="35" rightMargin="20" topMargin="20" bottomMargin="20" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="640"/>
+	<property name="ireport.x" value="81"/>
+	<property name="ireport.y" value="622"/>
 	<queryString>
 		<![CDATA[select booking_airline.airline_code as code, booking_airline.alrline_name as name, pc.p_count, sum(booking_flight.ad_cost) as cost, sum(booking_flight.ad_price) as price, (sum(booking_flight.ad_price) - sum(booking_flight.ad_cost)) as balance
 from booking_airline inner join booking_flight on booking_airline.id = booking_flight.airline_code
@@ -60,7 +60,7 @@ group by booking_airline.airline_code]]>
 				<text><![CDATA[9 FLOOR SIAM AT SIAM HOTEL BUILDING.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="244" y="56" width="311" height="12" uuid="985d65ea-7e13-4c3d-be71-fe5a913abd3b"/>
+				<reportElement x="244" y="56" width="295" height="12" uuid="985d65ea-7e13-4c3d-be71-fe5a913abd3b"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
@@ -107,18 +107,18 @@ group by booking_airline.airline_code]]>
 				<text><![CDATA[ATTN : THE RESERVATION DEPARTMENT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="427" y="0" width="66" height="20" uuid="056c1a7e-0a28-4761-b79b-f10feb61d8b9"/>
+				<reportElement x="412" y="0" width="66" height="20" uuid="056c1a7e-0a28-4761-b79b-f10feb61d8b9"/>
 				<text><![CDATA[Print Date : 2014/12/16]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="421" y="20" width="95" height="20" uuid="898c8598-7f99-46b4-a720-c90deace44dc"/>
+				<reportElement x="405" y="20" width="95" height="20" uuid="898c8598-7f99-46b4-a720-c90deace44dc"/>
 				<textElement textAlignment="Right">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="515" y="20" width="40" height="20" uuid="4589b701-ec7d-45ba-b39d-a826dffd959a"/>
+				<reportElement x="499" y="20" width="40" height="20" uuid="4589b701-ec7d-45ba-b39d-a826dffd959a"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -126,15 +126,27 @@ group by booking_airline.airline_code]]>
 			</textField>
 			<rectangle>
 				<reportElement x="500" y="93" width="28" height="20" uuid="27ffe0da-d718-4ff7-934b-46bf88a2143e"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<rectangle>
 				<reportElement x="445" y="93" width="28" height="20" uuid="0dac09ed-098d-45de-829c-72f668f3dd69"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<rectangle>
 				<reportElement x="389" y="93" width="28" height="20" uuid="aaaf7c21-f158-4cbc-b444-b66d46aad8cb"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<rectangle>
 				<reportElement x="335" y="93" width="28" height="20" uuid="e82dafca-3d5d-4fa2-98a7-ae1397b20665"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
 				<reportElement x="427" y="93" width="8" height="20" uuid="0b155f2e-9b89-4585-8f8b-4dc4ea4f05ed"/>
@@ -175,7 +187,10 @@ group by booking_airline.airline_code]]>
 				<text><![CDATA[ADT]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="117" width="555" height="1" uuid="2c721dbd-9f0b-4806-885c-31a3e2e6bd89"/>
+				<reportElement x="0" y="117" width="540" height="1" uuid="2c721dbd-9f0b-4806-885c-31a3e2e6bd89"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<staticText>
 				<reportElement x="25" y="140" width="82" height="20" uuid="d4efe991-059b-4c44-87fb-4ec3b2f16369"/>
@@ -214,6 +229,9 @@ group by booking_airline.airline_code]]>
 			</staticText>
 			<rectangle>
 				<reportElement x="25" y="234" width="503" height="49" uuid="949ad1dc-68db-425d-8a19-69c2713c5b97"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
 				<reportElement x="0" y="285" width="271" height="20" uuid="ad2e8656-7686-48b1-91a3-9ae5bb7c5dc9"/>
@@ -224,6 +242,9 @@ group by booking_airline.airline_code]]>
 			</staticText>
 			<rectangle>
 				<reportElement x="26" y="312" width="503" height="20" uuid="15dc0bce-9919-4998-91c4-b1234bba73ff"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
 				<reportElement x="26" y="298" width="271" height="20" uuid="4aa1c0f5-2264-496d-a33a-47ff1b10fdca"/>
@@ -338,7 +359,7 @@ group by booking_airline.airline_code]]>
 				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="41" y="93" width="230" height="20" uuid="2ced045b-684a-4eaa-8a6f-89798f06d193"/>
+				<reportElement x="43" y="89" width="230" height="20" uuid="2ced045b-684a-4eaa-8a6f-89798f06d193"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -373,7 +394,7 @@ group by booking_airline.airline_code]]>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="483" y="0" width="72" height="20" uuid="e27df374-bcf8-4127-b644-8e9a6261c617"/>
+				<reportElement x="468" y="0" width="72" height="20" uuid="e27df374-bcf8-4127-b644-8e9a6261c617"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -398,7 +419,7 @@ group by booking_airline.airline_code]]>
 				<text><![CDATA[Account will be payable by company]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="71" y="38" width="484" height="20" uuid="cf990ed0-07fe-4586-8cf1-f2cfcaaa535e"/>
+				<reportElement x="71" y="38" width="468" height="20" uuid="cf990ed0-07fe-4586-8cf1-f2cfcaaa535e"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -420,12 +441,21 @@ group by booking_airline.airline_code]]>
 			</staticText>
 			<line>
 				<reportElement x="213" y="121" width="127" height="1" uuid="f1228ac5-897c-4eed-b4e5-d6692fe1f067"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="26" y="121" width="159" height="1" uuid="0b13172b-f8dc-411b-a621-7a59f4ef535b"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
 				<reportElement x="369" y="121" width="159" height="1" uuid="ca7ecd15-5193-4a93-8678-34f7527bba24"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<staticText>
 				<reportElement x="26" y="133" width="161" height="11" uuid="e20a1848-0cab-4267-8c93-487e60e2e9c1"/>
@@ -467,15 +497,19 @@ group by booking_airline.airline_code]]>
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="2" width="555" height="20" backcolor="#CCCCCC" uuid="ad6573ea-8127-4be8-940a-3a4d819f0ee2"/>
+				<reportElement x="0" y="2" width="527" height="20" backcolor="#CCCCCC" uuid="ad6573ea-8127-4be8-940a-3a4d819f0ee2"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</rectangle>
 			<staticText>
 				<reportElement x="0" y="2" width="150" height="20" backcolor="#FFFFFF" uuid="80e62658-6145-4ebb-b49e-4600a847a307"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -485,10 +519,11 @@ group by booking_airline.airline_code]]>
 			<staticText>
 				<reportElement x="150" y="2" width="63" height="20" uuid="8d1446dc-26ab-4bc8-8577-83e239890a57"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -498,10 +533,11 @@ group by booking_airline.airline_code]]>
 			<staticText>
 				<reportElement x="213" y="2" width="172" height="20" uuid="e483f3ca-4b44-422a-bc8d-de10314058ce"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -509,12 +545,13 @@ group by booking_airline.airline_code]]>
 				<text><![CDATA[Remark]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="473" y="2" width="82" height="20" backcolor="#FFFFFF" uuid="83edb736-492d-4623-8ee4-433b052f46a6"/>
+				<reportElement x="445" y="2" width="82" height="20" backcolor="#FFFFFF" uuid="83edb736-492d-4623-8ee4-433b052f46a6"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -522,12 +559,13 @@ group by booking_airline.airline_code]]>
 				<text><![CDATA[Status]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="385" y="2" width="88" height="20" uuid="2c511a20-3573-420b-8c32-d6395dc30413"/>
+				<reportElement x="385" y="2" width="60" height="20" uuid="2c511a20-3573-420b-8c32-d6395dc30413"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -541,11 +579,11 @@ group by booking_airline.airline_code]]>
 			<textField>
 				<reportElement x="0" y="0" width="150" height="20" uuid="1c23a45f-0ec9-49ed-a142-fab4136a36f3"/>
 				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
-					<pen lineStyle="Solid"/>
-					<topPen lineWidth="1.0" lineStyle="Solid"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
 				</box>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -555,10 +593,11 @@ group by booking_airline.airline_code]]>
 			<textField>
 				<reportElement x="150" y="0" width="63" height="20" uuid="212dbd31-2cc9-4246-ae43-e5a970661325"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -568,10 +607,11 @@ group by booking_airline.airline_code]]>
 			<textField>
 				<reportElement x="213" y="0" width="172" height="20" uuid="93ed662f-0e2e-4826-a880-c579d527651a"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -579,12 +619,13 @@ group by booking_airline.airline_code]]>
 				<textFieldExpression><![CDATA[$F{psgremark}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="385" y="0" width="88" height="20" uuid="c77c2759-1518-4eaf-b67a-9c72937aca1a"/>
+				<reportElement x="385" y="0" width="60" height="20" uuid="c77c2759-1518-4eaf-b67a-9c72937aca1a"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -592,12 +633,13 @@ group by booking_airline.airline_code]]>
 				<textFieldExpression><![CDATA[$F{age}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="473" y="0" width="82" height="20" uuid="2d03a3f4-2439-4046-bed6-d7fd1867d2a1"/>
+				<reportElement x="445" y="0" width="82" height="20" uuid="2d03a3f4-2439-4046-bed6-d7fd1867d2a1"/>
 				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
