@@ -130,7 +130,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
     }
 
     @Override
-    public List getBillAirAgentReportSummary(String agentCode,String invoiceFromDate,String InvoiceToDate,String issueFrom,String issueTo,String refundFrom,String refundTo,String department,String salebyUser,String termPay,String printby,String paymentType) {
+    public List getBillAirAgentReportSummary(String agentCode,String invoiceFromDate,String InvoiceToDate,String issueFrom,String issueTo,String refundFrom,String refundTo,String department,String salebyUser,String termPay,String printby,String paymentType,String vat,String wht) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<ListBillAirAgent>();
@@ -383,6 +383,8 @@ public class BillAirAgentImpl implements BillAirAgentDao{
             }else{
                 bil.setPaycusrefund("0.00");
             }
+            bil.setVattemp(vat);
+            bil.setWhttemp(wht);
             dataAgent.add(bil);
         }
         

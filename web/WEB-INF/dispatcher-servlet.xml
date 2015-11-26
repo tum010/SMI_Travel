@@ -812,6 +812,7 @@
 	</bean>
         
         <bean id="BillAirAgentSummary" class="com.smi.travel.controller.excel.checking.airticket.BillAirAgentSummary">
+            <property name="util" ref="UtilityService" />
 	</bean>
         
         <bean id="TicketFareSummary" class="com.smi.travel.controller.excel.checking.airticket.TicketFareSummary">

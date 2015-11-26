@@ -285,8 +285,8 @@ public class ReportService {
         return billAirAgentDao.getBillAirAgentReport();
     }
     
-    public List getBillAirAgentReportSummary(String agentCode,String invoiceFromDate,String InvoiceToDate,String issueFrom,String issueTo,String refundFrom,String refundTo,String department,String salebyUser,String termPay,String printby,String paymentType){
-        return billAirAgentDao.getBillAirAgentReportSummary(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay,printby,paymentType);
+    public List getBillAirAgentReportSummary(String agentCode,String invoiceFromDate,String InvoiceToDate,String issueFrom,String issueTo,String refundFrom,String refundTo,String department,String salebyUser,String termPay,String printby,String paymentType,String vat,String wht){
+        return billAirAgentDao.getBillAirAgentReportSummary(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay,printby,paymentType,vat,wht);
     }
 
     public HotelVoucherDao getHotelVoucherdao() {

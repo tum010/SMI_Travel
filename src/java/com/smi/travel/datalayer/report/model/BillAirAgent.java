@@ -33,6 +33,8 @@ public class BillAirAgent {
     private String agentcom;
     private String agentcomrefund;
     private String paycusrefund;
+    private String vattemp;
+    private String whttemp;
     
     // header
     private String agentPage;
@@ -40,6 +42,22 @@ public class BillAirAgent {
     private String invoicedatePage;
     private String printbyPage;
     private String paymenttypePage;
+
+    public String getVattemp() {
+        return vattemp;
+    }
+
+    public void setVattemp(String vattemp) {
+        this.vattemp = vattemp;
+    }
+
+    public String getWhttemp() {
+        return whttemp;
+    }
+
+    public void setWhttemp(String whttemp) {
+        this.whttemp = whttemp;
+    }
 
     public String getPaymenttypePage() {
         return paymenttypePage;
