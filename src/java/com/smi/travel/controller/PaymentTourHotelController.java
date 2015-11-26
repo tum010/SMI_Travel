@@ -465,15 +465,13 @@ public class PaymentTourHotelController extends SMITravelController {
                     paymentDetailWendy.setInvoiceCreditor(invNo);
                     paymentDetailWendy.setPaymentWendy(paymentWendy);
 //                    paymentDetailWendy.setRefCode(code);
-                   
-                    MPaytype mpayType = new MPaytype();                   
+                                                        
                     if(product==""){
                         paymentDetailWendy.setMPaytype(null);
                     } else {
-                        mpayType.setId(product);
-                        paymentDetailWendy.setMPaytype(mpayType);
-                        String acc_code = paymentTourHotelService.getAccountCode(product);
-                        paymentDetailWendy.setAccCode(acc_code);
+                        MPaytype mpayType = paymentTourHotelService.getMPayTypeFromPayTypeId(product);
+                        paymentDetailWendy.setMPaytype(mpayType);                       
+                        paymentDetailWendy.setAccCode(!"".equalsIgnoreCase(mpayType.getAccName())? mpayType.getAccCode() : "");
                     }
                   
                     Master master = paymentTourHotelService.getMasterFromRefno(refNo);
@@ -492,15 +490,13 @@ public class PaymentTourHotelController extends SMITravelController {
                     paymentDetailWendy.setPaymentWendy(paymentWendy);
 //                    paymentDetailWendy.setRefCode(code);
                     
-                    MPaytype mpayType = new MPaytype();
                     if(product==""){
                         paymentDetailWendy.setMPaytype(null);
                     } else {
-                        mpayType.setId(product);
-                        paymentDetailWendy.setMPaytype(mpayType);
-                        String acc_code = paymentTourHotelService.getAccountCode(product);
-                        paymentDetailWendy.setAccCode(acc_code);
-                    }                                     
+                        MPaytype mpayType = paymentTourHotelService.getMPayTypeFromPayTypeId(product);
+                        paymentDetailWendy.setMPaytype(mpayType);                       
+                        paymentDetailWendy.setAccCode(!"".equalsIgnoreCase(mpayType.getAccName())? mpayType.getAccCode() : "");
+                    }                                 
                     
                     Master master = paymentTourHotelService.getMasterFromRefno(refNo);
                     if(master == null){
