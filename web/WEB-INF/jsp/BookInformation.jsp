@@ -200,7 +200,7 @@
                 <c:set var="colorTr" value="#D6F1D4"/>
                 <c:choose>                  
                     <c:when test="${requestScope['search_type'] == '1'}">
-                        <table id="BookList" class="display paginated" cellspacing="0" width="100%">
+                        <table id="BookList" class="displayblackcolor paginated" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header" >
                                 <th style="width: 1%">No</th>
@@ -252,7 +252,7 @@
                     </table> 
                     </c:when>
                     <c:when test="${requestScope['search_type'] == '2'}">
-                    <table id="BookList" class="display paginated" cellspacing="0" style="table-layout: fixed">
+                    <table id="BookList" class="displayblackcolor paginated" cellspacing="0" style="table-layout: fixed">
                         <thead>
                             <tr class="datatable-header" >
                                 <th style="width: 2%">No</th>
@@ -306,7 +306,7 @@
                     </table> 
                     </c:when>
                     <c:when test="${requestScope['search_type'] == '3'}">
-                    <table id="BookList" class="display paginated" cellspacing="0" style="table-layout: fixed">
+                    <table id="BookList" class="displayblackcolor paginated" cellspacing="0" style="table-layout: fixed">
                         <thead>
                             <tr class="datatable-header" >
                                 <th style="width: 2%">No</th>
@@ -350,7 +350,7 @@
                     </table> 
                     </c:when>
                     <c:when test="${requestScope['search_type'] == '4'}">
-                    <table id="BookList" class="display paginated" cellspacing="0" style="table-layout: fixed">
+                    <table id="BookList" class="displayblackcolor paginated" cellspacing="0" style="table-layout: fixed">
                         <thead>
                             <tr class="datatable-header" >
                                 <th style="width: 2%">No</th>
@@ -410,7 +410,7 @@
                     </table> 
                     </c:when>
                     <c:when test="${requestScope['search_type'] == '5'}">
-                    <table id="BookList" class="display paginated" cellspacing="0" style="table-layout: fixed">
+                    <table id="BookList" class="displayblackcolor paginated" cellspacing="0" style="table-layout: fixed">
                         <thead>
                             <tr class="datatable-header" >
                                 <th style="width: 2%">No</th>
@@ -456,7 +456,7 @@
                     </table> 
                     </c:when>
                     <c:when test="${requestScope['search_type'] == '6'}">
-                    <table id="BookList" class="display paginated" cellspacing="0" style="table-layout: fixed">
+                    <table id="BookList" class="displayblackcolor paginated" cellspacing="0" style="table-layout: fixed">
                         <thead>
                             <tr class="datatable-header" >
                                 <th style="width: 2%">No</th>

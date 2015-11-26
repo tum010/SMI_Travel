@@ -383,6 +383,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
             }else{
                 bil.setPaycusrefund("0.00");
             }
+            System.out.println("Temp Vat : " +  vat  + " Wht : " + wht);
             bil.setVattemp(vat);
             bil.setWhttemp(wht);
             dataAgent.add(bil);

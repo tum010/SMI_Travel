@@ -85,6 +85,27 @@ table.display tr.even.row_selected td.sorting_1{
     background-color :#9FAFD1; 
 }
 
+table.displayblackcolor , table.displayblackcolor th , table.displayblackcolor th tr, table.displayblackcolor  tr td{
+    border: solid 1px #000; 
+}
+
+table.displayblackcolor  tr.odd td.sorting_1{
+    background-color :#FFF;
+}
+
+table.displayblackcolor  tr.even td.sorting_1{
+    background-color :#F2F2F2;
+}
+
+table.displayblackcolor tr.odd.row_selected td.sorting_1{
+    background-color :#9FAFD1; 
+}
+
+
+table.displayblackcolor tr.even.row_selected td.sorting_1{
+    background-color :#9FAFD1; 
+}
+
 .textpadding tr td{
     padding:  2px 2px;
     font-size: 13px;
@@ -167,9 +188,12 @@ hr{
 }*/
 .display{
     font-size: 13px;
-
-
 }
+
+.displayblackcolor{
+    font-size: 13px;
+}
+
 td {
     padding: 0px 5px;
 }

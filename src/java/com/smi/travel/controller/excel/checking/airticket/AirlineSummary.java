@@ -1744,15 +1744,15 @@ public class AirlineSummary extends AbstractExcelView {
                     cell88.setCellStyle(styleC3);
                     sheetDetail.autoSizeColumn(7);
                     HSSFCell cell89 = row8.createCell(8);
-                    cell89.setCellValue("Cost");
+                    cell89.setCellValue("Inv. Amt");
                     cell89.setCellStyle(styleC3);
                     sheetDetail.autoSizeColumn(8);
                     HSSFCell cell90 = row8.createCell(9);
-                    cell90.setCellValue("PF[LOSS]");
+                    cell90.setCellValue("Cost");
                     cell90.setCellStyle(styleC3);
                     sheetDetail.autoSizeColumn(9);
                     HSSFCell cell91 = row8.createCell(10);
-                    cell91.setCellValue("Inv. Amt");
+                    cell91.setCellValue("PF[LOSS]");
                     cell91.setCellStyle(styleC3);
                     sheetDetail.autoSizeColumn(10);
                     HSSFCell cell92 = row8.createCell(11);
@@ -1803,15 +1803,15 @@ public class AirlineSummary extends AbstractExcelView {
                     celldata7.setCellStyle(styleC25);
 
                     HSSFCell celldata8 = row.createCell(8);
-                    celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getCost())) ? 0 : (new BigDecimal(data.getCost())).doubleValue());
+                    celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getInvamount())) ? 0 : (new BigDecimal(data.getInvamount())).doubleValue());
                     celldata8.setCellStyle(styleC25);
 
                     HSSFCell celldata9 = row.createCell(9);
-                    celldata9.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPfloss())) ? 0 : (new BigDecimal(data.getPfloss())).doubleValue());
+                    celldata9.setCellValue("".equalsIgnoreCase(String.valueOf(data.getCost())) ? 0 : (new BigDecimal(data.getCost())).doubleValue());
                     celldata9.setCellStyle(styleC25);
 
                     HSSFCell celldata10 = row.createCell(10);
-                    celldata10.setCellValue("".equalsIgnoreCase(String.valueOf(data.getInvamount())) ? 0 : (new BigDecimal(data.getInvamount())).doubleValue());
+                    celldata10.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPfloss())) ? 0 : (new BigDecimal(data.getPfloss())).doubleValue());
                     celldata10.setCellStyle(styleC25);
 
                     HSSFCell celldata11 = row.createCell(11); // No inv amount
@@ -1835,9 +1835,9 @@ public class AirlineSummary extends AbstractExcelView {
                         String totalTax = "SUM(F" + 10+":F"+(count + x + 1)+")";
                         String totalIns = "SUM(G" + 10+":G"+(count + x + 1)+")";
                         String totalComm = "SUM(H" + 10+":H"+(count + x + 1)+")";
-                        String totalCost = "SUM(I" + 10+":I"+(count + x + 1)+")";
-                        String totalPfloss = "SUM(J" + 10+":J"+(count + x + 1)+")";
-                        String totalInvamt = "SUM(K" + 10+":K"+(count + x + 1)+")";
+                        String totalInvamt = "SUM(I" + 10+":I"+(count + x + 1)+")";
+                        String totalCost = "SUM(J" + 10+":J"+(count + x + 1)+")";
+                        String totalPfloss = "SUM(K" + 10+":K"+(count + x + 1)+")";
                         String totalNoInvamt= "SUM(L" + 10+":L"+(count + x + 1)+")";
                         String totalDiff = "SUM(N" + 10+":N"+(count + x + 1)+")";
 
@@ -1862,13 +1862,13 @@ public class AirlineSummary extends AbstractExcelView {
                         celldatas06.setCellFormula(totalComm);
                         celldatas06.setCellStyle(styleC25);
                         HSSFCell celldatas07 = rows.createCell(8);
-                        celldatas07.setCellFormula(totalCost);
+                        celldatas07.setCellFormula(totalInvamt);
                         celldatas07.setCellStyle(styleC25);
                         HSSFCell celldatas08 = rows.createCell(9);
-                        celldatas08.setCellFormula(totalPfloss);
+                        celldatas08.setCellFormula(totalCost);
                         celldatas08.setCellStyle(styleC25);
                         HSSFCell celldatas09 = rows.createCell(10);
-                        celldatas09.setCellFormula(totalInvamt);
+                        celldatas09.setCellFormula(totalPfloss);
                         celldatas09.setCellStyle(styleC25);
                         HSSFCell celldatas10 = rows.createCell(11);
                         celldatas10.setCellFormula(totalNoInvamt);
