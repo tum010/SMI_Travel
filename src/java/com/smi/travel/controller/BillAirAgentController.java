@@ -1,6 +1,7 @@
 package com.smi.travel.controller;
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.MAccterm;
+import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
@@ -43,6 +44,24 @@ public class BillAirAgentController extends SMITravelController {
             request.setAttribute("listTermPay", listTermPay);
         }else{
             request.setAttribute("listTermPay", null);
+        }
+        
+        MDefaultData mDE = utilityService.getMDefaultDataFromType("vat");
+        MDefaultData mDE2 = utilityService.getMDefaultDataFromType("withholding tax");
+        String vatMDE = mDE.getValue();
+        String whtMDE = mDE2.getValue();
+        if(vatMDE != null && !"".equals(vatMDE)){
+            System.out.println("Vat Bill Air Agent : " + vatMDE);
+            request.setAttribute("vatMDE", vatMDE);
+        }else{
+            request.setAttribute("vatMDE", null);
+        }
+        
+        if(whtMDE != null && !"".equals(whtMDE)){
+            System.out.println("Wht Bill Air Agent : " + whtMDE);
+            request.setAttribute("whtMDE", whtMDE);
+        }else{
+            request.setAttribute("whtMDE", null);
         }
         
         return BillAirAgent;

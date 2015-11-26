@@ -9,6 +9,8 @@
 <c:set var="userList" value="${requestScope['userList']}" />
 <c:set var="listAgent" value="${requestScope['listAgent']}" />
 <c:set var="listTermPay" value="${requestScope['listTermPay']}" />
+<c:set var="vatMDE" value="${requestScope['vatMDE']}" />
+<c:set var="whtMDE" value="${requestScope['whtMDE']}" />
 <section class="content-header"  >
     <h4>
         <b>Report : Billing Air Agent </b>
@@ -33,6 +35,8 @@
             
             <div class="col-md-10" >
                 <form action="BillAirAgent.smi" method="post" id="BillAirAgent" name="BillAirAgent" role="form">
+                    <input type="hidden" class="form-control" id="vatTemp" name="vatTemp" value="${vatMDE}"/>
+                    <input type="hidden" class="form-control" id="whtTemp" name="whtTemp" value="${whtMDE}"/>
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">

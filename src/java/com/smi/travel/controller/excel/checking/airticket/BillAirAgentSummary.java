@@ -6,7 +6,9 @@
 package com.smi.travel.controller.excel.checking.airticket;
 
 import com.smi.travel.controller.excel.master.UtilityExcelFunction;
+import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.report.model.BillAirAgent;
+import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.BillAirAgentRefund;
 import com.smi.travel.datalayer.view.entity.ListBillAirAgent;
 import java.math.BigDecimal;
@@ -33,6 +35,7 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
 public class BillAirAgentSummary extends AbstractExcelView {
     private static final String BillAirAgent = "BillAirAgent";
     private static final String BillAirAgentSummary = "BillAirAgentSummary";
+    private UtilityService util;
     
     @Override
     protected void buildExcelDocument(Map model, HSSFWorkbook workbook,HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -278,12 +281,18 @@ public class BillAirAgentSummary extends AbstractExcelView {
             SumVatReceive = SumVatReceive.add(new BigDecimal(listAgentRefund.get(i).getVat()));
             System.out.println("Com Receive : " + listAgent.get(i).getAgentcom() + "  Sum Com Receive : " + sumComReceive);
         }
+
+        String vatMDE = listAgent.get(0).getVattemp();
+        String whtMDE = listAgent.get(0).getWhttemp();
+        
         DecimalFormat df = new DecimalFormat("#,###.00");
         sumTotalPayment = sumSalePrice.add(sumComReceive);
         sumTotalCompay = sumComPay.subtract(sumComReceive);
         sumTotalCompaySub = sumComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
         
-        vatComPay = sumVatComPay;
+        BigDecimal vatPa =  new BigDecimal(vatMDE );
+        vatComPay = sumTotalCompay.multiply(vatPa);
+        vatComPay = vatComPay.divide(new BigDecimal(100),MathContext.DECIMAL128);
         vatPay =  vatComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
         
 //        vatReceive = sumComReceive.multiply(new BigDecimal(0.07));
@@ -301,16 +310,14 @@ public class BillAirAgentSummary extends AbstractExcelView {
         
         withHoldingTax = sumTotalCompay.add(vatComPay);
         withHoldingTax = withHoldingTax.multiply(new BigDecimal(100));
-//        UtilityService util = new UtilityService();
-//        MDefaultData mDE = utilityService.getMDefaultDataFromType("vat");
-//        MDefaultData mDE2 = utilityService.getMDefaultDataFromType("withholding tax");
-//        String vatMDE = mDE.getValue();
-//        String whtMDE = mDE2.getValue();
-//        System.out.println("Vat :::: " + vatMDE + "Wht :::: " + whtMDE);
-        BigDecimal vatTemp =  new BigDecimal(7);
+        
+        System.out.println("Vat :::: " + vatMDE + "Wht :::: " + whtMDE);
+        BigDecimal vatTemp =  new BigDecimal(vatMDE );
+        BigDecimal whtTemp =  new BigDecimal(whtMDE );
         vatTemp = vatTemp.add(new BigDecimal(100));
+        whtTemp = whtTemp.divide(new BigDecimal(100),MathContext.DECIMAL128);
         withHoldingTax = withHoldingTax.divide(vatTemp,MathContext.DECIMAL128);
-        withHoldingTax = withHoldingTax.multiply(new BigDecimal(0.03));
+        withHoldingTax = withHoldingTax.multiply(whtTemp);
         
         System.out.println(">>>>>>>>>>> Total Sale Price : " + df.format(sumSalePrice));
         System.out.println(">>>>>>>>>>> Total Com Refund Receive : " + df.format(sumTotalComRefundReceive));
@@ -1177,5 +1184,14 @@ public class BillAirAgentSummary extends AbstractExcelView {
             cell12.setCellValue(new BigDecimal(listAgent.get(num).getReceive()).doubleValue());
             cell12.setCellStyle(styleNum);
     }
+
+    public UtilityService getUtil() {
+        return util;
+    }
+
+    public void setUtil(UtilityService util) {
+        this.util = util;
+    }
+    
     
 }

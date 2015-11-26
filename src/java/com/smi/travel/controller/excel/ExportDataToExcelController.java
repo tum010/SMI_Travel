@@ -134,8 +134,10 @@ public class ExportDataToExcelController  extends SMITravelController{
             String salebyUsers = request.getParameter("salebyUser");
             String termPays = request.getParameter("termPay");
             String paymentTypes = request.getParameter("paymentType");
+            String vatTemp = request.getParameter("vatTemp");
+            String whtTemp = request.getParameter("whtTemp");
             System.out.println("termPays : "+termPays);
-            data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays,printby,paymentTypes);
+            data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays,printby,paymentTypes,vatTemp,whtTemp);
             return new ModelAndView("BillAirAgentSummary",name,data).addObject(ReportName, name);
         }else if(ChangeARReport.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
@@ -154,8 +156,10 @@ public class ExportDataToExcelController  extends SMITravelController{
             String salebyUsers = request.getParameter("salebyUser");
             String termPays = "";
             String paymentTypes = request.getParameter("paymentType");
+            String vatTemp = request.getParameter("vatTemp");
+            String whtTemp = request.getParameter("whtTemp");
             System.out.println("termPays : "+termPays);
-            data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays, printby,paymentTypes);
+            data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays, printby,paymentTypes,vatTemp,whtTemp);
             return new ModelAndView("BillAirAgentSummary",name,data).addObject(ReportName, name);
         }else if(CollectionReport.equalsIgnoreCase(name)){
             //Collectipn Report
