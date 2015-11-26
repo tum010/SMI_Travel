@@ -624,57 +624,57 @@ public class CheckingAirOthersummary extends AbstractExcelView {
         sheet.autoSizeColumn(14);
 
         HSSFCell cell0106 = row09.createCell(15);
-        cell0106.setCellValue("Sale");	
+        cell0106.setCellValue("Amount Inbound");	
         cell0106.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(15);
 
         HSSFCell cell0107 = row09.createCell(16);
-        cell0107.setCellValue("Cost");
+        cell0107.setCellValue("Amount Refund");
         cell0107.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(16);
 
         HSSFCell cell0108 = row09.createCell(17);
-        cell0108.setCellValue("Over");
+        cell0108.setCellValue("Amount Business Trip");
         cell0108.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(17);
 
         HSSFCell cell0109 = row09.createCell(18);
-        cell0109.setCellValue("Add");
+        cell0109.setCellValue("Amount Annual Leave");
         cell0109.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(18);
 
         HSSFCell cell0110 = row09.createCell(19);
-        cell0110.setCellValue("Dres");
+        cell0110.setCellValue("Amount No Inv");
         cell0110.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(19);
 
         HSSFCell cell0111 = row09.createCell(20);
-        cell0111.setCellValue("Profit");
+        cell0111.setCellValue("Sale");
         cell0111.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(20);
         
         HSSFCell cell0116 = row09.createCell(21);
-        cell0116.setCellValue("Comm");
+        cell0116.setCellValue("Cost");
         cell0116.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(21);
 
         HSSFCell cell0112 = row09.createCell(22);
-        cell0112.setCellValue("Little");
+        cell0112.setCellValue("Over");
         cell0112.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(22);
 
         HSSFCell cell0113 = row09.createCell(23);
-        cell0113.setCellValue("Agent[Comm] Pay");
+        cell0113.setCellValue("Add");
         cell0113.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(23);
 
         HSSFCell cell0114 = row09.createCell(24);
-        cell0114.setCellValue("Agent[Comm] Receive");
+        cell0114.setCellValue("Dres");
         cell0114.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(24);
 
         HSSFCell cell0115 = row09.createCell(25);
-        cell0115.setCellValue("Pay");
+        cell0115.setCellValue("Profit");
         cell0115.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(25);
        
@@ -682,6 +682,32 @@ public class CheckingAirOthersummary extends AbstractExcelView {
         cell0117.setCellValue("Comm");
         cell0117.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(25);
+        
+        HSSFCell cell0118 = row09.createCell(27);
+        cell0118.setCellValue("Little");
+        cell0118.setCellStyle(styleAlignRightBorderAllHeaderTable);
+        sheet.autoSizeColumn(27);
+
+        HSSFCell cell0119 = row09.createCell(28);
+        cell0119.setCellValue("Agent[Comm] Pay");
+        cell0119.setCellStyle(styleAlignRightBorderAllHeaderTable);
+        sheet.autoSizeColumn(28);
+
+        HSSFCell cell0130 = row09.createCell(29);
+        cell0130.setCellValue("Agent[Comm] Receive");
+        cell0130.setCellStyle(styleAlignRightBorderAllHeaderTable);
+        sheet.autoSizeColumn(29);
+
+        HSSFCell cell0131 = row09.createCell(30);
+        cell0131.setCellValue("Pay");
+        cell0131.setCellStyle(styleAlignRightBorderAllHeaderTable);
+        sheet.autoSizeColumn(30);
+       
+        HSSFCell cell0132 = row09.createCell(31);
+        cell0132.setCellValue("Net Comm Receive");
+        cell0132.setCellStyle(styleAlignRightBorderAllHeaderTable);
+        sheet.autoSizeColumn(31);
+
         
         int count = 10 + listDetail.size();
         System.out.println(" listDetail.size() " + listDetail.size());
@@ -697,7 +723,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell2.setCellStyle(styleDetailTable);
                 HSSFCell cell3 = row.createCell(2);
                     cell3.setCellValue(listDetail.get(r-10).getDepartment());
-                    cell3.setCellStyle(styleDetailTableNumber);
+                    cell3.setCellStyle(styleDetailTable);
                 HSSFCell cell4 = row.createCell(3);
                     cell4.setCellValue(listDetail.get(r-10).getOwner());
                     cell4.setCellStyle(styleDetailTable);
@@ -706,13 +732,13 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell55.setCellStyle(styleDetailTable);
                 HSSFCell cell5 = row.createCell(5);
                     cell5.setCellValue(listDetail.get(r-10).getAgent());
-                    cell5.setCellStyle(styleDetailTableNumber);
+                    cell5.setCellStyle(styleDetailTable);
                 HSSFCell cell6 = row.createCell(6);
                     cell6.setCellValue(listDetail.get(r-10).getType());
-                    cell6.setCellStyle(styleDetailTableNumber);
+                    cell6.setCellStyle(stylePaxNumber);
                 HSSFCell cell7 = row.createCell(7);
                     cell7.setCellValue(listDetail.get(r-10).getBuy());
-                    cell7.setCellStyle(styleDetailTableNumber);
+                    cell7.setCellStyle(stylePaxNumber);
                 HSSFCell cell8 = row.createCell(8);
                     cell8.setCellValue(listDetail.get(r-10).getPax());
                     cell8.setCellStyle(stylePaxNumber);
@@ -721,13 +747,13 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell9.setCellStyle(stylePaxNumber);
                 HSSFCell cell10 = row.createCell(10);
                         cell10.setCellValue(listDetail.get(r-10).getDocno());
-                        cell10.setCellStyle(styleDetailTableNumber);
+                        cell10.setCellStyle(styleDetailTable);
                HSSFCell cell11 = row.createCell(11);
                        cell11.setCellValue(listDetail.get(r-10).getRefno());
-                       cell11.setCellStyle(styleDetailTableNumber);
+                       cell11.setCellStyle(styleDetailTable);
                HSSFCell cell12 = row.createCell(12);
                        cell12.setCellValue(listDetail.get(r-10).getIssuedate());
-                       cell12.setCellStyle(styleDetailTableNumber);
+                       cell12.setCellStyle(stylePaxNumber);
                HSSFCell cell13 = row.createCell(13);
                        BigDecimal amountwendy = new BigDecimal("".equals(listDetail.get(r-10).getAmountwendy()) ? "0" : listDetail.get(r-10).getAmountwendy());
                        cell13.setCellValue((amountwendy != null) ? amountwendy.doubleValue() : new BigDecimal("0").doubleValue());
@@ -736,55 +762,76 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                        BigDecimal amountoutbound = new BigDecimal("".equals(listDetail.get(r-10).getAmountoutbound()) ? "0" : listDetail.get(r-10).getAmountoutbound());
                        cell14.setCellValue((amountoutbound != null) ? amountoutbound.doubleValue() : new BigDecimal("0").doubleValue());
                        cell14.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell15 = row.createCell(15);
+               HSSFCell cell27 = row.createCell(15);
+                       BigDecimal amountinbound = new BigDecimal("".equals(listDetail.get(r-10).getAmountinbound()) ? "0" : listDetail.get(r-10).getAmountinbound());
+                       cell27.setCellValue((amountinbound != null) ? amountinbound.doubleValue() : new BigDecimal("0").doubleValue());
+                       cell27.setCellStyle(styleDetailTableNumber);     
+                HSSFCell cell28 = row.createCell(16);
+                       BigDecimal amountref = new BigDecimal("".equals(listDetail.get(r-10).getAmountrefund()) ? "0" : listDetail.get(r-10).getAmountrefund());
+                       cell28.setCellValue((amountref != null) ? amountref.doubleValue() : new BigDecimal("0").doubleValue());
+                       cell28.setCellStyle(styleDetailTableNumber);  
+                HSSFCell cell29 = row.createCell(17);
+                       BigDecimal amountbus = new BigDecimal("".equals(listDetail.get(r-10).getAmountbusinesstrip()) ? "0" : listDetail.get(r-10).getAmountbusinesstrip());
+                       cell29.setCellValue((amountbus != null) ? amountbus.doubleValue() : new BigDecimal("0").doubleValue());
+                       cell29.setCellStyle(styleDetailTableNumber);   
+                HSSFCell cell30 = row.createCell(18);
+                       BigDecimal amountann = new BigDecimal("".equals(listDetail.get(r-10).getAmountannualleave()) ? "0" : listDetail.get(r-10).getAmountannualleave());
+                       cell30.setCellValue((amountann != null) ? amountann.doubleValue() : new BigDecimal("0").doubleValue());
+                       cell30.setCellStyle(styleDetailTableNumber);   
+                HSSFCell cell31 = row.createCell(19);
+                       BigDecimal amountnoinv= new BigDecimal("".equals(listDetail.get(r-10).getAmountnoinvoice()) ? "0" : listDetail.get(r-10).getAmountnoinvoice());
+                       cell31.setCellValue((amountnoinv != null) ? amountnoinv.doubleValue() : new BigDecimal("0").doubleValue());
+                       cell31.setCellStyle(styleDetailTableNumber);   
+               HSSFCell cell15 = row.createCell(20);
                        BigDecimal sale = new BigDecimal("".equals(listDetail.get(r-10).getSale()) ? "0" : listDetail.get(r-10).getSale());
                        cell15.setCellValue((sale != null) ? sale.doubleValue() : new BigDecimal("0").doubleValue());
                        cell15.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell16 = row.createCell(16);
+               HSSFCell cell16 = row.createCell(21);
                        BigDecimal cost  = new BigDecimal("".equals(listDetail.get(r-10).getCost()) ? "0" : listDetail.get(r-10).getCost());
                        cell16.setCellValue((cost != null) ? cost.doubleValue() : new BigDecimal("0").doubleValue());
                        cell16.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell17 = row.createCell(17);
+               HSSFCell cell17 = row.createCell(22);
                        BigDecimal over  = new BigDecimal("".equals(listDetail.get(r-10).getOver()) ? "0" : listDetail.get(r-10).getOver());
                        cell17.setCellValue((over != null) ? over.doubleValue() : new BigDecimal("0").doubleValue());
                        cell17.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell18 = row.createCell(18);
+               HSSFCell cell18 = row.createCell(23);
                        BigDecimal add  = new BigDecimal("".equals(listDetail.get(r-10).getAdd()) ? "0" : listDetail.get(r-10).getAdd());
                        cell18.setCellValue((add != null) ? add.doubleValue() : new BigDecimal("0").doubleValue());
                        cell18.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell19 = row.createCell(19);
+               HSSFCell cell19 = row.createCell(24);
                        BigDecimal dres  = new BigDecimal("".equals(listDetail.get(r-10).getDres()) ? "0" : listDetail.get(r-10).getDres());
                        cell19.setCellValue((dres != null) ? dres.doubleValue() : new BigDecimal("0").doubleValue());
                        cell19.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell20 = row.createCell(20);
+               HSSFCell cell20 = row.createCell(25);
                        BigDecimal profit  = new BigDecimal("".equals(listDetail.get(r-10).getProfit()) ? "0" : listDetail.get(r-10).getProfit());
                        cell20.setCellValue((profit != null) ? profit.doubleValue() : new BigDecimal("0").doubleValue());
                        cell20.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell25 = row.createCell(21);
+               HSSFCell cell25 = row.createCell(26);
                        BigDecimal ticcom  = new BigDecimal("".equals(listDetail.get(r-10).getTiccomm()) ? "0" : listDetail.get(r-10).getTiccomm());
                        cell25.setCellValue((ticcom != null) ? ticcom.doubleValue() : new BigDecimal("0").doubleValue());
                        cell25.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell21 = row.createCell(22);
+               HSSFCell cell21 = row.createCell(27);
                        BigDecimal little  = new BigDecimal("".equals(listDetail.get(r-10).getLittle()) ? "0" : listDetail.get(r-10).getLittle());
                        cell21.setCellValue((little != null) ? little.doubleValue() : new BigDecimal("0").doubleValue());
                        cell21.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell22 = row.createCell(23);
+               HSSFCell cell22 = row.createCell(28);
                         BigDecimal agentcommpay = new BigDecimal("".equals(listDetail.get(r-10).getAgentcommpay()) ? "0" : listDetail.get(r-10).getAgentcommpay());
                         cell22.setCellValue((agentcommpay != null) ? agentcommpay.doubleValue() : new BigDecimal("0").doubleValue());
                         cell22.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell23 = row.createCell(24);
+                HSSFCell cell23 = row.createCell(29);
                         BigDecimal agentcommrec = new BigDecimal("".equals(listDetail.get(r-10).getAgentcommrec()) ? "0" : listDetail.get(r-10).getAgentcommrec());
                         cell23.setCellValue((agentcommrec != null) ? agentcommrec.doubleValue() : new BigDecimal("0").doubleValue());
                         cell23.setCellStyle(styleDetailTableNumber);        
-               HSSFCell cell24 = row.createCell(25);
+               HSSFCell cell24 = row.createCell(30);
                         BigDecimal pay = new BigDecimal("".equals(listDetail.get(r-10).getPay()) ? "0" : listDetail.get(r-10).getPay());
                         cell24.setCellValue((pay != null) ? pay.doubleValue() : new BigDecimal("0").doubleValue());
                         cell24.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell26 = row.createCell(26);
+               HSSFCell cell26 = row.createCell(31);
                         BigDecimal comm = new BigDecimal("".equals(listDetail.get(r-10).getComm()) ? "0" : listDetail.get(r-10).getComm());
                         cell26.setCellValue((comm != null) ? comm.doubleValue() : new BigDecimal("0").doubleValue());
                         cell26.setCellStyle(styleDetailTableNumber);
-                for (int i = 0; i < 25; i++) {
+
+                for (int i = 0; i < 32; i++) {
                     sheet.autoSizeColumn(i);
                 }
             }
@@ -819,7 +866,11 @@ public class CheckingAirOthersummary extends AbstractExcelView {
         rowL.createCell(24).setCellStyle(styleBorderTop);
         rowL.createCell(25).setCellStyle(styleBorderTop);
         rowL.createCell(26).setCellStyle(styleBorderTop);
-            
+        rowL.createCell(27).setCellStyle(styleBorderTop);
+        rowL.createCell(28).setCellStyle(styleBorderTop);
+        rowL.createCell(29).setCellStyle(styleBorderTop);
+        rowL.createCell(30).setCellStyle(styleBorderTop);
+        rowL.createCell(31).setCellStyle(styleBorderTop);
 //**********************************************************************************************************************
 	// set Header Report (Row 1)
             HSSFCellStyle styleHeader02 = wb.createCellStyle();
@@ -1022,71 +1073,76 @@ public class CheckingAirOthersummary extends AbstractExcelView {
             cell295.setCellValue("Amount Wendy");
             cell295.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(4);
-
+            
             HSSFCell cell296 = row29.createCell(5);
-            cell296.setCellValue("Amount Inbound");
+            cell296.setCellValue("Amount Outbound");
             cell296.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(5);
-
-            HSSFCell cell297 = row29.createCell(6);
-            cell297.setCellValue("Sale Price");
-            cell297.setCellStyle(styleAlignRightBorderAllHeaderTable);
+            
+            HSSFCell cell2110 = row29.createCell(6);
+            cell2110.setCellValue("Amount Inbound");
+            cell2110.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(6);
 
-            HSSFCell cell298 = row29.createCell(7);
-            cell298.setCellValue("Cost");
-            cell298.setCellStyle(styleAlignRightBorderAllHeaderTable);
+            HSSFCell cell297 = row29.createCell(7);
+            cell297.setCellValue("Sale Price");
+            cell297.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(7);
 
-            HSSFCell cell299 = row29.createCell(8);
-            cell299.setCellValue("Over Comm");
-            cell299.setCellStyle(styleAlignRightBorderAllHeaderTable);
+            HSSFCell cell298 = row29.createCell(8);
+            cell298.setCellValue("Cost");
+            cell298.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(8);
 
-            HSSFCell cell2100 = row29.createCell(9);
-            cell2100.setCellValue("Add Pay");
-            cell2100.setCellStyle(styleAlignRightBorderAllHeaderTable);
+            HSSFCell cell299 = row29.createCell(9);
+            cell299.setCellValue("Over Comm");
+            cell299.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(9);
 
-            HSSFCell cell2101 = row29.createCell(10);
-            cell2101.setCellValue("Drecrease Pay");
-            cell2101.setCellStyle(styleAlignRightBorderAllHeaderTable);
+            HSSFCell cell2100 = row29.createCell(10);
+            cell2100.setCellValue("Add Pay");
+            cell2100.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(10);
 
-            HSSFCell cell2103 = row29.createCell(11);
-            cell2103.setCellValue("Profit");
-            cell2103.setCellStyle(styleAlignRightBorderAllHeaderTable);
+            HSSFCell cell2101 = row29.createCell(11);
+            cell2101.setCellValue("Drecrease Pay");
+            cell2101.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(11);
 
-            HSSFCell cell2104 = row29.createCell(12);
-            cell2104.setCellValue("Comm");
-            cell2104.setCellStyle(styleAlignRightBorderAllHeaderTable);
+            HSSFCell cell2103 = row29.createCell(12);
+            cell2103.setCellValue("Profit");
+            cell2103.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(12);
 
-            HSSFCell cell2105 = row29.createCell(13);
-            cell2105.setCellValue("Little Comm");
-            cell2105.setCellStyle(styleAlignRightBorderAllHeaderTable);
+            HSSFCell cell2104 = row29.createCell(13);
+            cell2104.setCellValue("Comm");
+            cell2104.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(13);
 
-            HSSFCell cell2106 = row29.createCell(14);
-            cell2106.setCellValue("Agent[Comm] Pay");	
-            cell2106.setCellStyle(styleAlignRightBorderAllHeaderTable);
+            HSSFCell cell2105 = row29.createCell(14);
+            cell2105.setCellValue("Little Comm");
+            cell2105.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(14);
 
-            HSSFCell cell2107 = row29.createCell(15);
-            cell2107.setCellValue("Agent[Comm] Receive");
-            cell2107.setCellStyle(styleAlignRightBorderAllHeaderTable);
+            HSSFCell cell2106 = row29.createCell(15);
+            cell2106.setCellValue("Agent[Comm] Pay");	
+            cell2106.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(15);
 
-            HSSFCell cell2108 = row29.createCell(16);
-            cell2108.setCellValue("Pay Comm Refund");
-            cell2108.setCellStyle(styleAlignRightBorderAllHeaderTable);
+            HSSFCell cell2107 = row29.createCell(16);
+            cell2107.setCellValue("Agent[Comm] Receive");
+            cell2107.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(16);
 
-            HSSFCell cell2109 = row29.createCell(17);
+            HSSFCell cell2108 = row29.createCell(17);
+            cell2108.setCellValue("Pay Comm Refund");
+            cell2108.setCellStyle(styleAlignRightBorderAllHeaderTable);
+            sheet1.autoSizeColumn(17);
+
+            HSSFCell cell2109 = row29.createCell(18);
             cell2109.setCellValue("Comm Receive");
             cell2109.setCellStyle(styleAlignRightBorderAllHeaderTable);
-            sheet1.autoSizeColumn(17);
+            sheet1.autoSizeColumn(18);
            
         int count1 = 10 + listAir.size();
 	if(listAir  != null){
@@ -1097,7 +1153,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                         cell1.setCellStyle(styleDetailTable);
                     HSSFCell cell2 = row.createCell(1);
                         cell2.setCellValue(listAir.get(r-10).getTyperounting());
-                        cell2.setCellStyle(styleDetailTable);
+                        cell2.setCellStyle(stylePaxNumber);
                     HSSFCell cell3 = row.createCell(2);
                        BigDecimal pax = new BigDecimal("".equals(listAir.get(r-10).getPax()) ? "0" : listAir.get(r-10).getPax());
                        cell3.setCellValue((pax != null) ? pax.doubleValue() : new BigDecimal("0").doubleValue());
@@ -1105,59 +1161,63 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     HSSFCell cell4 = row.createCell(3);
                         cell4.setCellValue(listAir.get(r-10).getAir());
                         cell4.setCellStyle(stylePaxNumber);
-                   HSSFCell cell5 = row.createCell(4);
+                    HSSFCell cell5 = row.createCell(4);
                         BigDecimal amountwendy = new BigDecimal("".equals(listAir.get(r-10).getAmountwendy()) ? "0" : listAir.get(r-10).getAmountwendy());
                         cell5.setCellValue((amountwendy != null) ? amountwendy.doubleValue() : new BigDecimal("0").doubleValue());
                         cell5.setCellStyle(styleDetailTableNumber);
-                   HSSFCell cell6 = row.createCell(5);
+                    HSSFCell cell19 = row.createCell(5);
+                            BigDecimal amountoutbound = new BigDecimal("null".equals(String.valueOf(listAir.get(r-10).getAmountoutbound())) ? "0" : listAir.get(r-10).getAmountoutbound());
+                            cell19.setCellValue((amountoutbound != null) ? amountoutbound.doubleValue() : new BigDecimal("0").doubleValue());
+                            cell19.setCellStyle(styleDetailTableNumber);
+                   HSSFCell cell6 = row.createCell(6);
                            BigDecimal amountinbound = new BigDecimal("null".equals(String.valueOf(listAir.get(r-10).getAmountinbound())) ? "0" : listAir.get(r-10).getAmountinbound());
                            cell6.setCellValue((amountinbound != null) ? amountinbound.doubleValue() : new BigDecimal("0").doubleValue());
                            cell6.setCellStyle(styleDetailTableNumber);
-                   HSSFCell cell7 = row.createCell(6);
+                   HSSFCell cell7 = row.createCell(7);
                            BigDecimal sale = new BigDecimal("".equals(listAir.get(r-10).getSale()) ? "0" : listAir.get(r-10).getSale());
                            cell7.setCellValue((sale != null) ? sale.doubleValue() : new BigDecimal("0").doubleValue());
                            cell7.setCellStyle(styleDetailTableNumber);
-                   HSSFCell cell8 = row.createCell(7);
+                   HSSFCell cell8 = row.createCell(8);
                            BigDecimal cost  = new BigDecimal("".equals(listAir.get(r-10).getCost()) ? "0" : listAir.get(r-10).getCost());
                            cell8.setCellValue((cost != null) ? cost.doubleValue() : new BigDecimal("0").doubleValue());
                            cell8.setCellStyle(styleDetailTableNumber);
-                   HSSFCell cell9 = row.createCell(8);
+                   HSSFCell cell9 = row.createCell(9);
                            BigDecimal over  = new BigDecimal("".equals(listAir.get(r-10).getOver()) ? "0" : listAir.get(r-10).getOver());
                            cell9.setCellValue((over != null) ? over.doubleValue() : new BigDecimal("0").doubleValue());
                            cell9.setCellStyle(styleDetailTableNumber);
-                   HSSFCell cell10 = row.createCell(9);
+                   HSSFCell cell10 = row.createCell(10);
                            BigDecimal add  = new BigDecimal("".equals(listAir.get(r-10).getAdd()) ? "0" : listAir.get(r-10).getAdd());
                            cell10.setCellValue((add != null) ? add.doubleValue() : new BigDecimal("0").doubleValue());
                            cell10.setCellStyle(styleDetailTableNumber);
-                   HSSFCell cell11 = row.createCell(10);
+                   HSSFCell cell11 = row.createCell(11);
                            BigDecimal dres  = new BigDecimal("".equals(listAir.get(r-10).getDres()) ? "0" : listAir.get(r-10).getDres());
                            cell11.setCellValue((dres != null) ? dres.doubleValue() : new BigDecimal("0").doubleValue());
                            cell11.setCellStyle(styleDetailTableNumber);
-                   HSSFCell cell12 = row.createCell(11);
+                   HSSFCell cell12 = row.createCell(12);
                            BigDecimal profit  = new BigDecimal("".equals(listAir.get(r-10).getProfit()) ? "0" : listAir.get(r-10).getProfit());
                            cell12.setCellValue((profit != null) ? profit.doubleValue() : new BigDecimal("0").doubleValue());
                            cell12.setCellStyle(styleDetailTableNumber);
-                   HSSFCell cell13 = row.createCell(12);
+                   HSSFCell cell13 = row.createCell(13);
                            BigDecimal ticcom  = new BigDecimal("".equals(listAir.get(r-10).getTiccomm()) ? "0" : listAir.get(r-10).getTiccomm());
                            cell13.setCellValue((ticcom != null) ? ticcom.doubleValue() : new BigDecimal("0").doubleValue());
                            cell13.setCellStyle(styleDetailTableNumber);
-                   HSSFCell cell14 = row.createCell(13);
+                   HSSFCell cell14 = row.createCell(14);
                            BigDecimal little  = new BigDecimal("".equals(listAir.get(r-10).getLittle()) ? "0" : listAir.get(r-10).getLittle());
                            cell14.setCellValue((little != null) ? little.doubleValue() : new BigDecimal("0").doubleValue());
                            cell14.setCellStyle(styleDetailTableNumber);
-                   HSSFCell cell15 = row.createCell(14);
+                   HSSFCell cell15 = row.createCell(15);
                             BigDecimal agentcommpay = new BigDecimal("".equals(listAir.get(r-10).getAgentcommpay()) ? "0" : listAir.get(r-10).getAgentcommpay());
                             cell15.setCellValue((agentcommpay != null) ? agentcommpay.doubleValue() : new BigDecimal("0").doubleValue());
                             cell15.setCellStyle(styleDetailTableNumber);
-                   HSSFCell cell16 = row.createCell(15);
+                   HSSFCell cell16 = row.createCell(16);
                             BigDecimal agentcommrec = new BigDecimal("".equals(listAir.get(r-10).getAgentcommrec()) ? "0" : listAir.get(r-10).getAgentcommrec());
                             cell16.setCellValue((agentcommrec != null) ? agentcommrec.doubleValue() : new BigDecimal("0").doubleValue());
                             cell16.setCellStyle(styleDetailTableNumber);
-                   HSSFCell cell17 = row.createCell(16);
+                   HSSFCell cell17 = row.createCell(17);
                             BigDecimal pay = new BigDecimal("".equals(listAir.get(r-10).getPay()) ? "0" : listAir.get(r-10).getPay());
                             cell17.setCellValue((pay != null) ? pay.doubleValue() : new BigDecimal("0").doubleValue());
                             cell17.setCellStyle(styleDetailTableNumber);
-                   HSSFCell cell18 = row.createCell(17);
+                   HSSFCell cell18 = row.createCell(18);
                             BigDecimal comm = new BigDecimal("".equals(listAir.get(r-10).getComm()) ? "0" : listAir.get(r-10).getComm());
                             cell18.setCellValue((comm != null) ? comm.doubleValue() : new BigDecimal("0").doubleValue());
                             cell18.setCellStyle(styleDetailTableNumber);
@@ -1168,21 +1228,22 @@ public class CheckingAirOthersummary extends AbstractExcelView {
         }
         
         HSSFRow rowtotal = sheet1.createRow(count1);
-        String sumtotalpax = "SUM(C" + 10+":C"+(count1)+")";
-        String sumtotalamountwen = "SUM(E" + 10+":E"+(count1)+")";
-        String sumtotalamountin = "SUM(F" + 10+":F"+(count1)+")";
-        String sumtotalsale = "SUM(G" + 10+":G"+(count1)+")";
-        String sumtotalcost = "SUM(H" + 10+":H"+(count1)+")";
-        String sumtotalover = "SUM(I" + 10+":I"+(count1)+")";
-        String sumtotaladd = "SUM(J" + 10+":J"+(count1)+")";
-        String sumtotaldres = "SUM(K" + 10+":K"+(count1)+")";
-        String sumtotalprofit = "SUM(L" + 10+":L"+(count1)+")";
-        String sumtotalticketcomm = "SUM(M" + 10+":M"+(count1)+")";
-        String sumtotallittle = "SUM(N" + 10+":N"+(count1)+")";
-        String sumtotalagentcommpay = "SUM(O" + 10+":O"+(count1)+")";
-        String sumtotalagentcommrec = "SUM(P" + 10+":P"+(count1)+")";
-        String sumtotalpay = "SUM(Q" + 10+":Q"+(count1)+")";
-        String sumtotalcomm = "SUM(R" + 10+":R"+(count1)+")";
+        String sumtotalpax = "SUM(C" + 11+":C"+(count1)+")";
+        String sumtotalamountwen = "SUM(E" + 11+":E"+(count1)+")";
+        String sumtotalamountout = "SUM(F" + 11+":F"+(count1)+")";
+        String sumtotalamountin = "SUM(G" + 11+":G"+(count1)+")";
+        String sumtotalsale = "SUM(H" + 11+":H"+(count1)+")";
+        String sumtotalcost = "SUM(I" + 11+":I"+(count1)+")";
+        String sumtotalover = "SUM(J" + 11+":J"+(count1)+")";
+        String sumtotaladd = "SUM(K" + 11+":K"+(count1)+")";
+        String sumtotaldres = "SUM(L" + 11+":L"+(count1)+")";
+        String sumtotalprofit = "SUM(M" + 11+":M"+(count1)+")";
+        String sumtotalticketcomm = "SUM(N" + 11+":N"+(count1)+")";
+        String sumtotallittle = "SUM(O" + 11+":O"+(count1)+")";
+        String sumtotalagentcommpay = "SUM(P" + 11+":P"+(count1)+")";
+        String sumtotalagentcommrec = "SUM(Q" + 11+":Q"+(count1)+")";
+        String sumtotalpay = "SUM(R" + 11+":R"+(count1)+")";
+        String sumtotalcomm = "SUM(S" + 11+":S"+(count1)+")";
 //            sheetIncSum.addMergedRegion(CellRangeAddress.valueOf("A"+(count + x + 2)+":B"+(count + x + 2)));
 //            sheetIncSum.addMergedRegion(CellRangeAddress.valueOf("D"+(count + x + 2)+":E"+(count + x + 2)));
         HSSFCell cellTotalSum00 = rowtotal.createCell(0);
@@ -1198,45 +1259,47 @@ public class CheckingAirOthersummary extends AbstractExcelView {
             cellTotalSum18.setCellFormula(sumtotalamountwen);
             cellTotalSum18.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum02 = rowtotal.createCell(5);
-            cellTotalSum02.setCellFormula(sumtotalamountin);
+            cellTotalSum02.setCellFormula(sumtotalamountout);
             cellTotalSum02.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum03 = rowtotal.createCell(6);
-            cellTotalSum03.setCellFormula(sumtotalsale);
+            cellTotalSum03.setCellFormula(sumtotalamountin);
             cellTotalSum03.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum04 = rowtotal.createCell(7);
-            cellTotalSum04.setCellFormula(sumtotalcost);
+            cellTotalSum04.setCellFormula(sumtotalsale);
             cellTotalSum04.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum05 = rowtotal.createCell(8);
-            cellTotalSum05.setCellFormula(sumtotalover);
+            cellTotalSum05.setCellFormula(sumtotalcost);
             cellTotalSum05.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum06 = rowtotal.createCell(9);
-            cellTotalSum06.setCellFormula(sumtotaladd);
+            cellTotalSum06.setCellFormula(sumtotalover);
             cellTotalSum06.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum07 = rowtotal.createCell(10);
-            cellTotalSum07.setCellFormula(sumtotaldres);
+            cellTotalSum07.setCellFormula(sumtotaladd);
             cellTotalSum07.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum08 = rowtotal.createCell(11);
-            cellTotalSum08.setCellFormula(sumtotalprofit);
+            cellTotalSum08.setCellFormula(sumtotaldres);
             cellTotalSum08.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum09 = rowtotal.createCell(12);
-            cellTotalSum09.setCellFormula(sumtotalticketcomm);
+            cellTotalSum09.setCellFormula(sumtotalprofit);
             cellTotalSum09.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum10 = rowtotal.createCell(13);
-            cellTotalSum10.setCellFormula(sumtotallittle);
+            cellTotalSum10.setCellFormula(sumtotalticketcomm);
             cellTotalSum10.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum11 = rowtotal.createCell(14);
-            cellTotalSum11.setCellFormula(sumtotalagentcommpay);
+            cellTotalSum11.setCellFormula(sumtotallittle);
             cellTotalSum11.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum12 = rowtotal.createCell(15);
-            cellTotalSum12.setCellFormula(sumtotalagentcommrec);
+            cellTotalSum12.setCellFormula(sumtotalagentcommpay);
             cellTotalSum12.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum13 = rowtotal.createCell(16);
-            cellTotalSum13.setCellFormula(sumtotalpay);
+            cellTotalSum13.setCellFormula(sumtotalagentcommrec);
             cellTotalSum13.setCellStyle(styleTotalTableNumber);
             HSSFCell cellTotalSum14 = rowtotal.createCell(17);
-            cellTotalSum14.setCellFormula(sumtotalcomm);
+            cellTotalSum14.setCellFormula(sumtotalpay);
             cellTotalSum14.setCellStyle(styleTotalTableNumber);
-
+            HSSFCell cellTotalSum15 = rowtotal.createCell(18);
+            cellTotalSum15.setCellFormula(sumtotalcomm);
+            cellTotalSum15.setCellStyle(styleTotalTableNumber);
 
         
 //                       
@@ -1456,69 +1519,74 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 sheet2.autoSizeColumn(2);
 
                 HSSFCell cell3105 = row39.createCell(3);
-                cell3105.setCellValue("Amount Inbound");
+                cell3105.setCellValue("Amount Outbound");
                 cell3105.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(3);
 
                 HSSFCell cell3106 = row39.createCell(4);
-                cell3106.setCellValue("Sale");	
+                cell3106.setCellValue("Amount Inbound");	
                 cell3106.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(4);
 
                 HSSFCell cell3107 = row39.createCell(5);
-                cell3107.setCellValue("Cost");
+                cell3107.setCellValue("Sale");
                 cell3107.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(5);
 
                 HSSFCell cell3108 = row39.createCell(6);
-                cell3108.setCellValue("Over Comm");
+                cell3108.setCellValue("Cost");
                 cell3108.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(6);
 
                 HSSFCell cell3109 = row39.createCell(7);
-                cell3109.setCellValue("Add Pay");
+                cell3109.setCellValue("Over Comm");
                 cell3109.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(7);
 
                 HSSFCell cell3110 = row39.createCell(8);
-                cell3110.setCellValue("Drecrease Pay");
+                cell3110.setCellValue("Add Pay");
                 cell3110.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(8);
 
                 HSSFCell cell3111 = row39.createCell(9);
-                cell3111.setCellValue("Profit");
+                cell3111.setCellValue("Drecrease Pay");
                 cell3111.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(9);
 
                 HSSFCell cell3116 = row39.createCell(10);
-                cell3116.setCellValue("Comm");
+                cell3116.setCellValue("Profit");
                 cell3116.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(10);
                 
                 HSSFCell cell3112 = row39.createCell(11);
-                cell3112.setCellValue("Little Comm");
+                cell3112.setCellValue("Comm");
                 cell3112.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(11);
 
                 HSSFCell cell3113 = row39.createCell(12);
-                cell3113.setCellValue("Agent[Comm] Pay");
+                cell3113.setCellValue("Little Comm");
                 cell3113.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(12);
 
                 HSSFCell cell3114 = row39.createCell(13);
-                cell3114.setCellValue("Agent[Comm] Receive");
+                cell3114.setCellValue("Agent[Comm] Pay");
                 cell3114.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(13);
 
                 HSSFCell cell3115 = row39.createCell(14);
-                cell3115.setCellValue("Pay");
+                cell3115.setCellValue("Agent[Comm] Receive");
                 cell3115.setCellStyle(styleAlignRightBorderAllHeaderTable);
                 sheet2.autoSizeColumn(14);
                 
                 HSSFCell cell3117 = row39.createCell(15);
-                cell3117.setCellValue("Comm");
+                cell3117.setCellValue("Pay");
                 cell3117.setCellStyle(styleAlignRightBorderAllHeaderTable);
-                sheet2.autoSizeColumn(14);
+                sheet2.autoSizeColumn(15);
+                
+                HSSFCell cell3118 = row39.createCell(16);
+                cell3118.setCellValue("Net Comm Receive");
+                cell3118.setCellStyle(styleAlignRightBorderAllHeaderTable);
+                sheet2.autoSizeColumn(16);
 
             int count2 = 10 + listAgent.size();
 
@@ -1535,58 +1603,64 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                        BigDecimal amountwendy = new BigDecimal("".equals(listAgent.get(r-10).getAmountwendy()) ? "0" : listAgent.get(r-10).getAmountwendy());
                        cell13.setCellValue((amountwendy != null) ? amountwendy.doubleValue() : new BigDecimal("0").doubleValue());
                        cell13.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell14 = row.createCell(3);
+               HSSFCell cell26 = row.createCell(3);
+                       BigDecimal amountout = new BigDecimal("".equals(listAgent.get(r-10).getAmountoutbound()) ? "0" : listAgent.get(r-10).getAmountoutbound());
+                       cell26.setCellValue((amountout != null) ? amountout.doubleValue() : new BigDecimal("0").doubleValue());
+                       cell26.setCellStyle(styleDetailTableNumber);        
+               HSSFCell cell14 = row.createCell(4);
                        BigDecimal amountin = new BigDecimal("".equals(listAgent.get(r-10).getAmountinbound()) ? "0" : listAgent.get(r-10).getAmountinbound());
                        cell14.setCellValue((amountin != null) ? amountin.doubleValue() : new BigDecimal("0").doubleValue());
                        cell14.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell15 = row.createCell(4);
+               HSSFCell cell15 = row.createCell(5);
                        BigDecimal sale = new BigDecimal("".equals(listAgent.get(r-10).getSale()) ? "0" : listAgent.get(r-10).getSale());
                        cell15.setCellValue((sale != null) ? sale.doubleValue() : new BigDecimal("0").doubleValue());
                        cell15.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell16 = row.createCell(5);
+               HSSFCell cell16 = row.createCell(6);
                        BigDecimal cost  = new BigDecimal("".equals(listAgent.get(r-10).getCost()) ? "0" : listAgent.get(r-10).getCost());
                        cell16.setCellValue((cost != null) ? cost.doubleValue() : new BigDecimal("0").doubleValue());
                        cell16.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell17 = row.createCell(6);
+               HSSFCell cell17 = row.createCell(7);
                        BigDecimal over  = new BigDecimal("".equals(listAgent.get(r-10).getOver()) ? "0" : listAgent.get(r-10).getOver());
                        cell17.setCellValue((over != null) ? over.doubleValue() : new BigDecimal("0").doubleValue());
                        cell17.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell18 = row.createCell(7);
+               HSSFCell cell18 = row.createCell(8);
                        BigDecimal add  = new BigDecimal("".equals(listAgent.get(r-10).getAdd()) ? "0" : listAgent.get(r-10).getAdd());
                        cell18.setCellValue((add != null) ? add.doubleValue() : new BigDecimal("0").doubleValue());
                        cell18.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell19 = row.createCell(8);
+               HSSFCell cell19 = row.createCell(9);
                        BigDecimal dres  = new BigDecimal("".equals(listAgent.get(r-10).getDres()) ? "0" : listAgent.get(r-10).getDres());
                        cell19.setCellValue((dres != null) ? dres.doubleValue() : new BigDecimal("0").doubleValue());
                        cell19.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell20 = row.createCell(9);
+               HSSFCell cell20 = row.createCell(10);
                        BigDecimal profit  = new BigDecimal("".equals(listAgent.get(r-10).getProfit()) ? "0" : listAgent.get(r-10).getProfit());
                        cell20.setCellValue((profit != null) ? profit.doubleValue() : new BigDecimal("0").doubleValue());
                        cell20.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell2205 = row.createCell(10);
+               HSSFCell cell2205 = row.createCell(11);
                        BigDecimal ticcom  = new BigDecimal("".equals(listAgent.get(r-10).getTiccomm()) ? "0" : listAgent.get(r-10).getTiccomm());
                        cell2205.setCellValue((ticcom != null) ? ticcom.doubleValue() : new BigDecimal("0").doubleValue());
                        cell2205.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell212 = row.createCell(11);
+               HSSFCell cell212 = row.createCell(12);
                        BigDecimal little  = new BigDecimal("".equals(listAgent.get(r-10).getLittle()) ? "0" : listAgent.get(r-10).getLittle());
                        cell212.setCellValue((little != null) ? little.doubleValue() : new BigDecimal("0").doubleValue());
                        cell212.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell22 = row.createCell(12);
+               HSSFCell cell22 = row.createCell(13);
                         BigDecimal agentcommpay = new BigDecimal("".equals(listAgent.get(r-10).getAgentcommpay()) ? "0" : listAgent.get(r-10).getAgentcommpay());
                         cell22.setCellValue((agentcommpay != null) ? agentcommpay.doubleValue() : new BigDecimal("0").doubleValue());
                         cell22.setCellStyle(styleDetailTableNumber);
-                HSSFCell cell23 = row.createCell(13);
+                HSSFCell cell23 = row.createCell(14);
                         BigDecimal agentcommrec = new BigDecimal("".equals(listAgent.get(r-10).getAgentcommrec()) ? "0" : listAgent.get(r-10).getAgentcommrec());
                         cell23.setCellValue((agentcommrec != null) ? agentcommrec.doubleValue() : new BigDecimal("0").doubleValue());
                         cell23.setCellStyle(styleDetailTableNumber);        
-               HSSFCell cell24 = row.createCell(14);
+               HSSFCell cell24 = row.createCell(15);
                         BigDecimal pay = new BigDecimal("".equals(listAgent.get(r-10).getPay()) ? "0" : listAgent.get(r-10).getPay());
                         cell24.setCellValue((pay != null) ? pay.doubleValue() : new BigDecimal("0").doubleValue());
                         cell24.setCellStyle(styleDetailTableNumber);
-               HSSFCell cell25 = row.createCell(15);
+               HSSFCell cell25 = row.createCell(16);
                         BigDecimal comm = new BigDecimal("".equals(listAgent.get(r-10).getComm()) ? "0" : listAgent.get(r-10).getComm());
                         cell25.setCellValue((comm != null) ? comm.doubleValue() : new BigDecimal("0").doubleValue());
                         cell25.setCellStyle(styleDetailTableNumber);
+     
+                        
             for (int i = 0; i < 25; i++) {
                 sheet2.autoSizeColumn(i);
             }
@@ -1616,7 +1690,13 @@ public class CheckingAirOthersummary extends AbstractExcelView {
          rowLLL.createCell(12).setCellStyle(styleBorderTop);
          rowLLL.createCell(13).setCellStyle(styleBorderTop);
 	 rowLLL.createCell(14).setCellStyle(styleBorderTop);    
-         rowLLL.createCell(15).setCellStyle(styleBorderTop);            
+         rowLLL.createCell(15).setCellStyle(styleBorderTop);  
+         rowLLL.createCell(16).setCellStyle(styleBorderTop); 
+         
+        sheet.setColumnWidth(5, 256*40);
+        sheet.setColumnWidth(30, 256*12);
+        sheet1.setColumnWidth(13, 256*12);
+        sheet2.setColumnWidth(0, 256*40);
     }
     
 }

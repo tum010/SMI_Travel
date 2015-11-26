@@ -40,7 +40,10 @@ public class TicketSummaryCommissionView {
     private String pay;
     private String comm;
     private String agentcommrec;
-
+    private String amountrefund;
+    private String amountbusinesstrip;
+    private String amountannualleave;
+    private String amountnoinvoice;
     //air
     private String typepayment;
     private String typerounting;
@@ -686,6 +689,38 @@ public class TicketSummaryCommissionView {
 
     public void setPrintonPage(String printonPage) {
         this.printonPage = printonPage;
+    }
+
+    public String getAmountnoinvoice() {
+        return amountnoinvoice;
+    }
+
+    public void setAmountnoinvoice(String amountnoinvoice) {
+        this.amountnoinvoice = amountnoinvoice;
+    }
+
+    public String getAmountrefund() {
+        return amountrefund;
+    }
+
+    public void setAmountrefund(String amountrefund) {
+        this.amountrefund = amountrefund;
+    }
+
+    public String getAmountbusinesstrip() {
+        return amountbusinesstrip;
+    }
+
+    public void setAmountbusinesstrip(String amountbusinesstrip) {
+        this.amountbusinesstrip = amountbusinesstrip;
+    }
+
+    public String getAmountannualleave() {
+        return amountannualleave;
+    }
+
+    public void setAmountannualleave(String amountannualleave) {
+        this.amountannualleave = amountannualleave;
     }
 
 }
