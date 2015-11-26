@@ -12,7 +12,9 @@ import com.smi.travel.datalayer.view.entity.SummaryTicketAdjustCostAndIncome;
 import com.smi.travel.datalayer.view.entity.SummaryTicketCostAndIncomeView;
 import com.smi.travel.datalayer.view.entity.TicketCommissionReceive;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -471,7 +473,7 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
             sumticket.setTyperounting(util.ConvertString(B[1])== null ? "" : util.ConvertString(B[1]));
             sumticket.setPax(util.ConvertString(B[2])== null ? "" : util.ConvertString(B[2]));
             sumticket.setAir(util.ConvertString(B[3])== null ? "" : util.ConvertString(B[3]));
-            sumticket.setTicketissue(util.ConvertString(B[4])== null ? "" : util.ConvertString(B[4]));
+//            sumticket.setTicketissue(util.ConvertString(B[4])== null ? "" : util.ConvertString(B[4]));
             sumticket.setInvno(util.ConvertString(B[5])== null ? "" : util.ConvertString(B[5]));
             sumticket.setCost(util.ConvertString(B[6])== null ? "" : util.ConvertString(B[6]));
             sumticket.setInbound(util.ConvertString(B[7])== null ? "" : util.ConvertString(B[7]));
@@ -491,6 +493,92 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
             sumticket.setPage("income");
             data.add(sumticket);
         }
+        
+        int max = data.size();
+        String typepayment = "";
+        String typepaymentPast = "";
+        String typeroute = "";
+        String typeroutePast = "";
+        String air = "";
+        String airPast = "";
+        BigDecimal cost = new BigDecimal(0);
+        BigDecimal costPast = new BigDecimal(0);
+        BigDecimal ticketissue = new BigDecimal(0);
+        List<String> ticketissueList = new ArrayList<String>();
+        for(int i=0; i<data.size(); i++){
+            SummaryTicketCostAndIncomeView present = new SummaryTicketCostAndIncomeView();
+            present = (SummaryTicketCostAndIncomeView) data.get(i);
+            typepayment = (!"".equalsIgnoreCase(present.getTypepayment()) && present != null ? present.getTypepayment() : "");
+            typeroute = (!"".equalsIgnoreCase(present.getTyperounting()) && present != null ? present.getTyperounting() : "");
+            air = (!"".equalsIgnoreCase(present.getAir()) && present != null ? present.getAir() : "");
+            cost = (!"".equalsIgnoreCase(present.getCost()) ? new BigDecimal(present.getCost()) : new BigDecimal(0));
+            
+            SummaryTicketCostAndIncomeView past = new SummaryTicketCostAndIncomeView();
+            past = (i > 0 ? (SummaryTicketCostAndIncomeView) data.get(i-1) : null);
+            typepaymentPast = (past != null ? past.getTypepayment() : "");
+            typeroutePast = (past != null ? past.getTyperounting() : "");
+            airPast = (past != null ? past.getAir() : "");
+            costPast = (past != null ? new BigDecimal(past.getCost()) : new BigDecimal(0));
+            
+            if((typepayment.equalsIgnoreCase(typepaymentPast)) && (typeroute.equalsIgnoreCase(typeroutePast)) && (air.equalsIgnoreCase(airPast))){
+                if(i == data.size()-1){
+                    ticketissue = ticketissue.add(cost);
+                    ticketissueList.add(String.valueOf(ticketissue));
+                } else {
+                    ticketissue = ticketissue.add(cost);   
+                }
+                            
+            } else if((i > 0)){
+                if(i == data.size()-1){
+                    ticketissueList.add(String.valueOf(ticketissue));
+                    ticketissue = new BigDecimal(0);
+                    ticketissue = ticketissue.add(cost);
+                    ticketissueList.add(String.valueOf(ticketissue));
+                } else {
+                    ticketissueList.add(String.valueOf(ticketissue));
+                    ticketissue = new BigDecimal(0);
+                    ticketissue = ticketissue.add(cost);
+                }
+                
+            } else {
+                if(i == data.size()-1){
+                    ticketissue = new BigDecimal(0);
+                    ticketissue = ticketissue.add(cost);
+                    ticketissueList.add(String.valueOf(ticketissue));
+                } else {
+                    ticketissue = new BigDecimal(0);
+                    ticketissue = ticketissue.add(cost);
+                }
+            }                        
+        }
+        
+        int j = 0;
+        for(int i=0; i<data.size(); i++){
+            SummaryTicketCostAndIncomeView present = new SummaryTicketCostAndIncomeView();
+            present = (SummaryTicketCostAndIncomeView) data.get(i);
+            typepayment = (!"".equalsIgnoreCase(present.getTypepayment()) && present != null ? present.getTypepayment() : "");
+            typeroute = (!"".equalsIgnoreCase(present.getTyperounting()) && present != null ? present.getTyperounting() : "");
+            air = (!"".equalsIgnoreCase(present.getAir()) && present != null ? present.getAir() : "");
+            
+            SummaryTicketCostAndIncomeView past = new SummaryTicketCostAndIncomeView();
+            past = (i > 0 ? (SummaryTicketCostAndIncomeView) data.get(i-1) : null);
+            typepaymentPast = (past != null ? past.getTypepayment() : "");
+            typeroutePast = (past != null ? past.getTyperounting() : "");
+            airPast = (past != null ? past.getAir() : "");
+            
+            if((typepayment.equalsIgnoreCase(typepaymentPast)) && (typeroute.equalsIgnoreCase(typeroutePast)) && (air.equalsIgnoreCase(airPast))){
+                present.setTicketissue(ticketissueList.get(j));
+                
+            } else if(i>0){
+                j++;
+                present.setTicketissue(ticketissueList.get(j));
+                
+            } else {
+                present.setTicketissue(ticketissueList.get(j));
+            }
+                       
+        }
+        
         List<Object[]> SummaryTicketCostAndIncomeSummary = session.createSQLQuery(querySum)
                 .addScalar("typepayment", Hibernate.STRING)
                 .addScalar("typerounting", Hibernate.STRING)
@@ -529,7 +617,7 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
             sumticket.setTypepaymentSum(util.ConvertString(B[0]) == null ? "" : util.ConvertString(B[0]));
             sumticket.setTyperountingSum(util.ConvertString(B[1])== null ? "" : util.ConvertString(B[1]));
             sumticket.setPaxSum(util.ConvertString(B[2])== null ? "" : util.ConvertString(B[2]));
-            sumticket.setTicketissueSum(util.ConvertString(B[3])== null ? "" : util.ConvertString(B[3]));
+//            sumticket.setTicketissueSum(util.ConvertString(B[3])== null ? "" : util.ConvertString(B[3]));
             sumticket.setInvnoSum(util.ConvertString(B[4])== null ? "" : util.ConvertString(B[4]));
             sumticket.setCostSum(util.ConvertString(B[5])== null ? "" : util.ConvertString(B[5]));
             sumticket.setInboundSum(util.ConvertString(B[6])== null ? "" : util.ConvertString(B[6]));
@@ -549,6 +637,85 @@ public class SummaryTicketAdjustCostAndIncomeImpl implements SummaryTicketAdjust
             sumticket.setPage("incomesum");
             data.add(sumticket);
         }
+        
+        typepayment = "";
+        typepaymentPast = "";
+        typeroute = "";
+        typeroutePast = "";
+        cost = new BigDecimal(0);
+        costPast = new BigDecimal(0);
+        ticketissue = new BigDecimal(0);
+        List<String> ticketissueSumList = new ArrayList<String>();
+        for(int i=max; i<data.size(); i++){
+            SummaryTicketCostAndIncomeView present = new SummaryTicketCostAndIncomeView();
+            present = (SummaryTicketCostAndIncomeView) data.get(i);
+            typepayment = (!"".equalsIgnoreCase(present.getTypepaymentSum()) && present != null ? present.getTypepaymentSum() : "");
+            typeroute = (!"".equalsIgnoreCase(present.getTyperountingSum()) && present != null ? present.getTyperountingSum() : "");
+            cost = (!"".equalsIgnoreCase(present.getCostSum()) ? new BigDecimal(present.getCostSum()) : new BigDecimal(0));
+            
+            SummaryTicketCostAndIncomeView past = new SummaryTicketCostAndIncomeView();
+            past = (i > max ? (SummaryTicketCostAndIncomeView) data.get(i-1) : null);
+            typepaymentPast = (past != null ? past.getTypepaymentSum() : "");
+            typeroutePast = (past != null ? past.getTyperountingSum() : "");
+            costPast = (past != null ? new BigDecimal(past.getCostSum()) : new BigDecimal(0));
+            
+            if((typepayment.equalsIgnoreCase(typepaymentPast)) && (typeroute.equalsIgnoreCase(typeroutePast))){
+                if(i == data.size()-1){
+                    ticketissue = ticketissue.add(cost);
+                    ticketissueSumList.add(String.valueOf(ticketissue));
+                } else {
+                    ticketissue = ticketissue.add(cost);   
+                }
+                            
+            } else if((i > max)){
+                if(i == data.size()-1){
+                    ticketissueSumList.add(String.valueOf(ticketissue));
+                    ticketissue = new BigDecimal(0);
+                    ticketissue = ticketissue.add(cost);
+                    ticketissueSumList.add(String.valueOf(ticketissue));
+                } else {
+                    ticketissueSumList.add(String.valueOf(ticketissue));
+                    ticketissue = new BigDecimal(0);
+                    ticketissue = ticketissue.add(cost);
+                }
+                
+            } else {
+                if(i == data.size()-1){
+                    ticketissue = new BigDecimal(0);
+                    ticketissue = ticketissue.add(cost);
+                    ticketissueSumList.add(String.valueOf(ticketissue));
+                } else {
+                    ticketissue = new BigDecimal(0);
+                    ticketissue = ticketissue.add(cost);
+                }
+            }                        
+        }
+        
+        j = 0;
+        for(int i=max; i<data.size(); i++){
+            SummaryTicketCostAndIncomeView present = new SummaryTicketCostAndIncomeView();
+            present = (SummaryTicketCostAndIncomeView) data.get(i);
+            typepayment = (!"".equalsIgnoreCase(present.getTypepaymentSum()) && present != null ? present.getTypepaymentSum(): "");
+            typeroute = (!"".equalsIgnoreCase(present.getTyperountingSum()) && present != null ? present.getTyperountingSum(): "");
+            
+            SummaryTicketCostAndIncomeView past = new SummaryTicketCostAndIncomeView();
+            past = (i > max ? (SummaryTicketCostAndIncomeView) data.get(i-1) : null);
+            typepaymentPast = (past != null ? past.getTypepaymentSum(): "");
+            typeroutePast = (past != null ? past.getTyperountingSum(): "");
+            
+            if((typepayment.equalsIgnoreCase(typepaymentPast)) && (typeroute.equalsIgnoreCase(typeroutePast))){
+                present.setTicketissueSum(ticketissueSumList.get(j));
+                
+            } else if(i>max){
+                j++;
+                present.setTicketissueSum(ticketissueSumList.get(j));
+                
+            } else {
+                present.setTicketissueSum(ticketissueSumList.get(j));
+            }
+                       
+        }
+        
         session.close();
         this.sessionFactory.close();
         return data;
