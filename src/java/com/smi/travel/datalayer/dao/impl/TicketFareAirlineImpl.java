@@ -251,23 +251,23 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                                 if(flightList.get(j).getAdCost() != null){
                                    ticketfare = ticketfare + flightList.get(j).getAdCost();
                                 }
+                                if(flightList.get(j).getAdTaxCost() != null){
+                                    tickettax = tickettax + flightList.get(j).getAdTaxCost();
+                                }
                             }else if("CHILD".equals(mpricecategoryname)){
                                 if(flightList.get(j).getChCost()!= null){
                                    ticketfare = ticketfare + flightList.get(j).getChCost();
+                                }
+                                if(flightList.get(j).getChTaxCost() != null){
+                                    tickettax = tickettax + flightList.get(j).getChTaxCost();
                                 }
                             }else if("INFANT".equals(mpricecategoryname)){
                                 if(flightList.get(j).getInCost() != null){
                                    ticketfare = ticketfare + flightList.get(j).getInCost();
                                 }
-                            }
-                            if(flightList.get(j).getAdTaxCost() != null){
-                                tickettax = tickettax + flightList.get(j).getAdTaxCost();
-                            }
-                            if(flightList.get(j).getChTaxCost() != null){
-                                tickettax = tickettax + flightList.get(j).getChTaxCost();
-                            }
-                            if(flightList.get(j).getInTaxCost() != null){
-                                tickettax = tickettax + flightList.get(j).getInTaxCost();
+                                if(flightList.get(j).getInTaxCost() != null){
+                                    tickettax = tickettax + flightList.get(j).getInTaxCost();
+                                }
                             }
                         }
                     }
@@ -354,33 +354,33 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                     if(airlines.get(j).getAdCost() != null){
                        ticketfare = ticketfare + airlines.get(j).getAdCost();
                     }
-//                    if(airlines.get(j).getAdTax() != null){
-//                        tickettax = tickettax +  airlines.get(j).getAdTax();
-//                    }
+                    if(airlines.get(j).getAdTaxCost() != null){
+                        tickettax = tickettax +  airlines.get(j).getAdTaxCost();
+                    }
                 }else if("CHILD".equals(mpricecategoryname)){
                     if(airlines.get(j).getChCost()!= null){
                         ticketfare = ticketfare + airlines.get(j).getChCost();
                     }    
-//                    if(airlines.get(j).getChTax() != null){
-//                        tickettax = tickettax +  airlines.get(j).getChTax();
-//                    }
+                    if(airlines.get(j).getChTaxCost() != null){
+                        tickettax = tickettax +  airlines.get(j).getChTaxCost();
+                    }
                 }else if("INFANT".equals(mpricecategoryname)){
                     if(airlines.get(j).getInCost() != null){
                        ticketfare = ticketfare + airlines.get(j).getInCost();
                     }
-//                    if(airlines.get(j).getInTax() != null){
-//                        tickettax = tickettax +  airlines.get(j).getInTax();
-//                    }
+                    if(airlines.get(j).getInTaxCost() != null){
+                        tickettax = tickettax +  airlines.get(j).getInTaxCost();
+                    }
                 }
-                if(airlines.get(j).getAdTaxCost() != null){
-                    tickettax = tickettax +  airlines.get(j).getAdTaxCost();
-                }
-                if(airlines.get(j).getChTaxCost() != null){
-                    tickettax = tickettax +  airlines.get(j).getChTaxCost();
-                }
-                if(airlines.get(j).getInTaxCost() != null){
-                    tickettax = tickettax +  airlines.get(j).getInTaxCost();
-                }
+//                if(airlines.get(j).getAdTaxCost() != null){
+//                    tickettax = tickettax +  airlines.get(j).getAdTaxCost();
+//                }
+//                if(airlines.get(j).getChTaxCost() != null){
+//                    tickettax = tickettax +  airlines.get(j).getChTaxCost();
+//                }
+//                if(airlines.get(j).getInTaxCost() != null){
+//                    tickettax = tickettax +  airlines.get(j).getInTaxCost();
+//                }
             }
             
             TicketFareAirline ticketFareAirline = new TicketFareAirline();
