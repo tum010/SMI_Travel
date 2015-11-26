@@ -1527,6 +1527,7 @@ function saveAction(optionsave){
 }
 
 function searchTicketNo() {
+    $("#ticketId").val("");
     var ticketNo = $("#ticketNo").val();
     FilterCheckTicketNoList(ticketNo);
     
