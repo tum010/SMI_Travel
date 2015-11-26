@@ -294,7 +294,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
         BigDecimal vatPa =  new BigDecimal(vatMDE );
         vatComPay = sumTotalCompay.multiply(vatPa);
         vatComPay = vatComPay.divide(new BigDecimal(100),MathContext.DECIMAL128);
-        vatPay =  vatComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
+        vatPay =  (vatComPay.add(SumVatReceive)).multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
         
 //        vatReceive = sumComReceive.multiply(new BigDecimal(0.07));
         totalCom = sumTotalCompaySub.add(sumComReceive);
