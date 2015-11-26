@@ -58,12 +58,13 @@ public class InvoiceImpl implements InvoiceDao{
     @Override
     public synchronized String insertInvoice(Invoice invoice) {
         String result = "";
+        String invNo = "";
         Session session = this.sessionFactory.openSession();
         try { 
             transaction = session.beginTransaction();
-//            result = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
-            result = invoice.getInvNo();
-//            invoice.setInvNo(result);
+            invNo = generateInvoiceNo(invoice.getDepartment() , invoice.getInvType());
+//            result = invoice.getInvNo();
+            invoice.setInvNo(invNo);
             session.save(invoice);
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
             if(invoiceDetail != null){
@@ -75,6 +76,7 @@ public class InvoiceImpl implements InvoiceDao{
             session.close();
             this.sessionFactory.close();
             System.out.println("ss result : "+ invoice.getInvNo());
+            result = invoice.getInvNo();
 //            result = "success";
         } catch (Exception ex) {
             transaction.rollback();
