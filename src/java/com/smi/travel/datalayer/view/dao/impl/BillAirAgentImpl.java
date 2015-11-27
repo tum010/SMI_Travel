@@ -133,7 +133,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
     public List getBillAirAgentReportSummary(String agentCode,String invoiceFromDate,String InvoiceToDate,String issueFrom,String issueTo,String refundFrom,String refundTo,String department,String salebyUser,String termPay,String printby,String paymentType,String vat,String wht) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
-        List data = new ArrayList<ListBillAirAgent>();
+        List<ListBillAirAgent> data = new ArrayList<ListBillAirAgent>();
         ListBillAirAgent listBillAirAgent = new ListBillAirAgent();
         List dataAgent = new ArrayList<BillAirAgent>();
         List dataRefund = new ArrayList<BillAirAgentRefund>();
@@ -466,6 +466,11 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         listBillAirAgent.setBillAirAgent(dataAgent);
         listBillAirAgent.setBillAirAgentRefund(dataRefund);
         data.add(listBillAirAgent);
+        
+        List<BillAirAgent> list2 = data.get(0).getBillAirAgent();
+        for (int i = 0; i < list2.size(); i++) {
+            System.out.println("Vat : " + list2.get(i).getVattemp() + " Wht : " + list2.get(i).getWhttemp());
+        }
         return data;
     }
     

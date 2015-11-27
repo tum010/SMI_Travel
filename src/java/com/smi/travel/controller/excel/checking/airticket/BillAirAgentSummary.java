@@ -260,8 +260,8 @@ public class BillAirAgentSummary extends AbstractExcelView {
         BigDecimal checkResult =  new BigDecimal(0);
         BigDecimal midValue =  new BigDecimal(0);
         BigDecimal withHoldingTax =  new BigDecimal(0);
-        String vatMDE = "7";
-        String whtMDE = "5";
+        String vatMDE = "";
+        String whtMDE = "";
         
         for (int i = 0; i < listAgent.size(); i++) {
             sumSalePrice = sumSalePrice.add(new BigDecimal(listAgent.get(i).getSaleprice()));
@@ -269,9 +269,6 @@ public class BillAirAgentSummary extends AbstractExcelView {
             sumComPay = sumComPay.add(new BigDecimal(listAgent.get(i).getCompay()));
             sumVatComPay = sumVatComPay.add(new BigDecimal(listAgent.get(i).getCompayvat()));
             sumTotalComRefundReceive = sumTotalComRefundReceive.add(new BigDecimal(listAgent.get(i).getAgentcomrefund()));
-//            vatMDE = listAgent.get(i).getVattemp();
-//            whtMDE = listAgent.get(i).getWhttemp();
-//            System.out.println("Vat : " + vatMDE + "Wht  :" + whtMDE);
             
             System.out.println("Sale Price : " + listAgent.get(i).getSaleprice() + "  Sum Sale Price : " + sumSalePrice);
             System.out.println("Amount Air : " + listAgent.get(i).getAmountair() + "  Sum Amount Air : " + sumAmountAir);
@@ -285,7 +282,10 @@ public class BillAirAgentSummary extends AbstractExcelView {
             SumVatReceive = SumVatReceive.add(new BigDecimal(listAgentRefund.get(i).getVat()));
 //            System.out.println("Com Receive : " + listAgent.get(i).getAgentcom() + "  Sum Com Receive : " + sumComReceive);
         }
-
+        vatMDE = listAgent.get(0).getVattemp();
+        whtMDE = listAgent.get(0).getWhttemp();
+        System.out.println("Vat : " + vatMDE + "Wht  :" + whtMDE);
+        
         DecimalFormat df = new DecimalFormat("#,###.00");
         sumTotalPayment = sumSalePrice.add(sumComReceive);
         sumTotalCompay = sumComPay.subtract(sumComReceive);
