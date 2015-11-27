@@ -210,13 +210,14 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         String masterId = "";
         String ticketType = "";
         String mpricecategoryname = "";
+        String ticketnotemp = "";
         if (ticketPassList.isEmpty()) {
             System.out.println(" ticketPassList.isEmpty() ");
             return null;
         }else{ 
             for(int i = 0 ; i < ticketPassList.size() ; i++ ){
                 ticketType = ticketPassList.get(i).getTicketType();
-                
+                ticketnotemp = ticketPassList.get(i).getSeries1();
                 AirticketAirline airticketAirline = ticketPassList.get(i).getAirticketAirline();
                 MInitialname mInitialname = ticketPassList.get(i).getMInitialname();
                 if(airticketAirline.getMAirline() != null){
@@ -243,7 +244,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 }
                 int ticketfare = 0;
                 int tickettax = 0;
-                if("I".equalsIgnoreCase(ticketType)){
+                if(("I".equalsIgnoreCase(ticketType) || "D".equalsIgnoreCase(ticketType)) &&  !"217".equalsIgnoreCase(ticketnotemp)){
                     if(airticketAirline.getAirticketFlights() != null){
                         List<AirticketFlight> flightList = new ArrayList<AirticketFlight>(airticketAirline.getAirticketFlights());
                         for(int j = 0 ; j < flightList.size() ; j++ ){
@@ -271,7 +272,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                             }
                         }
                     }
-                }else if("D".equalsIgnoreCase(ticketType)){
+                }else if("D".equalsIgnoreCase(ticketType) && "217".equalsIgnoreCase(ticketnotemp)){
                     ticketfare = ticketPassList.get(i).getTicketFare();
                     tickettax  = ticketPassList.get(i).getTicketTax();
                 }
