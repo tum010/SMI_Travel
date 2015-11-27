@@ -5,6 +5,7 @@
  */
 package com.smi.travel.datalayer.view.dao;
 
+import com.smi.travel.datalayer.report.model.BillAirAgentReport;
 import java.util.List;
 
 /**
@@ -14,4 +15,5 @@ import java.util.List;
 public interface BillAirAgentDao {
     public List getBillAirAgentReport();
     public List getBillAirAgentReportSummary(String agentCode,String invoiceFromDate,String InvoiceToDate,String issueFrom,String issueTo,String refundFrom,String refundTo,String department,String salebyUser,String termPay,String printby,String paymentType,String vat,String wht);
+    public BillAirAgentReport getBillAirAgentReport(String agentCode,String invoiceFromDate,String InvoiceToDate,String issueFrom,String issueTo,String refundFrom,String refundTo,String department,String salebyUser,String termPay,String printby,String paymentType,String vat,String wht);
 }

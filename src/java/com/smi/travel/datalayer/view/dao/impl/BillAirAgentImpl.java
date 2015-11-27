@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.report.model.BillAirAgent;
+import com.smi.travel.datalayer.report.model.BillAirAgentReport;
 import com.smi.travel.datalayer.report.model.TicketFareReport;
 import com.smi.travel.datalayer.view.dao.BillAirAgentDao;
 import com.smi.travel.datalayer.view.entity.BillAirAgentRefund;
@@ -14,6 +15,7 @@ import com.smi.travel.util.UtilityFunction;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -471,6 +473,42 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         for (int i = 0; i < list2.size(); i++) {
             System.out.println("Vat : " + list2.get(i).getVattemp() + " Wht : " + list2.get(i).getWhttemp());
         }
+        return data;
+    }
+
+    @Override
+    public BillAirAgentReport getBillAirAgentReport(String agentCode, String invoiceFromDate, String InvoiceToDate, String issueFrom, String issueTo, String refundFrom, String refundTo, String department, String salebyUser, String termPay, String printby, String paymentType, String vat, String wht) {
+        BillAirAgentReport billAirAgentReport = new BillAirAgentReport();
+        billAirAgentReport.setBillAirAgentSummaryDataSource(new JRBeanCollectionDataSource(getBillAirAgentSummaryReport(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht)));
+        billAirAgentReport.setBillAirAgentDetailDataSource(new JRBeanCollectionDataSource(getBillAirAgentDetailReport(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht)));
+         billAirAgentReport.setBillAirAgentRefundDataSource(new JRBeanCollectionDataSource(getBillAirAgentRefundReport(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht)));
+        return billAirAgentReport;
+    }
+    
+    private List getBillAirAgentSummaryReport(String agentCode, String invoiceFromDate, String InvoiceToDate, String issueFrom, String issueTo, String refundFrom, String refundTo, String department, String salebyUser, String termPay, String printby, String paymentType, String vat, String wht){
+        Session session = this.sessionFactory.openSession();
+        List data = new ArrayList();
+        Date thisdate = new Date();
+        UtilityFunction util = new UtilityFunction();
+        
+        return data;
+    }
+    
+    private List getBillAirAgentDetailReport(String agentCode, String invoiceFromDate, String InvoiceToDate, String issueFrom, String issueTo, String refundFrom, String refundTo, String department, String salebyUser, String termPay, String printby, String paymentType, String vat, String wht){
+        Session session = this.sessionFactory.openSession();
+        List data = new ArrayList();
+        Date thisdate = new Date();
+        UtilityFunction util = new UtilityFunction();
+        
+        return data;
+    }
+    
+    private List getBillAirAgentRefundReport(String agentCode, String invoiceFromDate, String InvoiceToDate, String issueFrom, String issueTo, String refundFrom, String refundTo, String department, String salebyUser, String termPay, String printby, String paymentType, String vat, String wht){
+        Session session = this.sessionFactory.openSession();
+        List data = new ArrayList();
+        Date thisdate = new Date();
+        UtilityFunction util = new UtilityFunction();
+        
         return data;
     }
     
