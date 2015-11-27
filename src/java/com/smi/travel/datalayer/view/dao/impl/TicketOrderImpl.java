@@ -72,10 +72,10 @@ public class TicketOrderImpl implements TicketOrderDao{
             ticket.setPrepareby(util.ConvertString(B[13]));
             ticket.setIssueby(util.ConvertString(B[14]));
                        
-            price += (int)B[7];
-            priceTax += (int)B[8];
-            cost += (int)B[9];
-            costtax += (int)B[10];
+            price += (!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[7])))? (int)B[7] : 0);
+            priceTax += (!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[8])))? (int)B[8] : 0);
+            cost += (!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[9])))? (int)B[9] : 0);
+            costtax += (!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[10])))? (int)B[10] : 0);
                         
             if(check == QueryTicketInfo.size()){
                TicketOrderInfo ticketOrderInfo = new TicketOrderInfo();
