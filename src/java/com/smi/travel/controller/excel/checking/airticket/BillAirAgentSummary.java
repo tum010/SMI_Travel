@@ -753,7 +753,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
         int start = 11;
         int end = 0;
         int num = 0;
-
+    if(listAgent != null && listAgent.size() != 0){
 	for (int r = 9 ; r < count; r++) {
             if(num <= (listAgent.size()-1)){
                 if(num != 0){ // Check not row first
@@ -887,6 +887,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
                 sheet1.autoSizeColumn(i);
             }
 	}
+    }
         
         //****************************************************************************************************************		
 	// set Header Report (Row 1)

@@ -513,6 +513,8 @@ public class BillAirAgentImpl implements BillAirAgentDao{
             listAgent = null;
             listAgentRefund = null;
         }
+        
+        if(listAgent != null && listAgent.size() != 0){
         BigDecimal sumSalePrice = new BigDecimal(0);
         BigDecimal sumAmountAir = new BigDecimal(0);
         BigDecimal sumComPay =  new BigDecimal(0);
@@ -608,7 +610,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         billAirAgentSummaryReport.setMidvalue(midValue);
         billAirAgentSummaryReport.setCheckresult(checkResult);
         data.add(billAirAgentSummaryReport);
-        
+     }  
         return data;
     }
     
@@ -620,25 +622,26 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         }else{
             listAgent = null;
         }
-        for (int i = 0; i < listAgent.size(); i++) {
-            BillAirAgentDetailReport billAirAgentDetailReport = new BillAirAgentDetailReport();
-            billAirAgentDetailReport.setAgentname(listAgent.get(i).getAgentname());
-            billAirAgentDetailReport.setInvoiceno(listAgent.get(i).getInvno());
-            billAirAgentDetailReport.setInvoicedate(listAgent.get(i).getInvdate());
-            billAirAgentDetailReport.setCustomer(listAgent.get(i).getCustomer());
-            billAirAgentDetailReport.setTicketno(listAgent.get(i).getTicketno());
-            billAirAgentDetailReport.setRounting(listAgent.get(i).getRounting());
-            billAirAgentDetailReport.setSaleprice(new BigDecimal(listAgent.get(i).getSaleprice()));
-            billAirAgentDetailReport.setNet(new BigDecimal(listAgent.get(i).getNet()));
-            billAirAgentDetailReport.setService(new BigDecimal(listAgent.get(i).getService()));
-            billAirAgentDetailReport.setVatamount(new BigDecimal(listAgent.get(i).getServicevat()));
-            billAirAgentDetailReport.setAmountair(new BigDecimal(listAgent.get(i).getAmountair()));
-            billAirAgentDetailReport.setCompay(new BigDecimal(listAgent.get(i).getCompay()));
-            billAirAgentDetailReport.setVatreceive(new BigDecimal(listAgent.get(i).getCompayvat()));
-            billAirAgentDetailReport.setReceive(new BigDecimal(listAgent.get(i).getReceive()));
-            data.add(billAirAgentDetailReport);
+        if(listAgent != null && listAgent.size() != 0){
+            for (int i = 0; i < listAgent.size(); i++) {
+                BillAirAgentDetailReport billAirAgentDetailReport = new BillAirAgentDetailReport();
+                billAirAgentDetailReport.setAgentname(listAgent.get(i).getAgentname());
+                billAirAgentDetailReport.setInvoiceno(listAgent.get(i).getInvno());
+                billAirAgentDetailReport.setInvoicedate(listAgent.get(i).getInvdate());
+                billAirAgentDetailReport.setCustomer(listAgent.get(i).getCustomer());
+                billAirAgentDetailReport.setTicketno(listAgent.get(i).getTicketno());
+                billAirAgentDetailReport.setRounting(listAgent.get(i).getRounting());
+                billAirAgentDetailReport.setSaleprice(new BigDecimal(listAgent.get(i).getSaleprice()));
+                billAirAgentDetailReport.setNet(new BigDecimal(listAgent.get(i).getNet()));
+                billAirAgentDetailReport.setService(new BigDecimal(listAgent.get(i).getService()));
+                billAirAgentDetailReport.setVatamount(new BigDecimal(listAgent.get(i).getServicevat()));
+                billAirAgentDetailReport.setAmountair(new BigDecimal(listAgent.get(i).getAmountair()));
+                billAirAgentDetailReport.setCompay(new BigDecimal(listAgent.get(i).getCompay()));
+                billAirAgentDetailReport.setVatreceive(new BigDecimal(listAgent.get(i).getCompayvat()));
+                billAirAgentDetailReport.setReceive(new BigDecimal(listAgent.get(i).getReceive()));
+                data.add(billAirAgentDetailReport);
+            }
         }
-        
         return data;
     }
     
@@ -650,20 +653,22 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         }else{
             listAgentRefund = null;
         }
-        for (int i = 0; i < listAgentRefund.size(); i++) {
-            BillAirAgentRefundReport billAirAgentRefundReport = new BillAirAgentRefundReport();
-            billAirAgentRefundReport.setRefundno(listAgentRefund.get(i).getRefundno());
-            billAirAgentRefundReport.setDatereceive(listAgentRefund.get(i).getReceivedate());
-            billAirAgentRefundReport.setPassenger(listAgentRefund.get(i).getPassenger());
-            billAirAgentRefundReport.setAir(listAgentRefund.get(i).getAir());
-            billAirAgentRefundReport.setDocno(listAgentRefund.get(i).getDocno());
-            billAirAgentRefundReport.setRefno(listAgentRefund.get(i).getRefno());
-            billAirAgentRefundReport.setAmountreceive(new BigDecimal(listAgentRefund.get(i).getAmount_receive()));
-            billAirAgentRefundReport.setRefundchange(new BigDecimal(listAgentRefund.get(i).getRefundchange()));
-            billAirAgentRefundReport.setAmountpay(new BigDecimal(listAgentRefund.get(i).getAmountpay()));
-            billAirAgentRefundReport.setCommrac(new BigDecimal(listAgentRefund.get(i).getComm_rec()));
-            billAirAgentRefundReport.setVat(new BigDecimal(listAgentRefund.get(i).getVat()));
-            data.add(billAirAgentRefundReport);
+        if(listAgentRefund != null && listAgentRefund.size() != 0){
+            for (int i = 0; i < listAgentRefund.size(); i++) {
+                BillAirAgentRefundReport billAirAgentRefundReport = new BillAirAgentRefundReport();
+                billAirAgentRefundReport.setRefundno(listAgentRefund.get(i).getRefundno());
+                billAirAgentRefundReport.setDatereceive(listAgentRefund.get(i).getReceivedate());
+                billAirAgentRefundReport.setPassenger(listAgentRefund.get(i).getPassenger());
+                billAirAgentRefundReport.setAir(listAgentRefund.get(i).getAir());
+                billAirAgentRefundReport.setDocno(listAgentRefund.get(i).getDocno());
+                billAirAgentRefundReport.setRefno(listAgentRefund.get(i).getRefno());
+                billAirAgentRefundReport.setAmountreceive(new BigDecimal(listAgentRefund.get(i).getAmount_receive()));
+                billAirAgentRefundReport.setRefundchange(new BigDecimal(listAgentRefund.get(i).getRefundchange()));
+                billAirAgentRefundReport.setAmountpay(new BigDecimal(listAgentRefund.get(i).getAmountpay()));
+                billAirAgentRefundReport.setCommrac(new BigDecimal(listAgentRefund.get(i).getComm_rec()));
+                billAirAgentRefundReport.setVat(new BigDecimal(listAgentRefund.get(i).getVat()));
+                data.add(billAirAgentRefundReport);
+            }
         }
         return data;
     }
