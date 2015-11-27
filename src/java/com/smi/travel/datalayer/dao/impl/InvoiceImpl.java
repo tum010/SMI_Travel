@@ -332,6 +332,8 @@ public class InvoiceImpl implements InvoiceDao{
                 invoice.setRemark(invoiceList.get(0).getRemark());
                 invoice.setStaff(invoiceList.get(0).getStaff());
                 invoice.setSubDepartment(invoiceList.get(0).getSubDepartment());
+                invoice.setExportDate(invoiceList.get(0).getExportDate());
+                invoice.setIsExport(invoiceList.get(0).getIsExport());
             }           
         }
                        
