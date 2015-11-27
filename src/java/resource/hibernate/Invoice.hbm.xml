@@ -64,7 +64,7 @@
         <property name="updateDate" type="timestamp">
             <column name="update_date" length="20" />
         </property>
-        <property name="exportDate" type="date">
+        <property name="exportDate" type="timestamp">
             <column name="export_date" length="20" />
         </property>
         <property name="isExport" type="java.lang.Integer">
