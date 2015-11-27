@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BillAirAgentRefundReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="20" uuid="ae4a8592-6a6c-42a8-abcf-779bdbddce88">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="refundno" class="java.lang.String"/>
+	<field name="datereceive" class="java.lang.String"/>
+	<field name="passenger" class="java.lang.String"/>
+	<field name="air" class="java.lang.String"/>
+	<field name="docno" class="java.lang.String"/>
+	<field name="refno" class="java.lang.String"/>
+	<field name="amountreceive" class="java.math.BigDecimal"/>
+	<field name="refundchange" class="java.math.BigDecimal"/>
+	<field name="amountpay" class="java.math.BigDecimal"/>
+	<field name="commrac" class="java.math.BigDecimal"/>
+	<field name="vat" class="java.math.BigDecimal"/>
+	<variable name="totalamountreceive" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{amountreceive}]]></variableExpression>
+	</variable>
+	<variable name="totalrefundchange" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{refundchange}]]></variableExpression>
+	</variable>
+	<variable name="totalamountpay" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{amountpay}]]></variableExpression>
+	</variable>
+	<variable name="totalcommrac" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{commrac}]]></variableExpression>
+	</variable>
+	<variable name="totalvat" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{vat}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="13" width="840" height="18" backcolor="#E6E6E6" uuid="38cbca84-9b03-4a87-bfef-8a0c61ce3f5e"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineColor="#CCCCCC"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="266" y="13" width="54" height="18" backcolor="#FFFFFF" uuid="a94ba308-f126-4ac3-b865-447db89c9459"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Air]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="13" width="66" height="18" uuid="36606381-4541-401f-9eaf-bbea037f938a"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Refund No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="13" width="75" height="18" uuid="7df824b1-3696-4221-8e4e-53f9a76c9b60"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Receive]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="144" y="13" width="122" height="18" uuid="3e7dc23a-4f8f-415e-a49c-e0080677e2b5"/>
+				<box>
+					<pen lineColor="#CCCCFF"/>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="13" width="84" height="18" backcolor="#FFFFFF" uuid="91cde746-f7a0-4fae-a1cd-6777788af34a"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Doc No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="404" y="13" width="68" height="18" backcolor="#FFFFFF" uuid="fa0e5d88-1992-445d-b0f0-601a19e02f21"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ref No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="13" width="87" height="18" backcolor="#FFFFFF" uuid="cac09a3c-3c18-4b5f-a09e-151137e596d0"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount Receive]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="559" y="13" width="82" height="18" backcolor="#FFFFFF" uuid="9d495810-e8d1-4a8e-8d4b-171139359242"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Refund Change]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="641" y="13" width="87" height="18" backcolor="#FFFFFF" uuid="d84c5d6d-71fc-43ef-ae2e-3e239e2c57ae"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount Pay]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="728" y="13" width="68" height="18" backcolor="#FFFFFF" uuid="47354f45-b9bf-4ec6-81d5-781173ff6710"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comm Rcc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="796" y="13" width="45" height="18" backcolor="#FFFFFF" uuid="d6217825-2e0e-4c78-b0c7-c992a369c5ff"/>
+				<box>
+					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vat]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="-3" y="0" width="72" height="20" forecolor="#CCCCCC" uuid="6400dd1b-35ea-4dd9-b3b2-f5e253c30c67"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="3" y="0" width="66" height="20" uuid="045e1382-fb37-4a55-a5af-045557ebaf1b"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refundno}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="69" y="0" width="75" height="20" forecolor="#CCCCCC" uuid="6c790084-128e-4551-a2b0-256607b6cdaf"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="75" y="0" width="69" height="20" uuid="c1be2543-56ba-43d2-b74d-92f47a5b8187"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datereceive}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="0" width="116" height="20" uuid="36f1f700-b18b-47dd-9a41-b280738a4b59"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{passenger}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="144" y="0" width="122" height="20" forecolor="#CCCCCC" uuid="218d498d-b573-4560-aace-c599b3c7d7d6"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="272" y="0" width="48" height="20" uuid="4839a9d9-dc87-47e3-8359-6dacfe3d7f1c"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{air}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="266" y="0" width="54" height="20" forecolor="#CCCCCC" uuid="6f8f6d69-e987-4a55-9622-1410a2219cee"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="326" y="0" width="78" height="20" uuid="89fe7893-c2b4-4958-aa15-790a548699cf"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{docno}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="320" y="0" width="84" height="20" forecolor="#CCCCCC" uuid="e710f76d-97d3-4378-9ac4-0796834813b0"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="410" y="0" width="62" height="20" uuid="6f4cd343-a2bd-4868-b021-155849f04c77"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refno}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="404" y="0" width="68" height="20" forecolor="#CCCCCC" uuid="77ef3863-83ea-4099-a08d-0fb1839e76fc"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="472" y="0" width="79" height="20" uuid="396d7ec6-4cbf-4f3e-b40b-93f2256e412d"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amountreceive}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="472" y="0" width="87" height="20" forecolor="#CCCCCC" uuid="5406d4d9-a360-4ffe-848f-094139d9f45e"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="559" y="0" width="72" height="20" uuid="59336fc1-b288-41b6-8912-c078bd93ffb2"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refundchange}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="559" y="0" width="82" height="20" forecolor="#CCCCCC" uuid="62898513-d6a8-4802-ab5f-530a871e5322"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="641" y="0" width="79" height="20" uuid="1faa5d17-b014-4b38-8c87-7c2bcb8753f5"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amountpay}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="641" y="0" width="87" height="20" forecolor="#CCCCCC" uuid="c1ca79f1-6518-4b2b-91b2-7b6fe953bfc1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="728" y="0" width="61" height="20" uuid="e049dd28-c0b7-4595-a0b6-8d7c6df01bca"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{commrac}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="728" y="0" width="68" height="20" forecolor="#CCCCCC" uuid="baa8934d-e3b0-496e-ac29-689592278bd5"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="796" y="0" width="35" height="20" uuid="0f271aab-183b-4478-94b3-58f7631c769b"/>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vat}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="796" y="0" width="45" height="20" forecolor="#CCCCCC" uuid="1ae82ff4-f46e-4373-9c85-7dd282f30548"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="19" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="0" width="840" height="19" backcolor="#E6E6E6" uuid="21825c67-dac9-4a9f-b8d5-dbc3e390c378"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineColor="#CCCCCC"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="472" y="0" width="79" height="19" uuid="e5dc8876-ffcf-445e-a59e-eec3d893be26"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalamountreceive}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="472" y="0" width="87" height="19" forecolor="#CCCCCC" uuid="326c192d-4c80-46bc-abba-89f29fd93338"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="559" y="0" width="82" height="19" forecolor="#CCCCCC" uuid="435db362-0dc9-41a6-a31d-085665b8eb48"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="559" y="0" width="74" height="19" uuid="15ec615e-8c9b-4e6c-a085-25f0475fa74f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalrefundchange}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="641" y="0" width="87" height="19" forecolor="#CCCCCC" uuid="7925c25d-4b63-4459-8089-25da907b0ad3"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="641" y="0" width="79" height="19" uuid="5199ecc0-af0b-4eb2-b422-66f900aa6c02"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalamountpay}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="728" y="0" width="68" height="19" forecolor="#CCCCCC" uuid="a5a48930-7852-4c69-a112-ed5e371ce387"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="728" y="0" width="60" height="19" uuid="4d4b061a-297d-4029-8b45-a222ddda9477"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalcommrac}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="796" y="0" width="46" height="19" forecolor="#CCCCCC" uuid="5839927c-7e3a-43d1-9a2a-ce72ac46bf69"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="796" y="0" width="38" height="19" uuid="81d64bc8-e2e6-45bd-b885-e8dae91634b0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalvat}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="404" y="0" width="68" height="19" uuid="4c7d10e4-bdbd-42c7-9bb7-d488ca7e0f60"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="320" y="0" width="84" height="19" forecolor="#CCCCCC" uuid="e7174eca-9b4e-4369-bc06-83fc60d4ccb7"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="266" y="0" width="54" height="19" forecolor="#CCCCCC" uuid="9fa65b1b-c6f7-4544-9611-232fe280ae94"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="144" y="0" width="122" height="19" forecolor="#CCCCCC" uuid="eba47009-5037-48ff-9b48-d0a8a8fc92fb"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="69" y="0" width="75" height="19" forecolor="#CCCCCC" uuid="433c3165-cf97-4b5b-8f2c-8869dc611808"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="3" y="0" width="66" height="19" forecolor="#CCCCCC" uuid="ada80bb0-152a-45eb-9ea0-3f98f7ae9eb8"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</columnFooter>
+</jasperReport>

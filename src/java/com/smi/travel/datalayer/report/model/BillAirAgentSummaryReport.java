@@ -31,22 +31,6 @@ public class BillAirAgentSummaryReport {
     private BigDecimal checkresult;
     private BigDecimal withholdingtax;
 
-    // Header 
-    private String agenthead; 
-    private String issuedatehead; 
-    private String invoicedatehead; 
-    private String paymenttypehead; 
-    private String refundpaymentdate;
-    private String printby;
-
-    public String getRefundpaymentdate() {
-        return refundpaymentdate;
-    }
-
-    public void setRefundpaymentdate(String refundpaymentdate) {
-        this.refundpaymentdate = refundpaymentdate;
-    }
-
     public BigDecimal getTotalsaleprice() {
         return totalsaleprice;
     }
@@ -190,45 +174,4 @@ public class BillAirAgentSummaryReport {
     public void setWithholdingtax(BigDecimal withholdingtax) {
         this.withholdingtax = withholdingtax;
     }
-
-    public String getAgenthead() {
-        return agenthead;
-    }
-
-    public void setAgenthead(String agenthead) {
-        this.agenthead = agenthead;
-    }
-
-    public String getIssuedatehead() {
-        return issuedatehead;
-    }
-
-    public void setIssuedatehead(String issuedatehead) {
-        this.issuedatehead = issuedatehead;
-    }
-
-    public String getInvoicedatehead() {
-        return invoicedatehead;
-    }
-
-    public void setInvoicedatehead(String invoicedatehead) {
-        this.invoicedatehead = invoicedatehead;
-    }
-
-    public String getPaymenttypehead() {
-        return paymenttypehead;
-    }
-
-    public void setPaymenttypehead(String paymenttypehead) {
-        this.paymenttypehead = paymenttypehead;
-    }
-
-    public String getPrintby() {
-        return printby;
-    }
-
-    public void setPrintby(String printby) {
-        this.printby = printby;
-    }
-    
 }

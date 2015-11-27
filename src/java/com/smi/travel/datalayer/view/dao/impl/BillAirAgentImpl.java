@@ -18,9 +18,11 @@ import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -487,9 +489,16 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         BillAirAgentReport billAirAgentReport = new BillAirAgentReport();
         List<ListBillAirAgent> data = new ArrayList<ListBillAirAgent>();
         data = getBillAirAgentReportSummary(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht);
+        
+        billAirAgentReport.setAgenthead(agentCode);
+        billAirAgentReport.setIssuedatehead(issueFrom + " - " + issueTo );
+        billAirAgentReport.setInvoicedatehead(invoiceFromDate + " - " + InvoiceToDate);
+        billAirAgentReport.setPaymenttypehead(refundFrom + " - " + refundTo);
+        billAirAgentReport.setPrintby(printby);
+        billAirAgentReport.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(new Date()));
         billAirAgentReport.setBillAirAgentSummaryDataSource(new JRBeanCollectionDataSource(getBillAirAgentSummaryReport(data,agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht)));
         billAirAgentReport.setBillAirAgentDetailDataSource(new JRBeanCollectionDataSource(getBillAirAgentDetailReport(data,agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht)));
-         billAirAgentReport.setBillAirAgentRefundDataSource(new JRBeanCollectionDataSource(getBillAirAgentRefundReport(data,agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht)));
+        billAirAgentReport.setBillAirAgentRefundDataSource(new JRBeanCollectionDataSource(getBillAirAgentRefundReport(data,agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht)));
         return billAirAgentReport;
     }
     
@@ -557,7 +566,6 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         vatComPay = vatComPay.divide(new BigDecimal(100),MathContext.DECIMAL128);
         vatPay =  (vatComPay.add(SumVatReceive)).multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
         
-//        vatReceive = sumComReceive.multiply(new BigDecimal(0.07));
         totalCom = sumTotalCompaySub.add(sumComReceive);
         sumPayRefundAmount = sumPayRefundAmount.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
         
@@ -581,12 +589,6 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         withHoldingTax = withHoldingTax.multiply(whtTemp);
         
         BillAirAgentSummaryReport billAirAgentSummaryReport  =  new BillAirAgentSummaryReport();
-        billAirAgentSummaryReport.setAgenthead(agentCode);
-        billAirAgentSummaryReport.setIssuedatehead(issueFrom + " - " + issueTo );
-        billAirAgentSummaryReport.setInvoicedatehead(invoiceFromDate + " - " + InvoiceToDate);
-        billAirAgentSummaryReport.setPaymenttypehead(refundFrom + " - " + refundTo);
-        billAirAgentSummaryReport.setPrintby(printby);
-        
         billAirAgentSummaryReport.setTotalsaleprice(sumSalePrice);
         billAirAgentSummaryReport.setTotalcomrefundreceive(sumComReceive);
         billAirAgentSummaryReport.setTotalpayment(sumTotalPayment);
@@ -620,6 +622,7 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         }
         for (int i = 0; i < listAgent.size(); i++) {
             BillAirAgentDetailReport billAirAgentDetailReport = new BillAirAgentDetailReport();
+            billAirAgentDetailReport.setAgentname(listAgent.get(i).getAgentname());
             billAirAgentDetailReport.setInvoiceno(listAgent.get(i).getInvno());
             billAirAgentDetailReport.setInvoicedate(listAgent.get(i).getInvdate());
             billAirAgentDetailReport.setCustomer(listAgent.get(i).getCustomer());

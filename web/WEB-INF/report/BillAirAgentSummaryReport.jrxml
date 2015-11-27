@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BillAirAgentSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="59c0f2bf-ace6-4ac0-9f42-349a75ebd265">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="totalsaleprice" class="java.math.BigDecimal"/>
+	<field name="totalcomrefundreceive" class="java.math.BigDecimal"/>
+	<field name="totalpayment" class="java.math.BigDecimal"/>
+	<field name="compay" class="java.math.BigDecimal"/>
+	<field name="comreceive" class="java.math.BigDecimal"/>
+	<field name="totalcom" class="java.math.BigDecimal"/>
+	<field name="vatpay" class="java.math.BigDecimal"/>
+	<field name="vatreceive" class="java.math.BigDecimal"/>
+	<field name="payrefundamount" class="java.math.BigDecimal"/>
+	<field name="balancepayment" class="java.math.BigDecimal"/>
+	<field name="amountairsale" class="java.math.BigDecimal"/>
+	<field name="midvalue" class="java.math.BigDecimal"/>
+	<field name="compaydivide" class="java.math.BigDecimal"/>
+	<field name="comreceivedivide" class="java.math.BigDecimal"/>
+	<field name="totalcompay" class="java.math.BigDecimal"/>
+	<field name="vatcompay" class="java.math.BigDecimal"/>
+	<field name="checkresult" class="java.math.BigDecimal"/>
+	<field name="withholdingtax" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="279" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="10" width="43" height="15" uuid="7c465cfd-34cc-4d76-8120-461b5b07dc57"/>
+				<text><![CDATA[All]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="369" y="29" width="170" height="20" uuid="0bfb2946-5b19-4db3-84da-c8a490de5a17"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalsaleprice}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="277" y="30" width="87" height="19" uuid="ff31fa69-0aec-46a2-9402-4ed029d5c2aa"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Total Sale Price : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="226" y="52" width="138" height="19" uuid="fba2a84a-55ae-4cbe-8953-f7a1ff1a9de7"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Total Com Refund Receive : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="369" y="51" width="170" height="20" uuid="2a3e67fb-1790-4177-8cf9-19480ae840f6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalcomrefundreceive}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="277" y="73" width="87" height="19" uuid="96e83541-c642-43a2-bee8-fad691b205d9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Total Payment : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="369" y="73" width="170" height="20" uuid="9e62c22b-d30b-45d1-a143-221bd5bcf489"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalpayment}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="32" y="138" width="59" height="19" uuid="26fa99bc-a3b9-4a4d-a869-fa9a5208edc6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Com Pay : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="94" y="138" width="136" height="20" uuid="02eefaaa-2f0b-461d-83f1-9cf262eef0c0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compay}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="20" y="106" width="43" height="15" uuid="b92dea4e-ef9d-480f-afaa-8257a7577527"/>
+				<text><![CDATA[Less]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="160" width="71" height="20" uuid="9fbbfc9e-3192-4d91-a10e-e3c5add31b68"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Com Receive : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="94" y="160" width="136" height="20" uuid="240068cb-6e2e-4b1e-9f60-e526b904c08c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{comreceive}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="301" y="137" width="63" height="19" uuid="1a2cbf26-da67-4747-bcaf-3110663fc56a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Vat Pay : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="369" y="136" width="170" height="20" uuid="83a4f25d-62e7-432d-9940-3f51960d0495"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vatpay}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="290" y="160" width="74" height="19" uuid="c1bafd72-c4db-4cc8-b913-18e6ac86c042"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Vat Receive: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="369" y="159" width="170" height="20" uuid="5822012c-6546-4c90-bb2e-4fc99e4e5731"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vatreceive}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="258" y="184" width="106" height="19" uuid="e105855e-7ff9-4d82-9cd6-8cbe4348d286"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Pay Refund Amount : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="369" y="183" width="170" height="20" uuid="260f3dd9-c555-4518-aa95-135db0bd3755"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{payrefundamount}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="560" y="10" width="87" height="19" uuid="dc2cb02b-5077-4203-a19f-ba8d9c082124"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Amount Air Sale]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="708" y="9" width="87" height="19" uuid="73e035ef-470a-40f7-b2ec-357b8f62dc53"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Com Pay]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="560" y="31" width="119" height="20" uuid="58e812d4-ec43-44c2-9450-6a97a3fcfa60"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{amountairsale}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="708" y="31" width="115" height="20" uuid="b75ab6da-1783-431e-a069-8b14d413a254"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{compaydivide}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="708" y="85" width="115" height="20" uuid="ef5e5c1e-f80b-44d5-829e-e249efead89a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{comreceivedivide}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="708" y="63" width="87" height="19" uuid="3531de22-6c9a-4bc6-a2ab-79e2c7e2150e"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Com Receive]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="708" y="135" width="115" height="20" uuid="69d68249-4729-45be-9b7f-e669e9f9c761"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalcompay}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="708" y="113" width="87" height="19" uuid="c132fcd7-da58-462d-bee5-a0c7df99f700"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Total Com Pay]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="708" y="184" width="115" height="20" uuid="f089229a-33a2-4bf4-bb6d-fa04d00eec7b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vatcompay}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="708" y="161" width="87" height="19" uuid="af3a28fd-d427-4221-895d-6e9ef4e568e7"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Vat  Com Pay]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="94" y="219" width="136" height="20" uuid="f8ff9803-acce-4419-ab7d-a80efa98b446"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalcom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="32" y="219" width="59" height="19" uuid="969574cc-6394-44cc-81cd-7e1a7591bacb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Total Com  : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="369" y="218" width="170" height="20" uuid="f63a9f6c-c5d3-4664-af0f-7b6f631ef161"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{balancepayment}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="258" y="219" width="106" height="19" uuid="c6dd6aa5-f3cd-47d5-b511-f4d7dac7d9c8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Balance Payment : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="560" y="219" width="119" height="20" uuid="048a9b67-a99e-44fc-9921-677115278658"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{midvalue}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="708" y="219" width="115" height="20" uuid="f1cf66ec-3a1a-4d5d-8eda-c291c3941bf8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{checkresult}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="580" y="247" width="99" height="19" uuid="687a6ee0-c944-48e5-9ba6-aafcf0cdab96"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Witholding Tax : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="708" y="247" width="115" height="20" uuid="f249c473-b1eb-40ba-a4d4-35435f37f002"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{withholdingtax}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="16" y="8" width="811" height="1" uuid="4d6ea4a3-addd-42e2-bec7-2ed2eb5327fd"/>
+			</line>
+			<line>
+				<reportElement x="16" y="271" width="811" height="1" uuid="12043856-ed9d-41fa-b947-8ae1fe91db67"/>
+			</line>
+			<line>
+				<reportElement x="16" y="8" width="1" height="264" uuid="7a1bf188-e001-4dd2-a392-ba693fa020b2"/>
+			</line>
+			<line>
+				<reportElement x="826" y="8" width="1" height="264" uuid="5fae40d4-718b-4d63-9947-975cc283c09a"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

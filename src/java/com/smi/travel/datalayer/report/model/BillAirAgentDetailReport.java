@@ -12,6 +12,7 @@ import java.math.BigDecimal;
  * @author Kanokporn
  */
 public class BillAirAgentDetailReport {
+    private String agentname;
     private String invoiceno;
     private String invoicedate;
     private String customer;
@@ -25,52 +26,13 @@ public class BillAirAgentDetailReport {
     private BigDecimal compay;
     private BigDecimal vatreceive;
     private BigDecimal receive;
-    
-    // Header 
-    private String agenthead; 
-    private String issuedatehead; 
-    private String invoicedatehead; 
-    private String paymenttypehead; 
-    private String printby;
 
-    public String getAgenthead() {
-        return agenthead;
+    public String getAgentname() {
+        return agentname;
     }
 
-    public void setAgenthead(String agenthead) {
-        this.agenthead = agenthead;
-    }
-
-    public String getIssuedatehead() {
-        return issuedatehead;
-    }
-
-    public void setIssuedatehead(String issuedatehead) {
-        this.issuedatehead = issuedatehead;
-    }
-
-    public String getInvoicedatehead() {
-        return invoicedatehead;
-    }
-
-    public void setInvoicedatehead(String invoicedatehead) {
-        this.invoicedatehead = invoicedatehead;
-    }
-
-    public String getPaymenttypehead() {
-        return paymenttypehead;
-    }
-
-    public void setPaymenttypehead(String paymenttypehead) {
-        this.paymenttypehead = paymenttypehead;
-    }
-
-    public String getPrintby() {
-        return printby;
-    }
-
-    public void setPrintby(String printby) {
-        this.printby = printby;
+    public void setAgentname(String agentname) {
+        this.agentname = agentname;
     }
 
     public String getInvoiceno() {

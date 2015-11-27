@@ -23,12 +23,7 @@ public class BillAirAgentRefundReport {
     private BigDecimal amountpay;
     private BigDecimal commrac;
     private BigDecimal vat;
-    
-    // Header
-    private String agenthead;
-    private String refundpaymentdatehead;
-    private String printby; 
-
+  
     public String getRefundno() {
         return refundno;
     }
@@ -116,30 +111,4 @@ public class BillAirAgentRefundReport {
     public void setVat(BigDecimal vat) {
         this.vat = vat;
     }
-
-    public String getAgenthead() {
-        return agenthead;
-    }
-
-    public void setAgenthead(String agenthead) {
-        this.agenthead = agenthead;
-    }
-
-    public String getRefundpaymentdatehead() {
-        return refundpaymentdatehead;
-    }
-
-    public void setRefundpaymentdatehead(String refundpaymentdatehead) {
-        this.refundpaymentdatehead = refundpaymentdatehead;
-    }
-
-    public String getPrintby() {
-        return printby;
-    }
-
-    public void setPrintby(String printby) {
-        this.printby = printby;
-    }
-    
-
 }
