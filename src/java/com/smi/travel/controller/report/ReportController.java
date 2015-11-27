@@ -97,6 +97,7 @@ public class ReportController extends SMITravelController {
     private static final String OtherGuideCommission = "OtherGuideCommission"; 
     private static final String OtherAgentCommission = "OtherAgentCommission";
     private static final String ConfirmSlipReport = "ConfirmSlipReport";
+    private static final String BillAirAgentSummary = "BillAirAgentSummary";
     
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -171,6 +172,21 @@ public class ReportController extends SMITravelController {
         String billingFax = request.getParameter("billingFax");
         String billingMail = request.getParameter("billingMail");
         String billingDate = request.getParameter("billingDate");
+        
+        //Bill Air Agent
+        String agentCode = request.getParameter("agentCode");
+        String invoiceFromDates = request.getParameter("invoiceFrom");
+        String InvoiceToDates = request.getParameter("invoiceTo");
+        String issueFroms = request.getParameter("issueFrom");
+        String issueTos = request.getParameter("issueTo");
+        String refundFrom = request.getParameter("refundFrom");
+        String refundTo = request.getParameter("refundTo");
+        String departments = request.getParameter("department");
+        String salebyUsers = request.getParameter("salebyUser");
+        String termPays = "";
+        String paymentTypes = request.getParameter("paymentType");
+        String vatTemp = request.getParameter("vatTemp");
+        String whtTemp = request.getParameter("whtTemp");
         
         Map model = new HashMap();
         List data = new ArrayList();
@@ -318,6 +334,10 @@ public class ReportController extends SMITravelController {
             System.out.println(" user.getUsername()+\"-\"+user.getRole().getName() " + user.getUsername()+"-"+user.getRole().getName());
             data = reportservice.getConfirmSlipHeaderReport(refno,user.getUsername()+"-"+user.getRole().getName());
             ((ConfirmSlipHeaderReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
+        }else if (BillAirAgentSummary.equalsIgnoreCase(name)) {
+            data = reportservice.getBillAirAgentReportPdf(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays,user.getUsername(),paymentTypes,vatTemp,whtTemp);
+            // set path for loading sub-report file
+            ((AgentCommission) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);
