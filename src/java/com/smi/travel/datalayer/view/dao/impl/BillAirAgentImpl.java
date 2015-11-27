@@ -6,12 +6,18 @@
 package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.report.model.BillAirAgent;
+import com.smi.travel.datalayer.report.model.BillAirAgentDetailReport;
+import com.smi.travel.datalayer.report.model.BillAirAgentRefundReport;
 import com.smi.travel.datalayer.report.model.BillAirAgentReport;
+import com.smi.travel.datalayer.report.model.BillAirAgentSummaryReport;
 import com.smi.travel.datalayer.report.model.TicketFareReport;
 import com.smi.travel.datalayer.view.dao.BillAirAgentDao;
 import com.smi.travel.datalayer.view.entity.BillAirAgentRefund;
 import com.smi.travel.datalayer.view.entity.ListBillAirAgent;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -479,36 +485,182 @@ public class BillAirAgentImpl implements BillAirAgentDao{
     @Override
     public BillAirAgentReport getBillAirAgentReport(String agentCode, String invoiceFromDate, String InvoiceToDate, String issueFrom, String issueTo, String refundFrom, String refundTo, String department, String salebyUser, String termPay, String printby, String paymentType, String vat, String wht) {
         BillAirAgentReport billAirAgentReport = new BillAirAgentReport();
-        billAirAgentReport.setBillAirAgentSummaryDataSource(new JRBeanCollectionDataSource(getBillAirAgentSummaryReport(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht)));
-        billAirAgentReport.setBillAirAgentDetailDataSource(new JRBeanCollectionDataSource(getBillAirAgentDetailReport(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht)));
-         billAirAgentReport.setBillAirAgentRefundDataSource(new JRBeanCollectionDataSource(getBillAirAgentRefundReport(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht)));
+        List<ListBillAirAgent> data = new ArrayList<ListBillAirAgent>();
+        data = getBillAirAgentReportSummary(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht);
+        billAirAgentReport.setBillAirAgentSummaryDataSource(new JRBeanCollectionDataSource(getBillAirAgentSummaryReport(data,agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht)));
+        billAirAgentReport.setBillAirAgentDetailDataSource(new JRBeanCollectionDataSource(getBillAirAgentDetailReport(data,agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht)));
+         billAirAgentReport.setBillAirAgentRefundDataSource(new JRBeanCollectionDataSource(getBillAirAgentRefundReport(data,agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay, printby, paymentType, vat, wht)));
         return billAirAgentReport;
     }
     
-    private List getBillAirAgentSummaryReport(String agentCode, String invoiceFromDate, String InvoiceToDate, String issueFrom, String issueTo, String refundFrom, String refundTo, String department, String salebyUser, String termPay, String printby, String paymentType, String vat, String wht){
-        Session session = this.sessionFactory.openSession();
-        List data = new ArrayList();
-        Date thisdate = new Date();
-        UtilityFunction util = new UtilityFunction();
+    private List getBillAirAgentSummaryReport(List<ListBillAirAgent> dataTemp,String agentCode, String invoiceFromDate, String InvoiceToDate, String issueFrom, String issueTo, String refundFrom, String refundTo, String department, String salebyUser, String termPay, String printby, String paymentType, String vat, String wht){
+        List<BillAirAgentSummaryReport> data = new ArrayList<BillAirAgentSummaryReport>();
+        List<BillAirAgent> listAgent = new ArrayList<BillAirAgent>();
+        List<BillAirAgentRefund> listAgentRefund = new ArrayList<BillAirAgentRefund>();
+        if(dataTemp != null && dataTemp.size() != 0){
+            listAgent = dataTemp.get(0).getBillAirAgent();
+            listAgentRefund = dataTemp.get(0).getBillAirAgentRefund();
+        }else{
+            listAgent = null;
+            listAgentRefund = null;
+        }
+        BigDecimal sumSalePrice = new BigDecimal(0);
+        BigDecimal sumAmountAir = new BigDecimal(0);
+        BigDecimal sumComPay =  new BigDecimal(0);
+        BigDecimal sumComReceive =  new BigDecimal(0);
+        BigDecimal sumTotalComRefundReceive =  new BigDecimal(0);
+        BigDecimal sumTotalPayment =  new BigDecimal(0);
+        BigDecimal sumTotalCompay =  new BigDecimal(0);
+        BigDecimal sumTotalCompaySub =  new BigDecimal(0);
+        BigDecimal sumPayRefundAmount =  new BigDecimal(0);
+        BigDecimal sumVatComPay =  new BigDecimal(0);
+        BigDecimal SumVatReceive =  new BigDecimal(0);
+        BigDecimal vatComPay =  new BigDecimal(0);
+        BigDecimal vatPay =  new BigDecimal(0);
+        BigDecimal vatReceive =  new BigDecimal(0);
+        BigDecimal totalCom =  new BigDecimal(0);
+        BigDecimal balancePayment =  new BigDecimal(0);
+        BigDecimal checkResult =  new BigDecimal(0);
+        BigDecimal midValue =  new BigDecimal(0);
+        BigDecimal withHoldingTax =  new BigDecimal(0);
+        String vatMDE = "";
+        String whtMDE = "";
+        for (int i = 0; i < listAgent.size(); i++) {
+            sumSalePrice = sumSalePrice.add(new BigDecimal(listAgent.get(i).getSaleprice()));
+            sumAmountAir = sumAmountAir.add(new BigDecimal(listAgent.get(i).getAmountair()));
+            sumComPay = sumComPay.add(new BigDecimal(listAgent.get(i).getCompay()));
+            sumVatComPay = sumVatComPay.add(new BigDecimal(listAgent.get(i).getCompayvat()));
+            sumTotalComRefundReceive = sumTotalComRefundReceive.add(new BigDecimal(listAgent.get(i).getAgentcomrefund()));
+            
+            System.out.println("Sale Price : " + listAgent.get(i).getSaleprice() + "  Sum Sale Price : " + sumSalePrice);
+            System.out.println("Amount Air : " + listAgent.get(i).getAmountair() + "  Sum Amount Air : " + sumAmountAir);
+            System.out.println("Com Pay : " + listAgent.get(i).getCompay() + "  Sum Com Pay : " + sumComPay);
+            System.out.println("Com Reefund Receive : " + listAgent.get(i).getAgentcomrefund() + "  Sum Reefund Receive : " + sumTotalComRefundReceive);
+            System.out.println("Pay Refund Amount : " + listAgent.get(i).getPaycusrefund() + "  Sum Refund Amount : " + sumPayRefundAmount);
+        }
+        for (int i = 0; i < listAgentRefund.size(); i++) {
+            sumComReceive = sumComReceive.add(new BigDecimal(listAgentRefund.get(i).getComm_rec()));
+            sumPayRefundAmount = sumPayRefundAmount.add(new BigDecimal(listAgentRefund.get(i).getAmountpay()));
+            SumVatReceive = SumVatReceive.add(new BigDecimal(listAgentRefund.get(i).getVat()));
+        }
+        vatMDE = listAgent.get(0).getVattemp();
+        whtMDE = listAgent.get(0).getWhttemp();
+        System.out.println("Vat : " + vatMDE + "Wht  :" + whtMDE);
+        
+        DecimalFormat df = new DecimalFormat("#,###.00");
+        sumTotalPayment = sumSalePrice.add(sumComReceive);
+        sumTotalCompay = sumComPay.subtract(sumComReceive);
+        sumTotalCompaySub = sumComPay.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
+        
+        BigDecimal vatPa =  new BigDecimal(vatMDE );
+        vatComPay = sumTotalCompay.multiply(vatPa);
+        vatComPay = vatComPay.divide(new BigDecimal(100),MathContext.DECIMAL128);
+        vatPay =  (vatComPay.add(SumVatReceive)).multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
+        
+//        vatReceive = sumComReceive.multiply(new BigDecimal(0.07));
+        totalCom = sumTotalCompaySub.add(sumComReceive);
+        sumPayRefundAmount = sumPayRefundAmount.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE));
+        
+        balancePayment = sumTotalPayment.add(vatPay);
+        balancePayment = balancePayment.add(SumVatReceive);
+        balancePayment = balancePayment.subtract(sumPayRefundAmount.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE)));
+        
+        checkResult = sumTotalCompay.add(vatComPay);
+        
+        midValue =  checkResult.add(balancePayment);
+        midValue = midValue.add(sumPayRefundAmount.multiply((BigDecimal.ZERO).subtract(BigDecimal.ONE)));
+        
+        withHoldingTax = sumTotalCompay.add(vatComPay);
+        withHoldingTax = withHoldingTax.multiply(new BigDecimal(100));
+        System.out.println("Vat :::: " + vatMDE + "Wht :::: " + whtMDE);
+        BigDecimal vatTemp =  new BigDecimal(vatMDE );
+        BigDecimal whtTemp =  new BigDecimal(whtMDE );
+        vatTemp = vatTemp.add(new BigDecimal(100));
+        whtTemp = whtTemp.divide(new BigDecimal(100),MathContext.DECIMAL128);
+        withHoldingTax = withHoldingTax.divide(vatTemp,MathContext.DECIMAL128);
+        withHoldingTax = withHoldingTax.multiply(whtTemp);
+        
+        BillAirAgentSummaryReport billAirAgentSummaryReport  =  new BillAirAgentSummaryReport();
+        billAirAgentSummaryReport.setAgenthead(agentCode);
+        billAirAgentSummaryReport.setIssuedatehead(issueFrom + " - " + issueTo );
+        billAirAgentSummaryReport.setInvoicedatehead(invoiceFromDate + " - " + InvoiceToDate);
+        billAirAgentSummaryReport.setPaymenttypehead(refundFrom + " - " + refundTo);
+        billAirAgentSummaryReport.setPrintby(printby);
+        
+        billAirAgentSummaryReport.setTotalsaleprice(sumSalePrice);
+        billAirAgentSummaryReport.setTotalcomrefundreceive(sumComReceive);
+        billAirAgentSummaryReport.setTotalpayment(sumTotalPayment);
+        billAirAgentSummaryReport.setCompay(sumTotalCompaySub);
+        billAirAgentSummaryReport.setComreceive(sumComReceive);
+        billAirAgentSummaryReport.setTotalcom(totalCom);
+        billAirAgentSummaryReport.setVatpay(vatPay);
+        billAirAgentSummaryReport.setVatreceive(SumVatReceive);
+        billAirAgentSummaryReport.setPayrefundamount(sumPayRefundAmount);
+        billAirAgentSummaryReport.setBalancepayment(balancePayment);
+        billAirAgentSummaryReport.setAmountairsale(sumAmountAir);
+        billAirAgentSummaryReport.setWithholdingtax(withHoldingTax);
+        billAirAgentSummaryReport.setCompaydivide(sumComPay);
+        billAirAgentSummaryReport.setComreceivedivide(sumComReceive);
+        billAirAgentSummaryReport.setTotalcompay(sumTotalCompay);
+        billAirAgentSummaryReport.setVatcompay(vatComPay);
+        billAirAgentSummaryReport.setMidvalue(midValue);
+        billAirAgentSummaryReport.setCheckresult(checkResult);
+        data.add(billAirAgentSummaryReport);
         
         return data;
     }
     
-    private List getBillAirAgentDetailReport(String agentCode, String invoiceFromDate, String InvoiceToDate, String issueFrom, String issueTo, String refundFrom, String refundTo, String department, String salebyUser, String termPay, String printby, String paymentType, String vat, String wht){
-        Session session = this.sessionFactory.openSession();
-        List data = new ArrayList();
-        Date thisdate = new Date();
-        UtilityFunction util = new UtilityFunction();
+    private List getBillAirAgentDetailReport(List<ListBillAirAgent> dataTemp,String agentCode, String invoiceFromDate, String InvoiceToDate, String issueFrom, String issueTo, String refundFrom, String refundTo, String department, String salebyUser, String termPay, String printby, String paymentType, String vat, String wht){
+        List<BillAirAgentDetailReport> data = new ArrayList<BillAirAgentDetailReport>();
+        List<BillAirAgent> listAgent = new ArrayList<BillAirAgent>();
+        if(dataTemp != null && dataTemp.size() != 0){
+            listAgent = dataTemp.get(0).getBillAirAgent();
+        }else{
+            listAgent = null;
+        }
+        for (int i = 0; i < listAgent.size(); i++) {
+            BillAirAgentDetailReport billAirAgentDetailReport = new BillAirAgentDetailReport();
+            billAirAgentDetailReport.setInvoiceno(listAgent.get(i).getInvno());
+            billAirAgentDetailReport.setInvoicedate(listAgent.get(i).getInvdate());
+            billAirAgentDetailReport.setCustomer(listAgent.get(i).getCustomer());
+            billAirAgentDetailReport.setTicketno(listAgent.get(i).getTicketno());
+            billAirAgentDetailReport.setRounting(listAgent.get(i).getRounting());
+            billAirAgentDetailReport.setSaleprice(new BigDecimal(listAgent.get(i).getSaleprice()));
+            billAirAgentDetailReport.setNet(new BigDecimal(listAgent.get(i).getNet()));
+            billAirAgentDetailReport.setService(new BigDecimal(listAgent.get(i).getService()));
+            billAirAgentDetailReport.setVatamount(new BigDecimal(listAgent.get(i).getServicevat()));
+            billAirAgentDetailReport.setAmountair(new BigDecimal(listAgent.get(i).getAmountair()));
+            billAirAgentDetailReport.setCompay(new BigDecimal(listAgent.get(i).getCompay()));
+            billAirAgentDetailReport.setVatreceive(new BigDecimal(listAgent.get(i).getCompayvat()));
+            billAirAgentDetailReport.setReceive(new BigDecimal(listAgent.get(i).getReceive()));
+            data.add(billAirAgentDetailReport);
+        }
         
         return data;
     }
     
-    private List getBillAirAgentRefundReport(String agentCode, String invoiceFromDate, String InvoiceToDate, String issueFrom, String issueTo, String refundFrom, String refundTo, String department, String salebyUser, String termPay, String printby, String paymentType, String vat, String wht){
-        Session session = this.sessionFactory.openSession();
-        List data = new ArrayList();
-        Date thisdate = new Date();
-        UtilityFunction util = new UtilityFunction();
-        
+    private List getBillAirAgentRefundReport(List<ListBillAirAgent> dataTemp,String agentCode, String invoiceFromDate, String InvoiceToDate, String issueFrom, String issueTo, String refundFrom, String refundTo, String department, String salebyUser, String termPay, String printby, String paymentType, String vat, String wht){
+        List<BillAirAgentRefundReport> data = new ArrayList<BillAirAgentRefundReport>();
+        List<BillAirAgentRefund> listAgentRefund = new ArrayList<BillAirAgentRefund>();
+        if(dataTemp != null && dataTemp.size() != 0){
+            listAgentRefund = dataTemp.get(0).getBillAirAgentRefund();
+        }else{
+            listAgentRefund = null;
+        }
+        for (int i = 0; i < listAgentRefund.size(); i++) {
+            BillAirAgentRefundReport billAirAgentRefundReport = new BillAirAgentRefundReport();
+            billAirAgentRefundReport.setDatereceive(listAgentRefund.get(i).getRefundno());
+            billAirAgentRefundReport.setPassenger(listAgentRefund.get(i).getPassenger());
+            billAirAgentRefundReport.setAir(listAgentRefund.get(i).getAir());
+            billAirAgentRefundReport.setDocno(listAgentRefund.get(i).getDocno());
+            billAirAgentRefundReport.setRefno(listAgentRefund.get(i).getRefno());
+            billAirAgentRefundReport.setAmountreceive(new BigDecimal(listAgentRefund.get(i).getAmount_receive()));
+            billAirAgentRefundReport.setRefundchange(new BigDecimal(listAgentRefund.get(i).getRefundchange()));
+            billAirAgentRefundReport.setAmountpay(new BigDecimal(listAgentRefund.get(i).getAmountpay()));
+            billAirAgentRefundReport.setCommrac(new BigDecimal(listAgentRefund.get(i).getComm_rec()));
+            billAirAgentRefundReport.setVat(new BigDecimal(listAgentRefund.get(i).getVat()));
+            data.add(billAirAgentRefundReport);
+        }
         return data;
     }
     

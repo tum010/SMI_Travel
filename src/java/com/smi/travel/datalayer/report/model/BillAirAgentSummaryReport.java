@@ -36,7 +36,16 @@ public class BillAirAgentSummaryReport {
     private String issuedatehead; 
     private String invoicedatehead; 
     private String paymenttypehead; 
+    private String refundpaymentdate;
     private String printby;
+
+    public String getRefundpaymentdate() {
+        return refundpaymentdate;
+    }
+
+    public void setRefundpaymentdate(String refundpaymentdate) {
+        this.refundpaymentdate = refundpaymentdate;
+    }
 
     public BigDecimal getTotalsaleprice() {
         return totalsaleprice;

@@ -319,7 +319,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
         withHoldingTax = withHoldingTax.multiply(whtTemp);
         
         System.out.println(">>>>>>>>>>> Total Sale Price : " + df.format(sumSalePrice));
-        System.out.println(">>>>>>>>>>> Total Com Refund Receive : " + df.format(sumTotalComRefundReceive));
+        System.out.println(">>>>>>>>>>> Total Com Refund Receive : " + df.format(sumComReceive));
         System.out.println(">>>>>>>>>>> Total Payment : " + df.format(sumTotalPayment));
         System.out.println(">>>>>>>>>>> Com Pay (Less) : " + df.format(sumTotalCompaySub));
         System.out.println(">>>>>>>>>>> Com Receive (Less) : " + df.format(sumComReceive));
