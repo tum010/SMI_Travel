@@ -7,6 +7,7 @@ package com.smi.travel.controller.report;
 
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.report.model.AgentCommission;
+import com.smi.travel.datalayer.report.model.BillAirAgentReport;
 import com.smi.travel.datalayer.report.model.DailyTourReport;
 import com.smi.travel.datalayer.report.model.GuideCommissionInfo;
 import com.smi.travel.datalayer.report.model.HotelMonthlyReport;
@@ -97,7 +98,7 @@ public class ReportController extends SMITravelController {
     private static final String OtherGuideCommission = "OtherGuideCommission"; 
     private static final String OtherAgentCommission = "OtherAgentCommission";
     private static final String ConfirmSlipReport = "ConfirmSlipReport";
-    private static final String BillAirAgentSummary = "BillAirAgentSummary";
+    private static final String BillAirAgentSummaryReport = "BillAirAgentSummaryReport";
     
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -334,10 +335,10 @@ public class ReportController extends SMITravelController {
             System.out.println(" user.getUsername()+\"-\"+user.getRole().getName() " + user.getUsername()+"-"+user.getRole().getName());
             data = reportservice.getConfirmSlipHeaderReport(refno,user.getUsername()+"-"+user.getRole().getName());
             ((ConfirmSlipHeaderReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
-        }else if (BillAirAgentSummary.equalsIgnoreCase(name)) {
+        }else if (BillAirAgentSummaryReport.equalsIgnoreCase(name)) {
             data = reportservice.getBillAirAgentReportPdf(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays,user.getUsername(),paymentTypes,vatTemp,whtTemp);
             // set path for loading sub-report file
-            ((AgentCommission) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
+            ((BillAirAgentReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

@@ -351,7 +351,7 @@
 	   <property name="url" value="/WEB-INF/report/ConfirmSlipPassengerSubReport.jrxml"/>
 	</bean> 
         
-        <bean id="BillAirAgentSummary"
+        <bean id="BillAirAgentSummaryReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/BillAirAgentReport.jrxml"/>
          </bean>

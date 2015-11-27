@@ -238,7 +238,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
         HSSFCell cell52 = row5.createCell(1);
         cell52.setCellValue(bil.getPaymenttypePage());
         cell52.setCellStyle(styleAlignLeft);
-
+        if(listAgent != null && listAgent.size() != 0){
         // Body Table
         BigDecimal sumSalePrice = new BigDecimal(0);
         BigDecimal sumAmountAir = new BigDecimal(0);
@@ -620,7 +620,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
                         cell212.setCellStyle(styleAlignRight);
                         sheet.autoSizeColumn(10);
                         sheet.addMergedRegion(CellRangeAddress.valueOf("K21:L21"));
-            
+        }    
      // Sheet Detail (2)************************************************************************************************
      // set Header Report (Row 1)
         HSSFCellStyle styleC11 = wb.createCellStyle();
