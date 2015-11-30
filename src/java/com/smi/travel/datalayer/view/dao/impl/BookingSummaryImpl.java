@@ -87,11 +87,20 @@ public class BookingSummaryImpl implements BookingSummaryDao{
                 .addScalar("address", Hibernate.STRING)
                 .addScalar("termpay", Hibernate.STRING)
                 .addScalar("payby", Hibernate.STRING)
+                .addScalar("departmentNo", Hibernate.STRING)
                 .list();
         
         for (Object[] B : QueryStaffList) {
             booksummary.setSystemdate(String.valueOf(dateformat.format(new Date())));
-            booksummary.setRefno(B[0]== null ? "" :util.ConvertString(B[0]));
+            String refnum = "";
+            if(B[0] != null){ 
+                refnum = util.ConvertString(B[0]);
+            }
+            if(B[9] != null){
+                refnum += "/"+util.ConvertString(B[9]);
+            }
+            
+            booksummary.setRefno(refnum);
             booksummary.setAgent(B[1]== null ? "" :util.ConvertString(B[1]));
             booksummary.setLeader(B[2]== null ? "" :util.ConvertString(B[2]));
             booksummary.setPax(B[3]== null ? "" :util.ConvertString(B[3]));

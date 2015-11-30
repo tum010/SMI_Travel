@@ -8,6 +8,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" src="js/selectize.js"></script>
+<link href="css/selectize.bootstrap3.css" rel="stylesheet">
 
 <c:set var="userList" value="${requestScope['listSale']}" />
 <c:set var="listStatus" value="${requestScope['listStatus']}" />
@@ -44,7 +46,7 @@
                                 <label class="col-md-6 control-label text-right" >Country</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <select name="SelectCountry" id="SelectCountry"  class="form-control">
+                                        <select name="SelectCountry" id="SelectCountry"  class="form-control selectize">
                                             <option value=""  selected="selected">-- ALL --</option>
                                             <c:set var="select" value="" />
                                             <c:forEach var="term" items="${listCountry}" >
@@ -65,7 +67,7 @@
                                 <label class="col-md-6 control-label text-right" >City</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <select name="SelectCity" id="SelectCity"  class="form-control">
+                                        <select name="SelectCity" id="SelectCity"  class="form-control selectize">
                                             <option value=""  selected="selected">-- ALL --</option>
                                             <c:set var="select" value="" />
                                             <c:forEach var="term" items="${listCity}" >

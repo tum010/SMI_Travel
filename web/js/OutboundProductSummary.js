@@ -4,7 +4,47 @@
  * and open the template in the editor.
  */
 $(document).ready(function() {
+    Selectize.define( 'clear_selection', function ( options ) {
+        var self = this;
+        self.plugins.settings.dropdown_header = {
+            title: 'Clear Selection'
+        };
+        this.require( 'dropdown_header' );
+        self.setup = (function () {
+            var original = self.setup;
+            return function () {
+                original.apply( this, arguments );
+                this.$dropdown.on( 'mousedown', '.selectize-dropdown-header', function ( e ) {
+                    self.setValue( '' );
+                    self.close();
+                    self.blur();
+                    return false;
+                });
+            };
+        })();
+    });
 
+    var Country = "#SelectCountry";
+    $(Country).selectize({
+        removeItem: '',
+        sortField: 'text' ,
+        create: false ,
+        dropdownParent: 'body',
+        plugins: {
+            'clear_selection': {}
+        }
+    });
+
+    var City = "#SelectCity";
+    $(City).selectize({
+        removeItem: '',
+        sortField: 'text' ,
+        create: false ,
+        dropdownParent: 'body',
+        plugins: {
+            'clear_selection': {}
+        }
+    });
     //Sale By Auto Complete
     $("#SaleByTable tr").on('click', function () {
         var saleby_id = $(this).find(".saleby-id").text();
