@@ -102,8 +102,8 @@ public class PassengerDetailController extends SMITravelController {
 //        master.setId(masters);
         customerBean.setCode(code);
         customerBean.setMInitialname(initialname);
-        customerBean.setFirstName(firstName);
-        customerBean.setLastName(lastName);
+        customerBean.setFirstName(firstName != null ? firstName.toUpperCase() : firstName);
+        customerBean.setLastName(lastName != null ? lastName.toUpperCase() : lastName);
         customerBean.setBirthDate(birthdate);
         customerBean.setSex(sex);
         customerBean.setAddress(address);
