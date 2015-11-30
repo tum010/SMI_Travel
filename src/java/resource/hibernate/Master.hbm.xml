@@ -73,6 +73,9 @@
         <property name="createDate" type="date">
             <column name="Create_date" length="10" />
         </property>
+        <property name="departmentNo" type="string">
+            <column name="DepartmentNo" length="20" />
+        </property>
         <set name="hotelBookings" table="hotel_booking" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="master_id" not-null="true" />

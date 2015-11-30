@@ -97,8 +97,12 @@ public class BookingDetailService {
             master.setFlagLand(0);
             if (user.getMDepartment().getId().equalsIgnoreCase(OUTBOUNDTYPE)) {
                 master.setBookingType("O");
+                String departmentNo = masterdao.gennarateRefnoFromBookType("O");
+                master.setDepartmentNo(departmentNo);
             } else {
                 master.setBookingType("I");
+                String departmentNo = masterdao.gennarateRefnoFromBookType("I");
+                master.setDepartmentNo(departmentNo);
             }
             master.setReferenceNo(String.valueOf(refno + 1));
             

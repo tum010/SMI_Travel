@@ -79,6 +79,7 @@
 
             <form action="BookDetail.smi" method="post" id="BookDetail" role="form">
                 <input type="hidden" class="form-control" id="referenceNo" name="referenceNo" value="${detail.referenceNo}"/>
+                <input type="hidden" class="form-control" id="departmentNo" name="departmentNo" value="${detail.departmentNo}"/>
                 <input type="hidden" class="form-control" id="agent_id" name="agent_id" value="${SelectedAgent.id}"/>
                 <input type="hidden" class="form-control" id="masterId" name="masterId" value="${detail.id}" />
                 <input type="hidden" class="form-control"  id="action" name="action" value="${action}" />

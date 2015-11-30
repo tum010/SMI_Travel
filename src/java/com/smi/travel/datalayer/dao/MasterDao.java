@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.Passenger;
+import java.util.Date;
 import java.util.List;
 /**
  *
@@ -23,5 +24,5 @@ public interface MasterDao {
     public int getMaxRefno();
     public int LockAndUnLockBooking(Master master);
     public int[] getBookStatusFromRefno(String Refno);
-
+    public String gennarateRefnoFromBookType(String bookingType);
 }

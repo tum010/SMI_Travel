@@ -34,6 +34,7 @@ public class Master  {
      private String createBy;
      private String currency;
      private Date createDate;
+     private String departmentNo;
      private Set hotelBookings = new HashSet(0);
      private Set otherBookings = new HashSet(0);
      private Set billables = new HashSet(0);
@@ -311,6 +312,14 @@ public class Master  {
 
     public void setHistoryBookings(Set historyBookings) {
         this.historyBookings = historyBookings;
+    }
+
+    public String getDepartmentNo() {
+        return departmentNo;
+    }
+
+    public void setDepartmentNo(String departmentNo) {
+        this.departmentNo = departmentNo;
     }
 
 

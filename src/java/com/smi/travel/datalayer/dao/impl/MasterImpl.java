@@ -13,7 +13,9 @@ import com.smi.travel.datalayer.entity.MBookingstatus;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.Passenger;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -233,7 +235,47 @@ public class MasterImpl implements MasterDao{
         this.transaction = transaction;
     }
 
+    @Override
+    public String gennarateRefnoFromBookType(String bookingType) {
+        String refno = "";
+        Session session = this.sessionFactory.openSession();
+        List<String> list = new LinkedList<String>();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyMM");
+        String querysql = "";
+        System.out.println(" bookingType " + bookingType);
+        if("O".equalsIgnoreCase(bookingType)){
+            querysql = "select RIGHT(mas.DepartmentNo, 4) from master mas where mas.booking_type = 'O' and mas.DepartmentNo Like :departmentNo  ORDER BY RIGHT(mas.DepartmentNo, 4) desc";
+        }else{
+            querysql = "select RIGHT(mas.DepartmentNo, 4) from master mas where mas.booking_type = 'I' and mas.DepartmentNo Like :departmentNo  ORDER BY RIGHT(mas.DepartmentNo, 4) desc";
+        }
+        System.out.println(" querysql :: " + querysql);
 
-    
-    
+        Query query = session.createSQLQuery(querysql);
+        query.setParameter("departmentNo", "%"+ df.format(new Date()) + "%");
+        query.setMaxResults(1);
+        list = query.list();
+        if (list.isEmpty() || list == null) {
+            refno = df.format(new Date()) + "-" + "0001";
+        } else {
+            refno = String.valueOf(list.get(0));
+            if (!refno.equalsIgnoreCase("") && !refno.equalsIgnoreCase("null")){
+                int running = Integer.parseInt(refno) + 1;
+                String temp = String.valueOf(running);
+                for (int i = temp.length(); i < 4; i++) {
+                    temp = "0" + temp;
+                }
+                refno = df.format(new Date()) + "-" + temp;
+            }
+        }
+        if("O".equalsIgnoreCase(bookingType)){
+            refno = "O"+refno;
+        }else{
+            refno = "W"+refno;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return refno.replace("-","");    
+    }
+
 }
