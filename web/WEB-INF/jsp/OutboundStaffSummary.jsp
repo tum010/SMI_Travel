@@ -271,10 +271,15 @@
     function printOutboundStaffSummary(){
         var form = $("#fromdate").val();
         var to = $("#todate").val();
-        var saleby = $("#salebyUser").val();
+        var saleby = $("#salebyId").val();
         var currency = $("#currency").val();
         var detail = $("#detail").val();
-        
+        window.open("report.smi?name=OutboundStaffSummaryReport&fromdate="+form
+                +"&todate="+to
+                +"&salebyUser="+saleby
+                +"&currency="+currency
+                +"&detail="+detail
+                );
         
 //        alert(form+"+++++"+to+"+++++"+saleby);
     }

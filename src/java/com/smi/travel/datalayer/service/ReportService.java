@@ -697,6 +697,12 @@ public class ReportService {
         return data;
     }
     
+    public List getOutboundStaffSummaryReport(String from,String to,String saleby,String currency,String detail,String user){
+        List data  = new ArrayList();
+        data.add(bookingSummaryDao.getOutboundStaffSummaryReport(from, to, saleby, currency, detail, user));
+        return data;
+    }
+    
     public BookingSummaryDao getBookingSummaryDao() {
         return bookingSummaryDao;
     }

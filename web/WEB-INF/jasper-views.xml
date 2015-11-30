@@ -355,5 +355,20 @@
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/BillAirAgentReport.jrxml"/>
          </bean>
+         
+        <bean id="OutboundStaffSummaryReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/OutboundStaffSummaryReport.jrxml"/>
+        </bean>
+         
+        <bean id="OutboundStaffSummaryListReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/OutboundStaffSummaryListReport.jrxml"/>
+        </bean>
+         
+        <bean id="OutboundStaffSummaryDetailReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/OutboundStaffSummaryDetailReport.jrxml"/>
+        </bean>
                                                                                                                                       
 </beans>

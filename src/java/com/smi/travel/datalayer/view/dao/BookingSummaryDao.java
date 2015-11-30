@@ -7,8 +7,8 @@
 package com.smi.travel.datalayer.view.dao;
 import com.smi.travel.datalayer.view.entity.BookSummary;
 import com.smi.travel.datalayer.view.entity.BookingHeaderSummaryView;
-import com.smi.travel.datalayer.view.entity.ConfirmSlipDetailReport;
 import com.smi.travel.datalayer.view.entity.ConfirmSlipHeaderReport;
+import com.smi.travel.datalayer.view.entity.OutboundStaffSummaryReport;
 import java.util.List;
 /**
  *
@@ -18,4 +18,6 @@ public interface BookingSummaryDao {
     public List<BookSummary>  getListBookSummary(String refno);
     public BookingHeaderSummaryView getBookingSummaryReport(String refno);
     public ConfirmSlipHeaderReport getConfirmSlipHeaderReport(String refno,String user);
+    
+    public OutboundStaffSummaryReport getOutboundStaffSummaryReport(String from,String to,String saleby,String currency,String detail,String user);
 }

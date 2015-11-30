@@ -12,6 +12,8 @@ import com.smi.travel.datalayer.view.entity.BookingHeaderSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingSummaryDetailView;
 import com.smi.travel.datalayer.view.entity.ConfirmSlipDetailReport;
 import com.smi.travel.datalayer.view.entity.ConfirmSlipHeaderReport;
+import com.smi.travel.datalayer.view.entity.OutboundStaffSummaryReport;
+import com.smi.travel.datalayer.view.entity.OutboundStaffSummarySubReport;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -637,6 +639,116 @@ public class BookingSummaryImpl implements BookingSummaryDao{
         session.close();
         return data;
     }
+
+    @Override
+    public OutboundStaffSummaryReport getOutboundStaffSummaryReport(String from, String to, String saleby, String currency, String detail, String user) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy hh:mm");
+        
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd MMM yyyy");
+        
+        OutboundStaffSummaryReport ossr = new OutboundStaffSummaryReport();
+        
+        String fromto = "";
+        if(!"".equalsIgnoreCase(from) && !"".equalsIgnoreCase(to)){
+            fromto = String.valueOf(df.format(util.convertStringToDate(from))) 
+                    + " to " + String.valueOf(df.format(util.convertStringToDate(to))) ;
+        }
+        ossr.setUser(user);
+        ossr.setSystemdate(String.valueOf(dateformat.format(new Date())));
+        ossr.setFromto(fromto);
+
+        ossr.setOutboundStaffSummaryListReportDataSource(new JRBeanCollectionDataSource(getOutboundStaffSummaryList(from,to,saleby,currency)));
+        ossr.setOutboundStaffSummaryDetailReportDataSource(new JRBeanCollectionDataSource(getOutboundStaffSummaryDetail(from,to,saleby,currency)));
+        
+        this.sessionFactory.close();
+        session.close();
+        return ossr;        
+    }
     
+    public List getOutboundStaffSummaryList(String from, String to, String saleby, String currency) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        
+        String query = "SELECT st.`name` AS staff, pt. NAME AS productType, sum(bd.cost) AS cost, sum(bd.price) AS price, sum(bd.price - bd.cost) AS profit FROM `billable` bi INNER JOIN billable_desc bd ON bi.id = bd.billable_id INNER JOIN `master` mt ON mt.id = bi.master_id INNER JOIN m_product_type pt ON pt.id = bd.bill_type INNER JOIN staff st ON st.id = mt.Staff_id WHERE mt.booking_type = 'O' and mt.Create_date BETWEEN '"+from+"' and  '"+to+"' ";
+        
+        if(saleby != null && !"".equalsIgnoreCase(saleby)){
+            query += " and st.id = '"+saleby+"'";
+        }
+        
+        if(currency != null && !"".equalsIgnoreCase(currency)){
+            query += " and bd.currency = '"+currency+"'";
+        }
+        
+        query += " GROUP BY mt.Staff_id , pt.id ORDER BY st.`name`";
+
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("staff", Hibernate.STRING)
+                .addScalar("productType", Hibernate.STRING)
+                .addScalar("cost", Hibernate.STRING)
+                .addScalar("price", Hibernate.STRING)
+                .addScalar("profit", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryStaffList) {
+            OutboundStaffSummarySubReport osssr = new OutboundStaffSummarySubReport();
+            osssr.setStaff(B[0]== null ? "" :util.ConvertString(B[0]));
+            osssr.setProducttype(B[1]== null ? "" :util.ConvertString(B[1]));
+            osssr.setNet(B[2]== null ? "" : util.ConvertString(B[2]));
+            osssr.setSale(B[3]== null ? "" : util.ConvertString(B[3]));
+            osssr.setProfit(B[4]== null ? "" : util.ConvertString(B[4]));
+            data.add(osssr);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+     
+    public List getOutboundStaffSummaryDetail(String from, String to, String saleby, String currency) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        
+        String query = "SELECT * FROM `outbound_staff_detail` where bookdate BETWEEN '"+from+"' and  '"+to+"' ";
+        
+        if(saleby != null && !"".equalsIgnoreCase(saleby)){
+            query += " and staffid = '"+saleby+"'";
+        }
+        
+        if(currency != null && !"".equalsIgnoreCase(currency)){
+            query += " and currency = '"+currency+"'";
+        }
+        
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("staff", Hibernate.STRING)
+                .addScalar("productType", Hibernate.STRING)
+                .addScalar("productname", Hibernate.STRING)
+                .addScalar("cost", Hibernate.STRING)
+                .addScalar("price", Hibernate.STRING)
+                .addScalar("profit", Hibernate.STRING)
+                .addScalar("departmentno", Hibernate.STRING)
+                .list();
+
+        for (Object[] B : QueryStaffList) {
+            OutboundStaffSummarySubReport osssr = new OutboundStaffSummarySubReport();
+            osssr.setStaff(B[0]== null ? "" :util.ConvertString(B[0]));
+            osssr.setType(B[1]== null ? "" :util.ConvertString(B[1]));
+            osssr.setName(B[2]== null ? "" : util.ConvertString(B[2]));
+            osssr.setNet(B[3]== null ? "" : util.ConvertString(B[3]));
+            osssr.setSale(B[4]== null ? "" : util.ConvertString(B[4]));
+            osssr.setProfit(B[5]== null ? "" : util.ConvertString(B[5]));
+            osssr.setDepartmentno(B[6]== null ? "" : util.ConvertString(B[6]));
+            data.add(osssr);
+        }
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
     
 }
