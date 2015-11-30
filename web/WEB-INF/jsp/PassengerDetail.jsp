@@ -140,7 +140,7 @@
                                         </select>-->
                                         
                                     <select name="MInitialname" id="MInitialname" class="form-control">
-                                        <option value="">--- Select ---</option> 
+                                        <option value="">---</option> 
                                          <c:forEach var="initial" items="${initialList}">
                                             <c:set var="select" value="" />
                                             <c:set var="selectedId" value="${passenger.customer.MInitialname.id}" />
@@ -155,14 +155,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-sm-4">
-                                        <input  value="${passenger.getCustomer().getLastName()}" type="text" maxlength="50" class="form-control" id="lastName" name="lastName" placeholder="Last Name">
+                                    <div class="col-sm-3">
+                                        <input  value="${passenger.getCustomer().getLastName()}" type="text" maxlength="50" class="form-control" id="lastName" name="lastName" placeholder="Last Name" style="text-transform: uppercase">
                                     </div>
                                 </div>
                                 <div class="col-sm-2"></div>
                                 <div class="form-group">
                                     <div class="col-sm-3">
-                                        <input  value="${passenger.getCustomer().getFirstName()}" type="text" maxlength="50" class="form-control" id="firstName" placeholder="First name" name="firstName">
+                                        <input  value="${passenger.getCustomer().getFirstName()}" type="text" maxlength="50" class="form-control" id="firstName" placeholder="First name" name="firstName" style="text-transform: uppercase">
                                     </div>
                                 </div>    
                             </div>
@@ -179,7 +179,7 @@
                                 </div>
                                 <div class="col-sm-2"></div>
                                 <div class="form-group">
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <input value="${passenger.customer.lastNameJapan}" type="text" maxlength="50" class="form-control" id="lastNameJapan" name="lastNameJapan" placeholder="Japanese Name" />
                                     </div>
                                 </div>
