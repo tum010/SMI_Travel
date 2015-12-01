@@ -26,7 +26,7 @@
             <column name="bill_to" length="20" />
         </property>
         <property name="billName" type="string">
-            <column name="bill_name" length="50" />
+            <column name="bill_name" length="255" />
         </property>
         <property name="billAddress" type="string">
             <column name="bill_address" length="200" />

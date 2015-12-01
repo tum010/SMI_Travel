@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
-	<property name="ireport.zoom" value="1.6500000000000075"/>
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
@@ -53,7 +53,7 @@
 				</staticText>
 				<textField>
 					<reportElement x="47" y="-1" width="249" height="20" uuid="a6884a8d-1a6a-4527-bfe0-9726dfa354bf"/>
-					<textElement>
+					<textElement verticalAlignment="Middle">
 						<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{agent}]]></textFieldExpression>
@@ -113,7 +113,8 @@
 					<text><![CDATA[CLIENT NAME]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="5" y="0" width="43" height="15" uuid="a2668eb6-8628-4e6e-a3a1-d0cd969b3835"/>
+					<reportElement x="5" y="0" width="43" height="19" uuid="a2668eb6-8628-4e6e-a3a1-d0cd969b3835"/>
+					<textElement verticalAlignment="Middle"/>
 					<text><![CDATA[Agent : ]]></text>
 				</staticText>
 				<staticText>

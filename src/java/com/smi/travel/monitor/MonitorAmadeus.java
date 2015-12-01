@@ -438,7 +438,7 @@ public class MonitorAmadeus extends MonitorScheduler {
                     String costS = getField("cost").trim();
                     
                     // No cost line. Set to ticket_fare.
-                    if ("0".equalsIgnoreCase(costS)) {
+                    if (("0".equalsIgnoreCase(costS))||("0.00".equalsIgnoreCase(costS))) {
                         costS = ticket_fare;
                     }
                     cost = Integer.valueOf(costS);
