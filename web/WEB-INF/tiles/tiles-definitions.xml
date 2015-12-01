@@ -693,5 +693,13 @@
     <definition name="OutboundStaffSummary" extends="baseLayout">
         <put-attribute name="title" value="OutboundStaffSummary Report : OutboundStaffSummary" />
         <put-attribute name="body" value="/WEB-INF/jsp/OutboundStaffSummary.jsp" />
+    </definition>
+    <definition name="OutboundAirTicketMonthReport" extends="baseLayout">
+        <put-attribute name="title" value="OutboundAirTicketMonthReport Report : OutboundAirTicketMonthReport" />
+        <put-attribute name="body" value="/WEB-INF/jsp/OutboundAirTicketMonthReport.jsp" />
+    </definition>
+    <definition name="OutboundAirTicketAirlineStaffSummary" extends="baseLayout">
+        <put-attribute name="title" value="OutboundAirTicketAirlineStaffSummary Report : OutboundAirTicketAirlineStaffSummary" />
+        <put-attribute name="body" value="/WEB-INF/jsp/OutboundAirTicketAirlineStaffSummary.jsp" />
     </definition>  
 </tiles-definitions>
