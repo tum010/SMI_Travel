@@ -39,8 +39,8 @@
                 </div>
             </div>
             <div class="col-md-10" >
-                <form action="BillAirAgent.smi" method="post" id="BillAirAgent" name="BillAirAgent" role="form">
-                    <div class="row">
+                <form action="OutboundProductSummary.smi" method="post" id="OutboundProductSummaryForm" name="OutboundProductSummaryForm" role="form">
+<!--                    <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label class="col-md-6 control-label text-right" >Country</label>
@@ -60,8 +60,8 @@
                                 </div>   
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
+                    </div>-->
+<!--                    <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label class="col-md-6 control-label text-right" >City</label>
@@ -81,7 +81,7 @@
                                 </div>   
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
@@ -106,8 +106,8 @@
                             <div class="form-group" id="invfromdatepanel">
                                 <label class="col-md-6 control-label text-right">From</label>
                                 <div class="col-md-5">  
-                                    <div class="form-group">
-                                        <div class='input-group date invfromdate' id='invDateFrom'>
+                                    <div class="form-group" id="DateFrom">
+                                        <div class='input-group date'>
                                             <input type='text' id="FromDate" name="FromDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -122,8 +122,8 @@
                             <div class="form-group" id="invtodatepanel">
                                 <label class="col-md-6 control-label text-right">To</label>
                                 <div class="col-md-5">  
-                                    <div class="form-group">
-                                        <div class='input-group date invtodate' id='invDateTo'>
+                                    <div class="form-group" id="DateTo">
+                                        <div class='input-group date' >
                                             <input type='text' id="ToDate" name="ToDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -221,7 +221,7 @@
                                 <label class="col-md-6 control-label text-right" for="rept"></label>
                                 <div class="col-md-6">  
                                     <div class="form-group">
-                                        <button type=button onclick="printBillAirAgent();" id="printbutton" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
+                                        <button type=button onclick="printOutboundProductSummary();" id="printbutton" class="btn btn-success"><span class="glyphicon glyphicon-print" id="btnDownloadAP"></span> Print</button>
                                     </div>
                                 </div>   
                             </div>
@@ -431,6 +431,59 @@ $(document).ready(function() {
            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
        });
+       
+         $("#OutboundProductSummaryForm")
+            .bootstrapValidator({
+                framework: 'bootstrap',
+                feedbackIcons: {
+                    valid: 'uk-icon-check',
+                    invalid: 'uk-icon-times',
+                    validating: 'uk-icon-refresh'
+                },
+                fields: {
+                    FromDate: {
+                        trigger: 'focus keyup change',
+                            validators: {
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    max: 'ToDate',
+                                    message: 'The Date From is not a valid'
+                                },notEmpty: {
+                                    message: 'The Date From is required'
+                                }
+                            }
+                    },
+                    ToDate: {
+                        trigger: 'focus keyup change',
+                            validators: {
+                                date: {
+                                    format: 'YYYY-MM-DD',
+                                    min: 'FromDate',
+                                    message: 'The Date To is not a valid'
+                                },notEmpty: {
+                                    message: 'The Date From is required'
+                                }
+                            }
+                    }
+                }
+            }).on('success.field.fv', function (e, data) {
+//                alert("1");
+                if (data.field === 'FromDate' && data.fv.isValidField('ToDate') === false) {
+                    data.fv.revalidateField('ToDate');
+                }
+
+                if (data.field === 'ToDate' && data.fv.isValidField('FromDate') === false) {
+                    data.fv.revalidateField('FromDate');
+                }
+            });
+            $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+//                alert("1");
+                $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'FromDate');
+            });
+            $('#DateTo').datetimepicker().on('dp.change', function (e) {
+                $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'ToDate');
+            });  
+    
 });
 </script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>

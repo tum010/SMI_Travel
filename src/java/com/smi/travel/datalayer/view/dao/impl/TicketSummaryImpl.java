@@ -38,13 +38,13 @@ public class TicketSummaryImpl implements TicketSummaryDao {
         this.sessionFactory = sessionFactory;
     }
     @Override
-    public List getTicketSummary(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger,String username) {
+    public List getTicketSummary(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger,String username,String department) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         Date thisDate = new Date();
         List data = new ArrayList();
         String Query ="SELECT * FROM `airticket_ticket` ";
-        Query += createTicketSummaryQuery(ticketfrom,tickettype,startdate,enddate,billto,passenger);
+        Query += createTicketSummaryQuery(ticketfrom,tickettype,startdate,enddate,billto,passenger,department);
         System.out.println("Query : "+Query);
         int no = 0;
         List<Object[]> QueryTicketList = session.createSQLQuery(Query )
@@ -131,7 +131,7 @@ public class TicketSummaryImpl implements TicketSummaryDao {
         return input;
     }
 
-    public String createTicketSummaryQuery(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger) {
+    public String createTicketSummaryQuery(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger,String department) {
         String query = " where ";
         int check = 0;
         System.out.println(startdate);
@@ -159,6 +159,12 @@ public class TicketSummaryImpl implements TicketSummaryDao {
             query += "";
             check = 1;
         }
+        if ((department != null) && (!"".equalsIgnoreCase(department))) {
+            if (check == 1) {query += " and"; }
+            query += "  booktype = '" + department + "'";
+            query += "";
+            check = 1;
+        }
 
         if (check == 0) {
             query = query.replaceAll("where", " ");
@@ -168,7 +174,7 @@ public class TicketSummaryImpl implements TicketSummaryDao {
     }
 
     @Override
-    public TicketSummaryList getTicketSummaryReport(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger, String username) {
+    public TicketSummaryList getTicketSummaryReport(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger, String username,String department) {
         TicketSummaryList guideCommissionInfo = new TicketSummaryList();
         UtilityFunction util = new UtilityFunction();
         guideCommissionInfo.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(new Date()));
@@ -177,19 +183,19 @@ public class TicketSummaryImpl implements TicketSummaryDao {
         guideCommissionInfo.setEnddate(enddate);
         guideCommissionInfo.setFrom(ticketfrom);
         guideCommissionInfo.setType(tickettype);
-        guideCommissionInfo.setTicketSummaryDataSource(new JRBeanCollectionDataSource(getTicketSummary(ticketfrom, tickettype, startdate, enddate, billto, passenger, username)));
-        guideCommissionInfo.setTicketSummaryAirlineDataSource(new JRBeanCollectionDataSource(getTicketSummaryAirline(ticketfrom, tickettype, startdate, enddate, billto, passenger, username)));
+        guideCommissionInfo.setTicketSummaryDataSource(new JRBeanCollectionDataSource(getTicketSummary(ticketfrom, tickettype, startdate, enddate, billto, passenger, username, department)));
+        guideCommissionInfo.setTicketSummaryAirlineDataSource(new JRBeanCollectionDataSource(getTicketSummaryAirline(ticketfrom, tickettype, startdate, enddate, billto, passenger, username, department)));
         return guideCommissionInfo;
     }
     
-    private List getTicketSummaryAirline(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger,String username){
+    private List getTicketSummaryAirline(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger,String username,String department){
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         Date thisDate = new Date();
         List data = new ArrayList();
         String Query ="SELECT bill_to as billingname, air as airline , COUNT(ticket_no)  as ticketnum , SUM(sale_fare) as totalsalefare ,SUM(net_fare) as totalnetfare ,SUM(tax) as totaltax " +
                       ",SUM(profit) as totalprofit  FROM `airticket_ticket` ";
-        Query += createTicketSummaryQuery(ticketfrom,tickettype,startdate,enddate,billto,passenger);
+        Query += createTicketSummaryQuery(ticketfrom,tickettype,startdate,enddate,billto,passenger,department);
         Query += "GROUP BY bill_to,air " +
                  "ORDER BY bill_to ";
         System.out.println("Query Ticket Summary Airline : "+Query);

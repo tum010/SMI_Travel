@@ -105,65 +105,6 @@ $(document).ready(function() {
         $(this).addClass('row_selected').siblings().removeClass('row_selected');
     });
     
-//    // Product Auto Complete
-//    $("#ProductTable tr").on('click', function () {
-//        var saleby_id = $(this).find(".product-id").text();
-//        var saleby_user = $(this).find(".product-code").text();
-//        var saleby_name = $(this).find(".product-name").text();
-//        $("#product_id").val(saleby_id);
-//        $("#product_code").val(saleby_user);
-//        $("#product_name").val(saleby_name);
-//        $("#ProductModal").modal('hide');
-//    });
-//        
-//    var productUser = [];
-//    $.each(product, function (key, value) {
-//        productUser.push(value.username);
-//        productUser.push(value.name);
-//    });
-//
-//    $("#product_code").autocomplete({
-//        source: productUser,
-//        close:function( event, ui ) {
-//           $("#product_code").trigger('keyup');
-//        }
-//    });
-//        
-//    $("#product_code").on('keyup',function(){
-//        var position = $(this).offset();
-//        $(".ui-widget").css("top", position.top + 30);
-//        $(".ui-widget").css("left", position.left);
-//        var username = this.value.toUpperCase();
-//        var name = this.value.toUpperCase();
-//       // console.log("Name :"+ name);
-//        $("#product_id,#product_code,#product_name").val(null);
-//        $.each(product, function (key, value) {
-//            if (value.username.toUpperCase() === username ) {  
-//                $("#product_id").val(value.id);
-//                $("#product_code").val(value.code);
-//                $("#product_name").val(value.name);
-//            }
-//            else if(value.name.toUpperCase() === name){
-//                $("#product_code").val(value.code);
-//                $("#product_id").val(value.id);
-//                $("#product_name").val(value.name);
-//            }
-//        }); 
-//    }); 
-//    
-//    $('#ProductTable').dataTable({bJQueryUI: true,
-//        "sPaginationType": "full_numbers",
-//        "bAutoWidth": false,
-//        "bFilter": true,
-//        "bPaginate": true,
-//        "bInfo": false,
-//        "bLengthChange": false,
-//        "iDisplayLength": 10
-//    });
-//    
-//    $('#ProductTable tbody').on('click', 'tr', function () {
-//        $(this).addClass('row_selected').siblings().removeClass('row_selected');
-//    });
 });
 
 function setupproductvalue(id, code, name) {
@@ -172,4 +113,38 @@ function setupproductvalue(id, code, name) {
     document.getElementById('product_code').value = code;
     document.getElementById('product_name').value = name;
     document.getElementById('product_code').focus();
+}
+
+function printOutboundProductSummary(){
+    var from  = $("#FromDate").val();
+    var to  = $("#ToDate").val();
+    var productid  = $("#InputId").val();
+    var saleby  = $("#salebyId").val();
+    var payby  = $("#SelectPayby").val();
+    var bank  = $("#SelectBank").val();
+    
+    if((from === '') || (to === '')){
+        validateDate();
+    } else {
+        window.open("Excel.smi?name=OutboundProduct&fromdate="+from+"&todate="+to+"&productid="+productid+"&saleby="+saleby+"&payby="+payby+"&bank="+bank);   
+    }
+}
+
+function validateDate(date,option){
+    if(option === 'over'){
+        if(date === 'from'){
+            $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'FromDate');
+            $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'ToDate');
+        }
+        if(date === 'to'){
+            $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'FromDate');
+            $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'ToDate');
+        }           
+        $("#btnDownloadAP").addClass("disabled");
+    } else {
+//        alert("1");
+        $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'FromDate');
+        $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'ToDate');
+        $("#btnDownloadAP").addClass("disabled");
+    }
 }
