@@ -416,8 +416,8 @@ public class OutboundPackageSummary extends AbstractExcelView {
         sheet.setColumnWidth(1, 256*15);
         sheet.setColumnWidth(2, 256*15);
         sheet.setColumnWidth(3, 256*15);
-        sheet.setColumnWidth(4, 256*25);
-        sheet.setColumnWidth(5, 256*25);
+//        sheet.setColumnWidth(4, 256*25);
+//        sheet.setColumnWidth(5, 256*25);
         sheet.setColumnWidth(6, 256*15);
         sheet.setColumnWidth(10, 256*15);
         sheet.setColumnWidth(11, 256*15);
