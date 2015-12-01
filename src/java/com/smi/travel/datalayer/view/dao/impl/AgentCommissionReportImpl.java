@@ -41,6 +41,10 @@ public class AgentCommissionReportImpl implements AgentCommissionReportDao {
     @Override
     public AgentCommission getAgentCommissionReport(String datefrom, String dateto, String user,String agentid) {
         AgentCommission agentCommission = new AgentCommission();
+        agentCommission.setDatefrom(datefrom);
+        agentCommission.setDateto(dateto);
+        agentCommission.setSystemdate(new SimpleDateFormat("dd MMM yy hh:mm", new Locale("us", "us")).format(new Date()));
+        agentCommission.setUser(user);
         agentCommission.setAgentCommissionInfoDataSource(new JRBeanCollectionDataSource(getAgentReportInfo(datefrom, dateto, user,agentid)));
         agentCommission.setAgentCommissionSummaryDataSource(new JRBeanCollectionDataSource(getAgentReportSummary(datefrom, dateto, user,agentid)));
         return agentCommission;
