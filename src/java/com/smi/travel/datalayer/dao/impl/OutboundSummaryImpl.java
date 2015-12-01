@@ -300,11 +300,11 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
             other.setProfittotal((BigDecimal)B[15]);
             other.setPayby(B[16]== null ? "" :util.ConvertString(B[16]));
             other.setDatetrsf(B[17]== null ? "" :util.ConvertString(B[17]));
-            other.setSeller(B[21]== null ? "" :util.ConvertString(B[21]));
+            other.setSeller(B[18]== null ? "" :util.ConvertString(B[18]));
             // Set Header
             other.setProductname(B[3]== null ? "" :util.ConvertString(B[3]));
             other.setProductnamepage(B[3]== null ? "" :util.ConvertString(B[3]));
-            other.setSalebypage(B[21]== null ? "" :util.ConvertString(B[21]));
+            other.setSalebypage(B[18]== null ? "" :util.ConvertString(B[18]));
             other.setBankpage("");
             other.setSaledate("");
             other.setPaybypage("");
