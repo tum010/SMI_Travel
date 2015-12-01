@@ -7,6 +7,7 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.entity.DaytourPrice;
+import com.smi.travel.datalayer.entity.MBank;
 import com.smi.travel.datalayer.entity.PackageCity;
 import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackagePrice;
@@ -457,6 +458,20 @@ public class PackageTourImpl implements PackageTourDao {
             result = "fail";
         }
         return result;
+    }
+
+    @Override
+    public List<PackageTour> getListPackageTour() {
+        String query = "from PackageTour pt ";
+        Session session = this.sessionFactory.openSession();
+        List<PackageTour> list = session.createQuery(query).list();
+        System.out.println("query : "+query );
+        if (list.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return list;
     }
 
 }
