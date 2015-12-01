@@ -98,6 +98,9 @@
          <property name="curCost" type="string">
             <column name="cur_cost" length="3"/>
         </property>
+        <property name="otherDateTo" type="date">
+            <column name="other_date_to" length="10"/>
+        </property>
          <set name="coupons" table="coupon" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="other_booking_id" />
