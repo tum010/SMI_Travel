@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.entity.MCity;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.PackageTour;
 import com.smi.travel.datalayer.view.entity.OutboundPackageSummaryView;
+import com.smi.travel.datalayer.view.entity.OutboundProductSummaryExcel;
 import com.smi.travel.datalayer.view.entity.OutputTaxView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
