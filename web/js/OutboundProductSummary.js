@@ -126,7 +126,7 @@ function printOutboundProductSummary(){
     if((from === '') || (to === '')){
         validateDate();
     } else {
-        window.open("Excel.smi?name=OutboundProductSummary&fromdate="+from+"&todate="+to+"&productid="+productid+"&saleby="+saleby+"&payby="+payby+"&bank="+bank);   
+        window.open("Excel.smi?name=OutboundProduct&fromdate="+from+"&todate="+to+"&productid="+productid+"&saleby="+saleby+"&payby="+payby+"&bank="+bank);   
     }
 }
 
