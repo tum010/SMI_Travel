@@ -5,10 +5,12 @@
  */
 package com.smi.travel.datalayer.dao;
 
+import java.util.List;
+
 /**
  *
  * @author Kanokporn
  */
 public interface OutboundSummaryDao {
-    
+    public List getOutboundProductSummary(String productid,String from,String to,String saleby,String payby,String bank,String printby);
 }

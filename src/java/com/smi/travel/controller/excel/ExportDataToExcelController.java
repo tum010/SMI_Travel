@@ -264,8 +264,14 @@ public class ExportDataToExcelController  extends SMITravelController{
             data = reportservice.getSaleVatReportList(selectMonth, selectYear, selectDepartment);
             return new ModelAndView("AccountReportSummary",name,data).addObject(ReportName, name);
         }else if(OutboundProductSummary.equals(name)){
-             data = reportservice.getTicketProfitLoss(invoiceFromDate,invoiceToDate,printby);
-            return new ModelAndView("CheckingAirOthersummary",name,data).addObject(ReportName, name);
+            String productidout = request.getParameter("productid");    
+            String fromout = request.getParameter("fromdate");    
+            String toout = request.getParameter("todate");    
+            String salebyout = request.getParameter("saleby");    
+            String paybyout = request.getParameter("payby");    
+            String bankout = request.getParameter("bank");     
+            data = reportservice.getOutboundProductSummary(productidout, fromout, toout, salebyout, paybyout, bankout, printby);
+            return new ModelAndView("OutboundProductSummary",name,data).addObject(ReportName, name);
         }
 		
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);
