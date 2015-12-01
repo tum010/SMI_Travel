@@ -29,7 +29,7 @@
 	<variable name="sumprofitavg" class="java.math.BigDecimal" resetType="Group" resetGroup="TicketSummaryAirline" calculation="Sum">
 		<variableExpression><![CDATA[$F{profitavg}]]></variableExpression>
 	</variable>
-	<group name="TicketSummaryAirline">
+	<group name="TicketSummaryAirline" keepTogether="true">
 		<groupExpression><![CDATA[$F{billingname}]]></groupExpression>
 		<groupHeader>
 			<band height="69">

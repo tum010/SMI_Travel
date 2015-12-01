@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketSummaryList" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dcfc7980-ab02-4c1f-9967-385a3abf56ed">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="145"/>
 	<field name="type" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
 	<field name="enddate" class="java.lang.String"/>
@@ -171,20 +171,17 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="165" splitType="Stretch">
+		<band height="5" splitType="Stretch">
 			<subreport>
-				<reportElement positionType="Float" x="0" y="87" width="803" height="76" isRemoveLineWhenBlank="true" uuid="3618a560-5328-44f7-9d3f-491f682db626"/>
+				<reportElement positionType="Float" x="-1" y="3" width="803" height="2" isRemoveLineWhenBlank="true" uuid="3618a560-5328-44f7-9d3f-491f682db626"/>
 				<dataSourceExpression><![CDATA[$F{ticketSummaryAirlineDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/TicketSummaryAirline.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="0" y="0" width="802" height="76" isRemoveLineWhenBlank="true" uuid="5e0fd47b-980a-4f86-a808-df4058d1cb30"/>
+				<reportElement x="0" y="0" width="802" height="2" isRemoveLineWhenBlank="true" uuid="5e0fd47b-980a-4f86-a808-df4058d1cb30"/>
 				<dataSourceExpression><![CDATA[$F{ticketSummaryDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/TicketSummary.jasper"]]></subreportExpression>
 			</subreport>
-			<break>
-				<reportElement x="0" y="83" width="100" height="1" uuid="306278aa-e340-474c-99dd-3180ff86d8ba"/>
-			</break>
 		</band>
 	</detail>
 </jasperReport>
