@@ -764,8 +764,8 @@ public class ReportService {
         this.outboundSummaryDao = outboundSummaryDao;
     }
     
-    public List getOutboundProductSummary(String productid,String from,String to,String saleby,String payby,String bank,String printby) {
-        return outboundSummaryDao.getOutboundProductSummary(productid, from, to, saleby, payby, bank, printby);
+    public List getOutboundProductSummary(String productid,String from,String to,String saleby,String payby,String bank,String printby,String productname,String salename,String status) {
+        return outboundSummaryDao.getOutboundProductSummary(productid, from, to, saleby, payby, bank, printby,productname,salename,status);
     }
     
 }

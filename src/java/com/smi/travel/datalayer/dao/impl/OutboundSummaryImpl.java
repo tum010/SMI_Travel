@@ -188,7 +188,7 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
     }
     
     @Override
-    public List getOutboundProductSummary(String productid, String from, String to, String saleby, String payby, String bank,String printby) {
+    public List getOutboundProductSummary(String productid, String from, String to, String saleby, String payby, String bank,String printby,String productname,String salename,String status) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList();
@@ -302,13 +302,43 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
             other.setDatetrsf(B[17]== null ? "" :util.ConvertString(B[17]));
             other.setSeller(B[18]== null ? "" :util.ConvertString(B[18]));
             // Set Header
+            if(productname != null && !"".equals(productname)){
+                other.setProductnamepage(productname);
+            }else{
+                other.setProductnamepage("");
+            }
             other.setProductname(B[3]== null ? "" :util.ConvertString(B[3]));
-            other.setProductnamepage(B[3]== null ? "" :util.ConvertString(B[3]));
-            other.setSalebypage(B[18]== null ? "" :util.ConvertString(B[18]));
-            other.setBankpage("");
-            other.setSaledate("");
-            other.setPaybypage("");
-            other.setStatuspage("");           
+            if(salename != null && !"".equals(salename)){
+                other.setSalebypage(salename);
+            }else{
+                other.setSalebypage("");
+            }          
+            if(bank != null && !"".equals(bank)){
+                other.setBankpage(bank);
+            }else{
+                other.setBankpage("");
+            }
+            if(from != null && !"".equals(from)){
+                if(to != null && !"".equals(to)){
+                    String dateOutbound = from + " To " + to;
+                    other.setSaledatepage(dateOutbound);
+                    System.out.println(" Date Outbound : " +dateOutbound);
+                }else{
+                    other.setSaledatepage("");
+                }
+            }else{
+                other.setSaledatepage("");
+            }          
+            if(payby != null && !"".equals(payby)){
+                other.setPaybypage(payby);
+            }else{
+                other.setPaybypage("");
+            }
+            if(status != null && !"".equals(status)){
+                other.setStatuspage(status);           
+            }else{
+                other.setStatuspage("");           
+            }
             data.add(other);
         }
         

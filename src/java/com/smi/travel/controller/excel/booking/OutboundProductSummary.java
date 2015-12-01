@@ -77,7 +77,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 cell21.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(0);
             HSSFCell cell22 = row2.createCell(1);
-                cell22.setCellValue(outboundProduct.getProductname());
+                cell22.setCellValue(outboundProduct.getProductnamepage());
                 cell22.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(1);
             HSSFCell cell23 = row2.createCell(2);
@@ -85,7 +85,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 cell23.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(2);
             HSSFCell cell24 = row2.createCell(3);
-                cell24.setCellValue(outboundProduct.getPayby());
+                cell24.setCellValue(outboundProduct.getPaybypage());
                 cell24.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(3);
                 
@@ -95,7 +95,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 cell31.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(0);
             HSSFCell cell32 = row3.createCell(1);
-                cell32.setCellValue(outboundProduct.getSaledate());
+                cell32.setCellValue(outboundProduct.getSaledatepage());
                 cell32.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(1);
             HSSFCell cell33 = row3.createCell(2);
@@ -113,7 +113,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 cell41.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(0);
             HSSFCell cell42 = row4.createCell(1);
-                cell42.setCellValue(outboundProduct.getSeller());
+                cell42.setCellValue(outboundProduct.getSalebypage());
                 cell42.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(1);
             HSSFCell cell43 = row4.createCell(2);
@@ -221,11 +221,11 @@ public class OutboundProductSummary extends AbstractExcelView  {
             cell62.setCellStyle(styleHeader);
             sheet.autoSizeColumn(1);
         HSSFCell cell63 = row5.createCell(2);
-            cell63.setCellValue("TRAVOX NO");
+            cell63.setCellValue("REF NO");
             cell63.setCellStyle(styleHeader);
             sheet.autoSizeColumn(2);
         HSSFCell cell64 = row5.createCell(3);
-            cell64.setCellValue("PASS TYPE");
+            cell64.setCellValue("PRODUCT NAME");
             cell64.setCellStyle(styleHeader);
             sheet.autoSizeColumn(3);
         HSSFCell cell65 = row5.createCell(4);
@@ -353,19 +353,23 @@ public class OutboundProductSummary extends AbstractExcelView  {
             for (int r = 9 ; r < count; r++) {
              if(num <= (listOutboundProduct.size()-1)){
                 if(num != 0){ // Check not row first
-                    String temp = listOutboundProduct.get(num-1).getCustomername();
-                    if(temp.equals(listOutboundProduct.get(num).getCustomername())){ // equal type	
+                    String temp = listOutboundProduct.get(num-1).getProductname();
+                    if(temp.equals(listOutboundProduct.get(num).getProductname())){ // equal type	
                         System.out.println("Num : " + num + " Last Row : " + (listOutboundProduct.size()-1));
                         if(num  != (listOutboundProduct.size()-1)){ // check not last row
                             HSSFRow row = sheet.createRow(r);
                             createCell(row,listOutboundProduct,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
-//                            sheet.autoSizeColumn(20);
+                            if(listOutboundProduct.get(num).getInvno() != null && !"".equals(listOutboundProduct.get(num).getInvno())){
+                                sheet.autoSizeColumn(6);
+                            }
                             num++; 
                         }else{ // last row				
                             System.out.println("Num : " + num + " Last Row : " + (listOutboundProduct.size()-1));
                             HSSFRow row = sheet.createRow(r);
                             createCell(row,listOutboundProduct,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
-//                            sheet.autoSizeColumn(20);
+                            if(listOutboundProduct.get(num).getInvno() != null && !"".equals(listOutboundProduct.get(num).getInvno())){
+                                sheet.autoSizeColumn(6);
+                            }
                             num++;
 
                             // total
@@ -397,7 +401,9 @@ public class OutboundProductSummary extends AbstractExcelView  {
                             System.out.println("Num : " + num + " Last Row : " + (listOutboundProduct.size()-1));
                             HSSFRow row = sheet.createRow(r);
                             createCell(row,listOutboundProduct,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
-//                            sheet.autoSizeColumn(20);
+                            if(listOutboundProduct.get(num).getInvno() != null && !"".equals(listOutboundProduct.get(num).getInvno())){
+                                sheet.autoSizeColumn(6);
+                            }
                             num++;
                                 // total
                                 HSSFRow rowT = sheet.createRow(r+1);
@@ -451,15 +457,17 @@ public class OutboundProductSummary extends AbstractExcelView  {
                                 start = end + 5;
                                 HSSFRow row0 = sheet.createRow(r+1);
                                 HSSFCell cell = row0.createCell(0);
-                                    cell.setCellValue(listOutboundProduct.get(num).getCustomername());
+                                    cell.setCellValue(listOutboundProduct.get(num).getProductname());
 //                                    cell.setCellStyle(styleAlignRightBorderAll);
                                 row0.createCell(20).setCellStyle(styleAlignRightBorderAll);
+                                if(listOutboundProduct.get(num).getInvno() != null && !"".equals(listOutboundProduct.get(num).getInvno())){
+                                    sheet.autoSizeColumn(6);
+                                }
                                 String add = "A"+(r+2)+":M"+(r+2)+"";
                                 System.out.println("Add : " + add);
                                 sheet.addMergedRegion(CellRangeAddress.valueOf(add));
                                 HSSFRow row122 = sheet.createRow(r+2);
                                 createCell(row122,listOutboundProduct,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
-//                                sheet.autoSizeColumn(20);
                                 num++;				 
                                 count = count + 2;
                                 r = r + 2;
@@ -470,7 +478,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                         
                         HSSFRow row0 = sheet.createRow(r);
                         HSSFCell cell = row0.createCell(0);
-                            cell.setCellValue(listOutboundProduct.get(num).getCustomername());
+                            cell.setCellValue(listOutboundProduct.get(num).getProductname());
 //                            cell.setCellStyle(styleAlignRightBorderAll);
                         row0.createCell(20).setCellStyle(styleAlignRightBorderAll);
                         String add = "A"+(r+1)+":U"+(r+1)+"";
@@ -478,19 +486,19 @@ public class OutboundProductSummary extends AbstractExcelView  {
                         sheet.addMergedRegion(CellRangeAddress.valueOf(add));
                         
                         HSSFRow row = sheet.createRow(r+1);
-                        createCell(row,listOutboundProduct,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                        
-                        sheet.autoSizeColumn(13);
+                        createCell(row,listOutboundProduct,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
+                        if(listOutboundProduct.get(num).getInvno() != null && !"".equals(listOutboundProduct.get(num).getInvno())){
+                            sheet.autoSizeColumn(6);
+                        }
+//                        sheet.autoSizeColumn(20);
                         num = num + 1;
                         count = count + 1;
                         r = r + 1;
                     }
+                    sheet.autoSizeColumn(3);
+                    sheet.autoSizeColumn(7);
+                    sheet.autoSizeColumn(10);
                 }
-//                for(int i =0 ; i < 20 ; i++){
-                sheet.autoSizeColumn(3);
-                sheet.autoSizeColumn(6);
-                sheet.autoSizeColumn(7);
-                sheet.autoSizeColumn(10);
-//                }
             }
         }
     }
