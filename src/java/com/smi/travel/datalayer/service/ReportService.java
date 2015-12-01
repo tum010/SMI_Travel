@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.service;
 import com.smi.travel.datalayer.dao.DaytourBookingDao;
 import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.OutboundSummaryDao;
+import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.PackageTourHotelDao;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
@@ -735,6 +736,10 @@ public class ReportService {
     
     public List getSaleVatReportList(String month,String year,String department){
         return saleVatReportDao.getSaleVatReportList(month, year, department);
+    }
+    
+    public List getOutboundPackageSummaryReportList(String fromdate,String todate,String cityId, String packageId,String salebyId,String paybyId,String bankId,String statusId){
+        return outboundSummaryDao.getOutboundPackageSummaryReportList(fromdate, todate, cityId, packageId, salebyId, paybyId, bankId, statusId);
     }
     
     public SaleVatReportDao getSaleVatReportDao() {

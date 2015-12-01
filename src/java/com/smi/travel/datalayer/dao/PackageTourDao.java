@@ -27,4 +27,5 @@ public interface PackageTourDao {
     public PackageTour getPackageFromID(String packageID);
     public List<PackageItinerary> SortItineraryList(List<PackageItinerary> data);
     public List<PackagePrice> SortPriceList(List<PackagePrice> data);
+    public List<PackageTour> getListPackageTour();
 }

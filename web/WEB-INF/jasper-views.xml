@@ -135,6 +135,9 @@
         <bean id="TicketFareSummary" class="com.smi.travel.controller.excel.checking.airticket.TicketFareSummary">
 	</bean>
         
+        <bean id="OutboundPackageSummaryReport" class="com.smi.travel.controller.excel.booking.OutboundPackageSummary">
+	</bean>
+        
         <bean id="ReceiptEmail"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/ReceiptEmail.jrxml"/>
