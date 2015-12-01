@@ -688,7 +688,10 @@
     </bean>
     
     <bean id="OutboundSummaryController" class="com.smi.travel.controller.OutboundSummaryController">
-        
+        <property name="hotelService" ref="HotelService" /> 
+        <property name="cityservice" ref="MCityService" />
+        <property name="countryservice" ref="MCountryService" /> 
+        <property name="utilityService" ref="UtilityService" />
     </bean>
     
     <bean id="OutboundPackageSummaryController" class="com.smi.travel.controller.OutboundPackageSummaryController">
