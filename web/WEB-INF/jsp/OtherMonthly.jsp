@@ -39,7 +39,7 @@
                                 <div class="col-md-4">  
                                     <div class="form-group">
                                         <div class='input-group date' id='DateFrom'>
-                                            <input type='text' id="fromdate" name="fromdate" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="fromdate" name="fromdate" class="form-control datemask" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -55,7 +55,7 @@
                                 <div class="col-md-4">  
                                     <div class="form-group">
                                         <div class='input-group date' id='DateTo'>
-                                            <input type='text' id="todate" name="todate"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="todate" name="todate"  class="form-control datemask" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -119,7 +119,7 @@
     $(document).ready(function () { 
         $('.date').datetimepicker({
         });
-        
+        $('.datemask').mask('0000-00-00');
         $('span').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);

@@ -13,5 +13,5 @@ import java.util.List;
  * @author Surachai
  */
 public interface StaffSummaryDao {
-    public List getStaffSummary(String ticketfrom,String tickettype,String startdate,String enddate,String username);
+    public List getStaffSummary(String ticketfrom,String tickettype,String startdate,String enddate,String username,String department);
 }

@@ -214,12 +214,12 @@ public class ReportController extends SMITravelController {
             // set path for loading sub-report file
             ((TicketOrder) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         } else if (TicketSummary.equalsIgnoreCase(name)) {
-            data = reportservice.getTicketSummary(ticketfrom, tickettype, startdate, enddate, billto, passenger, user.getName());
+            data = reportservice.getTicketSummary(ticketfrom, tickettype, startdate, enddate, billto, passenger, user.getName(), department);
             ((TicketSummaryList) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         } else if (AirlineSummary.equalsIgnoreCase(name)) {
-            data = reportservice.getAirlineSummary(ticketfrom, tickettype, startdate, enddate, user.getName());
+            data = reportservice.getAirlineSummary(ticketfrom, tickettype, startdate, enddate, user.getName(), department);
         } else if (StaffSummary.equalsIgnoreCase(name)) {
-            data = reportservice.getStaffSummary(ticketfrom, tickettype, startdate, enddate, user.getName());
+            data = reportservice.getStaffSummary(ticketfrom, tickettype, startdate, enddate, user.getName(), department);
         } else if (TicketSaleSummary.equalsIgnoreCase(name)) {
             data = reportservice.getTicketSaleVolumn(ticketfrom, tickettype, startdate, enddate);
         } else if (TicketProfitSummary.equalsIgnoreCase(name)) {

@@ -663,7 +663,12 @@ public class BookingSummaryImpl implements BookingSummaryDao{
         ossr.setFromto(fromto);
 
         ossr.setOutboundStaffSummaryListReportDataSource(new JRBeanCollectionDataSource(getOutboundStaffSummaryList(from,to,saleby,currency)));
-        ossr.setOutboundStaffSummaryDetailReportDataSource(new JRBeanCollectionDataSource(getOutboundStaffSummaryDetail(from,to,saleby,currency)));
+        
+        if("1".equalsIgnoreCase(detail)){
+            ossr.setOutboundStaffSummaryDetailReportDataSource(new JRBeanCollectionDataSource(getOutboundStaffSummaryDetail(from,to,saleby,currency)));
+        }else{
+            ossr.setOutboundStaffSummaryDetailReportDataSource(null);
+        }
         
         this.sessionFactory.close();
         session.close();

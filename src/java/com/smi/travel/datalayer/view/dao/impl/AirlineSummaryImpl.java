@@ -39,6 +39,7 @@ public class AirlineSummaryImpl implements AirlineSummaryDao {
             + ",sum(at.sale_fare) AS selling "
             + ",sum(at.tax) AS tax "
             + ",(sum(at.sale_fare) - sum(at.net_fare)) AS profit  "
+            + ",AT.booktype as booktype "
             + "from airticket_ticket at  ";
 
     public SessionFactory getSessionFactory() {
@@ -50,13 +51,13 @@ public class AirlineSummaryImpl implements AirlineSummaryDao {
     }
 
     @Override
-    public List getAirlineSummary(String ticketfrom, String tickettype, String startdate, String enddate, String username) {
+    public List getAirlineSummary(String ticketfrom, String tickettype, String startdate, String enddate, String username, String department) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         Date thisDate = new Date();
         List data = new ArrayList();
         String Query = AirLineSumQuery;
-        Query += CreateAirlineSummaryQuery(ticketfrom, tickettype, startdate, enddate);
+        Query += CreateAirlineSummaryQuery(ticketfrom, tickettype, startdate, enddate, department);
         System.out.println("Query : " + Query);
 
         List<Object[]> QueryStaffList = session.createSQLQuery(Query)
@@ -95,7 +96,7 @@ public class AirlineSummaryImpl implements AirlineSummaryDao {
     }
 
     
-    public String CreateAirlineSummaryQuery(String ticketfrom, String tickettype, String startdate, String enddate) {
+    public String CreateAirlineSummaryQuery(String ticketfrom, String tickettype, String startdate, String enddate, String department) {
         String Query = "Where ";
          int check =0;
         if((ticketfrom != null) && (!"".equalsIgnoreCase(ticketfrom))) {
@@ -111,6 +112,11 @@ public class AirlineSummaryImpl implements AirlineSummaryDao {
         if (((startdate != null) && (!"".equalsIgnoreCase(startdate))) && ((enddate != null) && (!"".equalsIgnoreCase(enddate)))) {
             if(check == 1){Query += " and ";}
             Query += " at.create_date between '"+startdate+"' and '"+enddate+"' ";
+            check =1;
+        }
+        if (((department != null) && (!"".equalsIgnoreCase(department)))) {
+            if(check == 1){Query += " and ";}
+            Query += " at.booktype = '" + department + "' ";
             check =1;
         }
         if(check == 0){

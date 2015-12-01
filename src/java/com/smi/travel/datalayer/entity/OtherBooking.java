@@ -42,6 +42,7 @@ public class OtherBooking  {
      private String remarkTicket;
      private String remarkGuideCommission;
      private String remarkAgentCommission;
+     private Date otherDateTo;
      private Set coupons = new HashSet(0);
 
     public OtherBooking() {
@@ -333,6 +334,14 @@ public class OtherBooking  {
 
     public void setRemarkTicket(String remarkTicket) {
         this.remarkTicket = remarkTicket;
+    }
+
+    public Date getOtherDateTo() {
+        return otherDateTo;
+    }
+
+    public void setOtherDateTo(Date otherDateTo) {
+        this.otherDateTo = otherDateTo;
     }
 
    

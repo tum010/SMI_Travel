@@ -27,6 +27,20 @@
         </a>
         <b class="arrow"></b>
     </li>
+    <li>
+        <a href="OutboundAirTicketMonthReport.smi" id="menu-passenger">
+            <i class="menu-icon fa fa-plane"></i>
+            <span class="menu-text"> Ticket Summary <strong></strong></span>
+        </a>
+        <b class="arrow"></b>
+    </li>
+    <li class="">
+        <a href="OutboundAirTicketAirlineStaffSummary.smi">
+            <i class="menu-icon fa fa-users"></i>
+            <span class="menu-text"> Airline/Staff Volumn</span>
+        </a>
+        <b class="arrow"></b>
+    </li>
 </ul>
 
 <script>
@@ -36,7 +50,7 @@
         console.log(name[2]);
         str = name[2].split(".");
         console.log(str[0]);
-        sub = str[0].substr(0,10);
+        sub = str[0].substr(0,18);
         console.log(sub);
         var $select = $('a[href*="' + sub + '"]');
         $("#OutboundSummaryMenu").find($select).css('background-color', '#ccc');

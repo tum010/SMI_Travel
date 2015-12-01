@@ -63,6 +63,7 @@ public class OtherDetailController extends SMITravelController {
         String inQty = request.getParameter("in_qty");
         String inPrice = request.getParameter("in_price");
         String otherdate = request.getParameter("otherdate");
+        String otherdateTo = request.getParameter("otherdateTo");
         String othertime = request.getParameter("othertime");
         String canceldate = request.getParameter("canceldate");
         String remark = request.getParameter("remark");
@@ -177,6 +178,9 @@ public class OtherDetailController extends SMITravelController {
             }
             if(!"".equalsIgnoreCase(canceldate)){
                 Other.setCancelDate(util.convertStringToTime(canceldate));
+            }
+            if(!"".equalsIgnoreCase(otherdateTo)){
+                Other.setOtherDateTo(util.convertStringToDate(otherdateTo));
             }
             if(Other.getId() != null){
                 saveHistoryBooking(refno,user,Other,"UPDATE");
@@ -343,6 +347,11 @@ public class OtherDetailController extends SMITravelController {
             }else{
                 canceldate = util.convertDateToString(Other.getCancelDate());
             }
+            if(Other.getOtherDateTo() == null){
+                otherdateTo = "";
+            }else{
+                otherdateTo = util.convertDateToString(Other.getOtherDateTo()); 
+            }
             
             if(Other.getStatus() != null){
                 status = Other.getStatus().getId();
@@ -393,6 +402,7 @@ public class OtherDetailController extends SMITravelController {
         request.setAttribute("in_price", inPrice);
         request.setAttribute("in_price", inPrice);
         request.setAttribute("otherdate", otherdate);
+        request.setAttribute("otherdateTo", otherdateTo);
         request.setAttribute("othertime", othertime);
         request.setAttribute("cancelDate", canceldate);
         request.setAttribute("remark", remark);
