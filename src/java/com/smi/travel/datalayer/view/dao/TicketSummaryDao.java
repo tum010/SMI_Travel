@@ -14,6 +14,6 @@ import java.util.List;
  * @author Surachai
  */
 public interface TicketSummaryDao {
-    public List getTicketSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username);
-    public TicketSummaryList getTicketSummaryReport(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username);
+    public List getTicketSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username,String department);
+    public TicketSummaryList getTicketSummaryReport(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username,String department);
 }

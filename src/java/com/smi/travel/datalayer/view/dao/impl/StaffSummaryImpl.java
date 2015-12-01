@@ -30,6 +30,7 @@ public class StaffSummaryImpl implements StaffSummaryDao {
             + ",sum(at.sale_fare) AS selling "
             + ",sum(at.tax) AS tax "
             + ",(sum(at.sale_fare) - sum(at.net_fare)) AS profit  "
+            + ",AT.booktype as booktype "
             + "from staff st "
             + ", airticket_ticket at "
             + "where st.username = at.owner ";
@@ -44,13 +45,13 @@ public class StaffSummaryImpl implements StaffSummaryDao {
     }
 
     @Override
-    public List getStaffSummary(String ticketfrom, String tickettype, String startdate, String enddate, String username) {
+    public List getStaffSummary(String ticketfrom, String tickettype, String startdate, String enddate, String username, String department) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         Date thisDate = new Date();
         List data = new ArrayList();
         String Query = StaffQuery;
-        Query += CreateStaffSummaryQuery(ticketfrom, tickettype, startdate, enddate);
+        Query += CreateStaffSummaryQuery(ticketfrom, tickettype, startdate, enddate, department);
         System.out.println("Query : " + Query);
 
         
@@ -86,7 +87,7 @@ public class StaffSummaryImpl implements StaffSummaryDao {
         return data;
     }
 
-    public String CreateStaffSummaryQuery(String ticketfrom, String tickettype, String startdate, String enddate) {
+    public String CreateStaffSummaryQuery(String ticketfrom, String tickettype, String startdate, String enddate, String department) {
         String Query = "";
         if((ticketfrom != null) && (!"".equalsIgnoreCase(ticketfrom))) {
             Query += " and `at`.ticket_from = '"+ticketfrom+"' ";
@@ -97,6 +98,9 @@ public class StaffSummaryImpl implements StaffSummaryDao {
         
         if (((startdate != null) && (!"".equalsIgnoreCase(startdate))) && ((enddate != null) && (!"".equalsIgnoreCase(enddate)))) {
             Query += "and at.create_date between '"+startdate+"' and '"+enddate+"' ";
+        }
+        if (((department != null) && (!"".equalsIgnoreCase(department)))) {
+            Query += "and at.booktype = '" + department + "' ";
         }
         Query += " group by st.name;";
         return Query;
