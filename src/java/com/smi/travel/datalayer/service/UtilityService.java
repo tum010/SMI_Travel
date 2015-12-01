@@ -16,6 +16,7 @@ import com.smi.travel.datalayer.dao.MCityDao;
 import com.smi.travel.datalayer.dao.MCountryDao;
 import com.smi.travel.datalayer.dao.MListItemDao;
 import com.smi.travel.datalayer.dao.MasterDao;
+import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.PlaceDao;
 import com.smi.travel.datalayer.dao.SystemUserDao;
 import com.smi.travel.datalayer.entity.Agent;
@@ -55,6 +56,7 @@ import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import com.smi.travel.datalayer.entity.BillableDesc;
+import com.smi.travel.datalayer.entity.PackageTour;
 /**
  *
  * @author Surachai
@@ -76,6 +78,7 @@ public class UtilityService {
     private DefineVarDao defineVardao;
     private BookingHistoryDao bookinghistorydao;
     private MCountryDao mCountryDao;
+    private PackageTourDao packageTourDao;
     
     public int[] getCountItemFromBooking(String refno) {
         int[] Booking_size = new int[7];
@@ -335,6 +338,9 @@ public class UtilityService {
         return listitemdao.updateBillableDesc(billableView,billDescId);
     }
     
+    public List<PackageTour> getListPackageTour(){
+        return packageTourDao.getListPackageTour();
+    }
     public MasterDao getMasterdao() {
         return masterdao;
     }
@@ -458,6 +464,14 @@ public class UtilityService {
 
     public void setmCountryDao(MCountryDao mCountryDao) {
         this.mCountryDao = mCountryDao;
+    }
+
+    public PackageTourDao getPackageTourDao() {
+        return packageTourDao;
+    }
+
+    public void setPackageTourDao(PackageTourDao packageTourDao) {
+        this.packageTourDao = packageTourDao;
     }
     
     

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OutboundStaffSummaryDetailReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="1" bottomMargin="1" uuid="06b26242-e914-43ea-844f-53a60c3f2bf1">
-	<property name="ireport.zoom" value="3.7974983358324375"/>
-	<property name="ireport.x" value="1337"/>
+	<property name="ireport.zoom" value="1.46410000000001"/>
+	<property name="ireport.x" value="116"/>
 	<property name="ireport.y" value="0"/>
 	<field name="staff" class="java.lang.String"/>
 	<field name="type" class="java.lang.String"/>
@@ -26,7 +26,7 @@
 					<textElement textAlignment="Center">
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
-					<text><![CDATA[   Net]]></text>
+					<text><![CDATA[Sale]]></text>
 				</staticText>
 				<line>
 					<reportElement stretchType="RelativeToBandHeight" x="476" y="28" width="1" height="20" isPrintWhenDetailOverflows="true" uuid="2042b5ab-6edc-47ff-bd6a-b9d0aec6ae22"/>
@@ -70,7 +70,7 @@
 					<textElement textAlignment="Center">
 						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Sale]]></text>
+					<text><![CDATA[Net]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
 					<reportElement x="39" y="9" width="242" height="20" uuid="9a738408-34c3-4dd4-9f02-889a2706003f"/>
@@ -144,13 +144,6 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="318" y="-1" width="74" height="20" uuid="e3b86226-a211-4299-b1de-e4f018ed6c2e"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{net} != null && !"null".equals($F{net}) && $F{net}.length() > 0) ? new BigDecimal($F{net}) : new BigDecimal("0")]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement stretchType="RelativeToBandHeight" x="397" y="-4" width="1" height="23" isPrintWhenDetailOverflows="true" uuid="b05ed8bd-3625-4390-aecb-905b066da36e"/>
 				<graphicElement>
@@ -169,13 +162,6 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="397" y="-1" width="74" height="20" uuid="b981f51a-5685-4da5-8748-a1914cd7f497"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[($F{sale} != null && !"null".equals($F{sale}) && $F{sale}.length() > 0) ? new BigDecimal($F{sale}) : new BigDecimal("0")]]></textFieldExpression>
-			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="476" y="-1" width="74" height="20" uuid="364b78e4-08f2-45bd-ad9c-815dc46fa5c9"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -222,6 +208,21 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="316" y="1" width="79" height="18" uuid="177658ee-5ef0-474e-94ca-5c7a4372f020"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{sale}) && $F{sale}.length() > 0) ? new BigDecimal($F{sale}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="396" y="1" width="79" height="18" uuid="35070ae5-1022-4304-ada6-6e4da2598159"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{net} != null && !"null".equals($F{net}) && $F{net}.length() > 0) ? new BigDecimal($F{net}) : new BigDecimal("0")
+]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

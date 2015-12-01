@@ -680,7 +680,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList();
         
-        String query = "SELECT st.`name` AS staff, pt. NAME AS productType, sum(bd.cost) AS cost, sum(bd.price) AS price, sum(bd.price - bd.cost) AS profit FROM `billable` bi INNER JOIN billable_desc bd ON bi.id = bd.billable_id INNER JOIN `master` mt ON mt.id = bi.master_id INNER JOIN m_product_type pt ON pt.id = bd.bill_type INNER JOIN staff st ON st.id = mt.Staff_id WHERE mt.booking_type = 'O' and mt.Create_date BETWEEN '"+from+"' and  '"+to+"' ";
+        String query = "SELECT st.`name` AS staff, pt. NAME AS productType, sum(bd.cost) AS cost, sum(bd.price) AS price, sum(bd.price - bd.cost) AS profit FROM `billable` bi INNER JOIN billable_desc bd ON bi.id = bd.billable_id INNER JOIN `master` mt ON mt.id = bi.master_id INNER JOIN m_billtype pt ON pt.id = bd.bill_type INNER JOIN staff st ON st.id = mt.Staff_id WHERE mt.booking_type = 'O' and mt.Create_date BETWEEN '"+from+"' and  '"+to+"' ";
         
         if(saleby != null && !"".equalsIgnoreCase(saleby)){
             query += " and st.id = '"+saleby+"'";

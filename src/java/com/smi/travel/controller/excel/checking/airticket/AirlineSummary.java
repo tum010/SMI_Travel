@@ -758,15 +758,15 @@ public class AirlineSummary extends AbstractExcelView {
                     //pax
                     HSSFRow row8 = sheetPax.createRow(8);
                     HSSFCell cell81 = row8.createCell(0);
-                    cell81.setCellValue("Pax");
+                    cell81.setCellValue("Payment Type");
                     cell81.setCellStyle(styleC3);
                     sheetPax.autoSizeColumn(0);
                     HSSFCell cell82 = row8.createCell(1);
-                    cell82.setCellValue("Payment Type");
+                    cell82.setCellValue("Type Routing");
                     cell82.setCellStyle(styleC3);
                     sheetPax.autoSizeColumn(1);
                     HSSFCell cell83 = row8.createCell(2);
-                    cell83.setCellValue("Type Routing");
+                    cell83.setCellValue("Pax");
                     sheetPax.autoSizeColumn(2);
                     cell83.setCellStyle(styleC3);
                     HSSFCell cell84 = row8.createCell(3);
@@ -800,16 +800,16 @@ public class AirlineSummary extends AbstractExcelView {
                     
                     HSSFRow row = sheetPax.createRow(count + i);
                     HSSFCell celldata0 = row.createCell(0);
-                    celldata0.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPaxP())) ? 0 : (new BigDecimal(data.getPaxP())).doubleValue());
-                    celldata0.setCellStyle(styleC26);
+                    celldata0.setCellValue(String.valueOf(data.getPaymenttypeP()));
+                    celldata0.setCellStyle(styleC30);
 
                     HSSFCell celldata1 = row.createCell(1);
-                    celldata1.setCellValue(String.valueOf(data.getPaymenttypeP()));
+                    celldata1.setCellValue(String.valueOf(data.getTyperoutingP()));
                     celldata1.setCellStyle(styleC30);
 
                     HSSFCell celldata2 = row.createCell(2);
-                    celldata2.setCellValue(String.valueOf(data.getTyperoutingP()));
-                    celldata2.setCellStyle(styleC30);
+                    celldata2.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPaxP())) ? 0 : (new BigDecimal(data.getPaxP())).doubleValue());
+                    celldata2.setCellStyle(styleC26);
 
                     HSSFCell celldata3 = row.createCell(3);
                     celldata3.setCellValue("".equalsIgnoreCase(String.valueOf(data.getNetsalesP())) ? 0 : (new BigDecimal(data.getNetsalesP())).doubleValue());
@@ -846,7 +846,7 @@ public class AirlineSummary extends AbstractExcelView {
                 if("detail".equalsIgnoreCase(data.getPage())){
                     //Total Pax
                     HSSFRow rowtotal = sheetPax.createRow(tempcount);
-                    String totalPax = "SUM(A" + 10+":A"+(tempcount)+")";
+                    String totalPax = "SUM(C" + 10+":C"+(tempcount)+")";
                     String totalNet = "SUM(D" + 10+":D"+(tempcount)+")";
                     String totalTax = "SUM(E" + 10+":E"+(tempcount)+")";
                     String totalIns = "SUM(F" + 10+":F"+(tempcount)+")";
