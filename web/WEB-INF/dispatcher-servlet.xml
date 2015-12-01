@@ -158,6 +158,8 @@
                                 <prop key="OutboundPackageSummary.smi">OutboundPackageSummaryController</prop>
                                 <prop key="OutboundProductSummary.smi">OutboundProductSummaryController</prop>
                                 <prop key="OutboundStaffSummary.smi">OutboundStaffSummaryController</prop>
+                                <prop key="OutboundAirTicketMonthReport.smi">OutboundAirTicketMonthReportController</prop>
+                                <prop key="OutboundAirTicketAirlineStaffSummary.smi">OutboundAirTicketAirlineStaffSummaryController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -699,6 +701,12 @@
     </bean>
     <bean id="OutboundStaffSummaryController" class="com.smi.travel.controller.OutboundStaffSummaryController">
         <property name="utilityService" ref="UtilityService" />
+    </bean>
+    <bean id="OutboundAirTicketMonthReportController" class="com.smi.travel.controller.OutboundAirTicketMonthReportController">
+        <property name="AirreportService" ref="AirTicketReportService" />
+    </bean>
+    <bean id="OutboundAirTicketAirlineStaffSummaryController" class="com.smi.travel.controller.OutboundAirTicketAirlineStaffSummaryController">
+        
     </bean>
     
 	<!-- add bean id controller -->

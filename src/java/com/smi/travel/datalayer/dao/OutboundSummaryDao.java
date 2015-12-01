@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface OutboundSummaryDao {
     public List getOutboundPackageSummaryReportList(String fromdate,String todate,String cityId, String packageId,String salebyId,String paybyId,String bankId,String statusId);
+    public List getOutboundProductSummary(String productid,String from,String to,String saleby,String payby,String bank,String printby);
 }

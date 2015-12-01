@@ -45,7 +45,7 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String TicketProfitLoss = "TicketProfitLoss";
     private static final String TicketSummaryCommission = "TicketSummaryCommission";
     private static final String SaleVatReport = "SaleVatReport";
-    private static final String OutboundProductSummary = "OutboundProductSummary";
+    private static final String OutboundProduct = "OutboundProduct";
     private static final String OutboundPackageSummary = "OutboundPackageSummary";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -264,9 +264,15 @@ public class ExportDataToExcelController  extends SMITravelController{
             String selectDepartment   = request.getParameter("selectDepartment");   
             data = reportservice.getSaleVatReportList(selectMonth, selectYear, selectDepartment);
             return new ModelAndView("AccountReportSummary",name,data).addObject(ReportName, name);
-        }else if(OutboundProductSummary.equals(name)){
-             data = reportservice.getTicketProfitLoss(invoiceFromDate,invoiceToDate,printby);
-            return new ModelAndView("CheckingAirOthersummary",name,data).addObject(ReportName, name);
+        }else if(OutboundProduct.equals(name)){
+            String productidout = request.getParameter("productid");    
+            String fromout = request.getParameter("fromdate");    
+            String toout = request.getParameter("todate");    
+            String salebyout = request.getParameter("saleby");    
+            String paybyout = request.getParameter("payby");    
+            String bankout = request.getParameter("bank");     
+            data = reportservice.getOutboundProductSummary(productidout, fromout, toout, salebyout, paybyout, bankout, printby);
+            return new ModelAndView("OutboundProduct",name,data).addObject(ReportName, name);
         }else if(OutboundPackageSummary.equals(name)){
             String fromdate   = request.getParameter("fromdate");   
             String todate   = request.getParameter("todate");   

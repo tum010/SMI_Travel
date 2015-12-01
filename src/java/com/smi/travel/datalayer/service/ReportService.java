@@ -140,17 +140,17 @@ public class ReportService {
         return ticketsaleprofitVolumnDao.getTicketProfitVolumn(ticketFrom, ticketType, startDate, endDate);
     }
     
-    public List getStaffSummary(String ticketfrom, String tickettype, String startdate, String enddate, String username) {
-        return staffsummaryDao.getStaffSummary(ticketfrom, tickettype, startdate, enddate, username);
+    public List getStaffSummary(String ticketfrom, String tickettype, String startdate, String enddate, String username, String department) {
+        return staffsummaryDao.getStaffSummary(ticketfrom, tickettype, startdate, enddate, username, department);
     }
     
-    public List getAirlineSummary(String ticketfrom,String tickettype,String startdate,String enddate,String username){
-        return airlinesummaryDao.getAirlineSummary(ticketfrom, tickettype, startdate, enddate, username);
+    public List getAirlineSummary(String ticketfrom,String tickettype,String startdate,String enddate,String username,String department){
+        return airlinesummaryDao.getAirlineSummary(ticketfrom, tickettype, startdate, enddate, username, department);
     }
     
-    public List getTicketSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username){
+    public List getTicketSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username,String department){
         List data  = new ArrayList();
-        data.add(ticketsummaryDao.getTicketSummaryReport(ticketfrom, tickettype, startdate, enddate, billto, passenger, username));
+        data.add(ticketsummaryDao.getTicketSummaryReport(ticketfrom, tickettype, startdate, enddate, billto, passenger, username, department));
         return data;
     }
     
@@ -762,6 +762,10 @@ public class ReportService {
 
     public void setOutboundSummaryDao(OutboundSummaryDao outboundSummaryDao) {
         this.outboundSummaryDao = outboundSummaryDao;
+    }
+    
+    public List getOutboundProductSummary(String productid,String from,String to,String saleby,String payby,String bank,String printby) {
+        return outboundSummaryDao.getOutboundProductSummary(productid, from, to, saleby, payby, bank, printby);
     }
     
 }

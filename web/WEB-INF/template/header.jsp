@@ -77,7 +77,7 @@
                                             "<li><a id='menu-mdaytour' href='MDaytour.smi'>Tour</a></li>",
                                             "<li><a id='menu-mcommission' href='MCommission.smi'>Commission</a></li>",
                                             "<li><a id='menu-mbank' href='MBank.smi'>Bank</a></li>",
-                                            "<li><a id='menu-maccountcode' href='MAccountCode.smi'>Account Code</a></li>",
+                                         //   "<li><a id='menu-maccountcode' href='MAccountCode.smi'>Account Code</a></li>",
                                             "<li><a id='menu-maparcode' href='APARCode.smi'>AP/AR Code</a></li>",         
                                             "<li><a id='menu-stock' href='SearchStock.smi'>Stock</a></li>",
                                             "<li><a id='menu-DefineVar' href='DefineVar.smi'>Define Variable</a></li>",
@@ -96,8 +96,8 @@
                                             "<li><a href=''>Land</a></li>",
                                             "<li><a href=''>Others</a></li>",
                                             "<li><a href='InvoiceMonthly.smi'>Finance And Account</a></li>",
-                                            "<li><a href='OutboundSummary.smi'>Outbound Summary</a></li>",
-                                            "<li><a href='PackageTourHotel.smi'>Booking Summary</a></li>"];
+                                            "<li><a href='OutboundSummary.smi'>Outbound summary</a></li>",
+                                            "<li><a href='AirTicketMonthReport.smi'>Booking Summary</a></li>"];
                             var CheckingMenu = [
                                             "<li><a href='PaymentTourHotel.smi'> PackageTour/Hotel </a></li>",
                                             "<li><a href='AddTicketFare.smi'> AirTicket </a></li>",
