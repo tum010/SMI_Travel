@@ -64,7 +64,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Package <font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Package </label>
                                 <div class="col-md-3 form-group" >  
                                     <div class="input-group">
                                         <input name="InputPackageId" id="InputPackageId" type="hidden" class="form-control" value="" />
@@ -570,7 +570,7 @@ function printPackageSummary(){
         var city = $("#SelectCity").val();
         var package = $("#InputPackageId").val();
         
-        if(((form !== '') && (to !== '')) && form < to && (package !== '')){
+        if(((form !== '') && (to !== '')) && form < to ){
             $("#printbutton").removeClass("disabled");
             window.open("Excel.smi?name=OutboundPackageSummary"
                         + "&fromdate=" + form 
@@ -582,7 +582,7 @@ function printPackageSummary(){
                         + "&city=" + city 
                         + "&package=" + package 
                         );
-        }else if((((form !== '') && (to !== '')) && form === to) && (package !== '')) {
+        }else if((((form !== '') && (to !== '')) && form === to) ) {
             $("#printbutton").removeClass("disabled");
             window.open("Excel.smi?name=OutboundPackageSummary"
                         + "&fromdate=" + form 
@@ -597,7 +597,6 @@ function printPackageSummary(){
         }else {
             $('#PackageSummaryForm').bootstrapValidator('revalidateField', 'fromdate');
             $('#PackageSummaryForm').bootstrapValidator('revalidateField', 'todate');
-            $('#PackageSummaryForm').bootstrapValidator('revalidateField', 'InputPackageCode');
             $("#printbutton").addClass("disabled");
         }
 
