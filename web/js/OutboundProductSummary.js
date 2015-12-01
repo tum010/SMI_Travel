@@ -122,11 +122,13 @@ function printOutboundProductSummary(){
     var saleby  = $("#salebyId").val();
     var payby  = $("#SelectPayby").val();
     var bank  = $("#SelectBank").val();
-    
+    var productname  = $("#InputProductName").val();
+    var salename  = $("#salebyName").val();
+    var status = $("#SelectStatus").val();
     if((from === '') || (to === '')){
         validateDate();
     } else {
-        window.open("Excel.smi?name=OutboundProduct&fromdate="+from+"&todate="+to+"&productid="+productid+"&saleby="+saleby+"&payby="+payby+"&bank="+bank);   
+        window.open("Excel.smi?name=OutboundProduct&fromdate="+from+"&todate="+to+"&productid="+productid+"&saleby="+saleby+"&payby="+payby+"&bank="+bank+"&productname="+productname+"&salename="+salename+"&status="+status);   
     }
 }
 
