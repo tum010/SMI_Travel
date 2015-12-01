@@ -157,7 +157,7 @@
                             <div class="col-md-3 ">
                                 <div class="form-group">
 
-                                    <label for="effectivefrom" class="col-sm-3 control-label" > Date </label>
+                                    <label for="effectivefrom" class="col-sm-3 control-label" > From </label>
                                     <div class=' col-sm-6 input-group date' id='effectivefromClass' style="width: 140px">
                                         <input type='text' class="form-control"  id="otherdate" name="otherdate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['otherdate']}"/>                                     
                                         <span class="input-group-addon spandate">
@@ -191,6 +191,18 @@
                                 </div>
                                 <div class="col-sm-6" style="padding-left: 20px">  
                                     <input type="text" class="form-control" style="width: 250px" id="agent_name" name="agent_name" value="${requestScope['agent_name']}" readonly="">
+                                </div>
+                            </div>
+                            <div class="col-md-3 ">
+                                <div class="form-group">
+
+                                    <label for="effectivefrom" class="col-sm-3 control-label" > To </label>
+                                    <div class=' col-sm-6 input-group date' id='effectivefromClass' style="width: 140px">
+                                        <input type='text' class="form-control"  id="otherdateTo" name="otherdateTo" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['otherdateTo']}"/>                                     
+                                        <span class="input-group-addon spandate">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>                                                                            
                                 </div>
                             </div>
                         </div>

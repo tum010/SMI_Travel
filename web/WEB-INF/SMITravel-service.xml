@@ -176,6 +176,7 @@
         <property name="bookingSummaryDao" ref="BookingSummaryDao" />
         <property name="otherBookingDao" ref="OtherBookingDao" />
         <property name="saleVatReportDao" ref="SaleVatReportDao" />
+        <property name="outboundSummaryDao" ref="OutboundSummaryDao" />
     </bean> 
     
     

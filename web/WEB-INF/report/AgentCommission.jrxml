@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="65"/>
+	<property name="ireport.x" value="30"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/Users/taninsammanee/Projects/ICONEXT/icoweb/trunk/SMITravel/web/WEB-INF/report/"]]></defaultValueExpression>
@@ -22,28 +22,28 @@
 	<pageHeader>
 		<band height="80">
 			<staticText>
-				<reportElement x="1" y="4" width="283" height="20" uuid="9d2d185a-081e-487f-85e6-1a937cfb33be"/>
+				<reportElement x="1" y="13" width="283" height="20" uuid="9d2d185a-081e-487f-85e6-1a937cfb33be"/>
 				<textElement>
 					<font size="13"/>
 				</textElement>
 				<text><![CDATA[Report Days Tour Agent Commission Service]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="71" y="28" width="18" height="19" uuid="1bc5ae63-b011-4cf1-b255-f99722416a85"/>
-				<textElement textAlignment="Center">
+				<reportElement x="71" y="37" width="18" height="19" uuid="1bc5ae63-b011-4cf1-b255-f99722416a85"/>
+				<textElement>
 					<font size="11"/>
 				</textElement>
 				<text><![CDATA[to]]></text>
 			</staticText>
 			<textField pattern="">
-				<reportElement x="2" y="29" width="69" height="19" uuid="6d753604-badd-4df5-a753-6f3997e3db8b"/>
-				<textElement textAlignment="Right">
+				<reportElement x="2" y="38" width="69" height="19" uuid="6d753604-badd-4df5-a753-6f3997e3db8b"/>
+				<textElement>
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{datefrom}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="89" y="29" width="90" height="19" uuid="e6318956-fdd2-4fdf-8bf3-354beabacd5f"/>
+				<reportElement x="89" y="38" width="90" height="19" uuid="e6318956-fdd2-4fdf-8bf3-354beabacd5f"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
@@ -69,15 +69,15 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="369" y="48" width="163" height="15" uuid="caf8d549-d7ae-432e-b26e-5fcda3de165f"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="532" y="48" width="17" height="15" uuid="234ae40f-04a5-48d6-b417-b5730389fc00"/>
+				<reportElement x="527" y="48" width="17" height="15" uuid="865fe6d9-842e-47e1-b6a0-a138f629a029"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="364" y="48" width="163" height="15" uuid="67e5c646-b01a-4d1f-ad6f-269622af5f73"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page : "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

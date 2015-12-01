@@ -446,6 +446,9 @@
     <bean id="PaymentOutboundDao" class="com.smi.travel.datalayer.dao.impl.PaymentOutboundImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
+    <bean id="OutboundSummaryDao" class="com.smi.travel.datalayer.dao.impl.OutboundSummaryImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
     
     <!-- Component Bean -->
     <bean id="AJAXBean" class="com.smi.travel.datalayer.bean.master.AJAXBean">
