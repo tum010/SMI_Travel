@@ -692,8 +692,9 @@
     </bean>
     
     <bean id="OutboundPackageSummaryController" class="com.smi.travel.controller.OutboundPackageSummaryController">
-
+        <property name="utilityService" ref="UtilityService" />
     </bean>
+    
     <bean id="OutboundProductSummaryController" class="com.smi.travel.controller.OutboundProductSummaryController">
         <property name="utilityService" ref="UtilityService" />
         <property name="bookingOtherService" ref="BookingOtherService" />
@@ -826,6 +827,8 @@
         <bean id="TicketFareSummary" class="com.smi.travel.controller.excel.checking.airticket.TicketFareSummary">
 	</bean>
         
+        <bean id="OutboundPackageSummaryReport" class="com.smi.travel.controller.excel.booking.OutboundPackageSummary">
+	</bean>
 <!--	<mvc:annotation-driven />
 	<context:annotation-config />
 	<context:component-scan base-package="com.smi.travel.controller,com.smi.travel.**.controller" />-->
