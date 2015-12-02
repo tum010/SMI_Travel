@@ -495,7 +495,7 @@ public class InvoiceImpl implements InvoiceDao{
                     invoiceView.setInvoiceNo(listInvoice.get(i).getInvNo());
                     invoiceView.setDepartment(listInvoice.get(i).getDepartment());
                     invoiceView.setType(listInvoice.get(i).getInvType());
-                    String invoiceDate = utility.convertDateToString(listInvoice.get(i).getCreateDate());
+                    String invoiceDate = utility.convertDateToString(listInvoice.get(i).getInvDate());
                     invoiceView.setInvoiceDate(invoiceDate);
                     invoiceView.setName(listInvoice.get(i).getInvName());
                     invoiceView.setAddress(listInvoice.get(i).getInvAddress());
