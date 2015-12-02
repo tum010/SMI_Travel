@@ -96,7 +96,7 @@
                                             "<li><a id='menu-land' href=''>Land</a></li>",
                                             "<li><a id='menu-other' href=''>Others</a></li>",
                                             "<li><a id='menu-financeandaccount' href='InvoiceMonthly.smi'>Finance And Account</a></li>",
-                                            "<li><a id='menu-outboundsummary' href='OutboundSummary.smi'>Outbound summary</a></li>",
+                                            "<li><a id='menu-outboundsummary' href='OutboundSummary.smi'>Outbound Summary</a></li>",
                                             "<li><a id='menu-bookingsummary' href='AirTicketMonthReport.smi'>Booking Summary</a></li>"];
                             var CheckingMenu = [
                                             "<li><a id='menu-packagetourhotel' href='PaymentTourHotel.smi'> PackageTour/Hotel </a></li>",
