@@ -459,27 +459,37 @@ td div .selectize-input{
 }
 
 .panel > .wendyheader{
-    color: #FFFFFF;
-    background-color: #11BF00;
-    border-color: #0E8F00;
+    color: #000000;
+    background-color: #FFCD97;
+    border-color: #FCBB75;
 }
 
 .nav > .wendyheader{
-    border-color: #0E8F00;
+    border-color: #FCBB75;
 }
 
 .wendyborder{
-    border-color: #0E8F00;
+    border-color: #FCBB75;
 }
 
 .panel  > .outboundheader{
-    color: #FFFFFF;
+    color: #000000;
     background-color : #FF8003;
     border-color : #F55E00;
 }
 
 .outboundborder{
     border-color : #F55E00;
+}
+
+.panel  > .inboundborderheader{
+    color: #000000;
+    background-color : #11BF00;
+    border-color : #0E8F00;
+}
+
+.inboundborder{
+    border-color : #0E8F00;
 }
 
 /*input:not([type]), input[type="text"]
