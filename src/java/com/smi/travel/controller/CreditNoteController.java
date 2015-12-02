@@ -78,6 +78,9 @@ public class CreditNoteController extends SMITravelController {
                     cn.setDepartment(department);
                     cn.setCreateBy(user.getUsername());
                     cn.setCreateDate(Calendar.getInstance().getTime());
+                }else{
+                    String createDate = request.getParameter("createDate");
+                    cn.setCreateDate(utilty.convertStringToDate(createDate));
                 }
                 result = creditNoteService.saveCreditNote(cn);
             }
@@ -201,7 +204,7 @@ public class CreditNoteController extends SMITravelController {
             String name = request.getParameter("name");
             String address = request.getParameter("address");
             String remark = request.getParameter("remark");
-            String apCode = request.getParameter("apCode");
+            String apCode = request.getParameter("apCode");           
 
             cn.setId(cnId);
             cn.setCnNo(cnNo);

@@ -72,6 +72,7 @@
                 </div>
                 <input type="hidden" name="action" id="action" value="search">
                 <input type="hidden" name="cnId" id="cnId" value="${creditNote.id}"/>
+                <input type="hidden" name="createDate" id="createDate" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${creditNote.createDate}" />"/>
                 <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                 <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                 <div class="panel panel-default ${panelborder}">
