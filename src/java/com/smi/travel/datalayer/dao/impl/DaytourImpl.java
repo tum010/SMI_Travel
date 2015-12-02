@@ -176,24 +176,28 @@ public class DaytourImpl implements DaytourDao{
 
     @Override
     public String DeleteTour(Daytour tour) {
+        String textResult = "";
         String result = "";
         String resultTourPrice = "";
         String resultTourExpense = "";
         
         if(CheckUsabilityTour(tour)){
             result = "Use Booking";
-            return result;
+        }else{
+            result = "";
         }
         if(IsExistTourPrice(tour.getId())){
             resultTourPrice = "Use Tour Price";
-            return resultTourPrice;
+        }else{
+            resultTourPrice = "";
         }
         if(IsExistTourExpense(tour.getId())){
             resultTourExpense = "Use Tour Expense";
-            return resultTourExpense;
+        }else{
+            resultTourExpense = "";
         }
         
-        if(!"".equals(result) && !"".equals(resultTourExpense) && !"".equals(resultTourPrice)){
+        if("".equals(result) && "".equals(resultTourExpense) && "".equals(resultTourPrice)){
             try {
                 Session session = this.sessionFactory.openSession();
                 transaction = session.beginTransaction();
@@ -201,13 +205,23 @@ public class DaytourImpl implements DaytourDao{
                 transaction.commit();
                 session.close();
                 this.sessionFactory.close();
-                result = "delete successful"; 
+                textResult = "delete successful"; 
             } catch (Exception ex) {
                 ex.printStackTrace();
-                result = "delete unsuccessful";
+                textResult = "delete unsuccessful";
             }
+        }else{
+            if("Use Booking".equals(result)){
+                textResult =  result;
+            }
+            if("Use Tour Price".equals(resultTourPrice)){
+                textResult =  resultTourPrice;
+            } 
+            if("Use Tour Expense".equals(resultTourExpense)){
+                textResult =  resultTourExpense;
+            } 
         }
-        return result;
+        return textResult;
     }
     
     private boolean IsExistTourPrice(String TourID){
