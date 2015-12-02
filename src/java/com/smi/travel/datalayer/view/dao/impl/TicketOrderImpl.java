@@ -175,38 +175,25 @@ public class TicketOrderImpl implements TicketOrderDao{
                 .list();
         
         List description = new ArrayList();
-        TicketOrderDescription ticketOrderDescription = new TicketOrderDescription();
+        
         for (int i = 0; i < QueryDescList.size(); i++) {
-            Object[] data = QueryDescList.get(i);           
-            if (i == 0) {
-                ticketOrderDescription.setDescription1(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(data[0]))) ? util.ConvertString(data[0]) : "");
-                ticketOrderDescription.setNet1(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(data[1]))) ? util.ConvertString(data[1]) : "");
-                ticketOrderDescription.setSell1(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(data[2]))) ? util.ConvertString(data[2]) : "");
-            } else if (i == 1) {
-                ticketOrderDescription.setDescription2(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(data[0]))) ? util.ConvertString(data[0]) : "");
-                ticketOrderDescription.setNet2(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(data[1]))) ? util.ConvertString(data[1]) : "");
-                ticketOrderDescription.setSell2(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(data[2]))) ? util.ConvertString(data[2]) : "");
-            }
-            
-//            if (i == 0) {
-//                ticket.setDescription1(util.ConvertString(data[0]));
-//                ticket.setNet1(util.ConvertString(data[1]));
-//                ticket.setSell1(util.ConvertString(data[2]));
-//            } else if (i == 1) {
-//                ticket.setDescription2(util.ConvertString(data[0]));
-//                ticket.setNet2(util.ConvertString(data[1]));
-//                ticket.setSell2(util.ConvertString(data[2]));
-//            }
+            Object[] data = QueryDescList.get(i);
+            TicketOrderDescription ticketOrderDescription = new TicketOrderDescription();
+            ticketOrderDescription.setDescription1(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(data[0]))) ? util.ConvertString(data[0]) : "");
+            ticketOrderDescription.setNet1(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(data[1]))) ? util.ConvertString(data[1]) : "");
+            ticketOrderDescription.setSell1(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(data[2]))) ? util.ConvertString(data[2]) : "");
+            description.add(ticketOrderDescription);
         }
-        if(QueryDescList.size() == 0){
-            ticketOrderDescription.setDescription1("");
-            ticketOrderDescription.setNet1("");
-            ticketOrderDescription.setSell1("");
-            ticketOrderDescription.setDescription2("");
-            ticketOrderDescription.setNet2("");
-            ticketOrderDescription.setSell2("");
-        }
-        description.add(ticketOrderDescription);
+//        if(QueryDescList.size() == 0){
+//            TicketOrderDescription ticketOrderDescription = new TicketOrderDescription();
+//            ticketOrderDescription.setDescription1("");
+//            ticketOrderDescription.setNet1("");
+//            ticketOrderDescription.setSell1("");
+//            ticketOrderDescription.setDescription2("");
+//            ticketOrderDescription.setNet2("");
+//            ticketOrderDescription.setSell2("");
+//        }
+        
         ticket.setDescriptionDataSource(new JRBeanCollectionDataSource(description));
         
         List<Object[]> QueryPassengerList = session.createSQLQuery("SELECT * FROM `ticket_order_passenger` where `ticket_order_passenger`.pnr_id = " + pnrID)
