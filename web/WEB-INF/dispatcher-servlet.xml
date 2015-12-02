@@ -504,6 +504,7 @@
 		<property name="ticketFareAirlineService" ref="TicketFareAirlineService" />
 		<property name="agentService" ref="AgentService" />
                 <property name="receiptService" ref="ReceiptService" />
+                <property name="invoiceService" ref="InvoiceService" />
 	</bean>
 
 	<bean id="SearchTicketFareController" class="com.smi.travel.controller.SearchTicketFareController">

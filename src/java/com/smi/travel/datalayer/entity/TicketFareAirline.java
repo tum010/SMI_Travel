@@ -57,6 +57,7 @@ public class TicketFareAirline {
      private Integer isWaitPay;
      private BigDecimal wht;
      private Integer isTempTicket;
+     private String otherAirAgent;
      private List paymentAirticketFares = new LinkedList<PaymentAirticketFare>();
      private List refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
      private List ticketFareInvoices = new LinkedList<TicketFareInvoice>();
@@ -461,6 +462,14 @@ public class TicketFareAirline {
 
     public void setIsTempTicket(Integer isTempTicket) {
         this.isTempTicket = isTempTicket;
+    }
+
+    public String getOtherAirAgent() {
+        return otherAirAgent;
+    }
+
+    public void setOtherAirAgent(String otherAirAgent) {
+        this.otherAirAgent = otherAirAgent;
     }
 
     

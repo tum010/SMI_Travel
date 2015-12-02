@@ -140,6 +140,9 @@
         <property name="isTempTicket" type="java.lang.Integer">
             <column name="is_temp_ticket" />
         </property>
+        <property name="otherAirAgent" type="string">
+            <column name="other_air_agent" />
+        </property>
         <bag name="paymentAirticketFares" table="payment_airticket_fare" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ticket_fare_id" />

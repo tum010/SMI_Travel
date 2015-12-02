@@ -221,7 +221,15 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 AirticketAirline airticketAirline = ticketPassList.get(i).getAirticketAirline();
                 MInitialname mInitialname = ticketPassList.get(i).getMInitialname();
                 if(airticketAirline.getMAirline() != null){
-                    ticketAirline = getMAirlineAgentIdFromCode(ticketPassList.get(i).getAirticketAirline().getMAirline().getCode());
+                    if("A".equalsIgnoreCase(ticketType)){
+                        ticketAirline = getMAirlineAgentIdFromCode(ticketPassList.get(i).getAirticketAirline().getMAirline().getCode());
+                    }else{
+                        if("TG".equalsIgnoreCase(ticketPassList.get(i).getAirticketAirline().getMAirline().getCode())){
+                            ticketAirline = "2";
+                        }else{
+                            ticketAirline = "1";
+                        }
+                    }
                 }
                 if(mInitialname != null){
                     initialname = mInitialname.getName();

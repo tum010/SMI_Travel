@@ -22,4 +22,5 @@ public interface AgentDao {
     public Agent getAgentFromID(String agentID);
     public List<Agent> getListAgent();
     public List<Agent> getListAgentForBookingDetail();
+    public Agent getAgentFromCode(String code); 
 }

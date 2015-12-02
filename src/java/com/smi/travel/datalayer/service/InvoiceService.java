@@ -101,4 +101,8 @@ public class InvoiceService {
     public String setBookingStatus(Invoice invoice){
         return invoiceDao.setBookingStatus(invoice);
     }
+    
+    public Invoice getInvoiceFromId(String invoiceId){
+        return invoiceDao.getInvoiceFromId(invoiceId);
+    }
 }

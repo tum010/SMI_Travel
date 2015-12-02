@@ -217,5 +217,21 @@ public class AgentImpl implements AgentDao{
         return agent;
     }
 
+    @Override
+    public Agent getAgentFromCode(String code) {
+        Agent agent = null;
+        String query = "from Agent a where a.code = :code";
+        Session session = this.sessionFactory.openSession();
+        List<Agent> AgentList = session.createQuery(query).setParameter("code", code).list();
+       
+        if (AgentList.isEmpty()) {
+            return null;
+        }else{
+           agent =  AgentList.get(0);
+        }
+
+        return agent;
+    }
+
        
 }

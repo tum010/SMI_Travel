@@ -80,6 +80,7 @@
                         <div class="col-xs-1 form-group" style="width: 200px" id="ticketnopanel">
                             <div class="input-group"  id='ticketnumber'>
                                 <input id="ticketId" name="ticketId" type="hidden" class="form-control" maxlength="11" value="${ticketFare.id}">
+                                <input id="ticketNoTempSearch" name="ticketNoTempSearch" type="hidden" class="form-control" maxlength="20" value="${ticketFare.ticketNo}">
                                 <input id="ticketNo" name="ticketNo" type="text" class="form-control" maxlength="20" value="${ticketFare.ticketNo}">
                             </div>
                             
@@ -169,18 +170,22 @@
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label text-right">Airline&nbsp;</label>
                         </div> 
-                        <div class="col-xs-1" style="width: 200px">
-                            <select name="ticketAirline" id="ticketAirline" class="form-control">
-                                <option value="">--- Airline ---</option> 
+                        <div class="col-xs-1" style="width: 120px">
+                            <select name="ticketAirline" id="ticketAirline" class="form-control" onclick="checkAirlineSelected()">
+                                <option value="">-- Airline --</option> 
                                 <c:forEach var="table" items="${airlineList}" >
                                     <c:set var="select" value="" />
                                     <c:set var="selectedId" value="${ticketFare.MAirlineAgent.id}" />
                                     <c:if test="${table.id == selectedId}">
                                         <c:set var="select" value="selected" />
                                     </c:if>
-                                    <option value="${table.id}" ${select}>${table.code}</option>  
+                                    <option value="${table.id}" ${select}>${table.code}</option>
                                 </c:forEach>
+                                    <option value="OTHER">OTHER</option>
                             </select>
+                        </div>
+                        <div class="col-xs-1" style="width:140px">
+                                <input id="ticketAirlineOther" name="ticketAirlineOther" type="text" class="form-control" maxlength="50" value="${ticketFare.otherAirAgent}" disabled="">
                         </div>
                     </div>
                 </div>
@@ -935,6 +940,12 @@
             FilterTicketList($("#filtercus").val());
         }
         
+        if($('#ticketAirlineOther').val() === ''){
+            $("#ticketAirlineOther").attr("disabled", "disabled");
+        }else{
+            $('#ticketAirline').val('OTHER');
+            $("#ticketAirlineOther").removeAttr("disabled");
+        }
 //        if($('#refno').val() != ""){
 //            var refNo = $('#refno').val();
 //            $("#filtercus").val(refNo);
@@ -1527,8 +1538,11 @@ function saveAction(optionsave){
 }
 
 function searchTicketNo() {
-    $("#ticketId").val("");
+    var ticketnotempsearch = $("#ticketNoTempSearch").val();
     var ticketNo = $("#ticketNo").val();
+    if(ticketnotempsearch !== ticketNo){
+        $("#ticketId").val("");
+    }
     FilterCheckTicketNoList(ticketNo);
     
 //    var ticketnopanel = $("#ticketnopanel").val();
@@ -1586,6 +1600,7 @@ function CallFilterCheckTicketNoList(param) {
                             "iDisplayLength": 10
                         });
                         $("#ajaxload").addClass("hidden");
+//                        $("#isTempTicket").val("1"); 
                         searchTicketNoAction();
                     }else{
                         $('#ListTicketNoDuplicateTable').dataTable().fnClearTable();
@@ -1791,6 +1806,7 @@ function clearData(){
     $("#ticketType").val("");
     $("#ticketRouting").val("");
     $("#ticketAirline").val("");
+    $("#ticketAirlineOther").val("");
     $("#passenger").val("");
     $("#ticketBuy").val("");
     $("#department").val("");
@@ -2007,5 +2023,14 @@ function searchTicketNoNew(){
 function selectInvoiceDetailRadio(row){
    document.getElementById('selectInvId').value = $("#selectInvoiceDetail"+row).val();
 }    
+
+function checkAirlineSelected(){
+    var air = $("#ticketAirline").val(); 
+    if(air === 'OTHER'){
+        $("#ticketAirlineOther").removeAttr("disabled");
+    }else{
+        $("#ticketAirlineOther").attr("disabled", "disabled");
+    }
+}
 </script>
   

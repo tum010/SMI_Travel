@@ -31,6 +31,10 @@ public class AgentService {
         return agentDao.getAgentFromID(agentID);
     }
     
+    public Agent getAgentFromCode(String code){
+        return agentDao.getAgentFromCode(code);
+    }
+    
     public String validateAgent(Agent Vagent, String operation){
         String validate = "";
         Agent agent = new Agent();
