@@ -19,7 +19,10 @@ public class TicketAircommissionView {
     private String airline;
     private BigDecimal commision;
     private String isUse;
-
+    private String agentcode;
+    private String agentname;
+    private String agentaddress;
+    
     public String getPaymentId() {
         return paymentId;
     }
@@ -66,6 +69,30 @@ public class TicketAircommissionView {
 
     public void setIsUse(String isUse) {
         this.isUse = isUse;
+    }
+
+    public String getAgentcode() {
+        return agentcode;
+    }
+
+    public void setAgentcode(String agentcode) {
+        this.agentcode = agentcode;
+    }
+
+    public String getAgentname() {
+        return agentname;
+    }
+
+    public void setAgentname(String agentname) {
+        this.agentname = agentname;
+    }
+
+    public String getAgentaddress() {
+        return agentaddress;
+    }
+
+    public void setAgentaddress(String agentaddress) {
+        this.agentaddress = agentaddress;
     }
     
 }

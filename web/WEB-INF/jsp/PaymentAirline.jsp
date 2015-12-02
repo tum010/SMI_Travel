@@ -209,7 +209,7 @@
                             <div class="col-xs-1 text-right" style="width: 128px">
                                 <label class="control-label text-right">Ticket From </label>
                             </div>
-                            <div class="col-xs-1" style="width: 300px">
+                            <div class="col-xs-1" style="width: 200px">
                                 <select name="ticketFrom" id="ticketFrom" class="form-control">
                                     <option value="">--- Ticket From ---</option> 
                                      <c:choose>
@@ -226,12 +226,12 @@
                                     <option value="O" ${selectedO}>OUT</option>
                                 </select>
                             </div>
-                            <div class="col-xs-1 text-right" style="width: 122px">
+                            <div class="col-xs-1 text-right" style="width: 128px">
                                 <label class="control-label text-right">Type Airline </label>
                             </div>
-                            <div class="col-xs-1" style="width: 300px">
-                                <select name="typeAirline" id="typeAirline" class="form-control">
-                                    <option value="">--- Airline ---</option> 
+                            <div class="col-xs-1" style="width: 120px">
+                                <select name="typeAirline" id="typeAirline" class="form-control"  onclick="checkAirlineSelected()">
+                                    <option value="">--Airline--</option> 
                                     <c:forEach var="table" items="${airlineList}" >
                                         <c:set var="select" value="" />
                                         <c:set var="selectedId" value="${requestScope['TypeAirline']}" />
@@ -240,35 +240,78 @@
                                         </c:if>
                                         <option value="${table.id}" ${select}>${table.code}</option>  
                                     </c:forEach>
+                                    <option value="OTHER">OTHER</option>
                                 </select>
                             </div>
-                            <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
-                            <div class="col-xs-1 text-right" style="width: 80px">
-                                <button style="height:34px" type="button"  id="ButtonSearchTicket"  name="ButtonSearchTicket" onclick="searchTicketFare();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                            <div class="col-xs-1" style="width:140px">
+                                <input id="typeAirlineOther" name="typeAirlineOther" type="text" class="form-control" maxlength="50" value="${requestScope['TypeAirlineOther']}" disabled="">
                             </div>
+                            <div class="col-xs-1 text-right" style="width: 128px">
+                                <label class="control-label text-right">Ticket Type </label>
+                            </div>
+                            <div class="col-xs-1" style="width: 200px">
+                                <select id="ticketType" name="ticketType" class="form-control selectize" onchange="calculateVat()">
+                                    <option value="">--- Ticket Type ---</option> 
+                                    <c:choose>
+                                        <c:when test="${requestScope['TicketType'] == 'B'}">
+                                            <c:set var="selectedB" value="selected" />
+                                        </c:when>
+                                    </c:choose>
+                                    <option value="B" ${selectedB}>BSP</option>
+                                    <c:choose>
+                                        <c:when test="${requestScope['TicketType'] == 'D'}">
+                                            <c:set var="selectedD" value="selected" />
+                                        </c:when>
+                                    </c:choose>
+                                    <option value="D" ${selectedD}>DOMESTIC</option>
+                                    <c:choose>
+                                        <c:when test="${requestScope['TicketType'] == 'A'}">
+                                            <c:set var="selectedA" value="selected" />
+                                        </c:when>
+                                    </c:choose>
+                                    <option value="A" ${selectedA}>AGENT</option>
+                                    <c:choose>
+                                        <c:when test="${requestScope['TicketType'] == 'TI'}">
+                                            <c:set var="selectedTI" value="selected" />
+                                        </c:when>
+                                    </c:choose>
+                                    <option value="TI" ${selectedTI}>TG Inter</option>
+
+                                    <c:choose>
+                                        <c:when test="${requestScope['TicketType'] == 'TD'}">
+                                            <c:set var="selectedTD" value="selected" />
+                                        </c:when>
+                                    </c:choose>
+                                    <option value="TD" ${selectedTD}>TG Domestic</option>
+                                </select>
+                            </div>    
                         </div>
                         <div class="col-xs-12" style="padding-top: 15px">
                             <div class="col-xs-1 text-right" style="width: 128px">
                                 <label class="control-label text-right">From </label>
                             </div>
-                            <div class="col-xs-1 form-group text-left" style="width: 170px" id="datefrompanel">
+                            <div class="col-xs-1 form-group text-left" style="width: 200px" id="datefrompanel">
                                 <div class='input-group date' id="inputDateFrom">
                                     <input id="dateFrom" name="dateFrom"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dateFrom']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right" style="width: 130px">
-                            </div>
-                            <div class="col-xs-1 text-right" style="width: 122px">
+<!--                            <div class="col-xs-1 text-right" style="width: 130px">
+                            </div>-->
+                            <div class="col-xs-1 text-right" style="width: 128px">
                                 <label class="control-label text-right">To </label>
                             </div>
-                            <div class="col-xs-1 form-group text-left" style="width: 170px" id="datetopanel">
+                            <div class="col-xs-1 form-group text-left" style="width: 200px" id="datetopanel">
                                 <div class='input-group date' id="inputDateTo">
                                     <input id="dateTo" name="dateTo"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dateTo']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
+                            </div>
+                            <div class="col-xs-1  text-right" style="width: 188px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
+                            <div class="col-xs-1 text-right" style="width: 80px">
+                                <button style="height:34px" type="button"  id="ButtonSearchTicket"  name="ButtonSearchTicket" onclick="searchTicketFare();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                             </div>
                         </div>
                         <table class="display" id="TicketFareTable">
@@ -918,7 +961,14 @@ for(var i = 0; i < rad.length; i++) {
         if($('#searchPaymentNoFlag').val() == "dummy"){
             $('#textAlertPaymentNo').show();
         }     
-         
+        
+        if($('#typeAirlineOther').val() === ''){
+            $("#typeAirlineOther").attr("disabled", "disabled");
+        }else{
+            $('#typeAirline').val('OTHER');
+            $("#typeAirlineOther").removeAttr("disabled");
+        }
+        
         $('#inputDateFrom').datetimepicker().on('dp.change', function (e) {
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'dateFrom');
             var dateTo = $('#dateTo').val();
@@ -2240,6 +2290,16 @@ function printReport(){
     var payno = $('#paymentNo').val();
     if(payno != ''){
         window.open("report.smi?name=PaymentAirlineInfo"+"&payno="+payno); 
+    }
+}
+
+function checkAirlineSelected(){
+    var air = $("#typeAirline").val(); 
+    if(air === 'OTHER'){
+        $("#typeAirlineOther").removeAttr("disabled");
+    }else{
+        $("#typeAirlineOther").val("");
+        $("#typeAirlineOther").attr("disabled", "disabled");
     }
 }
 </script>

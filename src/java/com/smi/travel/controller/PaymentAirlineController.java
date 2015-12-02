@@ -66,7 +66,8 @@ public class PaymentAirlineController extends SMITravelController {
     private static final String DEBITROWCOUNT = "debitRowCount";
     private static final String DEBITLIST = "debitList";
     private static final String SETCALCULATEDEBIT = "setCalculateDebit";
-    
+    private static final String TYPEAIRLINEOTHER = "TypeAirlineOther";
+    private static final String TICKETTYPE = "TicketType";
     private UtilityService utilityService; 
     private PaymentAirTicketService paymentAirTicketService;
     UtilityFunction util;
@@ -103,7 +104,9 @@ public class PaymentAirlineController extends SMITravelController {
         String optionSave = request.getParameter("optionSave");
         // Add PayTo radio
         String payto = request.getParameter("payto");
-
+        String typeAirlineOther = request.getParameter("typeAirlineOther");
+        String ticketType = request.getParameter("ticketType");
+        
         String exportDate = request.getParameter("exportDate");
         String isExport = request.getParameter("isExport");
         System.out.println("  exportDate " + exportDate);
@@ -267,8 +270,12 @@ public class PaymentAirlineController extends SMITravelController {
                 invoiceSupplier = utilityService.getDataInvoiceSuppiler(invoiceSupCode);
                 request.setAttribute(SELECTEDINVOICE, invoiceSupplier);
             }
-           
-            ticketFareViews = paymentAirTicketService.getListTicketFare(dateFrom,dateTo,ticketFrom,typeAirline,invoiceSupCode);
+            
+            if("OTHER".equalsIgnoreCase(typeAirline)){
+                typeAirline = "";
+            }
+            
+            ticketFareViews = paymentAirTicketService.getListTicketFare(dateFrom,dateTo,ticketFrom,typeAirline,invoiceSupCode,typeAirlineOther,ticketType);
             if(ticketFareViews != null){
                 request.setAttribute(SETCALCULATETICKET,1);
                 request.setAttribute(TICKETFARECOUNT,ticketFareViews.size()+1);
@@ -716,6 +723,8 @@ public class PaymentAirlineController extends SMITravelController {
         request.setAttribute(DATETO,dateTo);
         request.setAttribute(TICKETFROM,ticketFrom);
         request.setAttribute(TYPEAIRLINE,typeAirline);
+        request.setAttribute(TYPEAIRLINEOTHER,typeAirlineOther);
+        request.setAttribute(TICKETTYPE,ticketType);
         request.setAttribute(PAYMENTAIRTICKET,paymentAirticket);
         setResponseAttribute(request);
         return PaymentAirline;

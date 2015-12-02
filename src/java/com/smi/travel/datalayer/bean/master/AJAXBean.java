@@ -898,6 +898,10 @@ public class AJAXBean extends AbstractBean implements
         String payNo = "";
         String product = "";
         String currency = "";
+        String receiveFrom = "";
+        String receiveName = "";
+        String receiveAddress = "";
+        String arcode = "";
         for (int i = 0; i < ticketList.size(); i++) {
             No = i + 1;
             product = "9";
@@ -909,17 +913,41 @@ public class AJAXBean extends AbstractBean implements
             isUse = String.valueOf(ticketList.get(i).getIsUse());
             description = String.valueOf(ticketList.get(i).getDetail());
             String newrow = "";
+            System.out.println(" ticketList.get(i).getAgentcode() "+ ticketList.get(i).getAgentcode());
+            if(!"null".equalsIgnoreCase(ticketList.get(i).getAgentcode()) ){
+                receiveFrom = ticketList.get(i).getAgentcode();
+                arcode = ticketList.get(i).getAgentcode();
+            }
+            if(!"null".equalsIgnoreCase(ticketList.get(i).getAgentname())){
+                receiveName = ticketList.get(i).getAgentname();
+            }
+            if(!"null".equalsIgnoreCase(ticketList.get(i).getAgentaddress()) ){
+                receiveAddress = ticketList.get(i).getAgentaddress();
+            }
+
             if ("U".equals(isUse)) {
-                newrow += "<tr>"
-                        + "<td class='text-center'>" + No + "</td>"
+                newrow += "<tr>";
+                        if(!"".equalsIgnoreCase(receiveFrom)){
+                             newrow += "<input type='hidden' name='receiveFromTicAir' id='receiveFromTicAir' value='" + receiveFrom + "'>"
+                            + "<input type='hidden' name='receiveNameTicAir' id='receiveNameTicAir' value='" + receiveName + "'>"
+                            + "<input type='hidden' name='receiveAddressTicAir' id='receiveAddressTicAir' value='" + receiveAddress + "'>"
+                            + "<input type='hidden' name='arcodeTicAir' id='arcodeTicAir' value='" + arcode + "'>";
+                        }
+                newrow  += "<td class='text-center'>" + No + "</td>"
                         + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
                         + "<td class='text-center'>" + isUse + "</td>"
                         + "<td><center><span class='glyphicon glyphicon-plus disable'></span></center></td>"
                         + "</tr>";
             } else if ("N".equals(isUse)) {
-                newrow += "<tr>"
-                        + "<td class='text-center'>" + No + "</td>"
+                newrow += "<tr>";
+                        if(!"".equalsIgnoreCase(receiveFrom)){
+                             newrow += "<input type='hidden' name='receiveFromTicAir' id='receiveFromTicAir' value='" + receiveFrom + "'>"
+                            + "<input type='hidden' name='receiveNameTicAir' id='receiveNameTicAir' value='" + receiveName + "'>"
+                            + "<input type='hidden' name='receiveAddressTicAir' id='receiveAddressTicAir' value='" + receiveAddress + "'>"
+                            + "<input type='hidden' name='arcodeTicAir' id='arcodeTicAir' value='" + arcode + "'>";
+                        }
+                newrow  += "<td class='text-center'>" + No + "</td>"
                         + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
                         + "<td class='text-center'>" + isUse + "</td>"

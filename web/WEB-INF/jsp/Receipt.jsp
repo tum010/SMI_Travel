@@ -2512,6 +2512,12 @@ function CallAjaxSearchPaymentNoAir(param) {
                             "bLengthChange": false,
                             "iDisplayLength": 5
                         });
+                        
+                        document.getElementById("receiveFromCode").value = $("#receiveFromTicAir").val();
+                        document.getElementById("receiveFromName").value = $("#receiveNameTicAir").val();
+                        document.getElementById("receiveFromAddress").value = $("#receiveAddressTicAir").val();
+                        document.getElementById("arCode").value = $("#receiveFromTicAir").val();
+                        
                         $("#AircommissionTable_wrapper").css("min-height",100);
                     }
                     $("#ajaxload3").addClass("hidden");

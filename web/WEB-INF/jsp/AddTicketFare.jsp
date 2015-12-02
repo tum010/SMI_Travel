@@ -1840,6 +1840,19 @@ function clearData(){
     $('#FlightDeailTable').dataTable().fnClearTable();
     $('#FlightDeailTable').dataTable().fnDestroy();
     $("#FlightDeailTable tbody").empty();
+    
+    $('#RefundDetailTable').dataTable().fnClearTable();
+    $('#RefundDetailTable').dataTable().fnDestroy();
+    $("#RefundDetailTable tbody").empty();
+    
+    $('#InvoiceDeailTable').dataTable().fnClearTable();
+    $('#InvoiceDeailTable').dataTable().fnDestroy();
+    $("#InvoiceDeailTable tbody").empty();
+    
+    $('#ReceiptDetailTable').dataTable().fnClearTable();
+    $('#ReceiptDetailTable').dataTable().fnDestroy();
+    $("#ReceiptDetailTable tbody").empty();
+    
     $("#flightPanel").addClass('hidden');
 }
 function calculateVat() {
@@ -2029,6 +2042,7 @@ function checkAirlineSelected(){
     if(air === 'OTHER'){
         $("#ticketAirlineOther").removeAttr("disabled");
     }else{
+        $("#ticketAirlineOther").val("");
         $("#ticketAirlineOther").attr("disabled", "disabled");
     }
 }
