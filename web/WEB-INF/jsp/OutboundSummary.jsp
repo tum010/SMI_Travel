@@ -83,7 +83,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-5 control-label text-right" >Hotel <font style="color: red">*</font></label>
+                                <label class="col-md-5 control-label text-right" >Hotel</label>
                                 <div class="col-md-3 form-group" id="agentcodepanel">  
                                     <div class="input-group">
                                         <input name="InputId" id="InputId" type="hidden" class="form-control" value="" />
@@ -102,7 +102,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="invfromdatepanel">
-                                <label class="col-md-5 control-label text-right">From</label>
+                                <label class="col-md-5 control-label text-right">From<font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group" id="DateFrom">
                                         <div class='input-group date'>
@@ -118,7 +118,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="invtodatepanel">
-                                <label class="col-md-5 control-label text-right">To</label>
+                                <label class="col-md-5 control-label text-right">To<font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group" id="DateTo">
                                         <div class='input-group date' >

@@ -78,12 +78,24 @@ $(document).ready(function() {
             }
         }
     });
+    
+    $("#bookRefNo,#bookLeader,#bookDate,#bookType,#airPnr,#airDeptDate,#airFlight,#hotelName,#hotelCheckIn,#hotelCheckOut,\n\
+        #packageName,#packageAgent,#tourCode,#tourName,#tourDate,#tourPickup,#otherCode,#otherName,#otherDate,#otherAgent,#landOkBy,\n\
+            #landCategory,#landAgent").keyup(function (event) {
+        if (event.keyCode === 13) {
+            searchAction();
+        }
+    });
 
 });
 
 function searchAction() {
-    document.getElementById("action").value = "search";
-    document.getElementById('BookInformationSearch').submit();
+    if($("#bookType").val() !== ''){
+        document.getElementById("action").value = "search";
+        document.getElementById('BookInformationSearch').submit();
+    }else{
+        $("#BookInformationSearch").bootstrapValidator('revalidateField', 'bookType');
+    }   
 }
 
 function searchFillter() {
