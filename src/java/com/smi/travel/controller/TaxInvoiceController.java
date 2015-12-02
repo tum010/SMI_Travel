@@ -147,6 +147,7 @@ public class TaxInvoiceController extends SMITravelController {
                 createDate = dateFormat.format(cal.getTime());              
                 date = utilty.convertStringToDate(createDate);
                 taxInvoice.setCreateDate(date);
+                taxInvoice.setOutputTaxStatus(0);
                 
             } else {
                 taxInvoice.setTaxNo(taxInvNo);               
@@ -158,10 +159,12 @@ public class TaxInvoiceController extends SMITravelController {
                 taxInvoice.setCreateDate(invToDateConvert);
                 taxInvoice.setDepartment(department);               
                 taxInvoice.setOutputTaxStatus(Integer.parseInt(outputTaxStatus));
-                SimpleDateFormat dateformat = new SimpleDateFormat();
-                dateformat.applyPattern("yyyy-MM-dd HH:mm:ss");
-                String postDateTemp = dateformat.format(utilty.convertStringToDateTime(postDate));
-                taxInvoice.setPostDate(utilty.convertStringToDateTime(postDateTemp));
+                if(!"".equalsIgnoreCase(postDate) && postDate != null){
+                    SimpleDateFormat dateformat = new SimpleDateFormat();
+                    dateformat.applyPattern("yyyy-MM-dd HH:mm:ss");
+                    String postDateTemp = dateformat.format(utilty.convertStringToDateTime(postDate));
+                    taxInvoice.setPostDate(utilty.convertStringToDateTime(postDateTemp));
+                }    
             }
             
             if(Integer.parseInt(count) > 1){
