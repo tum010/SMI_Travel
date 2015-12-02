@@ -197,7 +197,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
                 .addScalar("air", Hibernate.STRING)
                 .addScalar("docno", Hibernate.STRING)
                 .addScalar("airlineagent", Hibernate.STRING)
-               .addScalar("agent", Hibernate.STRING)
+               .addScalar("agentname", Hibernate.STRING)
                 .addScalar("passenger", Hibernate.STRING)
                .addScalar("sectorrefund", Hibernate.STRING)
                .addScalar("receiveairline", Hibernate.STRING)
