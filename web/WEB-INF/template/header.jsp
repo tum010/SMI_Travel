@@ -87,7 +87,7 @@
                             var bookingMenu = [ "<li><a id='menu-book' href='Book.smi'> Booking</a></li>",
                                                "<li><a id='menu-information' href='BookInformation.smi'>Information</a></li>" ];
                                            
-                            var daytourMenu = [ "<li><a a id='menu-daytouredit' href='DaytourOperationDetail.smi?action=edit'> Day Tour</a></li>",
+                            var daytourMenu = [ "<li><a a id='menu-daytouredit' href='DaytourOperationDetail.smi?action=edit'> Day tour</a></li>",
                                                 "<li><a id='menu-other' href='DaytourOperationOther.smi'> Other</a></li>"];
                                             
                             var reportMenu = [
@@ -122,8 +122,7 @@
 
                             var daytourMenuString = getActiveMenuString(
                                             daytourMenuList, daytourMenu);
-                            document.getElementById("daytourMenu").innerHTML = daytourMenuString
-                                            + "<li><a id='menu-daytouredit' href='DaytourOperationDetail.smi?action=edit'> Day Tour</a></li>";
+                            document.getElementById("daytourMenu").innerHTML = daytourMenuString;
 
                             var reportMenuString = getActiveMenuString(
                                             reportMenuList, reportMenu);
