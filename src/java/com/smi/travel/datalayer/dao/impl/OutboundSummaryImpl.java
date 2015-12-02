@@ -6,11 +6,14 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.OutboundSummaryDao;
+import com.smi.travel.datalayer.entity.Hotel;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MBank;
 import com.smi.travel.datalayer.entity.MCity;
+import com.smi.travel.datalayer.entity.MCountry;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.PackageTour;
+import com.smi.travel.datalayer.view.entity.OutboundHotelSummaryView;
 import com.smi.travel.datalayer.view.entity.OutboundPackageSummaryView;
 import com.smi.travel.datalayer.view.entity.OutboundProductSummaryExcel;
 import com.smi.travel.datalayer.view.entity.OutputTaxView;
@@ -342,6 +345,152 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
             data.add(other);
         }
         
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+
+    @Override
+    public List getOutboundHotelSummary(String hotelid, String fromdate, String todate, String saleby, String payby, String bank, String status, String city, String country, String printby) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        String paybyname = "ALL";
+        String cityname = "ALL";
+        String countryname = "ALL";
+        String packagename = "ALL";
+        String statusname = "ALL";
+        String bankname = "ALL";
+        String hotelname = "ALL";
+        
+        String query = "SELECT * FROM `outbound_hotel_summary` ohs where ohs.hoteldate BETWEEN '"+fromdate+"' and '"+todate+"'";
+        
+        if((city != null) && (!"".equalsIgnoreCase(city))) {
+            query += " and ohs.city = '" + city + "'" ;
+            
+            String querycity = "from MCity c where c.id = '"+city+"'";
+            List<MCity> mCity = session.createQuery(querycity).list();
+            if(!mCity.isEmpty()) {
+                cityname = mCity.get(0).getName();
+            }
+        }
+        
+        if((country != null) && (!"".equalsIgnoreCase(country))) {
+            query += " and ohs.country = '" + country + "'" ;
+            
+            String querycountry = "from MCountry c where c.id = '"+country+"'";
+            List<MCountry> mCountry = session.createQuery(querycountry).list();
+            if(!mCountry.isEmpty()) {
+                countryname = mCountry.get(0).getName();
+            }
+        }
+         
+        if((hotelid != null) && (!"".equalsIgnoreCase(hotelid))) {
+            query += " and ohs.hotelid = '" + hotelid + "'" ;
+            
+            String queryhotel= " from Hotel h where h.id = '"+hotelid+"'";
+            List<Hotel> hotel = session.createQuery(queryhotel).list();
+            if(!hotel.isEmpty()) {
+                hotelname = hotel.get(0).getName();
+            }
+        }
+        
+        if((saleby != null) && (!"".equalsIgnoreCase(saleby))) {
+            query += " and ohs.saleby = '" + saleby + "'" ;
+        }
+        
+        if((payby != null) && (!"".equalsIgnoreCase(payby))) {
+            query += " and ohs.payid = '" + payby + "'" ;
+            
+            String querypayby = "from MAccpay pay where pay.id = '"+payby+"'";
+            List<MAccpay> mAccpays = session.createQuery(querypayby).list();
+            if(!mAccpays.isEmpty()) {
+                paybyname = mAccpays.get(0).getName();
+            }
+        }
+       
+        if((bank != null) && (!"".equalsIgnoreCase(bank))) {
+            query += " and ohs.bank = '" + bank + "'" ;
+            
+            String querybank = "from MBank bank where bank.id = '"+bank+"'";
+            List<MBank> mBank = session.createQuery(querybank).list();
+            if(!mBank.isEmpty()) {
+                bankname = mBank.get(0).getName();
+            }
+        }
+        
+        if((status != null) && (!"".equalsIgnoreCase(status)) && (!"-- ALL --".equalsIgnoreCase(status))) {
+            query += " and ohs.status = '" + status + "'" ;
+            statusname = status;
+//            String querystatus = "from MItemstatus s where s.id = '"+statusId+"'";
+//            List<MItemstatus> maItemstatus = session.createQuery(querystatus).list();
+//            if(!maItemstatus.isEmpty()) {
+//                statusname = maItemstatus.get(0).getName();
+//            }
+        }
+
+        query += " ORDER BY ohs.hoteldate ";
+        
+        System.out.println("query : "+query);
+        
+        List<Object[]> QueryList = session.createSQLQuery(query)
+                .addScalar("hoteldate", Hibernate.STRING)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("recondno", Hibernate.STRING)
+                .addScalar("leader", Hibernate.STRING)
+                .addScalar("payby", Hibernate.STRING)
+                .addScalar("hotel", Hibernate.STRING)
+                .addScalar("period", Hibernate.STRING)
+                .addScalar("pax", Hibernate.STRING)
+                .addScalar("net", Hibernate.STRING)
+                .addScalar("sale", Hibernate.STRING)
+                .addScalar("reference", Hibernate.STRING)
+                .addScalar("status", Hibernate.STRING)
+                .addScalar("remark", Hibernate.STRING)
+                .addScalar("totalnet", Hibernate.STRING)
+                .addScalar("totalsell", Hibernate.STRING)
+                .addScalar("totalprofit", Hibernate.STRING)
+                .addScalar("transferdate", Hibernate.STRING)
+                .addScalar("seller", Hibernate.STRING)
+                .addScalar("invno", Hibernate.STRING)
+                .addScalar("bank", Hibernate.STRING)
+                .list();
+        
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MMM-yyyy");
+       
+        for (Object[] B : QueryList){
+            OutboundHotelSummaryView outboundHotelSummaryView = new OutboundHotelSummaryView();
+            outboundHotelSummaryView.setHeadcountry(countryname);
+            outboundHotelSummaryView.setHeadcity(cityname);
+            outboundHotelSummaryView.setHeadhotel(hotelname);
+            outboundHotelSummaryView.setHeaddate(util.ConvertString(dateformat.format(util.convertStringToDate(fromdate))) + " to " + util.ConvertString(dateformat.format(util.convertStringToDate(todate))));
+            outboundHotelSummaryView.setHeadpayby(paybyname);
+            outboundHotelSummaryView.setHeadbanktransfer(bankname);
+            outboundHotelSummaryView.setHeadstatus(statusname);
+            outboundHotelSummaryView.setHoteldate(B[0] != null ? util.ConvertString(dateformat.format(util.convertStringToDate(fromdate))) : "");
+            outboundHotelSummaryView.setRefno(B[1] != null ? util.ConvertString(B[1]) : "");
+            outboundHotelSummaryView.setRecordno(B[2] != null ? util.ConvertString(B[2]) : "");
+            outboundHotelSummaryView.setLeader(B[3] != null ? util.ConvertString(B[3]) : "");
+            outboundHotelSummaryView.setPayby(B[4] != null ? util.ConvertString(B[4]) : "");
+            outboundHotelSummaryView.setHotel(B[5] != null ? util.ConvertString(B[5]) : "");
+            outboundHotelSummaryView.setPeriod(B[6] != null ? util.ConvertString(B[6]) : "");
+            outboundHotelSummaryView.setPax(B[7] != null ? util.ConvertString(B[7]) : "0.00");
+            outboundHotelSummaryView.setNet(B[8] != null ? util.ConvertString(B[8]) : "0.00");
+            outboundHotelSummaryView.setSale(B[9] != null ? util.ConvertString(B[9]) : "0.00");
+            outboundHotelSummaryView.setReference(B[10] != null ? util.ConvertString(B[10]) : "");
+            outboundHotelSummaryView.setStatus(B[11] != null ? util.ConvertString(B[11]) : "");
+            outboundHotelSummaryView.setRemark(B[12] != null ? util.ConvertString(B[12]) : "");
+            outboundHotelSummaryView.setTotelnet(B[13] != null ? util.ConvertString(B[13]) : "0.00");
+            outboundHotelSummaryView.setTotalsell(B[14] != null ? util.ConvertString(B[14]) : "0.00");
+            outboundHotelSummaryView.setTotalprofit(B[15] != null ? util.ConvertString(B[15]) : "0.00");
+            outboundHotelSummaryView.setTransferdate(B[16] != null ? util.ConvertString(B[16]) : "");
+            outboundHotelSummaryView.setSeller(B[17] != null ? util.ConvertString(B[17]) : "");
+            outboundHotelSummaryView.setInvno(B[18] != null ? util.ConvertString(B[18]) : "");
+            outboundHotelSummaryView.setBank(B[19] != null ? util.ConvertString(B[19]) : "");
+            data.add(outboundHotelSummaryView);
+        }
         this.sessionFactory.close();
         session.close();
         return data;

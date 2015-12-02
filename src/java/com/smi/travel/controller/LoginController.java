@@ -91,7 +91,12 @@ public class LoginController extends SMITravelController {
                             accountmenu = activateMenu(menuActivate, 7);
                         }
                         Arrays.sort(masterMenu);
+                        Arrays.sort(bookingMenu);
+                        Arrays.sort(daytourMenu);
+                        Arrays.sort(financeMenu);
                         Arrays.sort(reportMenu);
+                        Arrays.sort(accountmenu);
+                        Arrays.sort(checkingMenu);
                         
                         session.setAttribute("mastermenu", masterMenu);
                         session.setAttribute("bookingmenu", bookingMenu);

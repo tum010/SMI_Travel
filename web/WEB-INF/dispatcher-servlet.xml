@@ -833,6 +833,9 @@
         
         <bean id="OutboundPackageSummaryReport" class="com.smi.travel.controller.excel.booking.OutboundPackageSummary">
 	</bean>
+        
+        <bean id="OutboundHotelSummaryReport" class="com.smi.travel.controller.excel.booking.OutboundHotelSummary">
+	</bean>
 <!--	<mvc:annotation-driven />
 	<context:annotation-config />
 	<context:component-scan base-package="com.smi.travel.controller,com.smi.travel.**.controller" />-->

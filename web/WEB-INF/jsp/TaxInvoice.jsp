@@ -94,6 +94,8 @@
                     <c:when test="${fn:contains(page , 'I')}">
                         <h4><b>Tax Invoice Inbound <font style="color: red">${voidTaxInvoice}</font></b></h4>
                         <c:set var="outbound" value="disabled"/>
+                        <c:set var="panelheader" value="inboundborderheader"/>
+                        <c:set var="panelborder" value="inboundborder"/>
                     </c:when> 
 		</c:choose> 
             </div>

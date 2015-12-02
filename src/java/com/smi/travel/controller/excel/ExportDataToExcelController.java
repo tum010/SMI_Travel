@@ -47,6 +47,7 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String SaleVatReport = "SaleVatReport";
     private static final String OutboundProduct = "OutboundProduct";
     private static final String OutboundPackageSummary = "OutboundPackageSummary";
+    private static final String OutboundHotelSummary = "OutboundHotelSummary";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String output =  request.getParameter("output");
@@ -287,6 +288,18 @@ public class ExportDataToExcelController  extends SMITravelController{
             String packageId   = request.getParameter("package");  
             data = reportservice.getOutboundPackageSummaryReportList(fromdate, todate, cityId, packageId, salebyId, paybyId, bankId, statusId);
             return new ModelAndView("OutboundPackageSummaryReport",name,data).addObject(ReportName, name);
+        }else if(OutboundHotelSummary.equals(name)){
+            String hotelidout = request.getParameter("hotelid");    
+            String fromout = request.getParameter("fromdate");    
+            String toout = request.getParameter("todate");    
+            String salebyout = request.getParameter("saleby");    
+            String paybyout = request.getParameter("payby");    
+            String bankout = request.getParameter("bank");
+            String statusout = request.getParameter("status");
+            String cityout = request.getParameter("city");
+            String countryout = request.getParameter("country");
+            data = reportservice.getOutboundHotelSummary(hotelidout, fromout, toout, salebyout, paybyout, bankout, statusout, cityout, countryout, printby);
+            return new ModelAndView("OutboundHotelSummaryReport",name,data).addObject(ReportName, name);
         }
 		
         

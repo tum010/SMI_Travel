@@ -118,12 +118,16 @@
                             <c:set var="typeDepartment" value="Inbound" />
                             <c:set var="typeBooking" value="I" />
                             <h4><b>Receipt Temp Inbound   <font style="color: red">${receiptVoid}</font></b></h4>
+                            <c:set var="panelheader" value="inboundborderheader"/>
+                            <c:set var="panelborder" value="inboundborder"/>
                         </c:when>   
                         <c:when test="${fn:contains(page , 'IV')}">
                             <c:set var="typeReceipt" value="V" />
                             <c:set var="typeDepartment" value="Inbound" />
                             <c:set var="typeBooking" value="I" />
                             <h4><b>Receipt Vat Inbound   <font style="color: red">${receiptVoid}</font></b></h4>
+                            <c:set var="panelheader" value="inboundborderheader"/>
+                            <c:set var="panelborder" value="inboundborder"/>
                         </c:when>    
                     </c:choose>
                 </div>

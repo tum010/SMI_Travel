@@ -291,11 +291,11 @@ public class RefundAirsummary extends AbstractExcelView {
                 cell4.setCellStyle(styleDetailTable);
                 sheet.autoSizeColumn(3);
             HSSFCell cell55 = row.createCell(4);
-                cell55.setCellValue(listRefund.get(r-9).getAirlineagent());
+                cell55.setCellValue(listRefund.get(r-9).getAirlineagentname());
                 cell55.setCellStyle(styleDetailTable);
                 sheet.autoSizeColumn(4);
             HSSFCell cell5 = row.createCell(5);
-                cell5.setCellValue(listRefund.get(r-9).getAirlineagentname());
+                cell5.setCellValue(listRefund.get(r-9).getAgent());
                 cell5.setCellStyle(styleDetailTable);
                 sheet.autoSizeColumn(5);
             HSSFCell cell6 = row.createCell(6);

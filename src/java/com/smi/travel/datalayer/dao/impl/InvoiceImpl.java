@@ -495,7 +495,7 @@ public class InvoiceImpl implements InvoiceDao{
                     invoiceView.setInvoiceNo(listInvoice.get(i).getInvNo());
                     invoiceView.setDepartment(listInvoice.get(i).getDepartment());
                     invoiceView.setType(listInvoice.get(i).getInvType());
-                    String invoiceDate = utility.convertDateToString(listInvoice.get(i).getCreateDate());
+                    String invoiceDate = utility.convertDateToString(listInvoice.get(i).getInvDate());
                     invoiceView.setInvoiceDate(invoiceDate);
                     invoiceView.setName(listInvoice.get(i).getInvName());
                     invoiceView.setAddress(listInvoice.get(i).getInvAddress());
@@ -716,9 +716,14 @@ public class InvoiceImpl implements InvoiceDao{
                     InvoicePrice = InvoicePrice.add(invoiceList.get(j).getAmount());
                 }
                 System.out.println("InvoiceCost : "+InvoiceCost +"InvoicePrice : "+InvoicePrice);
-
-                InvoicePrice = InvoicePrice.add(detail.getAmount());
-                InvoiceCost = InvoiceCost.add(detail.getCost());
+                
+                if(detail.getAmount() != null && !"".equals(detail.getAmount())){
+                    InvoicePrice = InvoicePrice.add(detail.getAmount());
+                }
+                if(detail.getCost() != null && !"".equals(detail.getCost())){
+                    InvoiceCost = InvoiceCost.add(detail.getCost());
+                }
+                
                 System.out.println("SumInvoiceCost : "+InvoiceCost +"SumInvoicePrice : "+InvoicePrice);
                 System.out.println("Compare price : "+price.compareTo(InvoicePrice));
                     if((price.compareTo(InvoicePrice) == -1)){

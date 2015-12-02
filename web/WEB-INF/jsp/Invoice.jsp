@@ -41,7 +41,34 @@
 <div class ="container"  style="padding-top: 15px;" ng-app="">
     <div class="row">        
         <!-- side bar -->
-        <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
+        <c:set var="lineRightMenu" value=""/>
+        <c:choose>
+            <c:when test="${fn:contains(page , 'OT')}">
+               <c:set var="lineRightMenu" value="border-right:  solid 1px #F55E00;padding-top: 10px"/>
+            </c:when>
+            <c:when test="${fn:contains(page , 'OV')}">
+                <c:set var="lineRightMenu" value="border-right:  solid 1px #F55E00;padding-top: 10px"/>
+            </c:when>
+            <c:when test="${fn:contains(page , 'WT')}">
+                <c:set var="lineRightMenu" value="border-right:  solid 1px #FCBB75;padding-top: 10px"/>
+            </c:when>
+            <c:when test="${fn:contains(page , 'WV')}">
+                <c:set var="lineRightMenu" value="border-right:  solid 1px #FCBB75;padding-top: 10px"/>
+            </c:when>
+            <c:when test="${fn:contains(page , 'WN')}">
+                <c:set var="lineRightMenu" value="border-right:  solid 1px #FCBB75;padding-top: 10px"/>
+            </c:when> 
+            <c:when test="${fn:contains(page , 'ON')}">
+                <c:set var="lineRightMenu" value="border-right:  solid 1px #F55E00;padding-top: 10px"/>
+            </c:when> 
+            <c:when test="${fn:contains(page , 'WA')}">
+                <c:set var="lineRightMenu" value="border-right:  solid 1px #FCBB75;padding-top: 10px"/>
+            </c:when> 
+            <c:when test="${fn:contains(page , 'OA')}">
+                <c:set var="lineRightMenu" value="border-right:  solid 1px #F55E00;padding-top: 10px"/>
+            </c:when> 
+        </c:choose> 
+        <div class="col-sm-2" style="${lineRightMenu}">
             <div ng-include="'WebContent/FinanceAndCashier/InvoiceMenu.html'"></div>
         </div>
     

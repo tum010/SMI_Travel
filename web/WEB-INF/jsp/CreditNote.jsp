@@ -53,6 +53,8 @@
                         </c:when>     
                         <c:when test="${fn:contains(page , 'I')}">
                             <c:set var="type" value="Inbound"/>
+                            <c:set var="panelheader" value="inboundborderheader"/>
+                            <c:set var="panelborder" value="inboundborder"/>
                         </c:when> 
                     </c:choose> 
                     <h4><b>Credit Note ${type} <font style="color: red;">${creditNote.MFinanceItemstatus.id == '2' ? 'VOID' : ''}</font></b></h4>
