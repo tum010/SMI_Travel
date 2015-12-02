@@ -767,5 +767,9 @@ public class ReportService {
     public List getOutboundProductSummary(String productid,String from,String to,String saleby,String payby,String bank,String printby,String productname,String salename,String status) {
         return outboundSummaryDao.getOutboundProductSummary(productid, from, to, saleby, payby, bank, printby,productname,salename,status);
     }
+
+    public List getOutboundHotelSummary(String hotelid, String from, String to, String saleby, String payby, String bank, String status, String city, String country, String printby) {
+        return outboundSummaryDao.getOutboundHotelSummary(hotelid, from, to, saleby, payby, bank, status, city, country, printby);
+    }
     
 }
