@@ -560,7 +560,7 @@ function changeFormatCostLocalNumber(id) {
     if (isNaN(count)) {
         document.getElementById('InputCostLocal' + id).value = "";
     } else {
-        count = parseFloat(document.getElementById('InputCostLocal' + id).value);
+        count = parseFloat((document.getElementById('InputCostLocal' + id).value).replace(/,/g,""));
         document.getElementById('InputCostLocal' + id).value = formatNumber(count);
     }
 }

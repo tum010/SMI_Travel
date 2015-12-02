@@ -506,7 +506,7 @@
                                                             </c:forEach>
                                                         </select>
                                                     </td>
-                                                    <td><input type="text" value="${ind.costLocal}" onfocusout="changeFormatCostLocalNumber(${taxdesc.count})" id="InputCostLocal${taxdesc.count}" name="InputCostLocal${taxdesc.count}" class="form-control text-right"></td>
+                                                    <td><input type="text" value="${ind.costLocal}" onfocusout="changeFormatCostLocalNumber('${taxdesc.count}')" id="InputCostLocal${taxdesc.count}" name="InputCostLocal${taxdesc.count}" class="form-control text-right"></td>
                                                     <td class="hidden"><input type="text" value="${ind.costLocal}" id="InputCostLocalTemp${taxdesc.count}" name="InputCostLocalTemp${taxdesc.count}"></td>      
                                                     <td>
                                                         <c:set var="checkIsVat" value="" />
