@@ -210,7 +210,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             System.out.println("get excel data ap RefundTicketDetail");
             System.out.println("Term : " + termPayt);    
             String refundagent = request.getParameter("refundAgentId");
-            String refundnameby = request.getParameter("refundAgentName");
+            String refundnameby = request.getParameter("refundByName");
             String refundBy = request.getParameter("refundBy");
             String passengername = request.getParameter("passenger");
             String receivefrom = request.getParameter("receiveFromDate");
