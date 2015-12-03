@@ -17,6 +17,9 @@ public class PaymentTourCommissionView {
     private String detail;
     private BigDecimal commision;
     private String isUse;
+    private String supcode;
+    private String supname;
+    private String supaddress;
 
     public String getPaymentId() {
         return paymentId;
@@ -56,6 +59,30 @@ public class PaymentTourCommissionView {
 
     public void setIsUse(String isUse) {
         this.isUse = isUse;
+    }
+
+    public String getSupcode() {
+        return supcode;
+    }
+
+    public void setSupcode(String supcode) {
+        this.supcode = supcode;
+    }
+
+    public String getSupname() {
+        return supname;
+    }
+
+    public void setSupname(String supname) {
+        this.supname = supname;
+    }
+
+    public String getSupaddress() {
+        return supaddress;
+    }
+
+    public void setSupaddress(String supaddress) {
+        this.supaddress = supaddress;
     }
     
 }

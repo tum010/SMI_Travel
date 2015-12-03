@@ -901,7 +901,6 @@ public class AJAXBean extends AbstractBean implements
         String receiveFrom = "";
         String receiveName = "";
         String receiveAddress = "";
-        String arcode = "";
         for (int i = 0; i < ticketList.size(); i++) {
             No = i + 1;
             product = "9";
@@ -916,7 +915,6 @@ public class AJAXBean extends AbstractBean implements
             System.out.println(" ticketList.get(i).getAgentcode() "+ ticketList.get(i).getAgentcode());
             if(!"null".equalsIgnoreCase(ticketList.get(i).getAgentcode()) ){
                 receiveFrom = ticketList.get(i).getAgentcode();
-                arcode = ticketList.get(i).getAgentcode();
             }
             if(!"null".equalsIgnoreCase(ticketList.get(i).getAgentname())){
                 receiveName = ticketList.get(i).getAgentname();
@@ -927,10 +925,6 @@ public class AJAXBean extends AbstractBean implements
 
             if ("U".equals(isUse)) {
                 newrow += "<tr>"
-//                        + "<input type='hidden' name='receiveFromTicAir' id='receiveFromTicAir' value='" + receiveFrom + "'>"
-//                        + "<input type='hidden' name='receiveNameTicAir' id='receiveNameTicAir' value='" + receiveName + "'>"
-//                        + "<input type='hidden' name='receiveAddressTicAir' id='receiveAddressTicAir' value='" + receiveAddress + "'>"
-//                        + "<input type='hidden' name='arcodeTicAir' id='arcodeTicAir' value='" + arcode + "'>"
                         + "<td class='text-center'>" + No + "</td>"
                         + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
@@ -939,10 +933,6 @@ public class AJAXBean extends AbstractBean implements
                         + "</tr>";
             } else if ("N".equals(isUse)) {
                 newrow += "<tr>"
-//                        + "<input type='hidden' name='receiveFromTicAir' id='receiveFromTicAir' value='" + receiveFrom + "'>"
-//                        + "<input type='hidden' name='receiveNameTicAir' id='receiveNameTicAir' value='" + receiveName + "'>"
-//                        + "<input type='hidden' name='receiveAddressTicAir' id='receiveAddressTicAir' value='" + receiveAddress + "'>"
-//                        + "<input type='hidden' name='arcodeTicAir' id='arcodeTicAir' value='" + arcode + "'>"
                         + "<td class='text-center'>" + No + "</td>"
                         + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
@@ -967,6 +957,9 @@ public class AJAXBean extends AbstractBean implements
         String payNo = "";
         String product = "";
         String currency = "";
+        String receiveFrom = "";
+        String receiveName = "";
+        String receiveAddress = "";
         for (int i = 0; i < paymentTourList.size(); i++) {
             No = i + 1;
             product = "6";
@@ -977,6 +970,18 @@ public class AJAXBean extends AbstractBean implements
             isUse = String.valueOf(paymentTourList.get(i).getIsUse());
             description = String.valueOf(paymentTourList.get(i).getDetail());
             String newrow = "";
+            
+            if(!"null".equalsIgnoreCase(paymentTourList.get(i).getSupcode()) ){
+                receiveFrom = paymentTourList.get(i).getSupcode();
+            }
+            if(!"null".equalsIgnoreCase(paymentTourList.get(i).getSupname())){
+                receiveName = paymentTourList.get(i).getSupname();
+            }
+            if(!"null".equalsIgnoreCase(paymentTourList.get(i).getSupaddress()) ){
+                receiveAddress = paymentTourList.get(i).getSupaddress();
+            }
+            
+            
             if ("U".equals(isUse)) {
                 newrow += "<tr>"
                         + "<td class='text-center'>" + No + "</td>"
@@ -991,7 +996,7 @@ public class AJAXBean extends AbstractBean implements
 //                        + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
                         + "<td class='text-center'>" + isUse + "</td>"
-                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','','','" + commission + "','" + currency + "','','','','" + airline + "','4','" + description + "','" + payNo + "','" + paymentTourId + "','','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','','','" + commission + "','" + currency + "','','','','" + airline + "','4','" + description + "','" + payNo + "','" + paymentTourId + "','" + receiveFrom + "','" + receiveName + "','" + receiveAddress + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
             }
             html.append(newrow);

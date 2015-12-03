@@ -71,6 +71,9 @@ public class TicketAircommissionViewImpl implements TicketAircommissionViewDao{
                 .addScalar("detail",Hibernate.STRING)
                 .addScalar("commission",Hibernate.BIG_DECIMAL)
                 .addScalar("is_use",Hibernate.STRING)
+                .addScalar("supcode",Hibernate.STRING)
+                .addScalar("supname",Hibernate.STRING)
+                .addScalar("supaddress",Hibernate.STRING)
                 .list();
               
         List<PaymentTourCommissionView> paymentTourCommissionViewList =  new LinkedList<PaymentTourCommissionView>();
@@ -81,6 +84,9 @@ public class TicketAircommissionViewImpl implements TicketAircommissionViewDao{
             payment.setDetail(util.ConvertString(T[2]));
             payment.setCommision(new BigDecimal(String.valueOf(T[3])));
             payment.setIsUse(util.ConvertString(T[4]));
+            payment.setSupcode(util.ConvertString(T[5]));
+            payment.setSupname(util.ConvertString(T[6]));
+            payment.setSupaddress(util.ConvertString(T[7]));
             paymentTourCommissionViewList.add(payment); 
         }
        
