@@ -497,7 +497,7 @@ public class AirlineSummary extends AbstractExcelView {
                     // Row 5
                     HSSFRow row5 = sheetPax.createRow(4);
                     HSSFCell cell51 = row5.createCell(0);
-                    cell51.setCellValue("Air : ");
+                    cell51.setCellValue("Airline Code : ");
                     cell51.setCellStyle(styleC21);
                     HSSFCell cell52 = row5.createCell(1);
                     cell52.setCellValue(dataheader.getHeaderair());
@@ -597,7 +597,7 @@ public class AirlineSummary extends AbstractExcelView {
                     // Row 5
                     HSSFRow row5 = sheetDetail.createRow(4);
                     HSSFCell cell51 = row5.createCell(0);
-                    cell51.setCellValue("Air : ");
+                    cell51.setCellValue("Airline Code : ");
                     cell51.setCellStyle(styleC21);
                     HSSFCell cell52 = row5.createCell(1);
                     cell52.setCellValue(dataheader.getHeaderair());
@@ -697,7 +697,7 @@ public class AirlineSummary extends AbstractExcelView {
                     // Row 5
                     HSSFRow row5 = sheetRounting.createRow(4);
                     HSSFCell cell51 = row5.createCell(0);
-                    cell51.setCellValue("Air : ");
+                    cell51.setCellValue("Airline Code : ");
                     cell51.setCellStyle(styleC21);
                     HSSFCell cell52 = row5.createCell(1);
                     cell52.setCellValue(dataheader.getHeaderair());
@@ -1496,7 +1496,7 @@ public class AirlineSummary extends AbstractExcelView {
                     // Row 5
                     HSSFRow row5 = sheetInv.createRow(4);
                     HSSFCell cell51 = row5.createCell(0);
-                    cell51.setCellValue("Air : ");
+                    cell51.setCellValue("Airline Code : ");
                     cell51.setCellStyle(styleC21);
                     HSSFCell cell52 = row5.createCell(1);
                     cell52.setCellValue(dataheader.getHeaderair());
@@ -1588,7 +1588,7 @@ public class AirlineSummary extends AbstractExcelView {
                     // Row 5
                     HSSFRow row5 = sheetDetail.createRow(4);
                     HSSFCell cell51 = row5.createCell(0);
-                    cell51.setCellValue("Air : ");
+                    cell51.setCellValue("Airline Code : ");
                     cell51.setCellStyle(styleC21);
                     HSSFCell cell52 = row5.createCell(1);
                     cell52.setCellValue(dataheader.getHeaderair());
