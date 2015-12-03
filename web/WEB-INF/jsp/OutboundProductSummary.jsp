@@ -85,7 +85,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Product <font style="color: red">*</font></label>
+                                <label class="col-md-6 control-label text-right" >Product </label>
                                 <div class="col-md-3 form-group" id="agentcodepanel">  
                                     <div class="input-group">
                                         <input name="InputId" id="InputId" type="hidden" class="form-control" value="" />
