@@ -2114,7 +2114,7 @@ function invoicenoValidate(){
     $('#invoicenopanel').addClass('has-success');
     $('#invoicenopanel').removeClass('has-error');  
 }
-function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,checkadd,disdescription,number,paymentTourId){
+function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,checkadd,disdescription,number,paymentTourId,receiveFrom,receiveName,receiveAddress){
     $('#textAlertDuplicateProduct').hide();
     var tempCount = parseInt($("#counter").val());
     var checkAddDuplicate = false;
@@ -2172,12 +2172,18 @@ function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId
         
     }
     if(!checkAddDuplicate){
-        AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number,paymentTourId);
+        AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number,paymentTourId,receiveFrom,receiveName,receiveAddress);
     }else{
         $('#textAlertDuplicateProduct').show();
     }
 }
-function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number,paymentTourId) {
+function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number,paymentTourId,receiveFrom,receiveName,receiveAddress) {
+    
+    document.getElementById("receiveFromCode").value = receiveFrom ;
+    document.getElementById("receiveFromName").value = receiveName ;
+    document.getElementById("receiveFromAddress").value = receiveAddress ;
+    document.getElementById("arCode").value = receiveFrom ;
+    
     var rowAll = row+1;
     for(var i =1; i<rowAll ;i++){
         if($("#receiveProduct"+i).val() != "" 
@@ -2513,10 +2519,10 @@ function CallAjaxSearchPaymentNoAir(param) {
                             "iDisplayLength": 5
                         });
                         
-                        document.getElementById("receiveFromCode").value = $("#receiveFromTicAir").val();
-                        document.getElementById("receiveFromName").value = $("#receiveNameTicAir").val();
-                        document.getElementById("receiveFromAddress").value = $("#receiveAddressTicAir").val();
-                        document.getElementById("arCode").value = $("#receiveFromTicAir").val();
+//                        document.getElementById("receiveFromCode").value = $("#receiveFromTicAir").val();
+//                        document.getElementById("receiveFromName").value = $("#receiveNameTicAir").val();
+//                        document.getElementById("receiveFromAddress").value = $("#receiveAddressTicAir").val();
+//                        document.getElementById("arCode").value = $("#receiveFromTicAir").val();
                         
                         $("#AircommissionTable_wrapper").css("min-height",100);
                     }

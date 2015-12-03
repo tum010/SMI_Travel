@@ -926,32 +926,28 @@ public class AJAXBean extends AbstractBean implements
             }
 
             if ("U".equals(isUse)) {
-                newrow += "<tr>";
-                        if(!"".equalsIgnoreCase(receiveFrom)){
-                             newrow += "<input type='hidden' name='receiveFromTicAir' id='receiveFromTicAir' value='" + receiveFrom + "'>"
-                            + "<input type='hidden' name='receiveNameTicAir' id='receiveNameTicAir' value='" + receiveName + "'>"
-                            + "<input type='hidden' name='receiveAddressTicAir' id='receiveAddressTicAir' value='" + receiveAddress + "'>"
-                            + "<input type='hidden' name='arcodeTicAir' id='arcodeTicAir' value='" + arcode + "'>";
-                        }
-                newrow  += "<td class='text-center'>" + No + "</td>"
+                newrow += "<tr>"
+//                        + "<input type='hidden' name='receiveFromTicAir' id='receiveFromTicAir' value='" + receiveFrom + "'>"
+//                        + "<input type='hidden' name='receiveNameTicAir' id='receiveNameTicAir' value='" + receiveName + "'>"
+//                        + "<input type='hidden' name='receiveAddressTicAir' id='receiveAddressTicAir' value='" + receiveAddress + "'>"
+//                        + "<input type='hidden' name='arcodeTicAir' id='arcodeTicAir' value='" + arcode + "'>"
+                        + "<td class='text-center'>" + No + "</td>"
                         + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
                         + "<td class='text-center'>" + isUse + "</td>"
                         + "<td><center><span class='glyphicon glyphicon-plus disable'></span></center></td>"
                         + "</tr>";
             } else if ("N".equals(isUse)) {
-                newrow += "<tr>";
-                        if(!"".equalsIgnoreCase(receiveFrom)){
-                             newrow += "<input type='hidden' name='receiveFromTicAir' id='receiveFromTicAir' value='" + receiveFrom + "'>"
-                            + "<input type='hidden' name='receiveNameTicAir' id='receiveNameTicAir' value='" + receiveName + "'>"
-                            + "<input type='hidden' name='receiveAddressTicAir' id='receiveAddressTicAir' value='" + receiveAddress + "'>"
-                            + "<input type='hidden' name='arcodeTicAir' id='arcodeTicAir' value='" + arcode + "'>";
-                        }
-                newrow  += "<td class='text-center'>" + No + "</td>"
+                newrow += "<tr>"
+//                        + "<input type='hidden' name='receiveFromTicAir' id='receiveFromTicAir' value='" + receiveFrom + "'>"
+//                        + "<input type='hidden' name='receiveNameTicAir' id='receiveNameTicAir' value='" + receiveName + "'>"
+//                        + "<input type='hidden' name='receiveAddressTicAir' id='receiveAddressTicAir' value='" + receiveAddress + "'>"
+//                        + "<input type='hidden' name='arcodeTicAir' id='arcodeTicAir' value='" + arcode + "'>"
+                        + "<td class='text-center'>" + No + "</td>"
                         + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
                         + "<td class='text-center'>" + isUse + "</td>"
-                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','','','" + commission + "','" + currency + "','','','" + paymentId + "','" + airline + "','3','" + description + "','" + payNo + "','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','','','" + commission + "','" + currency + "','','','" + paymentId + "','" + airline + "','3','" + description + "','" + payNo + "','','" + receiveFrom + "','" + receiveName + "','" + receiveAddress + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
             }
             html.append(newrow);
@@ -995,7 +991,7 @@ public class AJAXBean extends AbstractBean implements
 //                        + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
                         + "<td class='text-center'>" + isUse + "</td>"
-                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','','','" + commission + "','" + currency + "','','','','" + airline + "','4','" + description + "','" + payNo + "','" + paymentTourId + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','','','" + commission + "','" + currency + "','','','','" + airline + "','4','" + description + "','" + payNo + "','" + paymentTourId + "','','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
             }
             html.append(newrow);
@@ -1400,7 +1396,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td>" + displaydescription + "</td>"
                         + "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
-                        + "<td><center><a href=\"#/inv\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','" + isVat + "','" + vat + "','" + amount + "','" + currency + "','" + invId + "','','','','1','" + displaydescription + "','" + invNo + "','' )\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/inv\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','" + isVat + "','" + vat + "','" + amount + "','" + currency + "','" + invId + "','','','','1','" + displaydescription + "','" + invNo + "','','','','' )\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;
@@ -1529,7 +1525,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td>" + displaydescription + "</td>"
                         + "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
-                        + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + currency + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + currency + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "','','','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;
