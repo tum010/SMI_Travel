@@ -387,7 +387,7 @@
             console.log("Name :"+ name + " Code : " + code);
             $("#refundAgentId,#refundAgentName").val(null);
             $.each(agent, function (key, value) {
-                console.log("Name 1:"+ value.code.toUpperCase() + " Code : " + code);
+//                console.log("Name 1:"+ value.username.toUpperCase() + " Code : " + code);
                 if (value.code.toUpperCase() === code ) { 
                     console.log("Name 2:"+ name + " Code : " + code);
                     $("#refundAgentId").val(value.id);
