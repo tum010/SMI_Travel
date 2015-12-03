@@ -34,7 +34,10 @@ public class DaytourImpl implements DaytourDao{
     private static final String TOUREXPENSEQUERY ="from DaytourExpense p where p.daytour.id = :tour";
     private static final String TOURACTIVEQUERY ="from Daytour d where d.status = 'active'";
     private static final String DELETE_PRICEQUERY = "DELETE FROM DaytourPrice p WHERE p.id = :priceid";
+    private static final String DELETE_DAYTOUR = "DELETE FROM Daytour p WHERE p.id = :daytourid";
+    private static final String DELETE_PRICEQUERY_BYDAYTOUR = "DELETE FROM DaytourPrice p WHERE p.daytour.id = :priceid";
     private static final String DELETE_EXPENSEQUERY = "DELETE FROM DaytourExpense e WHERE e.id = :expenseid";
+    private static final String DELETE_EXPENSEQUERY_BYDAYTOUR = "DELETE FROM DaytourExpense e WHERE e.daytour.id = :expenseid";
     private static final String GET_STAFFTOUR_QUERY ="from MDefaultData d where d.name = 'staff tour'";
     
     @Override
@@ -186,22 +189,32 @@ public class DaytourImpl implements DaytourDao{
         }else{
             result = "";
         }
-        if(IsExistTourPrice(tour.getId())){
-            resultTourPrice = "Use Tour Price";
-        }else{
-            resultTourPrice = "";
-        }
-        if(IsExistTourExpense(tour.getId())){
-            resultTourExpense = "Use Tour Expense";
-        }else{
-            resultTourExpense = "";
-        }
+//        if(IsExistTourPrice(tour.getId())){
+//            resultTourPrice = "Use Tour Price";
+//        }else{
+//            resultTourPrice = "";
+//        }
+//        if(IsExistTourExpense(tour.getId())){
+//            resultTourExpense = "Use Tour Expense";
+//        }else{
+//            resultTourExpense = "";
+//        }
         
         if("".equals(result) && "".equals(resultTourExpense) && "".equals(resultTourPrice)){
             try {
                 Session session = this.sessionFactory.openSession();
                 transaction = session.beginTransaction();
-                session.delete(tour);
+//                DeleteTourPriceByDaytourId(tour.getId());
+//                DeleteTourExpenseByDaytourId(tour.getId());
+                Query query1 = session.createQuery(DELETE_PRICEQUERY_BYDAYTOUR)
+                            .setParameter("priceid", tour.getId());
+                System.out.println("row result price : "+query1.executeUpdate());  
+                Query query2 = session.createQuery(DELETE_EXPENSEQUERY_BYDAYTOUR)
+                            .setParameter("expenseid", tour.getId());
+                System.out.println("row result expence: "+query2.executeUpdate()); 
+                Query query = session.createQuery(DELETE_DAYTOUR)
+                            .setParameter("daytourid", tour.getId());
+                System.out.println("row result tour : "+query.executeUpdate());  
                 transaction.commit();
                 session.close();
                 this.sessionFactory.close();
@@ -214,14 +227,51 @@ public class DaytourImpl implements DaytourDao{
             if("Use Booking".equals(result)){
                 textResult =  result;
             }
-            if("Use Tour Price".equals(resultTourPrice)){
-                textResult =  resultTourPrice;
-            } 
-            if("Use Tour Expense".equals(resultTourExpense)){
-                textResult =  resultTourExpense;
-            } 
+//            if("Use Tour Price".equals(resultTourPrice)){
+//                textResult =  resultTourPrice;
+//            } 
+//            if("Use Tour Expense".equals(resultTourExpense)){
+//                textResult =  resultTourExpense;
+//            } 
         }
         return textResult;
+    }
+    
+    private String DeleteTourPriceByDaytourId(String daytourID) {
+        String result = "";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery(DELETE_PRICEQUERY_BYDAYTOUR)
+                            .setParameter("priceid", daytourID);
+            System.out.println("row result price : "+query.executeUpdate());  
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";
+        } catch (Exception ex){
+            ex.printStackTrace();
+            result = "fail";
+        }
+        return result;
+    }
+    private String DeleteTourExpenseByDaytourId(String daytourID) {
+        String result = "";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            Query query = session.createQuery(DELETE_EXPENSEQUERY_BYDAYTOUR)
+                            .setParameter("expenseid", daytourID);
+            System.out.println("row result expence: "+query.executeUpdate());  
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";
+        } catch (Exception ex){
+            ex.printStackTrace();
+            result = "fail";
+        }
+        return result;
     }
     
     private boolean IsExistTourPrice(String TourID){
