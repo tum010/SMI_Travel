@@ -1506,7 +1506,11 @@ public class AJAXBean extends AbstractBean implements
                         String[] parts = displaydesTemp.split("\\|");
                         displaydescription += parts[4] + " : " + parts[5] + " : " + parts[6];
                     }
+                }else{
+                    displaydescription = billTypeName;
                 }
+            }else{
+                displaydescription = billTypeName;
             }
 
             System.out.println("displaydescription" + displaydescription);
