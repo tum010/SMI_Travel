@@ -1374,6 +1374,9 @@
 </c:if>
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
+    
+   var setinvoice = 0; 
+    
     $(document).ready(function() {
         $("#inv,#ref,#com").removeClass('hidden');
         $('.datemask').mask('0000-00-00');
@@ -2088,7 +2091,7 @@ function CallAjaxSearchInvoice(param) {
                             $(this).remove();
                         });
                         $("#InvoiceListTable tbody").empty().append(msg);
-                        
+                        setinvoice = 1;
                         document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
                         document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();
                         document.getElementById("receiveFromAddress").value = $("#receiveAddressInvoice").val();
@@ -2179,10 +2182,13 @@ function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId
 }
 function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number,paymentTourId,receiveFrom,receiveName,receiveAddress) {
     
-    document.getElementById("receiveFromCode").value = receiveFrom ;
-    document.getElementById("receiveFromName").value = receiveName ;
-    document.getElementById("receiveFromAddress").value = receiveAddress ;
-    document.getElementById("arCode").value = receiveFrom ;
+    if(setinvoice !== 1){
+        document.getElementById("receiveFromCode").value = receiveFrom ;
+        document.getElementById("receiveFromName").value = receiveName ;
+        document.getElementById("receiveFromAddress").value = receiveAddress ;
+        document.getElementById("arCode").value = receiveFrom ;
+    }
+    
     
     var rowAll = row+1;
     for(var i =1; i<rowAll ;i++){
@@ -2447,7 +2453,7 @@ function CallAjaxSearchRef(param) {
 
                     }
                     $("#ajaxload2").addClass("hidden");
-                     
+                    setinvoice = 1;
                 } catch (e) {
                     alert(e);
                 }
@@ -2477,6 +2483,7 @@ function searchPaymentNoAir() {
             '&paymentNo=' + paymentNoAir +
             '&type=' + 'searchPaymentNoAir';
     CallAjaxSearchPaymentNoAir(param);
+    
 
 }
 
@@ -2527,7 +2534,7 @@ function CallAjaxSearchPaymentNoAir(param) {
                         $("#AircommissionTable_wrapper").css("min-height",100);
                     }
                     $("#ajaxload3").addClass("hidden");
-                     
+                    setinvoice = 0;
                 } catch (e) {
                     alert(e);
                 }
@@ -2593,7 +2600,7 @@ function CallAjaxSearchPaymentNoTour(param) {
                         $("#TourcommissionTable_wrapper").css("min-height",100);
                     }
                     $("#ajaxload4").addClass("hidden");
-                     
+                     setinvoice = 0;
                 } catch (e) {
                     alert(e);
                 }
