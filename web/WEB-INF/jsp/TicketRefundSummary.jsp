@@ -3,7 +3,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" src="js/jquery.mask.min.js"></script>
+<script type="text/javascript" src="js/selectize.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
+<link href="css/selectize.bootstrap3.css" rel="stylesheet">
 
 <section class="content-header"  >
     <h4>
@@ -180,7 +183,7 @@
 </div>          
                                 
 <!--Modal  Agent-->
-<div class="modal fade" id="RefundAgentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!--<div class="modal fade" id="RefundAgentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -188,7 +191,7 @@
                 <h4 class="modal-title"  id="Titlemodel">Refund Agent</h4>
             </div>
             <div class="modal-body">
-                <table class="display" id="RefundAgentTable">
+                <table class="display" id="AgentRefundTable">
                     <thead class="datatable-header">                     
                         <tr>
                             <th class="hidden">ID</th>
@@ -214,7 +217,56 @@
                         </tr>
                         <script>
                             agent.push({id: "${a.id}", code: "${a.code}", name: "${a.name}",
-                                address: "${a.address}", tel: "${a.tel}", fax: "${a.fax}"});
+                                address: "${a.tel}", tel: "${a.tel}", fax: "${a.fax}"});
+                        </script>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button id="RefundAgentModalClose" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div> /.modal-content 
+    </div> /.modal-dialog 
+</div> -->
+
+<div class="modal fade" id="RefundAgentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Refund Agent</h4>
+            </div>
+            <div class="modal-body">
+                <table class="display" id="AgentRefundTable">
+                    <thead class="datatable-header">                     
+                        <tr>
+                            <th class="hidden">ID</th>
+                            <th>User</th>
+                            <th>Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
+                            <th class="hidden">Fax</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <script>
+                        agent = [];
+                    </script>
+                    <c:forEach var="a" items="${agent}">
+                        <tr onclick="setRefundAgentValue('${a.id}', '${a.code}', '${a.name}', '${a.tel}', '${a.fax}');">
+                            <td class="agent-id hidden">${a.id}</td>
+                            <td class="agent-user">${a.code}</td>
+                            <td class="agent-name">${a.name}</td>
+                            <td class="agent-addr hidden">${a.address}</td>
+                            <td class="agent-tel hidden">${a.tel}</td>
+                            <td class="agent-fax hidden">${a.fax}</td>
+                        </tr>
+                        <script>
+                            agent.push({id: "${a.id}", code: "${a.code}", name: "${a.name}",
+                                address: "${a.tel}", tel: "${a.tel}", fax: "${a.fax}"});
                         </script>
                     </c:forEach>
                     </tbody>
@@ -227,7 +279,7 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div>                    
+</div>
                 
 
 <!--Modal  Customer-->
@@ -282,10 +334,10 @@
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
         });
         
-        var RefundAgentTable = $('#RefundAgentTable').dataTable({bJQueryUI: true,
+        var AgentRefundTable = $('#AgentRefundTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
-            "bFilter": true,
+            "bFilter": false,
             "bPaginate": true,
             "bInfo": false,
             "bLengthChange": false,
@@ -302,7 +354,8 @@
             "iDisplayLength": 10
         });
         
-        $("#RefundAgentTable tr").on('click', function () {
+        $("#AgentRefundTable tr").on('click', function () {
+//            alert("1");
             var agent_id = $(this).find(".agent-id").text();
             var agent_user = $(this).find(".agent-user").text();
             var agent_name = $(this).find(".agent-name").text();
@@ -320,32 +373,35 @@
 
         $("#refundAgentCode").autocomplete({
             source: agentCode,
-            close: function (event, ui) {
-                $("#refundAgentCode").trigger('keyup');
+            close:function( event, ui ) {
+               $("#refundAgentCode").trigger('keyup');
             }
         });
 
-        $("#refundAgentCode").on('keyup', function () {
+        $("#refundAgentCode").on('keyup',function(){
             var position = $(this).offset();
             $(".ui-widget").css("top", position.top + 30);
             $(".ui-widget").css("left", position.left);
             var code = this.value.toUpperCase();
             var name = this.value.toUpperCase();
-            console.log("Name :" + name);
-            $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
+            console.log("Name :"+ name + " Code : " + code);
+            $("#refundAgentId,#refundAgentName").val(null);
             $.each(agent, function (key, value) {
-                if (value.code.toUpperCase() === code) {
+                console.log("Name 1:"+ value.code.toUpperCase() + " Code : " + code);
+                if (value.code.toUpperCase() === code ) { 
+                    console.log("Name 2:"+ name + " Code : " + code);
                     $("#refundAgentId").val(value.id);
                     $("#refundAgentName").val(value.name);
                     $("#refundAgentCode").val(value.code);
                 }
-                else if (value.name.toUpperCase() === name) {
-                    $("#refundAgentCode").val(value.code);
+                else if(value.name.toUpperCase() === name){
+                    console.log("Name 3:"+ name + " Username3 : " + code);
                     $("#refundAgentId").val(value.id);
                     $("#refundAgentName").val(value.name);
+                    $("#refundAgentCode").val(value.code);
                 }
-            });
-        });
+            }); 
+        }); 
         
         //autocomplete
         $("#refundBy").keyup(function (event) {
@@ -781,6 +837,14 @@ function setBillValue(billto, billname, address, term, pay) {
    $("#refundBy").val(billto);
    $("#refundByName").val(billname);
    $("#refundCustModal").modal('hide');
+}
+
+function setRefundAgentValue(id, code, name, term, pay) {
+
+   $("#refundAgentId").val(id);
+   $("#refundAgentCode").val(code);
+   $("#refundAgentName").val(name);
+   $("#RefundAgentModal").modal('hide');
 }
     
 </script>

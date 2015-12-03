@@ -217,21 +217,25 @@ public class RefundAirReportImpl implements RefundAirReportDao{
             RefundTicketView refund = new RefundTicketView();
             //header
             if(refundagent != null && !"".equals(refundagent)){
-               refund.setRefundagentPage(refundagent);
+               refund.setRefundagentPage((util.ConvertString(B[5])) == "" ? "" : util.ConvertString(B[5]));
             }else{
-                refund.setRefundagentPage("");
+                refund.setRefundagentPage("ALL");
             }
             if(refundnameby != null && !"".equals(refundnameby)){
                refund.setRefundbyPage(refundnameby);
             }else{
-                refund.setRefundbyPage("");
+                refund.setRefundbyPage("ALL");
             }
             if(passenger != null && !"".equals(passenger)){
                refund.setPassengerPage(passenger);
             }else{
-                refund.setPassengerPage("");
+                refund.setPassengerPage("ALL");
             }
-            refund.setSelectorrefundPage("");
+            if(sectortoberef != null && !"".equals(sectortoberef)){
+                refund.setSelectorrefundPage(sectortoberef);
+            }else{
+                refund.setSelectorrefundPage("ALL");
+            }
             Date date = new Date();
             SimpleDateFormat sm = new SimpleDateFormat("dd/MM/yyyy");
             String strDate = sm.format(date);
@@ -243,18 +247,18 @@ public class RefundAirReportImpl implements RefundAirReportDao{
                 String receive = ""+ receivefrom +" To " + receiveto;
                 refund.setReceivePage(receive);
             }else{
-                refund.setReceivePage("");
+                refund.setReceivePage("ALL");
             }
             if(paidfrom != null && !"".equals(paidfrom)){
                 String paid = ""+ paidfrom +" To " + paidto;
                 refund.setPaidPage(paid);
             }else{
-                refund.setPaidPage("");
+                refund.setPaidPage("ALL");
             }
             if(typeprint != null && !"".equals(typeprint)){
                refund.setTypeprintPage(typeprint);
             }else{
-                refund.setTypeprintPage("");
+                refund.setTypeprintPage("ALL");
             }
             
             refund.setRefundno((util.ConvertString(B[0])) == "" ? "" : util.ConvertString(B[0]));
