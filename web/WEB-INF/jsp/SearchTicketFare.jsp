@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
-<script type="text/javascript" src="js/SearchTicketFare.js"></script> 
+<!--<script type="text/javascript" src="js/SearchTicketFare.js"></script>--> 
 <link href="css/jquery-ui.css" rel="stylesheet">
 <c:set var="airlineList" value="${requestScope['airlineList']}" />
 <c:set var="ticketFare" value="${requestScope['ticketFare']}" />
@@ -118,7 +118,7 @@
                                 </select>
                             </div>    
                         </div>
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 ">
                             <div class="col-xs-1 text-right" style="width: 150px">
                                 <label class="control-label text-right">Ticket No </label>
                             </div>
@@ -130,8 +130,8 @@
                             <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Issue Date From</label>
                             </div>
-                            <div class="col-xs-1"  style="width: 200px">
-                                <div class='input-group date'>
+                            <div class="col-xs-1 form-group"  style="width: 200px">
+                                <div class='input-group date fromdate' id='fromdatepanel'>
                                     <input id="issueDateFrom" name="issueDateFrom"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['issueDateFrom']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -140,8 +140,8 @@
                             <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Issue Date To</label>
                             </div>
-                            <div class="col-xs-1"  style="width: 180px">
-                                <div class='input-group date'>
+                            <div class="col-xs-1 form-group"  style="width: 180px">
+                                <div class='input-group date todate' id='todatepanel'>
                                     <input id="issueDateTo" name="issueDateTo"  type="text" 
                                        class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['issueDateTo']}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -197,7 +197,7 @@
                             <div class="col-xs-1 text-right" style="width: 330px;padding-top: 15px">
                                 <input type="hidden" id="ticketId" name="ticketId" >
                                 <input type="hidden" name="action" id="action" value="">
-                                <button style="height:34px" type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm">
+                                <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm">
                                     <i class="fa fa-search"></i>&nbsp;Search</button></button>
                             </div>
                         </div>
@@ -352,8 +352,143 @@
         });
         
         $('.date').datetimepicker();
+        
+//        $("#SearchTicketFareForm")
+//                .bootstrapValidator({
+//                    framework: 'bootstrap',
+//    //                container: 'tooltip',
+//                    feedbackIcons: {
+//                        valid: 'uk-icon-check',
+//                        invalid: 'uk-icon-times',
+//                        validating: 'uk-icon-refresh'
+//                    },
+//                    fields: {
+//                        issueDateFrom: {
+//                            trigger: 'focus keyup change',
+//                            validators: {
+//                                date: {
+//                                    format: 'YYYY-MM-DD',
+//                                    max: 'issueDateTo',
+//                                    message: 'The Date From is not a valid'
+//                                }
+//                            }
+//                        },
+//                        issueDateTo: {
+//                            trigger: 'focus keyup change',
+//                            validators: {
+//                                date: {
+//                                    format: 'YYYY-MM-DD',
+//                                    min: 'issueDateFrom',
+//                                    message: 'The Date To is not a valid'
+//                                }
+//                            }
+//                        }
+//                    }
+//                }).on('success.field.fv', function (e, data) {
+//                    if (data.field === 'issueDateFrom' && data.fv.isValidField('issueDateTo') === false) {
+//                        data.fv.revalidateField('issueDateFrom');
+//                    }
+//
+//                    if (data.field === 'issueDateTo' && data.fv.isValidField('issueDateFrom') === false) {
+//                        data.fv.revalidateField('issueDateTo');
+//                    }
+//                });
+//        $('.fromdate').datetimepicker().change(function(){                          
+//            $('#SearchTicketFareForm').bootstrapValidator('revalidateField', 'issueDateTo');
+//            $('#SearchTicketFareForm').bootstrapValidator('revalidateField', 'issueDateFrom');
+//        });
+//        $('.todate').datetimepicker().change(function(){                          
+//            $('#SearchTicketFareForm').bootstrapValidator('revalidateField', 'issueDateTo');
+//            $('#SearchTicketFareForm').bootstrapValidator('revalidateField', 'issueDateFrom');
+//        });        
 
+        $('.fromdate').datetimepicker().change(function(){                          
+            checkFromDateField();
+        });
+        $('.todate').datetimepicker().change(function(){                          
+            checkToDateField();
+        });
     });
+    
+function checkFromDateField(){      
+    var inputFromDate = document.getElementById("issueDateFrom");
+    var InputToDate = document.getElementById("issueDateTo");
+    if(InputToDate.value === '' && inputFromDate.value === ''){
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");  
+        $("#ButtonSearch").removeClass("disabled");
+    }else if(inputFromDate.value === '' || InputToDate.value === ''){
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-success");
+        $("#fromdatepanel").addClass("has-error");
+        $("#todatepanel").addClass("has-error");
+        $("#ButtonSearch").addClass("disabled");
+    } else {
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");
+        $("#fromdatepanel").addClass("has-success");
+        $("#todatepanel").addClass("has-success");
+        $("#ButtonSearch").removeClass("disabled");
+        checkDateValue("from","");
+    }
+}    
+
+function checkToDateField(){
+    var InputToDate = document.getElementById("issueDateFrom");
+    var inputFromDate = document.getElementById("issueDateTo");
+    if(InputToDate.value === '' && inputFromDate.value === ''){
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");  
+        $("#ButtonSearch").removeClass("disabled");
+    }else if(inputFromDate.value === '' || InputToDate.value === ''){
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-success");
+        $("#fromdatepanel").addClass("has-error");
+        $("#todatepanel").addClass("has-error");
+        $("#ButtonSearch").addClass("disabled");
+    }else{
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");
+        $("#fromdatepanel").addClass("has-success");
+        $("#todatepanel").addClass("has-success");
+        $("#ButtonSearch").removeClass("disabled");
+        checkDateValue("to","");
+    }       
+}
+
+function checkDateValue(date){
+    var inputFromDate = document.getElementById("issueDateFrom");
+    var InputToDate = document.getElementById("issueDateTo");
+    if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+        var fromDate = (inputFromDate.value).split('-');
+        var toDate = (InputToDate.value).split('-');
+        if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+            validateDate(date,"over");
+        }
+        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+            validateDate(date,"over");
+        }
+        if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+            validateDate(date,"over");
+        }          
+    }
+}
+
+function validateDate(date,option){
+    if(option === 'over'){
+        $("#fromdatepanel").removeClass("has-success");
+        $("#fromdatepanel").addClass("has-error");                                 
+        $("#todatepanel").removeClass("has-success");
+        $("#todatepanel").addClass("has-error");   
+        $("#ButtonSearch").addClass("disabled");
+    } else {
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-success"); 
+        $("#fromdatepanel").addClass("has-error");
+        $("#todatepanel").addClass("has-error");
+        $("#ButtonSearch").addClass("disabled");
+    }
+}
     
 function searchAction() {
     var action = document.getElementById('action');
