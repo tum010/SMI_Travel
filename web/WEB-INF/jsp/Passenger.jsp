@@ -18,6 +18,7 @@
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
+<input type="hidden" value="${master.departmentNo}" id="departmentNo">
 
 <input type="hidden" value="${requestScope['result']}" id="resultText">
 <section class="content-header" >

@@ -31,7 +31,7 @@
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <c:set var="enableSave" value="${requestScope['EnableSave']}" />
-
+<input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <section class="content-header" >
     <h1>
         Booking - Day Tours Detail

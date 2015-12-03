@@ -31,6 +31,7 @@
 <c:set var="pnrdata" value="${requestScope['pnrdata']}" />
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
+<input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
 
 <c:choose>

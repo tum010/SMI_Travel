@@ -22,6 +22,7 @@
 <c:set var="booktype" value="${requestScope['BOOKING_TYPE']}" />
 <c:set var="ticketList" value="${requestScope['ticketList']}" />
 <c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
+<input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <c:set var="enableVat" value="" />
 <c:set var="checkVat" value="checked" />
 <c:if test="${booktype == 'i'}">
