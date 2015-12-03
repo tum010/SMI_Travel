@@ -168,7 +168,7 @@
                             </select>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
-                            <label class="control-label text-right">Airline&nbsp;</label>
+                            <label class="control-label text-right">Airline&nbsp; Agent</label>
                         </div> 
                         <div class="col-xs-1" style="width: 120px">
                             <select name="ticketAirline" id="ticketAirline" class="form-control" onclick="checkAirlineSelected()">
