@@ -154,6 +154,9 @@ public class AirTicketDetailController extends SMITravelController {
             }
         } else if ("update".equalsIgnoreCase(action)) {
             AirticketPnr airticketPnr = bookingAirticketService.getPNRDetailByID(pnr, referenceNo);
+            if(!"".equalsIgnoreCase(addpnrname)){
+                airticketPnr.setPnr(addpnrname);
+            }
             try {
                 result = updateAirPnr(request, airticketPnr, referenceNo);
                 request.setAttribute(Action, "update");
@@ -365,10 +368,12 @@ public class AirTicketDetailController extends SMITravelController {
                 allPassengers.addAll(airlines.get(i).getAirticketPassengers());
             }
             
-//            if(allFlights != null){
-//                request.setAttribute(ISBILLSTATUS,allFlights.get(0).getIsBill());
-//            }
             allFlights.addAll(sortedFlight);
+            
+            if(allFlights != null){
+                request.setAttribute(ISBILLSTATUS,allFlights.get(0).getIsBill());
+            }
+            
             request.setAttribute(CurrentPnr, airticketPnr);
             request.setAttribute(Airline, airlines);
             request.setAttribute(AllFlights, allFlights);
