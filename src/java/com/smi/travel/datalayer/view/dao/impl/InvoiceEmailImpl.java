@@ -29,11 +29,11 @@ public class InvoiceEmailImpl implements InvoiceEmailDao{
         UtilityFunction util = new UtilityFunction();  
         InvoiceReport invoiceEmail = new InvoiceReport();
         invoiceEmail.setAccname("TestMan");
-        invoiceEmail.setAccno("11111111");
+        invoiceEmail.setAccno1("11111111");
         invoiceEmail.setAcctype("Test");
         invoiceEmail.setAmount("1000000000");
-        invoiceEmail.setBank("KBank");
-        invoiceEmail.setBranch("Bangkapi");
+        invoiceEmail.setBank1("KBank");
+        invoiceEmail.setBranch1("Bangkapi");
         invoiceEmail.setDescription("test ภาษาไทย");
         invoiceEmail.setGross("999999");
         int a = 1999999999;

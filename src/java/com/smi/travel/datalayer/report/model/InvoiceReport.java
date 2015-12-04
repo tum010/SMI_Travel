@@ -25,9 +25,12 @@ public class InvoiceReport {
     private String totalvat;
     private String grtotal;
     private String accname;
-    private String bank;
-    private String branch;
-    private String accno;
+    private String bank1;
+    private String branch1;
+    private String accno1;
+    private String bank2;
+    private String branch2;
+    private String accno2;
     private String acctype;
     private String user;
     private String textmoney;
@@ -38,6 +41,7 @@ public class InvoiceReport {
     private String taxid;
     private String taxbranch;
     private String sign;
+    private String signname;
     private String duedate;
     private String address;
     private String remark;
@@ -164,30 +168,6 @@ public class InvoiceReport {
         this.accname = accname;
     }
 
-    public String getBank() {
-        return bank;
-    }
-
-    public void setBank(String bank) {
-        this.bank = bank;
-    }
-
-    public String getBranch() {
-        return branch;
-    }
-
-    public void setBranch(String branch) {
-        this.branch = branch;
-    }
-
-    public String getAccno() {
-        return accno;
-    }
-
-    public void setAccno(String accno) {
-        this.accno = accno;
-    }
-
     public String getAcctype() {
         return acctype;
     }
@@ -283,6 +263,62 @@ public class InvoiceReport {
 
     public String getDuedate() {
         return duedate;
+    }
+
+    public String getSignname() {
+        return signname;
+    }
+
+    public void setSignname(String signname) {
+        this.signname = signname;
+    }
+
+    public String getBank1() {
+        return bank1;
+    }
+
+    public void setBank1(String bank1) {
+        this.bank1 = bank1;
+    }
+
+    public String getBranch1() {
+        return branch1;
+    }
+
+    public void setBranch1(String branch1) {
+        this.branch1 = branch1;
+    }
+
+    public String getAccno1() {
+        return accno1;
+    }
+
+    public void setAccno1(String accno1) {
+        this.accno1 = accno1;
+    }
+
+    public String getBank2() {
+        return bank2;
+    }
+
+    public void setBank2(String bank2) {
+        this.bank2 = bank2;
+    }
+
+    public String getBranch2() {
+        return branch2;
+    }
+
+    public void setBranch2(String branch2) {
+        this.branch2 = branch2;
+    }
+
+    public String getAccno2() {
+        return accno2;
+    }
+
+    public void setAccno2(String accno2) {
+        this.accno2 = accno2;
     }
     
 }

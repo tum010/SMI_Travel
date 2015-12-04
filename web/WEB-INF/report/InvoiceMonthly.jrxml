@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceMonthly" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f3e0a4ca-601e-4515-90b1-1c808ba982a2">
-	<property name="ireport.zoom" value="6.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="1344"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="81"/>
+	<property name="ireport.y" value="48"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="billto" class="java.lang.String"/>
 	<field name="billfrom" class="java.lang.String"/>
@@ -128,310 +128,513 @@
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<pageHeader>
-		<band height="200">
-			<rectangle radius="10">
-				<reportElement mode="Opaque" x="9" y="179" width="534" height="20" backcolor="#E6E6E6" uuid="e1a62c6c-f263-4c4e-8f33-5d976f8af834"/>
-				<graphicElement>
-					<pen lineWidth="0.0"/>
-				</graphicElement>
-			</rectangle>
+	<title>
+		<band height="100">
 			<staticText>
-				<reportElement x="375" y="2" width="168" height="25" uuid="4bbe5945-5d10-47f9-be48-9e11c7b922a8"/>
-				<textElement textAlignment="Right">
-					<font size="16" isBold="true"/>
-				</textElement>
-				<text><![CDATA[List Invoice Monthly]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="376" y="28" width="57" height="13" uuid="0a461b4c-25e2-4cb4-923c-50b22d5a190a"/>
+				<reportElement x="379" y="28" width="57" height="13" uuid="0a461b4c-25e2-4cb4-923c-50b22d5a190a"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Print Date :  ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="436" y="40" width="24" height="12" uuid="e637f75a-b96f-429d-9e75-ec19da3e4934"/>
+				<reportElement x="439" y="40" width="24" height="12" uuid="e637f75a-b96f-429d-9e75-ec19da3e4934"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="436" y="28" width="109" height="13" uuid="26c670d5-c782-4e23-a209-3cfcbec41fa8"/>
+				<reportElement x="439" y="28" width="109" height="13" uuid="26c670d5-c782-4e23-a209-3cfcbec41fa8"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="391" y="40" width="42" height="12" uuid="13c33f46-e094-4475-88f4-c3eb8aa535b2"/>
+				<reportElement x="394" y="40" width="42" height="12" uuid="13c33f46-e094-4475-88f4-c3eb8aa535b2"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Print :  ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="376" y="52" width="57" height="13" uuid="a018ac39-ceea-42cf-a7c3-e232ec233a06"/>
+				<reportElement x="379" y="52" width="57" height="13" uuid="a018ac39-ceea-42cf-a7c3-e232ec233a06"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Department :  ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="376" y="65" width="57" height="13" uuid="edfbf294-40aa-4984-a338-c581ecfe0416"/>
+				<reportElement x="379" y="65" width="57" height="13" uuid="edfbf294-40aa-4984-a338-c581ecfe0416"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Print Type :  ]]></text>
 			</staticText>
-			<line>
-				<reportElement x="-1" y="90" width="555" height="1" uuid="4d39eaa1-8f44-4fb4-bde8-6e67241fee9f"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</line>
 			<textField isBlankWhenNull="true">
-				<reportElement x="436" y="65" width="109" height="13" uuid="a2084f80-44b5-49c0-b1c3-622851367151"/>
+				<reportElement x="439" y="65" width="109" height="13" uuid="a2084f80-44b5-49c0-b1c3-622851367151"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="436" y="52" width="100" height="13" uuid="fa3c1002-a99f-4767-b297-e353f241d76b"/>
+				<reportElement x="439" y="52" width="100" height="13" uuid="fa3c1002-a99f-4767-b297-e353f241d76b"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{headdepartment}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="101" y="23" width="220" height="14" uuid="78fad1d2-beb1-4564-a6bf-6162f897715f"/>
+				<reportElement x="104" y="23" width="220" height="14" uuid="78fad1d2-beb1-4564-a6bf-6162f897715f"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[9th Floor, Siam at Siam Hotel Building, 865 Rama1 Road,]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="101" y="33" width="267" height="13" uuid="f0af9509-49a7-462b-9076-146aefc161b7"/>
+				<reportElement x="104" y="33" width="267" height="13" uuid="f0af9509-49a7-462b-9076-146aefc161b7"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330 THAILAND.]]></text>
 			</staticText>
 			<image>
-				<reportElement x="10" y="9" width="87" height="80" uuid="a2dcbc36-b8dc-4d01-9544-8ee2bc531aa8"/>
+				<reportElement x="13" y="9" width="87" height="80" uuid="a2dcbc36-b8dc-4d01-9544-8ee2bc531aa8"/>
 				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="101" y="9" width="223" height="17" uuid="dce810b2-dc41-4585-adfa-67986984d6c6"/>
+				<reportElement x="104" y="9" width="223" height="17" uuid="dce810b2-dc41-4585-adfa-67986984d6c6"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S.M.I Travel Co., Ltd. (Head Office)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="101" y="43" width="271" height="13" uuid="27f99e0f-5512-47ad-8b60-be4c7efe734d"/>
+				<reportElement x="104" y="43" width="271" height="13" uuid="27f99e0f-5512-47ad-8b60-be4c7efe734d"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[Tel : (66-2) 216-2201 Fax : (66-2) 216-2202]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="102" y="53" width="177" height="13" uuid="000ba9dc-af2b-4d66-a8a6-f11e3e2cccac"/>
+				<reportElement x="105" y="53" width="177" height="13" uuid="000ba9dc-af2b-4d66-a8a6-f11e3e2cccac"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
 			</staticText>
-			<rectangle radius="10">
-				<reportElement mode="Transparent" x="11" y="99" width="268" height="73" uuid="81ddd926-5913-4b76-a926-d4f3c7adaa05"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</rectangle>
-			<rectangle radius="10">
-				<reportElement mode="Transparent" x="289" y="99" width="253" height="73" uuid="988d10f2-c5fd-4cae-9c5a-48580dc7c279"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</rectangle>
-			<rectangle>
-				<reportElement x="9" y="189" width="533" height="11" backcolor="#E6E6E6" uuid="e16d98ce-dd1b-4074-b68b-3f4dc9ce9939"/>
-				<graphicElement>
-					<pen lineWidth="0.0"/>
-				</graphicElement>
-			</rectangle>
-			<staticText>
-				<reportElement x="9" y="182" width="65" height="17" backcolor="#FFFFFF" uuid="eae92499-240a-4d62-9141-3812ff46a117"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Inv No]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="74" y="182" width="55" height="17" backcolor="#FFFFFF" uuid="ec7441ff-8829-457a-b686-7950aae4feed"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Date]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="129" y="182" width="71" height="17" backcolor="#FFFFFF" uuid="46ae4393-396b-40ba-b3c1-85663776f6e3"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Detail]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="200" y="182" width="64" height="17" backcolor="#FFFFFF" uuid="bde3efab-7639-4908-8cc5-3a6d49422f16"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Bath]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="264" y="182" width="60" height="17" backcolor="#FFFFFF" uuid="c73fab67-0fa1-4f8b-9a93-f7cead8eb83b"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[JPY]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="324" y="182" width="63" height="17" backcolor="#FFFFFF" uuid="f7286c2b-a03c-4fb5-bb00-c717260f1dca"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[USD]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="387" y="182" width="47" height="17" backcolor="#FFFFFF" uuid="c87b50b9-2c25-472e-8ac3-246ada605cfe"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Rev No]]></text>
-			</staticText>
-			<staticText>
-				<reportElement mode="Transparent" x="434" y="182" width="52" height="17" backcolor="#FFFFFF" uuid="50cb20be-99ea-48db-b3b3-09622a5c8640"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Rev Amt]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="486" y="182" width="56" height="17" backcolor="#FFFFFF" uuid="b9ec31c5-0bf7-47e7-98e4-1e7c62f780cf"/>
-				<textElement textAlignment="Center">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Department]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="28" y="105" width="46" height="20" uuid="5f85d521-765d-40ec-b602-90bde0ec6f61"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Attn :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="28" y="125" width="46" height="20" uuid="5bc3a5cb-58ce-421e-a970-5d64e4da32c5"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[From :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="28" y="145" width="46" height="20" uuid="ac92c28c-1c33-4aa2-b74f-10ec31b73e0b"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Billing :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="307" y="105" width="46" height="20" uuid="69d91477-f1e7-42ee-b3ef-d486bb6bed03"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Tel :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="307" y="125" width="46" height="20" uuid="21f6e8c9-4a35-420f-8858-bfe9fbd5fdb6"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Fax :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="307" y="145" width="46" height="20" uuid="4e621029-74e0-42ba-a027-29f9b7870120"/>
-				<textElement textAlignment="Right">
-					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Email :]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="80" y="105" width="171" height="20" uuid="a9358aca-a151-46d2-95db-a03de6df43bc"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{billingattn}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="80" y="125" width="171" height="20" uuid="a3a3d229-ad9c-40f9-9e0d-7f1b7077832b"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{billingfrom}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="80" y="145" width="171" height="20" uuid="7085d908-f3ee-4715-9c7d-3455ec18c0a1"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{billingdate}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="365" y="105" width="171" height="20" uuid="170a1eb1-5575-4727-84cb-177c519c306f"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{billingtel}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="365" y="125" width="171" height="20" uuid="65eb30c3-7bb9-4349-8e0f-49c9693de873"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{billingfax}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="365" y="145" width="171" height="20" uuid="7eac52d1-0fda-4825-9cf8-2c1bbfadd0eb"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{billingmail}]]></textFieldExpression>
-			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="484" y="40" width="24" height="12" uuid="e4199868-289d-4af0-a8fe-721567746aa6"/>
+				<reportElement x="487" y="40" width="24" height="12" uuid="e4199868-289d-4af0-a8fe-721567746aa6"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="463" y="40" width="20" height="12" uuid="4fa687dc-4ff2-47b0-b66b-e6770f0fa739"/>
+				<reportElement x="466" y="40" width="20" height="12" uuid="4fa687dc-4ff2-47b0-b66b-e6770f0fa739"/>
 				<textElement>
 					<font size="8"/>
 				</textElement>
 				<text><![CDATA[of]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="321" y="77" width="221" height="14" isRemoveLineWhenBlank="true" uuid="43e6529e-0873-41f8-9b4c-299eb8f07a06"/>
+				<reportElement x="324" y="77" width="221" height="14" isRemoveLineWhenBlank="true" uuid="43e6529e-0873-41f8-9b4c-299eb8f07a06"/>
 				<textElement textAlignment="Right">
 					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[TAX ID. NO. 0105523020132]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="378" y="2" width="168" height="25" uuid="4bbe5945-5d10-47f9-be48-9e11c7b922a8"/>
+				<textElement textAlignment="Right">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[List Invoice Monthly]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="94" width="555" height="1" uuid="4d39eaa1-8f44-4fb4-bde8-6e67241fee9f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="95">
+			<rectangle radius="10">
+				<reportElement mode="Transparent" x="11" y="10" width="268" height="73" uuid="81ddd926-5913-4b76-a926-d4f3c7adaa05">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement mode="Transparent" x="289" y="10" width="253" height="73" uuid="988d10f2-c5fd-4cae-9c5a-48580dc7c279">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="28" y="16" width="46" height="20" uuid="5f85d521-765d-40ec-b602-90bde0ec6f61">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Attn :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="36" width="46" height="20" uuid="5bc3a5cb-58ce-421e-a970-5d64e4da32c5">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[From :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="56" width="46" height="20" uuid="ac92c28c-1c33-4aa2-b74f-10ec31b73e0b">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Billing :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="16" width="46" height="20" uuid="69d91477-f1e7-42ee-b3ef-d486bb6bed03">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tel :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="36" width="46" height="20" uuid="21f6e8c9-4a35-420f-8858-bfe9fbd5fdb6">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fax :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="56" width="46" height="20" uuid="4e621029-74e0-42ba-a027-29f9b7870120">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Email :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="16" width="171" height="20" uuid="a9358aca-a151-46d2-95db-a03de6df43bc">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billingattn}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="36" width="171" height="20" uuid="a3a3d229-ad9c-40f9-9e0d-7f1b7077832b">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billingfrom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="56" width="171" height="20" uuid="7085d908-f3ee-4715-9c7d-3455ec18c0a1">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billingdate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="16" width="171" height="20" uuid="170a1eb1-5575-4727-84cb-177c519c306f">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billingtel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="36" width="171" height="20" uuid="65eb30c3-7bb9-4349-8e0f-49c9693de873">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billingfax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="365" y="56" width="171" height="20" uuid="7eac52d1-0fda-4825-9cf8-2c1bbfadd0eb">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="14" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{billingmail}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="324" y="74" width="221" height="14" isRemoveLineWhenBlank="true" uuid="1e6d694d-95a8-4b1a-8ac1-072714ce040b">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[TAX ID. NO. 0105523020132]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="439" y="37" width="24" height="12" uuid="733662bd-cf6e-4c6f-9128-235991231e22">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="105" y="50" width="177" height="13" uuid="e1fd9e2b-67d6-4a03-bb58-cfb82ad90283">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="40" width="271" height="13" uuid="0f10c603-3319-455b-8637-2288cdc59b2f">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tel : (66-2) 216-2201 Fax : (66-2) 216-2202]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="30" width="267" height="13" uuid="7f56ee28-e11f-45de-a0a1-d2bbee25cc38">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330 THAILAND.]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="439" y="25" width="109" height="13" uuid="97ade6ce-b899-4582-b74b-878bea4d3217">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="439" y="62" width="109" height="13" uuid="2e6b7dd2-5f5f-4da0-aae7-f81b50f7d1b6">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="439" y="49" width="100" height="13" uuid="3b40475b-375d-4452-afe1-1beca0d4572f">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headdepartment}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="104" y="6" width="223" height="17" uuid="d674aff8-c927-4e21-a7b4-645919bc37c3">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.M.I Travel Co., Ltd. (Head Office)]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="487" y="37" width="24" height="12" uuid="510c4bfe-782b-4938-b62c-a766a9a5db66">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="379" y="25" width="57" height="13" uuid="b3f56fb8-c474-49d9-b67f-f612d87292b0">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Print Date :  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="20" width="220" height="14" uuid="497cd50e-2cbe-4129-9ff4-43774b32a0bf">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[9th Floor, Siam at Siam Hotel Building, 865 Rama1 Road,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="466" y="37" width="20" height="12" uuid="6ff84c3c-f8f0-4c4c-8e21-f89be21543df">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[of]]></text>
+			</staticText>
+			<image>
+				<reportElement x="13" y="6" width="87" height="80" uuid="efe19acc-71e6-4248-b01f-a9f6fa5efc2a">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="379" y="49" width="57" height="13" uuid="395be832-3bac-4c76-93d2-24e25ee56afa">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Department :  ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="88" width="555" height="1" uuid="5193f885-74a5-4546-96fb-6e5cf5746e4e">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="379" y="62" width="57" height="13" uuid="38f32742-1abb-42d4-a974-950b263dca52">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Print Type :  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="394" y="37" width="42" height="12" uuid="a20c34d9-c922-44bc-8661-011ec6d92885">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Print :  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="1" width="168" height="21" uuid="964dab14-5e62-4b32-a39c-f86ca75d24ab">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} != 1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[List Invoice Monthly]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
+	<columnHeader>
+		<band height="19">
+			<rectangle radius="10">
+				<reportElement mode="Opaque" x="10" y="-1" width="534" height="20" backcolor="#E6E6E6" uuid="e1a62c6c-f263-4c4e-8f33-5d976f8af834"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="10" y="7" width="533" height="11" backcolor="#E6E6E6" uuid="e16d98ce-dd1b-4074-b68b-3f4dc9ce9939"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="1" width="65" height="17" backcolor="#FFFFFF" uuid="eae92499-240a-4d62-9141-3812ff46a117"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Inv No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="1" width="55" height="17" backcolor="#FFFFFF" uuid="ec7441ff-8829-457a-b686-7950aae4feed"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="1" width="71" height="17" backcolor="#FFFFFF" uuid="46ae4393-396b-40ba-b3c1-85663776f6e3"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="1" width="64" height="17" backcolor="#FFFFFF" uuid="bde3efab-7639-4908-8cc5-3a6d49422f16"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bath]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="265" y="1" width="60" height="17" backcolor="#FFFFFF" uuid="c73fab67-0fa1-4f8b-9a93-f7cead8eb83b"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[JPY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="1" width="63" height="17" backcolor="#FFFFFF" uuid="f7286c2b-a03c-4fb5-bb00-c717260f1dca"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[USD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="1" width="47" height="17" backcolor="#FFFFFF" uuid="c87b50b9-2c25-472e-8ac3-246ada605cfe"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rev No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="435" y="1" width="52" height="17" backcolor="#FFFFFF" uuid="50cb20be-99ea-48db-b3b3-09622a5c8640"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rev Amt]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="487" y="1" width="56" height="17" backcolor="#FFFFFF" uuid="b9ec31c5-0bf7-47e7-98e4-1e7c62f780cf"/>
+				<textElement textAlignment="Center">
+					<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Department]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
 			<rectangle>

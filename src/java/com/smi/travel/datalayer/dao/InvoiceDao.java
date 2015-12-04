@@ -28,7 +28,7 @@ public interface InvoiceDao {
     public String searchInvoiceNum(String department,String invoiceType,String invoiceNo);
     public Invoice searchInvoiceNo(String invoiceId,String department,String invoiceType);
     public Invoice getInvoiceFromId(String invoiceId);
-    public List<Invoice> getSearchInvoice(String fromData,String toDate ,String department,String type,String agent,String status);
+    public List<Invoice> getSearchInvoice(String fromData,String toDate ,String department,String type,String agent,String status,String airticketWendy);
     public List<InvoiceView> setSearchInvoiceView(List<Invoice> listInvoice);
     public List<HashMap<String,Object>> getInvoiceDetailFromInvoiceNumber(String InvoiceNumber);
     public BigDecimal[] checkBillDescInuse(String billdesc,String cost,String amount);

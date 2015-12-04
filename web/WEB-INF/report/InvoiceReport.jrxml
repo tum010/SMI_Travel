@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="68" bottomMargin="20" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="485"/>
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="484"/>
+	<property name="ireport.y" value="768"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -13,10 +13,10 @@
 	<field name="vat" class="java.lang.String"/>
 	<field name="amount" class="java.lang.String"/>
 	<field name="accname" class="java.lang.String"/>
-	<field name="bank" class="java.lang.String"/>
+	<field name="bank1" class="java.lang.String"/>
 	<field name="acctype" class="java.lang.String"/>
-	<field name="accno" class="java.lang.String"/>
-	<field name="branch" class="java.lang.String"/>
+	<field name="accno1" class="java.lang.String"/>
+	<field name="branch1" class="java.lang.String"/>
 	<field name="total" class="java.lang.String"/>
 	<field name="grtotal" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
@@ -32,6 +32,10 @@
 	<field name="sign" class="java.lang.String"/>
 	<field name="duedate" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
+	<field name="signname" class="java.lang.String"/>
+	<field name="bank2" class="java.lang.String"/>
+	<field name="accno2" class="java.lang.String"/>
+	<field name="branch2" class="java.lang.String"/>
 	<background>
 		<band height="754">
 			<line>
@@ -270,103 +274,103 @@
 	<pageFooter>
 		<band height="173" splitType="Stretch">
 			<staticText>
-				<reportElement x="5" y="0" width="127" height="16" uuid="00d05e53-4307-4b00-a4d0-28ec21d6ed1e">
+				<reportElement x="8" y="0" width="127" height="10" uuid="00d05e53-4307-4b00-a4d0-28ec21d6ed1e">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font fontName="Tahoma" size="9" isBold="true" isUnderline="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" isBold="true" isUnderline="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[PAYMENT  BY MONEY TRANSFER]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="5" y="12" width="91" height="18" uuid="53d23dc7-6397-4d1c-a85d-2b452d621f99">
+				<reportElement x="8" y="10" width="71" height="10" uuid="53d23dc7-6397-4d1c-a85d-2b452d621f99">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[NAME OF ACCOUNT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="5" y="23" width="40" height="21" uuid="57109df1-eb59-4db5-b5be-49fe747bb579">
+				<reportElement x="8" y="18" width="40" height="10" uuid="57109df1-eb59-4db5-b5be-49fe747bb579">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font fontName="Tahoma" size="9" isBold="true" isItalic="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" isBold="true" isItalic="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[BANK]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="5" y="35" width="91" height="17" uuid="6b72b22d-f207-4052-ace6-c5d077775e5b">
+				<reportElement x="8" y="26" width="76" height="10" uuid="6b72b22d-f207-4052-ace6-c5d077775e5b">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[TYPE OF ACCOUNT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="222" y="22" width="40" height="23" uuid="b96a4ae4-36e5-4b8d-9f4a-090b754cfee2">
+				<reportElement x="8" y="34" width="40" height="11" uuid="b96a4ae4-36e5-4b8d-9f4a-090b754cfee2">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[BRANCH]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="222" y="35" width="66" height="17" uuid="2d6a01b1-b538-4363-9fc6-33f83483184d">
+				<reportElement x="8" y="42" width="66" height="10" uuid="2d6a01b1-b538-4363-9fc6-33f83483184d">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[ACCOUNT NO.]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="105" y="11" width="274" height="17" uuid="9336b075-0603-4d98-8f4b-c6176e69a2ce">
+				<reportElement x="91" y="10" width="108" height="10" uuid="9336b075-0603-4d98-8f4b-c6176e69a2ce">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{accname}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="105" y="22" width="117" height="22" uuid="fa4a2fea-d60e-4ac1-9be4-4014e226b426">
+				<reportElement x="91" y="18" width="108" height="9" uuid="fa4a2fea-d60e-4ac1-9be4-4014e226b426">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{bank}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{bank1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="105" y="36" width="117" height="17" uuid="a92ad15c-6e3c-41e6-b3a4-429bcc44fb26">
+				<reportElement x="91" y="26" width="108" height="9" uuid="a92ad15c-6e3c-41e6-b3a4-429bcc44fb26">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{acctype}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="293" y="36" width="110" height="17" uuid="343ac943-e507-4dea-84a4-06443b119d39">
+				<reportElement x="91" y="43" width="108" height="9" uuid="343ac943-e507-4dea-84a4-06443b119d39">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
-					<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{accno}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{accno1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="295" y="22" width="108" height="21" uuid="902df182-cb74-43fb-bc31-2ad2299ea2ef">
+				<reportElement x="91" y="34" width="108" height="9" uuid="902df182-cb74-43fb-bc31-2ad2299ea2ef">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top">
-					<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{branch}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{branch1}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="409" y="2" width="45" height="16" uuid="3f56065f-24d8-465f-a0ac-038c5ce7026b"/>
@@ -423,47 +427,47 @@
 				<textFieldExpression><![CDATA[$F{textmoney}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="96" y="33" width="10" height="23" uuid="d49cba2e-e472-4631-9c87-6c391d7c37a0">
+				<reportElement x="79" y="25" width="10" height="10" uuid="d49cba2e-e472-4631-9c87-6c391d7c37a0">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="96" y="22" width="10" height="17" uuid="f602f32a-3f3a-4bb4-9221-cf823c4f8e9d">
+				<reportElement x="79" y="17" width="10" height="11" uuid="f602f32a-3f3a-4bb4-9221-cf823c4f8e9d">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="284" y="21" width="10" height="18" uuid="c01a0043-b11a-4c81-b09e-31b9a97342fb">
+				<reportElement x="79" y="33" width="10" height="12" uuid="c01a0043-b11a-4c81-b09e-31b9a97342fb">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="284" y="34" width="10" height="23" uuid="f90f7d53-5fbd-433a-85d7-9c47da5e3294">
+				<reportElement x="79" y="42" width="10" height="11" uuid="f90f7d53-5fbd-433a-85d7-9c47da5e3294">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="96" y="10" width="10" height="19" uuid="62c8cd95-b8d4-4b03-bf78-387f288e759d">
+				<reportElement x="79" y="10" width="10" height="9" uuid="62c8cd95-b8d4-4b03-bf78-387f288e759d">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
-					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[:]]></text>
 			</staticText>
@@ -490,6 +494,148 @@
 				<reportElement x="268" y="76" width="119" height="37" uuid="68d695f0-2c40-4f26-a749-6f21c90aaa4e"/>
 				<imageExpression><![CDATA["resource/images/"+$F{sign}+".png"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement x="278" y="41" width="5" height="11" uuid="d8a595ec-175f-4325-8461-0d120500e636">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="284" y="9" width="119" height="10" uuid="a698cda8-71d6-4025-8cd7-c7d7e617dbf8">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{accname}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="32" width="5" height="12" uuid="4084b874-5015-4f0e-88d9-36379d0a2b92">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="24" width="5" height="10" uuid="0437a054-7d2f-43b3-a962-b985e1afe877">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="284" y="42" width="119" height="9" uuid="70613551-f39d-449c-a00d-193e209e4a3a">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{accno2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="209" y="33" width="33" height="11" uuid="071c053e-a5af-4cef-af19-e9d688cd98bf">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[BRANCH]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="284" y="17" width="119" height="9" uuid="5a7fc22c-e0db-400e-ba8d-05d8f879b57c">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bank2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="16" width="5" height="11" uuid="5e67d795-7f89-4729-a661-85e122622cb8">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="9" width="69" height="10" uuid="6a290eb9-2cea-461f-9ed9-1f02b5b60733">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[NAME OF ACCOUNT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="9" width="5" height="9" uuid="f477e23d-4e00-437b-8039-aa6666e993b0">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="42" width="59" height="10" uuid="b51de407-8f86-4736-933a-3bff27294df2">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ACCOUNT NO.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="284" y="25" width="119" height="9" uuid="9e63295e-fe6b-4633-8481-ed5b6ea291f2">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{acctype}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="33" width="119" height="9" uuid="e7e65384-ef24-4a27-8d59-82c8512cd86e">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{branch2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="209" y="17" width="33" height="10" uuid="ad2844ed-7d06-4e2d-ae17-5ea957d7e9d2">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Tahoma" size="7" isBold="true" isItalic="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[BANK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="25" width="69" height="10" uuid="199c9d8d-08c0-45eb-bd78-f9fd20c31b66">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Tahoma" size="7" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[TYPE OF ACCOUNT]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="268" y="108" width="119" height="15" uuid="6ab238b9-2695-43c8-8e85-0cc772b77b48"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{signname}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 </jasperReport>

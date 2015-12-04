@@ -605,8 +605,9 @@ function DisableInvoice() {
     document.getElementById('InvoiceForm').submit();
 }
 
-function printInvoice(text) {
+function printInvoice(text,report) {
     $('#typePrint').val(text);
+    $('#typeReport').val(report);
 }
 
 function printInvoiceNew() {
@@ -616,13 +617,14 @@ function printInvoiceNew() {
     var leader = $('#selectLeader').val();
     var payment = $('#selectPayment').val();
     var type = $('#typePrint').val();
+    var typeReport = $('#typeReport').val();
     var sign = $('#SelectSign').val();
     var invoiceType = $('#invoiceType').val();
     if (type === 'print') {
         if (invoiceType === 'T') {
             window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         } else {
-            window.open("report.smi?name=" + typePrint + "&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+            window.open("report.smi?name=" + typeReport + "&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         }
     } else if (type === 'email') {
         if (invoiceType === 'T') {
