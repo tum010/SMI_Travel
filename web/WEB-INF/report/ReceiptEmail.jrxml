@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="81"/>
-	<property name="ireport.y" value="4"/>
+	<property name="ireport.zoom" value="3.215383215000002"/>
+	<property name="ireport.x" value="1083"/>
+	<property name="ireport.y" value="596"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -358,7 +358,7 @@
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="#,##0.00">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="429" y="-2" width="88" height="14" uuid="dd249f80-444e-443e-b320-4b8a62986dd1"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="429" y="-1" width="88" height="14" uuid="dd249f80-444e-443e-b320-4b8a62986dd1"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.0"/>
@@ -372,7 +372,7 @@
 				<textFieldExpression><![CDATA[(!"null".equals($F{amount}) && $F{amount} != "null" && $F{amount}.length() > 0) ? Double.valueOf($F{amount}) : ""]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="5" y="-2" width="333" height="14" uuid="5ca36030-1d00-413e-a98d-6b86fa0619c4"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="5" y="-1" width="333" height="14" uuid="5ca36030-1d00-413e-a98d-6b86fa0619c4"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -386,7 +386,7 @@
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="338" y="-2" width="91" height="14" uuid="a34cb96b-8c9f-4412-84f4-ac976e04dece"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="338" y="-1" width="91" height="14" uuid="a34cb96b-8c9f-4412-84f4-ac976e04dece"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>

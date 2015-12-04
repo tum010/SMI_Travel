@@ -1296,6 +1296,7 @@ public class AJAXBean extends AbstractBean implements
         BigDecimal cost = new BigDecimal(0);
         BigDecimal amountinvoice = new BigDecimal(0);
         BigDecimal costinvoice = new BigDecimal(0);
+        BigDecimal amountlocalinvoice = new BigDecimal(0);
         String currency = "";
         String product = "";
         String cur = "";
@@ -1326,7 +1327,10 @@ public class AJAXBean extends AbstractBean implements
             if(invoiceDetaill.get(i).getAmount() != null){
                 amountinvoice = invoiceDetaill.get(i).getAmount().compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : invoiceDetaill.get(i).getAmount();
             }
-            currency = invoiceDetaill.get(i).getCurAmount();
+            if(invoiceDetaill.get(i).getAmountLocal()!= null){
+                amountlocalinvoice = invoiceDetaill.get(i).getAmountLocal().compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : invoiceDetaill.get(i).getAmountLocal();
+            }
+            currency = "THB";
             if (invoiceDetaill.get(i).getMbillType() != null) {
                 product = invoiceDetaill.get(i).getMbillType().getId();
                 billTypeName = invoiceDetaill.get(i).getMbillType().getName();
@@ -1342,9 +1346,9 @@ public class AJAXBean extends AbstractBean implements
             BigDecimal[] value = checkReceiptDetail(invId);
             BigDecimal costTemp = value[0];
             BigDecimal amountTemp = value[1];
-            amount = amountinvoice.subtract(amountTemp);
+            amount = amountlocalinvoice.subtract(amountTemp);
             cost = costinvoice.subtract(costTemp);
-            System.out.println(" amount =  " + amountinvoice + "-" + amountTemp + " = " + amount);
+            System.out.println(" amount =  " + amountlocalinvoice + "-" + amountTemp + " = " + amount);
             System.out.println(" cost =  " + costinvoice + "-" + costTemp + " = " + cost);
 
             if (invoiceDetaill.get(i).getBillableDesc() != null) {
@@ -1354,7 +1358,7 @@ public class AJAXBean extends AbstractBean implements
             String displaydescription = "";
             String displaydesTemp = "";
             if ("1".equals(product)) {                
-                displaydescription = billTypeName + " : "+description;
+                displaydescription = billTypeName;
 
             } else if ("2".equals(product) || "8".equals(product)) {
                 if (!"".equals(refItemId)) {
@@ -1399,6 +1403,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<input type='hidden' name='invoiceId' id='invoiceId' value='" + invoice.getId() + "'>"
                         + "<td class='text-center'>" + No + "</td>"
                         + "<td>" + displaydescription + "</td>"
+                        + "<td class='money'>" + amountinvoice + "</td>"
                         + "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
                         + "<td><center><a href=\"#/inv\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','" + isVat + "','" + vat + "','" + amount + "','" + currency + "','" + invId + "','','','','1','" + displaydescription + "','" + invNo + "','','','','' )\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"

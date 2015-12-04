@@ -114,6 +114,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
         String querydata = "";
         String query = "";
         int checkQuery = 0;
+        System.out.println("Refund By : " + refundnameby);
         if( refundagent != null || refundnameby != null || passenger != null || receivefrom != null || receiveto != null || paidfrom != null || paidto != null || refundby != null){
             query = "SELECT * FROM `refund_ticket_detail_view` invm  Where";
         }else{
