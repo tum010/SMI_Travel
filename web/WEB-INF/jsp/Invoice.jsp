@@ -396,14 +396,14 @@
                                     <c:set var="isHidden" value="" />
                                 </c:if>
                             <div class="form-group ${isHidden}" >
-                                <div class="col-sm-2" style="padding-left: 53px">
-                                <label for="Department" class="col-sm-3 control-label" >Department</label>
+                                <div class="col-sm-3" style="padding-left: 53px;">
+                                    <label for="Department" class="col-sm-10 control-label" >Air Ticket Wendy<font style="color: red">*</font></label>
                                 </div>
                                 <c:set var="chekcDepartAir" value="" />
                                 <c:if test="${invoice.subDepartment == 'AirTicket'}">
                                     <c:set var="chekcDepartAir" value="checked" />
                                 </c:if>      
-                                <div class="radio col-sm-2 "  >   
+                                <div class="radio col-sm-2"  >   
                                    <label ${isHidden}><input value="AirTicket" id="DepartmentAirTicket" name="Department" type="radio" ${chekcDepartAir} >Air Ticket</label>
                                 </div>
                             </div>
@@ -416,7 +416,7 @@
                                 <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" >${invoice.invAddress}</textarea>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-2"></div>
+                                <div class="col-sm-3"></div>
                                 <div class="radio col-sm-2 ${isHidden}" > 
                                     <c:set var="checkDepartPackage" value="" />
                                     <c:if test="${invoice.subDepartment == 'Package'}">
@@ -729,16 +729,21 @@
                             <div class="panel panel-default ${panelborder}">                              
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">
-                                        <div class="col-md-2 text-right ">
+                                        <div class="col-md-2 text-right hidden">
                                             <select id="SelectTypePrint" name="SelectTypePrint" class="form-control">
                                                 <option value="InvoiceReport">Invoice</option>
                                                 <option value="InvoiceEmail">Invoice Email</option>
                                                 <!--<option value="Package">Package</option>-->
                                             </select>          
                                         </div>
-                                        <div class="col-md-1 text-left " style="padding-left: 0px">
-                                            <button type="button" class="btn btn-default" id="printButton" onclick="printInvoice('print')" data-toggle="modal" data-target="#PrintModal">
-                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print
+                                        <div class="col-md-1 text-left " style="padding-left: 0px;width: 130px">
+                                            <button type="button" class="btn btn-default" id="printButton" onclick="printInvoice('print','InvoiceReport')" data-toggle="modal" data-target="#PrintModal">
+                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice
+                                            </button>
+                                        </div>
+                                        <div class="col-md-1 text-left " style="padding-left: 0px;width: 155px">
+                                            <button type="button" class="btn btn-default" id="printButton" onclick="printInvoice('print','InvoiceEmail')" data-toggle="modal" data-target="#PrintModal">
+                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice Email
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-left " style="width: 125px">
@@ -940,8 +945,8 @@
                     </div>
                     <div class="col-md-7">
                         <select id="selectSalesStaff" name="selectSalesStaff" class="form-control">
-                            <option value="0">Not Show Sales Staff</option>
                             <option value="1">Show Sales Staff</option>
+                            <option value="0">Not Show Sales Staff</option>
                         </select>
                     </div>
                 </div>
@@ -965,6 +970,7 @@
                             <option value="0">Not show</option>
                             <option value="SCB2">Payment Bank Siam commercial bank PCL</option>
                             <option value="BBL">Payment Bank Bangkok bank PCL</option>
+                            <option value="SCB2,BBL">All</option>
                         </select>
                     </div>
                 </div>
@@ -1156,7 +1162,15 @@
                             message: 'Input Invoice Date'
                         }
                     }
-                } 
+                },
+                Department: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'Air Ticket Wendy'
+                        }
+                    }
+                }
             }  
         });
 </script>
@@ -1205,6 +1219,7 @@
 <input type="hidden" id="typeBooking" name="typeBooking" value="${typeBooking}">
 <input type="hidden" id="vatBase" name="vatBase" value="${vat}">
 <input type="hidden" id="typePrint" name="typePrint" value="">
+<input type="hidden" id="typeReport" name="typeReport" value="">
 <input type="hidden" value="${textVoid}">
 <input type="hidden" id="invoiceType" name="invoiceType" value="${invoiceType}">
 <script type="text/javascript" src="js/Invoice.js"></script>

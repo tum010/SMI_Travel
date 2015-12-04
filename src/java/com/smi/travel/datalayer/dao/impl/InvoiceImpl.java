@@ -412,7 +412,7 @@ public class InvoiceImpl implements InvoiceDao{
     }
 
     @Override
-    public List<Invoice> getSearchInvoice(String fromData, String toDate, String department, String type,String agent,String status) {
+    public List<Invoice> getSearchInvoice(String fromData, String toDate, String department, String type,String agent,String status,String airticketWendy) {
         System.out.println("From Date : " + fromData + ":");
         System.out.println("To Date : " + toDate + ":");
         System.out.println("Department : " + department + ":");
@@ -475,6 +475,16 @@ public class InvoiceImpl implements InvoiceDao{
                
             }
         }
+        
+        if(airticketWendy != null && (!"".equalsIgnoreCase(airticketWendy))){
+            if(AndQuery == 1){
+                query += " and st.subDepartment = '" + airticketWendy + "'";
+           }else{
+               AndQuery = 1;
+               query += " st.subDepartment = '" + airticketWendy + "'";
+           }
+        }
+        
         query += "  ORDER BY st.invDate DESC";
         System.out.println("query : " + query);
         List<Invoice> list = session.createQuery(query).list();

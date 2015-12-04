@@ -17,6 +17,7 @@
 <c:set var="status" value="${requestScope['status']}" />
 <c:set var="result" value="${requestScope['result']}" />
 <c:set var="showtemp" value="${requestScope['showtemp']}" />
+<c:set var="airticketWendy" value="${requestScope['airticketWendy']}" />
 <section class="content-header" >
     <h1>
         Finance & Cashier - Invoice
@@ -62,10 +63,10 @@
                             </c:if>                             
                         </div>
                     </div>
-                    <div class="col-xs-1 text-right">
-                        <label class="control-label" for="">To <font style="color: red">*</font>&nbsp;</lable>
+                    <div class="col-xs-1 text-left" style="padding: 0px 0px 0px 10px;width: 33px">
+                        <label class="control-label" for="">To<font style="color: red">*</font></lable>
                     </div>
-                    <div class="col-md-2 form-group"> 
+                    <div class="col-md-2 form-group" style="padding: 0px 0px 0px 20px; width: 160px"> 
                         <div class='input-group date todate' id="DateTo">
                             <c:if test='${todate != null}'>
                                 <input id="ToDate" name="ToDate"  type="text" 
@@ -117,7 +118,7 @@
                             <option value="WendyOutbound" ${selectDepartWO}>Wendy + Outbound</option>
                         </select>    
                     </div>
-                    <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
+                    <div class="col-xs-1 text-left" style="padding: 0px 0px 0px 25px; width: 140px">
                         <label class="control-label" for="">Type</lable>
                     </div>
                     <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px" id="classHideTemp" >
@@ -165,7 +166,7 @@
                     <div class="col-md-2 form-group text-left" style="width: 200px;">
                         <input name="InvToName" id="InvToName" type="text" class="form-control" value="${agentName}" readonly=""/>
                     </div>
-                    <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
+                    <div class="col-xs-1 text-left" style="padding: 0px 0px 0px 20px">
                         <label class="control-label" for="">Status</lable>
                     </div>
                     <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
@@ -185,8 +186,30 @@
                             <option value="2" ${statusV}>Void</option>
                         </select>    
                     </div>
-                    <div class="col-md-1 "  ></div>
-                    <div class="col-md-1 text-right " style="padding: 0px 30px 0px 0px;">
+                    <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px;width: 140px">
+                        <label class="control-label" for="">Air Ticket Wendy</lable>
+                    </div>
+                    <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
+                        <select class="form-control" id="airticketWendy" name="airticketWendy">
+                            <option value="">--choose--</option>
+                            <c:set var="a" value="" />
+                            <c:set var="p" value="" />
+                                <c:choose>
+                                    <c:when test="${airticketWendy == 'airticket'}">
+                                    <c:set var="a" value="selected" />
+                                    </c:when>
+                                     <c:when test="${airticketWendy == 'package'}">
+                                        <c:set var="p" value="selected" />
+                                    </c:when>                                  
+                                </c:choose>>     
+                            <option value="airticket" ${a}>Air Ticket</option>
+                            <option value="package" ${p}>Package</option>
+                        </select>    
+                    </div>    
+                    <div class="col-md-1 "  ></div>                   
+                </div>
+                <div class="col-xs-12 form-group">
+                     <div class="col-md-1 text-right " style="padding: 0px 30px 0px 0px;">
                         <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="search()" class="btn btn-primary btn-primary ">
                             <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                         </button>                                          
@@ -195,7 +218,7 @@
                         <button id="btnPrint" type="button" onclick="printInvoiceSummary();" class="btn btn-default">
                             <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
                         </button>
-                    </div>    
+                    </div>           
                 </div>
             <div class="col-xs-12 form-group"><hr/></div>
             <div class="row">    

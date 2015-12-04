@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.report.model.InvoiceMonthly;
 import com.smi.travel.datalayer.report.model.InvoiceReport;
 import com.smi.travel.datalayer.view.dao.InvoiceReportDao;
@@ -39,20 +40,37 @@ public class InvoiceImpl implements InvoiceReportDao{
         DecimalFormat df = new DecimalFormat("###,###.00");
         String accName = "S.M.I. TRAVEL CO., LTD.";
         String accType = "CURRENT ACCOUNT";
-        String Branch = "";
-        String Accno = "";
-        String Bank = "";
-         List<Object[]> QueryBankList = session.createSQLQuery("SELECT * FROM `m_bank` where code= '" + BankId+"'")
+        String Branch1 = "";
+        String Accno1 = "";
+        String Bank1 = "";
+        String Branch2 = "";
+        String Accno2 = "";
+        String Bank2 = "";
+        
+        String[] bankCode = BankId.split(",");
+        String queryBank = "SELECT * FROM `m_bank` ";
+        for(int i=0;i<bankCode.length;i++){
+            queryBank += (i > 0 ? " or " : " where ");
+            queryBank += " code = '" + bankCode[i] + "' ";
+        }        
+        List<Object[]> QueryBankList = session.createSQLQuery(queryBank)
                  .addScalar("code", Hibernate.STRING)
                  .addScalar("name", Hibernate.STRING)
                  .addScalar("branch", Hibernate.STRING)
                  .addScalar("acc_no", Hibernate.STRING)
                  .list();
+        int i = 0;
         for (Object[] B : QueryBankList) {
-            Bank = util.ConvertString(B[1]);
-            Branch = util.ConvertString(B[2]);
-            Accno = util.ConvertString(B[3]);   
-            
+            if(i == 0){
+                Bank1 = util.ConvertString(B[1]);
+                Branch1 = util.ConvertString(B[2]);
+                Accno1 = util.ConvertString(B[3]);
+                i++;
+            }else{
+                Bank2 = util.ConvertString(B[1]);
+                Branch2 = util.ConvertString(B[2]);
+                Accno2 = util.ConvertString(B[3]); 
+            }
         }
         List<Object[]> QueryInvoiceList = session.createSQLQuery(" SELECT * FROM `invoice_view` where id =  " + InvoiceId)      
                 .addScalar("invto", Hibernate.STRING)
@@ -81,12 +99,15 @@ public class InvoiceImpl implements InvoiceReportDao{
             count++;
             InvoiceReport invoice = new InvoiceReport();
             invoice.setAccname(accName);
-            invoice.setAccno(Accno);
+            invoice.setAccno1(Accno1);
+            invoice.setAccno2(Accno2);
             invoice.setAcctype(accType);
             invoice.setRefno("");
             invoice.setAmount(df.format(B[11]));
-            invoice.setBank(Bank);
-            invoice.setBranch(Branch);
+            invoice.setBank1(Bank1);
+            invoice.setBank2(Bank2);
+            invoice.setBranch1(Branch1);
+            invoice.setBranch2(Branch2);
             invoice.setInvto(util.ConvertString(B[0]));
             invoice.setInvno(util.ConvertString(B[13]));
             invoice.setBankid(BankId);
@@ -177,6 +198,12 @@ public class InvoiceImpl implements InvoiceReportDao{
                     invoice.setSign("nosign");
                 }else{
                     invoice.setSign(sign);
+                    String querySystemUser = "from SystemUser s where s.name like '%"+sign+"%'";
+                    List<SystemUser> systemUser = session.createQuery(querySystemUser).list();
+                    if(!systemUser.isEmpty()) {
+                        invoice.setSignname(systemUser.get(0).getName());
+                    }        
+                    
                 }
             }
             
