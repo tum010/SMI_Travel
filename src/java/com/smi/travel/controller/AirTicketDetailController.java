@@ -171,6 +171,7 @@ public class AirTicketDetailController extends SMITravelController {
             request.setAttribute(Result, result);
             
             String refItemIdTemp="";
+            System.out.println("Ref no : " + referenceNo);
             String refItemId = utilservice.getRefitemIdFromRefNo(referenceNo);
             if("".equalsIgnoreCase(refItemId)){
                 request.setAttribute(EnableSave,1);

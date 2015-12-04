@@ -190,6 +190,7 @@ $(document).ready(function () {
             alert('please add Passengers...');
             return false;
         } else {
+            
             console.log('submit');
             return true;
         }
@@ -1141,6 +1142,6 @@ function addRowPassengerTable() {
     $("div").find($('.collapse')).collapse('hide');
     $("#btnConfirmAddPassenger" + counter).prop('class', 'hidden');
 
-
+            document.getElementById("ButtonSave").disabled = false;
 }
 
