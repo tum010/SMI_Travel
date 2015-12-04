@@ -2233,7 +2233,7 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
         '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="'+isVat+'" onclick="return false" >' +
         '</td>' +
         '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
-        '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="checkAmount('+row+')" value="'+amount+'"></td>' +
+        '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onfocusout="checkAmount('+row+')" value="'+amount+'"></td>' +
         '<td>' + 
         '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="'+currency+'"></option></select>' +                           
         '</td>' +

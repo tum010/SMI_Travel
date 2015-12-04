@@ -92,10 +92,13 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setBankid(BankId);
             invoice.setTaxid(util.ConvertString(B[14]));
             invoice.setTaxbranch(util.ConvertString(B[15]));
-            invoice.setDuedate(util.ConvertString(B[16]));
             if(B[1] != null){
                 invoice.setInvdate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format((Date)B[1]));
             }
+            if(B[16] != null){
+                invoice.setDuedate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[16]))));
+            }
+            
             
             invoice.setStaff(util.ConvertString(B[2]));
             invoice.setPayment(util.ConvertString(B[3]));
