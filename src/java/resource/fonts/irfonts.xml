@@ -12,6 +12,37 @@
                <locale><![CDATA[th]]></locale>
        </locales>
    </fontFamily>
+    <fontFamily name="Angsana New">
+       <normal><![CDATA[Angsa.ttf]]></normal>
+       <bold><![CDATA[Angsab.ttf]]></bold>
+       <italic><![CDATA[Angsai.ttf]]></italic>
+       <boldItalic><![CDATA[Angsabi.ttf]]></boldItalic>
+       <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+       <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+       <locales>
+               <locale><![CDATA[th]]></locale>
+       </locales>
+   </fontFamily>
+   <fontFamily name="Cordia New">
+       <normal><![CDATA[Cordia.ttf]]></normal>
+       <bold><![CDATA[Cordiab.ttf]]></bold>
+       <italic><![CDATA[Cordiai.ttf]]></italic>
+       <boldItalic><![CDATA[Cordiabi.ttf]]></boldItalic>
+       <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+       <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+       <locales>
+               <locale><![CDATA[th]]></locale>
+       </locales>
+   </fontFamily>
+   <fontFamily name="Tahoma">
+       <normal><![CDATA[Tahoma.ttf]]></normal>
+       <bold><![CDATA[Tahomabd.ttf]]></bold>
+       <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+       <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+       <locales>
+               <locale><![CDATA[th]]></locale>
+       </locales>
+   </fontFamily>
 
 </fontFamilies>
 
