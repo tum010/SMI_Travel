@@ -188,10 +188,11 @@
                                                 <thead>
                                                     <tr class="datatable-header" >
                                                         <th style="width:10%;">No</th>
-                                                        <th style="width:40%;">Description</th>
+                                                        <th style="width:30%;">Description</th>
                                                         <th style="width:20%;">Amount</th>
+                                                        <th style="width:20%;">Amount Local</th>
                                                         <th style="width:20%;">Currency</th>
-                                                        <th style="width:10%;">Action</th>
+                                                        <th style="width:5%;">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -305,7 +306,7 @@
                             <div class="col-xs-8" style="padding-top: 0px;">
                                 <div class="col-xs-1 text-right" style="width: 135px">
                                     <label class="control-label text-right">Receive No </label>                                    
-                                </div>
+                                </div> 
                                 <div class="col-xs-1" style="width: 150px" id='receivenumber'>
                                     <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                                     <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
@@ -505,7 +506,8 @@
                                     </tbody>
                                 </table>      
                             </div>
-                        </div> 
+                        </div>
+                        <input type="hidden" class="form-control" id="selectPrint" name="selectPrint"  value="" >
                         <input type="hidden" id="InputDescriptionDetailId" name="InputDescriptionDetailId" value="">
                         <!--<input type="hidden" name="mAccPayBillable" id="mAccPayBillable" value="">-->
                         <input type="hidden" id="typeBooking" name="typeBooking" value="${typeBooking}">
@@ -714,45 +716,40 @@
                     <div class="panel panel-default ${panelborder}">
                         <div class="panel-body"  style="padding-right: 0px;">
                             <div class="col-xs-12">
-                                <div class="col-md-1 text-left" style="width: 200px" >
-                                    <select name="selectPrint" id="selectPrint" class="form-control" style="height:34px">
-                                        <option value="">--- Select Print ---</option> 
-                                         <c:choose>
-                                            <c:when test="${requestScope['SelectPrint'] == '1'}">
-                                                <c:set var="selected1" value="selected" />
-                                            </c:when>
-                                        </c:choose>
-                                        <option value="1" ${selected1}>Receipt</option>
-                                        <c:choose>
-                                            <c:when test="${requestScope['SelectPrint'] == '2'}">
-                                                <c:set var="selected2" value="selected" />
-                                            </c:when>
-                                        </c:choose>
-                                        <option value="2" ${selected2}>Receipt Email</option>
-                                        <c:choose>
-                                            <c:when test="${requestScope['SelectPrint'] == '3'}">
-                                                <c:set var="selected3" value="selected" />
-                                            </c:when>
-                                        </c:choose>
-                                        <option value="3" ${selected3}>Invoice</option>
-                                        <c:choose>
-                                            <c:when test="${requestScope['SelectPrint'] == '4'}">
-                                                <c:set var="selected4" value="selected" />
-                                            </c:when>
-                                        </c:choose>
-                                        <option value="4" ${selected4}>Invoice Email</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-1 text-left " style="width: 100px">
-                                    <button type="button" class="btn btn-default" onclick="printReceipt()">
-                                        <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Print 
+
+                                <div class="col-md-1 text-left " style="width: 99px">
+                                    <button type="button" class="btn btn-default" onclick="printReceipt(1)">
+                                        <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Receipt
                                     </button>
                                 </div>
-                                <div class="col-md-1 text-left " style="width: 125px">
+                                <div class="col-md-1 text-left " style="width: 138px">
+                                    <button type="button" class="btn btn-default" onclick="printReceipt(2)">
+                                        <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Receipt Email
+                                    </button>
+                                </div>
+                                <div class="col-md-1 text-left " style="width: 96px">
+                                    <button type="button" class="btn btn-default" onclick="printReceipt(3)">
+                                        <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Invoice
+                                    </button>
+                                </div>
+                                <div class="col-md-1 text-left " style="width: 136px">
+                                    <button type="button" class="btn btn-default" onclick="printReceipt(4)">
+                                        <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Invoice Email
+                                    </button>
+                                </div>
+                                
+                                <div class="col-md-1 text-left " style="width: 136px">
                                     <button type="button" class="btn btn-default" onclick="sendEmailReceipt()">
-                                        <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> SendEmail 
+                                        <span id="buttonEmailRec" class="glyphicon glyphicon-send" ></span> Send Receipt
                                     </button>
                                 </div>
+                                
+                                <div class="col-md-1 text-left " style="width: 140px">
+                                    <button type="button" class="btn btn-default" onclick="printReceipt(5)">
+                                        <span id="buttonEmailInv" class="glyphicon glyphicon-send" ></span> Send Invoice
+                                    </button>
+                                </div>
+                                
                                 <div class="col-md-2 text-right"> 
                                 </div>
                                 <div class="col-md-1 text-right">                                    
@@ -760,7 +757,7 @@
                                         <span id="ButtonCopy" class="glyphicon glyphicon-copyright-mark" ></span> Copy 
                                     </button>
                                 </div>
-                                <div class="col-md-2 text-right ">
+                                <div class="col-md-1 text-right " style="width: 126px">
                                     <c:set var="isDisableVoid" value="disabled='true'" />
                                     <c:set var="isEnableVoid" value="style='display: none;'" />
                                     <c:set var="isSaveVoid" value="" />
@@ -1773,11 +1770,11 @@
         window.open("report.smi?name=ReceiptEmail");
     }
     
-    function printReceipt() {
-        var printtype = document.getElementById('selectPrint').value;
+    function printReceipt(printtype) {
+        document.getElementById('selectPrint').value = printtype;
         if(printtype == 1 || printtype == 2 ){
             $('#PrintReceiptModal').modal('show');
-        }else if(printtype == 3 || printtype == 4){
+        }else if(printtype == 3 || printtype == 4 || printtype == 5 ){
             $('#PrintInvoiceModal').modal('show');
         }
     }
@@ -1829,7 +1826,16 @@
                     window.open("report.smi?name=InvoiceEmail&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign);   
                 }
             }
-        } 
+        }else if(printtype == 5){
+            if(invoice === ''){
+            }else{
+                if (invType === 'T') {
+                    window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                } else {
+                    window.open("SendMail.smi?reportname=Invoice&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                }
+            }
+        }
     }
     
     
