@@ -21,13 +21,13 @@
 	<field name="selling" class="java.lang.Integer"/>
 	<field name="guide" class="java.lang.String"/>
 	<field name="remark" class="java.lang.String"/>
-	<variable name="totalpax" class="java.lang.Integer" calculation="Sum">
+	<variable name="totalpax" class="java.lang.Integer" resetType="Group" resetGroup="Guide" calculation="Sum">
 		<variableExpression><![CDATA[$F{pax}]]></variableExpression>
 	</variable>
-	<variable name="totalcommission" class="java.lang.Integer" calculation="Sum">
+	<variable name="totalcommission" class="java.lang.Integer" resetType="Group" resetGroup="Guide" calculation="Sum">
 		<variableExpression><![CDATA[$F{comission}]]></variableExpression>
 	</variable>
-	<variable name="totalselling" class="java.lang.Integer" calculation="Sum">
+	<variable name="totalselling" class="java.lang.Integer" resetType="Group" resetGroup="Guide" calculation="Sum">
 		<variableExpression><![CDATA[$F{selling}]]></variableExpression>
 	</variable>
 	<group name="Guide" isStartNewPage="true">
