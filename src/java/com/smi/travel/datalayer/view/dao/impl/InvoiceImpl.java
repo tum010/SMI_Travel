@@ -97,6 +97,8 @@ public class InvoiceImpl implements InvoiceReportDao{
             }
             if(B[16] != null){
                 invoice.setDuedate(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[16]))));
+            }else{
+                invoice.setDuedate("");
             }
             
             
