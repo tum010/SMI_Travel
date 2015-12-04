@@ -742,7 +742,7 @@ function printTicketSummaryAirline(){
                     + "&passenger=" + passenger
                     + "&agentId=" + agentId 
                     + "&department=" + department 
-                    + "&staff=" + salebyName 
+                    + "&salebyUser=" + salebyUser 
                     + "&termPay=" + termPay);
         }else if(reportType == 2){
             window.open("Excel.smi?name=SummaryAirlinePax&typeRouting=" + typeRouting 
@@ -755,7 +755,7 @@ function printTicketSummaryAirline(){
                     + "&passenger=" + passenger
                     + "&agentId=" + agentId 
                     + "&department=" + department 
-                    + "&staff=" + salebyName 
+                    + "&salebyUser=" + salebyUser 
                     + "&termPay=" + termPay);
         }else{
             $("#reporttypepanel").removeClass("has-success");
@@ -774,7 +774,7 @@ function printTicketSummaryAirline(){
                     + "&passenger=" + passenger
                     + "&agentId=" + agentId 
                     + "&department=" + department 
-                    + "&staff=" + salebyName 
+                    + "&salebyUser=" + salebyUser 
                     + "&termPay=" + termPay);
         }else if(reportType == 2){
             window.open("Excel.smi?name=SummaryAirlinePax&typeRouting=" + typeRouting 
@@ -787,7 +787,7 @@ function printTicketSummaryAirline(){
                     + "&passenger=" + passenger
                     + "&agentId=" + agentId 
                     + "&department=" + department 
-                    + "&staff=" + salebyName 
+                    + "&salebyUser=" + salebyUser 
                     + "&termPay=" + termPay);
         }else{
             $("#reporttypepanel").removeClass("has-success");

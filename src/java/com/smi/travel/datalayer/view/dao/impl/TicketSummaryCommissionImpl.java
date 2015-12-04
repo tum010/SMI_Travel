@@ -354,96 +354,84 @@ public class TicketSummaryCommissionImpl implements TicketSummaryCommissionDao{
                    String date = ""+ invoicefromdatePage + " To " + invoicetodatePage;
                    ticket.setInvoicefromdatePage(date);
                 }else{
-                    ticket.setInvoicefromdatePage("");
+                    ticket.setInvoicefromdatePage("ALL");
                 }
                 if(issuefromdatePage != null && !"".equals(issuefromdatePage)){
                    String date = ""+ issuefromdatePage + " To " + issuetodatePage;
                    ticket.setIssuefromdatePage(date);
                 }else{
-                    ticket.setIssuefromdatePage("");
+                    ticket.setIssuefromdatePage("ALL");
                 }
-//                if(agentcomfromdatePage != null && !"".equals(agentcomfromdatePage)){
-//                   String date = ""+ agentcomfromdatePage + " To " + agentcomtodatePage;
-//                   ticket.setAgentcomfromdatePage(date);
-//                }else{
-//                    ticket.setAgentcomfromdatePage("");
-//                }
-//                if(ticketcomfromdatePage != null && !"".equals(ticketcomfromdatePage)){
-//                   String date = ""+ ticketcomfromdatePage + " To " + ticketcomtodatePage;
-//                   ticket.setTicketcomfromdatePage(date);
-//                }else{
-//                    ticket.setTicketcomfromdatePage("");
-//                }
                 if(overfromdatePage != null && !"".equals(overfromdatePage)){
                    String date = ""+ overfromdatePage + " To " + overtodatePage;
                    ticket.setOverfromdatePage(date);
                 }else{
-                    ticket.setOverfromdatePage("");
+                    ticket.setOverfromdatePage("ALL");
                 }
                 if(littlefromdatePage != null && !"".equals(littlefromdatePage)){
                    String date = ""+ littlefromdatePage + " To " + littletodatePage;
                    ticket.setLittlefromdatePage(date);
                 }else{
-                    ticket.setLittlefromdatePage("");
+                    ticket.setLittlefromdatePage("ALL");
                 }
                 if(agemtcomreceivefromdatePage != null && !"".equals(agemtcomreceivefromdatePage)){
                    String date = ""+ agemtcomreceivefromdatePage + " To " + agemtcomreceivetodatePage;
                    ticket.setAgemtcomreceivefromdatePage(date);
                 }else{
-                    ticket.setAgemtcomreceivefromdatePage("");
+                    ticket.setAgemtcomreceivefromdatePage("ALL");
                 }
                 if(comrefundfromdatePage != null && !"".equals(comrefundfromdatePage)){
                    String date = ""+ comrefundfromdatePage + " To " + comrefundtodatePage;
                    ticket.setComrefundfromdatePage(date);
                 }else{
-                    ticket.setComrefundfromdatePage("");
+                    ticket.setComrefundfromdatePage("ALL");
                 }
                 if(addpayfromdatePage != null && !"".equals(addpayfromdatePage)){
                    String date = ""+ addpayfromdatePage + " To " + addpaytodatePage;
                    ticket.setAddpayfromdatePage(date);
                 }else{
-                    ticket.setAddpayfromdatePage("");
+                    ticket.setAddpayfromdatePage("ALL");
                 }
                 if(decreasepayfromdatePage != null && !"".equals(decreasepayfromdatePage)){
                    String date = ""+ decreasepayfromdatePage + " To " + decreasepaytodatePage;
                    ticket.setDecreasepayfromdatePage(date);
                 }else{
-                    ticket.setDecreasepayfromdatePage("");
+                    ticket.setDecreasepayfromdatePage("ALL");
                 }
                 if(typeRoutingPage != null && !"".equals(typeRoutingPage)){
                     ticket.setTypeRoutingPage(typeRoutingPage);
                 }else{
-                    ticket.setTypeRoutingPage("");
+                    ticket.setTypeRoutingPage("ALL");
                 }
                 if(routingDetailPage != null && !"".equals(routingDetailPage)){
                     ticket.setRoutingDetailPage(routingDetailPage);
                 }else{
-                    ticket.setRoutingDetailPage("");
+                    ticket.setRoutingDetailPage("ALL");
                 }
                 if(airlineCodePage != null && !"".equals(airlineCodePage)){
                     ticket.setAirlineCodePage(airlineCodePage);
                 }else{
-                    ticket.setAirlineCodePage("");
+                    ticket.setAirlineCodePage("ALL");
                 }
                 if(agentNamePage != null && !"".equals(agentNamePage)){
                     ticket.setAgentNamePage(agentNamePage);
                 }else{
-                    ticket.setAgentNamePage("");
+                    ticket.setAgentNamePage("ALL");
                 }
                 if(departmentPage != null && !"".equals(departmentPage)){
                     ticket.setDepartmentPage(departmentPage);
                 }else{
-                    ticket.setDepartmentPage("");
+                    ticket.setDepartmentPage("ALL");
                 }
                 if(salebyNamePage != null && !"".equals(salebyNamePage)){
                     ticket.setSalebyNamePage(salebyNamePage);
                 }else{
-                    ticket.setSalebyNamePage("");
+                    ticket.setSalebyNamePage("ALL");
                 }
                 if(termPayPage != null && !"".equals(termPayPage)){
                     ticket.setTermPayPage(termPayPage);
                 }else{
-                    ticket.setTermPayPage("");
+                    ticket.setTermPayPage("ALL");
                 }
 
                 ticket.setPrintbyPage(printby);
@@ -523,13 +511,13 @@ public class TicketSummaryCommissionImpl implements TicketSummaryCommissionDao{
                    String date = ""+ invoicefromdatePage + " To " + invoicetodatePage;
                    ticket.setInvoicefromdatePage(date);
                 }else{
-                    ticket.setInvoicefromdatePage("");
+                    ticket.setInvoicefromdatePage("ALL");
                 }
                 if(issuefromdatePage != null && !"".equals(issuefromdatePage)){
                    String date = ""+ issuefromdatePage + " To " + issuetodatePage;
                    ticket.setIssuefromdatePage(date);
                 }else{
-                    ticket.setIssuefromdatePage("");
+                    ticket.setIssuefromdatePage("ALL");
                 }
 //                if(agentcomfromdatePage != null && !"".equals(agentcomfromdatePage)){
 //                   String date = ""+ agentcomfromdatePage + " To " + agentcomtodatePage;
@@ -547,72 +535,72 @@ public class TicketSummaryCommissionImpl implements TicketSummaryCommissionDao{
                    String date = ""+ overfromdatePage + " To " + overtodatePage;
                    ticket.setOverfromdatePage(date);
                 }else{
-                    ticket.setOverfromdatePage("");
+                    ticket.setOverfromdatePage("ALL");
                 }
                 if(littlefromdatePage != null && !"".equals(littlefromdatePage)){
                    String date = ""+ littlefromdatePage + " To " + littletodatePage;
                    ticket.setLittlefromdatePage(date);
                 }else{
-                    ticket.setLittlefromdatePage("");
+                    ticket.setLittlefromdatePage("ALL");
                 }
                 if(agemtcomreceivefromdatePage != null && !"".equals(agemtcomreceivefromdatePage)){
                    String date = ""+ agemtcomreceivefromdatePage + " To " + agemtcomreceivetodatePage;
                    ticket.setAgemtcomreceivefromdatePage(date);
                 }else{
-                    ticket.setAgemtcomreceivefromdatePage("");
+                    ticket.setAgemtcomreceivefromdatePage("ALL");
                 }
                 if(comrefundfromdatePage != null && !"".equals(comrefundfromdatePage)){
                    String date = ""+ comrefundfromdatePage + " To " + comrefundtodatePage;
                    ticket.setComrefundfromdatePage(date);
                 }else{
-                    ticket.setComrefundfromdatePage("");
+                    ticket.setComrefundfromdatePage("ALL");
                 }
                 if(addpayfromdatePage != null && !"".equals(addpayfromdatePage)){
                    String date = ""+ addpayfromdatePage + " To " + addpaytodatePage;
                    ticket.setAddpayfromdatePage(date);
                 }else{
-                    ticket.setAddpayfromdatePage("");
+                    ticket.setAddpayfromdatePage("ALL");
                 }
                 if(decreasepayfromdatePage != null && !"".equals(decreasepayfromdatePage)){
                    String date = ""+ decreasepayfromdatePage + " To " + decreasepaytodatePage;
                    ticket.setDecreasepayfromdatePage(date);
                 }else{
-                    ticket.setDecreasepayfromdatePage("");
+                    ticket.setDecreasepayfromdatePage("ALL");
                 }
                 if(typeRoutingPage != null && !"".equals(typeRoutingPage)){
                     ticket.setTypeRoutingPage(typeRoutingPage);
                 }else{
-                    ticket.setTypeRoutingPage("");
+                    ticket.setTypeRoutingPage("ALL");
                 }
                 if(routingDetailPage != null && !"".equals(routingDetailPage)){
                     ticket.setRoutingDetailPage(routingDetailPage);
                 }else{
-                    ticket.setRoutingDetailPage("");
+                    ticket.setRoutingDetailPage("ALL");
                 }
                 if(airlineCodePage != null && !"".equals(airlineCodePage)){
                     ticket.setAirlineCodePage(airlineCodePage);
                 }else{
-                    ticket.setAirlineCodePage("");
+                    ticket.setAirlineCodePage("ALL");
                 }
                 if(agentNamePage != null && !"".equals(agentNamePage)){
                     ticket.setAgentNamePage(agentNamePage);
                 }else{
-                    ticket.setAgentNamePage("");
+                    ticket.setAgentNamePage("ALL");
                 }
                 if(departmentPage != null && !"".equals(departmentPage)){
                     ticket.setDepartmentPage(departmentPage);
                 }else{
-                    ticket.setDepartmentPage("");
+                    ticket.setDepartmentPage("ALL");
                 }
                 if(salebyNamePage != null && !"".equals(salebyNamePage)){
                     ticket.setSalebyNamePage(salebyNamePage);
                 }else{
-                    ticket.setSalebyNamePage("");
+                    ticket.setSalebyNamePage("ALL");
                 }
                 if(termPayPage != null && !"".equals(termPayPage)){
                     ticket.setTermPayPage(termPayPage);
                 }else{
-                    ticket.setTermPayPage("");
+                    ticket.setTermPayPage("ALL");
                 }
 
                 ticket.setPrintbyPage(printby);
@@ -678,13 +666,13 @@ public class TicketSummaryCommissionImpl implements TicketSummaryCommissionDao{
                    String date = ""+ invoicefromdatePage + " To " + invoicetodatePage;
                    ticket.setInvoicefromdatePage(date);
                 }else{
-                    ticket.setInvoicefromdatePage("");
+                    ticket.setInvoicefromdatePage("ALL");
                 }
                 if(issuefromdatePage != null && !"".equals(issuefromdatePage)){
                    String date = ""+ issuefromdatePage + " To " + issuetodatePage;
                    ticket.setIssuefromdatePage(date);
                 }else{
-                    ticket.setIssuefromdatePage("");
+                    ticket.setIssuefromdatePage("ALL");
                 }
 //                if(agentcomfromdatePage != null && !"".equals(agentcomfromdatePage)){
 //                   String date = ""+ agentcomfromdatePage + " To " + agentcomtodatePage;
@@ -702,72 +690,72 @@ public class TicketSummaryCommissionImpl implements TicketSummaryCommissionDao{
                    String date = ""+ overfromdatePage + " To " + overtodatePage;
                    ticket.setOverfromdatePage(date);
                 }else{
-                    ticket.setOverfromdatePage("");
+                    ticket.setOverfromdatePage("ALL");
                 }
                 if(littlefromdatePage != null && !"".equals(littlefromdatePage)){
                    String date = ""+ littlefromdatePage + " To " + littletodatePage;
                    ticket.setLittlefromdatePage(date);
                 }else{
-                    ticket.setLittlefromdatePage("");
+                    ticket.setLittlefromdatePage("ALL");
                 }
                 if(agemtcomreceivefromdatePage != null && !"".equals(agemtcomreceivefromdatePage)){
                    String date = ""+ agemtcomreceivefromdatePage + " To " + agemtcomreceivetodatePage;
                    ticket.setAgemtcomreceivefromdatePage(date);
                 }else{
-                    ticket.setAgemtcomreceivefromdatePage("");
+                    ticket.setAgemtcomreceivefromdatePage("ALL");
                 }
                 if(comrefundfromdatePage != null && !"".equals(comrefundfromdatePage)){
                    String date = ""+ comrefundfromdatePage + " To " + comrefundtodatePage;
                    ticket.setComrefundfromdatePage(date);
                 }else{
-                    ticket.setComrefundfromdatePage("");
+                    ticket.setComrefundfromdatePage("ALL");
                 }
                 if(addpayfromdatePage != null && !"".equals(addpayfromdatePage)){
                    String date = ""+ addpayfromdatePage + " To " + addpaytodatePage;
                    ticket.setAddpayfromdatePage(date);
                 }else{
-                    ticket.setAddpayfromdatePage("");
+                    ticket.setAddpayfromdatePage("ALL");
                 }
                 if(decreasepayfromdatePage != null && !"".equals(decreasepayfromdatePage)){
                    String date = ""+ decreasepayfromdatePage + " To " + decreasepaytodatePage;
                    ticket.setDecreasepayfromdatePage(date);
                 }else{
-                    ticket.setDecreasepayfromdatePage("");
+                    ticket.setDecreasepayfromdatePage("ALL");
                 }
                 if(typeRoutingPage != null && !"".equals(typeRoutingPage)){
                     ticket.setTypeRoutingPage(typeRoutingPage);
                 }else{
-                    ticket.setTypeRoutingPage("");
+                    ticket.setTypeRoutingPage("ALL");
                 }
                 if(routingDetailPage != null && !"".equals(routingDetailPage)){
                     ticket.setRoutingDetailPage(routingDetailPage);
                 }else{
-                    ticket.setRoutingDetailPage("");
+                    ticket.setRoutingDetailPage("ALL");
                 }
                 if(airlineCodePage != null && !"".equals(airlineCodePage)){
                     ticket.setAirlineCodePage(airlineCodePage);
                 }else{
-                    ticket.setAirlineCodePage("");
+                    ticket.setAirlineCodePage("ALL");
                 }
                 if(agentNamePage != null && !"".equals(agentNamePage)){
                     ticket.setAgentNamePage(agentNamePage);
                 }else{
-                    ticket.setAgentNamePage("");
+                    ticket.setAgentNamePage("ALL");
                 }
                 if(departmentPage != null && !"".equals(departmentPage)){
                     ticket.setDepartmentPage(departmentPage);
                 }else{
-                    ticket.setDepartmentPage("");
+                    ticket.setDepartmentPage("ALL");
                 }
                 if(salebyNamePage != null && !"".equals(salebyNamePage)){
                     ticket.setSalebyNamePage(salebyNamePage);
                 }else{
-                    ticket.setSalebyNamePage("");
+                    ticket.setSalebyNamePage("ALL");
                 }
                 if(termPayPage != null && !"".equals(termPayPage)){
                     ticket.setTermPayPage(termPayPage);
                 }else{
-                    ticket.setTermPayPage("");
+                    ticket.setTermPayPage("ALL");
                 }
 
                 ticket.setPrintbyPage(printby);
