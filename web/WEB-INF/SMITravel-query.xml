@@ -480,6 +480,7 @@
                 <ref local="PaymentWendytourDao" />
                 <ref local="ReceiveTableDao" />
                 <ref local="PaymentOutboundDao" />
+                <ref local="DefineVarDao" />
             </list>
         </constructor-arg>
     </bean>

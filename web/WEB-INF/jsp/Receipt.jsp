@@ -2187,6 +2187,10 @@ function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId
     }
 }
 function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number,paymentTourId,receiveFrom,receiveName,receiveAddress) {
+    var x = parseFloat(amount) ;
+    var v = parseFloat(vat) ;    
+    var grossinv = x * (100/(100+v));
+    grossinv = formatNumber(grossinv);
     
     if(setinvoice !== 1){
         document.getElementById("receiveFromCode").value = receiveFrom ;
@@ -2194,7 +2198,6 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
         document.getElementById("receiveFromAddress").value = receiveAddress ;
         document.getElementById("arCode").value = receiveFrom ;
     }
-    
     
     var rowAll = row+1;
     for(var i =1; i<rowAll ;i++){
@@ -2216,6 +2219,7 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
 
     $("#ReceiptListTable tbody").append(
         '<tr style="higth 100px">' +
+        '<input id="grossInvoice' + row + '" name="grossInvoice' + row + '"  type="hidden" value="'+grossinv+'" >' +
         '<input id="invId' + row + '" name="invId' + row + '"  type="hidden" value="'+invId+'" >' +
         '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
         '<input id="billDescId' + row + '" name="billDescId' + row + '"  type="hidden" value="'+billDescId+'" >' +
@@ -2238,7 +2242,7 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
         '<td align="center">' +
         '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="'+isVat+'" onclick="return false" >' +
         '</td>' +
-        '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
+        '<td><div id="receiveVat' + row + '" style="display:none" value="'+vat+'"></div></td>' +
         '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onfocusout="checkAmount('+row+')" value="'+amount+'"></td>' +
         '<td>' + 
         '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="'+currency+'"></option></select>' +                           

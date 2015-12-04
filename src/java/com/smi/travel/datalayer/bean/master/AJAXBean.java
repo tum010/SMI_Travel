@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.dao.CustomerDao;
 import com.smi.travel.datalayer.dao.DaytourBookingDao;
 import com.smi.travel.datalayer.dao.DaytourComissionDao;
 import com.smi.travel.datalayer.dao.DaytourDao;
+import com.smi.travel.datalayer.dao.DefineVarDao;
 import com.smi.travel.datalayer.dao.InvoiceDao;
 import com.smi.travel.datalayer.dao.MAirportDao;
 import com.smi.travel.datalayer.dao.MFilghtDao;
@@ -41,6 +42,7 @@ import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MAirport;
 import com.smi.travel.datalayer.entity.MBookingstatus;
+import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.MFlightservice;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.Master;
@@ -137,7 +139,8 @@ public class AJAXBean extends AbstractBean implements
     private PaymentWendytourDao paymentWendytourDao;
     private ReceiveTableDao receiveTableDao;
     private PaymentOutboundDao paymentOutboundDao;
-
+    private DefineVarDao defineVardao;
+    
     public AJAXBean(List queryList) {
         super(queryList);
         if (queryList != null && queryList.size() > 0) {
@@ -196,6 +199,8 @@ public class AJAXBean extends AbstractBean implements
                     receiveTableDao = (ReceiveTableDao) obj;
                 } else if (obj instanceof PaymentOutboundDao) {
                     paymentOutboundDao = (PaymentOutboundDao) obj;
+                } else if (obj instanceof DefineVarDao) {
+                    defineVardao = (DefineVarDao) obj;
                 }
             }
         }
@@ -901,6 +906,7 @@ public class AJAXBean extends AbstractBean implements
         String receiveFrom = "";
         String receiveName = "";
         String receiveAddress = "";
+        String vat = "";
         for (int i = 0; i < ticketList.size(); i++) {
             No = i + 1;
             product = "9";
@@ -922,7 +928,8 @@ public class AJAXBean extends AbstractBean implements
             if(!"null".equalsIgnoreCase(ticketList.get(i).getAgentaddress()) ){
                 receiveAddress = ticketList.get(i).getAgentaddress();
             }
-
+            MDefaultData mDefaultData = getMDefaultDataFromType("vat");
+            vat = mDefaultData.getValue();
             if ("U".equals(isUse)) {
                 newrow += "<tr>"
                         + "<td class='text-center'>" + No + "</td>"
@@ -937,7 +944,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
                         + "<td class='text-center'>" + isUse + "</td>"
-                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','','','" + commission + "','" + currency + "','','','" + paymentId + "','" + airline + "','3','" + description + "','" + payNo + "','','" + receiveFrom + "','" + receiveName + "','" + receiveAddress + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','1','" + vat + "','" + commission + "','" + currency + "','','','" + paymentId + "','" + airline + "','3','" + description + "','" + payNo + "','','" + receiveFrom + "','" + receiveName + "','" + receiveAddress + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
             }
             html.append(newrow);
@@ -960,6 +967,7 @@ public class AJAXBean extends AbstractBean implements
         String receiveFrom = "";
         String receiveName = "";
         String receiveAddress = "";
+        String vat = "";
         for (int i = 0; i < paymentTourList.size(); i++) {
             No = i + 1;
             product = "6";
@@ -981,6 +989,8 @@ public class AJAXBean extends AbstractBean implements
                 receiveAddress = paymentTourList.get(i).getSupaddress();
             }
             
+            MDefaultData mDefaultData = getMDefaultDataFromType("vat");
+            vat = mDefaultData.getValue();
             
             if ("U".equals(isUse)) {
                 newrow += "<tr>"
@@ -996,7 +1006,7 @@ public class AJAXBean extends AbstractBean implements
 //                        + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
                         + "<td class='text-center'>" + isUse + "</td>"
-                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','','','" + commission + "','" + currency + "','','','','" + airline + "','4','" + description + "','" + payNo + "','" + paymentTourId + "','" + receiveFrom + "','" + receiveName + "','" + receiveAddress + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','1','" + vat + "','" + commission + "','" + currency + "','','','','" + airline + "','4','" + description + "','" + payNo + "','" + paymentTourId + "','" + receiveFrom + "','" + receiveName + "','" + receiveAddress + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
             }
             html.append(newrow);
@@ -1492,16 +1502,18 @@ public class AJAXBean extends AbstractBean implements
 
             String displaydescription = "";
             String displaydesTemp = "";
-
+            String displaydescriptionother = "";
             if ("1".equals(product)) {
                 displaydescription = billTypeName;
             } else if ("2".equals(product) || "8".equals(product)) {
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " #-- ";
+                    displaydescriptionother += billTypeName + " #-- ";
                     displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
                         String[] parts = displaydesTemp.split("\\|");
-                        displaydescription += parts[9] + " : " + parts[4] + " : " + parts[5];
+                        displaydescription += parts[4] + " : " + parts[5];
+                        displaydescriptionother += parts[9] + " : " + parts[4] + " : " + parts[5];
                     }
                 }
             } else if ("3".equals(product)) {
@@ -1535,9 +1547,13 @@ public class AJAXBean extends AbstractBean implements
                         + "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='" + receiveAddress + "'>"
                         + "<input type='hidden' name='arcodeBillable' id='arcodeBillable' value='" + arcode + "'>"
                         + "<input type='hidden' name='mAccPayBillable' id='mAccPayBillable' value='" + mAccPay + "'>"
-                        + "<td class='text-center'>" + No + "</td>"
-                        + "<td>" + displaydescription + "</td>"
-                        + "<td class='money'>" + amount + "</td>"
+                        + "<td class='text-center'>" + No + "</td>";
+                        if ("2".equals(product) || "8".equals(product)) {
+                            newrow += "<td>" + displaydescriptionother + "</td>";
+                        }else{
+                            newrow += "<td>" + displaydescription + "</td>";
+                        }
+                newrow += "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
                         + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + currency + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "','','','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
@@ -2269,5 +2285,22 @@ public class AJAXBean extends AbstractBean implements
     public void setmFlightDao(MFilghtDao mFlightDao) {
         this.mFlightDao = mFlightDao;
     }
-       
+
+    public DefineVarDao getDefineVardao() {
+        return defineVardao;
+    }
+
+    public void setDefineVardao(DefineVarDao defineVardao) {
+        this.defineVardao = defineVardao;
+    }
+    
+    public MDefaultData getMDefaultDataFromType(String name){   
+        List<MDefaultData> data = defineVardao.getListDefaultData();
+        for(int i=0;i<data.size();i++){
+            if(data.get(i).getName().equalsIgnoreCase(name)){
+                return data.get(i);
+            }
+        }
+        return null; 
+    }   
 }

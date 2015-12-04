@@ -22,6 +22,7 @@ import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -125,6 +126,7 @@ public class ReceiptController extends SMITravelController {
         SimpleDateFormat df = new SimpleDateFormat();
         df.applyPattern("yyyy-MM-dd");
         request.setAttribute(RECEIPTDATE,String.valueOf(df.format(new Date())));
+        request.setAttribute(RECEIVEDATE,String.valueOf(df.format(new Date())));
         //Role User
         String roleName = user.getRole().getName();
         System.out.println("roleName"+roleName);
@@ -226,6 +228,7 @@ public class ReceiptController extends SMITravelController {
                 String airlineCode = request.getParameter("airlineCode" + i);
                 String displayDescription = request.getParameter("DescriptionReceiptDetail" + i);
                 String paymentTourId = request.getParameter("paymentTourId" + i);
+                String gross = request.getParameter("grossInvoice" + i);
 //                System.out.println(" invId " + invId);
 //                System.out.println(" airlineCode " + airlineCode);
                 ReceiptDetail receiptDetail = new ReceiptDetail();
@@ -245,7 +248,10 @@ public class ReceiptController extends SMITravelController {
                 }else{
                     receiptDetail.setIsVat(0);
                 }
-                receiptDetail.setVat(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveVat) ? receiveVat.replaceAll(",","") : 0)));
+                MDefaultData mDefaultData = utilityService.getMDefaultDataFromType("vat");
+                receiptDetail.setVat(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveVat) ? receiveVat.replaceAll(",","") : mDefaultData.getValue())));
+
+                
                 receiptDetail.setAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveAmount) ? receiveAmount.replaceAll(",","") : 0)));
                 receiptDetail.setCurAmount(receiveCurrency);
                 
@@ -296,6 +302,7 @@ public class ReceiptController extends SMITravelController {
                        }    
                        invoiceDetail.setInvoice(invoice);
                        invoiceDetail.setDescription(receiptDetail.getDescription());
+                       invoiceDetail.setDisplayDescription(receiptDetail.getDisplayDescription());
                        invoiceDetail.setCost(receiptDetail.getCost());
                        invoiceDetail.setCostLocal(receiptDetail.getCost());
                        invoiceDetail.setCurCost(receiptDetail.getCurCost());
@@ -304,6 +311,7 @@ public class ReceiptController extends SMITravelController {
                        invoiceDetail.setCurAmount(receiptDetail.getCurAmount());
                        invoiceDetail.setVat(receiptDetail.getVat());
                        invoiceDetail.setIsVat(receiptDetail.getIsVat());
+                       invoiceDetail.setGross(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(gross) ? gross.replaceAll(",","") : 0)));
                        listInvoiceDetail.add(invoiceDetail);
                        
                         if( (receiveProduct!="" && receiveProduct!=null) || 
