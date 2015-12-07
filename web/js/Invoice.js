@@ -365,7 +365,7 @@ function checkCurrencyCost() {
 
 var isDuplicateInvoiceDetail = 0;
 var description = "";
-function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c) {
+function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c, refItemId, productName) {
 
     var selectT = "";
     var selectC = "";
@@ -408,6 +408,12 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c)
     if (cur_c === undefined) {
         cur_c = "";
     }
+    if (refItemId === undefined) {
+        refItemId = "";
+    }
+    if (productName === undefined) {
+        productName = "";
+    }
     if (!row) {
         row = 1;
     }
@@ -441,6 +447,10 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c)
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
                 '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +
                 '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> ' + description + '</textarea> </td>' +
+                '<td class="hidden"><input type="text" value="'+ prod + '" id="mBilltypeId' + row + '" name="mBilltypeId' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="'+ productName + '" id="mBilltypeName' + row + '" name="mBilltypeName' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="'+ refItemId +'" id="refItemId' + row + '" name="refItemId' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="'+ RefNo +'" id="refNo' + row + '" name="refNo' + row + '" class="form-control" ></td>' +
                 '</tr>'
                 );
     } else if (des == '' || RefNo == '') {
@@ -465,6 +475,10 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c)
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
                 '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +
                 '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> ' + description + '</textarea> </td>' +
+                '<td class="hidden"><input type="text" value="'+ prod + '" id="mBilltypeId' + row + '" name="mBilltypeId' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="'+ productName + '" id="mBilltypeName' + row + '" name="mBilltypeName' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="'+ refItemId +'" id="refItemId' + row + '" name="refItemId' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="'+ RefNo +'" id="refNo' + row + '" name="refNo' + row + '" class="form-control" ></td>' +
                 '</tr>'
                 );
     }
@@ -491,6 +505,23 @@ function saveDescriptionDetail() {
     var descriptionDetail = $('#InputDescriptionDetail').val();
     console.log("Detail : " + $('#InputDescriptionDetail').val());
     $('#DescriptionInvoiceDetail' + row).html(descriptionDetail);
+}
+function cancelDescriptionDetail() {
+    var row = $("#InputDescriptionDetailId").val();
+    var product = $("#mBilltypeName"+row).val();
+    var refNo = $("#refNo"+row).val();
+    var refItemId = $("#refItemId"+row).val();
+    var prod = $("#mBilltypeId"+row).val();
+    var servletName = 'InvoiceServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&refNo=' + refItemId +
+            '&typeId=' + prod +
+            '&type=' + 'searchInvoiceDescription';
+//    alert("row : "+row+" product : "+product+" refNo : "+refNo+" refItemId : "+refItemId+" prod : "+prod);
+    CallAjaxSearchDescription(param, row, product, refNo);
 }
 function subStringDescription(description, row) {
     var index = description.indexOf("\n");
@@ -529,7 +560,7 @@ function changeFormatAmountLocalNumber(id) {
     if (isNaN(count)) {
         document.getElementById('InputAmountLocal' + id).value = "";
     } else {
-        count = parseFloat((document.getElementById('InputAmountLocal' + id).value).replace(/,/g,""));
+        count = parseFloat((document.getElementById('InputAmountLocal' + id).value).replace(/,/g, ""));
         document.getElementById('InputAmountLocal' + id).value = formatNumber(count);
     }
 }
@@ -560,7 +591,7 @@ function changeFormatCostLocalNumber(id) {
     if (isNaN(count)) {
         document.getElementById('InputCostLocal' + id).value = "";
     } else {
-        count = parseFloat((document.getElementById('InputCostLocal' + id).value).replace(/,/g,""));
+        count = parseFloat((document.getElementById('InputCostLocal' + id).value).replace(/,/g, ""));
         document.getElementById('InputCostLocal' + id).value = formatNumber(count);
     }
 }
@@ -605,7 +636,7 @@ function DisableInvoice() {
     document.getElementById('InvoiceForm').submit();
 }
 
-function printInvoice(text,report) {
+function printInvoice(text, report) {
     $('#typePrint').val(text);
     $('#typeReport').val(report);
 }
@@ -956,14 +987,14 @@ function addInvoiceDetail(rowId) {
                         '&type=' + 'searchInvoiceDescription';
                 CallAjaxSearchDescription(param, countTable, pro, RefNo);
                 // Send Add Row
-                AddRowDetailBillAble(countTable, prod, des, cos, id, price, RefNo, cur, cur_c);
+                AddRowDetailBillAble(countTable, prod, des, cos, id, price, RefNo, cur, cur_c, refItemId, pro);
 //                alert("C : " + countTable);
                 CalculateGrandTotal(countTable);
                 calculateGross(countTable);
             } else if (isDuplicateInvoiceDetail !== 0) {
 //                alert("Duplicate");
                 $('#textAlertDuplicate').show();
-            }            
+            }
         }
         count++;
     });
@@ -972,8 +1003,8 @@ function addInvoiceDetail(rowId) {
         $("#counter").val(countTable);
         AddRowDetailBillAble(countTable);
     }
-    if(curChk === ''){
-        validFromInvoice(); 
+    if (curChk === '') {
+        validFromInvoice();
     }
 }
 
@@ -1311,14 +1342,14 @@ function setBillValue(billto, billname, address, term, pay) {
     $("#InvToAddress").val(address);
     $("#ARCode").val(billto);
 
-    if($("#InvTo").val() !== "" && $("#InvToName").val() !== ""  && $("#ARCode").val() !== "" && $("#InputInvDate").val() !== ""){
+    if ($("#InvTo").val() !== "" && $("#InvToName").val() !== "" && $("#ARCode").val() !== "" && $("#InputInvDate").val() !== "") {
 //        alert("1");
         $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvTo');
         $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvToName');
         $('#InvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
         $("#saveInvoice").removeAttr("disabled");
         $("#disableVoidButton").removeAttr("disabled");
-    }else{
+    } else {
 //         alert("2");
         $("#saveInvoice").attr("disabled", "disabled");
         $("#disableVoidButton").attr("disabled", "disabled");
