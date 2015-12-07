@@ -428,7 +428,7 @@ public class BookingViewImpl implements BookingViewDao{
     }
 
     @Override
-    public List<BookingDayTourSummaryView> getListBookingDayTourSummaryView(String bookRefNo, String bookLeader, String bookDate, String tourCode, String tourName, String tourDate, String tourPickUp) {
+    public List<BookingDayTourSummaryView> getListBookingDayTourSummaryView(String bookRefNo, String bookLeader, String bookDate, String tourCode, String tourName, String tourDate, String tourPickUp, String tourAgent) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List<BookingDayTourSummaryView> bookingDayTourSummaryViewList = new ArrayList<BookingDayTourSummaryView>();
@@ -471,11 +471,16 @@ public class BookingViewImpl implements BookingViewDao{
             query += " pickup LIKE '%" + tourPickUp + "%' " ;
             condition = true;
         }
+        if((tourAgent != null) &&(!"".equalsIgnoreCase(tourAgent))){
+            query += (condition ? " and " : " where ");
+            query += " agentname LIKE '%" + tourAgent + "%' OR agentcode LIKE '%" + tourAgent + "%' " ;
+            condition = true;
+        }
 
         List<Object[]> QueryDayTour = session.createSQLQuery(query)
                 .addScalar("refno", Hibernate.STRING)
                 .addScalar("refdate", Hibernate.STRING)
-                .addScalar("agent", Hibernate.STRING)
+                .addScalar("agentname", Hibernate.STRING)
                 .addScalar("leader", Hibernate.STRING)
                 .addScalar("pax", Hibernate.STRING)
                 .addScalar("tour_code", Hibernate.STRING)
@@ -490,6 +495,7 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("invoice", Hibernate.STRING)
                 .addScalar("receipt", Hibernate.STRING)
                 .addScalar("id", Hibernate.STRING)
+                .addScalar("agentcode", Hibernate.STRING)
                 .setMaxResults(500)
                 .list();
         

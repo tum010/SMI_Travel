@@ -85,8 +85,8 @@ public class WorkSpaceService {
         return bookingviewdao.getListBookingPackageSummaryView(bookRefNo, bookLeader, bookDate, packageName, packageAgent);
     }
 
-    public List<BookingDayTourSummaryView> getListBookingDayTourSummaryView(String bookRefNo, String bookLeader, String bookDate, String tourCode, String tourName, String tourDate, String tourPickUp) {
-        return bookingviewdao.getListBookingDayTourSummaryView(bookRefNo, bookLeader, bookDate, tourCode, tourName, tourDate, tourPickUp);
+    public List<BookingDayTourSummaryView> getListBookingDayTourSummaryView(String bookRefNo, String bookLeader, String bookDate, String tourCode, String tourName, String tourDate, String tourPickUp, String tourAgent) {
+        return bookingviewdao.getListBookingDayTourSummaryView(bookRefNo, bookLeader, bookDate, tourCode, tourName, tourDate, tourPickUp, tourAgent);
     }
 
     public List<BookingOtherSummaryView> getListBookingOtherSummaryView(String bookRefNo, String bookLeader, String bookDate, String otherCode, String otherName, String otherDate, String otherAgent) {

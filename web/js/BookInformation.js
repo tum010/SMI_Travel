@@ -80,7 +80,7 @@ $(document).ready(function() {
     });
     
     $("#bookRefNo,#bookLeader,#bookDate,#bookType,#airPnr,#airDeptDate,#airFlight,#hotelName,#hotelCheckIn,#hotelCheckOut,\n\
-        #packageName,#packageAgent,#tourCode,#tourName,#tourDate,#tourPickup,#otherCode,#otherName,#otherDate,#otherAgent,#landOkBy,\n\
+        #packageName,#packageAgent,#tourCode,#tourName,#tourDate,#tourPickup,#tourAgent,#otherCode,#otherName,#otherDate,#otherAgent,#landOkBy,\n\
             #landCategory,#landAgent").keyup(function (event) {
         if (event.keyCode === 13) {
             searchAction();

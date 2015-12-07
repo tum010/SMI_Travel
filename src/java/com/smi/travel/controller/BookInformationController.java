@@ -42,6 +42,7 @@ public class BookInformationController extends SMITravelController {
         String tourName = request.getParameter("tourName");
         String tourDate = request.getParameter("tourDate");
         String tourPickUp = request.getParameter("tourPickUp");
+        String tourAgent = request.getParameter("tourAgent");
         String otherCode = request.getParameter("otherCode");
         String otherName = request.getParameter("otherName");
         String otherDate = request.getParameter("otherDate");
@@ -68,7 +69,7 @@ public class BookInformationController extends SMITravelController {
                 
             }else if("4".equalsIgnoreCase(bookType)){//Day tours
                 List<BookingDayTourSummaryView> bookingDayTourSummaryViewList = new LinkedList<BookingDayTourSummaryView>();
-                bookingDayTourSummaryViewList = workspaceService.getListBookingDayTourSummaryView(bookRefNo,bookLeader,bookDate,tourCode,tourName,tourDate,tourPickUp);
+                bookingDayTourSummaryViewList = workspaceService.getListBookingDayTourSummaryView(bookRefNo,bookLeader,bookDate,tourCode,tourName,tourDate,tourPickUp,tourAgent);
                 request.setAttribute(DATALIST,bookingDayTourSummaryViewList);
                 
             }else if("5".equalsIgnoreCase(bookType)){//Other
@@ -98,6 +99,7 @@ public class BookInformationController extends SMITravelController {
         request.setAttribute("tourName",tourName);
         request.setAttribute("tourDate",tourDate);
         request.setAttribute("tourPickUp",tourPickUp);
+        request.setAttribute("tourAgent",tourAgent);
         request.setAttribute("otherCode",otherCode);
         request.setAttribute("otherName",otherName);
         request.setAttribute("otherDate",otherDate);

@@ -142,6 +142,10 @@
                     <label>Pick up</label>
                     <input class="form-control" id="tourPickup" name="tourPickup" value="${requestScope['tourPickup']}"/>
                 </div>
+                <div class="col-xs-2" >
+                    <label>Agent</label>
+                    <input class="form-control" id="tourAgent" name="tourAgent" value="${requestScope['tourAgent']}"/>
+                </div>
             </div>
             <div class="col-md-12 hidden" id="searchOther">
                 <div class="col-xs-2"></div>
