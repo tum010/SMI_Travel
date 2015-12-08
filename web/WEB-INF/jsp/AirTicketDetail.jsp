@@ -1283,7 +1283,7 @@
 
                 <div class="text-center">
                     <input name="action" id="action" value="${action}" type="hidden"/>
-                    <input name="enableSave" id="enableSave" value="${enableSave}" type="text"/>
+                    <input name="enableSave" id="enableSave" value="${enableSave}" type="hidden"/>
                     <c:choose>
                         <c:when test="${currentPnr.MItemstatus.id == 2}">
                             <button type="button" disabled id="saveDetail" class="btn btn-success"><span class="fa fa-save"></span> Save</button>

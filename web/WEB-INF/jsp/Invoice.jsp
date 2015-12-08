@@ -298,7 +298,7 @@
                                 <label class="control-label" for="">INV no</lable>
                             </div>
                             <div class="col-md-1 form-group" style="width: 125px;">
-                                <input type="text"  class="form-control" id="InvNo" name="InvNo"  value="${invoice.invNo}" >
+                                <input type="text" class="form-control" id="InvNo" name="InvNo" style="text-transform: uppercase" value="${invoice.invNo}" >
                             </div>
                             <div class="col-md-1 form-group" style="width: 120px;">
                                 <button type="button"  id="ButtonSearchInvoiceNo"  name="ButtonSearchInvoiceNo" onclick="searchInvoiceFromInvoiceNo();" class="btn btn-primary btn-sm">
