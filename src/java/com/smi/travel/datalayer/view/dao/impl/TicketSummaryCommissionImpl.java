@@ -430,7 +430,7 @@ public class TicketSummaryCommissionImpl implements TicketSummaryCommissionDao{
                     ticket.setSalebyNamePage("ALL");
                 }
                 if(termPayPage != null && !"".equals(termPayPage)){
-                    ticket.setTermPayPage(termPayPage);
+                    ticket.setTermPayPage(util.ConvertString(B[28]) == "" ? "" : util.ConvertString(B[28]));
                 }else{
                     ticket.setTermPayPage("ALL");
                 }
