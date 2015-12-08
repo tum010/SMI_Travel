@@ -387,7 +387,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell021.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(0);
         HSSFCell cell022 = row02.createCell(1);
-                cell022.setCellValue(ticketDetail.getAgentNamePage());
+                cell022.setCellValue(ticketDetail.getAgentNamePage() != null && !"".equals(ticketDetail.getAgentNamePage())? ticketDetail.getAgentNamePage() :"ALL");
                 cell022.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(1);
         HSSFCell cell023 = row02.createCell(2);
@@ -395,7 +395,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell023.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(2);
         HSSFCell cell024 = row02.createCell(3);
-                cell024.setCellValue(ticketDetail.getIssuefromdatePage());
+                cell024.setCellValue(ticketDetail.getIssuefromdatePage() != null && !"".equals(ticketDetail.getIssuefromdatePage())? ticketDetail.getIssuefromdatePage() :"ALL");
                 cell024.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(3);
         HSSFCell cell025 = row02.createCell(4);
@@ -403,7 +403,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell025.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(4);
         HSSFCell cell026 = row02.createCell(5);
-                cell026.setCellValue(ticketDetail.getPrintbyPage());
+                cell026.setCellValue(ticketDetail.getPrintbyPage() != null && !"".equals(ticketDetail.getPrintbyPage())? ticketDetail.getPrintbyPage() :"ALL");
                 cell026.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(5);
 
@@ -414,7 +414,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell031.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(0);
         HSSFCell cell032 = row03.createCell(1);
-                cell032.setCellValue(ticketDetail.getTypeRoutingPage());
+                cell032.setCellValue(ticketDetail.getTypeRoutingPage() != null && !"".equals(ticketDetail.getTypeRoutingPage())? ticketDetail.getTypeRoutingPage() :"ALL");
                 cell032.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(1);
         HSSFCell cell033 = row03.createCell(2);
@@ -422,7 +422,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell033.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(2);
         HSSFCell cell034 = row03.createCell(3);
-                cell034.setCellValue(ticketDetail.getOverfromdatePage());
+                cell034.setCellValue(ticketDetail.getOverfromdatePage() != null && !"".equals(ticketDetail.getOverfromdatePage())? ticketDetail.getOverfromdatePage() :"ALL");
                 cell034.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(3);
         HSSFCell cell035 = row03.createCell(4);
@@ -430,7 +430,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell035.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(4);
         HSSFCell cell036 = row03.createCell(5);
-                cell036.setCellValue(ticketDetail.getAddpayfromdatePage());
+                cell036.setCellValue(ticketDetail.getAddpayfromdatePage() != null && !"".equals(ticketDetail.getAddpayfromdatePage())? ticketDetail.getAddpayfromdatePage() :"ALL");
                 cell036.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(5);
 
@@ -441,7 +441,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell041.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(0);
         HSSFCell cell042 = row04.createCell(1);
-                cell042.setCellValue(ticketDetail.getAirlineCodePage());
+                cell042.setCellValue(ticketDetail.getAirlineCodePage() != null && !"".equals(ticketDetail.getAirlineCodePage())? ticketDetail.getAirlineCodePage() :"ALL");
                 cell042.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(1);
         HSSFCell cell043 = row04.createCell(2);
@@ -449,7 +449,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell043.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(2);
         HSSFCell cell044 = row04.createCell(3);
-                cell044.setCellValue(ticketDetail.getLittlefromdatePage());
+                cell044.setCellValue(ticketDetail.getLittlefromdatePage() != null && !"".equals(ticketDetail.getLittlefromdatePage())? ticketDetail.getLittlefromdatePage() :"ALL");
                 cell044.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(3);
         HSSFCell cell045 = row04.createCell(4);
@@ -457,7 +457,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell045.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(4);
         HSSFCell cell046 = row04.createCell(5);
-                cell046.setCellValue(ticketDetail.getDecreasepayfromdatePage());
+                cell046.setCellValue(ticketDetail.getDecreasepayfromdatePage() != null && !"".equals(ticketDetail.getDecreasepayfromdatePage())? ticketDetail.getDecreasepayfromdatePage() :"ALL");
                 cell046.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(5);
 
@@ -468,7 +468,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell051.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(0);
         HSSFCell cell052 = row05.createCell(1);
-                cell052.setCellValue(ticketDetail.getRoutingDetailPage());
+                cell052.setCellValue(ticketDetail.getRoutingDetailPage() != null && !"".equals(ticketDetail.getRoutingDetailPage())? ticketDetail.getRoutingDetailPage() :"ALL");
                 cell052.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(1);
         HSSFCell cell053 = row05.createCell(2);
@@ -476,7 +476,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell053.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(2);
         HSSFCell cell054 = row05.createCell(3);
-                cell054.setCellValue(ticketDetail.getAgemtcomreceivefromdatePage());
+                cell054.setCellValue(ticketDetail.getAgemtcomreceivefromdatePage() != null && !"".equals(ticketDetail.getAgemtcomreceivefromdatePage())? ticketDetail.getAgemtcomreceivefromdatePage() :"ALL");
                 cell054.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(3);
         HSSFCell cell055 = row05.createCell(4);
@@ -484,7 +484,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell055.setCellStyle(styleAlignRight);
                 sheet.autoSizeColumn(4);
         HSSFCell cell056 = row05.createCell(5);
-                cell056.setCellValue(ticketDetail.getTicketnoPagePage());
+                cell056.setCellValue(ticketDetail.getTicketnoPagePage() != null && !"".equals(ticketDetail.getTicketnoPagePage())? ticketDetail.getTicketnoPagePage() :"ALL");
                 cell056.setCellStyle(styleAlignLeft);
                 sheet.autoSizeColumn(5);
 
@@ -494,19 +494,19 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell061.setCellValue("Sale Staff : ");
                 cell061.setCellStyle(styleAlignRight);
         HSSFCell cell062 = row06.createCell(1);
-                cell062.setCellValue(ticketDetail.getSalebyNamePage());
+                cell062.setCellValue(ticketDetail.getSalebyNamePage() != null && !"".equals(ticketDetail.getSalebyNamePage())? ticketDetail.getSalebyNamePage() :"ALL");
                 cell062.setCellStyle(styleAlignLeft);
         HSSFCell cell063 = row06.createCell(2);
                 cell063.setCellValue("Refund Comm Date : ");
                 cell063.setCellStyle(styleAlignRight);
         HSSFCell cell064 = row06.createCell(3);
-                cell064.setCellValue(ticketDetail.getComrefundfromdatePage());
+                cell064.setCellValue(ticketDetail.getComrefundfromdatePage() != null && !"".equals(ticketDetail.getComrefundfromdatePage())? ticketDetail.getComrefundfromdatePage() :"ALL");
                 cell064.setCellStyle(styleAlignLeft);
         HSSFCell cell065 = row06.createCell(4);
                 cell065.setCellValue("Ticket Comm Date : ");
                 cell065.setCellStyle(styleAlignRight);
         HSSFCell cell066 = row06.createCell(5);
-                cell066.setCellValue(ticketDetail.getTicketcomfromdatePage());
+                cell066.setCellValue(ticketDetail.getTicketcomfromdatePage()!= null && !"".equals(ticketDetail.getTicketcomfromdatePage())? ticketDetail.getTicketcomfromdatePage() :"ALL");
                 cell066.setCellStyle(styleAlignLeft);
 
         // Row 7
@@ -515,19 +515,19 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell071.setCellValue("Department : ");
                 cell071.setCellStyle(styleAlignRight);
         HSSFCell cell072 = row07.createCell(1);
-                cell072.setCellValue(ticketDetail.getDepartmentPage());
+                cell072.setCellValue(ticketDetail.getDepartmentPage() != null && !"".equals(ticketDetail.getDepartmentPage())? ticketDetail.getDepartmentPage() :"ALL");
                 cell072.setCellStyle(styleAlignLeft);
         HSSFCell cell073 = row07.createCell(2);
                 cell073.setCellValue("Invoice Date : ");
                 cell073.setCellStyle(styleAlignRight);
         HSSFCell cell074 = row07.createCell(3);
-                cell074.setCellValue(ticketDetail.getInvoicefromdatePage());
+                cell074.setCellValue(ticketDetail.getInvoicefromdatePage() != null && !"".equals(ticketDetail.getInvoicefromdatePage())? ticketDetail.getInvoicefromdatePage() :"ALL");
                 cell074.setCellStyle(styleAlignLeft);
         HSSFCell cell075 = row07.createCell(4);
                 cell075.setCellValue("Print on : ");
                 cell075.setCellStyle(styleAlignRight);
         HSSFCell cell076 = row07.createCell(5);
-                cell076.setCellValue(ticketDetail.getPrintonPage());
+                cell076.setCellValue(ticketDetail.getPrintonPage() != null && !"".equals(ticketDetail.getPrintonPage())? ticketDetail.getPrintonPage() :"ALL");
                 cell076.setCellStyle(styleAlignLeft);
 
         // Row 8
@@ -536,7 +536,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell081.setCellValue("Term Pay : ");
                 cell081.setCellStyle(styleAlignRight);
         HSSFCell cell082 = row08.createCell(1);
-                cell082.setCellValue(ticketDetail.getTermPayPage());
+                cell082.setCellValue(ticketDetail.getTermPayPage() != null && !"".equals(ticketDetail.getTermPayPage())? ticketDetail.getTermPayPage() :"ALL");
                 cell082.setCellStyle(styleAlignLeft);
         HSSFCell cell083 = row08.createCell(2);
                 cell083.setCellValue("Page : ");
@@ -712,7 +712,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
         int count = 10 + listDetail.size();
         System.out.println(" listDetail.size() " + listDetail.size());
         System.out.println(" count " + count);
-        if(listDetail != null){
+        if(listDetail != null && listDetail.size() != 0){
             for (int r = 10; r < count; r++) {
                 HSSFRow row = sheet.createRow(r);
                 HSSFCell cell1 = row.createCell(0);
@@ -836,6 +836,10 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     sheet.autoSizeColumn(i);
                 }
             }
+        }else{
+            HSSFRow row = sheet.createRow(12);
+            HSSFCell cell1 = row.createCell(0);
+                cell1.setCellValue("No Data");
         }
         
         HSSFRow rowtotalDetail = sheet.createRow(count);
@@ -997,7 +1001,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell221.setCellStyle(styleAlignRight);
                     sheet1.autoSizeColumn(0);
             HSSFCell cell222 = row22.createCell(1);
-                    cell222.setCellValue(ticketAir.getAgentNamePage());
+                    cell222.setCellValue(ticketAir.getAgentNamePage() != null && !"".equals(ticketDetail.getAgentNamePage())? ticketDetail.getAgentNamePage() :"ALL");
                     cell222.setCellStyle(styleAlignLeft);
                     sheet1.autoSizeColumn(1);
             HSSFCell cell223 = row22.createCell(2);
@@ -1005,7 +1009,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell223.setCellStyle(styleAlignRight);
                     sheet1.autoSizeColumn(2);
             HSSFCell cell224 = row22.createCell(3);
-                    cell224.setCellValue(ticketAir.getIssuefromdatePage());
+                    cell224.setCellValue(ticketAir.getIssuefromdatePage() != null && !"".equals(ticketDetail.getIssuefromdatePage())? ticketDetail.getIssuefromdatePage() :"ALL");
                     cell224.setCellStyle(styleAlignLeft);
                     sheet1.autoSizeColumn(3);
             HSSFCell cell225 = row22.createCell(4);
@@ -1013,7 +1017,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell225.setCellStyle(styleAlignRight);
                     sheet1.autoSizeColumn(4);
             HSSFCell cell226 = row22.createCell(5);
-                    cell226.setCellValue(ticketAir.getPrintbyPage());
+                    cell226.setCellValue(ticketAir.getPrintbyPage() != null && !"".equals(ticketDetail.getPrintbyPage())? ticketDetail.getPrintbyPage() :"ALL");
                     cell226.setCellStyle(styleAlignLeft);
                     sheet1.autoSizeColumn(5);
 
@@ -1024,7 +1028,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell231.setCellStyle(styleAlignRight);
                     sheet1.autoSizeColumn(0);
             HSSFCell cell232 = row23.createCell(1);
-                    cell232.setCellValue(ticketAir.getTypeRoutingPage());
+                    cell232.setCellValue(ticketAir.getTypeRoutingPage() != null && !"".equals(ticketDetail.getTypeRoutingPage())? ticketDetail.getTypeRoutingPage() :"ALL");
                     cell232.setCellStyle(styleAlignLeft);
                     sheet1.autoSizeColumn(1);
             HSSFCell cell233 = row23.createCell(2);
@@ -1032,7 +1036,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell233.setCellStyle(styleAlignRight);
                     sheet1.autoSizeColumn(2);
             HSSFCell cell234 = row23.createCell(3);
-                    cell234.setCellValue(ticketAir.getOverfromdatePage());
+                    cell234.setCellValue(ticketAir.getOverfromdatePage() != null && !"".equals(ticketDetail.getOverfromdatePage())? ticketDetail.getOverfromdatePage() :"ALL");
                     cell234.setCellStyle(styleAlignLeft);
                     sheet1.autoSizeColumn(3);
             HSSFCell cell235 = row23.createCell(4);
@@ -1040,7 +1044,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell235.setCellStyle(styleAlignRight);
                     sheet1.autoSizeColumn(4);
             HSSFCell cell236 = row23.createCell(5);
-                    cell236.setCellValue(ticketAir.getAddpayfromdatePage());
+                    cell236.setCellValue(ticketAir.getAddpayfromdatePage() != null && !"".equals(ticketDetail.getAddpayfromdatePage())? ticketDetail.getAddpayfromdatePage() :"ALL");
                     cell236.setCellStyle(styleAlignLeft);
                     sheet1.autoSizeColumn(5);
 
@@ -1051,7 +1055,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell241.setCellStyle(styleAlignRight);
                     sheet1.autoSizeColumn(0);
             HSSFCell cell242 = row24.createCell(1);
-                    cell242.setCellValue(ticketAir.getAirlineCodePage());
+                    cell242.setCellValue(ticketAir.getAirlineCodePage() != null && !"".equals(ticketDetail.getAirlineCodePage())? ticketDetail.getAirlineCodePage() :"ALL");
                     cell242.setCellStyle(styleAlignLeft);
                     sheet1.autoSizeColumn(1);
             HSSFCell cell243 = row24.createCell(2);
@@ -1059,7 +1063,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell243.setCellStyle(styleAlignRight);
                     sheet1.autoSizeColumn(2);
             HSSFCell cell244 = row24.createCell(3);
-                    cell244.setCellValue(ticketAir.getLittlefromdatePage());
+                    cell244.setCellValue(ticketAir.getLittlefromdatePage() != null && !"".equals(ticketDetail.getLittlefromdatePage())? ticketDetail.getLittlefromdatePage() :"ALL");
                     cell244.setCellStyle(styleAlignLeft);
                     sheet1.autoSizeColumn(3);
             HSSFCell cell245 = row24.createCell(4);
@@ -1067,7 +1071,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell245.setCellStyle(styleAlignRight);
                     sheet1.autoSizeColumn(4);
             HSSFCell cell246 = row24.createCell(5);
-                    cell246.setCellValue(ticketAir.getDecreasepayfromdatePage());
+                    cell246.setCellValue(ticketAir.getDecreasepayfromdatePage() != null && !"".equals(ticketDetail.getDecreasepayfromdatePage())? ticketDetail.getDecreasepayfromdatePage() :"ALL");
                     cell246.setCellStyle(styleAlignLeft);
                     sheet1.autoSizeColumn(5);
 
@@ -1078,7 +1082,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell251.setCellStyle(styleAlignRight);
                     sheet1.autoSizeColumn(0);
             HSSFCell cell252 = row25.createCell(1);
-                    cell252.setCellValue(ticketAir.getRoutingDetailPage());
+                    cell252.setCellValue(ticketAir.getRoutingDetailPage() != null && !"".equals(ticketDetail.getRoutingDetailPage())? ticketDetail.getRoutingDetailPage() :"ALL");
                     cell252.setCellStyle(styleAlignLeft);
                     sheet1.autoSizeColumn(1);
             HSSFCell cell253 = row25.createCell(2);
@@ -1086,7 +1090,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell253.setCellStyle(styleAlignRight);
                     sheet1.autoSizeColumn(2);
             HSSFCell cell254 = row25.createCell(3);
-                    cell254.setCellValue(ticketAir.getAgemtcomreceivefromdatePage());
+                    cell254.setCellValue(ticketAir.getAgemtcomreceivefromdatePage() != null && !"".equals(ticketDetail.getAgemtcomreceivefromdatePage())? ticketDetail.getAgemtcomreceivefromdatePage() :"ALL");
                     cell254.setCellStyle(styleAlignLeft);
                     sheet1.autoSizeColumn(3);
             HSSFCell cell255 = row25.createCell(4);
@@ -1094,7 +1098,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell255.setCellStyle(styleAlignRight);
                     sheet1.autoSizeColumn(4);
             HSSFCell cell256 = row25.createCell(5);
-                    cell256.setCellValue(ticketAir.getTicketcomfromdatePage());
+                    cell256.setCellValue(ticketAir.getTicketcomfromdatePage() != null && !"".equals(ticketDetail.getTicketcomfromdatePage())? ticketDetail.getTicketcomfromdatePage() :"ALL");
                     cell256.setCellStyle(styleAlignLeft);
                     sheet1.autoSizeColumn(5);
 
@@ -1104,19 +1108,19 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell261.setCellValue("Sale Staff : ");
                     cell261.setCellStyle(styleAlignRight);
             HSSFCell cell262 = row26.createCell(1);
-                    cell262.setCellValue(ticketAir.getSalebyNamePage());
+                    cell262.setCellValue(ticketAir.getSalebyNamePage() != null && !"".equals(ticketDetail.getSalebyNamePage())? ticketDetail.getSalebyNamePage() :"ALL");
                     cell262.setCellStyle(styleAlignLeft);
             HSSFCell cell263 = row26.createCell(2);
                     cell263.setCellValue("Refund Comm Date : ");
                     cell263.setCellStyle(styleAlignRight);
             HSSFCell cell264 = row26.createCell(3);
-                    cell264.setCellValue(ticketAir.getComrefundfromdatePage());
+                    cell264.setCellValue(ticketAir.getComrefundfromdatePage() != null && !"".equals(ticketDetail.getComrefundfromdatePage())? ticketDetail.getComrefundfromdatePage() :"ALL");
                     cell264.setCellStyle(styleAlignLeft);
             HSSFCell cell265 = row26.createCell(4);
                     cell265.setCellValue("Ticket Comm Date : ");
                     cell265.setCellStyle(styleAlignRight);
             HSSFCell cell266 = row26.createCell(5);
-                    cell266.setCellValue(ticketAir.getTicketcomfromdatePage());
+                    cell266.setCellValue(ticketAir.getTicketcomfromdatePage() != null && !"".equals(ticketDetail.getTicketcomfromdatePage())? ticketDetail.getTicketcomfromdatePage() :"ALL");
                     cell266.setCellStyle(styleAlignLeft);
 
             // Row 7
@@ -1125,19 +1129,19 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell271.setCellValue("Department : ");
                     cell271.setCellStyle(styleAlignRight);
             HSSFCell cell272 = row27.createCell(1);
-                    cell272.setCellValue(ticketAir.getDepartmentPage());
+                    cell272.setCellValue(ticketAir.getDepartmentPage() != null && !"".equals(ticketDetail.getDepartmentPage())? ticketDetail.getDepartmentPage() :"ALL");
                     cell272.setCellStyle(styleAlignLeft);
             HSSFCell cell273 = row27.createCell(2);
                     cell273.setCellValue("Invoice Date : ");
                     cell273.setCellStyle(styleAlignRight);
             HSSFCell cell274 = row27.createCell(3);
-                    cell274.setCellValue(ticketAir.getInvoicefromdatePage());
+                    cell274.setCellValue(ticketAir.getInvoicefromdatePage() != null && !"".equals(ticketDetail.getInvoicefromdatePage())? ticketDetail.getInvoicefromdatePage() :"ALL");
                     cell274.setCellStyle(styleAlignLeft);
             HSSFCell cell275 = row27.createCell(4);
                     cell275.setCellValue("Print on : ");
                     cell275.setCellStyle(styleAlignRight);
             HSSFCell cell276 = row27.createCell(5);
-                    cell276.setCellValue(ticketAir.getPrintonPage());
+                    cell276.setCellValue(ticketAir.getPrintonPage() != null && !"".equals(ticketDetail.getPrintonPage())? ticketDetail.getPrintonPage() :"ALL");
                     cell276.setCellStyle(styleAlignLeft);
 
             // Row 8
@@ -1146,7 +1150,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                     cell281.setCellValue("Term Pay : ");
                     cell281.setCellStyle(styleAlignRight);
             HSSFCell cell282 = row28.createCell(1);
-                    cell282.setCellValue(ticketAir.getTermPayPage());
+                    cell282.setCellValue(ticketAir.getTermPayPage() != null && !"".equals(ticketDetail.getTermPayPage())? ticketDetail.getTermPayPage() :"ALL");
                     cell282.setCellStyle(styleAlignLeft);
             HSSFCell cell283 = row28.createCell(2);
                     cell283.setCellValue("Page : ");
@@ -1450,7 +1454,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell321.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(0);
                 HSSFCell cell322 = row32.createCell(1);
-                cell322.setCellValue(ticketAgent.getAgentNamePage());
+                cell322.setCellValue(ticketAgent.getAgentNamePage() != null && !"".equals(ticketAgent.getAgentNamePage()) ? ticketAgent.getAgentNamePage() : "ALL");
                 cell322.setCellStyle(styleAlignLeft);
                         sheet2.autoSizeColumn(1);
                 HSSFCell cell323 = row32.createCell(2);
@@ -1458,7 +1462,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell323.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(2);
                 HSSFCell cell324 = row32.createCell(3);
-                cell324.setCellValue(ticketAgent.getIssuefromdatePage());
+                cell324.setCellValue(ticketAgent.getIssuefromdatePage() != null && !"".equals(ticketAgent.getIssuefromdatePage()) ? ticketAgent.getIssuefromdatePage() : "ALL");
                 cell324.setCellStyle(styleAlignLeft);
                         sheet2.autoSizeColumn(3);
                 HSSFCell cell325 = row32.createCell(4);
@@ -1466,7 +1470,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell325.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(4);
                 HSSFCell cell326 = row32.createCell(5);
-                cell326.setCellValue(ticketAgent.getPrintbyPage());
+                cell326.setCellValue(ticketAgent.getPrintbyPage() != null && !"".equals(ticketAgent.getPrintbyPage()) ? ticketAgent.getPrintbyPage() : "ALL");
                 cell326.setCellStyle(styleAlignLeft);
                         sheet2.autoSizeColumn(5);
 
@@ -1477,7 +1481,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell331.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(0);
                 HSSFCell cell332 = row33.createCell(1);
-                cell332.setCellValue(ticketAgent.getTypeRoutingPage());
+                cell332.setCellValue(ticketAgent.getTypeRoutingPage() != null && !"".equals(ticketAgent.getTypeRoutingPage()) ? ticketAgent.getTypeRoutingPage() : "ALL");
                 cell332.setCellStyle(styleAlignLeft);
                         sheet2.autoSizeColumn(1);
                 HSSFCell cell333 = row33.createCell(2);
@@ -1485,7 +1489,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell333.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(2);
                 HSSFCell cell334 = row33.createCell(3);
-                cell334.setCellValue(ticketAgent.getOverfromdatePage());
+                cell334.setCellValue(ticketAgent.getOverfromdatePage() != null && !"".equals(ticketAgent.getOverfromdatePage()) ? ticketAgent.getOverfromdatePage() : "ALL");
                 cell334.setCellStyle(styleAlignLeft);
                         sheet2.autoSizeColumn(3);
                 HSSFCell cell335 = row33.createCell(4);
@@ -1493,7 +1497,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell335.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(4);
                 HSSFCell cell336 = row33.createCell(5);
-                cell336.setCellValue(ticketAgent.getAddpayfromdatePage());
+                cell336.setCellValue(ticketAgent.getAddpayfromdatePage() != null && !"".equals(ticketAgent.getAddpayfromdatePage()) ? ticketAgent.getAddpayfromdatePage() : "ALL");
                 cell336.setCellStyle(styleAlignLeft);
                         sheet2.autoSizeColumn(5);
 
@@ -1504,7 +1508,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell341.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(0);
                 HSSFCell cell342 = row34.createCell(1);
-                cell342.setCellValue(ticketAgent.getAirlineCodePage());
+                cell342.setCellValue(ticketAgent.getAirlineCodePage() != null && !"".equals(ticketAgent.getAirlineCodePage()) ? ticketAgent.getAirlineCodePage() : "ALL");
                 cell342.setCellStyle(styleAlignLeft);
                         sheet2.autoSizeColumn(1);
                 HSSFCell cell343 = row34.createCell(2);
@@ -1512,7 +1516,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell343.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(2);
                 HSSFCell cell344 = row34.createCell(3);
-                cell344.setCellValue(ticketAgent.getLittlefromdatePage());
+                cell344.setCellValue(ticketAgent.getLittlefromdatePage() != null && !"".equals(ticketAgent.getLittlefromdatePage()) ? ticketAgent.getLittlefromdatePage() : "ALL");
                 cell344.setCellStyle(styleAlignLeft);
                         sheet2.autoSizeColumn(3);
                 HSSFCell cell345 = row34.createCell(4);
@@ -1520,7 +1524,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell345.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(4);
                 HSSFCell cell346 = row34.createCell(5);
-                cell346.setCellValue(ticketAgent.getDecreasepayfromdatePage());
+                cell346.setCellValue(ticketAgent.getDecreasepayfromdatePage() != null && !"".equals(ticketAgent.getDecreasepayfromdatePage()) ? ticketAgent.getDecreasepayfromdatePage() : "ALL");
                 cell346.setCellStyle(styleAlignLeft);
                         sheet2.autoSizeColumn(5);
 
@@ -1531,7 +1535,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell351.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(0);
                 HSSFCell cell352 = row35.createCell(1);
-                cell352.setCellValue(ticketAgent.getRoutingDetailPage());
+                cell352.setCellValue(ticketAgent.getRoutingDetailPage() != null && !"".equals(ticketAgent.getRoutingDetailPage()) ? ticketAgent.getRoutingDetailPage() : "ALL");
                 cell352.setCellStyle(styleAlignLeft);
                         sheet2.autoSizeColumn(1);
                 HSSFCell cell353 = row35.createCell(2);
@@ -1539,7 +1543,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell353.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(2);
                 HSSFCell cell354 = row35.createCell(3);
-                cell354.setCellValue(ticketAgent.getAgentcomfromdatePage());
+                cell354.setCellValue(ticketAgent.getAgentcomfromdatePage() != null && !"".equals(ticketAgent.getAgentcomfromdatePage()) ? ticketAgent.getAgentcomfromdatePage() : "ALL");
                 cell354.setCellStyle(styleAlignLeft);
                         sheet2.autoSizeColumn(3);
                 HSSFCell cell355 = row35.createCell(4);
@@ -1547,7 +1551,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell355.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(4);
                 HSSFCell cell356 = row35.createCell(5);
-                cell356.setCellValue(ticketAgent.getTicketnoPagePage());
+                cell356.setCellValue(ticketAgent.getTicketnoPagePage() != null && !"".equals(ticketAgent.getTicketnoPagePage()) ? ticketAgent.getTicketnoPagePage() : "ALL");
                 cell356.setCellStyle(styleAlignLeft);
                         sheet2.autoSizeColumn(5);
 
@@ -1557,19 +1561,19 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell361.setCellValue("Sale Staff : ");
                 cell361.setCellStyle(styleAlignRight);
                 HSSFCell cell362 = row36.createCell(1);
-                cell362.setCellValue(ticketAgent.getSalebyNamePage());
+                cell362.setCellValue(ticketAgent.getSalebyNamePage() != null && !"".equals(ticketAgent.getSalebyNamePage()) ? ticketAgent.getSalebyNamePage() : "ALL");
                 cell362.setCellStyle(styleAlignLeft);
                 HSSFCell cell363 = row36.createCell(2);
                 cell363.setCellValue("Refund Comm Date : ");
                 cell363.setCellStyle(styleAlignRight);
                 HSSFCell cell364 = row36.createCell(3);
-                cell364.setCellValue(ticketAgent.getComrefundfromdatePage());
+                cell364.setCellValue(ticketAgent.getComrefundfromdatePage() != null && !"".equals(ticketAgent.getComrefundfromdatePage()) ? ticketAgent.getComrefundfromdatePage() : "ALL");
                 cell364.setCellStyle(styleAlignLeft);
                 HSSFCell cell365 = row36.createCell(4);
                 cell365.setCellValue("Ticket Comm Date : ");
                 cell365.setCellStyle(styleAlignRight);
                 HSSFCell cell366 = row36.createCell(5);
-                cell366.setCellValue(ticketAgent.getTicketcomfromdatePage());
+                cell366.setCellValue(ticketAgent.getTicketcomfromdatePage() != null && !"".equals(ticketAgent.getTicketcomfromdatePage()) ? ticketAgent.getTicketcomfromdatePage() : "ALL");
                 cell366.setCellStyle(styleAlignLeft);
 
                 // Row 7
@@ -1578,19 +1582,19 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell371.setCellValue("Department : ");
                 cell371.setCellStyle(styleAlignRight);
                 HSSFCell cell372 = row37.createCell(1);
-                cell372.setCellValue(ticketAgent.getDepartmentPage());
+                cell372.setCellValue(ticketAgent.getDepartmentPage() != null && !"".equals(ticketAgent.getDepartmentPage()) ? ticketAgent.getDepartmentPage() : "ALL");
                 cell372.setCellStyle(styleAlignLeft);
                 HSSFCell cell373 = row37.createCell(2);
                 cell373.setCellValue("Invoice Date : ");
                 cell373.setCellStyle(styleAlignRight);
                 HSSFCell cell374 = row37.createCell(3);
-                cell374.setCellValue(ticketAgent.getInvoicefromdatePage());
+                cell374.setCellValue(ticketAgent.getInvoicefromdatePage() != null && !"".equals(ticketAgent.getInvoicefromdatePage()) ? ticketAgent.getInvoicefromdatePage() : "ALL");
                 cell374.setCellStyle(styleAlignLeft);
                 HSSFCell cell375 = row37.createCell(4);
                 cell375.setCellValue("Print on : ");
                 cell375.setCellStyle(styleAlignRight);
                 HSSFCell cell376 = row37.createCell(5);
-                cell376.setCellValue(ticketAgent.getPrintonPage());
+                cell376.setCellValue(ticketAgent.getPrintonPage() != null && !"".equals(ticketAgent.getPrintonPage()) ? ticketAgent.getPrintonPage() : "ALL");
                 cell376.setCellStyle(styleAlignLeft);
 
                 // Row 8
@@ -1599,7 +1603,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
                 cell381.setCellValue("Term Pay : ");
                 cell381.setCellStyle(styleAlignRight);
                 HSSFCell cell382 = row38.createCell(1);
-                cell382.setCellValue(ticketAgent.getTermPayPage());
+                cell382.setCellValue(ticketAgent.getTermPayPage() != null && !"".equals(ticketAgent.getTermPayPage()) ? ticketAgent.getTermPayPage() : "ALL");
                 cell382.setCellStyle(styleAlignLeft);
                 HSSFCell cell383 = row38.createCell(2);
                 cell383.setCellValue("Page : ");
