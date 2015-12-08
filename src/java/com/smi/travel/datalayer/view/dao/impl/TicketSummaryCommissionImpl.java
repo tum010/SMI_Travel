@@ -413,6 +413,7 @@ public class TicketSummaryCommissionImpl implements TicketSummaryCommissionDao{
                 }else{
                     ticket.setAirlineCodePage("ALL");
                 }
+                System.out.println("Agent Name : " + agentNamePage);
                 if(agentNamePage != null && !"".equals(agentNamePage)){
                     ticket.setAgentNamePage(agentNamePage);
                 }else{
@@ -582,6 +583,7 @@ public class TicketSummaryCommissionImpl implements TicketSummaryCommissionDao{
                 }else{
                     ticket.setAirlineCodePage("ALL");
                 }
+                System.out.println("Agent Name : " + agentNamePage);
                 if(agentNamePage != null && !"".equals(agentNamePage)){
                     ticket.setAgentNamePage(agentNamePage);
                 }else{
@@ -737,6 +739,7 @@ public class TicketSummaryCommissionImpl implements TicketSummaryCommissionDao{
                 }else{
                     ticket.setAirlineCodePage("ALL");
                 }
+                System.out.println("Agent Name : "+agentNamePage);
                 if(agentNamePage != null && !"".equals(agentNamePage)){
                     ticket.setAgentNamePage(agentNamePage);
                 }else{
