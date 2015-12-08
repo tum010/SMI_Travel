@@ -916,11 +916,13 @@ function CallAjaxAdd(param) {
                     $('#AlertBookingRefno').hide();
                     setBillableInvoice(array[1]);
                     try {
+                        $("#searchRefNo2").removeClass("hidden");
                         $("#MasterReservation tbody").append(array[2]);
                     } catch (e) {
                         alert(e);
                     }
                 } else {
+                    $("#searchRefNo2").addClass("hidden");
                     $('#AlertBooking').show();
                     $('#AlertBookingRefno').show();
 
@@ -1355,4 +1357,17 @@ function setBillValue(billto, billname, address, term, pay) {
         $("#disableVoidButton").attr("disabled", "disabled");
     }
     $("#InvToModal").modal('hide');
+}
+function showSearchRefNo(){
+    if($("#searchRefNo1").hasClass("hidden")){
+        $("#searchRefNo1").removeClass("hidden");
+    }else{
+        $("#searchRefNo1").addClass("hidden");
+    }
+    $("#searchRefNo2").addClass("hidden");
+//    if($("#searchRefNo2").hasClass("hidden")){
+//        $("#searchRefNo2").removeClass("hidden");
+//    }else{
+//        $("#searchRefNo2").addClass("hidden");
+//    }
 }

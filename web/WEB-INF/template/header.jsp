@@ -9,10 +9,10 @@
 <c:set var="checkingmenu" value="${sessionScope['checkingMenu']}" />
 <c:set var="accountmenu" value="${sessionScope['accountmenu']}" />
 
-<nav class="navbar " style="margin-bottom: 5px; height: 25px;" role="navigation">
+<nav class="navbar " style="margin-bottom: -5px; height: 5px;" role="navigation">
 	<div class="navbar-header">
 		<a class="navbar-brand" style="padding: 0px" href="#"> <img
-			src="${pageContext.request.contextPath}/img/smilogo.jpg" />
+                        src="${pageContext.request.contextPath}/img/smilogo.jpg" style="width: 55px;height: 40px"/>
 		</a>
 	</div>
 	<form class="nav navbar-nav navbar-right" style="margin-right: 0px">
@@ -33,15 +33,15 @@
             
         </li>
         -->
-		<li><a href="#">User: ${sessionScope['username']} </a></li>
-		<li><a href="#">Role: ${sessionScope['rolename']} </a></li>
-		<li><a href="logout.smi"><i class="glyphicon glyphicon-lock"></i>
+                <li st><a href="#" style="font-size: small;">User: ${sessionScope['username']} </a></li>
+		<li><a href="#" style="font-size: small;">Role: ${sessionScope['rolename']} </a></li>
+		<li><a href="logout.smi" style="font-size: small;"><i class="glyphicon glyphicon-lock"></i>
 				Logout</a></li>
 	</form>
 </nav>
 
 
-<nav class="navbar navbar-inverse " style="margin-bottom: 5px" role="navigation">
+<nav class="navbar navbar-inverse " style="height: 10px" role="navigation">
 
 	<!-- Brand and toggle get grouped for better mobile display -->
 	<div class="navbar-header">
@@ -50,7 +50,7 @@
 			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 			<span class="icon-bar"></span> <span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="main.smi"> Home </a>
+		<a class="navbar-brand" href="main.smi">HOME</a>
 	</div>
 
 	<script type="text/javascript" charset="utf-8">
@@ -161,52 +161,52 @@
 	</script>
 
 	<!-- Collect the nav links, forms, and other content for toggling -->
-	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
 		<ul class="nav navbar-nav" id="navtop">
-			<li class="dropdown"><a href="#" class="dropdown-header"
-				data-toggle="dropdown"> <span
-					class="glyphicon glyphicon-dashboard"></span> Master <span
+			<li class="dropdown" style="margin-top: -10px;" ><a href="#" class="dropdown-header"
+                            data-toggle="dropdown" style="height: 44px;"> <span
+					class=""></span> MASTER <span
 					class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu" id="menuMaster">
 				</ul></li>
-			<li class="dropdown"><a href="#" class="dropdown-header"
-				data-toggle="dropdown" id="BookingMenu"> <span
-					class="glyphicon glyphicon-book"></span> Booking <span
+			<li class="dropdown" style="margin-top: -10px;"><a href="#" class="dropdown-header"
+				data-toggle="dropdown" id="BookingMenu" style="height: 44px;"> <span
+					class=""></span> BOOKING <span
 					class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu" id="bookingMenu">
 
 				</ul></li>
 
-			<li class="dropdown"><a href="#" class="dropdown-header"
-				data-toggle="dropdown"> <span class="glyphicon glyphicon-plane"></span>
-					Operation <span class="caret"></span></a>
+			<li class="dropdown" style="margin-top: -10px;"><a href="#" class="dropdown-header"
+				data-toggle="dropdown" style="height: 44px;"> <span class=""></span>
+					OPERATION <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu" id="daytourMenu">
 				</ul></li>
 
-			<li class="dropdown"><a href="#" class="dropdown-header"
-				data-toggle="dropdown"> <span class="glyphicon glyphicon-check"></span>
-					Checking <span class="caret"></span></a>
+			<li class="dropdown" style="margin-top: -10px;"><a href="#" class="dropdown-header"
+				data-toggle="dropdown" style="height: 44px;"> <span class=""></span>
+					CHECKING <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu" id="checkingMenu">
 				</ul></li>
 
-			<li class="dropdown"><a href="#" class="dropdown-header"
-				data-toggle="dropdown"> <span class="glyphicon glyphicon-euro"></span>
-					Finance & Cashier <span class="caret"></span></a>
+			<li class="dropdown" style="margin-top: -10px;"><a href="#" class="dropdown-header"
+				data-toggle="dropdown" style="height: 44px;"> <span class=""></span>
+					FINANCE & CASHIER <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu" id="financeMenu">
 
 
 				</ul></li>
-                        <li class="dropdown"><a href="#" class="dropdown-header"
-				data-toggle="dropdown"> <span class="glyphicon glyphicon-usd"></span>
-					Accounting <span class="caret"></span></a>
+                        <li class="dropdown" style="margin-top: -10px;"><a href="#" class="dropdown-header"
+				data-toggle="dropdown" style="height: 44px;"> <span class=""></span>
+					ACCOUNTING <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu" id="accountMenu">
 
 
 				</ul></li>        
-			<li class="">
+			<li class="" style="margin-top: -10px;">
 				<!--<a href="AirTicketMonthReport.smi" >Report</a>--> <a href="#"
-				class="dropdown-header" data-toggle="dropdown"> <span
-					class="glyphicon glyphicon-list-alt"></span> Report <span
+				class="dropdown-header" data-toggle="dropdown" style="height: 44px;"> <span
+					class=""></span> REPORT <span
 					class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu" id="reportMenu">
 
