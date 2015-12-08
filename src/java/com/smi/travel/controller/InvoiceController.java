@@ -180,8 +180,8 @@ public class InvoiceController extends SMITravelController {
             }
             System.out.println("invoiceService checkOverflowValueOfInvoice:"+invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()));
         }else if("searchInvoice".equals(action)){ // search invoice when input invoice no
-            String depart = invoiceNo.substring(0,1);
-            String type = invoiceNo.substring(1,2);
+            String depart = (invoiceNo.length() > 2 ? invoiceNo.substring(0,1) : "");
+            String type = (invoiceNo.length() > 2 ? invoiceNo.substring(1,2) : "");
             if("W".equals(depart)){
                 if("V".equals(type)){
                     type = "V";
@@ -238,6 +238,7 @@ public class InvoiceController extends SMITravelController {
                 System.out.println("result : "+result);
                 request.setAttribute("result", result);
             }
+ 
         }else if("disableVoid".equals(action)){
             //checck Tax invoice
             int checkReciptAndTaxInvoice = 0;

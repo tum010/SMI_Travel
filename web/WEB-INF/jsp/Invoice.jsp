@@ -287,7 +287,7 @@
                 <!--<div class="col-xs-12 form-group"></div>-->
                 <div class="panel panel-default ${panelborder}">
                     <div class="panel-heading ${panelheader}">
-                        <h4 class="panel-title">Invoice Detail</h4>
+                        <h4 class="panel-title"><font style="color: white">Invoice Detail</font></h4>
                     </div>
                     <div class="panel-body"  style="padding-right: 0px;">
                         <input type="hidden"  class="form-control" id="InvoiceId" name="InvoiceId"  value="${invoice.id}" >
