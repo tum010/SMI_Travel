@@ -93,7 +93,7 @@
             
             <div class="panel panel-default inboundborder">
                 <div class="panel-heading inboundborderheader ">
-                    <h4 class="panel-title">Invoice Detail</h4>
+                    <h4 class="panel-title"><font style="color: white">Invoice Detail</font></h4>
                 </div>
                 <div class="panel-body"  style="padding-right: 0px;">
                     <!--Search Invoice-->

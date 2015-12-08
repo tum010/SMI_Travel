@@ -892,6 +892,7 @@ function searchAction() {
         CallAjaxAdd(param);
     } else {
         $('#SearchRefNo').focus();
+        $("#searchRefNo2").addClass("hidden");
     }
 
 }
