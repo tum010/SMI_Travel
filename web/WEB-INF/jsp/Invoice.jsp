@@ -436,11 +436,11 @@
                             </c:choose>        
                             </div>
                         </div>
-                        <div class="col-xs-12 " style="margin-top: -10px">
-                            <div class="col-xs-1 text-right">
+                        <div class="col-xs-12 " style="margin-top: -15px">
+                            <div class="col-xs-1 text-right" style="margin-top: -10px">
                                 <label class="control-label" for="">Sale&nbsp;Staff</label>
                             </div>                       
-                            <div class="col-md-2 form-group">
+                            <div class="col-md-2 form-group" style="margin-top: -10px">
                                 <div class="input-group">
                                     <input type="hidden" class="form-control" id="SaleStaffId" name="SaleStaffId" value="${invoice.staff.id}"/>
                                     <input type="text" class="form-control" id="SaleStaffCode" name="SaleStaffCode" value="${invoice.staff.username}" style="background-color: #ffffff">
@@ -449,10 +449,10 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-md-3 form-group">
+                            <div class="col-md-3 form-group" style="margin-top: -10px">
                                 <input type="text"  class="form-control" id="SaleStaffName" name="SaleStaffName"  value="${invoice.staff.name}" readonly="">
                             </div>
-                            <div class="col-md-2 form-group">
+                            <div class="col-md-2 form-group" style="margin-top: -10px">
                                 <c:set var="checkGroup" value="" />
                                 <c:if test="${invoice.isGroup == 1}">
                                     <c:set var="checkGroup" value="checked" />
@@ -460,10 +460,10 @@
                                 <label class="control-label"><input onclick='' type="checkbox" id="Grpup" name="Grpup"  ${checkGroup}>  Group Yes/No</label>
                                 <input class="hidden" type="text" value="${invoice.isGroup}"  >
                             </div>
-                            <div class="col-xs-1 text-right" style="width: 100px;">
+                            <div class="col-xs-1 text-right" style="width: 100px; margin-top: -10px">
                                 <label class="control-label" for="" >A/R&nbsp;Code<font style="color: red">*</font></label>
                             </div>  
-                            <div class="col-md-2 form-group">
+                            <div class="col-md-2 form-group" style="margin-top: -10px">
                                 <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value="${invoice.arcode}"/>
                                 <input type="text" class="form-control" id="ARCode" name="ARCode" value="${invoice.arcode}" style="background-color: #ffffff">                    
                             </div>
@@ -993,7 +993,7 @@
             </div>
             <div class="modal-footer">  
                 <button type="button" onclick="saveDescriptionDetail()" class="btn btn-success" data-dismiss="modal">OK</button>
-                <button type="button" onclick="cancelDescriptionDetail()" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" onclick="cancelDescriptionDetail()" class="btn btn-danger">Cancel</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
