@@ -922,6 +922,7 @@ function CallAjaxAdd(param) {
                         alert(e);
                     }
                 } else {
+                    $("#searchRefNo2").addClass("hidden");
                     $('#AlertBooking').show();
                     $('#AlertBookingRefno').show();
 
