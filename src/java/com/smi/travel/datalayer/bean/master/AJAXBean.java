@@ -1460,6 +1460,14 @@ public class AJAXBean extends AbstractBean implements
         String receiveAddress = billable.getBillAddress();
         String arcode = billable.getBillTo();
         String refNo = billable.getMaster().getReferenceNo();
+        String leader = ""; 
+        if(billable.getMaster().getCustomer() != null){
+            if(billable.getMaster().getCustomer().getMInitialname()  != null){
+                leader += billable.getMaster().getCustomer().getMInitialname().getName();
+            }
+            leader += " "+ billable.getMaster().getCustomer().getFirstName() + " " +  billable.getMaster().getCustomer().getLastName();
+        }
+       
         if (billable.getMAccpay() != null) {
             mAccPay = billable.getMAccpay().getId();
         }
@@ -1477,7 +1485,7 @@ public class AJAXBean extends AbstractBean implements
         }
         for (int i = 0; i < billableDescs.size(); i++) {
             billableDescId = billableDescs.get(i).getId();
-            description = billableDescs.get(i).getDetail();
+//            description = billableDescs.get(i).getDetail();
             BigDecimal amounttemp = new BigDecimal(billableDescs.get(i).getPrice());
             amountinvoice = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
             currency = billableDescs.get(i).getCurrency() == null ? "" : billableDescs.get(i).getCurrency();
@@ -1503,6 +1511,7 @@ public class AJAXBean extends AbstractBean implements
             String displaydescription = "";
             String displaydesTemp = "";
             String displaydescriptionother = "";
+            description = refNo + " " +leader +" " + billTypeName ;
             if ("1".equals(product)) {
                 displaydescription = billTypeName;
             } else if ("2".equals(product) || "8".equals(product)) {
@@ -1526,7 +1535,7 @@ public class AJAXBean extends AbstractBean implements
                     displaydesTemp = billableDao.getDescriptionInvoiceDayTourFromRefId(refItemId);
                     if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
                         String[] parts = displaydesTemp.split("\\|");
-                        displaydescription += parts[4] + " : " + parts[5] + " : " + parts[6];
+                        displaydescription += parts[4] + " : " + parts[6];
                     }
                 }else{
                     displaydescription = billTypeName;

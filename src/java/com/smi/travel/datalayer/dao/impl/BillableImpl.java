@@ -904,7 +904,9 @@ public class BillableImpl implements BillableDao {
         String description = "";
         Session session = this.sessionFactory.openSession();
         List<OtherBooking> list = session.createQuery(QUERY_OTHERS).setParameter("refitemid", refId).list();
-
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        
         if (list.isEmpty()) {
             return null;
         }else{
@@ -935,7 +937,7 @@ public class BillableImpl implements BillableDao {
                      description += " |";
                 }
                 if(list.get(i).getOtherDate() != null){ // Other Date
-                    description += ""+list.get(i).getOtherDate() +"|";
+                    description += ""+String.valueOf(dateformat.format(list.get(i).getOtherDate()))  +"|";
                 }else{
                      description += " |";
                 }
@@ -987,7 +989,8 @@ public class BillableImpl implements BillableDao {
                 String description = "";
         Session session = this.sessionFactory.openSession();
         List<DaytourBooking> list = session.createQuery(QUERY_DAYTOUR).setParameter("refitemid", refId).list();
-
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
         if (list.isEmpty()) {
             return null;
         }else{
@@ -1022,8 +1025,9 @@ public class BillableImpl implements BillableDao {
                 }else{
                      description += " |";
                 }
+                
                 if(list.get(i).getTourDate() != null){ // date
-                    description += ""+list.get(i).getTourDate() +"|";
+                    description += ""+ String.valueOf(dateformat.format(list.get(i).getTourDate()))+"|";
                 }else{
                      description += " |";
                 }
