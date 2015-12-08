@@ -2187,10 +2187,13 @@ function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId
     }
 }
 function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number,paymentTourId,receiveFrom,receiveName,receiveAddress) {
-    var x = parseFloat(amount) ;
-    var v = parseFloat(vat) ;    
-    var grossinv = x * (100/(100+v));
-    grossinv = formatNumber(grossinv);
+    var grossinv = 0 ;
+    if(vat !== '' && isVat !== '0'){
+        var x = parseFloat(amount) ;
+        var v = parseFloat(vat) ;    
+        grossinv = x * (100/(100+v));
+        grossinv = formatNumber(grossinv);
+    }   
     
     if(setinvoice !== 1){
         document.getElementById("receiveFromCode").value = receiveFrom ;
@@ -2219,7 +2222,7 @@ function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,cur
 
     $("#ReceiptListTable tbody").append(
         '<tr style="higth 100px">' +
-        '<input id="grossInvoice' + row + '" name="grossInvoice' + row + '"  type="hidden" value="'+grossinv+'" >' +
+        '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="'+grossinv+'" >' +
         '<input id="invId' + row + '" name="invId' + row + '"  type="hidden" value="'+invId+'" >' +
         '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
         '<input id="billDescId' + row + '" name="billDescId' + row + '"  type="hidden" value="'+billDescId+'" >' +

@@ -1493,7 +1493,6 @@ public class AJAXBean extends AbstractBean implements
                 product = billableDescs.get(i).getMBilltype().getId();
                 billTypeName = billableDescs.get(i).getMBilltype().getName();
             }
-
             BigDecimal costtemp = new BigDecimal(billableDescs.get(i).getCost());
             costinvoice = costtemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
             cur = billableDescs.get(i).getCurCost() == null ? "" : billableDescs.get(i).getCurCost();
@@ -1545,7 +1544,10 @@ public class AJAXBean extends AbstractBean implements
             }
 
             System.out.println("displaydescription" + displaydescription);
-
+            
+//            MDefaultData mDefaultData = getMDefaultDataFromType("vat");
+//            vat = mDefaultData.getValue();
+            
             if (amount.compareTo(BigDecimal.ZERO) != 0) {
                 String newrow = "";
                 newrow +=
