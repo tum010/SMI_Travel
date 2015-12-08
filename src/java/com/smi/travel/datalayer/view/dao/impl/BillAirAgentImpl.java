@@ -305,22 +305,22 @@ public class BillAirAgentImpl implements BillAirAgentDao{
             //header
           
             if(agentCode != null && !"".equals(agentCode)){
-                bil.setAgentPage(agentCode);
+                bil.setAgentPage(util.ConvertString(B[0]));
             }else{
-                bil.setAgentPage("");
+                bil.setAgentPage("ALL");
             }
             if(issueFrom != null && !"".equals(issueFrom)){
                 String issue = "" + issueFrom + " To " + issueTo;
                 bil.setIssuedatePage(issue);
             }else{
-                bil.setIssuedatePage("");
+                bil.setIssuedatePage("ALL");
             }
             System.out.println("Invoice Date : " + invoiceFromDate);
             if(invoiceFromDate != null && !"".equals(invoiceFromDate)){
                 String invoice = ""+ invoiceFromDate + " To " + InvoiceToDate;
                 bil.setInvoicedatePage(invoice);
             }else{
-                bil.setInvoicedatePage("");
+                bil.setInvoicedatePage("ALL");
             }
             bil.setPrintbyPage(printby);
             
