@@ -521,7 +521,7 @@ function cancelDescriptionDetail() {
             '&typeId=' + prod +
             '&type=' + 'searchInvoiceDescription';
 //    alert("row : "+row+" product : "+product+" refNo : "+refNo+" refItemId : "+refItemId+" prod : "+prod);
-    CallAjaxSearchDescription(param, row, product, refNo);
+    CallAjaxSearchDescriptionCancel(param, row, product, refNo);
 }
 function subStringDescription(description, row) {
     var index = description.indexOf("\n");
@@ -910,18 +910,19 @@ function CallAjaxAdd(param) {
                 var strx = msg.split('||');
                 var array = [];
                 array = array.concat(strx);
-
                 BookintType = array[0];
                 if (BookintType == $('#typeBooking').val()) {
                     $('#AlertBooking').hide();
                     $('#AlertBookingRefno').hide();
                     setBillableInvoice(array[1]);
-                    try {
-                        $("#searchRefNo2").removeClass("hidden");
-                        $("#MasterReservation tbody").append(array[2]);
-                    } catch (e) {
-                        alert(e);
-                    }
+                    if(array[2] !== ''){
+                        try {
+                            $("#searchRefNo2").removeClass("hidden");
+                            $("#MasterReservation tbody").append(array[2]);
+                        } catch (e) {
+                            alert(e);
+                        }
+                    }               
                 } else {
                     $("#searchRefNo2").addClass("hidden");
                     $('#AlertBooking').show();
@@ -1030,6 +1031,37 @@ function CallAjaxSearchDescription(param, rowId, des, RefNo) {
                 } catch (e) {
                     alert(e);
                 }
+            }, error: function(msg) {
+                $("#ajaxloadsearch").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}
+
+function CallAjaxSearchDescriptionCancel(param, rowId, des, RefNo) {
+    var url = 'AJAXServlet';
+    $("#ajaxloadsearch").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                var strx = msg.split('|');
+                var array = [];
+                array = array.concat(strx);
+                setbillAndDescription(rowId, RefNo, array[1], array[0], des);
+                try {
+                    $("#ajaxloadsearch").addClass("hidden");
+                } catch (e) {
+                    alert(e);
+                }
+                var description = $('#DescriptionInvoiceDetail' + rowId).val();
+                $('#InputDescriptionDetailId').val(rowId);
+                $('#InputDescriptionDetail').val(description);
             }, error: function(msg) {
                 $("#ajaxloadsearch").addClass("hidden");
             }
