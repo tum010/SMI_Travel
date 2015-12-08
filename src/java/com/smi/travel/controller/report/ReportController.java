@@ -255,13 +255,13 @@ public class ReportController extends SMITravelController {
         } else if (ReceiveList.equalsIgnoreCase(name)) {
             data = reportservice.getDaytourOtherReport(refno, status);
         } else if (InvoiceEmail.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign);
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
         } else if (InvoiceReport.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign);
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
         }else if (InvoiceTemp.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign);
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
         } else if (InvoiceTempReport.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign);
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
         } else if (TaxInvoiceReport.equalsIgnoreCase(name)) {
             data = reportservice.getTaxInvoice(taxInvId, option);
         } else if (TaxInvoiceEmailReport.equalsIgnoreCase(name)) {

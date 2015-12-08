@@ -32,7 +32,7 @@ public class InvoiceImpl implements InvoiceReportDao{
     private static final String GET_INVOICE_FROMID = "FROM InvoiceDetail invD where invD.invoice.id = :invId";
 
     @Override
-    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign) {
+    public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign,String printBy) {
         Session session = this.sessionFactory.openSession();
         System.out.println("Sign : " + sign);
         UtilityFunction util = new UtilityFunction();  
@@ -196,6 +196,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             if(sign != null){
                 if("".equals(sign)){
                     invoice.setSign("nosign");
+                    invoice.setSignname(printBy);
                 }else{
                     invoice.setSign(sign);
                     String querySystemUser = "from SystemUser s where s.name like '%"+sign+"%'";

@@ -452,7 +452,7 @@
                                             <option value=""  selected="selected">-- ALL --</option>
                                             <c:forEach var="table" items="${termPayList}" >
                                                 <c:set var="select" value="" />
-                                                <option value="${table.name}" ${select}>${table.name}</option>  
+                                                <option value="${table.id}" ${select}>${table.name}</option>  
                                             </c:forEach>
                                         </select>
                                     </div>

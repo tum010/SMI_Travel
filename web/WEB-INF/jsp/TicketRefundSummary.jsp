@@ -472,12 +472,12 @@ function printTicketRefundSummary(){
 //            $("#printbutton").addClass("disabled");
 //        }      
     } else {
-        if(typePrint === ""){
-            $("#reporttypepanel").removeClass("has-success");
-            $("#reporttypepanel").addClass("has-error");
-        }else{
+//        if(typePrint === ""){
+//            $("#reporttypepanel").removeClass("has-success");
+//            $("#reporttypepanel").addClass("has-error");
+//        }else{
          validateDate(); 
-        }
+//        }
     }
 }
 
@@ -607,6 +607,7 @@ function checkDateValue(date){
 }
     
 function validateDate(date,option){
+    alert("1");
    if(option === 'over'){
         if(date === 'from'){
             $("#receivefromdatepanel").removeClass("has-success");

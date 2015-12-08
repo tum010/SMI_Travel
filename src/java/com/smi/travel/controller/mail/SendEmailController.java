@@ -92,7 +92,7 @@ public class SendEmailController extends SMITravelController {
 
         if ((recipientAddress != null) && (!"".equalsIgnoreCase(recipientAddress))) {
             if (InvoiceReport.equalsIgnoreCase(name)) {
-                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign);
+                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName());
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "InvoiceEmail.jasper";
                 pdfFileName = "invoice.pdf";
