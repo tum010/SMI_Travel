@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceSummary2" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ce5d0eb5-af68-44b4-b287-253094472c71">
-	<property name="ireport.zoom" value="3.0"/>
-	<property name="ireport.x" value="1511"/>
-	<property name="ireport.y" value="215"/>
+	<property name="ireport.zoom" value="3.993000000000009"/>
+	<property name="ireport.x" value="2090"/>
+	<property name="ireport.y" value="797"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="username" class="java.lang.String"/>
 	<field name="invfrom" class="java.lang.String"/>
@@ -48,58 +48,58 @@
 		<groupHeader>
 			<band height="59">
 				<staticText>
-					<reportElement x="8" y="5" width="100" height="13" uuid="95700217-0665-4ecc-9e3a-db6b5785ce26"/>
+					<reportElement x="8" y="5" width="121" height="13" uuid="95700217-0665-4ecc-9e3a-db6b5785ce26"/>
 					<textElement>
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[ Daliy Report of Invoice]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement x="108" y="5" width="84" height="13" uuid="0e62bbe9-2b26-4949-8feb-dde841d38fab"/>
-					<textElement textAlignment="Left">
-						<font size="8" isBold="true"/>
+					<reportElement x="129" y="5" width="70" height="13" uuid="0e62bbe9-2b26-4949-8feb-dde841d38fab"/>
+					<textElement textAlignment="Right">
+						<font fontName="Tahoma" size="9" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{invfrom}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="194" y="5" width="15" height="13" uuid="46df6c85-a235-4a02-a861-2f8474928231"/>
+					<reportElement x="201" y="5" width="15" height="13" uuid="46df6c85-a235-4a02-a861-2f8474928231"/>
 					<textElement textAlignment="Center">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[to]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement x="216" y="5" width="79" height="13" uuid="822490ed-988c-4d80-9deb-e3ad798aeb4f"/>
+					<reportElement x="218" y="5" width="79" height="13" uuid="822490ed-988c-4d80-9deb-e3ad798aeb4f"/>
 					<textElement textAlignment="Left">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="9" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{invto}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="501" y="5" width="58" height="13" uuid="99b5044d-68d1-4b0a-8348-3d6baf461545"/>
+					<reportElement x="488" y="5" width="75" height="13" uuid="99b5044d-68d1-4b0a-8348-3d6baf461545"/>
 					<textElement>
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Invoice Type]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="563" y="5" width="89" height="13" isPrintInFirstWholeBand="true" uuid="e53443c6-a8ff-490b-96cd-46a5e0f9a978"/>
 					<textElement textAlignment="Left">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="9" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{headertype}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="659" y="5" width="56" height="13" uuid="79ac56e2-fdd9-4eef-aae5-14369097c9c9"/>
+					<reportElement x="659" y="5" width="64" height="13" uuid="79ac56e2-fdd9-4eef-aae5-14369097c9c9"/>
 					<textElement>
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Department]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="723" y="5" width="65" height="13" uuid="60280c19-08d7-4903-b449-9c4862b22e14"/>
 					<textElement textAlignment="Center">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="9" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{department}]]></textFieldExpression>
 				</textField>
@@ -110,7 +110,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[No]]></text>
 				</staticText>
@@ -121,7 +121,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Invoice No]]></text>
 				</staticText>
@@ -132,7 +132,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Date]]></text>
 				</staticText>
@@ -143,7 +143,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[To]]></text>
 				</staticText>
@@ -154,7 +154,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Name]]></text>
 				</staticText>
@@ -165,7 +165,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Term Pay]]></text>
 				</staticText>
@@ -176,7 +176,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Detail]]></text>
 				</staticText>
@@ -188,7 +188,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Gross]]></text>
 				</staticText>
@@ -200,7 +200,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Vat]]></text>
 				</staticText>
@@ -212,7 +212,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Amount]]></text>
 				</staticText>
@@ -224,7 +224,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Amount Cur]]></text>
 				</staticText>
@@ -236,7 +236,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Staff]]></text>
 				</staticText>
@@ -248,7 +248,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Status]]></text>
 				</staticText>
@@ -261,7 +261,7 @@
 						<rightPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Department]]></text>
 				</staticText>
@@ -273,7 +273,7 @@
 						<bottomPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Invoice]]></text>
 				</staticText>
@@ -282,64 +282,64 @@
 		<groupFooter>
 			<band height="83">
 				<staticText>
-					<reportElement x="587" y="6" width="59" height="20" uuid="d1f1ae06-d454-41dd-8978-6a9b157c82d9"/>
+					<reportElement x="586" y="6" width="59" height="20" uuid="d1f1ae06-d454-41dd-8978-6a9b157c82d9"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Total Net :]]></text>
 				</staticText>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="652" y="6" width="136" height="20" uuid="a4179d9b-eda0-4b38-b101-97261be1a605"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[($V{totalnet} != null && !"null".equals($V{totalnet})  ) ? new BigDecimal($V{totalnet}) : new BigDecimal("0")]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="587" y="24" width="59" height="20" uuid="9f7b53a3-2f45-4471-8dab-a8fb9dc5ba4f"/>
+					<reportElement x="615" y="24" width="28" height="20" uuid="9f7b53a3-2f45-4471-8dab-a8fb9dc5ba4f"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Vat :]]></text>
 				</staticText>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="652" y="25" width="136" height="19" uuid="4a16eafd-c3bb-467e-800b-82f9a32aafef"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[($V{totalvat} != null && !"null".equals($V{totalvat})  ) ? new BigDecimal($V{totalvat}) : new BigDecimal("0")]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="587" y="42" width="59" height="20" uuid="03f50e86-8244-4e9c-a8b2-77eff217723d"/>
+					<reportElement x="563" y="42" width="76" height="20" uuid="03f50e86-8244-4e9c-a8b2-77eff217723d"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Total Amount :]]></text>
 				</staticText>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
 					<reportElement x="652" y="41" width="136" height="20" uuid="ecb83bf4-4df5-421d-9c0f-723b5fcb57b3"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>
 				</textField>
 				<staticText>
-					<reportElement x="587" y="60" width="59" height="20" uuid="18f9e966-2c86-46a0-a3fe-f892a26e75e9"/>
+					<reportElement x="575" y="60" width="71" height="20" uuid="18f9e966-2c86-46a0-a3fe-f892a26e75e9"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font size="8" isBold="true"/>
+						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Total Profit :]]></text>
 				</staticText>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement x="652" y="44" width="136" height="18" uuid="b4d7d6d2-ddc0-4cd5-ac5c-115c81cc7733"/>
+					<reportElement x="652" y="46" width="136" height="18" uuid="b4d7d6d2-ddc0-4cd5-ac5c-115c81cc7733"/>
 					<textElement>
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[($V{totalamount} != null && !"null".equals($V{totalamount})  ) ? new BigDecimal($V{totalamount}) : new BigDecimal("0")]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0.00" isBlankWhenNull="true">
-					<reportElement x="652" y="62" width="136" height="18" uuid="85d005b9-22c3-4c1f-b09e-baa4d6f848a2"/>
+					<reportElement x="652" y="64" width="136" height="18" uuid="85d005b9-22c3-4c1f-b09e-baa4d6f848a2"/>
 					<textElement>
-						<font fontName="TH SarabunPSK" size="14" isBold="true"/>
+						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[($V{totalprofit} != null && !"null".equals($V{totalprofit})  ) ? new BigDecimal($V{totalprofit}) : new BigDecimal("0")]]></textFieldExpression>
 				</textField>
@@ -354,35 +354,35 @@
 			<staticText>
 				<reportElement x="438" y="5" width="358" height="27" uuid="7993861e-1c32-485a-bcd0-db5168235b39"/>
 				<textElement textAlignment="Right">
-					<font size="16" isBold="true"/>
+					<font fontName="Tahoma" size="22" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Invoice Report]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="668" y="33" width="48" height="14" uuid="76b9b769-929f-43a5-9720-0112e8225af9"/>
+				<reportElement x="633" y="33" width="48" height="14" uuid="76b9b769-929f-43a5-9720-0112e8225af9"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
-				<text><![CDATA[Print on:]]></text>
+				<text><![CDATA[Print on :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="668" y="51" width="48" height="14" uuid="ec56269a-1c07-4cb2-9d1d-bdc029bbea19"/>
+				<reportElement x="633" y="51" width="48" height="14" uuid="ec56269a-1c07-4cb2-9d1d-bdc029bbea19"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<text><![CDATA[Print by :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="716" y="51" width="80" height="14" uuid="f3be6bba-dba8-4863-96f2-b9927da0d910"/>
+				<reportElement x="681" y="51" width="115" height="14" uuid="f3be6bba-dba8-4863-96f2-b9927da0d910"/>
 				<textElement textAlignment="Right">
-					<font fontName="SansSerif" size="8"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="716" y="33" width="78" height="15" uuid="81d7a0cd-c3e6-4821-9b5a-8ee38f1bf562"/>
+				<reportElement x="681" y="33" width="113" height="15" uuid="81d7a0cd-c3e6-4821-9b5a-8ee38f1bf562"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
 			</textField>
@@ -394,25 +394,29 @@
 			</line>
 			<textField evaluationTime="Report">
 				<reportElement x="778" y="70" width="17" height="15" uuid="d8cd3196-b959-46c8-9dd9-9dcb868524e5"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="615" y="70" width="163" height="15" uuid="0b7f75ce-694a-425b-9e42-99ef94b32001"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="10"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Page : "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="101" y="24" width="223" height="14" uuid="9c3c91af-d87d-4837-85ef-d8975dd8a403"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<text><![CDATA[9th Floor, Siam at Siam Hotel Building, 865 Rama1 Road,]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="101" y="34" width="267" height="13" uuid="fc809133-8230-4cbe-ba49-ec9469b332ab"/>
+				<reportElement x="101" y="37" width="267" height="13" uuid="fc809133-8230-4cbe-ba49-ec9469b332ab"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330 THAILAND.]]></text>
 			</staticText>
@@ -423,21 +427,21 @@
 			<staticText>
 				<reportElement x="101" y="10" width="223" height="17" uuid="ec9a369a-e98d-4eee-8b46-a8d60edf279c"/>
 				<textElement>
-					<font size="11" isBold="true"/>
+					<font fontName="Tahoma" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[S.M.I Travel Co., Ltd. (Head Office)]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="101" y="44" width="271" height="13" uuid="15f2c0ef-9601-4199-979f-a35b9e8e98d1"/>
+				<reportElement x="101" y="50" width="271" height="13" uuid="15f2c0ef-9601-4199-979f-a35b9e8e98d1"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<text><![CDATA[Tel : (66-2) 216-2201 Fax : (66-2) 216-2202]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="102" y="54" width="177" height="13" uuid="6ebf7eb6-b392-41e4-80a3-121378daad44"/>
+				<reportElement x="102" y="63" width="177" height="13" uuid="6ebf7eb6-b392-41e4-80a3-121378daad44"/>
 				<textElement>
-					<font size="8"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
 			</staticText>
@@ -454,7 +458,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 					<paragraph leftIndent="1" spacingBefore="2"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invno}]]></textFieldExpression>
@@ -468,7 +472,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{countNo}]]></textFieldExpression>
 			</textField>
@@ -481,7 +485,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 					<paragraph leftIndent="1"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invdate}]]></textFieldExpression>
@@ -495,7 +499,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{to}]]></textFieldExpression>
 			</textField>
@@ -508,7 +512,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invname}]]></textFieldExpression>
 			</textField>
@@ -521,7 +525,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{termpay}]]></textFieldExpression>
 			</textField>
@@ -534,7 +538,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{detail}]]></textFieldExpression>
 			</textField>
@@ -547,7 +551,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{gross} != null && !"null".equals($F{gross}) ) ? new BigDecimal($F{gross}) : ""]]></textFieldExpression>
 			</textField>
@@ -560,7 +564,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{vat} != null && !"null".equals($F{vat}) ) ? new BigDecimal($F{vat}) : ""]]></textFieldExpression>
 			</textField>
@@ -573,7 +577,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{amount} != null && !"null".equals($F{amount}) ) ? new BigDecimal($F{amount}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
@@ -586,7 +590,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{amountcur}]]></textFieldExpression>
 			</textField>
@@ -599,7 +603,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{staff}]]></textFieldExpression>
 			</textField>
@@ -612,7 +616,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
 			</textField>
@@ -625,7 +629,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="TH SarabunPSK" size="14"/>
+					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invdepartment}]]></textFieldExpression>
 			</textField>
@@ -676,15 +680,6 @@
 			</staticText>
 			<staticText>
 				<reportElement stretchType="RelativeToBandHeight" x="312" y="0" width="82" height="20" uuid="d91c9dd6-6331-4e34-ab46-a74bb1a24154"/>
-				<box>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-				</box>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement stretchType="RelativeToBandHeight" x="394" y="0" width="94" height="20" uuid="c1e7d7b0-d1c2-47a5-85bb-1411ff108e9f"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -749,6 +744,15 @@
 			</staticText>
 			<staticText>
 				<reportElement stretchType="RelativeToBandHeight" x="648" y="0" width="42" height="20" uuid="8ddeb2f9-5966-4418-99d5-95c9172ecf71"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="394" y="0" width="94" height="20" uuid="c1e7d7b0-d1c2-47a5-85bb-1411ff108e9f"/>
 				<box>
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
