@@ -40,12 +40,12 @@ $(document).ready(function() {
 
     //Auto complete
     var showflag = 1;
-    $("#receiveCode").keyup(function(event) {
+    $("#receiveName").keyup(function(event) {
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
         if ($(this).val() === "") {
-            $("#receiveCode").val("");
+//            $("#receiveCode").val("");
             $("#receiveName").val("");
             $("#receiveArCode").val("");
         } else {
@@ -54,7 +54,7 @@ $(document).ready(function() {
             }
         }
     });
-    $("#receiveCode").keydown(function() {
+    $("#receiveName").keydown(function() {
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
@@ -84,13 +84,13 @@ $(document).ready(function() {
                     }
                 }
             },
-            receiveCode: {
-                validators: {
-                    notEmpty: {
-                        message: 'The Code is required'
-                    }
-                }
-            },
+//            receiveCode: {
+//                validators: {
+//                    notEmpty: {
+//                        message: 'The Code is required'
+//                    }
+//                }
+//            },
             receiveName: {
                 validators: {
                     notEmpty: {
@@ -216,7 +216,7 @@ function searchCustomerAgentAutoList(billTo) {
             '&servletName=' + servletName +
             '&servicesName=' + servicesName +
             '&name=' + billTo +
-            '&type=' + 'getAutoListBillto';
+            '&type=' + 'getAutoListBilltoReceiveTable';
     CallAjaxAuto(param);
 }
 function CallAjaxAuto(param) {
@@ -256,14 +256,15 @@ function CallAjaxAuto(param) {
                 $("#receiveName").val(billname);
 //                   $("#InvToAddress").val(billaddr);
 
-                $("#receiveCode").autocomplete({
+                $("#receiveName").autocomplete({
                     source: billArray,
                     close: function() {
-                        $("#receiveCode").trigger("keyup");
-                        var billselect = $("#receiveCode").val();
-                        for (var i = 0; i < billListId.length; i++) {
-                            if ((billselect == billListName[i]) || (billselect == billListId[i])) {
-                                $("#receiveCode").val(billListId[i]);
+                        $("#receiveName").trigger("keyup");
+                        var billselect = $("#receiveName").val();
+                        for (var i = 0; i < billListName.length; i++) {
+//                            if ((billselect == billListName[i]) || (billselect == billListId[i])) {
+                            if ((billselect == billListName[i])) {  
+//                                $("#receiveCode").val(billListId[i]);
                                 $("#receiveArCode").val(billListId[i]);
                                 $("#receiveName").val(billListName[i]);
 //                                   $("#InvToAddress").val(billListAddress[i]);
@@ -272,19 +273,19 @@ function CallAjaxAuto(param) {
                     }
                 });
 
-                var billval = $("#receiveCode").val();
-                for (var i = 0; i < billListId.length; i++) {
+                var billval = $("#receiveName").val();
+                for (var i = 0; i < billListName.length; i++) {
                     if (billval == billListName[i]) {
-                        $("#receiveCode").val(billListId[i]);
+                        $("#receiveName").val(billListName[i]);
                     }
                 }
-                if (billListId.length == 1) {
+                if (billListName.length == 1) {
                     showflag = 0;
-                    $("#receiveCode").val(billListId[0]);
+                    $("#receiveName").val(billListName[0]);
                 }
                 var event = jQuery.Event('keydown');
                 event.keyCode = 40;
-                $("#receiveCode").trigger(event);
+                $("#receiveName").trigger(event);
 
             }, error: function(msg) {
                 console.log('auto ERROR');

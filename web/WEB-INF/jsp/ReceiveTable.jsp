@@ -45,9 +45,6 @@
                 <strong>Delete Not Success!</strong> 
         </div>
         <div class="panel panel-default">
-            <div class="panel-heading">
-                 <label class="control-label">Receive Table</lable>
-            </div>
             <div class="panel-body">               
                 <div class="row" style="padding-left: 0px">
                     <div class="col-xs-12 ">
@@ -98,8 +95,12 @@
                             </a>
                         </div>
                     </div>   
-                </div><!-- End Row 1--><br>                             
-                <div class="row" style="padding-left: 25px;width: 100%;">
+                </div><!-- End Row 1-->
+                <c:set var="receiveTable" value=""/>
+                <c:if test="${advanceReceiveList == null}">
+                   <c:set var="receiveTable" value="hidden"/> 
+                </c:if>
+                <div class="row ${receiveTable}" style="padding-left: 25px; width: 100%;">
                     <table class="display" id="ReceiveTable">
                         <thead class="datatable-header">
                             <tr>
@@ -135,12 +136,12 @@
                     </table>
                 </div>
                 <br>
-                <div class="panel panel-default" id="receiveData">
+                <div class="panel panel-default" id="receiveData" style="margin-top: -10px;">
                     <div class="panel-body">
                         <div class="tab-content" id="collapseExample" aria-expanded="false">
                         <div role="tabpanel" class="tab-pane hidden active" id="receive">
                         <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 ">
+                            <div class="col-xs-12 " style="margin-top: -10px;">
                                 <div class="col-xs-1 form-group" style="width: 135px">
                                     <label class="control-label text-left">Receive Date<font style="color: red">*</font></lable>        
                                 </div>
@@ -169,71 +170,70 @@
                                         <option value="T" ${temp}>Temp</option>
                                     </select>    
                                 </div>
+                                <div class="col-xs-1 text-right" style="width: 170px;">
+                                    <label class="control-label">Status<font style="color: red">*</font></lable>        
+                                </div>
+                                <div class="col-xs-1 form-group" style="width: 200px;">
+                                    <select name="status" id="status" class="form-control">
+                                        <option value=""></option>
+                                        <c:forEach var="mAccpay" items="${mAccpayList}">                                       
+                                            <c:set var="select" value="" />
+                                            <c:if test="${mAccpay.id == advanceReceive.MAccpay.id}">
+                                                <c:set var="select" value="selected" />
+                                            </c:if>
+                                            <option  value="${mAccpay.id}" ${select}>${mAccpay.name}</option>
+                                        </c:forEach>                                            
+                                    </select>    
+                                </div>     
                             </div>   
-                        </div><!-- End Row 1--><br>
+                        </div><!-- End Row 1-->
                         <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 ">
+                            <div class="col-xs-12 " style="margin-top: -10px;">
+                                <div class="col-xs-1 form-group hidden">
+                                    <input name="receiveId" id="receiveId" type="hidden" class="form-control" value="${advanceReceive.id}" />
+                                    <input name="receiveCreditId" id="receiveCreditId" type="hidden" class="form-control" value="" />
+                                    <input name="receiveCreditRow" id="receiveCreditRow" type="hidden" class="form-control" value="" />
+                                </div>
                                 <div class="col-xs-1 form-group" style="width: 135px">
                                     <label class="control-label text-left">Receive Name<font style="color: red">*</font></lable>        
                                 </div>
-                                <div class="col-xs-1 form-group" style="width: 170px">
-                                    <div class="input-group">
-                                        <input name="receiveId" id="receiveId" type="hidden" class="form-control" value="${advanceReceive.id}" />
-                                        <input name="receiveCreditId" id="receiveCreditId" type="hidden" class="form-control" value="" />
-                                        <input name="receiveCreditRow" id="receiveCreditRow" type="hidden" class="form-control" value="" />
+                                <div class="col-xs-1 form-group hidden" style="width: 170px">
+                                    <div class="input-group">                                 
                                         <input name="receiveCode" id="receiveCode" type="text" class="form-control" value="${advanceReceive.recTo}" />
                                         <span class="input-group-addon" id="receiveModal"  data-toggle="modal" data-target="#ReceiveModal">
                                             <span class="glyphicon-search glyphicon"></span>
                                         </span>
                                     </div>    
                                 </div>
-                                <div class="col-xs-1 form-group" style="width: 420px">
-                                    <input name="receiveName" id="receiveName" type="text" class="form-control" value="${advanceReceive.recName}" />
+                                <div class="col-xs-1 form-group" style="width: 290px">
+                                    <input name="receiveName" id="receiveName" type="text" class="form-control" style="text-transform: uppercase;" value="${advanceReceive.recName}" />
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 170px">
+                                <div class="col-xs-1 text-left" style="width: 100px">
                                     <label class="control-label">AR Code</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px">
                                     <input name="receiveArCode" id="receiveArCode" type="text" class="form-control" value="${advanceReceive.arCode}" readonly=""/>
+                                </div>                                                                
+                                <div class="col-xs-1 text-right" style="width: 170px">
+                                   <label class="control-label text-left">Receive Amount<font style="color: red">*</font></lable>        
+                                </div>                               
+                                <div class="col-xs-1 form-group" style="width: 200px">
+                                    <input name="receiveAmount" id="receiveAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.recAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
                                 </div>
                             </div>
-                        </div><!-- End Row 2--><br>
+                        </div><!-- End Row 2-->
                         <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 ">
+                            <div class="col-xs-12 " style="margin-top: -10px;">
                                 <div class="col-xs-1" style="width: 135px">
                                     <label class="control-label text-left">Description</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 590px">
                                     <textarea name="description" id="description" class="form-control" rows="3">${advanceReceive.description}</textarea>
-                                </div>
-                                <div style="col-xs-1">
-                                    <div class="col-xs-1 text-right" style="width: 170px;padding-top: 5px">
-                                        <label class="control-label">Status<font style="color: red">*</font></lable>        
-                                    </div>
-                                    <div class="col-xs-1 form-group" style="width: 200px;padding-top: 5px">
-                                        <select name="status" id="status" class="form-control">
-                                            <option value=""></option>
-                                            <c:forEach var="mAccpay" items="${mAccpayList}">                                       
-                                                <c:set var="select" value="" />
-                                                <c:if test="${mAccpay.id == advanceReceive.MAccpay.id}">
-                                                    <c:set var="select" value="selected" />
-                                                </c:if>
-                                                <option  value="${mAccpay.id}" ${select}>${mAccpay.name}</option>
-                                            </c:forEach>                                            
-                                        </select>    
-                                    </div>                               
-                                    <div class="col-xs-1 text-right" style="width: 895px">
-                                        <label class="control-label text-left">Receive Amount<font style="color: red">*</font></lable>        
-                                   </div>                               
-                                    <div class="col-xs-1 form-group" style="width: 200px">
-                                        <input name="receiveAmount" id="receiveAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.recAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
-                                    </div>
-                                </div>
+                                </div>                               
                             </div>
                         </div><!-- End Row 3--><br>
                         <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 ">                               
-                                  
+                            <div class="col-xs-12 " style="margin-top: -15px;">                                                                 
                                 <div class="col-xs-1" style="width: 135px">
                                     <label class="control-label text-left">Cash Amount</lable>        
                                 </div>
@@ -257,7 +257,7 @@
                             </div>
                         </div><!-- End Row 4--><br>
                         <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 ">
+                            <div class="col-xs-12 " style="margin-top: -15px;">
                                 <div class="col-xs-1" style="width: 135px">
                                     <label class="control-label text-left">Chq Bank</lable>        
                                 </div>

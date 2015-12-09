@@ -16,4 +16,5 @@ import java.util.List;
 public interface CustomerAgentInfoDao {
     public List<CustomerAgentInfo> getListCustomerAgentInfo();
     public List<CustomerAgentInfo> SearchListCustomerAgentInfo(String name);
+    public List<CustomerAgentInfo> SearchListCustomerAgentInfoReceiveTable(String name);
 }

@@ -86,6 +86,7 @@ public class ReceiveTableController extends SMITravelController {
             request.setAttribute(ADVANCERECEIVELIST, advanceReceiveList);
             request.setAttribute("inputDate", inputDate);
             request.setAttribute("selectStatus", selectStatus);
+            getReceivePeriod(request,inputDate);
         }else if("save".equalsIgnoreCase(action)){
             AdvanceReceive advanceReceive = new AdvanceReceive();
             if("".equalsIgnoreCase(receiveId)){
@@ -146,6 +147,10 @@ public class ReceiveTableController extends SMITravelController {
                 advanceReceiveCreditList = advanceReceiveList.get(0).getAdvanceReceiveCredits();
                 request.setAttribute(ADVANCERECEIVECREDITLIST, advanceReceiveCreditList);                
             }
+            List<AdvanceReceive> advanceReceiveSearchList = receiveTableService.searchAdvanceReceive(inputDate,selectStatus,"search");
+            request.setAttribute(ADVANCERECEIVELIST, advanceReceiveSearchList);
+            request.setAttribute("inputDate", inputDate);
+            request.setAttribute("selectStatus", selectStatus);
                        
         }else if("deleteAdvanceReceive".equalsIgnoreCase(action)){
             AdvanceReceive advanceReceive = new AdvanceReceive();

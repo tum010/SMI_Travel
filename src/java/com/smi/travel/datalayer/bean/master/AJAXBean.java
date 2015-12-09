@@ -439,6 +439,9 @@ public class AJAXBean extends AbstractBean implements
             } else if ("getAutoListBillto".equalsIgnoreCase(type)) {
                 String name = map.get("name").toString();
                 result = buildBillListJSON(customerAgentInfoDao.SearchListCustomerAgentInfo(name));
+            } else if ("getAutoListBilltoReceiveTable".equalsIgnoreCase(type)) {
+                String name = map.get("name").toString();
+                result = buildBillListJSON(customerAgentInfoDao.SearchListCustomerAgentInfoReceiveTable(name));
             } else if ("deleteInvoiceDetail".equalsIgnoreCase(type)) {
                 String id = map.get("name").toString();
                 result = invoicedao.DeleteInvoiceDetail(id);

@@ -108,6 +108,44 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
         this.sessionFactory.close();
         return CustomerAgentInfoList;
     }
+
+    @Override
+    public List<CustomerAgentInfo> SearchListCustomerAgentInfoReceiveTable(String name) {
+        Session session = this.sessionFactory.openSession();
+        util = new UtilityFunction();
+        String sql ="SELECT * FROM `customer_agent_info` where bill_name like '%"+name+"%' limit 200";
+        List<Object[]> QueryList =  session.createSQLQuery(sql)
+                .addScalar("bill_To",Hibernate.STRING)
+                .addScalar("bill_Name",Hibernate.STRING)
+                .addScalar("tel",Hibernate.STRING)
+                .addScalar("address",Hibernate.STRING)
+                .addScalar("term",Hibernate.INTEGER)
+                .addScalar("pay",Hibernate.INTEGER)
+                .list();
+        
+        List<CustomerAgentInfo> CustomerAgentInfoList =  new LinkedList<CustomerAgentInfo>();
+        for(Object[] B : QueryList){
+            CustomerAgentInfo CustomerAgent = new CustomerAgentInfo();
+            CustomerAgent.setBillTo(B[0].toString());
+            CustomerAgent.setBillName(B[1].toString());
+            CustomerAgent.setTel(util.inputString(B[2]));
+            CustomerAgent.setAddress(util.inputString(B[3]));
+            if(B[4] != null){
+                CustomerAgent.setTerm(util.ConvertInt(B[4]));
+            }
+            if(B[5] != null){
+                CustomerAgent.setPay(util.ConvertInt(B[5]));
+            }
+            CustomerAgentInfoList.add(CustomerAgent);
+        }
+       
+        if (CustomerAgentInfoList.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return CustomerAgentInfoList;
+    }
     
     
     
