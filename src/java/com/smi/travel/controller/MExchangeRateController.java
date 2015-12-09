@@ -5,9 +5,19 @@
  */
 package com.smi.travel.controller;
 
+import com.smi.travel.datalayer.entity.MCurrency;
+import com.smi.travel.datalayer.entity.MExchangeRate;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.MExchangeRateService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,10 +31,70 @@ public class MExchangeRateController  extends SMITravelController{
     private static final ModelAndView MExchangeRate = new ModelAndView("MExchangeRate");
     private MExchangeRateService mExchangeRateService;
     private UtilityService  utilityService;
+    UtilityFunction utilty = new UtilityFunction();
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+         //List Currency
+        List<MCurrency> listCurrency = new ArrayList<MCurrency>();
+        listCurrency = utilityService.getListMCurrency();
+        if(listCurrency != null){
+            request.setAttribute("listCurrency", listCurrency);
+        }else{
+            request.setAttribute("listCurrency", null);
+        }
+        SystemUser user = (SystemUser) session.getAttribute("USER");
+        String action = request.getParameter("action");
+        String ExchangeId = request.getParameter("ExchangeID");
+        String EdxchangeDate = request.getParameter("ExchangeDate");
+        String EdxchangeRate = request.getParameter("ExchangeRate");
+        String Currency = request.getParameter("Currency");
         
+        String Currency_Search = request.getParameter("CurrencyS");
+        String FromDate = request.getParameter("FromDate");
+        String ToDate = request.getParameter("ToDate");
+        
+        MExchangeRate mExchangeRate = new MExchangeRate();
+        if(ExchangeId != null && !"".equals(ExchangeId)){
+            mExchangeRate.setId(ExchangeId);
+        }else{
+            mExchangeRate.setId(null);
+        }
+        // Exchange Date
+        if(EdxchangeDate != null && !"".equals(EdxchangeDate)){
+            Date exdate = utilty.convertStringToDate(EdxchangeDate);
+            mExchangeRate.setExdate(exdate);
+        }else{
+            mExchangeRate.setExdate(null);
+        }
+        // Exchange Rate
+        if(EdxchangeRate != null && !"".equals(EdxchangeRate)){
+            BigDecimal CurrencyInt =  new BigDecimal(Currency.replaceAll(",", ""));
+            mExchangeRate.setExrate(CurrencyInt);
+        }else{
+            mExchangeRate.setExrate(null);
+        }
+        // Currency
+        if(Currency != null && !"".equals(Currency)){
+            mExchangeRate.setCurrency(Currency);
+        }else{
+            mExchangeRate.setCurrency(null);
+        }
+        mExchangeRate.setCreateby(user.getName());
+        mExchangeRate.setCreatedate(new Date());
+        
+        if ("search".equalsIgnoreCase(action)) {
+            
+        }else if ("add".equalsIgnoreCase(action)) {
+            
+        }else if ("update".equalsIgnoreCase(action)) {
+            
+        }else if ("delete".equalsIgnoreCase(action)) {
+            
+        }
+        request.setAttribute("fromdate", FromDate);
+        request.setAttribute("todate", ToDate);
+        request.setAttribute("currency_exchange", Currency_Search);
         
         return MExchangeRate;
     }
