@@ -23,7 +23,7 @@ function EditExchange(id, exdate, cur, exrate,createby,createdate) {
     document.getElementById('ExchangeDate').value = exdate;
     document.getElementById('ExchangeRate').value = exrate;
     document.getElementById('Currency').value = cur;
-    document.getElementById('action').value = 'update';
+    document.getElementById('action').value = 'add';
 }
 
 function DeleteExchange(id, exdate,cur) {
@@ -45,9 +45,11 @@ function formatDecimal() {
         if(decimalOnly.test(myData)){
 //            alert('It is GOOD!');
             document.getElementById("btnSave").disabled = false;
+            $('#textAlertDivDecimal').hide();
         }else{
             document.getElementById("btnSave").disabled = true;
-            alert('Please Input 4 decimal point!');
+//            alert('Please Input 4 decimal point!');
+            $('#textAlertDivDecimal').show();
         }
     }
     return;  

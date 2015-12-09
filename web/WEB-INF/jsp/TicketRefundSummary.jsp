@@ -607,7 +607,7 @@ function checkDateValue(date){
 }
     
 function validateDate(date,option){
-    alert("1");
+//    alert("1");
    if(option === 'over'){
         if(date === 'from'){
             $("#receivefromdatepanel").removeClass("has-success");

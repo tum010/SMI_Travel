@@ -96,40 +96,33 @@ public class MExchangeRateController  extends SMITravelController{
             }else{
                 request.setAttribute("ExchangeList", listMExchange);
             }
+            request.setAttribute("fromdate", FromDate);
+            request.setAttribute("todate", ToDate);
+            request.setAttribute("currency_exchange", Currency_Search);
         }else if ("add".equalsIgnoreCase(action)) {
             String result = "";
-            String result_find = mExchangeRateService.findExchangeDuplicate(EdxchangeDate, Currency);
+            String result_find = mExchangeRateService.findExchangeDuplicate(EdxchangeDate, Currency,ExchangeId);
             if("OK".equals(result_find)){
-                result = mExchangeRateService.insertExchange(mExchangeRate);
-                List<MExchangeRate> listMExchange = mExchangeRateService.searchExchangeRateById(EdxchangeDate,Currency);
-                if( listMExchange != null && listMExchange.size() != 0 ){
-                    request.setAttribute("ExchangeList", listMExchange);
-                }else{
-                    request.setAttribute("ExchangeList", listMExchange);
-                }
+                result = mExchangeRateService.insertExchange(mExchangeRate);             
             }else{
                 result = "duplicate";               
             }
-            System.out.println("Result Add Exchange : " + result);
-            request.setAttribute("result", result);
-            
-        }else if ("update".equalsIgnoreCase(action)) {
-            String result = mExchangeRateService.insertExchange(mExchangeRate);
-            System.out.println("Result Update Exchange : " + result);
-            request.setAttribute("result", result);
-            
-            List<MExchangeRate> listMExchange = mExchangeRateService.searchExchangeRateById(EdxchangeDate,Currency);
+            List<MExchangeRate> listMExchange = mExchangeRateService.searchExchangeRateById(EdxchangeDate,"");
             if( listMExchange != null && listMExchange.size() != 0 ){
                 request.setAttribute("ExchangeList", listMExchange);
             }else{
                 request.setAttribute("ExchangeList", listMExchange);
             }
+            System.out.println("Result Add Exchange : " + result);
+            request.setAttribute("result", result);
+            request.setAttribute("fromdate", EdxchangeDate);
+            request.setAttribute("todate", EdxchangeDate);
         }else if ("delete".equalsIgnoreCase(action)) {
             String result = mExchangeRateService.deleteExchange(mExchangeRate);
             System.out.println("Result Delete Exchange : " + result);
             request.setAttribute("result", result);
             
-            List<MExchangeRate> listMExchange = mExchangeRateService.searchExchangeRateById("","");
+            List<MExchangeRate> listMExchange = mExchangeRateService.searchExchangeRateById(EdxchangeDate,"");
             if( listMExchange != null && listMExchange.size() != 0 ){
                 request.setAttribute("ExchangeList", listMExchange);
             }else{
@@ -137,9 +130,6 @@ public class MExchangeRateController  extends SMITravelController{
             }
         }
         System.out.println("Date Current : " + new Date());
-        request.setAttribute("fromdate", FromDate);
-        request.setAttribute("todate", ToDate);
-        request.setAttribute("currency_exchange", Currency_Search);
         
         return MExchangeRate;
     }

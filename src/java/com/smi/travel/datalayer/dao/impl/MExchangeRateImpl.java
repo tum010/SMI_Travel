@@ -134,15 +134,15 @@ public class MExchangeRateImpl extends HibernateDaoSupport implements MExchangeR
     }
 
     @Override
-    public String findExchangeDuplicate(String exchangedate, String currency) {
+    public String findExchangeDuplicate(String exchangedate, String currency,String id) {
         String result ="";
         String query = "";
         int AndQuery = 0;
         
-        if(exchangedate == null  &&  currency == null ){
+        if(exchangedate == null  &&  currency == null && id == null){
             query = " FROM MExchangeRate  mg " ; 
         }else{
-           if("".equals(exchangedate) && "".equals(currency)){
+           if("".equals(exchangedate) && "".equals(currency) && "".equals(id)){
                 query = " FROM MExchangeRate  mg " ;
            }else{
                 query = " FROM MExchangeRate  mg  where " ;
@@ -162,6 +162,14 @@ public class MExchangeRateImpl extends HibernateDaoSupport implements MExchangeR
            }else{
                AndQuery = 1;
                query += " mg.currency = '" + currency + "'";
+           }
+        }
+        if(id != null && (!"".equalsIgnoreCase(id))){
+            if(AndQuery == 1){
+                query += " and mg.id != " + id ;
+           }else{
+               AndQuery = 1;
+               query += " mg.id != " + id ;
            }
         }
         System.out.println("query exchange: "+query );
