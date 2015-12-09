@@ -471,7 +471,7 @@
                         <div class="col-xs-12" style="margin-top: -10px">
                             <div class="col-xs-2">
                                 <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchRefNo()">
-                                    <span id="SpanEdit${advanced.search}">Search Invoice</span>
+                                    <span id="SpanEdit${advanced.search}">Search Ref No.</span>
                                 </a>
                             </div>
                             <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxloadsearch"  class="fa fa-spinner fa-spin hidden"></i></div>                                                      

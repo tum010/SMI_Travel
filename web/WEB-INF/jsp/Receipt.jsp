@@ -27,8 +27,62 @@
 
 
 <section class="content-header" >
-    <h1>
-        Finance & Cashier - Receipt 
+    <c:set var="panelheader" value=""/>
+    <c:set var="panelborder" value=""/>
+    <c:if test="${receipt.MFinanceItemstatus.id == '2'}">
+        <c:set var="receiptVoid" value="VOID" />
+    </c:if>
+    <h1>               
+        <c:choose>
+            <c:when test="${fn:contains(page , 'WT')}">
+                <c:set var="typeReceipt" value="T" />
+                <c:set var="typeDepartment" value="Wendy" />
+                <c:set var="typeBooking" value="I" />
+                <h4><b>Finance & Cashier - Receipt Temp Wendy   <font style="color: red">${receiptVoid}</font></b></h4>
+                <c:set var="panelheader" value="wendyheader"/>
+                <c:set var="panelborder" value="wendyborder"/>
+            </c:when>
+            <c:when test="${fn:contains(page , 'WV')}">
+                <c:set var="typeReceipt" value="V" />
+                <c:set var="typeDepartment" value="Wendy" />
+                <c:set var="typeBooking" value="I" />
+                <h4><b>Finance & Cashier - Receipt Vat Wendy   <font style="color: red">${receiptVoid}</font></b></h4>
+                <c:set var="panelheader" value="wendyheader"/>
+                <c:set var="panelborder" value="wendyborder"/>
+            </c:when>    
+            <c:when test="${fn:contains(page , 'OT')}">
+                <c:set var="typeReceipt" value="T" />
+                <c:set var="typeDepartment" value="Outbound" />
+                <c:set var="typeBooking" value="O" />
+                <h4><b>Finance & Cashier - Receipt Temp Outbound   <font style="color: red">${receiptVoid}</font></b></h4>
+                <c:set var="panelheader" value="outboundheader"/>
+                <c:set var="panelborder" value="outboundborder"/>
+            </c:when>    
+            <c:when test="${fn:contains(page , 'OV')}">
+                <c:set var="typeReceipt" value="V" />
+                <c:set var="typeDepartment" value="Outbound" />
+                <c:set var="typeBooking" value="O" />
+                <h4><b>Finance & Cashier - Receipt Vat Outbound   <font style="color: red">${receiptVoid}</font></b></h4>
+                <c:set var="panelheader" value="outboundheader"/>
+                <c:set var="panelborder" value="outboundborder"/>
+            </c:when>    
+            <c:when test="${fn:contains(page , 'IT')}">
+                <c:set var="typeReceipt" value="T" />
+                <c:set var="typeDepartment" value="Inbound" />
+                <c:set var="typeBooking" value="I" />
+                <h4><b>Finance & Cashier - Receipt Temp Inbound   <font style="color: red">${receiptVoid}</font></b></h4>
+                <c:set var="panelheader" value="inboundborderheader"/>
+                <c:set var="panelborder" value="inboundborder"/>
+            </c:when>   
+            <c:when test="${fn:contains(page , 'IV')}">
+                <c:set var="typeReceipt" value="V" />
+                <c:set var="typeDepartment" value="Inbound" />
+                <c:set var="typeBooking" value="I" />
+                <h4><b>Finance & Cashier - Receipt Vat Inbound   <font style="color: red">${receiptVoid}</font></b></h4>
+                <c:set var="panelheader" value="inboundborderheader"/>
+                <c:set var="panelborder" value="inboundborder"/>
+            </c:when>    
+        </c:choose>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i>Finance & Cashier</a></li>          
@@ -70,73 +124,12 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Amount over than invoice.</strong> 
             </div>
-        </div>    
-       
-        <c:set var="panelheader" value=""/>
-        <c:set var="panelborder" value=""/>
+        </div>               
         <div class="col-sm-10">
-            <div class="row" style="padding-left: 15px">  
-                <div class="col-sm-6 " style="padding-right: 15px">
-                    <c:if test="${receipt.MFinanceItemstatus.id == '2'}">
-                        <c:set var="receiptVoid" value="VOID" />
-                    </c:if>
-                    <c:choose>
-                        <c:when test="${fn:contains(page , 'WT')}">
-                            <c:set var="typeReceipt" value="T" />
-                            <c:set var="typeDepartment" value="Wendy" />
-                            <c:set var="typeBooking" value="I" />
-                            <h4><b>Receipt Temp Wendy   <font style="color: red">${receiptVoid}</font></b></h4>
-                            <c:set var="panelheader" value="wendyheader"/>
-                            <c:set var="panelborder" value="wendyborder"/>
-                        </c:when>
-                        <c:when test="${fn:contains(page , 'WV')}">
-                            <c:set var="typeReceipt" value="V" />
-                            <c:set var="typeDepartment" value="Wendy" />
-                            <c:set var="typeBooking" value="I" />
-                            <h4><b>Receipt Vat Wendy   <font style="color: red">${receiptVoid}</font></b></h4>
-                            <c:set var="panelheader" value="wendyheader"/>
-                            <c:set var="panelborder" value="wendyborder"/>
-                        </c:when>    
-                        <c:when test="${fn:contains(page , 'OT')}">
-                            <c:set var="typeReceipt" value="T" />
-                            <c:set var="typeDepartment" value="Outbound" />
-                            <c:set var="typeBooking" value="O" />
-                            <h4><b>Receipt Temp Outbound   <font style="color: red">${receiptVoid}</font></b></h4>
-                            <c:set var="panelheader" value="outboundheader"/>
-                            <c:set var="panelborder" value="outboundborder"/>
-                        </c:when>    
-                        <c:when test="${fn:contains(page , 'OV')}">
-                            <c:set var="typeReceipt" value="V" />
-                            <c:set var="typeDepartment" value="Outbound" />
-                            <c:set var="typeBooking" value="O" />
-                            <h4><b>Receipt Vat Outbound   <font style="color: red">${receiptVoid}</font></b></h4>
-                            <c:set var="panelheader" value="outboundheader"/>
-                            <c:set var="panelborder" value="outboundborder"/>
-                        </c:when>    
-                        <c:when test="${fn:contains(page , 'IT')}">
-                            <c:set var="typeReceipt" value="T" />
-                            <c:set var="typeDepartment" value="Inbound" />
-                            <c:set var="typeBooking" value="I" />
-                            <h4><b>Receipt Temp Inbound   <font style="color: red">${receiptVoid}</font></b></h4>
-                            <c:set var="panelheader" value="inboundborderheader"/>
-                            <c:set var="panelborder" value="inboundborder"/>
-                        </c:when>   
-                        <c:when test="${fn:contains(page , 'IV')}">
-                            <c:set var="typeReceipt" value="V" />
-                            <c:set var="typeDepartment" value="Inbound" />
-                            <c:set var="typeBooking" value="I" />
-                            <h4><b>Receipt Vat Inbound   <font style="color: red">${receiptVoid}</font></b></h4>
-                            <c:set var="panelheader" value="inboundborderheader"/>
-                            <c:set var="panelborder" value="inboundborder"/>
-                        </c:when>    
-                    </c:choose>
-                </div>
-                <div class="col-xs-12 form-group"><hr/></div>
-            </div>
             <!--<hr/>-->
             <div class="row" style="padding-left: 15px;padding-right:15px"> 
                 <input type="text" class="hidden" value="${typeBooking}">
-                 <c:choose>
+                <c:choose>
                     <c:when test="${typeBooking == 'O'}">
                         <div id="AlertBookingRefno"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -153,17 +146,17 @@
             </div>
             <form action="${callPage}" method="post" id="ReceiptForm" name="ReceiptForm" role="form">
                 <div role="tabpanel">
-                     <!-- Nav tabs -->
-                     
+                    <!-- Nav tabs -->
+
                     <ul class="nav nav-tabs " role="tablist">
                         <li role="presentation" class="active "><a href="#inv" aria-controls="inv" role="tab" data-toggle="tab">INV</a></li>
                         <li role="presentation" class=""><a href="#ref" aria-controls="ref" role="tab" data-toggle="tab">REF</a></li>
                         <li role="presentation" class=""><a href="#com" aria-controls="com" role="tab" data-toggle="tab">COM</a></li>
                         <h4><a class="col-xs-9 text-right" data-toggle="collapse" href="#collapseTab" aria-expanded="false" aria-controls="collapseTab">
-                            <span id="arrowReceipt" class="arrowReceipt glyphicon glyphicon-chevron-up"></span>
-                        </a></h4>
+                                <span id="arrowReceipt" class="arrowReceipt glyphicon glyphicon-chevron-up"></span>
+                            </a></h4>
                     </ul>
-                                
+
                     <!-- Tab BL -->
                     <div class="panel panel-default ${panelborder}">
                         <div class="panel-body">
@@ -196,7 +189,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -230,7 +223,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -267,7 +260,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-6" style="padding-top: 20px;">
-                                       <div class="col-xs-1 text-left" style="width: 200px">
+                                        <div class="col-xs-1 text-left" style="width: 200px">
                                             <label class="control-label text-right">Tour Commission </label>
                                         </div>
                                         <div class="col-xs-1 text-right" style="width: 135px">
@@ -297,40 +290,40 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="panel panel-default ${panelborder}">
                         <div class="panel-heading ${panelheader}">
                             <h4 class="panel-title">Receipt Detail</h4>
                         </div>
                         <div class="panel-body"  style="padding-right: 0px;">
                             <div class="col-xs-8" style="padding-top: 0px;">
-                                <div class="col-xs-1 text-right" style="width: 135px">
+                                <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px" >
                                     <label class="control-label text-right">Receive No </label>                                    
                                 </div> 
-                                <div class="col-xs-1" style="width: 150px" id='receivenumber'>
+                                <div class="col-xs-1" style="width: 150px; margin-top: -10px" id='receivenumber'>
                                     <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                                     <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                                     <input id="receiveId" name="receiveId" type="hidden" class="form-control" maxlength="11" value="${receipt.id}">
                                     <input id="receiveNo" name="receiveNo" type="text" style="width: 150px" class="form-control" maxlength="20" value="${receipt.recNo}">
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 8px"></div>
-                                <div class="col-xs-1 text-right" style="width: 80px">
+                                <div class="col-xs-1 text-right" style="width: 8px;"></div>
+                                <div class="col-xs-1 text-right" style="width: 80px; margin-top: -10px">
                                     <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchReceiveNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 130px">
+                                <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
                                     <label class="control-label text-right">Receipt Date<font style="color: red">*</font></label>
                                 </div>
-                                <div class="col-xs-1 form-group" style="width: 170px">
+                                <div class="col-xs-1 form-group" style="width: 170px; margin-top: -10px">
                                     <div class='input-group date' id="ReceiveDate">
                                         <input id="receiveFromDate" name="receiveFromDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['receiveFromDate']}">
+                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['receiveFromDate']}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>  
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 135px">
+                                <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px">
                                     <label class="control-label text-right" for="codeBillto">Receive From <font style="color: red">*</font></label> 
                                 </div>
-                                <div class="form-group col-xs-1 text-right" style="width: 560px">
+                                <div class="form-group col-xs-1 text-right" style="width: 560px; margin-top: -10px">
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="receiveFromId" name="receiveFromId" value=""/>
                                         <input type="text" class="form-control" id="receiveFromCode" name="receiveFromCode" maxlength="11" value="${receipt.recFrom}" style="text-transform:uppercase"/>
@@ -339,42 +332,42 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 135px">
-                                     <label class="control-label text-right">Name </label> 
+                                <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px">
+                                    <label class="control-label text-right">Name </label> 
                                 </div>
-                                <div class="form-group col-xs-1 text-right" style="width: 560px">
+                                <div class="form-group col-xs-1 text-right" style="width: 560px; margin-top: -10px">
                                     <input type="text" class="form-control" id="receiveFromName" name="receiveFromName" value="${receipt.recName}">                           
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 135px">
-                                     <label class="control-label text-right">Address </label>  
+                                <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px">
+                                    <label class="control-label text-right">Address </label>  
                                 </div>
-                                <div class="form-group col-xs-1 text-right" style="width: 560px">
+                                <div class="form-group col-xs-1 text-right" style="width: 560px; margin-top: -10px">
                                     <div class="input-group">                                    
                                         <textarea rows="3" class="form-control" id="receiveFromAddress" name="receiveFromAddress" style="width: 327%" value="${receipt.recAddress}">${receipt.recAddress}</textarea>  
                                     </div>                               
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 135px">
-                                     <label class="control-label text-right">Remark </label> 
+                                <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px">
+                                    <label class="control-label text-right">Remark </label> 
                                 </div>
-                                <div class="form-group col-xs-1 text-right" style="width: 560px">
+                                <div class="form-group col-xs-1 text-right" style="width: 560px; margin-top: -10px">
                                     <input type="text" class="form-control" id="remark" name="remark" value="${receipt.remark}">                           
                                 </div>
                             </div>
                             <div class="col-xs-4" style="padding-top: 0px;">
-                                <div class="col-xs-1 text-right" style="width: 130px">
+                                <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
                                     <label class="control-label text-right">Receive Date</label>
                                 </div>
-                                <div class="col-xs-1 form-group" style="width: 170px">
+                                <div class="col-xs-1 form-group" style="width: 170px; margin-top: -10px">
                                     <div class='input-group date'>
                                         <input id="receiveDate" name="receiveDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['receiveDate']}">
+                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['receiveDate']}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>  
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 130px">
+                                <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
                                     <label class="control-label text-right">Payment <font style="color: red">*</font></label>
                                 </div>
-                                <div class="form-group col-xs-1" style="width: 170px">
+                                <div class="form-group col-xs-1" style="width: 170px; margin-top: -10px">
                                     <select name="inputStatus" id="inputStatus" class="form-control">
                                         <option value="">--- Status ---</option> 
                                         <c:forEach var="table" items="${statusList}" >
@@ -387,17 +380,68 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 130px">
+                                <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
                                     <label class="control-label text-right">A/R Code <font style="color: red">*</font></label>                                    
                                 </div>
-                                <div class="form-group col-xs-1" style="width: 170px">
+                                <div class="form-group col-xs-1" style="width: 170px; margin-top: -10px">
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="arCode" name="arCode" maxlength="11" value="${receipt.arCode}" readonly="" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+                        <div class="col-xs-12" style="margin-top: -20px">
+                            <div class="col-xs-1 text-right" style="width: 150px; margin-top: -5px">                              
+                                <label class="control-label text-right">Search</label>  
+                            </div>
+                            <div class="col-xs-1">
+                                <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchInv()">
+                                    <span id="SpanEdit${advanced.search}">Invoice</span>
+                                </a>                                
+                            </div>
+                            <div class="col-xs-1">
+                                <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchRefNo()">
+                                    <span id="SpanEdit${advanced.search}">Ref No.</span>
+                                </a>                                
+                            </div>
+                            <div class="col-xs-1">
+                                <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchCom()">
+                                    <span id="SpanEdit${advanced.search}">Com</span>
+                                </a>                                
+                            </div>
+                            <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxloadsearch"  class="fa fa-spinner fa-spin hidden"></i></div>    
+                        </div>
+                        <div class="col-xs-12" style="margin-top: -20px;">
+                            <div class="col-xs-1 text-right" style="width: 150px">
+                                <label class="control-label text-right">Invoice No </label>
+                            </div>
+                            <div class="col-xs-1 form-group" style="width: 200px" id="invoicenopanel">
+                                <div class="input-group">
+                                    <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" value="" onkeydown="invoicenoValidate()">
+                                </div>
+                            </div>
+                            <div class="col-xs-1 text-left"  style="width: 100px">
+                                <button style="height:30px" type="button"  id="ButtonSearchInvoice"  name="ButtonSearchInvoice" onclick="searchInvoice();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
+                            </div>
+                            <!--Invoice Table-->
+                            <div class="row" style="padding-left: 10px;padding-right: 10px">
+                                <table id="InvoiceListTable" class="display" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr class="datatable-header" >
+                                            <th style="width:10%;">No</th>
+                                            <th style="width:30%;">Description</th>
+                                            <th style="width:20%;">Amount</th>
+                                            <th style="width:20%;">Amount Local</th>
+                                            <th style="width:20%;">Currency</th>
+                                            <th style="width:5%;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>       
                         <!---Table-->
                         <div class="row" style="padding-right: 10px;padding-left: 10px;padding-bottom:  10px;">
                             <div class="col-md-12 ">
@@ -419,90 +463,90 @@
                                     <tbody> 
                                         <c:forEach var="table" items="${receiptDetailList}" varStatus="i">
                                             <tr>
-                                                <input type="hidden" name="count${i.count}" id="count${i.count}" value="${i.count}">
-                                                <input id="invId${i.count}"  name="invId${i.count}"   type="hidden" value="${table.invoiceDetail.id}" >
-                                                <input type="hidden" name="tableId${i.count}" id="tableId${i.count}" value="${table.id}">
-                                                <input id="receiveAmountTemp${i.count}" name="receiveAmountTemp${i.count}"  type="hidden" value="${table.amount}" >
-                                                <input id="paymentTourId${i.count}" name="paymentTourId${i.count}"  type="hidden" value="${table.paymentDetailWendy.id}" >
-                                                <input id="paymentId${i.count}" name="paymentId${i.count}"  type="hidden" value="${table.paymentAirticket.id}" >
-                                                <input id="DescriptionReceiptDetail${i.count}" name="DescriptionReceiptDetail${i.count}"  type="hidden" value="${table.displayDescription}" >
-                                                <td>
-                                                    <select class="form-control" name="receiveProduct${i.count}" id="receiveProduct${i.count}">
-                                                        <option  value="" >---------</option>
-                                                        <c:forEach var="product" items="${billTypeList}" varStatus="status">                                       
-                                                            <c:set var="select" value="" />
-                                                            <c:if test="${product.id == table.MBilltype.id}">
-                                                                <c:set var="select" value="selected" />
-                                                            </c:if>
-                                                            <option  value="${product.id}" ${select}>${product.name}</option>
-                                                        </c:forEach>
-                                                    </select>                                                                  
-                                                </td>
-                                                <td><input maxlength="255" id="receiveDes${i.count}" name="receiveDes${i.count}" type="text" class="form-control" value="${table.description}"></td>
-                                                <td><input maxlength="10" id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control text-right"  value="${table.cost}" onkeyup="insertCommas(this)" readonly=""></td>
-                                                <td>                                   
-                                                    <select class="form-control" name="receiveCurCostTemp${i.count}" id="receiveCurCostTemp${i.count}" disabled="disabled">
-                                                        <option  value="" >---------</option>
-                                                        <c:forEach var="curCost" items="${currencyList}" varStatus="status">                                       
-                                                            <c:set var="select" value="" />
-                                                            <c:if test="${curCost.code == table.curCost}">
-                                                                <c:set var="select" value="selected" />
-                                                            </c:if>
-                                                            <option  value="${curCost.code}" ${select} >${curCost.code}</option>
-                                                        </c:forEach>
-                                                    </select>                                                                  
-                                                </td>
-                                                <td class="hidden">                                   
-                                                    <select class="form-control" name="receiveCurCost${i.count}" id="receiveCurCost${i.count}" >
-                                                        <option  value="" >---------</option>
-                                                        <c:forEach var="curCost" items="${currencyList}" varStatus="status">                                       
-                                                            <c:set var="select" value="" />
-                                                            <c:if test="${curCost.code == table.curCost}">
-                                                                <c:set var="select" value="selected" />
-                                                            </c:if>
-                                                            <option  value="${curCost.code}" ${select} >${curCost.code}</option>
-                                                        </c:forEach>
-                                                    </select>                                                                  
-                                                </td>
-                                                <td align="center">
-                                                    <c:choose>
-                                                        <c:when test="${table.isVat == '1'}">
-                                                            <input type="checkbox" checked name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="return false" value="${table.isVat}" readonly="">
-                                                        </c:when>
-                                                        <c:when test="${table.isVat == '0'}">
-                                                            <input type="checkbox"  name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="return false" value="${table.isVat}" readonly="">
-                                                        </c:when>
-                                                    </c:choose>
-                                                </td> 
-                                                <td>
-                                                    <c:choose>
-                                                        <c:when test="${table.isVat == '1'}">
-                                                            <div id="receiveVat${i.count}" name="receiveVat${i.count}"  value="">${requestScope['vat']}</div>                                                        
-                                                        </c:when>
-                                                        <c:when test="${table.isVat == '0'}">
-                                                            <div id="receiveVat${i.count}" name="receiveVat${i.count}" style="display:none" ></div>
-                                                        </c:when>
-                                                    </c:choose>
-                                                </td>
-                                                <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="setFormatCurrencyOnFocusOut('${i.count}')"  value="${table.amount}"></td>
-                                                <td>                                   
-                                                    <select class="form-control" name="receiveCurrency${i.count}" id="receiveCurrency${i.count}">
-                                                        <option  value="" >---------</option>
-                                                        <c:forEach var="curAmount" items="${currencyList}" varStatus="status">                                       
-                                                            <c:set var="select" value="" />
-                                                            <c:if test="${curAmount.code == table.curAmount}">
-                                                                <c:set var="select" value="selected" />
-                                                            </c:if>
-                                                            <option  value="${curAmount.code}" ${select}>${curAmount.code}</option>
-                                                        </c:forEach>
-                                                    </select>                                                                  
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('${i.count}')"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp
-                                                    <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteReceiptList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
-                                                </td>                                   
-                                            </tr>
-                                        </c:forEach>
+                                        <input type="hidden" name="count${i.count}" id="count${i.count}" value="${i.count}">
+                                        <input id="invId${i.count}"  name="invId${i.count}"   type="hidden" value="${table.invoiceDetail.id}" >
+                                        <input type="hidden" name="tableId${i.count}" id="tableId${i.count}" value="${table.id}">
+                                        <input id="receiveAmountTemp${i.count}" name="receiveAmountTemp${i.count}"  type="hidden" value="${table.amount}" >
+                                        <input id="paymentTourId${i.count}" name="paymentTourId${i.count}"  type="hidden" value="${table.paymentDetailWendy.id}" >
+                                        <input id="paymentId${i.count}" name="paymentId${i.count}"  type="hidden" value="${table.paymentAirticket.id}" >
+                                        <input id="DescriptionReceiptDetail${i.count}" name="DescriptionReceiptDetail${i.count}"  type="hidden" value="${table.displayDescription}" >
+                                        <td>
+                                            <select class="form-control" name="receiveProduct${i.count}" id="receiveProduct${i.count}">
+                                                <option  value="" >---------</option>
+                                                <c:forEach var="product" items="${billTypeList}" varStatus="status">                                       
+                                                    <c:set var="select" value="" />
+                                                    <c:if test="${product.id == table.MBilltype.id}">
+                                                        <c:set var="select" value="selected" />
+                                                    </c:if>
+                                                    <option  value="${product.id}" ${select}>${product.name}</option>
+                                                </c:forEach>
+                                            </select>                                                                  
+                                        </td>
+                                        <td><input maxlength="255" id="receiveDes${i.count}" name="receiveDes${i.count}" type="text" class="form-control" value="${table.description}"></td>
+                                        <td><input maxlength="10" id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control text-right"  value="${table.cost}" onkeyup="insertCommas(this)" readonly=""></td>
+                                        <td>                                   
+                                            <select class="form-control" name="receiveCurCostTemp${i.count}" id="receiveCurCostTemp${i.count}" disabled="disabled">
+                                                <option  value="" >---------</option>
+                                                <c:forEach var="curCost" items="${currencyList}" varStatus="status">                                       
+                                                    <c:set var="select" value="" />
+                                                    <c:if test="${curCost.code == table.curCost}">
+                                                        <c:set var="select" value="selected" />
+                                                    </c:if>
+                                                    <option  value="${curCost.code}" ${select} >${curCost.code}</option>
+                                                </c:forEach>
+                                            </select>                                                                  
+                                        </td>
+                                        <td class="hidden">                                   
+                                            <select class="form-control" name="receiveCurCost${i.count}" id="receiveCurCost${i.count}" >
+                                                <option  value="" >---------</option>
+                                                <c:forEach var="curCost" items="${currencyList}" varStatus="status">                                       
+                                                    <c:set var="select" value="" />
+                                                    <c:if test="${curCost.code == table.curCost}">
+                                                        <c:set var="select" value="selected" />
+                                                    </c:if>
+                                                    <option  value="${curCost.code}" ${select} >${curCost.code}</option>
+                                                </c:forEach>
+                                            </select>                                                                  
+                                        </td>
+                                        <td align="center">
+                                            <c:choose>
+                                                <c:when test="${table.isVat == '1'}">
+                                                    <input type="checkbox" checked name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="return false" value="${table.isVat}" readonly="">
+                                                </c:when>
+                                                <c:when test="${table.isVat == '0'}">
+                                                    <input type="checkbox"  name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="return false" value="${table.isVat}" readonly="">
+                                                </c:when>
+                                            </c:choose>
+                                        </td> 
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${table.isVat == '1'}">
+                                                    <div id="receiveVat${i.count}" name="receiveVat${i.count}"  value="">${requestScope['vat']}</div>                                                        
+                                                </c:when>
+                                                <c:when test="${table.isVat == '0'}">
+                                                    <div id="receiveVat${i.count}" name="receiveVat${i.count}" style="display:none" ></div>
+                                                </c:when>
+                                            </c:choose>
+                                        </td>
+                                        <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="setFormatCurrencyOnFocusOut('${i.count}')"  value="${table.amount}"></td>
+                                        <td>                                   
+                                            <select class="form-control" name="receiveCurrency${i.count}" id="receiveCurrency${i.count}">
+                                                <option  value="" >---------</option>
+                                                <c:forEach var="curAmount" items="${currencyList}" varStatus="status">                                       
+                                                    <c:set var="select" value="" />
+                                                    <c:if test="${curAmount.code == table.curAmount}">
+                                                        <c:set var="select" value="selected" />
+                                                    </c:if>
+                                                    <option  value="${curAmount.code}" ${select}>${curAmount.code}</option>
+                                                </c:forEach>
+                                            </select>                                                                  
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('${i.count}')"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp
+                                            <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteReceiptList('${table.id}', '${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                        </td>                                   
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>      
                             </div>
@@ -609,7 +653,7 @@
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
                                             <input id="chqDate1" name="chqDate1"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['chqDate1']}">
+                                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['chqDate1']}">
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -618,12 +662,12 @@
                                     </div>
                                     <div class="col-xs-1" style="width: 120px">
                                         <input id="chqAmount1" name="chqAmount1" type="text" class="form-control" value="${receipt.chqAmount1}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
-                                        
+
                                     </div>
                                     <div class="col-xs-1" style="width: 50px ;">
                                         <h4><a class="col-xs-1">
-                                        <span class="glyphicon glyphicon-plus-sign" id="addChqButton"></span>
-                                        </a></h4>                                        
+                                                <span class="glyphicon glyphicon-plus-sign" id="addChqButton"></span>
+                                            </a></h4>                                        
                                     </div>
                                 </div>
                                 <div class="row hidden active" id="addChq" style="padding-top: 8px ">
@@ -645,7 +689,7 @@
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
                                             <input id="chqDate2" name="chqDate2"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['chqDate2']}">
+                                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['chqDate2']}">
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -657,13 +701,13 @@
                                     </div>
                                     <div class="col-xs-1" style="width: 50px ;">
                                         <h4><a class="col-xs-1">
-                                        <span class="glyphicon glyphicon-remove deleteicon" id="deleteChqButton"></span>
-                                        </a></h4>                                        
+                                                <span class="glyphicon glyphicon-remove deleteicon" id="deleteChqButton"></span>
+                                            </a></h4>                                        
                                     </div>
                                 </div>
                                 <hr/>
                                 <!----- Credit Detail ----->
-            
+
                                 <table class="display" id="CreditDetailTable">
                                     <thead class="datatable-header">
                                         <tr>
@@ -677,32 +721,32 @@
                                     <tbody>
                                         <c:forEach var="table" items="${receiptCreditList}" varStatus="i">
                                             <tr>
-                                                <input type="hidden" name="countCredit${i.count}" id="countCredit${i.count}" value="${i.count}">
-                                                <input type="hidden" name="tableCreditId${i.count}" id="tableCreditId${i.count}" value="${table.id}">
-                                                <td>                                   
-                                                    <select class="form-control" name="creditBank${i.count}" id="creditBank${i.count}">
-                                                        <option  value="" >---------</option>
-                                                        <c:forEach var="credit" items="${creditBankList}" varStatus="status">                                       
-                                                            <c:set var="select" value="" />
-                                                            <c:if test="${credit.id == table.MCreditBank.id}">
-                                                                <c:set var="select" value="selected" />
-                                                            </c:if>
-                                                            <option  value="${credit.id}" ${select}>${credit.name}</option>
-                                                        </c:forEach>
-                                                    </select>                                                                  
-                                                </td>
-                                                <td><input maxlength="20" id="creditNo${i.count}" name="creditNo${i.count}" type="text" class="form-control" value="${table.creditNo}"></td>
-                                                <td><div class="input-group date">
-                                                    <input id="creditExpired${i.count}" name="creditExpired${i.count}"  type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${table.creditExpire}">
-                                                    <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span>
-                                                    </div>
-                                                </td>
-                                                <td><input id="creditAmount${i.count}" name="creditAmount${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" value="${table.creditAmount}"></td>                                                           
-                                                <td class="text-center">
-                                                    <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteCreditList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
-                                                </td>                                   
-                                            </tr>
-                                        </c:forEach>
+                                        <input type="hidden" name="countCredit${i.count}" id="countCredit${i.count}" value="${i.count}">
+                                        <input type="hidden" name="tableCreditId${i.count}" id="tableCreditId${i.count}" value="${table.id}">
+                                        <td>                                   
+                                            <select class="form-control" name="creditBank${i.count}" id="creditBank${i.count}">
+                                                <option  value="" >---------</option>
+                                                <c:forEach var="credit" items="${creditBankList}" varStatus="status">                                       
+                                                    <c:set var="select" value="" />
+                                                    <c:if test="${credit.id == table.MCreditBank.id}">
+                                                        <c:set var="select" value="selected" />
+                                                    </c:if>
+                                                    <option  value="${credit.id}" ${select}>${credit.name}</option>
+                                                </c:forEach>
+                                            </select>                                                                  
+                                        </td>
+                                        <td><input maxlength="20" id="creditNo${i.count}" name="creditNo${i.count}" type="text" class="form-control" value="${table.creditNo}"></td>
+                                        <td><div class="input-group date">
+                                                <input id="creditExpired${i.count}" name="creditExpired${i.count}"  type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${table.creditExpire}">
+                                                <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                        </td>
+                                        <td><input id="creditAmount${i.count}" name="creditAmount${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" value="${table.creditAmount}"></td>                                                           
+                                        <td class="text-center">
+                                            <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteCreditList('${table.id}', '${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                        </td>                                   
+                                        </tr>
+                                    </c:forEach>
                                     </tbody>
                                 </table>
                                 <div id="tr_CreditDetailAddRow" class="text-center hide" style="padding-top: 10px">
@@ -737,19 +781,19 @@
                                         <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Invoice Email
                                     </button>
                                 </div>
-                                
+
                                 <div class="col-md-1 text-left " style="width: 136px">
                                     <button type="button" class="btn btn-default" onclick="sendEmailReceipt()">
                                         <span id="buttonEmailRec" class="glyphicon glyphicon-send" ></span> Send Receipt
                                     </button>
                                 </div>
-                                
+
                                 <div class="col-md-1 text-left " style="width: 140px">
                                     <button type="button" class="btn btn-default" onclick="printReceipt(5)">
                                         <span id="buttonEmailInv" class="glyphicon glyphicon-send" ></span> Send Invoice
                                     </button>
                                 </div>
-                                
+
                                 <div class="col-md-2 text-right"> 
                                 </div>
                                 <div class="col-md-1 text-right">                                    
@@ -796,15 +840,15 @@
                             </div>
                         </div>
                     </div>
-                           
-                                
+
+
                 </div>                          
             </form>
         </div>
     </div>      
 </div>
 <hr/>
-        
+
 <!--List Receive From Modal-->
 <div class="modal fade" id="ReceiveFromModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -839,7 +883,7 @@
                 <!--Script Receive From List Table-->
                 <script>
                     var showflag = 1;
-                    $(document).ready(function () {
+                    $(document).ready(function() {
                         // Receive From Table
                         var ReceiveFromTable = $('#ReceiveFromTable').dataTable({bJQueryUI: true,
                             "sPaginationType": "full_numbers",
@@ -850,8 +894,8 @@
                             "bLengthChange": false,
                             "iDisplayLength": 10
                         });
-                        
-                        $('#ReceiveFromTable tbody').on('click', 'tr', function () {
+
+                        $('#ReceiveFromTable tbody').on('click', 'tr', function() {
                             $('.collapse').collapse('show');
                             if ($(this).hasClass('row_selected')) {
                                 $(this).removeClass('row_selected');
@@ -861,7 +905,7 @@
                                 $(this).addClass('row_selected');
                             }
                         });
-                        
+
                         $("#searchReceiveFrom").keyup(function(event) {
                             if (event.keyCode === 13) {
                                 if ($("#searchReceiveFrom").val() == "") {
@@ -872,35 +916,35 @@
                         });
 
 //                        autocomplete
-                        $("#receiveFromCode").keyup(function(event){   
+                        $("#receiveFromCode").keyup(function(event) {
                             var position = $(this).offset();
                             $(".ui-widget").css("top", position.top + 30);
-                            $(".ui-widget").css("left", position.left); 
-                            if($(this).val() === ""){
+                            $(".ui-widget").css("left", position.left);
+                            if ($(this).val() === "") {
                                 $("#receiveFromName").val("");
                                 $("#receiveFromAddress").val("");
                                 $("#arCode").val("");
-                            }else{
+                            } else {
 //                                if(event.keyCode === 13){
-                                    searchCustomerAutoList(this.value); 
+                                searchCustomerAutoList(this.value);
 //                                }
                             }
                             $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
                             $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
                         });
-                        $("#receiveFromCode").keydown(function(){
+                        $("#receiveFromCode").keydown(function() {
                             var position = $(this).offset();
                             $(".ui-widget").css("top", position.top + 30);
-                            $(".ui-widget").css("left", position.left); 
-                            if(showflag == 0){
+                            $(".ui-widget").css("left", position.left);
+                            if (showflag == 0) {
                                 $(".ui-widget").css("top", -1000);
-                                showflag=1;
+                                showflag = 1;
                             }
                             $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
                             $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
                         });
                     });
-                    
+
                     function setBillValue(billto, billname, address, term, pay) {
                         $("#receiveFromCode").val(billto);
                         $("#arCode").val(billto);
@@ -914,7 +958,7 @@
                         $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
                         $("#ReceiveFromModal").modal('hide');
                     }
-                    
+
                     function searchCustomerAgentList(name) {
                         var servletName = 'BillableServlet';
                         var servicesName = 'AJAXBean';
@@ -960,8 +1004,8 @@
                             alert(e);
                         }
                     }
-                    
-                    function searchCustomerAutoList(name){
+
+                    function searchCustomerAutoList(name) {
                         var servletName = 'BillableServlet';
                         var servicesName = 'AJAXBean';
                         var param = 'action=' + 'text' +
@@ -972,27 +1016,27 @@
                         CallAjaxAuto(param);
                     }
 
-                    function CallAjaxAuto(param){
-                         var url = 'AJAXServlet';
-                         var billArray = [];
-                         var billListId= [];
-                         var billListName= [];
-                         var billListAddress= [];
-                         var billid , billname ,billaddr;
-                         $("#receiveFromCode").autocomplete("destroy");
-                         try {
+                    function CallAjaxAuto(param) {
+                        var url = 'AJAXServlet';
+                        var billArray = [];
+                        var billListId = [];
+                        var billListName = [];
+                        var billListAddress = [];
+                        var billid, billname, billaddr;
+                        $("#receiveFromCode").autocomplete("destroy");
+                        try {
                             $.ajax({
                                 type: "POST",
                                 url: url,
                                 cache: false,
                                 data: param,
                                 beforeSend: function() {
-                                   $("#dataload").removeClass("hidden");    
+                                    $("#dataload").removeClass("hidden");
                                 },
                                 success: function(msg) {
-                                    var billJson =  JSON.parse(msg);
-                                    for (var i in billJson){
-                                        if (billJson.hasOwnProperty(i)){
+                                    var billJson = JSON.parse(msg);
+                                    for (var i in billJson) {
+                                        if (billJson.hasOwnProperty(i)) {
                                             billid = billJson[i].id;
                                             billname = billJson[i].name;
                                             billaddr = billJson[i].address;
@@ -1001,45 +1045,45 @@
                                             billListId.push(billid);
                                             billListName.push(billname);
                                             billListAddress.push(billaddr);
-                                        }                 
-                                         $("#dataload").addClass("hidden"); 
+                                        }
+                                        $("#dataload").addClass("hidden");
                                     }
                                     $("#receiveFromId").val(billid);
                                     $("#receiveFromName").val(billname);
                                     $("#receiveFromAddress").val(billaddr);
-                                    
+
                                     $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
                                     $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
-                                    
+
                                     $("#receiveFromCode").autocomplete({
                                         source: billArray,
-                                        close: function(){
+                                        close: function() {
                                             $("#receiveFromCode").trigger("keyup");
                                             var billselect = $("#receiveFromCode").val();
-                                            for(var i =0;i<billListId.length;i++){
-                                                if((billselect==billListName[i])||(billselect==billListId[i])){      
+                                            for (var i = 0; i < billListId.length; i++) {
+                                                if ((billselect == billListName[i]) || (billselect == billListId[i])) {
                                                     $("#receiveFromCode").val(billListId[i]);
                                                     $("#arCode").val(billListId[i]);
                                                     $("#receiveFromName").val(billListName[i]);
                                                     $("#receiveFromAddress").val(billListAddress[i]);
-                                                    
+
                                                     $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
                                                     $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
-                                                }                 
-                                            }   
+                                                }
+                                            }
                                         }
-                                     });
+                                    });
 
                                     var billval = $("#receiveFromCode").val();
-                                    for(var i =0;i<billListId.length;i++){
-                                        if(billval==billListName[i]){
+                                    for (var i = 0; i < billListId.length; i++) {
+                                        if (billval == billListName[i]) {
                                             $("#receiveFromCode").val(billListId[i]);
                                             $("#arCode").val(billListId[i]);
                                             $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
                                             $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
                                         }
                                     }
-                                    if(billListId.length == 1){
+                                    if (billListId.length == 1) {
                                         showflag = 0;
                                         $("#receiveFromCode").val(billListId[0]);
                                         $("#arCode").val(billListId[0]);
@@ -1208,7 +1252,7 @@
                     <div class="col-md-7">
                         <select id="selectInvoiceId" name="selectInvoiceId" class="form-control">
                             <c:forEach var="table" items="${invoiceIdList}" >
-                               <option value="${table.invoiceId} | ${table.invoiceType}">${table.invoiceNo}</option>  
+                                <option value="${table.invoiceId} | ${table.invoiceType}">${table.invoiceNo}</option>  
                             </c:forEach>
                         </select>
                     </div>
@@ -1219,8 +1263,8 @@
                     </div>
                     <div class="col-md-7">
                         <select id="selectSalesStaff" name="selectSalesStaff" class="form-control">
-                            <option value="0">Not Show Sales Staff</option>
                             <option value="1">Show Sales Staff</option>
+                            <option value="0">Not  Show Sales Staff</option>
                         </select>
                     </div>
                 </div>
@@ -1244,6 +1288,7 @@
                             <option value="0">Not show</option>
                             <option value="SCB2">Payment Bank Siam commercial bank PCL</option>
                             <option value="BBL">Payment Bank Bangkok bank PCL</option>
+                            <option value="SCB2,BBL">All</option>
                         </select>
                     </div>
                 </div>
@@ -1305,7 +1350,7 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title"  id="Titlemodel">Description</h4>
             </div>
-            
+
             <div class="modal-body" >
                 <div class="row">
                     <div class="col-md-2">
@@ -1314,7 +1359,7 @@
                     <div class="col-md-10">
                         <input maxlength="255" id="InputDescriptionDetail" name="InputDescriptionDetail" type="text" class="form-control" value=""></td>
                         <!--<textarea id="InputDescriptionDetail" rows="12" cols="80" class="form-control" >-->
-<!--                        </textarea>-->
+                        <!--                        </textarea>-->
                     </div>
                 </div>
             </div>
@@ -1353,7 +1398,7 @@
     </c:if>
     <c:if test="${requestScope['saveresult'] =='save unsuccessful'}">        
         <script language="javascript">
-           $('#textAlertDivNotSave').show();
+            $('#textAlertDivNotSave').show();
         </script>
     </c:if>
 </c:if>
@@ -1365,56 +1410,56 @@
     </c:if>
     <c:if test="${requestScope['deleteresult'] =='delete unsuccessful'}">        
         <script language="javascript">
-           $('#textAlertDivNotDelete').show();
+            $('#textAlertDivNotDelete').show();
         </script>
     </c:if>
 </c:if>
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
-    
-   var setinvoice = 0; 
-    
+
+    var setinvoice = 0;
+
     $(document).ready(function() {
         $("#inv,#ref,#com").removeClass('hidden');
         $('.datemask').mask('0000-00-00');
         $('.date').datetimepicker();
         $(".money").mask('000,000,000.00', {reverse: true});
-        
-        if($('#searchReceipt').val() == "dummy"){
+
+        if ($('#searchReceipt').val() == "dummy") {
             $('#textAlertReceiveNo').show();
-        }      
+        }
 //        $(".moneyformat").mask('000,000,000', {reverse: true});
-        
+
         var wildCardSearch = ($("#wildCardSearch").val()).indexOf("%");
-        if($("#receiveId").val() !== ''){
+        if ($("#receiveId").val() !== '') {
             $("#receiveNo").focus();
-        }     
-        $("#receiveNo").keyup(function (event) {
-            if(event.keyCode === 13){
-               searchReceiveNo();
-            } else if(event.keyCode === 38){
-                if((parseInt(wildCardSearch) >= 0) || ($("#receiveId").val() !== '')){
+        }
+        $("#receiveNo").keyup(function(event) {
+            if (event.keyCode === 13) {
+                searchReceiveNo();
+            } else if (event.keyCode === 38) {
+                if ((parseInt(wildCardSearch) >= 0) || ($("#receiveId").val() !== '')) {
                     $("#keyCode").val(event.keyCode);
                     var action = document.getElementById('action');
                     action.value = 'wildCardSearch';
                     document.getElementById('ReceiptForm').submit();
                 }
-            
-            } else if(event.keyCode === 40){
-                if((parseInt(wildCardSearch) >= 0) || ($("#receiveId").val() !== '')){
+
+            } else if (event.keyCode === 40) {
+                if ((parseInt(wildCardSearch) >= 0) || ($("#receiveId").val() !== '')) {
                     $("#keyCode").val(event.keyCode);
                     var action = document.getElementById('action');
                     action.value = 'wildCardSearch';
                     document.getElementById('ReceiptForm').submit();
                 }
-            
-            } else if(event.keyCode === 118){
+
+            } else if (event.keyCode === 118) {
                 $("#keyCode").val(event.keyCode);
                 var action = document.getElementById('action');
                 action.value = 'new';
                 document.getElementById('ReceiptForm').submit();
-            
-            } else if(event.keyCode === 119){
+
+            } else if (event.keyCode === 119) {
                 $("#keyCode").val(event.keyCode);
                 var action = document.getElementById('action');
                 action.value = 'wildCardSearch';
@@ -1422,32 +1467,32 @@
 
             }
         });
-        $("#invoiceNo").keyup(function (event) {
-            if(event.keyCode === 13){
-               searchInvoice();
+        $("#invoiceNo").keyup(function(event) {
+            if (event.keyCode === 13) {
+                searchInvoice();
             }
         });
-        $("#refNo").keyup(function (event) {
-            if(event.keyCode === 13){
-               searchRefNo();
+        $("#refNo").keyup(function(event) {
+            if (event.keyCode === 13) {
+                searchRefNo();
             }
         });
-        $("#searchPaymentNoAir").keyup(function (event) {
-            if(event.keyCode === 13){
-               searchPaymentNoAir();
+        $("#searchPaymentNoAir").keyup(function(event) {
+            if (event.keyCode === 13) {
+                searchPaymentNoAir();
             }
         });
-		
-	$("#searchPaymentNoTour").keyup(function (event) {
-            if(event.keyCode === 13){
-               searchPaymentNoTour();
+
+        $("#searchPaymentNoTour").keyup(function(event) {
+            if (event.keyCode === 13) {
+                searchPaymentNoTour();
             }
         });
-        
-        $('#ReceiveDate').datetimepicker().on('dp.change', function (e) {
+
+        $('#ReceiveDate').datetimepicker().on('dp.change', function(e) {
             $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
         });
-        
+
         $('#ReceiptForm').bootstrapValidator({
             container: 'tooltip',
             excluded: [':disabled'],
@@ -1487,20 +1532,20 @@
                 }
             }
         });
-            
+
         $('#addChqButton').on('click', function() {
             $("#addChq").removeClass('hidden');
         });
-        
+
         $('#deleteChqButton').on('click', function() {
             $("#addChq").addClass('hidden');
         });
-        
+
         $('#addCreditButton').on('click', function() {
             $("#addCredit").removeClass('hidden');
             $("#addCreditDetail").removeClass('hidden');
         });
-        
+
 //        $('#selectInvoiceId').on('click', function() {
 //            if($('#selectInvoiceId').val() === ''){
 //                $("#confirmPrintInv").addClass("disabled");
@@ -1508,18 +1553,18 @@
 //                $("#confirmPrintInv").removeClass("disabled");
 //            }
 //        });
-        
+
         $('#deleteCreditButton').on('click', function() {
             $("#addCredit").addClass('hidden');
             $("#addCreditDetail").addClass('hidden');
         });
 
-        $('#collapseTab').on('shown.bs.collapse', function () {
+        $('#collapseTab').on('shown.bs.collapse', function() {
             $(".arrowReceipt").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
         });
 
-        $('#collapseTab').on('hidden.bs.collapse', function () {
-           $(".arrowReceipt").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
+        $('#collapseTab').on('hidden.bs.collapse', function() {
+            $(".arrowReceipt").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
         });
 
         var receiveFromTable = $('#ListReceiveFromTable').dataTable({bJQueryUI: true,
@@ -1531,7 +1576,7 @@
             "bLengthChange": false,
             "iDisplayLength": 10
         });
-         
+
         var ARCodeTable = $('#ListARCodeTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
@@ -1541,14 +1586,14 @@
             "bLengthChange": false,
             "iDisplayLength": 10
         });
-        
+
         // +++++++++++++++++++++ Product Table +++++++++++++++++++++ //
         AddRowProduct(parseInt($("#counter").val()));
-        
-        $('#ReceiptListTable tbody tr:last td .input-group-addon').click(function(){  
+
+        $('#ReceiptListTable tbody tr:last td .input-group-addon').click(function() {
             AddRowProduct(parseInt($("#counter").val()));
         });
-        
+
         $("#ReceiptListTable").on("keyup", function() {
             var rowAll = $("#ReceiptListTable tr").length;
             $("td").keyup(function() {
@@ -1564,26 +1609,26 @@
                         $("#tr_ProductDetailAddRow").removeClass("hide");
                         $("#tr_ProductDetailAddRow").addClass("show");
                     }
-                 }
+                }
             });
         });
-        $("#ReceiptListTable").on("change", "select:last", function () {
+        $("#ReceiptListTable").on("change", "select:last", function() {
             var row = parseInt($("#counter").val());
             AddRowProduct(row);
         });
-        $("#ReceiptListTable").on('click', '.newRemCF', function () {
+        $("#ReceiptListTable").on('click', '.newRemCF', function() {
             $(this).parent().parent().remove();
-                var rowAll = $("#ReceiptListTable tr").length;
-                if (rowAll < 2) {
-                    $("#tr_ProductDetailAddRow").removeClass("hide");
-                    $("#tr_ProductDetailAddRow").addClass("show");
+            var rowAll = $("#ReceiptListTable tr").length;
+            if (rowAll < 2) {
+                $("#tr_ProductDetailAddRow").removeClass("hide");
+                $("#tr_ProductDetailAddRow").addClass("show");
             }
         });
-        $("#tr_ProductDetailAddRow a").click(function () {
+        $("#tr_ProductDetailAddRow a").click(function() {
             $(this).parent().removeClass("show");
             $(this).parent().addClass("hide");
         });
-        
+
         // +++++++++++++++++++++ Credit Detail Table +++++++++++++++++++++ //
         AddRowCredit(parseInt($("#countRowCredit").val()));
 //        $('#CreditDetailTable tbody tr:last td .input-group-addon').click(function() {  
@@ -1604,67 +1649,67 @@
                         $("#tr_CreditDetailAddRow").removeClass("hide");
                         $("#tr_CreditDetailAddRow").addClass("show");
                     }
-                 }
+                }
             });
         });
-        
-        $("#CreditDetailTable").on("change", "select:last", function () {
+
+        $("#CreditDetailTable").on("change", "select:last", function() {
             var row = parseInt($("#countRowCredit").val());
             AddRowCredit(row);
         });
-        
-        $("#CreditDetailTable").on('click', '.newRemCF', function () {
+
+        $("#CreditDetailTable").on('click', '.newRemCF', function() {
             $(this).parent().parent().remove();
-                var rowAll = $("#CreditDetailTable tr").length;
-                if (rowAll < 2) {
-                    $("#tr_CreditDetailAddRow").removeClass("hide");
-                    $("#tr_CreditDetailAddRow").addClass("show");
+            var rowAll = $("#CreditDetailTable tr").length;
+            if (rowAll < 2) {
+                $("#tr_CreditDetailAddRow").removeClass("hide");
+                $("#tr_CreditDetailAddRow").addClass("show");
             }
         });
-        
-        $("#tr_CreditDetailAddRow a").click(function () {
+
+        $("#tr_CreditDetailAddRow a").click(function() {
             $(this).parent().removeClass("show");
             $(this).parent().addClass("hide");
         });
-        
-        
+
+
         //set format money
-        $("#withTax").focusout(function(){
-            setFormatCurrencyReceipt();
-        }); 
-        $("#cashAmount").focusout(function(){
-            setFormatCurrencyReceipt();
-        }); 
-        $("#cashMinusAmount").focusout(function(){
-            setFormatCurrencyReceipt();
-        }); 
-        $("#bankTransfer").focusout(function(){
-            setFormatCurrencyReceipt();
-        }); 
-        $("#chqAmount1").focusout(function(){
-            setFormatCurrencyReceipt();
-        }); 
-        $("#chqAmount2").focusout(function(){
+        $("#withTax").focusout(function() {
             setFormatCurrencyReceipt();
         });
-        
-        setFormatCurrencyReceipt();       
-//        var creditlength = $("#CreditDetailTable tr").length ;
-        var detaillength = $("#ReceiptListTable tr").length ;
+        $("#cashAmount").focusout(function() {
+            setFormatCurrencyReceipt();
+        });
+        $("#cashMinusAmount").focusout(function() {
+            setFormatCurrencyReceipt();
+        });
+        $("#bankTransfer").focusout(function() {
+            setFormatCurrencyReceipt();
+        });
+        $("#chqAmount1").focusout(function() {
+            setFormatCurrencyReceipt();
+        });
+        $("#chqAmount2").focusout(function() {
+            setFormatCurrencyReceipt();
+        });
 
-        if(detaillength > 1) {
-            for(var i = 1;i<detaillength;i++){
-                if( $('#receiveCost'+i).val() != "" ){
+        setFormatCurrencyReceipt();
+//        var creditlength = $("#CreditDetailTable tr").length ;
+        var detaillength = $("#ReceiptListTable tr").length;
+
+        if (detaillength > 1) {
+            for (var i = 1; i < detaillength; i++) {
+                if ($('#receiveCost' + i).val() != "") {
                     setFormatCurrency(i);
                 }
-                if($('#receiveAmount'+i).val() != ""){
+                if ($('#receiveAmount' + i).val() != "") {
                     setFormatCurrency(i);
                 }
             }
         }
         calculateGrandTotal();
     });
-    
+
 //    function setFormatCurrencyDetail(){
 //        var detaillength = $("#ReceiptListTable tr").length ;
 //        if(detaillength > 1) {
@@ -1697,138 +1742,138 @@
 //        }
 //
 //    }
-    
-    function setFormatCurrencyReceipt(){
-        var withTax = replaceAll(",","",$('#withTax').val()); 
-        if (withTax == ""){
+
+    function setFormatCurrencyReceipt() {
+        var withTax = replaceAll(",", "", $('#withTax').val());
+        if (withTax == "") {
             withTax = 0;
         }
-        withTax = parseFloat(withTax); 
+        withTax = parseFloat(withTax);
         document.getElementById("withTax").value = formatNumber(withTax);
 
-        if (withTax == "" || withTax == 0){
+        if (withTax == "" || withTax == 0) {
             document.getElementById("withTax").value = "";
         }
-        
-        var cashAmount = replaceAll(",","",$('#cashAmount').val()); 
-        if (cashAmount == ""){
+
+        var cashAmount = replaceAll(",", "", $('#cashAmount').val());
+        if (cashAmount == "") {
             cashAmount = 0;
         }
-        cashAmount = parseFloat(cashAmount); 
+        cashAmount = parseFloat(cashAmount);
         document.getElementById("cashAmount").value = formatNumber(cashAmount);
 
-        if (cashAmount == "" || cashAmount == 0){
+        if (cashAmount == "" || cashAmount == 0) {
             document.getElementById("cashAmount").value = "";
         }
-        
-        var cashMinusAmount = replaceAll(",","",$('#cashMinusAmount').val()); 
-        if (cashMinusAmount == ""){
+
+        var cashMinusAmount = replaceAll(",", "", $('#cashMinusAmount').val());
+        if (cashMinusAmount == "") {
             cashMinusAmount = 0;
         }
-        cashMinusAmount = parseFloat(cashMinusAmount); 
+        cashMinusAmount = parseFloat(cashMinusAmount);
         document.getElementById("cashMinusAmount").value = formatNumber(cashMinusAmount);
 
-        if (cashMinusAmount == "" || cashMinusAmount == 0){
+        if (cashMinusAmount == "" || cashMinusAmount == 0) {
             document.getElementById("cashMinusAmount").value = "";
         }
-        
-        var bankTransfer = replaceAll(",","",$('#bankTransfer').val()); 
-        if (bankTransfer == ""){
+
+        var bankTransfer = replaceAll(",", "", $('#bankTransfer').val());
+        if (bankTransfer == "") {
             bankTransfer = 0;
         }
-        bankTransfer = parseFloat(bankTransfer); 
+        bankTransfer = parseFloat(bankTransfer);
         document.getElementById("bankTransfer").value = formatNumber(bankTransfer);
 
-        if (bankTransfer == "" || bankTransfer == 0){
+        if (bankTransfer == "" || bankTransfer == 0) {
             document.getElementById("bankTransfer").value = "";
         }
-        
-        var chqAmount1 = replaceAll(",","",$('#chqAmount1').val()); 
-        if (chqAmount1 == ""){
+
+        var chqAmount1 = replaceAll(",", "", $('#chqAmount1').val());
+        if (chqAmount1 == "") {
             chqAmount1 = 0;
         }
-        chqAmount1 = parseFloat(chqAmount1); 
+        chqAmount1 = parseFloat(chqAmount1);
         document.getElementById("chqAmount1").value = formatNumber(chqAmount1);
 
-        if (chqAmount1 == "" || chqAmount1 == 0){
+        if (chqAmount1 == "" || chqAmount1 == 0) {
             document.getElementById("chqAmount1").value = "";
         }
-        
-        var chqAmount2 = replaceAll(",","",$('#chqAmount2').val()); 
-        if (chqAmount2 == ""){
+
+        var chqAmount2 = replaceAll(",", "", $('#chqAmount2').val());
+        if (chqAmount2 == "") {
             chqAmount2 = 0;
         }
-        chqAmount2 = parseFloat(chqAmount2); 
+        chqAmount2 = parseFloat(chqAmount2);
         document.getElementById("chqAmount2").value = formatNumber(chqAmount2);
 
-        if (chqAmount2 == "" || chqAmount2 == 0){
+        if (chqAmount2 == "" || chqAmount2 == 0) {
             document.getElementById("chqAmount2").value = "";
         }
     }
-    
+
     function printReceiptNew() {
         window.open("report.smi?name=ReceiptEmail");
     }
-    
+
     function printReceipt(printtype) {
         document.getElementById('selectPrint').value = printtype;
-        if(printtype == 1 || printtype == 2 ){
+        if (printtype == 1 || printtype == 2) {
             $('#PrintReceiptModal').modal('show');
-        }else if(printtype == 3 || printtype == 4 || printtype == 5 ){
+        } else if (printtype == 3 || printtype == 4 || printtype == 5) {
             $('#PrintInvoiceModal').modal('show');
         }
     }
-    
+
     function confirmPrintReceipt() {
-        $('#PrintReceiptModal').modal('hide'); 
+        $('#PrintReceiptModal').modal('hide');
         var printtype = document.getElementById('selectPrint').value;
         var receiveId = document.getElementById('receiveId').value;
         var receiveNo = document.getElementById('receiveNo').value;
-        var optionPrint =  document.getElementById('optionPrint').value;
-        if(receiveId == ""){
+        var optionPrint = document.getElementById('optionPrint').value;
+        if (receiveId == "") {
             alert("please save before print");
-        }else if(printtype == 0){
+        } else if (printtype == 0) {
             alert('please select option print');
-        }else if(printtype == 1){
-            window.open("report.smi?name=ReceiptReport&receiveId="+receiveId+"&receiveNo="+receiveNo+"&optionPrint="+optionPrint);
-        }else if(printtype == 2){
-            window.open("report.smi?name=ReceiptEmail&receiveId="+receiveId+"&receiveNo="+receiveNo+"&optionPrint="+optionPrint);
-        }        
+        } else if (printtype == 1) {
+            window.open("report.smi?name=ReceiptReport&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint);
+        } else if (printtype == 2) {
+            window.open("report.smi?name=ReceiptEmail&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint);
+        }
     }
-    
-    function confirmPrintInvoice(){
+
+    function confirmPrintInvoice() {
         var printtype = document.getElementById('selectPrint').value;
         var invoice = document.getElementById('selectInvoiceId').value;
-        
+
         var inv = invoice.split("|");
         var invoiceId = inv[0];
         var invType = inv[1];
         var sale = document.getElementById('selectSalesStaff').value;
-        var payment =  document.getElementById('selectPayment').value;
-        var sign =  document.getElementById('SelectSign').value;
-        var leader =  document.getElementById('selectLeader').value;
-        
-        if(printtype == 3){
-            if(invoice === ''){
-            }else{
-                if(invType === 'T'){
-                    window.open("report.smi?name=InvoiceTemp&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
-                }else{
-                    window.open("report.smi?name=InvoiceReport&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
+        var payment = document.getElementById('selectPayment').value;
+        var sign = document.getElementById('SelectSign').value;
+        var leader = document.getElementById('selectLeader').value;
+
+        if (printtype == 3) {
+            if (invoice === '') {
+            } else {
+                if (invType === 'T') {
+                    window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                } else {
+                    window.open("report.smi?name=InvoiceReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
                 }
             }
-        }else if(printtype == 4){
-            if(invoice === ''){
-            }else{
-                if(invType === 'T'){
-                    window.open("report.smi?name=InvoiceTemp&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign); 
-                }else{
-                    window.open("report.smi?name=InvoiceEmail&invoiceid="+invoiceId+"&bankid="+payment+"&showstaff="+sale+"&showleader="+leader+"&sign="+sign);   
+        } else if (printtype == 4) {
+            if (invoice === '') {
+            } else {
+                if (invType === 'T') {
+                    window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                } else {
+                    window.open("report.smi?name=InvoiceEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
                 }
             }
-        }else if(printtype == 5){
-            if(invoice === ''){
-            }else{
+        } else if (printtype == 5) {
+            if (invoice === '') {
+            } else {
                 if (invType === 'T') {
                     window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
                 } else {
@@ -1837,837 +1882,837 @@
             }
         }
     }
-    
-    
-    
+
+
+
     //http://localhost:8080/SMITravel/SendMail.smi?reportname=Invoice
-    function sendEmailReceipt(){
-        $('#SendEmailReceiptModal').modal('show');     
+    function sendEmailReceipt() {
+        $('#SendEmailReceiptModal').modal('show');
     }
-    
-    function confirmSendEmailReceipt(){
+
+    function confirmSendEmailReceipt() {
         $('#SendEmailReceiptModal').modal('hide');
-        var optionSend =  document.getElementById('optionSend').value;
+        var optionSend = document.getElementById('optionSend').value;
         var receiveId = document.getElementById('receiveId').value;
-        window.open("SendMail.smi?reportname=ReceiptEmail&reportid="+receiveId+"&optionsend="+optionSend);
+        window.open("SendMail.smi?reportname=ReceiptEmail&reportid=" + receiveId + "&optionsend=" + optionSend);
     }
-    
-    function AddRowProduct(row) {           
-            $("#ReceiptListTable tbody").append(
-                '<tr style="higth 100px">' + 
+
+    function AddRowProduct(row) {
+        $("#ReceiptListTable tbody").append(
+                '<tr style="higth 100px">' +
                 '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
                 '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" >' +
                 '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="9999999" >' +
-                '<td>' + 
-                '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +                          
+                '<td>' +
+                '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +
                 '</td>' +
                 '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
                 '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" onkeyup="insertCommas(this)" readonly="" ></td>' +
-                '<td>' + 
-                '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +                          
+                '<td>' +
+                '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +
                 '</td>' +
-                '<td class="hidden">' + 
-                '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="" >---------</option></select>' +                          
+                '<td class="hidden">' +
+                '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="" >---------</option></select>' +
                 '</td>' +
                 '<td align="center">' +
                 '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="" onclick="return false">' +
                 '</td>' +
                 '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
                 '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
-                '<td>' + 
-                '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +                          
+                '<td>' +
+                '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +
                 '</td>' +
                 '<td class="text-center">' +
-                '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp&nbsp' +    
-                '<a class="remCF" onclick="deleteReceiptList(\'\', \''+row+'\')">'+
-                '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+  
+                '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp&nbsp' +
+                '<a class="remCF" onclick="deleteReceiptList(\'\', \'' + row + '\')">' +
+                '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
                 '</td>' +
                 '</tr>'
-            );
-            $("#billTypeList option").clone().appendTo("#receiveProduct" + row);
-            $("#currencyList option").clone().appendTo("#receiveCurrency" + row);
-            $("#currencyList option").clone().appendTo("#receiveCurCost" + row);
-            $("#currencyList option").clone().appendTo("#receiveCurCostTemp" + row);
-            $('#receiveCurCostTemp'+row).attr("disabled", true); 
-            $("#receiveAmount"+row).focusout(function(){
+                );
+        $("#billTypeList option").clone().appendTo("#receiveProduct" + row);
+        $("#currencyList option").clone().appendTo("#receiveCurrency" + row);
+        $("#currencyList option").clone().appendTo("#receiveCurCost" + row);
+        $("#currencyList option").clone().appendTo("#receiveCurCostTemp" + row);
+        $('#receiveCurCostTemp' + row).attr("disabled", true);
+        $("#receiveAmount" + row).focusout(function() {
 //              calculatGross(row);
-                setFormatCurrency(row);
-                calculateGrandTotal();
-            }); 
-            $("#receiveCost"+row).focusout(function(){
-                setFormatCurrency(row);
-            }); 
+            setFormatCurrency(row);
+            calculateGrandTotal();
+        });
+        $("#receiveCost" + row).focusout(function() {
+            setFormatCurrency(row);
+        });
 //            var tempCount = parseInt($("#counter").val()) + 1;
-            $("#counter").val(row+1);
+        $("#counter").val(row + 1);
 //        }
-        
-    }
-function handleClick(cb,row) {
-  if(cb.checked){
-    $("#receiveIsVat" + row).val("1");  
-    $("#receiveVat" + row).val($("#vatValue").val());
-    document.getElementById('receiveVat'+row).style.display = 'block';
-    document.getElementById('receiveVat'+row).innerHTML = $("#vatValue").val();
-  }else{
-    $("#receiveIsVat" + row).val("0"); 
-    $("#receiveVat" + row).val("");
-    document.getElementById('receiveVat'+row).style.display = 'none';
-  }
-}
 
-function calculatGross(row) {
+    }
+    function handleClick(cb, row) {
+        if (cb.checked) {
+            $("#receiveIsVat" + row).val("1");
+            $("#receiveVat" + row).val($("#vatValue").val());
+            document.getElementById('receiveVat' + row).style.display = 'block';
+            document.getElementById('receiveVat' + row).innerHTML = $("#vatValue").val();
+        } else {
+            $("#receiveIsVat" + row).val("0");
+            $("#receiveVat" + row).val("");
+            document.getElementById('receiveVat' + row).style.display = 'none';
+        }
+    }
+
+    function calculatGross(row) {
 //  Total Amount Refund  vat = vat * Total Amount Refund / 100
-    var receiveAmount = replaceAll(",","",$("#receiveAmount"+row).val()); 
-    if (receiveAmount == ""){
-        receiveAmount = 0;
-    }
-    
-    var receiveVat = replaceAll(",","",$("#receiveVat"+row).val());
-    if (receiveVat == ""){
-        receiveVat = 0;
-    }
-    
-    var amount = parseFloat(receiveAmount); 
-    var vat = parseFloat(receiveVat);
-    var beforevat = parseFloat(100/(100+vat)).toFixed(2);
-    var receiveGross = amount * beforevat;
-    document.getElementById("receiveGross"+row).value = formatNumber(receiveGross);
-}
+        var receiveAmount = replaceAll(",", "", $("#receiveAmount" + row).val());
+        if (receiveAmount == "") {
+            receiveAmount = 0;
+        }
 
-function replaceAll(find, replace, str) {
-  return str.replace(new RegExp(find, 'g'), replace);
-}
+        var receiveVat = replaceAll(",", "", $("#receiveVat" + row).val());
+        if (receiveVat == "") {
+            receiveVat = 0;
+        }
 
-function formatNumber(num) {
-    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1,")
-}
+        var amount = parseFloat(receiveAmount);
+        var vat = parseFloat(receiveVat);
+        var beforevat = parseFloat(100 / (100 + vat)).toFixed(2);
+        var receiveGross = amount * beforevat;
+        document.getElementById("receiveGross" + row).value = formatNumber(receiveGross);
+    }
 
-function insertCommas(nField){
-    if (/^0/.test(nField.value)){
-        nField.value = nField.value.substring(0,1);
+    function replaceAll(find, replace, str) {
+        return str.replace(new RegExp(find, 'g'), replace);
     }
-    if (Number(nField.value.replace(/,/g,""))){
-        var tmp = nField.value.replace(/,/g,"");
-        tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g,'$1,').split('').reverse().join('').replace(/^,/,'');
-        if (/\./g.test(tmp)){
-            tmp = tmp.split(".");
-            tmp[1] = tmp[1].replace(/\,/g,"").replace(/ /,"");
-            nField.value = tmp[0]+"."+tmp[1]
-        }else{
-            nField.value = tmp.replace(/ /,"");
-        } 
-    }else{
-        nField.value = nField.value.replace(/[^\d\,\.]/g,"").replace(/ /,"");
-    }
-}
 
-function setFormatCurrency(row){  
-    var receiveAmount = replaceAll(",","",$('#receiveAmount'+row).val()); 
-    if (receiveAmount == ""){
-        receiveAmount = 0;
+    function formatNumber(num) {
+        return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     }
-    receiveAmount = parseFloat(receiveAmount); 
-    document.getElementById("receiveAmount"+row).value = formatNumber(receiveAmount);
-    
-    var receiveCost = replaceAll(",","",$('#receiveCost'+row).val()); 
-    if (receiveCost == ""){
-        receiveCost = 0;
-    }
-    receiveCost = parseFloat(receiveCost); 
-    document.getElementById("receiveCost"+row).value = formatNumber(receiveCost);
 
-    if (receiveAmount == "" || receiveAmount == 0){
-        document.getElementById("receiveAmount"+row).value = "";
+    function insertCommas(nField) {
+        if (/^0/.test(nField.value)) {
+            nField.value = nField.value.substring(0, 1);
+        }
+        if (Number(nField.value.replace(/,/g, ""))) {
+            var tmp = nField.value.replace(/,/g, "");
+            tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g, '$1,').split('').reverse().join('').replace(/^,/, '');
+            if (/\./g.test(tmp)) {
+                tmp = tmp.split(".");
+                tmp[1] = tmp[1].replace(/\,/g, "").replace(/ /, "");
+                nField.value = tmp[0] + "." + tmp[1]
+            } else {
+                nField.value = tmp.replace(/ /, "");
+            }
+        } else {
+            nField.value = nField.value.replace(/[^\d\,\.]/g, "").replace(/ /, "");
+        }
     }
-    
-    if (receiveCost == "" || receiveCost == 0){
-        document.getElementById("receiveCost"+row).value = "";
-    }
-    calculateGrandTotal();
-}
 
-function AddRowCredit(row) {
+    function setFormatCurrency(row) {
+        var receiveAmount = replaceAll(",", "", $('#receiveAmount' + row).val());
+        if (receiveAmount == "") {
+            receiveAmount = 0;
+        }
+        receiveAmount = parseFloat(receiveAmount);
+        document.getElementById("receiveAmount" + row).value = formatNumber(receiveAmount);
+
+        var receiveCost = replaceAll(",", "", $('#receiveCost' + row).val());
+        if (receiveCost == "") {
+            receiveCost = 0;
+        }
+        receiveCost = parseFloat(receiveCost);
+        document.getElementById("receiveCost" + row).value = formatNumber(receiveCost);
+
+        if (receiveAmount == "" || receiveAmount == 0) {
+            document.getElementById("receiveAmount" + row).value = "";
+        }
+
+        if (receiveCost == "" || receiveCost == 0) {
+            document.getElementById("receiveCost" + row).value = "";
+        }
+        calculateGrandTotal();
+    }
+
+    function AddRowCredit(row) {
         $("#CreditDetailTable tbody").append(
-            '<tr style="higth 100px">' +
-            '<input id="tableCreditId' + row + '" name="tableCreditId' + row + '"  type="hidden" >' +
-            '<td>' + 
-            '<select class="form-control" name="creditBank' + row + '" id="creditBank' + row + '" ><option value="">---------</option></select>' +                          
-            '</td>' +
-            '<td><input maxlength="20" id="creditNo' + row + '" name="creditNo' + row + '" type="text" class="form-control" ></td>' +
-            '<td><div class="input-group date"><input id="creditExpired'+row+'" name="creditExpired'+row+'"  type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value=""><span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
-            '<td><input id="creditAmount' + row + '" name="creditAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
-            '<td class="text-center">' +
-            '<a class="remCF" onclick="deleteCreditList(\'\', \''+row+'\')">  '+
-            '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
-            '</tr>'
-        );
+                '<tr style="higth 100px">' +
+                '<input id="tableCreditId' + row + '" name="tableCreditId' + row + '"  type="hidden" >' +
+                '<td>' +
+                '<select class="form-control" name="creditBank' + row + '" id="creditBank' + row + '" ><option value="">---------</option></select>' +
+                '</td>' +
+                '<td><input maxlength="20" id="creditNo' + row + '" name="creditNo' + row + '" type="text" class="form-control" ></td>' +
+                '<td><div class="input-group date"><input id="creditExpired' + row + '" name="creditExpired' + row + '"  type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value=""><span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
+                '<td><input id="creditAmount' + row + '" name="creditAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
+                '<td class="text-center">' +
+                '<a class="remCF" onclick="deleteCreditList(\'\', \'' + row + '\')">  ' +
+                '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                '</tr>'
+                );
         $("#creditBankList option").clone().appendTo("#creditBank" + row);
-                    
-        $("#creditAmount"+row).focusout(function(){
-            var creditAmount = replaceAll(",","",$('#creditAmount'+row).val()); 
-            if (creditAmount == ""){
+
+        $("#creditAmount" + row).focusout(function() {
+            var creditAmount = replaceAll(",", "", $('#creditAmount' + row).val());
+            if (creditAmount == "") {
                 creditAmount = 0;
             }
-            creditAmount = parseFloat(creditAmount); 
-            document.getElementById("creditAmount"+row).value = formatNumber(creditAmount);
-            
-            if (creditAmount == "" || creditAmount == 0){
-                document.getElementById("creditAmount"+row).value = "";
+            creditAmount = parseFloat(creditAmount);
+            document.getElementById("creditAmount" + row).value = formatNumber(creditAmount);
+
+            if (creditAmount == "" || creditAmount == 0) {
+                document.getElementById("creditAmount" + row).value = "";
             }
             sumTotalCreditAmount();
-        }); 
-        
+        });
+
         var tempCount = parseInt($("#countRowCredit").val()) + 1;
         $("#countRowCredit").val(tempCount);
         reloadDatePicker();
-} 
+    }
 
-function reloadDatePicker(){
-    try{
-       $(".date").datetimepicker({
-            pickTime: false   
-       });  
-       $('span').click(function() {
-            var position = $(this).offset();
-            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-       });
-    }catch(e){
+    function reloadDatePicker() {
+        try {
+            $(".date").datetimepicker({
+                pickTime: false
+            });
+            $('span').click(function() {
+                var position = $(this).offset();
+                $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+            });
+        } catch (e) {
 
-    }  
-}
-
-function clearNew(){
-    var action = document.getElementById('action');
-    action.value = 'new';
-    document.getElementById('ReceiptForm').submit();
-}
-
-function searchInvoice() {
-    var invoiceNo = $("#invoiceNo").val();
-    var department = "${typeDepartment}";
-    var invType = "${typeReceipt}";
-    var invoicenopanel = $("#invoicenopanel").val();
-    if(invoiceNo == ""){
-        if(!$('#invoicenopanel').hasClass('has-feedback')) {
-            $('#invoicenopanel').addClass('has-feedback');
         }
-        $('#invoicenopanel').removeClass('has-success');
-        $('#invoicenopanel').addClass('has-error');
     }
-    else{
-        var servletName = 'ReceiptServlet';
-        var servicesName = 'AJAXBean';
-        var param = 'action=' + 'text' +
-                '&servletName=' + servletName +
-                '&servicesName=' + servicesName +
-                '&invoiceNo=' + invoiceNo +
-                '&department=' + department +
-                '&invType=' + invType +
-                '&type=' + 'searchInvoiceNo';
-        CallAjaxSearchInvoice(param);
-    }
-}
 
-function CallAjaxSearchInvoice(param) {
-    var url = 'AJAXServlet';
-    $("#ajaxload1").removeClass("hidden");
-    try {
-        $.ajax({
-            type: "POST",
-            url: url,
-            cache: false,
-            data: param,
-            success: function (msg) {
-                try { 
-                    if(msg == "null"){
+    function clearNew() {
+        var action = document.getElementById('action');
+        action.value = 'new';
+        document.getElementById('ReceiptForm').submit();
+    }
+
+    function searchInvoice() {
+        var invoiceNo = $("#invoiceNo").val();
+        var department = "${typeDepartment}";
+        var invType = "${typeReceipt}";
+        var invoicenopanel = $("#invoicenopanel").val();
+        if (invoiceNo == "") {
+            if (!$('#invoicenopanel').hasClass('has-feedback')) {
+                $('#invoicenopanel').addClass('has-feedback');
+            }
+            $('#invoicenopanel').removeClass('has-success');
+            $('#invoicenopanel').addClass('has-error');
+        }
+        else {
+            var servletName = 'ReceiptServlet';
+            var servicesName = 'AJAXBean';
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&invoiceNo=' + invoiceNo +
+                    '&department=' + department +
+                    '&invType=' + invType +
+                    '&type=' + 'searchInvoiceNo';
+            CallAjaxSearchInvoice(param);
+        }
+    }
+
+    function CallAjaxSearchInvoice(param) {
+        var url = 'AJAXServlet';
+        $("#ajaxload1").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    try {
+                        if (msg == "null") {
 //                        $('#InvoiceListTable').dataTable().fnClearTable();
 //                        $('#InvoiceListTable').dataTable().fnDestroy();
-                        $('#InvoiceListTable > tbody  > tr').each(function() {
-                            $(this).remove();
-                        });
-                        
-                        document.getElementById("receiveFromCode").value = '';
-                        document.getElementById("receiveFromName").value = '';
-                        document.getElementById("receiveFromAddress").value = '';
-                        document.getElementById("arCode").value = '';
-                    }else{
+                            $('#InvoiceListTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
+
+                            document.getElementById("receiveFromCode").value = '';
+                            document.getElementById("receiveFromName").value = '';
+                            document.getElementById("receiveFromAddress").value = '';
+                            document.getElementById("arCode").value = '';
+                        } else {
 //                        $('#InvoiceListTable').dataTable().fnClearTable();
 //                        $('#InvoiceListTable').dataTable().fnDestroy();
-                        $('#InvoiceListTable > tbody  > tr').each(function() {
-                            $(this).remove();
-                        });
-                        $("#InvoiceListTable tbody").empty().append(msg);
-                        setinvoice = 1;
-                        document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
-                        document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();
-                        document.getElementById("receiveFromAddress").value = $("#receiveAddressInvoice").val();
-                        document.getElementById("arCode").value = $("#arcodeInvoice").val();
+                            $('#InvoiceListTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
+                            $("#InvoiceListTable tbody").empty().append(msg);
+                            setinvoice = 1;
+                            document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
+                            document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();
+                            document.getElementById("receiveFromAddress").value = $("#receiveAddressInvoice").val();
+                            document.getElementById("arCode").value = $("#arcodeInvoice").val();
+                        }
+                        $("#ajaxload1").addClass("hidden");
+
+                    } catch (e) {
+                        alert(e);
                     }
+
+                }, error: function(msg) {
                     $("#ajaxload1").addClass("hidden");
-                     
-                } catch (e) {
-                    alert(e);
                 }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
 
-            }, error: function (msg) {
-                 $("#ajaxload1").addClass("hidden");
+    function invoicenoValidate() {
+        $('#invoicenopanel').removeClass('has-feedback');
+        $('#invoicenopanel').addClass('has-success');
+        $('#invoicenopanel').removeClass('has-error');
+    }
+    function addProduct(product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, checkadd, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress) {
+        $('#textAlertDuplicateProduct').hide();
+        var tempCount = parseInt($("#counter").val());
+        var checkAddDuplicate = false;
+        if (checkadd == 1) {
+            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+            $("#searchPaymentNoAir").attr("disabled", "disabled");
+            $("#searchPaymentNoTour").attr("disabled", "disabled");
+
+            var rowAll = tempCount;
+            for (var i = 1; i < rowAll; i++) {
+                var invoiceId = $("#invId" + i).val();
+                if (invoiceId != "" && invId === invoiceId) {
+                    checkAddDuplicate = true;
+                }
             }
-        });
-    } catch (e) {
-        alert(e);
-    }
-}   
 
-function invoicenoValidate(){
-    $('#invoicenopanel').removeClass('has-feedback');
-    $('#invoicenopanel').addClass('has-success');
-    $('#invoicenopanel').removeClass('has-error');  
-}
-function addProduct(product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,checkadd,disdescription,number,paymentTourId,receiveFrom,receiveName,receiveAddress){
-    $('#textAlertDuplicateProduct').hide();
-    var tempCount = parseInt($("#counter").val());
-    var checkAddDuplicate = false;
-    if(checkadd == 1){
-        $("#ButtonSearchRefNo").attr("disabled", "disabled");
-        $("#searchPaymentNoAir").attr("disabled", "disabled");
-        $("#searchPaymentNoTour").attr("disabled", "disabled");
-        
-        var rowAll = tempCount;
-        for(var i =1; i<rowAll ;i++){
-            var invoiceId = $("#invId"+i).val();
-            if(invoiceId != "" && invId === invoiceId){
-                checkAddDuplicate = true;
-            } 
-        }
-        
-    }else if(checkadd == 2){
-        $("#ButtonSearchInvoice").attr("disabled", "disabled");
-        $("#searchPaymentNoAir").attr("disabled", "disabled");
-        $("#searchPaymentNoTour").attr("disabled", "disabled");
-        
-        var rowAll = tempCount;
-        for(var i =1; i<rowAll ;i++){
-            var billId = $("#billDescId"+i).val();
-            if(billId != "" && billDescId === billId){
-                checkAddDuplicate = true;
-            } 
-        }
-        
-    }else if(checkadd == 3){
-        $("#ButtonSearchRefNo").attr("disabled", "disabled");
-        $("#ButtonSearchInvoice").attr("disabled", "disabled");
-        $("#searchPaymentNoTour").attr("disabled", "disabled");
-        
-        var rowAll = tempCount;
-        for(var i =1; i<rowAll ;i++){
-            var payId = $("#paymentId"+i).val();
-            if(payId != "" && paymentId === payId){
-                checkAddDuplicate = true;
-            } 
-        }
-        
-    }else if(checkadd == 4){
-        $("#ButtonSearchRefNo").attr("disabled", "disabled");
-        $("#ButtonSearchInvoice").attr("disabled", "disabled");
-        $("#searchPaymentNoAir").attr("disabled", "disabled");
-        
-        var rowAll = tempCount;
-        for(var i =1; i<rowAll ;i++){
-            var paymentTour = $("#paymentTourId"+i).val();
-            if(paymentTour != "" && paymentTourId === paymentTour){
-                checkAddDuplicate = true;
-            } 
-        }
-        
-    }
-    if(!checkAddDuplicate){
-        AddDataRowProduct(tempCount,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number,paymentTourId,receiveFrom,receiveName,receiveAddress);
-    }else{
-        $('#textAlertDuplicateProduct').show();
-    }
-}
-function AddDataRowProduct(row,product,description,cost,cur,isVat,vat,amount,currency,invId,billDescId,paymentId,airlineCode,disdescription,number,paymentTourId,receiveFrom,receiveName,receiveAddress) {
-    var grossinv = 0 ;
-    if(vat !== '' && isVat !== '0'){
-        var x = parseFloat(amount) ;
-        var v = parseFloat(vat) ;    
-        grossinv = x * (100/(100+v));
-        grossinv = formatNumber(grossinv);
-    }   
-    
-    if(setinvoice !== 1){
-        document.getElementById("receiveFromCode").value = receiveFrom ;
-        document.getElementById("receiveFromName").value = receiveName ;
-        document.getElementById("receiveFromAddress").value = receiveAddress ;
-        document.getElementById("arCode").value = receiveFrom ;
-    }
-    
-    var rowAll = row+1;
-    for(var i =1; i<rowAll ;i++){
-        if($("#receiveProduct"+i).val() != "" 
-            || $("#receiveDes"+i).val() != "" 
-            || $("#receiveCost"+i).val() != "" 
-            || $("#receiveCurCost"+i).val() != "" 
-            || $("#receiveVat"+i).val() != ""
-            || $("#receiveAmount"+i).val() != "" 
-            || $("#receiveCurrency"+i).val() != ""
-            ){
-        
-        }else{
-            $("#receiveProduct" +i).parent().parent().remove();
-            row = parseInt(i);
-            $("#counter").val(row);
-        }
-    }
+        } else if (checkadd == 2) {
+            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+            $("#searchPaymentNoAir").attr("disabled", "disabled");
+            $("#searchPaymentNoTour").attr("disabled", "disabled");
 
-    $("#ReceiptListTable tbody").append(
-        '<tr style="higth 100px">' +
-        '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="'+grossinv+'" >' +
-        '<input id="invId' + row + '" name="invId' + row + '"  type="hidden" value="'+invId+'" >' +
-        '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
-        '<input id="billDescId' + row + '" name="billDescId' + row + '"  type="hidden" value="'+billDescId+'" >' +
-        '<input id="paymentId' + row + '" name="paymentId' + row + '"  type="hidden" value="'+paymentId+'" >' +
-        '<input id="paymentTourId' + row + '" name="paymentTourId' + row + '"  type="hidden" value="'+paymentTourId+'" >' +
-        '<input id="airlineCode' + row + '" name="airlineCode' + row + '"  type="hidden" value="'+airlineCode+'" >' +
-        '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="'+amount+'" >' +
-        '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" value="'+disdescription+'" >' +
-        '<td>' + 
-        '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="'+product+'" selected></option></select>' +                          
-        '</td>' +
-        '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="'+description+'"></td>' +
-        '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control text-right" value="'+cost+'" onkeyup="insertCommas(this)" readonly="" ></td>' +
-        '<td>' + 
-        '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="'+cur+'" ></option></select>' +                          
-        '</td>' +
-        '<td class="hidden">' + 
-        '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="'+cur+'" ></option></select>' +                          
-        '</td>' +
-        '<td align="center">' +
-        '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="'+isVat+'" onclick="return false" >' +
-        '</td>' +
-        '<td><div id="receiveVat' + row + '" style="display:none" value="'+vat+'"></div></td>' +
-        '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onfocusout="checkAmount('+row+')" value="'+amount+'"></td>' +
-        '<td>' + 
-        '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="'+currency+'"></option></select>' +                           
-        '</td>' +
-        '<td class="text-center">' +
-        '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('+row+')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp' +    
-        '<a class="remCF" onclick="deleteReceiptList(\'\', \''+row+'\')">  '+
-        '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
-        '</tr>'
-    );
-    $("#billTypeList option").clone().appendTo("#receiveProduct" + row);
-    $("#currencyList option").clone().appendTo("#receiveCurrency" + row);
-    $("#currencyList option").clone().appendTo("#receiveCurCost" + row);
-    $("#currencyList option").clone().appendTo("#receiveCurCostTemp" + row);
-    $('#receiveCurCostTemp'+row).attr("disabled", true); 
-    var isvat = $('#receiveIsVat'+row).val();
-    if (isvat === '1')
-    {
-        $('#receiveIsVat'+row).prop('checked', true);
-        document.getElementById('receiveVat'+row).style.display = 'block';
-        document.getElementById('receiveVat'+row).innerHTML = $("#vatValue").val();
+            var rowAll = tempCount;
+            for (var i = 1; i < rowAll; i++) {
+                var billId = $("#billDescId" + i).val();
+                if (billId != "" && billDescId === billId) {
+                    checkAddDuplicate = true;
+                }
+            }
+
+        } else if (checkadd == 3) {
+            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+            $("#searchPaymentNoTour").attr("disabled", "disabled");
+
+            var rowAll = tempCount;
+            for (var i = 1; i < rowAll; i++) {
+                var payId = $("#paymentId" + i).val();
+                if (payId != "" && paymentId === payId) {
+                    checkAddDuplicate = true;
+                }
+            }
+
+        } else if (checkadd == 4) {
+            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+            $("#searchPaymentNoAir").attr("disabled", "disabled");
+
+            var rowAll = tempCount;
+            for (var i = 1; i < rowAll; i++) {
+                var paymentTour = $("#paymentTourId" + i).val();
+                if (paymentTour != "" && paymentTourId === paymentTour) {
+                    checkAddDuplicate = true;
+                }
+            }
+
+        }
+        if (!checkAddDuplicate) {
+            AddDataRowProduct(tempCount, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress);
+        } else {
+            $('#textAlertDuplicateProduct').show();
+        }
     }
-    if (isvat === '0')
-    {
-        $('#receiveVat'+row).val("");
-    }
-    $('[name=receiveProduct'+row+'] option').filter(function() { 
-        return ($(this).val() === product);
-    }).prop('selected', true);
-    
-    $('[name=receiveCurCost'+row+'] option').filter(function() { 
-        return ($(this).val() === cur);
-    }).prop('selected', true);
-    
-    $('[name=receiveCurCostTemp'+row+'] option').filter(function() { 
-        return ($(this).val() === cur);
-    }).prop('selected', true);
-    
-    $('[name=receiveCurrency'+row+'] option').filter(function() { 
-        return ($(this).val() === currency);
-    }).prop('selected', true); 
-                
-    $("#receiveAmount"+row).focusout(function(){
+    function AddDataRowProduct(row, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress) {
+        var grossinv = 0;
+        if (vat !== '' && isVat !== '0') {
+            var x = parseFloat(amount);
+            var v = parseFloat(vat);
+            grossinv = x * (100 / (100 + v));
+            grossinv = formatNumber(grossinv);
+        }
+
+        if (setinvoice !== 1) {
+            document.getElementById("receiveFromCode").value = receiveFrom;
+            document.getElementById("receiveFromName").value = receiveName;
+            document.getElementById("receiveFromAddress").value = receiveAddress;
+            document.getElementById("arCode").value = receiveFrom;
+        }
+
+        var rowAll = row + 1;
+        for (var i = 1; i < rowAll; i++) {
+            if ($("#receiveProduct" + i).val() != ""
+                    || $("#receiveDes" + i).val() != ""
+                    || $("#receiveCost" + i).val() != ""
+                    || $("#receiveCurCost" + i).val() != ""
+                    || $("#receiveVat" + i).val() != ""
+                    || $("#receiveAmount" + i).val() != ""
+                    || $("#receiveCurrency" + i).val() != ""
+                    ) {
+
+            } else {
+                $("#receiveProduct" + i).parent().parent().remove();
+                row = parseInt(i);
+                $("#counter").val(row);
+            }
+        }
+
+        $("#ReceiptListTable tbody").append(
+                '<tr style="higth 100px">' +
+                '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="' + grossinv + '" >' +
+                '<input id="invId' + row + '" name="invId' + row + '"  type="hidden" value="' + invId + '" >' +
+                '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
+                '<input id="billDescId' + row + '" name="billDescId' + row + '"  type="hidden" value="' + billDescId + '" >' +
+                '<input id="paymentId' + row + '" name="paymentId' + row + '"  type="hidden" value="' + paymentId + '" >' +
+                '<input id="paymentTourId' + row + '" name="paymentTourId' + row + '"  type="hidden" value="' + paymentTourId + '" >' +
+                '<input id="airlineCode' + row + '" name="airlineCode' + row + '"  type="hidden" value="' + airlineCode + '" >' +
+                '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="' + amount + '" >' +
+                '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" value="' + disdescription + '" >' +
+                '<td>' +
+                '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="' + product + '" selected></option></select>' +
+                '</td>' +
+                '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="' + description + '"></td>' +
+                '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control text-right" value="' + cost + '" onkeyup="insertCommas(this)" readonly="" ></td>' +
+                '<td>' +
+                '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="' + cur + '" ></option></select>' +
+                '</td>' +
+                '<td class="hidden">' +
+                '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="' + cur + '" ></option></select>' +
+                '</td>' +
+                '<td align="center">' +
+                '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="' + isVat + '" onclick="return false" >' +
+                '</td>' +
+                '<td><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
+                '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
+                '<td>' +
+                '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="' + currency + '"></option></select>' +
+                '</td>' +
+                '<td class="text-center">' +
+                '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp' +
+                '<a class="remCF" onclick="deleteReceiptList(\'\', \'' + row + '\')">  ' +
+                '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                '</tr>'
+                );
+        $("#billTypeList option").clone().appendTo("#receiveProduct" + row);
+        $("#currencyList option").clone().appendTo("#receiveCurrency" + row);
+        $("#currencyList option").clone().appendTo("#receiveCurCost" + row);
+        $("#currencyList option").clone().appendTo("#receiveCurCostTemp" + row);
+        $('#receiveCurCostTemp' + row).attr("disabled", true);
+        var isvat = $('#receiveIsVat' + row).val();
+        if (isvat === '1')
+        {
+            $('#receiveIsVat' + row).prop('checked', true);
+            document.getElementById('receiveVat' + row).style.display = 'block';
+            document.getElementById('receiveVat' + row).innerHTML = $("#vatValue").val();
+        }
+        if (isvat === '0')
+        {
+            $('#receiveVat' + row).val("");
+        }
+        $('[name=receiveProduct' + row + '] option').filter(function() {
+            return ($(this).val() === product);
+        }).prop('selected', true);
+
+        $('[name=receiveCurCost' + row + '] option').filter(function() {
+            return ($(this).val() === cur);
+        }).prop('selected', true);
+
+        $('[name=receiveCurCostTemp' + row + '] option').filter(function() {
+            return ($(this).val() === cur);
+        }).prop('selected', true);
+
+        $('[name=receiveCurrency' + row + '] option').filter(function() {
+            return ($(this).val() === currency);
+        }).prop('selected', true);
+
+        $("#receiveAmount" + row).focusout(function() {
 //        calculatGross(row);
+            setFormatCurrency(row);
+            calculateGrandTotal();
+        });
+        $("#receiveCost" + row).focusout(function() {
+            setFormatCurrency(row);
+        });
         setFormatCurrency(row);
+        var tempCount = parseInt($("#counter").val()) + 1;
+        $("#counter").val(tempCount);
+        AddRowProduct(tempCount);
         calculateGrandTotal();
-    }); 
-    $("#receiveCost"+row).focusout(function(){
-        setFormatCurrency(row);
-    }); 
-    setFormatCurrency(row);
-    var tempCount = parseInt($("#counter").val()) + 1;
-    $("#counter").val(tempCount);
-    AddRowProduct(tempCount);
-    calculateGrandTotal();
-}
+    }
 
-function searchReceiveNo(){
-    var action = document.getElementById('action');
-    action.value = 'searchReceiveNo';
-    var receiveNo = document.getElementById('receiveNo');
-    receiveNo.value = $("#receiveNo").val();
-    var type = document.getElementById('type');
-    type.value = $("#type").val();
-    document.getElementById('ReceiptForm').submit();
-}
+    function searchReceiveNo() {
+        var action = document.getElementById('action');
+        action.value = 'searchReceiveNo';
+        var receiveNo = document.getElementById('receiveNo');
+        receiveNo.value = $("#receiveNo").val();
+        var type = document.getElementById('type');
+        type.value = $("#type").val();
+        document.getElementById('ReceiptForm').submit();
+    }
 
-function saveReceipt(){
-    $('#textAlertDivSave').hide();
-    $('#textAlertDivNotSave').hide();
-    $('#textAlertDivDelete').hide();
-    $('#textAlertDivNotDelete').hide();
-    $('#textAlertReceiveNo').hide();
-    $('#textAlertDuplicateProduct').hide();
-    $('#textAlertReceiveAmount').hide();
-    
-    var i = 0 ;
-    var checksave = 1;
-    var action = document.getElementById('action');
-    action.value = 'saveReceipt';
-    var counter = document.getElementById('counter');
-    counter.value = $("#ReceiptListTable tr").length;
-    var countRowCredit = document.getElementById('countRowCredit');
-    countRowCredit.value = $("#CreditDetailTable tr").length;
-    
-    
-    checkSumAmountBeforeSave();
-    
-    var inputStatus = document.getElementById('inputStatus').value;
-    var receiveFromCode = document.getElementById('receiveFromCode').value;
-    var arCode = document.getElementById('arCode').value;
-    var receiveFromDate = document.getElementById('receiveFromDate').value;
-    var inputStatus = document.getElementById('inputStatus').value;
-    if(counter.value > 2){
-        for(i = 1 ; i < counter.value-1 ; i++ ){
-            var amountTemp = document.getElementById('receiveAmountTemp'+i).value;
-            var amount = document.getElementById('receiveAmount'+i).value;
-            amount = replaceAll(",","",amount.toString());
+    function saveReceipt() {
+        $('#textAlertDivSave').hide();
+        $('#textAlertDivNotSave').hide();
+        $('#textAlertDivDelete').hide();
+        $('#textAlertDivNotDelete').hide();
+        $('#textAlertReceiveNo').hide();
+        $('#textAlertDuplicateProduct').hide();
+        $('#textAlertReceiveAmount').hide();
 
-            if(amount > amountTemp){
-    //            $('#textAlertReceiveAmount').show();
-                $('#textAlertAmountOver').show();
-                checksave = 2;
-            }else{
-                if(inputStatus !== '7'){
-                    var sumAmountBeforeSave = document.getElementById('sumAmountBeforeSave').value;
-                    var grandTotal = document.getElementById('grandTotal').value;
+        var i = 0;
+        var checksave = 1;
+        var action = document.getElementById('action');
+        action.value = 'saveReceipt';
+        var counter = document.getElementById('counter');
+        counter.value = $("#ReceiptListTable tr").length;
+        var countRowCredit = document.getElementById('countRowCredit');
+        countRowCredit.value = $("#CreditDetailTable tr").length;
 
-                    if(grandTotal === sumAmountBeforeSave){
-                        $('#textAlertReceiveAmount').hide();
-                    }else{
-                        $('#textAlertReceiveAmount').show();
-                        checksave = 2;
-                    }
 
-                    if(checksave === 1){
-                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
-                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
-                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
-                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
-                        if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
-                            document.getElementById('ReceiptForm').submit();
-                        }
-                        $('#textAlertReceiveAmount').hide();
-                    }
-                }else{
-                    if(checksave === 1){
-                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
-                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
-                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
-                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
+        checkSumAmountBeforeSave();
 
-                        if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
-                            document.getElementById('ReceiptForm').submit();
+        var inputStatus = document.getElementById('inputStatus').value;
+        var receiveFromCode = document.getElementById('receiveFromCode').value;
+        var arCode = document.getElementById('arCode').value;
+        var receiveFromDate = document.getElementById('receiveFromDate').value;
+        var inputStatus = document.getElementById('inputStatus').value;
+        if (counter.value > 2) {
+            for (i = 1; i < counter.value - 1; i++) {
+                var amountTemp = document.getElementById('receiveAmountTemp' + i).value;
+                var amount = document.getElementById('receiveAmount' + i).value;
+                amount = replaceAll(",", "", amount.toString());
+
+                if (amount > amountTemp) {
+                    //            $('#textAlertReceiveAmount').show();
+                    $('#textAlertAmountOver').show();
+                    checksave = 2;
+                } else {
+                    if (inputStatus !== '7') {
+                        var sumAmountBeforeSave = document.getElementById('sumAmountBeforeSave').value;
+                        var grandTotal = document.getElementById('grandTotal').value;
+
+                        if (grandTotal === sumAmountBeforeSave) {
+                            $('#textAlertReceiveAmount').hide();
+                        } else {
+                            $('#textAlertReceiveAmount').show();
+                            checksave = 2;
                         }
 
-                        $('#textAlertReceiveAmount').hide();
+                        if (checksave === 1) {
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
+                            if (receiveFromCode != "" && arCode != "" && receiveFromDate != "" && inputStatus != "") {
+                                document.getElementById('ReceiptForm').submit();
+                            }
+                            $('#textAlertReceiveAmount').hide();
+                        }
+                    } else {
+                        if (checksave === 1) {
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
+
+                            if (receiveFromCode != "" && arCode != "" && receiveFromDate != "" && inputStatus != "") {
+                                document.getElementById('ReceiptForm').submit();
+                            }
+
+                            $('#textAlertReceiveAmount').hide();
+                        }
                     }
                 }
             }
-        }
-    }else{
-        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
-        $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
-        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
-        $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
-        if(receiveFromCode != "" && arCode != "" &&  receiveFromDate != "" &&  inputStatus != ""  ){
-            document.getElementById('ReceiptForm').submit();
+        } else {
+            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+            $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
+            $('#ReceiptForm').bootstrapValidator('revalidateField', 'inputStatus');
+            if (receiveFromCode != "" && arCode != "" && receiveFromDate != "" && inputStatus != "") {
+                document.getElementById('ReceiptForm').submit();
+            }
         }
     }
-}
 
-function searchRefNo() {
-    var refNo = $("#refNo").val();
-    if(refNo == ""){
-        if(!$('#refnopanel').hasClass('has-feedback')) {
-            $('#refnopanel').addClass('has-feedback');
+    function searchRefNo() {
+        var refNo = $("#refNo").val();
+        if (refNo == "") {
+            if (!$('#refnopanel').hasClass('has-feedback')) {
+                $('#refnopanel').addClass('has-feedback');
+            }
+            $('#refnopanel').removeClass('has-success');
+            $('#refnopanel').addClass('has-error');
         }
-        $('#refnopanel').removeClass('has-success');
-        $('#refnopanel').addClass('has-error');
+        else {
+            var servletName = 'ReceiptServlet';
+            var servicesName = 'AJAXBean';
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&refNo=' + refNo +
+                    '&type=' + 'searchRefNo';
+            CallAjaxSearchRef(param);
+        }
     }
-    else{
-        var servletName = 'ReceiptServlet';
-        var servicesName = 'AJAXBean';
-        var param = 'action=' + 'text' +
-                '&servletName=' + servletName +
-                '&servicesName=' + servicesName +
-                '&refNo=' + refNo +
-                '&type=' + 'searchRefNo';
-        CallAjaxSearchRef(param);
-    }
-}
 
-function CallAjaxSearchRef(param) {
-    var url = 'AJAXServlet';
-    var BookintType = "";
-    $("#ajaxload2").removeClass("hidden");
-    try {
-        $.ajax({
-            type: "POST",
-            url: url,
-            cache: false,
-            data: param,
-            success: function (msg) {
-                try { 
-                    if(msg == "null"){
+    function CallAjaxSearchRef(param) {
+        var url = 'AJAXServlet';
+        var BookintType = "";
+        $("#ajaxload2").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    try {
+                        if (msg == "null") {
 //                        $('#RefNoListTable').dataTable().fnClearTable();
 //                        $('#RefNoListTable').dataTable().fnDestroy();
-                        $('#RefNoListTable > tbody  > tr').each(function() {
-                            $(this).remove();
-                        });
-
-                    }else{
-                        
-                        $("#RefNoListTable tbody").empty().append(msg);
-                        BookintType = $("#masterBookType").val();
-                        if(BookintType == $('#typeBooking').val()) {
                             $('#RefNoListTable > tbody  > tr').each(function() {
                                 $(this).remove();
                             });
-                            $('#AlertBookingRefno').hide();
-                            try {
-                                $("#RefNoListTable tbody").empty().append(msg);
-                                document.getElementById("receiveFromCode").value = $("#receiveFromBillable").val();
-                                document.getElementById("receiveFromName").value = $("#receiveNameBillable").val();
-                                document.getElementById("receiveFromAddress").value = $("#receiveAddressBillable").val();
-                                document.getElementById("arCode").value = $("#arcodeBillable").val();
-                                document.getElementById("inputStatus").value = $("#mAccPayBillable").val();
-                            } catch (e) {
-                                alert(e);
-                            }
+
                         } else {
-                            $('#RefNoListTable > tbody  > tr').each(function() {
-                                $(this).remove();
-                            });
-                            $('#AlertBookingRefno').show();
+
+                            $("#RefNoListTable tbody").empty().append(msg);
+                            BookintType = $("#masterBookType").val();
+                            if (BookintType == $('#typeBooking').val()) {
+                                $('#RefNoListTable > tbody  > tr').each(function() {
+                                    $(this).remove();
+                                });
+                                $('#AlertBookingRefno').hide();
+                                try {
+                                    $("#RefNoListTable tbody").empty().append(msg);
+                                    document.getElementById("receiveFromCode").value = $("#receiveFromBillable").val();
+                                    document.getElementById("receiveFromName").value = $("#receiveNameBillable").val();
+                                    document.getElementById("receiveFromAddress").value = $("#receiveAddressBillable").val();
+                                    document.getElementById("arCode").value = $("#arcodeBillable").val();
+                                    document.getElementById("inputStatus").value = $("#mAccPayBillable").val();
+                                } catch (e) {
+                                    alert(e);
+                                }
+                            } else {
+                                $('#RefNoListTable > tbody  > tr').each(function() {
+                                    $(this).remove();
+                                });
+                                $('#AlertBookingRefno').show();
+                            }
+
                         }
-
+                        $("#ajaxload2").addClass("hidden");
+                        setinvoice = 1;
+                    } catch (e) {
+                        alert(e);
                     }
+
+                }, error: function(msg) {
                     $("#ajaxload2").addClass("hidden");
-                    setinvoice = 1;
-                } catch (e) {
-                    alert(e);
                 }
-
-            }, error: function (msg) {
-                 $("#ajaxload2").addClass("hidden");
-            }
-        });
-    } catch (e) {
-        alert(e);
+            });
+        } catch (e) {
+            alert(e);
+        }
     }
-}
 
-function refnoValidate(){
-    $('#refnopanel').removeClass('has-feedback');
-    $('#refnopanel').addClass('has-success');
-    $('#refnopanel').removeClass('has-error');  
-}
+    function refnoValidate() {
+        $('#refnopanel').removeClass('has-feedback');
+        $('#refnopanel').addClass('has-success');
+        $('#refnopanel').removeClass('has-error');
+    }
 
-function searchPaymentNoAir() {
-    var paymentNoAir = $("#searchPaymentNoAir").val();
-    var servletName = 'ReceiptServlet';
-    var servicesName = 'AJAXBean';
-    var param = 'action=' + 'text' +
-            '&servletName=' + servletName +
-            '&servicesName=' + servicesName +
-            '&paymentNo=' + paymentNoAir +
-            '&type=' + 'searchPaymentNoAir';
-    CallAjaxSearchPaymentNoAir(param);
-    
+    function searchPaymentNoAir() {
+        var paymentNoAir = $("#searchPaymentNoAir").val();
+        var servletName = 'ReceiptServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&paymentNo=' + paymentNoAir +
+                '&type=' + 'searchPaymentNoAir';
+        CallAjaxSearchPaymentNoAir(param);
 
-}
 
-function CallAjaxSearchPaymentNoAir(param) {
-    var url = 'AJAXServlet';
-    $("#ajaxload3").removeClass("hidden");
-    try {
-        $.ajax({
-            type: "POST",
-            url: url,
-            cache: false,
-            data: param,
-            success: function (msg) {
-                try { 
-                    if(msg == "null"){
-                        $('#AircommissionTable').dataTable().fnClearTable();
-                        $('#AircommissionTable').dataTable().fnDestroy();
-                        
-                        $('#AircommissionTable').dataTable({bJQueryUI: true,
-                            "sPaginationType": "full_numbers",
-                            "bAutoWidth": false,
-                            "bFilter": false,
-                            "bPaginate": true,
-                            "bInfo": false,
-                            "bLengthChange": false,
-                            "iDisplayLength": 5
-                        });
-                        $("#AircommissionTable_wrapper").css("min-height",100);
-                    }else{
-                        $('#AircommissionTable').dataTable().fnClearTable();
-                        $('#AircommissionTable').dataTable().fnDestroy();
-                        $("#AircommissionTable tbody").empty().append(msg);
-                        $('#AircommissionTable').dataTable({bJQueryUI: true,
-                            "sPaginationType": "full_numbers",
-                            "bAutoWidth": false,
-                            "bFilter": false,
-                            "bPaginate": true,
-                            "bInfo": false,
-                            "bLengthChange": false,
-                            "iDisplayLength": 5
-                        });
-                        
+    }
+
+    function CallAjaxSearchPaymentNoAir(param) {
+        var url = 'AJAXServlet';
+        $("#ajaxload3").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    try {
+                        if (msg == "null") {
+                            $('#AircommissionTable').dataTable().fnClearTable();
+                            $('#AircommissionTable').dataTable().fnDestroy();
+
+                            $('#AircommissionTable').dataTable({bJQueryUI: true,
+                                "sPaginationType": "full_numbers",
+                                "bAutoWidth": false,
+                                "bFilter": false,
+                                "bPaginate": true,
+                                "bInfo": false,
+                                "bLengthChange": false,
+                                "iDisplayLength": 5
+                            });
+                            $("#AircommissionTable_wrapper").css("min-height", 100);
+                        } else {
+                            $('#AircommissionTable').dataTable().fnClearTable();
+                            $('#AircommissionTable').dataTable().fnDestroy();
+                            $("#AircommissionTable tbody").empty().append(msg);
+                            $('#AircommissionTable').dataTable({bJQueryUI: true,
+                                "sPaginationType": "full_numbers",
+                                "bAutoWidth": false,
+                                "bFilter": false,
+                                "bPaginate": true,
+                                "bInfo": false,
+                                "bLengthChange": false,
+                                "iDisplayLength": 5
+                            });
+
 //                        document.getElementById("receiveFromCode").value = $("#receiveFromTicAir").val();
 //                        document.getElementById("receiveFromName").value = $("#receiveNameTicAir").val();
 //                        document.getElementById("receiveFromAddress").value = $("#receiveAddressTicAir").val();
 //                        document.getElementById("arCode").value = $("#receiveFromTicAir").val();
-                        
-                        $("#AircommissionTable_wrapper").css("min-height",100);
+
+                            $("#AircommissionTable_wrapper").css("min-height", 100);
+                        }
+                        $("#ajaxload3").addClass("hidden");
+                        setinvoice = 0;
+                    } catch (e) {
+                        alert(e);
                     }
+
+                }, error: function(msg) {
                     $("#ajaxload3").addClass("hidden");
-                    setinvoice = 0;
-                } catch (e) {
-                    alert(e);
                 }
-
-            }, error: function (msg) {
-                 $("#ajaxload3").addClass("hidden");
-            }
-        });
-    } catch (e) {
-        alert(e);
-    }
-}
-function searchPaymentNoTour() {
-    var paymentNoTour = $("#searchPaymentNoTour").val();
-    var servletName = 'ReceiptServlet';
-    var servicesName = 'AJAXBean';
-    var param = 'action=' + 'text' +
-            '&servletName=' + servletName +
-            '&servicesName=' + servicesName +
-            '&paymentNo=' + paymentNoTour +
-            '&type=' + 'searchPaymentNoTour';
-    CallAjaxSearchPaymentNoTour(param);
-
-}
-
-function CallAjaxSearchPaymentNoTour(param) {
-    var url = 'AJAXServlet';
-    $("#ajaxload4").removeClass("hidden");
-    try {
-        $.ajax({
-            type: "POST",
-            url: url,
-            cache: false,
-            data: param,
-            success: function (msg) {
-                try { 
-                    if(msg == "null"){
-                        $('#TourcommissionTable').dataTable().fnClearTable();
-                        $('#TourcommissionTable').dataTable().fnDestroy();
-                        $('#TourcommissionTable').dataTable({bJQueryUI: true,
-                            "sPaginationType": "full_numbers",
-                            "bAutoWidth": false,
-                            "bFilter": false,
-                            "bPaginate": true,
-                            "bInfo": false,
-                            "bLengthChange": false,
-                            "iDisplayLength": 5
-                        });
-                        $("#TourcommissionTable_wrapper").css("min-height",100);
-                    }else{
-                        $('#TourcommissionTable').dataTable().fnClearTable();
-                        $('#TourcommissionTable').dataTable().fnDestroy();
-                        $("#TourcommissionTable tbody").empty().append(msg);
-                        $('#TourcommissionTable').dataTable({bJQueryUI: true,
-                            "sPaginationType": "full_numbers",
-                            "bAutoWidth": false,
-                            "bFilter": false,
-                            "bPaginate": true,
-                            "bInfo": false,
-                            "bLengthChange": false,
-                            "iDisplayLength": 5
-                        });
-                        $("#TourcommissionTable_wrapper").css("min-height",100);
-                    }
-                    $("#ajaxload4").addClass("hidden");
-                     setinvoice = 0;
-                } catch (e) {
-                    alert(e);
-                }
-
-            }, error: function (msg) {
-                 $("#ajaxload4").addClass("hidden");
-            }
-        });
-    } catch (e) {
-        alert(e);
-    }
-}
-
-function deleteReceiptList(id,Ccount) {
-    document.getElementById('receiptDetailIdDelete').value = id;
-    document.getElementById('receiptRowDelete').value = Ccount;
-    $("#delProduct").text('Are you sure delete this product ?');
-    $('#DeleteProduct').modal('show');
-}
-
-function DeleteRowProduct(){
-    $('#textAlertDuplicateProduct').hide();
-    var cCount = document.getElementById('receiptRowDelete').value;
-    var id = document.getElementById('receiptDetailIdDelete').value;    
-    if(id === ''){
-        $("#receiveProduct" + cCount).parent().parent().remove();
-        var rowAll = $("#ReceiptListTable tr").length;
-        if (rowAll <= 1) {
-            $("#tr_ProductDetailAddRow").removeClass("hide");
-            $("#tr_ProductDetailAddRow").addClass("show");
+            });
+        } catch (e) {
+            alert(e);
         }
-    } 
-    else {
-        $.ajax({
-            url: '${callPage}?action=deleteReceiptDetail',
-            type: 'get',
-            data: {receiptDetailIdDelete: id},
-            success: function () {
-                $("#receiveProduct" + cCount).parent().parent().remove();
-                var rowAll = $("#ReceiptListTable tr").length;
-                if (rowAll <= 1) {
-                    $("#tr_ProductDetailAddRow").removeClass("hide");
-                    $("#tr_ProductDetailAddRow").addClass("show");
+    }
+    function searchPaymentNoTour() {
+        var paymentNoTour = $("#searchPaymentNoTour").val();
+        var servletName = 'ReceiptServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&paymentNo=' + paymentNoTour +
+                '&type=' + 'searchPaymentNoTour';
+        CallAjaxSearchPaymentNoTour(param);
+
+    }
+
+    function CallAjaxSearchPaymentNoTour(param) {
+        var url = 'AJAXServlet';
+        $("#ajaxload4").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    try {
+                        if (msg == "null") {
+                            $('#TourcommissionTable').dataTable().fnClearTable();
+                            $('#TourcommissionTable').dataTable().fnDestroy();
+                            $('#TourcommissionTable').dataTable({bJQueryUI: true,
+                                "sPaginationType": "full_numbers",
+                                "bAutoWidth": false,
+                                "bFilter": false,
+                                "bPaginate": true,
+                                "bInfo": false,
+                                "bLengthChange": false,
+                                "iDisplayLength": 5
+                            });
+                            $("#TourcommissionTable_wrapper").css("min-height", 100);
+                        } else {
+                            $('#TourcommissionTable').dataTable().fnClearTable();
+                            $('#TourcommissionTable').dataTable().fnDestroy();
+                            $("#TourcommissionTable tbody").empty().append(msg);
+                            $('#TourcommissionTable').dataTable({bJQueryUI: true,
+                                "sPaginationType": "full_numbers",
+                                "bAutoWidth": false,
+                                "bFilter": false,
+                                "bPaginate": true,
+                                "bInfo": false,
+                                "bLengthChange": false,
+                                "iDisplayLength": 5
+                            });
+                            $("#TourcommissionTable_wrapper").css("min-height", 100);
+                        }
+                        $("#ajaxload4").addClass("hidden");
+                        setinvoice = 0;
+                    } catch (e) {
+                        alert(e);
+                    }
+
+                }, error: function(msg) {
+                    $("#ajaxload4").addClass("hidden");
                 }
-//                AddRowProduct();
-            },
-            error: function () {
-                console.log("error");
-                result =0;
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
+
+    function deleteReceiptList(id, Ccount) {
+        document.getElementById('receiptDetailIdDelete').value = id;
+        document.getElementById('receiptRowDelete').value = Ccount;
+        $("#delProduct").text('Are you sure delete this product ?');
+        $('#DeleteProduct').modal('show');
+    }
+
+    function DeleteRowProduct() {
+        $('#textAlertDuplicateProduct').hide();
+        var cCount = document.getElementById('receiptRowDelete').value;
+        var id = document.getElementById('receiptDetailIdDelete').value;
+        if (id === '') {
+            $("#receiveProduct" + cCount).parent().parent().remove();
+            var rowAll = $("#ReceiptListTable tr").length;
+            if (rowAll <= 1) {
+                $("#tr_ProductDetailAddRow").removeClass("hide");
+                $("#tr_ProductDetailAddRow").addClass("show");
             }
-        }); 
-    }    
-    $('#DeleteProduct').modal('hide');
-    
+        }
+        else {
+            $.ajax({
+                url: '${callPage}?action=deleteReceiptDetail',
+                type: 'get',
+                data: {receiptDetailIdDelete: id},
+                success: function() {
+                    $("#receiveProduct" + cCount).parent().parent().remove();
+                    var rowAll = $("#ReceiptListTable tr").length;
+                    if (rowAll <= 1) {
+                        $("#tr_ProductDetailAddRow").removeClass("hide");
+                        $("#tr_ProductDetailAddRow").addClass("show");
+                    }
+//                AddRowProduct();
+                },
+                error: function() {
+                    console.log("error");
+                    result = 0;
+                }
+            });
+        }
+        $('#DeleteProduct').modal('hide');
+
 //    var tempcount = parseInt($("#ReceiptListTable tr").length);
 //    
 //    if(tempcount == 1){
@@ -2687,123 +2732,123 @@ function DeleteRowProduct(){
 //            $("#searchPaymentNoTour").removeAttr("disabled");
 //        }
 //    }
-    calculateGrandTotal();
-}
+        calculateGrandTotal();
+    }
 
-function deleteCreditList(id,Ccount) {
-    document.getElementById('receiptCreditIdDelete').value = id;
-    document.getElementById('receiptCreditRowDelete').value = Ccount;
-    $("#delCredit").text('Are you sure delete this credit ?');
-    $('#DeleteReceiptCredit').modal('show');
-}
+    function deleteCreditList(id, Ccount) {
+        document.getElementById('receiptCreditIdDelete').value = id;
+        document.getElementById('receiptCreditRowDelete').value = Ccount;
+        $("#delCredit").text('Are you sure delete this credit ?');
+        $('#DeleteReceiptCredit').modal('show');
+    }
 
-function DeleteRowCredit(){
-    var cCount = document.getElementById('receiptCreditRowDelete').value;
-    var id = document.getElementById('receiptCreditIdDelete').value;
-    if(id === ''){
-        $("#creditBank" + cCount).parent().parent().remove();
-        var rowAll = $("#CreditDetailTable tr").length;
-        if (rowAll <= 1) {
-            $("#tr_CreditDetailAddRow").removeClass("hide");
-            $("#tr_CreditDetailAddRow").addClass("show");
-        }
-    } 
-    else {
-        $.ajax({
-            url: '${callPage}?action=deleteReceiptCredit',
-            type: 'get',
-            data: {receiptCreditIdDelete: id},
-            success: function () {
-                $("#creditBank" + cCount).parent().parent().remove();
-                var rowAll = $("#CreditDetailTable tr").length;
-                if (rowAll <= 1) {
-                    $("#tr_CreditDetailAddRow").removeClass("hide");
-                    $("#tr_CreditDetailAddRow").addClass("show");
-                }
-            },
-            error: function () {
-                console.log("error");
-                result =0;
+    function DeleteRowCredit() {
+        var cCount = document.getElementById('receiptCreditRowDelete').value;
+        var id = document.getElementById('receiptCreditIdDelete').value;
+        if (id === '') {
+            $("#creditBank" + cCount).parent().parent().remove();
+            var rowAll = $("#CreditDetailTable tr").length;
+            if (rowAll <= 1) {
+                $("#tr_CreditDetailAddRow").removeClass("hide");
+                $("#tr_CreditDetailAddRow").addClass("show");
             }
-        }); 
-    }    
-    $('#DeleteReceiptCredit').modal('hide');
-}
+        }
+        else {
+            $.ajax({
+                url: '${callPage}?action=deleteReceiptCredit',
+                type: 'get',
+                data: {receiptCreditIdDelete: id},
+                success: function() {
+                    $("#creditBank" + cCount).parent().parent().remove();
+                    var rowAll = $("#CreditDetailTable tr").length;
+                    if (rowAll <= 1) {
+                        $("#tr_CreditDetailAddRow").removeClass("hide");
+                        $("#tr_CreditDetailAddRow").addClass("show");
+                    }
+                },
+                error: function() {
+                    console.log("error");
+                    result = 0;
+                }
+            });
+        }
+        $('#DeleteReceiptCredit').modal('hide');
+    }
 
-function DisableVoidReceipt(){
-    var receiveNo = document.getElementById('receiveNo');
-    document.getElementById('disableVoid').innerHTML = "Are you sure to delete booking other : " + receiveNo.value + " ?";
-}
+    function DisableVoidReceipt() {
+        var receiveNo = document.getElementById('receiveNo');
+        document.getElementById('disableVoid').innerHTML = "Are you sure to delete booking other : " + receiveNo.value + " ?";
+    }
 
-function EnableVoidReceipt(){
-    var receiveNo = document.getElementById('receiveNo');
-    document.getElementById('enableVoid').innerHTML = "Are you sure to enable booking other : " + receiveNo.value + " ?";
-}
+    function EnableVoidReceipt() {
+        var receiveNo = document.getElementById('receiveNo');
+        document.getElementById('enableVoid').innerHTML = "Are you sure to enable booking other : " + receiveNo.value + " ?";
+    }
 
-function Enable() {
-    var action = document.getElementById('action');
-    action.value = 'enableVoid';
-    document.getElementById('ReceiptForm').submit();
-}
+    function Enable() {
+        var action = document.getElementById('action');
+        action.value = 'enableVoid';
+        document.getElementById('ReceiptForm').submit();
+    }
 
-function DisableReceipt() {
-    var action = document.getElementById('action');
-    action.value = 'disableVoid';
-    document.getElementById('ReceiptForm').submit();
-}
+    function DisableReceipt() {
+        var action = document.getElementById('action');
+        action.value = 'disableVoid';
+        document.getElementById('ReceiptForm').submit();
+    }
 
-function checkAmount(row){
-    var amountTemp = document.getElementById('receiveAmountTemp'+row).value;
-    var amount = document.getElementById('receiveAmount'+row).value;
-    
-    amountTemp = replaceAll(",","",amountTemp.toString()); 
-    amount = replaceAll(",","",amount.toString()); 
-    
+    function checkAmount(row) {
+        var amountTemp = document.getElementById('receiveAmountTemp' + row).value;
+        var amount = document.getElementById('receiveAmount' + row).value;
+
+        amountTemp = replaceAll(",", "", amountTemp.toString());
+        amount = replaceAll(",", "", amount.toString());
+
 //    $("#receiveAmount"+row).focusout(function(){
 //        if(parseInt(amount) > parseInt(amountTemp)){
 //            document.getElementById('receiveAmount'+row).value = amountTemp; 
 //        }
 //    });
-    calculateGrandTotal();
-}
+        calculateGrandTotal();
+    }
 
-function getDescriptionDetail(row){
-    var description = $('#DescriptionReceiptDetail'+row).val();
-    $('#InputDescriptionDetailId').val(row);
-    $('#InputDescriptionDetail').val(description);
-}
+    function getDescriptionDetail(row) {
+        var description = $('#DescriptionReceiptDetail' + row).val();
+        $('#InputDescriptionDetailId').val(row);
+        $('#InputDescriptionDetail').val(description);
+    }
 
-function saveDescriptionDetail(){
-    var row = $('#InputDescriptionDetailId').val();
-    var descriptionDetail = $('#InputDescriptionDetail').val();
-    $('#DescriptionReceiptDetail'+row).val(descriptionDetail);
-    $('#InputDescriptionDetail'+row).val(descriptionDetail);    
-    $('#InputDescription'+row).val(descriptionDetail); 
-}
+    function saveDescriptionDetail() {
+        var row = $('#InputDescriptionDetailId').val();
+        var descriptionDetail = $('#InputDescriptionDetail').val();
+        $('#DescriptionReceiptDetail' + row).val(descriptionDetail);
+        $('#InputDescriptionDetail' + row).val(descriptionDetail);
+        $('#InputDescription' + row).val(descriptionDetail);
+    }
 
 
-function copyReceipt(){
-    if($("#receiveFromDate").val() != ""){
-        $('#CopyReceiptModal').modal('show');
-    }    
-}
+    function copyReceipt() {
+        if ($("#receiveFromDate").val() != "") {
+            $('#CopyReceiptModal').modal('show');
+        }
+    }
 
-function confirmCopyReceipt(){
-    $('#CopyReceiptModal').modal('hide');
-    var action = document.getElementById('action');
-    action.value = 'saveReceipt';
-    var receiveId = document.getElementById('receiveId');
-    receiveId.value = '';
-    var receiveNo = document.getElementById('receiveNo');
-    receiveNo.value = '';
-    var counter = document.getElementById('counter');
-    counter.value = $("#ReceiptListTable tr").length;
-    var countRowCredit = document.getElementById('countRowCredit');
-    countRowCredit.value = $("#CreditDetailTable tr").length;
-    document.getElementById('ReceiptForm').submit();
-}
+    function confirmCopyReceipt() {
+        $('#CopyReceiptModal').modal('hide');
+        var action = document.getElementById('action');
+        action.value = 'saveReceipt';
+        var receiveId = document.getElementById('receiveId');
+        receiveId.value = '';
+        var receiveNo = document.getElementById('receiveNo');
+        receiveNo.value = '';
+        var counter = document.getElementById('counter');
+        counter.value = $("#ReceiptListTable tr").length;
+        var countRowCredit = document.getElementById('countRowCredit');
+        countRowCredit.value = $("#CreditDetailTable tr").length;
+        document.getElementById('ReceiptForm').submit();
+    }
 
-function calculateGrandTotal(){
+    function calculateGrandTotal() {
 //    var temp = 0;
 //    var i = 1;
 //    var amountTemp = parseFloat(0);
@@ -2822,106 +2867,106 @@ function calculateGrandTotal(){
 //        }   
 //    }
 //    document.getElementById("grandTotal").value = formatNumber(amount);
-    
-    var count = parseInt(document.getElementById('counter').value);
-    var i;
-    var grandTotal = 0;
-    for(i=1;i<count+1;i++){
-        var amount = document.getElementById("receiveAmount" + i);
-        if (amount !== null){
-            var value = amount.value;
-            if(value !== ''){
-                value = value.replace(/,/g,"");
-                var total = parseFloat(value);
-                grandTotal += total;
-                document.getElementById('receiveAmount' + i).value = formatNumber(total);
+
+        var count = parseInt(document.getElementById('counter').value);
+        var i;
+        var grandTotal = 0;
+        for (i = 1; i < count + 1; i++) {
+            var amount = document.getElementById("receiveAmount" + i);
+            if (amount !== null) {
+                var value = amount.value;
+                if (value !== '') {
+                    value = value.replace(/,/g, "");
+                    var total = parseFloat(value);
+                    grandTotal += total;
+                    document.getElementById('receiveAmount' + i).value = formatNumber(total);
+                }
             }
         }
-    }
-    document.getElementById('grandTotal').value = formatNumber(grandTotal);
-}
-
-
-function setFormatCurrencyOnFocusOut(row){
-    $('#receiveAmount'+row).focusout(function(){
-        setFormatCurrency(row);
-        calculateGrandTotal();
-    });
-
-    $('#receiveCost'+row).focusout(function(){
-        setFormatCurrency(row);
-        calculateGrandTotal()
-    });
-
-    
-}
-
-function checkSumAmountBeforeSave(){
-   sumTotalCreditAmount();
-
-    var sumCreditAmountTemp = replaceAll(",","",$("#sumCreditAmountTemp").val()); 
-    if (sumCreditAmountTemp == ""){
-        sumCreditAmountTemp = 0;
-    }
-    
-    var chqAmount1 = replaceAll(",","",$("#chqAmount1").val());
-    if (chqAmount1 == ""){
-        chqAmount1 = 0;
-    }
-    var chqAmount2 = replaceAll(",","",$("#chqAmount2").val()); 
-    if (chqAmount2 == ""){
-        chqAmount2 = 0;
-    }
-    
-    var withTax = replaceAll(",","",$("#withTax").val());
-    if (withTax == ""){
-        withTax = 0;
+        document.getElementById('grandTotal').value = formatNumber(grandTotal);
     }
 
-    var cashAmount = replaceAll(",","",$("#cashAmount").val());
-    if (cashAmount == ""){
-        cashAmount = 0;
+
+    function setFormatCurrencyOnFocusOut(row) {
+        $('#receiveAmount' + row).focusout(function() {
+            setFormatCurrency(row);
+            calculateGrandTotal();
+        });
+
+        $('#receiveCost' + row).focusout(function() {
+            setFormatCurrency(row);
+            calculateGrandTotal()
+        });
+
+
     }
-    
-    var bankTransfer = replaceAll(",","",$("#bankTransfer").val());
-    if (bankTransfer == ""){
-        bankTransfer = 0;
+
+    function checkSumAmountBeforeSave() {
+        sumTotalCreditAmount();
+
+        var sumCreditAmountTemp = replaceAll(",", "", $("#sumCreditAmountTemp").val());
+        if (sumCreditAmountTemp == "") {
+            sumCreditAmountTemp = 0;
+        }
+
+        var chqAmount1 = replaceAll(",", "", $("#chqAmount1").val());
+        if (chqAmount1 == "") {
+            chqAmount1 = 0;
+        }
+        var chqAmount2 = replaceAll(",", "", $("#chqAmount2").val());
+        if (chqAmount2 == "") {
+            chqAmount2 = 0;
+        }
+
+        var withTax = replaceAll(",", "", $("#withTax").val());
+        if (withTax == "") {
+            withTax = 0;
+        }
+
+        var cashAmount = replaceAll(",", "", $("#cashAmount").val());
+        if (cashAmount == "") {
+            cashAmount = 0;
+        }
+
+        var bankTransfer = replaceAll(",", "", $("#bankTransfer").val());
+        if (bankTransfer == "") {
+            bankTransfer = 0;
+        }
+
+        var sumCreditAmount = parseFloat(sumCreditAmountTemp);
+        var chq1 = parseFloat(chqAmount1);
+        var chq2 = parseFloat(chqAmount2);
+        var tax = parseFloat(withTax);
+        var cash = parseFloat(cashAmount);
+        var bank = parseFloat(bankTransfer);
+
+        //Sum Amount =  W/T + Cast Amount + Bank Transfer + Sum  Amount of Chq Bank + Sum Amount in table Credit Card
+        var sumAmount = tax + cash + bank + chq1 + chq2 + sumCreditAmount;
+        document.getElementById("sumAmountBeforeSave").value = formatNumber(sumAmount);
+
     }
-    
-    var sumCreditAmount = parseFloat(sumCreditAmountTemp);
-    var chq1 = parseFloat(chqAmount1);
-    var chq2 = parseFloat(chqAmount2);
-    var tax = parseFloat(withTax);
-    var cash = parseFloat(cashAmount);
-    var bank = parseFloat(bankTransfer);
-    
-    //Sum Amount =  W/T + Cast Amount + Bank Transfer + Sum  Amount of Chq Bank + Sum Amount in table Credit Card
-    var sumAmount = tax + cash + bank + chq1 + chq2 + sumCreditAmount ;
-    document.getElementById("sumAmountBeforeSave").value = formatNumber(sumAmount);
-
-}
 
 
-function sumTotalCreditAmount(){
-    //Sum Amount =  W/T + Cast Amount + Bank Transfer + Sum  Amount of Chq Bank + Sum Amount in table Credit Card
-   
-    var temp = 0;
-    var i = 1;
-    var amountTemp = parseFloat(0);
-    var tableCredit = $("#CreditDetailTable tr").length;
-    for (i ; i < tableCredit ; i++) {
-        temp = document.getElementById("creditAmount" + i);
-        if(temp !== null){
-            temp = temp.value;
-            if(temp == '') {
-                temp = 0;
+    function sumTotalCreditAmount() {
+        //Sum Amount =  W/T + Cast Amount + Bank Transfer + Sum  Amount of Chq Bank + Sum Amount in table Credit Card
+
+        var temp = 0;
+        var i = 1;
+        var amountTemp = parseFloat(0);
+        var tableCredit = $("#CreditDetailTable tr").length;
+        for (i; i < tableCredit; i++) {
+            temp = document.getElementById("creditAmount" + i);
+            if (temp !== null) {
+                temp = temp.value;
+                if (temp == '') {
+                    temp = 0;
+                }
+                temp = replaceAll(",", "", temp.toString());
+                var value = parseFloat(temp);
+                var amount = amountTemp + value;
+                amountTemp = amount;
             }
-            temp = replaceAll(",","",temp.toString());
-            var value = parseFloat(temp) ;
-            var amount = amountTemp + value ;
-            amountTemp = amount;
-        }   
+        }
+        document.getElementById("sumCreditAmountTemp").value = formatNumber(amount);
     }
-    document.getElementById("sumCreditAmountTemp").value = formatNumber(amount);
-}
 </script>
