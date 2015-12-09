@@ -187,7 +187,7 @@ function CallAjaxAuto(param){
                                 },
                                 date: {
                                     format: 'YYYY-MM-DD',
-                                    max: 'FromDate',
+                                    max: 'ToDate',
                                     message: 'The Date From is not a valid'
                                 }
                             }
@@ -200,7 +200,7 @@ function CallAjaxAuto(param){
                                 },
                                 date: {
                                     format: 'YYYY-MM-DD',
-                                    min: 'ToDate',
+                                    min: 'FromDate',
                                     message: 'The Date To is not a valid'
                                 }
                             }

@@ -8,9 +8,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="dataList" value="${requestScope['Airline_List']}" />
-<script type="text/javascript" src="js/MAirticket.js"></script> 
+<script type="text/javascript" src="js/MExchangeRate.js"></script>
+<c:set var="ExchangeList" value="${requestScope['ExchangeList']}" />
 
+<c:set var="listCurrency" value="${requestScope['listCurrency']}" />
 <section class="content-header" >
     <h1>
         Master Change Rate - Change Rate
@@ -28,28 +29,6 @@
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             
         </div>
-        <script type="text/javascript" charset="utf-8">
-            $(document).ready(function() {
-                var table = $('#MasterOthers').dataTable({bJQueryUI: true,
-                    "sPaginationType": "full_numbers",
-                    "bAutoWidth": false,
-                    "bFilter": false,
-                    "bInfo": false
-                });
-
-                $('#MasterOthers tbody').on('click', 'tr', function() {
-                    if ($(this).hasClass('row_selected')) {
-                        $(this).removeClass('row_selected');
-                    }
-                    else {
-                        table.$('tr.row_selected').removeClass('row_selected');
-                        $(this).addClass('row_selected');
-                    }
-                });
-
-            });
-
-        </script>
         <!-- main page -->
         <div class="col-md-10">
             <!--Alert Save --> 
@@ -68,31 +47,46 @@
                     <strong>Air ticket name already exist!</strong> 
             </div>
             <div class="row">
-                <form action="Mairticket.smi" method="post" id="SearchAirLine" role="form">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="AirCodeS">Code</label>
-                            <input type="text"   class="form-control" maxlength="3" id="AirCodeS" name="AirCodeS" style="text-transform:uppercase" value="${requestScope['airCode']}">
-
+                <form action="MExchangeRate.smi" method="post" id="SearchExchange" name="SearchExchange"  role="form">
+                    <div class="col-xs-1 text-right">
+                        <label class="control-label" for="">From<font style="color: red">*</font></lable>
+                    </div>
+                    <div class="col-md-2 form-group"> 
+                        <div class='input-group date fromdate' id="DateFrom">
+                            <input id="FromDate" name="FromDate"  type="text" 
+                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${fromdate}">
+                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                                          
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="AirNameS">Name</label>
-                            <input type="text"  class="form-control" id="AirNameS" name="AirNameS" style="text-transform:uppercase" value="${requestScope['airName']}">
+                    <div class="col-xs-1 text-left" >
+                        <label class="control-label" for="">To<font style="color: red">*</font></lable>
+                    </div>
+                    <div class="col-md-2 form-group" > 
+                        <div class='input-group date todate' id="DateTo">
+                            <input id="ToDate" name="ToDate"  type="text" 
+                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${todate}">
+                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                        
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="Code3S">Code 3 letter</label>
-                            <input type="text"  class="form-control" maxlength="3" id="Code3S" name="Code3S" style="text-transform:uppercase" value="${requestScope['code3']}">
-                        </div>
+                    <div class="col-xs-1 text-right" >
+                        <label class="control-label" for="">Currency</lable>
                     </div>
-
+                    <div class="col-md-2 form-group" >
+                        <select class="form-control" id="CurrencyS" name="CurrencyS">
+                            <option value="">--select--</option>
+                            <c:forEach var="cur" items="${listCurrency}">
+                                <c:set var="selectA" value="" />
+                                <c:if test="${cur.code == currency_exchange}">
+                                    <c:set var="selectA" value="selected" />
+                                </c:if> 
+                                <option value='${cur.code}' ${selectA}>${cur.code}</option>
+                            </c:forEach>
+                        </select>    
+                    </div>
                     <div class="col-md-3">
                         <div  style="padding-top: 20px">   
-                            <button type="button" id="acs" onclick="searchAction()"  class="btn btn-primary"><span class="fa fa-search"></span>Search</button>           
-                            <input type="hidden" name="action" id="Action"/>
+                            <button type="submit" id="ButtonSearch"  name="ButtonSearch" onclick="searchExchange()"  class="btn btn-primary"><span class="fa fa-search"></span>Search</button>           
+                            <input type="hidden" name="actionSearch" id="actionSearch"/>
                         </div>
                     </div>
                 </form>
@@ -101,10 +95,10 @@
             <hr>
             <div class="row" style="padding-left: 15px">  
                 <div class="col-md-6">
-                    <h4><b>Airline</b></h4>
+                    <h4><b>Exchange Rate</b></h4>
                 </div>
                 <div class="col-md-6 " style="padding-left:  182px">
-                    <button id="btnAdd" type="button" class="btn btn-success" onclick="addaction()"  data-toggle="modal" data-target="#AirModal">
+                    <button id="btnAdd" type="button" class="btn btn-success" onclick="addaction()"  data-toggle="modal" data-target="#ExchangeRateModal">
                         <span id="spanAdd" class="glyphicon glyphicon-plus"></span>Add
                     </button>
                 </div>
@@ -112,29 +106,29 @@
             </div>
             <div class="row" style="padding-left: 15px">    
                 <div class="col-md-9"> 
-                    <table id="MasterOthers" class="display" cellspacing="0" >
+                    <table id="ExchangeRateTable" class="display" cellspacing="0" >
                         <thead>
                             <tr class="datatable-header">
                                 <th class="hidden" ></th>
-                                <th style="width: 30px" >Code</th>
-                                <th>Name</th>
-                                <th style="width: 110px">Code 3 letter</th>
-                                <th style="width: 70px">Action</th>
+                                <th>Date</th>
+                                <th>Currency</th>
+                                <th>Exchange Rate</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="table" items="${dataList}" varStatus="dataStatus">
-                                <tr>
-                                    <td class="hidden" ><c:out value="${table.name}" /></td>
-                                    <td><c:out value="${fn:toUpperCase(table.code)}"  /></td>
-                                    <td><c:out value="${fn:toUpperCase(table.name)}"/></td>
-                                    <td><c:out value="${fn:toUpperCase(table.code3Letter)}" /></td>
-                                    <td>
-                            <center> 
-                                <span id="editSpan${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditAir('${table.id}', '${table.code}', '${table.name}', '${table.code3Letter}')" data-toggle="modal" data-target="#AirModal" ></span>
-                                <span id="removeSpan${dataStatus.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteAir('${table.id}', '${table.code}')" data-toggle="modal" data-target="#delAirModal"></span>
-                            </center>
-                            </td>                 
+                        <c:forEach var="table" items="${ExchangeList}" varStatus="dataStatus">
+                            <tr>
+                                <td class="hidden" ><c:out value="${table.id}" /></td>
+                                <td><c:out value="${fn:toUpperCase(table.exdate)}"  /></td>
+                                <td><c:out value="${fn:toUpperCase(table.currency)}"/></td>
+                                <td><c:out value="${fn:toUpperCase(table.exrate)}" /></td>
+                                <td>
+                                <center> 
+                                    <span id="editSpan${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditExchange('${table.id}', '${table.exdate}', '${table.currency}', '${table.exrate}', '${table.createby}', '${table.createdate}')" data-toggle="modal" data-target="#ExchangeRateModal" ></span>
+                                    <span id="removeSpan${dataStatus.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteExchange('${table.id}', '${table.exdate}', '${table.currency}')" data-toggle="modal" data-target="#DeleteExchangeModal"></span>
+                                </center>
+                                </td>                 
                             </tr>  
                         </c:forEach>
                         </tbody>
@@ -145,36 +139,48 @@
     </div>
 </div>
 
-<div class="modal fade" id="AirModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="ExchangeRateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 500px">
-        <form action="Mairticket.smi" method="post" id="Aitlineform" class="form-horizontal"  role="form">
+        <form action="MExchangeRate.smi" method="post" id="ExchangeRateForm" name="ExchangeRateForm" class="form-horizontal"  role="form">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">AirLine</h4>
+                    <h4 class="modal-title">Exchange Rate</h4>
                 </div>
                 <div class="modal-body">
-
                     <div class="form-group">
-                        <label for="AirCode" class="col-sm-3 control-label" >Code <font style="color: red">*</font></label>
-                        <div class="col-sm-8"> 
-                            <input type="text" class="form-control" maxlength="3" id="AirCode" name="AirCode" style="text-transform:uppercase" required >
+                        <label for="ExchangeRate" class="col-sm-3 control-label" >Exchange Date<font style="color: red">*</font></label>
+                        <div class="col-sm-8 " > 
+                            <div class='input-group date ' id="DateExchange">
+                                <input id="ExchangeDate" name="ExchangeDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                                          
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="AirName" class="col-sm-3 control-label" >Name <font style="color: red">*</font></label>
+                        <label for="ExchangeRate" class="col-sm-3 control-label" >Exchange Rate </label>
                         <div class="col-sm-8">  
-                            <input type="text" class="form-control" maxlength="50" id="AirName" name="AirName" style="text-transform:uppercase" required >
+                            <input type="text" class="form-control" maxlength="50" id="ExchangeRate" name="ExchangeRate" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="Code3" class="col-sm-3 control-label" >Code 3 Letter</label>
+                        <label for="Code3" class="col-sm-3 control-label" >Currency</label>
                         <div class="col-sm-8">   
-                            <input type="text" class="form-control" maxlength="3" id="Code3" name="Code3" style="text-transform:uppercase" > 
+                            <select class="form-control" id="Currency" name="Currency">
+                            <option value="">--select--</option>
+                            <c:forEach var="cur" items="${listCurrency}">
+                                <c:set var="selectA" value="" />
+                                <c:if test="${cur.code == currency_exchange}">
+                                    <c:set var="selectA" value="selected" />
+                                </c:if> 
+                                <option value='${cur.code}' ${selectA}>${cur.code}</option>
+                            </c:forEach>
+                        </select> 
                         </div>
                     </div>
-                    <input type="hidden" id="AirID" name="AirID" >
-                    <input type="hidden" id="actionIUP" name="action">
+                    <input type="hidden" id="ExchangeID" name="ExchangeID" >
+                    <input type="hidden" id="action" name="action">
 
                 </div>
                 <div class="modal-footer">
@@ -186,12 +192,12 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="delAirModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="DeleteExchangeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Delete Airline</h4>
+                <h4 class="modal-title">Delete Exchange</h4>
             </div>
             <div class="modal-body" id="delCode"></div>
             <div class="modal-footer">
