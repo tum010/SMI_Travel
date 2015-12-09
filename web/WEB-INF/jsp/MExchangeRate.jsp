@@ -43,19 +43,19 @@
             </div>
             <div id="textAlertDivUpdate"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Save Success!</strong> 
+                    <strong>Update Success!</strong> 
             </div>
             <div id="textAlertDivNotUpdate"  style="display:none;" class="alert alert-danger" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Save Not Success!</strong> 
+                    <strong>Update Not Success!</strong> 
             </div>
             <div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Save Success!</strong> 
+                    <strong>Delete Success!</strong> 
             </div>
             <div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-danger" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Save Not Success!</strong> 
+                    <strong>Delete Not Success!</strong> 
             </div>
             <!-- Alert Uni-->
             <div id="textAlertDuplicate"  style="display:none;" class="alert alert-danger" role="alert">
@@ -177,7 +177,7 @@
                     <div class="form-group">
                         <label for="ExchangeRate" class="col-sm-3 control-label" >Exchange Rate </label>
                         <div class="col-sm-8">  
-                            <input type="text" class="form-control" maxlength="50" id="ExchangeRate" name="ExchangeRate" >
+                            <input type="text" class="form-control" maxlength="50" id="ExchangeRate" name="ExchangeRate"  onfocusout="formatDecimal();">
                         </div>
                     </div>
                     <div class="form-group">

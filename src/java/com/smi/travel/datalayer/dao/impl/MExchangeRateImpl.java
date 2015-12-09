@@ -7,8 +7,6 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.MExchangeRateDao;
 import com.smi.travel.datalayer.entity.MExchangeRate;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -105,10 +103,13 @@ public class MExchangeRateImpl extends HibernateDaoSupport implements MExchangeR
         if(exchangedate == null  &&  currency == null ){
             query = " FROM MExchangeRate  mg " ; 
         }else{
-           
-            query = " FROM MExchangeRate  mg  where " ;
+           if("".equals(exchangedate) && "".equals(currency)){
+                query = " FROM MExchangeRate  mg " ;
+           }else{
+                query = " FROM MExchangeRate  mg  where " ;
+           }
         }
-        if (exchangedate != null ) {
+        if (exchangedate != null && !"".equals(exchangedate)) {
             if(AndQuery == 1){
                  query += " and mg.exdate  = '" + exchangedate + "' ";
             }else{
@@ -126,6 +127,56 @@ public class MExchangeRateImpl extends HibernateDaoSupport implements MExchangeR
         }
         System.out.println("query exchange: "+query );
         List<MExchangeRate> list = getHibernateTemplate().find(query);
+        if(list.isEmpty()){
+            return null;
+        }
+        return list;
+    }
+
+    @Override
+    public String findExchangeDuplicate(String exchangedate, String currency) {
+        String result ="";
+        String query = "";
+        int AndQuery = 0;
+        
+        if(exchangedate == null  &&  currency == null ){
+            query = " FROM MExchangeRate  mg " ; 
+        }else{
+           if("".equals(exchangedate) && "".equals(currency)){
+                query = " FROM MExchangeRate  mg " ;
+           }else{
+                query = " FROM MExchangeRate  mg  where " ;
+           }
+        }
+        if (exchangedate != null && !"".equals(exchangedate)) {
+            if(AndQuery == 1){
+                 query += " and mg.exdate  = '" + exchangedate + "' ";
+            }else{
+                AndQuery = 1;
+                 query += " mg.exdate  = '" + exchangedate + "' ";
+            }
+        }
+        if(currency != null && (!"".equalsIgnoreCase(currency))){
+            if(AndQuery == 1){
+                query += " and mg.currency = '" + currency + "'";
+           }else{
+               AndQuery = 1;
+               query += " mg.currency = '" + currency + "'";
+           }
+        }
+        System.out.println("query exchange: "+query );
+        List<MExchangeRate> list = getHibernateTemplate().find(query);
+        if(list.isEmpty()){
+            result = "OK";
+        }else{
+            result = "CANCEL";
+        }
+        return result;
+    }
+
+    @Override
+    public List getDaliyExchangeRate(String currentdate, String currency) {
+        List<MExchangeRate> list = searchExchangeRateById(currentdate, currency);
         if(list.isEmpty()){
             return null;
         }

@@ -24,6 +24,10 @@ public class MExchangeRateService {
         return mExchangeRateDao.searchExchangeRateById(exchangedate,currency);
     }
     
+    public String findExchangeDuplicate(String exchangedate, String currency){
+        return mExchangeRateDao.findExchangeDuplicate(exchangedate, currency);
+    }
+    
     public String insertExchange(MExchangeRate mExchangeRate){
         if(mExchangeRate.getId() != null && !"".equals(mExchangeRate.getId())){
             return mExchangeRateDao.updateExchange(mExchangeRate);

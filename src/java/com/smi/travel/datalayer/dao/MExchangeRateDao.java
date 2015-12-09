@@ -15,6 +15,8 @@ import java.util.List;
 public interface MExchangeRateDao {
     public List searchExchangeRate(String from, String to, String currency);
     public List searchExchangeRateById(String exchangedate, String currency);
+    public List getDaliyExchangeRate(String currentdate, String currency);
+    public String findExchangeDuplicate(String exchangedate, String currency);
     public String insertExchange(MExchangeRate mExchangeRate);
     public String updateExchange(MExchangeRate mExchangeRate);
     public String deleteExchange(MExchangeRate mExchangeRate);
