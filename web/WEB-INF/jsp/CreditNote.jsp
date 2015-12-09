@@ -21,7 +21,27 @@
 <c:set var="page" value="${requestScope['page']}" />
 <section class="content-header" >
     <h1>
-        Finance & Cashier - Credit Note
+        <c:set var="type" value=""/>
+        <c:set var="panelheader" value=""/>
+        <c:set var="panelborder" value=""/>
+        <c:choose>
+            <c:when test="${fn:contains(page , 'W')}">
+                <c:set var="type" value="Wendy"/>
+                <c:set var="panelheader" value="wendyheader"/>
+                <c:set var="panelborder" value="wendyborder"/>
+            </c:when>
+            <c:when test="${fn:contains(page , 'O')}">
+                <c:set var="type" value="Outbound"/>
+                <c:set var="panelheader" value="outboundheader"/>
+                <c:set var="panelborder" value="outboundborder"/>
+            </c:when>     
+            <c:when test="${fn:contains(page , 'I')}">
+                <c:set var="type" value="Inbound"/>
+                <c:set var="panelheader" value="inboundborderheader"/>
+                <c:set var="panelborder" value="inboundborder"/>
+            </c:when> 
+        </c:choose> 
+        <h4><b>Finance & Cashier - Credit Note ${type} <font style="color: red;">${creditNote.MFinanceItemstatus.id == '2' ? 'VOID' : ''}</font></b></h4>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Finance & Cashier </a></li>          
@@ -34,33 +54,7 @@
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/FinanceAndCashier/CreditNoteMainMenu.html'"></div>
         </div>
-        <c:set var="panelheader" value=""/>
-        <c:set var="panelborder" value=""/>
         <div class="col-sm-10">
-            <div class="row" style="padding-left: 15px">  
-                <div class="col-sm-6 " style="padding-right: 15px">
-                    <c:set var="type" value=""/>
-                    <c:choose>
-                        <c:when test="${fn:contains(page , 'W')}">
-                            <c:set var="type" value="Wendy"/>
-                            <c:set var="panelheader" value="wendyheader"/>
-                            <c:set var="panelborder" value="wendyborder"/>
-                        </c:when>
-                        <c:when test="${fn:contains(page , 'O')}">
-                            <c:set var="type" value="Outbound"/>
-                            <c:set var="panelheader" value="outboundheader"/>
-                            <c:set var="panelborder" value="outboundborder"/>
-                        </c:when>     
-                        <c:when test="${fn:contains(page , 'I')}">
-                            <c:set var="type" value="Inbound"/>
-                            <c:set var="panelheader" value="inboundborderheader"/>
-                            <c:set var="panelborder" value="inboundborder"/>
-                        </c:when> 
-                    </c:choose> 
-                    <h4><b>Credit Note ${type} <font style="color: red;">${creditNote.MFinanceItemstatus.id == '2' ? 'VOID' : ''}</font></b></h4>
-                </div>
-            </div>
-            <hr/>
             <form action="CreditNote${page}.smi" method="post" id="CreditNoteForm" name="CreditNoteForm" role="form" class="ng-pristine ng-valid bv-form">
                 <div id="alertSuccess"  style="" class="alert alert-success alert-dismissible" role="alert" <c:if test="${successStatus != true}">hidden="true"</c:if> >
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -77,7 +71,7 @@
                 <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                 <div class="panel panel-default ${panelborder}">
                     <div class="panel-heading ${panelheader}">
-                        <h4 class="panel-title">Credit Note Detail</h4>
+                        <h4 class="panel-title"><font style="color: white">Credit Note Detail</font></h4>
                     </div>
                     <div class="panel-body"  style="padding-right: 0px;">
                         <div class="row">
@@ -135,6 +129,14 @@
                                         <textarea rows="3" class="form-control" id="address" name="address" style="width: 279%"><c:out value="${creditNote.cnAddress}"/></textarea>  
                                     </div>
                                 </div>
+                                <div class="col-xs-1 text-right" style="width: 370px">
+                                    <label class="control-label text-right">Remark</label>
+                                </div>
+                                <div class="col-xs-1" style="width: 145px">
+                                    <div class="input-group">                                    
+                                        <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 279%"><c:out value="${creditNote.cnRemark}"/></textarea>  
+                                    </div>
+                                </div>    
                             </div>
                         </div>
 
@@ -238,19 +240,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12" style="padding-top: 15px">
-                                <div class="col-xs-1 text-right" style="width: 80px">
-                                    <label class="control-label text-right">Remark</label>
-                                </div>
-                                <div class="col-xs-1 text-right" style="width: 800px">
-                                    <div class="input-group">                                    
-                                        <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 582%"><c:out value="${creditNote.cnRemark}"/></textarea>  
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </div>                       
                     </div>
                 </div> 
                 <div class="row"><div class="col-md-12" style="padding-top: 15px"></div></div>
