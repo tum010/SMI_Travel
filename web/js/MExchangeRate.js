@@ -39,7 +39,7 @@ function Delete() {
 }
 
 function formatDecimal() {
-    var decimalOnly = /^\s*-?[1-9]\d*(\.\d{1,4})?\s*$/;
+    var decimalOnly = /^\s*-?[0-9]\d*(\.\d{1,4})?\s*$/;
     var myData = document.getElementById("ExchangeRate").value;
     if(myData!==''){
         if(decimalOnly.test(myData)){

@@ -65,7 +65,7 @@
             <div class="row">
                 <form action="MExchangeRate.smi" method="post" id="SearchExchange" name="SearchExchange"  role="form">
                     <div class="col-xs-1 text-right">
-                        <label class="control-label" for="">From<font style="color: red">*</font></lable>
+                        <label class="control-label" for="">From</lable>
                     </div>
                     <div class="col-md-2 form-group"> 
                         <div class='input-group date fromdate' id="DateFrom">
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="col-xs-1 text-left" >
-                        <label class="control-label" for="">To<font style="color: red">*</font></lable>
+                        <label class="control-label" for="">To</lable>
                     </div>
                     <div class="col-md-2 form-group" > 
                         <div class='input-group date todate' id="DateTo">
