@@ -148,16 +148,16 @@
                 <div role="tabpanel">
                     <!-- Nav tabs -->
 
-                    <ul class="nav nav-tabs " role="tablist">
+<!--                    <ul class="nav nav-tabs " role="tablist">
                         <li role="presentation" class="active "><a href="#inv" aria-controls="inv" role="tab" data-toggle="tab">INV</a></li>
                         <li role="presentation" class=""><a href="#ref" aria-controls="ref" role="tab" data-toggle="tab">REF</a></li>
                         <li role="presentation" class=""><a href="#com" aria-controls="com" role="tab" data-toggle="tab">COM</a></li>
                         <h4><a class="col-xs-9 text-right" data-toggle="collapse" href="#collapseTab" aria-expanded="false" aria-controls="collapseTab">
                                 <span id="arrowReceipt" class="arrowReceipt glyphicon glyphicon-chevron-up"></span>
                             </a></h4>
-                    </ul>
+                    </ul>-->
 
-                    <!-- Tab BL -->
+<!--                     Tab BL 
                     <div class="panel panel-default ${panelborder}">
                         <div class="panel-body">
                             <div class="tab-content collapse in" id="collapseTab" aria-expanded="false">
@@ -175,7 +175,7 @@
                                         <div class="col-xs-1 text-left"  style="width: 100px">
                                             <button style="height:30px" type="button"  id="ButtonSearchInvoice"  name="ButtonSearchInvoice" onclick="searchInvoice();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
                                         </div>
-                                        <!--Invoice Table-->
+                                        Invoice Table
                                         <div class="row" style="padding-left: 10px;padding-right: 10px">
                                             <table id="InvoiceListTable" class="display" cellspacing="0" width="100%">
                                                 <thead>
@@ -195,7 +195,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Tab REF -->
+                                 Tab REF 
                                 <div role="tabpanel" class="tab-pane hidden" id="ref">
                                     <div class="col-xs-12" style="padding-top: 20px; padding-left: 50px;padding-right: 50px">
                                         <div class="col-xs-1 text-right" style="width: 120px">
@@ -210,7 +210,7 @@
                                         <div class="col-xs-1 text-left"  style="width: 100px">
                                             <button style="height:30px" type="button"  id="ButtonSearchRefNo"  name="ButtonSearchRefNo" onclick="searchRefNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
                                         </div>
-                                        <!--RefNo Table-->
+                                        RefNo Table
                                         <div class="row" style="padding-left: 10px;padding-right: 10px">
                                             <table id="RefNoListTable" class="display" cellspacing="0" width="100%">
                                                 <thead>
@@ -229,7 +229,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Tab COM -->
+                                 Tab COM 
                                 <div role="tabpanel" class="tab-pane hidden" id="com">
                                     <div class="col-xs-6" style="padding-top: 20px; border-right:solid 1px #D9D9D9">
                                         <div class="col-xs-1 text-left" style="width: 200px">
@@ -242,7 +242,7 @@
                                             <input style="width: 150px" id="searchPaymentNoAir" name="searchPaymentNoAir" type="text" class="form-control" value="">
                                         </div>
                                         <div class="col-xs-1  text-left" style="padding-top: 6px;width: 4px"><i id="ajaxload3"  class="fa fa-spinner fa-spin hidden"></i></div>
-                                        <!--Invoice Table-->
+                                        Invoice Table
                                         <div class="row" style="padding-left: 10px;padding-right: 10px">
                                             <table id="AircommissionTable" class="display" width="100%">
                                                 <thead>
@@ -289,7 +289,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
 
                     <div class="panel panel-default ${panelborder}">
                         <div class="panel-heading ${panelheader}">
@@ -390,40 +390,45 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12" style="margin-top: -20px">
-                            <div class="col-xs-1 text-right" style="width: 150px; margin-top: -5px">                              
-                                <label class="control-label text-right">Search</label>  
-                            </div>
-                            <div class="col-xs-1">
-                                <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchInv()">
-                                    <span id="SpanEdit${advanced.search}">Invoice</span>
-                                </a>                                
-                            </div>
-                            <div class="col-xs-1">
-                                <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchRefNo()">
-                                    <span id="SpanEdit${advanced.search}">Ref No.</span>
-                                </a>                                
-                            </div>
-                            <div class="col-xs-1">
-                                <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchCom()">
-                                    <span id="SpanEdit${advanced.search}">Com</span>
-                                </a>                                
-                            </div>
-                            <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxloadsearch"  class="fa fa-spinner fa-spin hidden"></i></div>    
-                        </div>
-                        <div class="col-xs-12" style="margin-top: -20px;">
-                            <div class="col-xs-1 text-right" style="width: 150px">
-                                <label class="control-label text-right">Invoice No </label>
-                            </div>
-                            <div class="col-xs-1 form-group" style="width: 200px" id="invoicenopanel">
-                                <div class="input-group">
-                                    <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" value="" onkeydown="invoicenoValidate()">
+                        <div class="col-xs-12" style="margin-top: -30px">
+                            <div class="col-xs-12">
+                                <div class="col-xs-1  text-right" style="width: 147px">
+                                    <label class="control-label text-right" > Search &nbsp;&nbsp;</label>
                                 </div>
+                                <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchInvno()">
+                                    <span id="SpanEdit${advanced.search}">Invoice No.</span>
+                                </a>
+                                <label class="control-label text-right">&nbsp;&nbsp;/&nbsp;&nbsp;</label>
+                                
+                                <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchRefno()">
+                                    <span id="SpanEdit${advanced.search}">Ref No.</span>
+                                </a>
+                                <label class="control-label text-right">&nbsp;&nbsp;/&nbsp;&nbsp;</label>
+                                <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchAirCom()">
+                                    <span id="SpanEdit${advanced.search}">Air Commission</span>
+                                </a>
+                                <label class="control-label text-right">&nbsp;&nbsp;/&nbsp;&nbsp;</label>
+                                <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchTourCom()">
+                                    <span id="SpanEdit${advanced.search}">Tour Commission</span>
+                                </a>
                             </div>
-                            <div class="col-xs-1 text-left"  style="width: 100px">
-                                <button style="height:30px" type="button"  id="ButtonSearchInvoice"  name="ButtonSearchInvoice" onclick="searchInvoice();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
-                            </div>
-                            <!--Invoice Table-->
+                        </div>            
+
+                        <div class="col-xs-12" id="searchinvtext">
+                           <div class="col-xs-1 text-right" style="width: 160px">
+                               <label class="control-label text-right">Invoice No </label>
+                           </div>
+                           <div class="col-xs-1 form-group" style="width: 200px" id="invoicenopanel">
+                               <div class="input-group">
+                                   <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" value="" onkeydown="invoicenoValidate()">
+                               </div>
+                           </div>
+                           <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload1"  class="fa fa-spinner fa-spin hidden"></i></div>
+                           <div class="col-xs-1 text-left"  style="width: 100px">
+                               <button style="height:30px" type="button"  id="ButtonSearchInvoice"  name="ButtonSearchInvoice" onclick="searchInvoice();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
+                           </div>
+                        </div>
+                        <div class="col-xs-12 hidden" style="margin-bottom: 10px" id="searchinvtable">
                             <div class="row" style="padding-left: 10px;padding-right: 10px">
                                 <table id="InvoiceListTable" class="display" cellspacing="0" width="100%">
                                     <thead>
@@ -441,7 +446,100 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>       
+                        </div>
+          
+                        <div class="col-xs-12 hidden" id="searchreftext">
+                            <div class="col-xs-1 text-right" style="width: 160px">
+                                <label class="control-label text-right">Ref No </label>
+                            </div>
+                            <div class="col-xs-1 form-group" style="width: 200px" id="refnopanel">
+                                <div class="input-group">
+                                    <input id="refNo" name="refNo" type="text" class="form-control" value="" onkeydown="refnoValidate()">
+                                </div>
+                            </div>
+                            <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload2"  class="fa fa-spinner fa-spin hidden"></i></div>
+                            <div class="col-xs-1 text-left"  style="width: 100px">
+                                <button style="height:30px" type="button"  id="ButtonSearchRefNo"  name="ButtonSearchRefNo" onclick="searchRefNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
+                            </div>
+                        </div>
+                        <!--RefNo Table-->
+                        <div class="col-xs-12 hidden" style="margin-bottom: 10px" id="searchreftable">
+                            <div class="row" style="padding-left: 10px;padding-right: 10px">
+                                <table id="RefNoListTable" class="display" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr class="datatable-header" >
+                                            <th style="width:10%;">No</th>
+                                            <th style="width:40%;">Description</th>
+                                            <th style="width:20%;">Amount</th>
+                                            <th style="width:20%;">Currency</th>
+                                            <th style="width:10%;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 hidden" id="searchaircomtext">
+                            <div class="col-xs-1 text-right" style="width: 160px">
+                                <label class="control-label text-right">Air Commission </label>
+                            </div>
+                            <div class="col-xs-1 form-group" style="width: 200px" >
+                                <input style="width: 170px" id="searchPaymentNoAir" name="searchPaymentNoAir" type="text" class="form-control" value="">
+                            </div>
+                            <!--<div class="col-xs-1  text-left" style="padding-top: 6px;width: 4px"><i id="ajaxload3"  class="fa fa-spinner fa-spin hidden"></i></div>-->
+                            <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload3"  class="fa fa-spinner fa-spin hidden"></i></div>
+                            <div class="col-xs-1 text-left"  style="width: 100px">
+                                <button style="height:30px" type="button"  id="ButtonSearchPaymentNoAir"  name="ButtonSearchPaymentNoAir" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
+                            </div>
+                        </div>    
+                        <!--Invoice Table-->
+                        <div class="col-xs-12 hidden" style="margin-bottom: 10px" id="searchaircomtable">
+                            <div class="row" style="padding-left: 10px;padding-right: 10px">
+                                <table id="AircommissionTable" class="display" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr class="datatable-header" >
+                                            <th style="width:10%;">No</th>
+                                            <th style="width:40%;">Airline</th>
+                                            <th style="width:30%;">Commission</th>
+                                            <th style="width:10%;">Is Use</th>
+                                            <th style="width:10%;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 hidden" id="searchtourcomtext">
+                            <div class="col-xs-1 text-right" style="width: 160px">
+                                <label class="control-label text-right">Tour Commission </label>
+                            </div>
+                            <div class="col-xs-1 form-group" style="width: 200px" >
+                                <input style="width: 170px" id="searchPaymentNoTour" name="searchPaymentNoTour" type="text" class="form-control" value="">
+                            </div>
+                            <div class="col-xs-1 text-right" style="width: 8px"><i id="ajaxload4"  class="fa fa-spinner fa-spin hidden"></i></div>
+                            <div class="col-xs-1 text-left"  style="width: 100px">
+                                <button style="height:30px" type="button"  id="ButtonSearchPaymentNoTour"  name="ButtonSearchPaymentNoTour" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 hidden" style="margin-bottom: 10px" id="searchtourcomtable">
+                            <div class="row" style="padding-left: 10px;padding-right: 10px">
+                                <table id="TourcommissionTable" class="display" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr class="datatable-header" >
+                                            <th style="width:10%;">No</th>
+                                            <th style="width:40%;">Commission</th>
+                                            <th style="width:30%;">Is Use</th>
+                                            <th style="width:20%;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <!---Table-->
                         <div class="row" style="padding-right: 10px;padding-left: 10px;padding-bottom:  10px;">
                             <div class="col-md-12 ">
@@ -605,37 +703,33 @@
                         <div class="panel-body"  style="padding-right: 0px;">
                             <div class="col-xs-12">
                                 <div class="row">
-                                    <div class="col-xs-1 text-right" style="width: 140px">
+                                    <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">W/T </label>                                    
                                     </div>
-                                    <div class="col-xs-1 " style="width: 200px">
-                                        <input id="withTax" name="withTax" type="text" class="form-control"  maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${receipt.withTax}">
+                                    <div class="col-xs-1" style="width: 130px">
+                                        <input style="width: 130px" id="withTax" name="withTax" type="text" class="form-control"  maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${receipt.withTax}">
                                     </div>
-                                </div><hr/>
-                                <div class="row">
-                                    <div class="col-xs-1 text-right" style="width: 140px">
-                                        <label class="control-label text-right">Cash Amount </label>                                    
+                                    <div class="col-xs-1 text-right" style="width: 110px">
+                                        <label class="control-label text-right">Cash </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 200px">
-                                        <input id="cashAmount" name="cashAmount" type="text" class="form-control" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${receipt.cashAmount}" >
+                                    <div class="col-xs-1" style="width: 130px">
+                                        <input style="width: 130px" id="cashAmount" name="cashAmount" type="text" class="form-control" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${receipt.cashAmount}" >
                                     </div>
-                                    <div class="col-xs-1 text-right" style="width: 160px">
-                                        <label class="control-label text-right">Cash(-) Amount</label>                                    
+                                    <div class="col-xs-1 text-right" style="width: 110px">
+                                        <label class="control-label text-right">Cash(-) </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 200px">
+                                    <div class="col-xs-1" style="width: 170px">
                                         <input id="cashMinusAmount" name="cashMinusAmount" type="text" class="form-control" value="${receipt.cashMinusAmount}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
                                     </div>
-                                </div><hr/>
-                                <div class="row">
-                                    <div class="col-xs-1 text-right" style="width: 140px">
+                                    <div class="col-xs-1 text-left" style="width: 130px">
                                         <label class="control-label text-right">Bank Transfer </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 200px">
-                                        <input id="bankTransfer" name="bankTransfer" type="text" class="form-control" value="${receipt.bankTransfer}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
+                                    <div class="col-xs-1" style="width: 130px">
+                                        <input style="width: 130px" id="bankTransfer" name="bankTransfer" type="text" class="form-control" value="${receipt.bankTransfer}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
                                     </div>
                                 </div><hr/>
                                 <div class="row">
-                                    <div class="col-xs-1 text-right" style="width: 140px">
+                                    <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Chq Bank </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
@@ -644,10 +738,10 @@
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Chq No </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 120px">
-                                        <input style="width: 115px" id="chqNo1" name="chqNo1" type="text" class="form-control" value="${receipt.chqNo1}" maxlength="100">
+                                    <div class="col-xs-1" style="width: 130px">
+                                        <input style="width: 130px" id="chqNo1" name="chqNo1" type="text" class="form-control" value="${receipt.chqNo1}" maxlength="100">
                                     </div>
-                                    <div class="col-xs-1 text-right" style="width: 130px">
+                                    <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Date </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 170px">
@@ -657,21 +751,20 @@
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-1 text-right" style="width: 100px">
+                                    <div class="col-xs-1 text-right" style="width: 130px">
                                         <label class="control-label text-right">Amount </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 120px">
-                                        <input id="chqAmount1" name="chqAmount1" type="text" class="form-control" value="${receipt.chqAmount1}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
-
+                                    <div class="col-xs-1" style="width: 130px">
+                                        <input style="width: 130px" id="chqAmount1" name="chqAmount1" type="text" class="form-control" value="${receipt.chqAmount1}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
                                     </div>
-                                    <div class="col-xs-1" style="width: 50px ;">
+                                    <div class="col-xs-1" style="width: 50px;">
                                         <h4><a class="col-xs-1">
                                                 <span class="glyphicon glyphicon-plus-sign" id="addChqButton"></span>
-                                            </a></h4>                                        
+                                        </a></h4>                                        
                                     </div>
                                 </div>
                                 <div class="row hidden active" id="addChq" style="padding-top: 8px ">
-                                    <div class="col-xs-1 text-right" style="width: 140px">
+                                    <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Chq Bank </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
@@ -680,10 +773,10 @@
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Chq No </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 120px">
-                                        <input  style="width: 115px" id="chqNo2" name="chqNo2" type="text" class="form-control" value="${receipt.chqNo2}"  maxlength="100">
+                                    <div class="col-xs-1" style="width: 130px">
+                                        <input  style="width: 130px" id="chqNo2" name="chqNo2" type="text" class="form-control" value="${receipt.chqNo2}"  maxlength="100">
                                     </div>
-                                    <div class="col-xs-1 text-right" style="width: 130px">
+                                    <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Date </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 170px">
@@ -693,16 +786,16 @@
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-1 text-right" style="width: 100px">
+                                    <div class="col-xs-1 text-right" style="width: 130px">
                                         <label class="control-label text-right">Amount </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 120px">
-                                        <input id="chqAmount2" name="chqAmount2" type="text" class="form-control" value="${receipt.chqAmount2}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
+                                    <div class="col-xs-1" style="width: 130px">
+                                        <input style="width: 130px"  id="chqAmount2" name="chqAmount2" type="text" class="form-control" value="${receipt.chqAmount2}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
                                     </div>
                                     <div class="col-xs-1" style="width: 50px ;">
                                         <h4><a class="col-xs-1">
-                                                <span class="glyphicon glyphicon-remove deleteicon" id="deleteChqButton"></span>
-                                            </a></h4>                                        
+                                            <span class="glyphicon glyphicon-remove deleteicon" id="deleteChqButton"></span>
+                                        </a></h4>                                        
                                     </div>
                                 </div>
                                 <hr/>
@@ -1482,6 +1575,13 @@
                 searchPaymentNoAir();
             }
         });
+        $("#ButtonSearchPaymentNoTour").on('click', function () {
+            searchPaymentNoTour();
+        });
+        
+        $("#ButtonSearchPaymentNoAir").on('click', function () {
+            searchPaymentNoAir();
+        });
 
         $("#searchPaymentNoTour").keyup(function(event) {
             if (event.keyCode === 13) {
@@ -2125,8 +2225,11 @@
                 success: function(msg) {
                     try {
                         if (msg == "null") {
-//                        $('#InvoiceListTable').dataTable().fnClearTable();
-//                        $('#InvoiceListTable').dataTable().fnDestroy();
+                            $("#searchinvtable").addClass("hidden");
+                            $("#searchreftable").addClass("hidden");
+                            $("#searchaircomtable").addClass("hidden");
+                            $("#searchtourcomtable").addClass("hidden");
+
                             $('#InvoiceListTable > tbody  > tr').each(function() {
                                 $(this).remove();
                             });
@@ -2136,12 +2239,18 @@
                             document.getElementById("receiveFromAddress").value = '';
                             document.getElementById("arCode").value = '';
                         } else {
-//                        $('#InvoiceListTable').dataTable().fnClearTable();
-//                        $('#InvoiceListTable').dataTable().fnDestroy();
                             $('#InvoiceListTable > tbody  > tr').each(function() {
                                 $(this).remove();
                             });
                             $("#InvoiceListTable tbody").empty().append(msg);
+                            
+                            var rowAll = $("#InvoiceListTable tr").length;
+                            if(rowAll === 1){
+                                $("#searchinvtable").addClass("hidden");
+                            }else{
+                                $("#searchinvtable").removeClass("hidden");
+                            }
+
                             setinvoice = 1;
                             document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
                             document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();
@@ -2168,6 +2277,7 @@
         $('#invoicenopanel').addClass('has-success');
         $('#invoicenopanel').removeClass('has-error');
     }
+    
     function addProduct(product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, checkadd, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress) {
         var receiveAddressTemp = replaceAll("<br>", "\n" , receiveAddress.toString());
         $('#textAlertDuplicateProduct').hide();
@@ -2478,6 +2588,10 @@
                 success: function(msg) {
                     try {
                         if (msg == "null") {
+                            $("#searchinvtable").addClass("hidden");
+                            $("#searchreftable").addClass("hidden");
+                            $("#searchaircomtable").addClass("hidden");
+                            $("#searchtourcomtable").addClass("hidden");
 //                        $('#RefNoListTable').dataTable().fnClearTable();
 //                        $('#RefNoListTable').dataTable().fnDestroy();
                             $('#RefNoListTable > tbody  > tr').each(function() {
@@ -2485,8 +2599,15 @@
                             });
 
                         } else {
-
                             $("#RefNoListTable tbody").empty().append(msg);
+                            
+                            var rowAll = $("#RefNoListTable tr").length;
+                            if(rowAll === 1){
+                                $("#searchreftable").addClass("hidden");
+                            }else{
+                                $("#searchreftable").removeClass("hidden");
+                            }
+                            
                             BookintType = $("#masterBookType").val();
                             if (BookintType == $('#typeBooking').val()) {
                                 $('#RefNoListTable > tbody  > tr').each(function() {
@@ -2558,12 +2679,17 @@
                 success: function(msg) {
                     try {
                         if (msg == "null") {
+                            $("#searchinvtable").addClass("hidden");
+                            $("#searchreftable").addClass("hidden");
+                            $("#searchaircomtable").addClass("hidden");
+                            $("#searchtourcomtable").addClass("hidden");
+                            
                             $('#AircommissionTable').dataTable().fnClearTable();
                             $('#AircommissionTable').dataTable().fnDestroy();
 
                             $('#AircommissionTable').dataTable({bJQueryUI: true,
                                 "sPaginationType": "full_numbers",
-                                "bAutoWidth": false,
+                                "bAutoWidth": true,
                                 "bFilter": false,
                                 "bPaginate": true,
                                 "bInfo": false,
@@ -2572,12 +2698,22 @@
                             });
                             $("#AircommissionTable_wrapper").css("min-height", 100);
                         } else {
+//                            $("#searchaircomtable").removeClass("hidden");
                             $('#AircommissionTable').dataTable().fnClearTable();
                             $('#AircommissionTable').dataTable().fnDestroy();
                             $("#AircommissionTable tbody").empty().append(msg);
+                            
+                            
+                            var rowAll = $("#AircommissionTable tr").length;
+                            if(rowAll === 1){
+                                $("#searchaircomtable").addClass("hidden");
+                            }else{
+                                $("#searchaircomtable").removeClass("hidden");
+                            }
+                            
                             $('#AircommissionTable').dataTable({bJQueryUI: true,
                                 "sPaginationType": "full_numbers",
-                                "bAutoWidth": false,
+                                "bAutoWidth": true,
                                 "bFilter": false,
                                 "bPaginate": true,
                                 "bInfo": false,
@@ -2631,11 +2767,16 @@
                 success: function(msg) {
                     try {
                         if (msg == "null") {
+                            $("#searchinvtable").addClass("hidden");
+                            $("#searchreftable").addClass("hidden");
+                            $("#searchaircomtable").addClass("hidden");
+                            $("#searchtourcomtable").addClass("hidden");
+                            
                             $('#TourcommissionTable').dataTable().fnClearTable();
                             $('#TourcommissionTable').dataTable().fnDestroy();
                             $('#TourcommissionTable').dataTable({bJQueryUI: true,
                                 "sPaginationType": "full_numbers",
-                                "bAutoWidth": false,
+                                "bAutoWidth": true,
                                 "bFilter": false,
                                 "bPaginate": true,
                                 "bInfo": false,
@@ -2644,12 +2785,22 @@
                             });
                             $("#TourcommissionTable_wrapper").css("min-height", 100);
                         } else {
+//                            $("#searchtourcomtable").removeClass("hidden");
+                            
                             $('#TourcommissionTable').dataTable().fnClearTable();
                             $('#TourcommissionTable').dataTable().fnDestroy();
                             $("#TourcommissionTable tbody").empty().append(msg);
+                            
+                            var rowAll = $("#TourcommissionTable tr").length;
+                            if(rowAll === 1){
+                                $("#searchtourcomtable").addClass("hidden");
+                            }else{
+                                $("#searchtourcomtable").removeClass("hidden");
+                            }
+                            
                             $('#TourcommissionTable').dataTable({bJQueryUI: true,
                                 "sPaginationType": "full_numbers",
-                                "bAutoWidth": false,
+                                "bAutoWidth": true,
                                 "bFilter": false,
                                 "bPaginate": true,
                                 "bInfo": false,
@@ -2970,4 +3121,68 @@
         }
         document.getElementById("sumCreditAmountTemp").value = formatNumber(amount);
     }
+    
+    function showSearchInvno(){
+        if($("#searchinvtext").hasClass("hidden")){
+            $("#searchreftext").addClass("hidden");
+            $("#searchaircomtext").addClass("hidden");
+            $("#searchtourcomtext").addClass("hidden");
+            $("#searchinvtext").removeClass("hidden");
+        }else{
+            $("#searchinvtext").addClass("hidden");
+        }
+        $("#searchtourcomtable").addClass("hidden");
+        $("#searchaircomtable").addClass("hidden");
+        $("#searchreftable").addClass("hidden");
+        $("#searchinvtable").addClass("hidden");
+    }
+    
+    function showSearchRefno(){
+        if($("#searchreftext").hasClass("hidden")){
+            $("#searchinvtext").addClass("hidden");
+            $("#searchaircomtext").addClass("hidden");
+            $("#searchtourcomtext").addClass("hidden");
+            
+            $("#searchreftext").removeClass("hidden");
+        }else{
+            $("#searchreftext").addClass("hidden");
+        }
+        $("#searchtourcomtable").addClass("hidden");
+        $("#searchaircomtable").addClass("hidden");
+        $("#searchreftable").addClass("hidden");
+        $("#searchinvtable").addClass("hidden");
+    }
+    
+    function showSearchAirCom(){
+        if($("#searchaircomtext").hasClass("hidden")){
+            $("#searchinvtext").addClass("hidden");
+            $("#searchreftext").addClass("hidden");
+            $("#searchtourcomtext").addClass("hidden");
+            
+            $("#searchaircomtext").removeClass("hidden");
+        }else{
+            $("#searchaircomtext").addClass("hidden");
+        }
+        $("#searchtourcomtable").addClass("hidden");
+        $("#searchaircomtable").addClass("hidden");
+        $("#searchreftable").addClass("hidden");
+        $("#searchinvtable").addClass("hidden");
+    }
+    
+    function showSearchTourCom(){
+        if($("#searchtourcomtext").hasClass("hidden")){
+            $("#searchinvtext").addClass("hidden");
+            $("#searchreftext").addClass("hidden");
+            $("#searchaircomtext").addClass("hidden");
+            
+            $("#searchtourcomtext").removeClass("hidden");
+        }else{
+            $("#searchtourcomtext").addClass("hidden");
+        }
+        $("#searchtourcomtable").addClass("hidden");
+        $("#searchaircomtable").addClass("hidden");
+        $("#searchreftable").addClass("hidden");
+        $("#searchinvtable").addClass("hidden");
+    }
+
 </script>
