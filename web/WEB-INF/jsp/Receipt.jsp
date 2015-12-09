@@ -2169,6 +2169,7 @@
         $('#invoicenopanel').removeClass('has-error');
     }
     function addProduct(product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, checkadd, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress) {
+        var receiveAddressTemp = replaceAll("<br>", "\n" , receiveAddress.toString());
         $('#textAlertDuplicateProduct').hide();
         var tempCount = parseInt($("#counter").val());
         var checkAddDuplicate = false;
@@ -2226,7 +2227,7 @@
 
         }
         if (!checkAddDuplicate) {
-            AddDataRowProduct(tempCount, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress);
+            AddDataRowProduct(tempCount, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddressTemp);
         } else {
             $('#textAlertDuplicateProduct').show();
         }

@@ -926,7 +926,7 @@ public class AJAXBean extends AbstractBean implements
                 receiveName = ticketList.get(i).getAgentname();
             }
             if(!"null".equalsIgnoreCase(ticketList.get(i).getAgentaddress()) ){
-                receiveAddress = ticketList.get(i).getAgentaddress();
+                receiveAddress = (ticketList.get(i).getAgentaddress()).replaceAll("(\r\n|\n)", "<br>");
             }
             MDefaultData mDefaultData = getMDefaultDataFromType("vat");
             vat = mDefaultData.getValue();
@@ -986,7 +986,7 @@ public class AJAXBean extends AbstractBean implements
                 receiveName = paymentTourList.get(i).getSupname();
             }
             if(!"null".equalsIgnoreCase(paymentTourList.get(i).getSupaddress()) ){
-                receiveAddress = paymentTourList.get(i).getSupaddress();
+                receiveAddress = (paymentTourList.get(i).getSupaddress()).replaceAll("(\r\n|\n)", "<br>");
             }
             
             MDefaultData mDefaultData = getMDefaultDataFromType("vat");
@@ -1318,7 +1318,7 @@ public class AJAXBean extends AbstractBean implements
         int No = 1;
         String receiveFrom = invoice.getInvTo();
         String receiveName = invoice.getInvName();
-        String receiveAddress = invoice.getInvAddress();
+        String receiveAddress = (invoice.getInvAddress()).replaceAll("(\r\n|\n)", "<br>");
         String arcode = invoice.getArcode();
         String invNo = invoice.getInvNo();
         System.out.println("invoiceDetaill.size() " + String.valueOf(invoiceDetaill.size()));
@@ -1457,7 +1457,7 @@ public class AJAXBean extends AbstractBean implements
         String mAccPay = "";
         String receiveFrom = billable.getBillTo();
         String receiveName = billable.getBillName();
-        String receiveAddress = billable.getBillAddress();
+        String receiveAddress = (billable.getBillAddress()).replaceAll("(\r\n|\n)", "<br>");
         String arcode = billable.getBillTo();
         String refNo = billable.getMaster().getReferenceNo();
         String leader = ""; 
