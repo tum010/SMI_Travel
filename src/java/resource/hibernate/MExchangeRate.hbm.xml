@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="com.smi.travel.datalayer.entity.MExchangeRate" table="m_exchangerate">
+    <id name="id" type="string">
+        <column name="id" />
+        <generator class="identity" />
+    </id>
+    <property name="currency" type="string">
+        <column name="currency" length="3" />
+    </property>
+    <property name="exdate" type="date">
+        <column name="ex_date" length="10" />
+    </property>
+    <property name="exrate" type="big_decimal">
+        <column name="ex_rate" length="10" />
+    </property>
+    <property name="createby" type="string">
+        <column name="create_by" length="20"  />
+    </property>
+    <property name="createdate" type="date">
+        <column name="creadte_date" length="10" />
+    </property>
+  </class>
+</hibernate-mapping>
