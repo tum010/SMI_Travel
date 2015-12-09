@@ -14,7 +14,7 @@
 <c:set var="listCurrency" value="${requestScope['listCurrency']}" />
 <section class="content-header" >
     <h1>
-        Master Change Rate - Change Rate
+        Master Exchange Rate - Exchange Rate
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Master</a></li>        
@@ -99,8 +99,8 @@
                             </c:forEach>
                         </select>    
                     </div>
-                    <div class="col-md-3">
-                        <div  style="padding-top: 20px">   
+                    <div class="col-xs-3 form-group">
+                        <div>   
                             <button type="submit" id="ButtonSearch"  name="ButtonSearch" onclick="searchExchange()"  class="btn btn-primary"><span class="fa fa-search"></span>Search</button>           
                             <input type="hidden" name="actionSearch" id="actionSearch"/>
                         </div>
@@ -164,9 +164,15 @@
                     <h4 class="modal-title">Exchange Rate</h4>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group" style="width: 480px;padding-left: 20px;">
+                        <div id="textAlertDivDecimal"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert" >
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>Please Input 4 decimal point!</strong> 
+                        </div>
+                    </div>
                     <div class="form-group">
-                        <label for="ExchangeRate" class="col-sm-3 control-label" >Exchange Date<font style="color: red">*</font></label>
-                        <div class="col-sm-8 " > 
+                        <label for="ExchangeRate" class="col-sm-4 control-label" >Exchange Date<font style="color: red">*</font></label>
+                        <div class="col-sm-7 " > 
                             <div class='input-group date ' id="DateExchange">
                                 <input id="ExchangeDate" name="ExchangeDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
@@ -175,14 +181,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="ExchangeRate" class="col-sm-3 control-label" >Exchange Rate </label>
-                        <div class="col-sm-8">  
+                        <label for="ExchangeRate" class="col-sm-4 control-label" >Exchange Rate </label>
+                        <div class="col-sm-7">  
                             <input type="text" class="form-control" maxlength="50" id="ExchangeRate" name="ExchangeRate"  onfocusout="formatDecimal();">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="Code3" class="col-sm-3 control-label" >Currency <font style="color: red">*</font></label>
-                        <div class="col-sm-8">   
+                        <label for="Code3" class="col-sm-4 control-label" >Currency <font style="color: red">*</font></label>
+                        <div class="col-sm-7">   
                             <select class="form-control" id="Currency" name="Currency">
                             <option value="">--select--</option>
                             <c:forEach var="cur" items="${listCurrency}">

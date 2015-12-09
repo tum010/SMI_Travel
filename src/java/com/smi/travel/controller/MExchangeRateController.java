@@ -113,18 +113,25 @@ public class MExchangeRateController  extends SMITravelController{
             System.out.println("Result Add Exchange : " + result);
             request.setAttribute("result", result);
             
-        }else if ("update".equalsIgnoreCase(action)) {
-            String result = mExchangeRateService.insertExchange(mExchangeRate);
-            System.out.println("Result Update Exchange : " + result);
-            request.setAttribute("result", result);
-            
-            List<MExchangeRate> listMExchange = mExchangeRateService.searchExchangeRateById(EdxchangeDate,Currency);
-            if( listMExchange != null && listMExchange.size() != 0 ){
-                request.setAttribute("ExchangeList", listMExchange);
-            }else{
-                request.setAttribute("ExchangeList", listMExchange);
-            }
-        }else if ("delete".equalsIgnoreCase(action)) {
+        }
+//            else if ("update".equalsIgnoreCase(action)) {
+//            String result = "";
+//            String result_find = mExchangeRateService.findExchangeDuplicate(EdxchangeDate, Currency);
+//            if("OK".equals(result_find)){
+//                result = mExchangeRateService.insertExchange(mExchangeRate);
+//                List<MExchangeRate> listMExchange = mExchangeRateService.searchExchangeRateById(EdxchangeDate,Currency);
+//                if( listMExchange != null && listMExchange.size() != 0 ){
+//                    request.setAttribute("ExchangeList", listMExchange);
+//                }else{
+//                    request.setAttribute("ExchangeList", listMExchange);
+//                }
+//            }else{
+//                result = "duplicate";               
+//            }
+//            System.out.println("Result Add Exchange : " + result);
+//            request.setAttribute("result", result);
+//        }
+        else if ("delete".equalsIgnoreCase(action)) {
             String result = mExchangeRateService.deleteExchange(mExchangeRate);
             System.out.println("Result Delete Exchange : " + result);
             request.setAttribute("result", result);
