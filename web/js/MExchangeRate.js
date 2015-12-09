@@ -5,7 +5,7 @@
  */
 function searchExchange() {
    
-    var action = document.getElementById('action');
+    var action = document.getElementById('actionSearch');
     action.value = 'search';
 //    document.getElementById('SearchExchange').submit();
 
@@ -22,6 +22,7 @@ function EditExchange(id, exdate, cur, exrate,createby,createdate) {
     document.getElementById('ExchangeID').value = id;
     document.getElementById('ExchangeDate').value = exdate;
     document.getElementById('ExchangeRate').value = exrate;
+    document.getElementById('Currency').value = cur;
     document.getElementById('action').value = 'update';
 }
 
