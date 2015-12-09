@@ -240,14 +240,14 @@ public class TicketSummaryCommissionImpl implements TicketSummaryCommissionDao{
         
         if((typeRoutingPage != null) &&(!"".equalsIgnoreCase(typeRoutingPage))){
             if(checkQuery == 1){
-                querydetail += " and `fare`.`ticket_type` = '" + typeRoutingPage + "' ";
-                queryair += " and `fare`.`ticket_type` = '" + typeRoutingPage + "' ";
-                queryagent += " and `fare`.`ticket_type` = '" + typeRoutingPage + "' ";
+                querydetail += " and `fare`.`ticket_rounting` = '" + typeRoutingPage + "' ";
+                queryair += " and `fare`.`ticket_rounting` = '" + typeRoutingPage + "' ";
+                queryagent += " and `fare`.`ticket_rounting` = '" + typeRoutingPage + "' ";
             }else{
                 checkQuery = 1;
-                querydetail += " `fare`.`ticket_type`  = '" + typeRoutingPage + "' ";
-                queryair += " `fare`.`ticket_type`  = '" + typeRoutingPage + "' ";
-                queryagent += " `fare`.`ticket_type`  = '" + typeRoutingPage + "' ";
+                querydetail += " `fare`.`ticket_rounting`  = '" + typeRoutingPage + "' ";
+                queryair += " `fare`.`ticket_rounting`  = '" + typeRoutingPage + "' ";
+                queryagent += " `fare`.`ticket_rounting`  = '" + typeRoutingPage + "' ";
             }
         }
         
