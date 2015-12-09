@@ -16,7 +16,36 @@
 <input type="hidden" id="Type" name="Type" value="${param.Department}">
 <section class="content-header" >
     <h1>
-        Finance & Cashier
+        <c:set var="voidTaxInvoice" value="" />
+        <c:if test="${taxInvoice.MFinanceItemstatus.id == '2'}">
+            <c:set var="voidTaxInvoice" value="VOID" />
+        </c:if>
+        <c:set var="panelheader" value=""/>
+        <c:set var="panelborder" value=""/>
+        <div class="row" style="padding-left: 15px">  
+            <div class="col-sm-6 " style="padding-right: 15px">
+                <c:set var="outbound" value=""/>
+		<c:choose>
+                    <c:when test="${fn:contains(page , 'W')}">
+                        <h4><b>Finance & Cashier - Tax Invoice Wendy <font style="color: red">${voidTaxInvoice}</font></b></h4>
+                        <c:set var="outbound" value="disabled"/>
+                        <c:set var="panelheader" value="wendyheader"/>
+                        <c:set var="panelborder" value="wendyborder"/>
+                    </c:when>
+                    <c:when test="${fn:contains(page , 'O')}">
+                        <h4><b>Finance & Cashier - Tax Invoice Outbound <font style="color: red">${voidTaxInvoice}</font></b></h4> 
+                        <c:set var="panelheader" value="outboundheader"/>
+                        <c:set var="panelborder" value="outboundborder"/>
+                    </c:when> 
+                    <c:when test="${fn:contains(page , 'I')}">
+                        <h4><b>Finance & Cashier - Tax Invoice Inbound <font style="color: red">${voidTaxInvoice}</font></b></h4>
+                        <c:set var="outbound" value="disabled"/>
+                        <c:set var="panelheader" value="inboundborderheader"/>
+                        <c:set var="panelborder" value="inboundborder"/>
+                    </c:when> 
+		</c:choose> 
+            </div>
+        </div>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Finance & Cashier </a></li>          
@@ -47,15 +76,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
            <strong>Tax invoice no not found!.</strong> 
         </div>
-        </c:if>
-        <c:set var="voidTaxInvoice" value="" />
-        <c:if test="${taxInvoice.MFinanceItemstatus.id == '2'}">
-            <c:set var="voidTaxInvoice" value="VOID" />
-<!--        <div id="textAlertTaxInvoiceVoid"  style="" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-           <strong>Tax invoice void!.</strong>          
-        </div>-->
-        </c:if>    
+        </c:if>           
         <c:if test="${requestScope['result_text'] =='cost much over'}">
         <div id="textAlertCostOver"  style="" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -73,38 +94,11 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Cannot void Tax invoice. It use in credit note no ${requestScope['cnNoList']}</strong> 
         </div>
-        </c:if>
-        <c:set var="panelheader" value=""/>
-        <c:set var="panelborder" value=""/>
-        <div class="row" style="padding-left: 15px">  
-            <div class="col-sm-6 " style="padding-right: 15px">
-                <c:set var="outbound" value=""/>
-		<c:choose>
-                    <c:when test="${fn:contains(page , 'W')}">
-                        <h4><b>Tax Invoice Wendy <font style="color: red">${voidTaxInvoice}</font></b></h4>
-                        <c:set var="outbound" value="disabled"/>
-                        <c:set var="panelheader" value="wendyheader"/>
-                        <c:set var="panelborder" value="wendyborder"/>
-                    </c:when>
-                    <c:when test="${fn:contains(page , 'O')}">
-                        <h4><b>Tax Invoice Outbound <font style="color: red">${voidTaxInvoice}</font></b></h4> 
-                        <c:set var="panelheader" value="outboundheader"/>
-                        <c:set var="panelborder" value="outboundborder"/>
-                    </c:when> 
-                    <c:when test="${fn:contains(page , 'I')}">
-                        <h4><b>Tax Invoice Inbound <font style="color: red">${voidTaxInvoice}</font></b></h4>
-                        <c:set var="outbound" value="disabled"/>
-                        <c:set var="panelheader" value="inboundborderheader"/>
-                        <c:set var="panelborder" value="inboundborder"/>
-                    </c:when> 
-		</c:choose> 
-            </div>
-            <div class="col-xs-12 form-group"><hr/></div>
-        </div>
+        </c:if>        
         <form action="TaxInvoice${page}.smi" method="post" id="TaxInvoiceForm" role="form" autocomplete="off" onsubmit="return validateForm()">
         <!--Search Invoice-->
-           <div role="tabpanel">
-               <!-- Nav tabs -->                    
+<!--           <div role="tabpanel">
+                Nav tabs                     
                 <ul class="nav nav-tabs " role="tablist">
                     <li role="presentation" class="active ${panelheader}"><a href="#inv" aria-controls="inv" role="tab" data-toggle="tab">INV</a></li>
                     <li role="presentation" class="${panelheader}"><a href="#ref" aria-controls="ref" role="tab" data-toggle="tab">REF</a></li>
@@ -113,9 +107,9 @@
                             <span id="arrowReservstion" class="arrowReservstion glyphicon glyphicon-chevron-up"></span> 
                         </a>
                     </h4>
-                </ul>
+                </ul>-->
                <!-- Tab BL -->
-                <div class="panel panel-default ${panelborder}">
+<!--                <div class="panel panel-default ${panelborder}">
                     <div class="panel-body">
                         <div class="tab-content collapse in" id="collapseExample" aria-expanded="false">
                             <div role="tabpanel" class="tab-pane hidden active" id="inv">
@@ -134,7 +128,7 @@
                                             <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                                         </button> 
                                     </div>                                  
-                                    <!--Invoice Table-->
+                                    Invoice Table
                                     <div class="row" >    
                                         <div class="col-md-12">
                                             <table id="InvoiceListTable" class="display" cellspacing="0" width="100px">
@@ -157,7 +151,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Tab REF -->
+                             Tab REF 
                             <div role="tabpanel" class="tab-pane hidden" id="ref">
                                 <div class="col-xs-12" style="padding-top: 20px; padding-left: 50px;padding-right: 50px">
                                     <div class="col-xs-1 text-right" style="width: 120px">
@@ -175,7 +169,7 @@
                                     <div class="col-md-5 ">
                                         <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from outbound only.</font></div>  
                                     </div>
-                                    <!--RefNo Table-->
+                                    RefNo Table
                                     <div class="row">
                                         <table id="RefNoListTable" class="display" cellspacing="0" width="100%">
                                             <thead>
@@ -200,7 +194,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
 <!--                <div class="tab-content">
                     <div role="tabpanel" class="tab-pane  active" id="infoSearchInvoice">
                         <div class="panel panel-default">
@@ -260,14 +254,14 @@
                     </div>
                 </div>
             </div>-->
-            </div>
+            <!--</div>-->
             <!--Search-->  
             <div class="panel panel-default ${panelborder}">
                 <div class="panel-heading ${panelheader}">
-                    <h4 class="panel-title">Tax Invoice Detail</h4>
+                    <h4 class="panel-title"><font style="color: white">Tax Invoice Detail</font></h4>
                 </div>
                 <div class="panel-body"  style="padding-right: 0px;">
-                    <div class="col-xs-12 " style="padding-top: 0px;">
+                    <div class="col-xs-12 " style="margin-top: -10px">
                         <div class="col-md-2 text-left">
                             <label class="control-label" for="">Tax Invoice No</lable>
                         </div>
@@ -288,7 +282,7 @@
                                 <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                             </button>
                         </div>
-                        <div class="col-xs-2 text-right">
+                        <div class="col-xs-1 text-right" style="width: 180px;">
                             <label class="control-label" for="">Tax Invoice date<font style="color: red">*</font></lable>
                         </div>
                         <div class="col-md-2 form-group">
@@ -308,7 +302,7 @@
                             </div>               
                         </div>
                     </div>    
-                    <div class="col-xs-12 ">
+                    <div class="col-xs-12 " style="margin-top: -10px">
                         <div class="col-md-2 text-left">
                             <label class="control-label" for="">Tax Inv To<font style="color: red">*</font></lable>
                         </div>
@@ -321,7 +315,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 ">
+                    <div class="col-xs-12 " style="margin-top: -10px">
                         <div class="col-md-2 text-left">
                             <label class="control-label" for="">Name </lable>
                         </div>    
@@ -329,7 +323,7 @@
                             <input  type="text" id="InvToName" name="InvToName" class="form-control" value="${taxInvoice.taxInvName}">
                         </div>  
                     </div>
-                    <div class="col-xs-12 ">
+                    <div class="col-xs-12 " style="margin-top: -10px">
                         <div class="col-md-2 text-left">
                             <label class="control-label" for="">Address<font style="color: red">*</font></lable>
                         </div>
@@ -337,7 +331,7 @@
                             <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" value="" >${taxInvoice.taxInvAddr}</textarea>
                         </div>
                     </div>
-                    <div class="col-xs-12 ">
+                    <div class="col-xs-12 " style="margin-top: -10px">
                         <div class="col-md-2 text-left hidden">
                             <label class="control-label" for="">Passenger</label>
                         </div>                       
@@ -360,12 +354,98 @@
                             <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value=""/>
                             <input type="text" class="form-control" id="ARCode" name="ARCode" value="${taxInvoice.arCode}" style="background-color: #ffffff">                              
                         </div>
+                    </div>
+                    <div class="col-xs-12 " style="margin-top: -10px">
+                        <div class="col-md-1 text-left" style="margin-top: -5px">
+                            <label class="control-label" for="">Search</lable>                           
+                        </div>
+                        <div class="col-md-1 text-left">
+                            <div class="col-xs-1  text-right" style="padding: 10px 20px 0px 0px;"><i id="ajaxloadsearch"  class="fa fa-spinner fa-spin hidden"></i></div>
+                        </div>
+                        <div class="col-md-1 text-left" style="width: 120px;">
+                            <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchInvoiceNo()">
+                                <span id="SpanEdit${advanced.search}">Invoice No</span>
+                            </a>                           
+                        </div>
+                        <div class="col-md-1 text-left" style="width: 120px;">
+                            <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchRefNo()">
+                                <span id="SpanEdit${advanced.search}">Ref No</span>
+                            </a>                           
+                        </div>    
+                    </div>
+                    <div class="col-xs-12 " id="searchInvoiceNo1">
+                        <div class="col-xs-1 text-left" style="width: 160px;">
+                            <label class="control-label text-right">Invoice No</label>
+                        </div>
+                        <div class="col-xs-2 form-group" id="invoicenopanel" style="width: 180px">
+                            <div class="input-group">
+                                <input type="text" style="text-transform:uppercase" class="form-control" id="invoiceNo" name="invoiceNo" value="" onkeydown="invoiceNoValidate()">
+                            </div>
+                        </div>                        
+                        <div class="col-xs-1 text-left"  style="width: 100px">
+                            <button type="button"  id="btnSearchInvoiceNo"  name="btnSearchInvoiceNo" onclick="searchInvoiceNo()" class="btn btn-primary btn-sm">
+                                <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
+                            </button> 
+                        </div>
+                    </div> 
+                    <div class="col-xs-12 hidden" id="searchInvoiceNo2" style="padding: 0px 15px 0px 0px;">
+                        <table id="InvoiceListTable" class="display" cellspacing="0" width="100px">
+                            <thead>
+                                <tr class="datatable-header">
+                                    <th style="width: 15%" >Product</th>
+                                    <th style="width: 35%">Description</th>
+                                    <th style="width: 20%">Cost</th>
+                                    <th style="width: 10%">Cur</th>
+                                    <th style="width: 20%">Amount</th>
+                                    <th style="width: 10%">Cur</th>
+                                    <th style="width: 1%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>               
+
+                            </tbody>
+                        </table>        
+                    </div>         
+                    <div class="col-xs-12 hidden" id="searchRefNo1">
+                        <div class="col-xs-1 text-left" style="width: 160px;">
+                            <label class="control-label text-right">Ref No</label>
+                        </div>
+                        <div class="col-xs-1 form-group" style="width: 180px" id="refnopanel">
+                            <div class="input-group">
+                                <input id="refNo" name="refNo" type="text" class="form-control" value="" onkeydown="refnoValidate()" ${outbound}>
+                            </div>
+                        </div>
+                        <div class="col-xs-1 text-left"  style="width: 100px">
+                            <button style="height:30px" type="button"  id="btnSearchRefNo"  name="btnSearchRefNo" onclick="searchRefNo();" class="btn btn-primary btn-sm" ${outbound}><i class="fa fa-search"></i>&nbsp;Search </button>
+                        </div>
+                        <div class="col-md-5 ">
+                            <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from outbound only.</font></div>  
+                        </div>      
+                    </div>
+                    <div class="col-xs-12 hidden" id="searchRefNo2" style="padding: 0px 15px 0px 0px;">
+                        <table id="RefNoListTable" class="display" cellspacing="0" width="100%">
+                            <thead>
+                                <tr class="datatable-header" >
+                                    <th style="width:1%;">No</th>
+                                    <th style="width:20%;">Description</th>
+                                    <th style="width:10%;">Cost</th>
+                                    <th style="width:5%;">Cur</th>
+                                    <th style="width:10%;">Amount</th>
+                                    <th style="width:5%;">Cur</th>
+                                    <th style="width:10%;">Ex Rate</th>
+                                    <th style="width:10%;">Profit</th>
+                                    <th style="width:1%;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                                    
+                            </tbody>
+                        </table>
                     </div>    
                 </div>             
             <!--</div>-->
-            <div class="col-xs-12 form-group"></div>
             <!--<div role="tabpanel">-->
-                <div class="tab-content">
+                <div class="tab-content" style="margin-top: -20px">
                     <div role="tabpanel" class="tab-pane  active" id="infoMasterProduct">
                         <!--<div class="panel panel-default ${panelborder}">-->                              
                             <div class="panel-body">
@@ -521,14 +601,32 @@
                             <div class="panel panel-default ${panelborder}">                              
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">                                       
-                                        <div class="col-md-1 text-right " style="width: 200px">
+                                        <div class="col-md-1 text-right hidden" style="width: 200px">
                                             <select class="form-control" name="select_print" id="select_print">
                                                 <option  value="">--- Select Print ---</option>
                                                 <option  value="taxInvoice">Tax Invoice</option>
                                                 <option  value="taxInvoiceEmail">Tax Invoice Email</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-1 text-left ">
+                                        <div class="col-md-1 text-left " style="width: 160px">
+                                            <c:set var="print" value="" />
+                                            <c:if test="${(taxInvoice.id == '') || (taxInvoice.id == null) }">        
+                                                <c:set var="print" value="disabled='true'" />
+                                            </c:if>
+                                            <button type="button" onclick="selectPrintTaxInvoiceReport()" class="btn btn-default" ${print}>
+                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Tax Invoice
+                                            </button>
+                                        </div>
+                                        <div class="col-md-1 text-left " style="width: 170px">
+                                            <c:set var="print" value="" />
+                                            <c:if test="${(taxInvoice.id == '') || (taxInvoice.id == null) }">        
+                                                <c:set var="print" value="disabled='true'" />
+                                            </c:if>
+                                            <button type="button" onclick="selectPrintTaxInvoiceEmail()" class="btn btn-default" ${print}>
+                                                <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Tax Invoice Email
+                                            </button>
+                                        </div>
+                                        <div class="col-md-1 text-left hidden">
                                             <c:set var="print" value="" />
                                             <c:if test="${(taxInvoice.id == '') || (taxInvoice.id == null) }">        
                                                 <c:set var="print" value="disabled='true'" />
@@ -555,7 +653,7 @@
                                                 <span id="ButtonCopy" class="glyphicon glyphicon-copyright-mark" ></span> Copy 
                                             </button>
                                         </div>
-                                        <div class="col-md-1 " style="width: 180px"></div>
+                                        <div class="col-md-1 " style="width: 120px"></div>
                                         <div class="col-md-2 text-right">
                                             <c:set var="isDisableVoid" value="disabled='true'" />
                                             <c:set var="isEnableVoid" value="style='display: none;'" />
@@ -821,6 +919,7 @@
                 </br>
             </div>
             <div class="modal-footer">
+                <input type="hidden" id="printType" name="printType" value=""/>
                 <button type="button" class="btn btn-default" onclick="printTaxInvoice()"  data-dismiss="modal">
                     <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Print 
                 </button>          
@@ -1117,11 +1216,27 @@
         if(printType !== ""){
             $("#PrintTaxInvoiceModal").modal("show");
         }       
-    }  
+    }
+    
+    function selectPrintTaxInvoiceReport(){
+//        var printType = document.getElementById('select_print').value;
+        document.getElementById('printType').value = "taxInvoice";
+        if(printType !== ""){
+            $("#PrintTaxInvoiceModal").modal("show");
+        }       
+    }
+    
+    function selectPrintTaxInvoiceEmail(){
+//        var printType = document.getElementById('select_print').value;
+        document.getElementById('printType').value = "taxInvoiceEmail";
+        if(printType !== ""){
+            $("#PrintTaxInvoiceModal").modal("show");
+        }       
+    }
     
     function printTaxInvoice(){
         $("#PrintTaxInvoiceModal").modal("hide");
-        var printType = document.getElementById('select_print').value;
+        var printType = document.getElementById('printType').value;
         var taxInvId = document.getElementById('TaxInvId').value;
         var optionPrint =  document.getElementById('optionPrint').value;
         var department = '${page}';
@@ -1337,7 +1452,7 @@
     
     function CallAjaxSearchInvoice(param) {
         var url = 'AJAXServlet';
-        $("#ajaxload1").removeClass("hidden");
+        $("#ajaxloadsearch").removeClass("hidden");
         try {
             $.ajax({
                 type: "POST",
@@ -1349,7 +1464,8 @@
                         if(msg == "null"){
                             $('#InvoiceListTable > tbody  > tr').each(function() {
                                 $(this).remove();
-                            });                           
+                            });
+                            $("#searchInvoiceNo2").addClass("hidden");
                             document.getElementById("TaxInvTo").value = '';
                             document.getElementById("InvToName").value = '';
                             document.getElementById("InvToAddress").value = '';
@@ -1384,20 +1500,26 @@
                                 document.getElementById("ARCode").value = '';
                             }
                             
+                            if(msg !== ''){
+                                $("#searchInvoiceNo2").removeClass("hidden");
+                            } else {
+                                $("#searchInvoiceNo2").addClass("hidden");
+                            }
+                            
 //                            if((document.getElementById("receiveInvToDate")!==null) && ($("#receiveInvToDate").val()!==undefined)){
 //                                document.getElementById("InvToDate").value = $("#receiveInvToDate").val();
 //                            } else {
 //                                document.getElementById("InvToDate").value = '';
 //                            }                          
                         }
-                        $("#ajaxload1").addClass("hidden");
+                        $("#ajaxloadsearch").addClass("hidden");
 
                     } catch (e) {
                         alert(e);
                     }
 
                 }, error: function (msg) {
-                     $("#ajaxload1").addClass("hidden");
+                     $("#ajaxloadsearch").addClass("hidden");
                 }
             });
         } catch (e) {
@@ -1428,7 +1550,7 @@
 
     function CallAjaxSearchRef(param) {
         var url = 'AJAXServlet';
-        $("#ajaxload2").removeClass("hidden");
+        $("#ajaxloadsearch").removeClass("hidden");
         try {
             $.ajax({
                 type: "POST",
@@ -1441,7 +1563,7 @@
                             $('#RefNoListTable > tbody  > tr').each(function() {
                                 $(this).remove();
                             });
-                          
+                            $("#searchRefNo2").addClass("hidden");
                             document.getElementById("TaxInvTo").value = '';
                             document.getElementById("InvToName").value = '';
                             document.getElementById("InvToAddress").value = '';
@@ -1452,6 +1574,7 @@
                             $('#RefNoListTable > tbody  > tr').each(function() {
                                 $(this).remove();
                             });
+                            $("#searchRefNo2").addClass("hidden");
                             $('#AlertBooking').show();
                         }else{
                             $('#RefNoListTable > tbody  > tr').each(function() {
@@ -1482,22 +1605,26 @@
                             } else {
                                 document.getElementById("ARCode").value = '';
                             }
-                            
+                            if(msg !== ''){
+                                $("#searchRefNo2").removeClass("hidden");
+                            } else {
+                                $("#searchRefNo2").addClass("hidden");
+                            }
                         }
-                        $("#ajaxload2").addClass("hidden");
+                        $("#ajaxloadsearch").addClass("hidden");
 
                     } catch (e) {
                         $('#RefNoListTable > tbody  > tr').each(function() {
                             $(this).remove();
                         });
-                        $("#ajaxload2").addClass("hidden");
+                        $("#ajaxloadsearch").addClass("hidden");
                     }
 
                 }, error: function (msg) {
                     $('#RefNoListTable > tbody  > tr').each(function() {
                         $(this).remove();
                     });
-                    $("#ajaxload2").addClass("hidden");
+                    $("#ajaxloadsearch").addClass("hidden");
                 }
             });
         } catch (e) {
@@ -1875,17 +2002,20 @@
     }
     
     function setGross(){
-//        var row = $('#TaxInvoiceTable tr').length;
-//        for(var i=1;i<=row;i++){          
-//            var isVatCheck = document.getElementById("isVat"+i);
-//            if(isVatCheck !== null && isVatCheck !== ''){
-//                if(document.getElementById("isVat"+i).checked){
-//                    CalculateGross(i);
-//                } else {
-//                    
-//                }
-//            }   
-//        }
+        var count = parseInt(document.getElementById('countTaxInvoice').value);   
+        for(var i=1;i<count+1;i++){
+            var gross = document.getElementById("gross" + i);
+            if (gross !== null){
+                var grossVal = gross.value;                   
+                if(grossVal !== ''){
+                    grossVal = grossVal.replace(/,/g,"");
+                    var grossTotal = parseFloat(grossVal);
+                    document.getElementById('gross' + i).value = formatNumber(grossTotal);
+                    
+ 
+                }
+            }
+        }
     }   
                
     function checkRefNo(row){
@@ -2166,4 +2296,25 @@
         CalculateAmountTotal();   
     }
     
+    function showSearchInvoiceNo(){
+        if($("#searchInvoiceNo1").hasClass("hidden")){
+            $("#searchRefNo1").addClass("hidden");
+            $("#searchRefNo2").addClass("hidden");
+            $("#searchInvoiceNo1").removeClass("hidden");
+        }else{
+            $("#searchInvoiceNo1").addClass("hidden");
+        }
+        $("#searchInvoiceNo2").addClass("hidden");
+    }
+    
+    function showSearchRefNo(){
+        if($("#searchRefNo1").hasClass("hidden")){
+            $("#searchInvoiceNo1").addClass("hidden");
+            $("#searchInvoiceNo2").addClass("hidden");
+            $("#searchRefNo1").removeClass("hidden");
+        }else{
+            $("#searchRefNo1").addClass("hidden");
+        }
+        $("#searchRefNo2").addClass("hidden");
+    }
 </script>

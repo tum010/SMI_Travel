@@ -41,15 +41,31 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Not Success!</strong> 
             </div>
-            <!-- Alert Uni-->
-            <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
+            <div id="textAlertDivUpdate"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Air ticket name already exist!</strong> 
+                    <strong>Update Success!</strong> 
+            </div>
+            <div id="textAlertDivNotUpdate"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Update Not Success!</strong> 
+            </div>
+            <div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Delete Success!</strong> 
+            </div>
+            <div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Delete Not Success!</strong> 
+            </div>
+            <!-- Alert Uni-->
+            <div id="textAlertDuplicate"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Currency and exchange date already exist!</strong> 
             </div>
             <div class="row">
                 <form action="MExchangeRate.smi" method="post" id="SearchExchange" name="SearchExchange"  role="form">
                     <div class="col-xs-1 text-right">
-                        <label class="control-label" for="">From<font style="color: red">*</font></lable>
+                        <label class="control-label" for="">From</lable>
                     </div>
                     <div class="col-md-2 form-group"> 
                         <div class='input-group date fromdate' id="DateFrom">
@@ -59,7 +75,7 @@
                         </div>
                     </div>
                     <div class="col-xs-1 text-left" >
-                        <label class="control-label" for="">To<font style="color: red">*</font></lable>
+                        <label class="control-label" for="">To</lable>
                     </div>
                     <div class="col-md-2 form-group" > 
                         <div class='input-group date todate' id="DateTo">
@@ -161,11 +177,11 @@
                     <div class="form-group">
                         <label for="ExchangeRate" class="col-sm-3 control-label" >Exchange Rate </label>
                         <div class="col-sm-8">  
-                            <input type="text" class="form-control" maxlength="50" id="ExchangeRate" name="ExchangeRate" >
+                            <input type="text" class="form-control" maxlength="50" id="ExchangeRate" name="ExchangeRate"  onfocusout="formatDecimal();">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="Code3" class="col-sm-3 control-label" >Currency</label>
+                        <label for="Code3" class="col-sm-3 control-label" >Currency <font style="color: red">*</font></label>
                         <div class="col-sm-8">   
                             <select class="form-control" id="Currency" name="Currency">
                             <option value="">--select--</option>
@@ -207,20 +223,40 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<c:if test="${! empty requestScope['airlineLap']}">
-    <script language="javascript">
-        $('#textAlertLap').show();
-    </script>
-</c:if>
 <c:if test="${! empty requestScope['result']}">
-    <c:if test="${requestScope['result'] =='save successful'}">        
+    <c:if test="${requestScope['result'] =='save success'}">        
         <script language="javascript">
             $('#textAlertDivSave').show();
         </script>
     </c:if>
-    <c:if test="${requestScope['result'] =='save unsuccessful'}">        
+    <c:if test="${requestScope['result'] =='save unsuccess'}">        
         <script language="javascript">
            $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='update success'}">        
+        <script language="javascript">
+            $('#textAlertDivUpdate').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='update unsuccess'}">        
+        <script language="javascript">
+           $('#textAlertDivNotUpdate').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='delete success'}">        
+        <script language="javascript">
+            $('#textAlertDivDelete').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='delete unsuccess'}">        
+        <script language="javascript">
+           $('#textAlertDivNotDelete').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='duplicate'}">        
+        <script language="javascript">
+           $('#textAlertDuplicate').show();
         </script>
     </c:if>
 </c:if>

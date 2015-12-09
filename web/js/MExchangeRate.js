@@ -5,7 +5,7 @@
  */
 function searchExchange() {
    
-    var action = document.getElementById('action');
+    var action = document.getElementById('actionSearch');
     action.value = 'search';
 //    document.getElementById('SearchExchange').submit();
 
@@ -22,6 +22,7 @@ function EditExchange(id, exdate, cur, exrate,createby,createdate) {
     document.getElementById('ExchangeID').value = id;
     document.getElementById('ExchangeDate').value = exdate;
     document.getElementById('ExchangeRate').value = exrate;
+    document.getElementById('Currency').value = cur;
     document.getElementById('action').value = 'update';
 }
 
@@ -37,6 +38,21 @@ function Delete() {
     document.getElementById('ExchangeRateForm').submit();
 }
 
+function formatDecimal() {
+    var decimalOnly = /^\s*-?[0-9]\d*(\.\d{1,4})?\s*$/;
+    var myData = document.getElementById("ExchangeRate").value;
+    if(myData!==''){
+        if(decimalOnly.test(myData)){
+//            alert('It is GOOD!');
+            document.getElementById("btnSave").disabled = false;
+        }else{
+            document.getElementById("btnSave").disabled = true;
+            alert('Please Input 4 decimal point!');
+        }
+    }
+    return;  
+}
+
 $(document).ready(function() {
     $('.date').datetimepicker();
     $('.datemask').mask('0000-00-00');
@@ -50,59 +66,59 @@ $(document).ready(function() {
         $('#ExchangeRateForm').bootstrapValidator('revalidateField', 'ExchangeDate');
     });
     
-    $("#SearchExchange")
-        .bootstrapValidator({
-            framework: 'bootstrap',
-            feedbackIcons: {
-                valid: 'uk-icon-check',
-                invalid: 'uk-icon-times',
-                validating: 'uk-icon-refresh'
-            },
-            fields: {
-                FromDate: {
-                    trigger: 'focus keyup change',
-                        validators: {
-                            notEmpty: {
-                                message: 'The Date From is required'
-                            },
-                            date: {
-                                format: 'YYYY-MM-DD',
-                                max: 'ToDate',
-                                message: 'The Date From is not a valid'
-                            }
-                        }
-                },
-                ToDate: {
-                    trigger: 'focus keyup change',
-                        validators: {
-                            notEmpty: {
-                                message: 'The Date To is required'
-                            },
-                            date: {
-                                format: 'YYYY-MM-DD',
-                                min: 'FromDate',
-                                message: 'The Date To is not a valid'
-                            }
-                        }
-                }
-            }
-        }).on('success.field.fv', function (e, data) {
-            if (data.field === 'FromDate' && data.fv.isValidField('ToDate') === false) {
-                    data.fv.revalidateField('ToDate');
-                }
-
-                if (data.field === 'ToDate' && data.fv.isValidField('FromDate') === false) {
-                    data.fv.revalidateField('FromDate');
-                }
-        });
-
-        $('#DateFrom').datetimepicker().on('dp.change', function (e) {
-            $('#SearchExchange').bootstrapValidator('revalidateField', 'FromDate');
-        });
-        $('#DateTo').datetimepicker().on('dp.change', function (e) {
-            $('#SearchExchange').bootstrapValidator('revalidateField', 'ToDate');
-        });
-            
+//    $("#SearchExchange")
+//        .bootstrapValidator({
+//            framework: 'bootstrap',
+//            feedbackIcons: {
+//                valid: 'uk-icon-check',
+//                invalid: 'uk-icon-times',
+//                validating: 'uk-icon-refresh'
+//            },
+//            fields: {
+//                FromDate: {
+//                    trigger: 'focus keyup change',
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'The Date From is required'
+//                            },
+//                            date: {
+//                                format: 'YYYY-MM-DD',
+//                                max: 'ToDate',
+//                                message: 'The Date From is not a valid'
+//                            }
+//                        }
+//                },
+//                ToDate: {
+//                    trigger: 'focus keyup change',
+//                        validators: {
+//                            notEmpty: {
+//                                message: 'The Date To is required'
+//                            },
+//                            date: {
+//                                format: 'YYYY-MM-DD',
+//                                min: 'FromDate',
+//                                message: 'The Date To is not a valid'
+//                            }
+//                        }
+//                }
+//            }
+//        }).on('success.field.fv', function (e, data) {
+//            if (data.field === 'FromDate' && data.fv.isValidField('ToDate') === false) {
+//                    data.fv.revalidateField('ToDate');
+//                }
+//
+//                if (data.field === 'ToDate' && data.fv.isValidField('FromDate') === false) {
+//                    data.fv.revalidateField('FromDate');
+//                }
+//        });
+//
+//        $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+//            $('#SearchExchange').bootstrapValidator('revalidateField', 'FromDate');
+//        });
+//        $('#DateTo').datetimepicker().on('dp.change', function (e) {
+//            $('#SearchExchange').bootstrapValidator('revalidateField', 'ToDate');
+//        });
+//            
     
     $('#ExchangeRateForm').bootstrapValidator({
         container: 'tooltip',
