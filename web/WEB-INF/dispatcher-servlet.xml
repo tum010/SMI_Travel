@@ -160,6 +160,7 @@
                                 <prop key="OutboundStaffSummary.smi">OutboundStaffSummaryController</prop>
                                 <prop key="OutboundAirTicketMonthReport.smi">OutboundAirTicketMonthReportController</prop>
                                 <prop key="OutboundAirTicketAirlineStaffSummary.smi">OutboundAirTicketAirlineStaffSummaryController</prop>
+                                <prop key="MExchangeRate.smi">MExchangeRateController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -807,6 +808,11 @@
         
         <bean id="ExportDataToExcelView" class="com.smi.travel.controller.excel.ExportDataToExcelView">
 		<property name="utilityService" ref="UtilityService" />
+	</bean>
+        
+         <bean id="MExchangeRateController" class="com.smi.travel.controller.MExchangeRateController">
+		<property name="mExchangeRateService" ref="MExchangeRateService" />
+                <property name="utilityService" ref="UtilityService" />
 	</bean>
         
         <bean id="AccountReportSummary" class="com.smi.travel.controller.excel.account.AccountReportSummary">

@@ -702,4 +702,8 @@
         <put-attribute name="title" value="OutboundAirTicketAirlineStaffSummary Report : OutboundAirTicketAirlineStaffSummary" />
         <put-attribute name="body" value="/WEB-INF/jsp/OutboundAirTicketAirlineStaffSummary.jsp" />
     </definition>  
+    <definition name="MExchangeRate" extends="baseLayout">
+        <put-attribute name="title" value="MExchangeRate Report : MExchangeRate" />
+        <put-attribute name="body" value="/WEB-INF/jsp/MExchangeRate.jsp" />
+    </definition>
 </tiles-definitions>

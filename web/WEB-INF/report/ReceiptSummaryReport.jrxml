@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="058d4e5f-08d6-4dca-b53c-91fb30f0f189">
-	<property name="ireport.zoom" value="3.9930000000000287"/>
-	<property name="ireport.x" value="2317"/>
-	<property name="ireport.y" value="180"/>
+	<property name="ireport.zoom" value="2.4793388429752246"/>
+	<property name="ireport.x" value="888"/>
+	<property name="ireport.y" value="0"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -455,84 +455,84 @@ new BigDecimal($F{recamount}) : new BigDecimal("0.00")]]></variableExpression>
 			</rectangle>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1" y="0" width="21" height="16" uuid="1e466d17-d4a2-451b-a74f-a08e51a8fdf1"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="25" y="0" width="45" height="16" uuid="c00abeb7-b524-4a48-8cd8-f5a887818803"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recno}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="128" y="0" width="58" height="16" uuid="eea305ac-5d1d-4c0e-9101-14562c0d1597"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{receivedate}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="189" y="0" width="47" height="16" uuid="41f88a73-5fc6-4b09-8b73-896f90276138"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recfrom}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="71" y="0" width="56" height="16" uuid="c5d87a0f-1911-4d1a-b529-ca081bb67bcc"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recdate}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="240" y="0" width="161" height="16" uuid="035ea33e-fc28-415c-aab3-87f360b037b3"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recname}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="407" y="0" width="48" height="16" uuid="502c2827-9df4-46e1-968a-bd4d3a3789e2"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recdetail}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="462" y="0" width="62" height="16" uuid="8632bfc7-b84f-457f-951a-37b72bd7a782"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invno}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="false">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="525" y="0" width="64" height="16" uuid="6d227a99-20f9-4d95-ba7d-dd5f6a65e96e"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{invamount} != null && !"null".equals($F{invamount}) && $F{invamount}.length() > 0) ? new BigDecimal($F{invamount}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="591" y="0" width="50" height="16" uuid="68214f0d-92cf-4e58-a363-8806ca2e9a64"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{diff} != null && !"null".equals($F{diff}) && $F{diff}.length() > 0) ? new BigDecimal($F{diff}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="#,##0.00">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="643" y="0" width="65" height="16" uuid="b2856ba0-bb76-4b18-b06d-f081d2c5370c"/>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{recamount} != null && !"null".equals($F{recamount}) && $F{recamount}.length() > 0) ? new BigDecimal($F{recamount}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="715" y="0" width="87" height="16" uuid="4c013882-e168-4645-8ff6-4a54abcdb1f1"/>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Left" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{payby}]]></textFieldExpression>

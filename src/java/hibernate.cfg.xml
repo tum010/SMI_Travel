@@ -104,6 +104,6 @@
     <mapping resource="resource/hibernate/PaymentWendyReference.hbm.xml"/>
     <mapping resource="resource/hibernate/HistoryBooking.hbm.xml"/>
     <mapping resource="resource/hibernate/AirTicketRefund.hbm.xml"/>
-    <mapping/>
+    <mapping resource="resource/hibernate/MExchangeRate.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

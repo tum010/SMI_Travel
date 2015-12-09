@@ -365,5 +365,9 @@
     <bean id="PaymentOutboundService" class="com.smi.travel.datalayer.service.PaymentOutboundService">
         <property name="paymentOutboundDao" ref="PaymentOutboundDao" />
     </bean>
+    
+    <bean id="MExchangeRateService" class="com.smi.travel.datalayer.service.MExchangeRateService">
+        <property name="mExchangeRateDao" ref="MExchangeRateDao" />
+    </bean>
     <!--<add data>-->
 </beans>
