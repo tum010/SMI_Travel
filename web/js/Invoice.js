@@ -228,6 +228,7 @@ $(document).ready(function() {
     var invoiceNumber = $('#InvNo').val();
     if (invoiceNumber === '') {
         document.getElementById("printButton").disabled = true;
+        document.getElementById("printButtonEmail").disabled = true;
         document.getElementById("sendEmailButton").disabled = true;
     }
 
