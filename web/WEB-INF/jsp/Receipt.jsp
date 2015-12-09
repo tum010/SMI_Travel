@@ -2287,7 +2287,9 @@
             $("#ButtonSearchRefNo").attr("disabled", "disabled");
             $("#searchPaymentNoAir").attr("disabled", "disabled");
             $("#searchPaymentNoTour").attr("disabled", "disabled");
-
+            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
+            $("#refNo").attr("disabled", "disabled");
             var rowAll = tempCount;
             for (var i = 1; i < rowAll; i++) {
                 var invoiceId = $("#invId" + i).val();
@@ -2297,10 +2299,12 @@
             }
 
         } else if (checkadd == 2) {
+            $("#invoiceNo").attr("disabled", "disabled");
             $("#ButtonSearchInvoice").attr("disabled", "disabled");
             $("#searchPaymentNoAir").attr("disabled", "disabled");
             $("#searchPaymentNoTour").attr("disabled", "disabled");
-
+            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
             var rowAll = tempCount;
             for (var i = 1; i < rowAll; i++) {
                 var billId = $("#billDescId" + i).val();
@@ -2310,10 +2314,12 @@
             }
 
         } else if (checkadd == 3) {
+            $("#invoiceNo").attr("disabled", "disabled");
+            $("#refNo").attr("disabled", "disabled");
             $("#ButtonSearchRefNo").attr("disabled", "disabled");
             $("#ButtonSearchInvoice").attr("disabled", "disabled");
             $("#searchPaymentNoTour").attr("disabled", "disabled");
-
+            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
             var rowAll = tempCount;
             for (var i = 1; i < rowAll; i++) {
                 var payId = $("#paymentId" + i).val();
@@ -2323,10 +2329,12 @@
             }
 
         } else if (checkadd == 4) {
+            $("#invoiceNo").attr("disabled", "disabled");
+            $("#refNo").attr("disabled", "disabled");
             $("#ButtonSearchRefNo").attr("disabled", "disabled");
             $("#ButtonSearchInvoice").attr("disabled", "disabled");
             $("#searchPaymentNoAir").attr("disabled", "disabled");
-
+            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
             var rowAll = tempCount;
             for (var i = 1; i < rowAll; i++) {
                 var paymentTour = $("#paymentTourId" + i).val();
@@ -2865,25 +2873,33 @@
         }
         $('#DeleteProduct').modal('hide');
 
-//    var tempcount = parseInt($("#ReceiptListTable tr").length);
-//    
-//    if(tempcount == 1){
-//        $("#ButtonSearchRefNo").removeAttr("disabled");
-//        $("#ButtonSearchInvoice").removeAttr("disabled");
-//        $("#searchPaymentNoAir").removeAttr("disabled");
-//        $("#searchPaymentNoTour").removeAttr("disabled");
-//    }else if(tempcount == 2){
-//        $("#receiveProduct" + tempcount).parent().parent().remove();
-//        $("#counter").val(1);
-//        AddRowProduct(1);
-//        var amount = document.getElementById('receiveAmount1').value;
-//        if(amount === ""){
-//            $("#ButtonSearchRefNo").removeAttr("disabled");
-//            $("#ButtonSearchInvoice").removeAttr("disabled");
-//            $("#searchPaymentNoAir").removeAttr("disabled");
-//            $("#searchPaymentNoTour").removeAttr("disabled");
-//        }
-//    }
+    var tempcount = parseInt($("#ReceiptListTable tr").length);
+    
+    if(tempcount == 1){
+        $("#invoiceNo").removeAttr("disabled");
+        $("#refNo").removeAttr("disabled");
+        $("#ButtonSearchRefNo").removeAttr("disabled");
+        $("#ButtonSearchInvoice").removeAttr("disabled");
+        $("#searchPaymentNoAir").removeAttr("disabled");
+        $("#searchPaymentNoTour").removeAttr("disabled");
+        $("#ButtonSearchPaymentNoAir").removeAttr("disabled");
+        $("#ButtonSearchPaymentNoTour").removeAttr("disabled");
+    }else if(tempcount == 2){
+        $("#receiveProduct" + tempcount).parent().parent().remove();
+        $("#counter").val(1);
+        AddRowProduct(1);
+        var amount = document.getElementById('receiveAmount1').value;
+        if(amount === ""){
+            $("#invoiceNo").removeAttr("disabled");
+            $("#refNo").removeAttr("disabled");
+            $("#ButtonSearchRefNo").removeAttr("disabled");
+            $("#ButtonSearchInvoice").removeAttr("disabled");
+            $("#searchPaymentNoAir").removeAttr("disabled");
+            $("#searchPaymentNoTour").removeAttr("disabled");
+            $("#ButtonSearchPaymentNoAir").removeAttr("disabled");
+            $("#ButtonSearchPaymentNoTour").removeAttr("disabled");
+        }
+    }
         calculateGrandTotal();
     }
 
