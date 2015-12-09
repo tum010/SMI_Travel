@@ -296,24 +296,24 @@
                             <h4 class="panel-title">Receipt Detail</h4>
                         </div>
                         <div class="panel-body"  style="padding-right: 0px;">
-                            <div class="col-xs-8" style="padding-top: 0px;">
+                            <div class="col-xs-7" style="padding-top: 0px;">
                                 <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px" >
                                     <label class="control-label text-right">Receive No </label>                                    
                                 </div> 
-                                <div class="col-xs-1" style="width: 150px; margin-top: -10px" id='receivenumber'>
+                                <div class="col-xs-1" style="width: 80px; margin-top: -10px" id='receivenumber'>
                                     <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                                     <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                                     <input id="receiveId" name="receiveId" type="hidden" class="form-control" maxlength="11" value="${receipt.id}">
-                                    <input id="receiveNo" name="receiveNo" type="text" style="width: 150px" class="form-control" maxlength="20" value="${receipt.recNo}">
+                                    <input id="receiveNo" name="receiveNo" type="text" style="width: 80px" class="form-control" maxlength="20" value="${receipt.recNo}">
                                 </div>
                                 <div class="col-xs-1 text-right" style="width: 8px;"></div>
                                 <div class="col-xs-1 text-right" style="width: 80px; margin-top: -10px">
                                     <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchReceiveNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
+                                <div class="col-xs-1 text-right" style="width: 125px; margin-top: -10px">
                                     <label class="control-label text-right">Receipt Date<font style="color: red">*</font></label>
                                 </div>
-                                <div class="col-xs-1 form-group" style="width: 170px; margin-top: -10px">
+                                <div class="col-xs-1 form-group" style="width: 155px; margin-top: -10px">
                                     <div class='input-group date' id="ReceiveDate">
                                         <input id="receiveFromDate" name="receiveFromDate"  type="text" 
                                                class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['receiveFromDate']}">
@@ -323,7 +323,7 @@
                                 <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px">
                                     <label class="control-label text-right" for="codeBillto">Receive From <font style="color: red">*</font></label> 
                                 </div>
-                                <div class="form-group col-xs-1 text-right" style="width: 560px; margin-top: -10px">
+                                <div class="form-group col-xs-1 text-right" style="width: 470px; margin-top: -10px">
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="receiveFromId" name="receiveFromId" value=""/>
                                         <input type="text" class="form-control" id="receiveFromCode" name="receiveFromCode" maxlength="11" value="${receipt.recFrom}" style="text-transform:uppercase"/>
@@ -335,29 +335,24 @@
                                 <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px">
                                     <label class="control-label text-right">Name </label> 
                                 </div>
-                                <div class="form-group col-xs-1 text-right" style="width: 560px; margin-top: -10px">
+                                <div class="form-group col-xs-1 text-right" style="width: 470px; margin-top: -10px">
                                     <input type="text" class="form-control" id="receiveFromName" name="receiveFromName" value="${receipt.recName}">                           
                                 </div>
                                 <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px">
                                     <label class="control-label text-right">Address </label>  
                                 </div>
-                                <div class="form-group col-xs-1 text-right" style="width: 560px; margin-top: -10px">
+                                <div class="form-group col-xs-1 text-right" style="width: 470px; margin-top: -10px">
                                     <div class="input-group">                                    
-                                        <textarea rows="3" class="form-control" id="receiveFromAddress" name="receiveFromAddress" style="width: 327%" value="${receipt.recAddress}">${receipt.recAddress}</textarea>  
+                                        <textarea rows="3" class="form-control" id="receiveFromAddress" name="receiveFromAddress" style="width: 271%" value="${receipt.recAddress}">${receipt.recAddress}</textarea>  
                                     </div>                               
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px">
-                                    <label class="control-label text-right">Remark </label> 
-                                </div>
-                                <div class="form-group col-xs-1 text-right" style="width: 560px; margin-top: -10px">
-                                    <input type="text" class="form-control" id="remark" name="remark" value="${receipt.remark}">                           
-                                </div>
+                                
                             </div>
-                            <div class="col-xs-4" style="padding-top: 0px;">
+                            <div class="col-xs-5" style="padding-top: 0px;">
                                 <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
                                     <label class="control-label text-right">Receive Date</label>
                                 </div>
-                                <div class="col-xs-1 form-group" style="width: 170px; margin-top: -10px">
+                                <div class="col-xs-1 form-group" style="width: 200px; margin-top: -10px">
                                     <div class='input-group date'>
                                         <input id="receiveDate" name="receiveDate"  type="text" 
                                                class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['receiveDate']}">
@@ -367,7 +362,7 @@
                                 <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
                                     <label class="control-label text-right">Payment <font style="color: red">*</font></label>
                                 </div>
-                                <div class="form-group col-xs-1" style="width: 170px; margin-top: -10px">
+                                <div class="form-group col-xs-1" style="width: 200px; margin-top: -10px">
                                     <select name="inputStatus" id="inputStatus" class="form-control">
                                         <option value="">--- Status ---</option> 
                                         <c:forEach var="table" items="${statusList}" >
@@ -383,11 +378,22 @@
                                 <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
                                     <label class="control-label text-right">A/R Code <font style="color: red">*</font></label>                                    
                                 </div>
-                                <div class="form-group col-xs-1" style="width: 170px; margin-top: -10px">
+                                <div class="form-group col-xs-1" style="width: 200px; margin-top: -10px">
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="arCode" name="arCode" maxlength="11" value="${receipt.arCode}" readonly="" />
                                     </div>
                                 </div>
+                                <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
+                                    <label class="control-label text-right">Remark </label> 
+                                </div>
+                                <div class="form-group col-xs-1 text-right" style="width: 200px; margin-top: -10px">
+                                    <div class="input-group">                                    
+                                        <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 105%" value="${receipt.remark}">${receipt.remark}</textarea>  
+                                    </div>                               
+                                </div>    
+<!--                                <div class="form-group col-xs-1 text-right" style="width: 170px; margin-top: -10px">
+                                    <input type="text" class="form-control" id="remark" name="remark" value="${receipt.remark}">                           
+                                </div>-->
                             </div>
                         </div>
                         <div class="col-xs-12" style="margin-top: -30px">
