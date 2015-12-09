@@ -24,8 +24,8 @@ public class MExchangeRateService {
         return mExchangeRateDao.searchExchangeRateById(exchangedate,currency);
     }
     
-    public String findExchangeDuplicate(String exchangedate, String currency){
-        return mExchangeRateDao.findExchangeDuplicate(exchangedate, currency);
+    public String findExchangeDuplicate(String exchangedate, String currency,String id){
+        return mExchangeRateDao.findExchangeDuplicate(exchangedate, currency,id);
     }
     
     public String insertExchange(MExchangeRate mExchangeRate){
