@@ -28,7 +28,7 @@
 		<c:choose>
                     <c:when test="${fn:contains(page , 'W')}">
                         <h4><b>Finance & Cashier - Tax Invoice Wendy <font style="color: red">${voidTaxInvoice}</font></b></h4>
-                        <c:set var="outbound" value="disabled"/>
+                        <c:set var="outbound" value="hidden"/>
                         <c:set var="panelheader" value="wendyheader"/>
                         <c:set var="panelborder" value="wendyborder"/>
                     </c:when>
@@ -39,7 +39,7 @@
                     </c:when> 
                     <c:when test="${fn:contains(page , 'I')}">
                         <h4><b>Finance & Cashier - Tax Invoice Inbound <font style="color: red">${voidTaxInvoice}</font></b></h4>
-                        <c:set var="outbound" value="disabled"/>
+                        <c:set var="outbound" value="hidden"/>
                         <c:set var="panelheader" value="inboundborderheader"/>
                         <c:set var="panelborder" value="inboundborder"/>
                     </c:when> 
@@ -306,7 +306,7 @@
                         <div class="col-md-2 text-left">
                             <label class="control-label" for="">Tax Inv To<font style="color: red">*</font></lable>
                         </div>
-                        <div class="col-md-1 form-group" style="width: 585px">
+                        <div class="col-md-1 form-group" style="width: 265px">
                             <div class="input-group">                               
                                 <input type="text" style="text-transform:uppercase" class="form-control" id="TaxInvTo" name="TaxInvTo" value="${taxInvoice.taxInvTo}" style="background-color: #ffffff">
                                 <span class="input-group-addon" id="TaxInvTo_Modal"  data-toggle="modal" data-target="#TaxInvToModal">
@@ -314,6 +314,13 @@
                                 </span>
                             </div>
                         </div>
+                        <div class="col-md-1 text-right" style="width: 160px;">
+                            <label class="control-label" for="" >A/R&nbsp;Code<font style="color: red">*</font></label>
+                        </div>  
+                        <div class="col-md-2 form-group" >
+                            <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value=""/>
+                            <input type="text" class="form-control" id="ARCode" name="ARCode" value="${taxInvoice.arCode}" style="background-color: #ffffff">                              
+                        </div>        
                     </div>
                     <div class="col-xs-12 " style="margin-top: -10px">
                         <div class="col-md-2 text-left">
@@ -346,14 +353,7 @@
                         </div>
                         <div class="col-md-3 form-group hidden">
                             <input type="text"  class="form-control" id="PassengerName" name="PassengerName"  value="" readonly="">
-                        </div>
-                        <div class="col-md-2 text-left">
-                            <label class="control-label" for="" >A/R&nbsp;Code<font style="color: red">*</font></label>
-                        </div>  
-                        <div class="col-md-2 form-group" >
-                            <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value=""/>
-                            <input type="text" class="form-control" id="ARCode" name="ARCode" value="${taxInvoice.arCode}" style="background-color: #ffffff">                              
-                        </div>
+                        </div>                       
                     </div>
                     <div class="col-xs-12 " style="margin-top: -10px">
                         <div class="col-md-1 text-left" style="margin-top: -5px">
@@ -367,7 +367,7 @@
                                 <span id="SpanEdit${advanced.search}">Invoice No</span>
                             </a>                           
                         </div>
-                        <div class="col-md-1 text-left" style="width: 120px;">
+                        <div class="col-md-1 text-left ${outbound}" style="width: 120px;">
                             <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchRefNo()">
                                 <span id="SpanEdit${advanced.search}">Ref No</span>
                             </a>                           
@@ -406,17 +406,17 @@
                             </tbody>
                         </table>        
                     </div>         
-                    <div class="col-xs-12 hidden" id="searchRefNo1">
+                    <div class="col-xs-12 hidden " id="searchRefNo1">
                         <div class="col-xs-1 text-left" style="width: 160px;">
                             <label class="control-label text-right">Ref No</label>
                         </div>
                         <div class="col-xs-1 form-group" style="width: 180px" id="refnopanel">
                             <div class="input-group">
-                                <input id="refNo" name="refNo" type="text" class="form-control" value="" onkeydown="refnoValidate()" ${outbound}>
+                                <input id="refNo" name="refNo" type="text" class="form-control" value="" onkeydown="refnoValidate()" >
                             </div>
                         </div>
                         <div class="col-xs-1 text-left"  style="width: 100px">
-                            <button style="height:30px" type="button"  id="btnSearchRefNo"  name="btnSearchRefNo" onclick="searchRefNo();" class="btn btn-primary btn-sm" ${outbound}><i class="fa fa-search"></i>&nbsp;Search </button>
+                            <button style="height:30px" type="button"  id="btnSearchRefNo"  name="btnSearchRefNo" onclick="searchRefNo();" class="btn btn-primary btn-sm" ><i class="fa fa-search"></i>&nbsp;Search </button>
                         </div>
                         <div class="col-md-5 ">
                             <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from outbound only.</font></div>  
@@ -445,7 +445,7 @@
                 </div>             
             <!--</div>-->
             <!--<div role="tabpanel">-->
-                <div class="tab-content" style="margin-top: -20px">
+                <div class="tab-content" style="margin-top: -25px">
                     <div role="tabpanel" class="tab-pane  active" id="infoMasterProduct">
                         <!--<div class="panel panel-default ${panelborder}">-->                              
                             <div class="panel-body">
