@@ -148,7 +148,12 @@ $(document).ready(function() {
     var invoiceNumber = $('#InvNo').val();
     if (invoiceNumber === '') {
         document.getElementById("printButton").disabled = true;
+        document.getElementById("printButtonEmail").disabled = true;
         document.getElementById("sendEmailButton").disabled = true;
+    }else{
+        document.getElementById("printButton").disabled = false;
+        document.getElementById("printButtonEmail").disabled = false;
+        document.getElementById("sendEmailButton").disabled = false;
     }
 });
 
@@ -679,6 +684,36 @@ function Enable() {
 function EnableVoidInvoice() {
     var InvNo = document.getElementById('InvNo');
     document.getElementById('enableVoid').innerHTML = "Are you sure to enable booking other : " + InvNo.value + " ?";
+}
+
+function printInvoiceInbound(text, report) {
+    $('#typePrint').val(text);
+    $('#typeReport').val(report);
+}
+
+function printInvoiceInboundNew() {
+    var invoiceId = $('#InvoiceInboundId').val();
+    var typePrint = $('#SelectTypePrint').val();
+    var sale = $('#selectSalesStaff').val();
+    var leader = $('#selectLeader').val();
+    var payment = $('#selectPayment').val();
+    var type = $('#typePrint').val();
+    var typeReport = $('#typeReport').val();
+    var sign = $('#SelectSign').val();
+    var invoiceType = $('#InputTypeInvoiceInbound').val();
+    if (type === 'print') {
+        if (invoiceType === 'PM') {
+            window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+        } else {
+            window.open("report.smi?name=" + typeReport + "&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+        }
+    } else if (type === 'email') {
+        if (invoiceType === 'PM') {
+            window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+        } else {
+            window.open("SendMail.smi?reportname=Invoice&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+        }
+    }
 }
 
 $(document).ready(function() {

@@ -377,14 +377,19 @@
                         <div class="panel panel-default inboundborder">                              
                             <div class="panel-body">
                                 <div class="col-xs-12 text-right">
-                                    <div class="col-md-6 text-right "></div>                                   
-                                    <div class="col-md-1 text-left " style="padding-left: 0px">
-                                        <button type="button" class="btn btn-default" id="printButton" onclick="" data-toggle="modal" data-target="#PrintModal">
-                                            <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print
+                                    <div class="col-md-3 text-right "></div>                                   
+                                    <div class="col-md-1 text-left " style="padding-left: 0px;width: 130px">
+                                        <button type="button" class="btn btn-default" id="printButton" onclick="printInvoiceInbound('print', 'InvoiceReport')" data-toggle="modal" data-target="#PrintModal">
+                                            <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice
+                                        </button>
+                                    </div>
+                                    <div class="col-md-1 text-left " style="padding-left: 0px;width: 155px">
+                                        <button type="button" class="btn btn-default" id="printButtonEmail" onclick="printInvoiceInbound('print', 'InvoiceEmail')" data-toggle="modal" data-target="#PrintModal">
+                                            <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice Email
                                         </button>
                                     </div>
                                     <div class="col-md-1 text-left " style="width: 125px">
-                                        <button type="button" class="btn btn-default" id="sendEmailButton" onclick="" data-toggle="modal" data-target="#PrintModal">
+                                        <button type="button" class="btn btn-default" id="sendEmailButton" onclick="printInvoiceInbound('email')"  data-toggle="modal" data-target="#PrintModal">
                                             <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> Send Email 
                                         </button>
                                     </div>
@@ -583,7 +588,7 @@
                 </div>
             </div>
             <div class="modal-footer">  
-                <button type="button" onclick="printInvoiceNew()" class="btn btn-success" data-dismiss="modal">OK</button>
+                <button type="button" onclick="printInvoiceInboundNew()" class="btn btn-success" data-dismiss="modal">OK</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -742,6 +747,7 @@
 <input type="hidden" id="checkRecipt" name="checkRecipt" value="${checkRecipt}">
 <input type="hidden" id="typeBooking" name="typeBooking" value="${typeBooking}">
 <input type="hidden" id="typePrint" name="typePrint" value="">
+<input type="hidden" id="typeReport" name="typeReport" value="">
 <input type="hidden" value="${textVoid}">
 <input type="hidden" id="invoiceType" name="invoiceType" value="${invoiceType}">
 <input type="hidden" id="vatBase" name="vatBase" value="${vat}">
