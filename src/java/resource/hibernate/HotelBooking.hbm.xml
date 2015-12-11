@@ -58,8 +58,11 @@
          <property name="curAmount" type="string">
             <column name="cur_amount" length="3"/>
         </property>
-         <property name="curCost" type="string">
+        <property name="curCost" type="string">
             <column name="cur_cost" length="3"/>
+        </property>
+        <property name="supplier" type="string">
+            <column name="supplier" length="255"/>
         </property>
         
 

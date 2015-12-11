@@ -285,6 +285,13 @@
                                 </select>
                                 </div>
                             </div>
+                            <div class="col-sm-4">
+                                <label class="col-sm-4 control-label text-right">Supplier</label>
+                                <div class="col-sm-6">
+                                    <input class="form-control" type="text" maxlength="" id="Supplier" name="Supplier" 
+                                           value="${hotelBooking.supplier}" style="width: 180px;">
+                                </div>
+                            </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-sm-12">

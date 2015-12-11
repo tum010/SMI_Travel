@@ -27,7 +27,6 @@ import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -95,7 +94,7 @@ public class HotelDetailController extends SMITravelController {
         String Flight = request.getParameter("Flight");
         String currency = request.getParameter("select-currency");
         String currencycost = request.getParameter("select-currencycost");
-        
+        String supplier = request.getParameter("Supplier");
 
         String hotelRoomRows = request.getParameter("roomCounter");
         String hotelRequestRows = request.getParameter("requestCounter");
@@ -128,6 +127,7 @@ public class HotelDetailController extends SMITravelController {
             hotelBooking.setIsBill(util.convertStringToInteger(isBill));
             hotelBooking.setCurCost(currencycost);
             hotelBooking.setCurAmount(currency);
+            hotelBooking.setSupplier(supplier);
             
             System.out.println(" hotelBooking.getIsBill() " + hotelBooking.getIsBill());
             request.setAttribute(ISBILLSTATUS,hotelBooking.getIsBill());

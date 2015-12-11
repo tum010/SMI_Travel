@@ -32,6 +32,7 @@ public class HotelBooking  {
      private String curAmount;
      private String curCost;
      private Integer totalcost;
+     private String supplier;
      private List hotelPassengers = new LinkedList<HotelPassenger>();
      private List hotelRooms = new LinkedList<HotelRoom>();
      private List hotelRequests = new LinkedList<HotelRequest>();
@@ -48,7 +49,7 @@ public class HotelBooking  {
         this.checkin = checkin;
         this.checkout = checkout;
     }
-    public HotelBooking(MItemstatus MItemstatus, Master master, MMeal MMeal, Hotel hotel, int orderNo, String reconfirm, String hotelRef, Integer isBill, String remark, Date checkin, Date checkout, Integer adult, Integer child, Integer infant,String currency, List hotelPassengers, List hotelRooms, List hotelRequests,String curAmount,String curCost) {
+    public HotelBooking(MItemstatus MItemstatus, Master master, MMeal MMeal, Hotel hotel, int orderNo, String reconfirm, String hotelRef, Integer isBill, String remark, Date checkin, Date checkout, Integer adult, Integer child, Integer infant,String currency, List hotelPassengers, List hotelRooms, List hotelRequests,String curAmount,String curCost,String supplier) {
        this.MItemstatus = MItemstatus;
        this.master = master;
        this.MMeal = MMeal;
@@ -70,6 +71,15 @@ public class HotelBooking  {
        this.hotelPassengers = hotelPassengers;
        this.hotelRooms = hotelRooms;
        this.hotelRequests = hotelRequests;
+       this.supplier = supplier;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
    
     public String getId() {
