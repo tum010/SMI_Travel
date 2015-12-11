@@ -121,7 +121,10 @@
                                 <prop key="TaxInvoiceI.smi">TaxInvoiceController</prop>
                                 <prop key="TaxInvoiceO.smi">TaxInvoiceController</prop>
 				<prop key="SearchTaxInvoice.smi">SearchTaxInvoiceController</prop>
-				<prop key="ReceiveTable.smi">ReceiveTableController</prop>
+                                <prop key="ReceiveTable.smi">ReceiveTableController</prop>
+				<prop key="ReceiveTableW.smi">ReceiveTableController</prop>
+                                <prop key="ReceiveTableO.smi">ReceiveTableController</prop>
+                                <prop key="ReceiveTableI.smi">ReceiveTableController</prop>
 				<prop key="LockUnlockBooking.smi">LockUnlockBookingController</prop>
 				<prop key="Stock.smi">StockController</prop>
 				<prop key="SearchStock.smi">SearchStockController</prop>

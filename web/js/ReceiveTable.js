@@ -181,28 +181,46 @@ function setEnvironment() {
         $("#receiveData").removeClass("hidden");
     }
     if ($("#receiveAmount").val() !== '') {
-        $("#receiveAmount").val(formatNumber(parseFloat($("#receiveAmount").val())));
+        $("#receiveAmount").val(formatNumber(parseFloat($("#receiveAmount").val().replace(/,/g, ""))));
     }
     if ($("#cashAmount").val() !== '') {
-        $("#cashAmount").val(formatNumber(parseFloat($("#cashAmount").val())));
+        $("#cashAmount").val(formatNumber(parseFloat($("#cashAmount").val().replace(/,/g, ""))));
     }
     if ($("#bankAmount").val() !== '') {
-        $("#bankAmount").val(formatNumber(parseFloat($("#bankAmount").val())));
+        $("#bankAmount").val(formatNumber(parseFloat($("#bankAmount").val().replace(/,/g, ""))));
     }
     if ($("#chqAmount").val() !== '') {
-        $("#chqAmount").val(formatNumber(parseFloat($("#chqAmount").val())));
+        $("#chqAmount").val(formatNumber(parseFloat($("#chqAmount").val().replace(/,/g, ""))));
     }
     if ($("#chqBank").val() !== '') {
-        $("#chqBank").val(formatNumber(parseFloat($("#chqBank").val())));
+        $("#chqBank").val(formatNumber(parseFloat($("#chqBank").val().replace(/,/g, ""))));
     }
     if ($("#chqNo").val() !== '') {
-        $("#chqNo").val(formatNumber(parseFloat($("#chqNo").val())));
+        $("#chqNo").val(formatNumber(parseFloat($("#chqNo").val().replace(/,/g, ""))));
+    }
+    if ($("#periodDetail").val() !== '') {
+        $("#periodDetail").val($("#periodDetail").val().replace(/<br ?\/?>/g, "\n"));
+    }
+    if ($("#periodCashAmount").val() !== '') {
+        $("#periodCashAmount").val(formatNumber(parseFloat($("#periodCashAmount").val().replace(/,/g, ""))));
+    }
+    if ($("#periodBankAmount").val() !== '') {
+        $("#periodBankAmount").val(formatNumber(parseFloat($("#periodBankAmount").val().replace(/,/g, ""))));
+    }
+    if ($("#periodCash").val() !== '') {
+        $("#periodCash").val(formatNumber(parseFloat($("#periodCash").val().replace(/,/g, ""))));
+    }
+    if ($("#periodCheque").val() !== '') {
+        $("#periodCheque").val(formatNumber(parseFloat($("#periodCheque").val().replace(/,/g, ""))));
+    }
+    if ($("#periodCreditCard").val() !== '') {
+        $("#periodCreditCard").val(formatNumber(parseFloat($("#periodCreditCard").val().replace(/,/g, ""))));
     }
     if ($("#countCredit").val() !== '1') {
         var row = parseInt($("#countCredit").val());
         for (var i = 1; i <= row; i++) {
             if ($("#creditAmount" + i).val() !== '') {
-                $("#creditAmount" + i).val(formatNumber(parseFloat($("#creditAmount" + i).val())));
+                $("#creditAmount" + i).val(formatNumber(parseFloat($("#creditAmount" + i).val().replace(/,/g, ""))));
             }
         }
     }
@@ -263,7 +281,7 @@ function CallAjaxAuto(param) {
                         var billselect = $("#receiveName").val();
                         for (var i = 0; i < billListName.length; i++) {
 //                            if ((billselect == billListName[i]) || (billselect == billListId[i])) {
-                            if ((billselect == billListName[i])) {  
+                            if ((billselect == billListName[i])) {
 //                                $("#receiveCode").val(billListId[i]);
                                 $("#receiveArCode").val(billListId[i]);
                                 $("#receiveName").val(billListName[i]);
@@ -586,9 +604,20 @@ function saveReceivePeriod() {
     $('#textAlertDivSavePeriod').hide();
     $('#textAlertDivNotSavePeriod').hide();
     var periodId = $("#periodId").val();
+    var receiveFrom = $("#receiveFrom").val();
+    var receiveTo = $("#receiveTo").val();
     var fromDate = $("#fromDate").val();
     var toDate = $("#toDate").val();
     var periodDetail = $("#periodDetail").val();
+    var vatType = $("#SelectStatus").val();
+    var department = $("#department").val();
+    if (department === 'W') {
+        department = 'Wendy';
+    } else if (department === 'O') {
+        department = 'Outbound';
+    } else if (department === 'I') {
+        department = 'Inbound';
+    }
 
     var servletName = 'ReceiveTableServlet';
     var servicesName = 'AJAXBean';
@@ -596,9 +625,13 @@ function saveReceivePeriod() {
             '&servletName=' + servletName +
             '&servicesName=' + servicesName +
             '&periodId=' + periodId +
+            '&receiveFrom=' + receiveFrom +
+            '&receiveTo=' + receiveTo +
             '&fromDate=' + fromDate +
             '&toDate=' + toDate +
             '&periodDetail=' + periodDetail +
+            '&vatType=' + vatType +
+            '&department=' + department +
             '&type=' + 'checkPeriodDate';
     CallAjaxCheck(param);
 
@@ -612,14 +645,29 @@ function CallAjaxCheck(param) {
             url: url,
             cache: false,
             data: param,
-            success: function(msg) {               
-                if(msg === 'success'){
+            success: function(msg) {
+                if (msg !== 'fail') {
+                    var billJson = JSON.parse(msg);
+                    for (var i in billJson) {
+                        if (billJson.hasOwnProperty(i)) {
+                            $("#periodId").val(billJson[i].periodId);
+                            $("#receiveFrom").val(billJson[i].receiveFrom);
+                            $("#receiveTo").val(billJson[i].receiveTo);
+                            $("#periodDetail").val(billJson[i].periodIdDetail);
+                            $("#periodCashAmount").val(billJson[i].cashamount);
+                            $("#periodBankAmount").val(billJson[i].bankamount);
+                            $("#periodCash").val(billJson[i].cashminusamount);
+                            $("#periodCheque").val(billJson[i].cheque);
+                            $("#periodCreditCard").val(billJson[i].creditcard);
+                            setEnvironment();
+                        }
+                    }
                     $("#fromdatepanel").removeClass("has-error");
                     $("#fromdatepanel").addClass("has-success");
                     $("#todatepanel").removeClass("has-error");
                     $("#todatepanel").addClass("has-success");
                     $('#textAlertDivSavePeriod').show();
-                }else{
+                } else {
                     $("#fromdatepanel").removeClass("has-success");
                     $("#todatepanel").removeClass("has-success");
                     $("#fromdatepanel").addClass("has-error");
@@ -636,10 +684,24 @@ function CallAjaxCheck(param) {
     }
 }
 
-function hideTextAlertDivSavePeriod(){
+function hideTextAlertDivSavePeriod() {
     $('#textAlertDivSavePeriod').hide();
 }
 
-function hideTextAlertDivNotSavePeriod(){
+function hideTextAlertDivNotSavePeriod() {
     $('#textAlertDivNotSavePeriod').hide();
+}
+
+function printReceiveTableReport() {
+    var receiveDate = $("#InputDate").val();
+    var vatType = $("#SelectStatus").val();
+    var department = $("#department").val();
+    if (department === 'W') {
+        department = 'Wendy';
+    } else if (department === 'O') {
+        department = 'Outbound';
+    } else if (department === 'I') {
+        department = 'Inbound';
+    }
+    window.open("report.smi?name=CollectionReport&receiveDate=" + receiveDate + "&vatType=" + vatType + "&department=" + department);
 }

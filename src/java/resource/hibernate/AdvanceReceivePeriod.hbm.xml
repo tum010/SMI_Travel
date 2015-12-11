@@ -16,5 +16,11 @@
         <property name="detail" type="string">
             <column name="detail" />
         </property>
+        <property name="vatType" type="string">
+            <column name="vat_type" length="1" />
+        </property>
+        <property name="department" type="string">
+            <column name="department" length="20" />
+        </property>
     </class>
 </hibernate-mapping>

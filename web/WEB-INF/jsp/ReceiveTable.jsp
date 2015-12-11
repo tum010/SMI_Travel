@@ -12,19 +12,44 @@
 <c:set var="advanceReceiveCreditList" value="${requestScope['advanceReceiveCreditList']}" />
 <c:set var="advanceReceivePeriod" value="${requestScope['advanceReceivePeriod']}" />
 <c:set var="advanceReceivePeriodView" value="${requestScope['advanceReceivePeriodView']}" />
+<c:set var="department" value="${requestScope['department']}" />
 
 <input type="hidden" name="result" id="result" value="${requestScope['result']}">
 
 <section class="content-header" >
     <h1>
-        Finance & Cashier - Receive Table
+        <c:set var="page" value=""/>
+        <c:choose>
+            <c:when test="${fn:contains(department , 'W')}">
+                <c:set var="page" value="Wendy"/>
+            </c:when>
+            <c:when test="${fn:contains(department , 'O')}">
+                <c:set var="page" value="Outbound"/>
+            </c:when>
+            <c:when test="${fn:contains(department , 'I')}">
+                <c:set var="page" value="Inbound"/>
+            </c:when>
+        </c:choose>
+        Finance & Cashier - Receive Table ${page}
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Finance & Cashier </a></li>          
         <li class="active"><a href="#">Receive Table</a></li>
     </ol>
 </section>
-<form action="ReceiveTable.smi" method="post" id="receiveForm" role="form" autocomplete="off">
+<form action="ReceiveTable${department}.smi" method="post" id="receiveForm" role="form" autocomplete="off">
+<div class="col-xs-12" style="margin: 5px 0px 5px 0px;">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-1" style="width: 80px;">        
+        <a href="ReceiveTableW.smi" id="menu-wendyoutbound" style="color: #FFC07B;"><b>Wendy</b></a>
+    </div>
+    <div class="col-xs-1" style="width: 100px;">
+        <a href="ReceiveTableO.smi" id="menu-wendyoutbound" style="color: #FF8003;"><b>Outbound</b></a>        
+    </div>
+    <div class="col-xs-1" style="width: 80px;">
+        <a href="ReceiveTableI.smi" id="menu-wendyoutbound" style="color: #11BF00;"><b>Inbound</b></a>       
+    </div>
+</div>    
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">  
     <div class="col-sm-12" style="padding-left: 50px;padding-right: 50px;">
         <!--Alert Save -->
@@ -43,7 +68,7 @@
         <div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Delete Not Success!</strong> 
-        </div>
+        </div>       
         <div class="panel panel-default">
             <div class="panel-body">               
                 <div class="row" style="padding-left: 0px">
@@ -85,7 +110,7 @@
                             </a>
                         </div>
                         <div class="col-xs-2 text-right" style="width: 100px;" >
-                            <button type="button" id="ButtonPrint" name="ButtonPrint" class="btn btn-default">
+                            <button type="button" id="ButtonPrint" name="ButtonPrint" onclick="printReceiveTableReport()" class="btn btn-default">
                                 <i class="fa fa-print"></i> Print             
                             </button>
                         </div>
@@ -118,7 +143,7 @@
                             <tr>
                                 <td align="center">${advanceReceive.recDate}</td>
                                 <td align="center">${advanceReceive.arCode}</td>
-                                <td>${advanceReceive.recTo}</td>
+                                <td>${advanceReceive.recName}</td>
                                 <td>${advanceReceive.description}</td>
                                 <td align="center">${advanceReceive.MAccpay.name}</td>
                                 <td align="right" class="money">${advanceReceive.recAmount}</td>
@@ -193,6 +218,7 @@
                                     <input name="receiveId" id="receiveId" type="hidden" class="form-control" value="${advanceReceive.id}" />
                                     <input name="receiveCreditId" id="receiveCreditId" type="hidden" class="form-control" value="" />
                                     <input name="receiveCreditRow" id="receiveCreditRow" type="hidden" class="form-control" value="" />
+                                    <input name="department" id="department" type="hidden" class="form-control" value="${department}" />
                                 </div>
                                 <div class="col-xs-1 form-group" style="width: 135px">
                                     <label class="control-label text-left">Receive Name<font style="color: red">*</font></lable>        
@@ -380,6 +406,8 @@
                         <div class="row" style="padding-left: 0px">
                             <div class="col-xs-12 ">
                                 <input name="periodId" id="periodId" type="hidden" class="form-control" value="${advanceReceivePeriod.id}" />
+                                <input name="receiveFrom" id="receiveFrom" type="hidden" class="form-control" value="${advanceReceivePeriod.receiveFrom}" />
+                                <input name="receiveTo" id="receiveTo" type="hidden" class="form-control" value="${advanceReceivePeriod.receiveTo}" />
                                 <div class="col-xs-1 " style="width:30px;"></div>
                                 <div class="col-xs-1 " style="width:125px;">
                                     <label class="control-label">From</lable>
@@ -454,9 +482,7 @@
                                     <label class="control-label ">Detail</lable>
                                 </div>  
                                 <div class="col-md-2 form-group text-left" style="padding-left:35px;width:370px;">
-                                    <textarea class="form-control" rows="3" id="periodDetail" name="periodDetail" onclick="hideTextAlertDivSavePeriod(); hideTextAlertDivNotSavePeriod();">
-                                        ${advanceReceivePeriod.detail}
-                                    </textarea>
+                                    <textarea class="form-control" rows="3" id="periodDetail" name="periodDetail" onclick="hideTextAlertDivSavePeriod(); hideTextAlertDivNotSavePeriod();">${advanceReceivePeriod.detail}</textarea>
                                 </div>  
                             </div>   
                         </div><!--End Row 3 -->

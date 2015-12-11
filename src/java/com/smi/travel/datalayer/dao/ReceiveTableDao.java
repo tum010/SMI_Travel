@@ -18,14 +18,16 @@ import java.util.List;
  */
 public interface ReceiveTableDao {
 
-    public List<AdvanceReceive> searchAdvanceReceive(String inputDate, String selectStatus, String option);
+    public List<AdvanceReceive> searchAdvanceReceive(String inputDate, String selectStatus, String department, String option);
     public String deleteAdvanceReceive(AdvanceReceive advanceReceive);
     public String insertAdvanceReceive(AdvanceReceive advanceReceive);
     public String updateAdvanceReceive(AdvanceReceive advanceReceive);
     public String deleteAdvanceReceiveCredit(AdvanceReceiveCredit advanceReceiveCredit, String option);
-    public String saveReceivePeriod(String periodId, String fromDate, String toDate, String detail);
-    public String checkReceivePeriod(String periodId, String fromDate, String toDate);
-    public AdvanceReceivePeriodView getAdvanceReceivePeriodView(String from, String to);
-    public AdvanceReceivePeriod getReceivePeriod(String receiveDate);
+    public String saveReceivePeriod(String periodId, String fromDate, String toDate, String detail, String department, String vatType);
+    public String checkReceivePeriod(String periodId, String fromDate, String toDate, String department, String vatType);
+    public AdvanceReceivePeriodView getAdvanceReceivePeriodView(String from, String to, String department, String vatType);
+    public AdvanceReceivePeriod getReceivePeriod(String receiveDate, String department, String vatType);
+    public String updateReceivePeriod(String periodId, String periodDetail);
+    public List getCollectionReport(String receiveDate, String vatType, String department, String printBy);
    
 }

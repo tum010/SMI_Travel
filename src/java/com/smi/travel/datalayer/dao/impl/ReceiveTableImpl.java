@@ -13,9 +13,12 @@ import com.smi.travel.datalayer.entity.AdvanceReceivePeriod;
 import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MCreditBank;
 import com.smi.travel.datalayer.view.entity.AdvanceReceivePeriodView;
+import com.smi.travel.datalayer.view.entity.CollectionView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
@@ -57,7 +60,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
     }
 
     @Override
-    public List<AdvanceReceive> searchAdvanceReceive(String inputDate, String selectStatus, String option) {
+    public List<AdvanceReceive> searchAdvanceReceive(String inputDate, String selectStatus, String department, String option) {
         StringBuffer query = new StringBuffer("from AdvanceReceive ad ");
         boolean haveCondition = false;
         if ((inputDate != null) && (!"".equalsIgnoreCase(inputDate))) {
@@ -68,6 +71,11 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         if ((selectStatus != null) && (!"".equalsIgnoreCase(selectStatus))) {
             query.append(haveCondition ? " and" : " where");
             query.append(" ad.vatType = '" + selectStatus + "'");
+            haveCondition = true;
+        }
+        if ((department != null) && (!"".equalsIgnoreCase(department))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" ad.department = '" + department + "'");
             haveCondition = true;
         }
         // option search mean order by id and option success mean order by id desc
@@ -274,7 +282,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
     }
 
     @Override
-    public String saveReceivePeriod(String periodId, String fromDate, String toDate, String detail) {
+    public String saveReceivePeriod(String periodId, String fromDate, String toDate, String detail, String department, String vatType) {
         String result = "fail";
         UtilityFunction utilty = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
@@ -283,6 +291,8 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             advanceReceivePeriod.setReceiveFrom(utilty.convertStringToDate(fromDate));
             advanceReceivePeriod.setReceiveTo(utilty.convertStringToDate(toDate));
             advanceReceivePeriod.setDetail(detail);
+            advanceReceivePeriod.setDepartment(department);
+            advanceReceivePeriod.setVatType(vatType);
             transaction = session.beginTransaction();              
             session.save(advanceReceivePeriod);     
             transaction.commit();
@@ -299,18 +309,28 @@ public class ReceiveTableImpl implements ReceiveTableDao{
     }
 
     @Override
-    public String checkReceivePeriod(String periodId, String fromDate, String toDate) {
+    public String checkReceivePeriod(String periodId, String fromDate, String toDate, String department, String vatType) {
         String result = "fail";
         StringBuffer query = new StringBuffer("from AdvanceReceivePeriod ad ");
         boolean haveCondition = false;
         if ((fromDate != null) && (!"".equalsIgnoreCase(fromDate))) {
-            query.append(haveCondition ? " or" : " where");
-            query.append(" (ad.receiveFrom between '" + fromDate + "' and '" + toDate + "')");
+            query.append(haveCondition ? " or " : " where ");
+            query.append(" ((ad.receiveFrom between '" + fromDate + "' and '" + toDate + "')");
             haveCondition = true;
         }
         if ((toDate != null) && (!"".equalsIgnoreCase(toDate))) {
-            query.append(haveCondition ? " or" : " where");
-            query.append(" (ad.receiveTo between '" + fromDate + "' and '" + toDate + "')");
+            query.append(haveCondition ? " or " : " where ");
+            query.append(" (ad.receiveTo between '" + fromDate + "' and '" + toDate + "'))");
+            haveCondition = true;
+        }
+        if ((department != null) && (!"".equalsIgnoreCase(department))) {
+            query.append(haveCondition ? " and " : " where ");
+            query.append(" ad.department = '" + department + "' ");
+            haveCondition = true;
+        }
+        if ((vatType != null) && (!"".equalsIgnoreCase(vatType))) {
+            query.append(haveCondition ? " and " : " where ");
+            query.append(" ad.vatType = '" + vatType + "' ");
             haveCondition = true;
         }
         
@@ -329,12 +349,22 @@ public class ReceiveTableImpl implements ReceiveTableDao{
     }
 
     @Override
-    public AdvanceReceivePeriod getReceivePeriod(String receiveDate) {
+    public AdvanceReceivePeriod getReceivePeriod(String receiveDate, String department, String vatType) {
         StringBuffer query = new StringBuffer("from AdvanceReceivePeriod ad ");
         boolean haveCondition = false;
         if ((receiveDate != null) && (!"".equalsIgnoreCase(receiveDate))) {
-            query.append(haveCondition ? " or" : " where");
-            query.append(" (ad.receiveFrom <= '" + receiveDate + "' and ad.receiveTo >= '" + receiveDate + "')");
+            query.append(haveCondition ? " or " : " where ");
+            query.append(" ad.receiveFrom <= '" + receiveDate + "' and ad.receiveTo >= '" + receiveDate + "'");
+            haveCondition = true;
+        }
+        if ((department != null) && (!"".equalsIgnoreCase(department))) {
+            query.append(haveCondition ? " and " : " where ");
+            query.append(" ad.department = '" + department + "' ");
+            haveCondition = true;
+        }
+        if ((vatType != null) && (!"".equalsIgnoreCase(vatType))) {
+            query.append(haveCondition ? " and " : " where ");
+            query.append(" ad.vatType = '" + vatType + "' ");
             haveCondition = true;
         }
         
@@ -352,7 +382,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
     }
 
     @Override
-    public AdvanceReceivePeriodView getAdvanceReceivePeriodView(String from, String to) {
+    public AdvanceReceivePeriodView getAdvanceReceivePeriodView(String from, String to, String department, String vatType) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List<AdvanceReceivePeriodView> advanceReceivePeriodViewList = new ArrayList<AdvanceReceivePeriodView>();
@@ -362,6 +392,16 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         if((from != null) && (!"".equalsIgnoreCase(from)) && (to != null) && (!"".equalsIgnoreCase(to))){
              query += (condition ? " AND " : " WHERE ");
              query += " rec.rec_date BETWEEN '" + from + "' AND '" + to + "' " ;
+             condition = true;
+        }
+        if((department != null) && (!"".equalsIgnoreCase(department))){
+             query += (condition ? " AND " : " WHERE ");
+             query += " rec.department = '" + department + "' " ;
+             condition = true;
+        }
+        if((vatType != null) && (!"".equalsIgnoreCase(vatType))){
+             query += (condition ? " AND " : " WHERE ");
+             query += " rec.rec_type = '" + vatType + "' " ;
              condition = true;
         }
         
@@ -388,6 +428,145 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         this.sessionFactory.close();
         session.close();
         return advanceReceivePeriodViewList.get(0);
+    }
+
+    @Override
+    public String updateReceivePeriod(String periodId, String periodDetail) {
+        int result = 0;
+        String hql = "UPDATE AdvanceReceivePeriod period set period.detail = :periodDetail WHERE period.id = :periodId";
+        try {
+            org.hibernate.classic.Session session = this.sessionFactory.openSession();
+            Query query = session.createQuery(hql);
+            query.setParameter("periodDetail", periodDetail);
+            query.setParameter("periodId", periodId);
+            result = query.executeUpdate();
+         } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+        return String.valueOf(result);
+    }
+
+    @Override
+    public List getCollectionReport(String receiveDate, String vatType, String department, String printBy) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        
+        AdvanceReceivePeriod  advanceReceivePeriod = getReceivePeriod(receiveDate,department,vatType);
+        
+        String queryReceiveView = "SELECT * FROM `collection_receive_view` crv ";
+        String queryReceiptSummary = "select sum(ifnull(`rec`.`bank_transfer`,0)) AS `bank`,sum(ifnull(`rec`.`cash_amount`,0)) AS `cash`,sum(ifnull((`rec`.`chq_amount_1` + `rec`.`chq_amount_2`),0)) AS `chq`,ifnull((select sum(`rc`.`credit_amount`) from `receipt_credit` `rc` where (`rc`.`rec_id` = `rec`.`id`)),0) AS `credit` from `receipt` `rec` ";
+        String queryReceiveSummary = "SELECT sum( ifnull(`ar`.`cash_amount`, 0)) AS `cash`, sum( ifnull(`ar`.`bank_amount`, 0)) AS `bank`, sum( ifnull(`ar`.`chq_amount`, 0)) AS `chq`, ifnull(( SELECT sum(`ac`.`credit_amount`) FROM `advance_receive_credit` `ac` WHERE (`ac`.`ad_rec_id` = `ar`.`id`)), 0 ) AS `credit` FROM `advance_receive` `ar` ";
+        boolean haveCondition = false;
+        
+        if((receiveDate != null) && (!"".equalsIgnoreCase(receiveDate))) {
+            queryReceiveView += (haveCondition ? " AND " : " WHERE ");
+            queryReceiveView += " crv.receivedate = '" + receiveDate + "' ";
+            
+            queryReceiptSummary += (haveCondition ? " AND " : " WHERE ");
+            queryReceiptSummary += " ((`rec`.`rec_date` >= (select `adp`.`receive_from` from `advance_receive_period` `adp` where ((`adp`.`receive_from` < '" + receiveDate + "') and (`adp`.`receive_to` > '" + receiveDate + "')))) and (`rec`.`rec_date` <= (select `adp`.`receive_to` from `advance_receive_period` `adp` where ((`adp`.`receive_from` < '" + receiveDate + "') and (`adp`.`receive_to` > '" + receiveDate + "')))) ";
+            
+            queryReceiveSummary += (haveCondition ? " AND " : " WHERE ");
+            queryReceiveSummary += " (( `ar`.`rec_date` = '" + receiveDate + "' ) ";
+            
+            haveCondition = true;           
+        }
+        
+        if((vatType != null) && (!"".equalsIgnoreCase(vatType))) {
+            queryReceiveView += (haveCondition ? " AND " : " WHERE ");
+            queryReceiveView += " crv.vattype = '" + vatType + "' ";
+            
+            queryReceiptSummary += (haveCondition ? " AND " : " WHERE ");
+            queryReceiptSummary += " (`rec`.`rec_type` = '" + vatType + "') ";
+            
+            queryReceiveSummary += (haveCondition ? " AND " : " WHERE ");
+            queryReceiveSummary += " (`ar`.`vat_type` = '" + vatType + "') ";
+            
+            haveCondition = true;
+        }
+         
+        if((department != null) && (!"".equalsIgnoreCase(department))) {
+            queryReceiveView += (haveCondition ? " AND " : " WHERE ");
+            queryReceiveView += " crv.department = '" + department + "' ";
+            
+            queryReceiptSummary += (haveCondition ? " AND " : " WHERE ");
+            queryReceiptSummary += " (`rec`.`department` = '" + department + "')) ";
+            
+            queryReceiveSummary += (haveCondition ? " AND " : " WHERE ");
+            queryReceiveSummary += " ( `ar`.`department` = '" + department + "' )) ";
+            
+            haveCondition = true;
+        }
+        
+        queryReceiveSummary += " GROUP BY `ar`.`rec_date` ";
+       
+        List<Object[]> QueryReceiptSummary = session.createSQLQuery(queryReceiptSummary)
+                .addScalar("bank", Hibernate.STRING)
+                .addScalar("cash", Hibernate.STRING)
+                .addScalar("chq", Hibernate.STRING)
+                .addScalar("credit", Hibernate.STRING)
+                .list();
+        
+        CollectionView receiptSummary = new CollectionView();
+        for (Object[] A : QueryReceiptSummary){
+            receiptSummary.setObanktransfer(A[0] != null ? util.ConvertString(A[0]) : "0.00");
+            receiptSummary.setOcash(A[1] != null ? util.ConvertString(A[1]) : "0.00");
+            receiptSummary.setOchq(A[2] != null ? util.ConvertString(A[2]) : "0.00");
+            receiptSummary.setOcredit(A[3] != null ? util.ConvertString(A[3]) : "0.00");
+        }
+        
+        List<Object[]> QueryReceiveSummary = session.createSQLQuery(queryReceiveSummary)
+                .addScalar("cash", Hibernate.STRING)
+                .addScalar("bank", Hibernate.STRING)
+                .addScalar("chq", Hibernate.STRING)
+                .addScalar("credit", Hibernate.STRING)
+                .list();
+        
+        CollectionView receiveSummary = new CollectionView();
+        for (Object[] B : QueryReceiveSummary){
+            receiveSummary.setIcash(B[0] != null ? util.ConvertString(B[0]) : "0.00");
+            receiveSummary.setIbanktransfer(B[1] != null ? util.ConvertString(B[1]) : "0.00");
+            receiveSummary.setIchq(B[2] != null ? util.ConvertString(B[2]) : "0.00");
+            receiveSummary.setIcredit(B[3] != null ? util.ConvertString(B[3]) : "0.00");
+        }
+        
+        List<Object[]> QueryReceiveView = session.createSQLQuery(queryReceiveView)
+                .addScalar("name", Hibernate.STRING)
+                .addScalar("totalamount", Hibernate.STRING)
+                .addScalar("detail", Hibernate.STRING)
+                .addScalar("remark", Hibernate.STRING)
+                .list();
+                            
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MMM-yyyy HH:mm:ss");
+        
+        int i = 1;
+        for (Object[] C : QueryReceiveView){
+            CollectionView collectionView = new CollectionView();
+            collectionView.setDatefrom(util.convertDateToString(advanceReceivePeriod.getReceiveFrom()));
+            collectionView.setDateto(util.convertDateToString(advanceReceivePeriod.getReceiveTo()));
+            collectionView.setDepartment(department);
+            collectionView.setSystemdate(String.valueOf(dateformat.format(new Date())));
+            collectionView.setNo(String.valueOf(i));
+            collectionView.setName(C[0] != null ? util.ConvertString(C[0]) : "0.00");
+            collectionView.setTotalamount(C[1] != null ? util.ConvertString(C[1]) : "0.00");
+            collectionView.setDetail(C[2] != null ? util.ConvertString(C[2]) : "0.00");
+            collectionView.setRemark(C[3] != null ? util.ConvertString(C[3]) : "0.00");
+            collectionView.setOcash(receiptSummary.getOcash());
+            collectionView.setOchq(receiptSummary.getOchq());
+            collectionView.setOcredit(receiptSummary.getOcredit());
+            collectionView.setObanktransfer(receiptSummary.getObanktransfer());
+            collectionView.setIcash(receiveSummary.getIcash());
+            collectionView.setIchq(receiveSummary.getIchq());
+            collectionView.setIcredit(receiveSummary.getIcredit());
+            collectionView.setIbanktransfer(receiveSummary.getIbanktransfer());
+            data.add(collectionView);
+            i++;
+        }
+        this.sessionFactory.close();
+        session.close();
+        return data;
     }
        
 }

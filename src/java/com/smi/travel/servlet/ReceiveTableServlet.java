@@ -25,7 +25,11 @@ public class ReceiveTableServlet implements AbstractAJAXServlet{
         String fromDate = request.getParameter("fromDate");
         String toDate = request.getParameter("toDate");
         String periodId = request.getParameter("periodId");
-        String periodDetail = request.getParameter("periodDetail");        
+        String periodDetail = request.getParameter("periodDetail"); 
+        String receiveFrom = request.getParameter("receiveFrom"); 
+        String receiveTo = request.getParameter("receiveTo");
+        String vatType = request.getParameter("vatType");  
+        String department = request.getParameter("department");  
         String type = request.getParameter("type");
         Map result = new HashMap();
         
@@ -35,6 +39,10 @@ public class ReceiveTableServlet implements AbstractAJAXServlet{
         result.put("periodId", periodId);
         result.put("type", type);
         result.put("periodDetail", periodDetail);
+        result.put("receiveFrom", receiveFrom);
+        result.put("receiveTo", receiveTo);
+        result.put("vatType", vatType);
+        result.put("department", department);
                  
         return result;   
     }

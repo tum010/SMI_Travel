@@ -91,6 +91,7 @@ public class ReportController extends SMITravelController {
     private static final String HotelSummary = "HotelSummary";
     private static final String HotelMonthlyTempReport = "HotelMonthlyTempReport";
     private static final String HotelMonthlyDetailReport = "HotelMonthlyDetailReport";
+    private static final String CollectionReport = "CollectionReport";
     
     private static final String OtherMonthlyReport = "OtherMonthlyReport"; // Other
     private static final String DailyTourReport = "DailyTourReport";
@@ -345,8 +346,11 @@ public class ReportController extends SMITravelController {
             String currency = request.getParameter("currency");
             data = reportservice.getOutboundStaffSummaryReport(from,to,salebyUsers,currency,detail,user.getUsername()+"-"+user.getRole().getName());
             ((OutboundStaffSummaryReport) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
+        }else if(CollectionReport.equalsIgnoreCase(name)){
+            String receiveDate = request.getParameter("receiveDate");
+            String vatType = request.getParameter("vatType");
+            data = reportservice.getCollectionReport(receiveDate,vatType,department,user.getUsername()+"-"+user.getRole().getName());
         }
-
         
         
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

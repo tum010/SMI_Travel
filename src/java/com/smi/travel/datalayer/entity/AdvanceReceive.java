@@ -32,6 +32,7 @@ public class AdvanceReceive  {
      private Date createDate;
      private BigDecimal recAmount;
      private String vatType;
+     private String department;
      private List advanceReceiveCredits = new LinkedList<AdvanceReceiveCredit>();
 
     public AdvanceReceive() {
@@ -183,6 +184,14 @@ public class AdvanceReceive  {
 
     public void setAdvanceReceiveCredits(List advanceReceiveCredits) {
         this.advanceReceiveCredits = advanceReceiveCredits;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
 }

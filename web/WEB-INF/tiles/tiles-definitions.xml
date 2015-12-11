@@ -481,10 +481,24 @@
         <put-attribute name="title" value="FC : SearchTaxInvoice " />
         <put-attribute name="body" value="/WEB-INF/jsp/SearchTaxInvoice.jsp" />
     </definition>
-    
-    
+
     <definition name="ReceiveTable" extends="baseLayout">
         <put-attribute name="title" value="FC : ReceiveTable " />
+        <put-attribute name="body" value="/WEB-INF/jsp/ReceiveTable.jsp" />
+    </definition>
+    
+    <definition name="ReceiveTableW" extends="baseLayout">
+        <put-attribute name="title" value="FC : ReceiveTable Wendy" />
+        <put-attribute name="body" value="/WEB-INF/jsp/ReceiveTable.jsp" />
+    </definition>
+    
+    <definition name="ReceiveTableO" extends="baseLayout">
+        <put-attribute name="title" value="FC : ReceiveTable Outbound" />
+        <put-attribute name="body" value="/WEB-INF/jsp/ReceiveTable.jsp" />
+    </definition>
+    
+    <definition name="ReceiveTableI" extends="baseLayout">
+        <put-attribute name="title" value="FC : ReceiveTable Inbound" />
         <put-attribute name="body" value="/WEB-INF/jsp/ReceiveTable.jsp" />
     </definition>
     

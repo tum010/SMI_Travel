@@ -27,6 +27,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class ReceiveTableController extends SMITravelController {
     private static final ModelAndView ReceiveTable = new ModelAndView("ReceiveTable");
     private static final ModelAndView ReceiveTable_REFRESH = new ModelAndView(new RedirectView("ReceiveTable.smi", true));
+    private static final String LINKNAME = "ReceiveTable";
     private static final String CUSTOMERAGENTINFOLIST = "customerAgentInfoList";
     private static final String MACCPAYLIST = "mAccpayList";
     private static final String MCREDITBANKLIST = "mCreditBankList";
@@ -36,6 +37,7 @@ public class ReceiveTableController extends SMITravelController {
     private static final String ADVANCERECEIVEPERIOD = "advanceReceivePeriod";
     private static final String ADVANCERECEIVEPERIODVIEW = "advanceReceivePeriodView";
     private static final String RESULT = "result";
+    private static final String DEPARTMENT = "department";
     private ReceiveTableService receiveTableService;
     private UtilityService utilservice;
     private UtilityFunction util;
@@ -43,6 +45,12 @@ public class ReceiveTableController extends SMITravelController {
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         UtilityFunction utilty = new UtilityFunction();
+        String receiveDepartment = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");
+        if("".equalsIgnoreCase(receiveDepartment)){        
+           receiveDepartment =  "W";
+        }
+        request.setAttribute(DEPARTMENT, receiveDepartment);
+        
         List<CustomerAgentInfo> customerAgentInfoList = getUtilservice().getListCustomerAgentInfo();
         request.setAttribute(CUSTOMERAGENTINFOLIST, customerAgentInfoList);
         List<MAccpay> mAccpayList = getUtilservice().getListMAccpay();
@@ -80,13 +88,21 @@ public class ReceiveTableController extends SMITravelController {
         String createDate = request.getParameter("createDate");
         String countCredit = request.getParameter("countCredit");
         String receiveCreditId = request.getParameter("receiveCreditId");
+        String department = request.getParameter("department");
+        if("W".equalsIgnoreCase(department)){
+            department = "Wendy";
+        }else if("O".equalsIgnoreCase(department)){
+            department = "Outbound";
+        }else if("I".equalsIgnoreCase(department)){
+            department = "Inbound";
+        }
         
         if("search".equalsIgnoreCase(action)){
-            List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive(inputDate,selectStatus,"search");
+            List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive(inputDate,selectStatus,department,"search");
             request.setAttribute(ADVANCERECEIVELIST, advanceReceiveList);
             request.setAttribute("inputDate", inputDate);
             request.setAttribute("selectStatus", selectStatus);
-            getReceivePeriod(request,inputDate);
+            getReceivePeriod(request,inputDate,department,selectStatus);
         }else if("save".equalsIgnoreCase(action)){
             AdvanceReceive advanceReceive = new AdvanceReceive();
             if("".equalsIgnoreCase(receiveId)){
@@ -109,6 +125,7 @@ public class ReceiveTableController extends SMITravelController {
             advanceReceive.setChqBank(chqBank.replaceAll(",", ""));
             advanceReceive.setChqDate(utilty.convertStringToDate(chqDate));
             advanceReceive.setChqNo(chqNo.replaceAll(",", ""));
+            advanceReceive.setDepartment(department);
             
             MAccpay mAccpay = new MAccpay();
             mAccpay.setId(status);
@@ -131,23 +148,23 @@ public class ReceiveTableController extends SMITravelController {
             String result = receiveTableService.saveReceiveTable(advanceReceive);
             request.setAttribute(RESULT, result);
             if("success".equalsIgnoreCase(result)){
-                List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive(receiveDate,vatType,"success");
+                List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive(receiveDate,vatType,department,"success");
                 request.setAttribute(ADVANCERECEIVELIST, advanceReceiveList);
-                getReceivePeriod(request,receiveDate);
+                getReceivePeriod(request,receiveDate,department,vatType);
                 request.setAttribute("inputDate", receiveDate);
                 request.setAttribute("selectStatus", vatType);
             }
             
         }else if("edit".equalsIgnoreCase(action)){
-            List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive("","",receiveId);
+            List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive("","",department,receiveId);
             request.setAttribute(ADVANCERECEIVE, advanceReceiveList.get(0));
-            getReceivePeriod(request,String.valueOf(advanceReceiveList.get(0).getRecDate()));
+            getReceivePeriod(request,String.valueOf(advanceReceiveList.get(0).getRecDate()),department,advanceReceiveList.get(0).getVatType());
             if(advanceReceiveList.get(0).getAdvanceReceiveCredits() != null){
                 List<AdvanceReceiveCredit> advanceReceiveCreditList = new ArrayList<AdvanceReceiveCredit>();
                 advanceReceiveCreditList = advanceReceiveList.get(0).getAdvanceReceiveCredits();
                 request.setAttribute(ADVANCERECEIVECREDITLIST, advanceReceiveCreditList);                
             }
-            List<AdvanceReceive> advanceReceiveSearchList = receiveTableService.searchAdvanceReceive(inputDate,selectStatus,"search");
+            List<AdvanceReceive> advanceReceiveSearchList = receiveTableService.searchAdvanceReceive(inputDate,selectStatus,department,"search");
             request.setAttribute(ADVANCERECEIVELIST, advanceReceiveSearchList);
             request.setAttribute("inputDate", inputDate);
             request.setAttribute("selectStatus", selectStatus);
@@ -161,10 +178,11 @@ public class ReceiveTableController extends SMITravelController {
             advanceReceive.getAdvanceReceiveCredits().add(advanceReceiveCredit);
             String result = receiveTableService.deleteAdvanceReceive(advanceReceive);
             request.setAttribute(RESULT, result);
-            List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive(inputDate,selectStatus,"search");
+            List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive(inputDate,selectStatus,department,"search");
             request.setAttribute(ADVANCERECEIVELIST, advanceReceiveList);
             request.setAttribute("inputDate", inputDate);
             request.setAttribute("selectStatus", selectStatus);
+            
         }else if("deleteAdvanceReceiveCredit".equalsIgnoreCase(action)){
             AdvanceReceiveCredit advanceReceiveCredit = new AdvanceReceiveCredit();
             advanceReceiveCredit.setId(receiveCreditId);
@@ -175,7 +193,7 @@ public class ReceiveTableController extends SMITravelController {
             
         }
         
-        return ReceiveTable;
+        return new ModelAndView(LINKNAME+receiveDepartment);
     }
     
     private void setAdvanceReceiptCredit(HttpServletRequest request, int row, AdvanceReceive advanceReceive) {
@@ -223,15 +241,19 @@ public class ReceiveTableController extends SMITravelController {
         }
     }
 
-    private void getReceivePeriod(HttpServletRequest request, String receiveDate) {
+    private void getReceivePeriod(HttpServletRequest request, String receiveDate, String department, String vatType) {
         UtilityFunction utilty = new UtilityFunction();
         AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
-        advanceReceivePeriod = receiveTableService.getReceivePeriod(receiveDate);
-        request.setAttribute(ADVANCERECEIVEPERIOD, advanceReceivePeriod);
+        advanceReceivePeriod = receiveTableService.getReceivePeriod(receiveDate,department,vatType);
+        if(advanceReceivePeriod != null){
+            String detail = advanceReceivePeriod.getDetail().replaceAll("(\r\n|\n)", "<br />");
+            advanceReceivePeriod.setDetail(detail);
+            request.setAttribute(ADVANCERECEIVEPERIOD, advanceReceivePeriod);
+        }
         
         if(advanceReceivePeriod != null){
             AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
-            advanceReceivePeriodView = receiveTableService.getAdvanceReceivePeriodView(utilty.convertDateToString(advanceReceivePeriod.getReceiveFrom()),utilty.convertDateToString(advanceReceivePeriod.getReceiveTo()));
+            advanceReceivePeriodView = receiveTableService.getAdvanceReceivePeriodView(utilty.convertDateToString(advanceReceivePeriod.getReceiveFrom()),utilty.convertDateToString(advanceReceivePeriod.getReceiveTo()),department,vatType);
             request.setAttribute(ADVANCERECEIVEPERIODVIEW, advanceReceivePeriodView);
         }    
     }

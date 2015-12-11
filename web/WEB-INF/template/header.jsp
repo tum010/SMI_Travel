@@ -107,7 +107,7 @@
                                             "<li><a id='menu-creditnote' href='SearchCreditNote.smi'> Credit Note</a></li>",
                                             "<li><a id='menu-receipt' href='SearchReceipt.smi'> Receipt</a></li>",
                                             "<li><a id='menu-taxinvoice' href='SearchTaxInvoice.smi'> Tax Invoice</a></li>",
-                                            "<li><a id='menu-receivetable' href='ReceiveTable.smi'> Receive Table</a></li>",
+                                            "<li><a id='menu-receivetable' href='ReceiveTableW.smi'> Receive Table</a></li>",
                                             "<li><a id='menu-lockandunlockbooking' href='LockUnlockBooking.smi'>Lock And UnLock Booking</a></li>" ];
                             var AccountMenu = [
                                             "<li><a id='menu-narvanainterface' href='APMonitor.smi'> Nirvana Interface </a></li>",

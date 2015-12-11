@@ -16,7 +16,9 @@ public class AdvanceReceivePeriod {
      private String  id;
      private Date receiveFrom;
      private Date receiveTo;
-     private String detail; 
+     private String detail;
+     private String vatType;
+     private String department;
 
     public AdvanceReceivePeriod(String id, Date receiveFrom, Date receiveTo, String detail) {
        this.id = id;
@@ -59,5 +61,21 @@ public class AdvanceReceivePeriod {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public String getVatType() {
+        return vatType;
+    }
+
+    public void setVatType(String vatType) {
+        this.vatType = vatType;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }

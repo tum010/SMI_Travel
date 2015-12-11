@@ -31,6 +31,7 @@ import com.smi.travel.datalayer.dao.TaxInvoiceDao;
 import com.smi.travel.datalayer.dao.TicketFareAirlineDao;
 import com.smi.travel.datalayer.dao.TransferJobDao;
 import com.smi.travel.datalayer.entity.AdvanceReceive;
+import com.smi.travel.datalayer.entity.AdvanceReceivePeriod;
 import com.smi.travel.datalayer.entity.Billable;
 import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.Customer;
@@ -57,6 +58,7 @@ import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
 import com.smi.travel.datalayer.view.dao.CustomerAgentInfoDao;
 import com.smi.travel.datalayer.view.dao.TicketAircommissionViewDao;
+import com.smi.travel.datalayer.view.entity.AdvanceReceivePeriodView;
 import com.smi.travel.datalayer.view.entity.BookSummary;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
@@ -869,16 +871,42 @@ public class AJAXBean extends AbstractBean implements
         }else if (RECEIVETABLE.equalsIgnoreCase(servletName)){
             if("checkPeriodDate".equalsIgnoreCase(type)){
                 String periodId = map.get("periodId").toString();
+                String receiveFrom = map.get("receiveFrom").toString();
+                String receiveTo = map.get("receiveTo").toString();        
                 String fromDate = map.get("fromDate").toString();
                 String toDate = map.get("toDate").toString();
                 String periodDetail = map.get("periodDetail").toString();
-                String check = receiveTableDao.checkReceivePeriod(periodId,fromDate,toDate);
-                if("success".equalsIgnoreCase(check)){
-                    result = receiveTableDao.saveReceivePeriod(periodId,fromDate,toDate,periodDetail);
-                    System.out.println("Result : "+result);
+                String department = map.get("department").toString();
+                String vatType = map.get("vatType").toString();
+                String check = "";
+                if(!"".equalsIgnoreCase(periodId) && receiveFrom.equalsIgnoreCase(fromDate) && receiveTo.equalsIgnoreCase(toDate)){                    
+                    check = receiveTableDao.updateReceivePeriod(periodId,periodDetail);                   
+                    if("1".equalsIgnoreCase(check)){
+                        AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
+                        advanceReceivePeriod = receiveTableDao.getReceivePeriod(receiveFrom,department,vatType);
+                        AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
+                        advanceReceivePeriodView = receiveTableDao.getAdvanceReceivePeriodView(fromDate,toDate,department,vatType);
+                        result = buildAdvanceReceivePeriodViewListJSON(advanceReceivePeriod,advanceReceivePeriodView);
+                        System.out.println("Result : "+result);
+                    }else{
+                        result = "fail";
+                    }
                 }else{
-                    result = "fail";
-                }    
+                    check = receiveTableDao.checkReceivePeriod(periodId,fromDate,toDate,department,vatType);
+                    if("success".equalsIgnoreCase(check)){
+                        check = receiveTableDao.saveReceivePeriod(periodId,fromDate,toDate,periodDetail,department,vatType);                   
+                        if("success".equalsIgnoreCase(check)){
+                            AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
+                            advanceReceivePeriod = receiveTableDao.getReceivePeriod(fromDate,department,vatType);
+                            AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
+                            advanceReceivePeriodView = receiveTableDao.getAdvanceReceivePeriodView(fromDate,toDate,department,vatType);
+                            result = buildAdvanceReceivePeriodViewListJSON(advanceReceivePeriod,advanceReceivePeriodView);
+                            System.out.println("Result : "+result);
+                        }
+                    }else{
+                        result = "fail";
+                    }
+                }                    
             }
         }else if(PAYMENTOUTBOUND.equalsIgnoreCase(servletName)){
             if("searchRefNo".equalsIgnoreCase(type)){
@@ -2317,4 +2345,22 @@ public class AJAXBean extends AbstractBean implements
         }
         return null; 
     }   
+
+    private JSONArray buildAdvanceReceivePeriodViewListJSON(AdvanceReceivePeriod advanceReceivePeriod ,AdvanceReceivePeriodView advanceReceivePeriodView) {
+        UtilityFunction utilty = new UtilityFunction();
+        JSONArray record = new JSONArray();
+        JSONObject field = new JSONObject();
+        field.put("periodId", advanceReceivePeriod.getId());
+        field.put("periodIdDetail", advanceReceivePeriod.getDetail());
+        field.put("receiveFrom", utilty.convertDateToString(advanceReceivePeriod.getReceiveFrom()));
+        field.put("receiveTo", utilty.convertDateToString(advanceReceivePeriod.getReceiveTo()));
+        field.put("cashamount", advanceReceivePeriodView.getCashamount());
+        field.put("bankamount", advanceReceivePeriodView.getBankamount());
+        field.put("cashminusamount", advanceReceivePeriodView.getCashminusamount());
+        field.put("cheque", advanceReceivePeriodView.getCheque());
+        field.put("creditcard", advanceReceivePeriodView.getCreditcard());
+        record.add(field);
+
+        return record;
+    }
 }

@@ -29,8 +29,8 @@ public class ReceiveTableService {
         this.receiveTableDao = receiveTableDao;
     }
 
-    public List<AdvanceReceive> searchAdvanceReceive(String inputDate, String selectStatus, String option) {
-        return this.receiveTableDao.searchAdvanceReceive(inputDate,selectStatus,option);
+    public List<AdvanceReceive> searchAdvanceReceive(String inputDate, String selectStatus, String department, String option) {
+        return this.receiveTableDao.searchAdvanceReceive(inputDate,selectStatus,department,option);
     }
 
     public String deleteAdvanceReceive(AdvanceReceive advanceReceive) {
@@ -49,12 +49,12 @@ public class ReceiveTableService {
         return this.receiveTableDao.deleteAdvanceReceiveCredit(advanceReceiveCredit,option);
     }
 
-    public AdvanceReceivePeriod getReceivePeriod(String receiveDate) {
-        return this.receiveTableDao.getReceivePeriod(receiveDate);
+    public AdvanceReceivePeriod getReceivePeriod(String receiveDate, String department, String vatType) {
+        return this.receiveTableDao.getReceivePeriod(receiveDate, department, vatType);
     }
 
-    public AdvanceReceivePeriodView getAdvanceReceivePeriodView(String from, String to) {
-        return this.receiveTableDao.getAdvanceReceivePeriodView(from,to);
+    public AdvanceReceivePeriodView getAdvanceReceivePeriodView(String from, String to, String department, String vatType) {
+        return this.receiveTableDao.getAdvanceReceivePeriodView(from,to,department,vatType);
     }
     
 }

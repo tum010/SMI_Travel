@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.PackageTourHotelDao;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
+import com.smi.travel.datalayer.dao.ReceiveTableDao;
 import com.smi.travel.datalayer.dao.SummaryTicketAdjustCostAndIncomeDao;
 import com.smi.travel.datalayer.view.dao.APNirvanaDao;
 import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
@@ -105,6 +106,7 @@ public class ReportService {
     private OtherBookingDao otherBookingDao;
     private SaleVatReportDao saleVatReportDao;
     private OutboundSummaryDao outboundSummaryDao;
+    private ReceiveTableDao receiveTableDao;
     
     public List getInvoiceMonthly(String BillTo,String ClientName,String Accno,String vattype,String from,String to,String department,String billingAttn,String billingFrom,String billingTel,String billingFax,String billingMail,String billingDate){
         return invoiceReportDao.getInvoiceMonthly(BillTo, ClientName, Accno, vattype, from, to, department, billingAttn, billingFrom, billingTel, billingFax, billingMail, billingDate);
@@ -770,6 +772,18 @@ public class ReportService {
 
     public List getOutboundHotelSummary(String hotelid, String from, String to, String saleby, String payby, String bank, String status, String city, String country, String printby) {
         return outboundSummaryDao.getOutboundHotelSummary(hotelid, from, to, saleby, payby, bank, status, city, country, printby);
+    }
+
+    public List getCollectionReport(String receiveDate, String vatType, String department, String printBy) {
+        return receiveTableDao.getCollectionReport(receiveDate, vatType, department, printBy);
+    }
+
+    public ReceiveTableDao getReceiveTableDao() {
+        return receiveTableDao;
+    }
+
+    public void setReceiveTableDao(ReceiveTableDao receiveTableDao) {
+        this.receiveTableDao = receiveTableDao;
     }
     
 }
