@@ -538,16 +538,18 @@ public class ReceiveTableImpl implements ReceiveTableDao{
                 .addScalar("remark", Hibernate.STRING)
                 .list();
                             
-        SimpleDateFormat dateformat = new SimpleDateFormat();
-        dateformat.applyPattern("dd-MMM-yyyy HH:mm:ss");
+        SimpleDateFormat dateformatSystemDate = new SimpleDateFormat();
+        dateformatSystemDate.applyPattern("dd-MMM-yyyy HH:mm");
+        SimpleDateFormat dateformatReceiveDate = new SimpleDateFormat();
+        dateformatReceiveDate.applyPattern("dd/MM/yyyy");
         
         int i = 1;
         for (Object[] C : QueryReceiveView){
             CollectionView collectionView = new CollectionView();
-            collectionView.setDatefrom(util.convertDateToString(advanceReceivePeriod.getReceiveFrom()));
-            collectionView.setDateto(util.convertDateToString(advanceReceivePeriod.getReceiveTo()));
+            collectionView.setDatefrom(String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveFrom())));
+            collectionView.setDateto(String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveTo())));
             collectionView.setDepartment(department);
-            collectionView.setSystemdate(String.valueOf(dateformat.format(new Date())));
+            collectionView.setSystemdate(String.valueOf(dateformatSystemDate.format(new Date())));
             collectionView.setNo(String.valueOf(i));
             collectionView.setName(C[0] != null ? util.ConvertString(C[0]) : "0.00");
             collectionView.setTotalamount(C[1] != null ? util.ConvertString(C[1]) : "0.00");

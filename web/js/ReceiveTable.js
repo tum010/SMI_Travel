@@ -219,7 +219,7 @@ function setEnvironment() {
     if ($("#countCredit").val() !== '1') {
         var row = parseInt($("#countCredit").val());
         for (var i = 1; i <= row; i++) {
-            if ($("#creditAmount" + i).val() !== '') {
+            if ($("#creditAmount" + i).val() !== '' && $("#creditAmount" + i).val() !== undefined) {
                 $("#creditAmount" + i).val(formatNumber(parseFloat($("#creditAmount" + i).val().replace(/,/g, ""))));
             }
         }
