@@ -694,7 +694,7 @@ function printInvoiceInbound(text, report) {
 function printInvoiceInboundNew() {
     var invoiceId = $('#InvoiceInboundId').val();
     var typePrint = $('#SelectTypePrint').val();
-    var sale = $('#selectSalesStaff').val();
+    var sale = 0;
     var leader = $('#selectLeader').val();
     var payment = $('#selectPayment').val();
     var type = $('#typePrint').val();

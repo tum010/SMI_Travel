@@ -550,7 +550,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="row">
+<!--                <div class="row">
                     <div class="col-md-5">
                         <h5>Show Leader to Invoice </h5>
                     </div>
@@ -560,8 +560,8 @@
                             <option value="1">Show Leader</option>
                         </select>
                     </div>
-                </div>
-                <div class="row">
+                </div>-->
+<!--                <div class="row">
                     <div class="col-md-5">
                         <h5>Payment by money Transfer</h5>
                     </div>
@@ -572,7 +572,7 @@
                             <option value="BBL">Payment Bank Bangkok bank PCL</option>
                         </select>
                     </div>
-                </div>
+                </div>-->
                 <div class="row">
                     <div class="col-md-5">
                         <h5>Sign </h5>
