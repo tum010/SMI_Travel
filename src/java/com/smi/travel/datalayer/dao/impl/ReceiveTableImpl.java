@@ -456,8 +456,8 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         AdvanceReceivePeriod  advanceReceivePeriod = getReceivePeriod(receiveDate,department,vatType);
         
         String queryReceiveView = "SELECT * FROM `collection_receive_view` crv ";
-        String queryReceiptSummary = "select sum(ifnull(`rec`.`bank_transfer`,0)) AS `bank`,sum(ifnull(`rec`.`cash_amount`,0)) AS `cash`,sum(ifnull((`rec`.`chq_amount_1` + `rec`.`chq_amount_2`),0)) AS `chq`,ifnull((select sum(`rc`.`credit_amount`) from `receipt_credit` `rc` where (`rc`.`rec_id` = `rec`.`id`)),0) AS `credit` from `receipt` `rec` ";
-        String queryReceiveSummary = "SELECT sum( ifnull(`ar`.`cash_amount`, 0)) AS `cash`, sum( ifnull(`ar`.`bank_amount`, 0)) AS `bank`, sum( ifnull(`ar`.`chq_amount`, 0)) AS `chq`, ifnull(( SELECT sum(`ac`.`credit_amount`) FROM `advance_receive_credit` `ac` WHERE (`ac`.`ad_rec_id` = `ar`.`id`)), 0 ) AS `credit` FROM `advance_receive` `ar` ";
+        String queryReceiptSummary = "select sum(ifnull(`rec`.`bank_transfer`,0)) AS `bank`,sum(ifnull(`rec`.`cash_amount`,0)) AS `cash`,sum(ifnull((`rec`.`chq_amount_1` + `rec`.`chq_amount_2`),0)) AS `chq`,sum(ifnull((select sum(`rc`.`credit_amount`) from `receipt_credit` `rc` where (`rc`.`rec_id` = `rec`.`id`)),0)) AS `credit` from `receipt` `rec` ";
+        String queryReceiveSummary = "SELECT sum( ifnull(`ar`.`cash_amount`, 0)) AS `cash`, sum( ifnull(`ar`.`bank_amount`, 0)) AS `bank`, sum( ifnull(`ar`.`chq_amount`, 0)) AS `chq`, sum(ifnull(( SELECT sum(`ac`.`credit_amount`) FROM `advance_receive_credit` `ac` WHERE (`ac`.`ad_rec_id` = `ar`.`id`)), 0 )) AS `credit` FROM `advance_receive` `ar` ";
         boolean haveCondition = false;
         
         if((receiveDate != null) && (!"".equalsIgnoreCase(receiveDate))) {
