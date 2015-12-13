@@ -419,7 +419,7 @@ public class BillableImpl implements BillableDao {
                     Initname = passenger.getMInitialname().getName();
                 }
             //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
-                description += "FOR" +"             " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"    "+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"\n";
+                description += "FOR" +"             " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
                 ticketno+= "                   "+"TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n";
             }
             
@@ -612,9 +612,9 @@ public class BillableImpl implements BillableDao {
                         int infant = list.get(i).getInboundInQty();
                         sum = adult + child + infant;
                         if(sum != 0){
-                            description += " \t\t "+ sum +"  PAX";
+                            description += "<P>"+ sum +"  PAX </P>";
                         }else{
-                            description += "\t\t 0  PAX";
+                            description += "<P> 0  PAX </P>";
                         } 
                     }else if ("O".equals(list.get(i).getMaster().getBookingType())){
                         int sum = 0;
@@ -623,12 +623,12 @@ public class BillableImpl implements BillableDao {
                         int infant = list.get(i).getOutboundInQty();
                         sum = adult + child + infant;
                         if(sum != 0){
-                            description += " \t\t"+ sum +" PAX ";
+                            description += "<P>"+ sum +" PAX </P>";
                         }else{
-                            description += "\t\t 0  PAX ";
+                            description += "<P> 0  PAX </P>";
                         } 
                     }else{
-                        description += "\t\t 0  PAX ";
+                        description += "<P> 0  PAX </P>";
                     }
                 }else{
                      description += " ";

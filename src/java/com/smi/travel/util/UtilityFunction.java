@@ -479,5 +479,29 @@ public class UtilityFunction {
     public static String getObjectString(Object object){
         return object == null ? "" : object.toString();
     }
+    
+    public  String[] getTagPDescription(String source ){
+        String[] output = {"",""};
+        String data[] = source.split("\n");
+        
+        for(int i =0;i<data.length;i++){
+            //step 2 find tag p
+            int indexTagP = data[i].indexOf("<P>");
+            //step 3 cut data to new field
+            if(indexTagP != -1){
+                String tagdescription = data[i].substring(indexTagP+3 ,data[i].indexOf("</P>") );
+                output[0] +=  data[i].replaceAll("<P>"+tagdescription+"</P>", "")+"\n";
+                output[1] += tagdescription;
+            }else{
+                if(i < data.length-1){
+                    output[0] += data[i]+"\n";
+                }else{
+                    output[0] += data[i];
+                }
+            }
+            output[1] += "\n";
+        }
+        return output;
+    }
 
 }
