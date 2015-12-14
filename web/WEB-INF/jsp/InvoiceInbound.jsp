@@ -23,7 +23,7 @@
 
 <section class="content-header" >
     <h1>
-        <c:choose>
+    <c:choose>
             <c:when test="${fn:contains(page , 'PM')}">
                 <c:set var="typeInvoiceInboubd" value="PM" />
                 <h4><b>Finance & Cashier - Proforma Invoice <font style="color: red;"> ${textVoid}</font></b></h4>
@@ -33,6 +33,7 @@
                 <h4><b>Finance & Cashier - Revenue Invoice  <font style="color: red;"> ${textVoid}</font></b></h4>
             </c:when>                        
         </c:choose> 
+        
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Finance & Cashier </a></li>          
@@ -80,8 +81,21 @@
         <form action="InvoiceInbound${page}.smi" method="post" id="InvoiceInboundForm" name="InvoiceInboundForm" role="form" onsubmit="">
             <input type="text" class="hidden" id="action" name="action" value="save" >
                 <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Void Success </strong> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Void Success </strong> 
+                </div>
+            <div class="row" style="padding-left: 15px">  
+                <div class="col-sm-6 " style="padding-right: 15px">
+                    <c:choose>
+                        <c:when test="${fn:contains(page , 'PM')}">
+                            <c:set var="typeInvoiceInboubd" value="PM" />
+                        </c:when>
+                        <c:when test="${fn:contains(page , 'RV')}">
+                            <c:set var="typeInvoiceInboubd" value="RV" />
+                        </c:when>                        
+                    </c:choose> 
+                </div>
+                <input type="text" class="hidden" value="${typeInvoiceInboubd}" id="InputTypeInvoiceInbound" name="InputTypeInvoiceInbound">
             </div>
             <div class="panel panel-default inboundborder">
                 <div class="panel-heading inboundborderheader ">

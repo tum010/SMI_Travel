@@ -133,7 +133,6 @@ public class RefundController extends SMITravelController {
                 List<RefundTicketDetail> refundTicketDetail = new LinkedList<RefundTicketDetail>();
                 if(refundTicket != null){
                     request.setAttribute("RefundTicket", refundTicket);
-                    request.setAttribute("listRefundTicket", refundTicket);
                     refundTicketDetail = refundTicket.get(0).getRefundTicketDetail();
                     if(refundTicketDetail != null ){
                         request.setAttribute("RefundTicketDetail", refundTicketDetail);
@@ -141,7 +140,6 @@ public class RefundController extends SMITravelController {
                         request.setAttribute("RefundTicketDetail", refundTicketDetail);
                     }
                 }else{
-                    request.setAttribute("listRefundTicket", null);
                     request.setAttribute("RefundTicket", null);
                 }
             }else{
@@ -186,14 +184,12 @@ public class RefundController extends SMITravelController {
         if(refundTicket != null){
             List<RefundTicketDetail> refundTicketDetail = refundTicket.get(0).getRefundTicketDetail();
             request.setAttribute("RefundTicket", refundTicket);
-            request.setAttribute("listRefundTicket", refundTicket);
             if(refundTicketDetail != null ){
                 request.setAttribute("RefundTicketDetail", refundTicketDetail);
             }else{
                 request.setAttribute("RefundTicketDetail", refundTicketDetail);
             }
         }else{
-            request.setAttribute("listRefundTicket", null);
             request.setAttribute("RefundTicket", null);
         }
     }

@@ -41,6 +41,7 @@
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
+<input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <!--Header-->
 <section class="content-header" >
     <h1>
@@ -87,6 +88,7 @@
             <input type="hidden" value="${master.customer.lastName}" id="lastname_tmp">  
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>       
             <input type="text" class="hidden" value="${param.referenceNo}" id="getUrl" >
+            <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
             
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
             <form action="Refund.smi" method="post" id="RefundForm"  name="RefundForm"  role="form" autocomplete="off">
@@ -112,7 +114,7 @@
                          <input type="hidden" id="countListAdd" name="countListAdd" value="1" >
                     </div>
                     <div class="col-md-2 text-right" style="margin-left: 0px;">
-                        <a  href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}"
+                        <a  href="AirTicket.smi?referenceNo=${param.referenceNo}&action=edit"
                             class="btn btn-primary">
                             <span class="glyphicon glyphicon-arrow-left"></span> Back
                         </a>
@@ -176,6 +178,12 @@
                                     <div class="col-sm-6 form-group" style="margin-left: 20px;">
                                          <h4>Refund Ticket Detail</h4>
                                     </div>
+                                    <div class="col-sm-6 form-group" style="margin-left: 2px;">
+                                         <label for="Owner" class="col-sm-3 control-label text-right">Refund No</label>
+                                        <div class="col-lg-4">
+                                            <input type="text" class="form-control" id="refundNo" name="refundNo" value="${table1.refundno}" readonly="">                                                  
+                                        </div>
+                                    </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="Owner" class="col-sm-3 control-label text-right">Refund By</label>
                                         <div class="col-lg-4">
@@ -184,7 +192,7 @@
                                                     <input type="hidden" class="form-control" name="refundById" id="refundById" value="${table1.airticketrefundid}">
                                                     <input type="hidden" class="form-control" name="refundid" id="refundid" value="${table1.id}">
                                                     <input type="text" class="form-control" id="refundBy" name="refundBy" value="${table1.refundcode}">
-                                                    <input type="hidden" class="form-control" id="refundNo" name="refundNo" value="${table1.refundno}">
+                                                    
                                                     <span class="input-group-addon" data-toggle="modal" data-target="#refundCustModal">
                                                         <span class="glyphicon-search glyphicon"></span>
                                                     </span>
