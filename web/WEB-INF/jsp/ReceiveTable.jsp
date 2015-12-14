@@ -427,6 +427,12 @@
                                 <input name="periodId" id="periodId" type="hidden" class="form-control" value="${advanceReceivePeriod.id}" />
                                 <input name="receiveFrom" id="receiveFrom" type="hidden" class="form-control" value="${advanceReceivePeriod.receiveFrom}" />
                                 <input name="receiveTo" id="receiveTo" type="hidden" class="form-control" value="${advanceReceivePeriod.receiveTo}" />
+                                <input name="receiveCashAmount" id="receiveCashAmount" type="hidden" class="form-control" value="${advanceReceivePeriodView.cashamount}" />
+                                <input name="receiveCash" id="receiveCash" type="hidden" class="form-control" value="${advanceReceivePeriodView.cashminusamount}" />
+                                <input name="receiveCheque" id="receiveCheque" type="hidden" class="form-control" value="${advanceReceivePeriodView.cheque}" />
+                                <input name="receiveBankAmount" id="receiveBankAmount" type="hidden" class="form-control" value="${advanceReceivePeriodView.bankamount}" />
+                                <input name="receiveCreditCard" id="receiveCreditCard" type="hidden" class="form-control" value="${advanceReceivePeriodView.creditcard}" />
+                                <input name="receiveDetail" id="receiveDetail" type="hidden" class="form-control" value="${advanceReceivePeriod.detail}" />
                                 <div class="col-xs-1 " style="width:30px;"></div>
                                 <div class="col-xs-1 " style="width:125px;">
                                     <label class="control-label">From</lable>
