@@ -111,9 +111,10 @@ public class InvoiceInboundController extends SMITravelController {
         } 
         
         // Action 
-        if("save".equals(action)){       
+        if("save".equals(action)){   
+            System.out.println("Invouce Inbound ID : " + invoiceId);
             if(invoiceId != null && !"".equals(invoiceId)){
-                invoice.setId(invoiceId);
+//                invoice.setId(invoiceId);
                 action = "update";
             }
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);

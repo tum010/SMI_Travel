@@ -358,7 +358,7 @@ function calculateGross(row) {
         }
         countVat++;
     } else {
-         console.log("Vat : " + vatTT);
+        console.log("Vat : " + vatTT);
         document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = '';
         document.getElementById('InputGross' + row).value = '';
     }
@@ -502,8 +502,9 @@ function CalculateGrandTotal(id) {
     var count = parseInt(document.getElementById('counterTable').value);
     var i;
     var grandTotal = 0;
+    var totalnet=0;
     if ((id !== null) || (id !== '')) {
-        for (i = 0; i < count + 1; i++) {
+        for (i = 1; i < count + 1; i++) {
             var amount = document.getElementById("InputAmount" + i);
             if (amount !== null) {
                 var value = amount.value;
@@ -517,8 +518,10 @@ function CalculateGrandTotal(id) {
         }
         if (id !== '') {
         }
-
+        var vatnet = grandTotal-totalnet;
         document.getElementById('GrandTotal').value = formatNumber(grandTotal);
+        document.getElementById('TotalNet').value = formatNumber(totalnet);
+        document.getElementById('VatNet').value = formatNumber(vatnet);
         if (grandTotal !== 0) {
             var bathString = toWords((grandTotal));
             document.getElementById('TextAmount').value = bathString;
@@ -526,14 +529,55 @@ function CalculateGrandTotal(id) {
     }
 }
 
+function CalculateTotalNet(id) {
+    var count = parseInt(document.getElementById('counterTable').value);
+    var i;
+    var grandTotal = 0;
+    var totalnet=0;
+    var amount = 0;
+    var vatnet = 0;
+    if ((id !== null) || (id !== '')) {
+        for (i = 1; i < count + 1; i++) {
+//            alert(".." + i);
+            var amount_temp = document.getElementById('InputAmount' + i);
+            amount = amount_temp.value;
+            amount = amount.replace(/,/g, "");
+            var grossTotal = 0;
+            if (amount !== '') {
+                var total = parseFloat(amount);
+                grandTotal += total;
+                    
+                var vatT = $('#vatBase').val();
+                var vatTT = parseFloat(vatT);
+                grossTotal = (amount * 100) / (100 + vatTT);
+                totalnet += grossTotal;
+            }else{
+                totalnet += 0.0;
+                vatnet += 0.0;
+            }
+            
+        }
+        vatnet = grandTotal-totalnet;      
+        document.getElementById('TotalNet').value = formatNumber(totalnet);
+        document.getElementById('VatNet').value = formatNumber(vatnet);
+    }
+}
+
 function changeFormatGrossNumber(id) {
-    var count = parseFloat(document.getElementById('InputGross' + id).value);
+    var count = document.getElementById('InputAmount' + id).value;
+
+    count = count.replace(/\,/g, '');
+    count = parseFloat(count);
     if (isNaN(count)) {
+        document.getElementById('InputAmount' + id).value = "";
         document.getElementById('InputGross' + id).value = "";
     } else {
-        count = parseFloat(document.getElementById('InputGross' + id).value);
-        document.getElementById('InputGross' + id).value = formatNumber(count);
+        count = parseFloat(count);
+        document.getElementById('InputAmount' + id).value = formatNumber(count);
     }
+    CalculateGrandTotal(id);
+    CalculateTotalNet(id);
+    calculateGross(id);
 }
 
 function changeFormatAmountNumber(id) {
@@ -556,10 +600,12 @@ function changeFormatAmountNumber(id) {
     }
     CalculateGrandTotal(id);
     calculateGross(id);
+    CalculateTotalNet(id);
 }
 
 function addRowInvoiceInboundDetail(row){
     var typeInvoiceInbound = $("#InputTypeInvoiceInbound").val();
+    var vatTemp = $('#vatBase').val();
     var textHidden = "";
     if(typeInvoiceInbound === "PM"){
         textHidden = 'class="hidden"';
@@ -569,9 +615,9 @@ function addRowInvoiceInboundDetail(row){
     '<tr>' +
     '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
     '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '"   value=""></td>' +
-    '<td '+ textHidden+'><input type="checkbox" id="checkUse' + row + '" name="checkUse' + row + '" onclick="calculateGross(' + row + ')" value=""></td>' +
+    '<td '+ textHidden+'><input type="checkbox" id="checkUse' + row + '" name="checkUse' + row + '" onclick="calculateGross(' + row + ')" value="" checked></td>' +
     '<td class="hidden" ><input type="text" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '"  value="' + vat + '"></td>' +
-    '<td '+ textHidden+'></td>' +
+    '<td '+ textHidden+'>'+vatTemp+'</td>' +
     '<td '+ textHidden+'><input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
     '<td><input type="text" maxlength ="15" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" onfocusout="changeFormatAmountNumber(' + row + ');"  value=""></td>' +
     '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" >' + select + '</select></td>' +              
