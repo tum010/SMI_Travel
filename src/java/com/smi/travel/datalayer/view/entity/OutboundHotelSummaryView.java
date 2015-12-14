@@ -38,6 +38,7 @@ public class OutboundHotelSummaryView {
     private String seller;
     private String invno;
     private String bank;
+    private String supplier;
 
     public String getHoteldate() {
         return hoteldate;
@@ -254,5 +255,15 @@ public class OutboundHotelSummaryView {
     public void setBank(String bank) {
         this.bank = bank;
     }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
+    }
        
+    
+    
 }
