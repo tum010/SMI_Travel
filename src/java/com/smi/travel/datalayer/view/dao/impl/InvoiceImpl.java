@@ -34,7 +34,7 @@ public class InvoiceImpl implements InvoiceReportDao{
     @Override
     public List getInvoice(String InvoiceId,String BankId,String showStaff,String showLeader,String sign,String printBy) {
         Session session = this.sessionFactory.openSession();
-        System.out.println("Sign : " + sign);
+        System.out.println("Sign : " + sign + "Print By : " + printBy);
         UtilityFunction util = new UtilityFunction();  
         List data = new ArrayList();
         DecimalFormat df = new DecimalFormat("###,###.00");
@@ -93,6 +93,8 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("currency", Hibernate.STRING)
                 .addScalar("address", Hibernate.STRING)
                 .addScalar("remark", Hibernate.STRING)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("vatpercent", Hibernate.STRING)
                 .list();
         int count = 0;
         for (Object[] B : QueryInvoiceList) {
@@ -102,7 +104,10 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setAccno1(Accno1);
             invoice.setAccno2(Accno2);
             invoice.setAcctype(accType);
-            invoice.setRefno("");
+            invoice.setPrintby(printBy);
+            invoice.setCurrency(util.ConvertString(B[17]));
+            invoice.setRefno(util.ConvertString(B[20]) != null && !"".equals(util.ConvertString(B[20])) ? util.ConvertString(B[20]) : "");
+            invoice.setVatpercent(util.ConvertString(B[21]) != null && !"".equals(util.ConvertString(B[21])) ? util.ConvertString(B[21]) : "");
             invoice.setAmount(df.format(B[11]));
             invoice.setBank1(Bank1);
             invoice.setBank2(Bank2);
@@ -188,8 +193,6 @@ public class InvoiceImpl implements InvoiceReportDao{
             }
             System.out.println(" totalWord " + totalWord);
             invoice.setTextmoney(totalWord.substring(0,1).toUpperCase() + totalWord.substring(1));
-            
-            
             
             invoice.setShowleader(showLeader);
             invoice.setShowstaff(showStaff);

@@ -45,6 +45,42 @@ public class InvoiceReport {
     private String duedate;
     private String address;
     private String remark;
+    private String currency;
+    private String vatpercent;
+    private String printby;
+    private String currencytotal;
+
+    public String getCurrencytotal() {
+        return currencytotal;
+    }
+
+    public void setCurrencytotal(String currencytotal) {
+        this.currencytotal = currencytotal;
+    }
+
+    public String getPrintby() {
+        return printby;
+    }
+
+    public void setPrintby(String printby) {
+        this.printby = printby;
+    }
+
+    public String getVatpercent() {
+        return vatpercent;
+    }
+
+    public void setVatpercent(String vatpercent) {
+        this.vatpercent = vatpercent;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 
     public String getRemark() {
         return remark;

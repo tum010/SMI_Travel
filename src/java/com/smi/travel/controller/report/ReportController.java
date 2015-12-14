@@ -102,6 +102,9 @@ public class ReportController extends SMITravelController {
     private static final String ConfirmSlipReport = "ConfirmSlipReport";
     private static final String BillAirAgentSummaryReport = "BillAirAgentSummaryReport";
     private static final String OutboundStaffSummaryReport = "OutboundStaffSummaryReport";
+    private static final String InvoiceInboundPerformaEmail = "InvoiceInboundPerformaEmail";
+    private static final String InvoiceInboundRevenueReport = "InvoiceInboundRevenueReport";
+    private static final String InvoiceInboundRevenueEmail = "InvoiceInboundRevenueEmail";
     
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -350,6 +353,12 @@ public class ReportController extends SMITravelController {
             String receiveDate = request.getParameter("receiveDate");
             String vatType = request.getParameter("vatType");
             data = reportservice.getCollectionReport(receiveDate,vatType,department,user.getUsername()+"-"+user.getRole().getName());
+        }else if (InvoiceInboundPerformaEmail.equalsIgnoreCase(name)) {
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
+        }else if (InvoiceInboundRevenueReport.equalsIgnoreCase(name)) {
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
+        }else if (InvoiceInboundRevenueEmail.equalsIgnoreCase(name)) {
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
         }
         
         

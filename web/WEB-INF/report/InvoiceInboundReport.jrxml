@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="68" bottomMargin="20" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceInboundReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="68" bottomMargin="20" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="185"/>
+	<property name="ireport.y" value="96"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -37,6 +37,7 @@
 	<field name="accno2" class="java.lang.String"/>
 	<field name="branch2" class="java.lang.String"/>
 	<field name="currency" class="java.lang.String"/>
+	<field name="vatpercent" class="java.lang.String"/>
 	<background>
 		<band height="754">
 			<line>
@@ -154,12 +155,12 @@
 	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
-			<textField isStretchWithOverflow="true" pattern="">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="370" y="1" width="43" height="20" uuid="c09accca-c12d-4c03-a0cb-c0fb4cc7dfc8"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{currency} == null || "".equalsIgnoreCase($F{vat}))? "":$F{vat}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{currency} == null || "".equalsIgnoreCase($F{currency}))? "":$F{currency}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="32" height="20" uuid="4c5e01bc-f9aa-4b23-9060-b8e5780a0170"/>
@@ -407,12 +408,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{signname}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="420" y="19" width="34" height="14" uuid="adaa5975-5a4a-462e-a905-fb9940f5e290"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{vat}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{vatpercent} == null || "".equalsIgnoreCase($F{vatpercent}))? "":$F{vatpercent} +"%"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

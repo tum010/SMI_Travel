@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="843" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
-	<property name="ireport.zoom" value="1.0"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceInboundEmail" language="groovy" pageWidth="595" pageHeight="843" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
+	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="178"/>
+	<property name="ireport.y" value="198"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -42,29 +42,29 @@
 	<background>
 		<band height="727">
 			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="52" y="323" width="415" height="230" uuid="1d987a9e-012a-426d-9848-5d381ee25320"/>
+				<reportElement x="52" y="285" width="387" height="208" uuid="1d987a9e-012a-426d-9848-5d381ee25320"/>
 				<imageExpression><![CDATA["resource/images/wendy_watermark_1.JPG"]]></imageExpression>
 			</image>
 			<line>
-				<reportElement x="27" y="239" width="1" height="359" uuid="4d55a96d-41d9-4c66-b975-a27220559c23"/>
+				<reportElement x="27" y="201" width="1" height="322" uuid="4d55a96d-41d9-4c66-b975-a27220559c23"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="362" y="239" width="1" height="358" uuid="c5786474-bb38-49f6-ad5b-f32a34f0251a"/>
+				<reportElement x="362" y="201" width="1" height="322" uuid="c5786474-bb38-49f6-ad5b-f32a34f0251a"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="1" y="598" width="521" height="1" uuid="3e3b1550-664a-40e9-87f2-4138566b94ac"/>
+				<reportElement x="1" y="523" width="521" height="1" uuid="3e3b1550-664a-40e9-87f2-4138566b94ac"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
 			<rectangle radius="10">
-				<reportElement mode="Transparent" x="1" y="239" width="521" height="413" uuid="feba6845-2257-4f09-9a9f-dd021f61908b"/>
+				<reportElement mode="Transparent" x="1" y="201" width="521" height="413" uuid="feba6845-2257-4f09-9a9f-dd021f61908b"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -121,14 +121,14 @@
 				<text><![CDATA[PROFORMA INVOICE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="7" y="124" width="24" height="20" uuid="2e4ba684-d417-4553-af70-2f75bf0fa89a"/>
+				<reportElement x="13" y="127" width="24" height="20" uuid="2e4ba684-d417-4553-af70-2f75bf0fa89a"/>
 				<textElement>
 					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H"/>
 				</textElement>
 				<text><![CDATA[TO :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="31" y="125" width="278" height="18" uuid="0b230a52-ac7b-453a-8bad-d1202b8a6f0d"/>
+				<reportElement x="37" y="128" width="278" height="18" uuid="0b230a52-ac7b-453a-8bad-d1202b8a6f0d"/>
 				<textElement>
 					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -181,7 +181,7 @@
 				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="31" y="142" width="278" height="43" uuid="08c1c36e-97df-4407-9662-f18543accfdb"/>
+				<reportElement x="37" y="145" width="278" height="43" uuid="08c1c36e-97df-4407-9662-f18543accfdb"/>
 				<textElement>
 					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -296,12 +296,12 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="368" y="2" width="55" height="20" uuid="1a6a5eb3-8e70-4c80-a373-d7fa350afc10"/>
-				<textElement textAlignment="Right">
+				<textElement>
 					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{currency} == null || "".equalsIgnoreCase($F{vat}))? "":$F{vat}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{currency} == null || "".equalsIgnoreCase($F{currency}))? "":$F{currency}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="439" y="2" width="78" height="20" uuid="947a5225-ea47-4395-9c48-c96c7d90de49"/>
@@ -321,12 +321,6 @@
 	</detail>
 	<pageFooter>
 		<band height="206" splitType="Stretch">
-			<rectangle radius="15">
-				<reportElement x="2" y="44" width="517" height="78" uuid="5cddccb4-f9ee-4838-96af-6f598c365f1e"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</rectangle>
 			<textField pattern="" isBlankWhenNull="false">
 				<reportElement x="424" y="6" width="94" height="20" uuid="1d78a392-1cf8-4c73-8bdd-248a94481871"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -349,18 +343,18 @@
 				<text><![CDATA[ PREPARED BY : ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="7" y="6" width="350" height="36" uuid="606580e8-0632-46bc-a83c-297e7417026b"/>
+				<reportElement x="7" y="6" width="350" height="20" uuid="606580e8-0632-46bc-a83c-297e7417026b"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{textmoney}]]></textFieldExpression>
 			</textField>
 			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="345" y="128" width="119" height="37" uuid="521c3cfe-8c7b-4214-822b-9498dd1569da"/>
+				<reportElement x="345" y="132" width="119" height="37" uuid="521c3cfe-8c7b-4214-822b-9498dd1569da"/>
 				<imageExpression><![CDATA["resource/images/"+$F{sign}+".png"]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="94" y="61" width="135" height="10" uuid="ab33c50d-8480-415e-9c14-1a5190f4dcd5">
+				<reportElement x="94" y="41" width="135" height="10" uuid="ab33c50d-8480-415e-9c14-1a5190f4dcd5">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -369,7 +363,7 @@
 				<textFieldExpression><![CDATA[$F{accname}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="242" y="60" width="74" height="10" uuid="0c7520ad-c300-40a0-bf0e-70f3c7e13ebb">
+				<reportElement x="242" y="40" width="74" height="10" uuid="0c7520ad-c300-40a0-bf0e-70f3c7e13ebb">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -378,7 +372,7 @@
 				<text><![CDATA[NAME OF ACCOUNT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="84" y="77" width="10" height="10" uuid="d3481874-1d4d-4c57-bdd3-34eae31651c9">
+				<reportElement x="84" y="57" width="10" height="10" uuid="d3481874-1d4d-4c57-bdd3-34eae31651c9">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -387,7 +381,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="317" y="84" width="122" height="9" uuid="fdf14f77-3f1a-4205-8fb3-d5d54a38ce43">
+				<reportElement x="317" y="64" width="122" height="9" uuid="fdf14f77-3f1a-4205-8fb3-d5d54a38ce43">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top">
@@ -396,7 +390,7 @@
 				<textFieldExpression><![CDATA[$F{branch2}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="242" y="68" width="33" height="10" uuid="f5c853a2-a82c-4565-a65a-4075cfd853b5">
+				<reportElement x="242" y="48" width="33" height="10" uuid="f5c853a2-a82c-4565-a65a-4075cfd853b5">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -405,7 +399,7 @@
 				<text><![CDATA[BANK]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="84" y="68" width="10" height="11" uuid="242dc688-6970-47c1-856a-59032c083877">
+				<reportElement x="84" y="48" width="10" height="11" uuid="242dc688-6970-47c1-856a-59032c083877">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -414,7 +408,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="311" y="92" width="5" height="11" uuid="1b4283dd-0c89-4f81-9254-16f8d72d8265">
+				<reportElement x="311" y="72" width="5" height="11" uuid="1b4283dd-0c89-4f81-9254-16f8d72d8265">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -423,7 +417,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="94" y="77" width="135" height="9" uuid="ebe0fa74-e2e1-4c30-9988-8d1d8b7e68ca">
+				<reportElement x="94" y="57" width="135" height="9" uuid="ebe0fa74-e2e1-4c30-9988-8d1d8b7e68ca">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -432,7 +426,7 @@
 				<textFieldExpression><![CDATA[$F{acctype}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="311" y="60" width="5" height="9" uuid="a4608878-81c5-41f4-b3f7-749b14e3868b">
+				<reportElement x="311" y="40" width="5" height="9" uuid="a4608878-81c5-41f4-b3f7-749b14e3868b">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -441,7 +435,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="94" y="85" width="135" height="9" uuid="d1aa804f-d1f2-4f23-ba87-205ea25d0e51">
+				<reportElement x="94" y="65" width="135" height="9" uuid="d1aa804f-d1f2-4f23-ba87-205ea25d0e51">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top">
@@ -450,7 +444,7 @@
 				<textFieldExpression><![CDATA[$F{branch1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="242" y="76" width="69" height="10" uuid="81c9fb0c-6ff1-4f0c-bc27-cec182ca5227">
+				<reportElement x="242" y="56" width="69" height="10" uuid="81c9fb0c-6ff1-4f0c-bc27-cec182ca5227">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -459,7 +453,7 @@
 				<text><![CDATA[TYPE OF ACCOUNT]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="317" y="93" width="122" height="9" uuid="f4dcaba5-2f1d-461d-b879-4352235c0f57">
+				<reportElement x="317" y="73" width="122" height="9" uuid="f4dcaba5-2f1d-461d-b879-4352235c0f57">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -468,7 +462,7 @@
 				<textFieldExpression><![CDATA[$F{accno2}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="242" y="84" width="33" height="11" uuid="b77bb50c-6130-4e5d-aec0-fe9a7544fa8b">
+				<reportElement x="242" y="64" width="33" height="11" uuid="b77bb50c-6130-4e5d-aec0-fe9a7544fa8b">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -477,7 +471,7 @@
 				<text><![CDATA[BRANCH]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="69" width="40" height="10" uuid="c4f28fb9-c545-49d7-93d9-26c34d56d391">
+				<reportElement x="12" y="49" width="40" height="10" uuid="c4f28fb9-c545-49d7-93d9-26c34d56d391">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -486,7 +480,7 @@
 				<text><![CDATA[BANK]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="242" y="93" width="59" height="10" uuid="10de0e64-35ab-40e6-8baa-b0b4d193bd71">
+				<reportElement x="242" y="73" width="59" height="10" uuid="10de0e64-35ab-40e6-8baa-b0b4d193bd71">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -495,7 +489,7 @@
 				<text><![CDATA[ACCOUNT NO.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="77" width="72" height="10" uuid="68f82722-9eec-48ea-a9d8-52391d2585fb">
+				<reportElement x="12" y="57" width="72" height="10" uuid="68f82722-9eec-48ea-a9d8-52391d2585fb">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -504,7 +498,7 @@
 				<text><![CDATA[TYPE OF ACCOUNT]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="317" y="76" width="122" height="9" uuid="00244c93-01cc-4e4d-8c97-56b9a232841f">
+				<reportElement x="317" y="56" width="122" height="9" uuid="00244c93-01cc-4e4d-8c97-56b9a232841f">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -513,7 +507,7 @@
 				<textFieldExpression><![CDATA[$F{acctype}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="317" y="68" width="122" height="9" uuid="50d3ab51-2c17-49ce-a345-50143d9c5caa">
+				<reportElement x="317" y="48" width="122" height="9" uuid="50d3ab51-2c17-49ce-a345-50143d9c5caa">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -522,7 +516,7 @@
 				<textFieldExpression><![CDATA[$F{bank2}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="84" y="93" width="10" height="11" uuid="5575dab0-9658-41b0-adbc-6647aef0fa70">
+				<reportElement x="84" y="73" width="10" height="11" uuid="5575dab0-9658-41b0-adbc-6647aef0fa70">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -531,7 +525,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="84" y="84" width="10" height="12" uuid="0c03c19c-7e7f-488c-b37a-cfa6166998b8">
+				<reportElement x="84" y="64" width="10" height="12" uuid="0c03c19c-7e7f-488c-b37a-cfa6166998b8">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -540,7 +534,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="51" width="127" height="10" uuid="205087a1-621b-4174-b771-6360d49b2040">
+				<reportElement x="12" y="31" width="127" height="10" uuid="205087a1-621b-4174-b771-6360d49b2040">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -549,7 +543,7 @@
 				<text><![CDATA[PAYMENT  BY MONEY TRANSFER]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="317" y="60" width="122" height="10" uuid="bf94d382-d557-40f0-b1bc-67ca68a48ac6">
+				<reportElement x="317" y="40" width="122" height="10" uuid="bf94d382-d557-40f0-b1bc-67ca68a48ac6">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -558,7 +552,7 @@
 				<textFieldExpression><![CDATA[$F{accname}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="12" y="85" width="40" height="11" uuid="c4433db0-4135-42c8-9c26-45509d39b247">
+				<reportElement x="12" y="65" width="40" height="11" uuid="c4433db0-4135-42c8-9c26-45509d39b247">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -567,7 +561,7 @@
 				<text><![CDATA[BRANCH]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="94" y="94" width="135" height="9" uuid="0f6e1550-6c81-4540-a2ef-100b6e474723">
+				<reportElement x="94" y="74" width="135" height="9" uuid="0f6e1550-6c81-4540-a2ef-100b6e474723">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -576,7 +570,7 @@
 				<textFieldExpression><![CDATA[$F{accno1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="94" y="69" width="135" height="9" uuid="fe5987cd-d466-4f6b-9f10-6f5bec1259a7">
+				<reportElement x="94" y="49" width="135" height="9" uuid="fe5987cd-d466-4f6b-9f10-6f5bec1259a7">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -585,7 +579,7 @@
 				<textFieldExpression><![CDATA[$F{bank1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="12" y="61" width="72" height="10" uuid="515254d5-5fcd-4878-8639-dc178583141c">
+				<reportElement x="12" y="41" width="72" height="10" uuid="515254d5-5fcd-4878-8639-dc178583141c">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -594,7 +588,7 @@
 				<text><![CDATA[NAME OF ACCOUNT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="84" y="61" width="10" height="9" uuid="d10a97a3-98be-4068-a335-5c694fa09e7a">
+				<reportElement x="84" y="41" width="10" height="9" uuid="d10a97a3-98be-4068-a335-5c694fa09e7a">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -603,7 +597,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="272" y="83" width="5" height="12" uuid="1797d133-11c3-4351-8ecb-7834ad0dfa33">
+				<reportElement x="272" y="63" width="5" height="12" uuid="1797d133-11c3-4351-8ecb-7834ad0dfa33">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -612,7 +606,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="12" y="93" width="66" height="10" uuid="f65b8969-5455-48b4-aa62-b68c645da004">
+				<reportElement x="12" y="73" width="66" height="10" uuid="f65b8969-5455-48b4-aa62-b68c645da004">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -621,7 +615,7 @@
 				<text><![CDATA[ACCOUNT NO.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="272" y="67" width="5" height="11" uuid="684fa867-779e-4ebd-9099-46fb2b63c65a">
+				<reportElement x="272" y="47" width="5" height="11" uuid="684fa867-779e-4ebd-9099-46fb2b63c65a">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -630,7 +624,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="272" y="75" width="5" height="10" uuid="8c59dd30-e860-428f-a6e0-6150b6088528">
+				<reportElement x="272" y="55" width="5" height="10" uuid="8c59dd30-e860-428f-a6e0-6150b6088528">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") && !$F{bank2}.equalsIgnoreCase("")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -639,18 +633,18 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="343" y="171" width="128" height="14" uuid="e2a5564d-fc92-4d1d-9bb7-d98556755c42"/>
+				<reportElement x="343" y="171" width="147" height="14" uuid="e2a5564d-fc92-4d1d-9bb7-d98556755c42"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["("+$F{signname}+")"]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="369" y="6" width="55" height="20" uuid="10e01098-fa09-434f-aee6-46c866973aab"/>
 				<textElement>
 					<font fontName="Tahoma" size="8" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{currency} == null || "".equalsIgnoreCase($F{vat}))? "":$F{vat}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{currency} == null || "".equalsIgnoreCase($F{currency}))? "":$F{currency}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="90" y="165" width="144" height="22" uuid="cb098a9e-9903-43ec-85f1-848ebd6e064d"/>
@@ -667,9 +661,7 @@
 				<text><![CDATA[DATE : ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="90" y="143" width="144" height="19" uuid="2c979ab3-9aa5-45b5-9d25-fadd40c629db">
-					<printWhenExpression><![CDATA[$F{showstaff}.equalsIgnoreCase("1")]]></printWhenExpression>
-				</reportElement>
+				<reportElement x="90" y="143" width="144" height="19" uuid="2c979ab3-9aa5-45b5-9d25-fadd40c629db"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
