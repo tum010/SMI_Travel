@@ -379,17 +379,17 @@
                                 <div class="col-xs-12 text-right">
                                     <div class="col-md-3 text-right "></div>                                   
                                     <div class="col-md-1 text-left " style="padding-left: 0px;width: 130px">
-                                        <button type="button" class="btn btn-default" id="printButton" onclick="printInvoiceInbound('print', 'InvoiceReport')" data-toggle="modal" data-target="#PrintModal">
+                                        <button type="button" class="btn btn-default" id="printButton" onclick="printInvoiceInbound('print')" data-toggle="modal" data-target="#PrintModal">
                                             <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice
                                         </button>
                                     </div>
                                     <div class="col-md-1 text-left " style="padding-left: 0px;width: 155px">
-                                        <button type="button" class="btn btn-default" id="printButtonEmail" onclick="printInvoiceInbound('print', 'InvoiceEmail')" data-toggle="modal" data-target="#PrintModal">
+                                        <button type="button" class="btn btn-default" id="printButtonEmail" onclick="printInvoiceInbound('email')" data-toggle="modal" data-target="#PrintModal">
                                             <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice Email
                                         </button>
                                     </div>
                                     <div class="col-md-1 text-left " style="width: 125px">
-                                        <button type="button" class="btn btn-default" id="sendEmailButton" onclick="printInvoiceInbound('email')"  data-toggle="modal" data-target="#PrintModal">
+                                        <button type="button" class="btn btn-default" id="sendEmailButton" onclick="printInvoiceInbound('sendemail')"  data-toggle="modal" data-target="#PrintModal">
                                             <span id="buttonEmail" class="glyphicon glyphicon-send" ></span> Send Email 
                                         </button>
                                     </div>
@@ -561,7 +561,7 @@
                         </select>
                     </div>
                 </div>-->
-<!--                <div class="row">
+                <div class="row">
                     <div class="col-md-5">
                         <h5>Payment by money Transfer</h5>
                     </div>
@@ -572,7 +572,7 @@
                             <option value="BBL">Payment Bank Bangkok bank PCL</option>
                         </select>
                     </div>
-                </div>-->
+                </div>
                 <div class="row">
                     <div class="col-md-5">
                         <h5>Sign </h5>

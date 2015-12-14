@@ -50,7 +50,7 @@
 			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 			<span class="icon-bar"></span> <span class="icon-bar"></span>
 		</button>
-		<a class="navbar-brand" href="main.smi">HOME</a>
+		<a class="navbar-brand" href="" style="font-size: 14px;" >HOME</a>
 	</div>
 
 	<script type="text/javascript" charset="utf-8">

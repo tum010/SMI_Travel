@@ -701,18 +701,25 @@ function printInvoiceInboundNew() {
     var typeReport = $('#typeReport').val();
     var sign = $('#SelectSign').val();
     var invoiceType = $('#InputTypeInvoiceInbound').val();
+    console.log("Invoice TYpe : " + invoiceType + " TYpe : " + type);
     if (type === 'print') {
         if (invoiceType === 'PM') {
             window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         } else {
-            window.open("report.smi?name=" + typeReport + "&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+            window.open("report.smi?name=InvoiceInboundRevenueReport"+ "&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         }
     } else if (type === 'email') {
         if (invoiceType === 'PM') {
-            window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+            window.open("report.smi?name=InvoiceInboundPerformaEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         } else {
-            window.open("SendMail.smi?reportname=Invoice&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+            window.open("report.smi?name=InvoiceInboundRevenueEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         }
+    }else if (type === 'sendemail') {
+//        if (invoiceType === 'PM') {
+//            window.open("report.smi?name=InvoiceInboundPerformaEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+//        } else {
+            window.open("SendMail.smi?reportname=InvoiceInboundRevenueEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+//        }
     }
 }
 

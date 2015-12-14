@@ -19,6 +19,16 @@ $(document).ready(function() {
 
     $(".money").mask('000,000,000,000.00', {reverse: true});
 
+    $('#ReceiveTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": false,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 5
+    });
+
     $('#SearchReceiveTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": false,
@@ -167,9 +177,11 @@ $(document).ready(function() {
     //Validate Receive Period
     $('.fromdate').datetimepicker().change(function() {
         checkFromDateField();
+        checkPeriod();
     });
     $('.todate').datetimepicker().change(function() {
         checkToDateField();
+        checkPeriod();
     });
 
     setEnvironment();
@@ -653,6 +665,13 @@ function CallAjaxCheck(param) {
                             $("#periodId").val(billJson[i].periodId);
                             $("#receiveFrom").val(billJson[i].receiveFrom);
                             $("#receiveTo").val(billJson[i].receiveTo);
+                            $("#receiveDetail").val(billJson[i].periodIdDetail);
+                            $("#receiveCashAmount").val(billJson[i].cashamount);
+                            $("#receiveBankAmount").val(billJson[i].bankamount);
+                            $("#receiveCash").val(billJson[i].cashminusamount);
+                            $("#receiveCheque").val(billJson[i].cheque);
+                            $("#receiveCreditCard").val(billJson[i].creditcard);
+
                             $("#periodDetail").val(billJson[i].periodIdDetail);
                             $("#periodCashAmount").val(billJson[i].cashamount);
                             $("#periodBankAmount").val(billJson[i].bankamount);
@@ -704,4 +723,28 @@ function printReceiveTableReport() {
         department = 'Inbound';
     }
     window.open("report.smi?name=CollectionReport&receiveDate=" + receiveDate + "&vatType=" + vatType + "&department=" + department);
+}
+
+function checkPeriod() {
+    if ($("#periodId").val() !== '') {
+        var from = $("#fromDate").val();
+        var fromCheck = $("#receiveFrom").val();
+        var to = $("#toDate").val();
+        var toCheck = $("#receiveTo").val();
+        if ((from === fromCheck) && (to === toCheck)) {
+            $("#periodDetail").val($("#receiveDetail").val());
+            $("#periodCashAmount").val($("#receiveCashAmount").val());
+            $("#periodBankAmount").val($("#receiveBankAmount").val());
+            $("#periodCash").val($("#receiveCash").val());
+            $("#periodCheque").val($("#receiveCheque").val());
+            $("#periodCreditCard").val($("#receiveCreditCard").val());
+        }else{
+            $("#periodDetail").val('');
+            $("#periodCashAmount").val('');
+            $("#periodBankAmount").val('');
+            $("#periodCash").val('');
+            $("#periodCheque").val('');
+            $("#periodCreditCard").val('');
+        }
+    }
 }

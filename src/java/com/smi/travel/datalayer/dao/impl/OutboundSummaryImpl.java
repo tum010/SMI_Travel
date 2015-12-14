@@ -454,6 +454,7 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
                 .addScalar("seller", Hibernate.STRING)
                 .addScalar("invno", Hibernate.STRING)
                 .addScalar("bank", Hibernate.STRING)
+                .addScalar("supplier", Hibernate.STRING)
                 .list();
         
         
@@ -489,6 +490,7 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
             outboundHotelSummaryView.setSeller(B[17] != null ? util.ConvertString(B[17]) : "");
             outboundHotelSummaryView.setInvno(B[18] != null ? util.ConvertString(B[18]) : "");
             outboundHotelSummaryView.setBank(B[19] != null ? util.ConvertString(B[19]) : "");
+            outboundHotelSummaryView.setSupplier(B[20] != null ? util.ConvertString(B[20]) : "");
             data.add(outboundHotelSummaryView);
         }
         this.sessionFactory.close();

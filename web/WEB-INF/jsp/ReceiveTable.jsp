@@ -18,16 +18,33 @@
 
 <section class="content-header" >
     <h1>
+        <c:set var="panelheader" value=""/>
+        <c:set var="panelborder" value=""/>
+        <c:set var="tableheader" value=""/>
+        <c:set var="tableborder" value=""/>
+        <c:set var="fontcolor" value="white"/>
         <c:set var="page" value=""/>
         <c:choose>
             <c:when test="${fn:contains(department , 'W')}">
                 <c:set var="page" value="Wendy"/>
+                <c:set var="panelheader" value="wendyheader"/>
+                <c:set var="panelborder" value="wendyborder"/>
+                <c:set var="tableheader" value="#FFC07B"/>
+                <c:set var="tableborder" value="#FFC07B"/>
             </c:when>
             <c:when test="${fn:contains(department , 'O')}">
                 <c:set var="page" value="Outbound"/>
+                <c:set var="panelheader" value="outboundheader"/>
+                <c:set var="panelborder" value="outboundborder"/>
+                <c:set var="tableheader" value="#FF8003"/>
+                <c:set var="tableborder" value="#FF8003"/>
             </c:when>
             <c:when test="${fn:contains(department , 'I')}">
                 <c:set var="page" value="Inbound"/>
+                <c:set var="panelheader" value="inboundborderheader"/>
+                <c:set var="panelborder" value="inboundborder"/>
+                <c:set var="tableheader" value="#11BF00"/>
+                <c:set var="tableborder" value="#11BF00"/>
             </c:when>
         </c:choose>
         Finance & Cashier - Receive Table ${page}
@@ -69,7 +86,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Delete Not Success!</strong> 
         </div>       
-        <div class="panel panel-default">
+        <div class="panel panel-default ${panelborder}">
             <div class="panel-body">               
                 <div class="row" style="padding-left: 0px">
                     <div class="col-xs-12 ">
@@ -120,22 +137,24 @@
                             </a>
                         </div>
                     </div>   
-                </div><!-- End Row 1-->
+                </div><!-- End Row 1-->               
                 <c:set var="receiveTable" value=""/>
+                <c:set var="advanceReceiveData" value="-130px"/>
                 <c:if test="${advanceReceiveList == null}">
-                   <c:set var="receiveTable" value="hidden"/> 
+                   <c:set var="receiveTable" value="hidden"/>
+                   <c:set var="advanceReceiveData" value="-10px"/>
                 </c:if>
                 <div class="row ${receiveTable}" style="padding-left: 25px; width: 100%;">
-                    <table class="display" id="ReceiveTable">
+                    <table class="display" id="ReceiveTable" >
                         <thead class="datatable-header">
                             <tr>
-                                <th style="width: 10%">Receive Date</th>
-                                <th style="width: 8%">A/R Code</th>
-                                <th style="width: 20%">Receive Name</th>
-                                <th style="width: 20%">Description</th>
-                                <th style="width: 10%">Payment</th>
-                                <th style="width: 12%">Receive Amount</th>
-                                <th style="width: 8%">Action</th>
+                                <th style="width: 10%" bgcolor="${tableheader}"><font style="color: ${fontcolor}">Receive Date</font></th>
+                                <th style="width: 8%" bgcolor="${tableheader}"><font style="color: ${fontcolor}">A/R Code</font></th>
+                                <th style="width: 20%" bgcolor="${tableheader}"><font style="color: ${fontcolor}">Receive Name</font></th>
+                                <th style="width: 20%" bgcolor="${tableheader}"><font style="color: ${fontcolor}">Description</font></th>
+                                <th style="width: 10%" bgcolor="${tableheader}"><font style="color: ${fontcolor}">Payment</font></th>
+                                <th style="width: 12%" bgcolor="${tableheader}"><font style="color: ${fontcolor}">Receive Amount</font></th>
+                                <th style="width: 8%" bgcolor="${tableheader}"><font style="color: ${fontcolor}">Action</font></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -161,7 +180,7 @@
                     </table>
                 </div>
                 <br>
-                <div class="panel panel-default" id="receiveData" style="margin-top: -10px;">
+                <div class="panel panel-default ${panelborder}" id="receiveData" style="margin-top: ${advanceReceiveData};">
                     <div class="panel-body">
                         <div class="tab-content" id="collapseExample" aria-expanded="false">
                         <div role="tabpanel" class="tab-pane hidden active" id="receive">
@@ -315,11 +334,11 @@
                             <table class="display" id="CreditTable">
                                 <thead class="datatable-header">
                                     <tr>
-                                        <th style="width: 10%">Credit Bank</th>
-                                        <th style="width: 20%">Credit No</th>
-                                        <th style="width: 9%">Credit Expire</th>
-                                        <th style="width: 10%">Amount</th>
-                                        <th style="width: 1%">Action</th>
+                                        <th style="width: 10%" bgcolor="${tableheader}"><font style="color: ${fontcolor}">Credit Bank</font></th>
+                                        <th style="width: 20%" bgcolor="${tableheader}"><font style="color: ${fontcolor}">Credit No</font></th>
+                                        <th style="width: 9%" bgcolor="${tableheader}"><font style="color: ${fontcolor}">Credit Expire</font></th>
+                                        <th style="width: 10%" bgcolor="${tableheader}"><font style="color: ${fontcolor}">Amount</font></th>
+                                        <th style="width: 1%" bgcolor="${tableheader}"><font style="color: ${fontcolor}">Action</font></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -396,18 +415,24 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivNotSavePeriod()"><span aria-hidden="true">&times;</span></button>
                 <strong>Period has already used!</strong> 
         </div>                
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <label class="control-label">Total Receive</lable>
-            </div>
+        <div class="panel panel-default ${panelborder}">
+            <div class="panel-heading ${panelheader}">
+                    <h4 class="panel-title"><font style="color: ${fontcolor}">Total Receive</font></h4>
+                </div>
             <div class="panel-body">
                 <div class="row">
                     <div id='TextBoxesGroup'>
                         <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 ">
+                            <div class="col-xs-12 " style="margin-top: -10px;">
                                 <input name="periodId" id="periodId" type="hidden" class="form-control" value="${advanceReceivePeriod.id}" />
                                 <input name="receiveFrom" id="receiveFrom" type="hidden" class="form-control" value="${advanceReceivePeriod.receiveFrom}" />
                                 <input name="receiveTo" id="receiveTo" type="hidden" class="form-control" value="${advanceReceivePeriod.receiveTo}" />
+                                <input name="receiveCashAmount" id="receiveCashAmount" type="hidden" class="form-control" value="${advanceReceivePeriodView.cashamount}" />
+                                <input name="receiveCash" id="receiveCash" type="hidden" class="form-control" value="${advanceReceivePeriodView.cashminusamount}" />
+                                <input name="receiveCheque" id="receiveCheque" type="hidden" class="form-control" value="${advanceReceivePeriodView.cheque}" />
+                                <input name="receiveBankAmount" id="receiveBankAmount" type="hidden" class="form-control" value="${advanceReceivePeriodView.bankamount}" />
+                                <input name="receiveCreditCard" id="receiveCreditCard" type="hidden" class="form-control" value="${advanceReceivePeriodView.creditcard}" />
+                                <input name="receiveDetail" id="receiveDetail" type="hidden" class="form-control" value="${advanceReceivePeriod.detail}" />
                                 <div class="col-xs-1 " style="width:30px;"></div>
                                 <div class="col-xs-1 " style="width:125px;">
                                     <label class="control-label">From</lable>
@@ -432,8 +457,8 @@
                         </div>                      
                     </div><!-- End Text 1-->
                     <div id="TextBoxDiv2" >                    
-                        <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 ">
+                        <div class="row" style="padding-left: 0px;">
+                            <div class="col-xs-12 " style="margin-top: -10px;">
                                 <div class="col-xs-1 text-right" style="padding-left: 0px;width:150px;">
                                     <label class="control-label">Cash Amount</lable>
                                 </div> 
@@ -460,7 +485,7 @@
                             </div>
                         </div><!--End Row 2 -->
                         <div class="row" style="padding-left: 0px">
-                            <div class="col-xs-12 ">
+                            <div class="col-xs-12 " style="margin-top: -10px;">
                                 <div class="col-xs-1 text-right" style="padding-left: 0px;width:150px;">
                                     <label class="control-label">Bank Amount</lable>
                                 </div> 
@@ -487,7 +512,7 @@
                             </div>   
                         </div><!--End Row 3 -->
                         <div class="row" >
-                            <div class="col-xs-12 text-center">                              
+                            <div class="col-xs-12 text-center" style="margin-top: -10px;">                              
                                 <button type="button" id="btnSave" name="btnSave" onclick="saveReceivePeriod()" class="btn btn-success">
                                     <i class="fa fa-save"></i> Save
                                 </button>                   

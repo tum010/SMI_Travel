@@ -362,7 +362,7 @@ public class OutboundHotelSummary extends AbstractExcelView{
             celldata12.setCellStyle(styleC24);
             
             HSSFCell celldata15 = row.createCell(14);
-            celldata15.setCellValue(data.getReference());
+            celldata15.setCellValue(data.getSupplier());
             celldata15.setCellStyle(styleC24);
             
             HSSFCell celldata13 = row.createCell(15);
