@@ -33,6 +33,8 @@
 <c:set var="ReceiptDetailList" value="${requestScope['ReceiptDetailList']}" />
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <input type="hidden" value="${requestScope['result']}" id="resultText">
+<input type="hidden" value="${master.bookingType}" id="master-bookingType">
+
 <section class="content-header" >
     <h1>
         Booking - Billable
@@ -459,9 +461,11 @@
                     <button type="button" onclick="printConfirmSlipReport()" class="btn btn-default" id="btnPrintConfirmSlipReport" name="btnPrintConfirmSlipReport">
                         <span id="SpanPrintConfirmSlip" class="glyphicon glyphicon-print"></span> Confirm Slip 
                     </button>
-                    <button type="button" onclick="printBookingSummaryReport()" class="btn btn-default" id="btnPrintBookingSummaryReport" name="btnPrintBookingSummaryReport">
-                        <span id="SpanPrintBookingSummary" class="glyphicon glyphicon-print"></span> Booking Summary
-                    </button>
+                    <c:if test="${master.bookingType == 'O'}">
+                        <button type="button" onclick="printBookingSummaryReport()" class="btn btn-default" id="btnPrintBookingSummaryReport" name="btnPrintBookingSummaryReport">
+                            <span id="SpanPrintBookingSummary" class="glyphicon glyphicon-print"></span> Booking Summary
+                        </button>
+                    </c:if>
                     <input type="hidden" id="printTicketOrder" name="printTicketOrder" value="${requestScope['printTicketOrder']}" />
                     <button type="button" onclick="printTicketOrderReport()" class="btn btn-default disabled" id="btnPrintTicketOrder" name="btnPrintTicketOrder">
                         <span id="SpanPrintTicketOrder" class="glyphicon glyphicon-print"></span> Ticket Order
