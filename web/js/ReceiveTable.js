@@ -18,6 +18,16 @@ $(document).ready(function() {
     });
 
     $(".money").mask('000,000,000,000.00', {reverse: true});
+    
+    $('#ReceiveTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": false,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 5
+    });
 
     $('#SearchReceiveTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
