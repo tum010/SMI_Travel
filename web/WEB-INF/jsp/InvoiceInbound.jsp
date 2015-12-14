@@ -23,7 +23,16 @@
 
 <section class="content-header" >
     <h1>
-        Finance & Cashier - Invoice Inbound
+        <c:choose>
+            <c:when test="${fn:contains(page , 'PM')}">
+                <c:set var="typeInvoiceInboubd" value="PM" />
+                <h4><b>Finance & Cashier - Proforma Invoice <font style="color: red;"> ${textVoid}</font></b></h4>
+            </c:when>
+            <c:when test="${fn:contains(page , 'RV')}">
+                <c:set var="typeInvoiceInboubd" value="RV" />
+                <h4><b>Finance & Cashier - Revenue Invoice  <font style="color: red;"> ${textVoid}</font></b></h4>
+            </c:when>                        
+        </c:choose> 
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Finance & Cashier </a></li>          
@@ -74,23 +83,6 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Void Success </strong> 
             </div>
-            <div class="row" style="padding-left: 15px">  
-                <div class="col-sm-6 " style="padding-right: 15px">
-                    <c:choose>
-                        <c:when test="${fn:contains(page , 'PM')}">
-                            <c:set var="typeInvoiceInboubd" value="PM" />
-                            <h4><b>Proforma Invoice <font style="color: red;"> ${textVoid}</font></b></h4>
-                        </c:when>
-                        <c:when test="${fn:contains(page , 'RV')}">
-                            <c:set var="typeInvoiceInboubd" value="RV" />
-                            <h4><b>Revenue Invoice  <font style="color: red;"> ${textVoid}</font></b></h4>
-                        </c:when>                        
-                    </c:choose> 
-                </div>
-                <input type="text" class="hidden" value="${typeInvoiceInboubd}" id="InputTypeInvoiceInbound" name="InputTypeInvoiceInbound">
-                <div class="col-xs-12 form-group"><hr/></div>
-            </div>
-            
             <div class="panel panel-default inboundborder">
                 <div class="panel-heading inboundborderheader ">
                     <h4 class="panel-title"><font style="color: white">Invoice Detail</font></h4>
@@ -104,7 +96,7 @@
                         <input type="hidden"  class="form-control" id="InvoiceExportDate" name="InvoiceExportDate"  value="${invoice.exportDate}" >
                         <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                         <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
-                        <div class="col-xs-12 ">
+                        <div class="sm_row col-xs-12 ">
                             <div class="col-xs-1 text-right">
                                 <label class="control-label" for="">INV no</lable>
                             </div>
@@ -134,7 +126,7 @@
                                 </div>
                             </div>                  
                         </div>
-                        <div class="col-xs-12 ">
+                        <div class="sm_row col-xs-12 ">
                             <div class="col-sm-1 text-right">
                                 <label class="control-label" for="">Inv To<font style="color: red">*</font></lable>
                             </div>
@@ -154,7 +146,7 @@
                                 <input  type="text" id="ARCode" name="ARCode" class="form-control" value="${invoice.arcode}"  >
                             </div>
                         </div>
-                        <div class="col-xs-12 ">
+                        <div class="sm_row col-xs-12 ">
                             <div class="col-sm-1 text-right">
                                 <label class="control-label" for="">Name<font style="color: red">*</font></lable>
                             </div>    
@@ -162,7 +154,7 @@
                                 <input  type="text" id="InvToName" name="InvToName" class="form-control" value="${invoice.invName}" >
                             </div>
                         </div>
-                        <div class="col-xs-12 ">
+                        <div class="sm_row col-xs-12 ">
                             <div class="col-sm-1 text-right">
                                 <label class="control-label" for="">Address </lable>
                             </div>
@@ -308,8 +300,8 @@
                             <c:choose>
                                 <c:when test="${fn:contains(page , 'PM')}">
                                     <div class="panel-body">                   
-                                        <div class="col-xs-12 form-group"></div>
-                                        <div class="col-xs-12 ">
+                                        <div class="sm_row col-xs-12 form-group"></div>
+                                        <div class="sm_row col-xs-12 ">
                                             <div class="col-sm-1">
                                                 <label class="control-label" for="">Text&nbsp;Amount&nbsp;:</lable>                                         
                                             </div>                                      
@@ -323,13 +315,13 @@
                                                 <input  rows="3" cols="200" id="GrandTotal" name="GrandTotal" class="form-control" value="" readonly=""  onfocus="CalculateGrandTotal();">
                                             </div>  
                                         </div>
-                                        <div class="col-xs-12 "><br></div>
+                                        <div class="sm_row col-xs-12 "><br></div>
                                     </div>
                                 </c:when>
                                 <c:when test="${fn:contains(page , 'RV')}">
                                     <div class="panel-body">                   
-                                        <div class="col-xs-12 form-group"></div>
-                                        <div class="col-xs-12 ">
+                                        <div class="sm_row col-xs-12 form-group"></div>
+                                        <div class="sm_row col-xs-12 ">
                                             <div class="col-sm-1">
                                                 <label class="control-label" for="">Text&nbsp;Amount&nbsp;:</lable>                                         
                                             </div>                                      
@@ -343,8 +335,8 @@
                                                 <input  rows="3" cols="200" id="TotalNet" name="TotalNet" class="form-control" value="" readonly="">
                                             </div>                      
                                         </div>
-                                        <div class="col-xs-12 "><br></div>
-                                        <div class="col-xs-12 ">                                     
+                                        <div class="sm_row col-xs-12 "><br></div>
+                                        <div class="sm_row col-xs-12 ">                                     
                                             <div class="col-sm-6" style="padding-left: 50px"></div>
                                             <div class="col-sm-2 text-right">
                                                 <label class="control-label" for="">Vat&nbsp;Net&nbsp;:</lable>                                         
@@ -353,8 +345,8 @@
                                                 <input  rows="3" cols="200" id="VatNet" name="VatNet" class="form-control" value="" readonly="">
                                             </div>
                                         </div> 
-                                        <div class="col-xs-12 "><br></div>
-                                        <div class="col-xs-12 ">                                     
+                                        <div class="sm_row col-xs-12 "><br></div>
+                                        <div class="sm_row col-xs-12 ">                                     
                                             <div class="col-sm-6" style="padding-left: 50px"></div>
                                             <div class="col-sm-2 text-right">
                                                 <label class="control-label" for="">Grand Total&nbsp;Net&nbsp;:</lable>                                         

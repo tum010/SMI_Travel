@@ -637,6 +637,10 @@
                                                                     <textarea id="DescriptionInvoiceDetail${taxdesc.count}" name="DescriptionInvoiceDetail${taxdesc.count}" >${displayDescriptionTemp}</textarea>
                                                                 </td>
                                                                 <td class="hidden">
+                                                                    <c:set var="displayDescriptionCheck" value="${fn:trim(ind.displayDescription)}" />
+                                                                    <textarea id="DescriptionInvoiceDetailCheck${taxdesc.count}" name="DescriptionInvoiceDetailCheck${taxdesc.count}" >${fn:trim(displayDescriptionTemp)}</textarea>
+                                                                </td>
+                                                                <td class="hidden">
                                                                     <input type="text" value="${ind.billableDesc.MBilltype.id}" id="mBilltypeId${taxdesc.count}" name="mBilltypeId${taxdesc.count}" class="form-control" >
                                                                 </td>
                                                                 <td class="hidden">
@@ -749,6 +753,10 @@
                                                                 <td class="hidden">
                                                                     <c:set var="displayDescriptionTemp" value="${fn:trim(ind.displayDescription)}" />
                                                                     <textarea id="DescriptionInvoiceDetail${taxdesc.count}" name="DescriptionInvoiceDetail${taxdesc.count}" >${fn:trim(displayDescriptionTemp)}</textarea>
+                                                                </td>
+                                                                <td class="hidden">
+                                                                    <c:set var="displayDescriptionCheck" value="${fn:trim(ind.displayDescription)}" />
+                                                                    <textarea id="DescriptionInvoiceDetailCheck${taxdesc.count}" name="DescriptionInvoiceDetailCheck${taxdesc.count}" >${fn:trim(displayDescriptionTemp)}</textarea>
                                                                 </td>
                                                                 <td class="hidden">
                                                                     <input type="text" value="${ind.billableDesc.MBilltype.id}" id="mBilltypeId${taxdesc.count}" name="mBilltypeId${taxdesc.count}" class="form-control" >
@@ -993,7 +1001,7 @@
             </div>
             <div class="modal-footer">  
                 <button type="button" onclick="saveDescriptionDetail()" class="btn btn-success" data-dismiss="modal">OK</button>
-                <button type="button" onclick="cancelDescriptionDetail()" class="btn btn-danger">Cancel</button>
+                <button type="button" onclick="cancelDescriptionDetail()" class="btn btn-primary">Reset</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->

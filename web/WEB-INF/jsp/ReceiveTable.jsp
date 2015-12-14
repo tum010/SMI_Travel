@@ -180,7 +180,7 @@
                     </table>
                 </div>
                 <br>
-                <div class="panel panel-default ${panelborder}" id="receiveData" style="margin-top: ${advanceReceiveData};">
+                <div class="panel panel-default hidden ${panelborder}" id="receiveData" >
                     <div class="panel-body">
                         <div class="tab-content" id="collapseExample" aria-expanded="false">
                         <div role="tabpanel" class="tab-pane hidden active" id="receive">
@@ -433,6 +433,7 @@
                                 <input name="receiveBankAmount" id="receiveBankAmount" type="hidden" class="form-control" value="${advanceReceivePeriodView.bankamount}" />
                                 <input name="receiveCreditCard" id="receiveCreditCard" type="hidden" class="form-control" value="${advanceReceivePeriodView.creditcard}" />
                                 <input name="receiveDetail" id="receiveDetail" type="hidden" class="form-control" value="${advanceReceivePeriod.detail}" />
+                                <input name="receiveVatType" id="receiveVatType" type="hidden" class="form-control" value="${requestScope['selectStatus']}" />
                                 <div class="col-xs-1 " style="width:30px;"></div>
                                 <div class="col-xs-1 " style="width:125px;">
                                     <label class="control-label">From</lable>
@@ -452,7 +453,27 @@
                                         <input name="toDate" id="toDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${advanceReceivePeriod.receiveTo}" onclick="hideTextAlertDivSavePeriod(); hideTextAlertDivNotSavePeriod();"/>
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
-                                </div>                                                  
+                                </div>
+                                <div class="col-xs-1 text-right" style="padding-left: 0px;width:120px;">
+                                    <label class="control-label">Vat Type </lable>
+                                </div>
+                                <div class="col-md-2 form-group text-left" style="padding-left:0px;padding-right:0px;width:150px;">
+                                    <div class="col-sm-12 " id="vattypepanel">
+                                        <select name="periodVatType" id="periodVatType" class="form-control" onchange="checkPeriod(); checkPeriodVatType();">
+                                            <c:set var="vat" value=""/>
+                                            <c:if test="${requestScope['selectStatus'] == 'V'}">
+                                                <c:set var="vat" value="selected"/>
+                                            </c:if>
+                                             <c:set var="temp" value=""/>
+                                            <c:if test="${requestScope['selectStatus'] == 'T'}">
+                                                <c:set var="temp" value="selected"/>
+                                            </c:if>
+                                            <option value=""></option>
+                                            <option value="V" ${vat}>Vat</option>
+                                            <option value="T" ${temp}>Temp</option>
+                                        </select>
+                                    </div>
+                                </div>        
                             </div>   
                         </div>                      
                     </div><!-- End Text 1-->

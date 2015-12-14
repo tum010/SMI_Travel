@@ -387,9 +387,10 @@ public class InvoiceController extends SMITravelController {
     public void saveAction(String result ,String invoiceNo, Invoice invoice ,String wildCardSearch ,HttpServletRequest request){
         if(result.equals("update success")){
             result = "success";
-            request.setAttribute("listInvoiceDetail", listInvoiceDetail);
+//            request.setAttribute("listInvoiceDetail", listInvoiceDetail);
             invoice = invoiceService.getInvoiceFromInvoiceNumber(invoiceNo,"","");
             request.setAttribute("invoice", invoice);
+            request.setAttribute("listInvoiceDetail", invoice.getInvoiceDetails());
             request.setAttribute("result", result);
                    
         }else if(!result.equals("fail")){ // Save New Success
