@@ -490,7 +490,9 @@ public class UtilityFunction {
             //step 3 cut data to new field
             if(indexTagP != -1){
                 String tagdescription = data[i].substring(indexTagP+3 ,data[i].indexOf("</P>") );
-                output[0] +=  data[i].replaceAll("<P>"+tagdescription+"</P>", "")+"\n";
+                String datatemp[] = data[i].split("<P>");
+                output[0] += datatemp[0]+"\n";
+                System.out.println(" output[0] " + output[0]);
                 output[1] += tagdescription;
             }else{
                 if(i < data.length-1){

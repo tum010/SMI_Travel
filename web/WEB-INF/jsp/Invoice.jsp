@@ -825,7 +825,7 @@
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-left " style="padding-left: 0px;width: 155px">
-                                            <button type="button" class="btn btn-default" id="printButtonEmail" onclick="printInvoice('print', 'InvoiceEmail')" data-toggle="modal" data-target="#PrintModal">
+                                            <button type="button" class="btn btn-default" id="printButtonEmail" onclick="printInvoice('printEmail', 'InvoiceEmail')" data-toggle="modal" data-target="#PrintModal">
                                                 <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice Email
                                             </button>
                                         </div>
