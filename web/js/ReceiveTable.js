@@ -361,6 +361,7 @@ function calculate(num) {
 
 //Check value for Search
 function checkSearch() {
+    $("#periodVatType").val($("#SelectStatus").val());   
     if (($("#InputDate").val() === '') || ($("#SelectStatus").val() === '')) {
         $("#ButtonSearch").addClass("disabled");
         $("#ButtonPrint").addClass("disabled");
@@ -368,6 +369,7 @@ function checkSearch() {
         $("#ButtonSearch").removeClass("disabled");
         $("#ButtonPrint").removeClass("disabled");
     }
+    
 }
 
 //Agent List
@@ -532,24 +534,42 @@ function newReceiveTable() {
     document.getElementById("receiveForm").submit();
 }
 
+function checkPeriodVatType(){
+    var vatType = $("#periodVatType").val();
+    if(vatType === ''){       
+        $("#vattypepanel").removeClass("has-success");
+        $("#vattypepanel").addClass("has-error");
+        $("#btnSave").addClass("disabled");
+    }else{
+        $("#vattypepanel").removeClass("has-error");
+        $("#vattypepanel").addClass("has-success");
+        $("#btnSave").removeClass("disabled");
+    }
+}
+
 function checkFromDateField() {
     var inputFromDate = document.getElementById("fromDate");
     var InputToDate = document.getElementById("toDate");
     if (InputToDate.value === '' && inputFromDate.value === '') {
         $("#fromdatepanel").removeClass("has-error");
         $("#todatepanel").removeClass("has-error");
+        $("#vattypepanel").removeClass("has-error");
         $("#btnSave").removeClass("disabled");
     } else if (inputFromDate.value === '' || InputToDate.value === '') {
         $("#fromdatepanel").removeClass("has-success");
         $("#todatepanel").removeClass("has-success");
+        $("#vattypepanel").removeClass("has-success");
         $("#fromdatepanel").addClass("has-error");
         $("#todatepanel").addClass("has-error");
+        $("#vattypepanel").addClass("has-error");
         $("#btnSave").addClass("disabled");
     } else {
         $("#fromdatepanel").removeClass("has-error");
         $("#todatepanel").removeClass("has-error");
+        $("#vattypepanel").removeClass("has-error");
         $("#fromdatepanel").addClass("has-success");
         $("#todatepanel").addClass("has-success");
+        $("#vattypepanel").addClass("has-success");
         $("#btnSave").removeClass("disabled");
         checkDateValue("from", "");
     }
@@ -561,18 +581,23 @@ function checkToDateField() {
     if (InputToDate.value === '' && inputFromDate.value === '') {
         $("#fromdatepanel").removeClass("has-error");
         $("#todatepanel").removeClass("has-error");
+        $("#vattypepanel").removeClass("has-error");
         $("#btnSave").removeClass("disabled");
     } else if (inputFromDate.value === '' || InputToDate.value === '') {
         $("#fromdatepanel").removeClass("has-success");
         $("#todatepanel").removeClass("has-success");
+        $("#vattypepanel").removeClass("has-success");
         $("#fromdatepanel").addClass("has-error");
         $("#todatepanel").addClass("has-error");
+        $("#vattypepanel").addClass("has-error");
         $("#btnSave").addClass("disabled");
     } else {
         $("#fromdatepanel").removeClass("has-error");
         $("#todatepanel").removeClass("has-error");
+        $("#vattypepanel").removeClass("has-error");
         $("#fromdatepanel").addClass("has-success");
         $("#todatepanel").addClass("has-success");
+        $("#vattypepanel").addClass("has-success");
         $("#btnSave").removeClass("disabled");
         checkDateValue("to", "");
     }
@@ -621,7 +646,7 @@ function saveReceivePeriod() {
     var fromDate = $("#fromDate").val();
     var toDate = $("#toDate").val();
     var periodDetail = $("#periodDetail").val();
-    var vatType = $("#SelectStatus").val();
+    var vatType = $("#periodVatType").val();
     var department = $("#department").val();
     if (department === 'W') {
         department = 'Wendy';
@@ -630,22 +655,33 @@ function saveReceivePeriod() {
     } else if (department === 'I') {
         department = 'Inbound';
     }
-
-    var servletName = 'ReceiveTableServlet';
-    var servicesName = 'AJAXBean';
-    var param = 'action=' + 'text' +
-            '&servletName=' + servletName +
-            '&servicesName=' + servicesName +
-            '&periodId=' + periodId +
-            '&receiveFrom=' + receiveFrom +
-            '&receiveTo=' + receiveTo +
-            '&fromDate=' + fromDate +
-            '&toDate=' + toDate +
-            '&periodDetail=' + periodDetail +
-            '&vatType=' + vatType +
-            '&department=' + department +
-            '&type=' + 'checkPeriodDate';
-    CallAjaxCheck(param);
+    
+    if(receiveFrom !== '' && receiveTo !== '' && vatType !== ''){
+        var servletName = 'ReceiveTableServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&periodId=' + periodId +
+                '&receiveFrom=' + receiveFrom +
+                '&receiveTo=' + receiveTo +
+                '&fromDate=' + fromDate +
+                '&toDate=' + toDate +
+                '&periodDetail=' + periodDetail +
+                '&vatType=' + vatType +
+                '&department=' + department +
+                '&type=' + 'checkPeriodDate';
+        CallAjaxCheck(param);
+        
+    }else{
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-success");
+        $("#vattypepanel").removeClass("has-success");
+        $("#fromdatepanel").addClass("has-error");
+        $("#todatepanel").addClass("has-error");
+        $("#vattypepanel").addClass("has-error");
+        $("#btnSave").addClass("disabled");
+    }    
 
 }
 
@@ -689,8 +725,10 @@ function CallAjaxCheck(param) {
                 } else {
                     $("#fromdatepanel").removeClass("has-success");
                     $("#todatepanel").removeClass("has-success");
+                    $("#vattypepanel").removeClass("has-success");
                     $("#fromdatepanel").addClass("has-error");
                     $("#todatepanel").addClass("has-error");
+                    $("#vattypepanel").addClass("has-error");
                     $("#btnSave").addClass("disabled");
                     $('#textAlertDivNotSavePeriod').show();
                 }
@@ -731,7 +769,9 @@ function checkPeriod() {
         var fromCheck = $("#receiveFrom").val();
         var to = $("#toDate").val();
         var toCheck = $("#receiveTo").val();
-        if ((from === fromCheck) && (to === toCheck)) {
+        var vatType = $("#periodVatType").val();
+        var vatTypeCheck = $("#receiveVatType").val();
+        if ((from === fromCheck) && (to === toCheck) && (vatType === vatTypeCheck)) {
             $("#periodDetail").val($("#receiveDetail").val());
             $("#periodCashAmount").val($("#receiveCashAmount").val());
             $("#periodBankAmount").val($("#receiveBankAmount").val());
