@@ -76,6 +76,7 @@ public class ReportController extends SMITravelController {
     private static final String InvoiceEmail = "InvoiceEmail";
     private static final String InvoiceReport = "InvoiceReport";
     private static final String InvoiceTemp = "InvoiceTemp";
+    private static final String InvoiceTempEmail = "InvoiceTempEmail";
     private static final String InvoiceTempReport = "InvoiceTempReport";
     private static final String TaxInvoiceReport = "TaxInvoiceReport";
     private static final String TaxInvoiceEmailReport = "TaxInvoiceEmailReport";
@@ -263,6 +264,8 @@ public class ReportController extends SMITravelController {
         } else if (InvoiceReport.equalsIgnoreCase(name)) {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
         }else if (InvoiceTemp.equalsIgnoreCase(name)) {
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
+        } else if (InvoiceTempEmail.equalsIgnoreCase(name)) {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
         } else if (InvoiceTempReport.equalsIgnoreCase(name)) {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());

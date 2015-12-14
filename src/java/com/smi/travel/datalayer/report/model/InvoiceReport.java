@@ -45,6 +45,9 @@ public class InvoiceReport {
     private String duedate;
     private String address;
     private String remark;
+    private String price;
+    private String tel;
+    private String fax;
     private String currency;
     private String vatpercent;
     private String printby;
@@ -81,7 +84,7 @@ public class InvoiceReport {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
-
+    
     public String getRemark() {
         return remark;
     }
@@ -355,6 +358,30 @@ public class InvoiceReport {
 
     public void setAccno2(String accno2) {
         this.accno2 = accno2;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getFax() {
+        return fax;
+    }
+
+    public void setFax(String fax) {
+        this.fax = fax;
     }
     
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="843" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="202"/>
-	<property name="ireport.y" value="676"/>
+	<property name="ireport.zoom" value="3.2210200000000015"/>
+	<property name="ireport.x" value="611"/>
+	<property name="ireport.y" value="889"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -37,6 +37,7 @@
 	<field name="accno2" class="java.lang.String"/>
 	<field name="bank2" class="java.lang.String"/>
 	<field name="branch2" class="java.lang.String"/>
+	<field name="price" class="java.lang.String"/>
 	<background>
 		<band height="727">
 			<image hAlign="Center" vAlign="Middle">
@@ -434,7 +435,7 @@
 	<detail>
 		<band height="24" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="33" y="0" width="284" height="23" uuid="72e266b6-b5ad-408e-9bcb-4dfe9f1f0cc9"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="33" y="0" width="193" height="23" uuid="72e266b6-b5ad-408e-9bcb-4dfe9f1f0cc9"/>
 				<box bottomPadding="5"/>
 				<textElement markup="none">
 					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -468,6 +469,13 @@
 					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="226" y="0" width="84" height="23" uuid="5e45acc7-7e44-4a35-966e-bfd420f0020c"/>
+				<textElement textAlignment="Right" markup="none">
+					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

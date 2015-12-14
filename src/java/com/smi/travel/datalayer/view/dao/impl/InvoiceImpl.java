@@ -132,7 +132,10 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setPayment(util.ConvertString(B[3]));
             
             if(count == QueryInvoiceList.size()){
-                invoice.setDescription(util.ConvertString(B[4]));
+                String[] desc = util.getTagPDescription(util.ConvertString(B[4]));
+                invoice.setDescription(desc[0]);
+                invoice.setPrice(desc[1]);
+//                invoice.setDescription(util.ConvertString(B[4]));
                 String Description = invoice.getDescription();
                 String remark = util.ConvertString(B[19]) == null ? "" : util.ConvertString(B[19]);
                 if(!"".equalsIgnoreCase(remark)){
@@ -142,7 +145,10 @@ public class InvoiceImpl implements InvoiceReportDao{
                 
                 System.out.println("Remark : " + remark);
             }else{
-                invoice.setDescription(util.ConvertString(B[4]));
+                String[] desc = util.getTagPDescription(util.ConvertString(B[4]));
+                invoice.setDescription(desc[0]);
+                invoice.setPrice(desc[1]);
+//                invoice.setDescription(util.ConvertString(B[4]));
             }
             
             if(B[5] != null){
