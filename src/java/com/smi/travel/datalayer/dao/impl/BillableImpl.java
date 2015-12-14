@@ -361,7 +361,7 @@ public class BillableImpl implements BillableDao {
                 
                 //get Depart date and flight
                 
-                DepartDateAndFlight += "                   "+new SimpleDateFormat("ddMMMyyyy", new Locale("us", "us")).format(flightDetail.getDepartDate()) + "/"+flightDetail.getFlightNo() +"\n";
+                DepartDateAndFlight += "                     "+new SimpleDateFormat("ddMMMyyyy", new Locale("us", "us")).format(flightDetail.getDepartDate()) + "/"+flightDetail.getFlightNo() +"\n";
                 
                 //PRICE
                 if(flightDetail.getAdPrice() != null){
@@ -419,8 +419,8 @@ public class BillableImpl implements BillableDao {
                     Initname = passenger.getMInitialname().getName();
                 }
             //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
-                description += "FOR" +"             " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
-                ticketno+= "                   "+"TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n";
+                description += "FOR" +"               " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
+                ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n";
             }
             
             String MInitialname = "";
@@ -578,12 +578,12 @@ public class BillableImpl implements BillableDao {
                             String  date = utility.convertDateToString(listLand.get(j).getDayDate());
                             String dateArr[] = date.split("-");
                             String newDate = dateArr[2] +"/" + dateArr[1] + "/" + dateArr[0];
-                            description += "  \t("+newDate +")";
+                            description += "  ("+newDate +")";
                         }else{
                              description += "";
                         }
                         if(listLand.get(j).getDescription() != null){ // description
-                            description += "  "+listLand.get(j).getDescription() +" NTS \n";
+                            description += "          "+listLand.get(j).getDescription() +" NTS \n         ";
                         }else{
                              description += " 0 NTS  \n";
                         }
@@ -592,12 +592,12 @@ public class BillableImpl implements BillableDao {
                             String  date = utility.convertDateToString(listLand.get(j).getDayDate());
                             String dateArr[] = date.split("-");
                             String newDate = dateArr[2] +"/" + dateArr[1] + "/" + dateArr[0];
-                            description += "  \t("+newDate +")";
+                            description += "  ("+newDate +")";
                         }else{
                              description += "";
                         }
                         if(listLand.get(j).getDescription() != null){ // description
-                            description += "  "+listLand.get(j).getDescription() +" NTS   ";
+                            description += "          "+listLand.get(j).getDescription() +" NTS   ";
                         }else{
                              description += " 0 NTS   ";
                         }
@@ -808,7 +808,7 @@ public class BillableImpl implements BillableDao {
                     String  date = utility.convertDateToString(list.get(i).getTourDate());
                     String dateArr[] = date.split("-");
                     String newDate = dateArr[2] +"/" + dateArr[1] + "/" + dateArr[0];
-                    description += "\t         ("+newDate +"  ";
+                    description += "               ("+newDate +"  ";
                 }else{
                      description += "  ";
                 }
