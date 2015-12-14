@@ -492,6 +492,10 @@ td div .selectize-input{
     border-color : #0E8F00;
 }
 
+.sm_row{
+    margin-top: -10px;
+}
+
 /*input:not([type]), input[type="text"]
 {
     text-transform: uppercase;
