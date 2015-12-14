@@ -471,8 +471,8 @@
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="230" y="0" width="86" height="23" uuid="5e45acc7-7e44-4a35-966e-bfd420f0020c"/>
-				<textElement markup="none">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="226" y="0" width="84" height="23" uuid="5e45acc7-7e44-4a35-966e-bfd420f0020c"/>
+				<textElement textAlignment="Right" markup="none">
 					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>

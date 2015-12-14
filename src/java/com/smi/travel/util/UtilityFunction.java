@@ -483,7 +483,6 @@ public class UtilityFunction {
     public  String[] getTagPDescription(String source ){
         String[] output = {"",""};
         String data[] = source.split("\n");
-        
         for(int i =0;i<data.length;i++){
             //step 2 find tag p
             int indexTagP = data[i].indexOf("<P>");
@@ -492,8 +491,7 @@ public class UtilityFunction {
                 String tagdescription = data[i].substring(indexTagP+3 ,data[i].indexOf("</P>") );
                 String datatemp[] = data[i].split("<P>");
                 output[0] += datatemp[0]+"\n";
-                System.out.println(" output[0] " + output[0]);
-                output[1] += tagdescription;
+                output[1] += tagdescription.trim();
             }else{
                 if(i < data.length-1){
                     output[0] += data[i]+"\n";
