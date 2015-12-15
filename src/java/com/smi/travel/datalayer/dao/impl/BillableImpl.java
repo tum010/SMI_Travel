@@ -345,7 +345,7 @@ public class BillableImpl implements BillableDao {
                 AirticketAirline  airline = list.get(k);
                 int isgroup = 0;
                 //get group pax
-                //isgroup = airline.getAirticketPnr().getAirticketBooking().getGroupPax();
+                isgroup = (airline.getAirticketPnr().getAirticketBooking().getGroupPax() == null) ? 0:airline.getAirticketPnr().getAirticketBooking().getGroupPax();
                 
                 String ticketlife = "";
                 DecimalFormat df = new DecimalFormat("###,##0.00");
@@ -435,7 +435,7 @@ public class BillableImpl implements BillableDao {
                 }
                 if(isgroup == 1){
                     //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}(PAX)
-                    description += "FOR" +"               " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"("+passengerList.size()+")</P>\n";
+                    description += "FOR" +"               " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+" ("+passengerList.size()+")</P>\n";
                     ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n\n";
                 }else{
                     //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
