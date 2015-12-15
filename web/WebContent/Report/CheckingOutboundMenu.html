@@ -1,7 +1,7 @@
 <ul id="CheckingOutboundMenu" class="nav nav-list" style="top: 0px;  background-color: #FAFEFA;border: solid 1px #0063DC">
     <li>
         <a href="OverdueSummary.smi">
-            <i class="menu-icon fa fa-times"></i>
+            <i class="menu-icon fa fa-money"></i>
             <span class="menu-text"> Overdue Summary <strong></strong></span>
         </a>
         <b class="arrow"></b>
@@ -16,7 +16,7 @@
     <li class="">
         <a  href="ProfitLoss.smi">
             <i class="menu-icon fa fa-money"></i>
-            <span class="menu-text"> Profit&Loss </span>
+            <span class="menu-text"> Profit & Loss </span>
         </a>
         <b class="arrow"></b>
     </li>
@@ -32,7 +32,7 @@
         sub = str[0].substr(0,18);
         console.log(sub);
         var $select = $('a[href*="' + sub + '"]');
-        $("#OutboundSummaryMenu").find($select).css('background-color', '#ccc');
+        $("#CheckingOutboundMenu").find($select).css('background-color', '#ccc');
     });
 
 </script>

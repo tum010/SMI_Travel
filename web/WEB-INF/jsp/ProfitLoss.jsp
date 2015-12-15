@@ -18,7 +18,7 @@
     </h4>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Report</a></li>          
-        <li class="active"><a href="#">Profit&Loss</a></li>
+        <li class="active"><a href="#">Profit & Loss</a></li>
     </ol>
 </section>
 
