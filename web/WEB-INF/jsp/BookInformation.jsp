@@ -289,9 +289,9 @@
                                 <td align="left">${hotel.hotel}</td>
                                 <td align="center">${hotel.checkin}</td>
                                 <td align="center">${hotel.checkout}</td>
-                                <td align="right" class="money">${hotel.totalcost}</td>
+                                <td align="right" id="totalCost${i.count}" class="money">${hotel.totalcost}</td>
                                 <td align="center">${hotel.curcost}</td>
-                                <td align="right" class="money">${hotel.totalprice}</td>
+                                <td align="right" id="totalPrice${i.count}" class="money">${hotel.totalprice}</td>
                                 <td align="center">${hotel.curamount}</td>
                                 <td align="center" rowspan="2">
                                     <a href="#" onclick="" data-toggle="modal" data-target="">

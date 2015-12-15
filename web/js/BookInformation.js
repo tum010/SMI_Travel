@@ -10,7 +10,7 @@ $(document).ready(function() {
         console.log("positon :" + position.top);
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
     });
-    $(".money").mask('000,000,000,000.00', {reverse: true});
+    $(".money").mask('000,000,000,000', {reverse: true});
 
     setSearchFormat($("#searchType").val());
 
@@ -86,6 +86,10 @@ $(document).ready(function() {
             searchAction();
         }
     });
+    
+    if($("#searchType").val() === '2'){
+        setEnvironment();
+    }
 
 });
 

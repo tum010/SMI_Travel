@@ -481,7 +481,7 @@ public class BookingViewImpl implements BookingViewDao{
         List<Object[]> QueryDayTour = session.createSQLQuery(query)
                 .addScalar("refno", Hibernate.STRING)
                 .addScalar("refdate", Hibernate.STRING)
-                .addScalar("agentname", Hibernate.STRING)
+                .addScalar("agent", Hibernate.STRING)
                 .addScalar("leader", Hibernate.STRING)
                 .addScalar("pax", Hibernate.STRING)
                 .addScalar("tour_code", Hibernate.STRING)
