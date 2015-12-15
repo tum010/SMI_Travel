@@ -334,30 +334,40 @@ public class BillableImpl implements BillableDao {
         Session session = this.sessionFactory.openSession();
         String airlineQuery = QUERY_AIRTICKET + "(" + refno +")";
         List<AirticketAirline> list = session.createQuery(airlineQuery).list();
-        String FlightDescription ="";
+        
         if (list.isEmpty()) {
             return null;
         }else{
             UtilityFunction utility = new UtilityFunction();
-            AirticketAirline  airline = list.get(0);
-            String ticketlife = "";
-            DecimalFormat df = new DecimalFormat("###,##0.00");
-            String DepartDateAndFlight = "";
-            Integer price = new Integer(0);
-            Integer tax = new Integer(0);
-            //Ref No. {Ref NO}
-            FlightDescription += "Ref No. "+airline.getAirticketPnr().getAirticketBooking().getMaster().getReferenceNo()+" : "+"\n";
-            //AIR TICKET         {ROUNTING} Ticket Type: {TICKET LIFE NAME}
-            List<AirticketFlight> flight = new ArrayList<AirticketFlight>(airline.getAirticketFlights()); 
-            
-            for(int f =0;f<flight.size();f++){
-                AirticketFlight flightDetail = flight.get(f);
-                //get Ticket Type
-                if(flight.get(f).getMTicketType() != null){
-                    if(ticketlife.indexOf(flightDetail.getMTicketType().getName()) == -1){
-                        ticketlife += flightDetail.getMTicketType().getName()+",";
-                    }
+            String LeaderName = "";
+            for(int k =0;k<list.size();k++){
+                String FlightDescription ="";
+                AirticketAirline  airline = list.get(k);
+                int isgroup = 0;
+                //get group pax
+                //isgroup = airline.getAirticketPnr().getAirticketBooking().getGroupPax();
+                
+                String ticketlife = "";
+                DecimalFormat df = new DecimalFormat("###,##0.00");
+                String DepartDateAndFlight = "";
+                Integer price = new Integer(0);
+                Integer tax = new Integer(0);
+                //Ref No. {Ref NO}
+                if(k ==0){
+                    FlightDescription += "Ref No. "+airline.getAirticketPnr().getAirticketBooking().getMaster().getReferenceNo()+" : "+"\n";                    
                 }
+
+                //AIR TICKET         {ROUNTING} Ticket Type: {TICKET LIFE NAME}
+                List<AirticketFlight> flight = new ArrayList<AirticketFlight>(airline.getAirticketFlights()); 
+            
+                for(int f =0;f<flight.size();f++){
+                    AirticketFlight flightDetail = flight.get(f);
+                    //get Ticket Type
+                    if(flight.get(f).getMTicketType() != null){
+                        if(ticketlife.indexOf(flightDetail.getMTicketType().getName()) == -1){
+                            ticketlife += flightDetail.getMTicketType().getName()+",";
+                        }
+                    }
                 
                 //get Depart date and flight
                 
@@ -401,10 +411,15 @@ public class BillableImpl implements BillableDao {
             if(ticketlife.length() > 0){
                     ticketlife = ticketlife.substring(0, ticketlife.length()-1);
             }
-            FlightDescription += "AIR TICKET"+"    "+utility.GetRounting(flight)
+            if(k ==0){
+                FlightDescription += "AIR TICKET"+"    "+utility.GetRounting(flight)
+                        + " Ticket Type: "+ticketlife+"\n";    
+            }else{
+                FlightDescription += "                     "+utility.GetRounting(flight)
                         + " Ticket Type: "+ticketlife+"\n";
-            //{DEPART DATE}/{FLIGHT}
+            }
             
+            //{DEPART DATE}/{FLIGHT}
             FlightDescription += DepartDateAndFlight;
             
             
@@ -418,20 +433,34 @@ public class BillableImpl implements BillableDao {
                 if(passenger.getMInitialname() != null){
                     Initname = passenger.getMInitialname().getName();
                 }
-            //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
-                description += "FOR" +"               " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
-                ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n";
+                if(isgroup == 1){
+                    //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}(PAX)
+                    description += "FOR" +"               " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"("+passengerList.size()+")</P>\n";
+                    ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n\n";
+                }else{
+                    //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
+                    description += "FOR" +"               " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
+                    ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n\n";
+                }
+                
             }
             
             String MInitialname = "";
             if(passengerList.get(0).getMInitialname() != null){
                 MInitialname = passengerList.get(0).getMInitialname().getName();
             }
-             name = "|"+ MInitialname +" "+ passengerList.get(0).getLastName() +" "+ passengerList.get(0).getFirstName() ;
+             if(k ==0){
+                LeaderName = "|"+ MInitialname +" "+ passengerList.get(0).getLastName() +" "+ passengerList.get(0).getFirstName() ;
+                
+             }
              description += ticketno;
-             description += name;
-             
+             if(isgroup == 1){
+                 k += list.size();
+             }
+            }
+            description += LeaderName;  
         }
+        
         System.out.println("description : "+description);
         session.close();
         this.sessionFactory.close();
