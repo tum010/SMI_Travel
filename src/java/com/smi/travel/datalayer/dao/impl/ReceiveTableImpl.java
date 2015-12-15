@@ -333,6 +333,11 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             query.append(" ad.vatType = '" + vatType + "' ");
             haveCondition = true;
         }
+        if ((periodId != null) && (!"".equalsIgnoreCase(periodId))) {
+            query.append(haveCondition ? " and " : " where ");
+            query.append(" ad.id != '" + periodId + "' ");
+            haveCondition = true;
+        }
         
         Session session = this.sessionFactory.openSession();
         Query HqlQuery = session.createQuery(query.toString());
@@ -431,12 +436,16 @@ public class ReceiveTableImpl implements ReceiveTableDao{
     }
 
     @Override
-    public String updateReceivePeriod(String periodId, String periodDetail) {
+    public String updateReceivePeriod(String periodId, String fromDate, String toDate, String vatType, String periodDetail) {
         int result = 0;
-        String hql = "UPDATE AdvanceReceivePeriod period set period.detail = :periodDetail WHERE period.id = :periodId";
+        UtilityFunction util = new UtilityFunction();
+        String hql = "UPDATE AdvanceReceivePeriod period set period.receiveFrom = :fromDate , period.receiveTo = :toDate , period.vatType = :vatType , period.detail = :periodDetail WHERE period.id = :periodId";
         try {
             org.hibernate.classic.Session session = this.sessionFactory.openSession();
             Query query = session.createQuery(hql);
+            query.setParameter("fromDate", util.convertStringToDate(fromDate));
+            query.setParameter("toDate", util.convertStringToDate(toDate));
+            query.setParameter("vatType", vatType);
             query.setParameter("periodDetail", periodDetail);
             query.setParameter("periodId", periodId);
             result = query.executeUpdate();

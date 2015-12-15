@@ -115,31 +115,24 @@ public class ReceiveTableController extends SMITravelController {
                 advanceReceive.setCreateDate(utilty.convertStringToDate(createDate));
             }           
             
-            advanceReceive.setRecTo(receiveCode);
+            advanceReceive.setRecTo("");
             advanceReceive.setRecName(receiveName);
             advanceReceive.setRecDate(utilty.convertStringToDate(receiveDate));
             advanceReceive.setArCode(receiveArCode);
             advanceReceive.setDescription(description);
-            advanceReceive.setVatType(vatType);
-            advanceReceive.setRecAmount(new BigDecimal(receiveAmount.replaceAll(",", "")));           
-            advanceReceive.setChqBank(chqBank.replaceAll(",", ""));
+            advanceReceive.setVatType(vatType);              
+            advanceReceive.setChqBank(chqBank);
             advanceReceive.setChqDate(utilty.convertStringToDate(chqDate));
-            advanceReceive.setChqNo(chqNo.replaceAll(",", ""));
+            advanceReceive.setChqNo(chqNo);
             advanceReceive.setDepartment(department);
+            advanceReceive.setRecAmount(!"".equalsIgnoreCase(receiveAmount) ? new BigDecimal(receiveAmount.replaceAll(",", "")) : null);
+            advanceReceive.setCashAmount(!"".equalsIgnoreCase(cashAmount) ? new BigDecimal(cashAmount.replaceAll(",", "")) : null);
+            advanceReceive.setBankAmount(!"".equalsIgnoreCase(bankAmount) ? new BigDecimal(bankAmount.replaceAll(",", "")) : null);
+            advanceReceive.setChqAmount(!"".equalsIgnoreCase(chqAmount) ? new BigDecimal(chqAmount.replaceAll(",", "")) : null);
             
             MAccpay mAccpay = new MAccpay();
             mAccpay.setId(status);
             advanceReceive.setMAccpay(mAccpay);
-            
-            if(!"".equalsIgnoreCase(cashAmount)){
-                advanceReceive.setCashAmount(new BigDecimal(cashAmount.replaceAll(",", "")));
-            }
-            if(!"".equalsIgnoreCase(bankAmount)){
-                advanceReceive.setBankAmount(new BigDecimal(bankAmount.replaceAll(",", "")));
-            }
-            if(!"".equalsIgnoreCase(chqAmount)){
-                advanceReceive.setChqAmount(new BigDecimal(chqAmount.replaceAll(",", "")));
-            }
             
             if(Integer.parseInt(countCredit) > 1){
                 setAdvanceReceiptCredit(request,Integer.parseInt(countCredit),advanceReceive);

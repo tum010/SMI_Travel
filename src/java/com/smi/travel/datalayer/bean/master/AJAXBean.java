@@ -879,18 +879,21 @@ public class AJAXBean extends AbstractBean implements
                 String department = map.get("department").toString();
                 String vatType = map.get("vatType").toString();
                 String check = "";
-                if(!"".equalsIgnoreCase(periodId) && receiveFrom.equalsIgnoreCase(fromDate) && receiveTo.equalsIgnoreCase(toDate)){                    
-                    check = receiveTableDao.updateReceivePeriod(periodId,periodDetail);                   
-                    if("1".equalsIgnoreCase(check)){
-                        AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
-                        advanceReceivePeriod = receiveTableDao.getReceivePeriod(receiveFrom,department,vatType);
-                        AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
-                        advanceReceivePeriodView = receiveTableDao.getAdvanceReceivePeriodView(fromDate,toDate,department,vatType);
-                        result = buildAdvanceReceivePeriodViewListJSON(advanceReceivePeriod,advanceReceivePeriodView);
-                        System.out.println("Result : "+result);
-                    }else{
-                        result = "fail";
-                    }
+                if(!"".equalsIgnoreCase(periodId) && periodId != null){
+                    check = receiveTableDao.checkReceivePeriod(periodId,fromDate,toDate,department,vatType);
+                    if("success".equalsIgnoreCase(check)){
+                        check = receiveTableDao.updateReceivePeriod(periodId,fromDate,toDate,vatType,periodDetail);                   
+                        if("1".equalsIgnoreCase(check)){
+                            AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
+                            advanceReceivePeriod = receiveTableDao.getReceivePeriod(receiveFrom,department,vatType);
+                            AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
+                            advanceReceivePeriodView = receiveTableDao.getAdvanceReceivePeriodView(fromDate,toDate,department,vatType);
+                            result = buildAdvanceReceivePeriodViewListJSON(advanceReceivePeriod,advanceReceivePeriodView);
+                            System.out.println("Result : "+result);
+                        }else{
+                            result = "fail";
+                        }
+                    }    
                 }else{
                     check = receiveTableDao.checkReceivePeriod(periodId,fromDate,toDate,department,vatType);
                     if("success".equalsIgnoreCase(check)){
@@ -1692,14 +1695,16 @@ public class AJAXBean extends AbstractBean implements
 
     public JSONArray buildBillListJSON(List<CustomerAgentInfo> listCutomerInfo) {
         JSONArray record = new JSONArray();
-        for (int i = 0; i < listCutomerInfo.size(); i++) {
-            CustomerAgentInfo customer = listCutomerInfo.get(i);
-            JSONObject field = new JSONObject();
-            field.put("id", customer.getBillTo());
-            field.put("name", customer.getBillName());
-            field.put("address", customer.getAddress());
-            record.add(field);
-        }
+        if(listCutomerInfo != null){
+            for (int i = 0; i < listCutomerInfo.size(); i++) {
+                CustomerAgentInfo customer = listCutomerInfo.get(i);
+                JSONObject field = new JSONObject();
+                field.put("id", customer.getBillTo());
+                field.put("name", customer.getBillName());
+                field.put("address", customer.getAddress());
+                record.add(field);
+            }
+        }    
         return record;
     }
     

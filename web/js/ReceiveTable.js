@@ -256,7 +256,7 @@ function CallAjaxAuto(param) {
     var billListName = [];
     var billListAddress = [];
     var billid, billname, billaddr;
-    $("#TaxInvTo").autocomplete("destroy");
+    $("#receiveName").autocomplete("destroy");
     try {
         $.ajax({
             type: "POST",
@@ -530,8 +530,31 @@ function addNewRowCreditTable() {
 }
 
 function newReceiveTable() {
-    $("#action").val("new");
-    document.getElementById("receiveForm").submit();
+//    $("#action").val("new");
+//    document.getElementById("receiveForm").submit();
+    
+    $("#receiveId").val('');
+    $("#receiveName").val('');
+    $("#receiveArCode").val('');
+    $("#description").val('');
+    $("#status").val('');
+    $("#receiveAmount").val('');    
+    $("#cashAmount").val('');    
+    $("#bankAmount").val('');    
+    $("#chqAmount").val('');    
+    $("#chqBank").val('');    
+    $("#chqDate").val('');
+    $("#chqNo").val('');  
+    $("#createBy").val('');  
+    $("#createDate").val('');  
+    $("#chqDate").val('');  
+    $("#chqDate").val('');
+    $("#countCredit").val(1);
+    $('#CreditTable > tbody  > tr').each(function() {
+        $(this).remove();
+    });
+    AddRowCreditTable(parseInt($("#countCredit").val()));
+
 }
 
 function checkPeriodVatType(){

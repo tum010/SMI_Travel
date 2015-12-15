@@ -130,21 +130,24 @@
                             <button type="button" id="ButtonPrint" name="ButtonPrint" onclick="printReceiveTableReport()" class="btn btn-default">
                                 <i class="fa fa-print"></i> Print             
                             </button>
-                        </div>
-                        <div class="col-xs-2 text-right" style="width: 390px;">
-                            <a data-toggle="collapse" class="btn btn-success" href="#" aria-expanded="false" onclick="AddReceiveData()">
-                                <i class="glyphicon glyphicon-plus"></i> Add
-                            </a>
+                        </div>       
+                        <div class="col-xs-2 text-right" style="width: 305px;" >
+                            <button type="button" id="ButtonNew" name="ButtonNew" class="btn btn-primary" onclick="newReceiveTable()">
+                                <i class="fa fa-plus"></i> New             
+                            </button>
+                        </div>        
+                        <div class="col-xs-2" style="width: 50px;padding: 0px 0px 0px 0px;">
+                            <button type="button" id="ButtonAdd" name="ButtonAdd" class="btn btn-success" onclick="AddReceiveData()">
+                                <i class="glyphicon glyphicon-plus"></i> Add             
+                            </button>
                         </div>
                     </div>   
                 </div><!-- End Row 1-->               
                 <c:set var="receiveTable" value=""/>
-                <c:set var="advanceReceiveData" value="-130px"/>
                 <c:if test="${advanceReceiveList == null}">
                    <c:set var="receiveTable" value="hidden"/>
-                   <c:set var="advanceReceiveData" value="-10px"/>
                 </c:if>
-                <div class="row ${receiveTable}" style="padding-left: 25px; width: 100%;">
+                <div class="row ${receiveTable}" style="padding-left: 25px; width: 100%">
                     <table class="display" id="ReceiveTable" >
                         <thead class="datatable-header">
                             <tr>
@@ -307,7 +310,7 @@
                                     <label class="control-label text-left">Chq Bank</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px">
-                                    <input name="chqBank" id="chqBank" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.chqBank}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
+                                    <input name="chqBank" id="chqBank" type="text" class="form-control" value="${advanceReceive.chqBank}" />
                                 </div>
                                 <div class="col-xs-1" style="width: 60px"></div>
                                 <div class="col-xs-1" style="width: 130px">
@@ -324,7 +327,7 @@
                                     <label class="control-label">Chq No</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px">
-                                    <input name="chqNo" id="chqNo" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.chqNo}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
+                                    <input name="chqNo" id="chqNo" type="text" class="form-control" value="${advanceReceive.chqNo}" />
                                 </div>
                             </div>
                         </div><!-- End Row 5-->
@@ -384,19 +387,12 @@
                             </div>
                         </div>
                         <div class="col-sm-12"><br></div>
-                        <div class="row text-center" >
-                            <div class="col-xs-5 text-right" ></div>                   
-                            <div class="col-xs-2 text-left" style="width: 100px;">
+                        <div class="row text-center" >                 
+                            <div class="col-xs-12 text-center">
                                 <button type="submit" id="ButtonSave" name="ButtonSave" onclick="" class="btn btn-success">
                                     <i class="fa fa-save"></i> Save
                                 </button>
-                            </div> 
-                            <div class="col-xs-2 text-left" style="width: 100px;" >
-                                <button type="button" id="ButtonNew" name="ButtonNew" class="btn btn-primary" onclick="newReceiveTable()">
-                                    <i class="fa fa-plus"></i> New             
-                                </button>
-                            </div>
-                            <div class="col-xs-2 text-right"  ></div>
+                            </div>                           
                         </div>
                     </div>
                     </div>
