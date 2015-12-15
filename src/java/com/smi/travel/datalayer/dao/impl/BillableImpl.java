@@ -342,6 +342,7 @@ public class BillableImpl implements BillableDao {
             String LeaderName = "";
             for(int k =0;k<list.size();k++){
                 String FlightDescription ="";
+                String FlightShort ="";
                 AirticketAirline  airline = list.get(k);
                 int isgroup = 0;
                 //get group pax
@@ -413,22 +414,29 @@ public class BillableImpl implements BillableDao {
             }
             if(k ==0){
                 FlightDescription += "AIR TICKET"+"    "+utility.GetRounting(flight)
-                        + " Ticket Type: "+ticketlife+"\n";    
+                        + " Ticket Type: "+ticketlife+"\n";     
             }else{
                 FlightDescription += "                     "+utility.GetRounting(flight)
-                        + " Ticket Type: "+ticketlife+"\n";
+                        + " Ticket Type: "+ticketlife+"\n"; 
             }
+            FlightShort += "                     "+utility.GetRounting(flight)
+                        + " Ticket Type: "+ticketlife+"\n";
             
             //{DEPART DATE}/{FLIGHT}
             FlightDescription += DepartDateAndFlight;
-            
+            FlightShort  += DepartDateAndFlight;
             
             List<AirticketPassenger>  passengerList = new ArrayList<AirticketPassenger>(airline.getAirticketPassengers());
             String name = "";
             String ticketno = "";
             for(int p =0;p<passengerList.size();p++){
                 AirticketPassenger passenger = passengerList.get(p);
-                description += FlightDescription +"";
+                if(p == 0){
+                    description += FlightDescription +"";
+                }else{
+                    description += FlightShort +"";
+                }  
+                
                 String Initname = "";
                 if(passenger.getMInitialname() != null){
                     Initname = passenger.getMInitialname().getName();
@@ -442,7 +450,8 @@ public class BillableImpl implements BillableDao {
                     description += "FOR" +"               " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
                     ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n\n";
                 }
-                
+                description += ticketno;
+                ticketno = "";
             }
             
             String MInitialname = "";
@@ -453,7 +462,7 @@ public class BillableImpl implements BillableDao {
                 LeaderName = "|"+ MInitialname +" "+ passengerList.get(0).getLastName() +" "+ passengerList.get(0).getFirstName() ;
                 
              }
-             description += ticketno;
+             
              if(isgroup == 1){
                  k += list.size();
              }
