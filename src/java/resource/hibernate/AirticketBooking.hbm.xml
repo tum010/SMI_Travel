@@ -25,6 +25,9 @@
         <property name="remark" type="string">
             <column name="remark" />
         </property>
+        <property name="groupPax" type="integer">
+            <column name="group_pax" />
+        </property>
         <bag name="airticketDescs" table="airticket_desc" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="booking_id" not-null="true" />

@@ -108,6 +108,7 @@ public class AirticketBookingImpl implements AirticketBookingDao {
             dbBooking.setDeadline(booking.getDeadline());
             dbBooking.setReConfirm(booking.getReConfirm());
             dbBooking.setRemark(booking.getRemark());
+            dbBooking.setGroupPax(booking.getGroupPax());
 //            dbBooking.setMaster(booking.getMaster());
 //            System.out.println("dbBooking.setMaster : "+dbBooking.getMaster().getFlagAir());
 //            System.out.println("dbBooking.setMaster : "+dbBooking.getMaster().getMBookingstatus().getId());

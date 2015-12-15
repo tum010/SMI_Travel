@@ -167,6 +167,7 @@ public class AirTicketController extends SMITravelController {
             String remark = request.getParameter("remark");   
             String issue_name = request.getParameter("issue_name");
             String staff_name = request.getParameter("staff_name");
+            String group_pax = request.getParameter("group-pax");
             
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date deadlineDate = null;
@@ -190,6 +191,7 @@ public class AirTicketController extends SMITravelController {
                 airBook.setStaffByIssueBy(issue);
                 airBook.setReConfirm(reconfirm);
                 airBook.setRemark(remark);
+                airBook.setGroupPax("on".equalsIgnoreCase(group_pax) ? 1 : 0);
                 airBook.setDeadline(deadlineDate);
                 Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
                 master.setFlagAir(new Integer("1"));
@@ -221,7 +223,8 @@ public class AirTicketController extends SMITravelController {
                 airBook.setStaffByOwnerBy(owner);
                 airBook.setReConfirm(reconfirm);
                 airBook.setDeadline(deadlineDate);
-                airBook.setRemark(remark);                
+                airBook.setRemark(remark);
+                airBook.setGroupPax("on".equalsIgnoreCase(group_pax) ? 1 : 0);
                 setAirticketDescRows(request, airDescRows, airBook);
                 System.out.println("updateBookingAirticket-----");
                 
