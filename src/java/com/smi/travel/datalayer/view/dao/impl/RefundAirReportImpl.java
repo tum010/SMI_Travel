@@ -78,8 +78,9 @@ public class RefundAirReportImpl implements RefundAirReportDao{
         for(int i=0;i<data.size();i++){
             RefundAirReport temp = (RefundAirReport) data.get(i);
             //temp.setTicketamount(util.setFormatMoney(SumTicketAmount));
-            temp.setTotalreceive(util.setFormatMoney(SumReceive));
-            temp.setTotalpay(util.setFormatMoney(SumPayCus));
+            System.out.println("Sum Receive : " +SumReceive + ": " +  util.setFormatMoney(SumReceive) );
+            temp.setTotalreceive(util.setFormatMoney(SumReceive) != null && !".00".equals(util.setFormatMoney(SumReceive)) ? util.setFormatMoney(SumReceive) : "");
+            temp.setTotalpay(util.setFormatMoney(SumPayCus) != null && !"".equals(util.setFormatMoney(SumPayCus)) ? util.setFormatMoney(SumPayCus) : "");
             data.set(0, temp);
             
         }

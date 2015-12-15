@@ -179,7 +179,7 @@
                                          <h4>Refund Ticket Detail</h4>
                                     </div>
                                     <div class="col-sm-6 form-group" style="margin-left: 2px;">
-                                         <label for="Owner" class="col-sm-3 control-label text-right">Refund No</label>
+                                        <label for="Owner" class="col-sm-3 control-label text-right">Refund No</label>
                                         <div class="col-lg-4">
                                             <input type="text" class="form-control" id="refundNo" name="refundNo" value="${table1.refundno}" readonly="">                                                  
                                         </div>
@@ -293,7 +293,7 @@
                                     <div class="col-sm-6 form-group">
                                         <label  class="col-sm-3 control-label text-right">Charge</label>
                                         <div class="col-sm-9">  
-                                            <input type="text" class="form-control" value="${table1.change}" maxlength="255" id="charge" name="charge"/>
+                                            <input type="text" class="form-control" value="${table1.change}" maxlength="255" id="charge" name="charge" readonly=""/>
                                         </div>
                                     </div>
                                 </div> 
@@ -383,6 +383,12 @@
                                 <div class="col-sm-6 form-group" style="margin-left: 20px;">
                                      <h4>Refund Ticket Detail</h4>
                                 </div>
+                                <div class="col-sm-6 form-group" style="margin-left: 2px;">
+                                    <label for="Owner" class="col-sm-3 control-label text-right">Refund No</label>
+                                    <div class="col-lg-4">
+                                        <input type="text" class="form-control" id="refundNo" name="refundNo" value="${table1.refundno}" readonly="">                                                  
+                                    </div>
+                                </div>
                                 <div class="col-sm-6 form-group">
                                     <label for="Owner" class="col-sm-3 control-label text-right">Refund By</label>
                                     <div class="col-lg-4">
@@ -470,7 +476,7 @@
                                 <div class="col-sm-6 form-group">
                                     <label  class="col-sm-3 control-label text-right">Charge</label>
                                     <div class="col-sm-9">  
-                                        <input type="text" class="form-control" value="${booking.reConfirm}" maxlength="255" id="charge" name="charge"/>
+                                        <input type="text" class="form-control" value="${booking.reConfirm}" maxlength="255" id="charge" name="charge" readonly=""/>
                                     </div>
                                 </div>
                             </div> 
@@ -1288,7 +1294,7 @@ function addRowRefundTicketDetail(row,id){
         '<td class="hidden"><input type="text" id="airticketrefunddetailid' + row + '" name="airticketrefunddetailid' + row + '" value="" /></td>'+
         '<td>' + row + '</td>' +       
         '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> </td>' +
-        '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value=""></td>' +
+        '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value="" readonly=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value=""></td>' +
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeNumber('+row+');"  id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' +      
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
@@ -1306,8 +1312,8 @@ function addRowRefundTicketDetailAdd(row,id){
         '<td class="hidden"><input type="text" id="airticketrefunddetailidadd' + row + '" name="airticketrefunddetailidadd' + row + '" value="" /></td>'+
         '<td>' + row + '</td>' +       
         '<td><select id="SelectTocketNoadd' + row + '" name="SelectTocketNoadd' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> </td>' +
-        '<td><input type="text" maxlength ="255" class="form-control" id="inputSectoradd' + row + '" name="inputSectoradd' + row + '" value=""></td>' +
-        '<td><input type="text" class="form-control" id="inputSectorRefundadd' + row + '" name="inputSectorRefundadd' + row + '" value=""></td>' +
+        '<td><input type="text" maxlength ="255" class="form-control" id="inputSectoradd' + row + '" name="inputSectoradd' + row + '" value="" readonly="" ></td>' +
+        '<td><input type="text" class="form-control" id="inputSectorRefundadd' + row + '" name="inputSectorRefundadd' + row + '" value="" onfocusout="checkRefundAdd(this,'+row+')"></td>' +
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeAddNumber('+row+');"  id="inputChargeadd' + row + '" name="inputChargeadd' + row + '" value="" ></td>' +      
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetailAdd" onclick="DeleteRefundDetailAdd('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
@@ -1503,6 +1509,22 @@ function changeFormatChargeNumber(id){
 function checkRefund(e,row) {
     var refund = e.value;
     var issue = $("#inputSector" + row).val();
+    console.log("Row Refund detail id : " + row + " Value issue : " + issue);
+    if (issue.indexOf(refund) >= 0) {
+        e.style.borderColor = "Green";
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+    } else {
+        e.style.borderColor = "Red";
+        $("#buttonSaveRefund").attr("disabled", "disabled");
+        $("#buttonPrintRefund").attr("disabled", "disabled");
+        return;
+    }
+}
+
+function checkRefundAdd(e,row) {
+    var refund = e.value;
+    var issue = $("#inputSectoradd" + row).val();
     console.log("Row Refund detail id : " + row + " Value issue : " + issue);
     if (issue.indexOf(refund) >= 0) {
         e.style.borderColor = "Green";
