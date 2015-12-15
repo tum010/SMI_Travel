@@ -368,34 +368,35 @@ public class BookingViewImpl implements BookingViewDao{
         UtilityFunction util = new UtilityFunction();
         List<BookingPackageSummaryView> bookingPackageSummaryViewList = new ArrayList<BookingPackageSummaryView>();
         
-        String query = " SELECT * FROM `booking_package_summary` ";
+        String query = " SELECT *,REPLACE(GROUP_CONCAT(DISTINCT b.invoice),',','<br>') AS invoiceno ,REPLACE(GROUP_CONCAT(DISTINCT b.receipt,''),',','<br>') AS receiptno FROM `booking_package_summary` b ";
         boolean condition = false;
         
         if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
             query += (condition ? " and " : " where ");
-            query += " refno = '" + bookRefNo + "' " ;
+            query += " b.refno = '" + bookRefNo + "' " ;
             condition = true;
         }
         if((bookLeader != null) &&(!"".equalsIgnoreCase(bookLeader))){
             query += (condition ? " and " : " where ");
-            query += " leader LIKE '%" + bookLeader + "%' COLLATE utf8_unicode_ci " ;
+            query += " b.leader LIKE '%" + bookLeader + "%' COLLATE utf8_unicode_ci " ;
             condition = true;
         }
         if((bookDate != null) &&(!"".equalsIgnoreCase(bookDate))){
             query += (condition ? " and " : " where ");
-            query += " refdate = '" + bookDate + "' " ;
+            query += " b.refdate = '" + bookDate + "' " ;
             condition = true;
         }
         if((packageName != null) &&(!"".equalsIgnoreCase(packageName))){
             query += (condition ? " and " : " where ");
-            query += " code LIKE '%" + packageName + "%' and name LIKE '%" + packageName + "%' " ;
+            query += " b.code LIKE '%" + packageName + "%' and b.name LIKE '%" + packageName + "%' " ;
             condition = true;
         }
         if((packageAgent != null) &&(!"".equalsIgnoreCase(packageAgent))){
             query += (condition ? " and " : " where ");
-            query += " agent LIKE '%" + packageAgent + "%' " ;
+            query += " b.agent LIKE '%" + packageAgent + "%' " ;
             condition = true;
         }
+        query += " GROUP BY b.refno ";
 
         List<Object[]> QueryPackage = session.createSQLQuery(query)
                 .addScalar("refno", Hibernate.STRING)
@@ -404,8 +405,8 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("leader", Hibernate.STRING)
                 .addScalar("code", Hibernate.STRING)
                 .addScalar("name", Hibernate.STRING)
-                .addScalar("invoice", Hibernate.STRING)
-                .addScalar("receipt", Hibernate.STRING)
+                .addScalar("invoiceno", Hibernate.STRING)
+                .addScalar("receiptno", Hibernate.STRING)
                 .setMaxResults(500)
                 .list();
         

@@ -25,6 +25,10 @@ body{
     color: #000;
 }
 
+#menuTop  {
+    height: 30px;
+}
+
 #ReceiveTable_wrapper  {
     min-height: 60px;
 }
