@@ -21,6 +21,7 @@ public class AirticketBooking {
      private Date deadline;
      private String reConfirm;
      private String remark;
+     private Integer groupPax;
      private List airticketDescs = new LinkedList<AirticketDesc>();
      private List airticketPnrs = new LinkedList<AirticketPnr>();
 
@@ -106,6 +107,14 @@ public class AirticketBooking {
     
     public void setAirticketPnrs(List airticketPnrs) {
         this.airticketPnrs = airticketPnrs;
+    }
+
+    public Integer getGroupPax() {
+        return groupPax;
+    }
+
+    public void setGroupPax(Integer groupPax) {
+        this.groupPax = groupPax;
     }
 
 

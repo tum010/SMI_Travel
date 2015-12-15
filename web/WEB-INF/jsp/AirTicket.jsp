@@ -168,10 +168,14 @@
                                         </div>
                                     </div>
                                     <!--checkbox-->
+                                    <c:set var="groupPax" value=""/>
+                                    <c:if test="${booking.groupPax == 1}">
+                                        <c:set var="groupPax" value="checked"/>
+                                    </c:if>
                                     <div class="col-sm-3">
                                         <div class="control-label">
                                             <input type="hidden" id="pnr-size" value="${pnr.size()}">
-                                            <input type="checkbox" disabled="" id="group-pax"> 
+                                            <input type="checkbox" id="group-pax" name="group-pax" ${groupPax}> 
                                             <strong class="text-center">Group Pax</strong>
                                         </div>
                                     </div>
