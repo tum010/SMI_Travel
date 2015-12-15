@@ -429,6 +429,7 @@ public class BillableImpl implements BillableDao {
             List<AirticketPassenger>  passengerList = new ArrayList<AirticketPassenger>(airline.getAirticketPassengers());
             String name = "";
             String ticketno = "";
+            
             for(int p =0;p<passengerList.size();p++){
                 AirticketPassenger passenger = passengerList.get(p);
                 if(p == 0){
@@ -445,6 +446,8 @@ public class BillableImpl implements BillableDao {
                     //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}(PAX)
                     description += "FOR" +"               " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+" ("+passengerList.size()+")</P>\n";
                     ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n\n";
+                    //Break Loop
+                    p +=  passengerList.size(); 
                 }else{
                     //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
                     description += "FOR" +"               " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
