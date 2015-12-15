@@ -183,7 +183,7 @@ public class ReceiveTableController extends SMITravelController {
             System.out.println("Delete Advance Receive Credit Result : "+result );
             
         }else if("new".equalsIgnoreCase(action)){
-            
+            AdvanceReceiveCredit advanceReceiveCredit = receiveTableService.testStoredProcedure(chqBank);
         }
         
         return new ModelAndView(LINKNAME+receiveDepartment);

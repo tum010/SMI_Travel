@@ -579,5 +579,18 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         session.close();
         return data;
     }
+
+    @Override
+    public AdvanceReceiveCredit testStoredProcedure(String agentName) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();       
+        String query = "CALL test('%" + agentName + "%')";
+               
+        List<AdvanceReceiveCredit> Query = session.createSQLQuery(query).list();
+
+        this.sessionFactory.close();
+        session.close();
+        return Query.get(0);
+    }
        
 }

@@ -56,5 +56,9 @@ public class ReceiveTableService {
     public AdvanceReceivePeriodView getAdvanceReceivePeriodView(String from, String to, String department, String vatType) {
         return this.receiveTableDao.getAdvanceReceivePeriodView(from,to,department,vatType);
     }
+
+    public AdvanceReceiveCredit testStoredProcedure(String agentName) {
+        return this.receiveTableDao.testStoredProcedure(agentName);
+    }
     
 }

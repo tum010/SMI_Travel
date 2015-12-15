@@ -29,5 +29,7 @@ public interface ReceiveTableDao {
     public AdvanceReceivePeriod getReceivePeriod(String receiveDate, String department, String vatType);
     public String updateReceivePeriod(String periodId, String fromDate, String toDate, String vatType, String periodDetail);
     public List getCollectionReport(String receiveDate, String vatType, String department, String printBy);
+
+    public AdvanceReceiveCredit testStoredProcedure(String agentName);
    
 }
