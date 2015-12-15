@@ -164,6 +164,9 @@
                                 <prop key="OutboundAirTicketMonthReport.smi">OutboundAirTicketMonthReportController</prop>
                                 <prop key="OutboundAirTicketAirlineStaffSummary.smi">OutboundAirTicketAirlineStaffSummaryController</prop>
                                 <prop key="MExchangeRate.smi">MExchangeRateController</prop>
+                                <prop key="OverdueSummary.smi">OverdueSummaryController</prop>
+                                <prop key="DebtorSummary.smi">DebtorSummaryController</prop>
+                                <prop key="ProfitLoss.smi">ProfitLossController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -715,6 +718,18 @@
     </bean>
     <bean id="OutboundAirTicketAirlineStaffSummaryController" class="com.smi.travel.controller.OutboundAirTicketAirlineStaffSummaryController">
         
+    </bean>
+    
+    <bean id="OverdueSummaryController" class="com.smi.travel.controller.OverdueSummaryController">
+        <property name="utilityService" ref="UtilityService" />
+    </bean>
+    
+    <bean id="DebtorSummaryController" class="com.smi.travel.controller.DebtorSummaryController">
+        <property name="utilityService" ref="UtilityService" />
+    </bean>
+    
+    <bean id="ProfitLossController" class="com.smi.travel.controller.ProfitLossController">
+        <property name="utilityService" ref="UtilityService" />
     </bean>
     
 	<!-- add bean id controller -->

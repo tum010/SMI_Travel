@@ -720,4 +720,20 @@
         <put-attribute name="title" value="MExchangeRate Report : MExchangeRate" />
         <put-attribute name="body" value="/WEB-INF/jsp/MExchangeRate.jsp" />
     </definition>
+                               
+    <definition name="OverdueSummary" extends="baseLayout">
+        <put-attribute name="title" value="OverdueSummary Report : OverdueSummary" />
+        <put-attribute name="body" value="/WEB-INF/jsp/OverdueSummary.jsp" />
+    </definition>
+    
+    <definition name="DebtorSummary" extends="baseLayout">
+        <put-attribute name="title" value="DebtorSummary Report : DebtorSummary" />
+        <put-attribute name="body" value="/WEB-INF/jsp/DebtorSummary.jsp" />
+    </definition>
+    
+    <definition name="ProfitLoss" extends="baseLayout">
+        <put-attribute name="title" value="Profit and Loss Report : Profit and Loss" />
+        <put-attribute name="body" value="/WEB-INF/jsp/ProfitLoss.jsp" />
+    </definition>
+    
 </tiles-definitions>
