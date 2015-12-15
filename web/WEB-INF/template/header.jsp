@@ -41,7 +41,7 @@
 </nav>
 
 
-<nav class="navbar navbar-inverse " style="height: 10px" role="navigation">
+<nav class="navbar navbar-inverse " role="navigation" id="menuTop">
 
 	<!-- Brand and toggle get grouped for better mobile display -->
 	<div class="navbar-header">
@@ -97,7 +97,8 @@
                                             "<li><a id='menu-other' href=''>Others</a></li>",
                                             "<li><a id='menu-financeandaccount' href='InvoiceMonthly.smi'>Finance And Account</a></li>",
                                             "<li><a id='menu-outboundsummary' href='OutboundSummary.smi'>Outbound Summary</a></li>",
-                                            "<li><a id='menu-bookingsummary' href='AirTicketMonthReport.smi'>Booking Summary</a></li>"];
+                                            "<li><a id='menu-bookingsummary' href='AirTicketMonthReport.smi'>Booking Summary</a></li>",
+                                            "<li><a id='menu-checkingoutbound' href='OverdueSummary.smi'>Checking Outbound</a></li>"];
                             var CheckingMenu = [
                                             "<li><a id='menu-packagetourhotel' href='PaymentTourHotel.smi'> PackageTour/Hotel </a></li>",
                                             "<li><a id='menu-airticket' href='AddTicketFare.smi'> AirTicket </a></li>",
@@ -161,15 +162,15 @@
 	</script>
 
 	<!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="position: absolute; padding: 0px 0px 0px 140px;">
 		<ul class="nav navbar-nav" id="navtop">
-			<li class="dropdown" style="margin-top: -10px;" ><a href="#" class="dropdown-header"
+			<li class="dropdown"><a href="#" class="dropdown-header"
                             data-toggle="dropdown" style="height: 44px;"> <span
 					class=""></span> MASTER <span
 					class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu" id="menuMaster">
 				</ul></li>
-			<li class="dropdown" style="margin-top: -10px;"><a href="#" class="dropdown-header"
+			<li class="dropdown"><a href="#" class="dropdown-header"
 				data-toggle="dropdown" id="BookingMenu" style="height: 44px;"> <span
 					class=""></span> BOOKING <span
 					class="caret"></span></a>
@@ -177,33 +178,33 @@
 
 				</ul></li>
 
-			<li class="dropdown" style="margin-top: -10px;"><a href="#" class="dropdown-header"
+			<li class="dropdown" ><a href="#" class="dropdown-header"
 				data-toggle="dropdown" style="height: 44px;"> <span class=""></span>
 					OPERATION <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu" id="daytourMenu">
 				</ul></li>
 
-			<li class="dropdown" style="margin-top: -10px;"><a href="#" class="dropdown-header"
+			<li class="dropdown" ><a href="#" class="dropdown-header"
 				data-toggle="dropdown" style="height: 44px;"> <span class=""></span>
 					CHECKING <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu" id="checkingMenu">
 				</ul></li>
 
-			<li class="dropdown" style="margin-top: -10px;"><a href="#" class="dropdown-header"
+			<li class="dropdown" ><a href="#" class="dropdown-header"
 				data-toggle="dropdown" style="height: 44px;"> <span class=""></span>
 					FINANCE & CASHIER <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu" id="financeMenu">
 
 
 				</ul></li>
-                        <li class="dropdown" style="margin-top: -10px;"><a href="#" class="dropdown-header"
+                        <li class="dropdown" ><a href="#" class="dropdown-header"
 				data-toggle="dropdown" style="height: 44px;"> <span class=""></span>
 					ACCOUNTING <span class="caret"></span></a>
 				<ul class="dropdown-menu" role="menu" id="accountMenu">
 
 
 				</ul></li>        
-			<li class="" style="margin-top: -10px;">
+			<li class="" >
 				<!--<a href="AirTicketMonthReport.smi" >Report</a>--> <a href="#"
 				class="dropdown-header" data-toggle="dropdown" style="height: 44px;"> <span
 					class=""></span> REPORT <span
