@@ -94,7 +94,7 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("address", Hibernate.STRING)
                 .addScalar("remark", Hibernate.STRING)
                 .addScalar("refno", Hibernate.STRING)
-                .addScalar("vatpercent", Hibernate.STRING)
+                .addScalar("vatpercent", Hibernate.INTEGER)
                 .list();
         int count = 0;
         for (Object[] B : QueryInvoiceList) {
@@ -107,7 +107,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setPrintby(printBy);
             invoice.setCurrency(util.ConvertString(B[17]));
             invoice.setRefno(util.ConvertString(B[20]) != null && !"".equals(util.ConvertString(B[20])) ? util.ConvertString(B[20]) : "");
-            invoice.setVatpercent(util.ConvertString(B[21]) != null && !"".equals(util.ConvertString(B[21])) ? util.ConvertString(B[21]) : "");
+            invoice.setVatpercent((Integer) (B[21] != null && (Integer) B[21] != 0 ? (Integer)B[21] : 0));
             invoice.setAmount(df.format(B[11]));
             invoice.setBank1(Bank1);
             invoice.setBank2(Bank2);

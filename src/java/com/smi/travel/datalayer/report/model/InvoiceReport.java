@@ -49,7 +49,7 @@ public class InvoiceReport {
     private String tel;
     private String fax;
     private String currency;
-    private String vatpercent;
+    private Integer vatpercent;
     private String printby;
     private String currencytotal;
 
@@ -69,11 +69,11 @@ public class InvoiceReport {
         this.printby = printby;
     }
 
-    public String getVatpercent() {
+    public Integer getVatpercent() {
         return vatpercent;
     }
 
-    public void setVatpercent(String vatpercent) {
+    public void setVatpercent(Integer vatpercent) {
         this.vatpercent = vatpercent;
     }
 
