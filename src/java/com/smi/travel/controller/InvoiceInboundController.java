@@ -51,6 +51,7 @@ public class InvoiceInboundController extends SMITravelController {
         String invoiceName = request.getParameter("InvToName");
         String invoiceAddress = request.getParameter("InvToAddress");
         String InputInvDate = request.getParameter("InputInvDate");
+        System.out.println("Date Invoice : " + InputInvDate);
         String arCode = request.getParameter("ARCode");
         
         String dueDate = "";
@@ -138,6 +139,7 @@ public class InvoiceInboundController extends SMITravelController {
                 request.setAttribute("invoice", invoice);
                 request.setAttribute("result", result);
             }
+            request.setAttribute("thisdate", InputInvDate);
             System.out.println("invoiceService checkOverflowValueOfInvoice:"+invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()));
         }else if("searchInvoice".equals(action)){ // search invoice when input invoice no
             String depart = invoiceNo.substring(0,1);
@@ -181,12 +183,13 @@ public class InvoiceInboundController extends SMITravelController {
                 }
                 result="yesInvoice";
                 System.out.println("result : "+result);
-                request.setAttribute("result", result);
+                request.setAttribute("result", result);              
             }else{
                 result = "notInvoice";
                 System.out.println("result : "+result);
                 request.setAttribute("result", result);
             }
+            request.setAttribute("thisdate", invoice.getInvDate());
         }else if("wildCardSearch".equalsIgnoreCase(action)){
             Invoice invoice = new Invoice();
             if(department != null){
@@ -204,7 +207,8 @@ public class InvoiceInboundController extends SMITravelController {
                invoiceType = "T";
             }
             invoice = invoiceService.getInvoiceByWildCardSearch(invoiceId,invoiceNo,wildCardSearch,keyCode,department,invoiceType);            
-            saveAction(invoice.getInvNo(), invoiceNo, invoice, "wildCardSearch", request);                     
+            saveAction(invoice.getInvNo(), invoiceNo, invoice, "wildCardSearch", request);   
+            request.setAttribute("thisdate", invoice.getInvDate());
         }else if("new".equals(action)){
             invoice.setInvoiceDetails(null);
             request.setAttribute("invoice",null);
@@ -237,6 +241,7 @@ public class InvoiceInboundController extends SMITravelController {
                    request.setAttribute("listInvoiceDetail", listInvoiceDetail);
                    request.setAttribute("invoice", invoice);
                    request.setAttribute("result", result);
+                   request.setAttribute("thisdate", InputInvDate);
                 }
             }else{
                 invoice = setValueInvoice("", user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
@@ -245,8 +250,8 @@ public class InvoiceInboundController extends SMITravelController {
                 invoice.setMFinanceItemstatus(mStatus);
                 request.setAttribute("listInvoiceDetail", listInvoiceDetail);
                 request.setAttribute("invoice", invoice);
-            }
-                     
+                request.setAttribute("thisdate", InputInvDate);
+            }                   
         }else if("enableVoid".equals(action)){      
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
             result = invoiceService.saveInvoice(invoice);
@@ -254,8 +259,11 @@ public class InvoiceInboundController extends SMITravelController {
                    result = "cancelvoid";
                    request.setAttribute("listInvoiceDetail", listInvoiceDetail);
                    request.setAttribute("invoice", invoice);
-                   request.setAttribute("result", result);    
+                   request.setAttribute("result", result);  
+                   request.setAttribute("thisdate", InputInvDate);
             }
+        }else{
+            request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
         }
         
         if((!"".equalsIgnoreCase(invoiceNo)) && (invoiceNo != null)){
@@ -280,7 +288,6 @@ public class InvoiceInboundController extends SMITravelController {
             }
         }
        
-        request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
         request.setAttribute("page", callPageFrom);
         return new ModelAndView(LINKNAME+callPageFrom);
     }

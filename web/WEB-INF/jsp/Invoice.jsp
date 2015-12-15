@@ -310,16 +310,11 @@
                             </div>
                             <div class="col-md-2 form-group">
                                 <div class='input-group date' id='InputDatePicker'>    
-                                    <c:if test='${invoice.invDate != null}'>
+                                    <div class='input-group date' id='InputDatePicker'>    
                                         <input id="InputInvDate" name="InputInvDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${invoice.invDate}">
-                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                         
-                                        </c:if>
-                                        <c:if test='${invoice.invDate == null}'>
-                                        <input id="InputInvDate" name="InputInvDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${create}">
+                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${create}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                              
-                                        </c:if>  
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-xs-2 text-right">

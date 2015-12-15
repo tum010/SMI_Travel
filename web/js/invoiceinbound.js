@@ -155,6 +155,8 @@ $(document).ready(function() {
         document.getElementById("printButtonEmail").disabled = false;
         document.getElementById("sendEmailButton").disabled = false;
     }
+    
+    validFromInvoiceInbound();
 });
 
 function searchInvoiceFromInvoiceNo() {
@@ -502,7 +504,6 @@ function CalculateGrandTotal(id) {
     var count = parseInt(document.getElementById('counterTable').value);
     var i;
     var grandTotal = 0;
-    var totalnet=0;
     if ((id !== null) || (id !== '')) {
         for (i = 1; i < count + 1; i++) {
             var amount = document.getElementById("InputAmount" + i);
@@ -518,15 +519,66 @@ function CalculateGrandTotal(id) {
         }
         if (id !== '') {
         }
-        var vatnet = grandTotal-totalnet;
         document.getElementById('GrandTotal').value = formatNumber(grandTotal);
-        document.getElementById('TotalNet').value = formatNumber(totalnet);
-        document.getElementById('VatNet').value = formatNumber(vatnet);
         if (grandTotal !== 0) {
-            var bathString = toWords((grandTotal));
+            var bathString = toWordsMoney((grandTotal));
             document.getElementById('TextAmount').value = bathString;
         }
     }
+}
+
+function toWordsMoney(s){
+    var currency = $('#SelectCurrencyAmount1').find(":selected").text();
+    if(s === 0){
+        var defaultWord = '';
+        return  defaultWord;
+    }
+    var hundred = s;
+    var th = ['','thousand','million', 'billion','trillion'];
+    var dg = ['zero','one','two','three','four', 'five','six','seven','eight','nine']; 
+    var tn = ['ten','eleven','twelve','thirteen', 'fourteen','fifteen','sixteen', 'seventeen','eighteen','nineteen']; 
+    var tw = ['twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety']; 
+    s = s.toString(); 
+    s = s.replace(/[\, ]/g,''); 
+    if (s != parseFloat(s)) return 'not a number'; 
+    var x = s.indexOf('.'); 
+    if (x == -1) x = s.length; if (x > 15) return 'too big'; 
+    var n = s.split(''); 
+    var str = ''; 
+    var sk = 0; 
+    for (var i=0; i < x; i++) {
+        if ((x-i)%3==2) {
+            if (n[i] == '1') {
+                str += tn[Number(n[i+1])] + ' '; i++; sk=1;
+            } else if (n[i]!=0) {
+                str += tw[n[i]-2] + ' ';sk=1;}
+        } else if (n[i]!=0) {
+            str += dg[n[i]] +' '; 
+            if ((x-i)%3==0){
+                str += 'hundred ';
+                if(((parseInt(hundred))%100) !== 0){
+                    if(((parseInt(hundred))%10) !== 0){
+                        str += 'and ';
+                    } else {
+                        str += 'and ';
+                    }                  
+                }
+            }
+            sk=1;
+        }             
+        if ((x-i)%3==1) {
+            if (sk) str += th[(x-i-1)/3] + ' ';
+            sk=0;
+        }
+    } 
+    str += '' + currency;
+    if (x != s.length) {
+        var y = s.length; str += 'point '; 
+        for (var i=x+1; i<y; i++) str += dg[n[i]] +' ';
+    } else {
+        str += ' only ';
+    }   
+    return str.replace(/\s+/g,' ').toUpperCase();
 }
 
 function CalculateTotalNet(id) {
@@ -582,7 +634,7 @@ function changeFormatGrossNumber(id) {
 
 function changeFormatAmountNumber(id) {
     var count = document.getElementById('InputAmount' + id).value;
-
+    var type = $("#InputTypeInvoiceInbound").val();
     var curamount = document.getElementById('SelectCurrencyAmount' + id).value;
     if (curamount === '') {
         $('#textAlertCurrencyAmountNotEmpty').show();
@@ -600,7 +652,9 @@ function changeFormatAmountNumber(id) {
     }
     CalculateGrandTotal(id);
     calculateGross(id);
-    CalculateTotalNet(id);
+    if(type === 'RV'){
+        CalculateTotalNet(id);
+    }
 }
 
 function addRowInvoiceInboundDetail(row){
@@ -620,7 +674,7 @@ function addRowInvoiceInboundDetail(row){
     '<td '+ textHidden+'>'+vatTemp+'</td>' +
     '<td '+ textHidden+'><input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
     '<td><input type="text" maxlength ="15" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" onfocusout="changeFormatAmountNumber(' + row + ');"  value=""></td>' +
-    '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" >' + select + '</select></td>' +              
+    '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="validFromInvoiceInbound()" >' + select + '</select></td>' +              
     '<td align="center" ><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBillInbound(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +           
     '</tr>'
     );
@@ -766,6 +820,71 @@ function printInvoiceInboundNew() {
 //        } else {
             window.open("SendMail.smi?reportname=InvoiceInboundRevenueEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
 //        }
+    }
+}
+var currency = 0;
+function validFromInvoiceInbound() {
+    var counter = $('#DetailBillableTable tbody tr').length;
+    var different = 0;
+    var checkcur1 = false;
+    for (var i = 1; i <= (counter - 1); i++) {
+        var currency1 = $('#SelectCurrencyAmount' + i).find(":selected").text();
+        if (currency1 === '') {
+            checkcur1 = true;
+        } else {
+            $('#textAlertCurrencyAmountNotEmpty').hide();
+        }
+        for (var j = 2; j <= (counter - 1); j++) {
+            var type = $('#BillDescriptionTemp' + j).val();
+            if (type !== "") {
+                var currency2 = $('#SelectCurrencyAmount' + j).find(":selected").text();
+                if (currency1 !== currency2) {
+                    rowTemp = j;
+                    different++;
+                }
+            }
+        }
+    }
+    if (different > 0) {
+        $('#DetailBillableTable').find('tr').each(function() {
+            $(this).find('td').each(function() {
+                if ($(this).hasClass('priceCurrencyAmount')) {
+                    $(this).addClass("alert-danger");
+                }
+            });
+        });
+        $('#textAlertCurrency').show();
+        currency = 1;
+        document.getElementById("saveInvoice").disabled = true;
+//        alert("Currency : " + currency); 
+//        $('#InvoiceForm').bootstrapValidator('validateField', 'SelectCurrencyAmount2'+rowTemp);
+        if (checkcur1) {
+            $('#textAlertCurrencyAmountNotEmpty').show();
+            document.getElementById("saveInvoice").disabled = true;
+        } else {
+            $('#textAlertInvoiceNotEmpty').hide();
+            document.getElementById("saveInvoice").disabled = false;
+        }
+        return false;
+    } else {
+        $('#DetailBillableTable').find('tr').each(function() {
+            $(this).find('td').each(function() {
+                if ($(this).hasClass('priceCurrencyAmount')) {
+                    $(this).removeClass("alert-danger");
+                }
+            });
+        });
+        $('#textAlertCurrency').hide();
+        currency = 0;
+        document.getElementById("saveInvoice").disabled = false;
+        if (checkcur1) {
+            $('#textAlertCurrencyAmountNotEmpty').show();
+            document.getElementById("saveInvoice").disabled = true;
+        } else {
+            $('#textAlertInvoiceNotEmpty').hide();
+            document.getElementById("saveInvoice").disabled = false;
+        }
+        return true;
     }
 }
 

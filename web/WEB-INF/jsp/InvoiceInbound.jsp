@@ -19,21 +19,24 @@
 <c:set var="invoice" value="${requestScope['invoice']}" />
 <c:set var="listInvoiceDetail" value="${requestScope['listInvoiceDetail']}" />
 <c:set var="result" value="${requestScope['result']}" />
+<c:set var="InvoiceDate" value="${requestScope['InvoiceDate']}" />
 <c:set var="textVoid" value="" />
 
 <section class="content-header" >
+    <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
+        <c:set var="textVoid" value="VOID" />
+    </c:if>
     <h1>
     <c:choose>
-            <c:when test="${fn:contains(page , 'PM')}">
-                <c:set var="typeInvoiceInboubd" value="PM" />
-                <h4><b>Finance & Cashier - Proforma Invoice <font style="color: red;"> ${textVoid}</font></b></h4>
-            </c:when>
-            <c:when test="${fn:contains(page , 'RV')}">
-                <c:set var="typeInvoiceInboubd" value="RV" />
-                <h4><b>Finance & Cashier - Revenue Invoice  <font style="color: red;"> ${textVoid}</font></b></h4>
-            </c:when>                        
-        </c:choose> 
-        
+        <c:when test="${fn:contains(page , 'PM')}">
+            <c:set var="typeInvoiceInboubd" value="PM" />
+            <h4><b>Finance & Cashier - Proforma Invoice <font style="color: red;"> ${textVoid}</font></b></h4>
+        </c:when>
+        <c:when test="${fn:contains(page , 'RV')}">
+            <c:set var="typeInvoiceInboubd" value="RV" />
+            <h4><b>Finance & Cashier - Revenue Invoice  <font style="color: red;"> ${textVoid}</font></b></h4>
+        </c:when>                        
+    </c:choose>      
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Finance & Cashier </a></li>          
@@ -75,10 +78,8 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Invoice Not Empty</strong> 
             </div>
-            <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
-                 <c:set var="textVoid" value="VOID" />
-            </c:if>
-        <form action="InvoiceInbound${page}.smi" method="post" id="InvoiceInboundForm" name="InvoiceInboundForm" role="form" onsubmit="">
+            
+        <form action="InvoiceInbound${page}.smi" method="post" id="InvoiceInboundForm" name="InvoiceInboundForm" role="form" onsubmit="return validFromInvoiceInbound();">
             <input type="text" class="hidden" id="action" name="action" value="save" >
                 <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -127,16 +128,9 @@
                             </div>
                             <div class="col-md-2 form-group">
                                 <div class='input-group date' id='InputDatePicker'>    
-                                    <c:if test='${invoice.invDate != null}'>
-                                        <input id="InputInvDate" name="InputInvDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${invoice.invDate}">
-                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                         
-                                    </c:if>
-                                    <c:if test='${invoice.invDate == null}'>
-                                        <input id="InputInvDate" name="InputInvDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${create}">
-                                        <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                              
-                                    </c:if>  
+                                    <input id="InputInvDate" name="InputInvDate"  type="text" 
+                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${create}">
+                                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                              
                                 </div>
                             </div>                  
                         </div>
@@ -274,7 +268,7 @@
                                                 onfocusout="changeFormatAmountNumber(${taxdesc.count});"  value="${ind.amount}">
                                             </td>
                                             <td class="priceCurrencyAmount">
-                                                <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" >
+                                                <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control"  onclick="validFromInvoiceInbound()">
                                                     <option value='' ></option>
                                                     <c:forEach var="cur" items="${listCurrency}">
                                                         <c:set var="selectA" value="" />
@@ -311,28 +305,16 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane  active" id="infoRemark">
                         <div class="panel panel-default inboundborder">
+                            <c:set var="setTotalNet" value="" />
                             <c:choose>
                                 <c:when test="${fn:contains(page , 'PM')}">
-                                    <div class="panel-body">                   
-                                        <div class="sm_row col-xs-12 form-group"></div>
-                                        <div class="sm_row col-xs-12 ">
-                                            <div class="col-sm-1">
-                                                <label class="control-label" for="">Text&nbsp;Amount&nbsp;:</lable>                                         
-                                            </div>                                      
-                                            <div class="col-sm-5" style="padding-left: 50px">
-                                                <input  rows="3" cols="200" id="TextAmount" name="TextAmount" class="form-control" value="" readonly="">
-                                            </div>  
-                                            <div class="col-sm-2 text-right" >
-                                                <label class="control-label" for="">Grand Total&nbsp;Net&nbsp;:</lable>                                     
-                                            </div>
-                                            <div class="col-sm-3" >
-                                                <input  rows="3" cols="200" id="GrandTotal" name="GrandTotal" class="form-control" value="" readonly=""  onfocus="CalculateGrandTotal();">
-                                            </div>  
-                                        </div>
-                                        <div class="sm_row col-xs-12 "><br></div>
-                                    </div>
+                                     <c:set var="setTotalNet" value="hidden" />
                                 </c:when>
                                 <c:when test="${fn:contains(page , 'RV')}">
+                                    
+                                </c:when>
+                            </c:choose>
+
                                     <div class="panel-body">                   
                                         <div class="sm_row col-xs-12 form-group"></div>
                                         <div class="sm_row col-xs-12 ">
@@ -342,15 +324,28 @@
                                             <div class="col-sm-5" style="padding-left: 50px">
                                                 <input  rows="3" cols="200" id="TextAmount" name="TextAmount" class="form-control" value="" readonly="">
                                             </div>
-                                            <div class="col-sm-2 text-right" >
-                                                <label class="control-label" for="">Total&nbsp;Net&nbsp;:</lable>                                         
-                                            </div>
-                                            <div class="col-sm-3" >
-                                                <input  rows="3" cols="200" id="TotalNet" name="TotalNet" class="form-control" value="" readonly="">
-                                            </div>                      
+                                            <c:choose>
+                                                <c:when test="${fn:contains(page , 'PM')}">
+                                                    <c:set var="setTotalNet" value="hidden" />
+                                                    <div class="col-sm-2 text-right" >
+                                                        <label class="control-label" for="">Grand Total&nbsp;Net&nbsp;:</lable>                                     
+                                                    </div>
+                                                    <div class="col-sm-3" >
+                                                        <input  rows="3" cols="200" id="GrandTotal" name="GrandTotal" class="form-control" value="" readonly=""  onfocus="CalculateGrandTotal();">
+                                                    </div>  
+                                                </c:when>
+                                                <c:when test="${fn:contains(page , 'RV')}">
+                                                    <div class="col-sm-2 text-right">
+                                                        <label class="control-label" for="">Total&nbsp;Net&nbsp;:</lable>                                         
+                                                    </div>
+                                                    <div class="col-sm-3" >
+                                                        <input  rows="3" cols="200" id="TotalNet" name="TotalNet" class="form-control" value="" readonly="">
+                                                    </div>  
+                                                </c:when>
+                                            </c:choose>                                                           
                                         </div>
-                                        <div class="sm_row col-xs-12 "><br></div>
-                                        <div class="sm_row col-xs-12 ">                                     
+                                        <div class="sm_row col-xs-12 " ${setTotalNet}><br></div>
+                                        <div class="sm_row col-xs-12 " ${setTotalNet}>                                     
                                             <div class="col-sm-6" style="padding-left: 50px"></div>
                                             <div class="col-sm-2 text-right">
                                                 <label class="control-label" for="">Vat&nbsp;Net&nbsp;:</lable>                                         
@@ -359,8 +354,8 @@
                                                 <input  rows="3" cols="200" id="VatNet" name="VatNet" class="form-control" value="" readonly="">
                                             </div>
                                         </div> 
-                                        <div class="sm_row col-xs-12 "><br></div>
-                                        <div class="sm_row col-xs-12 ">                                     
+                                        <div class="sm_row col-xs-12 " ${setTotalNet}><br></div>
+                                        <div class="sm_row col-xs-12 " ${setTotalNet}>                                     
                                             <div class="col-sm-6" style="padding-left: 50px"></div>
                                             <div class="col-sm-2 text-right">
                                                 <label class="control-label" for="">Grand Total&nbsp;Net&nbsp;:</lable>                                         
@@ -370,9 +365,6 @@
                                             </div>
                                         </div> 
                                     </div>
-                                </c:when>                        
-                            </c:choose>    
-
                         </div><!--End -->
                     </div>
                 </div>
@@ -383,8 +375,14 @@
                         <div class="panel panel-default inboundborder">                              
                             <div class="panel-body">
                                 <div class="col-xs-12 text-right">
-                                    <div class="col-md-3 text-right "></div>                                   
-                                    <div class="col-md-1 text-left " style="padding-left: 0px;width: 130px">
+                                    <div class="col-md-3 text-right "></div> 
+                                    <c:set var="printInvoiceReport" value="" />
+                                    <c:choose>
+                                        <c:when test="${fn:contains(page , 'PM')}">
+                                            <c:set var="printInvoiceReport" value="hidden" />
+                                        </c:when>                      
+                                    </c:choose>     
+                                    <div class="col-md-1 text-left " style="padding-left: 0px;width: 130px" ${printInvoiceReport}>
                                         <button type="button" class="btn btn-default" id="printButton" onclick="printInvoiceInbound('print')" data-toggle="modal" data-target="#PrintModal">
                                             <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice
                                         </button>
@@ -551,8 +549,8 @@
                     </div>
                     <div class="col-md-7">
                         <select id="selectSalesStaff" name="selectSalesStaff" class="form-control">
-                            <option value="0">Not Show Sales Staff</option>
                             <option value="1">Show Sales Staff</option>
+                            <option value="0">Not Show Sales Staff</option>                           
                         </select>
                     </div>
                 </div>
@@ -575,7 +573,13 @@
                         <select id="selectPayment" name="selectPayment" class="form-control">
                             <option value="0">Not show</option>
                             <option value="SCB2">Payment Bank Siam commercial bank PCL</option>
-                            <option value="BBL">Payment Bank Bangkok bank PCL</option>
+                            <c:set var="showBank" value="" />
+                            <c:choose>
+                                <c:when test="${fn:contains(page , 'PM')}">
+                                    <c:set var="showBank" value="hidden" />
+                                </c:when>                      
+                            </c:choose> 
+                            <option value="BBL" ${showBank}>Payment Bank Bangkok bank PCL</option>
                         </select>
                     </div>
                 </div>
