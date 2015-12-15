@@ -973,7 +973,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <div class="modal fade " id="DescriptionInvoiceDetailModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog"  style="width: 50%">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -982,11 +982,11 @@
 
             <div class="modal-body" >
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-1" style="width: 80px">
                         <h5>Description</h5>
                     </div>
                     <div class="col-md-10">
-                        <textarea id="InputDescriptionDetail" rows="12" style="width: 450px" class="form-control" >
+                        <textarea id="InputDescriptionDetail" rows="12" style="width: 560px" class="form-control" >
 
                         </textarea>
                         <!--<input type="text" id="InputDescriptionDetail" value="" style="width: 400px;height: 200px;">-->
