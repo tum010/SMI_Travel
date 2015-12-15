@@ -69,7 +69,7 @@ public class InvoiceController extends SMITravelController {
         String subDepartment = request.getParameter("Department");
         String wildCardSearch = request.getParameter("wildCardSearch");
         String keyCode = request.getParameter("keyCode");
-        
+
         if(callPageFrom != null){
            //String[] type = callPageFrom.split("\\?");
            request.setAttribute("typeInvoice", callPageFrom.substring(1));  
@@ -311,7 +311,7 @@ public class InvoiceController extends SMITravelController {
             }else{
                 request.setAttribute("invoice",null);
             }
-            request.setAttribute("thisdate", InputInvDate);
+            request.setAttribute("thisdate", (InputInvDate != null && !"".equalsIgnoreCase(InputInvDate) ? InputInvDate : utilty.convertDateToString(new Date())));
         }else if("delete".equals(action)){// Delete Invoice From Search invoice page
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
             String rowId  = request.getParameter("idDeleteDetailBillable");
