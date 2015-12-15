@@ -18,6 +18,7 @@ public class RefundAirticket {
      private String refundBy;
      private String remark;
      private String receiveBy;
+//     private String receiveByName;
      private Date receiveDate;
      private String address;
      private Integer status;
