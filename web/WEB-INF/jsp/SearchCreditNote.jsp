@@ -11,7 +11,7 @@
 <c:set var="department" value="${requestScope['department']}" />
 <section class="content-header" >
     <h1>
-        Finance & Cashier - Credit Note
+        Finance & Cashier - Search Credit Note
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Finance & Cashier </a></li>          
@@ -26,16 +26,10 @@
             <div ng-include="'WebContent/FinanceAndCashier/CreditNoteMainMenu.html'"></div>
         </div>
         <div class="col-sm-10">
-            <div class="row" style="padding-left: 15px">  
-                <div class="col-sm-6 " style="padding-right: 15px">
-                    <h4><b>Search Credit Note</b></h4>
-                </div>            
-            </div>
-            <hr/>
+
             <form action="SearchCreditNote.smi" method="post" id="SearchCreditNoteForm" name="SearchCreditNoteForm" role="form">
-                <input type="hidden" name="action" value="search" />
-                <div class="panel panel-default">
-                    <div class="panel-body"  style="width: 100%">
+                    <input type="hidden" name="action" value="search" />
+                    <div class="sm_row col-xs-12 " style="padding-top: 25px">
                         <div class="col-xs-3 form-group" style="padding-top: 15px">
                             <div class="col-xs-1 text-right"  style="width: 70px; margin-left: -20px">
                                 <label class="control-label text-right">Form<font style="color: red">*</font>&nbsp;</label>
@@ -64,7 +58,7 @@
                             <div class="col-xs-1 text-right" style="width: 100px">
                                 <label class="control-label text-right">Department</label>
                             </div>
-                            <div class="col-md-1 form-group" style="width: 130px">
+                            <div class="col-md-1 form-group" style="width: 125px">
 <!--                                 <select class="form-control" id="department" name="department">
                                      <option value="">Choose</option>
                                     <option value="W">Wendy</option>
@@ -108,7 +102,7 @@
                             <div class="col-xs-1 text-right" style="width: 100px">
                                 <label class="control-label text-right">Status</label>
                             </div>
-                            <div class="col-md-1 form-group" style="padding: 0px 0px 0px 0px;width: 130px">
+                            <div class="col-md-1 form-group" style="padding: 0px 0px 0px 0px;width: 90px">
                                 <select class="form-control" id="status" name="status">
                                     <option value="">Choose</option>
                                     <c:forEach var="mFinanceList" items="${mFinanceItemStatus_List}" varStatus="i">
@@ -121,25 +115,24 @@
                                 </select>    
                             </div>                                           
                         </div>
-                        <div class="col-md-12 form-group">
-                            <div class="col-md-1 form-group" style="width: 720px"></div>
-                            <div class="col-md-1 text-right " style="padding: 0px 0px 0px 0px ; width: 160px">
-                                <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-primary ">
-                                    <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
-                                </button>                                
-                            </div>
-                            <div class="col-md-1 text-right " style="padding: 0px 0px 0px 10px">
-                                <button id="ButtonPrint" type="button" onclick="printCreditNoteSummaryReport();" class="btn btn-default">
-                                    <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
-                                </button>                                
-                            </div>            
-                        </div>
                     </div>
-                </div>
-                
+                    <div class="sm_row col-md-12 form-group">
+                        <div class="sm_row col-md-1 form-group" style="width: 690px"></div>
+                        <div class="sm_row col-md-1 text-right " style="padding: 0px 0px 0px 0px ; width: 160px">
+                            <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-primary ">
+                                <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
+                            </button>                                
+                        </div>
+                        <div class="sm_row col-md-1 text-right " style="padding: 0px 0px 0px 10px">
+                            <button id="ButtonPrint" type="button" onclick="printCreditNoteSummaryReport();" class="btn btn-default">
+                                <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
+                            </button>                                
+                        </div>            
+                    </div>
+                <div class="sm_row col-xs-12 form-group"><hr/></div>                
                 <!--Table-->
-                <div class="row">
-                    <div class="col-md-12 ">
+                <div class="sm_row row">
+                    <div class="sm_row col-md-12 ">
                         <table id="CreditNoteTable" class="display" cellspacing="0" width="100%">
                             <thead>
                                 <tr class="datatable-header" >

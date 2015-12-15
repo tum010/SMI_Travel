@@ -20,7 +20,7 @@
 <c:set var="airticketWendy" value="${requestScope['airticketWendy']}" />
 <section class="content-header" >
     <h1>
-        Finance & Cashier - Invoice
+        Finance & Cashier - Search Invoice
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Finance & Cashier </a></li>          
@@ -36,14 +36,14 @@
             <div ng-include="'WebContent/FinanceAndCashier/InvoiceMenu.html'"></div>
         </div>
         <div class="col-sm-10">
-            <div class="row" style="padding-left: 15px">  
+<!--            <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <h4><b>Search Invoice</b></h4>
                 </div>            
-            </div>
+            </div>-->
             
                 <input type="text" class="hidden" id="action" name="action" value="">
-                <div class="col-xs-12 ">
+                <div class="sm_row col-xs-12 " style="padding-top: 25px">
                     <div class="col-xs-1 text-right">
                         <label class="control-label" for="">From<font style="color: red">*</font></lable>
                     </div>
@@ -85,7 +85,7 @@
                     <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
                         <label class="control-label" for="">Department</lable>
                     </div>
-                    <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
+                    <div class="col-md-1 form-group" style="padding: 0px 0px 0px 30px;width: 125px">
                         <select class="form-control" id="Department" name="Department">
                             <option value="">--select--</option>
                                 <c:set var="selectDepartW" value="" />
@@ -121,7 +121,7 @@
                     <div class="col-xs-1 text-left" style="padding: 0px 0px 0px 25px; width: 140px">
                         <label class="control-label" for="">Type</lable>
                     </div>
-                    <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px" id="classHideTemp" >
+                    <div class="col-md-1 form-group" style="padding: 0px 0px 0px 30px;width: 125px" id="classHideTemp" >
                         <select class="form-control" id="Type" name="Type">   
                             <option value="">--select--</option>
                                 <c:choose>
@@ -149,8 +149,8 @@
                         </select>    
                     </div>
                 </div>
-                <div class="col-xs-12 form-group"></div>        
-                <div class="col-xs-12 form-group">
+                <!--<div class="sm_row col-xs-12 form-group"></div>-->        
+                <div class="sm_row col-xs-12 form-group">
                     <input type="hidden" class="form-control" id="InvToId" name="InvToId" value="" />
                     <div class="col-md-1 text-right"  style="padding-left: 15px;">
                         <label class="control-label">Agent </lable>
@@ -163,13 +163,13 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-md-2 form-group text-left" style="width: 200px;">
+                    <div class="col-md-2 form-group text-left" style="width: 215px;">
                         <input name="InvToName" id="InvToName" type="text" class="form-control" value="${agentName}" readonly=""/>
                     </div>
-                    <div class="col-xs-1 text-left" style="padding: 0px 0px 0px 20px">
+                    <div class="col-xs-1 text-left" style="padding: 0px 0px 0px 5px">
                         <label class="control-label" for="">Status</lable>
                     </div>
-                    <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
+                    <div class="col-md-1 form-group" style="padding: 0px 0px 0px 15px;width: 110px">
                         <select class="form-control" id="status" name="status">
                             <option value="">--choose--</option>
                             <c:set var="statusN" value="" />
@@ -189,7 +189,7 @@
                     <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px;width: 140px">
                         <label class="control-label" for="">Air Ticket Wendy</lable>
                     </div>
-                    <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
+                    <div class="col-md-1 form-group" style="padding: 0px 0px 0px 30px;width: 125px">
                         <select class="form-control" id="airticketWendy" name="airticketWendy">
                             <option value="">--choose--</option>
                             <c:set var="a" value="" />
@@ -208,21 +208,23 @@
                     </div>    
                     <div class="col-md-1 "  ></div>                   
                 </div>
-                <div class="col-xs-12 form-group">
-                     <div class="col-md-1 text-right " style="padding: 0px 30px 0px 0px;">
+                <div class="sm_row col-xs-12 form-group">
+                    <div class="col-md-9 text-right "></div>
+                    <div class="sm_row col-md-1 text-right " style="padding: 0px 30px 0px 0px;">
                         <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="search()" class="btn btn-primary btn-primary ">
                             <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                         </button>                                          
                     </div>                   
-                    <div class="col-md-1 text-right " style="padding: 0px 0px 0px 0px">
+                    <div class="sm_row col-md-1 text-right " style="padding: 0px 0px 0px 0px">
                         <button id="btnPrint" type="button" onclick="printInvoiceSummary();" class="btn btn-default">
                             <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
                         </button>
                     </div>           
                 </div>
-            <div class="col-xs-12 form-group"><hr/></div>
-            <div class="row">    
-                <div class="col-md-12">
+            <!--<div class="sm_row col-xs-12 form-group"><hr/></div>-->
+            <div class="sm_row col-xs-12 form-group"><hr/></div>
+            <div class="sm_row row">    
+                <div class="sm_row col-md-12">
                     <table id="MasterInvoice" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header">

@@ -11,7 +11,7 @@
 <c:set var="mFinanceItemStatus_List" value="${requestScope['mFinanceItemStatus_List']}" />
 <section class="content-header" >
     <h1>
-        Finance & Cashier - Tax Invoice
+        Finance & Cashier - Search Tax Invoice
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Finance & Cashier </a></li>          
@@ -26,13 +26,13 @@
             <div ng-include="'WebContent/FinanceAndCashier/TaxInvoiceMainMenu.html'"></div>
         </div>        
         <div class="col-sm-10">
-            <div class="row" style="padding-left: 15px">  
+<!--            <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <h4><b>Search Tax Invoice</b></h4>
                 </div>            
-            </div>
+            </div>-->
             <form action="SearchTaxInvoice.smi" method="post" id="TaxInvoiceSearchForm" name="TaxInvoiceSearchForm" role="form">
-            <div class="col-xs-12 ">
+            <div class="sm_row col-xs-12 " style="padding-top: 25px">
                 <div class="col-xs-1 text-right">
                     <label class="control-label" for="">From<font style="color: red">*</font>&nbsp;</lable>
                 </div>
@@ -56,7 +56,7 @@
                 <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
                     <label class="control-label" for="">Department<font style="color: red"></font></lable>
                 </div>
-                <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
+                <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px;width: 125px">
                     <select class="form-control" id="Department" name="Department">
                         <option value="">Choose</option>
                             <c:choose>
@@ -88,7 +88,7 @@
                 <div class="col-xs-1 text-right" style="padding: 0px 0px 0px 20px">
                     <label class="control-label" for="">Status<font style="color: red"></font></lable>
                 </div>    
-                <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px">
+                <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px;width: 120px">
                     <select class="form-control" id="Status" name="Status">
                         <option value="">Choose</option>
                         <c:forEach var="mFinanceList" items="${mFinanceItemStatus_List}" varStatus="i">
@@ -101,8 +101,8 @@
                     </select>    
                 </div>                    
             </div>
-            <div class="col-xs-12 ">
-                <div class="col-xs-1" style="width: 755px"></div>
+            <div class="sm_row col-xs-12" style="padding-top: 5px">
+                <div class="col-xs-1" style="width: 665px"></div>
                  <div class="col-md-2 text-right " style="padding: 0px 0px 0px 0px">
                     <button type="submit"  id="ButtonSearch"  name="ButtonSearch" onclick="" class="btn btn-primary btn-primary ">
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
@@ -118,9 +118,9 @@
             <input type="hidden" class="form-control" id="user" name="user" value="${requestScope['user']}"/>
             </form>
             <div class="col-xs-12 form-group"></div>        
-            <div class="col-xs-12 form-group"><hr/></div>
-            <div class="row" >    
-                <div class="col-md-12">
+            <div class="sm_row col-xs-12 form-group"><hr/></div>
+            <div class="sm_row row" >    
+                <div class="sm_row col-md-12">
                     <table id="SearchTaxInvoiceTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr class="datatable-header">

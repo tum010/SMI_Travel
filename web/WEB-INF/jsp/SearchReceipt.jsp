@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/SearchReceipt.js"></script> 
+<!--<script type="text/javascript" src="js/SearchReceipt.js"></script>--> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -9,7 +9,7 @@
 
 <section class="content-header" >
     <h1>
-        Finance & Cashier - Receipt
+        Finance & Cashier - Search Receipt
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i>Finance & Cashier</a></li>          
@@ -25,15 +25,15 @@
         </div>
         
         <div class="col-sm-10">
-            <div class="row" style="padding-left: 15px">  
-                <div class="col-sm-6" style="padding-right: 15px">
+            <!--<div class="row" style="padding-left: 15px">-->  
+<!--                <div class="col-sm-6" style="padding-right: 15px">
                     <h4><b>Search Receipt</b></h4>
-                </div>
-            </div>
-            <hr/>
+                </div>-->
+            <!--</div>-->
+            <!--<hr/>-->
             
             <form action="SearchReceipt.smi" method="post" id="SearchReceiptForm" name="SearchReceiptForm" role="form">
-                <div class="col-xs-12">
+                <div class="sm_row col-xs-12" style="padding-top: 25px">
                     <div class="col-xs-1 text-right"  style="width: 80px">
                         <label class="control-label text-right">From<font style="color: red">*</font></label>
                     </div>
@@ -61,7 +61,7 @@
                     <div class="col-xs-1 text-right" style="width: 100px">
                         <label class="control-label text-right">Department </label>
                     </div>
-                    <div class="col-xs-1" style="width: 130px">
+                    <div class="col-xs-1" style="width: 125px">
                         <select id="department" name="department" class="form-control selectize">
                             <option value="">-------</option> 
                              <c:choose>
@@ -93,12 +93,12 @@
                     <div class="col-xs-1 text-right" style="width: 40px">
                         <label class="control-label text-right">Type </label>
                     </div>
-                    <div class="col-xs-1" style="width: 100px"  id="classHideTemp">
+                    <div class="col-xs-1" style="width: 98px"  id="classHideTemp">
                         <select id="recType" name="recType" class="form-control selectize">
                             <option value="V" ${selectedVat}>Vat</option>
                         </select>
                     </div>
-                    <div class="col-xs-1" style="width: 100px"  id="classShowTemp" hidden="">
+                    <div class="col-xs-1" style="width: 98px"  id="classShowTemp" hidden="">
                         <select id="recType" name="recType" class="form-control selectize">
                             <option value="T" ${selectedTemp}>Temp</option>
                         </select>
@@ -106,7 +106,7 @@
                     <div class="col-xs-1 text-right" style="width: 50px">
                         <label class="control-label text-right">Payment </label>
                     </div>          
-                    <div class="col-md-1 form-group" style="padding: 0px 0px 0px 30px;width: 150px">
+                    <div class="col-md-1 form-group" style="padding: 0px 0px 0px 30px;width: 120px">
                         <select class="form-control" id="status" name="status">
                             <option value="">----</option>
                             <c:forEach var="mFinanceList" items="${mFinanceItemStatus_List}" varStatus="i">
@@ -123,21 +123,24 @@
                     <!--<input type="hidden" id="ticketId" name="ticketId" >-->
                     <input type="hidden" name="action" id="action" value="">                       
                 </div>
-                <div class="col-xs-12">
-                    <div class="col-xs-1" style="width: 890px"></div>
+                <div class="sm_row col-xs-12 form-group"></div>  
+                <div class="sm_row col-xs-12">
+                    <div class="col-xs-1" style="width: 854px"></div>
                     <div class="col-xs-1 text-left" >
                         <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="searchAction()" style="height:34px" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
                     </div>
                     <div class="col-xs-1 text-left" >
                         <button type="button" id="ButtonPrint" onclick="printReceiptSummary()" name="ButtonPrint" class="btn btn-default"><i class="glyphicon glyphicon-print"></i> Print </button>
                     </div>      
-                </div>        
+                </div>   
             </form>
+            <div class="col-xs-12 form-group"></div>  
+            <div class="sm_row col-xs-12 form-group"><hr/></div>       
             <!--Table-->
-            <div class="row">
-                <div class="col-md-12 ">
+            <div class="sm_row row">
+                <div class="sm_row col-md-12 ">
                     <table id="ReceiptListTable" class="display hidden active" cellspacing="0" width="100%">
-                        <thead>
+                        <thead> 
                             <tr class="datatable-header" >
                                 <th style="width:7%;">Receive No</th>
                                 <th style="width:7%;">Date</th>
@@ -212,6 +215,19 @@
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
         });
+        
+//         $('#ReceiptListTable tbody').on('click', 'tr', function() {
+//            if ($(this).hasClass('row_selected')) {
+//                $(this).removeClass('row_selected');
+//                $('#hdGridSelected').val('');
+//            }
+//            else {
+//                table.$('tr.row_selected').removeClass('row_selected');
+//                $(this).addClass('row_selected');
+//                $('#hdGridSelected').val($('#ReceiptListTable tbody tr.row_selected').attr("id"));
+//            }
+//        });
+        
         $('#ButtonShow').on('click', function() {
             $("#ReceiptListTable").removeClass('hidden');
             var table = $('#ReceiptListTable').dataTable({bJQueryUI: true,
