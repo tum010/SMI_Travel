@@ -388,7 +388,7 @@ public class BookingViewImpl implements BookingViewDao{
         }
         if((packageName != null) &&(!"".equalsIgnoreCase(packageName))){
             query += (condition ? " and " : " where ");
-            query += " b.code LIKE '%" + packageName + "%' and b.name LIKE '%" + packageName + "%' " ;
+            query += " (b.code LIKE '%" + packageName + "%' or b.name LIKE '%" + packageName + "%') " ;
             condition = true;
         }
         if((packageAgent != null) &&(!"".equalsIgnoreCase(packageAgent))){
