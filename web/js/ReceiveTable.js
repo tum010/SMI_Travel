@@ -386,8 +386,10 @@ function setupCustomerAgentValue(billTo, billName, address) {
 function AddReceiveData() {
     if ($("#receiveData").hasClass("hidden")) {
         $("#receiveData").removeClass("hidden");
+        $("#addIcon").removeClass("glyphicon-plus").addClass("glyphicon-minus");
     } else {
         $("#receiveData").addClass("hidden");
+        $("#addIcon").removeClass("glyphicon-minus").addClass("glyphicon-plus");
     }
     if ($("#receiveDate").val() === '') {
         $("#receiveDate").val($("#InputDate").val());
