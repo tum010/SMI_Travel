@@ -42,6 +42,7 @@ public class RefundImpl implements RefundDao{
     private static final String DELETE_REFUND = "DELETE FROM RefundAirticket ar where ar.id = :refundid";
     private static final String DELETE_REFUND_DETAIL_BYREFUND_ID = "DELETE FROM RefundAirticketDetail ar where ar.refundAirticket.id = :refundid";
     private static final String DELETE_REFUND_DETAIL = "DELETE FROM RefundAirticketDetail ar where ar.id = :refunddetailid";
+    private static final String CHECK_STATUS_REFUND_AIRTICKET = "From RefundAirticket ra where ra.id = :refundairticketid";
     
     public SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -334,6 +335,25 @@ public class RefundImpl implements RefundDao{
             transaction.rollback();
             ex.printStackTrace();
             result = "delete fail";
+        }
+        return result;
+    }
+
+    @Override
+    public String checkStatusRefundAirticket(String refundairticketid) {
+        String result = "";
+        Session session = this.sessionFactory.openSession();
+        List<RefundAirticket> list = session.createQuery(CHECK_STATUS_REFUND_AIRTICKET)
+                .setParameter("refundairticketid", refundairticketid)
+                .list();
+        if(list != null && list.size()!= 0){
+            RefundAirticket refundAirticket = new RefundAirticket();
+            refundAirticket = list.get(0);
+            if(refundAirticket.getStatus() != 0){
+                result = "fail";
+            }else{
+                result = "pass";
+            }
         }
         return result;
     }

@@ -74,4 +74,8 @@ public class RefundService {
         this.mRunningCodeDao = mRunningCodeDao;
     }
     
+    public String checkStatusRefundAirticket(String refundairticketid){
+        return refundDao.checkStatusRefundAirticket(refundairticketid);
+    }
+    
 }

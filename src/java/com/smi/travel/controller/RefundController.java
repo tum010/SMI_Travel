@@ -158,15 +158,22 @@ public class RefundController extends SMITravelController {
         }else if("deleteAirTicketRefund".equals(action)){
             String airbookingid_del = request.getParameter("refundById");
             String refundid_del = request.getParameter("refundid");
-            String result_delete = refundService.deleteAirticketRefund(airbookingid_del,refundid_del);
-            System.out.println("Result Delete Airticket Refund : " + result_delete);
+            String result_delete = "";
+            String checkStatus = refundService.checkStatusRefundAirticket(refundid_del);
+            System.out.println("Status Refund Airticket : " + checkStatus);
+            if("pass".equals(checkStatus)){
+                result_delete = refundService.deleteAirticketRefund(airbookingid_del,refundid_del);
+                System.out.println("Result Delete Airticket Refund : " + result_delete);           
+            }else{
+                result_delete = "delete fail";
+            }
             request.setAttribute("result", result_delete);
-                List<RefundTicket> listRefundTicketDel = refundService.searchRefundTicket(airbookingid);
-                if(listRefundTicket != null){
-                    request.setAttribute("listRefundTicket", listRefundTicketDel);
-                }else{
-                    request.setAttribute("listRefundTicket", null);
-                }
+            List<RefundTicket> listRefundTicketDel = refundService.searchRefundTicket(airbookingid);
+            if(listRefundTicket != null){
+                request.setAttribute("listRefundTicket", listRefundTicketDel);
+            }else{
+                request.setAttribute("listRefundTicket", null);
+            }
         }else if("deleteAirTicketRefundDetail".equals(action)){
             String airbookingid_del = request.getParameter("refundById");
             String refundid_del = request.getParameter("refundid");
