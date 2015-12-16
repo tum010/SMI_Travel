@@ -28,7 +28,6 @@ public class RefundAirlineController extends SMITravelController {
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-
         String action = request.getParameter("action");
         String ticketNo = request.getParameter("ticketno");
         String refundNo = request.getParameter("refundNo");
@@ -123,7 +122,8 @@ public class RefundAirlineController extends SMITravelController {
             String refundBy = request.getParameter("refundBy");
             String receiveBy = request.getParameter("receiveBy");
             String receiveDate = request.getParameter("receiveDate");
-
+            String status = request.getParameter("status");
+            
             airticket.setId(refundId);
             airticket.setRefundNo(refundNo);
             airticket.setRefundDate(uf.convertStringToDate(refundDate));
@@ -131,6 +131,9 @@ public class RefundAirlineController extends SMITravelController {
             airticket.setRefundBy(refundBy);
             airticket.setReceiveBy(receiveBy);
             airticket.setRemark(remark);
+            if(!"".equalsIgnoreCase(status) && !"null".equalsIgnoreCase(status)){
+                airticket.setStatus(Integer.parseInt(status));
+            }
             Agent agent = new Agent();
             agent.setId(agentId);
             agent.setCode(agentCode);

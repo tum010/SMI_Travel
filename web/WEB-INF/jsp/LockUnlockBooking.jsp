@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/LockUnlockBooking.js"></script> 
+<!--<script type="text/javascript" src="js/LockUnlockBooking.js"></script>--> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -372,18 +372,20 @@ function CallAjaxSave(param) {
 }
 
 function clearAction() {
-    $("#referenceNo").val('');
     $("#SelectStatus").val('1');
-    $('input:checkbox[name=flagAir]').attr('checked',false);
-    $("#flagAir").val('0');
-    $('input:checkbox[name=flagHotel]').attr('checked',false);
-    $("#flagHotel").val('0');
-    $('input:checkbox[name=flagDaytour]').attr('checked',false);
-    $("#flagDaytour").val('0');
-    $('input:checkbox[name=flagLand]').attr('checked',false);
-    $("#flagLand").val('0');
-    $('input:checkbox[name=flagOther]').attr('checked',false);
-    $("#flagOther").val('0');
+    document.getElementById('LockUnlockBookingForm').submit();
+//    $("#referenceNo").val('');
+//    $("#SelectStatus").val('1');
+//    $('input:checkbox[name=flagAir]').attr('checked',false);
+//    $("#flagAir").val(0);
+//    $('input:checkbox[name=flagHotel]').attr('checked',false);
+//    $("#flagHotel").val(0);
+//    $('input:checkbox[name=flagDaytour]').attr('checked',false);
+//    $("#flagDaytour").val(0);
+//    $('input:checkbox[name=flagLand]').attr('checked',false);
+//    $("#flagLand").val(0);
+//    $('input:checkbox[name=flagOther]').attr('checked',false);
+//    $("#flagOther").val(0);
 }
 
 function isNumberKey(evt){

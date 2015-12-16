@@ -58,6 +58,7 @@
                             <label class="control-label text-right">Refund No</label>
                         </div>
                         <div class="col-xs-1" style="width: 290px">
+                            <input type="hidden" class="form-control" id="status" name="status" value="${refundAirline.status}" />
                             <input id="refundNo" name="refundNo" type="text" class="form-control" value="${refundAirline.refundNo}">
                         </div>
                         <div class="col-xs-1 text-right" style="width: 100px">
