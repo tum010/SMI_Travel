@@ -48,7 +48,7 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String OutboundProduct = "OutboundProduct";
     private static final String OutboundPackageSummary = "OutboundPackageSummary";
     private static final String OutboundHotelSummary = "OutboundHotelSummary";
-    private static final String OverdueSummary = "OverdueSummary";
+    private static final String Overdue = "Overdue";
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -303,7 +303,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             String countryout = request.getParameter("country");
             data = reportservice.getOutboundHotelSummary(hotelidout, fromout, toout, salebyout, paybyout, bankout, statusout, cityout, countryout, printby);
             return new ModelAndView("OutboundHotelSummaryReport",name,data).addObject(ReportName, name);
-        }else if(OverdueSummary.equals(name)){
+        }else if(Overdue.equals(name)){
             System.out.println("get excel data ap OverdueSummary");  
             String from_over = request.getParameter("from");
             String to_over = request.getParameter("to");

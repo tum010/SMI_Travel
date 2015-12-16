@@ -23,7 +23,7 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
  * @author Kanokporn
  */
 public class OverdueSummary extends AbstractExcelView{
-    private static final String OverdueSummary = "OverdueSummary";
+    private static final String Overdue= "Overdue";
 
     @Override
     protected void buildExcelDocument(Map<String, Object> model, HSSFWorkbook workbook, HttpServletRequest hsr, HttpServletResponse response) throws Exception {
@@ -31,7 +31,7 @@ public class OverdueSummary extends AbstractExcelView{
         System.out.println("name : " + name);
         response.setHeader("Content-disposition", "attachment; filename=" + name + ".xls");
         
-        if(name.equalsIgnoreCase(OverdueSummary)){
+        if(name.equalsIgnoreCase(Overdue)){
             System.out.println("gen report OverdueSummary");
             getOverdueSummary(workbook, (List) model.get(name));
         }
