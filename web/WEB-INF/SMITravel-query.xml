@@ -452,6 +452,9 @@
     <bean id="MExchangeRateDao" class="com.smi.travel.datalayer.dao.impl.MExchangeRateImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
+    <bean id="OverdueSummaryDao" class="com.smi.travel.datalayer.dao.impl.OverdueSummaryImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
     
     <!-- Component Bean -->
     <bean id="AJAXBean" class="com.smi.travel.datalayer.bean.master.AJAXBean">

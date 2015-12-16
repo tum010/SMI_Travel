@@ -178,6 +178,7 @@
         <property name="saleVatReportDao" ref="SaleVatReportDao" />
         <property name="outboundSummaryDao" ref="OutboundSummaryDao" />
         <property name="receiveTableDao" ref="ReceiveTableDao" />
+        <property name="overdueSummaryDao" ref="OverdueSummaryDao" />
     </bean> 
     
     

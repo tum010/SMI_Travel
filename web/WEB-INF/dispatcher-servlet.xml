@@ -860,6 +860,9 @@
         
         <bean id="OutboundHotelSummaryReport" class="com.smi.travel.controller.excel.booking.OutboundHotelSummary">
 	</bean>
+        
+        <bean id="OverdueSummary" class="com.smi.travel.controller.excel.checking.OverdueSummary">
+	</bean>
 <!--	<mvc:annotation-driven />
 	<context:annotation-config />
 	<context:component-scan base-package="com.smi.travel.controller,com.smi.travel.**.controller" />-->

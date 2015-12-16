@@ -48,6 +48,8 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String OutboundProduct = "OutboundProduct";
     private static final String OutboundPackageSummary = "OutboundPackageSummary";
     private static final String OutboundHotelSummary = "OutboundHotelSummary";
+    private static final String OverdueSummary = "OverdueSummary";
+    
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String output =  request.getParameter("output");
@@ -301,6 +303,20 @@ public class ExportDataToExcelController  extends SMITravelController{
             String countryout = request.getParameter("country");
             data = reportservice.getOutboundHotelSummary(hotelidout, fromout, toout, salebyout, paybyout, bankout, statusout, cityout, countryout, printby);
             return new ModelAndView("OutboundHotelSummaryReport",name,data).addObject(ReportName, name);
+        }else if(OverdueSummary.equals(name)){
+            System.out.println("get excel data ap OverdueSummary");  
+            String from_over = request.getParameter("from");
+            String to_over = request.getParameter("to");
+            String department_over = request.getParameter("department");
+            String staffcode_over = request.getParameter("staffcode");
+            String staffname_over = request.getParameter("staffname");
+            String vattype_over = request.getParameter("vattype");
+            String group_over = request.getParameter("group");
+            String view_over = request.getParameter("view");
+            String clientcode_over = request.getParameter("clientcode");
+            String clientname_over = request.getParameter("clientname");
+            data = reportservice.listOverdueSummary(from_over, to_over, department_over, staffcode_over, staffname_over, vattype_over, group_over, view_over, clientcode_over, clientname_over, printby);
+            return new ModelAndView("OverdueSummary",name,data).addObject(ReportName, name);
         }
 		
         

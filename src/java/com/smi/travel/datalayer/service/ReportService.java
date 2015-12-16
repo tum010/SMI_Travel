@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.service;
 import com.smi.travel.datalayer.dao.DaytourBookingDao;
 import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.OutboundSummaryDao;
+import com.smi.travel.datalayer.dao.OverdueSummaryDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.PackageTourHotelDao;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
@@ -107,6 +108,7 @@ public class ReportService {
     private SaleVatReportDao saleVatReportDao;
     private OutboundSummaryDao outboundSummaryDao;
     private ReceiveTableDao receiveTableDao;
+    private OverdueSummaryDao overdueSummaryDao;
     
     public List getInvoiceMonthly(String BillTo,String ClientName,String Accno,String vattype,String from,String to,String department,String billingAttn,String billingFrom,String billingTel,String billingFax,String billingMail,String billingDate){
         return invoiceReportDao.getInvoiceMonthly(BillTo, ClientName, Accno, vattype, from, to, department, billingAttn, billingFrom, billingTel, billingFax, billingMail, billingDate);
@@ -785,5 +787,16 @@ public class ReportService {
     public void setReceiveTableDao(ReceiveTableDao receiveTableDao) {
         this.receiveTableDao = receiveTableDao;
     }
+
+    public OverdueSummaryDao getOverdueSummaryDao() {
+        return overdueSummaryDao;
+    }
+
+    public void setOverdueSummaryDao(OverdueSummaryDao overdueSummaryDao) {
+        this.overdueSummaryDao = overdueSummaryDao;
+    }
     
+    public List listOverdueSummary(String clientcode,String clientname,String staffcode,String staffname,String vattype,String from,String to,String depart,String group,String view,String printby){
+        return overdueSummaryDao.listOverdueSummary(clientcode, clientname, staffcode, staffname, vattype, from, to, depart, group, view,printby);
+    }
 }
