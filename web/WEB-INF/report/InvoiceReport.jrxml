@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="68" bottomMargin="20" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
-	<property name="ireport.zoom" value="2.0490403660952152"/>
-	<property name="ireport.x" value="219"/>
-	<property name="ireport.y" value="451"/>
+	<property name="ireport.zoom" value="2.727272727272732"/>
+	<property name="ireport.x" value="820"/>
+	<property name="ireport.y" value="1913"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -58,7 +58,7 @@
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="464" y="174" width="1" height="403" uuid="a6f57b2e-d162-4982-8318-9b1e64113f3f"/>
+				<reportElement x="477" y="174" width="1" height="403" uuid="a6f57b2e-d162-4982-8318-9b1e64113f3f"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -218,14 +218,14 @@
 				<text><![CDATA[Gross]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="413" y="3" width="51" height="26" uuid="1960b1da-eec5-4921-bbbc-1f6d67528fbb"/>
+				<reportElement x="413" y="3" width="63" height="26" uuid="1960b1da-eec5-4921-bbbc-1f6d67528fbb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="10" isBold="true" isItalic="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Vat]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="464" y="3" width="91" height="26" uuid="5687b106-d429-42b2-9dc7-7c34cede3171"/>
+				<reportElement x="476" y="3" width="79" height="26" uuid="5687b106-d429-42b2-9dc7-7c34cede3171"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="10" isBold="true" isItalic="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -236,7 +236,7 @@
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="417" y="0" width="43" height="20" uuid="c09accca-c12d-4c03-a0cb-c0fb4cc7dfc8"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="417" y="0" width="55" height="20" uuid="c09accca-c12d-4c03-a0cb-c0fb4cc7dfc8"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -250,7 +250,7 @@
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="465" y="0" width="85" height="20" uuid="fc2ed8f8-3cbe-4bb5-99a0-87685883ae97"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="477" y="0" width="73" height="20" uuid="fc2ed8f8-3cbe-4bb5-99a0-87685883ae97"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
