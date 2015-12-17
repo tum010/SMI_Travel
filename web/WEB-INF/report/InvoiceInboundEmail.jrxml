@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceInboundEmail" language="groovy" pageWidth="595" pageHeight="843" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="37"/>
+	<property name="ireport.y" value="96"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -248,7 +248,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{total} == null ? "0.00":$F{total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{grtotal} == null ? "0.00":$F{grtotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="342" y="187" width="131" height="11" uuid="d1d378aa-1af7-45c3-a4d4-f00da4d27883"/>
@@ -385,7 +385,7 @@
 			</textField>
 			<textField>
 				<reportElement x="94" y="53" width="135" height="9" uuid="fe5987cd-d466-4f6b-9f10-6f5bec1259a7">
-					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") ]]></printWhenExpression>
 				</reportElement>
 				<textElement>
 					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>

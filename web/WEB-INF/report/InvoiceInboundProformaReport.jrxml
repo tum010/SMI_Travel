@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceInboundReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="68" bottomMargin="20" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="288"/>
+	<property name="ireport.y" value="48"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -224,7 +224,7 @@
 				<text><![CDATA[TYPE OF ACCOUNT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="210" y="21" width="40" height="11" uuid="b96a4ae4-36e5-4b8d-9f4a-090b754cfee2">
+				<reportElement x="230" y="21" width="40" height="11" uuid="b96a4ae4-36e5-4b8d-9f4a-090b754cfee2">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -233,7 +233,7 @@
 				<text><![CDATA[BRANCH]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="201" y="35" width="51" height="10" uuid="2d6a01b1-b538-4363-9fc6-33f83483184d">
+				<reportElement x="221" y="35" width="51" height="10" uuid="2d6a01b1-b538-4363-9fc6-33f83483184d">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -251,8 +251,8 @@
 				<textFieldExpression><![CDATA[$F{accname}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="91" y="23" width="90" height="9" uuid="fa4a2fea-d60e-4ac1-9be4-4014e226b426">
-					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+				<reportElement x="91" y="23" width="130" height="9" uuid="fa4a2fea-d60e-4ac1-9be4-4014e226b426">
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") ]]></printWhenExpression>
 				</reportElement>
 				<textElement>
 					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -260,7 +260,7 @@
 				<textFieldExpression><![CDATA[$F{bank1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="91" y="36" width="90" height="9" uuid="a92ad15c-6e3c-41e6-b3a4-429bcc44fb26">
+				<reportElement x="91" y="36" width="130" height="9" uuid="a92ad15c-6e3c-41e6-b3a4-429bcc44fb26">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -269,7 +269,7 @@
 				<textFieldExpression><![CDATA[$F{acctype}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="265" y="35" width="74" height="9" uuid="343ac943-e507-4dea-84a4-06443b119d39">
+				<reportElement x="285" y="35" width="74" height="9" uuid="343ac943-e507-4dea-84a4-06443b119d39">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -278,7 +278,7 @@
 				<textFieldExpression><![CDATA[$F{accno1}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="265" y="22" width="59" height="9" uuid="902df182-cb74-43fb-bc31-2ad2299ea2ef">
+				<reportElement x="285" y="22" width="59" height="9" uuid="902df182-cb74-43fb-bc31-2ad2299ea2ef">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Top">
@@ -352,7 +352,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="253" y="22" width="10" height="12" uuid="c01a0043-b11a-4c81-b09e-31b9a97342fb">
+				<reportElement x="273" y="22" width="10" height="12" uuid="c01a0043-b11a-4c81-b09e-31b9a97342fb">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -361,7 +361,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="253" y="35" width="10" height="11" uuid="f90f7d53-5fbd-433a-85d7-9c47da5e3294">
+				<reportElement x="273" y="35" width="10" height="11" uuid="f90f7d53-5fbd-433a-85d7-9c47da5e3294">
 					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
