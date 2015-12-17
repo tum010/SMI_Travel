@@ -301,7 +301,7 @@ public class ReceiptController extends SMITravelController {
                        if(StringUtils.isNotEmpty(billDescId)){
                             BillableDesc bill = new BillableDesc();
                             bill.setId(billDescId);
-                            refNo = receiptService.getRefnoFromBillableDescId(billDescId);
+                            refNo = receiptService.getRefitemidFromBillableDescId(billDescId);
                             invoiceDetail.setBillableDesc(bill);
                        }
                        if(receiptDetail.getMBilltype() != null){

@@ -720,7 +720,7 @@ import org.hibernate.Transaction;
     }
 
     @Override
-    public String getRefnoFromBillableDescId(String billabledescId) {
+    public String getRefitemidFromBillableDescId(String billabledescId) {
         String refno = "";
         String querybilldesc = "from BillableDesc b where  b.id = :billabledescId";
         
