@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="843" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
-	<property name="ireport.zoom" value="1.818181818181819"/>
-	<property name="ireport.x" value="82"/>
-	<property name="ireport.y" value="406"/>
+	<property name="ireport.zoom" value="4.715895382000005"/>
+	<property name="ireport.x" value="1664"/>
+	<property name="ireport.y" value="1006"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -173,7 +173,7 @@
 				<text><![CDATA[Page]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="327" y="206" width="55" height="17" uuid="d500c203-868a-4083-80f7-4bda0eb6edf9"/>
+				<reportElement x="327" y="188" width="55" height="17" uuid="d500c203-868a-4083-80f7-4bda0eb6edf9"/>
 				<textElement>
 					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -196,7 +196,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="369" y="206" width="9" height="19" uuid="b25c533f-27ea-4927-908c-b4e746483f3a"/>
+				<reportElement x="369" y="188" width="9" height="19" uuid="b25c533f-27ea-4927-908c-b4e746483f3a"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -240,7 +240,7 @@
 				<textFieldExpression><![CDATA[$F{invdate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="389" y="206" width="125" height="19" uuid="7bc3fb6c-8697-4452-8c4c-06921023ca0d"/>
+				<reportElement x="389" y="188" width="125" height="19" uuid="7bc3fb6c-8697-4452-8c4c-06921023ca0d"/>
 				<textElement>
 					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -263,7 +263,7 @@
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="363" y="191" width="156" height="20" uuid="d7292e83-51ea-4f17-8848-91ab11c93b97"/>
+				<reportElement x="363" y="207" width="156" height="20" uuid="d7292e83-51ea-4f17-8848-91ab11c93b97"/>
 				<textElement>
 					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>

@@ -84,7 +84,8 @@
                     <c:set var="typeInvoice" value="W/A" />
                     <c:set var="invType" value="Air Ticket" />
                     <c:set var="typeBooking" value="I" />
-                    <h4><b>Finance & Cashier - Invoice Air Ticket Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
+                    <h4><b>Finance & Cashier - Invoice Air Ticket Wendy <font style="color: red;"> ${textVoid}</font></b>
+                    <img src="${pageContext.request.contextPath}/img/plain.jpg" style="width:120px;height:50px;margin-left: 10px;"></h4>
                     <c:set var="panelheader" value="wendyheader"/>
                     <c:set var="panelborder" value="wendyborder"/>
                 </c:when> 
@@ -92,7 +93,8 @@
                     <c:set var="typeInvoice" value="O/A" />
                     <c:set var="invType" value="Air Ticket" />
                     <c:set var="typeBooking" value="O" />
-                    <h4><b>Finance & Cashier - Invoice Air Ticket Outbound <font style="color: red;"> ${textVoid}</font></b></h4>
+                    <h4><b>Finance & Cashier - Invoice Air Ticket Outbound <font style="color: red;"> ${textVoid}</font></b>
+                    <img src="${pageContext.request.contextPath}/img/plain.jpg" style="width:120px;height:50px;margin-left: 10px;"></h4>
                     <c:set var="panelheader" value="outboundheader"/>
                     <c:set var="panelborder" value="outboundborder"/>
                 </c:when> 
