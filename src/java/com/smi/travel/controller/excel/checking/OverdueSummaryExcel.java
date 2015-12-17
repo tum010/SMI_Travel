@@ -22,7 +22,7 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
  *
  * @author Kanokporn
  */
-public class OverdueSummary extends AbstractExcelView{
+public class OverdueSummaryExcel extends AbstractExcelView{
     private static final String Overdue= "Overdue";
 
     @Override

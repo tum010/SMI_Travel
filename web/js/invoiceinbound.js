@@ -804,7 +804,7 @@ function printInvoiceInboundNew() {
     console.log("Invoice TYpe : " + invoiceType + " TYpe : " + type);
     if (type === 'print') {
         if (invoiceType === 'PM') {
-            window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+            window.open("report.smi?name=InvoiceInboundPerformaReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         } else {
             window.open("report.smi?name=InvoiceInboundRevenueReport"+ "&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         }
