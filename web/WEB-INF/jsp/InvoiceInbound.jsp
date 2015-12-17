@@ -382,7 +382,7 @@
                                             <c:set var="printInvoiceReport" value="hidden" />
                                         </c:when>                      
                                     </c:choose>     
-                                    <div class="col-md-1 text-left " style="padding-left: 0px;width: 130px" ${printInvoiceReport}>
+                                    <div class="col-md-1 text-left " style="padding-left: 0px;width: 130px" >
                                         <button type="button" class="btn btn-default" id="printButton" onclick="printInvoiceInbound('print')" data-toggle="modal" data-target="#PrintModal">
                                             <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-print"></span> Print Invoice
                                         </button>
@@ -554,17 +554,6 @@
                         </select>
                     </div>
                 </div>
-<!--                <div class="row">
-                    <div class="col-md-5">
-                        <h5>Show Leader to Invoice </h5>
-                    </div>
-                    <div class="col-md-7">
-                        <select id="selectLeader" name="selectLeader" class="form-control">
-                            <option value="0">Not Show Leader</option>
-                            <option value="1">Show Leader</option>
-                        </select>
-                    </div>
-                </div>-->
                 <div class="row">
                     <div class="col-md-5">
                         <h5>Payment by money Transfer</h5>
@@ -572,7 +561,7 @@
                     <div class="col-md-7">
                         <select id="selectPayment" name="selectPayment" class="form-control">
                             <option value="0">Not show</option>
-                            <option value="SCB2">Payment Bank Siam commercial bank PCL</option>
+                            <option value="BBLINB">Payment Bank Siam commercial bank PCL</option>
                             <c:set var="showBank" value="" />
                             <c:choose>
                                 <c:when test="${fn:contains(page , 'PM')}">

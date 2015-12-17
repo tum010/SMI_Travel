@@ -104,6 +104,7 @@ public class ReportController extends SMITravelController {
     private static final String BillAirAgentSummaryReport = "BillAirAgentSummaryReport";
     private static final String OutboundStaffSummaryReport = "OutboundStaffSummaryReport";
     private static final String InvoiceInboundPerformaEmail = "InvoiceInboundPerformaEmail";
+    private static final String InvoiceInboundPerformaReport = "InvoiceInboundPerformaReport";
     private static final String InvoiceInboundRevenueReport = "InvoiceInboundRevenueReport";
     private static final String InvoiceInboundRevenueEmail = "InvoiceInboundRevenueEmail";
     
@@ -361,6 +362,8 @@ public class ReportController extends SMITravelController {
         }else if (InvoiceInboundRevenueReport.equalsIgnoreCase(name)) {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
         }else if (InvoiceInboundRevenueEmail.equalsIgnoreCase(name)) {
+            data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
+        }else if (InvoiceInboundPerformaReport.equalsIgnoreCase(name)) {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
         }
         

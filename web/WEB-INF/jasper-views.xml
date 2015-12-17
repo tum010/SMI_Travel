@@ -401,5 +401,11 @@
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/InvoiceInboundRevenueEmail.jrxml"/>
 	</bean>
-                                                                                                                                      
+        
+        <bean id="InvoiceInboundPerformaReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/InvoiceInboundProformaReport.jrxml"/>
+	</bean>
+              
+                                                                                                                                                                                                                                                              
 </beans>

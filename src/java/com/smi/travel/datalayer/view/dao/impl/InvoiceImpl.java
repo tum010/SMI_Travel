@@ -53,6 +53,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             queryBank += (i > 0 ? " or " : " where ");
             queryBank += " code = '" + bankCode[i] + "' ";
         }        
+        System.out.println("Bank : " + queryBank);
         List<Object[]> QueryBankList = session.createSQLQuery(queryBank)
                  .addScalar("code", Hibernate.STRING)
                  .addScalar("name", Hibernate.STRING)

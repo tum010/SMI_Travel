@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceInboundEmail" language="groovy" pageWidth="595" pageHeight="843" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="390"/>
+	<property name="ireport.y" value="96"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -41,10 +41,6 @@
 	<field name="currency" class="java.lang.String"/>
 	<background>
 		<band height="727">
-			<image hAlign="Center" vAlign="Middle">
-				<reportElement x="52" y="285" width="387" height="208" uuid="1d987a9e-012a-426d-9848-5d381ee25320"/>
-				<imageExpression><![CDATA["resource/images/wendy_watermark_1.JPG"]]></imageExpression>
-			</image>
 			<line>
 				<reportElement x="27" y="201" width="1" height="322" uuid="4d55a96d-41d9-4c66-b975-a27220559c23"/>
 				<graphicElement>
@@ -86,34 +82,6 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="271" y="1" width="249" height="22" uuid="681eb829-3566-4836-b668-7cf3acfe1fe1"/>
-				<textElement textAlignment="Right">
-					<font fontName="Angsana New" size="18" isBold="true" pdfFontName="resource/fonts/Angsa.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[บริษัท เอส.เอ็ม.ไอ. แทรเวล จำกัด (สำนักงานใหญ่)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="319" y="17" width="201" height="20" uuid="83617fe0-2b88-4b80-a879-17b39421a364"/>
-				<textElement textAlignment="Right">
-					<font fontName="Angsana New" size="14" isBold="false" pdfFontName="resource/fonts/Angsa.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[865 อาคารโรงแรมสยาม แอ็ท สยาม ชั้น 9]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="319" y="30" width="201" height="17" uuid="52ea73f2-01a5-4b98-9897-0b4129400a32"/>
-				<textElement textAlignment="Right">
-					<font fontName="Angsana New" size="14" isBold="false" isItalic="false" pdfFontName="resource/fonts/Angsa.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[ถนนพระราม 1 แขวงวังใหม่ เขตปทุมวัน]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="320" y="42" width="200" height="18" uuid="cd1961f3-497f-4058-8a84-85728c51ae53"/>
-				<textElement textAlignment="Right">
-					<font fontName="Angsana New" size="14" isBold="false" pdfFontName="resource/fonts/Angsa.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[กรุงเทพฯ 10330]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="122" y="76" width="275" height="44" uuid="c61e9124-2b6a-46f9-aae9-3c23f19ca77c"/>
 				<textElement textAlignment="Center">
 					<font fontName="Angsana New" size="36" isBold="true" pdfFontName="resource/fonts/Angsa.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -134,52 +102,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invto}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="299" y="56" width="221" height="24" isRemoveLineWhenBlank="true" uuid="3907cd69-1269-43bc-afcc-2ca342c3b913"/>
-				<textElement textAlignment="Right" verticalAlignment="Top">
-					<font fontName="Angsana New" size="18" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[TAX ID. NO. 0105523020132]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="86" y="18" width="218" height="26" uuid="4fa5de57-54ec-4c51-b231-48ae6615587f"/>
-				<textElement>
-					<font fontName="Cordia New" size="14"/>
-				</textElement>
-				<text><![CDATA[9th Floor, Siam at Siam Hotel Building, 865 Rama1 Road,]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="86" y="28" width="267" height="25" uuid="72a0952e-7659-4dd4-941b-a1678a17d920"/>
-				<textElement>
-					<font fontName="Cordia New" size="14"/>
-				</textElement>
-				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330 THAILAND.]]></text>
-			</staticText>
-			<image>
-				<reportElement x="5" y="3" width="79" height="70" uuid="7539c375-f065-49a9-b3c2-f53fed48816e"/>
-				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="86" y="4" width="231" height="20" uuid="fb1b39d3-10cc-4f4f-a0bf-249ff2ad282d"/>
-				<textElement>
-					<font fontName="SansSerif" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[S.M.I Travel Co., Ltd. (Head Office)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="86" y="38" width="271" height="25" uuid="25e3d06b-5e2b-434c-a56e-ed3423660ae6"/>
-				<textElement>
-					<font fontName="Cordia New" size="14"/>
-				</textElement>
-				<text><![CDATA[Tel : (66-2) 216-2201 Fax : (66-2) 216-2202]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="87" y="48" width="177" height="25" uuid="7dc1e6f1-fcba-4810-b801-f982c9e555cc"/>
-				<textElement>
-					<font fontName="Cordia New" size="14"/>
-				</textElement>
-				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
-			</staticText>
 			<textField>
 				<reportElement x="37" y="145" width="278" height="43" uuid="08c1c36e-97df-4407-9662-f18543accfdb"/>
 				<textElement>
@@ -326,7 +248,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="9" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{total} == null ? "0.00":$F{total}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{grtotal} == null ? "0.00":$F{grtotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="342" y="187" width="131" height="11" uuid="d1d378aa-1af7-45c3-a4d4-f00da4d27883"/>
@@ -463,7 +385,7 @@
 			</textField>
 			<textField>
 				<reportElement x="94" y="53" width="135" height="9" uuid="fe5987cd-d466-4f6b-9f10-6f5bec1259a7">
-					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") ]]></printWhenExpression>
 				</reportElement>
 				<textElement>
 					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
