@@ -447,7 +447,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList();
 
-        String query = "SELECT * FROM `hotel_booking_view` a where a.refno = '"+refno+"' GROUP BY a.`name` ,  a.`checkin` ,  a.`checkout` ";
+        String query = "SELECT * FROM `hotel_booking_view` a where a.refno = '"+refno+"' ";
         
         List<Object[]> QueryStaffList = session.createSQLQuery(query)
                 .addScalar("name", Hibernate.STRING)
