@@ -341,6 +341,11 @@ public class UtilityService {
     public List<PackageTour> getListPackageTour(){
         return packageTourDao.getListPackageTour();
     }
+    
+    public Place getPlaceFromId(String placeId){
+        return placedao.getPlaceFromId(placeId);
+    }
+    
     public MasterDao getMasterdao() {
         return masterdao;
     }

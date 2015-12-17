@@ -19,4 +19,5 @@ public interface PlaceDao {
     public int insertPlace(Place place);
     public int updatePlace(Place place);
     public int DeletePlace(Place place);
+    public Place getPlaceFromId(String placeId);
 }

@@ -136,8 +136,17 @@ public class PlaceImpl   implements PlaceDao{
         this.sessionFactory = sessionFactory;
     }
 
-
-    
-    
+    @Override
+    public Place getPlaceFromId(String placeId){
+        String query = "from Place p where  p.id = :placeId";
+        Session session = this.sessionFactory.openSession();
+        List<Place> places = session.createQuery(query).setParameter("placeId", placeId).list();
+        if (places.isEmpty()) {
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return places.get(0);
+    }
     
 }
