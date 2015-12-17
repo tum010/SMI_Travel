@@ -23,6 +23,7 @@ import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -138,6 +139,8 @@ public class ReceiptController extends SMITravelController {
             request.setAttribute("roleName", roleName);
         }
         
+        String refNo = "";
+        
         if("new".equalsIgnoreCase(action)){
             System.out.println(" CLEAR DATA ");
         }else if ("edit".equalsIgnoreCase(action)){
@@ -210,7 +213,7 @@ public class ReceiptController extends SMITravelController {
             MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
             mFinanceItemstatus.setId("1"); // 1 = Normal
             invoice.setMFinanceItemstatus(mFinanceItemstatus);
-
+            String receiveProducttemp = "";
             for (int i = 0; i < rowsProduct ; i++) {
                 String tableId = request.getParameter("tableId" + i);
                 String receiveProduct = request.getParameter("receiveProduct" + i);
@@ -237,6 +240,8 @@ public class ReceiptController extends SMITravelController {
                 if(StringUtils.isNotEmpty(receiveProduct)){
                     MBilltype mBilltype = new MBilltype();
                     mBilltype.setId(receiveProduct);
+                    receiveProducttemp = mBilltype.getId();
+                    System.out.println(" receiveProducttemp +++++++ " + receiveProducttemp);
                     receiptDetail.setMBilltype(mBilltype);
                 }
                 receiptDetail.setDescription(receiveDes);
@@ -245,13 +250,13 @@ public class ReceiptController extends SMITravelController {
                 receiptDetail.setCurCost(receiveCurCost);
                 if("1".equals(receiveIsVat)){
                     receiptDetail.setIsVat(1);
+                    MDefaultData mDefaultData = utilityService.getMDefaultDataFromType("vat");
+                    receiptDetail.setVat(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveVat) ? receiveVat.replaceAll(",","") : mDefaultData.getValue())));
                 }else{
                     receiptDetail.setIsVat(0);
+                    receiptDetail.setVat(new BigDecimal(BigInteger.ZERO));
                 }
-                MDefaultData mDefaultData = utilityService.getMDefaultDataFromType("vat");
-                receiptDetail.setVat(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveVat) ? receiveVat.replaceAll(",","") : mDefaultData.getValue())));
 
-                
                 receiptDetail.setAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveAmount) ? receiveAmount.replaceAll(",","") : 0)));
                 receiptDetail.setCurAmount(receiveCurrency);
                 
@@ -292,9 +297,11 @@ public class ReceiptController extends SMITravelController {
                        List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
                        InvoiceDetail invoiceDetail = new InvoiceDetail();
                        
+                       String displaydescfromrefno = "";
                        if(StringUtils.isNotEmpty(billDescId)){
                             BillableDesc bill = new BillableDesc();
                             bill.setId(billDescId);
+                            refNo = receiptService.getRefnoFromBillableDescId(billDescId);
                             invoiceDetail.setBillableDesc(bill);
                        }
                        if(receiptDetail.getMBilltype() != null){
@@ -302,7 +309,23 @@ public class ReceiptController extends SMITravelController {
                        }    
                        invoiceDetail.setInvoice(invoice);
                        invoiceDetail.setDescription(receiptDetail.getDescription());
-                       invoiceDetail.setDisplayDescription(receiptDetail.getDisplayDescription());
+                       
+                       if(!"".equalsIgnoreCase(refNo)){
+                            if("1".equalsIgnoreCase(receiveProducttemp)){
+                                displaydescfromrefno = receiptService.getDescriptionInvoiceAirTicket(refNo);
+                            }else if("2".equalsIgnoreCase(receiveProducttemp) || "8".equalsIgnoreCase(receiveProducttemp)){
+                                displaydescfromrefno = receiptService.getDescriptionInvoiceOthers(refNo);
+                            }else if("3".equalsIgnoreCase(receiveProducttemp)){
+                                displaydescfromrefno = receiptService.getDescriptionInvoiceLand(refNo);
+                            }else if("4".equalsIgnoreCase(receiveProducttemp)){
+                                displaydescfromrefno = receiptService.getDescriptionInvoiceHotel(refNo);
+                            }else if("6".equalsIgnoreCase(receiveProducttemp)){
+                                displaydescfromrefno = receiptService.getDescriptionInvoiceDayTour(refNo);
+                            }else if("7".equalsIgnoreCase(receiveProducttemp)){
+                                displaydescfromrefno = receiptService.getDescriptionInvoiceAirAdditional(refNo);
+                            }
+                            invoiceDetail.setDisplayDescription(displaydescfromrefno);
+                       }
                        invoiceDetail.setCost(receiptDetail.getCost());
                        invoiceDetail.setCostLocal(receiptDetail.getCost());
                        invoiceDetail.setCurCost(receiptDetail.getCurCost());

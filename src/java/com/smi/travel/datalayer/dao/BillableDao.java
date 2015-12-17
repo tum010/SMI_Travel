@@ -17,12 +17,12 @@ public interface BillableDao {
     public int updateBillableBooking(Billable bill);
     public int updateBillStatusBooking(String refno,Billable bill);
     public String getMBillTypeName(String typeId);
-    public String getDescriptionInvoiceAirTicket(String refno);
-    public String getDescriptionInvoiceOthers(String refno);
-    public String getDescriptionInvoiceLand(String refno);
-    public String getDescriptionInvoiceHotel(String refno);
-    public String getDescriptionInvoiceDayTour(String refno);
-    public String getDescriptionInvoiceAirAdditional(String refno);   
+    public String getDescriptionInvoiceAirTicket(String refno,int format);
+    public String getDescriptionInvoiceOthers(String refno,int format);
+    public String getDescriptionInvoiceLand(String refno,int format);
+    public String getDescriptionInvoiceHotel(String refno,int format);
+    public String getDescriptionInvoiceDayTour(String refno,int format);
+    public String getDescriptionInvoiceAirAdditional(String refno,int format);   
     public String getDescriptionInvoiceOthersFromRefId(String refId);
     public String getDescriptionInvoiceDayTourFromRefId(String refId);
     public Billable getBillableBookingForTaxInvoice(String searchRefNo);

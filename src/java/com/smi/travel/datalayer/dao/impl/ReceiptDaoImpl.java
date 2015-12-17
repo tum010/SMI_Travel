@@ -718,5 +718,24 @@ import org.hibernate.Transaction;
         session.close();
         return receiptList.get(0);
     }
+
+    @Override
+    public String getRefnoFromBillableDescId(String billabledescId) {
+        String refno = "";
+        String querybilldesc = "from BillableDesc b where  b.id = :billabledescId";
+        
+        Session session = this.sessionFactory.openSession();
+        List<BillableDesc> billableDescs = session.createQuery(querybilldesc).setParameter("billabledescId", billabledescId).list();
+        if (billableDescs.isEmpty()) {
+            return null;
+        }else{
+            if(billableDescs.get(0).getBillable().getMaster() != null){
+                refno = billableDescs.get(0).getRefItemId();
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return refno;
+    }
     
 }

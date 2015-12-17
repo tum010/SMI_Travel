@@ -614,12 +614,26 @@
                                         </td>
                                         <td align="center">
                                             <c:choose>
-                                                <c:when test="${table.isVat == '1'}">
-                                                    <input type="checkbox" checked name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="return false" value="${table.isVat}" readonly="">
+                                                <c:when test="${typeReceipt == 'V'}">
+                                                    <c:choose>
+                                                        <c:when test="${table.isVat == '1'}">
+                                                            <input type="checkbox" checked name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="handleClick(this,${i.count});" value="${table.isVat}" >
+                                                        </c:when>
+                                                        <c:when test="${table.isVat == '0'}">
+                                                            <input type="checkbox"  name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="handleClick(this,${i.count});" value="${table.isVat}" >
+                                                        </c:when>
+                                                    </c:choose>      
                                                 </c:when>
-                                                <c:when test="${table.isVat == '0'}">
-                                                    <input type="checkbox"  name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="return false" value="${table.isVat}" readonly="">
-                                                </c:when>
+                                                <c:when test="${typeReceipt == 'T'}">
+                                                    <c:choose>
+                                                        <c:when test="${table.isVat == '1'}">
+                                                            <input type="checkbox" checked name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="return false" value="${table.isVat}" readonly="">
+                                                        </c:when>
+                                                        <c:when test="${table.isVat == '0'}">
+                                                            <input type="checkbox"  name="receiveIsVat${i.count}" id="receiveIsVat${i.count}" onclick="return false" value="${table.isVat}" readonly="">
+                                                        </c:when>
+                                                    </c:choose>
+                                                </c:when>          
                                             </c:choose>
                                         </td> 
                                         <td>
@@ -2004,37 +2018,73 @@
     }
 
     function AddRowProduct(row) {
-        $("#ReceiptListTable tbody").append(
-                '<tr style="higth 100px">' +
-                '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
-                '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" >' +
-                '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="9999999" >' +
-                '<td>' +
-                '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +
-                '</td>' +
-                '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
-                '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" onkeyup="insertCommas(this)" readonly="" ></td>' +
-                '<td>' +
-                '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +
-                '</td>' +
-                '<td class="hidden">' +
-                '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="" >---------</option></select>' +
-                '</td>' +
-                '<td align="center">' +
-                '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="" onclick="return false">' +
-                '</td>' +
-                '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
-                '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
-                '<td>' +
-                '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +
-                '</td>' +
-                '<td class="text-center">' +
-                '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp&nbsp' +
-                '<a class="remCF" onclick="deleteReceiptList(\'\', \'' + row + '\')">' +
-                '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
-                '</td>' +
-                '</tr>'
-                );
+        
+        var typeRec = "${typeReceipt}";
+        if(typeRec === "V"){
+            $("#ReceiptListTable tbody").append(
+                    '<tr style="higth 100px">' +
+                    '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
+                    '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" >' +
+                    '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="9999999" >' +
+                    '<td>' +
+                    '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +
+                    '</td>' +
+                    '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
+                    '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" onkeyup="insertCommas(this)" readonly="" ></td>' +
+                    '<td>' +
+                    '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +
+                    '</td>' +
+                    '<td class="hidden">' +
+                    '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="" >---------</option></select>' +
+                    '</td>' +
+                    '<td align="center">' +
+                    '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,' + row + ');" value="" >' +
+                    '</td>' +
+                    '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
+                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
+                    '<td>' +
+                    '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +
+                    '</td>' +
+                    '<td class="text-center">' +
+                    '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp&nbsp' +
+                    '<a class="remCF" onclick="deleteReceiptList(\'\', \'' + row + '\')">' +
+                    '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                    '</td>' +
+                    '</tr>'
+                    );
+        }else {
+            $("#ReceiptListTable tbody").append(
+                    '<tr style="higth 100px">' +
+                    '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
+                    '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" >' +
+                    '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="9999999" >' +
+                    '<td>' +
+                    '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +
+                    '</td>' +
+                    '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
+                    '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" onkeyup="insertCommas(this)" readonly="" ></td>' +
+                    '<td>' +
+                    '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +
+                    '</td>' +
+                    '<td class="hidden">' +
+                    '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="" >---------</option></select>' +
+                    '</td>' +
+                    '<td align="center">' +
+                    '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="return false" value="" >' +
+                    '</td>' +
+                    '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
+                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
+                    '<td>' +
+                    '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +
+                    '</td>' +
+                    '<td class="text-center">' +
+                    '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp&nbsp' +
+                    '<a class="remCF" onclick="deleteReceiptList(\'\', \'' + row + '\')">' +
+                    '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                    '</td>' +
+                    '</tr>'
+                    );
+        }
         $("#billTypeList option").clone().appendTo("#receiveProduct" + row);
         $("#currencyList option").clone().appendTo("#receiveCurrency" + row);
         $("#currencyList option").clone().appendTo("#receiveCurCost" + row);
@@ -2051,7 +2101,12 @@
 //            var tempCount = parseInt($("#counter").val()) + 1;
         $("#counter").val(row + 1);
 //        }
-
+        if(typeRec === "V"){
+            $('#receiveIsVat' + row).prop('checked', true);
+            document.getElementById('receiveVat' + row).style.display = 'block';
+            document.getElementById('receiveVat' + row).innerHTML = $("#vatValue").val();
+            $('#receiveIsVat' + row).val('1');
+        }
     }
     function handleClick(cb, row) {
         if (cb.checked) {
@@ -2389,43 +2444,82 @@
                 $("#counter").val(row);
             }
         }
-
-        $("#ReceiptListTable tbody").append(
-                '<tr style="higth 100px">' +
-                '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="' + grossinv + '" >' +
-                '<input id="invId' + row + '" name="invId' + row + '"  type="hidden" value="' + invId + '" >' +
-                '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
-                '<input id="billDescId' + row + '" name="billDescId' + row + '"  type="hidden" value="' + billDescId + '" >' +
-                '<input id="paymentId' + row + '" name="paymentId' + row + '"  type="hidden" value="' + paymentId + '" >' +
-                '<input id="paymentTourId' + row + '" name="paymentTourId' + row + '"  type="hidden" value="' + paymentTourId + '" >' +
-                '<input id="airlineCode' + row + '" name="airlineCode' + row + '"  type="hidden" value="' + airlineCode + '" >' +
-                '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="' + amount + '" >' +
-                '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" value="' + disdescription + '" >' +
-                '<td>' +
-                '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="' + product + '" selected></option></select>' +
-                '</td>' +
-                '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="' + description + '"></td>' +
-                '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control text-right" value="' + cost + '" onkeyup="insertCommas(this)" readonly="" ></td>' +
-                '<td>' +
-                '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="' + cur + '" ></option></select>' +
-                '</td>' +
-                '<td class="hidden">' +
-                '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="' + cur + '" ></option></select>' +
-                '</td>' +
-                '<td align="center">' +
-                '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="' + isVat + '" onclick="return false" >' +
-                '</td>' +
-                '<td><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
-                '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
-                '<td>' +
-                '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="' + currency + '"></option></select>' +
-                '</td>' +
-                '<td class="text-center">' +
-                '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp' +
-                '<a class="remCF" onclick="deleteReceiptList(\'\', \'' + row + '\')">  ' +
-                '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
-                '</tr>'
-                );
+        var typeRec = "${typeReceipt}";
+        if(typeRec === "V"){
+            $("#ReceiptListTable tbody").append(
+                    '<tr style="higth 100px">' +
+                    '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="' + grossinv + '" >' +
+                    '<input id="invId' + row + '" name="invId' + row + '"  type="hidden" value="' + invId + '" >' +
+                    '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
+                    '<input id="billDescId' + row + '" name="billDescId' + row + '"  type="hidden" value="' + billDescId + '" >' +
+                    '<input id="paymentId' + row + '" name="paymentId' + row + '"  type="hidden" value="' + paymentId + '" >' +
+                    '<input id="paymentTourId' + row + '" name="paymentTourId' + row + '"  type="hidden" value="' + paymentTourId + '" >' +
+                    '<input id="airlineCode' + row + '" name="airlineCode' + row + '"  type="hidden" value="' + airlineCode + '" >' +
+                    '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="' + amount + '" >' +
+                    '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" value="' + disdescription + '" >' +
+                    '<td>' +
+                    '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="' + product + '" selected></option></select>' +
+                    '</td>' +
+                    '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="' + description + '"></td>' +
+                    '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control text-right" value="' + cost + '" onkeyup="insertCommas(this)" readonly="" ></td>' +
+                    '<td>' +
+                    '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="' + cur + '" ></option></select>' +
+                    '</td>' +
+                    '<td class="hidden">' +
+                    '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="' + cur + '" ></option></select>' +
+                    '</td>' +
+                    '<td align="center">' +
+                    '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="' + isVat + '"  onclick="handleClick(this,' + row + ');">' +
+                    '</td>' +
+                    '<td><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
+                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
+                    '<td>' +
+                    '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="' + currency + '"></option></select>' +
+                    '</td>' +
+                    '<td class="text-center">' +
+                    '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp' +
+                    '<a class="remCF" onclick="deleteReceiptList(\'\', \'' + row + '\')">  ' +
+                    '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                    '</tr>'
+                    );
+        }else{
+            $("#ReceiptListTable tbody").append(
+                    '<tr style="higth 100px">' +
+                    '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="' + grossinv + '" >' +
+                    '<input id="invId' + row + '" name="invId' + row + '"  type="hidden" value="' + invId + '" >' +
+                    '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
+                    '<input id="billDescId' + row + '" name="billDescId' + row + '"  type="hidden" value="' + billDescId + '" >' +
+                    '<input id="paymentId' + row + '" name="paymentId' + row + '"  type="hidden" value="' + paymentId + '" >' +
+                    '<input id="paymentTourId' + row + '" name="paymentTourId' + row + '"  type="hidden" value="' + paymentTourId + '" >' +
+                    '<input id="airlineCode' + row + '" name="airlineCode' + row + '"  type="hidden" value="' + airlineCode + '" >' +
+                    '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="' + amount + '" >' +
+                    '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" value="' + disdescription + '" >' +
+                    '<td>' +
+                    '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="' + product + '" selected></option></select>' +
+                    '</td>' +
+                    '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="' + description + '"></td>' +
+                    '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control text-right" value="' + cost + '" onkeyup="insertCommas(this)" readonly="" ></td>' +
+                    '<td>' +
+                    '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="' + cur + '" ></option></select>' +
+                    '</td>' +
+                    '<td class="hidden">' +
+                    '<select class="form-control" name="receiveCurCost' + row + '" id="receiveCurCost' + row + '"><option value="' + cur + '" ></option></select>' +
+                    '</td>' +
+                    '<td align="center">' +
+                    '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="' + isVat + '"  onclick="return false">' +
+                    '</td>' +
+                    '<td><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
+                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
+                    '<td>' +
+                    '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="' + currency + '"></option></select>' +
+                    '</td>' +
+                    '<td class="text-center">' +
+                    '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp' +
+                    '<a class="remCF" onclick="deleteReceiptList(\'\', \'' + row + '\')">  ' +
+                    '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
+                    '</tr>'
+                    );
+        }
         $("#billTypeList option").clone().appendTo("#receiveProduct" + row);
         $("#currencyList option").clone().appendTo("#receiveCurrency" + row);
         $("#currencyList option").clone().appendTo("#receiveCurCost" + row);
@@ -2442,6 +2536,15 @@
         {
             $('#receiveVat' + row).val("");
         }
+        
+        
+        if(typeRec === "V" && billDescId != ""){
+            $('#receiveIsVat' + row).prop('checked', true);
+            document.getElementById('receiveVat' + row).style.display = 'block';
+            document.getElementById('receiveVat' + row).innerHTML = $("#vatValue").val();
+            $('#receiveIsVat' + row).val('1');
+        }
+        
         $('[name=receiveProduct' + row + '] option').filter(function() {
             return ($(this).val() === product);
         }).prop('selected', true);

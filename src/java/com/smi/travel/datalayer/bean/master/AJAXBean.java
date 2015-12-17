@@ -724,18 +724,18 @@ public class AJAXBean extends AbstractBean implements
                 if (typeName != null) {
                     result = "";
                     if("Air Ticket".equals(typeName)) {
-                        result += billableDao.getDescriptionInvoiceAirTicket(searchRefNo);
+                        result += billableDao.getDescriptionInvoiceAirTicket(searchRefNo,1);
                     } else if (("Others".equals(typeName)) || ("Coupon".equals(typeName))) {
-                        result += billableDao.getDescriptionInvoiceOthers(searchRefNo);
+                        result += billableDao.getDescriptionInvoiceOthers(searchRefNo,1);
                     } else if ("Land".equals(typeName)) {
-                        result += billableDao.getDescriptionInvoiceLand(searchRefNo);
+                        result += billableDao.getDescriptionInvoiceLand(searchRefNo,1);
                     } else if ("Hotel".equals(typeName)) {
-                        result += billableDao.getDescriptionInvoiceHotel(searchRefNo);
+                        result += billableDao.getDescriptionInvoiceHotel(searchRefNo,1);
                     } else if ("Day Tour".equals(typeName)) {
-                        result += billableDao.getDescriptionInvoiceDayTour(searchRefNo);
+                        result += billableDao.getDescriptionInvoiceDayTour(searchRefNo,1);
                     } else if ("Air Additional".equals(typeName)) {
                         System.out.println("result LL : " + result);;
-                        result += billableDao.getDescriptionInvoiceAirAdditional(searchRefNo);
+                        result += billableDao.getDescriptionInvoiceAirAdditional(searchRefNo,1);
                     }
                 }
             }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="3.215383215000002"/>
-	<property name="ireport.x" value="1083"/>
-	<property name="ireport.y" value="596"/>
+	<property name="ireport.zoom" value="2.1961500000000025"/>
+	<property name="ireport.x" value="349"/>
+	<property name="ireport.y" value="384"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -334,14 +334,14 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="189" y="-1" width="83" height="16" uuid="b9ca6e7c-56b9-4fa3-ad03-3200fba2110f"/>
+				<reportElement x="189" y="-2" width="83" height="16" uuid="b9ca6e7c-56b9-4fa3-ad03-3200fba2110f"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="13" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Description]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="462" y="0" width="37" height="15" uuid="109673a6-4a63-4f1b-9f75-65e06474dcc6"/>
+				<reportElement x="462" y="-2" width="37" height="15" uuid="109673a6-4a63-4f1b-9f75-65e06474dcc6"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="13" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>

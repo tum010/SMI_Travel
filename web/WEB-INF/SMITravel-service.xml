@@ -311,6 +311,7 @@
     
     <bean id="ReceiptService" class="com.smi.travel.datalayer.service.ReceiptService">
         <property name="receiptDao" ref="ReceiptDetailDao" />
+        <property name="billableDao" ref="BillableDao" />
     </bean>
     
     <bean id="TaxInvoiceService" class="com.smi.travel.datalayer.service.TaxInvoiceService">

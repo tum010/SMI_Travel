@@ -5,6 +5,7 @@
  */
 package com.smi.travel.datalayer.service;
 
+import com.smi.travel.datalayer.dao.BillableDao;
 import com.smi.travel.datalayer.dao.ReceiptDao;
 import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.entity.ReceiptCredit;
@@ -19,58 +20,82 @@ import java.util.List;
  */
 public class ReceiptService {
     private ReceiptDao receiptDao;
-
+    private BillableDao billableDao;
+    
     public Receipt getReceiptfromReceiptNo(String receiptNo,String department,String recType){
-        return receiptDao.getReceiptfromReceiptNo(receiptNo,department,recType);
+        return getReceiptDao().getReceiptfromReceiptNo(receiptNo,department,recType);
     }
     public String UpdateFinanceStatusReceipt(String receiptId,int status){
-        return receiptDao.UpdateFinanceStatusReceipt(receiptId,status);
+        return getReceiptDao().UpdateFinanceStatusReceipt(receiptId,status);
     }
     public String insertReceipt(Receipt receipt){
-        return receiptDao.insertReceipt(receipt);
+        return getReceiptDao().insertReceipt(receipt);
     }
     public String updateReceipt(Receipt receipt){
-        return receiptDao.updateReceipt(receipt);
+        return getReceiptDao().updateReceipt(receipt);
     }
     public String deleteReceipt(Receipt receipt){
-        return receiptDao.deleteReceipt(receipt);
+        return getReceiptDao().deleteReceipt(receipt);
     }
     public String DeleteReceiptDetail(String receiptDetailId , String receiptId){
-        return receiptDao.DeleteReceiptDetail(receiptDetailId,receiptId);
+        return getReceiptDao().DeleteReceiptDetail(receiptDetailId,receiptId);
     }
     public String DeleteReceiptBank(String receiptId,int index){
-        return receiptDao.DeleteReceiptBank(receiptId,index);
+        return getReceiptDao().DeleteReceiptBank(receiptId,index);
     }
     public String DeleteReceiptChq(String receiptCreditId , String receiptId){
-        return receiptDao.DeleteReceiptChq(receiptCreditId,receiptId);
+        return getReceiptDao().DeleteReceiptChq(receiptCreditId,receiptId);
     }
     
     public List<ReceiptDetail> getReceiptDetailFromReceiptId(String receiptId){
-        return receiptDao.getReceiptDetailFromReceiptId(receiptId);
+        return getReceiptDao().getReceiptDetailFromReceiptId(receiptId);
     }
         
     public List<ReceiptCredit> getReceiptCreditFromReceiptId(String receiptId){
-        return receiptDao.getReceiptCreditFromReceiptId(receiptId);
+        return getReceiptDao().getReceiptCreditFromReceiptId(receiptId);
     }
     public List<ReceiptSearchView> getReceiptViewFromFilter(String from ,String to,String Department,String type,String status){
-        return receiptDao.getReceiptViewFromFilter(from, to, Department, type, status);
+        return getReceiptDao().getReceiptViewFromFilter(from, to, Department, type, status);
     }
     
     public Receipt getReceiptfromReceiptId(String recId){
-       return receiptDao.getReceiptfromReceiptId(recId);
+       return getReceiptDao().getReceiptfromReceiptId(recId);
     }
     
+    public String getRefnoFromBillableDescId(String billabledescId){
+        return receiptDao.getRefnoFromBillableDescId(billabledescId);
+    }
 //    public List<ReceiptDetail> getReceiptDetailFromInvDetailId(String invDetailId){
 //        return receiptDao.getReceiptDetailFromInvDetailId(invDetailId);
 //    }
     
     public List<ReceiptDetailView> getReceiptDetailViewFromInvDetailId(String invDetailId){
-        return receiptDao.getReceiptDetailViewFromInvDetailId(invDetailId);
+        return getReceiptDao().getReceiptDetailViewFromInvDetailId(invDetailId);
     }
     
     public List<ReceiptDetailView> getReceiptDetailViewFromBillableId(String billableId){
-        return receiptDao.getReceiptDetailViewFromBillableId(billableId);
+        return getReceiptDao().getReceiptDetailViewFromBillableId(billableId);
     }
+    
+    public String getDescriptionInvoiceAirTicket(String refno){
+        return billableDao.getDescriptionInvoiceAirTicket(refno,2);
+    }
+    public String getDescriptionInvoiceOthers(String refno){
+        return billableDao.getDescriptionInvoiceOthers(refno,2);
+    }
+    public String getDescriptionInvoiceLand(String refno){
+        return billableDao.getDescriptionInvoiceLand(refno,2);
+    }
+    public String getDescriptionInvoiceHotel(String refno){
+        return billableDao.getDescriptionInvoiceHotel(refno,2);
+    }
+    public String getDescriptionInvoiceDayTour(String refno){
+        return billableDao.getDescriptionInvoiceDayTour(refno,2);
+    }
+    public String getDescriptionInvoiceAirAdditional(String refno){
+        return billableDao.getDescriptionInvoiceAirAdditional(refno,2);
+    }   
+
     public ReceiptDao getReceiptDao() {
         return receiptDao;
     }
@@ -80,7 +105,15 @@ public class ReceiptService {
     }
 
     public Receipt getReceiptByWildCardSearch(String receiveId, String receiveNo, String wildCardSearch, String keyCode, String InputDepartment, String InputReceiptType) {
-        return receiptDao.getReceiptByWildCardSearch(receiveId, receiveNo, wildCardSearch, keyCode, InputDepartment, InputReceiptType);
+        return getReceiptDao().getReceiptByWildCardSearch(receiveId, receiveNo, wildCardSearch, keyCode, InputDepartment, InputReceiptType);
+    }
+
+    public BillableDao getBillableDao() {
+        return billableDao;
+    }
+
+    public void setBillableDao(BillableDao billableDao) {
+        this.billableDao = billableDao;
     }
     
 }

@@ -329,7 +329,7 @@ public class BillableImpl implements BillableDao {
     }
 
     @Override
-    public String getDescriptionInvoiceAirTicket(String refno) {
+    public String getDescriptionInvoiceAirTicket(String refno,int format) {
         String description = "";
         Session session = this.sessionFactory.openSession();
         String airlineQuery = QUERY_AIRTICKET + "(" + refno +")";
@@ -461,10 +461,12 @@ public class BillableImpl implements BillableDao {
             if(passengerList.get(0).getMInitialname() != null){
                 MInitialname = passengerList.get(0).getMInitialname().getName();
             }
+            if(format == 1){
              if(k ==0){
                 LeaderName = "|"+ MInitialname +" "+ passengerList.get(0).getLastName() +" "+ passengerList.get(0).getFirstName() ;
                 
              }
+            }
              
              if(isgroup == 1){
                  k += list.size();
@@ -480,7 +482,7 @@ public class BillableImpl implements BillableDao {
     }
 
     @Override
-    public String getDescriptionInvoiceOthers(String refno) {
+    public String getDescriptionInvoiceOthers(String refno,int format) {
         String description = "";
         Session session = this.sessionFactory.openSession();
         List<OtherBooking> list = session.createQuery(QUERY_OTHERS).setParameter("refitemid", refno).list();
@@ -557,20 +559,22 @@ public class BillableImpl implements BillableDao {
                 if(amount.length() !=0){  
                     description += "Amount              "+amount;
                 }
-                if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
-                    description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
-                }else{
-                     description += " ";
-                }
-                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
-                    description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
-                }else{
-                     description += " ";
-                }
-                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
-                    description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"";
-                }else{
-                     description += "";
+                if(format == 1){
+                    if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
+                        description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
+                    }else{
+                        description += " ";
+                    }
+                    if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                        description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
+                    }else{
+                         description += " ";
+                    }
+                    if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                        description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"";
+                    }else{
+                         description += "";
+                    }
                 }
             }
         }
@@ -581,7 +585,7 @@ public class BillableImpl implements BillableDao {
     }
 
     @Override
-    public String getDescriptionInvoiceLand(String refno) {
+    public String getDescriptionInvoiceLand(String refno,int format) {
         String description = "";
         Session session = this.sessionFactory.openSession();
         List<LandBooking> list = session.createQuery(QUERY_LAND).setParameter("refitemid", refno).list();
@@ -674,20 +678,22 @@ public class BillableImpl implements BillableDao {
                 }else{
                      description += " ";
                 }
-                if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
-                    description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
-                }else{
-                     description += " ";
-                }
-                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
-                    description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
-                }else{
-                     description += " ";
-                }
-                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
-                    description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"";
-                }else{
-                     description += "";
+                if(format == 1){
+                    if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
+                        description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
+                    }else{
+                         description += " ";
+                    }
+                    if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                        description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
+                    }else{
+                         description += " ";
+                    }
+                    if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                        description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"";
+                    }else{
+                         description += "";
+                    }
                 }
             }
         }
@@ -698,7 +704,7 @@ public class BillableImpl implements BillableDao {
     }
 
     @Override
-    public String getDescriptionInvoiceHotel(String refno) {
+    public String getDescriptionInvoiceHotel(String refno,int format) {
         String description = "";
         Session session = this.sessionFactory.openSession();
         List<HotelBooking> list = session.createQuery(QUERY_HOTEL).setParameter("refitemid", refno).list();
@@ -782,20 +788,22 @@ public class BillableImpl implements BillableDao {
                 }else{
                      description += "0 NST";
                 }
-                if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
-                    description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
-                }else{
-                     description += " ";
-                }
-                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
-                    description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
-                }else{
-                     description += " ";
-                }
-                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
-                    description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"";
-                }else{
-                     description += "";
+                if(format == 1){
+                    if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
+                        description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
+                    }else{
+                         description += " ";
+                    }
+                    if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                        description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
+                    }else{
+                         description += " ";
+                    }
+                    if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                        description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"";
+                    }else{
+                         description += "";
+                    }
                 }
             }
         }
@@ -805,7 +813,7 @@ public class BillableImpl implements BillableDao {
     }
 
     @Override
-    public String getDescriptionInvoiceDayTour(String refno) {
+    public String getDescriptionInvoiceDayTour(String refno,int format) {
         String description = "";
         Session session = this.sessionFactory.openSession();
         List<DaytourBooking> list = session.createQuery(QUERY_DAYTOUR).setParameter("refitemid", refno).list();
@@ -868,20 +876,22 @@ public class BillableImpl implements BillableDao {
                 }else{
                      description += ")";
                 }
-                if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
-                    description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
-                }else{
-                     description += " ";
-                }
-                if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
-                    description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
-                }else{
-                     description += " ";
-                }
-                if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
-                    description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"";
-                }else{
-                     description += "";
+                if(format == 1){
+                    if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename
+                        description += "|"+list.get(i).getMaster().getCustomer().getMInitialname().getName() +" ";
+                    }else{
+                         description += " ";
+                    }
+                    if(list.get(i).getMaster().getCustomer().getLastName() != null){ //last name
+                        description += " "+list.get(i).getMaster().getCustomer().getLastName() +" ";
+                    }else{
+                         description += " ";
+                    }
+                    if(list.get(i).getMaster().getCustomer().getFirstName() != null){// firstname
+                        description += " "+list.get(i).getMaster().getCustomer().getFirstName() +"";
+                    }else{
+                         description += "";
+                    }
                 }
             }
         }
@@ -918,7 +928,7 @@ public class BillableImpl implements BillableDao {
     }
 
     @Override
-    public String getDescriptionInvoiceAirAdditional(String refno) {
+    public String getDescriptionInvoiceAirAdditional(String refno,int format) {
         String description = "";
         UtilityFunction util = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
@@ -930,7 +940,9 @@ public class BillableImpl implements BillableDao {
             AirticketDesc desc = list.get(0);
             description += "Ref No. "+desc.getAirticketBooking().getMaster().getReferenceNo()+" : "+util.getCustomerName(desc.getAirticketBooking().getMaster().getCustomer())+"\n";
             description += desc.getDetail() +"\t\t\t\t\t"+ "(" + desc.getAmount() +" * "+desc.getQty() +")";
-            description += "|"+ util.getCustomerName(desc.getAirticketBooking().getMaster().getCustomer());
+            if(format == 1){
+                description += "|"+ util.getCustomerName(desc.getAirticketBooking().getMaster().getCustomer());
+            }
         }
         
         session.close();
