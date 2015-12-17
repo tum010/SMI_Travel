@@ -25,26 +25,33 @@
         <c:set var="fontcolor" value="white"/>
         <c:set var="page" value=""/>
         <c:choose>
-            <c:when test="${fn:contains(department , 'W')}">
+            <c:when test="${department == 'W'}">
                 <c:set var="page" value="Wendy"/>
                 <c:set var="panelheader" value="wendyheader"/>
                 <c:set var="panelborder" value="wendyborder"/>
                 <c:set var="tableheader" value="#FFC07B"/>
                 <c:set var="tableborder" value="#FFC07B"/>
             </c:when>
-            <c:when test="${fn:contains(department , 'O')}">
+            <c:when test="${department == 'O'}">
                 <c:set var="page" value="Outbound"/>
                 <c:set var="panelheader" value="outboundheader"/>
                 <c:set var="panelborder" value="outboundborder"/>
                 <c:set var="tableheader" value="#FF8003"/>
                 <c:set var="tableborder" value="#FF8003"/>
             </c:when>
-            <c:when test="${fn:contains(department , 'I')}">
+            <c:when test="${department == 'I'}">
                 <c:set var="page" value="Inbound"/>
                 <c:set var="panelheader" value="inboundborderheader"/>
                 <c:set var="panelborder" value="inboundborder"/>
                 <c:set var="tableheader" value="#11BF00"/>
                 <c:set var="tableborder" value="#11BF00"/>
+            </c:when>
+            <c:when test="${department == 'WO'}">
+                <c:set var="page" value="Wendy and Outbound"/>
+                <c:set var="panelheader" value=""/>
+                <c:set var="panelborder" value=""/>
+                <c:set var="tableheader" value=""/>
+                <c:set var="tableborder" value=""/>
             </c:when>
         </c:choose>
         Finance & Cashier - Receive Table ${page}
@@ -65,6 +72,9 @@
     </div>
     <div class="col-xs-1" style="width: 80px;">
         <a href="ReceiveTableI.smi" id="menu-wendyoutbound" style="color: #11BF00;"><b>Inbound</b></a>       
+    </div>
+    <div class="col-xs-1" style="width: 80px;">
+        <a href="ReceiveTableWO.smi" id="menu-wendyoutbound" ><b style="color: #FFC07B;">Wendy</b>+<b style="color: #FF8003;">Outbound</b></a>       
     </div>
 </div>    
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">  
@@ -138,7 +148,7 @@
                         </div>        
                         <div class="col-xs-2" style="width: 50px;padding: 0px 0px 0px 0px;">
                             <button type="button" id="ButtonAdd" name="ButtonAdd" class="btn btn-success" onclick="AddReceiveData()">
-                                <i class="glyphicon glyphicon-plus"></i> Add             
+                                <i class="glyphicon glyphicon-plus" id="addIcon"></i> Add             
                             </button>
                         </div>
                     </div>   
@@ -221,7 +231,7 @@
                                     <label class="control-label">Status<font style="color: red">*</font></lable>        
                                 </div>
                                 <div class="col-xs-1 form-group" style="width: 200px;">
-                                    <select name="status" id="status" class="form-control">
+                                    <select name="status" id="status" class="form-control" onchange="setStatusFormat()">
                                         <option value=""></option>
                                         <c:forEach var="mAccpay" items="${mAccpayList}">                                       
                                             <c:set var="select" value="" />
@@ -241,6 +251,7 @@
                                     <input name="receiveCreditId" id="receiveCreditId" type="hidden" class="form-control" value="" />
                                     <input name="receiveCreditRow" id="receiveCreditRow" type="hidden" class="form-control" value="" />
                                     <input name="department" id="department" type="hidden" class="form-control" value="${department}" />
+                                    <input name="creditAmount" id="creditAmount" type="hidden" class="form-control" value="0" />
                                 </div>
                                 <div class="col-xs-1 form-group" style="width: 135px">
                                     <label class="control-label text-left">Receive Name<font style="color: red">*</font></lable>        
@@ -277,7 +288,13 @@
                                 </div>
                                 <div class="col-xs-1" style="width: 590px">
                                     <textarea name="description" id="description" class="form-control" rows="3">${advanceReceive.description}</textarea>
-                                </div>                               
+                                </div>
+                                <div class="col-xs-1 text-right" style="width: 170px">
+                                    <label class="control-label ">Wht</lable>        
+                                </div>
+                                <div class="col-xs-1" style="width: 200px">
+                                    <input name="wht" id="wht" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.wht}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
+                                </div>
                             </div>
                         </div><!-- End Row 3--><br>
                         <div class="row" style="padding-left: 0px">
@@ -285,21 +302,21 @@
                                 <div class="col-xs-1" style="width: 135px">
                                     <label class="control-label text-left">Cash Amount</lable>        
                                 </div>
-                                <div class="col-xs-1" style="width: 200px">
-                                    <input name="cashAmount" id="cashAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.cashAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
+                                <div class="col-xs-1" style="width: 200px" id="cashAmountPanel">
+                                    <input name="cashAmount" id="cashAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.cashAmount}" onkeyup="insertCommas(this);" onfocusout="calculate(this)"/>
                                 </div>
                                 <div class="col-xs-1" style="width: 60px"></div>
                                 <div class="col-xs-1" style="width: 130px">
                                     <label class="control-label text-left">Bank Amount</lable>        
                                 </div>
-                                <div class="col-xs-1" style="width: 200px">
+                                <div class="col-xs-1" style="width: 200px" id="bankAmountPanel">
                                     <input name="bankAmount" id="bankAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.bankAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
                                 </div>
                                 <div class="col-xs-1" style="width: 35px"></div>
                                 <div class="col-xs-1 text-right" style="width: 135px">
                                     <label class="control-label">Chq Amount</lable>        
                                 </div>
-                                <div class="col-xs-1" style="width: 200px">
+                                <div class="col-xs-1" style="width: 200px" id="chqAmountPanel">
                                     <input name="chqAmount" id="chqAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.chqAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
                                 </div>
                             </div>
@@ -368,7 +385,7 @@
                                                 <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
                                             </div>
                                         </td>
-                                        <td><input class="form-control numerical" style="text-align:right;" type="text" id="creditAmount${i.count}" name="creditAmount${i.count}" value="${adReCre.creditAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"></td>
+                                        <td><input class="form-control numerical" style="text-align:right;" type="text" id="creditAmount${i.count}" name="creditAmount${i.count}" value="${adReCre.creditAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this); calculateCreditAmount(); setCreditAmount(); setCashOnDemand();"></td>
                                         <td>
                                             <center>
                                                 <a id="expenButtonRemove${i.count}" name="expenButtonRemove${i.count}" onclick="deleteAdvanceReceiveCreditConfirm('${adReCre.id}','${i.count}')"  data-toggle="modal">

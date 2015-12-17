@@ -22,5 +22,20 @@
         <property name="department" type="string">
             <column name="department" length="20" />
         </property>
+        <property name="cashAmount" type="big_decimal">
+            <column name="cash_amount" precision="10" />
+        </property>
+        <property name="cashMinusAmount" type="big_decimal">
+            <column name="cash_minus_amount" precision="10" />
+        </property>
+        <property name="bankTransfer" type="big_decimal">
+            <column name="bank_transfer" precision="10" />
+        </property>
+        <property name="chqAmount" type="big_decimal">
+            <column name="chq_amount" precision="10" />
+        </property>
+        <property name="creditAmount" type="big_decimal">
+            <column name="credit_amount" precision="10" />
+        </property>
     </class>
 </hibernate-mapping>

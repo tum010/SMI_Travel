@@ -125,6 +125,7 @@
 				<prop key="ReceiveTableW.smi">ReceiveTableController</prop>
                                 <prop key="ReceiveTableO.smi">ReceiveTableController</prop>
                                 <prop key="ReceiveTableI.smi">ReceiveTableController</prop>
+                                <prop key="ReceiveTableWO.smi">ReceiveTableController</prop>
 				<prop key="LockUnlockBooking.smi">LockUnlockBookingController</prop>
 				<prop key="Stock.smi">StockController</prop>
 				<prop key="SearchStock.smi">SearchStockController</prop>

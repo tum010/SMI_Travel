@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -19,6 +20,11 @@ public class AdvanceReceivePeriod {
      private String detail;
      private String vatType;
      private String department;
+     private BigDecimal cashAmount;
+     private BigDecimal cashMinusAmount;
+     private BigDecimal bankTransfer;
+     private BigDecimal chqAmount;
+     private BigDecimal creditAmount;
 
     public AdvanceReceivePeriod(String id, Date receiveFrom, Date receiveTo, String detail) {
        this.id = id;
@@ -77,5 +83,45 @@ public class AdvanceReceivePeriod {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public BigDecimal getCashAmount() {
+        return cashAmount;
+    }
+
+    public void setCashAmount(BigDecimal cashAmount) {
+        this.cashAmount = cashAmount;
+    }
+
+    public BigDecimal getCashMinusAmount() {
+        return cashMinusAmount;
+    }
+
+    public void setCashMinusAmount(BigDecimal cashMinusAmount) {
+        this.cashMinusAmount = cashMinusAmount;
+    }
+
+    public BigDecimal getBankTransfer() {
+        return bankTransfer;
+    }
+
+    public void setBankTransfer(BigDecimal bankTransfer) {
+        this.bankTransfer = bankTransfer;
+    }
+
+    public BigDecimal getChqAmount() {
+        return chqAmount;
+    }
+
+    public void setChqAmount(BigDecimal chqAmount) {
+        this.chqAmount = chqAmount;
+    }
+
+    public BigDecimal getCreditAmount() {
+        return creditAmount;
+    }
+
+    public void setCreditAmount(BigDecimal creditAmount) {
+        this.creditAmount = creditAmount;
     }
 }

@@ -291,7 +291,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             advanceReceivePeriod.setReceiveFrom(utilty.convertStringToDate(fromDate));
             advanceReceivePeriod.setReceiveTo(utilty.convertStringToDate(toDate));
             advanceReceivePeriod.setDetail(detail);
-            advanceReceivePeriod.setDepartment(department);
+            advanceReceivePeriod.setDepartment(department.indexOf(",") == (-1) ? department : department.replace(",", ""));
             advanceReceivePeriod.setVatType(vatType);
             transaction = session.beginTransaction();              
             session.save(advanceReceivePeriod);     
@@ -323,10 +323,10 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             query.append(" (ad.receiveTo between '" + fromDate + "' and '" + toDate + "'))");
             haveCondition = true;
         }
-        if ((department != null) && (!"".equalsIgnoreCase(department))) {
+        if ((department != null) && (!"".equalsIgnoreCase(department))) {                    
             query.append(haveCondition ? " and " : " where ");
-            query.append(" ad.department = '" + department + "' ");
-            haveCondition = true;
+            query.append(" ad.department = '" + (department.indexOf(",") == (-1) ? department : department.replace(",", "")) + "' ");
+            haveCondition = true;       
         }
         if ((vatType != null) && (!"".equalsIgnoreCase(vatType))) {
             query.append(haveCondition ? " and " : " where ");
@@ -364,7 +364,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         }
         if ((department != null) && (!"".equalsIgnoreCase(department))) {
             query.append(haveCondition ? " and " : " where ");
-            query.append(" ad.department = '" + department + "' ");
+            query.append(" ad.department = '" + (department.indexOf(",") == (-1) ? department : department.replace(",", "")) + "' ");
             haveCondition = true;
         }
         if ((vatType != null) && (!"".equalsIgnoreCase(vatType))) {
@@ -400,9 +400,16 @@ public class ReceiveTableImpl implements ReceiveTableDao{
              condition = true;
         }
         if((department != null) && (!"".equalsIgnoreCase(department))){
-             query += (condition ? " AND " : " WHERE ");
-             query += " rec.department = '" + department + "' " ;
-             condition = true;
+            if(department.indexOf(",") == (-1)){
+                query += (condition ? " AND " : " WHERE ");
+                query += " rec.department = '" + department + "' " ;
+                condition = true; 
+            }else{               
+                query += (condition ? " AND " : " WHERE ");
+                String[] departmentTemp = department.split(",");
+                query += " (rec.department = '" + departmentTemp[0] + "' OR rec.department = '" + departmentTemp[1] + "') ";
+                condition = true; 
+            }            
         }
         if((vatType != null) && (!"".equalsIgnoreCase(vatType))){
              query += (condition ? " AND " : " WHERE ");

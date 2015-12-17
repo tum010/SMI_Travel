@@ -183,8 +183,29 @@ $(document).ready(function() {
         checkToDateField();
         checkPeriod();
     });
+    
+    //Set Status Format Calculate
+    $("#receiveAmount,#wht").keyup(function() {
+        setStatusFormat();
+    });
+    
+    $("#cashAmount").keyup(function() {
+        setCashAmount(this.value);
+        setCashOnDemand()
+    });
+
+    $("#bankAmount").keyup(function() {
+        setBankAmount(this.value);
+        setCashOnDemand()
+    });
+    
+    $("#chqAmount").keyup(function() {
+        setChqAmount(this.value);
+        setCashOnDemand()
+    });
 
     setEnvironment();
+    
 });
 
 //Set Data at start
@@ -236,6 +257,8 @@ function setEnvironment() {
             }
         }
     }
+    calculateCreditAmount();
+    setStatusFormat();
 }
 
 //Auto Complete
@@ -361,7 +384,7 @@ function calculate(num) {
 
 //Check value for Search
 function checkSearch() {
-    $("#periodVatType").val($("#SelectStatus").val());   
+    $("#periodVatType").val($("#SelectStatus").val());
     if (($("#InputDate").val() === '') || ($("#SelectStatus").val() === '')) {
         $("#ButtonSearch").addClass("disabled");
         $("#ButtonPrint").addClass("disabled");
@@ -369,7 +392,7 @@ function checkSearch() {
         $("#ButtonSearch").removeClass("disabled");
         $("#ButtonPrint").removeClass("disabled");
     }
-    
+
 }
 
 //Agent List
@@ -429,10 +452,10 @@ function AddRowCreditTable(row) {
             '<td>' +
             '<div class="input-group daydatepicker" id="daydatepicker' + row + '">' +
             '<input type="text" name="creditExpire' + row + '" id="creditExpire' + row + '" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />' +
-            '<span class="input-group-addon spandate" style="padding : 1px 10px;" onclick="AddrowBySelect(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
+            '<span class="input-group-addon spandate" id="spandate' + row + '" style="padding : 1px 10px;" onclick="AddrowBySelect(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
             '</div>' +
             '</td>' +
-            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="creditAmount' + row + '" name="creditAmount' + row + '" value="" onkeyup="insertCommas(this)" onfocusout="calculate(this)"></td>' +
+            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="creditAmount' + row + '" name="creditAmount' + row + '" value="" onkeyup="insertCommas(this)" onfocusout="calculate(this); calculateCreditAmount(); setCreditAmount(); setCashOnDemand();"></td>' +
             '<td>' +
             '<center>' +
             '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" onclick="deleteAdvanceReceiveCreditConfirm(\'\',\'' + row + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' +
@@ -499,6 +522,7 @@ function deleteAdvanceReceiveCredit() {
         if ((parseInt(count) - 1) === parseInt(row)) {
             AddRowCreditTable(parseInt(count));
         }
+        calculateCreditAmount();
 //            $("#countTaxInvoice").val(count+1);
     } else {
         $.ajax({
@@ -516,6 +540,7 @@ function deleteAdvanceReceiveCredit() {
                 if ((parseInt(count) - 1) === parseInt(row)) {
                     AddRowCreditTable(parseInt(count));
                 }
+                calculateCreditAmount();
             },
             error: function() {
                 console.log("error");
@@ -534,22 +559,22 @@ function addNewRowCreditTable() {
 function newReceiveTable() {
 //    $("#action").val("new");
 //    document.getElementById("receiveForm").submit();
-    
+
     $("#receiveId").val('');
     $("#receiveName").val('');
     $("#receiveArCode").val('');
     $("#description").val('');
     $("#status").val('');
-    $("#receiveAmount").val('');    
-    $("#cashAmount").val('');    
-    $("#bankAmount").val('');    
-    $("#chqAmount").val('');    
-    $("#chqBank").val('');    
+    $("#receiveAmount").val('');
+    $("#cashAmount").val('');
+    $("#bankAmount").val('');
+    $("#chqAmount").val('');
+    $("#chqBank").val('');
     $("#chqDate").val('');
-    $("#chqNo").val('');  
-    $("#createBy").val('');  
-    $("#createDate").val('');  
-    $("#chqDate").val('');  
+    $("#chqNo").val('');
+    $("#createBy").val('');
+    $("#createDate").val('');
+    $("#chqDate").val('');
     $("#chqDate").val('');
     $("#countCredit").val(1);
     $('#CreditTable > tbody  > tr').each(function() {
@@ -559,15 +584,30 @@ function newReceiveTable() {
 
 }
 
-function checkPeriodVatType(){
+function checkPeriodVatType() {
     var vatType = $("#periodVatType").val();
-    if(vatType === ''){       
-        $("#vattypepanel").removeClass("has-success");
-        $("#vattypepanel").addClass("has-error");
-        $("#btnSave").addClass("disabled");
-    }else{
+    var inputFromDate = $("#fromDate").val();
+    var InputToDate = $("#toDate").val();
+    if (vatType === '' && inputFromDate === '' && InputToDate === '') {
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");
         $("#vattypepanel").removeClass("has-error");
+        $("#btnSave").addClass("disabled");
+    } else if (vatType === '' || inputFromDate === '' || InputToDate === '') {
+        $("#vattypepanel").removeClass("has-success");
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-success");
+        $("#vattypepanel").addClass("has-error");
+        $("#fromdatepanel").addClass("has-error");
+        $("#todatepanel").addClass("has-error");
+        $("#btnSave").addClass("disabled");
+    } else {
+        $("#vattypepanel").removeClass("has-error");
+        $("#fromdatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-error");
         $("#vattypepanel").addClass("has-success");
+        $("#fromdatepanel").addClass("has-success");
+        $("#todatepanel").addClass("has-success");
         $("#btnSave").removeClass("disabled");
     }
 }
@@ -575,12 +615,13 @@ function checkPeriodVatType(){
 function checkFromDateField() {
     var inputFromDate = document.getElementById("fromDate");
     var InputToDate = document.getElementById("toDate");
-    if (InputToDate.value === '' && inputFromDate.value === '') {
+    var vatType = document.getElementById("periodVatType");
+    if (InputToDate.value === '' && inputFromDate.value === '' && vatType.value === '') {
         $("#fromdatepanel").removeClass("has-error");
         $("#todatepanel").removeClass("has-error");
         $("#vattypepanel").removeClass("has-error");
         $("#btnSave").removeClass("disabled");
-    } else if (inputFromDate.value === '' || InputToDate.value === '') {
+    } else if (inputFromDate.value === '' || InputToDate.value === '' || vatType.value === '') {
         $("#fromdatepanel").removeClass("has-success");
         $("#todatepanel").removeClass("has-success");
         $("#vattypepanel").removeClass("has-success");
@@ -603,12 +644,13 @@ function checkFromDateField() {
 function checkToDateField() {
     var InputToDate = document.getElementById("toDate");
     var inputFromDate = document.getElementById("fromDate");
-    if (InputToDate.value === '' && inputFromDate.value === '') {
+    var vatType = document.getElementById("periodVatType");
+    if (InputToDate.value === '' && inputFromDate.value === '' && vatType.value === '') {
         $("#fromdatepanel").removeClass("has-error");
         $("#todatepanel").removeClass("has-error");
         $("#vattypepanel").removeClass("has-error");
         $("#btnSave").removeClass("disabled");
-    } else if (inputFromDate.value === '' || InputToDate.value === '') {
+    } else if (inputFromDate.value === '' || InputToDate.value === '' || vatType.value === '') {
         $("#fromdatepanel").removeClass("has-success");
         $("#todatepanel").removeClass("has-success");
         $("#vattypepanel").removeClass("has-success");
@@ -631,16 +673,17 @@ function checkToDateField() {
 function checkDateValue(date) {
     var inputFromDate = document.getElementById("fromDate");
     var InputToDate = document.getElementById("toDate");
-    if ((inputFromDate.value !== '') && (InputToDate.value !== '')) {
+    var vatType = document.getElementById("periodVatType");
+    if ((inputFromDate.value !== '') && (InputToDate.value !== '') && (vatType.value !== '')) {
         var fromDate = (inputFromDate.value).split('-');
         var toDate = (InputToDate.value).split('-');
         if ((parseInt(fromDate[0])) > (parseInt(toDate[0]))) {
             validateDate(date, "over");
         }
-        if (((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))) {
+        if (((parseInt(fromDate[0])) > (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))) {
             validateDate(date, "over");
         }
-        if (((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))) {
+        if (((parseInt(fromDate[0])) > (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))) {
             validateDate(date, "over");
         }
     }
@@ -652,12 +695,16 @@ function validateDate(date, option) {
         $("#fromdatepanel").addClass("has-error");
         $("#todatepanel").removeClass("has-success");
         $("#todatepanel").addClass("has-error");
+        $("#vattypepanel").removeClass("has-success");
+        $("#vattypepanel").addClass("has-error");
         $("#btnSave").addClass("disabled");
     } else {
         $("#fromdatepanel").removeClass("has-success");
         $("#todatepanel").removeClass("has-success");
+        $("#vattypepanel").removeClass("has-success");
         $("#fromdatepanel").addClass("has-error");
         $("#todatepanel").addClass("has-error");
+        $("#vattypepanel").addClass("has-error");
         $("#btnSave").addClass("disabled");
     }
 }
@@ -679,9 +726,11 @@ function saveReceivePeriod() {
         department = 'Outbound';
     } else if (department === 'I') {
         department = 'Inbound';
+    } else if (department === 'WO') {
+        department = 'Wendy,Outbound';
     }
-    
-    if(receiveFrom !== '' && receiveTo !== '' && vatType !== ''){
+
+    if (fromDate !== '' && toDate !== '' && vatType !== '') {
         var servletName = 'ReceiveTableServlet';
         var servicesName = 'AJAXBean';
         var param = 'action=' + 'text' +
@@ -697,8 +746,8 @@ function saveReceivePeriod() {
                 '&department=' + department +
                 '&type=' + 'checkPeriodDate';
         CallAjaxCheck(param);
-        
-    }else{
+
+    } else {
         $("#fromdatepanel").removeClass("has-success");
         $("#todatepanel").removeClass("has-success");
         $("#vattypepanel").removeClass("has-success");
@@ -706,7 +755,7 @@ function saveReceivePeriod() {
         $("#todatepanel").addClass("has-error");
         $("#vattypepanel").addClass("has-error");
         $("#btnSave").addClass("disabled");
-    }    
+    }
 
 }
 
@@ -784,6 +833,8 @@ function printReceiveTableReport() {
         department = 'Outbound';
     } else if (department === 'I') {
         department = 'Inbound';
+    } else if (department === 'WO') {
+        department = 'WendyOutbound';
     }
     window.open("report.smi?name=CollectionReport&receiveDate=" + receiveDate + "&vatType=" + vatType + "&department=" + department);
 }
@@ -803,7 +854,7 @@ function checkPeriod() {
             $("#periodCash").val($("#receiveCash").val());
             $("#periodCheque").val($("#receiveCheque").val());
             $("#periodCreditCard").val($("#receiveCreditCard").val());
-        }else{
+        } else {
             $("#periodDetail").val('');
             $("#periodCashAmount").val('');
             $("#periodBankAmount").val('');
@@ -812,4 +863,210 @@ function checkPeriod() {
             $("#periodCreditCard").val('');
         }
     }
+}
+
+function setStatusFormat() {
+    var status = $("#status option:selected").text();
+//    var receiveAmount = parseInt(($("#receiveAmount").val()).replace(/,/g, ""));
+    if (status == 'Cash') {
+        var cashAmount = $("#cashAmount").val();
+        disabledReceiveTableField(status);
+        setCashAmount(cashAmount);
+        
+    }else if(status == 'Cash on Demand'){
+        setCashOnDemand();
+        
+    }else if(status == 'Credit Card'){
+        disabledReceiveTableField(status);
+        setCreditAmount();
+        
+    }else if(status == 'Bank Transfer'){
+        var bankAmount = $("#bankAmount").val();
+        disabledReceiveTableField(status);
+        setBankAmount(bankAmount);
+        
+    }else if(status == 'Cheque'){
+        var chqAmount = $("#chqAmount").val();
+        disabledReceiveTableField(status);
+        setChqAmount(chqAmount);
+        
+    }else if(status == 'Void'){
+        
+        
+    }else if(status == 'Wait'){
+        
+    }
+}
+
+function disabledReceiveTableField(status) {
+    $("#cashAmountPanel").removeClass("has-success");
+    $("#cashAmountPanel").removeClass("has-error");
+    $("#bankAmountPanel").removeClass("has-success");
+    $("#bankAmountPanel").removeClass("has-error");
+    $("#chqAmountPanel").removeClass("has-success");
+    $("#chqAmountPanel").removeClass("has-error");
+   
+    if(status == 'Credit Card' || status == 'Bank Transfer' || status == 'Cheque'){
+       $("#cashAmount").val('');
+       $("#cashAmount").attr("disabled", "disabled");
+    }
+    if(status == 'Cash' || status == 'Credit Card' || status == 'Cheque'){
+        $("#bankAmount").val('');
+        $("#bankAmount").attr("disabled", "disabled");
+    }
+    if(status == 'Cash' || status == 'Bank Transfer' || status == 'Credit Card'){
+        $("#chqAmount").val('');
+        $("#chqAmount").attr("disabled", "disabled");
+    }
+    if(status == 'Cash' || status == 'Bank Transfer' || status == 'Cheque'){
+        $("#creditAmount").val(0);
+        $("#countCredit").val(1);
+        $('#CreditTable > tbody  > tr').each(function() {
+            $(this).remove();
+        });
+        AddRowCreditTable(parseInt($("#countCredit").val()));
+        $("#creditCard"+(parseInt($("#countCredit").val())-1)).attr("disabled", "disabled");
+        $("#creditNo"+(parseInt($("#countCredit").val())-1)).attr("disabled", "disabled");
+        $("#creditExpire"+(parseInt($("#countCredit").val())-1)).attr("disabled", "disabled");
+        $("#creditAmount"+(parseInt($("#countCredit").val())-1)).attr("disabled", "disabled");
+        $("#expenButtonRemove"+(parseInt($("#countCredit").val())-1)).addClass("hidden");
+        $('#spandate'+(parseInt($("#countCredit").val())-1)).addClass("hidden");
+    }   
+}
+
+function setCashAmount(cash) {
+    var status = $("#status option:selected").text();
+    if (status == 'Cash') {
+        $("#cashAmount").prop("disabled",false);
+        $("#cashAmount").val(cash);
+        var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
+        var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
+        var cashAmount = parseFloat(cash.replace(/,/g, ""));
+        if (cashAmount === (receiveAmount+wht)) {
+            $("#cashAmountPanel").removeClass("has-error");
+            $("#cashAmountPanel").addClass("has-success");
+            $("#ButtonSave").removeClass("disabled");
+        } else {
+            $("#cashAmountPanel").removeClass("has-success");
+            $("#cashAmountPanel").addClass("has-error");
+            $("#ButtonSave").addClass("disabled");
+        }
+    }
+}
+
+function setBankAmount(bank){
+    var status = $("#status option:selected").text();
+    if (status == 'Bank Transfer') {
+        $("#bankAmount").prop("disabled",false);
+        $("#bankAmount").val(bank);
+        var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
+        var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
+        var bankAmount = parseFloat(bank.replace(/,/g, ""));
+        if (bankAmount === (receiveAmount+wht)) {
+            $("#bankAmountPanel").removeClass("has-error");
+            $("#bankAmountPanel").addClass("has-success");
+            $("#ButtonSave").removeClass("disabled");
+        } else {
+            $("#bankAmountPanel").removeClass("has-success");
+            $("#bankAmountPanel").addClass("has-error");
+            $("#ButtonSave").addClass("disabled");
+        }
+    }
+}
+
+function setChqAmount(chq){
+    var status = $("#status option:selected").text();
+    if (status == 'Cheque') {
+        $("#chqAmount").prop("disabled",false);
+        $("#chqAmount").val(chq);
+        var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
+        var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
+        var chqAmount = parseFloat(chq.replace(/,/g, ""));
+        if (chqAmount === (receiveAmount+wht)) {
+            $("#chqAmountPanel").removeClass("has-error");
+            $("#chqAmountPanel").addClass("has-success");
+            $("#ButtonSave").removeClass("disabled");
+        } else {
+            $("#chqAmountPanel").removeClass("has-success");
+            $("#chqAmountPanel").addClass("has-error");
+            $("#ButtonSave").addClass("disabled");
+        }
+    }
+}
+
+function setCreditAmount(){
+    var status = $("#status option:selected").text();
+    if (status == 'Credit Card') {
+        $("#creditCard"+(parseInt($("#countCredit").val())-1)).prop("disabled",false);
+        $("#creditNo"+(parseInt($("#countCredit").val())-1)).prop("disabled",false);
+        $("#creditExpire"+(parseInt($("#countCredit").val())-1)).prop("disabled",false);
+        $("#creditAmount"+(parseInt($("#countCredit").val())-1)).prop("disabled",false);
+        $("#expenButtonRemove"+(parseInt($("#countCredit").val())-1)).removeClass("hidden");
+        $('#spandate'+(parseInt($("#countCredit").val())-1)).removeClass("hidden");
+        
+        var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
+        var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
+        var creditAmount = parseFloat($("#creditAmount").val());
+        if(creditAmount === (receiveAmount+wht)){
+            $("#ButtonSave").removeClass("disabled");
+            var count = parseInt($("#countCredit").val());
+            for(var i=1; i<=count; i++){
+                var creditAmount = $("#creditAmount"+i);
+                if(creditAmount.val() !== undefined){
+                    $("#creditAmount"+i).css("border", "green ridge 1px"); 
+                }
+            }
+        }else{
+            $("#ButtonSave").addClass("disabled");
+            var count = parseInt($("#countCredit").val());
+            for(var i=1; i<=count; i++){
+                var creditAmount = $("#creditAmount"+i);
+                if(creditAmount.val() !== undefined){
+                    $("#creditAmount"+i).css("border", "red solid 1px"); 
+                }
+            }
+        }
+    }    
+}
+
+function calculateCreditAmount(){
+    var count = parseInt($("#countCredit").val());
+    var creditTotal = 0;
+    for(var i=1; i<=count; i++){
+        var creditAmount = $("#creditAmount"+i);
+        if(creditAmount.val() !== '' && creditAmount.val() !== undefined){
+            creditTotal += parseFloat((($("#creditAmount"+i).val()).replace(/,/g, "")));
+        }
+    }
+    $("#creditAmount").val(creditTotal);
+}
+
+function setCashOnDemand(){
+    var status = $("#status option:selected").text();
+    if (status == 'Cash on Demand') {
+        var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
+        var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);   
+        var cashAmount = ($("#cashAmount").val() !== '' ? parseFloat((($("#cashAmount").val()).replace(/,/g, ""))) : 0);
+        var bankAmount = ($("#bankAmount").val() !== '' ? parseFloat((($("#bankAmount").val()).replace(/,/g, ""))) : 0);
+        var chqAmount = ($("#chqAmount").val() !== '' ? parseFloat((($("#chqAmount").val()).replace(/,/g, ""))) : 0);
+        var creditAmount = parseFloat($("#creditAmount").val());
+
+        if((receiveAmount+wht) === (cashAmount+bankAmount+chqAmount+creditAmount)){
+            $("#cashAmountPanel").removeClass("has-error");
+            $("#cashAmountPanel").addClass("has-success");
+            $("#bankAmountPanel").removeClass("has-error");
+            $("#bankAmountPanel").addClass("has-success");
+            $("#chqAmountPanel").removeClass("has-error");
+            $("#chqAmountPanel").addClass("has-success");
+            $("#ButtonSave").removeClass("disabled"); 
+        }else{
+            $("#cashAmountPanel").removeClass("has-success");
+            $("#cashAmountPanel").addClass("has-error");
+            $("#bankAmountPanel").removeClass("has-success");
+            $("#bankAmountPanel").addClass("has-error");
+            $("#chqAmountPanel").removeClass("has-success");
+            $("#chqAmountPanel").addClass("has-error");
+            $("#ButtonSave").addClass("disabled");
+        }
+    }    
 }

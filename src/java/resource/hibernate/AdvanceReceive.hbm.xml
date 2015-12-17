@@ -58,6 +58,9 @@
         <property name="department" type="string">
             <column name="department" length="20" />
         </property>
+        <property name="wht" type="big_decimal">
+            <column name="wht" precision="10" />
+        </property>
         <bag name="advanceReceiveCredits" table="advance_receive_credit" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ad_rec_id" />
