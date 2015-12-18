@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceInboundEmail" language="groovy" pageWidth="595" pageHeight="843" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="96"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -75,6 +75,19 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
+			<rectangle radius="15">
+				<reportElement x="2" y="81" width="520" height="36" backcolor="#B6DBAA" uuid="d3561c26-3c2b-4813-ae67-87c5fe222efa"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="122" y="76" width="275" height="44" uuid="c61e9124-2b6a-46f9-aae9-3c23f19ca77c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Angsana New" size="36" isBold="true" pdfFontName="resource/fonts/Angsa.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[PROFORMA INVOICE]]></text>
+			</staticText>
 			<staticText>
 				<reportElement x="13" y="127" width="24" height="20" uuid="2e4ba684-d417-4553-af70-2f75bf0fa89a"/>
 				<textElement>
@@ -372,7 +385,7 @@
 			</textField>
 			<textField>
 				<reportElement x="94" y="53" width="135" height="9" uuid="fe5987cd-d466-4f6b-9f10-6f5bec1259a7">
-					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0")]]></printWhenExpression>
+					<printWhenExpression><![CDATA[!$F{bankid}.equalsIgnoreCase("0") ]]></printWhenExpression>
 				</reportElement>
 				<textElement>
 					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>

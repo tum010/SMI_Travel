@@ -146,9 +146,8 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="SelectGroup" id="SelectGroup" class="form-control">
-                                            <option value=""  selected="selected">-- ALL --</option>
                                             <option value="1">Agent</option>
-                                            <option value="2">Staff</option>
+                                            <option value="2">Owner</option>
                                         </select>
                                     </div>
                                 </div>   
@@ -163,8 +162,9 @@
                                     <div class="form-group">
                                         <select name="SelectView" id="SelectView" class="form-control">
                                             <option value=""  selected="selected">-- ALL --</option>
-                                            <option value="1">All</option>
-                                            <option value="2">Deptor</option>
+                                            <option value="CLEAR">CLEAR</option>
+                                            <option value="OVERDUE">OVERDUE</option>
+                                            <option value="DEPTOR">DEPTOR</option>
                                         </select>
                                     </div>
                                 </div>   

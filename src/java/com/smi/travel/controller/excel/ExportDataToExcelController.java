@@ -315,7 +315,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             String view_over = request.getParameter("view");
             String clientcode_over = request.getParameter("clientcode");
             String clientname_over = request.getParameter("clientname");
-            data = reportservice.listOverdueSummary(from_over, to_over, department_over, staffcode_over, staffname_over, vattype_over, group_over, view_over, clientcode_over, clientname_over, printby);
+            data = reportservice.listOverdueSummary(clientcode_over, clientname_over, staffcode_over, staffname_over, vattype_over, from_over, to_over, department_over, group_over, view_over, printby);
             return new ModelAndView("OverdueSummaryExcel",name,data).addObject(ReportName, name);
         }
 		
