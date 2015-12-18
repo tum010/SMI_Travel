@@ -148,7 +148,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-2 text-right">
-                                <label class="control-label" for="">AR Code</lable>
+                                <label class="control-label" for="">AR Code<font style="color: red">*</font></lable>
                             </div>
                             <div class="col-md-2 form-group">                      
                                 <input  type="text" id="ARCode" name="ARCode" class="form-control" value="${invoice.arcode}"  >
@@ -430,7 +430,7 @@
                                         </button>
                                     </div>
                                     <div class="col-md-1 text-right ">
-                                        <button type="submit"  id="saveInvoice" name="saveInvoice" class="btn btn-success"  onclick="saveInvoiceInbound()" ${isSaveVoid}>
+                                        <button type="submit"  id="saveInvoiceInbound" name="saveInvoiceInbound" class="btn btn-success"  onclick="saveInvoiceInbound()" ${isSaveVoid}>
                                             <span id="SpanSave" class="fa fa-save"></span> Save 
                                         </button>
                                     </div>

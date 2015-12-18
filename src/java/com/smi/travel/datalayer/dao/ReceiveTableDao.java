@@ -23,13 +23,14 @@ public interface ReceiveTableDao {
     public String insertAdvanceReceive(AdvanceReceive advanceReceive);
     public String updateAdvanceReceive(AdvanceReceive advanceReceive);
     public String deleteAdvanceReceiveCredit(AdvanceReceiveCredit advanceReceiveCredit, String option);
-    public String saveReceivePeriod(String periodId, String fromDate, String toDate, String detail, String department, String vatType);
+    public String saveReceivePeriod(String periodId, String fromDate, String toDate, String detail, String department, String vatType, AdvanceReceivePeriodView advanceReceivePeriodView);
     public String checkReceivePeriod(String periodId, String fromDate, String toDate, String department, String vatType);
     public AdvanceReceivePeriodView getAdvanceReceivePeriodView(String from, String to, String department, String vatType);
     public AdvanceReceivePeriod getReceivePeriod(String receiveDate, String department, String vatType);
     public String updateReceivePeriod(String periodId, String fromDate, String toDate, String vatType, String periodDetail);
     public List getCollectionReport(String receiveDate, String vatType, String department, String printBy);
-
+    public List<AdvanceReceivePeriod> getReceivePeriodList(String department);
     public AdvanceReceiveCredit testStoredProcedure(String agentName);
+    public String deleteReceivePeriod(String periodId);
    
 }

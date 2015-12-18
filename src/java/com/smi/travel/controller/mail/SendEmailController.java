@@ -50,6 +50,7 @@ public class SendEmailController extends SMITravelController {
     private static final String SUBJECT = "subject";  
     private static final String MESSAGE = "message";       
     private static final String SIGN = "sign"; 
+    private static final String InvoiceInboundRevenueEmail = "InvoiceInboundRevenueEmail";
     
     private JavaMailSender mailSender;
     private ReportService reportservice;
@@ -135,6 +136,17 @@ public class SendEmailController extends SMITravelController {
                     result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
                 }
              }
+            if (InvoiceInboundRevenueEmail.equalsIgnoreCase(name)) {
+                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName());
+                JRDataSource dataSource = new JRBeanCollectionDataSource(data);
+                jasperFileName = "InvoiceInboundRevenueEmail.jasper";
+                pdfFileName = "InvoiceInboundRevenueEmail.pdf";
+                pathAttachfile = path[0] + "\\" + username;
+                System.out.println("path : " + path[0] + username);
+                if (checkDirectory(path[0] + username)) {
+                    result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
+                }
+            }
         }             
             
 

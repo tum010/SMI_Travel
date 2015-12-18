@@ -293,10 +293,7 @@ function validFromInvoice() {
         if (checkcur1) {
             $('#textAlertCurrencyAmountNotEmpty').show();
             document.getElementById("saveInvoice").disabled = true;
-        } else {
-            $('#textAlertInvoiceNotEmpty').hide();
-            document.getElementById("saveInvoice").disabled = false;
-        }
+        } 
         return false;
     } else {
         $('#DetailBillableTable').find('tr').each(function() {
