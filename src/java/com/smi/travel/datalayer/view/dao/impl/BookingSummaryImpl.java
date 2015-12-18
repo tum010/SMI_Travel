@@ -484,6 +484,25 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             confirmdetail.setCuramount(B[5]== null ? "" :util.ConvertString(B[5]));
             data.add(confirmdetail);
         }
+        
+        String queryAdditional = "SELECT * FROM `hotel_booking_additional_view` a where a.refno = '"+refno+"' ";
+        
+        List<Object[]> QueryList = session.createSQLQuery(queryAdditional)
+                .addScalar("description", Hibernate.STRING)
+                .addScalar("add_price", Hibernate.STRING)
+                .addScalar("refno", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : QueryList) {
+            ConfirmSlipDetailReport confirmdetail = new ConfirmSlipDetailReport();
+            confirmdetail.setOrder(String.valueOf(order));
+            order ++ ;
+            confirmdetail.setHotel(B[0]== null ? "" :util.ConvertString(B[0]));
+            confirmdetail.setAmount(B[1]== null ? "" :util.ConvertString(B[1]));
+            confirmdetail.setCuramount("THB");
+            data.add(confirmdetail);
+        }
+
         this.sessionFactory.close();
         session.close();
         return data;
