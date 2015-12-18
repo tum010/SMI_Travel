@@ -152,6 +152,10 @@ public class ReportService {
         return airlinesummaryDao.getAirlineSummary(ticketfrom, tickettype, startdate, enddate, username, department);
     }
     
+    public List getRefundTicketSummary(String refundFrom,String refundTo,String ticketFrom,String ticketTo,String refundBy,String printBy){
+        return ticketsummaryDao.getRefundTicketSummary(refundFrom, refundTo, ticketFrom, ticketTo, refundBy, printBy);
+    }
+    
     public List getTicketSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username,String department){
         List data  = new ArrayList();
         data.add(ticketsummaryDao.getTicketSummaryReport(ticketfrom, tickettype, startdate, enddate, billto, passenger, username, department));

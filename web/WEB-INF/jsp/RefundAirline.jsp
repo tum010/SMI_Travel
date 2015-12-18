@@ -475,7 +475,22 @@
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
-
+        var statusrefund = $("#status").val();
+        var ticNoTemp = $("#ticketNo1").val();
+        var ticNo = ticNoTemp.substring(0, 3);
+        
+        if(statusrefund === '0') {
+            if(ticNo === '217'){
+                document.getElementById("refundAgentId").value = '1010593';
+                document.getElementById("refundAgentCode").value = '200076';
+                document.getElementById("refundAgentName").value = 'บริษัท การบินไทย จำกัด ( มหาชน) บมจ. 422 (00003)';
+            }else{
+                document.getElementById("refundAgentId").value = '1011133';
+                document.getElementById("refundAgentCode").value = 'I0037';
+                document.getElementById("refundAgentName").value = 'IATA';
+            }
+        }
+    
         var refundid =  $("#refundId").val();
         if(refundid === ""){
             $("#buttonPrint").addClass("disabled");

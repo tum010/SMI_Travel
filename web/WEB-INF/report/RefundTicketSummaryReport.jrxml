@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RefundTicketSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="93ebb579-a6b8-4cb5-8231-f35a3b386db3">
+	<property name="ireport.zoom" value="3.7974983358324446"/>
+	<property name="ireport.x" value="2220"/>
+	<property name="ireport.y" value="397"/>
+	<field name="systemdate" class="java.lang.String"/>
+	<field name="refundfrom" class="java.lang.String"/>
+	<field name="refundto" class="java.lang.String"/>
+	<field name="ticketfrom" class="java.lang.String"/>
+	<field name="ticketto" class="java.lang.String"/>
+	<field name="user" class="java.lang.String"/>
+	<field name="refundno" class="java.lang.String"/>
+	<field name="refunddate" class="java.lang.String"/>
+	<field name="ticketno" class="java.lang.String"/>
+	<field name="refno" class="java.lang.String"/>
+	<field name="refundby" class="java.lang.String"/>
+	<field name="sectorrefund" class="java.lang.String"/>
+	<field name="salefare" class="java.lang.String"/>
+	<field name="netfare" class="java.lang.String"/>
+	<field name="tax" class="java.lang.String"/>
+	<field name="profit" class="java.lang.String"/>
+	<field name="refund" class="java.lang.String"/>
+	<field name="ticketdate" class="java.lang.String"/>
+	<variable name="totalsale" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{salefare})]]></variableExpression>
+	</variable>
+	<variable name="totalnet" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{netfare})]]></variableExpression>
+	</variable>
+	<variable name="totaltax" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{tax})]]></variableExpression>
+	</variable>
+	<variable name="totalprofit" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{profit})]]></variableExpression>
+	</variable>
+	<variable name="totalrefund" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{refund})]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="99" splitType="Stretch">
+			<staticText>
+				<reportElement x="651" y="27" width="42" height="12" uuid="99d56ee6-afda-4a3f-9e88-eb89439f644b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Print on :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="27" width="221" height="12" uuid="fd3b5413-17ae-4b33-bb69-87cd2d5fec6b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="59" width="158" height="15" uuid="3e395626-65f3-4f18-9290-4c4cdac35f7c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[http://www.wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="4" width="149" height="13" uuid="6081a609-c665-4b34-9785-bc5431656060"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[S.M.I TRAVEL CO., LTD]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="749" y="51" width="54" height="13" uuid="c919afa9-1f45-4990-9e8a-ee91d2df4669"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ticketto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="693" y="64" width="110" height="12" uuid="0349f54b-0d4d-45a2-a850-8e7c31878923"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="750" y="51" width="11" height="13" uuid="288c7cd7-1dfb-4fae-88fe-a0b09992995b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[to]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="71" width="158" height="13" uuid="52bc276c-757c-410b-aae2-c0386a0a43ce"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[e-mail: yoyaku@wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="17" width="221" height="22" uuid="434612b6-4714-4cd6-82aa-4a2e94f82661"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[9th Floor, Siam at Siam Hotel Building 865 Rama 1 Rd.,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="553" y="-1" width="250" height="25" uuid="a42c51ff-b26f-4cf7-b939-ec7fda6970d6"/>
+				<textElement textAlignment="Right">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[List Refund Ticket Summary]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="690" y="51" width="53" height="13" uuid="2c789ce6-7db6-4c25-8827-c3a8f0343b54"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ticketfrom}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="651" y="64" width="42" height="12" uuid="f3be0e70-acf0-4e77-b50b-546baf601348"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Print by :]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="766" y="83" width="36" height="12" uuid="7809de71-f2e0-4a03-9e95-da8372d657dc"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="630" y="83" width="131" height="12" uuid="1d7ba28e-020e-4915-8b25-66f555891869"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="1" y="4" width="65" height="48" uuid="bbf102ea-d61f-4597-aa50-a158c93d5954"/>
+				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
+			</image>
+			<textField pattern="">
+				<reportElement x="693" y="27" width="110" height="13" uuid="ed5ef857-211e-4602-b1d6-c3ed43955b29"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="630" y="51" width="64" height="13" uuid="3e4f10aa-b8f7-465d-9fa1-904065771170"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Ticket Date of : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="47" width="221" height="12" uuid="c11e872b-7351-40bf-a119-e3af0c00e83b"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tel: +66(0)-2162201 Fax: +66(0)-216-2202]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="625" y="39" width="65" height="13" uuid="7988cb35-0f5a-4c1a-a4ca-67fa3cf8992c"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Refund Date of : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="750" y="39" width="11" height="13" uuid="f335b524-400d-4d01-89b7-e60793bfc449"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[to]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="749" y="39" width="54" height="13" uuid="a0d3cfaf-0ab4-417a-83e7-f8fe2875c33a"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refundto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="690" y="39" width="53" height="13" uuid="8ca745b5-abba-4a00-ae9b-3fd85c36d4dc"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refundfrom}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="14" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="1" width="802" height="13" backcolor="#E6E6E6" uuid="82aa8828-2e4b-4e9a-aab4-8f2aa84fa02d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="62" y="1" width="63" height="13" forecolor="#CCCCCC" uuid="270897ad-f195-419b-b5f5-508b1677db3e"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="215" y="1" width="56" height="13" uuid="ba78bab8-3713-439a-a726-be974a574c2b"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ref No.]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="271" y="1" width="175" height="13" forecolor="#CCCCCC" uuid="8e514323-ce9d-4b58-aa2f-b8f32a0e07a9"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="446" y="1" width="75" height="13" uuid="bcbdf7a8-d47b-47e1-b0bf-4533709a5456"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sector Refund]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="577" y="1" width="56" height="13" uuid="c8b1f8c5-ca46-4876-baf1-954b6e0c20b3"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Net Fare]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="633" y="1" width="56" height="13" forecolor="#CCCCCC" uuid="b4283c76-bc6e-41f3-a9e8-f816dbd156f6"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="125" y="1" width="90" height="13" forecolor="#CCCCCC" uuid="6cee64f6-737c-4cd1-af6a-8297907bb936"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="125" y="1" width="90" height="13" backcolor="#FFFFFF" uuid="b5aaa04c-ca79-4d06-8c8d-af1da428e830"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ticket No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="521" y="1" width="56" height="13" uuid="c775eef7-7a8a-4c3a-947e-2c7246d8af25"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sale Fare]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="446" y="1" width="75" height="13" forecolor="#CCCCCC" uuid="6b36179b-19c9-4b6f-add3-6014a85bc843"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="271" y="1" width="175" height="13" backcolor="#FFFFFF" uuid="50816837-e7e9-4ed9-9c03-140631c6cffa"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Refund By]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="215" y="1" width="56" height="13" forecolor="#CCCCCC" uuid="32a5e5b0-8a2e-4f15-82ab-fcb867c54791"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="521" y="1" width="56" height="13" forecolor="#CCCCCC" uuid="65daec13-bb5d-468c-8cdb-140128391dbe"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="577" y="1" width="56" height="13" forecolor="#CCCCCC" uuid="03dec689-1ffc-4151-875d-eba33478e615"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="62" y="1" width="63" height="13" backcolor="#FFFFFF" uuid="990015ab-5e71-41fa-b849-671bd4e49d90"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Refund Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="633" y="1" width="56" height="13" uuid="3e289bc0-469c-44a4-b24a-9076ee8fa093"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tax]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="-1" y="1" width="63" height="13" forecolor="#CCCCCC" uuid="3e9a806f-9629-415a-997a-28b827a9aaf1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="-1" y="1" width="63" height="13" backcolor="#FFFFFF" uuid="1f8d85ad-045e-4df5-b0e4-d5d59469444b"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Refund No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="689" y="1" width="56" height="13" uuid="95b1699b-38d4-41fe-9359-3eba81227521"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profit]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="689" y="1" width="56" height="13" forecolor="#CCCCCC" uuid="76b342ef-4b93-4413-badb-bc02f899206d"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="745" y="1" width="56" height="13" uuid="123bff78-9dfa-4eb3-a602-8e1e90bf483b"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Refund]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="745" y="1" width="56" height="13" forecolor="#CCCCCC" uuid="bd97fa89-5f48-4bab-9da9-bb6c874dfd87"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="1" width="62" height="23" forecolor="#CCCCCC" uuid="bb46f2ff-17e0-48af-a91f-7c076318f319"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="">
+				<reportElement x="4" y="1" width="58" height="20" uuid="fa38cdbc-f0d3-488f-bb22-9d53b8ab36d7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refundno}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="446" y="1" width="75" height="23" forecolor="#CCCCCC" uuid="d3d6e4fd-a382-4114-bd1b-cc0fcab6d82c"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="#,##0">
+				<reportElement x="577" y="1" width="52" height="20" uuid="a24f8101-fc2c-4b26-8f9e-2ede4b1e795d"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(!"null".equals($F{netfare}) && $F{netfare} != "null" && $F{netfare}.length() > 0) ? Double.valueOf($F{netfare}) : ""]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="688" y="1" width="57" height="23" forecolor="#CCCCCC" uuid="bdd6a1d3-a3c0-431d-832c-07bb80e8305a"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="633" y="1" width="55" height="23" forecolor="#CCCCCC" uuid="f730ff0b-a2e7-46f2-9182-56a5e68c5317"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="745" y="1" width="52" height="20" uuid="75f8854b-cf2d-4da8-a899-f83d66e5efe6"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(!"null".equals($F{refund}) && $F{refund} != "null" && $F{refund}.length() > 0) ? Double.valueOf($F{refund}) : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="1" width="71" height="20" uuid="bb3f0703-e53b-4215-83cf-9cf63f7d20d5"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sectorrefund}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="521" y="1" width="52" height="20" uuid="b5625551-fa59-42e6-b037-a9a7128b21cd"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(!"null".equals($F{salefare}) && $F{salefare} != "null" && $F{salefare}.length() > 0) ? Double.valueOf($F{salefare}) : ""]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="745" y="1" width="57" height="23" forecolor="#CCCCCC" uuid="8624b510-6749-4eab-a7cc-ed349f98df76"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="577" y="1" width="56" height="23" forecolor="#CCCCCC" uuid="29175ea1-25d5-449e-996f-fb1a6723531c"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="#,##0">
+				<reportElement x="688" y="1" width="53" height="20" uuid="e1e41b89-5762-4dbc-84aa-f064f61ededb"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(!"null".equals($F{profit}) && $F{profit} != "null" && $F{profit}.length() > 0) ? Double.valueOf($F{profit}) : ""]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="521" y="1" width="56" height="23" forecolor="#CCCCCC" uuid="4793f8b4-5845-4332-8640-c2c1033b7902"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField pattern="#,##0">
+				<reportElement x="633" y="1" width="51" height="20" uuid="40acc18b-5e0f-4162-99a6-2b1dc3507d0c"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(!"null".equals($F{tax}) && $F{tax} != "null" && $F{tax}.length() > 0) ? Double.valueOf($F{tax}) : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="275" y="1" width="171" height="20" uuid="ab52eb72-5fab-4b2b-b6e0-8fc75b744066"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refundby}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="271" y="1" width="175" height="23" forecolor="#CCCCCC" uuid="24cdb45c-5a22-4aa7-9248-19625f0e9d47"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="219" y="1" width="52" height="20" uuid="3ea2771b-e1a1-43e7-a7a0-4a6c24bac27e"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refno}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="215" y="1" width="56" height="23" forecolor="#CCCCCC" uuid="a35ad674-398c-4087-aeeb-a35a788756db"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="125" y="1" width="90" height="23" forecolor="#CCCCCC" uuid="4a56afa3-4d3c-4766-a4ba-cef619e5fc99"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="129" y="1" width="86" height="20" uuid="09adb286-69a5-4384-bbea-0d259ff69bb8"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ticketno}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="62" y="1" width="63" height="23" forecolor="#CCCCCC" uuid="4f42fee1-13dc-4b3c-90d0-67effed24549"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="66" y="1" width="59" height="20" uuid="0ed068d4-addd-47e9-9e7c-3ca222583c80"/>
+				<textElement textAlignment="Left">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refunddate}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="13" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="802" height="13" backcolor="#E6E6E6" uuid="3b19b007-dde4-4c25-9ea9-42ddd764ebcd"/>
+				<graphicElement>
+					<pen lineColor="#CCCCFF"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="446" y="-1" width="75" height="14" uuid="b85a1be4-c538-454a-a4a0-2bf699f21b0a"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="688" y="0" width="53" height="13" uuid="7ffd770f-2ae3-4334-9b68-b06b82faf6cf"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="633" y="0" width="51" height="13" uuid="a455e42c-e53d-41dd-9a47-9058295f5c84"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totaltax}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="521" y="0" width="52" height="13" uuid="af92c73d-e4ff-42c5-818c-392953e21f13"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalsale}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="577" y="0" width="52" height="13" uuid="a02cc896-17c0-4309-9110-d2599d6f58f9"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalnet}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="745" y="0" width="52" height="13" uuid="fef942bc-fcc5-47c4-92d0-84f490a62a35"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalrefund}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

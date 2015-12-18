@@ -16,4 +16,6 @@ import java.util.List;
 public interface TicketSummaryDao {
     public List getTicketSummary(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username,String department);
     public TicketSummaryList getTicketSummaryReport(String ticketfrom,String tickettype,String startdate,String enddate,String billto,String  passenger,String username,String department);
+    
+    public List getRefundTicketSummary(String refundFrom,String refundTo,String ticketFrom,String ticketTo,String refundBy,String printBy); //Refund Ticket Summary Report
 }

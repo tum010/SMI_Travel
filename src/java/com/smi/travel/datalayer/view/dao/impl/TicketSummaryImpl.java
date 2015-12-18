@@ -5,6 +5,7 @@
  */
 package com.smi.travel.datalayer.view.dao.impl;
 
+import com.smi.travel.datalayer.report.model.RefundTicketSummaryReport;
 import com.smi.travel.datalayer.report.model.TicketSummary;
 import com.smi.travel.datalayer.report.model.TicketSummaryAirline;
 import com.smi.travel.datalayer.report.model.TicketSummaryList;
@@ -263,6 +264,70 @@ public class TicketSummaryImpl implements TicketSummaryDao {
             
         }
         
+        session.close();
+        this.sessionFactory.close();
+        return data;
+    }
+
+    @Override
+    public List getRefundTicketSummary(String refundFrom, String refundTo, String ticketFrom, String ticketTo, String refundBy, String printBy) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        Date thisDate = new Date();
+        List data = new ArrayList();
+        String Query = "SELECT * FROM `refund_airticket_sale_summary` where refunddate BETWEEN '"+refundFrom+"' and '"+refundTo+"' ";
+
+        if (((ticketFrom != null) && (!"".equalsIgnoreCase(ticketFrom))) && ((ticketTo != null) && (!"".equalsIgnoreCase(ticketTo)))) {
+            Query += "  and ticket_date BETWEEN '"+ticketFrom+"' and '"+ticketTo+"' ";
+        }
+        
+        if ((refundBy != null) && (!"".equalsIgnoreCase(refundBy))) {
+            Query += "  and refundby = '" + refundBy + "'";
+        }        
+        
+        System.out.println("Query : "+Query);
+        
+        List<Object[]> QueryTicketList = session.createSQLQuery(Query)
+                .addScalar("refundno", Hibernate.STRING)
+                .addScalar("refunddate", Hibernate.STRING)
+                .addScalar("ticketno", Hibernate.STRING)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("refundby", Hibernate.STRING)
+                .addScalar("sectorRefund", Hibernate.STRING)
+                .addScalar("sale_fare", Hibernate.STRING)
+                .addScalar("net_fare", Hibernate.STRING)
+                .addScalar("tax", Hibernate.STRING)
+                .addScalar("profit", Hibernate.STRING)
+                .addScalar("refund", Hibernate.STRING)
+                .addScalar("ticket_date", Hibernate.STRING)
+                .list();
+            
+            SimpleDateFormat dateformat = new SimpleDateFormat();
+            dateformat.applyPattern("dd-MM-yyyy");
+            
+        for (Object[] B : QueryTicketList) {
+            RefundTicketSummaryReport sum = new RefundTicketSummaryReport();
+
+            sum.setSystemdate(util.ConvertString(new SimpleDateFormat("dd MMM yyyy hh:mm:ss", new Locale("us", "us")).format(thisDate)));
+            sum.setUser(printBy);
+            sum.setRefundfrom(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(refundFrom))));
+            sum.setRefundto(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(refundTo))));
+            sum.setTicketfrom(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(ticketFrom))));
+            sum.setTicketto(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(ticketTo))));
+            
+            sum.setRefundno(util.ConvertString(B[0]));
+            sum.setRefunddate("null".equals(String.valueOf(B[1])) ? "" : util.ConvertString(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[1])))));
+            sum.setTicketno(util.ConvertString(B[2]));
+            sum.setRefno(util.ConvertString(B[3]));
+            sum.setRefundby(util.ConvertString(B[4]));
+            sum.setSectorrefund(B[5] != null ? util.ConvertString(B[5]) : "0.00");
+            sum.setSalefare(B[6] != null ? util.ConvertString(B[6]) : "0.00");
+            sum.setNetfare(B[7] != null ? util.ConvertString(B[7]) : "0.00");
+            sum.setTax(B[8] != null ? util.ConvertString(B[8]) : "0.00");
+            sum.setProfit(B[9] != null ? util.ConvertString(B[9]) : "0.00");
+            sum.setRefund(B[10] != null ? util.ConvertString(B[10]) : "0.00");
+            data.add(sum);            
+        }
         session.close();
         this.sessionFactory.close();
         return data;

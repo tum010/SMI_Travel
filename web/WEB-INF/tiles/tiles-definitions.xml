@@ -740,4 +740,8 @@
         <put-attribute name="body" value="/WEB-INF/jsp/ProfitLoss.jsp" />
     </definition>
     
+    <definition name="RefundTicketSummary" extends="baseLayout">
+        <put-attribute name="title" value="Report : Refund Ticket Summary" />
+        <put-attribute name="body" value="/WEB-INF/jsp/RefundTicketSummaryReport.jsp" />
+    </definition>
 </tiles-definitions>

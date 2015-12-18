@@ -107,6 +107,7 @@ public class ReportController extends SMITravelController {
     private static final String InvoiceInboundPerformaReport = "InvoiceInboundPerformaReport";
     private static final String InvoiceInboundRevenueReport = "InvoiceInboundRevenueReport";
     private static final String InvoiceInboundRevenueEmail = "InvoiceInboundRevenueEmail";
+    private static final String RefundTicketSummaryReport = "RefundTicketSummaryReport";
     
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -365,8 +366,12 @@ public class ReportController extends SMITravelController {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
         }else if (InvoiceInboundPerformaReport.equalsIgnoreCase(name)) {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
+        }else if (RefundTicketSummaryReport.equalsIgnoreCase(name)) {
+            String ticketFrom = request.getParameter("ticketFrom");
+            String ticketTo = request.getParameter("ticketTo");
+            String refundBy = request.getParameter("refundBy");
+            data = reportservice.getRefundTicketSummary(refundFrom,refundTo,ticketFrom,ticketTo,refundBy,user.getRole().getName());
         }
-        
         
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);
 
