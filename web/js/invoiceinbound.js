@@ -160,9 +160,15 @@ $(document).ready(function() {
 });
 
 function searchInvoiceFromInvoiceNo() {
-    var action = document.getElementById('action');
-    action.value = 'searchInvoice';
-    document.getElementById('InvoiceInboundForm').submit();
+    
+    var invno = $("#InvNo").val();
+    if(invno !== ""){
+        var action = document.getElementById('action');
+        action.value = 'searchInvoice';
+        document.getElementById('InvoiceInboundForm').submit();
+    }else{
+        $("#InvNo").focus();
+    }
 }
 
 function searchCustomerAgentList(name) {
@@ -344,12 +350,12 @@ function calculateGross(row) {
         if (countVat !== 0) {
             var vatT = $('#vatBase').val();
             var vatTT = parseFloat(vatT);
-            console.log("Vat : " + vatTT);
-            document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = vatTT;
+            console.log("Vat : " + formatNumber(vatTT));
+            document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = formatNumber(vatTT);
             grossTotal = (amount * 100) / (100 + vatTT);
             document.getElementById('InputGross' + row).value = formatNumber(grossTotal);
         } else {
-            document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = vatDefaultData;
+            document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = formatNumber(vatDefaultData);
             if(amount !== 0){
                 grossTotal = (amount * 100) / (100 + vatDefaultData);
             }else{
@@ -571,7 +577,11 @@ function toWordsMoney(s){
             sk=0;
         }
     } 
-    str += '' + currency;
+    if(currency !== 'THB'){
+        str += '' + currency;
+    }else{
+        str += 'BAHT';
+    }
     if (x != s.length) {
         var y = s.length; str += 'point '; 
         for (var i=x+1; i<y; i++) str += dg[n[i]] +' ';
@@ -683,6 +693,7 @@ function addRowInvoiceInboundDetail(row){
 }
 
 function saveInvoiceInbound(){
+//    validFromInvoiceInbound();
     var actionG = document.getElementById('action');
     actionG.value = 'save';
     document.getElementById('InvoiceInboundForm').submit();
@@ -855,16 +866,15 @@ function validFromInvoiceInbound() {
         });
         $('#textAlertCurrency').show();
         currency = 1;
-        document.getElementById("saveInvoice").disabled = true;
+//        alert("1");
+        document.getElementById("saveInvoiceInbound").disabled = true;
 //        alert("Currency : " + currency); 
 //        $('#InvoiceForm').bootstrapValidator('validateField', 'SelectCurrencyAmount2'+rowTemp);
         if (checkcur1) {
             $('#textAlertCurrencyAmountNotEmpty').show();
-            document.getElementById("saveInvoice").disabled = true;
-        } else {
-            $('#textAlertInvoiceNotEmpty').hide();
-            document.getElementById("saveInvoice").disabled = false;
-        }
+//            alert("2");
+            document.getElementById("saveInvoiceInbound").disabled = true;
+        } 
         return false;
     } else {
         $('#DetailBillableTable').find('tr').each(function() {
@@ -876,13 +886,14 @@ function validFromInvoiceInbound() {
         });
         $('#textAlertCurrency').hide();
         currency = 0;
-        document.getElementById("saveInvoice").disabled = false;
+        document.getElementById("saveInvoiceInbound").disabled = false;
         if (checkcur1) {
             $('#textAlertCurrencyAmountNotEmpty').show();
-            document.getElementById("saveInvoice").disabled = true;
+//            alert("3");
+            document.getElementById("saveInvoiceInbound").disabled = true;
         } else {
             $('#textAlertInvoiceNotEmpty').hide();
-            document.getElementById("saveInvoice").disabled = false;
+            document.getElementById("saveInvoiceInbound").disabled = false;
         }
         return true;
     }

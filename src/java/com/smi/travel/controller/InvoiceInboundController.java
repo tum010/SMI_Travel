@@ -142,8 +142,8 @@ public class InvoiceInboundController extends SMITravelController {
             request.setAttribute("thisdate", InputInvDate);
             System.out.println("invoiceService checkOverflowValueOfInvoice:"+invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()));
         }else if("searchInvoice".equals(action)){ // search invoice when input invoice no
-            String depart = invoiceNo.substring(0,1);
-            String type = invoiceNo.substring(1,2);
+            String depart = (invoiceNo.length() > 2 ? invoiceNo.substring(0,1) : "");
+            String type = (invoiceNo.length() > 2 ? invoiceNo.substring(1,2) : "");
             System.out.println("Department : " + depart + " Type : " + type);
             if("I".equals(depart)){
                 if("V".equals(type)){
