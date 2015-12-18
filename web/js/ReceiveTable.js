@@ -235,12 +235,6 @@ function setEnvironment() {
     if ($("#chqAmount").val() !== '') {
         $("#chqAmount").val(formatNumber(parseFloat($("#chqAmount").val().replace(/,/g, ""))));
     }
-    if ($("#chqBank").val() !== '') {
-        $("#chqBank").val(formatNumber(parseFloat($("#chqBank").val().replace(/,/g, ""))));
-    }
-    if ($("#chqNo").val() !== '') {
-        $("#chqNo").val(formatNumber(parseFloat($("#chqNo").val().replace(/,/g, ""))));
-    }
     if ($("#periodDetail").val() !== '') {
         $("#periodDetail").val($("#periodDetail").val().replace(/<br ?\/?>/g, "\n"));
     }
@@ -780,40 +774,62 @@ function CallAjaxCheckPeriod(param) {
             data: param,
             success: function(msg) {
                 if (msg !== 'fail') {
-                    var billJson = JSON.parse(msg);
-                    for (var i in billJson) {
-                        if (billJson.hasOwnProperty(i)) {
-                            $("#periodId").val(billJson[i].periodId);
-                            $("#receiveFrom").val(billJson[i].receiveFrom);
-                            $("#receiveTo").val(billJson[i].receiveTo);
-                            $("#receiveDetail").val(billJson[i].periodIdDetail);
-                            $("#receiveCashAmount").val(billJson[i].cashamount);
-                            $("#receiveBankAmount").val(billJson[i].bankamount);
-                            $("#receiveCash").val(billJson[i].cashminusamount);
-                            $("#receiveCheque").val(billJson[i].cheque);
-                            $("#receiveCreditCard").val(billJson[i].creditcard);
+                    $('#periodTable > tbody  > tr').each(function() {
+                        $(this).remove();
+                    });
+                    $("#periodTable tbody").append(msg);
+                    $("#periodId").val($("#periodIdTemp").val());
+                    $("#receiveFrom").val($("#periodFromTemp").val());
+                    $("#receiveTo").val($("#periodToTemp").val());
+                    $("#receiveDetail").val($("#periodDetailTemp").val());
+                    $("#receiveCashAmount").val($("#periodCashAmountTemp").val());
+                    $("#receiveBankAmount").val($("#periodBankAmountTemp").val());
+                    $("#receiveCash").val($("#periodCashMinusAmountTemp").val());
+                    $("#receiveCheque").val($("#periodChqAmountTemp").val());
+                    $("#receiveCreditCard").val($("#periodCreditAmountTemp").val());
 
-                            $("#periodDetail").val(billJson[i].periodIdDetail);
-                            $("#periodCashAmount").val(billJson[i].cashamount);
-                            $("#periodBankAmount").val(billJson[i].bankamount);
-                            $("#periodCash").val(billJson[i].cashminusamount);
-                            $("#periodCheque").val(billJson[i].cheque);
-                            $("#periodCreditCard").val(billJson[i].creditcard);
-                            setEnvironment();
-                        }
-                    }
+                    $("#periodDetail").val($("#periodDetailTemp").val());
+                    $("#periodCashAmount").val($("#periodCashAmountTemp").val());
+                    $("#periodBankAmount").val($("#periodBankAmountTemp").val());
+                    $("#periodCash").val($("#periodCashMinusAmountTemp").val());
+                    $("#periodCheque").val($("#periodChqAmountTemp").val());
+                    $("#periodCreditCard").val($("#periodCreditAmountTemp").val());
+                    setEnvironment();
+
+//                    var billJson = JSON.parse(msg);
+//                    for (var i in billJson) {
+//                        if (billJson.hasOwnProperty(i)) {
+//                            $("#periodId").val(billJson[i].periodId);
+//                            $("#receiveFrom").val(billJson[i].receiveFrom);
+//                            $("#receiveTo").val(billJson[i].receiveTo);
+//                            $("#receiveDetail").val(billJson[i].periodIdDetail);
+//                            $("#receiveCashAmount").val(billJson[i].cashamount);
+//                            $("#receiveBankAmount").val(billJson[i].bankamount);
+//                            $("#receiveCash").val(billJson[i].cashminusamount);
+//                            $("#receiveCheque").val(billJson[i].cheque);
+//                            $("#receiveCreditCard").val(billJson[i].creditcard);
+//
+//                            $("#periodDetail").val(billJson[i].periodIdDetail);
+//                            $("#periodCashAmount").val(billJson[i].cashamount);
+//                            $("#periodBankAmount").val(billJson[i].bankamount);
+//                            $("#periodCash").val(billJson[i].cashminusamount);
+//                            $("#periodCheque").val(billJson[i].cheque);
+//                            $("#periodCreditCard").val(billJson[i].creditcard);
+//                            setEnvironment();
+//                        }
+//                    }
                     $("#fromdatepanel").removeClass("has-error");
                     $("#fromdatepanel").addClass("has-success");
                     $("#todatepanel").removeClass("has-error");
                     $("#todatepanel").addClass("has-success");
                     $('#textAlertDivSavePeriod').show();
                 } else {
-                    $("#fromdatepanel").removeClass("has-success");
-                    $("#todatepanel").removeClass("has-success");
-                    $("#vattypepanel").removeClass("has-success");
-                    $("#fromdatepanel").addClass("has-error");
-                    $("#todatepanel").addClass("has-error");
-                    $("#vattypepanel").addClass("has-error");
+//                    $("#fromdatepanel").removeClass("has-success");
+//                    $("#todatepanel").removeClass("has-success");
+//                    $("#vattypepanel").removeClass("has-success");
+//                    $("#fromdatepanel").addClass("has-error");
+//                    $("#todatepanel").addClass("has-error");
+//                    $("#vattypepanel").addClass("has-error");
                     $("#btnSave").addClass("disabled");
                     $('#textAlertDivNotSavePeriod').show();
                 }
@@ -865,7 +881,7 @@ function callPeriodList() {
 }
 
 function editAdvanceReceivePeriod(id, receiveFrom, receiveTo, detail, vatType, department, cashAmount, cashMinusAmount, bankTransfer, chqAmount, creditAmount) {
-//   alert(id+" "+receiveFrom+" "+receiveTo+" "+detail+" "+vatType+" "+department+" "+cashAmount+" "+cashMinusAmount+" "+bankTransfer+" "+chqAmount+" "+creditAmount);
+//    alert(id + " " + receiveFrom + " " + receiveTo + " " + detail + " " + vatType + " " + department + " " + cashAmount + " " + cashMinusAmount + " " + bankTransfer + " " + chqAmount + " " + creditAmount);
     $("#periodId").val(id);
     $("#receiveFrom").val(receiveFrom);
     $("#receiveTo").val(receiveTo);
@@ -888,18 +904,16 @@ function editAdvanceReceivePeriod(id, receiveFrom, receiveTo, detail, vatType, d
     $("#receivePeriodModal").modal("hide");
 }
 
-function deleteAdvanceReceivePeriod() {      
+function deleteAdvanceReceivePeriod() {
     var periodSize = parseInt($("#periodSize").val());
-    var periodRow = '';
     var periodId = '';
-    for(var i=1; i<=periodSize; i++){
-        if($('#periodCheckbox'+i).is(":checked")){
-            periodId += $('#periodId'+i).val()+',';
-            periodRow += $('#periodRow'+i).val()+',';
+    for (var i = 1; i <= periodSize; i++) {
+        if ($('#periodCheckbox' + i).is(":checked")) {
+            periodId += $('#periodId' + i).val() + ',';
         }
     }
 
-    if(periodId !== ''){
+    if (periodId !== '') {
         var department = $("#department").val();
         if (department === 'W') {
             department = 'Wendy';
@@ -918,14 +932,14 @@ function deleteAdvanceReceivePeriod() {
                 '&periodId=' + periodId +
                 '&department=' + department +
                 '&type=' + 'deletePeriodDate';
-        CallAjaxDeletePeriod(param,periodRow);
+        CallAjaxDeletePeriod(param,periodId);
 //        $("#receivePeriodModal").modal("hide");
-    }else{
+    } else {
         $("#receivePeriodModal").modal("hide");
     }
 }
 
-function CallAjaxDeletePeriod(param,periodRow) {
+function CallAjaxDeletePeriod(param,periodId) {
     var url = 'AJAXServlet';
     try {
         $.ajax({
@@ -934,10 +948,38 @@ function CallAjaxDeletePeriod(param,periodRow) {
             cache: false,
             data: param,
             success: function(msg) {
-                $('#periodTable > tbody  > tr').each(function() {
-                    $(this).remove();
-                });
-                $("#periodTable tbody").append(msg);
+                if (msg !== 'fail') {
+                    $('#periodTable > tbody  > tr').each(function() {
+                        $(this).remove();
+                    });
+                    $("#periodTable tbody").append(msg);
+                    
+                    var id = periodId.split(",");
+                    for(var i=0; i<id.length; i++){
+                        if($("#periodId").val() === id[i]){
+                            $("#periodId").val('');
+                            $("#receiveFrom").val('');
+                            $("#receiveTo").val('');
+                            $("#receiveDetail").val('');
+                            $("#receiveCashAmount").val('');
+                            $("#receiveBankAmount").val('');
+                            $("#receiveCash").val('');
+                            $("#receiveCheque").val('');
+                            $("#receiveCreditCard").val('');
+
+                            $("#fromDate").val('');
+                            $("#toDate").val('');
+                            $("#periodVatType").val('');
+                            $("#periodDetail").val('');
+                            $("#periodCashAmount").val('');
+                            $("#periodBankAmount").val('');
+                            $("#periodCash").val('');
+                            $("#periodCheque").val('');
+                            $("#periodCreditCard").val('');
+                            i = id.length;
+                        }
+                    }                   
+                }
 //                if(msg === 'success'){
 //                    var row = periodRow.split(",");
 //                    for(var i=0; i<row.length; i++){
@@ -945,8 +987,8 @@ function CallAjaxDeletePeriod(param,periodRow) {
 //                    }                  
 //                    $('#textAlertDivNotDeletePeriod').show();
 //                }
-            
-                
+
+
             }, error: function(msg) {
                 console.log('auto ERROR');
             }
@@ -1187,7 +1229,7 @@ function setCashOnDemand() {
         $("#creditAmount" + (parseInt($("#countCredit").val()) - 1)).prop("disabled", false);
         $("#expenButtonRemove" + (parseInt($("#countCredit").val()) - 1)).removeClass("hidden");
         $('#spandate' + (parseInt($("#countCredit").val()) - 1)).removeClass("hidden");
-        
+
         var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
         var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
         var cashAmount = ($("#cashAmount").val() !== '' ? parseFloat((($("#cashAmount").val()).replace(/,/g, ""))) : 0);
