@@ -519,7 +519,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             order ++ ;
             
             confirmdetail.setCode(B[0]== null ? "" :util.ConvertString(B[0]));
-            confirmdetail.setName(B[1]== null ? "" :util.ConvertString(B[1]));
+            confirmdetail.setDescription(B[1]== null ? "" :util.ConvertString(B[1]));
             
             String datetime = "" ;
             if(B[2] != null){
