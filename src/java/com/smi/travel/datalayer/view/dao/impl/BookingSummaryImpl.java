@@ -430,9 +430,14 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             confirmdetail.setFlight(B[2]== null ? "" :util.ConvertString(B[2]));
             confirmdetail.setDepart(B[3]== null ? "" :util.ConvertString(B[3]));
             confirmdetail.setDepartname(B[4]== null ? "" :util.ConvertString(B[4]));
-            confirmdetail.setDeparttime(B[5]== null ? "" :util.ConvertString(B[5]));
+            String deptime1 = util.ConvertString(B[5]).substring(0,2);
+            String deptime2 = util.ConvertString(B[5]).substring(2,4);
+            String arrtime1 = util.ConvertString(B[8]).substring(0,2);
+            String arrtime2 = util.ConvertString(B[8]).substring(2,4);
+            confirmdetail.setDeparttime(deptime1+":"+deptime2 + " - " +arrtime1+":"+arrtime2 );
             confirmdetail.setArrive(B[6]== null ? "" :util.ConvertString(B[6]));
             confirmdetail.setArrivename(B[7]== null ? "" :util.ConvertString(B[7]));
+
             confirmdetail.setArrivetime(B[8]== null ? "" :util.ConvertString(B[8]));
             confirmdetail.setPrice(B[9]== null ? "" :util.ConvertString(B[9]));
             data.add(confirmdetail);
