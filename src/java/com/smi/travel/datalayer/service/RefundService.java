@@ -78,4 +78,8 @@ public class RefundService {
         return refundDao.checkStatusRefundAirticket(refundairticketid);
     }
     
+    public String getOwner(String airticketBookingid){
+        return refundDao.getOwner(airticketBookingid);
+    }
+    
 }

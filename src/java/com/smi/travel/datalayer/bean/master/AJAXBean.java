@@ -887,9 +887,10 @@ public class AJAXBean extends AbstractBean implements
                         check = receiveTableDao.updateReceivePeriod(periodId,fromDate,toDate,vatType,periodDetail);                   
                         if("1".equalsIgnoreCase(check)){
                             AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
-                            advanceReceivePeriod = receiveTableDao.getReceivePeriod(receiveFrom,department,vatType);                            
-                            result = buildAdvanceReceivePeriodViewListJSON(advanceReceivePeriod,advanceReceivePeriodView);
-                            System.out.println("Result : "+result);
+                            advanceReceivePeriod = receiveTableDao.getReceivePeriod(receiveFrom,department,vatType);  
+                            List<AdvanceReceivePeriod> advanceReceivePeriodList = receiveTableDao.getReceivePeriodList(department);
+                            result =  buildAdvanceReceivePeriodListTaxHTML(advanceReceivePeriodList, advanceReceivePeriod, "update");                                                                                  
+//                            result = buildAdvanceReceivePeriodViewListJSON(advanceReceivePeriod,advanceReceivePeriodView);
                         }else{
                             result = "fail";
                         }
@@ -902,9 +903,10 @@ public class AJAXBean extends AbstractBean implements
                         check = receiveTableDao.saveReceivePeriod(periodId,fromDate,toDate,periodDetail,department,vatType,advanceReceivePeriodView);                   
                         if("success".equalsIgnoreCase(check)){
                             AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
-                            advanceReceivePeriod = receiveTableDao.getReceivePeriod(fromDate,department,vatType);                            
-                            result = buildAdvanceReceivePeriodViewListJSON(advanceReceivePeriod,advanceReceivePeriodView);
-                            System.out.println("Result : "+result);
+                            advanceReceivePeriod = receiveTableDao.getReceivePeriod(fromDate,department,vatType);
+                            List<AdvanceReceivePeriod> advanceReceivePeriodList = receiveTableDao.getReceivePeriodList(department);
+                            result =  buildAdvanceReceivePeriodListTaxHTML(advanceReceivePeriodList, advanceReceivePeriod, "save");                                                        
+//                            result = buildAdvanceReceivePeriodViewListJSON(advanceReceivePeriod,advanceReceivePeriodView);
                         }
                     }else{
                         result = "fail";
@@ -916,7 +918,7 @@ public class AJAXBean extends AbstractBean implements
                 String check = receiveTableDao.deleteReceivePeriod(periodId);
                 if("success".equalsIgnoreCase(check)){
                    List<AdvanceReceivePeriod> advanceReceivePeriodList = receiveTableDao.getReceivePeriodList(department);
-                   result =  buildAdvanceReceivePeriodListTaxHTML(advanceReceivePeriodList);
+                   result =  buildAdvanceReceivePeriodListTaxHTML(advanceReceivePeriodList, null, "delete");
                 }
                 
             }
@@ -2378,7 +2380,7 @@ public class AJAXBean extends AbstractBean implements
         return record;
     }
 
-    private String buildAdvanceReceivePeriodListTaxHTML(List<AdvanceReceivePeriod> advanceReceivePeriodList) {
+    private String buildAdvanceReceivePeriodListTaxHTML(List<AdvanceReceivePeriod> advanceReceivePeriodList, AdvanceReceivePeriod period, String option) {
         UtilityFunction util = new UtilityFunction();
         StringBuffer html = new StringBuffer();
         int row = 1;
@@ -2393,6 +2395,31 @@ public class AJAXBean extends AbstractBean implements
         String bankTransfer = "";
         String chqAmount = "";
         String creditAmount = "";
+        
+        if("save".equalsIgnoreCase(option) || "update".equalsIgnoreCase(option)){
+            id = period.getId();
+            detail = (!"".equalsIgnoreCase(period.getDetail()) && period.getDetail() != null ? period.getDetail() : "");
+            receiveFrom = util.convertDateToString(period.getReceiveFrom());
+            receiveTo = util.convertDateToString(period.getReceiveTo());
+            cashAmount = (period.getCashAmount() != null ? String.valueOf(period.getCashAmount()) : "");
+            cashMinusAmount = (period.getCashAmount() != null ? String.valueOf(period.getCashAmount()) : "");
+            bankTransfer = (period.getCashAmount() != null ? String.valueOf(period.getCashAmount()) : "");
+            chqAmount = (period.getCashAmount() != null ? String.valueOf(period.getCashAmount()) : "");
+            creditAmount = (period.getCashAmount() != null ? String.valueOf(period.getCashAmount()) : "");        
+            String newrow = "";              
+            newrow += "<tr>"
+                    + "<input type='hidden' name='periodIdTemp' id='periodIdTemp' value='" + id + "'>"
+                    + "<input type='hidden' name='periodDetailTemp' id='periodDetailTemp' value='" + detail + "'>"
+                    + "<input type='hidden' name='periodFromTemp' id='periodFromTemp' value='" + receiveFrom + "'>"
+                    + "<input type='hidden' name='periodToTemp' id='periodToTemp' value='" + receiveTo + "'>"
+                    + "<input type='hidden' name='periodCashAmountTemp' id='periodCashAmountTemp' value='" + cashAmount + "'>"
+                    + "<input type='hidden' name='periodCashMinusAmountTemp' id='periodCashMinusAmountTemp' value='" + cashMinusAmount + "'>"
+                    + "<input type='hidden' name='periodBankAmountTemp' id='periodBankAmountTemp' value='" + bankTransfer + "'>"
+                    + "<input type='hidden' name='periodChqAmountTemp' id='periodChqAmountTemp' value='" + chqAmount + "'>"
+                    + "<input type='hidden' name='periodCreditAmountTemp' id='periodCreditAmountTemp' value='" + creditAmount + "'>"
+                    + "</tr>";
+            html.append(newrow);
+        }
                 
         for(int i=0; i<advanceReceivePeriodList.size(); i++){
             AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
@@ -2400,7 +2427,7 @@ public class AJAXBean extends AbstractBean implements
             id = advanceReceivePeriod.getId();
             receiveFrom = util.convertDateToString(advanceReceivePeriod.getReceiveFrom());
             receiveTo = util.convertDateToString(advanceReceivePeriod.getReceiveTo());
-            detail = advanceReceivePeriod.getDetail();
+            detail = (!"".equalsIgnoreCase(advanceReceivePeriod.getDetail()) && advanceReceivePeriod.getDetail() != null ? advanceReceivePeriod.getDetail() : "");
             vatType = advanceReceivePeriod.getVatType();
             department = advanceReceivePeriod.getDepartment();
             cashAmount = (advanceReceivePeriod.getCashAmount() != null ? String.valueOf(advanceReceivePeriod.getCashAmount()) : "");
@@ -2411,16 +2438,16 @@ public class AJAXBean extends AbstractBean implements
             
             String newrow = "";              
             newrow += "<tr>"
-                    + "<td class='text-center'>"
-                    +       "<input type='checkbox' id='periodCheckbox" + row + "' name='periodCheckbox" + row + "' value=''/>"
-                    +       "<input type='hidden' id='periodRow" + row + "' name='periodRow" + row + "' value='" + row + "'/>"
-                    +       "<input type='hidden' id='periodId" + row + "' name='periodId" + row + "' value='" + id + "'/>"
+                    + "<td class=\"text-center\">"
+                    +       "<input type=\"checkbox\" id=\"periodCheckbox" + row + "\" name=\"periodCheckbox" + row + "\" value=\"\"/>"
+                    +       "<input type=\"hidden\" id=\"periodRow" + row + "\" name=\"periodRow" + row + "\" value=\"" + row + "\"/>"
+                    +       "<input type=\"hidden\" id=\"periodId" + row + "\" name=\"periodId" + row + "\" value=\"" + id + "\"/>"
                     + "</td>" 
-                    + "<td class='text-center'>" + receiveFrom + "</td>"
-                    + "<td class='text-center'>" + receiveTo + "</td>"
-                    + "<td class='text-center'>" + ("V".equalsIgnoreCase(vatType) ? "Vat" : "Temp") + "</td>"
-                    + "<td class='text-center'>"
-                    +       "<span class='glyphicon glyphicon-edit editicon' onclick='editAdvanceReceivePeriod('" + id + "','" + receiveFrom + "','" + receiveTo + "','" + detail + "','" + vatType + "','" + department + "','" + cashAmount + "','" + cashMinusAmount + "','" + bankTransfer + "','" + chqAmount + "','" + creditAmount + "');'></span>"                                                                                                                                     
+                    + "<td class=\"text-center\">" + receiveFrom + "</td>"
+                    + "<td class=\"text-center\">" + receiveTo + "</td>"
+                    + "<td class=\"text-center\">" + ("V".equalsIgnoreCase(vatType) ? "Vat" : "Temp") + "</td>"
+                    + "<td class=\"text-center\">"
+                    +       "<span class=\"glyphicon glyphicon-edit editicon\" onclick=\"editAdvanceReceivePeriod('" + id + "','" + receiveFrom + "','" + receiveTo + "','" + detail + "','" + vatType + "','" + department + "','" + cashAmount + "','" + cashMinusAmount + "','" + bankTransfer + "','" + chqAmount + "','" + creditAmount + "');\"></span>"                                                                                                                                     
                     + "</td>"
                     + "</tr>";
             html.append(newrow);

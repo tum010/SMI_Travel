@@ -6,6 +6,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.RefundDao;
+import com.smi.travel.datalayer.entity.AirticketBooking;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
 import com.smi.travel.datalayer.entity.AirticketRefund;
@@ -33,6 +34,7 @@ public class RefundImpl implements RefundDao{
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private static final String SELECT_REFUND_AIRTICKET = "FROM AirticketRefund ar where ar.airticketBooking.id = :airbookingid";
+    private static final String SELECT_AIRBOOKIG = "FROM AirticketBooking ar where ar.id = :airbookingid";
     private static final String SELECT_REFUND_AIRTICKET2 = "FROM AirticketRefund ar where ar.airticketBooking.id = :airbookingid  and ar.refundAirticket.id = :refundid";
     private static final String SELECT_REFUND_DETAIL = "FROM AirticketRefund ar where ar.id = :refundid";
     private static final String SELECT_TICKETNO = "From AirticketPassenger psg where psg.airticketAirline.airticketPnr.airticketBooking.master.referenceNo = :refno";
@@ -233,6 +235,7 @@ public class RefundImpl implements RefundDao{
                         refundTicket.setRefundby("");
                     }
                 }  
+                refundTicket.setOwnerby(airbookingidList.get(i).getRefundAirticket().getOwnerby());
                 refundTicket.setRefundcode(airbookingidList.get(i).getRefundAirticket().getRefundBy());
                 refundTicket.setRefunddate(airbookingidList.get(i).getRefundAirticket().getRefundDate());
                 refundTicket.setReceivedate(airbookingidList.get(i).getRefundAirticket().getReceiveDate());
@@ -241,12 +244,19 @@ public class RefundImpl implements RefundDao{
                 List<RefundAirticketDetail> rRefundAirticketDetail = new LinkedList<RefundAirticketDetail>();
                 rRefundAirticketDetail =  airbookingidList.get(i).getRefundAirticket().getRefundAirticketDetails();
                 BigDecimal sumCharge = new BigDecimal(0);
+                BigDecimal sumPaycustomer = new BigDecimal(0);
                 DecimalFormat df = new DecimalFormat("#,###.00");
                 for (int j = 0; j < rRefundAirticketDetail.size(); j++) {
-                    if(rRefundAirticketDetail.get(j).getPayCustomer() != null ){
-                        sumCharge = sumCharge.add(rRefundAirticketDetail.get(j).getPayCustomer());
+                    if(rRefundAirticketDetail.get(j).getReceiveAirline() != null ){
+                        sumCharge = sumCharge.add(rRefundAirticketDetail.get(j).getReceiveAirline());
                     }else{
                         sumCharge = sumCharge.add(new BigDecimal(0.0));
+                    }
+                    
+                    if(rRefundAirticketDetail.get(j).getPayCustomer() != null ){
+                        sumPaycustomer = sumPaycustomer.add(rRefundAirticketDetail.get(j).getPayCustomer());
+                    }else{
+                        sumPaycustomer = sumPaycustomer.add(new BigDecimal(0.0));
                     }
                     // Refund Detail
                     RefundTicketDetail refundTicketDetail = new RefundTicketDetail();
@@ -268,14 +278,21 @@ public class RefundImpl implements RefundDao{
                         refundTicketDetail.setSectorRefund(rRefundAirticketDetail.get(j).getSectorRefund());
 
                         //Charge
-                        if(rRefundAirticketDetail.get(j).getPayCustomer() != null ){
-                            refundTicketDetail.setCharge(df.format(rRefundAirticketDetail.get(j).getPayCustomer()));
+                        if(rRefundAirticketDetail.get(j).getReceiveAirline() != null ){
+                            refundTicketDetail.setCharge(df.format(rRefundAirticketDetail.get(j).getReceiveAirline()));
                         }else{
                             refundTicketDetail.setCharge("");
+                        }
+                        //Charge
+                        if(rRefundAirticketDetail.get(j).getPayCustomer() != null ){
+                            refundTicketDetail.setPaycustomer(df.format(rRefundAirticketDetail.get(j).getPayCustomer()));
+                        }else{
+                            refundTicketDetail.setPaycustomer("");
                         }
                     listRefundTicketDetail.add(refundTicketDetail);
                 }
                 refundTicket.setChange(df.format(sumCharge));
+                refundTicket.setPaycustomer(df.format(sumPaycustomer));
                 refundTicket.setDetail(airbookingidList.get(i).getRefundAirticket().getRemark());
                 refundTicket.setAddress(airbookingidList.get(i).getRefundAirticket().getAddress());
                 refundTicket.setRefundTicketDetail(listRefundTicketDetail);
@@ -356,6 +373,26 @@ public class RefundImpl implements RefundDao{
             }
         }
         return result;
+    }
+
+    @Override
+    public String getOwner(String airticketBookingid) {
+        String ownerby = "";
+        Session session = this.sessionFactory.openSession();
+        List<AirticketBooking> airbookingidList = session.createQuery(SELECT_AIRBOOKIG)
+                .setParameter("airbookingid", airticketBookingid)
+                .list();
+        if (airbookingidList.isEmpty()) {
+            ownerby = "";
+        }else{
+            if(airbookingidList != null && airbookingidList.size() != 0){
+                AirticketBooking airBook = airbookingidList.get(0);
+                ownerby = airBook.getStaffByOwnerBy().getUsername();
+            }else{
+                 ownerby = "";
+            }
+        }
+        return ownerby;
     }
 
 }

@@ -25,4 +25,5 @@ public interface RefundDao {
     public String deleteAirticketRefund(String airticketRefund,String refundid);
     public String deleteAirticketRefundDetail(String airticketRefund,String refundid,String refunddetailid);
     public String checkStatusRefundAirticket(String refundairticketid);
+    public String getOwner(String airticketBookingid);
 }
