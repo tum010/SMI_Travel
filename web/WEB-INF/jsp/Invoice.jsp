@@ -85,7 +85,7 @@
                     <c:set var="invType" value="Air Ticket" />
                     <c:set var="typeBooking" value="I" />
                     <h4><b>Finance & Cashier - Invoice Air Ticket Wendy <font style="color: red;"> ${textVoid}</font></b>
-                    <img src="${pageContext.request.contextPath}/img/airplain.png" style="width:120px;height:50px;margin-left: 10px;"></h4>
+                    <img src="${pageContext.request.contextPath}/img/airplain.png" style="width:100px;height:40px;margin-left: 10px;"></h4>
                     <c:set var="panelheader" value="wendyheader"/>
                     <c:set var="panelborder" value="wendyborder"/>
                 </c:when> 
