@@ -10,7 +10,6 @@ import com.smi.travel.datalayer.report.model.BillAirAgentDetailReport;
 import com.smi.travel.datalayer.report.model.BillAirAgentRefundReport;
 import com.smi.travel.datalayer.report.model.BillAirAgentReport;
 import com.smi.travel.datalayer.report.model.BillAirAgentSummaryReport;
-import com.smi.travel.datalayer.report.model.TicketFareReport;
 import com.smi.travel.datalayer.view.dao.BillAirAgentDao;
 import com.smi.travel.datalayer.view.entity.BillAirAgentRefund;
 import com.smi.travel.datalayer.view.entity.ListBillAirAgent;
