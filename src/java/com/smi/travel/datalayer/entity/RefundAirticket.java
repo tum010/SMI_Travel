@@ -22,6 +22,10 @@ public class RefundAirticket {
      private Date receiveDate;
      private String address;
      private Integer status;
+     private String ownerby;
+     private String refundtype;
+     private String otherreason;
+     private String masterid;
      private List<RefundAirticketDetail> refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
 
     public RefundAirticket() {
@@ -34,6 +38,38 @@ public class RefundAirticket {
        this.refundBy = refundBy;
        this.remark = remark;
        this.refundAirticketDetails = refundAirticketDetails;
+    }
+
+    public String getOwnerby() {
+        return ownerby;
+    }
+
+    public void setOwnerby(String ownerby) {
+        this.ownerby = ownerby;
+    }
+
+    public String getRefundtype() {
+        return refundtype;
+    }
+
+    public void setRefundtype(String refundtype) {
+        this.refundtype = refundtype;
+    }
+
+    public String getOtherreason() {
+        return otherreason;
+    }
+
+    public void setOtherreason(String otherreason) {
+        this.otherreason = otherreason;
+    }
+
+    public String getMasterid() {
+        return masterid;
+    }
+
+    public void setMasterid(String masterid) {
+        this.masterid = masterid;
     }
    
     public String getId() {
