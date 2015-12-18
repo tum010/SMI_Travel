@@ -656,5 +656,62 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         }
         return result; 
     }
+
+    @Override
+    public String compareReceiptSummary(AdvanceReceivePeriod advanceReceivePeriod, AdvanceReceivePeriodView advanceReceivePeriodView) {
+        UtilityFunction util = new UtilityFunction();
+        BigDecimal cashAmount = (advanceReceivePeriod.getCashAmount() != null ? advanceReceivePeriod.getCashAmount() : new BigDecimal(0));
+        BigDecimal cashMinusAmount = (advanceReceivePeriod.getCashMinusAmount()!= null ? advanceReceivePeriod.getCashMinusAmount(): new BigDecimal(0));
+        BigDecimal bankTransfer = (advanceReceivePeriod.getBankTransfer() != null ? advanceReceivePeriod.getBankTransfer() : new BigDecimal(0));
+        BigDecimal chqAmount = (advanceReceivePeriod.getChqAmount() != null ? advanceReceivePeriod.getChqAmount() : new BigDecimal(0));
+        BigDecimal creditAmount = (advanceReceivePeriod.getCreditAmount() != null ? advanceReceivePeriod.getCreditAmount() : new BigDecimal(0));
+        
+        BigDecimal recCashAmount = (!"".equalsIgnoreCase(advanceReceivePeriodView.getCashamount()) && advanceReceivePeriodView.getCashamount() != null ? new BigDecimal(advanceReceivePeriodView.getCashamount()) : new BigDecimal(0));
+        BigDecimal recBankAmount = (!"".equalsIgnoreCase(advanceReceivePeriodView.getBankamount()) && advanceReceivePeriodView.getBankamount() != null ? new BigDecimal(advanceReceivePeriodView.getBankamount()) : new BigDecimal(0));
+        BigDecimal recCashMinusAmount = (!"".equalsIgnoreCase(advanceReceivePeriodView.getCashminusamount()) && advanceReceivePeriodView.getCashminusamount() != null ? new BigDecimal(advanceReceivePeriodView.getCashminusamount()) : new BigDecimal(0));
+        BigDecimal recCheque = (!"".equalsIgnoreCase(advanceReceivePeriodView.getCheque()) && advanceReceivePeriodView.getCheque() != null ? new BigDecimal(advanceReceivePeriodView.getCheque()) : new BigDecimal(0));
+        BigDecimal recCreditCard = (!"".equalsIgnoreCase(advanceReceivePeriodView.getCreditcard()) && advanceReceivePeriodView.getCreditcard() != null ? new BigDecimal(advanceReceivePeriodView.getCreditcard()) : new BigDecimal(0));
+        
+        BigDecimal cashCompare = new BigDecimal(0);
+        BigDecimal cashMinusCompare = new BigDecimal(0);
+        BigDecimal bankCompare = new BigDecimal(0);
+        BigDecimal chqCompare = new BigDecimal(0);
+        BigDecimal creditCompare = new BigDecimal(0);
+        
+        String result = "";
+        boolean condition = false;
+        if(recCashAmount.compareTo(cashAmount) != 0){
+            cashCompare = recCashAmount.subtract(cashAmount);
+            result += (condition ? " , " : "Diff - ");
+            condition = true;
+            result += "Cash Amount : "+util.setFormatMoney(cashCompare);
+        }
+        if(recCashMinusAmount.compareTo(cashMinusAmount) != 0){
+            cashMinusCompare = recCashMinusAmount.subtract(cashMinusAmount);
+            result += (condition ? " , " : "Diff - ");
+            condition = true;
+            result += "Cash Minus Amount : "+util.setFormatMoney(cashMinusCompare);           
+        }
+        if(recCheque.compareTo(chqAmount) != 0){
+            chqCompare = recCheque.subtract(chqAmount);
+            result += (condition ? " , " : "Diff - ");
+            condition = true;
+            result += "Chq Amount : "+util.setFormatMoney(chqCompare);
+        }
+        if(recBankAmount.compareTo(bankTransfer) != 0){
+            bankCompare = recBankAmount.subtract(bankTransfer);
+            result += (condition ? " , " : "Diff - ");
+            condition = true;
+            result += "Bank Amount : "+util.setFormatMoney(bankCompare);
+        }       
+        if(recCreditCard.compareTo(creditAmount) != 0){
+            creditCompare = recCreditCard.subtract(creditAmount);
+            result += (condition ? " , " : "Diff - ");
+            condition = true;
+            result += "Credit Amount : "+util.setFormatMoney(creditCompare);
+        }
+        
+        return result;
+    }
        
 }

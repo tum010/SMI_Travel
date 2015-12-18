@@ -64,5 +64,9 @@ public class ReceiveTableService {
     public List<AdvanceReceivePeriod> getReceivePeriodList(String department) {
         return this.receiveTableDao.getReceivePeriodList(department);
     }
+
+    public String compareReceiptSummary(AdvanceReceivePeriod advanceReceivePeriod, AdvanceReceivePeriodView advanceReceivePeriodView) {
+        return this.receiveTableDao.compareReceiptSummary(advanceReceivePeriod,advanceReceivePeriodView);
+    }
     
 }

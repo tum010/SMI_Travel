@@ -2402,10 +2402,10 @@ public class AJAXBean extends AbstractBean implements
             receiveFrom = util.convertDateToString(period.getReceiveFrom());
             receiveTo = util.convertDateToString(period.getReceiveTo());
             cashAmount = (period.getCashAmount() != null ? String.valueOf(period.getCashAmount()) : "");
-            cashMinusAmount = (period.getCashAmount() != null ? String.valueOf(period.getCashAmount()) : "");
-            bankTransfer = (period.getCashAmount() != null ? String.valueOf(period.getCashAmount()) : "");
-            chqAmount = (period.getCashAmount() != null ? String.valueOf(period.getCashAmount()) : "");
-            creditAmount = (period.getCashAmount() != null ? String.valueOf(period.getCashAmount()) : "");        
+            cashMinusAmount = (period.getCashMinusAmount()!= null ? String.valueOf(period.getCashMinusAmount()) : "");
+            bankTransfer = (period.getBankTransfer()!= null ? String.valueOf(period.getBankTransfer()) : "");
+            chqAmount = (period.getChqAmount()!= null ? String.valueOf(period.getChqAmount()) : "");
+            creditAmount = (period.getCreditAmount()!= null ? String.valueOf(period.getCreditAmount()) : "");        
             String newrow = "";              
             newrow += "<tr>"
                     + "<input type='hidden' name='periodIdTemp' id='periodIdTemp' value='" + id + "'>"

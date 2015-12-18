@@ -32,5 +32,6 @@ public interface ReceiveTableDao {
     public List<AdvanceReceivePeriod> getReceivePeriodList(String department);
     public AdvanceReceiveCredit testStoredProcedure(String agentName);
     public String deleteReceivePeriod(String periodId);
+    public String compareReceiptSummary(AdvanceReceivePeriod advanceReceivePeriod, AdvanceReceivePeriodView advanceReceivePeriodView);
    
 }

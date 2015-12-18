@@ -214,6 +214,11 @@ $(document).ready(function() {
         setCashOnDemand()
     });
 
+    //Period Message
+    if ($("#periodMessage").val() !== '') {
+        showPeriodMessage();
+    }
+
     setEnvironment();
 
 });
@@ -309,8 +314,8 @@ function CallAjaxAuto(param) {
 //                        $("#dataload").addClass("hidden"); 
                 }
 //                   $("#InvTo_Id").val(billid);
-                $("#receiveArCode").val(billid);
-                $("#receiveName").val(billname);
+//                $("#receiveArCode").val(billid);
+//                $("#receiveName").val(billname);
 //                   $("#InvToAddress").val(billaddr);
 
                 $("#receiveName").autocomplete({
@@ -854,6 +859,10 @@ function hideTextAlertDivDeletePeriod() {
     $('#textAlertDivNotDeletePeriod').hide();
 }
 
+function hideTextAlertPeriodMessage() {
+    $('#textAlertDivPeriodMeaasge').hide();
+}
+
 function newReceivePeriod() {
     $("#periodId").val('');
     $("#receiveFrom").val('');
@@ -932,14 +941,14 @@ function deleteAdvanceReceivePeriod() {
                 '&periodId=' + periodId +
                 '&department=' + department +
                 '&type=' + 'deletePeriodDate';
-        CallAjaxDeletePeriod(param,periodId);
+        CallAjaxDeletePeriod(param, periodId);
 //        $("#receivePeriodModal").modal("hide");
     } else {
         $("#receivePeriodModal").modal("hide");
     }
 }
 
-function CallAjaxDeletePeriod(param,periodId) {
+function CallAjaxDeletePeriod(param, periodId) {
     var url = 'AJAXServlet';
     try {
         $.ajax({
@@ -953,10 +962,10 @@ function CallAjaxDeletePeriod(param,periodId) {
                         $(this).remove();
                     });
                     $("#periodTable tbody").append(msg);
-                    
+
                     var id = periodId.split(",");
-                    for(var i=0; i<id.length; i++){
-                        if($("#periodId").val() === id[i]){
+                    for (var i = 0; i < id.length; i++) {
+                        if ($("#periodId").val() === id[i]) {
                             $("#periodId").val('');
                             $("#receiveFrom").val('');
                             $("#receiveTo").val('');
@@ -978,7 +987,7 @@ function CallAjaxDeletePeriod(param,periodId) {
                             $("#periodCreditCard").val('');
                             i = id.length;
                         }
-                    }                   
+                    }
                 }
 //                if(msg === 'success'){
 //                    var row = periodRow.split(",");
@@ -995,6 +1004,14 @@ function CallAjaxDeletePeriod(param,periodId) {
         });
     } catch (e) {
         alert(e);
+    }
+}
+// Period Message
+function showPeriodMessage() {
+    if ($("#periodMessage").val() !== '') {
+        $("#textAlertDivPeriodMeaasge").show();
+        $("#periodAlertMessage").text($("#periodMessage").val());
+
     }
 }
 
@@ -1066,11 +1083,8 @@ function setStatusFormat() {
         disabledReceiveTableField(status);
         setChqAmount(chqAmount);
 
-    } else if (status == 'Void') {
-
-
-    } else if (status == 'Wait') {
-
+    } else if (status == 'Void' || status == 'Wait') {
+        setVoidAndWaitAmount();
     }
 }
 
@@ -1266,6 +1280,36 @@ function setCashOnDemand() {
                 if (creditAmount.val() !== undefined) {
                     $("#creditAmount" + i).css("border", "red solid 1px");
                 }
+            }
+        }
+    }
+}
+
+function setVoidAndWaitAmount() {
+    var status = $("#status option:selected").text();
+    if (status == 'Void' || status == 'Wait') {
+        $("#cashAmount").prop("disabled", false);
+        $("#bankAmount").prop("disabled", false);
+        $("#chqAmount").prop("disabled", false);
+        $("#creditCard" + (parseInt($("#countCredit").val()) - 1)).prop("disabled", false);
+        $("#creditNo" + (parseInt($("#countCredit").val()) - 1)).prop("disabled", false);
+        $("#creditExpire" + (parseInt($("#countCredit").val()) - 1)).prop("disabled", false);
+        $("#creditAmount" + (parseInt($("#countCredit").val()) - 1)).prop("disabled", false);
+        $("#expenButtonRemove" + (parseInt($("#countCredit").val()) - 1)).removeClass("hidden");
+        $('#spandate' + (parseInt($("#countCredit").val()) - 1)).removeClass("hidden");
+
+        $("#cashAmountPanel").removeClass("has-success");
+        $("#cashAmountPanel").removeClass("has-error");
+        $("#bankAmountPanel").removeClass("has-success");
+        $("#bankAmountPanel").removeClass("has-error");
+        $("#chqAmountPanel").removeClass("has-success");
+        $("#chqAmountPanel").removeClass("has-error");
+        $("#ButtonSave").removeClass("disabled");
+        var count = parseInt($("#countCredit").val());
+        for (var i = 1; i <= count; i++) {
+            var creditAmount = $("#creditAmount" + i);
+            if (creditAmount.val() !== undefined) {
+                $("#creditAmount" + i).css("border", "black solid 1px");
             }
         }
     }

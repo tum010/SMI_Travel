@@ -16,6 +16,7 @@
 <c:set var="advanceReceivePeriodList" value="${requestScope['advanceReceivePeriodList']}" />
 
 <input type="hidden" name="result" id="result" value="${requestScope['result']}">
+<input type="hidden" name="periodMessage" id="periodMessage" value="${requestScope['periodMessage']}">
 
 <section class="content-header" >
     <h1>
@@ -65,6 +66,9 @@
 <form action="ReceiveTable${department}.smi" method="post" id="receiveForm" role="form" autocomplete="off">
 <div class="col-xs-12" style="margin: 5px 0px 5px 0px;">
     <div class="col-xs-1"></div>
+    <div class="col-xs-1" style="width: 160px;">
+        <a href="ReceiveTableWO.smi" id="menu-wendyoutbound" ><b style="color: #FFC07B;">Wendy</b>+<b style="color: #FF8003;">Outbound</b></a>       
+    </div>
     <div class="col-xs-1" style="width: 80px;">        
         <a href="ReceiveTableW.smi" id="menu-wendyoutbound" style="color: #FFC07B;"><b>Wendy</b></a>
     </div>
@@ -73,10 +77,7 @@
     </div>
     <div class="col-xs-1" style="width: 80px;">
         <a href="ReceiveTableI.smi" id="menu-wendyoutbound" style="color: #11BF00;"><b>Inbound</b></a>       
-    </div>
-    <div class="col-xs-1" style="width: 80px;">
-        <a href="ReceiveTableWO.smi" id="menu-wendyoutbound" ><b style="color: #FFC07B;">Wendy</b>+<b style="color: #FF8003;">Outbound</b></a>       
-    </div>
+    </div>   
 </div>    
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">  
     <div class="col-sm-12" style="padding-left: 50px;padding-right: 50px;">
@@ -432,6 +433,10 @@
         <div id="textAlertDivDeletePeriod"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivDeletePeriod()"><span aria-hidden="true">&times;</span></button>
             <strong>Delete Period Success!</strong> 
+        </div>
+        <div id="textAlertDivPeriodMeaasge"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertPeriodMessage()"><span aria-hidden="true">&times;</span></button>
+            <strong id="periodAlertMessage"></strong> 
         </div>                            
         <div class="panel panel-default ${panelborder}">
             <div class="panel-heading ${panelheader}">

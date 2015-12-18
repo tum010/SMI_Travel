@@ -496,7 +496,6 @@ public class BookingViewImpl implements BookingViewDao{
                 .addScalar("invoice", Hibernate.STRING)
                 .addScalar("receipt", Hibernate.STRING)
                 .addScalar("id", Hibernate.STRING)
-                .addScalar("agentcode", Hibernate.STRING)
                 .setMaxResults(500)
                 .list();
         

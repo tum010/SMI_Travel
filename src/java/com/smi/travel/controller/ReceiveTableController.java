@@ -39,6 +39,7 @@ public class ReceiveTableController extends SMITravelController {
     private static final String RESULT = "result";
     private static final String DEPARTMENT = "department";
     private static final String ADVANCERECEIVEPERIODLIST = "advanceReceivePeriodList";
+    private static final String PERIODMESSAGE = "periodMessage";
     private ReceiveTableService receiveTableService;
     private UtilityService utilservice;
     private UtilityFunction util;
@@ -247,9 +248,14 @@ public class ReceiveTableController extends SMITravelController {
         AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
         advanceReceivePeriod = receiveTableService.getReceivePeriod(receiveDate,department,vatType);
         if(advanceReceivePeriod != null){
-            String detail = advanceReceivePeriod.getDetail().replaceAll("(\r\n|\n)", "<br />");
+            String detail = (!"".equalsIgnoreCase(advanceReceivePeriod.getDetail()) && advanceReceivePeriod.getDetail() != null ? advanceReceivePeriod.getDetail().replaceAll("(\r\n|\n)", "<br />") : "");
             advanceReceivePeriod.setDetail(detail);
             request.setAttribute(ADVANCERECEIVEPERIOD, advanceReceivePeriod);
+            
+            AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
+            advanceReceivePeriodView = receiveTableService.getAdvanceReceivePeriodView(utilty.convertDateToString(advanceReceivePeriod.getReceiveFrom()),utilty.convertDateToString(advanceReceivePeriod.getReceiveTo()),department,vatType);
+            String periodMessage = receiveTableService.compareReceiptSummary(advanceReceivePeriod,advanceReceivePeriodView);
+            request.setAttribute(PERIODMESSAGE, periodMessage);
         }
         
 //        if(advanceReceivePeriod != null){
