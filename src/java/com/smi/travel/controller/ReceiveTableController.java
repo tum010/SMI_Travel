@@ -38,6 +38,7 @@ public class ReceiveTableController extends SMITravelController {
     private static final String ADVANCERECEIVEPERIODVIEW = "advanceReceivePeriodView";
     private static final String RESULT = "result";
     private static final String DEPARTMENT = "department";
+    private static final String ADVANCERECEIVEPERIODLIST = "advanceReceivePeriodList";
     private ReceiveTableService receiveTableService;
     private UtilityService utilservice;
     private UtilityFunction util;
@@ -99,6 +100,9 @@ public class ReceiveTableController extends SMITravelController {
         }else if("WO".equalsIgnoreCase(department)){
             department = "WendyOutbound";
         }
+        
+        List<AdvanceReceivePeriod> advanceReceivePeriodList = receiveTableService.getReceivePeriodList(receiveDepartment);
+        request.setAttribute(ADVANCERECEIVEPERIODLIST, advanceReceivePeriodList);
         
         if("search".equalsIgnoreCase(action)){
             List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive(inputDate,selectStatus,department,"search");
@@ -248,11 +252,11 @@ public class ReceiveTableController extends SMITravelController {
             request.setAttribute(ADVANCERECEIVEPERIOD, advanceReceivePeriod);
         }
         
-        if(advanceReceivePeriod != null){
-            AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
-            advanceReceivePeriodView = receiveTableService.getAdvanceReceivePeriodView(utilty.convertDateToString(advanceReceivePeriod.getReceiveFrom()),utilty.convertDateToString(advanceReceivePeriod.getReceiveTo()),department,vatType);
-            request.setAttribute(ADVANCERECEIVEPERIODVIEW, advanceReceivePeriodView);
-        }    
+//        if(advanceReceivePeriod != null){
+//            AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
+//            advanceReceivePeriodView = receiveTableService.getAdvanceReceivePeriodView(utilty.convertDateToString(advanceReceivePeriod.getReceiveFrom()),utilty.convertDateToString(advanceReceivePeriod.getReceiveTo()),department,vatType);
+//            request.setAttribute(ADVANCERECEIVEPERIODVIEW, advanceReceivePeriodView);
+//        }    
     }
     
     public UtilityService getUtilservice() {

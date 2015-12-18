@@ -39,6 +39,16 @@ $(document).ready(function() {
         "iDisplayLength": 10
     });
 
+    $('#periodTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": true,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 10
+    });
+
     //Button Search
     $('.datesearch').datetimepicker();
     $('.datesearch').datetimepicker().change(function() {
@@ -183,12 +193,12 @@ $(document).ready(function() {
         checkToDateField();
         checkPeriod();
     });
-    
+
     //Set Status Format Calculate
     $("#receiveAmount,#wht").keyup(function() {
         setStatusFormat();
     });
-    
+
     $("#cashAmount").keyup(function() {
         setCashAmount(this.value);
         setCashOnDemand()
@@ -198,14 +208,14 @@ $(document).ready(function() {
         setBankAmount(this.value);
         setCashOnDemand()
     });
-    
+
     $("#chqAmount").keyup(function() {
         setChqAmount(this.value);
         setCashOnDemand()
     });
 
     setEnvironment();
-    
+
 });
 
 //Set Data at start
@@ -709,6 +719,7 @@ function validateDate(date, option) {
     }
 }
 
+// Function Receive Period
 function saveReceivePeriod() {
     $('#textAlertDivSavePeriod').hide();
     $('#textAlertDivNotSavePeriod').hide();
@@ -745,7 +756,7 @@ function saveReceivePeriod() {
                 '&vatType=' + vatType +
                 '&department=' + department +
                 '&type=' + 'checkPeriodDate';
-        CallAjaxCheck(param);
+        CallAjaxCheckPeriod(param);
 
     } else {
         $("#fromdatepanel").removeClass("has-success");
@@ -759,7 +770,7 @@ function saveReceivePeriod() {
 
 }
 
-function CallAjaxCheck(param) {
+function CallAjaxCheckPeriod(param) {
     var url = 'AJAXServlet';
     try {
         $.ajax({
@@ -823,6 +834,129 @@ function hideTextAlertDivNotSavePeriod() {
     $('#textAlertDivNotSavePeriod').hide();
 }
 
+function hideTextAlertDivDeletePeriod() {
+    $('#textAlertDivNotDeletePeriod').hide();
+}
+
+function newReceivePeriod() {
+    $("#periodId").val('');
+    $("#receiveFrom").val('');
+    $("#receiveTo").val('');
+    $("#receiveCashAmount").val('');
+    $("#receiveCash").val('');
+    $("#receiveCheque").val('');
+    $("#receiveBankAmount").val('');
+    $("#receiveCreditCard").val('');
+    $("#receiveDetail").val('');
+
+    $("#fromDate").val('');
+    $("#toDate").val('');
+    $("#periodVatType").val('');
+    $("#periodCashAmount").val('');
+    $("#periodCash").val('');
+    $("#periodCheque").val('');
+    $("#periodBankAmount").val('');
+    $("#periodCreditCard").val('');
+    $("#periodDetail").val('');
+}
+
+function callPeriodList() {
+    $("#receivePeriodModal").modal("show");
+}
+
+function editAdvanceReceivePeriod(id, receiveFrom, receiveTo, detail, vatType, department, cashAmount, cashMinusAmount, bankTransfer, chqAmount, creditAmount) {
+//   alert(id+" "+receiveFrom+" "+receiveTo+" "+detail+" "+vatType+" "+department+" "+cashAmount+" "+cashMinusAmount+" "+bankTransfer+" "+chqAmount+" "+creditAmount);
+    $("#periodId").val(id);
+    $("#receiveFrom").val(receiveFrom);
+    $("#receiveTo").val(receiveTo);
+    $("#receiveCashAmount").val(cashAmount);
+    $("#receiveCash").val(cashMinusAmount);
+    $("#receiveCheque").val(chqAmount);
+    $("#receiveBankAmount").val(bankTransfer);
+    $("#receiveCreditCard").val(creditAmount);
+    $("#receiveDetail").val(detail);
+
+    $("#fromDate").val(receiveFrom);
+    $("#toDate").val(receiveTo);
+    $("#periodVatType").val(vatType);
+    $("#periodCashAmount").val(cashAmount !== '' ? formatNumber(parseFloat(cashAmount.replace(/,/g, ""))) : '');
+    $("#periodCash").val(cashMinusAmount !== '' ? formatNumber(parseFloat(cashMinusAmount.replace(/,/g, ""))) : '');
+    $("#periodCheque").val(chqAmount !== '' ? formatNumber(parseFloat(chqAmount.replace(/,/g, ""))) : '');
+    $("#periodBankAmount").val(bankTransfer !== '' ? formatNumber(parseFloat(bankTransfer.replace(/,/g, ""))) : '');
+    $("#periodCreditCard").val(creditAmount !== '' ? formatNumber(parseFloat(creditAmount.replace(/,/g, ""))) : '');
+    $("#periodDetail").val(detail);
+    $("#receivePeriodModal").modal("hide");
+}
+
+function deleteAdvanceReceivePeriod() {      
+    var periodSize = parseInt($("#periodSize").val());
+    var periodRow = '';
+    var periodId = '';
+    for(var i=1; i<=periodSize; i++){
+        if($('#periodCheckbox'+i).is(":checked")){
+            periodId += $('#periodId'+i).val()+',';
+            periodRow += $('#periodRow'+i).val()+',';
+        }
+    }
+
+    if(periodId !== ''){
+        var department = $("#department").val();
+        if (department === 'W') {
+            department = 'Wendy';
+        } else if (department === 'O') {
+            department = 'Outbound';
+        } else if (department === 'I') {
+            department = 'Inbound';
+        } else if (department === 'WO') {
+            department = 'WendyOutbound';
+        }
+        var servletName = 'ReceiveTableServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&periodId=' + periodId +
+                '&department=' + department +
+                '&type=' + 'deletePeriodDate';
+        CallAjaxDeletePeriod(param,periodRow);
+//        $("#receivePeriodModal").modal("hide");
+    }else{
+        $("#receivePeriodModal").modal("hide");
+    }
+}
+
+function CallAjaxDeletePeriod(param,periodRow) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                $('#periodTable > tbody  > tr').each(function() {
+                    $(this).remove();
+                });
+                $("#periodTable tbody").append(msg);
+//                if(msg === 'success'){
+//                    var row = periodRow.split(",");
+//                    for(var i=0; i<row.length; i++){
+//                        $("#periodRow" + row[i]).parent().parent().remove();
+//                    }                  
+//                    $('#textAlertDivNotDeletePeriod').show();
+//                }
+            
+                
+            }, error: function(msg) {
+                console.log('auto ERROR');
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}
+
+//Print Receive Table Report
 function printReceiveTableReport() {
     var receiveDate = $("#InputDate").val();
     var vatType = $("#SelectStatus").val();
@@ -872,29 +1006,29 @@ function setStatusFormat() {
         var cashAmount = $("#cashAmount").val();
         disabledReceiveTableField(status);
         setCashAmount(cashAmount);
-        
-    }else if(status == 'Cash on Demand'){
+
+    } else if (status == 'Cash on Demand') {
         setCashOnDemand();
-        
-    }else if(status == 'Credit Card'){
+
+    } else if (status == 'Credit Card') {
         disabledReceiveTableField(status);
         setCreditAmount();
-        
-    }else if(status == 'Bank Transfer'){
+
+    } else if (status == 'Bank Transfer') {
         var bankAmount = $("#bankAmount").val();
         disabledReceiveTableField(status);
         setBankAmount(bankAmount);
-        
-    }else if(status == 'Cheque'){
+
+    } else if (status == 'Cheque') {
         var chqAmount = $("#chqAmount").val();
         disabledReceiveTableField(status);
         setChqAmount(chqAmount);
-        
-    }else if(status == 'Void'){
-        
-        
-    }else if(status == 'Wait'){
-        
+
+    } else if (status == 'Void') {
+
+
+    } else if (status == 'Wait') {
+
     }
 }
 
@@ -905,44 +1039,44 @@ function disabledReceiveTableField(status) {
     $("#bankAmountPanel").removeClass("has-error");
     $("#chqAmountPanel").removeClass("has-success");
     $("#chqAmountPanel").removeClass("has-error");
-   
-    if(status == 'Credit Card' || status == 'Bank Transfer' || status == 'Cheque'){
-       $("#cashAmount").val('');
-       $("#cashAmount").attr("disabled", "disabled");
+
+    if (status == 'Credit Card' || status == 'Bank Transfer' || status == 'Cheque') {
+        $("#cashAmount").val('');
+        $("#cashAmount").attr("disabled", "disabled");
     }
-    if(status == 'Cash' || status == 'Credit Card' || status == 'Cheque'){
+    if (status == 'Cash' || status == 'Credit Card' || status == 'Cheque') {
         $("#bankAmount").val('');
         $("#bankAmount").attr("disabled", "disabled");
     }
-    if(status == 'Cash' || status == 'Bank Transfer' || status == 'Credit Card'){
+    if (status == 'Cash' || status == 'Bank Transfer' || status == 'Credit Card') {
         $("#chqAmount").val('');
         $("#chqAmount").attr("disabled", "disabled");
     }
-    if(status == 'Cash' || status == 'Bank Transfer' || status == 'Cheque'){
+    if (status == 'Cash' || status == 'Bank Transfer' || status == 'Cheque') {
         $("#creditAmount").val(0);
         $("#countCredit").val(1);
         $('#CreditTable > tbody  > tr').each(function() {
             $(this).remove();
         });
         AddRowCreditTable(parseInt($("#countCredit").val()));
-        $("#creditCard"+(parseInt($("#countCredit").val())-1)).attr("disabled", "disabled");
-        $("#creditNo"+(parseInt($("#countCredit").val())-1)).attr("disabled", "disabled");
-        $("#creditExpire"+(parseInt($("#countCredit").val())-1)).attr("disabled", "disabled");
-        $("#creditAmount"+(parseInt($("#countCredit").val())-1)).attr("disabled", "disabled");
-        $("#expenButtonRemove"+(parseInt($("#countCredit").val())-1)).addClass("hidden");
-        $('#spandate'+(parseInt($("#countCredit").val())-1)).addClass("hidden");
-    }   
+        $("#creditCard" + (parseInt($("#countCredit").val()) - 1)).attr("disabled", "disabled");
+        $("#creditNo" + (parseInt($("#countCredit").val()) - 1)).attr("disabled", "disabled");
+        $("#creditExpire" + (parseInt($("#countCredit").val()) - 1)).attr("disabled", "disabled");
+        $("#creditAmount" + (parseInt($("#countCredit").val()) - 1)).attr("disabled", "disabled");
+        $("#expenButtonRemove" + (parseInt($("#countCredit").val()) - 1)).addClass("hidden");
+        $('#spandate' + (parseInt($("#countCredit").val()) - 1)).addClass("hidden");
+    }
 }
 
 function setCashAmount(cash) {
     var status = $("#status option:selected").text();
     if (status == 'Cash') {
-        $("#cashAmount").prop("disabled",false);
+        $("#cashAmount").prop("disabled", false);
         $("#cashAmount").val(cash);
         var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
         var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
         var cashAmount = parseFloat(cash.replace(/,/g, ""));
-        if (cashAmount === (receiveAmount+wht)) {
+        if (cashAmount === (receiveAmount + wht)) {
             $("#cashAmountPanel").removeClass("has-error");
             $("#cashAmountPanel").addClass("has-success");
             $("#ButtonSave").removeClass("disabled");
@@ -954,15 +1088,15 @@ function setCashAmount(cash) {
     }
 }
 
-function setBankAmount(bank){
+function setBankAmount(bank) {
     var status = $("#status option:selected").text();
     if (status == 'Bank Transfer') {
-        $("#bankAmount").prop("disabled",false);
+        $("#bankAmount").prop("disabled", false);
         $("#bankAmount").val(bank);
         var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
         var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
         var bankAmount = parseFloat(bank.replace(/,/g, ""));
-        if (bankAmount === (receiveAmount+wht)) {
+        if (bankAmount === (receiveAmount + wht)) {
             $("#bankAmountPanel").removeClass("has-error");
             $("#bankAmountPanel").addClass("has-success");
             $("#ButtonSave").removeClass("disabled");
@@ -974,15 +1108,15 @@ function setBankAmount(bank){
     }
 }
 
-function setChqAmount(chq){
+function setChqAmount(chq) {
     var status = $("#status option:selected").text();
     if (status == 'Cheque') {
-        $("#chqAmount").prop("disabled",false);
+        $("#chqAmount").prop("disabled", false);
         $("#chqAmount").val(chq);
         var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
         var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
         var chqAmount = parseFloat(chq.replace(/,/g, ""));
-        if (chqAmount === (receiveAmount+wht)) {
+        if (chqAmount === (receiveAmount + wht)) {
             $("#chqAmountPanel").removeClass("has-error");
             $("#chqAmountPanel").addClass("has-success");
             $("#ButtonSave").removeClass("disabled");
@@ -994,72 +1128,89 @@ function setChqAmount(chq){
     }
 }
 
-function setCreditAmount(){
+function setCreditAmount() {
     var status = $("#status option:selected").text();
     if (status == 'Credit Card') {
-        $("#creditCard"+(parseInt($("#countCredit").val())-1)).prop("disabled",false);
-        $("#creditNo"+(parseInt($("#countCredit").val())-1)).prop("disabled",false);
-        $("#creditExpire"+(parseInt($("#countCredit").val())-1)).prop("disabled",false);
-        $("#creditAmount"+(parseInt($("#countCredit").val())-1)).prop("disabled",false);
-        $("#expenButtonRemove"+(parseInt($("#countCredit").val())-1)).removeClass("hidden");
-        $('#spandate'+(parseInt($("#countCredit").val())-1)).removeClass("hidden");
-        
+        $("#creditCard" + (parseInt($("#countCredit").val()) - 1)).prop("disabled", false);
+        $("#creditNo" + (parseInt($("#countCredit").val()) - 1)).prop("disabled", false);
+        $("#creditExpire" + (parseInt($("#countCredit").val()) - 1)).prop("disabled", false);
+        $("#creditAmount" + (parseInt($("#countCredit").val()) - 1)).prop("disabled", false);
+        $("#expenButtonRemove" + (parseInt($("#countCredit").val()) - 1)).removeClass("hidden");
+        $('#spandate' + (parseInt($("#countCredit").val()) - 1)).removeClass("hidden");
+
         var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
         var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
         var creditAmount = parseFloat($("#creditAmount").val());
-        if(creditAmount === (receiveAmount+wht)){
+        if (creditAmount === (receiveAmount + wht)) {
             $("#ButtonSave").removeClass("disabled");
             var count = parseInt($("#countCredit").val());
-            for(var i=1; i<=count; i++){
-                var creditAmount = $("#creditAmount"+i);
-                if(creditAmount.val() !== undefined){
-                    $("#creditAmount"+i).css("border", "green ridge 1px"); 
+            for (var i = 1; i <= count; i++) {
+                var creditAmount = $("#creditAmount" + i);
+                if (creditAmount.val() !== undefined) {
+                    $("#creditAmount" + i).css("border", "green ridge 1px");
                 }
             }
-        }else{
+        } else {
             $("#ButtonSave").addClass("disabled");
             var count = parseInt($("#countCredit").val());
-            for(var i=1; i<=count; i++){
-                var creditAmount = $("#creditAmount"+i);
-                if(creditAmount.val() !== undefined){
-                    $("#creditAmount"+i).css("border", "red solid 1px"); 
+            for (var i = 1; i <= count; i++) {
+                var creditAmount = $("#creditAmount" + i);
+                if (creditAmount.val() !== undefined) {
+                    $("#creditAmount" + i).css("border", "red solid 1px");
                 }
             }
         }
-    }    
+    }
 }
 
-function calculateCreditAmount(){
+function calculateCreditAmount() {
     var count = parseInt($("#countCredit").val());
     var creditTotal = 0;
-    for(var i=1; i<=count; i++){
-        var creditAmount = $("#creditAmount"+i);
-        if(creditAmount.val() !== '' && creditAmount.val() !== undefined){
-            creditTotal += parseFloat((($("#creditAmount"+i).val()).replace(/,/g, "")));
+    for (var i = 1; i <= count; i++) {
+        var creditAmount = $("#creditAmount" + i);
+        if (creditAmount.val() !== '' && creditAmount.val() !== undefined) {
+            creditTotal += parseFloat((($("#creditAmount" + i).val()).replace(/,/g, "")));
         }
     }
     $("#creditAmount").val(creditTotal);
 }
 
-function setCashOnDemand(){
+function setCashOnDemand() {
     var status = $("#status option:selected").text();
     if (status == 'Cash on Demand') {
+        $("#cashAmount").prop("disabled", false);
+        $("#bankAmount").prop("disabled", false);
+        $("#chqAmount").prop("disabled", false);
+        $("#creditCard" + (parseInt($("#countCredit").val()) - 1)).prop("disabled", false);
+        $("#creditNo" + (parseInt($("#countCredit").val()) - 1)).prop("disabled", false);
+        $("#creditExpire" + (parseInt($("#countCredit").val()) - 1)).prop("disabled", false);
+        $("#creditAmount" + (parseInt($("#countCredit").val()) - 1)).prop("disabled", false);
+        $("#expenButtonRemove" + (parseInt($("#countCredit").val()) - 1)).removeClass("hidden");
+        $('#spandate' + (parseInt($("#countCredit").val()) - 1)).removeClass("hidden");
+        
         var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
-        var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);   
+        var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
         var cashAmount = ($("#cashAmount").val() !== '' ? parseFloat((($("#cashAmount").val()).replace(/,/g, ""))) : 0);
         var bankAmount = ($("#bankAmount").val() !== '' ? parseFloat((($("#bankAmount").val()).replace(/,/g, ""))) : 0);
         var chqAmount = ($("#chqAmount").val() !== '' ? parseFloat((($("#chqAmount").val()).replace(/,/g, ""))) : 0);
         var creditAmount = parseFloat($("#creditAmount").val());
 
-        if((receiveAmount+wht) === (cashAmount+bankAmount+chqAmount+creditAmount)){
+        if ((receiveAmount + wht) === (cashAmount + bankAmount + chqAmount + creditAmount)) {
             $("#cashAmountPanel").removeClass("has-error");
             $("#cashAmountPanel").addClass("has-success");
             $("#bankAmountPanel").removeClass("has-error");
             $("#bankAmountPanel").addClass("has-success");
             $("#chqAmountPanel").removeClass("has-error");
             $("#chqAmountPanel").addClass("has-success");
-            $("#ButtonSave").removeClass("disabled"); 
-        }else{
+            $("#ButtonSave").removeClass("disabled");
+            var count = parseInt($("#countCredit").val());
+            for (var i = 1; i <= count; i++) {
+                var creditAmount = $("#creditAmount" + i);
+                if (creditAmount.val() !== undefined) {
+                    $("#creditAmount" + i).css("border", "green ridge 1px");
+                }
+            }
+        } else {
             $("#cashAmountPanel").removeClass("has-success");
             $("#cashAmountPanel").addClass("has-error");
             $("#bankAmountPanel").removeClass("has-success");
@@ -1067,6 +1218,13 @@ function setCashOnDemand(){
             $("#chqAmountPanel").removeClass("has-success");
             $("#chqAmountPanel").addClass("has-error");
             $("#ButtonSave").addClass("disabled");
+            var count = parseInt($("#countCredit").val());
+            for (var i = 1; i <= count; i++) {
+                var creditAmount = $("#creditAmount" + i);
+                if (creditAmount.val() !== undefined) {
+                    $("#creditAmount" + i).css("border", "red solid 1px");
+                }
+            }
         }
-    }    
+    }
 }

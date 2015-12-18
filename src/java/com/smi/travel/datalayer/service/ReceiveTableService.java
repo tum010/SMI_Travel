@@ -60,5 +60,9 @@ public class ReceiveTableService {
     public AdvanceReceiveCredit testStoredProcedure(String agentName) {
         return this.receiveTableDao.testStoredProcedure(agentName);
     }
+
+    public List<AdvanceReceivePeriod> getReceivePeriodList(String department) {
+        return this.receiveTableDao.getReceivePeriodList(department);
+    }
     
 }

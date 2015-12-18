@@ -13,6 +13,7 @@
 <c:set var="advanceReceivePeriod" value="${requestScope['advanceReceivePeriod']}" />
 <c:set var="advanceReceivePeriodView" value="${requestScope['advanceReceivePeriodView']}" />
 <c:set var="department" value="${requestScope['department']}" />
+<c:set var="advanceReceivePeriodList" value="${requestScope['advanceReceivePeriodList']}" />
 
 <input type="hidden" name="result" id="result" value="${requestScope['result']}">
 
@@ -421,13 +422,17 @@
             </div>
         </div>
         <div id="textAlertDivSavePeriod"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivSavePeriod()"><span aria-hidden="true">&times;</span></button>
-                <strong>Save Period Success!</strong> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivSavePeriod()"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Period Success!</strong> 
         </div>
         <div id="textAlertDivNotSavePeriod"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivNotSavePeriod()"><span aria-hidden="true">&times;</span></button>
-                <strong>Period has already used!</strong> 
-        </div>                
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivNotSavePeriod()"><span aria-hidden="true">&times;</span></button>
+            <strong>Period has already used!</strong> 
+        </div>
+        <div id="textAlertDivDeletePeriod"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivDeletePeriod()"><span aria-hidden="true">&times;</span></button>
+            <strong>Delete Period Success!</strong> 
+        </div>                            
         <div class="panel panel-default ${panelborder}">
             <div class="panel-heading ${panelheader}">
                     <h4 class="panel-title"><font style="color: ${fontcolor}">Total Receive</font></h4>
@@ -440,11 +445,11 @@
                                 <input name="periodId" id="periodId" type="hidden" class="form-control" value="${advanceReceivePeriod.id}" />
                                 <input name="receiveFrom" id="receiveFrom" type="hidden" class="form-control" value="${advanceReceivePeriod.receiveFrom}" />
                                 <input name="receiveTo" id="receiveTo" type="hidden" class="form-control" value="${advanceReceivePeriod.receiveTo}" />
-                                <input name="receiveCashAmount" id="receiveCashAmount" type="hidden" class="form-control" value="${advanceReceivePeriodView.cashamount}" />
-                                <input name="receiveCash" id="receiveCash" type="hidden" class="form-control" value="${advanceReceivePeriodView.cashminusamount}" />
-                                <input name="receiveCheque" id="receiveCheque" type="hidden" class="form-control" value="${advanceReceivePeriodView.cheque}" />
-                                <input name="receiveBankAmount" id="receiveBankAmount" type="hidden" class="form-control" value="${advanceReceivePeriodView.bankamount}" />
-                                <input name="receiveCreditCard" id="receiveCreditCard" type="hidden" class="form-control" value="${advanceReceivePeriodView.creditcard}" />
+                                <input name="receiveCashAmount" id="receiveCashAmount" type="hidden" class="form-control" value="${advanceReceivePeriod.cashAmount}" />
+                                <input name="receiveCash" id="receiveCash" type="hidden" class="form-control" value="${advanceReceivePeriod.cashMinusAmount}" />
+                                <input name="receiveCheque" id="receiveCheque" type="hidden" class="form-control" value="${advanceReceivePeriod.chqAmount}" />
+                                <input name="receiveBankAmount" id="receiveBankAmount" type="hidden" class="form-control" value="${advanceReceivePeriod.bankTransfer}" />
+                                <input name="receiveCreditCard" id="receiveCreditCard" type="hidden" class="form-control" value="${advanceReceivePeriod.creditAmount}" />
                                 <input name="receiveDetail" id="receiveDetail" type="hidden" class="form-control" value="${advanceReceivePeriod.detail}" />
                                 <input name="receiveVatType" id="receiveVatType" type="hidden" class="form-control" value="${requestScope['selectStatus']}" />
                                 <div class="col-xs-1 " style="width:30px;"></div>
@@ -486,6 +491,11 @@
                                             <option value="T" ${temp}>Temp</option>
                                         </select>
                                     </div>
+                                </div>
+                                <div class="col-xs-1 text-right" style="width: 200px;">                              
+                                    <button type="button" id="btnPeriodList" name="btnPeriodList" onclick="callPeriodList()" class="btn btn-default">
+                                        <i class="glyphicon glyphicon-align-justify"></i> Period
+                                    </button>                                
                                 </div>        
                             </div>   
                         </div>                      
@@ -498,7 +508,7 @@
                                 </div> 
                                 <div class="col-md-2 form-group text-left" style="padding-left:5px;width:200px;">
                                     <div class="col-sm-12">
-                                        <input name="periodCashAmount" id="periodCashAmount" type="text" class="form-control money" value="${advanceReceivePeriodView.cashamount}" readonly=""/>
+                                        <input name="periodCashAmount" id="periodCashAmount" type="text" class="form-control money" value="${advanceReceivePeriod.cashAmount}" readonly=""/>
                                     </div>
                                 </div>
                                 <div class="col-sm-1" style="width: 30px"></div>
@@ -507,14 +517,14 @@
                                 </div> 
                                 <div class="col-md-2 form-group text-left" style="width:210px;">                                
                                     <div class="col-sm-12">
-                                       <input name="periodCash" id="periodCash" type="text" class="form-control money" value="${advanceReceivePeriodView.cashminusamount}" readonly=""/>                              
+                                       <input name="periodCash" id="periodCash" type="text" class="form-control money" value="${advanceReceivePeriod.cashMinusAmount}" readonly=""/>                              
                                     </div>
                                 </div>       
                                 <div class="col-xs-1 text-right" style="padding-left: 0px;width:100px;">
                                     <label class="control-label">Cheque</lable>
                                 </div>  
                                 <div class="col-md-2 form-group text-left" style="padding-left:20px;width:200px;">
-                                    <input name="periodCheque" id="periodCheque" type="text" class="form-control money" value="${advanceReceivePeriodView.cheque}" readonly=""/>
+                                    <input name="periodCheque" id="periodCheque" type="text" class="form-control money" value="${advanceReceivePeriod.chqAmount}" readonly=""/>
                                 </div>
                             </div>
                         </div><!--End Row 2 -->
@@ -525,7 +535,7 @@
                                 </div> 
                                 <div class="col-md-2 form-group text-left" style="padding-left:5px;width:200px;">
                                     <div class="col-sm-12">
-                                        <input name="periodBankAmount" id="periodBankAmount" type="text" class="form-control money" value="${advanceReceivePeriodView.bankamount}" readonly=""/>
+                                        <input name="periodBankAmount" id="periodBankAmount" type="text" class="form-control money" value="${advanceReceivePeriod.bankTransfer}" readonly=""/>
                                     </div>
                                 </div>
                                 <div class="col-sm-1" style="width: 20px"></div>
@@ -534,7 +544,7 @@
                                 </div> 
                                 <div class="col-md-2 form-group text-left" style="padding-left:5px;width:200px;">                                
                                     <div class="col-sm-12">
-                                       <input name="periodCreditCard" id="periodCreditCard" type="text" class="form-control money" value="${advanceReceivePeriodView.creditcard}" readonly=""/>                               
+                                       <input name="periodCreditCard" id="periodCreditCard" type="text" class="form-control money" value="${advanceReceivePeriod.creditAmount}" readonly=""/>                               
                                     </div>
                                 </div>
                                 <div class="col-xs-1 text-right" style="width:85px;">
@@ -546,11 +556,16 @@
                             </div>   
                         </div><!--End Row 3 -->
                         <div class="row" >
-                            <div class="col-xs-12 text-center" style="margin-top: -10px;">                              
+                            <div class="col-xs-6 text-right" style="margin-top: -10px; padding: 0px 5px 0px 0px;">                              
+                                <button type="button" id="btnNew" name="btnNew" onclick="newReceivePeriod()" class="btn btn-primary">
+                                    <i class="fa fa-plus"></i> New
+                                </button>                                
+                            </div>
+                            <div class="col-xs-6 text-left" style="margin-top: -10px; padding: 0px 0px 0px 5px;">                              
                                 <button type="button" id="btnSave" name="btnSave" onclick="saveReceivePeriod()" class="btn btn-success">
                                     <i class="fa fa-save"></i> Save
                                 </button>                   
-                            </div>
+                            </div>                           
                         </div>
                     </div>
                 </div>                
@@ -630,6 +645,64 @@
             <div class="modal-body" id="delCode">Are you sure to delete this advance receive credit?</div>
             <div class="modal-footer">
                 <button id="btnDelete" type="button" onclick="deleteAdvanceReceiveCredit()" class="btn btn-danger">Delete</button>
+                <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--Period Receive Modal-->
+<div class="modal fade" id="receivePeriodModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Period</h4>
+            </div>
+            <div class="modal-body">               
+                <table class="display" id="periodTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th style="width: 2%"></th>
+                            <th style="width: 40%">From</th>
+                            <th style="width: 40%">To</th>
+                            <th style="width: 18%">Vat Type</th>
+                            <th style="width: 5%">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>                   
+                        <c:forEach var="advanceReceivePeriodList" items="${advanceReceivePeriodList}" varStatus="i">
+                            <tr>
+                                <td class="text-center">
+                                    <input type="checkbox" id="periodCheckbox${i.count}" name="periodCheckbox${i.count}" value="1"/>
+                                    <input type="hidden" id="periodRow${i.count}" name="periodRow${i.count}" value="${i.count}"/>
+                                    <input type="hidden" id="periodId${i.count}" name="periodId${i.count}" value="${advanceReceivePeriodList.id}"/>
+                                </td>
+                                <td class="text-center">${advanceReceivePeriodList.receiveFrom}</td>
+                                <td class="text-center">${advanceReceivePeriodList.receiveTo}</td>
+                                <td class="text-center">
+                                    <c:set var="vatType" value=""/>
+                                    <c:choose>
+                                        <c:when test="${advanceReceivePeriodList.vatType == 'V'}">
+                                            <c:set var="vatType" value="Vat"/>
+                                        </c:when>
+                                        <c:when test="${advanceReceivePeriodList.vatType == 'T'}">
+                                            <c:set var="vatType" value="Temp"/>
+                                        </c:when>                                      
+                                    </c:choose>
+                                    ${vatType}
+                                </td>
+                                <td class="text-center">
+                                    <span class="glyphicon glyphicon-edit editicon" onclick="editAdvanceReceivePeriod('${advanceReceivePeriodList.id}','${advanceReceivePeriodList.receiveFrom}','${advanceReceivePeriodList.receiveTo}','${advanceReceivePeriodList.detail}','${advanceReceivePeriodList.vatType}','${advanceReceivePeriodList.department}','${advanceReceivePeriodList.cashAmount}','${advanceReceivePeriodList.cashMinusAmount}','${advanceReceivePeriodList.bankTransfer}','${advanceReceivePeriodList.chqAmount}','${advanceReceivePeriodList.creditAmount}');"></span>                                                                                                                                     
+                                </td>
+                            </tr>   
+                        </c:forEach>    
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="periodSize" name="periodSize" value="${advanceReceivePeriodList.size()}"/>
+                <button id="btnDelete" type="button" onclick="deleteAdvanceReceivePeriod()" class="btn btn-danger">Delete</button>
                 <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->

@@ -282,7 +282,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
     }
 
     @Override
-    public String saveReceivePeriod(String periodId, String fromDate, String toDate, String detail, String department, String vatType) {
+    public String saveReceivePeriod(String periodId, String fromDate, String toDate, String detail, String department, String vatType, AdvanceReceivePeriodView advanceReceivePeriodView) {
         String result = "fail";
         UtilityFunction utilty = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
@@ -293,6 +293,11 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             advanceReceivePeriod.setDetail(detail);
             advanceReceivePeriod.setDepartment(department.indexOf(",") == (-1) ? department : department.replace(",", ""));
             advanceReceivePeriod.setVatType(vatType);
+            advanceReceivePeriod.setCashAmount(!"".equalsIgnoreCase(advanceReceivePeriodView.getCashamount()) ? new BigDecimal(advanceReceivePeriodView.getCashamount()) : null);
+            advanceReceivePeriod.setBankTransfer(!"".equalsIgnoreCase(advanceReceivePeriodView.getBankamount()) ? new BigDecimal(advanceReceivePeriodView.getBankamount()) : null);
+            advanceReceivePeriod.setCashMinusAmount(!"".equalsIgnoreCase(advanceReceivePeriodView.getCashminusamount()) ? new BigDecimal(advanceReceivePeriodView.getCashminusamount()) : null);
+            advanceReceivePeriod.setChqAmount(!"".equalsIgnoreCase(advanceReceivePeriodView.getCheque()) ? new BigDecimal(advanceReceivePeriodView.getCheque()) : null);
+            advanceReceivePeriod.setCreditAmount(!"".equalsIgnoreCase(advanceReceivePeriodView.getCreditcard()) ? new BigDecimal(advanceReceivePeriodView.getCreditcard()) : null);
             transaction = session.beginTransaction();              
             session.save(advanceReceivePeriod);     
             transaction.commit();
@@ -598,6 +603,58 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         this.sessionFactory.close();
         session.close();
         return Query.get(0);
+    }
+
+    @Override
+    public List<AdvanceReceivePeriod> getReceivePeriodList(String department) {
+        String query = "from AdvanceReceivePeriod p where p.department = :department order by p.receiveFrom desc ";
+        if("W".equalsIgnoreCase(department)){
+            department = "Wendy";
+        }else if("O".equalsIgnoreCase(department)){
+            department = "Outbound";
+        }else if("I".equalsIgnoreCase(department)){
+            department = "Inbound";
+        }else if("WO".equalsIgnoreCase(department)){
+            department = "WendyOutbound";
+        }
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query);
+        HqlQuery.setParameter("department", department);
+//        HqlQuery.setMaxResults(MAX_ROW);
+        List<AdvanceReceivePeriod> advanceReceivePeriodList = HqlQuery.list();
+        if (advanceReceivePeriodList.isEmpty()) {
+            return null;
+        }
+        this.sessionFactory.close();
+        session.close();
+        return advanceReceivePeriodList;
+    }
+
+    @Override
+    public String deleteReceivePeriod(String periodId) {
+        String result = "fail";
+        String[] id = periodId.split(",");
+        Session session = this.sessionFactory.openSession();
+        try {            
+            transaction = session.beginTransaction();                      
+            for (int i = 0; i < id.length; i++) {
+                AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
+                advanceReceivePeriod.setId(id[i]);
+                session.delete(advanceReceivePeriod);                  
+            }         
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";
+        } catch (Exception ex) {
+            transaction.rollback();
+            session.close();
+//            this.sessionFactory.close();
+            System.out.println("Fail !!!!!");
+            ex.printStackTrace();
+            result = "fail";
+        }
+        return result; 
     }
        
 }
