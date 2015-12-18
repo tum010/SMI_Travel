@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="68" bottomMargin="20" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
-	<property name="ireport.zoom" value="2.727272727272732"/>
-	<property name="ireport.x" value="820"/>
-	<property name="ireport.y" value="1913"/>
+	<property name="ireport.zoom" value="1.5394743546921252"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="1495"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -40,31 +40,31 @@
 	<background>
 		<band height="754">
 			<line>
-				<reportElement x="339" y="173" width="1" height="404" uuid="f68d28eb-d2ff-4db6-9ac2-065408c2d969"/>
+				<reportElement x="339" y="173" width="1" height="411" uuid="f68d28eb-d2ff-4db6-9ac2-065408c2d969"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="32" y="173" width="1" height="403" uuid="a125a4e8-3cfa-464d-9054-544074273698"/>
+				<reportElement x="32" y="173" width="1" height="410" uuid="a125a4e8-3cfa-464d-9054-544074273698"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="412" y="173" width="1" height="403" uuid="05e9e5d6-94be-4ec9-8b58-a2da6b45b614"/>
+				<reportElement x="412" y="173" width="1" height="410" uuid="05e9e5d6-94be-4ec9-8b58-a2da6b45b614"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="477" y="174" width="1" height="403" uuid="a6f57b2e-d162-4982-8318-9b1e64113f3f"/>
+				<reportElement x="477" y="174" width="1" height="410" uuid="a6f57b2e-d162-4982-8318-9b1e64113f3f"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="0" y="576" width="555" height="1" uuid="088dafe2-ba37-4fe8-8515-d459899be39f"/>
+				<reportElement x="0" y="582" width="555" height="1" uuid="088dafe2-ba37-4fe8-8515-d459899be39f"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -234,7 +234,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="417" y="0" width="55" height="20" uuid="c09accca-c12d-4c03-a0cb-c0fb4cc7dfc8"/>
 				<textElement textAlignment="Right">
