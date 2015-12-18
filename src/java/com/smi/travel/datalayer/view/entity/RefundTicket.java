@@ -20,13 +20,31 @@ public class RefundTicket {
     private String refundby;
     private Date refunddate;
     private String receiveby;
+    private String ownerby;
     private String refundcode;
     private Date receivedate;
     private String change;
+    private String paycustomer;
     private String detail;
     private String address;
     private String airbookingid;
     private List RefundTicketDetail;
+
+    public String getOwnerby() {
+        return ownerby;
+    }
+
+    public void setOwnerby(String ownerby) {
+        this.ownerby = ownerby;
+    }
+
+    public String getPaycustomer() {
+        return paycustomer;
+    }
+
+    public void setPaycustomer(String paycustomer) {
+        this.paycustomer = paycustomer;
+    }
 
     public String getId() {
         return id;

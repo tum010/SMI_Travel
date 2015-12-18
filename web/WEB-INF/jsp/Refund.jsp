@@ -35,6 +35,7 @@
 <c:set var="referenceNo" value="${requestScope['referenceNo']}" />
 <c:set var="actionAdd" value="${requestScope['actionAdd']}" />
 <c:set var="result" value="${requestScope['result']}" />
+<c:set var="ownerbyDefault" value="${requestScope['ownerbyDefault']}"/>
 
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
@@ -85,7 +86,7 @@
             </div>
             <input type="hidden" value="${master.customer.MInitialname.name}" id="initialname_tmp">
             <input type="hidden" value="${master.customer.firstName}" id="firstname_tmp">
-            <input type="hidden" value="${master.customer.lastName}" id="lastname_tmp">  
+            <input type="hidden" value="${master.customer.lastName}" id="lastname_tmp">   
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>       
             <input type="text" class="hidden" value="${param.referenceNo}" id="getUrl" >
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
@@ -93,6 +94,7 @@
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
             <form action="Refund.smi" method="post" id="RefundForm"  name="RefundForm"  role="form" autocomplete="off">
                 <input type="hidden" name="action" value="" id="action">
+                <input type="hidden" value="${master.id}" id="master_id" name="master_id"> 
                 <input type="text" class="hidden" value="${actionAdd}" name="actionAdd" id="actionAdd">
                 <input type="text" class="hidden" value="${referenceNo}" id="referenceNo" name="referenceNo">
                 <input type="text" class="hidden"  value="${airbookingid}" id="airbookingid" name="airbookingid">
@@ -288,15 +290,68 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>  
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
-                                        <label  class="col-sm-3 control-label text-right">Charge</label>
-                                        <div class="col-sm-9">  
-                                            <input type="text" class="form-control" value="${table1.change}" maxlength="255" id="charge" name="charge" readonly=""/>
+                                        <label class="col-sm-3 control-label text-right">Refund Type</label>
+                                        <div class="col-sm-3" style="padding-top: 5px;">                                      
+                                            <div class="form-group">
+                                                <input type="radio"  name="refundType" id="refundType" value="Unuse"> Unuse
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3" style="padding-top: 5px;">                                      
+                                            <div class="form-group">
+                                                <input type="radio"  name="refundType" id="refundType" value="Party"> Party
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3" style="padding-top: 5px;">                                      
+                                            <div class="form-group">
+                                               <input type="radio"  name="refundType" id="refundType" value="Other"> Other
+                                            </div>
                                         </div>
                                     </div>
-                                </div> 
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label text-right">Reason</label>
+                                        <div class="col-sm-9">                                      
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"  name="reason" id="reason" value="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="Owner" class="col-sm-3 control-label text-right">Owner By</label>
+                                        <div class="col-lg-4">
+                                            <div class="">
+                                                <div class="input-group" id="ownerpanel">
+                                                    <c:if test="${table1.ownerby == null}"> 
+                                                        <input type="hidden" class="form-control" name="ownerById" id="ownerById" value="">
+                                                        <input type="text" class="form-control" id="ownerBy" name="ownerBy" value="${ownerbyDefault}">
+                                                        <span class="input-group-addon" data-toggle="modal" data-target="#ownerUserModal">
+                                                            <span class="glyphicon-search glyphicon"></span>
+                                                        </span>
+                                                    </c:if>
+                                                    <c:if test="${table1.ownerby != null}"> 
+                                                        <input type="hidden" class="form-control" name="ownerById" id="ownerById" value="">
+                                                        <input type="text" class="form-control" id="ownerBy" name="ownerBy" value="${table1.ownerby}">
+                                                        <span class="input-group-addon" data-toggle="modal" data-target="#ownerUserModal">
+                                                            <span class="glyphicon-search glyphicon"></span>
+                                                        </span>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5"> 
+                                            <c:if test="${table1.ownerby == null}"> 
+                                                <input type="text" class="form-control" id="ownerByName" name="ownerByName" value="" readonly="">
+                                            </c:if>
+                                            <c:if test="${table1.ownerby != null}"> 
+                                                <input type="text" class="form-control" id="ownerByName" name="ownerByName" value="" readonly="">
+                                            </c:if>
+                                        </div>
+                                    </div>
+                                </div>
                                 </br>
                                 <div class="row">
                                     <div class="col-sm-12 form-group text-center">
@@ -309,9 +364,10 @@
                                                     <th class="hidden" >id</th>
                                                     <th style="width: 5%" >No</th>
                                                     <th style="width: 25%">Ticket No</th>
-                                                    <th style="width: 25%">Section</th>
-                                                    <th style="width: 25%">section refund</th>
+                                                    <th style="width: 20%">Section</th>
+                                                    <th style="width: 20%">section refund</th>
                                                     <th style="width: 15%">Change</th>
+                                                    <th style="width: 25%">Pay Customer</th>
                                                     <th style="width: 5%" >Action</th>
                                                 </tr>
                                             </thead>
@@ -334,13 +390,16 @@
                                                             </select>
                                                         </td>
                                                         <td>
-                                                            <input type="text" maxlength ="255" class="form-control" id="inputSector${statusDetail.count}" name="inputSector${statusDetail.count}" value="${tableDetail.sector}"></td>
+                                                            <input type="text" maxlength ="255" class="form-control" id="inputSector${statusDetail.count}" name="inputSector${statusDetail.count}" value="${tableDetail.sector}" readonly=""></td>
                                                         </td>
                                                         <td>
                                                             <input type="text" class="form-control" id="inputSectorRefund${statusDetail.count}" name="inputSectorRefund${statusDetail.count}" value="${tableDetail.sectorRefund}" onfocusout="checkRefund(this,${statusDetail.count})">
                                                         </td>
                                                         <td>
                                                             <input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeNumber(${statusDetail.count});"  id="inputCharge${statusDetail.count}" name="inputCharge${statusDetail.count}" value="${tableDetail.charge}" >
+                                                        </td>
+                                                        <td>
+                                                            <input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatPaycustomerNumber(${statusDetail.count});"  id="inputPaycustomer${statusDetail.count}" name="inputPaycustomer${statusDetail.count}" value="${tableDetail.paycustomer}" >
                                                         </td>
                                                         <td class="text-center">
                                                             <a class="carousel"  
@@ -361,18 +420,28 @@
                                         </div> 
                                     </div>
                                 </div>
-<!--                                    <div class="row">
-                                        <div class="col-sm-5 form-group text-right">
-                                        <button type="button" id="buttonPrintRefund"  name="buttonPrintRefund" class="btn btn-primary"><span class="fa fa-print"></span> Print</button>
-                                    </div>-->
-                                    <div class="col-sm-6 form-group text-right">
-                                        <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=saveRefund">
-                                            <button type="submit" class="btn btn-success"  id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
-                                        </a>
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label  class="col-sm-4 control-label text-right">Total Airline Charge</label>
+                                        <div class="col-sm-8">  
+                                            <input type="text" class="form-control" value="${table1.change}" maxlength="255" id="receiveAirline" name="receiveAirline" readonly=""/>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-6 form-group text-left">
-                                        <button type="button" id="buttonCloseRefund"  name="buttonCloseRefund" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
+                                        <div class="col-sm-6 form-group">
+                                        <label  class="col-sm-4 control-label text-right">Total Pay Customer</label>
+                                        <div class="col-sm-8">  
+                                            <input type="text" class="form-control" value="${table1.paycustomer}" maxlength="255" id="payCustomer" name="payCustomer" readonly=""/>
+                                        </div>
                                     </div>
+                                </div> 
+                                <div class="col-sm-6 form-group text-right">
+                                    <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=saveRefund">
+                                        <button type="submit" class="btn btn-success"  id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 form-group text-left">
+                                    <button type="button" id="buttonCloseRefund"  name="buttonCloseRefund" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
+                                </div>
                                 </div>  
                             </div>
                             </c:forEach>
@@ -471,15 +540,68 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>  
+                            </div>
                             <div class="row">
                                 <div class="col-sm-6 form-group">
-                                    <label  class="col-sm-3 control-label text-right">Charge</label>
-                                    <div class="col-sm-9">  
-                                        <input type="text" class="form-control" value="${booking.reConfirm}" maxlength="255" id="charge" name="charge" readonly=""/>
+                                    <label class="col-sm-3 control-label text-right">Refund Type</label>
+                                    <div class="col-sm-3" style="padding-top: 5px;">                                      
+                                        <div class="form-group">
+                                            <input type="radio"  name="refundType" id="refundType" value="Unuse"> Unuse
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" style="padding-top: 5px;">                                      
+                                        <div class="form-group">
+                                            <input type="radio"  name="refundType" id="refundType" value="Party"> Party
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" style="padding-top: 5px;">                                      
+                                        <div class="form-group">
+                                           <input type="radio"  name="refundType" id="refundType" value="Other"> Other
+                                        </div>
                                     </div>
                                 </div>
-                            </div> 
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label text-right">Reason</label>
+                                    <div class="col-sm-9">                                      
+                                        <div class="form-group">
+                                            <input type="text" class="form-control"  name="reason" id="reason" value="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label for="Owner" class="col-sm-3 control-label text-right">Owner By</label>
+                                    <div class="col-lg-4">
+                                        <div class="">
+                                            <div class="input-group" id="ownerpanel">
+                                                <c:if test="${table1.ownerby == null}"> 
+                                                    <input type="hidden" class="form-control" name="ownerById" id="ownerById" value="">
+                                                    <input type="text" class="form-control" id="ownerBy" name="ownerBy" value="${ownerbyDefault}">
+                                                    <span class="input-group-addon" data-toggle="modal" data-target="#ownerUserModal">
+                                                        <span class="glyphicon-search glyphicon"></span>
+                                                    </span>
+                                                </c:if>
+                                                <c:if test="${table1.ownerby != null}"> 
+                                                    <input type="hidden" class="form-control" name="ownerById" id="ownerById" value="">
+                                                    <input type="text" class="form-control" id="ownerBy" name="ownerBy" value="${table1.ownerby}">
+                                                    <span class="input-group-addon" data-toggle="modal" data-target="#ownerUserModal">
+                                                        <span class="glyphicon-search glyphicon"></span>
+                                                    </span>
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5"> 
+                                        <c:if test="${table1.ownerby == null}"> 
+                                            <input type="text" class="form-control" id="ownerByName" name="ownerByName" value="" readonly="">
+                                        </c:if>
+                                        <c:if test="${table1.ownerby != null}"> 
+                                            <input type="text" class="form-control" id="ownerByName" name="ownerByName" value="" readonly="">
+                                        </c:if>
+                                    </div>
+                                </div>
+                            </div>                          
                             </br>
                             <div class="row">
                                 <input type="text" class="hidden" id="counterTableAdd" name="counterTableAdd" value="1" >
@@ -489,11 +611,13 @@
                                         <thead>
                                             <tr class="datatable-header">
                                                 <th class="hidden" >id</th>
+                                                    <th class="hidden" >id</th>
                                                     <th style="width: 5%" >No</th>
                                                     <th style="width: 25%">Ticket No</th>
-                                                    <th style="width: 25%">Section</th>
-                                                    <th style="width: 25%">section refund</th>
+                                                    <th style="width: 20%">Section</th>
+                                                    <th style="width: 20%">section refund</th>
                                                     <th style="width: 15%">Change</th>
+                                                    <th style="width: 25%">Pay Customer</th>
                                                     <th style="width: 5%" >Action</th>
                                             </tr>
                                         </thead>
@@ -509,9 +633,20 @@
                                 </div>
                             </div>
                             <div class="row">
-<!--                                <div class="col-sm-5 form-group text-right">
-                                    <button type="button" id="buttonPrintRefund"  name="buttonPrintRefund" class="btn btn-primary" ><span class="fa fa-print"></span> Print</button>
-                                </div>-->
+                                <div class="col-sm-6 form-group">
+                                    <label  class="col-sm-4 control-label text-right">Total Airline Charge</label>
+                                    <div class="col-sm-8">  
+                                        <input type="text" class="form-control" value="${table1.receiveAirline}" maxlength="255" id="receiveAirline" name="receiveAirline" readonly=""/>
+                                    </div>
+                                </div>
+                                    <div class="col-sm-6 form-group">
+                                    <label  class="col-sm-4 control-label text-right">Total Pay Customer</label>
+                                    <div class="col-sm-8">  
+                                        <input type="text" class="form-control" value="${table1.change}" maxlength="255" id="payCustomer" name="payCustomer" readonly=""/>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="row">
                                 <div class="col-sm-6 form-group text-right">
                                     <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=addRefund">
                                     <button type="submit" class="btn btn-success" id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
@@ -698,6 +833,54 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+<div class="modal fade" id="ownerUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Owner</h4>
+            </div>
+            <div class="modal-body">
+                <table class="display" id="ownerUserTable">
+                    <thead class="datatable-header">                     
+                        <tr >
+                            <th class="hidden">ID</th>
+                            <th>User</th>
+                            <th>Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
+                            <th class="hidden">Fax</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <script>
+                        userowner = [];
+                    </script>
+                    <c:forEach var="a" items="${listReceiveBy}">
+                        <tr onclick="setBillOwnerValue('${a.username}', '${a.name}', '${a.tel}', '${a.tel}', '${a.tel}');">
+                            <td class="user-id hidden">${a.id}</td>
+                            <td class="user-user">${a.username}</td>
+                            <td class="user-name">${a.name}</td>
+                            <td class="user-addr hidden">${a.name}</td>
+                            <td class="user-tel hidden">${a.tel}</td>
+                            <td class="user-fax hidden">${a.tel}</td>
+                        </tr>
+                        <script>
+                            userowner.push({id: "${a.id}", code: "${a.username}", name: "${a.name}",
+                                address: "${a.name}", tel: "${a.tel}", fax: "${a.tel}"});
+                        </script>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button id="ownerUserModalClose" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <!--style-->
 <style>
     .dataTables_wrapper {
@@ -850,6 +1033,53 @@
                 $("#receiveByName").val(value.name);
             }
         });
+    });
+    
+    //Owner
+    $("#ownerUserTable tr").on('click', function () {
+        var user_id = $(this).find(".user-id").text();
+        var user_user = $(this).find(".user-user").text();
+        var user_name = $(this).find(".user-name").text();
+        $("#ownerById").val(user_id);
+        $("#ownerBy").val(user_user);
+        $("#ownerByName").val(user_name);
+        $("#ownerUserModal").modal('hide');
+    });
+
+    var userownerCode = [];
+    $.each(userowner, function (key, value) {
+        userownerCode.push(value.code);
+        userownerCode.push(value.name);
+        if ($("#ownerBy").val() === value.code) {
+            $("#ownerByName").val(value.name);
+        }
+    });
+    
+    $("#ownerBy").autocomplete({
+        source: userownerCode,
+        close: function (event, ui) {
+            $("#ownerBy").trigger('keyup');
+        }
+    });
+    
+    $("#ownerBy").on('keyup', function () {
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+        var code = this.value.toUpperCase();
+        var name = this.value.toUpperCase();
+        console.log("Name :" + name);
+        $("#ownerBy,#ownerByName").val(null);
+        $.each(user, function (key, value) {
+            if (value.code.toUpperCase() === code) {
+                $("#ownerByName").val(value.name);
+                $("#ownerBy").val(value.code);
+            }
+            else if (value.name.toUpperCase() === name) {
+                $("#ownerBy").val(value.code);
+                $("#ownerByName").val(value.name);
+            }
+        });
     }); 
 
     // Refund 
@@ -918,6 +1148,15 @@
     });
     
     $('#receiveUserTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": false,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 10
+    });
+    $('#ownerUserTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": false,
         "bFilter": false,
@@ -1042,6 +1281,15 @@ function setBillReceiveValue(billto, billname, address, term, pay) {
     $('#RefundForm').bootstrapValidator('revalidateField', 'receiveByName');
     $('#RefundForm').modal('hide');
     $("#receiveUserModal").modal('hide');
+}
+function setBillOwnerValue(billto, billname, address, term, pay) {
+    $("#ownerBy").val(billto);
+    $("#ownerByName").val(billname);
+
+    $('#RefundForm').bootstrapValidator('revalidateField', 'receiveBy');
+    $('#RefundForm').bootstrapValidator('revalidateField', 'receiveByName');
+    $('#RefundForm').modal('hide');
+    $("#ownerUserModal").modal('hide');
 }
 
 function validateRefundForm(){
@@ -1296,7 +1544,8 @@ function addRowRefundTicketDetail(row,id){
         '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> </td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value="" readonly=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value=""></td>' +
-        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeNumber('+row+');"  id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' +      
+        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeNumber('+row+');"  id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' + 
+        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatPaycustomerNumber('+row+');"  id="inputPaycustomer' + row + '" name="inputPaycustomer' + row + '" value="" ></td>'+
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
     );
@@ -1314,7 +1563,8 @@ function addRowRefundTicketDetailAdd(row,id){
         '<td><select id="SelectTocketNoadd' + row + '" name="SelectTocketNoadd' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> </td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSectoradd' + row + '" name="inputSectoradd' + row + '" value="" readonly="" ></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefundadd' + row + '" name="inputSectorRefundadd' + row + '" value="" onfocusout="checkRefundAdd(this,'+row+')"></td>' +
-        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeAddNumber('+row+');"  id="inputChargeadd' + row + '" name="inputChargeadd' + row + '" value="" ></td>' +      
+        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeAddNumber('+row+');"  id="inputChargeadd' + row + '" name="inputChargeadd' + row + '" value="" ></td>' +   
+        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatPaycustomerAddNumber('+row+');"  id="inputPaycustomeradd' + row + '" name="inputPaycustomeradd' + row + '" value="" ></td>'+
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetailAdd" onclick="DeleteRefundDetailAdd('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
     );
@@ -1503,6 +1753,32 @@ function changeFormatChargeNumber(id){
     }else{
         count = parseFloat(count);
         document.getElementById('inputCharge' + id).value = formatNumber(count);
+    }
+}
+
+function changeFormatPaycustomerNumber(id){
+    console.log("Id Row : " + count);
+    var count = document.getElementById('inputPaycustomer'+id).value;
+    count = count.replace(/\,/g,'');
+    count  = parseFloat(count);
+    if(isNaN(count)){
+        document.getElementById('inputPaycustomer' + id).value = "";
+    }else{
+        count = parseFloat(count);
+        document.getElementById('inputPaycustomer' + id).value = formatNumber(count);
+    }
+}
+
+function changeFormatPaycustomerAddNumber(id){
+    console.log("Id Row : " + count);
+    var count = document.getElementById('inputPaycustomeradd'+id).value;
+    count = count.replace(/\,/g,'');
+    count  = parseFloat(count);
+    if(isNaN(count)){
+        document.getElementById('inputPaycustomeradd' + id).value = "";
+    }else{
+        count = parseFloat(count);
+        document.getElementById('inputPaycustomeradd' + id).value = formatNumber(count);
     }
 }
 

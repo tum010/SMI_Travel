@@ -15,7 +15,16 @@ public class RefundTicketDetail {
     private String sector;
     private String sectorRefund;
     private String charge;
+    private String paycustomer;
     private String ticketid;
+
+    public String getPaycustomer() {
+        return paycustomer;
+    }
+
+    public void setPaycustomer(String paycustomer) {
+        this.paycustomer = paycustomer;
+    }
 
     public String getTicketid() {
         return ticketid;
