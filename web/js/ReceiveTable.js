@@ -216,7 +216,7 @@ $(document).ready(function() {
 
     //Period Message
     if ($("#periodMessage").val() !== '') {
-        showPeriodMessage();
+        showPeriodMessage($("#periodMessage").val());
     }
 
     setEnvironment();
@@ -827,6 +827,8 @@ function CallAjaxCheckPeriod(param) {
                     $("#fromdatepanel").addClass("has-success");
                     $("#todatepanel").removeClass("has-error");
                     $("#todatepanel").addClass("has-success");
+                    $("#vattypepanel").removeClass("has-error");
+                    $("#vattypepanel").addClass("has-success");
                     $('#textAlertDivSavePeriod').show();
                 } else {
 //                    $("#fromdatepanel").removeClass("has-success");
@@ -883,9 +885,30 @@ function newReceivePeriod() {
     $("#periodBankAmount").val('');
     $("#periodCreditCard").val('');
     $("#periodDetail").val('');
+
+    $("#textAlertDivSavePeriod").hide();
+    $("#textAlertDivNotSavePeriod").hide();
+    $("#textAlertDivDeletePeriod").hide();
+    $("#textAlertDivPeriodMeaasge").hide();
+    $("#fromdatepanel").removeClass("has-error");
+    $("#fromdatepanel").removeClass("has-success");
+    $("#todatepanel").removeClass("has-error");
+    $("#todatepanel").removeClass("has-success");
+    $("#vattypepanel").removeClass("has-error");
+    $("#vattypepanel").removeClass("has-success");
 }
 
 function callPeriodList() {
+    $("#textAlertDivSavePeriod").hide();
+    $("#textAlertDivNotSavePeriod").hide();
+    $("#textAlertDivDeletePeriod").hide();
+    $("#textAlertDivPeriodMeaasge").hide();
+    $("#fromdatepanel").removeClass("has-error");
+    $("#fromdatepanel").removeClass("has-success");
+    $("#todatepanel").removeClass("has-error");
+    $("#todatepanel").removeClass("has-success");
+    $("#vattypepanel").removeClass("has-error");
+    $("#vattypepanel").removeClass("has-success");
     $("#receivePeriodModal").modal("show");
 }
 
@@ -911,6 +934,38 @@ function editAdvanceReceivePeriod(id, receiveFrom, receiveTo, detail, vatType, d
     $("#periodCreditCard").val(creditAmount !== '' ? formatNumber(parseFloat(creditAmount.replace(/,/g, ""))) : '');
     $("#periodDetail").val(detail);
     $("#receivePeriodModal").modal("hide");
+    
+    var servletName = 'ReceiveTableServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&receiveFrom=' + receiveFrom +
+            '&department=' + department +
+            '&vatType=' + vatType +
+            '&type=' + 'compareReceiptSummary';
+    CallAjaxCompareReceiptSummary(param);
+}
+
+function CallAjaxCompareReceiptSummary(param) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                if(msg !== ''){
+                    showPeriodMessage(msg);
+                }
+            }, error: function(msg) {
+                console.log('auto ERROR');
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
 }
 
 function deleteAdvanceReceivePeriod() {
@@ -1006,11 +1061,12 @@ function CallAjaxDeletePeriod(param, periodId) {
         alert(e);
     }
 }
+
 // Period Message
-function showPeriodMessage() {
+function showPeriodMessage(message) {
     if ($("#periodMessage").val() !== '') {
         $("#textAlertDivPeriodMeaasge").show();
-        $("#periodAlertMessage").text($("#periodMessage").val());
+        $("#periodAlertMessage").text(message);
 
     }
 }
