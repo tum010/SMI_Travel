@@ -1857,7 +1857,7 @@ function printAirticketRefund(){
     if (PnrID === "") {
         alert("please select airticket refund");
     } else {
-        window.open("report.smi?name=RefundAirReport&refundId="+PnrID);
+        window.open("report.smi?name=RefundAirticketReport&refundId="+PnrID);
     }
 }
 </script>

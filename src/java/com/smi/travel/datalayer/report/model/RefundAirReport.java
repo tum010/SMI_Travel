@@ -23,6 +23,10 @@ public class RefundAirReport {
     private String totalreceive;
     private String totalpay;
     private String address;
+    private String totalclientcharge;
+    
+    private String refundtype;
+    private String otherreason;
     
     public String getRefundno() {
         return refundno;
@@ -135,6 +139,30 @@ public class RefundAirReport {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getTotalclientcharge() {
+        return totalclientcharge;
+    }
+
+    public void setTotalclientcharge(String totalclientcharge) {
+        this.totalclientcharge = totalclientcharge;
+    }
+
+    public String getRefundtype() {
+        return refundtype;
+    }
+
+    public void setRefundtype(String refundtype) {
+        this.refundtype = refundtype;
+    }
+
+    public String getOtherreason() {
+        return otherreason;
+    }
+
+    public void setOtherreason(String otherreason) {
+        this.otherreason = otherreason;
     }
     
     

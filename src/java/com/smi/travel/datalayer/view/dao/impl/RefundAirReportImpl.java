@@ -37,6 +37,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
         BigDecimal SumTicketAmount = new BigDecimal(0);
         BigDecimal SumReceive = new BigDecimal(0);
         BigDecimal SumPayCus = new BigDecimal(0);
+        BigDecimal SumClient = new BigDecimal(0);
          List<Object[]> QueryRefundList = session.createSQLQuery("SELECT * FROM `refund_ticket_view` where refundid = " + refundId)
                  .addScalar("refundno", Hibernate.STRING)
                  .addScalar("ticketdate", Hibernate.DATE)
@@ -53,6 +54,9 @@ public class RefundAirReportImpl implements RefundAirReportDao{
                  .addScalar("address", Hibernate.STRING)
                  .addScalar("totalreceive", Hibernate.BIG_DECIMAL)
                  .addScalar("totalpay", Hibernate.BIG_DECIMAL)
+                 .addScalar("totalclientcharge", Hibernate.BIG_DECIMAL)
+                 .addScalar("refundtype", Hibernate.STRING)
+                 .addScalar("otherreason", Hibernate.STRING)
                  .list();
         for (Object[] B : QueryRefundList) {
              RefundAirReport report = new RefundAirReport();
@@ -72,6 +76,10 @@ public class RefundAirReportImpl implements RefundAirReportDao{
              SumTicketAmount = SumTicketAmount.add((BigDecimal) B[11]);
              SumReceive = SumReceive.add((BigDecimal) B[13]);
              SumPayCus = SumPayCus.add((BigDecimal) B[14]);
+             SumClient = SumClient.add((BigDecimal) B[15]);
+             
+             report.setRefundtype(util.ConvertString(B[16]));
+             report.setOtherreason(util.ConvertString(B[17]));
              data.add(report);
             
         }
@@ -81,6 +89,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
             System.out.println("Sum Receive : " +SumReceive + ": " +  util.setFormatMoney(SumReceive) );
             temp.setTotalreceive(util.setFormatMoney(SumReceive) != null && !".00".equals(util.setFormatMoney(SumReceive)) ? util.setFormatMoney(SumReceive) : "");
             temp.setTotalpay(util.setFormatMoney(SumPayCus) != null && !"".equals(util.setFormatMoney(SumPayCus)) ? util.setFormatMoney(SumPayCus) : "");
+            temp.setTotalclientcharge(util.setFormatMoney(SumClient) != null && !"".equals(util.setFormatMoney(SumClient)) ? util.setFormatMoney(SumClient) : "");
             data.set(0, temp);
             
         }
