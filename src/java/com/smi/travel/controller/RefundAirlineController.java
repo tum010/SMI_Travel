@@ -169,6 +169,7 @@ public class RefundAirlineController extends SMITravelController {
                     String receivedate = request.getParameter("receivedate" + i);
                     String checkCharge = request.getParameter("checkCharge" + i);
                     String ticketNo = request.getParameter("ticketNo" + i);
+                    String clientCharge = request.getParameter("clientCharge" + i);
                     
                     detail.setTicketNo(ticketNo);
                     System.out.println(" checkCharge " + checkCharge);
@@ -196,6 +197,9 @@ public class RefundAirlineController extends SMITravelController {
                     }
                     if (agentCom != null && !"".equals(agentCom)) {
                         detail.setAgentComission(new BigDecimal(df.parse(agentCom).toString()));
+                    }
+                    if (clientCharge != null && !"".equals(clientCharge)) {
+                        detail.setClientCharge(new BigDecimal(df.parse(clientCharge).toString()));
                     }
                     detail.setReceiveDate(uf.convertStringToDate(receivedate));
                     detail.setExpenseDate(uf.convertStringToDate(paydate));

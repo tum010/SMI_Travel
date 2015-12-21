@@ -17,6 +17,7 @@ public class RefundTicketDetail {
     private String charge;
     private String paycustomer;
     private String ticketid;
+    private String clientcharge;
 
     public String getPaycustomer() {
         return paycustomer;
@@ -73,6 +74,14 @@ public class RefundTicketDetail {
 
     public void setCharge(String charge) {
         this.charge = charge;
+    }
+
+    public String getClientcharge() {
+        return clientcharge;
+    }
+
+    public void setClientcharge(String clientcharge) {
+        this.clientcharge = clientcharge;
     }
 
 }

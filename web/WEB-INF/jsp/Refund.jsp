@@ -191,6 +191,11 @@
                                         <div class="col-lg-4">
                                             <div class="">
                                                 <div class="input-group" id="refundpanel">
+                                                    <input type="hidden" class="form-control" name="refundStatus" id="refundStatus" value="${table1.status}">
+                                                    <!--<input type="hidden" class="form-control" name="ownerBy" id="ownerBy" value="${table1.ownerBy}">-->
+                                                    <!--<input type="hidden" class="form-control" name="refundType" id="refundType" value="${table1.refundType}">-->
+                                                    <!--<input type="hidden" class="form-control" name="otherReason" id="otherReason" value="${table1.otherReason}">-->
+                                                    <!--<input type="hidden" class="form-control" name="masterId" id="masterId" value="${table1.masterId}">-->
                                                     <input type="hidden" class="form-control" name="refundById" id="refundById" value="${table1.airticketrefundid}">
                                                     <input type="hidden" class="form-control" name="refundid" id="refundid" value="${table1.id}">
                                                     <input type="text" class="form-control" id="refundBy" name="refundBy" value="${table1.refundcode}">
@@ -272,6 +277,47 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label for="Owner" class="col-sm-3 control-label text-right">Owner By</label>
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <div class="input-group" id="ownerpanel">
+                                                    <c:if test="${table1.ownerBy == null}"> 
+                                                        <input type="hidden" class="form-control" name="ownerById" id="ownerById" value="">
+                                                        <input type="text" class="form-control" id="ownerBy" name="ownerBy" value="${ownerbyDefault}">
+                                                        <span class="input-group-addon" data-toggle="modal" data-target="#ownerUserModal">
+                                                            <span class="glyphicon-search glyphicon"></span>
+                                                        </span>
+                                                    </c:if>
+                                                    <c:if test="${table1.ownerBy != null}"> 
+                                                        <input type="hidden" class="form-control" name="ownerById" id="ownerById" value="">
+                                                        <input type="text" class="form-control" id="ownerBy" name="ownerBy" value="${table1.ownerBy}">
+                                                        <span class="input-group-addon" data-toggle="modal" data-target="#ownerUserModal">
+                                                            <span class="glyphicon-search glyphicon"></span>
+                                                        </span>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5"> 
+                                            <c:if test="${table1.ownerBy == null}"> 
+                                                <input type="text" class="form-control" id="ownerByName" name="ownerByName" value="" readonly="">
+                                            </c:if>
+                                            <c:if test="${table1.ownerBy != null}"> 
+                                                <input type="text" class="form-control" id="ownerByName" name="ownerByName" value="" readonly="">
+                                            </c:if>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label text-right">Cancel Detail</label>
+                                        <div class="col-sm-9">                                      
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="cancelDetail" name="cancelDetail">${table1.detail}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>                    
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
@@ -283,10 +329,10 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6 form-group">
-                                        <label class="col-sm-3 control-label text-right">Cancel Detail</label>
+                                        <label class="col-sm-3 control-label text-right">Reason</label>
                                         <div class="col-sm-9">                                      
                                             <div class="form-group">
-                                                <textarea class="form-control" id="cancelDetail" name="cancelDetail">${table1.detail}</textarea>
+                                                <input type="text" class="form-control"  name="reason" id="reason" value="">
                                             </div>
                                         </div>
                                     </div>
@@ -310,47 +356,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 form-group">
-                                        <label class="col-sm-3 control-label text-right">Reason</label>
-                                        <div class="col-sm-9">                                      
-                                            <div class="form-group">
-                                                <input type="text" class="form-control"  name="reason" id="reason" value="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6 form-group">
-                                        <label for="Owner" class="col-sm-3 control-label text-right">Owner By</label>
-                                        <div class="col-lg-4">
-                                            <div class="">
-                                                <div class="input-group" id="ownerpanel">
-                                                    <c:if test="${table1.ownerby == null}"> 
-                                                        <input type="hidden" class="form-control" name="ownerById" id="ownerById" value="">
-                                                        <input type="text" class="form-control" id="ownerBy" name="ownerBy" value="${ownerbyDefault}">
-                                                        <span class="input-group-addon" data-toggle="modal" data-target="#ownerUserModal">
-                                                            <span class="glyphicon-search glyphicon"></span>
-                                                        </span>
-                                                    </c:if>
-                                                    <c:if test="${table1.ownerby != null}"> 
-                                                        <input type="hidden" class="form-control" name="ownerById" id="ownerById" value="">
-                                                        <input type="text" class="form-control" id="ownerBy" name="ownerBy" value="${table1.ownerby}">
-                                                        <span class="input-group-addon" data-toggle="modal" data-target="#ownerUserModal">
-                                                            <span class="glyphicon-search glyphicon"></span>
-                                                        </span>
-                                                    </c:if>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-5"> 
-                                            <c:if test="${table1.ownerby == null}"> 
-                                                <input type="text" class="form-control" id="ownerByName" name="ownerByName" value="" readonly="">
-                                            </c:if>
-                                            <c:if test="${table1.ownerby != null}"> 
-                                                <input type="text" class="form-control" id="ownerByName" name="ownerByName" value="" readonly="">
-                                            </c:if>
-                                        </div>
-                                    </div>
                                 </div>
                                 </br>
                                 <div class="row">
@@ -365,9 +370,9 @@
                                                     <th style="width: 5%" >No</th>
                                                     <th style="width: 25%">Ticket No</th>
                                                     <th style="width: 20%">Section</th>
-                                                    <th style="width: 20%">section refund</th>
-                                                    <th style="width: 15%">Change</th>
-                                                    <th style="width: 25%">Pay Customer</th>
+                                                    <th style="width: 20%">Section refund</th>
+                                                    <th style="width: 15%">Airline Charge</th>
+                                                    <th style="width: 25%">Client Charge</th>
                                                     <th style="width: 5%" >Action</th>
                                                 </tr>
                                             </thead>
@@ -388,6 +393,7 @@
                                                                     <option value='${typeP.id}' ${selectTic}>${typeP.series1}${typeP.series2}${typeP.series3}</option>
                                                                 </c:forEach>
                                                             </select>
+                                                            <input type="hidden" id="ticketNoOnSelected${statusDetail.count}" name="ticketNoOnSelected${statusDetail.count}" value="" >
                                                         </td>
                                                         <td>
                                                             <input type="text" maxlength ="255" class="form-control" id="inputSector${statusDetail.count}" name="inputSector${statusDetail.count}" value="${tableDetail.sector}" readonly=""></td>
@@ -399,7 +405,7 @@
                                                             <input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeNumber(${statusDetail.count});"  id="inputCharge${statusDetail.count}" name="inputCharge${statusDetail.count}" value="${tableDetail.charge}" >
                                                         </td>
                                                         <td>
-                                                            <input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatPaycustomerNumber(${statusDetail.count});"  id="inputPaycustomer${statusDetail.count}" name="inputPaycustomer${statusDetail.count}" value="${tableDetail.paycustomer}" >
+                                                            <input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatClientchargeNumber(${statusDetail.count});"  id="inputClientcharge${statusDetail.count}" name="inputClientcharge${statusDetail.count}" value="${tableDetail.clientcharge}" >
                                                         </td>
                                                         <td class="text-center">
                                                             <a class="carousel"  
@@ -428,16 +434,26 @@
                                         </div>
                                     </div>
                                         <div class="col-sm-6 form-group">
-                                        <label  class="col-sm-4 control-label text-right">Total Pay Customer</label>
+                                        <label  class="col-sm-4 control-label text-right">Total Client Customer</label>
                                         <div class="col-sm-8">  
-                                            <input type="text" class="form-control" value="${table1.paycustomer}" maxlength="255" id="payCustomer" name="payCustomer" readonly=""/>
+                                            <input type="text" class="form-control" value="${table1.clientcharge}" maxlength="255" id="clientCharge" name="clientCharge" readonly=""/>
                                         </div>
                                     </div>
                                 </div> 
                                 <div class="col-sm-6 form-group text-right">
-                                    <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=saveRefund">
-                                        <button type="submit" class="btn btn-success"  id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
-                                    </a>
+                                    <c:choose>
+                                        <c:when test="${table1.status == 1}">
+                                           <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                        </c:when>
+                                        <c:when test="${table1.status == 2}">
+                                            <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=saveRefund">
+                                                <button type="submit" class="btn btn-success"  id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
+                                            </a>
+                                        </c:otherwise>
+                                    </c:choose> 
                                 </div>
                                 <div class="col-sm-6 form-group text-left">
                                     <button type="button" id="buttonCloseRefund"  name="buttonCloseRefund" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
@@ -522,7 +538,48 @@
                                     </div>
 
                                 </div>
-                            </div> 
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label for="Owner" class="col-sm-3 control-label text-right">Owner By</label>
+                                    <div class="col-sm-4">
+                                        <div class="">
+                                            <div class="input-group" id="ownerpanel">
+                                                <c:if test="${table1.ownerBy == null}"> 
+                                                    <input type="hidden" class="form-control" name="ownerById" id="ownerById" value="">
+                                                    <input type="text" class="form-control" id="ownerBy" name="ownerBy" value="${ownerbyDefault}">
+                                                    <span class="input-group-addon" data-toggle="modal" data-target="#ownerUserModal">
+                                                        <span class="glyphicon-search glyphicon"></span>
+                                                    </span>
+                                                </c:if>
+                                                <c:if test="${table1.ownerBy != null}"> 
+                                                    <input type="hidden" class="form-control" name="ownerById" id="ownerById" value="">
+                                                    <input type="text" class="form-control" id="ownerBy" name="ownerBy" value="${table1.ownerby}">
+                                                    <span class="input-group-addon" data-toggle="modal" data-target="#ownerUserModal">
+                                                        <span class="glyphicon-search glyphicon"></span>
+                                                    </span>
+                                                </c:if>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5"> 
+                                        <c:if test="${table1.ownerBy == null}"> 
+                                            <input type="text" class="form-control" id="ownerByName" name="ownerByName" value="" readonly="">
+                                        </c:if>
+                                        <c:if test="${table1.ownerBy != null}"> 
+                                            <input type="text" class="form-control" id="ownerByName" name="ownerByName" value="" readonly="">
+                                        </c:if>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label text-right">Cancel Detail</label>
+                                    <div class="col-sm-9">                                      
+                                        <div class="form-group">
+                                            <textarea class="form-control" id="cancelDetail" name="cancelDetail"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                    
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label class="col-sm-3 control-label text-right">Address</label>
@@ -533,10 +590,10 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    <label class="col-sm-3 control-label text-right">Cancel Detail</label>
+                                    <label class="col-sm-3 control-label text-right">Reason</label>
                                     <div class="col-sm-9">                                      
                                         <div class="form-group">
-                                            <textarea class="form-control" id="cancelDetail" name="cancelDetail"></textarea>
+                                            <input type="text" class="form-control"  name="reason" id="reason" value="">
                                         </div>
                                     </div>
                                 </div>
@@ -560,48 +617,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 form-group">
-                                    <label class="col-sm-3 control-label text-right">Reason</label>
-                                    <div class="col-sm-9">                                      
-                                        <div class="form-group">
-                                            <input type="text" class="form-control"  name="reason" id="reason" value="">
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label for="Owner" class="col-sm-3 control-label text-right">Owner By</label>
-                                    <div class="col-lg-4">
-                                        <div class="">
-                                            <div class="input-group" id="ownerpanel">
-                                                <c:if test="${table1.ownerby == null}"> 
-                                                    <input type="hidden" class="form-control" name="ownerById" id="ownerById" value="">
-                                                    <input type="text" class="form-control" id="ownerBy" name="ownerBy" value="${ownerbyDefault}">
-                                                    <span class="input-group-addon" data-toggle="modal" data-target="#ownerUserModal">
-                                                        <span class="glyphicon-search glyphicon"></span>
-                                                    </span>
-                                                </c:if>
-                                                <c:if test="${table1.ownerby != null}"> 
-                                                    <input type="hidden" class="form-control" name="ownerById" id="ownerById" value="">
-                                                    <input type="text" class="form-control" id="ownerBy" name="ownerBy" value="${table1.ownerby}">
-                                                    <span class="input-group-addon" data-toggle="modal" data-target="#ownerUserModal">
-                                                        <span class="glyphicon-search glyphicon"></span>
-                                                    </span>
-                                                </c:if>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-5"> 
-                                        <c:if test="${table1.ownerby == null}"> 
-                                            <input type="text" class="form-control" id="ownerByName" name="ownerByName" value="" readonly="">
-                                        </c:if>
-                                        <c:if test="${table1.ownerby != null}"> 
-                                            <input type="text" class="form-control" id="ownerByName" name="ownerByName" value="" readonly="">
-                                        </c:if>
-                                    </div>
-                                </div>
-                            </div>                          
                             </br>
                             <div class="row">
                                 <input type="text" class="hidden" id="counterTableAdd" name="counterTableAdd" value="1" >
@@ -616,8 +632,8 @@
                                                     <th style="width: 25%">Ticket No</th>
                                                     <th style="width: 20%">Section</th>
                                                     <th style="width: 20%">section refund</th>
-                                                    <th style="width: 15%">Change</th>
-                                                    <th style="width: 25%">Pay Customer</th>
+                                                    <th style="width: 15%">Airline Charge</th>
+                                                    <th style="width: 25%">Client Charge</th>
                                                     <th style="width: 5%" >Action</th>
                                             </tr>
                                         </thead>
@@ -640,17 +656,27 @@
                                     </div>
                                 </div>
                                     <div class="col-sm-6 form-group">
-                                    <label  class="col-sm-4 control-label text-right">Total Pay Customer</label>
+                                    <label  class="col-sm-4 control-label text-right">Total Client Customer</label>
                                     <div class="col-sm-8">  
-                                        <input type="text" class="form-control" value="${table1.change}" maxlength="255" id="payCustomer" name="payCustomer" readonly=""/>
+                                        <input type="text" class="form-control" value="${table1.change}" maxlength="255" id="clientCharge" name="clientCharge" readonly=""/>
                                     </div>
                                 </div>
                             </div> 
                             <div class="row">
                                 <div class="col-sm-6 form-group text-right">
-                                    <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=addRefund">
-                                    <button type="submit" class="btn btn-success" id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
-                                    </a>
+                                    <c:choose>
+                                        <c:when test="${table1.status == 1}">
+                                           <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                        </c:when>
+                                        <c:when test="${table1.status == 2}">
+                                            <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                        </c:when>
+                                        <c:otherwise>
+                                           <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=addRefund">
+                                                <button type="submit" class="btn btn-success" id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
+                                            </a>
+                                        </c:otherwise>
+                                    </c:choose>  
                                 </div>
                                 <div class="col-sm-6 form-group text-left">
                                     <button type="button" id="buttonCloseRefund"  name="buttonCloseRefund" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
@@ -1238,6 +1264,9 @@
         console.log("RefundTicketDetailTable : " + countTableRefundDetail);
         for(var i = 1 ; i <= (countTableRefundDetail-1) ; i++){
             checkRefundReady(i);
+            var txtNo = $("#SelectTocketNo"+ i + " option:selected").text();
+            $("#ticketNoOnSelected"+i).val(txtNo);
+            
         }  
         if(counterror === 0){
             $("#buttonSaveRefund").removeAttr("disabled");
@@ -1245,8 +1274,7 @@
         }else{
             $("#buttonSaveRefund").attr("disabled", "disabled");
             $("#buttonPrintRefund").attr("disabled", "disabled");
-        }
-        
+        }        
  }); 
   
 function setBillValue(billto, billname, address, term, pay) {
@@ -1541,11 +1569,11 @@ function addRowRefundTicketDetail(row,id){
         '<tr>' +
         '<td class="hidden"><input type="text" id="airticketrefunddetailid' + row + '" name="airticketrefunddetailid' + row + '" value="" /></td>'+
         '<td>' + row + '</td>' +       
-        '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> </td>' +
+        '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> <input type="hidden" id="ticketNoOnSelected' + row + '" name="ticketNoOnSelected' + row + '" value="" ></td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value="" readonly=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value=""></td>' +
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeNumber('+row+');"  id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' + 
-        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatPaycustomerNumber('+row+');"  id="inputPaycustomer' + row + '" name="inputPaycustomer' + row + '" value="" ></td>'+
+        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatClientchargeNumber('+row+');"  id="inputClientcharge' + row + '" name="inputClientcharge' + row + '" value="" ></td>'+
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
     );
@@ -1560,11 +1588,11 @@ function addRowRefundTicketDetailAdd(row,id){
         '<tr>' +
         '<td class="hidden"><input type="text" id="airticketrefunddetailidadd' + row + '" name="airticketrefunddetailidadd' + row + '" value="" /></td>'+
         '<td>' + row + '</td>' +       
-        '<td><select id="SelectTocketNoadd' + row + '" name="SelectTocketNoadd' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> </td>' +
+        '<td><select id="SelectTocketNoadd' + row + '" name="SelectTocketNoadd' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> <input type="hidden" id="ticketNoOnSelectedAdd' + row + '" name="ticketNoOnSelectedAdd' + row + '" value="" ></td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSectoradd' + row + '" name="inputSectoradd' + row + '" value="" readonly="" ></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefundadd' + row + '" name="inputSectorRefundadd' + row + '" value="" onfocusout="checkRefundAdd(this,'+row+')"></td>' +
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeAddNumber('+row+');"  id="inputChargeadd' + row + '" name="inputChargeadd' + row + '" value="" ></td>' +   
-        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatPaycustomerAddNumber('+row+');"  id="inputPaycustomeradd' + row + '" name="inputPaycustomeradd' + row + '" value="" ></td>'+
+        '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatClientchargeAddNumber('+row+');"  id="inputClientchargeadd' + row + '" name="inputClientchargeadd' + row + '" value="" ></td>'+
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetailAdd" onclick="DeleteRefundDetailAdd('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
         '</tr>'    
     );
@@ -1577,6 +1605,8 @@ function setSectorRefund(row){
     var txtNo = $("#SelectTocketNo"+ row + " option:selected").text();
     console.log("Text : " + txt);
     console.log("Text : " + txtNo);
+    $("#ticketNoOnSelected"+row).val(txtNo);
+    $("#ticketNoOnSelectedAdd"+row).val(txt);
     if(txt !== ''){
         var url = 'AJAXServlet';
         var servletName = 'RefundAirlineServlet';
@@ -1756,29 +1786,29 @@ function changeFormatChargeNumber(id){
     }
 }
 
-function changeFormatPaycustomerNumber(id){
+function changeFormatClientcharge(id){
     console.log("Id Row : " + count);
-    var count = document.getElementById('inputPaycustomer'+id).value;
+    var count = document.getElementById('inputClientcharge'+id).value;
     count = count.replace(/\,/g,'');
     count  = parseFloat(count);
     if(isNaN(count)){
-        document.getElementById('inputPaycustomer' + id).value = "";
+        document.getElementById('inputClientcharge' + id).value = "";
     }else{
         count = parseFloat(count);
-        document.getElementById('inputPaycustomer' + id).value = formatNumber(count);
+        document.getElementById('inputClientcharge' + id).value = formatNumber(count);
     }
 }
 
-function changeFormatPaycustomerAddNumber(id){
+function changeFormatClientchargeAddNumber(id){
     console.log("Id Row : " + count);
-    var count = document.getElementById('inputPaycustomeradd'+id).value;
+    var count = document.getElementById('inputClientchargeadd'+id).value;
     count = count.replace(/\,/g,'');
     count  = parseFloat(count);
     if(isNaN(count)){
-        document.getElementById('inputPaycustomeradd' + id).value = "";
+        document.getElementById('inputClientchargeadd' + id).value = "";
     }else{
         count = parseFloat(count);
-        document.getElementById('inputPaycustomeradd' + id).value = formatNumber(count);
+        document.getElementById('inputClientchargeadd' + id).value = formatNumber(count);
     }
 }
 

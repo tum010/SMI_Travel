@@ -20,7 +20,7 @@ public class RefundTicket {
     private String refundby;
     private Date refunddate;
     private String receiveby;
-    private String ownerby;
+//    private String ownerby;
     private String refundcode;
     private Date receivedate;
     private String change;
@@ -29,14 +29,12 @@ public class RefundTicket {
     private String address;
     private String airbookingid;
     private List RefundTicketDetail;
-
-    public String getOwnerby() {
-        return ownerby;
-    }
-
-    public void setOwnerby(String ownerby) {
-        this.ownerby = ownerby;
-    }
+    private Integer status;
+    private String ownerBy;
+    private String refundType;
+    private String otherReason;
+    private String masterId;
+    private String clientcharge;
 
     public String getPaycustomer() {
         return paycustomer;
@@ -153,6 +151,54 @@ public class RefundTicket {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getOwnerBy() {
+        return ownerBy;
+    }
+
+    public void setOwnerBy(String ownerBy) {
+        this.ownerBy = ownerBy;
+    }
+
+    public String getRefundType() {
+        return refundType;
+    }
+
+    public void setRefundType(String refundType) {
+        this.refundType = refundType;
+    }
+
+    public String getOtherReason() {
+        return otherReason;
+    }
+
+    public void setOtherReason(String otherReason) {
+        this.otherReason = otherReason;
+    }
+
+    public String getMasterId() {
+        return masterId;
+    }
+
+    public void setMasterId(String masterId) {
+        this.masterId = masterId;
+    }
+
+    public String getClientcharge() {
+        return clientcharge;
+    }
+
+    public void setClientcharge(String clientcharge) {
+        this.clientcharge = clientcharge;
     }
   
 }
