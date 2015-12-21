@@ -55,6 +55,9 @@
         <property name="isExport" type="java.lang.Integer">
             <column name="is_export"  />
         </property>
+        <property name="exRate" type="big_decimal">
+            <column name="ex_rate" precision="10" />
+        </property>
         <bag name="invoiceDocuments" table="invoice_document" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="invoice_detail_id" not-null="true" />

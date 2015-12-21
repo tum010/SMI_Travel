@@ -136,11 +136,11 @@
                 <c:set var="lineRightMenu" value="border-right:  solid 1px #F55E00;padding-top: 10px"/>
             </c:when> 
         </c:choose> 
-        <div class="col-sm-2" style="${lineRightMenu}">
+        <div class="col-sm-1" style="width: 175px; ${lineRightMenu}">
             <div ng-include="'WebContent/FinanceAndCashier/InvoiceMenu.html'"></div>
         </div>
 
-        <div class="col-sm-10">          
+        <div class="col-sm-10" style="width: 1100px;">          
             <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Save Success!</strong> 
@@ -341,7 +341,7 @@
                             <div class="col-sm-1 text-right">
                                 <label class="control-label" for="">Inv To<font style="color: red">*</font></lable>
                             </div>
-                            <div class="col-md-6 form-group" style="width: 514px;">
+                            <div class="col-md-6 form-group" style="width: 520px;">
                                 <div class="input-group">
                                     <input type="hidden" class="form-control" id="InvToId" name="InvToId" value="${invoice.invTo}"/>
                                     <input type="text" class="form-control" id="InvTo" name="InvTo" value="${invoice.invTo}" style="background-color: #ffffff">
@@ -370,7 +370,7 @@
                             <div class="col-sm-1 text-right">
                                 <label class="control-label" for="">Name<font style="color: red">*</font></lable>
                             </div>    
-                            <div class="col-md-6 form-group" style="width: 514px;">
+                            <div class="col-md-6 form-group" style="width: 520px;">
                                 <input  type="text" id="InvToName" name="InvToName" class="form-control" value="${invoice.invName}" >
                             </div>
                             <c:set var="isHidden" value="hidden" />
@@ -401,7 +401,7 @@
                             <div class="col-sm-1 text-right">
                                 <label class="control-label" for="">Address </lable>
                             </div>
-                            <div class="col-md-6 form-group" style="width: 514px;">
+                            <div class="col-md-6 form-group" style="width: 520px;">
                                 <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" >${invoice.invAddress}</textarea>
                             </div>
                             <div class="col-md-2 form-group text-right">                           
@@ -457,7 +457,7 @@
                                 <label class="control-label"><input onclick='' type="checkbox" id="Grpup" name="Grpup"  ${checkGroup}>  Group Yes/No</label>
                                 <input class="hidden" type="text" value="${invoice.isGroup}"  >
                             </div>
-                            <div class="col-xs-1 text-right" style="width: 100px; margin-top: -10px">
+                            <div class="col-xs-1 text-right" style="width: 93px; margin-top: -10px">
                                 <label class="control-label" for="" >A/R&nbsp;Code<font style="color: red">*</font></label>
                             </div>  
                             <div class="col-md-2 form-group" style="margin-top: -10px">
@@ -496,7 +496,7 @@
                             </c:choose>   
                             </div>
                         </div>
-                        <div class="col-xs-12 hidden" style="margin-bottom: 10px" id="searchRefNo2">
+                        <div class="col-xs-12 hidden" style="margin-bottom: 10px; margin-left: -20px; width: 1073px;" id="searchRefNo2">
                             <div class="row" >
                                 <input type="text" class="hidden" id="counter" name="counter" value="1">
                                 <div class="col-md-12">
@@ -523,12 +523,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel">
+                        <div role="tabpanel" style="margin-left: -20px;">
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane  active" id="infoDetailBillable">
                                     <div class="panel-body">
-                                        <div class="col-xs-12">    
-                                            <div id="textAlertCurrency"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                                        <div class="col-xs-12" style="margin-left: -15px; width: 1075px;">    
+                                            <div id="textAlertCurrency"  style="display:block;" class="alert alert-danger alert-dismissible" role="alert">
                                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 <strong>Currency is not match!!! </strong> 
                                             </div> 
@@ -543,8 +543,8 @@
                                                         <tr>
                                                             <th class="hidden"> Id</th>
                                                             <th class="hidden">Detail Id</th>
-                                                            <th style="width:10%;" align="center">Product</th>
-                                                            <th style="width:13%;" align="center">Description</th>
+                                                            <th style="width:9%;" align="center">Product</th>
+                                                            <th style="width:10%;" align="center">Description</th>
                                                             <th class="hidden">Description Temp</th>
                                                             <th style="width: 8%" align="center">Cost</th>
                                                             <th style="width: 7%" align="center" class="priceCurrencyCost">Cur</th>
@@ -556,6 +556,7 @@
                                                     <th style="width: 8%" align="center">Gross</th>
                                                     <th style="width: 8%" align="center">Amount</th>
                                                     <th style="width: 7%" align="center" class="" >Cur</th>
+                                                    <th style="width: 7%" align="center" class="" >Ex Rate</th>
                                                     <th style="width: 8%" align="center">Amount Local</th>
                                                     <th class="hidden">Amount Local Input</th>
                                                     <th style="width: 3%" align="center">Action</th>
@@ -623,6 +624,7 @@
                                                                         </c:forEach>
                                                                     </select>
                                                                 </td>
+                                                                <td><input type="text" value="${ind.exRate}" id="InputExRate${taxdesc.count}" onfocusout="changeFormatExRateNumber(${taxdesc.count})" name="InputExRate${taxdesc.count}" class="form-control text-right" ></td>
                                                                 <td><input type="text" value="${ind.amount}" id="InputAmountLocal${taxdesc.count}" onfocusout="changeFormatAmountLocalNumber(${taxdesc.count})" name="InputAmountLocal${taxdesc.count}" class="form-control text-right" ></td>
                                                                 <td class="hidden"><input type="text" value="${ind.amount}" onfocusout="changeFormatAmountLocalTempNumber(${taxdesc.count})" id="InputAmountLocalTemp${taxdesc.count}" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
                                                                 <td align="center" >
@@ -649,11 +651,13 @@
                                                                 <td class="hidden">
                                                                     <input type="text" value="${ind.billableDesc.billable.master.referenceNo}" id="refNo${taxdesc.count}" name="refNo${taxdesc.count}" class="form-control" >
                                                                 </td>
+                                                                <td class="hidden">
+                                                                    <input type="text" value="${ind.exRate}" id="curExRateTemp${taxdesc.count}" name="curExRateTemp${taxdesc.count}" class="form-control" >
+                                                                </td>
                                                             </tr>
                                                         </c:forEach>
                                                     </tbody>
                                                 </table>                                        
-
                                             </c:when>
                                             <c:when test="${showvat =='false'}">
                                                 <table class="display" id="DetailBillableTable">
@@ -669,16 +673,17 @@
                                                             <th style="width: 10%" align="center">Cost Local</th>
                                                             <th class="hidden">Cost Local Input</th>
                                                             <th class="hidden" onclick="checkVatInvoiceAll()" align="center"><u>Is vat</u></th> 
-                                                    <th class="hidden" align="center">Vat</th>
-                                                    <th class="hidden" align="center">Vat Temp</th>
-                                                    <th class="hidden" align="center">Gross</th>
-                                                    <th style="width: 10%" align="center">Amount</th>
-                                                    <th style="width: 7%" align="center">Cur</th>
-                                                    <th style="width: 10%" align="center">Amount Local</th>
-                                                    <th class="hidden">Amount Local Input</th>
-                                                    <th style="width: 3%" align="center">Action</th>
-                                                    <th class="hidden">Description Temp Type</th>
-                                                    </tr>
+                                                            <th class="hidden" align="center">Vat</th>
+                                                            <th class="hidden" align="center">Vat Temp</th>
+                                                            <th class="hidden" align="center">Gross</th>
+                                                            <th style="width: 10%" align="center">Amount</th>
+                                                            <th style="width: 7%" align="center">Cur</th>
+                                                            <th style="width: 7%" align="center">Ex Rate</th>
+                                                            <th style="width: 10%" align="center">Amount Local</th>
+                                                            <th class="hidden">Amount Local Input</th>
+                                                            <th style="width: 3%" align="center">Action</th>
+                                                            <th class="hidden">Description Temp Type</th>
+                                                        </tr>
                                                     </thead>
                                                     <tbody>
                                                         <c:forEach var="ind" items="${listInvoiceDetail}" varStatus="taxdesc">
@@ -741,6 +746,7 @@
                                                                         </c:forEach>
                                                                     </select>
                                                                 </td>
+                                                                <td><input type="text" value="${ind.exRate}" id="InputExRate${taxdesc.count}" onfocusout="changeFormatExRateNumber(${taxdesc.count})" name="InputExRate${taxdesc.count}" class="form-control text-right" ></td>
                                                                 <td><input type="text" value="${ind.amount}" onfocusout="changeFormatAmountLocalNumber(${taxdesc.count})" id="InputAmountLocal${taxdesc.count}" name="InputAmountLocal${taxdesc.count}" class="form-control text-right" ></td>
                                                                 <td class="hidden"><input type="text" value="${ind.amount}" id="InputAmountLocalTemp${taxdesc.count}" onfocusout="changeFormatAmountLocalTempNumber(${taxdesc.count})" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
                                                                 <td align="center" >
@@ -766,6 +772,9 @@
                                                                 </td>
                                                                 <td class="hidden">
                                                                     <input type="text" value="${ind.billableDesc.billable.master.referenceNo}" id="refNo${taxdesc.count}" name="refNo${taxdesc.count}" class="form-control" >
+                                                                </td>
+                                                                <td class="hidden">
+                                                                    <input type="text" value="${ind.exRate}" id="curExRateTemp${taxdesc.count}" name="curExRateTemp${taxdesc.count}" class="form-control" >
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>

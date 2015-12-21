@@ -28,6 +28,7 @@ public class InvoiceDetail {
      private Date exportDate;
      private Integer isExport;
      private String displayDescription;
+     private BigDecimal exRate;
      private List invoiceDocuments = new LinkedList<InvoiceDocument>();
      private List receiptDetails = new LinkedList<ReceiptDetail>();
      
@@ -206,6 +207,14 @@ public class InvoiceDetail {
 
     public void setReceiptDetails(List receiptDetails) {
         this.receiptDetails = receiptDetails;
+    }
+
+    public BigDecimal getExRate() {
+        return exRate;
+    }
+
+    public void setExRate(BigDecimal exRate) {
+        this.exRate = exRate;
     }
 
 

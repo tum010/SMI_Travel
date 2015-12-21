@@ -29,6 +29,7 @@ public class ReceiptDetail {
      private String invoiceId;
      private String invoiceNo;
      private String invoiceType;
+     private BigDecimal exRate;
      
     public ReceiptDetail() {
     }
@@ -187,6 +188,14 @@ public class ReceiptDetail {
 
     public void setPaymentDetailWendy(PaymentDetailWendy paymentDetailWendy) {
         this.paymentDetailWendy = paymentDetailWendy;
+    }
+
+    public BigDecimal getExRate() {
+        return exRate;
+    }
+
+    public void setExRate(BigDecimal exRate) {
+        this.exRate = exRate;
     }
 
 

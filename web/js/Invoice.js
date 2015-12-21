@@ -222,7 +222,8 @@ $(document).ready(function() {
         changeFormatCostLocalNumber(j);
         changeFormatAmountNumber(j);
         changeFormatAmountLocalNumber(j);
-
+        changeFormatExRateNumber(j)
+        calculateAmountLocal(j,'setEvent');
     }
 
     var invoiceNumber = $('#InvNo').val();
@@ -293,7 +294,7 @@ function validFromInvoice() {
         if (checkcur1) {
             $('#textAlertCurrencyAmountNotEmpty').show();
             document.getElementById("saveInvoice").disabled = true;
-        } 
+        }
         return false;
     } else {
         $('#DetailBillableTable').find('tr').each(function() {
@@ -441,17 +442,21 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td ' + vathidden + ' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
                 '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" value="' + price + '" ></td>' +
                 '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="validFromInvoice()">' + selectC + '</select></td>' +
+                '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right" ></td>' +
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
                 '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +
-                '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> ' + description + '</textarea> </td>' +               
+                '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> ' + description + '</textarea> </td>' +
                 '<td class="hidden"><textarea id="DescriptionInvoiceDetailCheck' + row + '" name="DescriptionInvoiceDetailCheck' + row + '"> ' + description + '</textarea> </td>' +
-                '<td class="hidden"><input type="text" value="'+ prod + '" id="mBilltypeId' + row + '" name="mBilltypeId' + row + '" class="form-control" ></td>' +
-                '<td class="hidden"><input type="text" value="'+ productName + '" id="mBilltypeName' + row + '" name="mBilltypeName' + row + '" class="form-control" ></td>' +
-                '<td class="hidden"><input type="text" value="'+ refItemId +'" id="refItemId' + row + '" name="refItemId' + row + '" class="form-control" ></td>' +
-                '<td class="hidden"><input type="text" value="'+ RefNo +'" id="refNo' + row + '" name="refNo' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="' + prod + '" id="mBilltypeId' + row + '" name="mBilltypeId' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="' + productName + '" id="mBilltypeName' + row + '" name="mBilltypeName' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="' + refItemId + '" id="refItemId' + row + '" name="refItemId' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="' + RefNo + '" id="refNo' + row + '" name="refNo' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="' + selectC + '" id="curExRateTemp' + row + '" name="curExRateTemp' + row + '" class="form-control" ></td>' +
                 '</tr>'
                 );
+        calculateAmountLocal(row, 'amountLocal');
+
     } else if (des == '' || RefNo == '') {
         $("#DetailBillableTable tbody").append(
                 '<tr>' +
@@ -470,15 +475,17 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td ' + vathidden + ' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
                 '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="' + price + '" ></td>' +
                 '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="validFromInvoice()">' + selectC + '</select></td>' +
+                '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right" ></td>' +
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
                 '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +
                 '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> ' + description + '</textarea> </td>' +
                 '<td class="hidden"><textarea id="DescriptionInvoiceDetailCheck' + row + '" name="DescriptionInvoiceDetailCheck' + row + '"> ' + description + '</textarea> </td>' +
-                '<td class="hidden"><input type="text" value="'+ prod + '" id="mBilltypeId' + row + '" name="mBilltypeId' + row + '" class="form-control" ></td>' +
-                '<td class="hidden"><input type="text" value="'+ productName + '" id="mBilltypeName' + row + '" name="mBilltypeName' + row + '" class="form-control" ></td>' +
-                '<td class="hidden"><input type="text" value="'+ refItemId +'" id="refItemId' + row + '" name="refItemId' + row + '" class="form-control" ></td>' +
-                '<td class="hidden"><input type="text" value="'+ RefNo +'" id="refNo' + row + '" name="refNo' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="' + prod + '" id="mBilltypeId' + row + '" name="mBilltypeId' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="' + productName + '" id="mBilltypeName' + row + '" name="mBilltypeName' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="' + refItemId + '" id="refItemId' + row + '" name="refItemId' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="' + RefNo + '" id="refNo' + row + '" name="refNo' + row + '" class="form-control" ></td>' +
+                '<td class="hidden"><input type="text" value="' + selectC + '" id="curExRateTemp' + row + '" name="curExRateTemp' + row + '" class="form-control" ></td>' +
                 '</tr>'
                 );
     }
@@ -508,11 +515,11 @@ function saveDescriptionDetail() {
 }
 function cancelDescriptionDetail() {
     var row = $("#InputDescriptionDetailId").val();
-    var product = $("#mBilltypeName"+row).val();
-    var refNo = $("#refNo"+row).val();
-    var refItemId = $("#refItemId"+row).val();
-    var prod = $("#mBilltypeId"+row).val();
-    if(product !== '' && refNo !== '' && refItemId !== '' && prod !== ''){
+    var product = $("#mBilltypeName" + row).val();
+    var refNo = $("#refNo" + row).val();
+    var refItemId = $("#refItemId" + row).val();
+    var prod = $("#mBilltypeId" + row).val();
+    if (product !== '' && refNo !== '' && refItemId !== '' && prod !== '') {
         var servletName = 'InvoiceServlet';
         var servicesName = 'AJAXBean';
         var param = 'action=' + 'text' +
@@ -521,14 +528,14 @@ function cancelDescriptionDetail() {
                 '&refNo=' + refItemId +
                 '&typeId=' + prod +
                 '&type=' + 'searchInvoiceDescription';
-    //    alert("row : "+row+" product : "+product+" refNo : "+refNo+" refItemId : "+refItemId+" prod : "+prod);
+        //    alert("row : "+row+" product : "+product+" refNo : "+refNo+" refItemId : "+refItemId+" prod : "+prod);
         CallAjaxSearchDescriptionCancel(param, row, product, refNo);
-    }else{
+    } else {
         var description = $('#DescriptionInvoiceDetailCheck' + row).val();
         $('#InputDescriptionDetailId').val(row);
         $('#InputDescriptionDetail').val(description);
-        
-    }    
+
+    }
 }
 function subStringDescription(description, row) {
     var index = description.indexOf("\n");
@@ -610,7 +617,7 @@ function changeFormatGrossNumber(id) {
 //        count = parseFloat(document.getElementById('InputGross' + id).value);
 //        document.getElementById('InputGross' + id).value = formatNumber(count);
 //    }
-    
+
     var count = document.getElementById('InputAmount' + id).value;
 
 //    var curamount = document.getElementById('SelectCurrencyAmount' + id).value;
@@ -632,6 +639,16 @@ function changeFormatGrossNumber(id) {
     }
     CalculateGrandTotal(id);
     calculateGross(id);
+}
+function changeFormatExRateNumber(id) {
+    var count = parseFloat(document.getElementById('InputExRate' + id).value);
+
+    if (isNaN(count)) {
+        document.getElementById('InputExRate' + id).value = "";
+    } else {
+        count = parseFloat((document.getElementById('InputExRate' + id).value).replace(/,/g, ""));
+        document.getElementById('InputExRate' + id).value = formatExRateNumber(count);
+    }
 }
 
 function DeleteDetailBill(rowID, code) {
@@ -686,13 +703,13 @@ function printInvoiceNew() {
         } else {
             window.open("report.smi?name=" + typeReport + "&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         }
-    }else if (type === 'printEmail') {
+    } else if (type === 'printEmail') {
         if (invoiceType === 'T') {
             window.open("report.smi?name=InvoiceTempEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         } else {
             window.open("report.smi?name=" + typeReport + "&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         }
-    }else if (type === 'email') {
+    } else if (type === 'email') {
         if (invoiceType === 'T') {
             window.open("report.smi?name=InvoiceTempEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         } else {
@@ -950,14 +967,16 @@ function CallAjaxAdd(param) {
                     $('#AlertBooking').hide();
                     $('#AlertBookingRefno').hide();
                     setBillableInvoice(array[1]);
-                    if(array[2] !== ''){
+                    if (array[2] !== '') {
                         try {
                             $("#searchRefNo2").removeClass("hidden");
                             $("#MasterReservation tbody").append(array[2]);
                         } catch (e) {
                             alert(e);
                         }
-                    }               
+                    } else {
+                        $("#searchRefNo2").addClass("hidden");
+                    }
                 } else {
                     $("#searchRefNo2").addClass("hidden");
                     $('#AlertBooking').show();
@@ -1134,6 +1153,10 @@ function setDescriptionAirAdditional(data, row) {
 
 function formatNumber(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+}
+
+function formatExRateNumber(num) {
+    return num.toFixed(4).replace(/(\d)(?=(\d{5})+(?!\d))/g, "$1,");
 }
 
 // American Numbering System
@@ -1426,10 +1449,10 @@ function setBillValue(billto, billname, address, term, pay) {
     }
     $("#InvToModal").modal('hide');
 }
-function showSearchRefNo(){
-    if($("#searchRefNo1").hasClass("hidden")){
+function showSearchRefNo() {
+    if ($("#searchRefNo1").hasClass("hidden")) {
         $("#searchRefNo1").removeClass("hidden");
-    }else{
+    } else {
         $("#searchRefNo1").addClass("hidden");
     }
     $("#searchRefNo2").addClass("hidden");
@@ -1438,4 +1461,31 @@ function showSearchRefNo(){
 //    }else{
 //        $("#searchRefNo2").addClass("hidden");
 //    }
+}
+function calculateAmountLocal(row, option) {
+    if (option === 'amountLocal') {
+        var curAmount = $("#SelectCurrencyAmount" + row).val();
+        if (curAmount !== undefined && curAmount === '') {
+            $("#InputAmountLocal" + row).val('');
+            $("#InputExRate" + row).keyup(function(event) {
+                if (event.keyCode === 13) {
+                    calculateAmountLocal(row, 'exRate');
+                }
+            });
+        }
+    } else if (option === 'exRate') {
+        var amount = ($("#InputAmount" + row).val() !== '' ? parseFloat(($("#InputAmount" + row).val()).replace(/\,/g, '')) : 0);
+        var exRate = ($("#InputExRate" + row).val() !== '' ? parseFloat(($("#InputExRate" + row).val()).replace(/\,/g, '')) : 0);
+        var amountLocal = amount * exRate;
+        $("#InputAmountLocal" + row).val((amountLocal !== 0 ? formatNumber(amountLocal) : ''));
+    } else if (option === 'setEvent'){
+        var curExRateTemp = $("curExRateTemp"+row).val();
+        if(curExRateTemp !== ''){
+            $("#InputExRate" + row).keyup(function(event) {
+                if (event.keyCode === 13) {
+                    calculateAmountLocal(row, 'exRate');
+                }
+            });
+        }
+    }
 }

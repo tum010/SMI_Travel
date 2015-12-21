@@ -664,6 +664,7 @@ public class InvoiceController extends SMITravelController {
              String isVat = request.getParameter("checkUse"+i);
              String gross = request.getParameter("InputGross"+i);
              String displayDescription = request.getParameter("DescriptionInvoiceDetail"+i);
+             String exRate = request.getParameter("InputExRate"+i);
              request.getParameterMap();
              System.out.println("isvat : ["+i+"]"+isVat);
              if(idDetail != null && !idDetail.equals("")){
@@ -726,6 +727,12 @@ public class InvoiceController extends SMITravelController {
                  invoiceDetail.setInvoice(invoice);
                  listInvoiceDetail.add(invoiceDetail);
              }
+             
+             if(exRate != null && !exRate.equals("")){
+                 BigDecimal exRateInt =  new BigDecimal(exRate.replaceAll(",", ""));
+                 invoiceDetail.setExRate(exRateInt);
+             }
+             
              
              if(invoiceDetailId != null && !"".equals(invoiceDetailId)){
                  bill.setId(invoiceDetailId);
