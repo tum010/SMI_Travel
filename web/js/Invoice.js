@@ -1465,8 +1465,10 @@ function showSearchRefNo() {
 function calculateAmountLocal(row, option) {
     if (option === 'amountLocal') {
         var curAmount = $("#SelectCurrencyAmount" + row).val();
-        if (curAmount !== undefined && curAmount !== 'THB') {
-            $("#InputAmountLocal" + row).val('');
+        if (curAmount !== undefined) {
+            if(curAmount !== 'THB'){
+                $("#InputAmountLocal" + row).val('');
+            }           
             $("#InputExRate" + row).keyup(function(event) {
                 if (event.keyCode === 13) {
                     calculateAmountLocal(row, 'exRate');
@@ -1474,18 +1476,18 @@ function calculateAmountLocal(row, option) {
             });
         }
     } else if (option === 'exRate') {
-        var amount = ($("#InputAmount" + row).val() !== '' ? parseFloat(($("#InputAmount" + row).val()).replace(/\,/g, '')) : 0);
-        var exRate = ($("#InputExRate" + row).val() !== '' ? parseFloat(($("#InputExRate" + row).val()).replace(/\,/g, '')) : 0);
-        var amountLocal = amount * exRate;
-        $("#InputAmountLocal" + row).val((amountLocal !== 0 ? formatNumber(amountLocal) : ''));
+        var curAmount = $("#SelectCurrencyAmount" + row).val();
+        if(curAmount !== undefined && curAmount !== 'THB'){
+            var amount = ($("#InputAmount" + row).val() !== '' ? parseFloat(($("#InputAmount" + row).val()).replace(/\,/g, '')) : 0);
+            var exRate = ($("#InputExRate" + row).val() !== '' ? parseFloat(($("#InputExRate" + row).val()).replace(/\,/g, '')) : 0);
+            var amountLocal = amount * exRate;
+            $("#InputAmountLocal" + row).val((amountLocal !== 0 ? formatNumber(amountLocal) : ''));
+        }       
     } else if (option === 'setEvent'){
-        var curExRateTemp = $("curExRateTemp"+row).val();
-        if(curExRateTemp !== ''){
-            $("#InputExRate" + row).keyup(function(event) {
-                if (event.keyCode === 13) {
-                    calculateAmountLocal(row, 'exRate');
-                }
-            });
-        }
+        $("#InputExRate" + row).keyup(function(event) {
+            if (event.keyCode === 13) {
+                calculateAmountLocal(row, 'exRate');
+            }
+        });
     }
 }
