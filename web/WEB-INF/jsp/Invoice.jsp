@@ -625,7 +625,7 @@
                                                                     </select>
                                                                 </td>
                                                                 <td><input type="text" value="${ind.exRate}" id="InputExRate${taxdesc.count}" onfocusout="changeFormatExRateNumber(${taxdesc.count})" name="InputExRate${taxdesc.count}" class="form-control text-right" ></td>
-                                                                <td><input type="text" value="${ind.amount}" id="InputAmountLocal${taxdesc.count}" onfocusout="changeFormatAmountLocalNumber(${taxdesc.count})" name="InputAmountLocal${taxdesc.count}" class="form-control text-right" ></td>
+                                                                <td><input type="text" value="${ind.amountLocal}" id="InputAmountLocal${taxdesc.count}" onfocusout="changeFormatAmountLocalNumber(${taxdesc.count})" name="InputAmountLocal${taxdesc.count}" class="form-control text-right" ></td>
                                                                 <td class="hidden"><input type="text" value="${ind.amount}" onfocusout="changeFormatAmountLocalTempNumber(${taxdesc.count})" id="InputAmountLocalTemp${taxdesc.count}" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
                                                                 <td align="center" >
                                                                     <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')" id="InputDescription${taxdesc.count}"></span>
@@ -652,7 +652,7 @@
                                                                     <input type="text" value="${ind.billableDesc.billable.master.referenceNo}" id="refNo${taxdesc.count}" name="refNo${taxdesc.count}" class="form-control" >
                                                                 </td>
                                                                 <td class="hidden">
-                                                                    <input type="text" value="${ind.exRate}" id="curExRateTemp${taxdesc.count}" name="curExRateTemp${taxdesc.count}" class="form-control" >
+                                                                    <input type="text" value="${ind.curAmount}" id="curExRateTemp${taxdesc.count}" name="curExRateTemp${taxdesc.count}" class="form-control" >
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
@@ -747,7 +747,7 @@
                                                                     </select>
                                                                 </td>
                                                                 <td><input type="text" value="${ind.exRate}" id="InputExRate${taxdesc.count}" onfocusout="changeFormatExRateNumber(${taxdesc.count})" name="InputExRate${taxdesc.count}" class="form-control text-right" ></td>
-                                                                <td><input type="text" value="${ind.amount}" onfocusout="changeFormatAmountLocalNumber(${taxdesc.count})" id="InputAmountLocal${taxdesc.count}" name="InputAmountLocal${taxdesc.count}" class="form-control text-right" ></td>
+                                                                <td><input type="text" value="${ind.amountLocal}" onfocusout="changeFormatAmountLocalNumber(${taxdesc.count})" id="InputAmountLocal${taxdesc.count}" name="InputAmountLocal${taxdesc.count}" class="form-control text-right" ></td>
                                                                 <td class="hidden"><input type="text" value="${ind.amount}" id="InputAmountLocalTemp${taxdesc.count}" onfocusout="changeFormatAmountLocalTempNumber(${taxdesc.count})" name="InputAmountLocalTemp${taxdesc.count}"  ></td>
                                                                 <td align="center" >
                                                                     <span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail('${taxdesc.count}')" id="InputDescription${taxdesc.count}"></span>
@@ -774,7 +774,7 @@
                                                                     <input type="text" value="${ind.billableDesc.billable.master.referenceNo}" id="refNo${taxdesc.count}" name="refNo${taxdesc.count}" class="form-control" >
                                                                 </td>
                                                                 <td class="hidden">
-                                                                    <input type="text" value="${ind.exRate}" id="curExRateTemp${taxdesc.count}" name="curExRateTemp${taxdesc.count}" class="form-control" >
+                                                                    <input type="text" value="${ind.curAmount}" id="curExRateTemp${taxdesc.count}" name="curExRateTemp${taxdesc.count}" class="form-control" >
                                                                 </td>
                                                             </tr>
                                                         </c:forEach>
