@@ -480,8 +480,6 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
         
-        
-        alert($("#ownerby").val());
         var statusrefund = $("#status").val();
         var ticNoTemp = $("#ticketNo1").val();
         var ticNo = ticNoTemp.substring(0, 3);
