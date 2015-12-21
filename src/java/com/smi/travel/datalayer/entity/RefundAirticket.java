@@ -13,6 +13,7 @@ public class RefundAirticket {
 
      private String id;
      private Agent agent;
+     private Master master;
      private String refundNo;
      private Date refundDate;
      private String refundBy;
@@ -22,10 +23,10 @@ public class RefundAirticket {
      private Date receiveDate;
      private String address;
      private Integer status;
-     private String ownerby;
-     private String refundtype;
-     private String otherreason;
-     private String masterid;
+     private String ownerBy;
+     private String refundType;
+     private String otherReason;
+
      private List<RefundAirticketDetail> refundAirticketDetails = new LinkedList<RefundAirticketDetail>();
 
     public RefundAirticket() {
@@ -40,38 +41,6 @@ public class RefundAirticket {
        this.refundAirticketDetails = refundAirticketDetails;
     }
 
-    public String getOwnerby() {
-        return ownerby;
-    }
-
-    public void setOwnerby(String ownerby) {
-        this.ownerby = ownerby;
-    }
-
-    public String getRefundtype() {
-        return refundtype;
-    }
-
-    public void setRefundtype(String refundtype) {
-        this.refundtype = refundtype;
-    }
-
-    public String getOtherreason() {
-        return otherreason;
-    }
-
-    public void setOtherreason(String otherreason) {
-        this.otherreason = otherreason;
-    }
-
-    public String getMasterid() {
-        return masterid;
-    }
-
-    public void setMasterid(String masterid) {
-        this.masterid = masterid;
-    }
-   
     public String getId() {
         return id;
     }
@@ -165,6 +134,38 @@ public class RefundAirticket {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Master getMaster() {
+        return master;
+    }
+
+    public void setMaster(Master master) {
+        this.master = master;
+    }
+
+    public String getOwnerBy() {
+        return ownerBy;
+    }
+
+    public void setOwnerBy(String ownerBy) {
+        this.ownerBy = ownerBy;
+    }
+
+    public String getRefundType() {
+        return refundType;
+    }
+
+    public void setRefundType(String refundType) {
+        this.refundType = refundType;
+    }
+
+    public String getOtherReason() {
+        return otherReason;
+    }
+
+    public void setOtherReason(String otherReason) {
+        this.otherReason = otherReason;
     }
 
 }

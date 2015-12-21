@@ -52,6 +52,10 @@
                 <input type="hidden" name="action" id="action" value="search">
                 <input type="hidden" name="counter" id="counter" >
                 <input type="hidden" name="refundId" id="refundId" value="${refundAirline.id}">
+                <input type="hidden" name="ownerby" id="ownerby" value="${refundAirline.ownerBy}">
+                <input type="hidden" name="refundtype" id="refundtype" value="${refundAirline.refundType}">
+                <input type="hidden" name="otherreason" id="otherreason" value="${refundAirline.otherReason}">
+                <input type="hidden" name="masterid" id="masterid" value="${refundAirline.master.id}">
                 <div class="row">
                     <div class="col-xs-6 form-group">
                         <div class="col-xs-1 text-right" style="width: 140px">
@@ -475,6 +479,9 @@
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
+        
+        
+        alert($("#ownerby").val());
         var statusrefund = $("#status").val();
         var ticNoTemp = $("#ticketNo1").val();
         var ticNo = ticNoTemp.substring(0, 3);

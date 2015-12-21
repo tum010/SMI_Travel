@@ -2,6 +2,7 @@ package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.AirticketPassenger;
+import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.RefundAirticket;
 import com.smi.travel.datalayer.entity.RefundAirticketDetail;
 import com.smi.travel.datalayer.service.RefundAirlineService;
@@ -123,6 +124,18 @@ public class RefundAirlineController extends SMITravelController {
             String receiveBy = request.getParameter("receiveBy");
             String receiveDate = request.getParameter("receiveDate");
             String status = request.getParameter("status");
+            String ownerby = request.getParameter("ownerby");
+            String refundtype = request.getParameter("refundtype");
+            String otherreason = request.getParameter("otherreason");
+            String masterid = request.getParameter("masterid");
+
+            airticket.setOwnerBy(ownerby);
+            airticket.setRefundType(refundtype);
+            airticket.setOtherReason(otherreason);
+            
+            Master master = new Master();
+            master.setId(masterid);
+            airticket.setMaster(master);
             
             airticket.setId(refundId);
             airticket.setRefundNo(refundNo);

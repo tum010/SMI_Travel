@@ -235,7 +235,7 @@ public class RefundImpl implements RefundDao{
                         refundTicket.setRefundby("");
                     }
                 }  
-                refundTicket.setOwnerby(airbookingidList.get(i).getRefundAirticket().getOwnerby());
+                refundTicket.setOwnerby(airbookingidList.get(i).getRefundAirticket().getOwnerBy());
                 refundTicket.setRefundcode(airbookingidList.get(i).getRefundAirticket().getRefundBy());
                 refundTicket.setRefunddate(airbookingidList.get(i).getRefundAirticket().getRefundDate());
                 refundTicket.setReceivedate(airbookingidList.get(i).getRefundAirticket().getReceiveDate());

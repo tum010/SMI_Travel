@@ -10,6 +10,9 @@
         <many-to-one name="agent" class="com.smi.travel.datalayer.entity.Agent" fetch="select">
             <column name="refund_agent" />
         </many-to-one>
+        <many-to-one name="master" class="com.smi.travel.datalayer.entity.Master" fetch="select">
+            <column name="master_id" />
+        </many-to-one>
         <property name="refundNo" type="string">
             <column name="refund_no" length="20" />
         </property>
@@ -33,6 +36,15 @@
         </property>
         <property name="status" type="java.lang.Integer">
             <column name="status" />
+        </property>
+        <property name="ownerBy" type="string">
+            <column name="owner_by" length="20" />
+        </property>
+        <property name="refundType" type="string">
+            <column name="refund_type" length="20" />
+        </property>
+        <property name="otherReason" type="string">
+            <column name="other_reason" length="100" />
         </property>
         <bag name="refundAirticketDetails" table="refund_airticket_detail" inverse="true" lazy="true" fetch="select">
             <key>

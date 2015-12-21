@@ -280,11 +280,12 @@ public class RefundController extends SMITravelController {
             }else{
                 refund.setRemark("");
             }
-            
+            Master master = new Master();
             if(master_id != null && !"".equals(master_id)){
-                refund.setMasterid(master_id);
+                master.setId(master_id);
+                refund.setMaster(master);
             }else{
-                refund.setMasterid("");
+                refund.setMaster(master);
             }
             
             refund.setStatus(0);
