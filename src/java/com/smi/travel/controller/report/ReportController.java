@@ -108,7 +108,7 @@ public class ReportController extends SMITravelController {
     private static final String InvoiceInboundRevenueReport = "InvoiceInboundRevenueReport";
     private static final String InvoiceInboundRevenueEmail = "InvoiceInboundRevenueEmail";
     private static final String RefundTicketSummaryReport = "RefundTicketSummaryReport";
-    private static final String RefundAirticketReport = "RefundAirReport";
+    private static final String RefundAirticketReport = "RefundAirticketReport";
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
     private ReportService reportservice;
