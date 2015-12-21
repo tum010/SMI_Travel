@@ -660,7 +660,7 @@
                                                 </c:forEach>
                                             </select>                                                                  
                                         </td>
-                                        <td><input type="text" value="${table.exRate}" id="receiveExRate${i.count}" name="receiveExRate${i.count}" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="setFormatExRateOnFocusOut('${i.count}')"></td>
+                                        <td><input type="text" value="${table.exRate}" id="receiveExRate${i.count}" name="receiveExRate${i.count}" class="form-control text-right" onkeypress="setFormatExRateOnFocusOut('${i.count}')"></td>
                                         <td class="hidden"><input type="text" value="${table.exRate}" id="curExRateTemp${i.count}" name="curExRateTemp${i.count}" class="form-control" ></td>
                                         <td class="text-center">
                                             <a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('${i.count}')"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp
@@ -2052,7 +2052,7 @@
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +
                     '</td>' +
                     '<td>' +
-                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control text-right" onkeyup="insertCommas(this)">' +
+                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control text-right" >' +
                     '</td>' +
                     '<td class="hidden">' +
                     '<input type="text" value="" id="curExRateTemp' + row + '" name="curExRateTemp' + row + '" class="form-control" >' +
@@ -2088,6 +2088,9 @@
                     '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +
+                    '</td>' +
+                    '<td>' +
+                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control text-right" >' +
                     '</td>' +
                     '<td class="text-center">' +
                     '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp&nbsp' +
@@ -2504,6 +2507,9 @@
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="' + currency + '"></option></select>' +
                     '</td>' +
+                    '<td>' +
+                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control text-right" >' +
+                    '</td>' +
                     '<td class="text-center">' +
                     '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp' +
                     '<a class="remCF" onclick="deleteReceiptList(\'\', \'' + row + '\')">  ' +
@@ -2540,6 +2546,9 @@
                     '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="' + currency + '"></option></select>' +
+                    '</td>' +
+                    '<td>' +
+                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control text-right" >' +
                     '</td>' +
                     '<td class="text-center">' +
                     '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp' +
@@ -2596,6 +2605,9 @@
         });
         $("#receiveCost" + row).focusout(function() {
             setFormatCurrency(row);
+        });
+        $("#receiveExRate" + row).focusout(function() {
+            setFormatExRate(row);
         });
         setFormatCurrency(row);
         var tempCount = parseInt($("#counter").val()) + 1;
