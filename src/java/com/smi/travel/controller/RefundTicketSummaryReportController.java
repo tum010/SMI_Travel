@@ -19,15 +19,15 @@ import org.springframework.web.servlet.view.RedirectView;
  */
 public class RefundTicketSummaryReportController extends SMITravelController {
     
-    private static final ModelAndView RefundTicketSummaryReport = new ModelAndView("RefundTicketSummaryReport");
-    private static final ModelAndView RefundTicketSummaryReport_REFRESH = new ModelAndView(new RedirectView("RefundTicketSummaryReport.smi", true));
+    private static final ModelAndView RefundTicketSummary = new ModelAndView("RefundTicketSummary");
+    private static final ModelAndView RefundTicketSummary_REFRESH = new ModelAndView(new RedirectView("RefundTicketSummary.smi", true));
     private static final String BILLTOLIST = "customerAgent";
     private AirTicketReportService airreportService;
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         request.setAttribute(BILLTOLIST, getAirreportService().getListCustomerAgentInfo());
-        return RefundTicketSummaryReport;
+        return RefundTicketSummary;
     }
 
     public AirTicketReportService getAirreportService() {

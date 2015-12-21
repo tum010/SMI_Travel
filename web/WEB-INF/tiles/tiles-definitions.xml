@@ -742,6 +742,6 @@
     
     <definition name="RefundTicketSummary" extends="baseLayout">
         <put-attribute name="title" value="Report : Refund Ticket Summary" />
-        <put-attribute name="body" value="/WEB-INF/jsp/RefundTicketSummaryReport.jsp" />
+        <put-attribute name="body" value="/WEB-INF/jsp/RefundTicketSummary.jsp" />
     </definition>
 </tiles-definitions>

@@ -312,8 +312,10 @@ public class TicketSummaryImpl implements TicketSummaryDao {
             sum.setUser(printBy);
             sum.setRefundfrom(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(refundFrom))));
             sum.setRefundto(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(refundTo))));
-            sum.setTicketfrom(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(ticketFrom))));
-            sum.setTicketto(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(ticketTo))));
+            if((!"".equalsIgnoreCase(ticketFrom) && !ticketFrom.isEmpty()) && (!"".equalsIgnoreCase(ticketTo) && !ticketTo.isEmpty())){
+                sum.setTicketfrom(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(ticketFrom))));
+                sum.setTicketto(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(ticketTo))));
+            }
             
             sum.setRefundno(util.ConvertString(B[0]));
             sum.setRefunddate("null".equals(String.valueOf(B[1])) ? "" : util.ConvertString(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[1])))));
