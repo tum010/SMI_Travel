@@ -1465,7 +1465,7 @@ function showSearchRefNo() {
 function calculateAmountLocal(row, option) {
     if (option === 'amountLocal') {
         var curAmount = $("#SelectCurrencyAmount" + row).val();
-        if (curAmount !== undefined && curAmount === '') {
+        if (curAmount !== undefined && curAmount !== 'THB') {
             $("#InputAmountLocal" + row).val('');
             $("#InputExRate" + row).keyup(function(event) {
                 if (event.keyCode === 13) {
