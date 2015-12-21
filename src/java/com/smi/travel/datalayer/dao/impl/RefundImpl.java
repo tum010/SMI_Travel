@@ -235,16 +235,23 @@ public class RefundImpl implements RefundDao{
                         refundTicket.setRefundby("");
                     }
                 }  
-                refundTicket.setOwnerby(airbookingidList.get(i).getRefundAirticket().getOwnerBy());
+                refundTicket.setOwnerBy(airbookingidList.get(i).getRefundAirticket().getOwnerBy());
                 refundTicket.setRefundcode(airbookingidList.get(i).getRefundAirticket().getRefundBy());
                 refundTicket.setRefunddate(airbookingidList.get(i).getRefundAirticket().getRefundDate());
                 refundTicket.setReceivedate(airbookingidList.get(i).getRefundAirticket().getReceiveDate());
                 refundTicket.setReceiveby(airbookingidList.get(i).getRefundAirticket().getReceiveBy());
+                refundTicket.setStatus(airbookingidList.get(i).getRefundAirticket().getStatus());
+                refundTicket.setRefundType(airbookingidList.get(i).getRefundAirticket().getRefundType());
+                refundTicket.setOtherReason(airbookingidList.get(i).getRefundAirticket().getOtherReason());
+                if(airbookingidList.get(i).getRefundAirticket().getMaster() != null){
+                    refundTicket.setMasterId(airbookingidList.get(i).getRefundAirticket().getMaster().getId());
+                }
                 // Sum Charge
                 List<RefundAirticketDetail> rRefundAirticketDetail = new LinkedList<RefundAirticketDetail>();
                 rRefundAirticketDetail =  airbookingidList.get(i).getRefundAirticket().getRefundAirticketDetails();
                 BigDecimal sumCharge = new BigDecimal(0);
                 BigDecimal sumPaycustomer = new BigDecimal(0);
+                BigDecimal sumClientCharge = new BigDecimal(0);
                 DecimalFormat df = new DecimalFormat("#,###.00");
                 for (int j = 0; j < rRefundAirticketDetail.size(); j++) {
                     if(rRefundAirticketDetail.get(j).getReceiveAirline() != null ){
@@ -257,6 +264,12 @@ public class RefundImpl implements RefundDao{
                         sumPaycustomer = sumPaycustomer.add(rRefundAirticketDetail.get(j).getPayCustomer());
                     }else{
                         sumPaycustomer = sumPaycustomer.add(new BigDecimal(0.0));
+                    }
+                    
+                    if(rRefundAirticketDetail.get(j).getClientCharge() != null ){
+                        sumClientCharge = sumClientCharge.add(rRefundAirticketDetail.get(j).getClientCharge());
+                    }else{
+                        sumClientCharge = sumClientCharge.add(new BigDecimal(0.0));
                     }
                     // Refund Detail
                     RefundTicketDetail refundTicketDetail = new RefundTicketDetail();
@@ -289,10 +302,19 @@ public class RefundImpl implements RefundDao{
                         }else{
                             refundTicketDetail.setPaycustomer("");
                         }
+                        
+                        
+                        if(rRefundAirticketDetail.get(j).getClientCharge() != null ){
+                            refundTicketDetail.setClientcharge(df.format(rRefundAirticketDetail.get(j).getClientCharge()));
+                        }else{
+                            refundTicketDetail.setClientcharge("");
+                        }
+                        
                     listRefundTicketDetail.add(refundTicketDetail);
                 }
                 refundTicket.setChange(df.format(sumCharge));
                 refundTicket.setPaycustomer(df.format(sumPaycustomer));
+                refundTicket.setClientcharge(df.format(sumClientCharge));
                 refundTicket.setDetail(airbookingidList.get(i).getRefundAirticket().getRemark());
                 refundTicket.setAddress(airbookingidList.get(i).getRefundAirticket().getAddress());
                 refundTicket.setRefundTicketDetail(listRefundTicketDetail);

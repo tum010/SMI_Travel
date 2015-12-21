@@ -232,7 +232,8 @@
                                     <!--<td style="text-align:center"><span id="total">${detail.ticketFareAirline["Total"]}</span></td>-->
                                     <td style="text-align:center"><fmt:formatNumber type="number" maxFractionDigits="3" minFractionDigits="2" value="${detail.ticketFareAirline['Total']}"/></td>
                                     <td ><span id="department">${detail.ticketFareAirline["Dept"]}</span></td>       
-                                    <td colspan='3'><span id="passsenger" name="passsenger">${detail.ticketFareAirline["Passenger"]}</span></td>
+                                    <td colspan='2'><span id="passsenger" name="passsenger">${detail.ticketFareAirline["Passenger"]}</span></td>
+                                    <td style="text-align:center"> <input id="clientCharge${index}" name="clientCharge${index}" colName="clientCharge" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.clientCharge}"></td>
                                     <td> 
                                         <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
                                             <input style="width: 100%" type="text" class="form-control" id="receivedate${index}" name="receivedate${index}"  colName="receivedate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${detail.receiveDate}">
@@ -465,7 +466,8 @@
             <td ><span id="sectorIssue" colName="sectorIssue"></span></td>
             <td style="text-align:center"><span id="total" colName="total"></span></td>
             <td ><span id="department" colName="department"></span></td>       
-            <td colspan='3'><span id="passsenger" colName="passsenger"></span></td>
+            <td colspan='2'><span id="passsenger" colName="passsenger"></span></td>
+            <td style="text-align:center"> <input id="clientCharge" name="clientCharge" colName="clientCharge"  type="text" class="form-control text-right decimal"></td>
             <td> 
                 <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
                     <input style="width: 100%" type="text" class="form-control" id="receivedate" name="receivedate" colName="receivedate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD">

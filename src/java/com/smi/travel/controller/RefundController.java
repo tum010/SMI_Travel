@@ -229,6 +229,8 @@ public class RefundController extends SMITravelController {
             String cancelDetailPage = request.getParameter("cancelDetail");
             String chargePage = request.getParameter("charge");
             String master_id = request.getParameter("master_id");
+            String ownerByPage = request.getParameter("ownerBy");
+            String ownerByNamePage = request.getParameter("ownerByName");
             AirticketRefund airticketRefund = new AirticketRefund();
             RefundAirticket refund = new RefundAirticket();
             if(refundno != null && !"".equals(refundno)){
@@ -288,6 +290,12 @@ public class RefundController extends SMITravelController {
                 refund.setMaster(master);
             }
             
+            if(ownerByPage != null && !"".equals(ownerByPage)){
+                refund.setOwnerBy(ownerByPage);
+            }else{
+                refund.setOwnerBy("");
+            }
+            
             refund.setStatus(0);
         return refund;
     }
@@ -304,7 +312,8 @@ public class RefundController extends SMITravelController {
                 String sectoradd = request.getParameter("inputSectoradd"+i);
                 String sectorrefundadd = request.getParameter("inputSectorRefundadd"+i);
                 String chargeadd = request.getParameter("inputChargeadd"+i);
-                String paycustomeradd = request.getParameter("inputPaycustomeradd"+i);
+                String clientchargeadd = request.getParameter("inputClientchargeadd"+i);     
+                String ticketNoOnSelectedAdd = request.getParameter("ticketNoOnSelectedAdd"+i);
                 RefundAirticketDetail refundAirticketDetail = new RefundAirticketDetail();
                 //refund detail id 
                 if(refunddetailidadd != null && !"".equals(refunddetailidadd)){
@@ -317,6 +326,7 @@ public class RefundController extends SMITravelController {
                 AirticketPassenger passenger = new AirticketPassenger();
                 if(ticketnoadd != null && !"".equals(ticketnoadd)){               
                     passenger.setId(ticketnoadd);
+                    refundAirticketDetail.setTicketNo(ticketNoOnSelectedAdd);
                     refundAirticketDetail.setAirticketPassenger(passenger);
                 }else{
                     refundAirticketDetail.setAirticketPassenger(passenger);
@@ -336,11 +346,11 @@ public class RefundController extends SMITravelController {
                 }
                 
                 //pay customer
-                if(paycustomeradd != null && !"".equals(paycustomeradd)){
-                    BigDecimal chargeInt =  new BigDecimal(paycustomeradd.replaceAll(",", ""));
-                    refundAirticketDetail.setPayCustomer(chargeInt);
+                if(clientchargeadd != null && !"".equals(clientchargeadd)){
+                    BigDecimal chargeInt =  new BigDecimal(clientchargeadd.replaceAll(",", ""));
+                    refundAirticketDetail.setClientCharge(chargeInt);
                 }else{
-                    refundAirticketDetail.setPayCustomer(new BigDecimal(0.0));
+                    refundAirticketDetail.setClientCharge(new BigDecimal(0.0));
                 }
                 // Add List Not Null from web page
                 if(ticketnoadd != null && !"".equals(ticketnoadd)){             
@@ -358,9 +368,10 @@ public class RefundController extends SMITravelController {
                 String sector = request.getParameter("inputSector"+i);
                 String sectorrefund = request.getParameter("inputSectorRefund"+i);
                 String charge = request.getParameter("inputCharge"+i);
-                String paycustomer = request.getParameter("inputPaycustomer"+i);
+                String clientcharge = request.getParameter("inputClientcharge"+i);
+                String ticketNoOnSelected = request.getParameter("ticketNoOnSelected"+i);
                 RefundAirticketDetail refundAirticketDetail = new RefundAirticketDetail();
-            
+                System.out.println(" ticketNoOnSelected " + ticketNoOnSelected);
                 //refund detail id 
                 if(refunddetailid != null && !"".equals(refunddetailid)){
                     refundAirticketDetail.setId(refunddetailid);
@@ -369,6 +380,7 @@ public class RefundController extends SMITravelController {
                 AirticketPassenger passenger = new AirticketPassenger();
                 if(ticketno != null && !"".equals(ticketno)){               
                     passenger.setId(ticketno);
+                    refundAirticketDetail.setTicketNo(ticketNoOnSelected);
                     refundAirticketDetail.setAirticketPassenger(passenger);
                 }else{
                     refundAirticketDetail.setAirticketPassenger(passenger);
@@ -387,11 +399,11 @@ public class RefundController extends SMITravelController {
                     refundAirticketDetail.setReceiveAirline(new BigDecimal(0.0));
                 }
                 
-                if(paycustomer != null && !"".equals(paycustomer)){
-                    BigDecimal chargeInt =  new BigDecimal(paycustomer.replaceAll(",", ""));
-                    refundAirticketDetail.setPayCustomer(chargeInt);
+                if(clientcharge != null && !"".equals(clientcharge)){
+                    BigDecimal chargeInt =  new BigDecimal(clientcharge.replaceAll(",", ""));
+                    refundAirticketDetail.setClientCharge(chargeInt);
                 }else{
-                    refundAirticketDetail.setPayCustomer(new BigDecimal(0.0));
+                    refundAirticketDetail.setClientCharge(new BigDecimal(0.0));
                 }
                 // Add List Not Null from web page
                 if(ticketno != null && !"".equals(ticketno)){
