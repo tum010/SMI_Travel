@@ -370,6 +370,8 @@ function calculateGross(row) {
         document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = '';
         document.getElementById('InputGross' + row).value = '';
     }
+    CalculateTotalNet(row);
+
 }
 
 function checkVatInvoiceInboundAll() {
@@ -576,11 +578,15 @@ function toWordsMoney(s){
             if (sk) str += th[(x-i-1)/3] + ' ';
             sk=0;
         }
-    } 
-    if(currency !== 'THB'){
-        str += '' + currency;
+    }
+    if(currency === 'THB'){
+        str += ' BAHT ';
+    }else if(currency === 'JPY'){
+        str += ' YEN ';    
+    }else if(currency === 'USD'){
+        str += ' DOLLAR ';    
     }else{
-        str += 'BAHT';
+        str += ''+currency;
     }
     if (x != s.length) {
         var y = s.length; str += 'point '; 
@@ -602,22 +608,24 @@ function CalculateTotalNet(id) {
         for (i = 1; i < count + 1; i++) {
 //            alert(".." + i);
             var amount_temp = document.getElementById('InputAmount' + i);
-            amount = amount_temp.value;
-            amount = amount.replace(/,/g, "");
-            var grossTotal = 0;
-            if (amount !== '') {
-                var total = parseFloat(amount);
-                grandTotal += total;
-                    
-                var vatT = $('#vatBase').val();
-                var vatTT = parseFloat(vatT);
-                grossTotal = (amount * 100) / (100 + vatTT);
-                totalnet += grossTotal;
-            }else{
-                totalnet += 0.0;
-                vatnet += 0.0;
-            }
-            
+            var isVat_temp = document.getElementById('checkUse' + i);
+            if(amount_temp !== null && isVat_temp !== null){
+                amount = amount_temp.value;
+                amount = amount.replace(/,/g, "");
+                var grossTotal = 0;
+                if (amount !== '' && isVat_temp.checked) {
+                    var total = parseFloat(amount);
+                    grandTotal += total;
+
+                    var vatT = $('#vatBase').val();
+                    var vatTT = parseFloat(vatT);
+                    grossTotal = (amount * 100) / (100 + vatTT);
+                    totalnet += grossTotal;
+                }else{
+                    totalnet += 0.0;
+                    vatnet += 0.0;
+                }
+            }    
         }
         vatnet = grandTotal-totalnet;      
         document.getElementById('TotalNet').value = formatNumber(totalnet);
@@ -741,6 +749,8 @@ function DeleteBill() {
             $("#tr_FormulaAddRow").css("display", "block");
         }
         count.value = count.value - 1;
+        CalculateTotalNet('1')
+        CalculateGrandTotal('1');
     }
 }
 
@@ -764,7 +774,9 @@ function CallAjaxDeleteBill(param, row) {
                     $('#textAlertInvoiceNotEmpty').show();
                 }
                 $("#ajaxload").addClass("hidden");
-
+                CalculateTotalNet('1')
+                CalculateGrandTotal('1');
+        
             }, error: function(msg) {
                 $("#ajaxload").addClass("hidden");
                 alert('error');

@@ -138,7 +138,7 @@
                             <div class="col-sm-1 text-right">
                                 <label class="control-label" for="">Inv To<font style="color: red">*</font></lable>
                             </div>
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-6 form-group" style="width: 517px;">
                                 <div class="input-group">
                                 <input type="hidden" class="form-control" id="InvToId" name="InvToId" value="${invoice.invTo}"/>
                                 <input type="text" class="form-control" id="InvTo" name="InvTo" value="${invoice.invTo}" style="background-color: #ffffff">
@@ -158,7 +158,7 @@
                             <div class="col-sm-1 text-right">
                                 <label class="control-label" for="">Name<font style="color: red">*</font></lable>
                             </div>    
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-6 form-group" style="width: 517px;">
                                 <input  type="text" id="InvToName" name="InvToName" class="form-control" value="${invoice.invName}" >
                             </div>
                         </div>
@@ -166,7 +166,7 @@
                             <div class="col-sm-1 text-right">
                                 <label class="control-label" for="">Address </lable>
                             </div>
-                            <div class="col-md-6 form-group">
+                            <div class="col-md-6 form-group" style="width: 517px;">
                                 <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" >${invoice.invAddress}</textarea>
                             </div>                  
                         </div>                              
@@ -268,7 +268,7 @@
                                                 onfocusout="changeFormatAmountNumber(${taxdesc.count});"  value="${ind.amount}">
                                             </td>
                                             <td class="priceCurrencyAmount">
-                                                <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control"  onclick="validFromInvoiceInbound()">
+                                                <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control"  onclick="validFromInvoiceInbound()" onchange="changeFormatAmountNumber(${taxdesc.count});">
                                                     <option value='' ></option>
                                                     <c:forEach var="cur" items="${listCurrency}">
                                                         <c:set var="selectA" value="" />
