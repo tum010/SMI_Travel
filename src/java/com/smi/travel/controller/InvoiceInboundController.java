@@ -210,11 +210,14 @@ public class InvoiceInboundController extends SMITravelController {
             saveAction(invoice.getInvNo(), invoiceNo, invoice, "wildCardSearch", request);   
             request.setAttribute("thisdate", invoice.getInvDate());
         }else if("new".equals(action)){
-            invoice.setInvoiceDetails(null);
+            if(invoice != null){
+              invoice.setInvoiceDetails(null);  
+            }           
             request.setAttribute("invoice",null);
             request.setAttribute("listInvoiceDetail", null);
             result = "NEW";
             request.setAttribute("result", result);
+            request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
         }else if("disableVoid".equals(action)){
             //checck Tax invoice
             int checkReciptAndTaxInvoice = 0;
