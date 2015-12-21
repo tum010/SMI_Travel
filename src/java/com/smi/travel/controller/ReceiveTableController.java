@@ -244,7 +244,7 @@ public class ReceiveTableController extends SMITravelController {
     }
 
     private void getReceivePeriod(HttpServletRequest request, String receiveDate, String department, String vatType) {
-        UtilityFunction utilty = new UtilityFunction();
+        UtilityFunction util = new UtilityFunction();
         AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
         advanceReceivePeriod = receiveTableService.getReceivePeriod(receiveDate,department,vatType);
         if(advanceReceivePeriod != null){
@@ -253,7 +253,7 @@ public class ReceiveTableController extends SMITravelController {
             request.setAttribute(ADVANCERECEIVEPERIOD, advanceReceivePeriod);
             
             AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
-            advanceReceivePeriodView = receiveTableService.getAdvanceReceivePeriodView(utilty.convertDateToString(advanceReceivePeriod.getReceiveFrom()),utilty.convertDateToString(advanceReceivePeriod.getReceiveTo()),department,vatType);
+            advanceReceivePeriodView = receiveTableService.getAdvanceReceivePeriodView(util.convertDateToString(advanceReceivePeriod.getReceiveFrom()),util.convertDateToString(advanceReceivePeriod.getReceiveTo()),department,vatType);
             String periodMessage = receiveTableService.compareReceiptSummary(advanceReceivePeriod,advanceReceivePeriodView);
             request.setAttribute(PERIODMESSAGE, periodMessage);
         }

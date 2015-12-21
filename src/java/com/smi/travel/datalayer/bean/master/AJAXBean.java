@@ -921,6 +921,17 @@ public class AJAXBean extends AbstractBean implements
                    result =  buildAdvanceReceivePeriodListTaxHTML(advanceReceivePeriodList, null, "delete");
                 }
                 
+            }else if("compareReceiptSummary".equalsIgnoreCase(type)){
+                UtilityFunction util = new UtilityFunction();
+                String receiveFrom = map.get("receiveFrom").toString();
+                String department = map.get("department").toString();
+                String vatType = map.get("vatType").toString();
+                String check = "";
+                AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
+                advanceReceivePeriod = receiveTableDao.getReceivePeriod(receiveFrom,department,vatType);
+                AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
+                advanceReceivePeriodView = receiveTableDao.getAdvanceReceivePeriodView(util.convertDateToString(advanceReceivePeriod.getReceiveFrom()),util.convertDateToString(advanceReceivePeriod.getReceiveTo()),department,vatType);
+                result = receiveTableDao.compareReceiptSummary(advanceReceivePeriod,advanceReceivePeriodView);
             }
         }else if(PAYMENTOUTBOUND.equalsIgnoreCase(servletName)){
             if("searchRefNo".equalsIgnoreCase(type)){
