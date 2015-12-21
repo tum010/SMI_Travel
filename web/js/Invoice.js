@@ -1155,8 +1155,8 @@ function formatNumber(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 }
 
-function formatExRateNumber(num) {
-    return num.toFixed(4).replace(/(\d)(?=(\d{5})+(?!\d))/g, "$1,");
+ function formatExRateNumber(num) {
+    return  num.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
 }
 
 // American Numbering System

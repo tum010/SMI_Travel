@@ -1828,6 +1828,9 @@
                 if ($('#receiveAmount' + i).val() != "") {
                     setFormatCurrency(i);
                 }
+                if ($('#receiveExRate' + i).val() != "") {
+                    setFormatExRate(i);
+                }
             }
         }
         calculateGrandTotal();
@@ -2161,7 +2164,7 @@
     }
     
     function formatExRateNumber(num) {
-        return num.toFixed(4).replace(/(\d)(?=(\d{5})+(?!\d))/g, "$1,");
+        return  num.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
     }
     
     function insertCommas(nField) {
