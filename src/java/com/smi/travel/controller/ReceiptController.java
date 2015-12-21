@@ -225,6 +225,7 @@ public class ReceiptController extends SMITravelController {
 //                String receiveGross = request.getParameter("receiveGross" + i);
                 String receiveAmount = request.getParameter("receiveAmount" + i);
                 String receiveCurrency = request.getParameter("receiveCurrency" + i);
+                String receiveExRate = request.getParameter("receiveExRate" + i);
                 String invId = request.getParameter("invId" + i);
                 String billDescId = request.getParameter("billDescId" + i);
                 String paymentId = request.getParameter("paymentId" + i);
@@ -258,6 +259,7 @@ public class ReceiptController extends SMITravelController {
                 }
 
                 receiptDetail.setAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveAmount) ? receiveAmount.replaceAll(",","") : 0)));
+                receiptDetail.setExRate(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveExRate) ? receiveExRate.replaceAll(",","") : 0)));
                 receiptDetail.setCurAmount(receiveCurrency);
                 
                 if(StringUtils.isNotEmpty(invId)){

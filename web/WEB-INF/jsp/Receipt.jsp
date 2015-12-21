@@ -552,8 +552,8 @@
                                 <table id="ReceiptListTable" class="display" cellspacing="0" width="100%">
                                     <thead>
                                         <tr class="datatable-header">
-                                            <th style="width:10%;">Product</th>
-                                            <th style="width:15%;">Description</th>
+                                            <th style="width:9%;">Product</th>
+                                            <th style="width:12%;">Description</th>
                                             <th style="width:10%;">Cost</th>
                                             <th style="width:7%;">Cur</th>
                                             <th style="width:5%;">Is Vat</th>
@@ -561,7 +561,8 @@
                                             <!--<th style="width:10%;">Gross</th>-->
                                             <th style="width:10%;">Amount</th>
                                             <th style="width:7%;">Cur</th>
-                                            <th style="width:5%;">Action</th>
+                                            <th style="width:7%;">Ex Rate</th>
+                                            <th style="width:3%;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody> 
@@ -659,6 +660,8 @@
                                                 </c:forEach>
                                             </select>                                                                  
                                         </td>
+                                        <td><input type="text" value="${table.exRate}" id="receiveExRate${i.count}" name="receiveExRate${i.count}" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="setFormatExRateOnFocusOut('${i.count}')"></td>
+                                        <td class="hidden"><input type="text" value="${table.exRate}" id="curExRateTemp${i.count}" name="curExRateTemp${i.count}" class="form-control" ></td>
                                         <td class="text-center">
                                             <a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('${i.count}')"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp
                                             <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteReceiptList('${table.id}', '${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
@@ -2045,6 +2048,12 @@
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +
                     '</td>' +
+                    '<td>' +
+                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control text-right" onkeyup="insertCommas(this)">' +
+                    '</td>' +
+                    '<td class="hidden">' +
+                    '<input type="text" value="" id="curExRateTemp' + row + '" name="curExRateTemp' + row + '" class="form-control" >' +
+                    '</td>' +
                     '<td class="text-center">' +
                     '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp&nbsp' +
                     '<a class="remCF" onclick="deleteReceiptList(\'\', \'' + row + '\')">' +
@@ -2098,6 +2107,9 @@
         $("#receiveCost" + row).focusout(function() {
             setFormatCurrency(row);
         });
+        $("#receiveExRate" + row).focusout(function() {
+            setFormatExRate(row);
+        });
 //            var tempCount = parseInt($("#counter").val()) + 1;
         $("#counter").val(row + 1);
 //        }
@@ -2147,7 +2159,11 @@
     function formatNumber(num) {
         return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     }
-
+    
+    function formatExRateNumber(num) {
+        return num.toFixed(4).replace(/(\d)(?=(\d{5})+(?!\d))/g, "$1,");
+    }
+    
     function insertCommas(nField) {
         if (/^0/.test(nField.value)) {
             nField.value = nField.value.substring(0, 1);
@@ -2165,6 +2181,15 @@
         } else {
             nField.value = nField.value.replace(/[^\d\,\.]/g, "").replace(/ /, "");
         }
+    }
+    
+    function setFormatExRate(row){
+        var receiveExRate = replaceAll(",", "", $('#receiveExRate' + row).val());
+        if (receiveExRate == "") {
+            receiveExRate = 0;
+        }
+        receiveExRate = parseFloat(receiveExRate);
+        document.getElementById("receiveExRate" + row).value = (receiveExRate !== 0 ? formatExRateNumber(receiveExRate) : '');
     }
 
     function setFormatCurrency(row) {
@@ -3175,7 +3200,12 @@
             calculateGrandTotal()
         });
 
-
+    }
+    
+    function setFormatExRateOnFocusOut(row) {
+        $('#receiveExRate' + row).focusout(function() {
+            setFormatExRate(row);
+        });
     }
 
     function checkSumAmountBeforeSave() {
