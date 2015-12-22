@@ -193,7 +193,7 @@
                                                 <div class="input-group" id="refundpanel">
                                                     <input type="hidden" class="form-control" name="refundStatus" id="refundStatus" value="${table1.status}">
                                                     <!--<input type="hidden" class="form-control" name="ownerBy" id="ownerBy" value="${table1.ownerBy}">-->
-                                                    <!--<input type="hidden" class="form-control" name="refundType" id="refundType" value="${table1.refundType}">-->
+                                                    <input type="hidden" class="form-control" name="refundTypeTemp" id="refundTypeTemp" value="${table1.refundType}">
                                                     <!--<input type="hidden" class="form-control" name="otherReason" id="otherReason" value="${table1.otherReason}">-->
                                                     <!--<input type="hidden" class="form-control" name="masterId" id="masterId" value="${table1.masterId}">-->
                                                     <input type="hidden" class="form-control" name="refundById" id="refundById" value="${table1.airticketrefundid}">
@@ -328,34 +328,46 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 form-group">
-                                        <label class="col-sm-3 control-label text-right">Reason</label>
-                                        <div class="col-sm-9">                                      
-                                            <div class="form-group">
-                                                <input type="text" class="form-control"  name="reason" id="reason" value="">
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
                                         <label class="col-sm-3 control-label text-right">Refund Type</label>
                                         <div class="col-sm-3" style="padding-top: 5px;">                                      
                                             <div class="form-group">
-                                                <input type="radio"  name="refundType" id="refundType" value="Unuse"> Unuse
+                                                <c:set var="checkU" value="" />
+                                                <c:if test="${table1.refundType == 'Unuse'}">
+                                                    <c:set var="checkU" value="checked" />
+                                                </c:if>
+                                                <input type="radio" name="refundType"  id="refundTypeUnuse" value="Unuse" ${checkU}/>&nbsp;Unuse
                                             </div>
                                         </div>
                                         <div class="col-sm-3" style="padding-top: 5px;">                                      
-                                            <div class="form-group">
-                                                <input type="radio"  name="refundType" id="refundType" value="Party"> Party
+                                            <div class="form-group">    
+                                                <c:set var="checkP" value="" />
+                                                <c:if test="${table1.refundType == 'Party'}">
+                                                    <c:set var="checkP" value="checked" />
+                                                </c:if>  
+                                                <input type="radio" name="refundType"  id="refundTypeParty" value="Party" ${checkP}/>&nbsp;Party
                                             </div>
                                         </div>
                                         <div class="col-sm-3" style="padding-top: 5px;">                                      
-                                            <div class="form-group">
-                                               <input type="radio"  name="refundType" id="refundType" value="Other"> Other
+                                            <div class="form-group"> 
+                                                <c:set var="checkO" value="" />
+                                                <c:if test="${table1.refundType == 'Other'}">
+                                                    <c:set var="checkO" value="checked" />
+                                                </c:if>  
+                                                <input type="radio" name="refundType"  id="refundTypeOther" value="Other" ${checkO}/>&nbsp;Other
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-sm-6 form-group">
+                                        <label class="col-sm-3 control-label text-right">Reason</label>
+                                        <div class="col-sm-9">                                      
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"  name="otherReason" id="otherReason" value="${table1.otherReason}">
+                                            </div>
+                                        </div>
+                                    </div> 
                                 </div>
                                 </br>
                                 <div class="row">
@@ -589,34 +601,46 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 form-group">
-                                    <label class="col-sm-3 control-label text-right">Reason</label>
-                                    <div class="col-sm-9">                                      
-                                        <div class="form-group">
-                                            <input type="text" class="form-control"  name="reason" id="reason" value="">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </div> 
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label class="col-sm-3 control-label text-right">Refund Type</label>
                                     <div class="col-sm-3" style="padding-top: 5px;">                                      
                                         <div class="form-group">
-                                            <input type="radio"  name="refundType" id="refundType" value="Unuse"> Unuse
+                                            <c:set var="checkU" value="" />
+                                            <c:if test="${table1.refundType == 'Unuse'}">
+                                                <c:set var="checkU" value="checked" />
+                                            </c:if>
+                                            <input type="radio" name="refundType"  id="refundTypeUnuse" value="Unuse" ${checkU}/>&nbsp;Unuse
                                         </div>
                                     </div>
                                     <div class="col-sm-3" style="padding-top: 5px;">                                      
-                                        <div class="form-group">
-                                            <input type="radio"  name="refundType" id="refundType" value="Party"> Party
+                                        <div class="form-group">    
+                                            <c:set var="checkP" value="" />
+                                            <c:if test="${table1.refundType == 'Party'}">
+                                                <c:set var="checkP" value="checked" />
+                                            </c:if>  
+                                            <input type="radio" name="refundType"  id="refundTypeParty" value="Party" ${checkP}/>&nbsp;Party
                                         </div>
                                     </div>
                                     <div class="col-sm-3" style="padding-top: 5px;">                                      
-                                        <div class="form-group">
-                                           <input type="radio"  name="refundType" id="refundType" value="Other"> Other
+                                        <div class="form-group"> 
+                                            <c:set var="checkO" value="" />
+                                            <c:if test="${table1.refundType == 'Other'}">
+                                                <c:set var="checkO" value="checked" />
+                                            </c:if>  
+                                            <input type="radio" name="refundType"  id="refundTypeOther" value="Other" ${checkO}/>&nbsp;Other
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-sm-6 form-group">
+                                    <label class="col-sm-3 control-label text-right">Reason</label>
+                                    <div class="col-sm-9">                                      
+                                        <div class="form-group">
+                                            <input type="text" class="form-control"  name="otherReason" id="otherReason" value="${table1.otherReason}">
+                                        </div>
+                                    </div>
+                                </div> 
                             </div>
                             </br>
                             <div class="row">
@@ -915,6 +939,27 @@
         clear: both;
     }
 </style>
+
+<script>
+var rad = document.RefundForm.refundType;
+var prev = null;
+for(var i = 0; i < rad.length; i++) {
+    rad[i].onclick = function() {
+        if(this !== prev) {
+            prev = this;
+        }
+//        document.getElementById('refundType').value = this.value;
+        $("#refundType").val(this.value);
+        
+        if(this.value === 'Other'){
+             $("#otherReason").removeAttr("disabled");
+        }else{
+            $("#otherReason").attr("disabled", "disabled");
+            $("#otherReason").val('');
+        }
+    };
+}
+</script> 
 <script type="text/javascript" charset="utf-8">
     var selectTicketNo = "<option value='' ></option>";
     var counterror = 0;
@@ -1274,7 +1319,17 @@
         }else{
             $("#buttonSaveRefund").attr("disabled", "disabled");
             $("#buttonPrintRefund").attr("disabled", "disabled");
-        }        
+        }    
+        
+        
+        var refundtype = $("#refundTypeTemp").val();
+        
+        if(refundtype === 'Other'){
+             $("#otherReason").removeAttr("disabled");
+        }else{
+            $("#otherReason").attr("disabled", "disabled");
+            $("#otherReason").val('');
+        }
  }); 
   
 function setBillValue(billto, billname, address, term, pay) {
