@@ -1188,7 +1188,7 @@ function setCashAmount(cash) {
         var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
         var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
         var cashAmount = parseFloat(cash.replace(/,/g, ""));
-        if (cashAmount === (receiveAmount + wht)) {
+        if ((cashAmount + wht) === receiveAmount) {
             $("#cashAmountPanel").removeClass("has-error");
             $("#cashAmountPanel").addClass("has-success");
             $("#ButtonSave").removeClass("disabled");
@@ -1208,7 +1208,7 @@ function setBankAmount(bank) {
         var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
         var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
         var bankAmount = parseFloat(bank.replace(/,/g, ""));
-        if (bankAmount === (receiveAmount + wht)) {
+        if ((bankAmount + wht) === receiveAmount) {
             $("#bankAmountPanel").removeClass("has-error");
             $("#bankAmountPanel").addClass("has-success");
             $("#ButtonSave").removeClass("disabled");
@@ -1228,7 +1228,7 @@ function setChqAmount(chq) {
         var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
         var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
         var chqAmount = parseFloat(chq.replace(/,/g, ""));
-        if (chqAmount === (receiveAmount + wht)) {
+        if ((chqAmount + wht) === receiveAmount) {
             $("#chqAmountPanel").removeClass("has-error");
             $("#chqAmountPanel").addClass("has-success");
             $("#ButtonSave").removeClass("disabled");
@@ -1253,7 +1253,7 @@ function setCreditAmount() {
         var receiveAmount = ($("#receiveAmount").val() !== '' ? parseFloat((($("#receiveAmount").val()).replace(/,/g, ""))) : 0);
         var wht = ($("#wht").val() !== '' ? parseFloat((($("#wht").val()).replace(/,/g, ""))) : 0);
         var creditAmount = parseFloat($("#creditAmount").val());
-        if (creditAmount === (receiveAmount + wht)) {
+        if ((creditAmount + wht) === receiveAmount) {
             $("#ButtonSave").removeClass("disabled");
             var count = parseInt($("#countCredit").val());
             for (var i = 1; i <= count; i++) {
@@ -1307,7 +1307,7 @@ function setCashOnDemand() {
         var chqAmount = ($("#chqAmount").val() !== '' ? parseFloat((($("#chqAmount").val()).replace(/,/g, ""))) : 0);
         var creditAmount = parseFloat($("#creditAmount").val());
 
-        if ((receiveAmount + wht) === (cashAmount + bankAmount + chqAmount + creditAmount)) {
+        if ((receiveAmount) === (cashAmount + bankAmount + chqAmount + creditAmount + wht)) {
             $("#cashAmountPanel").removeClass("has-error");
             $("#cashAmountPanel").addClass("has-success");
             $("#bankAmountPanel").removeClass("has-error");

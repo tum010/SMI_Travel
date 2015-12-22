@@ -506,6 +506,7 @@ function checkVatInvoiceInboundAll() {
         }
     }
     CalculateGrandTotal('');
+    CalculateTotalNet('1');
 }
 
 function CalculateGrandTotal(id) {
@@ -621,13 +622,15 @@ function CalculateTotalNet(id) {
                     var vatTT = parseFloat(vatT);
                     grossTotal = (amount * 100) / (100 + vatTT);
                     totalnet += grossTotal;
-                }else{
-                    totalnet += 0.0;
+                    vatnet += (amount - grossTotal);
+                }else if(amount !== '' && !isVat_temp.checked){
+                    var total = parseFloat(amount);
+                    totalnet += total;
                     vatnet += 0.0;
                 }
             }    
         }
-        vatnet = grandTotal-totalnet;      
+//        vatnet = grandTotal-totalnet;      
         document.getElementById('TotalNet').value = formatNumber(totalnet);
         document.getElementById('VatNet').value = formatNumber(vatnet);
     }

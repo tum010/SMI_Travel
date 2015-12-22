@@ -488,6 +488,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td class="hidden"><input type="text" value="' + selectC + '" id="curExRateTemp' + row + '" name="curExRateTemp' + row + '" class="form-control" ></td>' +
                 '</tr>'
                 );
+        calculateAmountLocal(row, 'amountLocal');
     }
     var count = document.getElementById('counterTable');
     count.value = row++;
