@@ -842,7 +842,7 @@ function printInvoiceInboundNew() {
         }
     }else if (type === 'sendemail') {
         if (invoiceType === 'PM') {
-            window.open("SendMail.smi?reportname=InvoiceInboundPerformaEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+            window.open("SendMail.smi?reportname=InvoiceInboundPerformaEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         } else {
             window.open("SendMail.smi?reportname=InvoiceInboundRevenueEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         }

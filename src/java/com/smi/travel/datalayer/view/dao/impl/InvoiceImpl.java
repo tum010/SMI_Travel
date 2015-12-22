@@ -98,6 +98,7 @@ public class InvoiceImpl implements InvoiceReportDao{
                 .addScalar("vatpercent", Hibernate.INTEGER)
                 .list();
         int count = 0;
+        int vat = 0;
         for (Object[] B : QueryInvoiceList) {
             count++;
             InvoiceReport invoice = new InvoiceReport();
@@ -108,7 +109,8 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setPrintby(printBy);
             invoice.setCurrency(util.ConvertString(B[17]));
             invoice.setRefno(util.ConvertString(B[20]) != null && !"".equals(util.ConvertString(B[20])) ? util.ConvertString(B[20]) : "");
-            invoice.setVatpercent((Integer) (B[21] != null && (Integer) B[21] != 0 ? (Integer)B[21] : 0));
+            vat = ((Integer) (B[21] != null && (Integer) B[21] != 0 ? (Integer)B[21] : vat));
+            invoice.setVatpercent(vat);
             invoice.setAmount(df.format(B[11]));
             invoice.setBank1(Bank1);
             invoice.setBank2(Bank2);
