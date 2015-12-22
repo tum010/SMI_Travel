@@ -344,10 +344,10 @@
                                         <div class="col-sm-3" style="padding-top: 5px;">                                      
                                             <div class="form-group">    
                                                 <c:set var="checkP" value="" />
-                                                <c:if test="${table1.refundType == 'Party'}">
+                                                <c:if test="${table1.refundType == 'Partly'}">
                                                     <c:set var="checkP" value="checked" />
                                                 </c:if>  
-                                                <input type="radio" name="refundType"  id="refundTypeParty" value="Party" ${checkP}/>&nbsp;Party
+                                                <input type="radio" name="refundType"  id="refundTypePartly" value="Partly" ${checkP}/>&nbsp;Partly
                                             </div>
                                         </div>
                                         <div class="col-sm-3" style="padding-top: 5px;">                                      
@@ -617,10 +617,10 @@
                                     <div class="col-sm-3" style="padding-top: 5px;">                                      
                                         <div class="form-group">    
                                             <c:set var="checkP" value="" />
-                                            <c:if test="${table1.refundType == 'Party'}">
+                                            <c:if test="${table1.refundType == 'Partly'}">
                                                 <c:set var="checkP" value="checked" />
                                             </c:if>  
-                                            <input type="radio" name="refundType"  id="refundTypeParty" value="Party" ${checkP}/>&nbsp;Party
+                                            <input type="radio" name="refundType"  id="refundTypePartly" value="Partly" ${checkP}/>&nbsp;Partly
                                         </div>
                                     </div>
                                     <div class="col-sm-3" style="padding-top: 5px;">                                      

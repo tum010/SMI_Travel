@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RefundAirReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="7b4a2257-2f70-4963-bf1f-6e60068f6f43">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="25"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.zoom" value="2.923075650000003"/>
+	<property name="ireport.x" value="585"/>
+	<property name="ireport.y" value="669"/>
 	<field name="refundno" class="java.lang.String"/>
 	<field name="ticketdate" class="java.lang.String"/>
 	<field name="passenger" class="java.lang.String"/>
@@ -17,6 +17,8 @@
 	<field name="address" class="java.lang.String"/>
 	<field name="totalpay" class="java.lang.String"/>
 	<field name="totalreceive" class="java.lang.String"/>
+	<field name="refundtype" class="java.lang.String"/>
+	<field name="otherreason" class="java.lang.String"/>
 	<background>
 		<band height="351">
 			<rectangle>
@@ -299,39 +301,6 @@
 				</textElement>
 				<text><![CDATA[For Officer Only]]></text>
 			</staticText>
-			<rectangle>
-				<reportElement x="267" y="79" width="8" height="7" uuid="2f3ed468-8d71-4423-a2bb-6c54647dacb7"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="267" y="91" width="8" height="7" uuid="02960425-fc07-4ec6-aaf4-6464518473e3"/>
-			</rectangle>
-			<staticText>
-				<reportElement x="276" y="75" width="72" height="14" uuid="e9b87de4-5855-4fbf-b794-ccb03d7bbecd"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Unuesd Ticket(s)]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="276" y="86" width="72" height="14" uuid="7aa4f3fd-cf97-473b-9d7d-7e3a812f13e6"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Other, specify]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="386" y="74" width="84" height="14" uuid="09b050cc-2a30-4607-9269-3004a8f61339"/>
-				<textElement>
-					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
-				</textElement>
-				<text><![CDATA[Partly Used Ticket(s)]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement x="376" y="79" width="8" height="7" uuid="a4d24499-43ba-41e3-a925-a25c3daf4863"/>
-			</rectangle>
-			<line>
-				<reportElement x="331" y="98" width="192" height="1" uuid="7bd940bb-10b6-4dd4-b2f4-4a6145ee3266"/>
-			</line>
 			<line>
 				<reportElement x="53" y="45" width="199" height="1" uuid="6df9645c-3419-4589-aa23-bc9692f9009a"/>
 			</line>
@@ -410,6 +379,61 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totalpay}]]></textFieldExpression>
 			</textField>
+			<rectangle>
+				<reportElement x="371" y="78" width="9" height="7" uuid="93adf34e-2db4-4672-b1f7-9181db7ee683"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="383" y="74" width="84" height="14" uuid="04b105c9-88c1-46e0-976b-377c431f4ef7"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Partly Used Ticket(s)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="336" y="84" width="165" height="14" uuid="f45cc720-ea9c-49fd-9fd6-3222156b1a01"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{otherreason}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="273" y="74" width="72" height="14" uuid="222778fa-601f-4233-bb03-652a916cb236"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Unused Ticket(s)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="328" y="97" width="193" height="1" uuid="f6d6022b-102b-49ba-b49e-0698c62df81b"/>
+			</line>
+			<rectangle>
+				<reportElement x="261" y="89" width="9" height="7" uuid="99341e08-5362-455c-a53b-138c19cfc443"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="261" y="78" width="9" height="7" uuid="39fa1713-7714-414a-8cba-1cf3c05bcdc2"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="273" y="85" width="72" height="14" uuid="70a0de9b-81ed-47f0-9554-e06e6251c9a9"/>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Other, specify]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="262" y="90" width="7" height="5" uuid="bd00e394-6b7c-4154-85c6-fce6024e246b"/>
+				<imageExpression><![CDATA[($F{refundtype}.equalsIgnoreCase("Other") ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg")
+]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="262" y="79" width="7" height="5" uuid="2c3c6c93-b095-43f8-bb79-cb970a0914fb"/>
+				<imageExpression><![CDATA[($F{refundtype}.equalsIgnoreCase("Unuse") ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg")
+]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="372" y="79" width="7" height="5" uuid="5c3bb413-2f97-4282-a0b1-9f39ff4c5b76"/>
+				<imageExpression><![CDATA[($F{refundtype}.equalsIgnoreCase("Partly") ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg")
+]]></imageExpression>
+			</image>
 		</band>
 	</pageFooter>
 </jasperReport>

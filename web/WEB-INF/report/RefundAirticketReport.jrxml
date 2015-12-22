@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RefundAirReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="7b4a2257-2f70-4963-bf1f-6e60068f6f43">
-	<property name="ireport.zoom" value="1.3636363636363722"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="542"/>
+	<property name="ireport.zoom" value="1.9965000000000148"/>
+	<property name="ireport.x" value="123"/>
+	<property name="ireport.y" value="261"/>
 	<field name="refundno" class="java.lang.String"/>
 	<field name="ticketdate" class="java.lang.String"/>
 	<field name="passenger" class="java.lang.String"/>
@@ -240,6 +240,15 @@
 	</detail>
 	<pageFooter>
 		<band height="102" splitType="Stretch">
+			<rectangle>
+				<reportElement x="374" y="81" width="9" height="7" uuid="a4d24499-43ba-41e3-a925-a25c3daf4863"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="264" y="81" width="9" height="7" uuid="56cd7459-b229-43d0-850a-b224d75e9dcd"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="264" y="92" width="9" height="7" uuid="ba3623c6-85b5-4925-a530-347df3c137b4"/>
+			</rectangle>
 			<staticText>
 				<reportElement x="0" y="3" width="92" height="16" uuid="c952da3e-a7dd-4288-befc-bdf222a4c117"/>
 				<textElement>
@@ -307,7 +316,7 @@
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Unuesd Ticket(s)]]></text>
+				<text><![CDATA[Unused Ticket(s)]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="276" y="88" width="72" height="14" uuid="7aa4f3fd-cf97-473b-9d7d-7e3a812f13e6"/>
@@ -317,15 +326,12 @@
 				<text><![CDATA[Other, specify]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="386" y="76" width="84" height="14" uuid="09b050cc-2a30-4607-9269-3004a8f61339"/>
+				<reportElement x="386" y="77" width="84" height="14" uuid="09b050cc-2a30-4607-9269-3004a8f61339"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Partly Used Ticket(s)]]></text>
 			</staticText>
-			<rectangle>
-				<reportElement x="374" y="80" width="8" height="7" uuid="a4d24499-43ba-41e3-a925-a25c3daf4863"/>
-			</rectangle>
 			<line>
 				<reportElement x="331" y="100" width="193" height="1" uuid="7bd940bb-10b6-4dd4-b2f4-4a6145ee3266"/>
 			</line>
@@ -414,25 +420,19 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{otherreason}]]></textFieldExpression>
 			</textField>
-			<image>
-				<reportElement x="376" y="82" width="4" height="2" uuid="dc3b1d40-d21e-468c-99f3-ddd77f988fc2"/>
-				<imageExpression><![CDATA[($F{refundtype}.equalsIgnoreCase("Party") ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg")
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="265" y="93" width="7" height="5" uuid="0e27a993-dfad-44c0-9c4b-bc86a6d5eda4"/>
+				<imageExpression><![CDATA[($F{refundtype}.equalsIgnoreCase("Other") ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg")
 ]]></imageExpression>
 			</image>
-			<image>
-				<reportElement x="266" y="83" width="4" height="2" uuid="f0a2461a-d9cf-426b-bbbc-1ef8b8cd2be8"/>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="265" y="82" width="7" height="5" uuid="562331b8-99c0-40dc-b514-7735cddd813a"/>
 				<imageExpression><![CDATA[($F{refundtype}.equalsIgnoreCase("Unuse") ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg")
 ]]></imageExpression>
 			</image>
-			<rectangle>
-				<reportElement x="264" y="81" width="8" height="7" uuid="56cd7459-b229-43d0-850a-b224d75e9dcd"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="264" y="92" width="8" height="7" uuid="ba3623c6-85b5-4925-a530-347df3c137b4"/>
-			</rectangle>
-			<image>
-				<reportElement x="266" y="94" width="4" height="2" uuid="0e27a993-dfad-44c0-9c4b-bc86a6d5eda4"/>
-				<imageExpression><![CDATA[($F{refundtype}.equalsIgnoreCase("Other") ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg")
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="375" y="82" width="7" height="5" uuid="a2da35fa-c6b2-4dda-9146-b46f3791de70"/>
+				<imageExpression><![CDATA[($F{refundtype}.equalsIgnoreCase("Partly") ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg")
 ]]></imageExpression>
 			</image>
 		</band>
