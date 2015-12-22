@@ -186,10 +186,30 @@ $(document).ready(function() {
 
     //Validate Receive Period
     $('.fromdate').datetimepicker().change(function() {
+        $("#textAlertDivSavePeriod").hide();
+        $("#textAlertDivNotSavePeriod").hide();
+        $("#textAlertDivDeletePeriod").hide();
+        $("#textAlertDivPeriodMeaasge").hide();
+        $("#fromdatepanel").removeClass("has-error");
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-success");
+        $("#vattypepanel").removeClass("has-error");
+        $("#vattypepanel").removeClass("has-success");
         checkFromDateField();
         checkPeriod();
     });
     $('.todate').datetimepicker().change(function() {
+        $("#textAlertDivSavePeriod").hide();
+        $("#textAlertDivNotSavePeriod").hide();
+        $("#textAlertDivDeletePeriod").hide();
+        $("#textAlertDivPeriodMeaasge").hide();
+        $("#fromdatepanel").removeClass("has-error");
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-success");
+        $("#vattypepanel").removeClass("has-error");
+        $("#vattypepanel").removeClass("has-success");
         checkToDateField();
         checkPeriod();
     });
@@ -218,6 +238,20 @@ $(document).ready(function() {
     if ($("#periodMessage").val() !== '') {
         showPeriodMessage($("#periodMessage").val());
     }
+    
+    //Clear Alert Message and Panel color
+    $("#periodVatType").click(function() {
+        $("#textAlertDivSavePeriod").hide();
+        $("#textAlertDivNotSavePeriod").hide();
+        $("#textAlertDivDeletePeriod").hide();
+        $("#textAlertDivPeriodMeaasge").hide();
+        $("#fromdatepanel").removeClass("has-error");
+        $("#fromdatepanel").removeClass("has-success");
+        $("#todatepanel").removeClass("has-error");
+        $("#todatepanel").removeClass("has-success");
+        $("#vattypepanel").removeClass("has-error");
+        $("#vattypepanel").removeClass("has-success");
+    });
 
     setEnvironment();
 
