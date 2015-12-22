@@ -70,6 +70,7 @@
                 <c:set var="tableborder" value=""/>
                 <c:set var="underLineWO1" value="<u>"/>
                 <c:set var="underLineWO2" value="</u>"/>
+                <c:set var="fontcolor" value="black"/>
             </c:when>
         </c:choose>
         Finance & Cashier - Receive Table ${page}
@@ -456,7 +457,7 @@
         </div>                            
         <div class="panel panel-default ${panelborder}">
             <div class="panel-heading ${panelheader}">
-                    <h4 class="panel-title"><font style="color: ${fontcolor}">Total Receive</font></h4>
+                    <h4 class="panel-title"><font style="color: ${fontcolor}">Total Receive </font><i id="ajaxPeriod" class="fa fa-spinner fa-spin hidden"></i></h4>
                 </div>
             <div class="panel-body">
                 <div class="row">

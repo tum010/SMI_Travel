@@ -190,12 +190,6 @@ $(document).ready(function() {
         $("#textAlertDivNotSavePeriod").hide();
         $("#textAlertDivDeletePeriod").hide();
         $("#textAlertDivPeriodMeaasge").hide();
-        $("#fromdatepanel").removeClass("has-error");
-        $("#fromdatepanel").removeClass("has-success");
-        $("#todatepanel").removeClass("has-error");
-        $("#todatepanel").removeClass("has-success");
-        $("#vattypepanel").removeClass("has-error");
-        $("#vattypepanel").removeClass("has-success");
         checkFromDateField();
         checkPeriod();
     });
@@ -204,12 +198,6 @@ $(document).ready(function() {
         $("#textAlertDivNotSavePeriod").hide();
         $("#textAlertDivDeletePeriod").hide();
         $("#textAlertDivPeriodMeaasge").hide();
-        $("#fromdatepanel").removeClass("has-error");
-        $("#fromdatepanel").removeClass("has-success");
-        $("#todatepanel").removeClass("has-error");
-        $("#todatepanel").removeClass("has-success");
-        $("#vattypepanel").removeClass("has-error");
-        $("#vattypepanel").removeClass("has-success");
         checkToDateField();
         checkPeriod();
     });
@@ -245,12 +233,6 @@ $(document).ready(function() {
         $("#textAlertDivNotSavePeriod").hide();
         $("#textAlertDivDeletePeriod").hide();
         $("#textAlertDivPeriodMeaasge").hide();
-        $("#fromdatepanel").removeClass("has-error");
-        $("#fromdatepanel").removeClass("has-success");
-        $("#todatepanel").removeClass("has-error");
-        $("#todatepanel").removeClass("has-success");
-        $("#vattypepanel").removeClass("has-error");
-        $("#vattypepanel").removeClass("has-success");
     });
 
     setEnvironment();
@@ -804,6 +786,7 @@ function saveReceivePeriod() {
 }
 
 function CallAjaxCheckPeriod(param) {
+    $('#ajaxPeriod').removeClass('hidden');
     var url = 'AJAXServlet';
     try {
         $.ajax({
@@ -864,6 +847,7 @@ function CallAjaxCheckPeriod(param) {
                     $("#vattypepanel").removeClass("has-error");
                     $("#vattypepanel").addClass("has-success");
                     $('#textAlertDivSavePeriod').show();
+                    $('#ajaxPeriod').addClass('hidden');
                 } else {
 //                    $("#fromdatepanel").removeClass("has-success");
 //                    $("#todatepanel").removeClass("has-success");
@@ -873,9 +857,11 @@ function CallAjaxCheckPeriod(param) {
 //                    $("#vattypepanel").addClass("has-error");
                     $("#btnSave").addClass("disabled");
                     $('#textAlertDivNotSavePeriod').show();
+                    $('#ajaxPeriod').addClass('hidden');
                 }
             }, error: function(msg) {
                 console.log('auto ERROR');
+                $('#ajaxPeriod').addClass('hidden');
             }
         });
     } catch (e) {

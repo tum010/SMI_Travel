@@ -518,8 +518,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             }else{
                 queryReceiptSummary += " (`rec`.`department` = '" + department + "')) ";
             }
-            
-            
+                        
             queryReceiveSummary += (haveCondition ? " AND " : " WHERE ");
             queryReceiveSummary += " ( `ar`.`department` = '" + department + "' )) ";
             

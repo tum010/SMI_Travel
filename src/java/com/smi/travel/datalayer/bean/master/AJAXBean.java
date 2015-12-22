@@ -887,7 +887,7 @@ public class AJAXBean extends AbstractBean implements
                         check = receiveTableDao.updateReceivePeriod(periodId,fromDate,toDate,vatType,periodDetail);                   
                         if("1".equalsIgnoreCase(check)){
                             AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
-                            advanceReceivePeriod = receiveTableDao.getReceivePeriod(receiveFrom,department,vatType);  
+                            advanceReceivePeriod = receiveTableDao.getReceivePeriod(fromDate,department,vatType);  
                             List<AdvanceReceivePeriod> advanceReceivePeriodList = receiveTableDao.getReceivePeriodList(department);
                             result =  buildAdvanceReceivePeriodListTaxHTML(advanceReceivePeriodList, advanceReceivePeriod, "update");                                                                                  
 //                            result = buildAdvanceReceivePeriodViewListJSON(advanceReceivePeriod,advanceReceivePeriodView);
