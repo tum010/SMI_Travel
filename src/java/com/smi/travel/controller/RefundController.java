@@ -231,6 +231,9 @@ public class RefundController extends SMITravelController {
             String master_id = request.getParameter("master_id");
             String ownerByPage = request.getParameter("ownerBy");
             String ownerByNamePage = request.getParameter("ownerByName");
+            String refundType = request.getParameter("refundType");
+            String otherReason = request.getParameter("otherReason");
+            
             AirticketRefund airticketRefund = new AirticketRefund();
             RefundAirticket refund = new RefundAirticket();
             if(refundno != null && !"".equals(refundno)){
@@ -295,6 +298,18 @@ public class RefundController extends SMITravelController {
             }else{
                 refund.setOwnerBy("");
             }
+            
+            if(refundType != null && !"".equals(refundType)){
+                refund.setRefundType(refundType);
+            }else{
+                refund.setRefundType("");
+            }            
+            
+            if(otherReason != null && !"".equals(otherReason)){
+                refund.setOtherReason(otherReason);
+            }else{
+                refund.setOtherReason("");
+            }      
             
             refund.setStatus(0);
         return refund;
