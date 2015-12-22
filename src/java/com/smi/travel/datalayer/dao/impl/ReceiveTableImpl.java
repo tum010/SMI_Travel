@@ -486,6 +486,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             queryReceiveView += " crv.receivedate = '" + receiveDate + "' ";
             
             queryReceiptSummary += (haveCondition ? " AND " : " WHERE ");
+            
             queryReceiptSummary += " ((`rec`.`rec_date` >= (select `adp`.`receive_from` from `advance_receive_period` `adp` where ((`adp`.`receive_from` <= '" + receiveDate + "') and (`adp`.`receive_to` >= '" + receiveDate + "') and (adp.vat_type = '" + vatType + "') and (adp.department = '" + department + "')))) and (`rec`.`rec_date` <= (select `adp`.`receive_to` from `advance_receive_period` `adp` where ((`adp`.`receive_from` <= '" + receiveDate + "') and (`adp`.`receive_to` >= '" + receiveDate + "') and (adp.vat_type = '" + vatType + "') and (adp.department = '" + department + "')))) ";
             
             queryReceiveSummary += (haveCondition ? " AND " : " WHERE ");
@@ -512,7 +513,12 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             queryReceiveView += " crv.department = '" + department + "' ";
             
             queryReceiptSummary += (haveCondition ? " AND " : " WHERE ");
-            queryReceiptSummary += " (`rec`.`department` = '" + department + "')) ";
+            if(department.equalsIgnoreCase("WendyOutbound")){
+                queryReceiptSummary += " (`rec`.`department` = 'Wendy' or `rec`.`department` = 'Outbound')) ";
+            }else{
+                queryReceiptSummary += " (`rec`.`department` = '" + department + "')) ";
+            }
+            
             
             queryReceiveSummary += (haveCondition ? " AND " : " WHERE ");
             queryReceiveSummary += " ( `ar`.`department` = '" + department + "' )) ";
