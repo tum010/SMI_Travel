@@ -133,12 +133,13 @@
                             <table  class="display" id="RefundTable">
                                 <thead>
                                     <tr class="datatable-header">
-                                        <th style="width: 15%"  class="hidden">id air ticket refund</th>
-                                        <th style="width: 15%" >Refund No</th>
-                                        <th style="width: 15%" >Refund By</th>
+                                        <th style="width: 10%"  class="hidden">id air ticket refund</th>
+                                        <th style="width: 10%" >Refund No</th>
+                                        <th style="width: 17%" >Refund By</th>
                                         <th style="width: 10%" >Refund Date</th>
-                                        <th style="width: 15%" >Receive</th>
-                                        <th style="width: 15%" >Change</th>
+                                        <th style="width: 6%" >Receive</th>
+                                        <th style="width: 10%" >Airline Charge</th>
+                                        <th style="width: 10%" >Client Charge</th>
                                         <th>Detail</th>
                                         <th style="width: 8%" >Action</th>
                                     </tr>
@@ -154,6 +155,7 @@
                                                 <td><c:out value="${table.refunddate}" /></td>
                                                 <td><c:out value="${table.receiveby}" /></td>
                                                 <td class="text-right "><c:out value="${table.change}" /></td>
+                                                <td class="text-right "><c:out value="${table.clientcharge}" /></td>
                                                 <td><c:out value="${table.detail}" /></td>
                                                 <td class="text-center">
                                                     <a  id="SpanEdit${status.count}" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&refundid=${table.airticketrefundid}&action=searchRefund">
@@ -319,7 +321,7 @@
                                         </div>
                                     </div>
                                 </div>                    
-                                <div class="row">
+<!--                                <div class="row">
                                     <div class="col-sm-6 form-group">
                                         <label class="col-sm-3 control-label text-right">Address</label>
                                         <div class="col-sm-9">                                      
@@ -328,7 +330,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
                                         <label class="col-sm-3 control-label text-right">Refund Type</label>
@@ -446,7 +448,7 @@
                                         </div>
                                     </div>
                                         <div class="col-sm-6 form-group">
-                                        <label  class="col-sm-4 control-label text-right">Total Client Customer</label>
+                                        <label  class="col-sm-4 control-label text-right">Total Client Charge</label>
                                         <div class="col-sm-8">  
                                             <input type="text" class="form-control" value="${table1.clientcharge}" maxlength="255" id="clientCharge" name="clientCharge" readonly=""/>
                                         </div>
@@ -592,7 +594,7 @@
                                     </div>
                                 </div>
                             </div>                    
-                            <div class="row">
+<!--                            <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label class="col-sm-3 control-label text-right">Address</label>
                                     <div class="col-sm-9">                                      
@@ -601,7 +603,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div> -->
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label class="col-sm-3 control-label text-right">Refund Type</label>
@@ -680,7 +682,7 @@
                                     </div>
                                 </div>
                                     <div class="col-sm-6 form-group">
-                                    <label  class="col-sm-4 control-label text-right">Total Client Customer</label>
+                                    <label  class="col-sm-4 control-label text-right">Total Client Charge</label>
                                     <div class="col-sm-8">  
                                         <input type="text" class="form-control" value="${table1.change}" maxlength="255" id="clientCharge" name="clientCharge" readonly=""/>
                                     </div>
