@@ -88,8 +88,8 @@ public class RefundAirReportImpl implements RefundAirReportDao{
             //temp.setTicketamount(util.setFormatMoney(SumTicketAmount));
             System.out.println("Sum Receive : " +SumReceive + ": " +  util.setFormatMoney(SumReceive) );
             temp.setTotalreceive(util.setFormatMoney(SumReceive) != null && !".00".equals(util.setFormatMoney(SumReceive)) ? util.setFormatMoney(SumReceive) : "");
-            temp.setTotalpay(util.setFormatMoney(SumPayCus) != null && !"".equals(util.setFormatMoney(SumPayCus)) ? util.setFormatMoney(SumPayCus) : "");
-            temp.setTotalclientcharge(util.setFormatMoney(SumClient) != null && !"".equals(util.setFormatMoney(SumClient)) ? util.setFormatMoney(SumClient) : "");
+            temp.setTotalpay(util.setFormatMoney(SumPayCus) != null && !".00".equals(util.setFormatMoney(SumPayCus)) ? util.setFormatMoney(SumPayCus) : "");
+            temp.setTotalclientcharge(util.setFormatMoney(SumClient) != null && !".00".equals(util.setFormatMoney(SumClient)) ? util.setFormatMoney(SumClient) : "");
             data.set(0, temp);
             
         }
