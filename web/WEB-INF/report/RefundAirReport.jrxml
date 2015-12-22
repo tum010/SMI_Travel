@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RefundAirReport" language="groovy" pageWidth="594" pageHeight="421" columnWidth="524" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="7b4a2257-2f70-4963-bf1f-6e60068f6f43">
-	<property name="ireport.zoom" value="2.923075650000003"/>
-	<property name="ireport.x" value="585"/>
-	<property name="ireport.y" value="669"/>
+	<property name="ireport.zoom" value="2.657341500000008"/>
+	<property name="ireport.x" value="529"/>
+	<property name="ireport.y" value="507"/>
 	<field name="refundno" class="java.lang.String"/>
 	<field name="ticketdate" class="java.lang.String"/>
 	<field name="passenger" class="java.lang.String"/>
@@ -31,10 +31,10 @@
 				<reportElement x="65" y="153" width="197" height="103" uuid="27acd792-38ac-4fac-86e5-6eb88db5dacc"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="262" y="153" width="121" height="103" uuid="11ad2c65-65c3-4bae-9a39-aaaa47eb4dc0"/>
+				<reportElement x="262" y="153" width="120" height="103" uuid="11ad2c65-65c3-4bae-9a39-aaaa47eb4dc0"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="383" y="153" width="70" height="103" uuid="4647e17a-1d0b-4566-b779-a8a129fdb6f8"/>
+				<reportElement x="382" y="153" width="71" height="103" uuid="4647e17a-1d0b-4566-b779-a8a129fdb6f8"/>
 			</rectangle>
 		</band>
 	</background>
@@ -208,7 +208,7 @@
 				<textFieldExpression><![CDATA[$F{ticketdate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="65" y="-1" width="197" height="16" uuid="aaeb0973-1f8e-467f-9a8f-bfd3936e0a97"/>
+				<reportElement x="70" y="-1" width="191" height="16" uuid="aaeb0973-1f8e-467f-9a8f-bfd3936e0a97"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
@@ -247,7 +247,7 @@
 				<text><![CDATA[Cancellation Charge]]></text>
 			</staticText>
 			<line>
-				<reportElement x="91" y="15" width="432" height="1" uuid="97cf98ae-453e-49f1-9bb5-aeda059608b3"/>
+				<reportElement x="91" y="15" width="433" height="1" uuid="97cf98ae-453e-49f1-9bb5-aeda059608b3"/>
 			</line>
 			<rectangle>
 				<reportElement x="0" y="18" width="524" height="15" uuid="5bdbdb6b-c5fc-4c80-972f-0fcef870998d"/>
@@ -308,10 +308,10 @@
 				<reportElement x="53" y="59" width="199" height="1" uuid="8eba42f0-618e-46bf-9a31-25f03100f300"/>
 			</line>
 			<line>
-				<reportElement x="357" y="47" width="166" height="1" uuid="3de00946-ea2a-4450-81ca-e6481459ea32"/>
+				<reportElement x="357" y="47" width="167" height="1" uuid="3de00946-ea2a-4450-81ca-e6481459ea32"/>
 			</line>
 			<line>
-				<reportElement x="357" y="60" width="166" height="1" uuid="7ffb7703-cb4c-42db-8bea-2b55169d25b1"/>
+				<reportElement x="357" y="60" width="167" height="1" uuid="7ffb7703-cb4c-42db-8bea-2b55169d25b1"/>
 			</line>
 			<textField>
 				<reportElement x="91" y="1" width="431" height="16" uuid="9c2bc10e-0396-40e3-8a71-78d114c3938f"/>
@@ -404,7 +404,7 @@
 				<text><![CDATA[Unused Ticket(s)]]></text>
 			</staticText>
 			<line>
-				<reportElement x="328" y="97" width="193" height="1" uuid="f6d6022b-102b-49ba-b49e-0698c62df81b"/>
+				<reportElement x="328" y="97" width="194" height="1" uuid="f6d6022b-102b-49ba-b49e-0698c62df81b"/>
 			</line>
 			<rectangle>
 				<reportElement x="261" y="89" width="9" height="7" uuid="99341e08-5362-455c-a53b-138c19cfc443"/>
