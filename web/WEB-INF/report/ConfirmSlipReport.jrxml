@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ConfirmSlipReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9214bb41-ccfa-4d73-8cc4-c3befae832ae">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="87"/>
+	<property name="ireport.y" value="0"/>
 	<field name="refno" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="systemdate" class="java.lang.String"/>
@@ -358,10 +358,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{packages}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="301" y="1" width="100" height="20" uuid="2b82e1da-4b03-4c47-8f1f-bceebc74deac"/>
-				<text><![CDATA[111111]]></text>
-			</staticText>
 		</band>
 	</pageHeader>
 	<detail>
