@@ -99,7 +99,7 @@ public class ReceiveTableController extends SMITravelController {
         }else if("I".equalsIgnoreCase(department)){
             department = "Inbound";
         }else if("WO".equalsIgnoreCase(department)){
-            department = "WendyOutbound";
+            department = "Wendy,Outbound";
         }
         
         List<AdvanceReceivePeriod> advanceReceivePeriodList = receiveTableService.getReceivePeriodList(receiveDepartment);
@@ -132,7 +132,7 @@ public class ReceiveTableController extends SMITravelController {
             advanceReceive.setChqBank(chqBank);
             advanceReceive.setChqDate(utilty.convertStringToDate(chqDate));
             advanceReceive.setChqNo(chqNo);
-            advanceReceive.setDepartment(department);
+            advanceReceive.setDepartment((department.indexOf(",") == (-1) ? department : department.replace(",", "")));
             advanceReceive.setRecAmount(!"".equalsIgnoreCase(receiveAmount) && receiveAmount != null ? new BigDecimal(receiveAmount.replaceAll(",", "")) : null);
             advanceReceive.setCashAmount(!"".equalsIgnoreCase(cashAmount) && cashAmount != null ? new BigDecimal(cashAmount.replaceAll(",", "")) : null);
             advanceReceive.setBankAmount(!"".equalsIgnoreCase(bankAmount) && bankAmount != null ? new BigDecimal(bankAmount.replaceAll(",", "")) : null);

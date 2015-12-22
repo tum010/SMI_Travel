@@ -75,7 +75,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         }
         if ((department != null) && (!"".equalsIgnoreCase(department))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" ad.department = '" + department + "'");
+            query.append(" ad.department = '" + (department.indexOf(",") == (-1) ? department : department.replace(",", "")) + "'");
             haveCondition = true;
         }
         // option search mean order by id and option success mean order by id desc
@@ -619,7 +619,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             department = "Outbound";
         }else if("I".equalsIgnoreCase(department)){
             department = "Inbound";
-        }else if("WO".equalsIgnoreCase(department) || department.indexOf(",") != 0){
+        }else if("WO".equalsIgnoreCase(department) || department.indexOf(",") > 0){
             department = "WendyOutbound";
         }
         

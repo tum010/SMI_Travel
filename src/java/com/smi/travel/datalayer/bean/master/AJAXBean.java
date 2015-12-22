@@ -894,6 +894,8 @@ public class AJAXBean extends AbstractBean implements
                         }else{
                             result = "fail";
                         }
+                    }else{
+                        result = "fail";
                     }    
                 }else{
                     check = receiveTableDao.checkReceivePeriod(periodId,fromDate,toDate,department,vatType);
@@ -919,6 +921,8 @@ public class AJAXBean extends AbstractBean implements
                 if("success".equalsIgnoreCase(check)){
                    List<AdvanceReceivePeriod> advanceReceivePeriodList = receiveTableDao.getReceivePeriodList(department);
                    result =  buildAdvanceReceivePeriodListTaxHTML(advanceReceivePeriodList, null, "delete");
+                }else{
+                    result = "fail";
                 }
                 
             }else if("compareReceiptSummary".equalsIgnoreCase(type)){

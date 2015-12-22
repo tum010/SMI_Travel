@@ -201,6 +201,10 @@ $(document).ready(function() {
         checkToDateField();
         checkPeriod();
     });
+    
+    $("#periodVatType").change(function() {
+        checkPeriod();
+    });
 
     //Set Status Format Calculate
     $("#receiveAmount,#wht").keyup(function() {
@@ -1118,11 +1122,11 @@ function checkPeriod() {
         var vatTypeCheck = $("#receiveVatType").val();
         if ((from === fromCheck) && (to === toCheck) && (vatType === vatTypeCheck)) {
             $("#periodDetail").val($("#receiveDetail").val());
-            $("#periodCashAmount").val($("#receiveCashAmount").val());
-            $("#periodBankAmount").val($("#receiveBankAmount").val());
-            $("#periodCash").val($("#receiveCash").val());
-            $("#periodCheque").val($("#receiveCheque").val());
-            $("#periodCreditCard").val($("#receiveCreditCard").val());
+            $("#periodCashAmount").val($("#receiveCashAmount").val() !== '' ? formatNumber(parseFloat($("#receiveCashAmount").val().replace(/,/g, ""))) : '');
+            $("#periodBankAmount").val($("#receiveBankAmount").val() !== '' ? formatNumber(parseFloat($("#receiveBankAmount").val().replace(/,/g, ""))) : '');
+            $("#periodCash").val($("#receiveCash").val() !== '' ? formatNumber(parseFloat($("#receiveCash").val().replace(/,/g, ""))) : '');
+            $("#periodCheque").val($("#receiveCheque").val() !== '' ? formatNumber(parseFloat($("#receiveCheque").val().replace(/,/g, ""))) : '');
+            $("#periodCreditCard").val($("#receiveCreditCard").val() !== '' ? formatNumber(parseFloat($("#receiveCreditCard").val().replace(/,/g, ""))) : '');
         } else {
             $("#periodDetail").val('');
             $("#periodCashAmount").val('');
