@@ -234,7 +234,7 @@
                                 <td align="left">${air.agent}</td>
                                 <td align="left">${air.leader}</td>
                                 <td align="center">${air.flight}</td>
-                                <td align="right" class="money">${air.pax}</td>
+                                <td align="center" >${air.pax}</td>
                                 <td align="center">${air.pnr}</td>
                                 <td align="center">${air.dept}</td>
                                 <td align="center">${air.arrv}</td>
@@ -387,15 +387,15 @@
                                 <td align="center">${daytour.refdate}</td>
                                 <td align="left">${daytour.agent}</td>
                                 <td align="left">${daytour.leader}</td>
-                                <td align="right" class="money">${daytour.pax}</td>
+                                <td align="center">${daytour.pax}</td>
                                 <td align="center">${daytour.tourcode}</td>
                                 <td align="left">${daytour.tourname}</td>
                                 <td align="center">${daytour.tourdate}</td>
                                 <td align="left">${daytour.pickup}</td>
                                 <td align="center">${daytour.time}</td>
-                                <td align="right" class="money">${daytour.adult}</td>
-                                <td align="right" class="money">${daytour.child}</td>
-                                <td align="right" class="money">${daytour.infant}</td>
+                                <td align="center">${daytour.adult}</td>
+                                <td align="center">${daytour.child}</td>
+                                <td align="center">${daytour.infant}</td>
                                 <td align="center">${daytour.remark}</td>
                                 <td align="center" rowspan="2">
                                     <a href="#" onclick="" data-toggle="modal" data-target="">
@@ -490,7 +490,7 @@
                                 <td align="center" >${land.okby}</td>
                                 <td align="left">${land.description}</td>
                                 <td align="center">${land.category}</td>
-                                <td align="right" class="money">${other.qty}</td>
+                                <td align="center">${land.qty}</td>
                                 <td align="center" rowspan="2">
                                     <a href="#" onclick="" data-toggle="modal" data-target="">
                                         <span id="editSpan1" class="glyphicon glyphicon-th-list" onclick="viewBooking('${requestScope['search_type']}','${land.refno}','${land.id}')"></span>
