@@ -82,7 +82,7 @@
             </div>
             <div id="textAlertNotDelete"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Delete Not Success!</strong> 
+                <strong>Delete Not Success! This Refund is in path of checking airticket </strong> 
             </div>
             <input type="hidden" value="${master.customer.MInitialname.name}" id="initialname_tmp">
             <input type="hidden" value="${master.customer.firstName}" id="firstname_tmp">
@@ -470,7 +470,11 @@
                                     </c:choose> 
                                 </div>
                                 <div class="col-sm-6 form-group text-left">
-                                    <button type="button" id="buttonCloseRefund"  name="buttonCloseRefund" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
+                                    <a  id="SpanClose" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=edit">
+                                        <button type="button"  class="btn btn-default" id="buttonCloseRefund" name="buttonCloseRefund" >
+                                            <span class="glyphicon glyphicon-remove deleteicon"></span> Close 
+                                        </button>
+                                    </a>
                                 </div>
                                 </div>  
                             </div>
@@ -705,7 +709,12 @@
                                     </c:choose>  
                                 </div>
                                 <div class="col-sm-6 form-group text-left">
-                                    <button type="button" id="buttonCloseRefund"  name="buttonCloseRefund" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>
+                                    <a  id="SpanClose" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=edit">
+                                        <button type="button"  class="btn btn-default" id="buttonCloseRefund" name="buttonCloseRefund" class="btn btn-default">
+                                            <span class="glyphicon glyphicon-remove deleteicon"></span> Close 
+                                        </button>
+                                    </a>
+                                    <!--<button type="button" id="buttonCloseRefund"  name="buttonCloseRefund" class="btn btn-default"><span class="glyphicon glyphicon-remove deleteicon"></span> Close </button>-->
                                 </div>
                             </div>  
                         </div> <!-- Refund Add --> 

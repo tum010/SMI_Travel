@@ -186,7 +186,8 @@
                                     <th>Sector issue</th>
                                     <th>Total</th>
                                     <th>Department</th>
-                                    <th colspan="3">Passenger</th>
+                                    <th colspan="2">Passenger</th>
+                                    <th>Cus Charge</th>
                                     <th >Receive Date</th>
                                 </tr>
                             </thead>
