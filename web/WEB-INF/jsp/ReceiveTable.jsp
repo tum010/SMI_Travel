@@ -26,6 +26,14 @@
         <c:set var="tableborder" value=""/>
         <c:set var="fontcolor" value="white"/>
         <c:set var="page" value=""/>
+        <c:set var="underLineWO1" value=""/>
+        <c:set var="underLineWO2" value=""/>
+        <c:set var="underLineW1" value=""/>
+        <c:set var="underLineW2" value=""/>
+        <c:set var="underLineO1" value=""/>
+        <c:set var="underLineO2" value=""/>
+        <c:set var="underLineI1" value=""/>
+        <c:set var="underLineI2" value=""/>
         <c:choose>
             <c:when test="${department == 'W'}">
                 <c:set var="page" value="Wendy"/>
@@ -33,6 +41,8 @@
                 <c:set var="panelborder" value="wendyborder"/>
                 <c:set var="tableheader" value="#FFC07B"/>
                 <c:set var="tableborder" value="#FFC07B"/>
+                <c:set var="underLineW1" value="<u>"/>
+                <c:set var="underLineW2" value="</u>"/>
             </c:when>
             <c:when test="${department == 'O'}">
                 <c:set var="page" value="Outbound"/>
@@ -40,6 +50,8 @@
                 <c:set var="panelborder" value="outboundborder"/>
                 <c:set var="tableheader" value="#FF8003"/>
                 <c:set var="tableborder" value="#FF8003"/>
+                <c:set var="underLineO1" value="<u>"/>
+                <c:set var="underLineO2" value="</u>"/>
             </c:when>
             <c:when test="${department == 'I'}">
                 <c:set var="page" value="Inbound"/>
@@ -47,6 +59,8 @@
                 <c:set var="panelborder" value="inboundborder"/>
                 <c:set var="tableheader" value="#11BF00"/>
                 <c:set var="tableborder" value="#11BF00"/>
+                <c:set var="underLineI1" value="<u>"/>
+                <c:set var="underLineI2" value="</u>"/>
             </c:when>
             <c:when test="${department == 'WO'}">
                 <c:set var="page" value="Wendy and Outbound"/>
@@ -54,6 +68,8 @@
                 <c:set var="panelborder" value=""/>
                 <c:set var="tableheader" value=""/>
                 <c:set var="tableborder" value=""/>
+                <c:set var="underLineWO1" value="<u>"/>
+                <c:set var="underLineWO2" value="</u>"/>
             </c:when>
         </c:choose>
         Finance & Cashier - Receive Table ${page}
@@ -67,16 +83,16 @@
 <div class="col-xs-12" style="margin: 5px 0px 5px 0px;">
     <div class="col-xs-1"></div>
     <div class="col-xs-1" style="width: 160px;">
-        <a href="ReceiveTableWO.smi" id="menu-wendyoutbound" ><b style="color: #FFC07B;">Wendy</b>+<b style="color: #FF8003;">Outbound</b></a>       
+        ${underLineWO1}<a href="ReceiveTableWO.smi" id="menu-wendyoutbound" ><b style="color: #FFC07B;">Wendy</b>+<b style="color: #FF8003;">Outbound</b></a>${underLineWO2}       
     </div>
     <div class="col-xs-1" style="width: 80px;">        
-        <a href="ReceiveTableW.smi" id="menu-wendyoutbound" style="color: #FFC07B;"><b>Wendy</b></a>
+        ${underLineW1}<a href="ReceiveTableW.smi" id="menu-wendyoutbound" style="color: #FFC07B;"><b>Wendy</b></a>${underLineW2}
     </div>
     <div class="col-xs-1" style="width: 100px;">
-        <a href="ReceiveTableO.smi" id="menu-wendyoutbound" style="color: #FF8003;"><b>Outbound</b></a>        
+        ${underLineO1}<a href="ReceiveTableO.smi" id="menu-wendyoutbound" style="color: #FF8003;"><b>Outbound</b></a>${underLineO1}        
     </div>
     <div class="col-xs-1" style="width: 80px;">
-        <a href="ReceiveTableI.smi" id="menu-wendyoutbound" style="color: #11BF00;"><b>Inbound</b></a>       
+        ${underLineI1}<a href="ReceiveTableI.smi" id="menu-wendyoutbound" style="color: #11BF00;"><b>Inbound</b></a>${underLineI1}       
     </div>   
 </div>    
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">  
