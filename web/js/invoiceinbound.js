@@ -657,11 +657,11 @@ function changeFormatAmountNumber(id) {
     var count = document.getElementById('InputAmount' + id).value;
     var type = $("#InputTypeInvoiceInbound").val();
     var curamount = document.getElementById('SelectCurrencyAmount' + id).value;
-    if (curamount === '') {
-        $('#textAlertCurrencyAmountNotEmpty').show();
-    } else {
-        $('#textAlertInvoiceNotEmpty').hide();
-    }
+//    if (curamount === '') {
+//        $('#textAlertCurrencyAmountNotEmpty').show();
+//    } else {
+//        $('#textAlertInvoiceNotEmpty').hide();
+//    }
 
     count = count.replace(/\,/g, '');
     count = parseFloat(count);

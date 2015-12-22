@@ -151,8 +151,8 @@ public class SendEmailController extends SMITravelController {
             if (InvoiceInboundPerformaEmail.equalsIgnoreCase(name)) {
                 data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName());
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
-                jasperFileName = "InvoiceInboundPerformaEmail.jasper";
-                pdfFileName = "InvoiceInboundPerformaEmail.pdf";
+                jasperFileName = "InvoiceInboundEmail.jasper";
+                pdfFileName = "InvoiceInboundProformaEmail.pdf";
                 pathAttachfile = path[0] + "\\" + username;
                 System.out.println("path : " + path[0] + username);
                 if (checkDirectory(path[0] + username)) {
