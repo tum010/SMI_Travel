@@ -841,11 +841,11 @@ function printInvoiceInboundNew() {
             window.open("report.smi?name=InvoiceInboundRevenueEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         }
     }else if (type === 'sendemail') {
-//        if (invoiceType === 'PM') {
-//            window.open("report.smi?name=InvoiceInboundPerformaEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
-//        } else {
+        if (invoiceType === 'PM') {
+            window.open("SendMail.smi?reportname=InvoiceInboundPerformaEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+        } else {
             window.open("SendMail.smi?reportname=InvoiceInboundRevenueEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
-//        }
+        }
     }
 }
 var currency = 0;
