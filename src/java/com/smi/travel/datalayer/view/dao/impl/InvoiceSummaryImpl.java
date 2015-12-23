@@ -59,7 +59,12 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
         System.out.println("Attribute : " + fromData + " : " + toDate + " : " + department + " : " + type + " : " + agent);
         if ( department != null && (!"".equalsIgnoreCase(department)) ) {
             AndQuery = 1;
-            query += " st.department = '" + department + "'";
+            if(department.indexOf(",") == -1){
+                query += " st.department = '" + department + "'";
+            }else{
+                String[] departmentTemp = department.split(",");
+                query += " st.department in ('" + departmentTemp[0] + "','" + departmentTemp[1] + "') ";
+            }          
         }
        
         if (type != null && (!"".equalsIgnoreCase(type)) ) {

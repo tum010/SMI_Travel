@@ -263,6 +263,9 @@ function printInvoiceSummary(){
     var agent = $('#InvTo').val();
     var status = $('#status').val();
 //    windsow.open("report.smi?name=InvoiceSummary");
+    if(department === 'WendyOutbound'){
+        department = 'Wendy,Outbound'
+    }
     if((from === '') || (to === '')){
         validateDate();
     } else {
