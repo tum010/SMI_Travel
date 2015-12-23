@@ -281,6 +281,9 @@ function setEnvironment() {
     if ($("#periodCreditCard").val() !== '') {
         $("#periodCreditCard").val(formatNumber(parseFloat($("#periodCreditCard").val().replace(/,/g, ""))));
     }
+    if ($("#wht").val() !== '') {
+        $("#wht").val(formatNumber(parseFloat($("#wht").val().replace(/,/g, ""))));
+    }
     if ($("#countCredit").val() !== '1') {
         var row = parseInt($("#countCredit").val());
         for (var i = 1; i <= row; i++) {

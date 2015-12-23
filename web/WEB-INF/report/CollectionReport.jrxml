@@ -28,7 +28,7 @@
 		<variableExpression><![CDATA[($F{totalamount} != null && !"null".equals($F{totalamount}) && $F{totalamount}.length() > 0) ? new BigDecimal($F{totalamount}) : "0.00"]]></variableExpression>
 	</variable>
 	<variable name="totalcash" class="java.math.BigDecimal" calculation="Sum"/>
-	<group name="collection" keepTogether="true">
+	<group name="collection" isReprintHeaderOnEachPage="true" keepTogether="true">
 		<groupHeader>
 			<band height="14">
 				<staticText>

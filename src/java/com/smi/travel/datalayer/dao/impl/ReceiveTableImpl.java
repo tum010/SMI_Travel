@@ -572,8 +572,8 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         int i = 1;
         for (Object[] C : QueryReceiveView){
             CollectionView collectionView = new CollectionView();
-            collectionView.setDatefrom(String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveFrom())));
-            collectionView.setDateto(String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveTo())));
+            collectionView.setDatefrom(advanceReceivePeriod != null ? String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveFrom())) : "");
+            collectionView.setDateto(advanceReceivePeriod != null ? String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveTo())) : "");
             collectionView.setDepartment(department);
             collectionView.setSystemdate(String.valueOf(dateformatSystemDate.format(new Date())));
             collectionView.setNo(String.valueOf(i));
