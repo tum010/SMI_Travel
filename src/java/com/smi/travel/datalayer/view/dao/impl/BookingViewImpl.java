@@ -368,7 +368,7 @@ public class BookingViewImpl implements BookingViewDao{
         UtilityFunction util = new UtilityFunction();
         List<BookingPackageSummaryView> bookingPackageSummaryViewList = new ArrayList<BookingPackageSummaryView>();
         
-        String query = " SELECT *,REPLACE(GROUP_CONCAT(DISTINCT b.invoice),',','<br>') AS invoiceno ,REPLACE(GROUP_CONCAT(DISTINCT b.receipt,''),',','<br>') AS receiptno FROM `booking_package_summary` b ";
+        String query = " SELECT *,GROUP_CONCAT(DISTINCT b.invoice) AS invoiceno, GROUP_CONCAT(DISTINCT b.receipt) AS receiptno FROM `booking_package_summary` b ";
         boolean condition = false;
         
         if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
@@ -474,7 +474,7 @@ public class BookingViewImpl implements BookingViewDao{
         }
         if((tourAgent != null) &&(!"".equalsIgnoreCase(tourAgent))){
             query += (condition ? " and " : " where ");
-            query += " agentname LIKE '%" + tourAgent + "%' OR agentcode LIKE '%" + tourAgent + "%' " ;
+            query += " agent LIKE '%" + tourAgent + "%' " ;
             condition = true;
         }
 
