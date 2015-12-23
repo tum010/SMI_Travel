@@ -24,6 +24,8 @@ import com.smi.travel.datalayer.report.model.OtherGuideCommissionSummaryHeader;
 import com.smi.travel.datalayer.view.entity.OtherBookingView;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -1249,7 +1251,6 @@ public class OtherBookingImpl implements OtherBookingDao{
         String guideComm = "";
         String guideCommTemp1 = "";
         String guideCommTemp2 = "";
-        Double guidecommpercent = new Double(0);
         UtilityFunction util = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
         List<ProductComission> list = session.createQuery("from ProductComission pro where pro.effectiveFrom <= :otherdate and pro.effectiveTo >= :otherdate")
@@ -1262,22 +1263,18 @@ public class OtherBookingImpl implements OtherBookingDao{
                 if(list.get(i).getAgent() != null){
                     if((String.valueOf(list.get(i).getAgent().getId())).equalsIgnoreCase(agentId)){
                         guideCommTemp1 = String.valueOf(list.get(i).getAgentCommission());
-                        
                         if(!"".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent())) && !"null".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent()))){
-                            System.out.println(" price " + price + " ++++  list.get(i).getAgentCommissionPercent() " + list.get(i).getAgentCommissionPercent());
-                            guidecommpercent = (Double.parseDouble(price) * ((list.get(i).getAgentCommissionPercent().doubleValue())/100));
-                            
+                            BigDecimal guidecommpercent = new BigDecimal(BigInteger.ZERO);
+                            guidecommpercent = guidecommpercent.add((new BigDecimal(price)).multiply((new BigDecimal(10)).divide(new BigDecimal(100)))) ;
                             guideCommTemp1 = String.valueOf(guidecommpercent);
                         }
                         
                     }
                 }else{
                     guideCommTemp2 = String.valueOf(list.get(i).getAgentCommission());
-                    
                     if(!"".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent())) && !"null".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent()))){
-                        System.out.println(" price " + price + " ++++  list.get(i).getAgentCommissionPercent() " + list.get(i).getAgentCommissionPercent());
-                        guidecommpercent = (Double.parseDouble(price) * ((list.get(i).getAgentCommissionPercent().doubleValue())/100));
-
+                        BigDecimal guidecommpercent = new BigDecimal(BigInteger.ZERO);
+                        guidecommpercent = guidecommpercent.add((new BigDecimal(price)).multiply((new BigDecimal(10)).divide(new BigDecimal(100)))) ;
                         guideCommTemp2 = String.valueOf(guidecommpercent);
 
                     }

@@ -215,7 +215,7 @@
                                            value="${item.remarkGuideCommission}" maxlength="255">
                                 </td>
                                 <td class="form-group">
-                                    <input type="text" onkeyup="getAgentCommission('${status.count}','${item.agent.id}')" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-" 
+                                    <input type="text" onkeyup="getAgentCommission('${status.count}')" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-" 
                                            valHidden="${item.agent.id}" value="${item.agent.name}" /> 
                                 </td>
                                 <td class="form-group">
@@ -475,7 +475,7 @@
         console.log("Add Guide : " + fromdate + " " + todate + " " + agent + " " + guide );
     }
     
-    function getAgentCommission(row,agentId){
+    function getAgentCommission(row){
         var otherDate = $('#otherDate-'+row).val(); 
         var adPrice = parseFloat($('#adPrice-'+row).val());
         var adQty = parseFloat($('#adQty-'+row).val());
@@ -484,6 +484,32 @@
         var inPrice = parseFloat($('#inPrice-'+row).val());
         var inQty = parseFloat($('#inQty-'+row).val());
         var price = (adPrice*adQty) + (chPrice*chQty)  + (inPrice*inQty) ;
+        var agentId = '';
+        var dataAgent = [];
+        dataAgent = agentName;
+        var agentcount= 0 ; 
+        
+        $("#AgentName-"+row).autocomplete({
+            source: dataAgent,
+            focus: function( event, ui ) {
+                event.preventDefault();
+                $(this).val(ui.item.label);
+                agentId = ui.item.value;
+            },
+            select: function( event, ui ) {
+                event.preventDefault();
+                $(this).val(ui.item.label);
+                $(this).attr("valHidden",ui.item.value);
+                agentId = ui.item.value;
+                
+            },
+            close:function( event, ui ) {
+               var editCheckBox = $(this).closest('tr').find('td.edited').children();
+               $(editCheckBox).attr("checked", true);
+               $("#AgentName-"+agentcount).trigger('keyup');
+            } 
+        });
+
         $("#AgentName-"+row).keyup(function () {
             if (event.keyCode === 13) {
                 var servletName = 'BookOtherServlet';
@@ -493,7 +519,7 @@
                         '&servicesName=' + servicesName +
                         '&otherDate=' + otherDate +
                         '&row=' + row +
-                        '&agentId=' + '1010521' +
+                        '&agentId=' + agentId +
                         '&price=' + price +
                         '&type=' + 'getAgentCommission';
                 CallAjaxSearchAgentCom(param,row);
