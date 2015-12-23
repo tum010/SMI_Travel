@@ -292,6 +292,9 @@
         if(strStatus === 'Choose'){
             strStatus = "";
         }
+        if(department === 'WendyOutbound'){
+            department = 'Wendy,Outbound';
+        }
         if((fromdate === '') || (todate === '')){
            validateDate();
         } else {

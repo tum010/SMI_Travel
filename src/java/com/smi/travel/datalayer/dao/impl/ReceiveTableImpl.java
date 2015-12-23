@@ -572,8 +572,8 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         int i = 1;
         for (Object[] C : QueryReceiveView){
             CollectionView collectionView = new CollectionView();
-            collectionView.setDatefrom(String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveFrom())));
-            collectionView.setDateto(String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveTo())));
+            collectionView.setDatefrom(advanceReceivePeriod != null ? String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveFrom())) : "");
+            collectionView.setDateto(advanceReceivePeriod != null ? String.valueOf(dateformatReceiveDate.format(advanceReceivePeriod.getReceiveTo())) : "");
             collectionView.setDepartment(department);
             collectionView.setSystemdate(String.valueOf(dateformatSystemDate.format(new Date())));
             collectionView.setNo(String.valueOf(i));
@@ -718,6 +718,30 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         }
         
         return result;
+    }
+
+    @Override
+    public String updateReceivePeriodSummary(String periodId, AdvanceReceivePeriodView advanceReceivePeriodView) {
+        int result = 0;
+        UtilityFunction util = new UtilityFunction();
+        String hql = "UPDATE AdvanceReceivePeriod period set period.cashAmount = :cashAmount , period.cashMinusAmount = :cashMinusAmount , "
+                + "period.bankTransfer = :bankTransfer , period.chqAmount = :chqAmount , period.creditAmount = :creditAmount "
+                + "WHERE period.id = :periodId";
+        try {
+            org.hibernate.classic.Session session = this.sessionFactory.openSession();
+            Query query = session.createQuery(hql);
+            query.setParameter("cashAmount", (!"".equalsIgnoreCase(advanceReceivePeriodView.getCashamount()) ? new BigDecimal(advanceReceivePeriodView.getCashamount()) : null));
+            query.setParameter("cashMinusAmount", (!"".equalsIgnoreCase(advanceReceivePeriodView.getCashminusamount()) ? new BigDecimal(advanceReceivePeriodView.getCashminusamount()) : null));
+            query.setParameter("bankTransfer", (!"".equalsIgnoreCase(advanceReceivePeriodView.getBankamount()) ? new BigDecimal(advanceReceivePeriodView.getBankamount()) : null));
+            query.setParameter("chqAmount", (!"".equalsIgnoreCase(advanceReceivePeriodView.getCheque()) ? new BigDecimal(advanceReceivePeriodView.getCheque()) : null));
+            query.setParameter("creditAmount", (!"".equalsIgnoreCase(advanceReceivePeriodView.getCreditcard()) ? new BigDecimal(advanceReceivePeriodView.getCreditcard()) : null));
+            query.setParameter("periodId", periodId);
+            result = query.executeUpdate();
+         } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+        return String.valueOf(result);
     }
        
 }

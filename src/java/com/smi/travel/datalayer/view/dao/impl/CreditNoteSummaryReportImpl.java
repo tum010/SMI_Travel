@@ -60,9 +60,15 @@ public class CreditNoteSummaryReportImpl implements CreditNoteSummaryReportDao{
         }
         if ((department != null) && (!"".equalsIgnoreCase(department))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `creditnote_summary`.department = '" + department + "'");
-            haveCondition = true;
-            departmentshow = department;
+            if(department.indexOf(",") == -1){
+                query.append(" `creditnote_summary`.department = '" + department + "'"); 
+                departmentshow = department;
+            }else{
+                String[] departmentTemp = department.split(",");
+                query.append(" `creditnote_summary`.department in ('" + departmentTemp[0] + "','" + departmentTemp[1] + "') "); 
+                departmentshow = "WO";
+            }
+            haveCondition = true;            
         }
 
         List<Object[]> QueryList =  session.createSQLQuery(query.toString())

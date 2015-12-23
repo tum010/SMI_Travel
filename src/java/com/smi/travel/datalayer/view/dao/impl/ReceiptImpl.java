@@ -173,7 +173,12 @@ public class ReceiptImpl implements ReceiptDao{
 
         if((departmentRec != null) &&(!"".equalsIgnoreCase(departmentRec))){
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-            query += prefix+" department = '"+departmentRec+"'";
+            if(departmentRec.indexOf(",") == -1){
+                query += prefix+" department = '"+departmentRec+"'";
+            }else{
+                String[] departmentTemp = departmentRec.split(",");
+                query += prefix+" department in ('" + departmentTemp[0] + "','" + departmentTemp[1] + "') ";
+            }            
         }
 
         if((recType != null) &&(!"".equalsIgnoreCase(recType))){
@@ -238,6 +243,8 @@ public class ReceiptImpl implements ReceiptDao{
                 receiptView.setDepartment("INBOUND");
             }else if("Outbound".equals(String.valueOf(departmentRec))){
                 receiptView.setDepartment("OUTBOUND");
+            }else if("Wendy,Outbound".equals(String.valueOf(departmentRec))){
+                receiptView.setDepartment("WO");
             }else{
                 receiptView.setDepartment("ALL");
             }

@@ -321,6 +321,9 @@ function printReceiptSummary(){
     if(strStatus === '----'){
         strStatus = "";
     }
+    if(department === 'WendyOutbound'){
+        department = 'Wendy,Outbound';
+    }
     if((inputToDate === '') || (inputFromDate === '')){
         validateDate();
     } else {

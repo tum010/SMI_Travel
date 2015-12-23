@@ -88,7 +88,7 @@
                                             </c:when>
                                         </c:choose>
                                         <c:choose>
-                                            <c:when test="${department == 'WO'}">
+                                            <c:when test="${department == 'WendyOutbound'}">
                                                 <c:set var="selectDepartWO" value="selected" />
                                             </c:when>
                                         </c:choose>
@@ -280,6 +280,9 @@ function printCreditNoteSummaryReport(){
     var strStatus = status.options[status.selectedIndex].text;
     if(strStatus === 'Choose'){
         strStatus = "";
+    }
+    if(department === 'WendyOutbound'){
+        department = 'Wendy,Outbound';
     }
     if((fromdate === '') || (todate === '')){
         validateDate();

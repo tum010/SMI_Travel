@@ -140,7 +140,7 @@
                 </div>  
                 <div class="col-xs-2" >
                     <label>Pick up</label>
-                    <input class="form-control" id="tourPickup" name="tourPickup" value="${requestScope['tourPickup']}"/>
+                    <input class="form-control" id="tourPickUp" name="tourPickUp" value="${requestScope['tourPickUp']}"/>
                 </div>
                 <div class="col-xs-2" >
                     <label>Agent</label>
