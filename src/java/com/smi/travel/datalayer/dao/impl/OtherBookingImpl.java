@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.MStockStatus;
 import com.smi.travel.datalayer.entity.OtherBooking;
+import com.smi.travel.datalayer.entity.ProductComission;
 import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
@@ -1241,5 +1242,85 @@ public class OtherBookingImpl implements OtherBookingDao{
              data.add(report);
         }      
         return data;  
+    }
+
+    @Override
+    public String getAgentCommission(String otherDate, String row,String agentId,String price) {
+        String guideComm = "";
+        String guideCommTemp1 = "";
+        String guideCommTemp2 = "";
+        Double guidecommpercent = new Double(0);
+        UtilityFunction util = new UtilityFunction();
+        Session session = this.sessionFactory.openSession();
+        List<ProductComission> list = session.createQuery("from ProductComission pro where pro.effectiveFrom <= :otherdate and pro.effectiveTo >= :otherdate")
+                .setParameter("otherdate", util.convertStringToDate(otherDate)).list();
+        if (list.isEmpty()) {
+            System.out.println(" list.isEmpty() ");
+            return "";
+        }else{
+            for (int i=0 ; i< list.size() ; i++){
+                if(list.get(i).getAgent() != null){
+                    if((String.valueOf(list.get(i).getAgent().getId())).equalsIgnoreCase(agentId)){
+                        guideCommTemp1 = String.valueOf(list.get(i).getAgentCommission());
+                        
+                        if(!"".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent())) && !"null".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent()))){
+                            System.out.println(" price " + price + " ++++  list.get(i).getAgentCommissionPercent() " + list.get(i).getAgentCommissionPercent());
+                            guidecommpercent = (Double.parseDouble(price) * ((list.get(i).getAgentCommissionPercent().doubleValue())/100));
+                            
+                            guideCommTemp1 = String.valueOf(guidecommpercent);
+                        }
+                        
+                    }
+                }else{
+                    guideCommTemp2 = String.valueOf(list.get(i).getAgentCommission());
+                    
+                    if(!"".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent())) && !"null".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent()))){
+                        System.out.println(" price " + price + " ++++  list.get(i).getAgentCommissionPercent() " + list.get(i).getAgentCommissionPercent());
+                        guidecommpercent = (Double.parseDouble(price) * ((list.get(i).getAgentCommissionPercent().doubleValue())/100));
+
+                        guideCommTemp2 = String.valueOf(guidecommpercent);
+
+                    }
+                }
+            }
+        }
+        System.out.println("guideCommTemp1  " +guideCommTemp1);
+        System.out.println("guideCommTemp2  " +guideCommTemp2);
+        if(!"".equalsIgnoreCase(guideCommTemp1)){
+            guideComm = guideCommTemp1;
+        }else{
+            guideComm = guideCommTemp2;
+        }
+        this.sessionFactory.close();
+        session.close();
+        return guideComm;
+    }
+    
+    @Override
+    public String getGuideCommission(String otherDate,String row,String price) {
+        UtilityFunction util = new UtilityFunction();
+        String guideComm = "";
+        Session session = this.sessionFactory.openSession();
+        List<ProductComission> list = session.createQuery("from ProductComission pro where pro.effectiveFrom <= :otherdate and pro.effectiveTo >= :otherdate")
+                .setParameter("otherdate", util.convertStringToDate(otherDate)).list();
+
+        if (list.isEmpty()) {
+            return "";
+        }else{
+            ProductComission productComission = list.get(0);
+            guideComm = String.valueOf(productComission.getComission());
+            
+            if(!"".equalsIgnoreCase(String.valueOf(productComission.getComissionPercent())) && !"null".equalsIgnoreCase(String.valueOf(productComission.getComissionPercent()))){
+                Double guidecomm = new Double(0);
+                System.out.println(" price " + price + " ++++ productComission.getComissionPercent() " + productComission.getComissionPercent());
+                guidecomm = (Double.parseDouble(price) * (productComission.getComissionPercent()/100));
+                guideComm = String.valueOf(guidecomm);
+            }
+
+        }
+        System.out.println("guideComm  " +guideComm);
+        this.sessionFactory.close();
+        session.close();
+        return guideComm;
     }
 }

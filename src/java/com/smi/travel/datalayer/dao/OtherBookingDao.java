@@ -38,4 +38,7 @@ public interface OtherBookingDao {
     public String checkStock(String productID, String otherdate);
     public OtherGuideCommissionInfo getOtherGuideCommissionInfoReport(String datefrom,String dateto,String username,String guideid);
     public OtherAgentCommission getOtherAgentCommissionReport(String datefrom,String dateto,String user,String agentid);
+    
+    public String getAgentCommission(String otherDate,String row,String agentId,String price);
+    public String getGuideCommission(String otherDate,String row,String price);
 }

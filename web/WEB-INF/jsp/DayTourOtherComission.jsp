@@ -175,16 +175,26 @@
                     <tbody>
                         <c:forEach var="item" items="${bookingList}" varStatus="status" >
                             <tr>
+                                <input type="hidden" id="adPrice-${status.count}" name="adPrice-" value="${item.adPrice}">
+                                <input type="hidden" id="adQty-${status.count}" name="adQty-" value="${item.adQty}">
+                                <input type="hidden" id="chPrice-${status.count}" name="chPrice-" value="${item.chPrice}">
+                                <input type="hidden" id="chQty-${status.count}" name="chQty-" value="${item.chQty}">
+                                <input type="hidden" id="inPrice-${status.count}" name="inPrice-" value="${item.inPrice}">
+                                <input type="hidden" id="inQty-${status.count}" name="inQty-" value="${item.inQty}">
                                 <td class="hide"><input type="hidden" id="daytourBookingId-${status.count}" name="daytourBookingId-" value="${item.id}"></td>
                                 <td>${item.product.code}</td>
                                 <td>${item.product.name}</td>
-                                <td>${item.otherDate}</td>
+                                <td>
+                                    <input type="hidden" class="form-control" id="otherDate-${status.count}" name="otherDate-" 
+                                           value="${item.otherDate}" maxlength="14">
+                                    ${item.otherDate}
+                                </td>
                                 <c:set var="refno1" value="${fn:substring(item.master.referenceNo,0,2)}" />
                                 <c:set var="refno2" value="${fn:substring(item.master.referenceNo,2,7)}" />   
                                 <td>${item.master.referenceNo}  </td>
                                 <td>${item.master.customer.firstName} &nbsp; ${item.master.customer.lastName} </td>
                                 <td class="selectGuide form-group">  
-                                    <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.guide.name}','guideComm-${status.count}');" class="selectize"   >
+                                    <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.guide.name}','guideComm-${status.count}');getGuideComm(${status.count});" class="selectize"   >
                                         <option value="" >--- select ---</option>
                                         <c:forEach var="guide" items="${guideList}" >
                                             <c:set var="select" value="" />
@@ -205,8 +215,8 @@
                                            value="${item.remarkGuideCommission}" maxlength="255">
                                 </td>
                                 <td class="form-group">
-                                    <input type="text" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-" 
-                                           valHidden="${item.agent.id}" value="${item.agent.name}"  /> 
+                                    <input type="text" onkeyup="getAgentCommission('${status.count}','${item.agent.id}')" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-" 
+                                           valHidden="${item.agent.id}" value="${item.agent.name}" /> 
                                 </td>
                                 <td class="form-group">
                                     <input type="text" class="form-control money agentcom" id="agentComm-${status.count}" name="agentComm-" 
@@ -413,7 +423,7 @@
         $('.form_datetime').datetimepicker({ 
             pickTime: false      
         });
- 
+        var rowIndex = 1;
         var dataAgent = [];
         dataAgent = agentName;
         var agentcount= 0 ; 
@@ -437,16 +447,16 @@
                    $("#AgentName-"+agentcount).trigger('keyup');
                 } 
             });
-        
+            
             $("#AgentName-"+agentcount).keyup(function () {
                 var position = $(this).offset();
                 $(".ui-widget").css("top", position.top + 30);
                 $(".ui-widget").css("left", position.left);
                 $(".ui-widget").css("font-size", 10);
-            }); 
-        });
-      
 
+            }); 
+        });       
+      
         $("#CommissionTable").on('change', 'input,select', function (e) {
             var editCheckBox = $(this).closest('tr').find('td.edited').children();
             $(editCheckBox).attr("checked", true);
@@ -463,6 +473,109 @@
         $('#agentAdd').val(agent);
         $('#guideAdd').val(guide);
         console.log("Add Guide : " + fromdate + " " + todate + " " + agent + " " + guide );
+    }
+    
+    function getAgentCommission(row,agentId){
+        var otherDate = $('#otherDate-'+row).val(); 
+        var adPrice = parseFloat($('#adPrice-'+row).val());
+        var adQty = parseFloat($('#adQty-'+row).val());
+        var chPrice = parseFloat($('#chPrice-'+row).val());
+        var chQty = parseFloat($('#chQty-'+row).val());
+        var inPrice = parseFloat($('#inPrice-'+row).val());
+        var inQty = parseFloat($('#inQty-'+row).val());
+        var price = (adPrice*adQty) + (chPrice*chQty)  + (inPrice*inQty) ;
+        $("#AgentName-"+row).keyup(function () {
+            if (event.keyCode === 13) {
+                var servletName = 'BookOtherServlet';
+                var servicesName = 'AJAXBean';
+                var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&otherDate=' + otherDate +
+                        '&row=' + row +
+                        '&agentId=' + '1010521' +
+                        '&price=' + price +
+                        '&type=' + 'getAgentCommission';
+                CallAjaxSearchAgentCom(param,row);
+            }
+        }); 
+    }
+    
+    function CallAjaxSearchAgentCom(param,row) {
+        var url = 'AJAXServlet';
+        $("#ajaxload1").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    if(msg !== ''){
+                        var guideComm = parseFloat(msg);
+                        $("#guideComm-"+row).val(formatNumber(guideComm));
+                    }   
+                    
+                }, error: function(msg) {
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
+    
+    function getGuideComm(row){
+        var otherDate = $('#otherDate-'+row).val();
+                        
+        var adPrice = parseFloat($('#adPrice-'+row).val());
+        var adQty = parseFloat($('#adQty-'+row).val());
+        var chPrice = parseFloat($('#chPrice-'+row).val());
+        var chQty = parseFloat($('#chQty-'+row).val());
+        var inPrice = parseFloat($('#inPrice-'+row).val());
+        var inQty = parseFloat($('#inQty-'+row).val());
+        var price = (adPrice*adQty) + (chPrice*chQty)  + (inPrice*inQty) ;
+       
+        var servletName = 'BookOtherServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&otherDate=' + otherDate +
+                '&row=' + row +
+                '&price=' + price +
+                '&type=' + 'getGuideCommission';
+        CallAjaxSearchGuideCom(param,row);
+    }
+    
+    function CallAjaxSearchGuideCom(param,row) {
+        var url = 'AJAXServlet';
+        $("#ajaxload1").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    if(msg !== ''){
+                        var guideComm = parseFloat(msg);
+                        $("#guideComm-"+row).val(formatNumber(guideComm));
+                    }
+                }, error: function(msg) {
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
+    
+    
+    function replaceAll(find, replace, str) {
+        return str.replace(new RegExp(find, 'g'), replace);
+    }
+
+    function formatNumber(num) {
+        return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     }
    
 </script>

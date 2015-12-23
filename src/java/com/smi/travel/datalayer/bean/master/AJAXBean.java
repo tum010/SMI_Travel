@@ -353,7 +353,26 @@ public class AJAXBean extends AbstractBean implements
                     result = otherBookingDao.checkStock(productID, otherdate);
                 }               
             }
-            
+            if ("getGuideCommission".equalsIgnoreCase(type)){
+                String otherDate = map.get("otherDate").toString();
+                String row = map.get("row").toString();
+                String price = map.get("price").toString();
+                System.out.println(" otherDate :: "+ otherDate);
+                System.out.println(" row :: "+ row);
+                System.out.println(" price :: "+ price);
+                result = otherBookingDao.getGuideCommission(otherDate, row,price);
+            }
+            if ("getAgentCommission".equalsIgnoreCase(type)){
+                String otherDate = map.get("otherDate").toString();
+                String row = map.get("row").toString();
+                String agentId = map.get("agentId").toString();
+                String price = map.get("price").toString();
+                System.out.println(" otherDate :: "+ otherDate);
+                System.out.println(" row :: "+ row);
+                System.out.println(" agentId :: "+ agentId);
+                System.out.println(" price :: "+ price);
+                result = otherBookingDao.getAgentCommission(otherDate, row, agentId,price);
+            }
         } else if (BOOKLAND.equalsIgnoreCase(servletName)) {
             //result = customerdao.isExistCustomer(initialID, first, last);
             System.out.println("ajax : " + BOOKLAND);

@@ -16,6 +16,7 @@ import com.smi.travel.datalayer.entity.RefundTicketDetail;
 import com.smi.travel.datalayer.view.entity.RefundTicket;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -249,27 +250,27 @@ public class RefundImpl implements RefundDao{
                 // Sum Charge
                 List<RefundAirticketDetail> rRefundAirticketDetail = new LinkedList<RefundAirticketDetail>();
                 rRefundAirticketDetail =  airbookingidList.get(i).getRefundAirticket().getRefundAirticketDetails();
-                BigDecimal sumCharge = new BigDecimal(0);
-                BigDecimal sumPaycustomer = new BigDecimal(0);
-                BigDecimal sumClientCharge = new BigDecimal(0);
-                DecimalFormat df = new DecimalFormat("#,###.00");
+                BigDecimal sumCharge = new BigDecimal(BigInteger.ZERO);
+                BigDecimal sumPaycustomer = new BigDecimal(BigInteger.ZERO);
+                BigDecimal sumClientCharge = new BigDecimal(BigInteger.ZERO);
+                DecimalFormat df = new DecimalFormat("#,##0.00");
                 for (int j = 0; j < rRefundAirticketDetail.size(); j++) {
                     if(rRefundAirticketDetail.get(j).getReceiveAirline() != null ){
                         sumCharge = sumCharge.add(rRefundAirticketDetail.get(j).getReceiveAirline());
                     }else{
-                        sumCharge = sumCharge.add(new BigDecimal(0.0));
+                        sumCharge = sumCharge.add(new BigDecimal(BigInteger.ZERO));
                     }
                     
                     if(rRefundAirticketDetail.get(j).getPayCustomer() != null ){
                         sumPaycustomer = sumPaycustomer.add(rRefundAirticketDetail.get(j).getPayCustomer());
                     }else{
-                        sumPaycustomer = sumPaycustomer.add(new BigDecimal(0.0));
+                        sumPaycustomer = sumPaycustomer.add(new BigDecimal(BigInteger.ZERO));
                     }
                     
                     if(rRefundAirticketDetail.get(j).getClientCharge() != null ){
                         sumClientCharge = sumClientCharge.add(rRefundAirticketDetail.get(j).getClientCharge());
                     }else{
-                        sumClientCharge = sumClientCharge.add(new BigDecimal(0.0));
+                        sumClientCharge = sumClientCharge.add(new BigDecimal(BigInteger.ZERO));
                     }
                     // Refund Detail
                     RefundTicketDetail refundTicketDetail = new RefundTicketDetail();
@@ -312,6 +313,7 @@ public class RefundImpl implements RefundDao{
                         
                     listRefundTicketDetail.add(refundTicketDetail);
                 }
+                
                 refundTicket.setChange(df.format(sumCharge));
                 refundTicket.setPaycustomer(df.format(sumPaycustomer));
                 refundTicket.setClientcharge(df.format(sumClientCharge));

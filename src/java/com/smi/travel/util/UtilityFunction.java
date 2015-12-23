@@ -230,7 +230,7 @@ public class UtilityFunction {
     
     public String setFormatMoney(Object data){
         if(data == null)return "";
-        DecimalFormat df = new DecimalFormat("###,###.00");
+        DecimalFormat df = new DecimalFormat("###,##0.00");
         return df.format(data);
     }
 

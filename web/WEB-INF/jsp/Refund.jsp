@@ -1104,7 +1104,7 @@ for(var i = 0; i < rad.length; i++) {
         var code = this.value.toUpperCase();
         var name = this.value.toUpperCase();
         console.log("Name :" + name);
-        $("#receiveBy,#receiveByName").val(null);
+        $("#receiveByName").val(null);
         $.each(user, function (key, value) {
             if (value.code.toUpperCase() === code) {
                 $("#receiveByName").val(value.name);
@@ -1151,7 +1151,7 @@ for(var i = 0; i < rad.length; i++) {
         var code = this.value.toUpperCase();
         var name = this.value.toUpperCase();
         console.log("Name :" + name);
-        $("#ownerBy,#ownerByName").val(null);
+        $("#ownerByName").val(null);
         $.each(user, function (key, value) {
             if (value.code.toUpperCase() === code) {
                 $("#ownerByName").val(value.name);
@@ -1197,7 +1197,7 @@ for(var i = 0; i < rad.length; i++) {
         var code = this.value.toUpperCase();
         var name = this.value.toUpperCase();
         console.log("Name :" + name);
-        $("#refundBy,#refundByName").val(null);
+        $("#refundByName").val(null);
         $.each(customerRefund, function (key, value) {
             if (value.code.toUpperCase() === code) {
                 $("#refundByName").val(value.name);

@@ -58,6 +58,7 @@ public class RefundAirReportImpl implements RefundAirReportDao{
                  .addScalar("refundtype", Hibernate.STRING)
                  .addScalar("otherreason", Hibernate.STRING)
                  .list();
+         
         for (Object[] B : QueryRefundList) {
              RefundAirReport report = new RefundAirReport();
              report.setRefundno(util.ConvertString(B[0]));
@@ -77,22 +78,25 @@ public class RefundAirReportImpl implements RefundAirReportDao{
              SumReceive = SumReceive.add((BigDecimal) B[13]);
              SumPayCus = SumPayCus.add((BigDecimal) B[14]);
              SumClient = SumClient.add((BigDecimal) B[15]);
-             
              report.setRefundtype(util.ConvertString(B[16]));
              report.setOtherreason(util.ConvertString(B[17]));
+             
+             report.setTotalreceive(util.setFormatMoney(SumReceive) != null && !"0.00".equals(util.setFormatMoney(SumReceive)) ? util.setFormatMoney(SumReceive) : "");
+             report.setTotalpay(util.setFormatMoney(SumPayCus) != null && !"0.00".equals(util.setFormatMoney(SumPayCus)) ? util.setFormatMoney(SumPayCus) : "");
+             report.setTotalclientcharge(util.setFormatMoney(SumClient) != null && !"0.00".equals(util.setFormatMoney(SumClient)) ? util.setFormatMoney(SumClient) : "");
+             
              data.add(report);
             
         }
-        for(int i=0;i<data.size();i++){
-            RefundAirReport temp = (RefundAirReport) data.get(i);
-            //temp.setTicketamount(util.setFormatMoney(SumTicketAmount));
-            System.out.println("Sum Receive : " +SumReceive + ": " +  util.setFormatMoney(SumReceive) );
-            temp.setTotalreceive(util.setFormatMoney(SumReceive) != null && !".00".equals(util.setFormatMoney(SumReceive)) ? util.setFormatMoney(SumReceive) : "");
-            temp.setTotalpay(util.setFormatMoney(SumPayCus) != null && !".00".equals(util.setFormatMoney(SumPayCus)) ? util.setFormatMoney(SumPayCus) : "");
-            temp.setTotalclientcharge(util.setFormatMoney(SumClient) != null && !".00".equals(util.setFormatMoney(SumClient)) ? util.setFormatMoney(SumClient) : "");
-            data.set(0, temp);
-            
-        }
+//        for(int i=0;i<data.size();i++){
+//            RefundAirReport temp = (RefundAirReport) data.get(i);
+//            //temp.setTicketamount(util.setFormatMoney(SumTicketAmount));
+//            System.out.println("Sum Receive : " +SumReceive + ": " +  util.setFormatMoney(SumReceive) );
+//            temp.setTotalreceive(util.setFormatMoney(SumReceive) != null && !"0.00".equals(util.setFormatMoney(SumReceive)) ? util.setFormatMoney(SumReceive) : "");
+//            temp.setTotalpay(util.setFormatMoney(SumPayCus) != null && !"0.00".equals(util.setFormatMoney(SumPayCus)) ? util.setFormatMoney(SumPayCus) : "");
+//            temp.setTotalclientcharge(util.setFormatMoney(SumClient) != null && !"0.00".equals(util.setFormatMoney(SumClient)) ? util.setFormatMoney(SumClient) : "");
+//            data.set(0, temp);
+//        }
         
         this.sessionFactory.close();
         session.close();
