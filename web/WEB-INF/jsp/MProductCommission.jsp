@@ -79,29 +79,34 @@
                     <table id="MasterCommission" class="display" cellspacing="0" >
                         <thead>
                             <tr class="datatable-header">
-                                <th style="width: 30%" colspan="2">Product</th>
-                                <th style="width: 10%" rowspan="2">From</th>
-                                <th style="width: 10%" rowspan="2">To</th>
-                                <th style="width: 10%" rowspan="2">Commission(%)</th>
-                                <th style="width: 10%" rowspan="2">Commission(Bath)</th>
-                                <th style="width: 10%" rowspan="2" >Action</th>
+                                <th style="width: 25%" colspan="2">Product</th>
+                                <th style="width: 14%" rowspan="2">From</th>
+                                <th style="width: 14%" rowspan="2">To</th>
+                                <th style="width: 5%" rowspan="2">Guide Comm(%)</th>
+                                <th style="width: 7%" rowspan="2">Guide Comm(THB)</th>
+                                <th style="width: 10%" rowspan="2">Agent</th>
+                                <th style="width: 5%" rowspan="2">Agent Comm(%)</th>
+                                <th style="width: 7%" rowspan="2">Agent Comm(THB)</th>
+                                <th style="width: 7%" rowspan="2">Action</th>
                             </tr>
                             <tr class="datatable-header">
                                 <th style="width: 10%">Code</th>
-                                <th style="width: 20%">Name</th>
+                                <th style="width: 15%">Name</th>
                             </tr> 
                             
                         </thead>
                         <tbody>
                             <c:forEach var="item" items="${ListProductCommission}" varStatus="loop">
                                 <tr>
-                  
                                     <td><c:out value="${item.productId.code}" /></td>
                                     <td><c:out value="${item.productId.name}" /></td>
                                     <td class="text-center"><c:out value="${item.effectiveFrom}" /></td>
                                     <td class="text-center"><c:out value="${item.effectiveTo}" /></td>
                                     <td class="text-right" id="compoint-${loop.count}"><c:out value="${item.comission}" /></td>
                                     <td class="text-right" id="compoint-${loop.count}"><c:out value="${item.comissionPercent}" /></td>
+                                    <td class="text-left"><c:out value="${item.agent.name}" /></td>
+                                    <td class="text-right" id="compoint-${loop.count}"><c:out value="${item.agentCommissionPercent}" /></td>
+                                    <td class="text-right" id="compoint-${loop.count}"><c:out value="${item.agentCommission}" /></td>
                                     <td class="text-center">
                                         <!--Edit -->
                                         <a id="ButtonEdit-${loop.count}" name="ButtonEdit-${loop.count}" 

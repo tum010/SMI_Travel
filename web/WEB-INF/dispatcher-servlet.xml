@@ -450,6 +450,7 @@
 	<bean id="MProductCommissionDetailController"
 		class="com.smi.travel.controller.MProductCommissionDetailController">
 		<property name="mProductCommissionService" ref="MProductCommissionService" />
+                <property name="utilityService" ref="UtilityService" />
 	</bean>
 
 	<bean id="LandDetailController" class="com.smi.travel.controller.LandDetailController">

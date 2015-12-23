@@ -5,11 +5,15 @@
  */
 package com.smi.travel.controller;
 
+import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.ProductComission;
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.MProductCommissionService;
+import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,10 +31,13 @@ public class MProductCommissionDetailController extends SMITravelController{
     private static final ModelAndView MProductCommissionDetail = new ModelAndView("MProductCommissionDetail");
     private MProductCommissionService  mProductCommissionService;
     private UtilityFunction util;
+    private UtilityService utilityService;
     private static final String COMMISSIONDELETE= "COMMISSIONDELETE";
+    private static final String AGENTLIST = "AgentList";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         List<Product> listProduct = mProductCommissionService.getListMasterProduct();
+        SystemUser user = (SystemUser) session.getAttribute("USER");
         String action = request.getParameter("action");
         String counter = request.getParameter("counterCommission");
         String inputProductId = request.getParameter("InputProductId");
@@ -43,16 +50,19 @@ public class MProductCommissionDetailController extends SMITravelController{
         String productCodeSearch = request.getParameter("ProductCodeSearch");
         // Attribute Delete
         String proComId = request.getParameter("productComId");
-    
+        
+        List<Agent> agentList = utilityService.getListAgent();
+        request.setAttribute(AGENTLIST, agentList);
+        
         if("save".equalsIgnoreCase(action)){
             //ProductComission productCommission = new ProductComission();
             Product product = new Product();
             product.setId(inputProductId);
             product.setCode(inputProductCode);
             product.setName(inputProductName);
-
+            
             //productCommission.setProductId(product);
-           List productCommissionList =  setProductCommission(request, counter,product);
+           List productCommissionList =  setProductCommission(request, counter,product,user.getUsername());
            product.setProductComissions(productCommissionList);
            
            String isSave = mProductCommissionService.updateProductCommission(product);
@@ -103,8 +113,9 @@ public class MProductCommissionDetailController extends SMITravelController{
         return MProductCommissionDetail;
     }
     
-    private List setProductCommission(HttpServletRequest request, String productCommissionCounter,Product product){
+    private List setProductCommission(HttpServletRequest request, String productCommissionCounter,Product product,String username){
         List productCommissionList = new ArrayList<ProductComission>();
+        
         util = new UtilityFunction();
         int productCommissionRows = 0;
         if(productCommissionCounter != null){
@@ -117,10 +128,19 @@ public class MProductCommissionDetailController extends SMITravelController{
             String to = request.getParameter("InputTo-"+i);
             String commission = util.StringUtilReplaceChar(request.getParameter("InputCommission-"+i));
             String commissionPercent = util.StringUtilReplaceChar(request.getParameter("InputCommissionPercent-"+i));
+            String agentId = request.getParameter("AgentName-"+i);
+            String agentCommissionPercent = util.StringUtilReplaceChar(request.getParameter("InputAgentCommissionPercent-"+i));
+            String agentCommission = util.StringUtilReplaceChar(request.getParameter("InputAgentCommission-"+i));
+            
+            String createBy = request.getParameter("createBy-"+i);
+            String createDate = request.getParameter("createDate-"+i);
+            String updateBy = request.getParameter("updateBy-"+i);
+            String updateDate = request.getParameter("updateDate-"+i);
             
             System.out.println("from"+i+" : "+from);
             System.out.println("to"+i+" : "+to);
             
+            System.out.println("agentId"+i+" : "+agentId);
             
             Double commissionDouble = 0.0;
             Double commissionPercentDouble = 0.0;
@@ -133,7 +153,7 @@ public class MProductCommissionDetailController extends SMITravelController{
                 commissionPercentDouble = Double.parseDouble(commissionPercent);
                 System.out.println("commissionPercentDouble = "+commissionPercentDouble);
             }
-            
+                        
             Date dateTo = util.convertStringToDateS(to);
             Date dateFrom = util.convertStringToDateS(from);
             
@@ -144,13 +164,36 @@ public class MProductCommissionDetailController extends SMITravelController{
                 ProductComission productComm = new ProductComission();
                 if(!id.equalsIgnoreCase("")){
                     productComm.setId(id);
+                    productComm.setCreateBy(createBy);
+                    productComm.setCreateDate(util.convertStringToDate(createDate));
+                    productComm.setUpdateDate(new Date());
+                    productComm.setUpdateBy(username);
+                }else{
+                    productComm.setCreateDate(new Date());
+                    productComm.setCreateBy(username);
                 }
                 productComm.setEffectiveTo(dateTo);
                 productComm.setEffectiveFrom(dateFrom);
                 productComm.setComission(commissionDouble);
                 productComm.setComissionPercent(commissionPercentDouble);
                 productComm.setProductId(product);
+
+                if(StringUtils.isNotEmpty(agentId)){
+                    Agent agent = new Agent();
+                    agent.setId(agentId);
+                    productComm.setAgent(agent);
+                }
+                
+                if(StringUtils.isNotEmpty(agentCommission)){
+                    productComm.setAgentCommission(new BigDecimal(agentCommission));
+                }
+                
+                if(StringUtils.isNotEmpty(agentCommissionPercent)){
+                    productComm.setAgentCommissionPercent(new BigDecimal(agentCommissionPercent));
+                }
+                
                 productCommissionList.add(productComm);
+                
             }else{
                 
             }    
@@ -165,6 +208,14 @@ public class MProductCommissionDetailController extends SMITravelController{
 
     public MProductCommissionService getmProductCommissionService() {
         return mProductCommissionService;
+    }
+
+    public UtilityService getUtilityService() {
+        return utilityService;
+    }
+
+    public void setUtilityService(UtilityService utilityService) {
+        this.utilityService = utilityService;
     }
     
 }

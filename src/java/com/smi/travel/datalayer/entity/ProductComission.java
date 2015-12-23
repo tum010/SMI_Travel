@@ -2,6 +2,7 @@ package com.smi.travel.datalayer.entity;
 // Generated Mar 18, 2015 10:03:25 AM by Hibernate Tools 3.6.0
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -10,11 +11,14 @@ import java.util.Date;
 public class ProductComission   {
 
      private String id;
+     private Agent agent;
      private Product productId;
      private Date effectiveFrom;
      private Date effectiveTo;
      private Double comission;
      private Double comissionPercent;
+     private BigDecimal agentCommission;
+     private BigDecimal agentCommissionPercent;
      private String createBy;
      private Date createDate;
      private String updateBy;
@@ -27,16 +31,20 @@ public class ProductComission   {
     public ProductComission(Product productId) {
         this.productId = productId;
     }
-    public ProductComission(Product productId, Date effectiveFrom, Date effectiveTo, Double comission, String createBy, Date createDate, String updateBy, Date updateDate,Double comissionPercent) {
+    
+    public ProductComission(Agent agent, Product productId, Date effectiveFrom, Date effectiveTo, Double comission, Double comissionPercent, BigDecimal agentCommission, BigDecimal agentCommissionPercent, String createBy, Date createDate, String updateBy, Date updateDate) {
+       this.agent = agent;
        this.productId = productId;
        this.effectiveFrom = effectiveFrom;
        this.effectiveTo = effectiveTo;
        this.comission = comission;
+       this.comissionPercent = comissionPercent;
+       this.agentCommission = agentCommission;
+       this.agentCommissionPercent = agentCommissionPercent;
        this.createBy = createBy;
        this.createDate = createDate;
        this.updateBy = updateBy;
        this.updateDate = updateDate;
-       this.comissionPercent = comissionPercent;
     }
    
     public String getId() {
@@ -109,6 +117,30 @@ public class ProductComission   {
 
     public void setComissionPercent(Double comissionPercent) {
         this.comissionPercent = comissionPercent;
+    }
+
+    public Agent getAgent() {
+        return agent;
+    }
+
+    public void setAgent(Agent agent) {
+        this.agent = agent;
+    }
+
+    public BigDecimal getAgentCommission() {
+        return agentCommission;
+    }
+
+    public void setAgentCommission(BigDecimal agentCommission) {
+        this.agentCommission = agentCommission;
+    }
+
+    public BigDecimal getAgentCommissionPercent() {
+        return agentCommissionPercent;
+    }
+
+    public void setAgentCommissionPercent(BigDecimal agentCommissionPercent) {
+        this.agentCommissionPercent = agentCommissionPercent;
     }
 
 

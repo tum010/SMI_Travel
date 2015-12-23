@@ -7,6 +7,9 @@
             <column name="id" />
             <generator class="identity" />
         </id>
+        <many-to-one name="agent" class="com.smi.travel.datalayer.entity.Agent" fetch="select">
+            <column name="agent_id" />
+        </many-to-one>
         <many-to-one name="productId" class="com.smi.travel.datalayer.entity.Product" fetch="select">
             <column name="product_id" not-null="true" />
         </many-to-one>
@@ -21,6 +24,12 @@
         </property>
         <property name="comissionPercent" type="java.lang.Double">
             <column name="comission_percent" precision="22" scale="0" />
+        </property>
+        <property name="agentCommission" type="big_decimal">
+            <column name="agent_commission" precision="10" />
+        </property>
+        <property name="agentCommissionPercent" type="big_decimal">
+            <column name="agent_commission_percent" precision="10" />
         </property>
         <property name="createBy" type="string">
             <column name="create_by" length="10" />

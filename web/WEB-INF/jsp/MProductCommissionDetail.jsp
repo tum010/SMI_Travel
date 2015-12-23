@@ -14,6 +14,11 @@
 <link href="css/jquery-ui.css" rel="stylesheet">
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/MProductCommissionDetail.js"></script>
+
+<script type="text/javascript" src="js/jquery.mask.min.js"></script>
+<script type="text/javascript" src="js/selectize.js"></script>
+<link href="css/selectize.bootstrap3.css" rel="stylesheet">
+
 <c:set var="ListProduct" value="${requestScope['ListProduct']}" />
 <c:set var="listProductCommission" value="${requestScope['listProductCommission']}" />
 <c:set var="InputProdductCommissionId" value="${requestScope['InputProdductCommissionId']}" />
@@ -22,6 +27,8 @@
 <c:set var="InputProductName" value="${requestScope['InputProductName']}" />
 <c:set var="actionAdd" value="${requestScope['actionAdd']}" />
 <c:set var="status" value="${requestScope['Status']}" />
+<c:set var="agentList" value="${requestScope['AgentList']}" />
+<c:set var="selectAgent" value="${requestScope['SelectAgent']}" />
 
 <section class="content-header"  >
     <h1>
@@ -107,7 +114,8 @@
                      .input-group-addon {
                          padding: 2px 10px; 
                      }
-                    </style>                    
+                    </style> 
+
                     <!--table add-->
                     <div class="col-xs-12 form-group">
                         <label class="control-label">Product Commission</label>
@@ -116,12 +124,22 @@
                                 <tr class="datatable-header">
                                     <th style="width: 10%">From</th>
                                     <th style="width: 10%">To</th>
-                                    <th style="width: 5%">Commission(%)</th>
-                                    <th style="width: 5%">Commission(฿)</th>
+                                    <th style="width: 5%">Guide Comm(%)</th>
+                                    <th style="width: 5%">Guide Comm(THB)</th>
+                                    <th style="width: 15%">Agent</th>
+                                    <th style="width: 5%">Agent Comm(%)</th>
+                                    <th style="width: 5%">Agent Comm(THB)</th>
                                     <th style="width: 2%">Action</th>
                                 </tr>
                             </thead>
-                            <tbody> 
+                            <script>
+                                agentName = [];
+                            </script>
+                            <c:forEach var="agent" items="${agentList}" >
+                                <script>
+                                    agentName.push({value: "${agent.id}", label: "${agent.name}"});
+                                </script>
+                            </c:forEach>
 
                                 <!--Simulate Row begin-->
                                 <!--<input type="text" id="actionAdd" name="actionAdd" value="${actionAdd}">-->
@@ -130,6 +148,14 @@
                                     <td class="hidden">
                                         <input type="text" class="form-control text-center" 
                                                name="InputId-" id="InputId-" value="">
+                                        <input type="text" class="form-control text-center" 
+                                               name="createBy-" id="createBy-" value="">
+                                        <input type="text" class="form-control text-center" 
+                                               name="createDate-" id="createDate-" value="">
+                                        <input type="text" class="form-control text-center" 
+                                               name="updateBy-" id="updateBy-" value="">
+                                        <input type="text" class="form-control text-center" 
+                                               name="updateDate-" id="updateDate-" value="">
                                     </td>
                                     <td>
                                         <div class="input-group  datetime" id="dateFrom-" name="dateFrom-">
@@ -153,15 +179,26 @@
                                         
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control text-right decimal"  
-                                               name="InputCommission-" id="InputCommission-"  
-                                                placeholder="0.00" maxlength="6"  value="">
+                                        <input type="text" class="form-control text-right decimal" name="InputCommission-" id="InputCommission-" placeholder="0.00" maxlength="10"  value="">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control text-right decimal" name="InputCommissionPercent-" id="InputCommissionPercent-" placeholder="0.00" maxlength="10"  value="">
+                                    </td>
+                                    <td>
+                                        <input type="hidden" class="form-control" id="AgentId-" name="AgentId-"  valHidden="" value=""  />
+                                        <input type="text" class="form-control" id="AgentName-" name="AgentName-"  valHidden="" value=""  />
                                     </td>
                                     <td>
                                         <input type="text" class="form-control text-right decimal"  
-                                               name="InputCommissionPercent-" id="InputCommissionPercent-"  
+                                               name="InputAgentCommissionPercent-" id="InputCommissionPercent-"  
                                                 placeholder="0.00" maxlength="10"  value="">
                                     </td>
+                                    <td>
+                                        <input type="text" class="form-control text-right decimal"  
+                                               name="InputAgentCommission-" id="InputCommission-"  
+                                                placeholder="0.00" maxlength="10"  value="">
+                                    </td>
+                                    
                                     <td class="text-center">
                                         <span id="deleteTourCommissionRow-" name="deleteTourCommissionRow-" 
                                               onclick="DeleteCommissionRow(null, this)" 
@@ -170,6 +207,7 @@
                                         </span>
                                     </td>
                                 </tr> 
+                            <input type="hidden" id="filterAgent" name="SelectAgent" >   
                                 <!--Simulate Row end-->
                             <input type="hidden" id="counterCommission" name="counterCommission" value="1">
                             <c:forEach var="item" items="${listProductCommission}" varStatus="loop">
@@ -225,6 +263,14 @@
                                     <td class="hidden">
                                         <input type="text" class="form-control text-center" 
                                                name="InputId-${loop.count}" id="InputId-${loop.count}" value="${item.id}">
+                                        <input type="text" class="form-control text-center" 
+                                               name="createBy-${loop.count}" id="createBy-${loop.count}" value="${item.createBy}">
+                                        <input type="text" class="form-control text-center" 
+                                               name="createDate-${loop.count}" id="createDate-${loop.count}" value="${item.createDate}">
+                                        <input type="text" class="form-control text-center" 
+                                               name="updateBy-${loop.count}" id="updateBy-${loop.count}" value="${item.updateBy}">
+                                        <input type="text" class="form-control text-center" 
+                                               name="updateDate-${loop.count}" id="updateDate-${loop.count}" value="${item.updateDate}">
                                     </td>
                                     <td>
                                         <div class="input-group  datetime" id="dateFrom-${loop.count}" name="dateFrom-${loop.count}">
@@ -251,12 +297,26 @@
                                     <td class="">
                                         <input type="text" class="form-control text-right decimal"  
                                         name="InputCommission-${loop.count}" id="InputCommissionRow-${loop.count}" 
-                                        placeholder="0.00" maxlength="6"  value="${item.comission}">
+                                        placeholder="0.00" maxlength="10"  value="${item.comission}">
                                     </td>
                                     <td class="">
                                         <input type="text" class="form-control text-right decimal"  
                                         name="InputCommissionPercent-${loop.count}" id="InputCommissionPercentRow-${loop.count}" 
                                         placeholder="0.00" maxlength="10"  value="${item.comissionPercent}" >
+                                    </td>
+                                    <td class="">
+                                        <input type="hidden" class="form-control" id="AgentId-${loop.count}" name="AgentId-" value="${item.agent.id}"  />
+                                        <input type="text" class="form-control" id="AgentName-${loop.count}" name="AgentName-"  valHidden="${item.agent.id}" value="${item.agent.name}"  />
+                                    </td>
+                                    <td class="">
+                                        <input type="text" class="form-control text-right decimal"  
+                                        name="InputAgentCommissionPercent-${loop.count}" id="InputAgentCommissionPercentRow-${loop.count}" 
+                                        placeholder="0.00" maxlength="10"  value="${item.agentCommissionPercent}" >
+                                    </td>
+                                    <td class="">
+                                        <input type="text" class="form-control text-right decimal"  
+                                        name="InputAgentCommission-${loop.count}" id="InputAgentCommissionRow-${loop.count}" 
+                                        placeholder="0.00" maxlength="10"  value="${item.agentCommission}" >
                                     </td>
                                     <td class="text-center">
                                         <span id="deleteTourCommissionRow-${loop.count}" name="deleteTourCommissionRow-${loop.count}" 
@@ -269,11 +329,17 @@
                             </c:forEach>
                             </tbody>
                         </table>
+                        <table class="display hide" id="EditTable" name="EditTable">
+                        <tbody></tbody>
+                        </table>
+                        <hr/>
+                        <div class="text-center">
+                        </div>
                     </div>
                     <div class="col-xs-12 text-center">
                         <input type="hidden" id="action" name="action" value="save" />
                         
-                        <button id="ButtonSave" name="ButtonSave" type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                        <button id="ButtonSave" name="ButtonSave" onclick="saveAction()" type="button" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                     </div>
                 </div>
             </div>
@@ -417,6 +483,59 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->   
 <script type="text/javascript" charset="utf-8" >
+    $(document).ready(function () { 
+        jQuery.curCSS = jQuery.css;
+        var dataAgent = [];
+        dataAgent = agentName;
+        var agentcount= 0 ; 
+        $("#commissionTable tbody").find("tr").each(function(){ 
+            agentcount++;
+            $("#AgentName-"+agentcount).autocomplete({
+                source: dataAgent,
+                focus: function( event, ui ) {
+                    event.preventDefault();
+                    $(this).val(ui.item.label);
+                },
+                select: function( event, ui ) {
+                    event.preventDefault();
+                    $(this).val(ui.item.label);
+                    $(this).attr("valHidden",ui.item.value);
+                    $("#AgentId-"+agentcount).val(ui.item.value);
+                },
+                close:function( event, ui ) {
+                   $("#AgentName-"+agentcount).trigger('keyup');
+                } 
+            });
+            
+            $("#AgentName-"+agentcount).keyup(function () {
+                var position = $(this).offset();
+                $(".ui-widget").css("top", position.top + 30);
+                $(".ui-widget").css("left", position.left);
+                $(".ui-widget").css("font-size", 10);
+            }); 
+            
+        });
+        
+        
+        var tableLength = $("#commissionTable tbody").find("tr").length;
+        console.log("table length " + tableLength);
+
+        for (var i = 1; i <= tableLength; i++) {
+
+            $(name).selectize({
+                removeItem: '',
+                sortField: 'text',
+                create: false,
+                dropdownParent: 'body',
+                plugins: {
+                    'clear_selection': {}
+                }
+
+            });
+
+        }
+    });
+    
 function sendDataToDelete(param){ //wii
         $.ajax({
                 dataType: 'html',
@@ -445,6 +564,8 @@ function sendDataToDelete(param){ //wii
         }).done(function () {
             console.log("done!");
         });   
+        
+     
     }
     
     function DeleteCommissionRow(id, objspan) {
@@ -477,5 +598,23 @@ function sendDataToDelete(param){ //wii
                 alert('this row for fill data');
             }
         }
+    }
+    function saveAction(){
+        var counter = 0;
+        $("#commissionTable tbody").find("tr").each(function(){
+                var cloneTr = $(this).clone();
+                cloneTr.find('input,select,span').each(function() {
+                    $(this).removeClass('hidden');
+                    if ($(this).attr('name') === "AgentName-") {
+                        $(this).val($(this).attr("valHidden"));
+                    }
+                    $(this).attr({
+                        name: $(this).attr('name') + counter
+                    });
+                });
+                $("#EditTable tbody").append(cloneTr);
+                counter++;
+        });
+        $("#MProductCommissionDetail").submit();
     }
 </script>

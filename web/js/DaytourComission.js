@@ -378,7 +378,7 @@ function saveDaytourCommission() {
     $("#filterGuide").val(controlGuide.getValue());
     $("#filterAgent").val(controlAgent.getValue());
     var counter = 1;
-    $("#CommissionTable tbody").find("tr").each(function() {
+    $("#CommissionTable tbody").find("tr").each(function(){
         var checkbox = $(this).find("td.edited").children();
         if ($(checkbox).is(":checked")) {
             var cloneTr = $(this).clone();
@@ -386,6 +386,7 @@ function saveDaytourCommission() {
                 $(this).removeClass('hidden');
                 if ($(this).attr('name') === "AgentName-") {
                     $(this).val($(this).attr("valHidden"));
+                    
                 }
                 $(this).attr({
                     name: $(this).attr('name') + counter

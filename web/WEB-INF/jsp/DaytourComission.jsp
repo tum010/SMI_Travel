@@ -42,7 +42,6 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Success!</strong> 
             </div>
-
             <div id="textAlertDivSaveAddGuide"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Guide Success!</strong> 
@@ -215,7 +214,6 @@
                                 </td>
                                 <td class="form-group">
                                     <input type="text" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-"  valHidden="${item.agent.id}" value="${item.agent.name}"  /> 
-                                   
                                 </td>
                                 <td class="form-group">
                                     <input type="text" class="form-control money agentcom" id="agentComm-${status.count}" name="agentComm-" 
