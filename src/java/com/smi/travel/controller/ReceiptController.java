@@ -638,9 +638,9 @@ public class ReceiptController extends SMITravelController {
                         if(receiptDetailList != null){
                             for(int i = 0 ;i < receiptDetailList.size();i++){
                                 ReceiptDetail receiptD = new ReceiptDetail();
-                                receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
-                                receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
-                                receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
+                                receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail() != null ? receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId() : "");
+                                receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail() != null ? receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo() : "");
+                                receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail() != null ? receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType() : "");
                                 recInvId.add(receiptD);
                             }
                             request.setAttribute(INVIDLIST, recInvId);
