@@ -453,8 +453,15 @@
         </div>
         <div id="textAlertDivPeriodMeaasge"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertPeriodMessage()"><span aria-hidden="true">&times;</span></button>
-            <strong id="periodAlertMessage"></strong> 
-        </div>                            
+            <strong id="periodAlertMessage"></strong>
+            <button type="button" id="ButtonPrint" name="ButtonPrint" onclick="updateReceivePeriod()" class="btn btn-xs btn-warning">
+                <i class="glyphicon glyphicon-usd"></i> Update            
+            </button>
+        </div>
+        <div id="textAlertDivUpdatePeriod"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivUpdatePeriod()"><span aria-hidden="true">&times;</span></button>
+            <strong>Update Period Success!</strong> 
+        </div>
         <div class="panel panel-default ${panelborder}">
             <div class="panel-heading ${panelheader}">
                     <h4 class="panel-title"><font style="color: ${fontcolor}">Total Receive </font><i id="ajaxPeriod" class="fa fa-spinner fa-spin hidden"></i></h4>

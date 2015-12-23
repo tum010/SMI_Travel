@@ -936,6 +936,24 @@ public class AJAXBean extends AbstractBean implements
                 AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
                 advanceReceivePeriodView = receiveTableDao.getAdvanceReceivePeriodView(util.convertDateToString(advanceReceivePeriod.getReceiveFrom()),util.convertDateToString(advanceReceivePeriod.getReceiveTo()),department,vatType);
                 result = receiveTableDao.compareReceiptSummary(advanceReceivePeriod,advanceReceivePeriodView);
+            }else if("updateReceivePeriodSummary".equalsIgnoreCase(type)){
+                String periodId = map.get("periodId").toString();
+                String receiveFrom = map.get("receiveFrom").toString();
+                String receiveTo = map.get("receiveTo").toString();        
+                String department = map.get("department").toString();
+                String vatType = map.get("vatType").toString();
+                String check = "";
+                AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
+                advanceReceivePeriodView = receiveTableDao.getAdvanceReceivePeriodView(receiveFrom,receiveTo,department,vatType);
+                check = receiveTableDao.updateReceivePeriodSummary(periodId,advanceReceivePeriodView);
+                if("1".equalsIgnoreCase(check)){
+                    AdvanceReceivePeriod advanceReceivePeriod = new AdvanceReceivePeriod();
+                    advanceReceivePeriod = receiveTableDao.getReceivePeriod(receiveFrom,department,vatType);  
+                    List<AdvanceReceivePeriod> advanceReceivePeriodList = receiveTableDao.getReceivePeriodList(department);
+                    result =  buildAdvanceReceivePeriodListTaxHTML(advanceReceivePeriodList, advanceReceivePeriod, "update");          
+                }else{
+                    result = "fail";
+                }
             }
         }else if(PAYMENTOUTBOUND.equalsIgnoreCase(servletName)){
             if("searchRefNo".equalsIgnoreCase(type)){

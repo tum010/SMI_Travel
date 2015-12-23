@@ -190,6 +190,7 @@ $(document).ready(function() {
         $("#textAlertDivNotSavePeriod").hide();
         $("#textAlertDivDeletePeriod").hide();
         $("#textAlertDivPeriodMeaasge").hide();
+        $("#textAlertDivUpdatePeriod").hide();
         checkFromDateField();
         checkPeriod();
     });
@@ -198,6 +199,7 @@ $(document).ready(function() {
         $("#textAlertDivNotSavePeriod").hide();
         $("#textAlertDivDeletePeriod").hide();
         $("#textAlertDivPeriodMeaasge").hide();
+        $("#textAlertDivUpdatePeriod").hide();
         checkToDateField();
         checkPeriod();
     });
@@ -237,6 +239,7 @@ $(document).ready(function() {
         $("#textAlertDivNotSavePeriod").hide();
         $("#textAlertDivDeletePeriod").hide();
         $("#textAlertDivPeriodMeaasge").hide();
+        $("#textAlertDivUpdatePeriod").hide();
     });
 
     setEnvironment();
@@ -889,6 +892,10 @@ function hideTextAlertPeriodMessage() {
     $('#textAlertDivPeriodMeaasge').hide();
 }
 
+function hideTextAlertDivUpdatePeriod() {
+    $('#textAlertDivUpdatePeriod').hide();
+}
+
 function newReceivePeriod() {
     $("#periodId").val('');
     $("#receiveFrom").val('');
@@ -914,6 +921,7 @@ function newReceivePeriod() {
     $("#textAlertDivNotSavePeriod").hide();
     $("#textAlertDivDeletePeriod").hide();
     $("#textAlertDivPeriodMeaasge").hide();
+    $('#textAlertDivUpdatePeriod').hide();
     $("#fromdatepanel").removeClass("has-error");
     $("#fromdatepanel").removeClass("has-success");
     $("#todatepanel").removeClass("has-error");
@@ -927,6 +935,7 @@ function callPeriodList() {
     $("#textAlertDivNotSavePeriod").hide();
     $("#textAlertDivDeletePeriod").hide();
     $("#textAlertDivPeriodMeaasge").hide();
+    $('#textAlertDivUpdatePeriod').hide();
     $("#fromdatepanel").removeClass("has-error");
     $("#fromdatepanel").removeClass("has-success");
     $("#todatepanel").removeClass("has-error");
@@ -1078,6 +1087,93 @@ function CallAjaxDeletePeriod(param, periodId) {
 
 
             }, error: function(msg) {
+                console.log('auto ERROR');
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}
+
+function updateReceivePeriod(){
+    var periodId = $("#periodId").val();
+    var receiveFrom = $("#receiveFrom").val();
+    var receiveTo = $("#receiveTo").val();
+    var vatType = $("#periodVatType").val();
+    var department = $("#department").val();
+    if (department === 'W') {
+        department = 'Wendy';
+    } else if (department === 'O') {
+        department = 'Outbound';
+    } else if (department === 'I') {
+        department = 'Inbound';
+    } else if (department === 'WO') {
+        department = 'Wendy,Outbound';
+    }
+
+    if (receiveFrom !== '' && receiveTo !== '' && vatType !== '') {
+        var servletName = 'ReceiveTableServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&periodId=' + periodId +
+                '&receiveFrom=' + receiveFrom +
+                '&receiveTo=' + receiveTo +
+                '&vatType=' + vatType +
+                '&department=' + department +
+                '&type=' + 'updateReceivePeriodSummary';
+        CallAjaxUpdateReceivePeriod(param);
+
+    }
+}
+
+function CallAjaxUpdateReceivePeriod(param) {
+    $('#ajaxPeriod').removeClass('hidden');
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                if(msg !== 'fail'){
+                    $('#periodTable > tbody  > tr').each(function() {
+                        $(this).remove();
+                    });
+                    $("#periodTable tbody").append(msg);
+                    $("#periodId").val($("#periodIdTemp").val());
+                    $("#receiveFrom").val($("#periodFromTemp").val());
+                    $("#receiveTo").val($("#periodToTemp").val());
+                    $("#receiveDetail").val($("#periodDetailTemp").val());
+                    $("#receiveCashAmount").val($("#periodCashAmountTemp").val());
+                    $("#receiveBankAmount").val($("#periodBankAmountTemp").val());
+                    $("#receiveCash").val($("#periodCashMinusAmountTemp").val());
+                    $("#receiveCheque").val($("#periodChqAmountTemp").val());
+                    $("#receiveCreditCard").val($("#periodCreditAmountTemp").val());
+
+                    $("#periodDetail").val($("#periodDetailTemp").val());
+                    $("#periodCashAmount").val($("#periodCashAmountTemp").val());
+                    $("#periodBankAmount").val($("#periodBankAmountTemp").val());
+                    $("#periodCash").val($("#periodCashMinusAmountTemp").val());
+                    $("#periodCheque").val($("#periodChqAmountTemp").val());
+                    $("#periodCreditCard").val($("#periodCreditAmountTemp").val());
+                    setEnvironment();
+                    
+                    $("#textAlertDivSavePeriod").show();
+                    $("#textAlertDivNotSavePeriod").hide();
+                    $("#textAlertDivDeletePeriod").hide();
+                    $("#textAlertDivPeriodMeaasge").hide();
+                    $('#ajaxPeriod').addClass('hidden');
+                
+                }else{
+                    $('#textAlertDivNotSavePeriod').show();
+                    $('#ajaxPeriod').addClass('hidden');
+                }
+                
+            }, error: function(msg) {
+                $('#ajaxPeriod').addClass('hidden');
                 console.log('auto ERROR');
             }
         });
