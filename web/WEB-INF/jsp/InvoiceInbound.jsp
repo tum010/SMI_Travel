@@ -79,7 +79,7 @@
                 <strong>Invoice Not Empty</strong> 
             </div>
             
-        <form action="InvoiceInbound${page}.smi" method="post" id="InvoiceInboundForm" name="InvoiceInboundForm" role="form" onsubmit="return validFromInvoiceInbound();">
+        <form action="InvoiceInbound${page}.smi" method="post" id="InvoiceInboundForm" name="InvoiceInboundForm" role="form" >
             <input type="text" class="hidden" id="action" name="action" value="save" >
                 <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -268,7 +268,7 @@
                                                 onfocusout="changeFormatAmountNumber(${taxdesc.count});"  value="${ind.amount}">
                                             </td>
                                             <td class="priceCurrencyAmount">
-                                                <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control"  onclick="validFromInvoiceInbound()" onchange="changeFormatAmountNumber(${taxdesc.count});">
+                                                <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="checkCurrency()">
                                                     <option value='' ></option>
                                                     <c:forEach var="cur" items="${listCurrency}">
                                                         <c:set var="selectA" value="" />
@@ -430,7 +430,7 @@
                                         </button>
                                     </div>
                                     <div class="col-md-1 text-right ">
-                                        <button type="submit"  id="saveInvoiceInbound" name="saveInvoiceInbound" class="btn btn-success"  onclick="saveInvoiceInbound()" ${isSaveVoid}>
+                                        <button type="button"  id="saveInvoiceInbound" name="saveInvoiceInbound" class="btn btn-success"  onclick="validFromInvoiceInbound()" ${isSaveVoid}>
                                             <span id="SpanSave" class="fa fa-save"></span> Save 
                                         </button>
                                     </div>
