@@ -34,7 +34,23 @@
                 </div>
             </div>
             <div class="col-md-10" >
-                <form role="form" id="OverdueSummaryFrom" name="OverdueSummaryFrom" method="post" class="form-horizontal" >                     
+                <form role="form" id="OverdueSummaryFrom" name="OverdueSummaryFrom" method="post" class="form-horizontal" >
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="col-md-5 control-label text-right" >Print Report Type</label>
+                                <div class="col-md-5">  
+                                    <div class="form-group">
+                                        <select name="SelectPrintReportType" id="SelectPrintReportType" class="form-control">
+                                            <!--<option value=""  selected="selected">-- ALL --</option>-->
+                                            <option value="1" >PDF</option>
+                                            <option value="2" >EXCEL</option>
+                                        </select>
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
@@ -512,6 +528,8 @@ function validateDate(date,option){
 }
 
 function printOverdueSummary(){  
+    var SelectPrintReportType = $('#SelectPrintReportType').val();
+    
     var clientcode = $('#billto').val();
     var clientname = $('#billname').val();
     var staffcode = $('#salebyUser').val();
@@ -526,8 +544,11 @@ function printOverdueSummary(){
     if((from === '') || (to === '')){
         validateDate();
     } else {
-        window.open("Excel.smi?name=Overdue"+"&from="+from+"&to="+to+"&department="+department+"&clientcode="+clientcode+"&clientname="+clientname+"&staffcode="+staffcode+"&staffname="+staffname+"&vattype="+vattype+"&group="+group+"&view="+view);  
+        if(SelectPrintReportType === '1'){
+            window.open("report.smi?name=OverdueSummaryReport"+"&from="+from+"&to="+to+"&department="+department+"&clientcode="+clientcode+"&clientname="+clientname+"&staffcode="+staffcode+"&staffname="+staffname+"&vattype="+vattype+"&group="+group+"&view="+view); 
+        }else if(SelectPrintReportType === '2'){
+            window.open("Excel.smi?name=Overdue"+"&from="+from+"&to="+to+"&department="+department+"&clientcode="+clientcode+"&clientname="+clientname+"&staffcode="+staffcode+"&staffname="+staffname+"&vattype="+vattype+"&group="+group+"&view="+view);  
+        }
     } 
-
 }
 </script>

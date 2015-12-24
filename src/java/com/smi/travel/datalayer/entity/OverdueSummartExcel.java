@@ -37,7 +37,10 @@ public class OverdueSummartExcel {
     private String depart_page;
     private String group_page;
     private String view_page;
-
+    
+    private String groupBy;
+    private String signname;
+    
     public String getOwnername() {
         return ownername;
     }
@@ -244,6 +247,22 @@ public class OverdueSummartExcel {
 
     public void setView_page(String view_page) {
         this.view_page = view_page;
+    }
+
+    public String getGroupBy() {
+        return groupBy;
+    }
+
+    public void setGroupBy(String groupBy) {
+        this.groupBy = groupBy;
+    }
+
+    public String getSignname() {
+        return signname;
+    }
+
+    public void setSignname(String signname) {
+        this.signname = signname;
     }
 
 }

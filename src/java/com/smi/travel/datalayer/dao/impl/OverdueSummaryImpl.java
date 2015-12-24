@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.OverdueSummaryDao;
 import com.smi.travel.datalayer.entity.OverdueSummartExcel;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Hibernate;
@@ -25,6 +26,11 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
     
     @Override
     public List listOverdueSummary(String clientcode, String clientname, String staffcode, String staffname, String vattype, String from, String to, String depart, String group, String view, String printby) {
+        System.out.println(" group " + group);
+        System.out.println(" view " + view);
+        System.out.println(" clientname " + clientname);
+        System.out.println(" staffname " + staffname);
+        System.out.println(" vattype " + vattype);
         List<OverdueSummartExcel> data = new ArrayList<OverdueSummartExcel>();
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
@@ -105,6 +111,9 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
             }
         }
         
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");
+        
         System.out.println("query : " + query);
         List<Object[]> overdueList = session.createSQLQuery(query )
                 .addScalar("invno", Hibernate.STRING)
@@ -122,6 +131,7 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
                 .addScalar("overduestatus", Hibernate.STRING)
                 .addScalar("ownername", Hibernate.STRING)
                 .addScalar("invto", Hibernate.STRING)
+                .addScalar("invname", Hibernate.STRING)
                 .list();
         for (Object[] B : overdueList) {
             OverdueSummartExcel overdue = new OverdueSummartExcel();
@@ -140,7 +150,7 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
             
             System.out.println(" Date Over : " + from + " : " + to );
             if(from != null && !"".equals(from)){
-                overdue.setFrom_page(from + " To " + to);
+                overdue.setFrom_page(df.format(util.convertStringToDate(from)) + " To " + df.format(util.convertStringToDate(to)));
             }else{
                 overdue.setFrom_page("ALL");
             }
@@ -167,9 +177,12 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
                 if("1".equals(group)){
                     overdue.setGroup_page("Agent");
                     overdue.setGroup("Agent");
+                    String invname = util.ConvertString(B[15]) != null && !"".equals(util.ConvertString(B[15])) ? util.ConvertString(B[15]) :"";
+                    overdue.setGroupBy(util.ConvertString(B[14]) != null && !"".equals(util.ConvertString(B[14])) ? util.ConvertString(B[14]) + "   " +invname : "");
                 }else{
                     overdue.setGroup_page("Owner");
                     overdue.setGroup("Owner");
+                    overdue.setGroupBy(util.ConvertString(B[13]) != null && !"".equals(util.ConvertString(B[13])) ? util.ConvertString(B[13]) :"ALL");
                 }
             }
             
@@ -179,8 +192,14 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
                 overdue.setView_page("ALL");
             }
             
+            if(printby != null && !"".equals(printby)){
+                overdue.setSignname(printby);
+            }else{
+                overdue.setSignname("");
+            }        
+                    
             overdue.setInvno(util.ConvertString(B[0]) != null && !"".equals(util.ConvertString(B[0])) ? util.ConvertString(B[0]) :"");
-            overdue.setDate(util.ConvertString(B[1]) != null && !"".equals(util.ConvertString(B[1])) ? util.ConvertString(B[1]) :"");
+            overdue.setDate(util.ConvertString(B[1]) != null && !"".equals(util.ConvertString(B[1])) ? df.format(util.convertStringToDate(util.ConvertString(B[1]))) :"");
             overdue.setDetail(util.ConvertString(B[2]) != null && !"".equals(util.ConvertString(B[2])) ? util.ConvertString(B[2]) :"");
             overdue.setBath(util.ConvertString(B[3]) != null && !"".equals(util.ConvertString(B[3])) ? util.ConvertString(B[3]) :"");
             overdue.setJpy(util.ConvertString(B[4]) != null && !"".equals(util.ConvertString(B[4])) ? util.ConvertString(B[4]) :"");
@@ -190,10 +209,11 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
             overdue.setDepartment(util.ConvertString(B[8]) != null && !"".equals(util.ConvertString(B[8])) ? util.ConvertString(B[8]) :"");
             overdue.setCredit(util.ConvertString(B[9]) != null && !"".equals(util.ConvertString(B[9])) ? util.ConvertString(B[9]) :"");
             overdue.setRefno(util.ConvertString(B[10]) != null && !"".equals(util.ConvertString(B[10])) ? util.ConvertString(B[10]) :"");
-            overdue.setDuedate(util.ConvertString(B[11]) != null && !"".equals(util.ConvertString(B[11])) ? util.ConvertString(B[11]) :"");
+            overdue.setDuedate(util.ConvertString(B[11]) != null && !"".equals(util.ConvertString(B[11])) ? df.format(util.convertStringToDate(util.ConvertString(B[11]))) :"");
             overdue.setOverduesstatus(util.ConvertString(B[12]) != null && !"".equals(util.ConvertString(B[12])) ? util.ConvertString(B[12]) :"");
             overdue.setOwnername(util.ConvertString(B[13]) != null && !"".equals(util.ConvertString(B[13])) ? util.ConvertString(B[13]) :"ALL");
-            overdue.setInvto(util.ConvertString(B[14]) != null && !"".equals(util.ConvertString(B[14])) ? util.ConvertString(B[14]) :"");
+            String invname = util.ConvertString(B[15]) != null && !"".equals(util.ConvertString(B[15])) ? util.ConvertString(B[15]) :"";
+            overdue.setInvto(util.ConvertString(B[14]) != null && !"".equals(util.ConvertString(B[14])) ? util.ConvertString(B[14]) + "   " +invname : "");
             data.add(overdue);
         }
         session.close();

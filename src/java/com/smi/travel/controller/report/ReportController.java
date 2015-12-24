@@ -109,6 +109,7 @@ public class ReportController extends SMITravelController {
     private static final String InvoiceInboundRevenueEmail = "InvoiceInboundRevenueEmail";
     private static final String RefundTicketSummaryReport = "RefundTicketSummaryReport";
     private static final String RefundAirticketReport = "RefundAirticketReport";
+    private static final String Overdue = "OverdueSummaryReport";
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
     private ReportService reportservice;
@@ -373,6 +374,18 @@ public class ReportController extends SMITravelController {
             data = reportservice.getRefundTicketSummary(refundFrom,refundTo,ticketFrom,ticketTo,refundBy,user.getRole().getName());
         }else if(RefundAirticketReport.equalsIgnoreCase(name)){
             data = reportservice.getRefundAirReport(refundId);
+        }else if(Overdue.equals(name)){
+            String from_over = request.getParameter("from");
+            String to_over = request.getParameter("to");
+            String department_over = request.getParameter("department");
+            String staffcode_over = request.getParameter("staffcode");
+            String staffname_over = request.getParameter("staffname");
+            String vattype_over = request.getParameter("vattype");
+            String group_over = request.getParameter("group");
+            String view_over = request.getParameter("view");
+            String clientcode_over = request.getParameter("clientcode");
+            String clientname_over = request.getParameter("clientname");
+            data = reportservice.listOverdueSummary(clientcode_over, clientname_over, staffcode_over, staffname_over, vattype_over, from_over, to_over, department_over, group_over, view_over, user.getRole().getName());
         }
         
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

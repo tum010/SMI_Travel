@@ -417,5 +417,8 @@
 	   <property name="url" value="/WEB-INF/report/RefundTicketSummaryReport.jrxml"/>
 	</bean> 
               
-                                                                                                                                                                                                                                                              
+        <bean id="OverdueSummaryReport"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/OverdueSummaryReport.jrxml"/>
+	</bean>                                                                                                                                                                                                                                                       
 </beans>

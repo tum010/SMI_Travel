@@ -91,6 +91,14 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                 styleAlignRightBorderAllColor.setBorderLeft(styleAlignRightBorderAllColor.BORDER_THIN);
                 styleAlignRightBorderAllColor.setFillBackgroundColor(IndexedColors.YELLOW.getIndex());
                 
+        HSSFCellStyle styleAlignRightBorderAllDetailTable = wb.createCellStyle();
+                styleAlignRightBorderAllDetailTable.setFont(excelFunction.getHeadDetailBoldFont(wb.createFont()));
+                styleAlignRightBorderAllDetailTable.setAlignment(styleAlignRightBorderAllDetailTable.ALIGN_LEFT);
+                styleAlignRightBorderAllDetailTable.setBorderTop(styleAlignRightBorderAllDetailTable.BORDER_THIN);
+                styleAlignRightBorderAllDetailTable.setBorderBottom(styleAlignRightBorderAllDetailTable.BORDER_THIN);
+                styleAlignRightBorderAllDetailTable.setBorderRight(styleAlignRightBorderAllDetailTable.BORDER_THIN);
+                styleAlignRightBorderAllDetailTable.setBorderLeft(styleAlignRightBorderAllDetailTable.BORDER_THIN);        
+                
         // set Header Report (Row 1)
         HSSFCellStyle styleC11 = wb.createCellStyle();
         HSSFRow row01 = sheet1.createRow(0);
@@ -229,12 +237,18 @@ public class OverdueSummaryExcel extends AbstractExcelView{
             cell73.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(11);
             
-        //Detail of Table
-        for (int r = 0 ; r < listOver.size(); r++) {
-            System.out.println("Size " + (r)+" : " + listOver.get(r).getStaffname_page() );
+
+        
+        int count = 9 ;
+                //Detail of Table
+        if(listOver != null){
+            for (int r = 0 ; r < listOver.size(); r++) {
+                System.out.println("Size " + (r)+" : " + listOver.get(r).getStaffname_page() );
+                
+                count = 9 + listOver.size();
+            }
         }
         
-        int count = 9 + listOver.size();
         int start = 11;
         int end = 0;
         int num = 0;
@@ -277,6 +291,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                                         HSSFRow row0 = sheet1.createRow(r);
                                         HSSFCell cell = row0.createCell(0);
                                             cell.setCellValue(listOver.get(num).getOwnername());
+                                            cell.setCellStyle(styleAlignRightBorderAllDetailTable);
                                         
                                         String add = "A"+(r+1)+":M"+(r+1)+"";
                                         System.out.println("Add : " + add);
@@ -323,8 +338,8 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                                         // Start New Row (Group)
                                         HSSFRow row0 = sheet1.createRow(r);
                                         HSSFCell cell = row0.createCell(0);
-                                            cell.setCellValue(listOver.get(num).getInvto());
-                                        
+                                        cell.setCellValue(listOver.get(num).getInvto());
+                                        cell.setCellStyle(styleAlignRightBorderAllDetailTable);
                                         String add = "A"+(r+1)+":M"+(r+1)+"";
                                         System.out.println("Add : " + add);
                                         sheet1.addMergedRegion(CellRangeAddress.valueOf(add));
@@ -344,9 +359,11 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                             if("Owner".equals(listOver.get(num).getGroup())){  
                                 HSSFCell cell = row0.createCell(0);
                                 cell.setCellValue(listOver.get(num).getOwnername());  
+                                cell.setCellStyle(styleAlignRightBorderAllDetailTable);
                             }else if("Agent".equals(listOver.get(num).getGroup())){
                                 HSSFCell cell = row0.createCell(0);
-                                cell.setCellValue(listOver.get(num).getInvto());  
+                                cell.setCellValue(listOver.get(num).getInvto());
+                                cell.setCellStyle(styleAlignRightBorderAllDetailTable);
                             }
                             
                             String add = "A"+(r+1)+":M"+(r+1)+"";
