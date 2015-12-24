@@ -209,7 +209,7 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-5" >  
-                                            <input type="text" class="form-control" id="refundByName" name="refundByName" value="" readonly="">
+                                            <input type="text" class="form-control" id="refundByName" name="refundByName" value="${table1.refundby}" readonly="">
                                         </div>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -1183,11 +1183,31 @@ for(var i = 0; i < rad.length; i++) {
         }
     });
     
-    $("#refundBy").autocomplete({
-        source: customerCode,
-        close: function (event, ui) {
-            $("#refundBy").trigger('keyup');
+//    $("#refundBy").autocomplete({
+//        source: customerCode,
+//        close: function (event, ui) {
+//            $("#refundBy").trigger('keyup');
+//        }
+//    });
+
+    //autocomplete
+    $("#refundBy").keyup(function(event){   
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left); 
+        if($(this).val() === ""){
+            $("#refundByName").val("");
+        }else{
+            if(event.keyCode === 13){
+                searchCustomerAutoList(this.value); 
+            }
         }
+    });
+    
+    $("#refundBy").keydown(function(){
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left); 
     });
     
     $("#refundBy").on('keyup', function(){
@@ -1376,6 +1396,7 @@ function setBillReceiveValue(billto, billname, address, term, pay) {
     $('#RefundForm').modal('hide');
     $("#receiveUserModal").modal('hide');
 }
+
 function setBillOwnerValue(billto, billname, address, term, pay) {
     $("#ownerBy").val(billto);
     $("#ownerByName").val(billname);
