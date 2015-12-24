@@ -368,7 +368,7 @@ public class BookingViewImpl implements BookingViewDao{
         UtilityFunction util = new UtilityFunction();
         List<BookingPackageSummaryView> bookingPackageSummaryViewList = new ArrayList<BookingPackageSummaryView>();
         
-        String query = " SELECT *,GROUP_CONCAT(DISTINCT b.invoice) AS invoiceno, GROUP_CONCAT(DISTINCT b.receipt) AS receiptno FROM `booking_package_summary` b ";
+        String query = " SELECT *,GROUP_CONCAT(DISTINCT b.invoice SEPARATOR '<br>') AS invoiceno, GROUP_CONCAT(DISTINCT b.receipt SEPARATOR '<br>') AS receiptno FROM `booking_package_summary` b ";
         boolean condition = false;
         
         if((bookRefNo != null) && (!"".equalsIgnoreCase(bookRefNo))){
