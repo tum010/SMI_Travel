@@ -47,13 +47,15 @@ public class OtherController extends SMITravelController {
         String action = request.getParameter("action");
         String OtherID = request.getParameter("OtherID");
         String callPageFrom = request.getParameter("callPageFrom");
-        String pattern = "###,###.###";
+        String pattern = "###,###.##";
         DecimalFormat dF = new DecimalFormat(pattern);
         SystemUser user = (SystemUser) session.getAttribute("USER");
         long TotalCost = 0;
         long TotalPrice = 0;
         long Amount = 0;
         double Markup = 0;
+        float totalCostTemp = 0;
+        float totalPriceTemp = 0;
         
         if ("delete".equalsIgnoreCase(action)) {
             System.out.println("delete booking other");
@@ -73,6 +75,8 @@ public class OtherController extends SMITravelController {
                 OtherBooking other = OtherList.get(i);
                 TotalCost += (other.getAdCost() * other.getAdQty()) + (other.getChCost() * other.getChQty()) + (other.getInCost() * other.getInQty());
                 TotalPrice += (other.getAdPrice() * other.getAdQty()) + (other.getChPrice() * other.getChQty()) + (other.getInPrice() * other.getInQty());
+                totalCostTemp += (other.getAdCost() * other.getAdQty()) + (other.getChCost() * other.getChQty()) + (other.getInCost() * other.getInQty());
+                totalPriceTemp += (other.getAdPrice() * other.getAdQty()) + (other.getChPrice() * other.getChQty()) + (other.getInPrice() * other.getInQty());        
                 Amount = TotalPrice - TotalCost;
                 Markup = 130.65;
             }
@@ -92,7 +96,7 @@ public class OtherController extends SMITravelController {
         request.setAttribute(TOTALCOST, dF.format(TotalCost));
         request.setAttribute(TOTALPRICE, dF.format(TotalPrice));
         request.setAttribute(AMOUNT, dF.format(Amount));
-        request.setAttribute(MARKUP, "0");
+        request.setAttribute(MARKUP, (totalCostTemp > 0 && totalPriceTemp > 0 ? dF.format((((totalPriceTemp/totalCostTemp)-1)*100)) : "0"));
         System.out.println("OtherController");
         if (request.getParameter(TransectionResult) != null) {
             if (request.getParameter(TransectionResult).equalsIgnoreCase("1")) {
