@@ -41,6 +41,7 @@ $(document).ready(function () {
     }else {
         $('#textAlertDivNotSave').show();
     }
+//    setMarkUp();
 });
 
 function getCouponCheck(id,code) {
@@ -80,5 +81,16 @@ function CallAjax(param, id, code) {
     } catch (e) {
         alert(e);
     }
+}
+
+function formatNumber(num) {
+    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+}
+
+function setMarkUp(){
+    var totalCost = parseFloat(($("#Totalcost").val()).replace(/,/g, ""));
+    var totalPrice = parseFloat(($("#Totalprice").val()).replace(/,/g, ""));
+    var markUp = ((totalPrice/totalCost)-1)*100;
+    $("#markup").val(formatNumber(markUp));
 }
 

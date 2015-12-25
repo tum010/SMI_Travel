@@ -77,8 +77,8 @@
             });
 
               $(".money").mask('000,000,000,000,000,000', {reverse: true});
-              $(".percent").mask('000,000,000,000,000%', {reverse: true});
-
+              $(".percent").mask('000,000,000,000,000.00%', {reverse: true});
+              
               function setformat(){
                 $('#MasterOther tr td.moneyformat').each(function() {
                     var innerHTML = $(this).html();
@@ -245,7 +245,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label" for="nameProduct">Mark up</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control money" id="markup" disabled name="markup" value="${markup}%">
+                                        <input type="text" class="form-control percent text-right " id="markup" disabled name="markup" value="${markup}">
                                     </div>
                                 </div>
                             </div>
