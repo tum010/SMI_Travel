@@ -6,6 +6,7 @@
 <c:set var="receiptSearchList" value="${requestScope['receiptSearchList']}" />
 <c:set var="callPage" value="${requestScope['callPage']}" />
 <c:set var="mFinanceItemStatus_List" value="${requestScope['mFinanceItemStatus_List']}" />
+<c:set var="hiddenMenu" value="${requestScope['hiddenMenu']}" />
 
 <section class="content-header" >
     <h1>
@@ -119,7 +120,8 @@
                         </select>    
                     </div>                   
                     <input type="hidden" id="dateFromSearch" name="InputDateFrom" >                        
-                    <input type="hidden" id="dateToSearch" name="InputDateTo" > 
+                    <input type="hidden" id="dateToSearch" name="InputDateTo" >
+                    <input type="hidden" name="hiddenMenu" id="hiddenMenu" value="${hiddenMenu}">       
                     <!--<input type="hidden" id="ticketId" name="ticketId" >-->
                     <input type="hidden" name="action" id="action" value="">                       
                 </div>
@@ -303,8 +305,40 @@
         });
         $('.todate').datetimepicker().change(function(){                          
             checkToDateField();
-        });        
+        });   
+        
+        setMenu();
     });
+    
+function setMenu(){
+    if($("#hiddenMenu").val() === "1111"){
+        $(".receiptTemp").show();
+        $("#tempBox").val("");
+        $("#hiddenMenu").val('1111');
+        $('#recType')
+            .find('option')
+            .remove()
+            .end()
+        ;       
+        $('#recType').append($('<option>', {
+            value: 'T',
+            text: 'Temp'
+        }));
+    }else if($("#hiddenMenu").val() === "2222"){
+        $(".receiptTemp").hide();
+        $("#tempBox").val("");
+        $("#hiddenMenu").val('2222');
+        $('#recType')
+            .find('option')
+            .remove()
+            .end()
+         ;       
+        $('#recType').append($('<option>', {
+            value: 'V',
+            text: 'Vat'
+        }));
+    }
+}
 
 function searchAction(){
     var action = document.getElementById('action');

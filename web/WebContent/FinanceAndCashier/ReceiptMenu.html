@@ -128,13 +128,33 @@ function checkmenu(){
         if($("#tempBox").val() === "1111"){
             $(".receiptTemp").show();
             $("#tempBox").val("");
-            $("#classShowTemp").show();
-            $("#classHideTemp").hide();
+//            $("#classShowTemp").show();
+//            $("#classHideTemp").hide();
+            $("#hiddenMenu").val('1111');
+            $('#recType')
+                .find('option')
+                .remove()
+                .end()
+            ;       
+            $('#recType').append($('<option>', {
+                value: 'T',
+                text: 'Temp'
+            }));
         }else if($("#tempBox").val() === "2222"){
             $(".receiptTemp").hide();
             $("#tempBox").val("");
-            $("#classHideTemp").show();
-            $("#classShowTemp").hide();
+//            $("#classHideTemp").show();
+//            $("#classShowTemp").hide();
+            $("#hiddenMenu").val('2222');
+            $('#recType')
+                .find('option')
+                .remove()
+                .end()
+            ;       
+            $('#recType').append($('<option>', {
+                value: 'V',
+                text: 'Vat'
+            }));
         }
 }
 
