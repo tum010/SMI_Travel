@@ -22,6 +22,7 @@ public class SearchReceiptController extends SMITravelController {
     private static final String RECEIPTSEARCHLIST = "receiptSearchList";
     private static final String PAGE = "callPage";
     private static final String MFinanceItemstatusList = "mFinanceItemStatus_List";
+    private static final String HIDDENMENU = "hiddenMenu";
     private ReceiptService receiptService;
     private UtilityService utilservice;
     @Override
@@ -34,12 +35,18 @@ public class SearchReceiptController extends SMITravelController {
         String inputFromDate = request.getParameter("inputFromDate");
         String inputToDate = request.getParameter("inputToDate");
         String status = request.getParameter("status");
+        String hiddenMenu = request.getParameter("hiddenMenu");
         String departtemp = "";
         if ("search".equalsIgnoreCase(action)) {
             List<ReceiptSearchView>  receiptSearchViews = receiptService.getReceiptViewFromFilter(inputFromDate, inputToDate, department, recType, status);
             if(receiptSearchViews != null){
                 request.setAttribute(RECEIPTSEARCHLIST,receiptSearchViews);
             } 
+        }
+        if("1111".equalsIgnoreCase(hiddenMenu)){
+            request.setAttribute(HIDDENMENU,"1111");
+        }else if("2222".equalsIgnoreCase(hiddenMenu)){
+            request.setAttribute(HIDDENMENU,"2222");
         }
 
         request.setAttribute(RECTYPE,recType);
