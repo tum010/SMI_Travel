@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.PaymentOutbound;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
+import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
 import java.util.List;
 
@@ -24,5 +25,6 @@ public interface PaymentOutboundDao {
     public List<String> getRefNoOutbound();
     public String deletePaymentOutboundDetail(String paymentOutboundDetailId);
     public List<BookingOutboundView> getBookingOutboundView(String searchRefNo);
+    public List<PaymentStock> getPaymentStock(String payStockNo);
     
 }

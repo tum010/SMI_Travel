@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentDetailWendy;
+import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.entity.PaymentWendy;
 import com.smi.travel.datalayer.entity.PaymentWendyReference;
 import com.smi.travel.datalayer.entity.TourOperationDesc;
@@ -638,6 +639,17 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
         }
         session.close();
         return list.get(0);
+    }
+
+    @Override
+    public PaymentStock getPaymentStockFromPayStockNo(String payStockNo) {
+        String query = "from PaymentStock p where p.payStockNo =  :payStockNo";
+        Session session = this.sessionFactory.openSession();
+        List<PaymentStock> paymentStockList = session.createQuery(query).setParameter("payStockNo", payStockNo).list();
+        if (paymentStockList.isEmpty()) {
+            return null;
+        }
+        return paymentStockList.get(0);   
     }
     
 }

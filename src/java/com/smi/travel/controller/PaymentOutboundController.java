@@ -7,6 +7,7 @@ import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentOutbound;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
+import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.PaymentOutboundService;
 import com.smi.travel.datalayer.service.PaymentTourHotelService;
@@ -32,6 +33,7 @@ public class PaymentOutboundController extends SMITravelController {
     private static final String PAYTYPE = "payTypeList";
     private static final String CURRENCY = "currencyList";
     private static final String MVAT = "mVat";
+    private static final String MWHT = "mWht";
     private static final String INVOICESUPLIST = "invSupList";
     private static final String REFNOLIST = "refNoList";
     private static final String PAYMENTOUTBOUND = "paymentOutbound";   
@@ -49,13 +51,16 @@ public class PaymentOutboundController extends SMITravelController {
         request.setAttribute(PAYTYPE, mPayTypeList);
         List<MCurrency> mCurrencyList = utilservice.getListMCurrency();
         request.setAttribute(CURRENCY, mCurrencyList);
-        MDefaultData mDefaultData = utilservice.getMDefaultDataFromType("vat");
-        BigDecimal mVat = new BigDecimal(mDefaultData.getValue());
+        MDefaultData mDefaultDataVat = utilservice.getMDefaultDataFromType("vat");
+        BigDecimal mVat = new BigDecimal(mDefaultDataVat.getValue());
         request.setAttribute(MVAT, mVat);
+        MDefaultData mDefaultDataWht = utilservice.getMDefaultDataFromType("withholding tax");
+        BigDecimal mWht = new BigDecimal(mDefaultDataWht.getValue());
+        request.setAttribute(MWHT, mWht);
         List<InvoiceSupplier> invoiceSupplierList = utilservice.getListInvoiceSuppiler();
         request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
         List<String> refNoList =  paymentOutboundService.getRefNoOutbound();       
-        request.setAttribute(REFNOLIST, refNoList);
+        request.setAttribute(REFNOLIST, refNoList);      
         
         String action = request.getParameter("action");
         String payId = request.getParameter("payId");
@@ -150,18 +155,31 @@ public class PaymentOutboundController extends SMITravelController {
             String amount = request.getParameter("amount"+i);
             String cur = request.getParameter("cur"+i);
             String comm = request.getParameter("comm"+i);
-            String value = request.getParameter("value"+i);
+            String saleAmount = request.getParameter("saleAmount"+i);
+            String saleCurrency = request.getParameter("saleCurrency"+i);
             String accCode = request.getParameter("accCode"+i);
             String bookDetailType = request.getParameter("bookDetailType"+i);       
             String payStock = request.getParameter("payStock"+i);
             String exportDate = request.getParameter("exportDate"+i);
-            String isExport = request.getParameter("isExport"+i);
+            String isExport = request.getParameter("isExport"+i);   
+            String realExRate = request.getParameter("realExRate"+i);
+            String payExRate = request.getParameter("payExRate"+i);
+            String isWht = request.getParameter("isWht"+i);
+            String wht = request.getParameter("wht"+i);
+            String whtAmount = request.getParameter("whtAmount"+i);
+            String isComVat = request.getParameter("isComVat"+i);
+            String vatRecCom = request.getParameter("vatRecCom"+i);
+            String vatRecComAmount = request.getParameter("vatRecComAmount"+i);
+            String value = request.getParameter("value"+i);
+            String payStockId = request.getParameter("payStockId"+i);
             
             if((!"".equalsIgnoreCase(detailId) && detailId != null) || ((!"".equalsIgnoreCase(payId) && payId != null)) || ((!"".equalsIgnoreCase(refNo) && refNo != null)) || 
                     (!"".equalsIgnoreCase(type) && type != null) || (!"".equalsIgnoreCase(description) && description != null) || (!"".equalsIgnoreCase(invoice) && invoice != null) || 
                     (!"".equalsIgnoreCase(cost) && cost != null) || (!"".equalsIgnoreCase(isVat) && isVat != null) || (!"".equalsIgnoreCase(amount) && amount != null) || 
-                    (!"".equalsIgnoreCase(cur) && cur != null) || (!"".equalsIgnoreCase(comm) && comm != null) || (!"".equalsIgnoreCase(value) && value != null) || 
-                    (!"".equalsIgnoreCase(payStock) && payStock != null)){
+                    (!"".equalsIgnoreCase(cur) && cur != null) || (!"".equalsIgnoreCase(comm) && comm != null) || (!"".equalsIgnoreCase(saleAmount) && saleAmount != null) || 
+                    (!"".equalsIgnoreCase(payStock) && payStock != null) || (!"".equalsIgnoreCase(realExRate) && realExRate != null) || (!"".equalsIgnoreCase(payExRate) && payExRate != null) || 
+                    (!"".equalsIgnoreCase(isWht) && isWht != null) || (!"".equalsIgnoreCase(isComVat) && isComVat != null) || (!"".equalsIgnoreCase(value) && value != null) ||
+                    (!"".equalsIgnoreCase(saleCurrency) && saleCurrency != null)){
                 
                 PaymentOutboundDetail paymentOutboundDetail = new PaymentOutboundDetail();
                 paymentOutboundDetail.setId(!"".equalsIgnoreCase(detailId) && detailId != null ? detailId : "");
@@ -175,11 +193,20 @@ public class PaymentOutboundController extends SMITravelController {
                 paymentOutboundDetail.setAmount(!"".equalsIgnoreCase(amount) && amount != null ? new BigDecimal(amount.replaceAll(",", "")) : null);
                 paymentOutboundDetail.setCurrency(!"".equalsIgnoreCase(cur) && cur != null ? cur : "");
                 paymentOutboundDetail.setRecCom(!"".equalsIgnoreCase(comm) && comm != null? new BigDecimal(comm.replaceAll(",", "")) : null);
-                paymentOutboundDetail.setValue(!"".equalsIgnoreCase(value) && value != null? new BigDecimal(value.replaceAll(",", "")) : null);
+                paymentOutboundDetail.setSaleAmount(!"".equalsIgnoreCase(saleAmount) && saleAmount != null? new BigDecimal(saleAmount.replaceAll(",", "")) : null);
                 paymentOutboundDetail.setBookDetailType(!"".equalsIgnoreCase(bookDetailType) && bookDetailType != null ? bookDetailType : "");
                 paymentOutboundDetail.setIsExport(!"".equalsIgnoreCase(payId) && payId != null? Integer.parseInt(isExport) : 0);
                 paymentOutboundDetail.setExportDate(!"".equalsIgnoreCase(exportDate) && exportDate != null ? utilfunction.convertStringToDateTime(exportDate) : null);
-                paymentOutboundDetail.setPayStockId(null);              
+                paymentOutboundDetail.setRealExRate(!"".equalsIgnoreCase(realExRate) && realExRate != null ? new BigDecimal(realExRate.replaceAll(",", "")) : null);
+                paymentOutboundDetail.setPayExRate(!"".equalsIgnoreCase(payExRate) && payExRate != null ? new BigDecimal(payExRate.replaceAll(",", "")) : null);
+                paymentOutboundDetail.setIsWht("1".equalsIgnoreCase(isWht) && isWht != null ? 1 : 0);
+                paymentOutboundDetail.setWht(!"".equalsIgnoreCase(wht) && wht != null ? new BigDecimal(wht.replaceAll(",", "")) : null);
+                paymentOutboundDetail.setWhtAmount(!"".equalsIgnoreCase(whtAmount) && whtAmount != null ? new BigDecimal(whtAmount.replaceAll(",", "")) : null);
+                paymentOutboundDetail.setIsVatRecCom("1".equalsIgnoreCase(isComVat) && isComVat != null ? 1 : 0);
+                paymentOutboundDetail.setVatRecCom(!"".equalsIgnoreCase(vatRecCom) && vatRecCom != null ? new BigDecimal(vatRecCom.replaceAll(",", "")) : null);
+                paymentOutboundDetail.setVatRecComAmount(!"".equalsIgnoreCase(vatRecComAmount) && vatRecComAmount != null ? new BigDecimal(vatRecComAmount.replaceAll(",", "")) : null);
+                paymentOutboundDetail.setValue(!"".equalsIgnoreCase(value) && value != null ? new BigDecimal(value.replaceAll(",", "")) : null);
+                paymentOutboundDetail.setSaleCurrency(!"".equalsIgnoreCase(saleCurrency) && saleCurrency != null ? saleCurrency : "");
                 
                 Master master = paymentTourHotelService.getMasterFromRefno(refNo);
                 paymentOutboundDetail.setMaster(master != null ? master : null);
@@ -187,6 +214,9 @@ public class PaymentOutboundController extends SMITravelController {
                 MPaytype mpayType = paymentTourHotelService.getMPayTypeFromPayTypeId(type);
                 paymentOutboundDetail.setMPaytype(mpayType != null ? mpayType : null);
                 paymentOutboundDetail.setAccCode(mpayType != null && !"".equalsIgnoreCase(mpayType.getAccCode()) ? mpayType.getAccCode() : "");
+                
+                PaymentStock paymentStock = paymentTourHotelService.getPaymentStockFromPayStockNo(payStock);
+                paymentOutboundDetail.setPaymentStock(paymentStock != null ? paymentStock : null);             
                 
                 paymentOutboundDetail.setPaymentOutbound(paymentOutbound);
                 paymentOutbound.getPaymentOutboundDetails().add(paymentOutboundDetail);

@@ -24,11 +24,13 @@ public class PaymentOutboundServlet implements AbstractAJAXServlet{
         String servletName = request.getParameter("servletName");
         String refNo = request.getParameter("refNo");        
         String type = request.getParameter("type");
+        String payStockNo = request.getParameter("payStockNo");
         Map result = new HashMap();
         
         result.put("refNo", refNo);
         result.put("servletName", servletName);
         result.put("type", type);
+        result.put("payStockNo", payStockNo);
                  
         return result;   
     }

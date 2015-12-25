@@ -16,8 +16,10 @@ public class BookingOutboundView {
     private String description;
     private String billtype;
     private String cost;
-    private String cur;
+    private String curcost;
     private String bookid;
+    private String sale;
+    private String cursale;
 
     public String getRefNo() {
         return refNo;
@@ -59,19 +61,35 @@ public class BookingOutboundView {
         this.cost = cost;
     }
 
-    public String getCur() {
-        return cur;
-    }
-
-    public void setCur(String cur) {
-        this.cur = cur;
-    }
-
     public String getBookid() {
         return bookid;
     }
 
     public void setBookid(String bookid) {
         this.bookid = bookid;
+    }
+
+    public String getSale() {
+        return sale;
+    }
+
+    public void setSale(String sale) {
+        this.sale = sale;
+    }
+
+    public String getCursale() {
+        return cursale;
+    }
+
+    public void setCursale(String cursale) {
+        this.cursale = cursale;
+    }
+
+    public String getCurcost() {
+        return curcost;
+    }
+
+    public void setCurcost(String curcost) {
+        this.curcost = curcost;
     }
 }

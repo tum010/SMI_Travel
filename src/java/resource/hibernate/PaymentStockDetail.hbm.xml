@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 25, 2015 10:19:36 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.PaymentStockDetail" table="payment_stock_detail" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="stock" class="com.smi.travel.datalayer.entity.Stock" fetch="select">
+            <column name="stock_id" />
+        </many-to-one>
+        <many-to-one name="paymentStock" class="com.smi.travel.datalayer.entity.PaymentStock" fetch="select">
+            <column name="pay_stock_id" />
+        </many-to-one>
+        <bag name="paymentStockItems" table="payment_stock_item" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pay_stock_detail_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.PaymentStockItem" />
+        </bag>
+    </class>
+</hibernate-mapping>

@@ -153,7 +153,10 @@ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
                                 <value>resource/hibernate/PaymentAirDebit.hbm.xml</value>
                                 <value>resource/hibernate/PaymentOutbound.hbm.xml</value>  
                                 <value>resource/hibernate/PaymentOutboundDetail.hbm.xml</value> 
-                                <value>resource/hibernate/MExchangeRate.hbm.xml</value>    
+                                <value>resource/hibernate/MExchangeRate.hbm.xml</value>
+                                <value>resource/hibernate/PaymentStock.hbm.xml</value>    
+                                <value>resource/hibernate/PaymentStockDetail.hbm.xml</value>    
+                                <value>resource/hibernate/PaymentStockItem.hbm.xml</value>        
 			</list>
 		</property>
 

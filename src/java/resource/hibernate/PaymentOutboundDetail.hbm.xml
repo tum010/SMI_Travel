@@ -13,6 +13,9 @@
         <many-to-one name="paymentOutbound" class="com.smi.travel.datalayer.entity.PaymentOutbound" fetch="select">
             <column name="payment_id" />
         </many-to-one>
+        <many-to-one name="paymentStock" class="com.smi.travel.datalayer.entity.PaymentStock" fetch="select">
+            <column name="pay_stock_id" />
+        </many-to-one>
         <many-to-one name="MPaytype" class="com.smi.travel.datalayer.entity.MPaytype" fetch="select">
             <column name="product_type" />
         </many-to-one>
@@ -55,14 +58,44 @@
         <property name="bookDetailType" type="string">
             <column name="book_detail_type" length="20" />
         </property>
-        <property name="payStockId" type="java.lang.Integer">
-            <column name="pay_stock_id" />
-        </property>
         <property name="exportDate" type="timestamp">
             <column name="export_date" length="10"/>
         </property>
         <property name="isExport" type="java.lang.Integer">
             <column name="is_export" />
+        </property>       
+        <property name="invoiceDate" type="date">
+            <column name="invoice_date" />
+        </property>
+        <property name="isVatRecCom" type="java.lang.Integer">
+            <column name="is_vat_rec_com" />
+        </property>
+        <property name="vatRecCom" type="big_decimal">
+            <column name="vat_rec_com" precision="10"/>
+        </property>
+        <property name="wht" type="big_decimal">
+            <column name="wht" precision="10"/>
+        </property>
+        <property name="payExRate" type="big_decimal">
+            <column name="pay_ex_rate" precision="10"/>
+        </property>
+        <property name="realExRate" type="big_decimal">
+            <column name="real_ex_rate" precision="10"/>
+        </property>
+        <property name="saleAmount" type="big_decimal">
+            <column name="sale_amount" precision="10"/>
+        </property>
+        <property name="vatRecComAmount" type="big_decimal">
+            <column name="vat_rec_com_amount" precision="10"/>
+        </property>
+        <property name="whtAmount" type="big_decimal">
+            <column name="wht_amount" precision="10"/>
+        </property>
+        <property name="isWht" type="java.lang.Integer">
+            <column name="is_wht" />
+        </property>
+        <property name="saleCurrency" type="string">
+            <column name="sale_currency" length="3"/>
         </property>
     </class>
 </hibernate-mapping>

@@ -37,6 +37,9 @@
         <property name="updateDate" type="timestamp">
             <column name="update_date" length="20" />
         </property>
+        <property name="duePaymentDate" type="date">
+            <column name="due_payment_date" length="10" />
+        </property>
         <bag name="paymentOutboundDetails" table="payment_outbound_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="payment_id" />

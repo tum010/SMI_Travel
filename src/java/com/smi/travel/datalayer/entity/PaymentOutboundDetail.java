@@ -12,6 +12,7 @@ public class PaymentOutboundDetail {
      private String id;
      private Master master;
      private PaymentOutbound paymentOutbound;
+     private PaymentStock paymentStock;
      private MPaytype MPaytype;
      private Integer bookDetailId;
      private String description;
@@ -26,9 +27,19 @@ public class PaymentOutboundDetail {
      private BigDecimal value;
      private String accCode;
      private String bookDetailType;
-     private Integer payStockId;
      private Date exportDate;
      private Integer isExport;
+     private Date invoiceDate;
+     private Integer isVatRecCom;
+     private BigDecimal vatRecCom;
+     private BigDecimal wht;
+     private BigDecimal payExRate;
+     private BigDecimal realExRate;
+     private BigDecimal saleAmount;
+     private BigDecimal vatRecComAmount;
+     private BigDecimal whtAmount;
+     private Integer isWht;
+     private String saleCurrency;
 
     public PaymentOutboundDetail() {
     }
@@ -51,7 +62,6 @@ public class PaymentOutboundDetail {
        this.value = value;
        this.accCode = accCode;
        this.bookDetailType = bookDetailType;
-       this.payStockId = payStockId;
        this.exportDate = exportDate;
        this.isExport =isExport;
     }
@@ -161,14 +171,7 @@ public class PaymentOutboundDetail {
     public void setAccCode(String accCode) {
         this.accCode = accCode;
     }
-    public Integer getPayStockId() {
-        return this.payStockId;
-    }
     
-    public void setPayStockId(Integer payStockId) {
-        this.payStockId = payStockId;
-    }
-
     public String getId() {
         return id;
     }
@@ -199,6 +202,102 @@ public class PaymentOutboundDetail {
 
     public void setIsExport(Integer isExport) {
         this.isExport = isExport;
+    }
+
+    public Date getInvoiceDate() {
+        return invoiceDate;
+    }
+
+    public void setInvoiceDate(Date invoiceDate) {
+        this.invoiceDate = invoiceDate;
+    }
+
+    public Integer getIsVatRecCom() {
+        return isVatRecCom;
+    }
+
+    public void setIsVatRecCom(Integer isVatRecCom) {
+        this.isVatRecCom = isVatRecCom;
+    }
+
+    public BigDecimal getVatRecCom() {
+        return vatRecCom;
+    }
+
+    public void setVatRecCom(BigDecimal vatRecCom) {
+        this.vatRecCom = vatRecCom;
+    }
+
+    public BigDecimal getWht() {
+        return wht;
+    }
+
+    public void setWht(BigDecimal wht) {
+        this.wht = wht;
+    }
+
+    public BigDecimal getPayExRate() {
+        return payExRate;
+    }
+
+    public void setPayExRate(BigDecimal payExRate) {
+        this.payExRate = payExRate;
+    }
+
+    public BigDecimal getRealExRate() {
+        return realExRate;
+    }
+
+    public void setRealExRate(BigDecimal realExRate) {
+        this.realExRate = realExRate;
+    }
+
+    public BigDecimal getSaleAmount() {
+        return saleAmount;
+    }
+
+    public void setSaleAmount(BigDecimal saleAmount) {
+        this.saleAmount = saleAmount;
+    }
+
+    public BigDecimal getVatRecComAmount() {
+        return vatRecComAmount;
+    }
+
+    public void setVatRecComAmount(BigDecimal vatRecComAmount) {
+        this.vatRecComAmount = vatRecComAmount;
+    }
+
+    public BigDecimal getWhtAmount() {
+        return whtAmount;
+    }
+
+    public void setWhtAmount(BigDecimal whtAmount) {
+        this.whtAmount = whtAmount;
+    }
+
+    public Integer getIsWht() {
+        return isWht;
+    }
+
+    public void setIsWht(Integer isWht) {
+        this.isWht = isWht;
+    }
+
+    public String getSaleCurrency() {
+        return saleCurrency;
+    }
+
+    public void setSaleCurrency(String saleCurrency) {
+        this.saleCurrency = saleCurrency;
+    }
+
+    public PaymentStock getPaymentStock() {
+        return paymentStock;
+    }
+
+    public void setPaymentStock(PaymentStock paymentStock) {
+        this.paymentStock = paymentStock;
     }
 
 }

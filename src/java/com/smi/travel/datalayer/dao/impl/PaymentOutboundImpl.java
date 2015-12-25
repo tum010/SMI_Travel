@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PaymentOutbound;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
+import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
@@ -168,9 +169,20 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             paymentOutboundDetailView.setValue(paymentOutboundDetail.getValue() != null ? paymentOutboundDetail.getRecCom() : null);
             paymentOutboundDetailView.setAccCode(!"".equalsIgnoreCase(paymentOutboundDetail.getAccCode()) ? paymentOutboundDetail.getAccCode() : "");
             paymentOutboundDetailView.setBookDetailType(!"".equalsIgnoreCase(paymentOutboundDetail.getBookDetailType()) ? paymentOutboundDetail.getBookDetailType() : "");
-            paymentOutboundDetailView.setPayStock(paymentOutboundDetail.getPayStockId() != null ? paymentOutboundDetail.getPayStockId() : null);
+            paymentOutboundDetailView.setPayStockId(paymentOutboundDetail.getPaymentStock()!= null ? paymentOutboundDetail.getPaymentStock().getId() : "");
+            paymentOutboundDetailView.setPayStock(paymentOutboundDetail.getPaymentStock()!= null ? paymentOutboundDetail.getPaymentStock().getPayStockNo(): "");
             paymentOutboundDetailView.setExportDate(paymentOutboundDetail.getExportDate() != null ? paymentOutboundDetail.getExportDate() : null);
             paymentOutboundDetailView.setIsExport(paymentOutboundDetail.getIsExport() != null ? paymentOutboundDetail.getIsExport() : null);
+            paymentOutboundDetailView.setIsVatRecCom(paymentOutboundDetail.getIsVatRecCom()!= null ? paymentOutboundDetail.getIsVatRecCom(): null);
+            paymentOutboundDetailView.setVatRecCom(paymentOutboundDetail.getVatRecCom()!= null ? paymentOutboundDetail.getVatRecCom(): null);
+            paymentOutboundDetailView.setWht(paymentOutboundDetail.getWht()!= null ? paymentOutboundDetail.getWht(): null);
+            paymentOutboundDetailView.setPayExRate(paymentOutboundDetail.getPayExRate()!= null ? paymentOutboundDetail.getPayExRate(): null);
+            paymentOutboundDetailView.setRealExRate(paymentOutboundDetail.getRealExRate()!= null ? paymentOutboundDetail.getRealExRate(): null);
+            paymentOutboundDetailView.setSaleAmount(paymentOutboundDetail.getSaleAmount()!= null ? paymentOutboundDetail.getSaleAmount(): null);
+            paymentOutboundDetailView.setVatRecComAmount(paymentOutboundDetail.getVatRecComAmount()!= null ? paymentOutboundDetail.getVatRecComAmount(): null);
+            paymentOutboundDetailView.setWhtAmount(paymentOutboundDetail.getWhtAmount()!= null ? paymentOutboundDetail.getWhtAmount(): null);
+            paymentOutboundDetailView.setIsWht(paymentOutboundDetail.getIsWht()!= null ? paymentOutboundDetail.getIsWht() : null);
+            paymentOutboundDetailView.setSaleCurrency(!"".equalsIgnoreCase(paymentOutboundDetail.getSaleCurrency()) ? paymentOutboundDetail.getSaleCurrency() : "");
             paymentOutboundDetailViewList.add(paymentOutboundDetailView);
         }
         session.close();
@@ -241,8 +253,10 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 .addScalar("description",Hibernate.STRING)
                 .addScalar("billtype",Hibernate.STRING)
                 .addScalar("cost",Hibernate.STRING)
-                .addScalar("cur",Hibernate.STRING)
-                .addScalar("bookid",Hibernate.STRING) 
+                .addScalar("curcost",Hibernate.STRING)
+                .addScalar("bookid",Hibernate.STRING)
+                .addScalar("price",Hibernate.STRING) 
+                .addScalar("cur",Hibernate.STRING) 
                 .list();
 
         for (Object[] B : QueryList) {
@@ -252,10 +266,28 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             bookingOutboundView.setDescription(B[2] != null ? util.ConvertString(B[2]) : "");
             bookingOutboundView.setBilltype(B[3] != null ? util.ConvertString(B[3]) : "");
             bookingOutboundView.setCost(B[4] != null ? util.ConvertString(B[4]) : "");
-            bookingOutboundView.setCur(B[5] != null ? util.ConvertString(B[5]) : "");
-            bookingOutboundView.setBookid(B[6] != null ? util.ConvertString(B[6]) : "");          
+            bookingOutboundView.setCurcost(B[5] != null ? util.ConvertString(B[5]) : "");
+            bookingOutboundView.setBookid(B[6] != null ? util.ConvertString(B[6]) : "");
+            bookingOutboundView.setSale(B[7] != null ? util.ConvertString(B[7]) : "");    
+            bookingOutboundView.setCursale(B[8] != null ? util.ConvertString(B[8]) : "");    
             bookingOutboundViewList.add(bookingOutboundView);
         }
         return bookingOutboundViewList;
+    }
+
+    @Override
+    public List<PaymentStock> getPaymentStock(String payStockNo) {
+        String query = "from PaymentStock p where p.payStockNo = :payStockNo ";       
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query);
+        HqlQuery.setParameter("payStockNo", payStockNo);
+//        HqlQuery.setMaxResults(MAX_ROW);
+        List<PaymentStock> paymentStockList = HqlQuery.list();
+        if (paymentStockList.isEmpty()) {
+            return null;
+        }
+        this.sessionFactory.close();
+        session.close();
+        return paymentStockList;
     }
 }

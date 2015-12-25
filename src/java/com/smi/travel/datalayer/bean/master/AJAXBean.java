@@ -50,6 +50,7 @@ import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackagePrice;
 import com.smi.travel.datalayer.entity.PackageTour;
+import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.ProductDetail;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
@@ -983,6 +984,14 @@ public class AJAXBean extends AbstractBean implements
                 } else {
                     result = "null";
                 }
+            }else if("searchStock".equalsIgnoreCase(type)){
+                String payStockNo = map.get("payStockNo").toString();
+                List<PaymentStock> paymentStockList = paymentOutboundDao.getPaymentStock(payStockNo);
+                if (paymentStockList.size() > 0) {
+                    result = buildPaymentStockHTML(paymentStockList);
+                } else {
+                    result = "null";
+                }
             }          
         }
 
@@ -1221,8 +1230,10 @@ public class AJAXBean extends AbstractBean implements
         String description = "";
         String billType = "";
         BigDecimal cost = new BigDecimal(0);
-        String cur = "";
+        String curCost = "";
         String bookId = "";
+        BigDecimal sale = new BigDecimal(0);
+        String curSale = "";
                 
         for (int i = 0; i < bookingOutboundViewList.size(); i++) {
             BookingOutboundView bookingOutboundView = new BookingOutboundView();
@@ -1232,8 +1243,10 @@ public class AJAXBean extends AbstractBean implements
             description = bookingOutboundView.getDescription();
             billType = bookingOutboundView.getBilltype();
             cost = (!"".equalsIgnoreCase(bookingOutboundView.getCost()) ? new BigDecimal(bookingOutboundView.getCost()) : new BigDecimal(0));
-            cur = bookingOutboundView.getCur();
+            curCost = bookingOutboundView.getCurcost();
             bookId = bookingOutboundView.getBookid();
+            sale = (!"".equalsIgnoreCase(bookingOutboundView.getSale()) ? new BigDecimal(bookingOutboundView.getSale()) : new BigDecimal(0));
+            curSale = bookingOutboundView.getCursale();
                        
             String newrow = "";              
             newrow += "<tr>"
@@ -1241,8 +1254,10 @@ public class AJAXBean extends AbstractBean implements
                     + "<td class='text-center'>" + type + "</td>"
                     + "<td>" + description + "</td>"
                     + "<td id='mCost" + no + "' class='text-right'>" + cost + "</td>"
-                    + "<td class='text-center'>" + cur + "</td>"
-                    + "<td><center><a href=\"#/ref\"><span onclick=\"addRefNo('" + refNo + "','" + type + "','" + description + "','" + billType + "','" + cost + "','" + cur + "','" + bookId + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                    + "<td class='text-center'>" + curCost + "</td>"
+                    + "<td id='mSale" + no + "' class='text-right'>" + sale + "</td>"
+                    + "<td class='text-center'>" + curSale + "</td>"
+                    + "<td><center><a href=\"#/ref\"><span onclick=\"addRefNo('" + refNo + "','" + type + "','" + description + "','" + billType + "','" + cost + "','" + curCost + "','" + sale + "','" + curSale + "','" + bookId + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                     + "</tr>";
             html.append(newrow);
             no++;
@@ -2505,6 +2520,42 @@ public class AJAXBean extends AbstractBean implements
             html.append(newrow);
             row++;    
         }
+        return html.toString();
+    }
+
+    private String buildPaymentStockHTML(List<PaymentStock> paymentStockList) {
+        StringBuffer html = new StringBuffer();      
+        int no = 1;
+        String stockId = "";
+        String payStockNo = "";
+        BigDecimal costAmount = new BigDecimal(0);
+        BigDecimal saleAmount = new BigDecimal(0);
+        String curCost = "";       
+        String curSale = "";
+                
+        for (int i = 0; i < paymentStockList.size(); i++) {
+            PaymentStock paymentStock = new PaymentStock();
+            paymentStock = paymentStockList.get(i);
+            stockId = paymentStock.getId();
+            payStockNo = paymentStock.getPayStockNo();
+            costAmount = (paymentStock.getCostAmount() != null ? paymentStock.getCostAmount() : new BigDecimal(0));
+            saleAmount = (paymentStock.getSaleAmount() != null ? paymentStock.getSaleAmount() : new BigDecimal(0));
+            curCost = paymentStock.getCurCost();
+            curSale = paymentStock.getCurSale();
+                       
+            String newrow = "";              
+            newrow += "<tr>"
+                    + "<td class='text-center'>" + no + "</td>"
+                    + "<td class='text-left'>" + payStockNo + "</td>"
+                    + "<td id='mCostAmount" + no + "' class='text-right'>" + costAmount + "</td>"
+                    + "<td class='text-center'>" + curCost + "</td>"
+                    + "<td id='mSaleAmount" + no + "' class='text-right'>" + saleAmount + "</td>"
+                    + "<td class='text-center'>" + curSale + "</td>"
+                    + "<td><center><a href=\"#/ref\"><span onclick=\"addStock('" + stockId + "','" + payStockNo + "','" + costAmount + "','" + saleAmount + "','" + curCost + "','" + curSale + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                    + "</tr>";
+            html.append(newrow);
+            no++;
+        } 
         return html.toString();
     }
 }

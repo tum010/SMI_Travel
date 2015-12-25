@@ -23,6 +23,7 @@ public class PaymentOutbound {
      private String createBy;
      private Date createDate;
      private Date updateDate;
+     private Date duePaymentDate;
      private List paymentOutboundDetails = new LinkedList<PaymentOutboundDetail>();
 
     public PaymentOutbound() {
@@ -128,6 +129,14 @@ public class PaymentOutbound {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public Date getDuePaymentDate() {
+        return duePaymentDate;
+    }
+
+    public void setDuePaymentDate(Date duePaymentDate) {
+        this.duePaymentDate = duePaymentDate;
     }
 
 }

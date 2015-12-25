@@ -60,6 +60,12 @@ $(document).ready(function() {
             searchRefNo();
         }
     });
+    
+    $("#payStockNo").keyup(function(event) {
+        if (event.keyCode === 13) {
+            searchStock();
+        }
+    });
 
     var rowPaymentDetailTable = parseInt($("#countPaymentDetail").val());
     addRowPaymentDetailTable(rowPaymentDetailTable);
@@ -156,6 +162,26 @@ $(document).ready(function() {
         $('#textAlertNotFound').hide();
     }
 
+    $("#realExRate").focusout(function() {
+        $("#realExRate").val(this.value !== '' ? formatNumberFourDecimal(parseFloat((this.value).replace(/,/g, ""))) : '');
+    });
+
+    $("#payExRate").focusout(function() {
+        $("#payExRate").val(this.value !== '' ? formatNumberFourDecimal(parseFloat((this.value).replace(/,/g, ""))) : '');
+    });
+
+    $("#value").focusout(function() {
+        $("#value").val(this.value !== '' ? formatNumber(parseFloat((this.value).replace(/,/g, ""))) : '');
+    });
+
+    $("#isWht").click(function() {
+        calculateWhtAmount();
+    });
+
+    $("#isComVat").click(function() {
+        calculateVatRecComAmount();
+    });
+
     setEnvironment()
 
 });
@@ -168,13 +194,13 @@ function reloadPage() {
 
 //Set Data at start
 function setEnvironment() {
-    for(var i = 0; i < invoiceSup.length; i++){
-        if(invoiceSup[i].code === $("#invSupCode").val()){
+    for (var i = 0; i < invoiceSup.length; i++) {
+        if (invoiceSup[i].code === $("#invSupCode").val()) {
             $("#invSupName").val(invoiceSup[i].name);
             i = invoiceSup.length;
         }
     }
-    
+
     var row = parseInt($("#countPaymentDetail").val());
     for (var i = 1; i <= row; i++) {
         if ($("#cost" + i).val() !== '') {
@@ -189,8 +215,8 @@ function setEnvironment() {
         if ($("#comm" + i).val() !== '') {
             $("#comm" + i).val(formatNumber(parseFloat($("#comm" + i).val())));
         }
-        if ($("#value" + i).val() !== '') {
-            $("#value" + i).val(formatNumber(parseFloat($("#value" + i).val())));
+        if ($("#saleAmount" + i).val() !== '') {
+            $("#saleAmount" + i).val(formatNumber(parseFloat($("#saleAmount" + i).val())));
         }
     }
     calculateGrossTotal();
@@ -200,6 +226,10 @@ function setEnvironment() {
 
 function formatNumber(num) {
     return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+}
+
+function formatNumberFourDecimal(num) {
+    return  num.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
 }
 
 function refNoValidate() {
@@ -222,6 +252,10 @@ function searchRefNo() {
         }
         $('#refnopanel').removeClass('has-success');
         $('#refnopanel').addClass('has-error');
+        $('#RefNoTable > tbody  > tr').each(function() {
+            $(this).remove();
+        });
+        $('#searchRefNo2').addClass('hidden');
     } else {
         var servletName = 'PaymentOutboundServlet';
         var servicesName = 'AJAXBean';
@@ -236,7 +270,7 @@ function searchRefNo() {
 
 function CallAjaxSearchRef(param) {
     var url = 'AJAXServlet';
-    $("#ajaxloadRefNo").removeClass("hidden");
+    $("#ajaxLoadSearch").removeClass("hidden");
     try {
         $.ajax({
             type: "POST",
@@ -245,10 +279,11 @@ function CallAjaxSearchRef(param) {
             data: param,
             success: function(msg) {
                 try {
-                    if (msg == "null") {
+                    if (msg === "null") {
                         $('#RefNoTable > tbody  > tr').each(function() {
                             $(this).remove();
                         });
+                        $('#searchRefNo2').addClass('hidden');
 
                     } else {
                         $('#RefNoTable > tbody  > tr').each(function() {
@@ -256,42 +291,139 @@ function CallAjaxSearchRef(param) {
                         });
                         $("#RefNoTable tbody").append(msg);
                         var rowAll = ($("#RefNoTable tr").length);
-                        for(var i = 1; i<rowAll; i++){
-                            var mCost = document.getElementById("mCost"+i);
-                            if(mCost !== null){
+                        for (var i = 1; i < rowAll; i++) {
+                            var mCost = document.getElementById("mCost" + i);
+                            if (mCost !== null) {
                                 var mCostTemp = mCost.innerHTML;
-                                if(mCostTemp !== ''){
+                                if (mCostTemp !== '') {
                                     mCost.innerHTML = formatNumber(parseFloat(mCostTemp));
                                 }
                             }
+                            var mSale = document.getElementById("mSale" + i);
+                            if (mSale !== null) {
+                                var mSaleTemp = mSale.innerHTML;
+                                if (mSaleTemp !== '') {
+                                    mSale.innerHTML = formatNumber(parseFloat(mSaleTemp));
+                                }
+                            }
                         }
+                        $('#searchRefNo2').removeClass('hidden');
 
                     }
-                    $("#ajaxloadRefNo").addClass("hidden");
+                    $("#ajaxLoadSearch").addClass("hidden");
 
                 } catch (e) {
                     $('#RefNoTable > tbody  > tr').each(function() {
                         $(this).remove();
                     });
-                    $("#ajaxloadRefNo").addClass("hidden");
+                    $("#ajaxLoadSearch").addClass("hidden");
                 }
 
             }, error: function(msg) {
                 $('#RefNoTable > tbody  > tr').each(function() {
                     $(this).remove();
                 });
-                $("#ajaxloadRefNo").addClass("hidden");
+                $('#searchRefNo2').addClass('hidden');
+                $("#ajaxLoadSearch").addClass("hidden");
             }
         });
     } catch (e) {
         $('#RefNoTable > tbody  > tr').each(function() {
             $(this).remove();
         });
+        $('#searchRefNo2').addClass('hidden');
     }
 }
 
 function searchStock() {
+    var payStockNo = $("#payStockNo").val();
+    if (payStockNo === "") {
+        if (!$('#stockpanel').hasClass('has-feedback')) {
+            $('#stockpanel').addClass('has-feedback');
+        }
+        $('#stockpanel').removeClass('has-success');
+        $('#stockpanel').addClass('has-error');
+        $('#StockTable > tbody  > tr').each(function() {
+            $(this).remove();
+        });
+        $('#searchStock2').addClass('hidden');
+    } else {
+        var servletName = 'PaymentOutboundServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&payStockNo=' + payStockNo +
+                '&type=' + 'searchStock';
+        CallAjaxSearchStock(param);
+    }
+}
 
+function CallAjaxSearchStock(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxLoadSearch").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                try {
+                    if (msg === "null") {
+                        $('#StockTable > tbody  > tr').each(function() {
+                            $(this).remove();
+                        });
+                        $('#searchStock2').addClass('hidden');
+
+                    } else {
+                        $('#StockTable > tbody  > tr').each(function() {
+                            $(this).remove();
+                        });
+                        $("#StockTable tbody").append(msg);
+                        var rowAll = ($("#StockTable tr").length);
+                        for (var i = 1; i < rowAll; i++) {
+                            var mCostAmount = document.getElementById("mCostAmount" + i);
+                            if (mCostAmount !== null) {
+                                var mCostAmountTemp = mCostAmount.innerHTML;
+                                if (mCostAmountTemp !== '') {
+                                    mCostAmount.innerHTML = formatNumber(parseFloat(mCostAmountTemp));
+                                }
+                            }
+                            var mSaleAmount = document.getElementById("mSaleAmount" + i);
+                            if (mSaleAmount !== null) {
+                                var mSaleAmountTemp = mSaleAmount.innerHTML;
+                                if (mSaleAmountTemp !== '') {
+                                    mSaleAmount.innerHTML = formatNumber(parseFloat(mSaleAmountTemp));
+                                }
+                            }
+                        }
+                        $('#searchStock2').removeClass('hidden');
+
+                    }
+                    $("#ajaxLoadSearch").addClass("hidden");
+
+                } catch (e) {
+                    $('#StockTable > tbody  > tr').each(function() {
+                        $(this).remove();
+                    });
+                    $("#ajaxLoadSearch").addClass("hidden");
+                }
+
+            }, error: function(msg) {
+                $('#StockTable > tbody  > tr').each(function() {
+                    $(this).remove();
+                });
+                $('#searchStock2').addClass('hidden');
+                $("#ajaxLoadSearch").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        $('#StockTable > tbody  > tr').each(function() {
+            $(this).remove();
+        });
+        $('#searchStock2').addClass('hidden');
+    }
 }
 
 function addRowPaymentDetailTable(row) {
@@ -308,8 +440,20 @@ function addRowPaymentDetailTable(row) {
             '<input type="text" name="bookDetailId' + row + '" id="payId' + row + '" class="form-control" value=""/>' +
             '<input type="text" name="bookDetailType' + row + '" id="bookDetailType' + row + '" class="form-control" value=""/>' +
             '<input type="text" name="accCode' + row + '" id="accCode' + row + '" class="form-control" value=""/>' +
-            '<input type="text" name="exportDate' + row + '" id="exportDate' + row + '" class="form-control" value=""/>"/>' +
+            '<input type="text" name="exportDate' + row + '" id="exportDate' + row + '" class="form-control" value=""/>' +
             '<input type="text" name="isExport' + row + '" id="isExport' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="realExRate' + row + '" id="realExRate' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="payExRate' + row + '" id="payExRate' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="isWht' + row + '" id="isWht' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="wht' + row + '" id="wht' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="whtTemp' + row + '" id="whtTemp' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="whtAmount' + row + '" id="whtAmount' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="isComVat' + row + '" id="isComVat' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="vatRecCom' + row + '" id="vatRecCom' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="vatRecComTemp' + row + '" id="vatRecComTemp' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="vatRecComAmount' + row + '" id="vatRecComAmount' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="value' + row + '" id="value' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="payStockId' + row + '" id="payStockId' + row + '" class="form-control" value=""/>' +
             '</td>' +
             '<td>' +
             '<select class="form-control" name="type' + row + '" id="type' + row + '" onchange="addRow(\'' + row + '\')">' +
@@ -347,6 +491,9 @@ function addRowPaymentDetailTable(row) {
             '</select>' +
             '</td>' +
             '<td class="text-center" rowspan="2">' +
+            '<a href="#" onclick=""  data-toggle="modal" data-target=""> ' +
+            '<span id="editPaymentDetail' + row + '" onclick="editPaymentDetail(\'' + row + '\')" class="glyphicon glyphicon glyphicon-list-alt"></span>' +
+            '</a>' +
             '<a href="#" onclick=""  data-toggle="modal" data-target="">' +
             '<span id="spanDelete' + row + '" class="glyphicon glyphicon-remove deleteicon"  onclick="deletePaymentDetailList(\'\',\'' + row + '\')" data-toggle="modal" ></span>' +
             '</a>' +
@@ -366,18 +513,22 @@ function addRowPaymentDetailTable(row) {
             '<input type="text" name="payStock' + row + '" id="payStock' + row + '" class="form-control" value=""/>' +
             '</td>' +
             '<td colspan="1" align="right" bgcolor="#E8EAFF">' +
-            '<b>Value</b>' +
+            '<b>Sale</b>' +
             '</td>' +
-            '<td colspan="2">' +
-            '<input type="text" name="value' + row + '" id="value' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'value\',\'' + row + '\')" value=""/>' +
+            '<td colspan="1">' +
+            '<input type="text" name="saleAmount' + row + '" id="saleAmount' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'saleAmount\',\'' + row + '\')" value=""/>' +
+            '</td>' +
+            '<td colspan="1">' +
+            '<select class="form-control" name="saleCurrency' + row + '" id="saleCurrency' + row + '" onchange="addRow(\'' + row + '\')">' +
+            '<option  value="" ></option>' +
             '</td>' +
             '</tr>'
-
             );
     $("#tr_PaymentOutboundDetailAddRow").removeClass("show");
     $("#tr_PaymentOutboundDetailAddRow").addClass("hide");
     $("#typeClone option").clone().appendTo("#type" + row);
     $("#curClone option").clone().appendTo("#cur" + row);
+    $("#curClone option").clone().appendTo("#saleCurrency" + row);
 //    document.getElementById('vatShow' + row).innerHTML = parseFloat($("#mVat").val());
     document.getElementById('vat' + row).value = parseFloat($("#mVat").val());
     $("#countPaymentDetail").val(row + 1);
@@ -484,26 +635,26 @@ function checkRefNo(row) {
             refNoField.style.borderColor = "Green";
             $("#btnSave").removeClass("disabled");
             i = refNo_list.length;
-            
-        }else if(refNo === ''){
+
+        } else if (refNo === '') {
             var refNoField = document.getElementById('refNo' + row);
             refNoField.style.borderColor = "";
             i = refNo_list.length;
-            
-        }else{
+
+        } else {
             var refNoField = document.getElementById('refNo' + row);
             refNoField.style.borderColor = "Red";
             $("#btnSave").addClass("disabled");
         }
     }
-    for(var i = 1; i < count; i++){
+    for (var i = 1; i < count; i++) {
         var refNoField = document.getElementById('refNo' + i);
-        if(refNoField !== null){
-            if(refNoField.style.borderColor === "red"){
-               $("#btnSave").addClass("disabled");
-               i = count;
-            }else{
-               $("#btnSave").removeClass("disabled");
+        if (refNoField !== null) {
+            if (refNoField.style.borderColor === "red") {
+                $("#btnSave").addClass("disabled");
+                i = count;
+            } else {
+                $("#btnSave").removeClass("disabled");
             }
         }
     }
@@ -551,10 +702,10 @@ function setFormatNumber(type, row) {
             document.getElementById('comm' + row).value = formatNumber(parseFloat(comm.replace(/,/g, "")));
         }
     }
-    if (type === 'value') {
-        var value = document.getElementById('value' + row).value;
-        if (value !== '') {
-            document.getElementById('value' + row).value = formatNumber(parseFloat(value.replace(/,/g, "")));
+    if (type === 'saleAmount') {
+        var saleAmount = document.getElementById('saleAmount' + row).value;
+        if (saleAmount !== '') {
+            document.getElementById('saleAmount' + row).value = formatNumber(parseFloat(saleAmount.replace(/,/g, "")));
         }
     }
     if (type === 'amount') {
@@ -587,9 +738,25 @@ function calculateGrossTotal() {
 }
 
 function calculateVatTotal() {
-    var grandTotal = parseFloat($("#grandTotal").val().replace(/,/g, ""));
-    var grossTotal = parseFloat($("#grossTotal").val().replace(/,/g, ""));
-    $("#vatTotal").val(formatNumber(grandTotal - grossTotal));
+//    var grandTotal = parseFloat($("#grandTotal").val().replace(/,/g, ""));
+//    var grossTotal = parseFloat($("#grossTotal").val().replace(/,/g, ""));
+//    $("#vatTotal").val(formatNumber(grandTotal - grossTotal));
+    var count = parseInt(document.getElementById('countPaymentDetail').value);
+    var i;
+    var vatTotal = 0;
+    for (i = 1; i < count + 1; i++) {
+        var isVat = document.getElementById("isVat" + i);
+        var cost = document.getElementById("cost" + i);
+        if (isVat !== null) {
+            if (isVat.check) {
+                var costTemp = parseFloat((cost.value).replace(/,/g, ""));
+                var vatTemp = parseFloat(document.getElementById('vat' + i).value);
+                var vat = (costTemp * (100 / (100 + vatTemp)));
+                vatTotal += vat;
+            }
+        }
+    }
+    document.getElementById('vatTotal').value = formatNumber(vatTotal);
 }
 
 function calculateGrandTotal() {
@@ -612,7 +779,7 @@ function calculateGrandTotal() {
     calculateVatTotal();
 }
 
-function addRefNo(refNo, type, description, billType, cost, cur, bookId) {
+function addRefNo(refNo, type, description, billType, cost, curCost, sale, curSale, bookId) {
     var countPaymentDetail = parseInt($("#countPaymentDetail").val());
     var count = 0;
     for (var i = 1; i < countPaymentDetail - 1; i++) {
@@ -621,10 +788,10 @@ function addRefNo(refNo, type, description, billType, cost, cur, bookId) {
             count = parseInt(countTemp.value);
         }
     }
-    addRowPaymentDetailTableByRefNo(refNo, type, description, billType, parseFloat(cost), cur, bookId, count + 1);
+    addRowPaymentDetailTableByRefNo(refNo, type, description, billType, parseFloat(cost), curCost, parseFloat(sale), curSale, bookId, count + 1);
 }
 
-function addRowPaymentDetailTableByRefNo(refNo, type, description, billType, cost, cur, bookId, row) {
+function addRowPaymentDetailTableByRefNo(refNo, type, description, billType, cost, curCost, sale, curSale, bookId, row) {
     var color = (row % 2 === 0 ? "#F2F2F2" : "");
     if (!row) {
         row = 1;
@@ -640,9 +807,48 @@ function addRowPaymentDetailTableByRefNo(refNo, type, description, billType, cos
         return ($(this).text() === type);
     }).prop('selected', true);
     $("[name=cur" + row + "] option").filter(function() {
-        return ($(this).text() === cur);
+        return ($(this).text() === curCost);
+    }).prop('selected', true);
+    $("#saleAmount" + row).val(formatNumber(sale));
+    $("[name=saleCurrency" + row + "] option").filter(function() {
+        return ($(this).text() === curSale);
     }).prop('selected', true);
 
+    row = row + 1;
+    addRowPaymentDetailTable(row);
+}
+
+function addStock(stockId, payStockNo, costAmount, saleAmount, curCost, curSale) {
+    var countPaymentDetail = parseInt($("#countPaymentDetail").val());
+    var count = 0;
+    for (var i = 1; i < countPaymentDetail - 1; i++) {
+        var countTemp = document.getElementById("count" + i);
+        if (countTemp !== null) {
+            count = parseInt(countTemp.value);
+        }
+    }
+    addRowPaymentDetailTableByStock(stockId, payStockNo, parseFloat(costAmount), curCost, parseFloat(saleAmount), curSale, count + 1);
+}
+
+function addRowPaymentDetailTableByStock(stockId, payStockNo, costAmount, curCost, saleAmount, curSale, row) {
+    var color = (row % 2 === 0 ? "#F2F2F2" : "");
+    if (!row) {
+        row = 1;
+    }
+
+    $("#count" + row).val(row);
+    $("#cost" + row).val(formatNumber(costAmount));
+    $("[name=cur" + row + "] option").filter(function() {
+        return ($(this).text() === curCost);
+    }).prop('selected', true);
+    $("#amount" + row).val(formatNumber(costAmount));
+    $("#saleAmount" + row).val(formatNumber(saleAmount));
+    $("[name=saleCurrency" + row + "] option").filter(function() {
+        return ($(this).text() === curSale);
+    }).prop('selected', true);
+    $("#payStockId" + row).val(stockId);
+    $("#payStock" + row).val(payStockNo);
+    
     row = row + 1;
     addRowPaymentDetailTable(row);
 }
@@ -694,7 +900,7 @@ function checkVatAll() {
         }
         calculateGrossTotal();
         return;
-    }else if (check > unCheck && unCheck !== 0) {
+    } else if (check > unCheck && unCheck !== 0) {
         for (var i = 1; i < row; i++) {
             var isVatCheck = document.getElementById("isVat" + i);
             if (isVatCheck !== null && isVatCheck !== '') {
@@ -739,7 +945,7 @@ function checkVatAll() {
         }
         calculateGrossTotal();
         return;
-    }else if (check < unCheck && check !== 0) {
+    } else if (check < unCheck && check !== 0) {
         for (var i = 1; i < row; i++) {
             var isVatCheck = document.getElementById("isVat" + i);
             if (isVatCheck !== null && isVatCheck !== '') {
@@ -784,5 +990,109 @@ function checkVatAll() {
         }
         calculateGrossTotal();
     }
-    
+}
+
+function editPaymentDetail(row) {
+    $("#rowDetail").val(row);
+    $("#realExRate").val(($("#realExRate" + row).val() !== '' ? formatNumberFourDecimal(parseFloat(($("#realExRate" + row).val()).replace(/,/g, ""))) : ''));
+    $("#payExRate").val(($("#payExRate" + row).val() !== '' ? formatNumberFourDecimal(parseFloat(($("#payExRate" + row).val()).replace(/,/g, ""))) : ''));
+    $("#whtAmount").val(($("#whtAmount" + row).val() !== '' ? formatNumber(parseFloat(($("#whtAmount" + row).val()).replace(/,/g, ""))) : ''));
+    $("#vatRecComAmount").val(($("#vatRecComAmount" + row).val() !== '' ? formatNumber(parseFloat(($("#vatRecComAmount" + row).val()).replace(/,/g, ""))) : ''));
+    $("#value").val(($("#value" + row).val() !== '' ? formatNumber(parseFloat(($("#value" + row).val()).replace(/,/g, ""))) : ''));
+    $("#wht").val(($("#wht" + row).val() !== '' ? formatNumber(parseFloat(($("#wht" + row).val()).replace(/,/g, ""))) : ''));
+    $("#vatRecCom").val(($("#vatRecCom" + row).val() !== '' ? formatNumber(parseFloat(($("#vatRecCom" + row).val()).replace(/,/g, ""))) : ''));
+
+    $('#isWht').prop('checked', ($("#isWht" + row).val() === '1' ? true : false));
+    $('#isComVat').prop('checked', ($("#isComVat" + row).val() === '1' ? true : false));
+
+    $("#paymentDescription").val($("#description" + row).val());
+
+    $("#paymentDetailPanel").removeClass("hidden");
+}
+
+function savePaymentDetail() {
+    var row = $("#rowDetail").val();
+    $("#realExRate" + row).val($("#realExRate").val());
+    $("#payExRate" + row).val($("#payExRate").val());
+    $("#whtAmount" + row).val($("#whtAmount").val());
+    $("#vatRecComAmount" + row).val($("#vatRecComAmount").val());
+    $("#value" + row).val($("#value").val());
+    $("#wht" + row).val($("#wht").val());
+    $("#vatRecCom" + row).val($("#vatRecCom").val());
+    $("#isWht" + row).val(($("#isWht").is(':checked') ? '1' : '0'));
+    $("#isComVat" + row).val(($("#isComVat").is(':checked') ? '1' : '0'));
+    $("#description" + row).val($("#paymentDescription").val());
+
+    $("#rowDetail").val('');
+    $("#realExRate").val('');
+    $("#payExRate").val('');
+    $("#whtAmount").val('');
+    $("#vatRecComAmount").val('');
+    $("#value").val('');
+    $("#wht").val('');
+    $("#vatRecCom").val('');
+    $('#isWht').prop('checked', false);
+    $('#isComVat').prop('checked', false);
+    $("#paymentDescription").val('');
+    $("#paymentDetailPanel").addClass("hidden");
+}
+
+function calculateWhtAmount() {
+    if ($("#isWht").is(':checked')) {
+        var row = $("#rowDetail").val();
+        var wht = ($("#whtTemp" + row).val() === '' ? parseFloat($("#mWht").val()) : parseFloat($("#whtTemp" + row).val()));
+        var gross = ($("#cost" + row).val() !== '' ? parseFloat(($("#cost" + row).val()).replace(/,/g, "")) : 0.00);
+        var whtAmount = gross * (1.00 + (wht / 100));
+        $("#whtAmount").val(formatNumber(whtAmount));
+        $("#wht").val(wht);
+        if ($("#whtTemp" + row).val() === '') {
+            $("#whtTemp" + row).val(parseFloat($("#mWht").val()));
+        } else {
+            $("#whtTemp" + row).val(parseFloat($("#mWht").val()));
+        }
+    } else {
+        $("#wht").val('');
+        $("#whtAmount").val('');
+    }
+}
+
+function calculateVatRecComAmount() {
+    if ($("#isComVat").is(':checked')) {
+        var row = $("#rowDetail").val();
+        var vatRecCom = ($("#vatRecCom" + row).val() === '' ? parseFloat($("#mVat").val()) : parseFloat($("#vatRecCom" + row).val()));
+        var comm = ($("#comm" + row).val() !== '' ? parseFloat(($("#comm" + row).val()).replace(/,/g, "")) : 0.00);
+        var vatRecComAmount = comm * (1.00 + (vatRecCom / 100));
+        $("#vatRecComAmount").val(formatNumber(vatRecComAmount));
+        $("#vatRecCom").val(vatRecCom);
+        if ($("#vatRecComTemp" + row).val() === '') {
+            $("#vatRecComTemp" + row).val(parseFloat($("#mVat").val()));
+        } else {
+            $("#vatRecComTemp" + row).val(parseFloat($("#mVat").val()));
+        }
+    } else {
+        $("#vatRecCom").val('');
+        $("#vatRecComAmount").val('');
+    }
+}
+
+function showSearchStock() {
+    if ($("#searchStock1").hasClass("hidden")) {
+        $("#searchRefNo1").addClass("hidden");
+        $("#searchRefNo2").addClass("hidden");
+        $("#searchStock1").removeClass("hidden");
+    } else {
+        $("#searchStock1").addClass("hidden");
+    }
+    $("#searchStock2").addClass("hidden");
+}
+
+function showSearchRefNo() {
+    if ($("#searchRefNo1").hasClass("hidden")) {
+        $("#searchStock1").addClass("hidden");
+        $("#searchStock2").addClass("hidden");
+        $("#searchRefNo1").removeClass("hidden");
+    } else {
+        $("#searchRefNo1").addClass("hidden");
+    }
+    $("#searchRefNo2").addClass("hidden");
 }

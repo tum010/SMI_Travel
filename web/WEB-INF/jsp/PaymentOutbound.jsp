@@ -12,7 +12,9 @@
 <c:set var="refNoList" value="${requestScope['refNoList']}" />
 <c:set var="result" value="${requestScope['result']}" />
 <c:set var="mVat" value="${requestScope['mVat']}" />
+<c:set var="mWht" value="${requestScope['mWht']}" />
 <input type="hidden" id="mVat" name="mVat" value="${mVat}"/>
+<input type="hidden" id="mWht" name="mWht" value="${mWht}"/>
 <input type="hidden" id="refNoList" name="refNoList" value="${refNoList}"/>
 <input type="hidden" id="result" name="result" value="${result}"/>
 
@@ -48,15 +50,15 @@
     <!--Content -->
     <form action="PaymentOutbound.smi" method="post" id="PaymentOutboundForm" autocomplete="off" role="form">
     <div class="col-sm-10">
-        <div class="row" style="padding-left: 0px">  
+<!--        <div class="row" style="padding-left: 0px">  
             <div class="col-sm-6" style="padding-right: 15px">
                 <h4><b>Payment Outbound</b></h4>
             </div>
         </div>
-        <hr/>
+        <hr/>-->
         <!--Search -->
-        <div role="tabpanel">
-            <!-- Nav tabs -->                    
+<!--        <div role="tabpanel">
+             Nav tabs                     
             <ul class="nav nav-tabs " role="tablist">
                 <li role="presentation" class="active outboundheader"><a href="#ref" aria-controls="ref" role="tab" data-toggle="tab">REF</a></li>
                 <li role="presentation" class="outboundheader"><a href="#stk" aria-controls="stk" role="tab" data-toggle="tab">Stock</a></li>
@@ -66,7 +68,7 @@
                     </a>
                 </h4>
             </ul>
-            <!-- Tab BL -->
+             Tab BL 
             <div class="panel panel-default outboundborder">
                 <div class="panel-body">
                     <div class="tab-content collapse in" id="collapseExample" aria-expanded="false">
@@ -86,7 +88,7 @@
                                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                                     </button> 
                                 </div>                                  
-                                <!--Ref No Table-->
+                                Ref No Table
                                 <div class="row" >    
                                     <div class="col-md-12">
                                         <table id="RefNoTable" class="display" cellspacing="0" width="100px">
@@ -108,7 +110,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- Tab Stock -->
+                         Tab Stock 
                         <div role="tabpanel" class="tab-pane" id="stk">
                             <div class="col-xs-12" style="padding-top: 20px; padding-left: 50px;padding-right: 50px">
                                 <div class="col-xs-1 text-right" style="width: 120px">
@@ -123,7 +125,7 @@
                                 <div class="col-xs-1 text-left"  style="width: 100px">
                                     <button style="height:30px" type="button"  id="btnSearchStock"  name="btnSearchStock" onclick="searchStock();" class="btn btn-primary btn-sm" ${outbound}><i class="fa fa-search"></i>&nbsp;Search </button>
                                 </div>
-                                <!--Stock Table-->
+                                Stock Table
                                 <div class="row">
                                     <table id="StockTable" class="display" cellspacing="0" width="100%">
                                         <thead>
@@ -144,7 +146,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         
         <!--Hidden Value-->
         <input type="hidden" id="countPaymentDetail" name="countPaymentDetail" value="${paymentOutboundDetail.size()+1}"/>
@@ -247,7 +249,92 @@
                         </div> 
                     </div>
                 </div><!--End row 2-->
-                <br>
+                <div class="col-xs-12 " style="padding-left: 0px;">
+                    <div class="col-xs-1 text-right" style="margin-top: -5px; width: 100px; ">
+                        <label class="control-label" for="">Search</lable>                           
+                    </div>           
+                    <div class="col-md-1 text-left" style="width: 50px; padding-left: 0px;">
+                        <a data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample" onclick="showSearchRefNo()">
+                            <span id="spanEditRefNo">Ref</span>
+                        </a>                           
+                    </div>
+                    <div class="col-md-1 text-left" style="width: 50px;">
+                        <a data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample" onclick="showSearchStock()">
+                            <span id="spanEditStock">Stock</span>
+                        </a>                           
+                    </div>
+                    <div class="col-md-1 text-left">
+                        <div class="col-xs-1  text-right" style="padding: 5px 0px 0px 0px;"><i id="ajaxLoadSearch"  class="fa fa-spinner fa-spin hidden"></i></div>
+                    </div>
+                </div>
+                <div class="col-xs-12 " id="searchRefNo1" style="padding-left: 0px;">
+                    <div class="col-xs-1 text-right" style="width: 100px;">
+                        <label class="control-label">Ref No</label>
+                    </div>
+                    <div class="col-xs-2 form-group" id="refnopanel" style="width: 180px; padding-left: 0px;">
+                        <div class="input-group">
+                            <input type="text" style="text-transform:uppercase" class="form-control" id="refNo" name="refNo" value="" onkeydown="refNoValidate()" maxlength="6">
+                        </div>
+                    </div>                        
+                    <div class="col-xs-1 text-left"  style="width: 100px">
+                        <button type="button"  id="btnSearchRefNo"  name="btnSearchRefNo" onclick="searchRefNo()" class="btn btn-primary btn-sm">
+                            <span id="SpanSearchRefNo" class="glyphicon glyphicon-print fa fa-search"></span> Search
+                        </button> 
+                    </div>
+                </div> 
+                <div class="col-xs-12 hidden" id="searchRefNo2" style="padding: 0px 15px 0px 0px;">
+                    <table id="RefNoTable" class="display" cellspacing="0" width="100px">
+                        <thead>
+                            <tr class="datatable-header">
+                                <th style="width: 1%" >No</th>
+                                <th style="width: 5%">Type</th>
+                                <th style="width: 44%">Description</th>
+                                <th style="width: 10%">Cost</th>
+                                <th style="width: 3%">Cur</th>
+                                <th style="width: 10%">Sale</th>
+                                <th style="width: 3%">Cur</th>
+                                <th style="width: 1%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>               
+
+                        </tbody>
+                    </table>        
+                </div>
+                <div class="col-xs-12 hidden" id="searchStock1" style="padding-left: 0px;">
+                    <div class="col-xs-1 text-right" style="width: 100px;">
+                        <label class="control-label">Stock</label>
+                    </div>
+                    <div class="col-xs-2 form-group" id="stockpanel" style="width: 180px; padding-left: 0px;">
+                        <div class="input-group">
+                            <input type="text" style="text-transform:uppercase" class="form-control" id="payStockNo" name="payStockNo" value="" onkeydown="stockValidate()" >
+                        </div>
+                    </div>                        
+                    <div class="col-xs-1 text-left"  style="width: 100px">
+                        <button type="button"  id="btnSearchStock"  name="btnSearchStock" onclick="searchStock()" class="btn btn-primary btn-sm">
+                            <span id="SpanSearchStock" class="glyphicon glyphicon-print fa fa-search"></span> Search
+                        </button> 
+                    </div>
+                </div> 
+                <div class="col-xs-12 hidden" id="searchStock2" style="padding: 0px 15px 0px 0px;">
+                    <table id="StockTable" class="display" cellspacing="0" width="100px">
+                        <thead>
+                            <tr class="datatable-header">
+                                <th style="width: 5%" >No</th>
+                                <th style="width: 35%">Pay Stock No.</th>
+                                <th style="width: 20%">Cost</th>
+                                <th style="width: 5%">Cur</th>
+                                <th style="width: 20%">Sale</th>
+                                <th style="width: 5%">Cur</th>
+                                <th style="width: 1%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>               
+
+                        </tbody>
+                    </table>        
+                </div>
+                <div class="col-xs-12"><br></div>               
                 <div class="row" style="padding-left: 15px;">             
                     <div class="row">
                         <div class="col-xs-11" style="width: 1030px">
@@ -283,6 +370,18 @@
                                             <input type="text" name="accCode${i.count}" id="accCode${i.count}" class="form-control" value="${detail.accCode}"/>
                                             <input type="text" name="exportDate${i.count}" id="exportDate${i.count}" class="form-control" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd HH:mm:ss' value="${detail.exportDate}"/>"/>
                                             <input type="text" name="isExport${i.count}" id="isExport${i.count}" class="form-control" value="${detail.isExport}"/>
+                                            <input type="text" name="realExRate${i.count}" id="realExRate${i.count}" class="form-control" value="${detail.realExRate}"/>
+                                            <input type="text" name="payExRate${i.count}" id="payExRate${i.count}" class="form-control" value="${detail.payExRate}"/>
+                                            <input type="text" name="isWht${i.count}" id="isWht${i.count}" class="form-control" value="${detail.isWht}"/>
+                                            <input type="text" name="wht${i.count}" id="wht${i.count}" class="form-control" value="${detail.wht}"/>
+                                            <input type="text" name="whtTemp${i.count}" id="whtTemp${i.count}" class="form-control" value="${detail.wht}"/>
+                                            <input type="text" name="whtAmount${i.count}" id="whtAmount${i.count}" class="form-control" value="${detail.whtAmount}"/>
+                                            <input type="text" name="isComVat${i.count}" id="isComVat${i.count}" class="form-control" value="${detail.isVatRecCom}"/>
+                                            <input type="text" name="vatRecCom${i.count}" id="vatRecCom${i.count}" class="form-control" value="${detail.vatRecCom}"/>
+                                            <input type="text" name="vatRecComTemp${i.count}" id="vatRecComTemp${i.count}" class="form-control" value="${detail.vatRecCom}"/>
+                                            <input type="text" name="vatRecComAmount${i.count}" id="vatRecComAmount${i.count}" class="form-control" value="${detail.vatRecComAmount}"/>
+                                            <input type="text" name="value${i.count}" id="value${i.count}" class="form-control" value="${detail.value}"/>
+                                            <input type="text" name="payStockId${i.count}" id="payStockId${i.count}" class="form-control" value="${detail.payStockId}"/>
                                         </td>
                                         <td>
                                             <select class="form-control" name="type${i.count}" id="type${i.count}" onchange="addRow('${i.count}')">
@@ -343,6 +442,9 @@
                                         </td>
                                         <td class="text-center" rowspan="2">                                 
                                             <a href="#" onclick=""  data-toggle="modal" data-target="">
+                                                <span id="editPaymentDetail${i.count}" onclick="editPaymentDetail('${i.count}')" class="glyphicon glyphicon glyphicon-list-alt"></span>                                                
+                                            </a>
+                                            <a href="#" onclick=""  data-toggle="modal" data-target="">
                                                 <span id="spanDelete${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentDetailList('${detail.detailId}','${i.count}')" data-toggle="modal"></span>
                                             </a>
                                         </td>
@@ -361,11 +463,23 @@
                                             <input type="text" name="payStock${i.count}" id="payStock${i.count}" class="form-control" value="${detail.payStock}"/>
                                         </td>
                                         <td colspan="1" align="right" bgcolor="#E8EAFF">
-                                            <b>Value</b>
+                                            <b>Sale</b>
                                         </td>
-                                        <td colspan="2">
-                                            <input type="text" name="value${i.count}" id="value${i.count}" class="form-control" style="text-align:right;" onkeyup="insertCommas(this)" onfocusout="setFormatNumber('value','${i.count}')" value="${detail.value}"/>
+                                        <td colspan="1">
+                                            <input type="text" name="saleAmount${i.count}" id="saleAmount${i.count}" class="form-control" style="text-align:right;" onkeyup="insertCommas(this)" onfocusout="setFormatNumber('saleAmount','${i.count}')" value="${detail.saleAmount}"/>
                                         </td>
+                                        <td colspan="1">
+                                            <select class="form-control" name="saleCurrency${i.count}" id="saleCurrency${i.count}" onchange="addRow('${i.count}')">
+                                                <option  value="" >---------</option>
+                                                <c:forEach var="currency" items="${currencyList}">                                       
+                                                    <c:set var="selectsaleCur" value="" />
+                                                    <c:if test="${currency.code == detail.saleCurrency}">
+                                                        <c:set var="selectsaleCur" value="selected" />
+                                                    </c:if>
+                                                    <option  value="${currency.code}" ${select}>${currency.code}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </td>      
                                     </tr>
                                     </c:forEach>
                                 </tbody>
@@ -380,6 +494,82 @@
                 </div>            
             </div>
         </div>
+        
+        <!-- Payment Detail Panel -->
+        <div class="panel panel-default outboundborder hidden" id="paymentDetailPanel">                    
+            <div class="panel-body">
+                <div class="row" style="padding-left: 25px; margin-top: -10px;">
+                    <div class="col-xs-2">
+                        <label class="control-label">Payment Detail</lable>
+                    </div>
+                </div>
+                <div class="row" style="padding-left: 25px; ">
+                    <div class="col-xs-1 text-right" style="width: 110px;">
+                        <label class="control-label">Real Rate</lable>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 200px;">
+                        <input type="hidden" class="form-control text-right" id="rowDetail" name="rowDetail" value=""/>
+                        <input type="text" class="form-control text-right numerical" id="realExRate" name="realExRate" value=""/>
+                    </div>
+                    <div class="col-xs-1 text-left" style="width: 120px;">
+                        <label class="control-label">Pay EX Rate</lable>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 200px;">
+                        <input type="text" class="form-control text-right numerical" id="payExRate" name="payExRate" value=""/>
+                    </div>
+                    <div class="col-xs-1 text-left" style="width: 70px;">
+                        <label class="control-label">Detail</lable>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 300px;">
+                        <textarea rows="3" cols="255" class="form-control" id="paymentDescription" name="paymentDescription" maxlength="255" data-bv-field="detail"></textarea>
+                    </div>
+                </div>
+                <div class="row" style="padding-left: 25px; margin-top: -30px;">
+                    <div class="col-xs-1 text-right" style="width: 110px;">
+                        <label class="control-label">WHT</lable>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 50px; padding-top: 5px;">
+                        <input type="checkbox" id="isWht" name="isWht" value="1"/>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 150px;">
+                        <input type="text" class="form-control text-right" id="wht" name="wht" value="" readonly=""/>
+                    </div>
+                    <div class="col-xs-1 text-left" style="width: 120px;">
+                        <label class="control-label">WHT Amount</lable>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 200px;">
+                        <input type="text" class="form-control text-right" id="whtAmount" name="whtAmount" value="" readonly=""/>
+                    </div>
+                </div>
+                <div class="row" style="padding-left: 25px; padding-top: 10px;">
+                    <div class="col-xs-1 text-right" style="width: 110px;">
+                        <label class="control-label">Com Vat</lable>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 50px; padding-top: 5px;">
+                        <input type="checkbox" id="isComVat" name="isComVat" value="1"/>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 150px;">
+                        <input type="text" class="form-control text-right" id="vatRecCom" name="vatRecCom" value="" readonly=""/>
+                    </div>
+                    <div class="col-xs-1 text-left" style="width: 120px;">
+                        <label class="control-label">Com Amount</lable>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 200px;">
+                        <input type="text" class="form-control text-right" id="vatRecComAmount" name="vatRecComAmount" value="" readonly=""/>
+                    </div>
+                    <div class="col-xs-1 text-left" style="width: 70px;">
+                        <label class="control-label">Value</lable>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 200px;">
+                        <input type="text" class="form-control text-right numerical" id="value" name="value" value=""/>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 100px">
+                         <button type="button" onclick="savePaymentDetail()" class="btn btn-success">OK</button>
+                    </div>    
+                </div> 
+            </div>
+        </div><!--End Table Content -->
+                            
         <div class="panel panel-default outboundborder">
             <div class="panel-body"  style="padding-right: 0px;">                                               
                 <div class="row" >

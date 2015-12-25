@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Dec 25, 2015 10:19:36 AM by Hibernate Tools 3.6.0 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.PaymentStock" table="payment_stock" catalog="smitravel">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="payStockNo" type="string">
+            <column name="pay_stock_no" length="20" />
+        </property>
+        <property name="createBy" type="string">
+            <column name="create_by" length="50" />
+        </property>
+        <property name="createDate" type="date">
+            <column name="create_date" length="10" />
+        </property>
+        <property name="updateBy" type="string">
+            <column name="update_by" length="50" />
+        </property>
+        <property name="updateDate" type="date">
+            <column name="update_date" length="10" />
+        </property>
+        <property name="costAmount" type="big_decimal">
+            <column name="cost_amount" precision="10" />
+        </property>
+        <property name="saleAmount" type="big_decimal">
+            <column name="sale_amount" precision="10" />
+        </property>
+        <property name="curCost" type="string">
+            <column name="cur_cost" length="3" />
+        </property>
+        <property name="curSale" type="string">
+            <column name="cur_sale" length="3" />
+        </property>
+        <bag name="paymentStockDetails" table="payment_stock_detail" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pay_stock_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.PaymentStockDetail" />
+        </bag>
+        <bag name="paymentOutboundDetails" table="payment_outbound_detail" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pay_stock_id" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.PaymentOutboundDetail" />
+        </bag>
+    </class>
+</hibernate-mapping>
