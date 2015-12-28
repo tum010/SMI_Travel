@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.entity.PaymentOutbound;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
 import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
+import com.smi.travel.datalayer.view.entity.PaymentOutboundView;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
  * @author chonnasith
  */
 public interface PaymentOutboundDao {
-
+    
     public String updatePaymentOutbound(PaymentOutbound paymentOutbound);
     public String insertPaymentOutbound(PaymentOutbound paymentOutbound);
     public List<PaymentOutboundDetailView> getPaymentOutboundDetail(String paymentOutboundId);
@@ -26,5 +27,7 @@ public interface PaymentOutboundDao {
     public String deletePaymentOutboundDetail(String paymentOutboundDetailId);
     public List<BookingOutboundView> getBookingOutboundView(String searchRefNo);
     public List<PaymentStock> getPaymentStock(String payStockNo);
+    public List<PaymentOutboundView> searchPaymentOutboundByFilter(String fromDate, String toDate, String status, String invSupCode, String invSupName, String refNo);
+    public String deletePaymentOutbound(String paymentId);
     
 }

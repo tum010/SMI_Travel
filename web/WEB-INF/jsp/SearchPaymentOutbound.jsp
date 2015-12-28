@@ -4,6 +4,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="statusList" value="${requestScope['statusList']}" />
+<c:set var="paymentOutboundViewList" value="${requestScope['paymentOutboundViewList']}" />
+<c:set var="result" value="${requestScope['result']}" />
+<input type="hidden" id="result" name="result" value="${result}"/>
 
 <section class="content-header" >
     <h1>
@@ -21,6 +24,16 @@
     </div>
     <!--Content -->
     <div class="col-sm-10">
+        <form action="SearchPaymentOutbound.smi" method="post" id="searchPaymentOutboundForm" name="searchPaymentOutboundForm" role="form">
+        <!--Alert Save -->
+        <div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Delete Success!</strong> 
+        </div>
+        <div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Delete Not Success!</strong> 
+        </div>
         <div class="row" style="padding-left: 0px">  
             <div class="col-sm-6" style="padding-right: 15px">
                 <h4><b>Search Payment Outbound</b></h4>
@@ -29,20 +42,20 @@
         <hr/>
         <div class="row" style="padding-left: 0px">
             <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;">
-                <label class="control-label">From </lable>
+                <label class="control-label">From<font style="color: red;">*</font></lable>
             </div>
             <div class="col-md-2 form-group text-left" >
-                <div class='input-group date' >
-                    <input name="fromDate" id="fromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                <div class='input-group date fromDate' id="fromDateDiv">
+                    <input name="fromDate" id="fromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['fromDate']}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
             <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;">
-                <label class="control-label">To</lable>
+                <label class="control-label">To<font style="color: red;">*</font></lable>
             </div>
             <div class="col-md-2 form-group text-left" >
-                <div class='input-group date' >
-                    <input name="toDate" id="toDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />
+                <div class='input-group date todate' id="toDateDiv">
+                    <input name="toDate" id="toDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['toDate']}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
@@ -54,7 +67,7 @@
                     <option  value="" >---------</option>
                     <c:forEach var="status" items="${statusList}">                                       
                         <c:set var="select" value="" />
-                        <c:if test="${status.id == taxDetail.mbillType.id}">
+                        <c:if test="${status.id == requestScope['status']}">
                             <c:set var="select" value="selected" />
                         </c:if>
                         <option  value="${status.id}" ${select}>${status.name}</option>
@@ -70,82 +83,101 @@
             <div class="col-md-2 form-group text-left" > 
                 <div class="input-group" id="gr" >
                     <input type="hidden" class="form-control" id="invSupId" name="invSupId" value="" />
-                    <input type="text" class="form-control" id="invSupCode" name="invSupCode" value="" />
+                    <input type="text" class="form-control" id="invSupCode" name="invSupCode" value="${requestScope['invSupCode']}" />
                     <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchInvoiceSup">
                         <span class="glyphicon-search glyphicon"></span>
                     </span>
                 </div>
             </div>
             <div class="col-md-2 form-group text-left" style="width:310px;padding-right: 0px;padding-left: 0px;">
-                <input name="invSupName" id="invSupName" type="text" class="form-control" value="" readonly=""/>
+                <input name="invSupName" id="invSupName" type="text" class="form-control" value="${requestScope['invSupName']}" readonly=""/>
             </div>
             <div class="col-xs-1 text-right" style="width:165px;padding-right: 0px;padding-left: 0px;">
                 <label class="control-label">Ref No</lable>
             </div>
             <div class="col-md-2 form-group text-left" >
-                <input name="refNo" id="refNo" type="text" class="form-control" value="" />
+                <input name="refNo" id="refNo" type="text" class="form-control" value="${requestScope['refNo']}" />
             </div>
         </div>
         <div class="row" style="padding-left: 775px">
             <div class="col-xs-1 text-left" style="width: 100px;">
-                <a id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary">
-                    <i class="glyphicon glyphicon-search"></i> Search
-                </a>
+                <button type="submit"  id="btnSearch"  name="btnSearch" onclick="" class="btn btn-primary btn-primary ">
+                    <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
+                </button>   
             </div>
             <div class="col-xs-1 text-left" style="width: 100px;">
-                <a id="ButtonPrint" name="ButtonPrint" onclick="" class="btn btn-default">
+                <a id="btnPrint" name="btnPrint" onclick="printPaymentOutbound()" class="btn btn-default">
                     <i class="glyphicon glyphicon-print"></i> Print
                 </a>
             </div>
         </div>
-            <div class="row" style="padding-left: 15px;width: 1040px;">
-                <table class="display" id="SearchPaymentTable">
-                    <thead class="datatable-header">
-                        <tr>
-                            <th style="width: 10%">Pay No</th>
-                            <th style="width: 8%">Pay Date</th>
-                            <th style="width: 20%">Invoice Sup</th>
-                            <th style="width: 10%">Dept</th>
-                            <th style="width: 12%">Total</th>
-                            <th style="width: 12%">Cur</th>
-                            <th style="width: 15%">Status</th>
-                            <th style="width: 8%">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>XXXxx</td>
-                            <td>26/07/2015</td>
-                            <td>XXXXX</td>
-                            <td>XXXX</td>
-                            <td>XXXXX</td>
-                            <td>THB</td>
-                            <td>XXX</td>
-                            <td class="text-center">
-                                <a href="#" onclick=""  data-toggle="modal" data-target="" id="editPayment" name="editPayment">
-                                    <span  class="glyphicon glyphicon-edit editicon" onclick=""></span>
-                                </a>    
-                                <a href="#" onclick=""  data-toggle="modal" data-target="" id="deletePayment" name="deletePayment">
-                                    <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal" data-target="#delSearchPaymentOutboundModal"></span>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="row" style="padding-left: 15px;width: 1040px;">
+            <table class="display" id="searchPaymentTable">
+                <thead class="datatable-header">
+                    <tr>
+                        <th style="width: 10%">Pay No</th>
+                        <th style="width: 8%">Pay Date</th>
+                        <th style="width: 20%">Ref No.</th>
+                        <th style="width: 20%">Invoice Sup</th>
+                        <th style="width: 20%">Invoice No.</th>
+                        <th style="width: 10%">Amount</th>
+                        <th style="width: 12%">Cur</th>
+                        <th style="width: 20%">Sale</th>
+                        <th style="width: 12%">Cur</th>
+                        <th style="width: 15%">Status</th>
+                        <th style="width: 8%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="paymentOutboundView" items="${paymentOutboundViewList}" varStatus="i">
+                    <tr>
+                        <td>${paymentOutboundView.payno}</td>
+                        <td>${paymentOutboundView.paydate}</td>
+                        <td>${paymentOutboundView.refno}</td>
+                        <td>${paymentOutboundView.invoicesup}</td>
+                        <td>${paymentOutboundView.invoiceno}</td>
+                        <td class="money" align="right">${paymentOutboundView.amount}</td>
+                        <td>${paymentOutboundView.curamount}</td>
+                        <td class="money" align="right">${paymentOutboundView.sale}</td>
+                        <td>${paymentOutboundView.cursale}</td>
+                        <td>
+                            <c:set var="statusName" value="" />
+                            <c:forEach var="status" items="${statusList}">                                                                       
+                                <c:if test="${status.id == paymentOutboundView.status}">
+                                    <c:set var="statusName" value="${status.name}" />
+                                </c:if>
+                            </c:forEach>
+                            ${statusName}
+                        </td>
+                        <td class="text-center">
+                            <a href="#" onclick="editPaymentOutbound('${paymentOutboundView.paymentid}','${paymentOutboundView.payno}')"  data-toggle="modal" data-target="" id="editPayment" name="editPayment">
+                                <span  class="glyphicon glyphicon-edit editicon" onclick=""></span>
+                            </a>    
+                            <a href="#" onclick="deletePaymentOutbound('${paymentOutboundView.paymentid}','${paymentOutboundView.payno}')"  data-toggle="modal" data-target="" id="deletePayment" name="deletePayment">
+                                <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
+        <input type="hidden" id="action" name="action" value="search"/>
+        <input type="hidden" id="paymentId" name="paymentId" value=""/>
+        </form>
     </div>
 </div>
 <!--Delete Payment Outbound Modal-->
 <div class="modal fade" id="delSearchPaymentOutboundModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">Delete Payment Outbound</h4>
             </div>
-            <div class="modal-body" id="delCode"></div>
+            <div class="modal-body" id="delPaymentOutboundMessage"></div>
             <div class="modal-footer">
-                <button id="btnDelete" type="button" onclick="Delete()" class="btn btn-danger">Delete</button>
+                <button id="btnDelete" type="button" onclick="confirmDeletePaymentOutbound()" class="btn btn-danger">Delete</button>
                 <button id="btnDeleteClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div><!-- /.modal-content -->
@@ -160,7 +192,7 @@
                 <h4 class="modal-title"  id="Titlemodel">Invoice Supplier</h4>
             </div>
             <div class="modal-body">
-                <table class="display" id="SearchInvoicSupTable">
+                <table class="display" id="searchInvoicSupTable">
                     <thead class="datatable-header">
                         <script>
                             var invoiceSup = [];
@@ -204,8 +236,9 @@ $(document).ready(function () {
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
         });
+    $(".money").mask('000,000,000,000.00', {reverse: true});
     
-    $('#SearchPaymentTable').dataTable({bJQueryUI: true,
+    var table = $('#searchPaymentTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": true,
         "bFilter": false,
@@ -215,7 +248,7 @@ $(document).ready(function () {
         "iDisplayLength": 10
     });
     
-    $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
+    $('#searchInvoicSupTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": true,
         "bFilter": true,
@@ -272,6 +305,85 @@ $(document).ready(function () {
             });   
         },delay); 
     });
+    
+    $('#searchPaymentTable tbody').on('click', 'tr', function () {
+        if ($(this).hasClass('row_selected')) {
+            $(this).removeClass('row_selected');
+            $('#hdGridSelected').val('');
+        }else{
+            table.$('tr.row_selected').removeClass('row_selected');
+            $(this).addClass('row_selected');
+            $('#hdGridSelected').val($('#searchPaymentTable tbody tr.row_selected').attr("id"));
+        }
+    });
+        
+    //validate date
+    $('#fromDateDiv').datetimepicker().on('dp.change', function (e) {
+        $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
+    });
+    $('#toDateDiv').datetimepicker().on('dp.change', function (e) {
+        $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
+    });
+
+    $("#searchPaymentOutboundForm").bootstrapValidator({
+        framework: 'bootstrap',
+    //  container: 'tooltip',
+        feedbackIcons: {
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
+        },
+        fields: {
+            fromDate: {
+                trigger: 'focus keyup change',
+                validators: {
+                    notEmpty: {
+                        message: 'The Date From is required'
+                    },
+                    date: {
+                        format: 'YYYY-MM-DD',
+                        max: 'toDate',
+                        message: 'The Date From is not a valid'
+                    }
+                }
+            },
+            toDate: {
+                trigger: 'focus keyup change',
+                validators: {
+                    notEmpty: {
+                        message: 'The Date From is required'
+                    },
+                    date: {
+                        format: 'YYYY-MM-DD',
+                        min: 'fromDate',
+                        message: 'The Date To is not a valid'
+                    }
+                }
+            }
+        }
+    }).on('success.field.fv', function (e, data) {
+        if (data.field === 'fromDate' && data.fv.isValidField('toDate') === false) {
+            data.fv.revalidateField('toDate');
+        }
+        if (data.field === 'toDate' && data.fv.isValidField('fromDate') === false) {
+            data.fv.revalidateField('fromDate');
+        }
+    });
+    
+    $('.fromdate').datetimepicker().change(function(){                          
+        checkFromDateField();
+    });
+    $('.todate').datetimepicker().change(function(){                          
+        checkToDateField();
+    });
+    
+    var result = $('#result').val();
+    if (result === "success") {
+        $('#textAlertDivDelete').show();
+    } else if (result === 'fail') {
+        $('#textAlertDivNotDelete').show();
+    }
+    
 });
 
     function setupInvSupValue(id,code,name,apcode){
@@ -282,5 +394,91 @@ $(document).ready(function () {
         document.getElementById('invSupCode').focus();
 //        $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputInvoiceSupCode');
 //        $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
+    }
+
+    function printPaymentOutbound(){
+        var fromdate = document.getElementById("fromDate").value;
+        var todate= document.getElementById("toDate").value;
+        if((fromdate === '') || (todate === '')){
+           validateDate();
+        } else {
+//            window.open("report.smi?name=TaxInvoiceSummaryReport&fromdate="+fromdate+"&todate="+todate+"&department="+department+"&comfirm="+strStatus+"&systemuser="+systemuser);
+        }    
+    }
+    
+    function checkFromDateField(){
+        var inputFromDate = document.getElementById("fromDate");
+        if(inputFromDate.value === ''){          
+            $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
+            $("#btnPrint").addClass("disabled");         
+        } else {
+            $("#btnPrint").removeClass("disabled");
+            checkDateValue("from","");
+        }      
+    }
+    
+    function checkToDateField(){
+        var InputToDate = document.getElementById("toDate");
+        if(InputToDate.value === ''){
+            $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
+            $("#btnPrint").addClass("disabled");  
+        }else{
+            $("#btnPrint").removeClass("disabled");
+            checkDateValue("to","");
+        }               
+    }
+    
+    function checkDateValue(date){
+        var inputFromDate = document.getElementById("fromDate");
+        var InputToDate = document.getElementById("toDate");
+        if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+            var fromDate = (inputFromDate.value).split('-');
+            var toDate = (InputToDate.value).split('-');
+            if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+                validateDate(date,"over");
+            }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+                validateDate(date,"over");
+            }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+                validateDate(date,"over");
+            }else{
+                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
+                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
+            }          
+        }
+    }
+    
+    function validateDate(date,option){
+        if(option === 'over'){
+            if(date === 'from'){
+                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
+                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
+            }
+            if(date === 'to'){
+                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
+                $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
+            }           
+            $("#btnPrint").addClass("disabled");
+        } else {
+            $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');
+            $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'toDate');
+            $("#btnPrint").addClass("disabled");
+        }
+    }
+    
+    function editPaymentOutbound(paymentId,payNo){
+        window.location = ("PaymentOutbound.smi?action=edit&payId="+paymentId+"&payNo="+payNo);
+    }
+    
+    function deletePaymentOutbound(paymentId,payNo){
+        $("#paymentId").val(paymentId);
+        $("#delPaymentOutboundMessage").text("Are you sure to delete payment "+payNo+" ?");
+        $("#delSearchPaymentOutboundModal").modal("show");
+    }
+    
+    function confirmDeletePaymentOutbound(){
+        $("#delSearchPaymentOutboundModal").modal("hide");
+        $("#action").val("deletePaymentOutbound");
+        document.getElementById("searchPaymentOutboundForm").submit();
+        
     }
 </script>

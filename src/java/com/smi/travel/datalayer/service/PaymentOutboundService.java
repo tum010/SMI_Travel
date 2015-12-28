@@ -4,6 +4,7 @@ package com.smi.travel.datalayer.service;
 import com.smi.travel.datalayer.dao.PaymentOutboundDao;
 import com.smi.travel.datalayer.entity.PaymentOutbound;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
+import com.smi.travel.datalayer.view.entity.PaymentOutboundView;
 import java.util.List;
 
 /*
@@ -49,5 +50,13 @@ public class PaymentOutboundService {
 
     public String deletePaymentOutboundDetail(String paymentOutboundDetailId) {
         return paymentOutboundDao.deletePaymentOutboundDetail(paymentOutboundDetailId);
+    }
+
+    public List<PaymentOutboundView> searchPaymentOutboundByFilter(String fromDate, String toDate, String status, String invSupCode, String invSupName, String refNo) {
+        return paymentOutboundDao.searchPaymentOutboundByFilter(fromDate, toDate, status, invSupCode, invSupName, refNo);
+    }
+
+    public String deletePaymentOutbound(String paymentId) {
+        return paymentOutboundDao.deletePaymentOutbound(paymentId);
     }
 }

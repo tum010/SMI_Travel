@@ -14,6 +14,7 @@ import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
 import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
+import com.smi.travel.datalayer.view.entity.PaymentOutboundView;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -289,5 +290,112 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         this.sessionFactory.close();
         session.close();
         return paymentStockList;
+    }
+
+    @Override
+    public List<PaymentOutboundView> searchPaymentOutboundByFilter(String fromDate, String toDate, String status, String invSupCode, String invSupName, String refNo) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<PaymentOutboundView> paymentOutboundViewList = new ArrayList<PaymentOutboundView>();
+        String query = " SELECT * FROM `payment_outbound_view` p ";
+        boolean haveCondition = false;
+        if(!"".equalsIgnoreCase(fromDate) && fromDate != null && !"".equalsIgnoreCase(toDate) && toDate != null){
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " (p.paydate BETWEEN '" + fromDate + "' AND '" + toDate + "') ";
+            haveCondition = true;
+        }
+        if(!"".equalsIgnoreCase(status) && status != null){
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " p.status = '" + status + "' ";
+            haveCondition = true;
+        }
+        if(!"".equalsIgnoreCase(invSupCode) && invSupCode != null){
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " p.suppliercode = '" + invSupCode + "' ";
+            haveCondition = true;
+        }
+        if(!"".equalsIgnoreCase(refNo) && refNo != null){
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " p.refno = '" + refNo + "' ";
+            haveCondition = true;
+        }
+        
+        List<Object[]> QueryList =  session.createSQLQuery(query)
+                .addScalar("paymentid",Hibernate.STRING)
+                .addScalar("payno",Hibernate.STRING)
+                .addScalar("paydate",Hibernate.STRING)
+                .addScalar("duepaymentdate",Hibernate.STRING)
+                .addScalar("invoicesup",Hibernate.STRING)
+                .addScalar("suppliercode",Hibernate.STRING)
+                .addScalar("refno",Hibernate.STRING)
+                .addScalar("invoiceno",Hibernate.STRING) 
+                .addScalar("amount",Hibernate.STRING)
+                .addScalar("sale",Hibernate.STRING) 
+                .addScalar("status",Hibernate.STRING)
+                .addScalar("diff",Hibernate.STRING)
+                .addScalar("curamount",Hibernate.STRING) 
+                .addScalar("cursale",Hibernate.STRING) 
+                .list();
+
+        for (Object[] B : QueryList) {
+            PaymentOutboundView paymentOutboundView = new PaymentOutboundView();
+            paymentOutboundView.setPaymentid(B[0] != null ? util.ConvertString(B[0]) : "");
+            paymentOutboundView.setPayno(B[1] != null ? util.ConvertString(B[1]) : "");
+            paymentOutboundView.setPaydate(B[2] != null ? util.ConvertString(B[2]) : "");
+            paymentOutboundView.setDuepaymentdate(B[3] != null ? util.ConvertString(B[3]) : "");
+            paymentOutboundView.setInvoicesup(B[4] != null ? util.ConvertString(B[4]) : "");
+            paymentOutboundView.setSuppliercode(B[5] != null ? util.ConvertString(B[5]) : "");
+            paymentOutboundView.setRefno(B[6] != null ? util.ConvertString(B[6]) : "");
+            paymentOutboundView.setInvoiceno(B[7] != null ? util.ConvertString(B[7]) : "");
+            paymentOutboundView.setAmount(B[8] != null ? util.ConvertString(B[8]) : "");
+            paymentOutboundView.setSale(B[9] != null ? util.ConvertString(B[9]) : "");
+            paymentOutboundView.setStatus(B[10] != null ? util.ConvertString(B[10]) : "");
+            paymentOutboundView.setDiff(B[11] != null ? util.ConvertString(B[11]) : "");
+            paymentOutboundView.setCuramount(B[12] != null ? util.ConvertString(B[12]) : ""); 
+            paymentOutboundView.setCursale(B[13] != null ? util.ConvertString(B[13]) : ""); 
+            paymentOutboundViewList.add(paymentOutboundView);
+        }
+        return paymentOutboundViewList;
+    }
+
+    @Override
+    public String deletePaymentOutbound(String paymentId) {
+        String result = "";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            String sql = "delete from PaymentOutboundDetail pd where pd.paymentOutbound.id = :paymentId";
+            Query query = session.createQuery(sql);
+            query.setParameter("paymentId", paymentId);
+            query.executeUpdate();
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            result = "success";
+        }catch (Exception ex){
+            transaction.rollback();
+            ex.printStackTrace();
+            result = "fail";
+        }
+        
+        if("success".equalsIgnoreCase(result)){
+            try {
+                Session session = this.sessionFactory.openSession();
+                transaction = session.beginTransaction();
+                String sql = "delete from PaymentOutbound po where po.id = :paymentId";
+                Query query = session.createQuery(sql);
+                query.setParameter("paymentId", paymentId);
+                query.executeUpdate();
+                transaction.commit();
+                session.close();
+                this.sessionFactory.close();
+                result = "success";
+            }catch (Exception ex){
+                transaction.rollback();
+                ex.printStackTrace();
+                result = "fail";
+            }
+        }
+        return result;
     }
 }

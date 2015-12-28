@@ -130,6 +130,16 @@ public class PaymentOutboundController extends SMITravelController {
             String paymentOutboundDetailId = request.getParameter("paymentOutboundDetailId");
             String result = paymentOutboundService.deletePaymentOutboundDetail(paymentOutboundDetailId);
             System.out.println("result : "+result);
+        
+        }else if("edit".equalsIgnoreCase(action)){
+            PaymentOutbound paymentOutbound = new PaymentOutbound();
+            paymentOutbound = paymentOutboundService.searchPaymentOutbound(payNo);
+            if(paymentOutbound != null){                         
+                List<PaymentOutboundDetailView> paymentOutboundDetailView = new ArrayList<PaymentOutboundDetailView>();
+                paymentOutboundDetailView = paymentOutboundService.getPaymentOutboundDetail(paymentOutbound.getId());
+                request.setAttribute(PAYMENTOUTBOUND, paymentOutbound);
+                request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);               
+            }
         }
                 
         return PaymentOutbound;
