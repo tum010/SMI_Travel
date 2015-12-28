@@ -630,8 +630,10 @@ function CalculateTotalNet(id) {
                 }
             }    
         }
-//        vatnet = grandTotal-totalnet;      
-        document.getElementById('TotalNet').value = formatNumber(totalnet);
+//        vatnet = grandTotal-totalnet;
+        if(document.getElementById('TotalNet') !== null){
+            document.getElementById('TotalNet').value = formatNumber(totalnet);
+        }    
         document.getElementById('VatNet').value = formatNumber(vatnet);
     }
 }
@@ -965,73 +967,73 @@ function validFromInvoiceInbound() {
 }
 
 function checkCurrency(){
-    var counter = $('#DetailBillableTable tbody tr').length;
-    var different = 0;
-    var checkcur1 = false;
-    for (var i = 1; i <= (counter - 1); i++) {
-        var currency1 = $('#SelectCurrencyAmount' + i).find(":selected").text();
-        if (currency1 === '') {
-            checkcur1 = true;
-        } else {
-            $('#textAlertCurrencyAmountNotEmpty').hide();
-        }
-        for (var j = 2; j <= (counter - 1); j++) {
-            var type = $('#BillDescriptionTemp' + j).val();
-            if (type !== "") {
-                var currency2 = $('#SelectCurrencyAmount' + j).find(":selected").text();
-                if (currency1 !== currency2 || currency2 === '') {
-                    rowTemp = j;
-                    different++;
-                }
-            }
-        }
-    }
-    if (different > 0) {
-        $('#DetailBillableTable').find('tr').each(function() {
-            $(this).find('td').each(function() {
-                if ($(this).hasClass('priceCurrencyAmount')) {
-                    $(this).addClass("alert-danger");
-                }
-            });
-        });
-        $('#textAlertCurrency').show();
-        currency = 1;
-        
-        if (checkcur1) {
-            $('#textAlertCurrencyAmountNotEmpty').show();
-            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvTo');
-            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvToName');
-            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'ARCode');
-            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InputInvDate');
-            return ;
-        }
-        $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvTo');
-        $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvToName');
-        $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'ARCode');
-        $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InputInvDate');
-
-    } else {
-        $('#DetailBillableTable').find('tr').each(function() {
-            $(this).find('td').each(function() {
-                if ($(this).hasClass('priceCurrencyAmount')) {
-                    $(this).removeClass("alert-danger");
-                }
-            });
-        });
-        $('#textAlertCurrency').hide();
-        currency = 0;
-
-        if (checkcur1) {
-            $('#textAlertCurrencyAmountNotEmpty').show();
-            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvTo');
-            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvToName');
-            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'ARCode');
-            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InputInvDate');
-            return ;
-        } else {
-            $('#textAlertInvoiceNotEmpty').hide();
-        }
-    }
+//    var counter = $('#DetailBillableTable tbody tr').length;
+//    var different = 0;
+//    var checkcur1 = false;
+//    for (var i = 1; i <= (counter - 1); i++) {
+//        var currency1 = $('#SelectCurrencyAmount' + i).find(":selected").text();
+//        if (currency1 === '') {
+//            checkcur1 = true;
+//        } else {
+//            $('#textAlertCurrencyAmountNotEmpty').hide();
+//        }
+//        for (var j = 2; j <= (counter - 1); j++) {
+//            var type = $('#BillDescriptionTemp' + j).val();
+//            if (type !== "") {
+//                var currency2 = $('#SelectCurrencyAmount' + j).find(":selected").text();
+//                if (currency1 !== currency2 || currency2 === '') {
+//                    rowTemp = j;
+//                    different++;
+//                }
+//            }
+//        }
+//    }
+//    if (different > 0) {
+//        $('#DetailBillableTable').find('tr').each(function() {
+//            $(this).find('td').each(function() {
+//                if ($(this).hasClass('priceCurrencyAmount')) {
+//                    $(this).addClass("alert-danger");
+//                }
+//            });
+//        });
+//        $('#textAlertCurrency').show();
+//        currency = 1;
+//        
+//        if (checkcur1) {
+//            $('#textAlertCurrencyAmountNotEmpty').show();
+//            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvTo');
+//            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvToName');
+//            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'ARCode');
+//            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InputInvDate');
+//            return ;
+//        }
+//        $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvTo');
+//        $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvToName');
+//        $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'ARCode');
+//        $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InputInvDate');
+//
+//    } else {
+//        $('#DetailBillableTable').find('tr').each(function() {
+//            $(this).find('td').each(function() {
+//                if ($(this).hasClass('priceCurrencyAmount')) {
+//                    $(this).removeClass("alert-danger");
+//                }
+//            });
+//        });
+//        $('#textAlertCurrency').hide();
+//        currency = 0;
+//
+//        if (checkcur1) {
+//            $('#textAlertCurrencyAmountNotEmpty').show();
+//            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvTo');
+//            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InvToName');
+//            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'ARCode');
+//            $('#InvoiceInboundForm').bootstrapValidator('revalidateField', 'InputInvDate');
+//            return ;
+//        } else {
+//            $('#textAlertInvoiceNotEmpty').hide();
+//        }
+//    }
 }
 
 $(document).ready(function() {
