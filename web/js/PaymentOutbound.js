@@ -60,7 +60,7 @@ $(document).ready(function() {
             searchRefNo();
         }
     });
-    
+
     $("#payStockNo").keyup(function(event) {
         if (event.keyCode === 13) {
             searchStock();
@@ -129,6 +129,7 @@ $(document).ready(function() {
                 $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'invSupApCode');
             }
         });
+        validatePaymentOutbound('paymentOutbound');
     });
 
     $("#invSupCode").on('blur', function() {
@@ -145,7 +146,7 @@ $(document).ready(function() {
             });
 
         }, delay);
-
+        validatePaymentOutbound('paymentOutbound');
     });
 
     //Result
@@ -183,6 +184,22 @@ $(document).ready(function() {
     });
 
     setEnvironment()
+
+    $("#account1,#account2").click(function() {
+        validatePaymentOutbound('paymentOutbound');
+    });
+
+    $('.payDate').datetimepicker().change(function() {
+        validatePaymentOutbound('paymentOutbound');
+    });
+
+    $("#status").change(function() {
+        validatePaymentOutbound('paymentOutbound');
+    });
+
+    $("#invSupApCode").keypress(function() {
+        validatePaymentOutbound('paymentOutbound');
+    });
 
 });
 
@@ -480,10 +497,10 @@ function addRowPaymentDetailTable(row) {
             '<input type="text" id="vat' + row + '" name="vat' + row + '" value=""/>' +
             '</td>' +
             '<td>' +
-            '<input type="text" name="amount' + row + '" id="amount' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'amount\',\'' + row + '\')" value=""/>' +
+            '<input type="text" name="amount' + row + '" id="amount' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'amount\',\'' + row + '\'); calculateWhtAmount(\'\');" value=""/>' +
             '</td>' +
             '<td>' +
-            '<input type="text" name="comm' + row + '" id="comm' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'comm\',\'' + row + '\')" value=""/>' +
+            '<input type="text" name="comm' + row + '" id="comm' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'comm\',\'' + row + '\'); calculateVatRecComAmount(\'\');" value=""/>' +
             '</td>' +
             '<td>' +
             '<select class="form-control" name="cur' + row + '" id="cur' + row + '" onchange="addRow(\'' + row + '\')">' +
@@ -510,7 +527,7 @@ function addRowPaymentDetailTable(row) {
             '<b>Pay Stock</b>' +
             '</td>' +
             '<td colspan="3">' +
-            '<input type="text" name="payStock' + row + '" id="payStock' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="payStock' + row + '" id="payStock' + row + '" class="form-control" value="" onfocusout="checkPayStock(\'' + row + '\')"/>' +
             '</td>' +
             '<td colspan="1" align="right" bgcolor="#E8EAFF">' +
             '<b>Sale</b>' +
@@ -561,6 +578,7 @@ function setupInvSupValue(id, code, name, apcode) {
     document.getElementById('invSupApCode').value = apcode;
     document.getElementById('invSupCode').focus();
     $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'invSupApCode');
+    validatePaymentOutbound('paymentOutbound');
 }
 
 function addRow(row) {
@@ -647,31 +665,21 @@ function checkRefNo(row) {
             $("#btnSave").addClass("disabled");
         }
     }
-    for (var i = 1; i < count; i++) {
-        var refNoField = document.getElementById('refNo' + i);
-        if (refNoField !== null) {
-            if (refNoField.style.borderColor === "red") {
-                $("#btnSave").addClass("disabled");
-                i = count;
-            } else {
-                $("#btnSave").removeClass("disabled");
-            }
-        }
-    }
+    validatePaymentOutbound("paymentOutboundDetail");
 }
 
 function calculateGross(row) {
-    var cost = document.getElementById('cost' + row).value;
+    var amount = document.getElementById('amount' + row).value;
     var vatData = parseFloat(document.getElementById('vat' + row).value);
     var isVat = document.getElementById('isVat' + row).checked;
     var mVat = document.getElementById('mVat').value;
 
-    cost = cost.replace(/,/g, "");
-    var amountTotal = parseFloat(cost);
+    amount = amount.replace(/,/g, "");
+    var amountTotal = parseFloat(amount);
     var vatTotal = parseFloat(vatData);
 
     if (isVat) {
-        amountTotal = (cost * (100 / (100 + vatData)));
+        amountTotal = (amount * (100 / (100 + vatData)));
         document.getElementById('gross' + row).value = formatNumber(amountTotal);
         document.getElementById('vatShow' + row).innerHTML = vatTotal;
 
@@ -681,6 +689,7 @@ function calculateGross(row) {
         document.getElementById('vat' + row).value = mVat;
 
     }
+    calculateWhtAmount();
     calculateGrossTotal();
 }
 
@@ -688,12 +697,8 @@ function calculateGross(row) {
 function setFormatNumber(type, row) {
     if (type === 'cost') {
         var cost = document.getElementById('cost' + row).value;
-        var isVat = document.getElementById('isVat' + row).checked;
         if (cost !== '') {
             document.getElementById('cost' + row).value = formatNumber(parseFloat(cost.replace(/,/g, "")));
-        }
-        if (isVat) {
-            calculateGross(row);
         }
     }
     if (type === 'comm') {
@@ -710,8 +715,12 @@ function setFormatNumber(type, row) {
     }
     if (type === 'amount') {
         var amount = document.getElementById('amount' + row).value;
+        var isVat = document.getElementById('isVat' + row).checked;
         if (amount !== '') {
             document.getElementById('amount' + row).value = formatNumber(parseFloat(amount.replace(/,/g, "")));
+        }
+        if (isVat) {
+            calculateGross(row);
         }
         calculateGrandTotal();
     }
@@ -746,12 +755,12 @@ function calculateVatTotal() {
     var vatTotal = 0;
     for (i = 1; i < count + 1; i++) {
         var isVat = document.getElementById("isVat" + i);
-        var cost = document.getElementById("cost" + i);
+        var amount = document.getElementById("amount" + i);
         if (isVat !== null) {
-            if (isVat.check) {
-                var costTemp = parseFloat((cost.value).replace(/,/g, ""));
+            if (isVat.checked) {
+                var amountTemp = (amount.value !== '' ? parseFloat((amount.value).replace(/,/g, "")) : 0.00);
                 var vatTemp = parseFloat(document.getElementById('vat' + i).value);
-                var vat = (costTemp * (100 / (100 + vatTemp)));
+                var vat = amountTemp - (amountTemp * (100 / (100 + vatTemp)));
                 vatTotal += vat;
             }
         }
@@ -848,7 +857,7 @@ function addRowPaymentDetailTableByStock(stockId, payStockNo, costAmount, curCos
     }).prop('selected', true);
     $("#payStockId" + row).val(stockId);
     $("#payStock" + row).val(payStockNo);
-    
+
     row = row + 1;
     addRowPaymentDetailTable(row);
 }
@@ -993,21 +1002,38 @@ function checkVatAll() {
 }
 
 function editPaymentDetail(row) {
-    $("#rowDetail").val(row);
-    $("#realExRate").val(($("#realExRate" + row).val() !== '' ? formatNumberFourDecimal(parseFloat(($("#realExRate" + row).val()).replace(/,/g, ""))) : ''));
-    $("#payExRate").val(($("#payExRate" + row).val() !== '' ? formatNumberFourDecimal(parseFloat(($("#payExRate" + row).val()).replace(/,/g, ""))) : ''));
-    $("#whtAmount").val(($("#whtAmount" + row).val() !== '' ? formatNumber(parseFloat(($("#whtAmount" + row).val()).replace(/,/g, ""))) : ''));
-    $("#vatRecComAmount").val(($("#vatRecComAmount" + row).val() !== '' ? formatNumber(parseFloat(($("#vatRecComAmount" + row).val()).replace(/,/g, ""))) : ''));
-    $("#value").val(($("#value" + row).val() !== '' ? formatNumber(parseFloat(($("#value" + row).val()).replace(/,/g, ""))) : ''));
-    $("#wht").val(($("#wht" + row).val() !== '' ? formatNumber(parseFloat(($("#wht" + row).val()).replace(/,/g, ""))) : ''));
-    $("#vatRecCom").val(($("#vatRecCom" + row).val() !== '' ? formatNumber(parseFloat(($("#vatRecCom" + row).val()).replace(/,/g, ""))) : ''));
+    if (row !== $("#rowDetail").val()) {
+        $("#rowDetail").val(row);
+        $("#realExRate").val(($("#realExRate" + row).val() !== '' ? formatNumberFourDecimal(parseFloat(($("#realExRate" + row).val()).replace(/,/g, ""))) : ''));
+        $("#payExRate").val(($("#payExRate" + row).val() !== '' ? formatNumberFourDecimal(parseFloat(($("#payExRate" + row).val()).replace(/,/g, ""))) : ''));
+        $("#whtAmount").val(($("#whtAmount" + row).val() !== '' ? formatNumber(parseFloat(($("#whtAmount" + row).val()).replace(/,/g, ""))) : ''));
+        $("#vatRecComAmount").val(($("#vatRecComAmount" + row).val() !== '' ? formatNumber(parseFloat(($("#vatRecComAmount" + row).val()).replace(/,/g, ""))) : ''));
+        $("#value").val(($("#value" + row).val() !== '' ? formatNumber(parseFloat(($("#value" + row).val()).replace(/,/g, ""))) : ''));
+        $("#wht").val(($("#wht" + row).val() !== '' ? formatNumber(parseFloat(($("#wht" + row).val()).replace(/,/g, ""))) : ''));
+        $("#vatRecCom").val(($("#vatRecCom" + row).val() !== '' ? formatNumber(parseFloat(($("#vatRecCom" + row).val()).replace(/,/g, ""))) : ''));
 
-    $('#isWht').prop('checked', ($("#isWht" + row).val() === '1' ? true : false));
-    $('#isComVat').prop('checked', ($("#isComVat" + row).val() === '1' ? true : false));
+        $('#isWht').prop('checked', ($("#isWht" + row).val() === '1' ? true : false));
+        $('#isComVat').prop('checked', ($("#isComVat" + row).val() === '1' ? true : false));
 
-    $("#paymentDescription").val($("#description" + row).val());
+        $("#paymentDescription").val($("#description" + row).val());
 
-    $("#paymentDetailPanel").removeClass("hidden");
+        $("#paymentDetailPanel").removeClass("hidden");
+
+    } else {
+        $("#rowDetail").val('');
+        $("#realExRate").val('');
+        $("#payExRate").val('');
+        $("#whtAmount").val('');
+        $("#vatRecComAmount").val('');
+        $("#value").val('');
+        $("#wht").val('');
+        $("#vatRecCom").val('');
+        $('#isWht').prop('checked', false);
+        $('#isComVat').prop('checked', false);
+        $("#paymentDescription").val('');
+        $("#paymentDetailPanel").addClass("hidden");
+    }
+
 }
 
 function savePaymentDetail() {
@@ -1041,8 +1067,8 @@ function calculateWhtAmount() {
     if ($("#isWht").is(':checked')) {
         var row = $("#rowDetail").val();
         var wht = ($("#whtTemp" + row).val() === '' ? parseFloat($("#mWht").val()) : parseFloat($("#whtTemp" + row).val()));
-        var gross = ($("#cost" + row).val() !== '' ? parseFloat(($("#cost" + row).val()).replace(/,/g, "")) : 0.00);
-        var whtAmount = gross * (1.00 + (wht / 100));
+        var gross = ($("#gross" + row).val() !== '' ? parseFloat(($("#gross" + row).val()).replace(/,/g, "")) : 0.00);
+        var whtAmount = gross * (wht / 100);
         $("#whtAmount").val(formatNumber(whtAmount));
         $("#wht").val(wht);
         if ($("#whtTemp" + row).val() === '') {
@@ -1061,7 +1087,7 @@ function calculateVatRecComAmount() {
         var row = $("#rowDetail").val();
         var vatRecCom = ($("#vatRecCom" + row).val() === '' ? parseFloat($("#mVat").val()) : parseFloat($("#vatRecCom" + row).val()));
         var comm = ($("#comm" + row).val() !== '' ? parseFloat(($("#comm" + row).val()).replace(/,/g, "")) : 0.00);
-        var vatRecComAmount = comm * (1.00 + (vatRecCom / 100));
+        var vatRecComAmount = comm * (vatRecCom / 100);
         $("#vatRecComAmount").val(formatNumber(vatRecComAmount));
         $("#vatRecCom").val(vatRecCom);
         if ($("#vatRecComTemp" + row).val() === '') {
@@ -1095,4 +1121,160 @@ function showSearchRefNo() {
         $("#searchRefNo1").addClass("hidden");
     }
     $("#searchRefNo2").addClass("hidden");
+}
+
+//Validate Pay Stock
+function checkPayStock(row) {
+    var payStockNo = $("#payStock" + row).val();
+    if (payStockNo !== '') {
+        var servletName = 'PaymentOutboundServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&payStockNo=' + payStockNo +
+                '&type=' + 'checkPayStock';
+        CallAjaxCheckStock(param, row);
+    } else {
+        var payStockField = document.getElementById('payStock' + row);
+        payStockField.style.borderColor = "";
+    }
+    validatePaymentOutbound("paymentOutboundDetail");
+}
+
+function CallAjaxCheckStock(param, row) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                try {
+                    if (msg === 'success') {
+                        var payStockField = document.getElementById('payStock' + row);
+                        payStockField.style.borderColor = "green";
+
+                    } else if (msg === 'fail') {
+                        var payStockField = document.getElementById('payStock' + row);
+                        payStockField.style.borderColor = "red";
+                    }
+
+                } catch (e) {
+
+                }
+
+            }, error: function(msg) {
+
+            }
+        });
+    } catch (e) {
+
+    }
+}
+
+function validatePaymentOutbound(option) {
+    $("#textAlertCurrencyNotMatch").hide();
+    $("#textAlertCurrencyNotEmpty").hide();
+    var count = parseInt($("#countPaymentDetail").val());
+    var lengthTable = $("#PaymentDetailTable tr").length;
+    var booleanPaymentOutbound = true;
+    var booleanRefNo = true;
+    var booleanPayStock = true;
+    var booleanCurrency = true;
+    var payDate = $("#payDate").val();
+    var account1 = $("#account1").is(":checked");
+    var account2 = $("#account2").is(":checked");
+    var invSupApCode = $("#invSupApCode").val();
+    var status = $("#status").val();
+    var currencyMessage = "";
+
+    if (option === 'paymentOutboundDetail' || option === 'paymentOutbound' || option === 'save') {
+        for (var i = 1; i < count; i++) {
+            var refNoField = document.getElementById('refNo' + i);
+            if (refNoField !== null) {
+                if (refNoField.style.borderColor === "red") {
+                    $("#btnSave").addClass("disabled");
+                    booleanRefNo = false;
+                    i = count;
+                }
+            }
+        }
+
+        for (var i = 1; i < count; i++) {
+            var payStockField = document.getElementById('payStock' + i);
+            if (payStockField !== null) {
+                if (payStockField.style.borderColor === "red") {
+                    $("#btnSave").addClass("disabled");
+                    booleanPayStock = false;
+                    i = count;
+                }
+            }
+        }
+    }
+
+    if (option === 'paymentOutbound' || option === 'save') {
+        if (payDate === '' || invSupApCode === '' || status === '' || !(account1 || account2)) {
+            $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'payDate');
+            $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'invSupApCode');
+            $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'status');
+            $('#PaymentOutboundForm').bootstrapValidator('revalidateField', 'account');
+            booleanPaymentOutbound = false;
+        }
+    }
+
+    if (booleanPaymentOutbound && booleanRefNo && booleanPayStock) {
+        $("#btnSave").removeClass("disabled");
+        if (option === 'save') {
+            for (var i = 1; i < count; i++) {
+                var curField1 = document.getElementById('cur' + i);
+                if (curField1 !== null) {
+                    var cur1 = curField1.value;
+                    for (var j = i+1; j < count; j++) {
+                        var curField2 = document.getElementById('cur' + j);
+                        if (curField2 !== null) {
+                            var cur2 = curField2.value;
+                            if(cur1 !== cur2 && cur2 !== ''){
+                                booleanCurrency = false;
+                                i = count;
+                                j = count;
+                                currencyMessage = "notMatch";
+                            }else if(cur1 === '' && cur2 === ''){
+                                booleanCurrency = false;
+                                i = count;
+                                j = count;
+                                currencyMessage = "empty";
+                            }
+                        }
+                    }
+                }
+            }
+            if(booleanCurrency){
+                $("#action").val("save");
+                document.getElementById("PaymentOutboundForm").submit();
+            }else{
+                checkCurrency(currencyMessage);
+            }
+        }
+    } else {
+        $("#btnSave").addClass("disabled");
+    }
+   
+}
+
+function checkCurrency(option) {
+    var count = parseInt($("#countPaymentDetail").val());
+    for (var i = 1; i <= count; i++) {
+        var curField = document.getElementById('cur' + i);
+        if(curField != null){
+            curField.style.borderColor = "red";
+        }    
+    }
+    if(option === 'notMatch'){
+        $("#textAlertCurrencyNotMatch").show();
+    }else if(option === 'empty'){
+        $("#textAlertCurrencyNotEmpty").show();
+    }
+    
 }

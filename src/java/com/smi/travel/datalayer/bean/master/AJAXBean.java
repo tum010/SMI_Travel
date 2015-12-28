@@ -933,7 +933,7 @@ public class AJAXBean extends AbstractBean implements
                     }else{
                         result = "fail";
                     }
-                }                    
+                }                
             }else if("deletePeriodDate".equalsIgnoreCase(type)){
                 String periodId = map.get("periodId").toString();
                 String department = map.get("department").toString();
@@ -943,8 +943,7 @@ public class AJAXBean extends AbstractBean implements
                    result =  buildAdvanceReceivePeriodListTaxHTML(advanceReceivePeriodList, null, "delete");
                 }else{
                     result = "fail";
-                }
-                
+                }                
             }else if("compareReceiptSummary".equalsIgnoreCase(type)){
                 UtilityFunction util = new UtilityFunction();
                 String receiveFrom = map.get("receiveFrom").toString();
@@ -955,7 +954,7 @@ public class AJAXBean extends AbstractBean implements
                 advanceReceivePeriod = receiveTableDao.getReceivePeriod(receiveFrom,department,vatType);
                 AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
                 advanceReceivePeriodView = receiveTableDao.getAdvanceReceivePeriodView(util.convertDateToString(advanceReceivePeriod.getReceiveFrom()),util.convertDateToString(advanceReceivePeriod.getReceiveTo()),department,vatType);
-                result = receiveTableDao.compareReceiptSummary(advanceReceivePeriod,advanceReceivePeriodView);
+                result = receiveTableDao.compareReceiptSummary(advanceReceivePeriod,advanceReceivePeriodView);               
             }else if("updateReceivePeriodSummary".equalsIgnoreCase(type)){
                 String periodId = map.get("periodId").toString();
                 String receiveFrom = map.get("receiveFrom").toString();
@@ -973,8 +972,9 @@ public class AJAXBean extends AbstractBean implements
                     result =  buildAdvanceReceivePeriodListTaxHTML(advanceReceivePeriodList, advanceReceivePeriod, "update");          
                 }else{
                     result = "fail";
-                }
+                }                
             }
+            
         }else if(PAYMENTOUTBOUND.equalsIgnoreCase(servletName)){
             if("searchRefNo".equalsIgnoreCase(type)){
                 String searchRefNo = map.get("refNo").toString();
@@ -991,6 +991,14 @@ public class AJAXBean extends AbstractBean implements
                     result = buildPaymentStockHTML(paymentStockList);
                 } else {
                     result = "null";
+                }
+            }else if("checkPayStock".equalsIgnoreCase(type)){
+                String payStockNo = map.get("payStockNo").toString();
+                List<PaymentStock> paymentStockList = paymentOutboundDao.getPaymentStock(payStockNo);
+                if (paymentStockList != null) {
+                    result = "success";
+                } else {
+                    result = "fail";
                 }
             }          
         }

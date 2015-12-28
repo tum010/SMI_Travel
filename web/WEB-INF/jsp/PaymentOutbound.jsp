@@ -178,7 +178,7 @@
                         <label class="control-label">Pay Date<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-3 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 150px;">
-                        <div class='input-group date' id="payDateCheck">
+                        <div class='input-group date payDate' id="payDateCheck">
                             <input name="payDate" id="payDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.payDate}"/>" />
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
@@ -198,10 +198,10 @@
                             </c:when>
                         </c:choose>
                         <div class="col-sm-6 text-left " >
-                            <input type="radio" name="account" value="1" ${account1}/>&nbsp;account(1)
+                            <input type="radio" id="account1" name="account" value="1" ${account1}/>&nbsp;account(1)
                         </div>
                         <div class="col-sm-6 text-left" >
-                            <input type="radio" name="account" value="2" ${account2}/>&nbsp;temp
+                            <input type="radio" id="account2" name="account" value="2" ${account2}/>&nbsp;temp
                         </div>
                     </div>
                 </div><!--End row 1-->
@@ -334,7 +334,17 @@
                         </tbody>
                     </table>        
                 </div>
-                <div class="col-xs-12"><br></div>               
+                <div class="col-xs-12" style="padding-left: 0px;">
+                    <br>
+                    <div id="textAlertCurrencyNotMatch"  style="display:none; " class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Amount Currency is not match.</strong> 
+                    </div>
+                    <div id="textAlertCurrencyNotEmpty"  style="display:none; " class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Amount Currency is not empty.</strong> 
+                    </div>
+                </div>               
                 <div class="row" style="padding-left: 15px;">             
                     <div class="row">
                         <div class="col-xs-11" style="width: 1030px">
@@ -423,10 +433,10 @@
                                             <input type="text" name="vat${i.count}" id="vat${i.count}" class="form-control" value="${detail.vat}"/>
                                         </td>
                                         <td>
-                                            <input type="text" name="amount${i.count}" id="amount${i.count}" class="form-control" style="text-align:right;" onkeyup="insertCommas(this)" onfocusout="setFormatNumber('amount','${i.count}')" value="${detail.amount}"/>
+                                            <input type="text" name="amount${i.count}" id="amount${i.count}" class="form-control" style="text-align:right;" onkeyup="insertCommas(this)" onfocusout="setFormatNumber('amount','${i.count}'); calculateWhtAmount('');" value="${detail.amount}"/>
                                         </td>
                                         <td>
-                                            <input type="text" name="comm${i.count}" id="comm${i.count}" class="form-control" style="text-align:right;" onkeyup="insertCommas(this)" onfocusout="setFormatNumber('comm','${i.count}')" value="${detail.comm}"/>
+                                            <input type="text" name="comm${i.count}" id="comm${i.count}" class="form-control" style="text-align:right;" onkeyup="insertCommas(this)" onfocusout="setFormatNumber('comm','${i.count}'); calculateVatRecComAmount();" value="${detail.comm}"/>
                                         </td>
                                         <td>
                                             <select class="form-control" name="cur${i.count}" id="cur${i.count}" onchange="addRow('${i.count}')">
@@ -460,7 +470,7 @@
                                             <b>Pay Stock</b>
                                         </td>
                                         <td colspan="3">
-                                            <input type="text" name="payStock${i.count}" id="payStock${i.count}" class="form-control" value="${detail.payStock}"/>
+                                            <input type="text" name="payStock${i.count}" id="payStock${i.count}" class="form-control" value="${detail.payStock}" onfocusout="checkPayStock('${i.count}')"/>
                                         </td>
                                         <td colspan="1" align="right" bgcolor="#E8EAFF">
                                             <b>Sale</b>
@@ -562,11 +572,13 @@
                     </div>
                     <div class="col-xs-1 text-right" style="width: 200px;">
                         <input type="text" class="form-control text-right numerical" id="value" name="value" value=""/>
-                    </div>
-                    <div class="col-xs-1 text-right" style="width: 100px">
+                    </div>                       
+                </div>
+                <div class="row" style="padding-left: 25px; padding-top: 10px;">
+                    <div class="col-xs-12 text-center" >
                          <button type="button" onclick="savePaymentDetail()" class="btn btn-success">OK</button>
-                    </div>    
-                </div> 
+                    </div>
+                </div>
             </div>
         </div><!--End Table Content -->
                             
@@ -616,7 +628,7 @@
         </div>
         <div class="row text-center" >
             <div class="col-xs-6 text-right">
-                <button type="submit" id="btnSave" name="btnSave" class="btn btn-success">
+                <button type="button" id="btnSave" name="btnSave" class="btn btn-success" onclick="validatePaymentOutbound('save')">
                     <i class="fa fa-save"></i> Save             
                 </button>
             </div>
