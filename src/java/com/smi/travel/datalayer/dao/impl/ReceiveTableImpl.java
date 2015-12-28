@@ -534,10 +534,17 @@ public class ReceiveTableImpl implements ReceiveTableDao{
 //                .list();
         
         CollectionView receiptSummary = new CollectionView();
-        receiptSummary.setObanktransfer(advanceReceivePeriod.getBankTransfer() != null ? String.valueOf(advanceReceivePeriod.getBankTransfer()) : "0.00");
-        receiptSummary.setOcash(advanceReceivePeriod.getCashAmount()!= null ? String.valueOf(advanceReceivePeriod.getCashAmount()) : "0.00");
-        receiptSummary.setOchq(advanceReceivePeriod.getChqAmount()!= null ? String.valueOf(advanceReceivePeriod.getChqAmount()) : "0.00");
-        receiptSummary.setOcredit(advanceReceivePeriod.getCreditAmount()!= null ? String.valueOf(advanceReceivePeriod.getCreditAmount()) : "0.00");
+        if(advanceReceivePeriod != null){
+            receiptSummary.setObanktransfer(advanceReceivePeriod.getBankTransfer() != null ? String.valueOf(advanceReceivePeriod.getBankTransfer()) : "0.00");
+            receiptSummary.setOcash(advanceReceivePeriod.getCashAmount()!= null ? String.valueOf(advanceReceivePeriod.getCashAmount()) : "0.00");
+            receiptSummary.setOchq(advanceReceivePeriod.getChqAmount()!= null ? String.valueOf(advanceReceivePeriod.getChqAmount()) : "0.00");
+            receiptSummary.setOcredit(advanceReceivePeriod.getCreditAmount()!= null ? String.valueOf(advanceReceivePeriod.getCreditAmount()) : "0.00");
+        }else{
+            receiptSummary.setObanktransfer("0.00");
+            receiptSummary.setOcash("0.00");
+            receiptSummary.setOchq("0.00");
+            receiptSummary.setOcredit("0.00");
+        }    
 //        for (Object[] A : QueryReceiptSummary){
 //            receiptSummary.setObanktransfer(A[0] != null ? util.ConvertString(A[0]) : "0.00");
 //            receiptSummary.setOcash(A[1] != null ? util.ConvertString(A[1]) : "0.00");
