@@ -477,7 +477,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         AdvanceReceivePeriod  advanceReceivePeriod = getReceivePeriod(receiveDate,department,vatType);
         
         String queryReceiveView = "SELECT * FROM `collection_receive_view` crv ";
-        String queryReceiptSummary = "SELECT sum(ifnull(`rec`.`bank_transfer`,0)) AS `bank`,sum(ifnull(`rec`.`cash_amount`,0)) AS `cash`,sum(ifnull((`rec`.`chq_amount_1` + `rec`.`chq_amount_2`),0)) AS `chq`,sum(ifnull((select sum(`rc`.`credit_amount`) from `receipt_credit` `rc` where (`rc`.`rec_id` = `rec`.`id`)),0)) AS `credit` from `receipt` `rec` ";
+//        String queryReceiptSummary = "SELECT sum(ifnull(`rec`.`bank_transfer`,0)) AS `bank`,sum(ifnull(`rec`.`cash_amount`,0)) AS `cash`,sum(ifnull((`rec`.`chq_amount_1` + `rec`.`chq_amount_2`),0)) AS `chq`,sum(ifnull((select sum(`rc`.`credit_amount`) from `receipt_credit` `rc` where (`rc`.`rec_id` = `rec`.`id`)),0)) AS `credit` from `receipt` `rec` ";
         String queryReceiveSummary = "SELECT sum( ifnull(`ar`.`cash_amount`, 0)) AS `cash`, sum( ifnull(`ar`.`bank_amount`, 0)) AS `bank`, sum( ifnull(`ar`.`chq_amount`, 0)) AS `chq`, sum(ifnull(( SELECT sum(`ac`.`credit_amount`) FROM `advance_receive_credit` `ac` WHERE (`ac`.`ad_rec_id` = `ar`.`id`)), 0 )) AS `credit` FROM `advance_receive` `ar` ";
         boolean haveCondition = false;
         
@@ -485,9 +485,8 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             queryReceiveView += (haveCondition ? " AND " : " WHERE ");
             queryReceiveView += " crv.receivedate = '" + receiveDate + "' ";
             
-            queryReceiptSummary += (haveCondition ? " AND " : " WHERE ");
-            
-            queryReceiptSummary += " ((`rec`.`rec_date` >= (select `adp`.`receive_from` from `advance_receive_period` `adp` where ((`adp`.`receive_from` <= '" + receiveDate + "') and (`adp`.`receive_to` >= '" + receiveDate + "') and (adp.vat_type = '" + vatType + "') and (adp.department = '" + department + "')))) and (`rec`.`rec_date` <= (select `adp`.`receive_to` from `advance_receive_period` `adp` where ((`adp`.`receive_from` <= '" + receiveDate + "') and (`adp`.`receive_to` >= '" + receiveDate + "') and (adp.vat_type = '" + vatType + "') and (adp.department = '" + department + "')))) ";
+//            queryReceiptSummary += (haveCondition ? " AND " : " WHERE ");            
+//            queryReceiptSummary += " ((`rec`.`rec_date` >= (select `adp`.`receive_from` from `advance_receive_period` `adp` where ((`adp`.`receive_from` <= '" + receiveDate + "') and (`adp`.`receive_to` >= '" + receiveDate + "') and (adp.vat_type = '" + vatType + "') and (adp.department = '" + department + "')))) and (`rec`.`rec_date` <= (select `adp`.`receive_to` from `advance_receive_period` `adp` where ((`adp`.`receive_from` <= '" + receiveDate + "') and (`adp`.`receive_to` >= '" + receiveDate + "') and (adp.vat_type = '" + vatType + "') and (adp.department = '" + department + "')))) ";
             
             queryReceiveSummary += (haveCondition ? " AND " : " WHERE ");
             queryReceiveSummary += " (( `ar`.`rec_date` = '" + receiveDate + "' ) ";
@@ -499,8 +498,8 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             queryReceiveView += (haveCondition ? " AND " : " WHERE ");
             queryReceiveView += " crv.vattype = '" + vatType + "' ";
             
-            queryReceiptSummary += (haveCondition ? " AND " : " WHERE ");
-            queryReceiptSummary += " (`rec`.`rec_type` = '" + vatType + "') ";
+//            queryReceiptSummary += (haveCondition ? " AND " : " WHERE ");
+//            queryReceiptSummary += " (`rec`.`rec_type` = '" + vatType + "') ";
             
             queryReceiveSummary += (haveCondition ? " AND " : " WHERE ");
             queryReceiveSummary += " (`ar`.`vat_type` = '" + vatType + "') ";
@@ -512,12 +511,12 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             queryReceiveView += (haveCondition ? " AND " : " WHERE ");
             queryReceiveView += " crv.department = '" + department + "' ";
             
-            queryReceiptSummary += (haveCondition ? " AND " : " WHERE ");
-            if(department.equalsIgnoreCase("WendyOutbound")){
-                queryReceiptSummary += " (`rec`.`department` = 'Wendy' or `rec`.`department` = 'Outbound')) ";
-            }else{
-                queryReceiptSummary += " (`rec`.`department` = '" + department + "')) ";
-            }
+//            queryReceiptSummary += (haveCondition ? " AND " : " WHERE ");
+//            if(department.equalsIgnoreCase("WendyOutbound")){
+//                queryReceiptSummary += " (`rec`.`department` = 'Wendy' or `rec`.`department` = 'Outbound')) ";
+//            }else{
+//                queryReceiptSummary += " (`rec`.`department` = '" + department + "')) ";
+//            }
                         
             queryReceiveSummary += (haveCondition ? " AND " : " WHERE ");
             queryReceiveSummary += " ( `ar`.`department` = '" + department + "' )) ";
@@ -527,20 +526,24 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         
         queryReceiveSummary += " GROUP BY `ar`.`rec_date` ";
        
-        List<Object[]> QueryReceiptSummary = session.createSQLQuery(queryReceiptSummary)
-                .addScalar("bank", Hibernate.STRING)
-                .addScalar("cash", Hibernate.STRING)
-                .addScalar("chq", Hibernate.STRING)
-                .addScalar("credit", Hibernate.STRING)
-                .list();
+//        List<Object[]> QueryReceiptSummary = session.createSQLQuery(queryReceiptSummary)
+//                .addScalar("bank", Hibernate.STRING)
+//                .addScalar("cash", Hibernate.STRING)
+//                .addScalar("chq", Hibernate.STRING)
+//                .addScalar("credit", Hibernate.STRING)
+//                .list();
         
         CollectionView receiptSummary = new CollectionView();
-        for (Object[] A : QueryReceiptSummary){
-            receiptSummary.setObanktransfer(A[0] != null ? util.ConvertString(A[0]) : "0.00");
-            receiptSummary.setOcash(A[1] != null ? util.ConvertString(A[1]) : "0.00");
-            receiptSummary.setOchq(A[2] != null ? util.ConvertString(A[2]) : "0.00");
-            receiptSummary.setOcredit(A[3] != null ? util.ConvertString(A[3]) : "0.00");
-        }
+        receiptSummary.setObanktransfer(advanceReceivePeriod.getBankTransfer() != null ? String.valueOf(advanceReceivePeriod.getBankTransfer()) : "0.00");
+        receiptSummary.setOcash(advanceReceivePeriod.getCashAmount()!= null ? String.valueOf(advanceReceivePeriod.getCashAmount()) : "0.00");
+        receiptSummary.setOchq(advanceReceivePeriod.getChqAmount()!= null ? String.valueOf(advanceReceivePeriod.getChqAmount()) : "0.00");
+        receiptSummary.setOcredit(advanceReceivePeriod.getCreditAmount()!= null ? String.valueOf(advanceReceivePeriod.getCreditAmount()) : "0.00");
+//        for (Object[] A : QueryReceiptSummary){
+//            receiptSummary.setObanktransfer(A[0] != null ? util.ConvertString(A[0]) : "0.00");
+//            receiptSummary.setOcash(A[1] != null ? util.ConvertString(A[1]) : "0.00");
+//            receiptSummary.setOchq(A[2] != null ? util.ConvertString(A[2]) : "0.00");
+//            receiptSummary.setOcredit(A[3] != null ? util.ConvertString(A[3]) : "0.00");
+//        }
         
         List<Object[]> QueryReceiveSummary = session.createSQLQuery(queryReceiveSummary)
                 .addScalar("cash", Hibernate.STRING)

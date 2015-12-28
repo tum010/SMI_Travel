@@ -454,7 +454,7 @@
         <div id="textAlertDivPeriodMeaasge"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertPeriodMessage()"><span aria-hidden="true">&times;</span></button>
             <strong id="periodAlertMessage"></strong>
-            <button type="button" id="ButtonPrint" name="ButtonPrint" onclick="updateReceivePeriod()" class="btn btn-xs btn-warning">
+            <button type="button" id="btnUpdate" name="btnUpdate" onclick="updateReceivePeriod()" class="btn btn-xs btn-warning">
                 <i class="glyphicon glyphicon-usd"></i> Update            
             </button>
         </div>
