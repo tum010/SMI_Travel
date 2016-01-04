@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ConfirmSlipHotelSubReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="5" bottomMargin="5" uuid="db08ed59-2d2f-46c2-b26b-6211f47e18d9">
 	<property name="ireport.zoom" value="4.177248169415699"/>
-	<property name="ireport.x" value="1576"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="1728"/>
+	<property name="ireport.y" value="40"/>
 	<field name="order" class="java.lang.String"/>
 	<field name="hotel" class="java.lang.String"/>
 	<field name="checkinout" class="java.lang.String"/>
@@ -204,7 +204,7 @@
 				<textFieldExpression><![CDATA[$F{hotel}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="381" y="-1" width="132" height="19" uuid="0f315746-024f-4e12-a69a-41b0ad7de972"/>
+				<reportElement stretchType="RelativeToBandHeight" x="381" y="-1" width="132" height="19" uuid="0f315746-024f-4e12-a69a-41b0ad7de972"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>

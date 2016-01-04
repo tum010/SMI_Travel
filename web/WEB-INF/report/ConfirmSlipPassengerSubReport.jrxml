@@ -132,8 +132,8 @@
 				</graphicElement>
 			</line>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="259" y="-1" width="49" height="20" uuid="90ac42b1-c8f0-458b-a471-0949b7689347"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<reportElement stretchType="RelativeToBandHeight" x="259" y="-1" width="59" height="20" uuid="90ac42b1-c8f0-458b-a471-0949b7689347"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{age}]]></textFieldExpression>
