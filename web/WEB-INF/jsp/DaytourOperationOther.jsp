@@ -54,7 +54,10 @@
                 </div>
             </div>
             <hr/>
-
+            <div id="textAlertDivNotPrint"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Please Select Report Type !</strong> 
+            </div>
             <div class="col-xs-12 form-group">
                 <div class="col-xs-1 text-right">
                     <label class="control-label text-right">Ref&nbsp;No</lable>
@@ -208,6 +211,7 @@
                          </a>
                     </div>
                 </div><!-- End Select Print Report -->
+ 
             </div><!--End Information -->
             
         </div>
@@ -217,32 +221,42 @@
 
 <!--Booking Modal-->
 <div class="modal fade" id="BookingModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal-dialog"  style="width: 60%">
+        <div class="modal-content" >
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title"  id="Titlemodel">Booking List</h4>
             </div>
             <div class="modal-body">
-                <div style="text-align: right"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i>Search : <input placeholder ="LAST/FIRST " type="text" style="width: 175px" id="filtercus" name="filtercus"/> </div> 
+                <div style="text-align: right"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i>Search : <input type="text" style="width: 175px" id="filtercus" name="filtercus"/> </div> 
                 <table class="display" id="PacketTable">
                     <thead class="datatable-header">
                         <tr>
-                            <th>Ref No</th>
-                            <th>Ref Date</th>
-                            <th>Leader</th>
-                            <th>Other name</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th style="width:40px;">Ref No</th>
+                            <th style="width:90px;">Ref Date</th>
+                            <th style="width:150px;">Leader</th>
+                            <th style="width:150px;">Product Name</th>
+                            <th style="width:70px;">Status</th>
+                            <th style="width:40px;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="table1" items="${ListBookingAllView}" varStatus="dayStatus">
-                            <tr class="packet">
+                            <tr>
+<!--                                <td class="pack-date"><div style="width: 31px" >${table1.refno}</div></td>
+                                <td class="text-center"><div style="width: 65px" >${table1.createdate}</div></td>
+                                <td class="text-left"><div style="width: 140px" > ${table1.leader}</div></td>
+                                <td class="text-left"><div style="width: 160px" >${table1.product}</div></td>
+                                <td class="text-center"><div style="width: 10px" >${table1.status}</div></td>
+                                <td class="text-center">
+                                    <a href="DaytourOperationOther.smi?InputRefNo=${table1.refno}&action=search">
+                                        <span class="glyphicon glyphicon-check"></span>
+                                    </a>
+                                </td>-->
                                 <td class="pack-date">${table1.refno}</td>
-                                <td>${table1.createdate}</td>
-                                <td class="text-center"> ${table1.leader}</td>
-                                <td class="text-center">${table1.product}</td>
+                                <td class="text-center">${table1.createdate}</td>
+                                <td class="text-left"> ${table1.leader}</td>
+                                <td class="text-left">${table1.product}</td>
                                 <td class="text-center">${table1.status}</td>
                                 <td class="text-center">
                                     <a href="DaytourOperationOther.smi?InputRefNo=${table1.refno}&action=search">

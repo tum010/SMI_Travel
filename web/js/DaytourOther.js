@@ -32,6 +32,7 @@ function selectListOther(counter){
 }
 function searchAction() {
     //alert("OK");
+    $('#textAlertDivNotPrint').hide();
     var action = document.getElementById('action');
     action.value = 'search';
     document.getElementById('DaytourOtherForm').submit();
@@ -85,16 +86,15 @@ function FilterBookingList(name) {
 }
 
 function CallFilterAjax(param) {
-    var url = 'AJAXServlet';
-    $("#ajaxload").removeClass("hidden");
-    try {
-        $.ajax({
-            type: "POST",
-            url: url,
-            cache: false,
-            data: param,
-            success: function (msg) {
-                try {
+        var url = 'AJAXServlet';
+            $("#ajaxload").removeClass("hidden");
+            try {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    cache: false,
+                    data: param,
+                    success: function(msg) {
                     $('#PacketTable').dataTable().fnClearTable();
                     $('#PacketTable').dataTable().fnDestroy();
                     $("#PacketTable tbody").empty().append(msg);
@@ -108,18 +108,38 @@ function CallFilterAjax(param) {
                         "iDisplayLength": 10
                     });
                      $("#ajaxload").addClass("hidden");
-                } catch (e) {
-                    alert(e);
-                }
-
-            }, error: function (msg) {
-                 $("#ajaxload").addClass("hidden");
-                alert(msg);
-            }
-        });
-    } catch (e) {
-        alert(e);
-    }
+                }, error: function(msg) {
+                    $("#ajaxload").addClass("hidden");
+                    alert(msg);
+               }
+           });
+        } catch (e) {
+           alert(e);
+        }
+    
+//    var url = 'AJAXServlet';
+//    $("#ajaxload").removeClass("hidden");
+//    try {
+//        $.ajax({
+//            type: "POST",
+//            url: url,
+//            cache: false,
+//            data: param,
+//            success: function (msg) {
+//                try {
+//                    
+//                } catch (e) {
+//                    alert(e);
+//                }
+//
+//            }, error: function (msg) {
+//                 $("#ajaxload").addClass("hidden");
+//                alert(msg);
+//            }
+//        });
+//    } catch (e) {
+//        alert(e);
+//    }
 }
 
 function printOtherVoucher(status) {  
@@ -137,10 +157,16 @@ function printOtherVoucher(status) {
 }
 
 function checkDuplicate(){
+    $('#textAlertDivNotPrint').hide();
+    var voucher = document.getElementById("voucher").value;
     var duplicate = document.getElementById("Duplicate").value;
-    if(duplicate === 'Duplicate'){
-        $('#PrintModal').modal("show");
+    if(voucher === ''){
+        $('#textAlertDivNotPrint').show();
     }else{
-        printOtherVoucher('');
+        if(duplicate === 'Duplicate'){
+            $('#PrintModal').modal("show");
+        }else{
+            printOtherVoucher('');
+        }
     }
 }

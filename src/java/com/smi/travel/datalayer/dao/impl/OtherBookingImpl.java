@@ -843,34 +843,13 @@ public class OtherBookingImpl implements OtherBookingDao{
     }
 
     @Override
-    public List<OtherBooking> searchOtherBooking(Customer customer, int option) {
-        String query = "from OtherBooking ob where ";
-        String queryOperation = "";
-        String Prefix_Subfix = "";
-        int check = 0;
-        if (option == 1) {
-            queryOperation = " = ";
-            Prefix_Subfix = "";
-        } else if (option == 2) {
-            queryOperation = " Like ";
-            Prefix_Subfix = "%";
-        }
-
-        if (!StringUtils.isNullOrEmpty(customer.getFirstName())) {
-            query += " ob.firstName " + queryOperation + " '" + Prefix_Subfix + customer.getFirstName() + Prefix_Subfix + "'";
-            check = 1;
-        }
-
-        if (check == 0) {
-            query = query.replaceAll("where", " ");
-        }
+    public List<OtherBooking> searchOtherBooking(String name) {
+        String query = "from OtherBooking ob where ob.master.customer.firstName Like '%"+name+"%' OR ob.master.customer.lastName Like '%"+name+"%' OR ob.product.code = '"+name+"' OR  ob.product.name  Like '%"+name+"%' OR ob.master.referenceNo  = '"+name+"' ";
         System.out.println("searchOtherBooking query : " + query);
-        //  List<SystemUser> list = getHibernateTemplate().find(query);
         org.hibernate.Session session = this.sessionFactory.openSession();
         List<OtherBooking> list = session.createQuery(query).list();
-
+        System.out.println(" list.size()  +++++ ==== " +list.size());
         return list;
-
     }     
 
     @Override
@@ -1263,19 +1242,25 @@ public class OtherBookingImpl implements OtherBookingDao{
                 if(list.get(i).getAgent() != null){
                     if((String.valueOf(list.get(i).getAgent().getId())).equalsIgnoreCase(agentId)){
                         guideCommTemp1 = String.valueOf(list.get(i).getAgentCommission());
-                        if(!"".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent())) && !"null".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent()))){
-                            BigDecimal guidecommpercent = new BigDecimal(BigInteger.ZERO);
-                            guidecommpercent = guidecommpercent.add((new BigDecimal(price)).multiply((new BigDecimal(10)).divide(new BigDecimal(100)))) ;
+                        if(!"".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent())) && !"0.0".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent())) && !"null".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent()))){
+                            Double guidecommpercent = new Double(0);
+                            guidecommpercent = (Double.parseDouble(price) * ((list.get(i).getAgentCommissionPercent().doubleValue())/100));
                             guideCommTemp1 = String.valueOf(guidecommpercent);
+//                            BigDecimal guidecommpercent = new BigDecimal(BigInteger.ZERO);
+//                            guidecommpercent = guidecommpercent.add((new BigDecimal(price)).multiply((new BigDecimal(10)).divide(new BigDecimal(100)))) ;
+//                            guideCommTemp1 = String.valueOf(guidecommpercent);
                         }
                         
                     }
                 }else{
                     guideCommTemp2 = String.valueOf(list.get(i).getAgentCommission());
-                    if(!"".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent())) && !"null".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent()))){
-                        BigDecimal guidecommpercent = new BigDecimal(BigInteger.ZERO);
-                        guidecommpercent = guidecommpercent.add((new BigDecimal(price)).multiply((new BigDecimal(10)).divide(new BigDecimal(100)))) ;
+                    if(!"".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent())) && !"0.0".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent())) && !"null".equalsIgnoreCase(String.valueOf(list.get(i).getAgentCommissionPercent()))){
+                        Double guidecommpercent = new Double(0);
+                        guidecommpercent = (Double.parseDouble(price) * ((list.get(i).getAgentCommissionPercent().doubleValue())/100));
                         guideCommTemp2 = String.valueOf(guidecommpercent);
+//                        BigDecimal guidecommpercent = new BigDecimal(BigInteger.ZERO);
+//                        guidecommpercent = guidecommpercent.add((new BigDecimal(price)).multiply((new BigDecimal(10)).divide(new BigDecimal(100)))) ;
+//                        guideCommTemp2 = String.valueOf(guidecommpercent);
 
                     }
                 }
@@ -1307,7 +1292,7 @@ public class OtherBookingImpl implements OtherBookingDao{
             ProductComission productComission = list.get(0);
             guideComm = String.valueOf(productComission.getComission());
             
-            if(!"".equalsIgnoreCase(String.valueOf(productComission.getComissionPercent())) && !"null".equalsIgnoreCase(String.valueOf(productComission.getComissionPercent()))){
+            if(!"0.0".equalsIgnoreCase(String.valueOf(productComission.getComissionPercent())) && !"".equalsIgnoreCase(String.valueOf(productComission.getComissionPercent())) && !"null".equalsIgnoreCase(String.valueOf(productComission.getComissionPercent()))){
                 Double guidecomm = new Double(0);
                 System.out.println(" price " + price + " ++++ productComission.getComissionPercent() " + productComission.getComissionPercent());
                 guidecomm = (Double.parseDouble(price) * (productComission.getComissionPercent()/100));

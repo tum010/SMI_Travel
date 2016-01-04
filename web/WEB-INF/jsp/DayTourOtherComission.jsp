@@ -67,23 +67,24 @@
                     <div class="col-xs-1 text-right">
                         <label class="control-label text-right">From <font style="color: red">*</font></label>
                     </div>
-                    <div class="col-xs-2 form-group">
-                        <div class="input-group  date " id="DateFrom">
-                            <input  id="InputDateFrom" name="InputDateFrom" type="text" data-date-format="YYYY-MM-DD" class="form-control datemask" placeholder="YYYY-MM-DD" value="${dateFrom}">
-                            <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
-                            </span>
+                    <div class="col-xs-2">
+                        <div class=" form-group">     
+                            <div class="input-group date fromDate" id="DateFrom">
+                                <input  id="InputDateFrom" name="InputDateFrom" type="text" data-date-format="YYYY-MM-DD" class="form-control datemask" placeholder="YYYY-MM-DD" value="${dateFrom}">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
                     </div>
                     <div class="col-xs-1">
-
                     </div>
                     <div class="col-xs-1 text-right">
                         <label class="control-label text-right">To <font style="color: red">*</font></label>
                     </div>
                     <div class="col-xs-2 form-group">
-                        <div class="input-group  date" id="DateTo">
+                        <div class="input-group date toDate" id="DateTo">
                             <input id="InputDateTo" name="InputDateTo" type="text" data-date-format="YYYY-MM-DD" class="form-control datemask" placeholder="YYYY-MM-DD" value="${dateTo}">
-                            <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
+                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
                     </div>
@@ -245,10 +246,13 @@
                     <input type="hidden" id="dateFromSearch" name="InputDateFrom" >                        
                     <input type="hidden" id="dateToSearch" name="InputDateTo" >                        
                     <input type="hidden" id="filterGuide" name="SelectGuide" >                        
-                    <input type="hidden" id="filterAgent" name="SelectAgent" >                        
+                    <input type="hidden" id="filterAgent" name="SelectAgent" >                       
                     <input type="hidden" id="action" name="action" value="save"> 
-                   <a id="ButtonPrintGuide" name="ButtonPrintGuide" class="btn btn-primary" data-toggle="modal" data-target="#GuideModal"><i class="fa fa-print"></i> Print Guide</a>
-                   <a id="ButtonPrintAgent" name="ButtonPrintAgent" class="btn btn-primary" data-toggle="modal" data-target="#AgentModal"><i class="fa fa-print"></i> Print Agent</a>
+<!--                    <a id="ButtonPrintGuide" name="ButtonPrintGuide" class="btn btn-primary" data-toggle="modal" data-target="#GuideModal" ><i class="fa fa-print"></i> Print Guide</a>
+                    <a id="ButtonPrintAgent" name="ButtonPrintAgent" class="btn btn-primary" data-toggle="modal" data-target="#AgentModal"><i class="fa fa-print"></i> Print Agent</a>-->
+
+                   <a id="ButtonPrintGuide" name="ButtonPrintGuide" class="btn btn-primary"  onclick="printOtherGuideCommission();"  ><i class="fa fa-print"></i> Print Guide</a>
+                   <a id="ButtonPrintAgent" name="ButtonPrintAgent" class="btn btn-primary" onclick="printOtherAgentCommission();"><i class="fa fa-print"></i> Print Agent</a>
                    <button type="submit" id="ButtonSave" name="ButtonSave" onclick="saveDaytourCommission();"  class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                 </div>
             </form>
@@ -419,10 +423,21 @@
             "iDisplayLength":10
         });
         
-
+        $('.datemask').mask('0000-00-00');
+        $('.date').datetimepicker();
+        
+        $('.spandate').click(function() {
+            var position = $(this).offset();
+            console.log("positon :" + position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+        });
+        
         $('.form_datetime').datetimepicker({ 
             pickTime: false      
         });
+        
+        
+        
         var rowIndex = 1;
         var dataAgent = [];
         dataAgent = agentName;
@@ -461,8 +476,170 @@
             var editCheckBox = $(this).closest('tr').find('td.edited').children();
             $(editCheckBox).attr("checked", true);
         });
+        
+        
+        
+    //validate date
+    $('#DateFrom').datetimepicker().on('dp.change', function(e) {
+        $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateFrom');
     });
-    
+    $('#DateTo').datetimepicker().on('dp.change', function(e) {
+        $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateTo');
+    });
+
+    $("#searchDaytourCommissionForm")
+        .bootstrapValidator({
+            framework: 'bootstrap',
+//                container: 'tooltip',
+            feedbackIcons: {
+                valid: 'uk-icon-check',
+                invalid: 'uk-icon-times',
+                validating: 'uk-icon-refresh'
+            },
+            fields: {
+                InputDateFrom: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'The Date From is required'
+                        },
+                        date: {
+                            format: 'YYYY-MM-DD',
+                            max: 'InputDateTo',
+                            message: 'The Date From is not a valid'
+                        }
+                    }
+                },
+                InputDateTo: {
+                    trigger: 'focus keyup change',
+                    validators: {
+                        notEmpty: {
+                            message: 'The Date To is required'
+                        },
+                        date: {
+                            format: 'YYYY-MM-DD',
+                            min: 'InputDateFrom',
+                            message: 'The Date To is not a valid'
+                        }
+                    }
+                }
+            }
+        }).on('success.field.fv', function(e, data) {
+            if (data.field === 'InputDateFrom' && data.fv.isValidField('InputDateTo') === false) {
+                data.fv.revalidateField('InputDateTo');
+            }
+
+            if (data.field === 'InputDateTo' && data.fv.isValidField('InputDateFrom') === false) {
+                data.fv.revalidateField('InputDateFrom');
+            }
+        });
+        $('.fromDate').datetimepicker().change(function() {
+            checkFromDateField();
+        });
+        $('.toDate').datetimepicker().change(function() {
+            checkToDateField();
+        });
+    });
+
+    function checkFromDateField() {
+        var InputToDate = document.getElementById("InputDateTo");
+        var inputFromDate = document.getElementById("InputDateFrom");
+        if (InputToDate.value === '' && inputFromDate.value === '') {
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateTo');
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateFrom');
+            $("#ButtonPrintGuide").addClass("disabled");
+            $("#ButtonPrintAgent").addClass("disabled");
+            $("#ButtonSearch").addClass("disabled");
+            $("#ButtonSave").addClass("disabled");
+        } else if (inputFromDate.value === '' || InputToDate.value === '') {
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateTo');
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateFrom');
+            $("#ButtonPrintGuide").addClass("disabled");
+            $("#ButtonPrintAgent").addClass("disabled");
+            $("#ButtonSearch").addClass("disabled");
+            $("#ButtonSave").addClass("disabled");
+        } else {
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateTo');
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateFrom');
+            $("#ButtonPrintGuide").removeClass("disabled");
+            $("#ButtonPrintAgent").removeClass("disabled");
+            $("#ButtonSearch").removeClass("disabled");
+            $("#ButtonSave").removeClass("disabled");
+            checkDateValue("from", "");
+        }
+    }
+
+    function checkToDateField() {
+        var InputToDate = document.getElementById("InputDateTo");
+        var inputFromDate = document.getElementById("InputDateFrom");
+        if (InputToDate.value === '' && inputFromDate.value === '') {
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateTo');
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateFrom');
+            $("#ButtonPrintGuide").addClass("disabled");
+            $("#ButtonPrintAgent").addClass("disabled");
+            $("#ButtonSearch").addClass("disabled");
+            $("#ButtonSave").addClass("disabled");
+        } else if (inputFromDate.value === '' || InputToDate.value === '') {
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateTo');
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateFrom');
+            $("#ButtonPrintGuide").addClass("disabled");
+            $("#ButtonPrintAgent").addClass("disabled");
+            $("#ButtonSearch").addClass("disabled");
+            $("#ButtonSave").addClass("disabled");
+        } else {
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateTo');
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateFrom');
+            $("#ButtonPrintGuide").removeClass("disabled");
+            $("#ButtonPrintAgent").removeClass("disabled");
+            $("#ButtonSearch").removeClass("disabled");
+            $("#ButtonSave").removeClass("disabled");
+            checkDateValue("to", "");
+        }
+    }
+
+    function checkDateValue(date) {
+        var inputFromDate = document.getElementById("InputDateFrom");
+        var InputToDate = document.getElementById("InputDateTo");
+
+        if ((inputFromDate.value !== '') && (InputToDate.value !== '')) {
+            var fromDate = (inputFromDate.value).split('-');
+            var toDate = (InputToDate.value).split('-');
+            if ((parseInt(fromDate[0])) > (parseInt(toDate[0]))) {
+                validateDate(date, "over");
+            }
+            if (((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))) {
+                validateDate(date, "over");
+            }
+            if (((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))) {
+                validateDate(date, "over");
+            }
+        }
+    }
+
+    function validateDate(date, option) {
+        if (option === 'over') {
+            if (date === 'from') {
+                $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateTo');
+                $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateFrom');
+            }
+            if (date === 'to') {
+                $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateTo');
+                $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateFrom');
+            }
+             $("#ButtonPrintGuide").addClass("disabled");
+            $("#ButtonPrintAgent").addClass("disabled");
+            $("#ButtonSearch").addClass("disabled");
+            $("#ButtonSave").addClass("disabled");
+        } else {
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateTo');
+            $('#searchDaytourCommissionForm').bootstrapValidator('revalidateField', 'InputDateFrom');
+            $("#ButtonPrintGuide").addClass("disabled");
+            $("#ButtonPrintAgent").addClass("disabled");
+            $("#ButtonSearch").addClass("disabled");
+            $("#ButtonSave").addClass("disabled");
+        }
+    }
+
     function setValueInModalGuide(){
         var fromdate = $('#InputDateFrom').val();
         var todate = $('#InputDateTo').val();
@@ -538,8 +715,8 @@
                 data: param,
                 success: function(msg) {
                     if(msg !== ''){
-                        var guideComm = parseFloat(msg);
-                        $("#guideComm-"+row).val(formatNumber(guideComm));
+                        var agentComm = parseFloat(msg);
+                        $("#agentComm-"+row).val(formatNumber(agentComm));
                     }   
                     
                 }, error: function(msg) {
@@ -560,7 +737,6 @@
         var inPrice = parseFloat($('#inPrice-'+row).val());
         var inQty = parseFloat($('#inQty-'+row).val());
         var price = (adPrice*adQty) + (chPrice*chQty)  + (inPrice*inQty) ;
-       
         var servletName = 'BookOtherServlet';
         var servicesName = 'AJAXBean';
         var param = 'action=' + 'text' +
@@ -571,6 +747,7 @@
                 '&price=' + price +
                 '&type=' + 'getGuideCommission';
         CallAjaxSearchGuideCom(param,row);
+        
     }
     
     function CallAjaxSearchGuideCom(param,row) {
@@ -604,6 +781,36 @@
         return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     }
    
+   
+   function printOtherGuideCommission() {
+//    var guidePrintFrom = document.getElementById("guidePrintFrom").value;
+//    var guidePrintTo = document.getElementById("guidePrintTo").value;
+//    var selGuideReport = document.getElementById("selGuideReport").value;
+        var guidePrintFrom = document.getElementById("InputDateFrom").value;
+        var guidePrintTo = document.getElementById("InputDateTo").value;
+        var selGuideReport = document.getElementById("SelectGuide").value;
+        if ((guidePrintFrom !== '') && (guidePrintTo !== '')) {
+            window.open("report.smi?name=OtherGuideCommission&startdate=" + guidePrintFrom + "&enddate=" + guidePrintTo + "&GuideID=" + selGuideReport);
+        } else {
+            validateDate();
+        }
+
+    }
+
+    function printOtherAgentCommission() {
+    //    var agentPrintFrom = document.getElementById("agentPrintFrom").value;
+    //    var agentPrintTo = document.getElementById("agentPrintTo").value;
+    //    var selAgentReport = document.getElementById("selAgentReport").value;
+        var agentPrintFrom = document.getElementById("InputDateFrom").value;
+        var agentPrintTo = document.getElementById("InputDateTo").value;
+        var selAgentReport = document.getElementById("SelectAgent").value;
+        if ((agentPrintFrom !== '') && (agentPrintTo !== '')) {
+            window.open("report.smi?name=OtherAgentCommission&startdate=" + agentPrintFrom + "&enddate=" + agentPrintTo + "&agentID=" + selAgentReport);
+        } else {
+            validateDate();
+        }    
+    }
+    
 </script>
 <style>
  .bootstrap-datetimepicker-widget { 

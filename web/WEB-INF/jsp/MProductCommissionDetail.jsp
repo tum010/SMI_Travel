@@ -179,10 +179,10 @@
                                         
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control text-right decimal" name="InputCommission-" id="InputCommission-" placeholder="0.00" maxlength="10"  value="">
+                                        <input type="text" class="form-control text-right decimal" name="InputCommissionPercent-" id="InputCommissionPercent-" placeholder="0.00" maxlength="10"  value="">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control text-right decimal" name="InputCommissionPercent-" id="InputCommissionPercent-" placeholder="0.00" maxlength="10"  value="">
+                                        <input type="text" class="form-control text-right decimal" name="InputCommission-" id="InputCommission-" placeholder="0.00" maxlength="10"  value="">
                                     </td>
                                     <td>
                                         <input type="hidden" class="form-control" id="AgentId-" name="AgentId-"  valHidden="" value=""  />
@@ -190,12 +190,12 @@
                                     </td>
                                     <td>
                                         <input type="text" class="form-control text-right decimal"  
-                                               name="InputAgentCommissionPercent-" id="InputCommissionPercent-"  
+                                               name="InputAgentCommissionPercent-" id="InputAgentCommissionPercent-"  
                                                 placeholder="0.00" maxlength="10"  value="">
                                     </td>
                                     <td>
                                         <input type="text" class="form-control text-right decimal"  
-                                               name="InputAgentCommission-" id="InputCommission-"  
+                                               name="InputAgentCommission-" id="InputAgentCommission-"  
                                                 placeholder="0.00" maxlength="10"  value="">
                                     </td>
                                     
@@ -296,13 +296,13 @@
                                     </td>
                                     <td class="">
                                         <input type="text" class="form-control text-right decimal"  
-                                        name="InputCommission-${loop.count}" id="InputCommissionRow-${loop.count}" 
-                                        placeholder="0.00" maxlength="10"  value="${item.comission}">
+                                        name="InputCommissionPercent-${loop.count}" id="InputCommissionPercentRow-${loop.count}" 
+                                        placeholder="0.00" maxlength="10"  value="${item.comissionPercent}">
                                     </td>
                                     <td class="">
                                         <input type="text" class="form-control text-right decimal"  
-                                        name="InputCommissionPercent-${loop.count}" id="InputCommissionPercentRow-${loop.count}" 
-                                        placeholder="0.00" maxlength="10"  value="${item.comissionPercent}" >
+                                        name="InputCommission-${loop.count}" id="InputCommissionRow-${loop.count}" 
+                                        placeholder="0.00" maxlength="10"  value="${item.comission}" >
                                     </td>
                                     <td class="">
                                         <input type="hidden" class="form-control" id="AgentId-${loop.count}" name="AgentId-" value="${item.agent.id}"  />
@@ -556,6 +556,7 @@ function sendDataToDelete(param){ //wii
 //                        var status = $(tr).find("input[name^='textAlert']").val();
 //                        if(status != null){
                     jQuery("#textAlertDivDelete").css("display","block");
+                    $('#textAlertDivSave').hide();
 //                        }
                 },
                 "error": function () {
@@ -608,6 +609,9 @@ function sendDataToDelete(param){ //wii
                     if ($(this).attr('name') === "AgentName-") {
                         $(this).val($(this).attr("valHidden"));
                     }
+                    if ($(this).attr('name') === "AgentName-"+counter) {
+                        $("#AgentName-"+counter).val($(this).attr("valHidden"));
+                    }
                     $(this).attr({
                         name: $(this).attr('name') + counter
                     });
@@ -617,4 +621,7 @@ function sendDataToDelete(param){ //wii
         });
         $("#MProductCommissionDetail").submit();
     }
+    
+    
+    
 </script>

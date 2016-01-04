@@ -137,10 +137,11 @@ public class MProductCommissionDetailController extends SMITravelController{
             String updateBy = request.getParameter("updateBy-"+i);
             String updateDate = request.getParameter("updateDate-"+i);
             
-            System.out.println("from"+i+" : "+from);
-            System.out.println("to"+i+" : "+to);
-            
-            System.out.println("agentId"+i+" : "+agentId);
+//            System.out.println("from"+i+" : "+from);
+//            System.out.println("to"+i+" : "+to);
+//            
+//            System.out.println("agentId"+i+" : "+agentId);
+            System.out.println("commission"+i+" : "+commission);
             
             Double commissionDouble = 0.0;
             Double commissionPercentDouble = 0.0;

@@ -102,8 +102,8 @@
                                     <td><c:out value="${item.productId.name}" /></td>
                                     <td class="text-center"><c:out value="${item.effectiveFrom}" /></td>
                                     <td class="text-center"><c:out value="${item.effectiveTo}" /></td>
-                                    <td class="text-right" id="compoint-${loop.count}"><c:out value="${item.comission}" /></td>
                                     <td class="text-right" id="compoint-${loop.count}"><c:out value="${item.comissionPercent}" /></td>
+                                    <td class="text-right" id="compoint-${loop.count}"><c:out value="${item.comission}" /></td>
                                     <td class="text-left"><c:out value="${item.agent.name}" /></td>
                                     <td class="text-right" id="compoint-${loop.count}"><c:out value="${item.agentCommissionPercent}" /></td>
                                     <td class="text-right" id="compoint-${loop.count}"><c:out value="${item.agentCommission}" /></td>

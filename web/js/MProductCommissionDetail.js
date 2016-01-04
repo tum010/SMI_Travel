@@ -178,6 +178,7 @@ $(document).ready(function () {
     }
     
     function addRowCommissionTable() {
+        
         var counter = $('#commissionTable tbody tr').length;
         var clone = $('#commissionTable tbody tr:first').clone();
         clone.removeClass("hide");
@@ -200,8 +201,39 @@ $(document).ready(function () {
                 allowMinus:false,        
                 digitsOptional: false,
                 placeholder: "0"
-            }); 
+            });
             $("#counterCommission").val(counter + 1);
         });
+        
         $('#commissionTable tbody').append(clone);
+        
+        var dataAgent = [];
+        dataAgent = agentName;
+        var agentcount = counter ; 
+        $("#commissionTable tbody").find("tr").each(function(){ 
+        $("#AgentName-"+agentcount).autocomplete({
+            source: dataAgent,
+            focus: function( event, ui ) {
+                event.preventDefault();
+                $(this).val(ui.item.label);
+            },
+            select: function( event, ui ) {
+                event.preventDefault();
+                $(this).val(ui.item.label);
+                $(this).attr("valHidden",ui.item.value);
+                $("#AgentId-"+agentcount).val(ui.item.value);
+            },
+            close:function( event, ui ) {
+               $("#AgentName-"+agentcount).trigger('keyup');
+            } 
+        });
+
+        $("#AgentName-"+agentcount).keyup(function () {
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left);
+            $(".ui-widget").css("font-size", 10);
+        }); 
+
+    });
     }

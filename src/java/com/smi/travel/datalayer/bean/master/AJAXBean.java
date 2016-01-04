@@ -47,6 +47,7 @@ import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.MFlightservice;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.Master;
+import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackagePrice;
 import com.smi.travel.datalayer.entity.PackageTour;
@@ -329,21 +330,43 @@ public class AJAXBean extends AbstractBean implements
             }
             if ("getOtherBookList".equalsIgnoreCase(type)) {
                 String name = map.get("name").toString();
-                Customer customer = new Customer();
-                String[] pathname = name.trim().split("/");
-                int filter = 0;
-                if (pathname.length == 1) {
-                    customer.setFirstName(pathname[0]);
-                    customer.setLastName(pathname[0]);
-                    customer.setCode(pathname[0]);
-                    filter = 1;
-                } else {
-                    filter = 0;
-                    customer.setFirstName(pathname[1]);
-                    customer.setLastName(pathname[0]);
-                    customer.setCode(pathname[0] + pathname[1]);
+//                Customer customer = new Customer();
+//                String[] pathname = name.trim().split("/");
+//                int filter = 0;
+//                if (pathname.length == 1) {
+//                    customer.setFirstName(pathname[0]);
+//                    customer.setLastName(pathname[0]);
+//                    customer.setCode(pathname[0]);
+//                    filter = 1;
+//                } else {
+//                    filter = 0;
+//                    customer.setFirstName(pathname[1]);
+//                    customer.setLastName(pathname[0]);
+//                    customer.setCode(pathname[0] + pathname[1]);
+//                }
+                List<OtherBooking> summaryList = otherBookingDao.searchOtherBooking(name);
+                
+                
+                
+                if (summaryList != null) {
+                    for (int i = 0; i < summaryList.size(); i++) {
+
+                        OtherBooking otherBooking = summaryList.get(i);
+//                            if (bookDetail.getDateTour() != null) {
+//                                tourdate = bookDetail.getDateTour().toString();
+//                            }
+
+                        result += "<tr>"
+                                + "<td class=\"text-center\">" + otherBooking.getMaster().getReferenceNo().trim() + "</td>"
+                                + "<td class=\"text-center\">" + otherBooking.getCreateDate() + "</td>"
+                                + "<td class=\"text-left\">" + otherBooking.getMaster().getCustomer().getFirstName() + " "  + otherBooking.getMaster().getCustomer().getLastName() + "</td>"
+                                + "<td class=\"text-left\">" + otherBooking.getProduct().getName() + "</td>"
+                                + "<td class=\"text-center\">" + otherBooking.getStatus().getName() + "</td>" 
+                                + "<td class=\"text-center\"><a href='DaytourOperationOther.smi?InputRefNo="+otherBooking.getMaster().getReferenceNo()+ "&action=search'><span class='glyphicon glyphicon-check'></span></a></td>"
+                                + "</tr>";
+                    }
                 }
-                result = otherBookingDao.searchOtherBooking(customer, filter);
+                System.out.println(" result :: " +result);
             }
             if ("getStock".equalsIgnoreCase(type)){
                 String productID = map.get("productid").toString();
@@ -2577,5 +2600,13 @@ public class AJAXBean extends AbstractBean implements
             no++;
         } 
         return html.toString();
+    }
+
+    public OtherBookingDao getOtherBookingDao() {
+        return otherBookingDao;
+    }
+
+    public void setOtherBookingDao(OtherBookingDao otherBookingDao) {
+        this.otherBookingDao = otherBookingDao;
     }
 }

@@ -31,7 +31,7 @@ public interface OtherBookingDao {
     public int enableBookDetailOther(String otherID);
     public String saveOtherBookCommission(List<OtherBooking> BookList);
     public Boolean CheckUsabilityCoupon(String CouponId);
-    public  List<OtherBooking> searchOtherBooking(Customer customer, int filter);
+    public List<OtherBooking> searchOtherBooking(String name);
     public String saveStockDetailOther(OtherBooking Other, SystemUser user, String addticket, String adTicket, String chTicket, String infTicket, String itemid);
     public List<OtherTicketView> getListStockDetail(String otherBookingId);
     public String updateStockTicketStatus(String stockTicketId,String status);
