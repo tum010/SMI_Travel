@@ -1834,6 +1834,17 @@
             }
         }
         calculateGrandTotal();
+        
+        var creditDetailTableLength = $("#CreditDetailTable tr").length;
+        
+        if (creditDetailTableLength > 1) {
+            for (var i = 1; i < creditDetailTableLength; i++) {
+                if ($('#creditAmount' + i).val() != "") {
+                    setFormatCreditAmount(i);
+                }
+
+            }
+        }
     });
 
 //    function setFormatCurrencyDetail(){
@@ -2221,6 +2232,29 @@
             document.getElementById("receiveCost" + row).value = "";
         }
         calculateGrandTotal();
+    }
+    
+    function setFormatCreditAmount(row){
+        var creditAmount = replaceAll(",", "", $('#creditAmount' + row).val());
+        if (creditAmount == "") {
+            creditAmount = 0;
+        }
+        creditAmount = parseFloat(creditAmount);
+        document.getElementById("creditAmount" + row).value = formatNumber(creditAmount);
+        sumTotalCreditAmount();
+        $("#creditAmount" + row).focusout(function() {
+            var creditAmount = replaceAll(",", "", $('#creditAmount' + row).val());
+            if (creditAmount == "") {
+                creditAmount = 0;
+            }
+            creditAmount = parseFloat(creditAmount);
+            document.getElementById("creditAmount" + row).value = formatNumber(creditAmount);
+
+            if (creditAmount == "" || creditAmount == 0) {
+                document.getElementById("creditAmount" + row).value = "";
+            }
+            sumTotalCreditAmount();
+        });
     }
 
     function AddRowCredit(row) {
