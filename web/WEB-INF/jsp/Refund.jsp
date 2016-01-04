@@ -463,8 +463,9 @@
                                             <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
                                         </c:when>
                                         <c:otherwise>
-                                            <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=saveRefund">
-                                                <button type="submit" class="btn btn-success"  id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
+                                            <!--<a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=saveRefund">-->
+                                            <a  id="SpanAdd" href="#">
+                                                <button type="button" class="btn btn-success"  id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
                                             </a>
                                         </c:otherwise>
                                     </c:choose> 
@@ -702,8 +703,9 @@
                                             <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
                                         </c:when>
                                         <c:otherwise>
-                                           <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=addRefund">
-                                                <button type="submit" class="btn btn-success" id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
+                                           <!--<a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=addRefund">-->
+                                            <a  id="SpanAdd" href="#">   
+                                               <button type="button" class="btn btn-success" id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
                                             </a>
                                         </c:otherwise>
                                     </c:choose>  
