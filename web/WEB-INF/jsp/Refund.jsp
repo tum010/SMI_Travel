@@ -1597,10 +1597,34 @@ function saveRefund(){
     var receivename = $("#receiveByName").val();
     var receivedate = $("#receiveDate").val();
     if(refundby !== '' && refundname !== '' && receiveby !== '' &&  receivename !== '' && receivedate !== ''){
-        $("#buttonSaveRefund").removeAttr("disabled");
-        $("#buttonPrintRefund").removeAttr("disabled");
-        $("#buttonCloseRefund").removeAttr("disabled");
-        document.getElementById('RefundForm').submit();
+        var error = 0;
+        var count = ($("#counterTable").val() !== undefined ? parseInt($("#counterTable").val()) : parseInt($("#counterTableAdd").val()));
+        for(var i=1; i<count; i++){
+            var inputSectorRefund = document.getElementById('inputSectorRefund'+i);
+            if(inputSectorRefund !== null){
+                if(inputSectorRefund.style.borderColor === 'red'){
+                    error++;
+                    i = count;
+                }
+                
+            }
+            var inputSectorRefundAdd = document.getElementById('inputSectorRefundadd'+i);
+            if(inputSectorRefundAdd !== null){
+                if(inputSectorRefundAdd.style.borderColor === 'red'){
+                    error++;
+                    i = count;
+                }                
+            }           
+        }    
+        if(error === 0){
+            $("#buttonSaveRefund").removeAttr("disabled");
+            $("#buttonPrintRefund").removeAttr("disabled");
+            $("#buttonCloseRefund").removeAttr("disabled");
+            document.getElementById('RefundForm').submit();
+        } else {
+            $("#buttonSaveRefund").attr("disabled", "disabled");
+            $("#buttonPrintRefund").attr("disabled", "disabled");
+        }        
     }
     // Check Change
    
@@ -1660,7 +1684,7 @@ function addRowRefundTicketDetail(row,id){
         '<td>' + row + '</td>' +       
         '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> <input type="hidden" id="ticketNoOnSelected' + row + '" name="ticketNoOnSelected' + row + '" value="" ></td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value="" readonly=""></td>' +
-        '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value=""></td>' +
+        '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value="" onfocusout="checkRefundAdd(this,'+row+')"></td>' +
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatChargeNumber('+row+');"  id="inputCharge' + row + '" name="inputCharge' + row + '" value="" ></td>' + 
         '<td><input  maxlength ="15" type="text"  class="form-control numerical text-right"  onfocusout="changeFormatClientchargeNumber('+row+');"  id="inputClientcharge' + row + '" name="inputClientcharge' + row + '" value="" ></td>'+
         '<td class="text-center"><a class="carousel" data-toggle="modal"  data-target="#DeleteRefundDetail" onclick="DeleteRefundDetail('+row+',\'\')"  ><span class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+
@@ -1905,8 +1929,13 @@ function checkRefund(e,row) {
     var refund = e.value;
     var issue = $("#inputSector" + row).val();
     console.log("Row Refund detail id : " + row + " Value issue : " + issue);
-    if (issue.indexOf(refund) >= 0) {
+//    if (issue.indexOf(refund) >= 0) {
+    if (issue === refund) {
         e.style.borderColor = "Green";
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+    } else if(refund === ''){
+        e.style.borderColor = "";
         $("#buttonSaveRefund").removeAttr("disabled");
         $("#buttonPrintRefund").removeAttr("disabled");
     } else {
@@ -1921,8 +1950,12 @@ function checkRefundAdd(e,row) {
     var refund = e.value;
     var issue = $("#inputSectoradd" + row).val();
     console.log("Row Refund detail id : " + row + " Value issue : " + issue);
-    if (issue.indexOf(refund) >= 0) {
+    if (issue === refund) {
         e.style.borderColor = "Green";
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+    } else if(refund === ''){
+        e.style.borderColor = "";
         $("#buttonSaveRefund").removeAttr("disabled");
         $("#buttonPrintRefund").removeAttr("disabled");
     } else {
