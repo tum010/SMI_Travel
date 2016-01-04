@@ -347,6 +347,7 @@ public class InvoiceController extends SMITravelController {
             request.setAttribute("listInvoiceDetail", null);
             result = "NEW";
             request.setAttribute("result", result);
+            request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
         }else if("wildCardSearch".equalsIgnoreCase(action)){
             Invoice invoice = new Invoice();
             if(department != null){
@@ -713,7 +714,7 @@ public class InvoiceController extends SMITravelController {
               if( isVat == null){
                   invoiceDetail.setIsVat(0);
                   invoiceDetail.setGross(null);
-                  invoiceDetail.setVat(null);
+//                  invoiceDetail.setVat(null);
               }else{
                   invoiceDetail.setIsVat(1);
               }
