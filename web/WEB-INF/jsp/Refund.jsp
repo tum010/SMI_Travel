@@ -1630,25 +1630,63 @@ function saveRefund(){
    
 }
 function checkRefundReady(row) {
-    var refund = $("#inputSectorRefund" + row).val();
-    var issue = $("#inputSector" + row).val();
-    console.log("Row Refund detail id : " + row + " Value issue : " + issue + " Refund : " + refund);
-    if (issue.indexOf(refund) >= 0) {
+//    var refund = $("#inputSectorRefund" + row).val();
+//    var issue = $("#inputSector" + row).val();
+//    console.log("Row Refund detail id : " + row + " Value issue : " + issue + " Refund : " + refund);
+//    if (issue.indexOf(refund) >= 0) {
 //        $("#inputSectorRefund" + row).style.borderColor = "Green";
-        $("#inputSectorRefund"+row).addClass("has-success");
-        if(refund !== ''){
-            $("#inputSectorRefund"+row).css('border-color','green');
-        }
+//        $("#inputSectorRefund"+row).addClass("has-success");
+//        if(refund !== ''){
+//            $("#inputSectorRefund"+row).css('border-color','green');
+//        }
+//        $("#buttonSaveRefund").removeAttr("disabled");
+//        $("#buttonPrintRefund").removeAttr("disabled");
+//    } else {
+//        $("#inputSectorRefund" + row).style.borderColor = "Red";
+//        counterror++;
+//        $("#inputSectorRefund"+row).addClass("has-error");
+//        $("#inputSectorRefund"+row).css('border-color','red');
+//        $("#buttonSaveRefund").attr("disabled", "disabled");
+//        $("#buttonPrintRefund").attr("disabled", "disabled");
+//        return;
+//    }
+    var refund = ($("#inputSectorRefund" + row).val()).split("-");
+    var issue = ($("#inputSector" + row).val()).split("-");
+    
+    if ($("#inputSectorRefund" + row).val() === '') {
+        $("#inputSectorRefund" + row).css('border-color','');
         $("#buttonSaveRefund").removeAttr("disabled");
         $("#buttonPrintRefund").removeAttr("disabled");
-    } else {
-//        $("#inputSectorRefund" + row).style.borderColor = "Red";
-        counterror++;
-        $("#inputSectorRefund"+row).addClass("has-error");
-        $("#inputSectorRefund"+row).css('border-color','red');
-        $("#buttonSaveRefund").attr("disabled", "disabled");
-        $("#buttonPrintRefund").attr("disabled", "disabled");
-        return;
+    } else{
+        var match = 0;
+        var error = 0;
+        for(var i=0; i<refund.length; i++){
+            var sectionRefund = refund[i];
+            for(var j=0; j<issue.length; j++){
+                var section = issue[j];
+                var different = 0;
+                if(sectionRefund === section){
+                    j = issue.length;
+                    match++;
+                }else{
+                    different++;
+                }
+                if(j === ((issue.length)-1)){
+                    if(different  === ((issue.length)-1)){
+                        error++;
+                    }                    
+                }
+            }        
+        }
+        if(error === 0 && match > 0){
+            $("#inputSectorRefund" + row).css('border-color','green');
+            $("#buttonSaveRefund").removeAttr("disabled");
+            $("#buttonPrintRefund").removeAttr("disabled");
+        }else{
+            $("#inputSectorRefund" + row).css('border-color','red');
+            $("#buttonSaveRefund").attr("disabled", "disabled");
+            $("#buttonPrintRefund").attr("disabled", "disabled");
+        }                     
     }
 }
 
@@ -1926,43 +1964,101 @@ function changeFormatClientchargeAddNumber(id){
 }
 
 function checkRefund(e,row) {
-    var refund = e.value;
-    var issue = $("#inputSector" + row).val();
-    console.log("Row Refund detail id : " + row + " Value issue : " + issue);
-//    if (issue.indexOf(refund) >= 0) {
-    if (issue === refund) {
-        e.style.borderColor = "Green";
-        $("#buttonSaveRefund").removeAttr("disabled");
-        $("#buttonPrintRefund").removeAttr("disabled");
-    } else if(refund === ''){
+//    var refund = e.value;
+//    var issue = $("#inputSector" + row).val();
+//
+//    if (issue === refund) {
+//        e.style.borderColor = "Green";
+//        $("#buttonSaveRefund").removeAttr("disabled");
+//        $("#buttonPrintRefund").removeAttr("disabled");
+//    } else if(refund === ''){
+//        e.style.borderColor = "";
+//        $("#buttonSaveRefund").removeAttr("disabled");
+//        $("#buttonPrintRefund").removeAttr("disabled");
+//    } else {
+//        e.style.borderColor = "Red";
+//        $("#buttonSaveRefund").attr("disabled", "disabled");
+//        $("#buttonPrintRefund").attr("disabled", "disabled");
+//        return;
+//    }
+    var refund = (e.value).split("-");
+    var issue = ($("#inputSector" + row).val()).split("-");
+    
+    if (e.value === '') {
         e.style.borderColor = "";
         $("#buttonSaveRefund").removeAttr("disabled");
         $("#buttonPrintRefund").removeAttr("disabled");
-    } else {
-        e.style.borderColor = "Red";
-        $("#buttonSaveRefund").attr("disabled", "disabled");
-        $("#buttonPrintRefund").attr("disabled", "disabled");
-        return;
+    } else{
+        var match = 0;
+        var error = 0;
+        for(var i=0; i<refund.length; i++){
+            var sectionRefund = refund[i];
+            for(var j=0; j<issue.length; j++){
+                var section = issue[j];
+                var different = 0;
+                if(sectionRefund === section){
+                    j = issue.length;
+                    match++;
+                }else{
+                    different++;
+                }
+                if(j === ((issue.length)-1)){
+                    if(different  === ((issue.length)-1)){
+                        error++;
+                    }                    
+                }
+            }        
+        }
+        if(error === 0 && match > 0){
+            e.style.borderColor = "Green";
+            $("#buttonSaveRefund").removeAttr("disabled");
+            $("#buttonPrintRefund").removeAttr("disabled");
+        }else{
+            e.style.borderColor = "Red";
+            $("#buttonSaveRefund").attr("disabled", "disabled");
+            $("#buttonPrintRefund").attr("disabled", "disabled");
+        }                     
     }
 }
 
 function checkRefundAdd(e,row) {
-    var refund = e.value;
-    var issue = $("#inputSectoradd" + row).val();
-    console.log("Row Refund detail id : " + row + " Value issue : " + issue);
-    if (issue === refund) {
-        e.style.borderColor = "Green";
-        $("#buttonSaveRefund").removeAttr("disabled");
-        $("#buttonPrintRefund").removeAttr("disabled");
-    } else if(refund === ''){
+    var refund = (e.value).split("-");
+    var issue = ($("#inputSectoradd" + row).val()).split("-");
+    
+    if (e.value === '') {
         e.style.borderColor = "";
         $("#buttonSaveRefund").removeAttr("disabled");
         $("#buttonPrintRefund").removeAttr("disabled");
-    } else {
-        e.style.borderColor = "Red";
-        $("#buttonSaveRefund").attr("disabled", "disabled");
-        $("#buttonPrintRefund").attr("disabled", "disabled");
-        return;
+    } else{
+        var match = 0;
+        var error = 0;
+        for(var i=0; i<refund.length; i++){
+            var sectionRefund = refund[i];
+            for(var j=0; j<issue.length; j++){
+                var section = issue[j];
+                var different = 0;
+                if(sectionRefund === section){
+                    j = issue.length;
+                    match++;
+                }else{
+                    different++;
+                }
+                if(j === ((issue.length)-1)){
+                    if(different  === ((issue.length)-1)){
+                        error++;
+                    }                    
+                }
+            }        
+        }
+        if(error === 0 && match > 0){
+            e.style.borderColor = "Green";
+            $("#buttonSaveRefund").removeAttr("disabled");
+            $("#buttonPrintRefund").removeAttr("disabled");
+        }else{
+            e.style.borderColor = "Red";
+            $("#buttonSaveRefund").attr("disabled", "disabled");
+            $("#buttonPrintRefund").attr("disabled", "disabled");
+        }                     
     }
 }
 
