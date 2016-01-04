@@ -139,6 +139,7 @@
                                 <th style="width: 7%">Vat</th>
                                 <th style="width: 12%">Amount</th>
                                 <th style="width: 10%">Department</th>
+                                <th style="width: 10%">Status</th>
                              </tr>
                         </thead>
                         <tbody>
@@ -163,6 +164,7 @@
                                 <td align="right" class="money">${table.vat}</td>
                                 <td align="right" class="money">${table.amount}</td>
                                 <td align="center">${table.department}</td>
+                                <td align="center">${table.status}</td>
                             </tr>
                             </c:forEach>
                         </tbody>

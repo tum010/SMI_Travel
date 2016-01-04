@@ -47,7 +47,7 @@ public class SaleVatReportImpl implements SaleVatReportDao{
         UtilityFunction util = new UtilityFunction();
         List<OutputTaxView> outputTaxViewList = new ArrayList<OutputTaxView>();
         Session session = this.getSessionFactory().openSession();
-        StringBuffer query = new StringBuffer(" SELECT * FROM `output_tax_view` tax  where `tax`.status = 'Post' ");
+        StringBuffer query = new StringBuffer(" SELECT * FROM `output_tax_view` tax  where `tax`.status = 'Post' || `tax`.status = 'Change'  ");
         boolean haveCondition = true;
                 
         if ((from != null) && (!"".equalsIgnoreCase(from))) {
@@ -152,7 +152,7 @@ public class SaleVatReportImpl implements SaleVatReportDao{
         }
         query += " ORDER BY department desc , taxno , taxdate";
         
-        System.out.println("query : "+query);
+        System.out.println(" 1111 query : "+query);
         
          List<Object[]> QueryList = session.createSQLQuery(query)
                 .addScalar("taxid", Hibernate.STRING)
