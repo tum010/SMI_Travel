@@ -696,31 +696,31 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         
         String result = "";
         boolean condition = false;
-        if(recCashAmount.compareTo(new BigDecimal(0)) != 0 && recCashAmount.compareTo(cashAmount) != 0){
+        if(recCashAmount.compareTo(cashAmount) != 0){
             cashCompare = recCashAmount.subtract(cashAmount);
             result += (condition ? " , " : "Diff - ");
             condition = true;
             result += "Cash Amount : "+util.setFormatMoney(cashCompare);
         }
-        if(recCashMinusAmount.compareTo(new BigDecimal(0)) != 0 && recCashMinusAmount.compareTo(cashMinusAmount) != 0){
+        if(recCashMinusAmount.compareTo(cashMinusAmount) != 0){
             cashMinusCompare = recCashMinusAmount.subtract(cashMinusAmount);
             result += (condition ? " , " : "Diff - ");
             condition = true;
             result += "Cash Minus Amount : "+util.setFormatMoney(cashMinusCompare);           
         }
-        if(recCheque.compareTo(new BigDecimal(0)) != 0 && recCheque.compareTo(chqAmount) != 0){
+        if(recCheque.compareTo(chqAmount) != 0){
             chqCompare = recCheque.subtract(chqAmount);
             result += (condition ? " , " : "Diff - ");
             condition = true;
             result += "Chq Amount : "+util.setFormatMoney(chqCompare);
         }
-        if(recBankAmount.compareTo(new BigDecimal(0)) != 0 && recBankAmount.compareTo(bankTransfer) != 0){
+        if(recBankAmount.compareTo(bankTransfer) != 0){
             bankCompare = recBankAmount.subtract(bankTransfer);
             result += (condition ? " , " : "Diff - ");
             condition = true;
             result += "Bank Amount : "+util.setFormatMoney(bankCompare);
         }       
-        if(recCreditCard.compareTo(new BigDecimal(0)) != 0 && recCreditCard.compareTo(creditAmount) != 0){
+        if(recCreditCard.compareTo(creditAmount) != 0){
             creditCompare = recCreditCard.subtract(creditAmount);
             result += (condition ? " , " : "Diff - ");
             condition = true;
