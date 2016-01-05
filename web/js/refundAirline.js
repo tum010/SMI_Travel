@@ -498,7 +498,7 @@ function checkRefund(e) {
                     }
                 }        
             }
-            if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+            if(error === 0 && match > 0){
                 e.style.borderColor = "Green";
             }else{
                 e.style.borderColor = "Red";

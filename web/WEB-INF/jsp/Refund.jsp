@@ -1687,7 +1687,7 @@ function checkRefundReady(row) {
                     }
                 }        
             }
-            if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+            if(error === 0 && match > 0){
                 $("#inputSectorRefund" + row).css('border-color','green');
                 $("#buttonSaveRefund").removeAttr("disabled");
                 $("#buttonPrintRefund").removeAttr("disabled");
@@ -2028,7 +2028,7 @@ function checkRefund(e,row) {
                     }
                 }        
             }
-            if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+            if(error === 0 && match > 0){
                 e.style.borderColor = "Green";
                 $("#buttonSaveRefund").removeAttr("disabled");
                 $("#buttonPrintRefund").removeAttr("disabled");
@@ -2096,7 +2096,7 @@ function checkRefundAdd(e,row) {
                     }
                 }        
             }
-            if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+            if(error === 0 && match > 0){
                 e.style.borderColor = "Green";
                 $("#buttonSaveRefund").removeAttr("disabled");
                 $("#buttonPrintRefund").removeAttr("disabled");
