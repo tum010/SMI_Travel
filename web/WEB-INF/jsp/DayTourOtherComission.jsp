@@ -813,12 +813,12 @@
     
 </script>
 <style>
- .bootstrap-datetimepicker-widget { 
+/* .bootstrap-datetimepicker-widget { 
     left: 650px !important;
     position: absolute !important;
     right: auto !important;
     top: 290px !important;
-}
+}*/
 </style>
 <c:if test="${! empty result}">
     <c:if test="${result =='success'}">        
