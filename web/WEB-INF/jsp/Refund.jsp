@@ -1652,41 +1652,55 @@ function checkRefundReady(row) {
 //    }
     var refund = ($("#inputSectorRefund" + row).val()).split("-");
     var issue = ($("#inputSector" + row).val()).split("-");
+    var refundTemp = ($("#inputSectorRefund" + row).val());
+    var issueTemp = ($("#inputSector" + row).val());
     
     if ($("#inputSectorRefund" + row).val() === '') {
         $("#inputSectorRefund" + row).css('border-color','');
         $("#buttonSaveRefund").removeAttr("disabled");
         $("#buttonPrintRefund").removeAttr("disabled");
     } else{
-        var match = 0;
-        var error = 0;
-        for(var i=0; i<refund.length; i++){
-            var sectionRefund = refund[i];
-            for(var j=0; j<issue.length; j++){
-                var section = issue[j];
+        if(refund.length > 1){
+            var match = 0;
+            var error = 0;
+            var seq = 0;
+            for(var i=0; i<refund.length; i++){
+                var sectionRefund = refund[i];
                 var different = 0;
-                if(sectionRefund === section){
-                    j = issue.length;
-                    match++;
-                }else{
-                    different++;
-                }
-                if(j === ((issue.length)-1)){
-                    if(different  === ((issue.length)-1)){
-                        error++;
-                    }                    
-                }
-            }        
-        }
-        if(error === 0 && match > 0){
-            $("#inputSectorRefund" + row).css('border-color','green');
-            $("#buttonSaveRefund").removeAttr("disabled");
-            $("#buttonPrintRefund").removeAttr("disabled");
+                for(var j=0; j<issue.length; j++){
+                    var section = issue[j];               
+                    if(sectionRefund === section){
+                        var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
+                        if(((j >= seq) && ((section !== sectionRefundTemp)))){
+                            seq = j;
+                            delete issue[j];
+                            j = issue.length;
+                            match++;
+                        }      
+                    }else{
+                        different++;
+                    }
+                    if(j === ((issue.length)-1)){
+                        if(different > 0){
+                            error++;
+                        }                    
+                    }
+                }        
+            }
+            if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+                $("#inputSectorRefund" + row).css('border-color','green');
+                $("#buttonSaveRefund").removeAttr("disabled");
+                $("#buttonPrintRefund").removeAttr("disabled");
+            }else{
+                $("#inputSectorRefund" + row).css('border-color','red');
+                $("#buttonSaveRefund").attr("disabled", "disabled");
+                $("#buttonPrintRefund").attr("disabled", "disabled");
+            }
         }else{
             $("#inputSectorRefund" + row).css('border-color','red');
             $("#buttonSaveRefund").attr("disabled", "disabled");
             $("#buttonPrintRefund").attr("disabled", "disabled");
-        }                     
+        }    
     }
 }
 
@@ -1967,12 +1981,8 @@ function checkRefund(e,row) {
 //    var refund = e.value;
 //    var issue = $("#inputSector" + row).val();
 //
-//    if (issue === refund) {
+//    if (issue.indexOf(refund) >= 0) {
 //        e.style.borderColor = "Green";
-//        $("#buttonSaveRefund").removeAttr("disabled");
-//        $("#buttonPrintRefund").removeAttr("disabled");
-//    } else if(refund === ''){
-//        e.style.borderColor = "";
 //        $("#buttonSaveRefund").removeAttr("disabled");
 //        $("#buttonPrintRefund").removeAttr("disabled");
 //    } else {
@@ -1983,83 +1993,124 @@ function checkRefund(e,row) {
 //    }
     var refund = (e.value).split("-");
     var issue = ($("#inputSector" + row).val()).split("-");
+    var refundTemp = e.value;
+    var issueTemp = ($("#inputSector" + row).val());
     
     if (e.value === '') {
         e.style.borderColor = "";
         $("#buttonSaveRefund").removeAttr("disabled");
         $("#buttonPrintRefund").removeAttr("disabled");
     } else{
-        var match = 0;
-        var error = 0;
-        for(var i=0; i<refund.length; i++){
-            var sectionRefund = refund[i];
-            for(var j=0; j<issue.length; j++){
-                var section = issue[j];
+        if(refund.length > 1){
+            var match = 0;
+            var error = 0;
+            var seq = 0;
+            for(var i=0; i<refund.length; i++){
+                var sectionRefund = refund[i];
                 var different = 0;
-                if(sectionRefund === section){
-                    j = issue.length;
-                    match++;
-                }else{
-                    different++;
-                }
-                if(j === ((issue.length)-1)){
-                    if(different  === ((issue.length)-1)){
-                        error++;
-                    }                    
-                }
-            }        
-        }
-        if(error === 0 && match > 0){
-            e.style.borderColor = "Green";
-            $("#buttonSaveRefund").removeAttr("disabled");
-            $("#buttonPrintRefund").removeAttr("disabled");
+                for(var j=0; j<issue.length; j++){
+                    var section = issue[j];               
+                    if(sectionRefund === section){
+                        var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
+                        if(((j >= seq) && ((section !== sectionRefundTemp)))){
+                            seq = j;
+                            delete issue[j];
+                            j = issue.length;                   
+                            match++;
+                        }                  
+                    }else{
+                        different++;
+                    }
+                    if(j === ((issue.length)-1)){
+                        if(different > 0){
+                            error++;
+                        }                    
+                    }
+                }        
+            }
+            if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+                e.style.borderColor = "Green";
+                $("#buttonSaveRefund").removeAttr("disabled");
+                $("#buttonPrintRefund").removeAttr("disabled");
+            }else{
+                e.style.borderColor = "Red";
+                $("#buttonSaveRefund").attr("disabled", "disabled");
+                $("#buttonPrintRefund").attr("disabled", "disabled");
+            }
         }else{
             e.style.borderColor = "Red";
             $("#buttonSaveRefund").attr("disabled", "disabled");
             $("#buttonPrintRefund").attr("disabled", "disabled");
-        }                     
+        }    
     }
 }
 
 function checkRefundAdd(e,row) {
+//    var refund = e.value;
+//    var issue = $("#inputSectoradd" + row).val();
+//
+//    if (issue.indexOf(refund) >= 0) {
+//        e.style.borderColor = "Green";
+//        $("#buttonSaveRefund").removeAttr("disabled");
+//        $("#buttonPrintRefund").removeAttr("disabled");
+//    } else {
+//        e.style.borderColor = "Red";
+//        $("#buttonSaveRefund").attr("disabled", "disabled");
+//        $("#buttonPrintRefund").attr("disabled", "disabled");
+//        return;
+//    }
     var refund = (e.value).split("-");
     var issue = ($("#inputSectoradd" + row).val()).split("-");
+    var refundTemp = e.value;
+    var issueTemp = ($("#inputSector" + row).val());
     
     if (e.value === '') {
         e.style.borderColor = "";
         $("#buttonSaveRefund").removeAttr("disabled");
         $("#buttonPrintRefund").removeAttr("disabled");
     } else{
-        var match = 0;
-        var error = 0;
-        for(var i=0; i<refund.length; i++){
-            var sectionRefund = refund[i];
-            for(var j=0; j<issue.length; j++){
-                var section = issue[j];
+        if(refund.length > 1){
+            var match = 0;
+            var error = 0;
+            var seq = 0;
+            for(var i=0; i<refund.length; i++){
+                var sectionRefund = refund[i];
                 var different = 0;
-                if(sectionRefund === section){
-                    j = issue.length;
-                    match++;
-                }else{
-                    different++;
-                }
-                if(j === ((issue.length)-1)){
-                    if(different  === ((issue.length)-1)){
-                        error++;
-                    }                    
-                }
-            }        
-        }
-        if(error === 0 && match > 0){
-            e.style.borderColor = "Green";
-            $("#buttonSaveRefund").removeAttr("disabled");
-            $("#buttonPrintRefund").removeAttr("disabled");
+                for(var j=0; j<issue.length; j++){
+                    var section = issue[j];
+                    if(sectionRefund === section){
+                        var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
+                        if(((j >= seq) && ((section !== sectionRefundTemp)))){
+                            seq = j;
+                            delete issue[j];
+                            j = issue.length;
+                            match++;
+                        }    
+                    }else{
+                        different++;
+                    }
+                    if(j === ((issue.length)-1)){
+                        if(different > 0){
+                            error++;
+                        }                    
+                    }
+                }        
+            }
+            if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+                e.style.borderColor = "Green";
+                $("#buttonSaveRefund").removeAttr("disabled");
+                $("#buttonPrintRefund").removeAttr("disabled");
+            }else{
+                e.style.borderColor = "Red";
+                $("#buttonSaveRefund").attr("disabled", "disabled");
+                $("#buttonPrintRefund").attr("disabled", "disabled");
+            }                     
         }else{
             e.style.borderColor = "Red";
             $("#buttonSaveRefund").attr("disabled", "disabled");
             $("#buttonPrintRefund").attr("disabled", "disabled");
-        }                     
-    }
+        }
+    }    
 }
 
 function formatNumber(num) {
