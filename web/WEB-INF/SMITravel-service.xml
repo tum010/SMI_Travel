@@ -372,5 +372,9 @@
     <bean id="MExchangeRateService" class="com.smi.travel.datalayer.service.MExchangeRateService">
         <property name="mExchangeRateDao" ref="MExchangeRateDao" />
     </bean>
+    
+    <bean id="PaymentStockService" class="com.smi.travel.datalayer.service.PaymentStockService">
+        <property name="paymentStockDao" ref="PaymentStockDao" />
+    </bean>
     <!--<add data>-->
 </beans>

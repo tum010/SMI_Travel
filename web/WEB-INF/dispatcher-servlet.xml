@@ -696,7 +696,8 @@
     </bean>
     
     <bean id="PaymentStockController" class="com.smi.travel.controller.PaymentStockController">
-        <property name="utilservice" ref="UtilityService" />
+        <property name="utilityService" ref="UtilityService" />
+        <property name="paymentStockService" ref="PaymentStockService" />
     </bean>
     
     <bean id="OutboundSummaryController" class="com.smi.travel.controller.OutboundSummaryController">

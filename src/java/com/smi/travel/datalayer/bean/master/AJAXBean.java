@@ -22,6 +22,7 @@ import com.smi.travel.datalayer.dao.OtherBookingDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
 import com.smi.travel.datalayer.dao.PaymentOutboundDao;
+import com.smi.travel.datalayer.dao.PaymentStockDao;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
 import com.smi.travel.datalayer.dao.ProductDetailDao;
 import com.smi.travel.datalayer.dao.ReceiptDao;
@@ -55,6 +56,7 @@ import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.ProductDetail;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
+import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.entity.TaxInvoice;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
@@ -117,6 +119,7 @@ public class AJAXBean extends AbstractBean implements
     private static final String PAYMENTTOURHOTEL = "PaymentTourHotelServlet";
     private static final String RECEIVETABLE = "ReceiveTableServlet";
     private static final String PAYMENTOUTBOUND = "PaymentOutboundServlet"; 
+    private static final String PAYMENTSTOCK = "PaymentStockServlet"; 
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -144,6 +147,7 @@ public class AJAXBean extends AbstractBean implements
     private ReceiveTableDao receiveTableDao;
     private PaymentOutboundDao paymentOutboundDao;
     private DefineVarDao defineVardao;
+    private PaymentStockDao paymentStockDao;
     
     public AJAXBean(List queryList) {
         super(queryList);
@@ -205,6 +209,8 @@ public class AJAXBean extends AbstractBean implements
                     paymentOutboundDao = (PaymentOutboundDao) obj;
                 } else if (obj instanceof DefineVarDao) {
                     defineVardao = (DefineVarDao) obj;
+                } else if (obj instanceof PaymentStockDao) {
+                    paymentStockDao = (PaymentStockDao) obj;
                 }
             }
         }
@@ -1024,11 +1030,79 @@ public class AJAXBean extends AbstractBean implements
                     result = "fail";
                 }
             }          
+        }else if(PAYMENTSTOCK.equalsIgnoreCase(servletName)){
+            if("getStockDetail".equalsIgnoreCase(type)){
+                String stockId = map.get("stockId").toString();
+                List<StockDetail> stockDetailList = paymentStockDao.getListStockDetailFromStockId(stockId);
+                if (stockDetailList != null) {
+                    result = buildPaymentStockDetailHTML(stockDetailList);
+                } else {
+                    result = "null";
+                }
+            }      
         }
 
+        
+        
+        
         return result;
     }
 
+    
+    private String buildPaymentStockDetailHTML(List<StockDetail> stockDetailList) {
+        StringBuffer html = new StringBuffer();     
+        UtilityFunction utilty = new UtilityFunction();
+        int no = 1;
+        String code = "" ;
+        String type = "" ;
+        String refno = "" ;
+        String pickup = "" ;
+        String pickdate = "" ;
+        
+        for (int i = 0; i < stockDetailList.size(); i++) {
+            StockDetail stockDetail = new StockDetail();
+            stockDetail = stockDetailList.get(i);
+            code = stockDetail.getCode();
+            if(stockDetail.getTypeId() != null){
+                type = stockDetail.getTypeId().getName() ;
+            }
+            if(stockDetail.getOtherBooking() != null && stockDetail.getOtherBooking().getMaster() != null){
+                refno = stockDetail.getOtherBooking().getMaster().getReferenceNo();
+            }
+            if(stockDetail.getStaff() != null){
+                pickup = stockDetail.getStaff().getName();
+            }
+            pickdate = utilty.convertDateToString(stockDetail.getPickupDate());
+
+            String newrow = "";              
+//            newrow += "<tr>"
+//                    + "<td class='text-center'>" + no + "</td>"
+//                    + "<td class='text-left'>" + code + "</td>"
+//                    + "<td class='text-left'>" + type + "</td>"
+//                    + "<td class='text-left'>" + refno + "</td>"
+//                    + "<td class='text-center'>" + pickup + "</td>"
+//                    + "<td class='text-center'>" + pickdate + "</td>"
+//                    + "<td><input maxlength=\"10\" id=\"cost" + no + "\" name=\"cost" + no + "\" type=\"text\" class=\"form-control\" ></td>"
+//                    + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control\" ></td>"
+//                    + "</tr>";
+            newrow += "<tr>"
+                    + "<td class='text-center'>" + no + "</td>"
+                    + "<td class='text-left'>" + code + "</td>"
+                    + "<td class='text-left'>" + type + "</td>"
+                    + "<td class='text-left'>" + refno + "</td>"
+                    + "<td class='text-center'>" + pickup + "</td>"
+                    + "<td class='text-center'>" + pickdate + "</td>"
+                    + "<td><input maxlength=\"10\" id=\"cost" + no + "\" name=\"cost" + no + "\" type=\"text\" class=\"form-control\" ></td>"
+                    + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control\" ></td>"
+                    + "</tr>";
+            html.append(newrow);
+            no++;
+        } 
+        return html.toString();
+    }
+    
+    
+    
     public String buildTicketAircommissionViewListHTML(List<TicketAircommissionView> ticketList) {
         StringBuffer html = new StringBuffer();
         int No = 0;

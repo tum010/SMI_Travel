@@ -452,7 +452,12 @@
     <bean id="MExchangeRateDao" class="com.smi.travel.datalayer.dao.impl.MExchangeRateImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
+    
     <bean id="OverdueSummaryDao" class="com.smi.travel.datalayer.dao.impl.OverdueSummaryImpl">
+          <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    
+    <bean id="PaymentStockDao" class="com.smi.travel.datalayer.dao.impl.PaymentStockImpl">
           <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
     
@@ -487,6 +492,7 @@
                 <ref local="ReceiveTableDao" />
                 <ref local="PaymentOutboundDao" />
                 <ref local="DefineVarDao" />
+                <ref local="PaymentStockDao" />
             </list>
         </constructor-arg>
     </bean>
@@ -516,6 +522,7 @@
     <bean id="PaymentTourHotelServlet" class="com.smi.travel.servlet.PaymentTourHotelServlet" />
     <bean id="ReceiveTableServlet" class="com.smi.travel.servlet.ReceiveTableServlet" />
     <bean id="PaymentOutboundServlet" class="com.smi.travel.servlet.PaymentOutboundServlet" />
+    <bean id="PaymentStockServlet" class="com.smi.travel.servlet.PaymentStockServlet" />
 	<!--<add data>-->
 	
 </beans>
