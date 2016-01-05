@@ -131,15 +131,15 @@
                             <tr class="datatable-header">
                                 <th class="hidden">Id</th>
                                 <th style="width: 1%" onclick="selectAll()"><u>Cancel</u></th>
-                                <th style="width: 13%" >Tax No.</th>
-                                <th style="width: 15%">Tax Date</th>
+                                <th style="width: 10%" >Tax No.</th>
+                                <th style="width: 17%">Tax Date</th>
                                 <th style="width: 9%">A/R</th>
-                                <th style="width: 22%">Tax Inv Name</th>
+                                <th style="width: 24%">Tax Inv Name</th>
                                 <th style="width: 12%">Gross</th>
                                 <th style="width: 7%">Vat</th>
                                 <th style="width: 12%">Amount</th>
-                                <th style="width: 10%">Department</th>
-                                <th style="width: 10%">Status</th>
+                                <th style="width: 8%">Department</th>
+                                <th style="width: 8%">Status</th>
                              </tr>
                         </thead>
                         <tbody>

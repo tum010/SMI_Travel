@@ -452,14 +452,60 @@ function removeAndRenameRow() {
 }
 
 function checkRefund(e) {
-    var refund = e.value;
+//    var refund = e.value;
+//    var row = $(e).parent().parent().attr("row");
+//    var issue = $("#sectorIssue" + row).html();
+//    if (issue.indexOf(refund) >= 0) {
+//        e.style.borderColor = "Green";
+//    } else {
+//        e.style.borderColor = "Red";
+//        return;
+//    }
+
+    var refund = (e.value).split("-");
+    var refundTemp = e.value;
     var row = $(e).parent().parent().attr("row");
-    var issue = $("#sectorIssue" + row).html();
-    if (issue.indexOf(refund) >= 0) {
-        e.style.borderColor = "Green";
-    } else {
-        e.style.borderColor = "Red";
-        return;
+    var issue = ($("#sectorIssue" + row).html()).split("-");
+    var issueTemp = ($("#sectorIssue" + row).html());
+    
+    if (e.value === '') {
+        e.style.borderColor = "";
+    } else{
+        if(refund.length > 1){
+            var match = 0;
+            var error = 0;
+            var seq = 0;
+            for(var i=0; i<refund.length; i++){
+                var sectionRefund = refund[i];
+                var different = 0;
+                for(var j=0; j<issue.length; j++){
+                    var section = issue[j];               
+                    if(sectionRefund === section){
+                        var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
+                        if(((j >= seq) && ((section !== sectionRefundTemp)))){
+                            seq = j;
+                            delete issue[j];
+                            j = issue.length;             
+                            match++;
+                        }    
+                    }else{
+                        different++;
+                    }
+                    if(j === ((issue.length)-1)){
+                        if(different > 0){
+                            error++;
+                        }                    
+                    }
+                }        
+            }
+            if(error === 0 && match > 0){
+                e.style.borderColor = "Green";
+            }else{
+                e.style.borderColor = "Red";
+            }
+        }else{
+            e.style.borderColor = "Red";
+        }                            
     }
 }
 

@@ -514,7 +514,7 @@ function AddRowCreditTable(row) {
             '<span class="input-group-addon spandate" id="spandate' + row + '" style="padding : 1px 10px;" onclick="AddrowBySelect(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
             '</div>' +
             '</td>' +
-            '<td><input class="form-control numerical" style="text-align:right;" type="text" id="creditAmount' + row + '" name="creditAmount' + row + '" value="" onkeyup="insertCommas(this)" onfocusout="calculate(this); calculateCreditAmount(); setCreditAmount(); setCashOnDemand();"></td>' +
+            '<td><input maxlength="10" class="form-control numerical" style="text-align:right;" type="text" id="creditAmount' + row + '" name="creditAmount' + row + '" value="" onkeyup="insertCommas(this)" onfocusout="calculate(this); calculateCreditAmount(); setCreditAmount(); setCashOnDemand();"></td>' +
             '<td>' +
             '<center>' +
             '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" onclick="deleteAdvanceReceiveCreditConfirm(\'\',\'' + row + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' +
@@ -582,6 +582,8 @@ function deleteAdvanceReceiveCredit() {
             AddRowCreditTable(parseInt(count));
         }
         calculateCreditAmount();
+        setCreditAmount();
+        setCashOnDemand();
 //            $("#countTaxInvoice").val(count+1);
     } else {
         $.ajax({
@@ -600,6 +602,8 @@ function deleteAdvanceReceiveCredit() {
                     AddRowCreditTable(parseInt(count));
                 }
                 calculateCreditAmount();
+                setCreditAmount();
+                setCashOnDemand();
             },
             error: function() {
                 console.log("error");

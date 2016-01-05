@@ -543,7 +543,7 @@
                 <h4 class="modal-title"  id="Titlemodel">Print</h4>
             </div>
             <div class="modal-body" >
-                <div class="row">
+                <div class="row hidden">
                     <div class="col-md-5">
                         <h5>Sales Staff </h5>
                     </div>

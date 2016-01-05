@@ -296,7 +296,7 @@
                                    <label class="control-label text-left">Receive Amount<font style="color: red">*</font></lable>        
                                 </div>                               
                                 <div class="col-xs-1 form-group" style="width: 200px">
-                                    <input name="receiveAmount" id="receiveAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.recAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
+                                    <input maxlength="10" name="receiveAmount" id="receiveAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.recAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
                                 </div>
                             </div>
                         </div><!-- End Row 2-->
@@ -312,7 +312,7 @@
                                     <label class="control-label ">Wht</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px">
-                                    <input name="wht" id="wht" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.wht}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
+                                    <input maxlength="10" name="wht" id="wht" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.wht}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
                                 </div>
                             </div>
                         </div><!-- End Row 3--><br>
@@ -322,21 +322,21 @@
                                     <label class="control-label text-left">Cash Amount</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px" id="cashAmountPanel">
-                                    <input name="cashAmount" id="cashAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.cashAmount}" onkeyup="insertCommas(this);" onfocusout="calculate(this)"/>
+                                    <input maxlength="10" name="cashAmount" id="cashAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.cashAmount}" onkeyup="insertCommas(this);" onfocusout="calculate(this)"/>
                                 </div>
                                 <div class="col-xs-1" style="width: 60px"></div>
                                 <div class="col-xs-1" style="width: 130px">
                                     <label class="control-label text-left">Bank Amount</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px" id="bankAmountPanel">
-                                    <input name="bankAmount" id="bankAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.bankAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
+                                    <input maxlength="10" name="bankAmount" id="bankAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.bankAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
                                 </div>
                                 <div class="col-xs-1" style="width: 35px"></div>
                                 <div class="col-xs-1 text-right" style="width: 135px">
                                     <label class="control-label">Chq Amount</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px" id="chqAmountPanel">
-                                    <input name="chqAmount" id="chqAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.chqAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
+                                    <input maxlength="10" name="chqAmount" id="chqAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.chqAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
                                 </div>
                             </div>
                         </div><!-- End Row 4--><br>
@@ -404,7 +404,7 @@
                                                 <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
                                             </div>
                                         </td>
-                                        <td><input class="form-control numerical" style="text-align:right;" type="text" id="creditAmount${i.count}" name="creditAmount${i.count}" value="${adReCre.creditAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this); calculateCreditAmount(); setCreditAmount(); setCashOnDemand();"></td>
+                                        <td><input maxlength="10" class="form-control numerical" style="text-align:right;" type="text" id="creditAmount${i.count}" name="creditAmount${i.count}" value="${adReCre.creditAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this); calculateCreditAmount(); setCreditAmount(); setCashOnDemand();"></td>
                                         <td>
                                             <center>
                                                 <a id="expenButtonRemove${i.count}" name="expenButtonRemove${i.count}" onclick="deleteAdvanceReceiveCreditConfirm('${adReCre.id}','${i.count}')"  data-toggle="modal">
@@ -542,7 +542,7 @@
                                 </div>
                                 <div class="col-sm-1" style="width: 30px"></div>
                                 <div class="col-xs-1" style="padding-left: 0px;width:85px;">
-                                    <label class="control-label">Cash(--)</lable>
+                                    <label class="control-label">Cash(-)</lable>
                                 </div> 
                                 <div class="col-md-2 form-group text-left" style="width:210px;">                                
                                     <div class="col-sm-12">

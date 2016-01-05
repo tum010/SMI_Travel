@@ -145,14 +145,14 @@
                                 <c:forEach var="table" items="${listOtherBooking}" varStatus="status">
                                 <tr>
                                     <td><center><c:out value="${table.adCost}" /></center></td>
-                                    <td><center><c:out value="${table.adPrice}" /></center></td>
                                     <td><center><c:out value="${table.adQty}" /></center></td>
+                                    <td><center><c:out value="${table.adPrice}" /></center></td>
                                     <td><center><c:out value="${table.chCost}" /></center></td>
-                                    <td><center><c:out value="${table.chPrice}" /></center></td>
                                     <td><center><c:out value="${table.chQty}" /></center></td>
+                                    <td><center><c:out value="${table.chPrice}" /></center></td>
                                     <td><center><c:out value="${table.inCost}" /></center></td>
-                                    <td><center><c:out value="${table.inPrice}" /></center></td>
                                     <td><center><c:out value="${table.inQty}" /></center></td>
+                                    <td><center><c:out value="${table.inPrice}" /></center></td>
                                     <td><center><c:out value="" /></center></td>
                                     <td><center><c:out value="" /></center></td>
                                 </tr>
@@ -314,3 +314,9 @@
     </script>
     <META HTTP-EQUIV="Refresh" CONTENT="0;URL=${requestScope['redirectUrl']}">
 </c:if>
+    
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () { 
+        $(".money").mask('000,000,000,000', {reverse: true});
+    });
+</script>   
