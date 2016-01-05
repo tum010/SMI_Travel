@@ -252,39 +252,64 @@
                                     <td align="right"><fmt:formatNumber type="number" maxFractionDigits="3" value="${inv.totalPrice}"/> </td>
                                     <td align="center">${inv.currency}</td>
                                     <td>${inv.department}
+                                        <c:set var="depart" value="" />
                                         <c:choose>
                                             <c:when test="${inv.department == 'Wendy'}">
                                                 <c:set var="depart" value="W" />
                                             </c:when>
-                                        </c:choose>
-                                        <c:choose>
                                             <c:when test="${inv.department == 'Outbound'}">
                                                 <c:set var="depart" value="O" />
+                                            </c:when>
+                                            <c:when test="${inv.department == 'Inbound'}">
+                                                <c:set var="depart" value="Inbound" />
                                             </c:when>
                                         </c:choose>
                                     </td>
                                     <td>
+                                        <c:set var="typeName" value="" />
                                         <c:choose>
                                             <c:when test="${inv.type == 'N'}">
                                                 <c:set var="typeName" value="No Vat" />
                                             </c:when>
-                                        </c:choose>
-                                        <c:choose>
                                             <c:when test="${inv.type == 'V'}">
                                                 <c:set var="typeName" value="Vat" />
                                             </c:when>
-                                        </c:choose>
-                                        <c:choose>
                                             <c:when test="${inv.type == 'T'}">
                                                 <c:set var="typeName" value="Temp" />
                                             </c:when>
-                                        </c:choose>
+                                        </c:choose>    
                                         ${typeName}
                                     </td>
                                     <td>${inv.termPayName}</td>
-                                    <td align="center" > 
+                                    <td align="center" >
+                                        <c:set var="type" value="" />
+                                        <c:choose>
+                                            <c:when test="${inv.department == 'Wendy' || inv.department == 'Outbound'}">
+                                                <c:choose>
+                                                    <c:when test="${inv.type == 'N'}">
+                                                        <c:set var="type" value="N" />
+                                                    </c:when>
+                                                    <c:when test="${inv.type == 'V'}">
+                                                        <c:set var="type" value="V" />
+                                                    </c:when>
+                                                    <c:when test="${inv.type == 'T'}">
+                                                        <c:set var="type" value="T" />
+                                                    </c:when>
+                                                </c:choose>
+                                            </c:when>
+                                            <c:when test="${inv.department == 'Inbound'}">
+                                                <c:choose>
+                                                    <c:when test="${inv.type == 'V'}">
+                                                        <c:set var="type" value="RV" />
+                                                    </c:when>
+                                                    <c:when test="${inv.type == 'T'}">
+                                                        <c:set var="type" value="PM" />
+                                                    </c:when>
+                                                </c:choose>
+                                            </c:when>                                         
+                                        </c:choose>    
                                         <center> 
-                                        <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/Invoice${depart}${inv.type}.smi?typeInvoice=${inv.type}&departmentInvoice=${inv.department}&idInvoice=${inv.invoiceId}&action=edit');">
+                                        <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/Invoice${depart}${type}.smi?typeInvoice=${inv.type}&departmentInvoice=${inv.department}&idInvoice=${inv.invoiceId}&action=edit');">
                                         </span>
                                         </center>
                                     </td>

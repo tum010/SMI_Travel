@@ -265,6 +265,24 @@ public class InvoiceInboundController extends SMITravelController {
                    request.setAttribute("result", result);  
                    request.setAttribute("thisdate", InputInvDate);
             }
+        }else if("edit".equals(action)){
+            String invoiceIdSearch = request.getParameter("idInvoice"); // invoice id from search invoice page
+            String departmentInvoice = request.getParameter("departmentInvoice");
+            String typeInvoice = request.getParameter("typeInvoice");
+            invoice = invoiceService.searchInvoiceNo(invoiceIdSearch, departmentInvoice, typeInvoice);
+            listInvoiceDetail = invoice.getInvoiceDetails();
+            if(invoice != null){
+                request.setAttribute("invoice", invoice);
+                if(listInvoiceDetail != null){
+                    request.setAttribute("listInvoiceDetail", listInvoiceDetail);
+                }else{
+                    request.setAttribute("listInvoiceDetail", null);
+                }
+            }else{
+                request.setAttribute("invoice",null);
+            }
+            request.setAttribute("thisdate", invoice.getInvDate());
+            
         }else{
             request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
         }
