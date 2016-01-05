@@ -488,9 +488,9 @@ public class InvoiceInboundController extends SMITravelController {
             return null;
         }
         int driverRows = Integer.parseInt(invoiceDetailRows);
-        if (driverRows == 1) {
-            return null;
-        }
+//        if (driverRows == 1) {
+//            return null;
+//        }
         for (int i = 1; i <= driverRows; i++) {
             InvoiceDetail invoiceDetail = new InvoiceDetail();
             String idDetail = request.getParameter("detailId"+i);
@@ -502,49 +502,55 @@ public class InvoiceInboundController extends SMITravelController {
             String isVat = request.getParameter("checkUse"+i);          
             request.getParameterMap();
             System.out.println("isvat : ["+i+"]"+isVat);
-            if(idDetail != null && !idDetail.equals("")){
-                 invoiceDetail.setId(idDetail);
-            }
-
-            if(amount != null && !amount.equals("")){
-                System.out.println(""+amount);
-                BigDecimal amountInt = new BigDecimal(amount.replaceAll(",", ""));
-                invoiceDetail.setAmount(amountInt);
-            }
             
-            if(gross != null && !gross.equals("")){
-                    System.out.println("Gross"+gross);  
-                    BigDecimal grossInt = new BigDecimal(gross.replaceAll(",", ""));
-                    invoiceDetail.setGross(grossInt);
-            }
+            if(idDetail != null && !idDetail.equals("") || (amount != null && !amount.equals("")) || (gross != null && !gross.equals("")) || 
+                    (amountCurren!="" && amountCurren!=null) || (description!="" && description!=null)){  
+                                   
+                if(idDetail != null && !idDetail.equals("")){
+                     invoiceDetail.setId(idDetail);
+                }
 
-            if(amountCurren != null){
-                invoiceDetail.setCurAmount(amountCurren);
-            }
+                if(amount != null && !amount.equals("")){
+                    System.out.println(""+amount);
+                    BigDecimal amountInt = new BigDecimal(amount.replaceAll(",", ""));
+                    invoiceDetail.setAmount(amountInt);
+                }
 
-            if(vat != null && !vat.equals("")){
-                BigDecimal vatInt =  new BigDecimal(vat);
-                invoiceDetail.setVat(vatInt);
-            }
-            
-            if(isVat == null){
-                invoiceDetail.setIsVat(0);
-                invoiceDetail.setGross(null);
-                invoiceDetail.setVat(null);
-            }else{
-                invoiceDetail.setIsVat(1);
-            }
+                if(gross != null && !gross.equals("")){
+                        System.out.println("Gross"+gross);  
+                        BigDecimal grossInt = new BigDecimal(gross.replaceAll(",", ""));
+                        invoiceDetail.setGross(grossInt);
+                }
 
-            if(description != null && !"".equals(description)){
-                invoiceDetail.setDescription(description);
-                invoiceDetail.setInvoice(invoice);
-                listInvoiceDetail.add(invoiceDetail);
-            }
+                if(amountCurren != null){
+                    invoiceDetail.setCurAmount(amountCurren);
+                }
 
-            if("update".equals(action)){
-               invoiceDetail.setIsExport(1);
-            }else{
-               invoiceDetail.setIsExport(0);
+                if(vat != null && !vat.equals("")){
+                    BigDecimal vatInt =  new BigDecimal(vat);
+                    invoiceDetail.setVat(vatInt);
+                }
+
+                if(isVat == null){
+                    invoiceDetail.setIsVat(0);
+                    invoiceDetail.setGross(null);
+                    invoiceDetail.setVat(null);
+                }else{
+                    invoiceDetail.setIsVat(1);
+                }
+
+                if(description != null && !"".equals(description)){
+                    invoiceDetail.setDescription(description);
+                    invoiceDetail.setInvoice(invoice);
+                    listInvoiceDetail.add(invoiceDetail);
+                }
+
+                if("update".equals(action)){
+                   invoiceDetail.setIsExport(1);
+                }else{
+                   invoiceDetail.setIsExport(0);
+                }
+                
             }
         }       
         return listInvoiceDetail;
