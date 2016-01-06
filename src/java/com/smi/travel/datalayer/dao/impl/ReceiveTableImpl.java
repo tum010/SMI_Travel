@@ -434,11 +434,11 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         
         for (Object[] B : Query) {
             AdvanceReceivePeriodView advanceReceivePeriodView = new AdvanceReceivePeriodView();
-            advanceReceivePeriodView.setCashamount(B[0]== null ? "" : util.ConvertString(B[0]));
-            advanceReceivePeriodView.setBankamount(B[1]== null ? "" : util.ConvertString(B[1]));
-            advanceReceivePeriodView.setCashminusamount(B[2]== null ? "" : util.ConvertString(B[2]));
-            advanceReceivePeriodView.setCheque(B[3]== null ? "" : util.ConvertString(B[3]));
-            advanceReceivePeriodView.setCreditcard(B[4]== null ? "" : util.ConvertString(B[4]));
+            advanceReceivePeriodView.setCashamount(B[0]== null ? "0.00" : util.ConvertString(B[0]));
+            advanceReceivePeriodView.setBankamount(B[1]== null ? "0.00" : util.ConvertString(B[1]));
+            advanceReceivePeriodView.setCashminusamount(B[2]== null ? "0.00" : util.ConvertString(B[2]));
+            advanceReceivePeriodView.setCheque(B[3]== null ? "0.00" : util.ConvertString(B[3]));
+            advanceReceivePeriodView.setCreditcard(B[4]== null ? "0.00" : util.ConvertString(B[4]));
             advanceReceivePeriodViewList.add(advanceReceivePeriodView);
         }               
     
