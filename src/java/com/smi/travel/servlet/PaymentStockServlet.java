@@ -28,12 +28,16 @@ public class PaymentStockServlet implements AbstractAJAXServlet {
         String Type = request.getParameter("type");
         String Name = request.getParameter("name");
         String stockId = request.getParameter("stockId");
+        String countRowDetail = request.getParameter("countRowDetail");
+        
+        
         Map result = new HashMap();
 
         result.put("name", Name);
         result.put("servletName", servletName);
         result.put("type", Type);
         result.put("stockId", stockId);
+        result.put("countRowDetail", countRowDetail);
         
         return result;
     }

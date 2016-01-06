@@ -63,15 +63,11 @@ public class PaymentStockController extends SMITravelController{
         String curCost = request.getParameter("curCost");
         String curSale = request.getParameter("curSale");
         String noStockTable = request.getParameter("noStockTable");
-        
-        
-        System.out.println(" curCost  ============= " + curCost);
-        System.out.println(" payId  ============= " + payId);
+
         request.setAttribute(NOSTOCKTABLE,1);
         String saveresult = "" ;
         
         if ("searchPayNo".equalsIgnoreCase(action)){
-            System.out.println(" ==================== Search Pay No =======================");
             PaymentStock paymentStock = new PaymentStock();
             PaymentStockDetail paymentStockDetail = new PaymentStockDetail();
             PaymentStockItem paymentStockItem = new PaymentStockItem();
@@ -138,9 +134,9 @@ public class PaymentStockController extends SMITravelController{
                 String paymentStockId = request.getParameter("paymentStockId" + i);
                 String stockId = request.getParameter("stockId" + i);
                 String paymentStockDetailId = request.getParameter("paymentStockDetailId" + i);
-                System.out.println(" paymentStockId  ============= " + paymentStockId);
-                System.out.println(" paymentStockDetailId ============= " + paymentStockDetailId);
-                System.out.println(" stockId ============= " + stockId);
+//                System.out.println(" paymentStockId  ============= " + paymentStockId);
+//                System.out.println(" paymentStockDetailId ============= " + paymentStockDetailId);
+//                System.out.println(" stockId ============= " + stockId);
                 PaymentStockDetail psd = new PaymentStockDetail();
                 psd.setId(paymentStockDetailId); // save Payment Stock Detail Id
                 psd.setPaymentStock(paymentStock);
@@ -157,11 +153,13 @@ public class PaymentStockController extends SMITravelController{
                     String stockDetailIdTable = request.getParameter("stockDetailIdTable" + j);
                     String cost = request.getParameter("cost" + j);
                     String sale = request.getParameter("sale" + j);
+                    String stockIdTable = request.getParameter("stockIdTable" + j);
+                    
                     System.out.println(" paymentStockDetailId  ============= " + paymentStockDetailId);
                     System.out.println(" psdIdTable ============= " + psdIdTable);
                     System.out.println(" psiIdTable ============= " + psiIdTable);
-                    if((!"".equalsIgnoreCase(paymentStockDetailId) && paymentStockDetailId != null ) && (!"".equalsIgnoreCase(psdIdTable) && psdIdTable!=null)){
-                        if(paymentStockDetailId.equalsIgnoreCase(psdIdTable)){
+                    if((!"".equalsIgnoreCase(stockIdTable) && stockIdTable != null ) && (!"".equalsIgnoreCase(stockId) && stockId!=null)){
+                        if(stockId.equalsIgnoreCase(stockIdTable)){
 //                            PaymentStockItem psi = new PaymentStockItem();
                             if(psiIdTable != null){
                                 psi.setId(psiIdTable);
@@ -179,24 +177,18 @@ public class PaymentStockController extends SMITravelController{
                             psi.setSale(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(sale) ? sale.replaceAll(",","") : 0)));
 
                          }
-                    }else{
-                        
-                        
-                        
-                        psi.setId(psiIdTable);
-
-                        psi.setPaymentStockDetail(psd);
-
-                        StockDetail stockDetail = new StockDetail();
-                        stockDetail.setId(stockDetailIdTable);
-                        psi.setStockDetail(stockDetail);
-
-                        psi.setCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(cost) ? cost.replaceAll(",","") : 0)));
-                        psi.setSale(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(sale) ? sale.replaceAll(",","") : 0)));
-
-                       
                     }
-                     psd.getPaymentStockItems().add(psi);
+//                    else{
+//                        psi.setId(psiIdTable);
+//                        psi.setPaymentStockDetail(psd);
+//                        StockDetail stockDetail = new StockDetail();
+//                        stockDetail.setId(stockDetailIdTable);
+//                        psi.setStockDetail(stockDetail);
+//                        psi.setCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(cost) ? cost.replaceAll(",","") : 0)));
+//                        psi.setSale(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(sale) ? sale.replaceAll(",","") : 0)));
+//                       
+//                    }
+                    psd.getPaymentStockItems().add(psi);
                 }
                 
                 

@@ -38,7 +38,6 @@ function searchPaymentNoStock() {
 
 function createStockDetails(stockid, productName, staff, addDate, effectiveFrom, effectiveTo) {
     var noStockTable = parseInt($("#noStockTable").val());
-
     for(var i=1; i<=noStockTable; i++){
         if(productName === $("#chk"+i).val()){
             $("#SearchStock").modal("hide");
@@ -74,12 +73,14 @@ function createStockDetails(stockid, productName, staff, addDate, effectiveFrom,
 }
 
 function getStockDetail(stockid) {
+    var countRowStockDetail = $("#StockDetailTable tr").length;
     var servletName = 'PaymentStockServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
             '&servletName=' + servletName +
             '&servicesName=' + servicesName +
             '&stockId=' + stockid +
+            '&countRowDetail=' + countRowStockDetail +
             '&type=' + 'getStockDetail';
     CallAjax(param);
 }
@@ -119,6 +120,8 @@ function CallAjax(param) {
     } catch (e) {
         alert(e);
     }
+//    var countRowStockDetail = $("#StockDetailTable tr").length; 
+//    $("#noStockTable").val(countRowStockDetail);
 }
 
 function deletelist(productName,no){

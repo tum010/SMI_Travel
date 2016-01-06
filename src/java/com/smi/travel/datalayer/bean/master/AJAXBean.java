@@ -1034,9 +1034,10 @@ public class AJAXBean extends AbstractBean implements
         }else if(PAYMENTSTOCK.equalsIgnoreCase(servletName)){
             if("getStockDetail".equalsIgnoreCase(type)){
                 String stockId = map.get("stockId").toString();
+                String countRowDetail = map.get("countRowDetail").toString();
                 List<StockDetail> stockDetails = paymentStockDao.getListPaymentStockItemFromStockId(stockId);
                 if (stockDetails != null) {
-                    result = buildPaymentStockDetailHTML(stockDetails);
+                    result = buildPaymentStockDetailHTML(stockDetails,countRowDetail);
                 } else {
                     result = "null";
                 }
@@ -1050,10 +1051,10 @@ public class AJAXBean extends AbstractBean implements
     }
 
     
-    private String buildPaymentStockDetailHTML(List<StockDetail> stockDetails) {
+    private String buildPaymentStockDetailHTML(List<StockDetail> stockDetails,String row) {
         StringBuffer html = new StringBuffer();     
         UtilityFunction utilty = new UtilityFunction();
-        int no = 1;
+        int no = Integer.parseInt(row);
         String code = "" ;
         String type = "" ;
         String refno = "" ;

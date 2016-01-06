@@ -180,9 +180,7 @@ public class PaymentStockImpl implements PaymentStockDao {
                         List<PaymentStockItem> paymentStockItems = paymentStockDetails.get(i).getPaymentStockItems();
                         if(paymentStockItems != null){
                             for(int j = 0; j < paymentStockItems.size(); j++){
-                                if((paymentStockDetails.get(i).getId()).equalsIgnoreCase(paymentStockItems.get(j).getPaymentStockDetail().getId())){
-                                    session.save(paymentStockItems.get(j));
-                                }
+                                session.save(paymentStockItems.get(j));
                             }
                         }
                        
@@ -207,9 +205,7 @@ public class PaymentStockImpl implements PaymentStockDao {
                                 if("".equalsIgnoreCase(paymentStockDetails.get(i).getId()) || paymentStockDetails.get(i).getId() == null){
                                     session.save(paymentStockItems.get(j));
                                 }else{
-                                    if((paymentStockDetails.get(i).getId()).equalsIgnoreCase(paymentStockItems.get(j).getPaymentStockDetail().getId())){
-                                       session.update(paymentStockItems.get(j));
-                                    }
+                                    session.update(paymentStockItems.get(j));
                                 }
                             }
                         }
