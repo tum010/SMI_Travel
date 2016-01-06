@@ -38,6 +38,10 @@ public class PaymentStockService {
         return paymentStockDao.deletePaymentStock(paymentStockDetailId);
     }
     
+    public String insertOrUpdatePaymentStock(PaymentStock paymentStock){
+        return paymentStockDao.insertOrUpdatePaymentStock(paymentStock);
+    }
+    
     public PaymentStockDao getPaymentStockDao() {
         return paymentStockDao;
     }

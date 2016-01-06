@@ -36,18 +36,24 @@ function searchPaymentNoStock() {
 }
 
 
-function createStockDetail(stockid, productName, staff, addDate, effectiveFrom, effectiveTo) {
+function createStockDetails(stockid, productName, staff, addDate, effectiveFrom, effectiveTo) {
     var noStockTable = parseInt($("#noStockTable").val());
+
     for(var i=1; i<=noStockTable; i++){
         if(productName === $("#chk"+i).val()){
             $("#SearchStock").modal("hide");
             $('#fail').show();
             return;
+        }else{
+            $('#fail').hide();
         }
     }
-    
+                        
     $("#StockTable").append(
             '<tr>' +
+            '<input type="hidden" id="paymentStockDetailId'+ noStockTable +'" name="paymentStockDetailId'+ noStockTable +'"  value=""> '+
+            '<input type="hidden" id="paymentStockId'+ noStockTable +'" name="paymentStockId'+ noStockTable +'"  value="">' +
+            '<input type="hidden" id="stockId'+ noStockTable +'" name="stockId'+ noStockTable +'"  value="'+ stockid +'"> '+
             '<td class="hidden"><input type="hidden" id="chk'+ noStockTable +'" name="chk'+ noStockTable +'" value="' + productName + '"/></td>' +
             '<td class="text-center ">' + noStockTable + '</td>' +
             '<td>' + productName + '</td>' +
@@ -56,12 +62,13 @@ function createStockDetail(stockid, productName, staff, addDate, effectiveFrom, 
             '<td>' + effectiveFrom + '</td>' +
             '<td>' + effectiveTo + '</td>' +
             '<td class="text-center ">' +
-            '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editTour" onclick="editTour(\'\')" class="glyphicon glyphicon glyphicon-list-alt"></span></a>' +
-            '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="SpanRemove" class="glyphicon glyphicon-remove deleteicon" onclick="deletelist(\''+ productName +'\', \''+ noStockTable +'\');"></span></a>' +
+            '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" onclick="getStockDetail('+ stockid +')" class="glyphicon glyphicon glyphicon-list-alt"></span></a>' +
+            '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="SpanRemove" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentStockDetailList(\'\', \'' + noStockTable + '\' , \'' + stockid + '\');"></span></a>' +
             '</td>' +
             '<tr>'
             );
-    $("#noStockTable").val(noStockTable + 1);
+    
+    $("#noStockTable").val(noStockTable+1);
     getStockDetail(stockid);
     $("#SearchStock").modal("hide");
 }
@@ -124,19 +131,50 @@ function deletelist(productName,no){
     }
 }
 
-function deletePaymentStockDetailList(paymentStockDetailId , row){
-    document.getElementById('paymentStockDetailIdDelete').value = paymentStockDetailId;
-    document.getElementById('paymentStockRowDelete').value = row;
-    $("#delPaymentStock").text('Are you sure to delete stock from this payment ?');
-    $('#DeletePaymentStock').modal('show');
+function deletePaymentStockDetailList(paymentStockDetailId , row , stockid){
+    if(paymentStockDetailId === ''){
+        $("#paymentStockDetailId" + row).parent().remove();
+        var countRowStockDetail = $("#StockDetailTable tr").length; 
+        for(var i=1 ; i < countRowStockDetail ; i++){
+            var sit = $("#stockIdTable"+i).val();
+            if(sit === stockid){
+                $("#psdIdTable" + i).parent().parent().remove();
+            }
+        }
+
+        var countRowStock = $("#StockDetailTable tr").length;   
+        if(countRowStock === 1){
+            document.getElementById('totalCost').value = formatNumber(0);
+            document.getElementById('totalSale').value = formatNumber(0);
+        }else{
+            for(var i=1;i<countRowStock;i++){
+                setFormatCurrency(i);
+                calculateCostTotal();
+                calculateSaleTotal();
+            }
+        }
+    }else{
+        document.getElementById('paymentStockDetailIdDelete').value = paymentStockDetailId;
+        document.getElementById('paymentStockRowDelete').value = row;
+        $("#delPaymentStock").text('Are you sure to delete stock from this payment ?');
+        $('#DeletePaymentStock').modal('show');
+    }
+    
+    
 }
 
 function DeleteRowPaymentStock(){
     var psdIdDelete = document.getElementById('paymentStockDetailIdDelete').value;
     var row = document.getElementById('paymentStockRowDelete').value;
         if (psdIdDelete === '') {
-            for(var i=0 ; i < 10 ; i++){
+            var countRowStock = $("#StockTable tr").length;    
+            var countRowStockDetail = $("#StockDetailTable tr").length; 
+            for(var i=0 ; i < countRowStockDetail ; i++){
                 var psdId = $("#psdIdTable"+i).val();
+                var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
+                if(paymentStockDetailId  === psdIdDelete){
+                    $("#paymentStockDetailId" + i).parent().parent().remove();
+                }
                 if(psdId === psdIdDelete){
                     $("#psdIdTable" + i).parent().parent().remove();
                 }
@@ -148,12 +186,20 @@ function DeleteRowPaymentStock(){
                 type: 'get',
                 data: {psdIdDelete: psdIdDelete},
                 success: function() {
-                    for(var i=0 ; i < 10 ; i++){
+                    var countRowStock = $("#StockTable tr").length;    
+                    var countRowStockDetail = $("#StockDetailTable tr").length;    
+                    
+                    for(var i=1 ; i < countRowStockDetail ; i++){
                         var psdId = $("#psdIdTable"+i).val();
+                        var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
+                        if(paymentStockDetailId  === psdIdDelete){
+                            $("#paymentStockDetailId" + i).parent().parent().remove();
+                        }
                         if(psdId === psdIdDelete){
                             $("#psdIdTable" + i).parent().parent().remove();
                         }
                     }
+                    
                 },
                 error: function() {
                     console.log("error");
@@ -161,7 +207,129 @@ function DeleteRowPaymentStock(){
                 }
             });
         }
-    $('#DeletePaymentStock').modal('hide');    
+    $('#DeletePaymentStock').modal('hide');  
+//    var countRowStockDetail = $("#StockDetailTable tr").length; 
+//    for(var i=1 ; i < countRowStockDetail ; i++){
+//        setFormatCurrency(i);
+//        calculateCostTotal();
+//        calculateSaleTotal();
+//    }
+    
+    countRowStock = $("#StockDetailTable tr").length;   
+    if(countRowStock === 1){
+        document.getElementById('totalCost').value = formatNumber(0);
+        document.getElementById('totalSale').value = formatNumber(0);
+    }else{
+        for(var i=1;i<countRowStock;i++){
+            setFormatCurrency(i);
+            calculateCostTotal();
+            calculateSaleTotal();
+        }
+    }
 }
 
+function calculateCostTotal() {
+    var count = $("#StockDetailTable tr").length;    
+    var i;
+    var grandTotal = 0;
+    for (i = 1; i < count + 1; i++) {
+        var amount = document.getElementById("cost" + i);
+        if (amount !== null) {
+            var value = amount.value;
+            if (value !== '') {
+                value = value.replace(/,/g, "");
+                var total = parseFloat(value);
+                grandTotal += total;
+                document.getElementById('cost' + i).value = formatNumber(total);
+            }
+        }
+    }
+    document.getElementById('totalCost').value = formatNumber(grandTotal);
+}
+
+function calculateSaleTotal() {
+    var count = $("#StockDetailTable tr").length; 
+    var i;
+    var grandTotal = 0;
+    for (i = 1; i < count + 1; i++) {
+        var amount = document.getElementById("sale" + i);
+        if (amount !== null) {
+            var value = amount.value;
+            if (value !== '') {
+                value = value.replace(/,/g, "");
+                var total = parseFloat(value);
+                grandTotal += total;
+                document.getElementById('sale' + i).value = formatNumber(total);
+            }
+        }
+    }
+    document.getElementById('totalSale').value = formatNumber(grandTotal);
+}
+
+function setFormatCurrencyOnFocusOut(row) {
+    $('#cost' + row).focusout(function() {
+        setFormatCurrency(row);
+        calculateCostTotal();
+    });
+
+    $('#sale' + row).focusout(function() {
+        setFormatCurrency(row);
+        calculateSaleTotal();
+    });
+
+}
+	
+function setFormatCurrency(row) {
+    var cost = replaceAll(",", "", $('#cost' + row).val());
+    if (cost == "") {
+        cost = 0;
+    }
+    cost = parseFloat(cost);
+    document.getElementById("cost" + row).value = formatNumber(cost);
+
+    var sale = replaceAll(",", "", $('#sale' + row).val());
+    if (sale == "") {
+        sale = 0;
+    }
+    sale = parseFloat(sale);
+    document.getElementById("sale" + row).value = formatNumber(sale);
+
+    if (cost == "" || cost == 0) {
+        document.getElementById("cost" + row).value = "";
+    }
+
+    if (sale == "" || sale == 0) {
+        document.getElementById("sale" + row).value = "";
+    }
+    
+    calculateCostTotal();
+    calculateSaleTotal();
+}
+	
+function replaceAll(find, replace, str) {
+    return str.replace(new RegExp(find, 'g'), replace);
+}
+
+function formatNumber(num) {
+    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+}
+
+function insertCommas(nField) {
+    if (/^0/.test(nField.value)) {
+        nField.value = nField.value.substring(0, 1);
+    }
+    if (Number(nField.value.replace(/,/g, ""))) {
+        var tmp = nField.value.replace(/,/g, "");
+        tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g, '$1,').split('').reverse().join('').replace(/^,/, '');
+        if (/\./g.test(tmp)) {
+            tmp = tmp.split(".");
+            tmp[1] = tmp[1].replace(/\,/g, "").replace(/ /, "");
+            nField.value = tmp[0] + "." + tmp[1]
+        } else {
+            nField.value = tmp.replace(/ /, "");
+        }
+    } else {
+        nField.value = nField.value.replace(/[^\d\,\.]/g, "").replace(/ /, "");
+    }
+}
 

@@ -6,19 +6,26 @@
 
 package com.smi.travel.controller;
 
+import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.entity.PaymentStockDetail;
 import com.smi.travel.datalayer.entity.PaymentStockItem;
+import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.Stock;
+import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.PaymentStockService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -35,8 +42,10 @@ public class PaymentStockController extends SMITravelController{
     private static final String PAYMENTSTOCKDETAILLIST = "PaymentStockDetailList";
     private static final String PAYMENTSTOCKITEMLIST = "PaymentStockItemList";
     private static final String DELETERESULT = "deleteresult";
-    
-    
+    private static final String MCURRENCYLIST = "currencyList";
+    private static final String SAVERESULT = "saveresult"; // save result
+    private static final String CREATEDATE = "createDate"; // save result
+    private static final String NOSTOCKTABLE = "noStockTable"; // save result
     private UtilityService utilityService;
     private PaymentStockService paymentStockService;
     
@@ -46,14 +55,26 @@ public class PaymentStockController extends SMITravelController{
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String action = request.getParameter("action");
         String payNo = request.getParameter("payNo");
-
+        String payId = request.getParameter("payId");
+        String createBy = request.getParameter("createBy");
+        String createDate = request.getParameter("createDate");
+        String totalSale = request.getParameter("totalSale");
+        String totalCost = request.getParameter("totalCost");
+        String curCost = request.getParameter("curCost");
+        String curSale = request.getParameter("curSale");
+        String noStockTable = request.getParameter("noStockTable");
+        
+        
+        System.out.println(" curCost  ============= " + curCost);
+        System.out.println(" payId  ============= " + payId);
+        request.setAttribute(NOSTOCKTABLE,1);
+        String saveresult = "" ;
+        
         if ("searchPayNo".equalsIgnoreCase(action)){
             System.out.println(" ==================== Search Pay No =======================");
             PaymentStock paymentStock = new PaymentStock();
             PaymentStockDetail paymentStockDetail = new PaymentStockDetail();
             PaymentStockItem paymentStockItem = new PaymentStockItem();
-            
-            
             if(!"".equals(payNo)){
                 paymentStock = paymentStockService.getPaymentStockFromPayNo(payNo);
                 if(paymentStock != null) {
@@ -65,12 +86,11 @@ public class PaymentStockController extends SMITravelController{
                         request.setAttribute(PAYMENTSTOCKITEMLIST,paymentStockItemList);
 
                         request.setAttribute(PAYMENTSTOCK,paymentStock);
+                        request.setAttribute(CREATEDATE,String.valueOf(paymentStock.getCreateDate()));
                     }
                 }
             }
-            
-            
-        }else if ("deletePaymentStock".equalsIgnoreCase(action)){
+        }else if("deletePaymentStock".equalsIgnoreCase(action)){
             String psdIdDelete = request.getParameter("psdIdDelete");
             System.out.println("psdIdDelete ::: "+ psdIdDelete);
             String result = paymentStockService.deletePaymentStock(psdIdDelete);
@@ -80,6 +100,132 @@ public class PaymentStockController extends SMITravelController{
                 request.setAttribute(DELETERESULT, "delete unsuccessful");
             }
         }
+        else if("savePaymentStock".equalsIgnoreCase(action)){
+            PaymentStock paymentStock = new PaymentStock();
+            paymentStock.setId(payId);
+            paymentStock.setPayStockNo(payNo);
+
+            if("".equalsIgnoreCase(payId) ){
+                paymentStock.setCreateBy(user.getUsername());
+                paymentStock.setCreateDate(new Date());
+            }else{
+                System.out.println(" createDate " + createDate);
+                paymentStock.setCreateBy(createBy);
+                paymentStock.setCreateDate(utilty.convertStringToDate(createDate != "" ? createDate : ""));
+                paymentStock.setUpdateBy(user.getUsername());
+                paymentStock.setUpdateDate(new Date());
+            }
+            
+            paymentStock.setSaleAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(totalCost) ? totalCost.replaceAll(",","") : 0)));
+            paymentStock.setCostAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(totalSale) ? totalSale.replaceAll(",","") : 0)));
+            paymentStock.setCurCost(curCost);
+            paymentStock.setCurSale(curSale);
+
+            String countRowStock = request.getParameter("countRowStock");
+            String countRowDetail = request.getParameter("countRowDetail");
+            countRowStock = noStockTable;
+            System.out.println(" countRowStock " + countRowStock + "+++++++ countRowDetail " + countRowDetail);
+            
+            int rowsStock = Integer.parseInt(countRowStock);
+            int rowsDetail = Integer.parseInt(countRowDetail);
+            
+            if(paymentStock.getPaymentStockDetails() == null){
+                paymentStock.setPaymentStockDetails(new ArrayList<PaymentStockDetail>());
+            }
+            
+            for (int i = 1; i < rowsStock ; i++) {
+                
+                String paymentStockId = request.getParameter("paymentStockId" + i);
+                String stockId = request.getParameter("stockId" + i);
+                String paymentStockDetailId = request.getParameter("paymentStockDetailId" + i);
+                System.out.println(" paymentStockId  ============= " + paymentStockId);
+                System.out.println(" paymentStockDetailId ============= " + paymentStockDetailId);
+                System.out.println(" stockId ============= " + stockId);
+                PaymentStockDetail psd = new PaymentStockDetail();
+                psd.setId(paymentStockDetailId); // save Payment Stock Detail Id
+                psd.setPaymentStock(paymentStock);
+                
+                Stock stock = new Stock(); // save Stock Id
+                stock.setId(stockId);
+                psd.setStock(stock);
+
+                for (int j = 1; j < rowsDetail ; j++) {
+                    PaymentStockItem psi = new PaymentStockItem();
+                    
+                    String psiIdTable = request.getParameter("psiIdTable" + j);
+                    String psdIdTable = request.getParameter("psdIdTable" + j);
+                    String stockDetailIdTable = request.getParameter("stockDetailIdTable" + j);
+                    String cost = request.getParameter("cost" + j);
+                    String sale = request.getParameter("sale" + j);
+                    System.out.println(" paymentStockDetailId  ============= " + paymentStockDetailId);
+                    System.out.println(" psdIdTable ============= " + psdIdTable);
+                    System.out.println(" psiIdTable ============= " + psiIdTable);
+                    if((!"".equalsIgnoreCase(paymentStockDetailId) && paymentStockDetailId != null ) && (!"".equalsIgnoreCase(psdIdTable) && psdIdTable!=null)){
+                        if(paymentStockDetailId.equalsIgnoreCase(psdIdTable)){
+//                            PaymentStockItem psi = new PaymentStockItem();
+                            if(psiIdTable != null){
+                                psi.setId(psiIdTable);
+                            }
+
+    //                        PaymentStockDetail psdtemp = new PaymentStockDetail(); // save Payment Stock Detail Id
+    //                        psdtemp.setId(psdIdTable); 
+                            psi.setPaymentStockDetail(psd);
+
+                            StockDetail stockDetail = new StockDetail();
+                            stockDetail.setId(stockDetailIdTable);
+                            psi.setStockDetail(stockDetail);
+
+                            psi.setCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(cost) ? cost.replaceAll(",","") : 0)));
+                            psi.setSale(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(sale) ? sale.replaceAll(",","") : 0)));
+
+                         }
+                    }else{
+                        
+                        
+                        
+                        psi.setId(psiIdTable);
+
+                        psi.setPaymentStockDetail(psd);
+
+                        StockDetail stockDetail = new StockDetail();
+                        stockDetail.setId(stockDetailIdTable);
+                        psi.setStockDetail(stockDetail);
+
+                        psi.setCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(cost) ? cost.replaceAll(",","") : 0)));
+                        psi.setSale(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(sale) ? sale.replaceAll(",","") : 0)));
+
+                       
+                    }
+                     psd.getPaymentStockItems().add(psi);
+                }
+                
+                
+                
+                
+                paymentStock.getPaymentStockDetails().add(psd);
+            }
+            
+            saveresult = paymentStockService.insertOrUpdatePaymentStock(paymentStock);
+            System.out.println(" saveresult " + saveresult);
+            if("fail".equalsIgnoreCase(saveresult)){
+                request.setAttribute(SAVERESULT, "save unsuccessful");
+            }else if("success".equalsIgnoreCase(saveresult)){
+                request.setAttribute(SAVERESULT, "save successful");
+            }else{
+                paymentStock.setPayStockNo(saveresult);
+                request.setAttribute(SAVERESULT, "save successful");
+            }
+            request.setAttribute(PAYMENTSTOCK,paymentStock);
+            
+            List<PaymentStockDetail> paymentStockDetailList = paymentStockService.getListPaymentStockDetailFromPaymentStockId(paymentStock.getId());
+            List<PaymentStockItem> paymentStockItemList = paymentStockService.getListPaymentStockItemFromPaymentStockId(paymentStock.getId());
+
+            request.setAttribute(PAYMENTSTOCKDETAILLIST,paymentStockDetailList);
+            request.setAttribute(PAYMENTSTOCKITEMLIST,paymentStockItemList);
+            System.out.println(" createDate after save " + createDate);
+            request.setAttribute(CREATEDATE,createDate);
+            request.setAttribute(NOSTOCKTABLE,noStockTable);
+        }
         
         setResponseAttribute(request);
         return PaymentStock;
@@ -88,7 +234,8 @@ public class PaymentStockController extends SMITravelController{
     public void setResponseAttribute(HttpServletRequest request) {
         List<Stock> listStock = paymentStockService.getListStock();
         request.setAttribute(STOCKLIST, listStock);
-        
+        List<MCurrency> mCurrencys = utilityService.getListMCurrency();
+        request.setAttribute(MCURRENCYLIST, mCurrencys); //receiveCurrency
     }
 
     public PaymentStockService getPaymentStockService() {

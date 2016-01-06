@@ -56,9 +56,9 @@ public class PaymentStockImpl implements PaymentStockDao {
     }
 
     @Override
-    public List<StockDetail> getListStockDetailFromStockId(String stockId) {
+    public List<StockDetail> getListPaymentStockItemFromStockId(String stockId) {
         Session session = this.sessionFactory.openSession();
-        List<StockDetail> stockDetails = session.createQuery("From StockDetail st where st.stock.id = '"+stockId+"'")
+        List<StockDetail> stockDetails = session.createQuery("From StockDetail st where st.stock = '"+stockId+"'")
                 .list();
         if (stockDetails.isEmpty()) {
             return null;
@@ -106,12 +106,14 @@ public class PaymentStockImpl implements PaymentStockDao {
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
+            
+            System.out.println(" paymentStockDetailId +++++++++++++= " + paymentStockDetailId);
             // DELETE PAYMENT STOCK DETAIL
             Query querydeleteitem = session.createQuery("Delete From PaymentStockItem psi where psi.paymentStockDetail.id = :paymentStockDetailId");
             querydeleteitem.setParameter("paymentStockDetailId", paymentStockDetailId);
             querydeleteitem.executeUpdate();
             
-            Query querydeletedetail = session.createQuery("Delete From PayStockDetail psd where psd.id = :paymentStockDetailId");
+            Query querydeletedetail = session.createQuery("Delete From PaymentStockDetail psd where psd.id = :paymentStockDetailId");
             querydeletedetail.setParameter("paymentStockDetailId", paymentStockDetailId);
             querydeletedetail.executeUpdate();
             
@@ -138,35 +140,96 @@ public class PaymentStockImpl implements PaymentStockDao {
         query.setMaxResults(1);
         list = query.list();
         
-//        if (list.isEmpty()) {
-//            payNo = "PS" + df.format(thisdate) + "-" + "0001";
-//        } else {
-//            payNo = list.get(0);
-//            System.out.println("payNo === " + payNo + " === ");
-//            if (!payNo.equalsIgnoreCase("")) {
-//                System.out.println("invNo type" + invNo.substring(1,2) + "/////");
-//                invType = invNo.substring(1,2);
-//                if(!"V".equals(invType) && !"N".equals(invType)){
-//                    int running = Integer.parseInt(invNo) + 1;
-//                    String temp = String.valueOf(running);
-//                    for (int i = temp.length(); i < 4; i++) {
-//                        temp = "0" + temp;
-//                    }
-//                    invNo = departtype + "-" + df.format(thisdate) + "-" + temp;
-//                }else{
-//                    int running = Integer.parseInt(invNo) + 1;
-//                    String temp = String.valueOf(running);
-//                    for (int i = temp.length(); i < 4; i++) {
-//                        temp = "0" + temp;
-//                    }
-//                    invNo = departtype + "-" + df.format(thisdate) + "-" + temp;
-//                }
-//            }
-//        }
-//        System.out.println("invNo ::: " +invNo);
-//        session.close();
-//        this.sessionFactory.close();
+        if (list.isEmpty()) {
+            payNo = "PS" + "-" + df.format(thisdate) + "-" + "0001";
+        } else {
+            payNo = list.get(0);
+            System.out.println("payNo === " + payNo + " === ");
+            if (!payNo.equalsIgnoreCase("")) {
+                int running = Integer.parseInt(payNo) + 1;
+                String temp = String.valueOf(running);
+                for (int i = temp.length(); i < 4; i++) {
+                    temp = "0" + temp;
+                }
+                payNo = "PS" + "-" + df.format(thisdate) + "-" + temp;
+            }
+        }
+        System.out.println("payNo ::: " +payNo);
+        session.close();
+        this.sessionFactory.close();
         return payNo.replace("-","");
+    }
+    
+    @Override
+    public String insertOrUpdatePaymentStock(PaymentStock paymentStock) {
+        String result = "";
+        boolean checkupdate = false;
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            
+            if("".equalsIgnoreCase(paymentStock.getId()) || paymentStock.getId() == null){
+                result = generatePayNo();
+                paymentStock.setPayStockNo(result);
+                session.save(paymentStock);
+
+                List<PaymentStockDetail> paymentStockDetails = paymentStock.getPaymentStockDetails();
+                if(paymentStockDetails != null){
+                    for(int i = 0; i < paymentStockDetails.size(); i++){
+                        session.save(paymentStockDetails.get(i));
+                        List<PaymentStockItem> paymentStockItems = paymentStockDetails.get(i).getPaymentStockItems();
+                        if(paymentStockItems != null){
+                            for(int j = 0; j < paymentStockItems.size(); j++){
+                                if((paymentStockDetails.get(i).getId()).equalsIgnoreCase(paymentStockItems.get(j).getPaymentStockDetail().getId())){
+                                    session.save(paymentStockItems.get(j));
+                                }
+                            }
+                        }
+                       
+                    }
+                }
+            }else{
+                System.out.println("+++++++++++++++++++++ UPDATE +++++++++++++++++++++ ");
+                session.update(paymentStock);
+                List<PaymentStockDetail> paymentStockDetails = paymentStock.getPaymentStockDetails();
+                if(paymentStockDetails != null){
+                    System.out.println(" paymentStockDetails.size()  " + paymentStockDetails.size());
+                    for(int i = 0; i < paymentStockDetails.size(); i++){
+                        if("".equalsIgnoreCase(paymentStockDetails.get(i).getId()) || paymentStockDetails.get(i).getId() == null){
+                            session.save(paymentStockDetails.get(i));
+                        }else{
+                            session.update(paymentStockDetails.get(i));
+                        }
+                        
+                        List<PaymentStockItem> paymentStockItems = paymentStockDetails.get(i).getPaymentStockItems();
+                        if(paymentStockItems != null){
+                            for(int j = 0; j < paymentStockItems.size(); j++){
+                                if("".equalsIgnoreCase(paymentStockDetails.get(i).getId()) || paymentStockDetails.get(i).getId() == null){
+                                    session.save(paymentStockItems.get(j));
+                                }else{
+                                    if((paymentStockDetails.get(i).getId()).equalsIgnoreCase(paymentStockItems.get(j).getPaymentStockDetail().getId())){
+                                       session.update(paymentStockItems.get(j));
+                                    }
+                                }
+                            }
+                        }
+                       
+                    }
+                }
+                checkupdate = true ;
+            }
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            if(checkupdate){
+                result = "success";
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = "fail";
+        }
+        System.out.println("result::"+result);
+        return result;
     }
     
 }

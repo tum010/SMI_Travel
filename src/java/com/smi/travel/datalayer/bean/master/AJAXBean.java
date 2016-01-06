@@ -53,6 +53,7 @@ import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackagePrice;
 import com.smi.travel.datalayer.entity.PackageTour;
 import com.smi.travel.datalayer.entity.PaymentStock;
+import com.smi.travel.datalayer.entity.PaymentStockItem;
 import com.smi.travel.datalayer.entity.Place;
 import com.smi.travel.datalayer.entity.ProductDetail;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
@@ -1033,9 +1034,9 @@ public class AJAXBean extends AbstractBean implements
         }else if(PAYMENTSTOCK.equalsIgnoreCase(servletName)){
             if("getStockDetail".equalsIgnoreCase(type)){
                 String stockId = map.get("stockId").toString();
-                List<StockDetail> stockDetailList = paymentStockDao.getListStockDetailFromStockId(stockId);
-                if (stockDetailList != null) {
-                    result = buildPaymentStockDetailHTML(stockDetailList);
+                List<StockDetail> stockDetails = paymentStockDao.getListPaymentStockItemFromStockId(stockId);
+                if (stockDetails != null) {
+                    result = buildPaymentStockDetailHTML(stockDetails);
                 } else {
                     result = "null";
                 }
@@ -1049,7 +1050,7 @@ public class AJAXBean extends AbstractBean implements
     }
 
     
-    private String buildPaymentStockDetailHTML(List<StockDetail> stockDetailList) {
+    private String buildPaymentStockDetailHTML(List<StockDetail> stockDetails) {
         StringBuffer html = new StringBuffer();     
         UtilityFunction utilty = new UtilityFunction();
         int no = 1;
@@ -1058,10 +1059,18 @@ public class AJAXBean extends AbstractBean implements
         String refno = "" ;
         String pickup = "" ;
         String pickdate = "" ;
+        String psiIdTable = "" ;
+        String psdIdTable = "" ;
+        String stockDetailIdTable = "" ;
+        String stockId = "";
         
-        for (int i = 0; i < stockDetailList.size(); i++) {
+        
+        String cost = "" ;
+        String sale = "";
+        
+        for (int i = 0; i < stockDetails.size(); i++) {
             StockDetail stockDetail = new StockDetail();
-            stockDetail = stockDetailList.get(i);
+            stockDetail = stockDetails.get(i);
             code = stockDetail.getCode();
             if(stockDetail.getTypeId() != null){
                 type = stockDetail.getTypeId().getName() ;
@@ -1073,7 +1082,14 @@ public class AJAXBean extends AbstractBean implements
                 pickup = stockDetail.getStaff().getName();
             }
             pickdate = utilty.convertDateToString(stockDetail.getPickupDate());
-
+            
+//            psiIdTable = paymentStockItem.getId() ;
+//            psdIdTable = paymentStockItem.getPaymentStockDetail().getId() ;
+            stockDetailIdTable = stockDetail.getId();
+            stockId = stockDetail.getStock().getId();
+//            cost = String.valueOf(paymentStockItemList.get(i).getCost());
+//            sale = String.valueOf(paymentStockItemList.get(i).getSale());             
+//            System.out.println(" stockId " + stockId);
             String newrow = "";              
 //            newrow += "<tr>"
 //                    + "<td class='text-center'>" + no + "</td>"
@@ -1086,14 +1102,18 @@ public class AJAXBean extends AbstractBean implements
 //                    + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control\" ></td>"
 //                    + "</tr>";
             newrow += "<tr>"
+                    + "<input type='hidden' id='psiIdTable" + no + "' name='psiIdTable" + no + "'  value='" + psiIdTable + "'>"
+                    + "<input type='hidden' id='psdIdTable" + no + "' name='psdIdTable" + no + "'  value='" + psdIdTable + "'>"
+                    + "<input type='hidden' id='stockDetailIdTable" + no + "' name='stockDetailIdTable" + no + "'  value='" + stockDetailIdTable + "'>" 
+                    + "<input type='hidden' id='stockIdTable" + no + "' name='stockIdTable" + no + "'  value='" + stockId + "'>"
                     + "<td class='text-center'>" + no + "</td>"
                     + "<td class='text-left'>" + code + "</td>"
                     + "<td class='text-left'>" + type + "</td>"
                     + "<td class='text-left'>" + refno + "</td>"
                     + "<td class='text-center'>" + pickup + "</td>"
                     + "<td class='text-center'>" + pickdate + "</td>"
-                    + "<td><input maxlength=\"10\" id=\"cost" + no + "\" name=\"cost" + no + "\" type=\"text\" class=\"form-control\" ></td>"
-                    + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control\" ></td>"
+                    + "<td><input maxlength=\"10\" id=\"cost" + no + "\" name=\"cost" + no + "\" type=\"text\" class=\"form-control text-right\" value='" + cost + "' onkeyup=\"insertCommas(this)\" onkeypress=\"setFormatCurrencyOnFocusOut('"+  no + "')\" ></td>"
+                    + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control text-right\" value='" + sale + "' onkeyup=\"insertCommas(this)\" onkeypress=\"setFormatCurrencyOnFocusOut('"+  no + "')\" ></td>"
                     + "</tr>";
             html.append(newrow);
             no++;
