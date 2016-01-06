@@ -394,7 +394,7 @@
                                                 <c:forEach var="tableDetail" items="${RefundTicketDetail}" varStatus="statusDetail">
                                                     <tr>
                                                         <td class="hidden"><input type="text" id="airticketrefunddetailid${statusDetail.count}" name="airticketrefunddetailid${statusDetail.count}" value="${tableDetail.refunddetailid}" /></td>
-                                                        <td>${statusDetail.count}</td>
+                                                        <td id="rowTable${statusDetail.count}">${statusDetail.count}</td>
                                                         <td>
                                                             <select id="SelectTocketNo${statusDetail.count}" name="SelectTocketNo${statusDetail.count}" class="form-control" onchange="setSectorRefund(${statusDetail.count});">
                                                                 <option value='' ></option>
@@ -651,7 +651,7 @@
                             </div>
                             </br>
                             <div class="row">
-                                <input type="text" class="hidden" id="counterTableAdd" name="counterTableAdd" value="1" >
+                                <input type="text" class="text" id="counterTableAdd" name="counterTableAdd" value="1" >
                                 <input type="text" class="hidden" id="refunddetailidadd" name="refunddetailidadd" value="0" />
                                 <div class="col-sm-12 form-group text-center">
                                     <table  class="display" id="RefundTicketDetailTableAdd" style="width: 1000px;">
@@ -1021,7 +1021,7 @@ for(var i = 0; i < rad.length; i++) {
                     rowAll = $("#RefundTicketDetailTable tr").length;
                     if (rowIndex === rowAll) {
                         console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
-                        addRowRefundTicketDetail(rowAll);
+                        addRowRefundTicketDetail(parseInt($("#counterTable").val())+1);
                     }
                 }
             });
@@ -1047,7 +1047,7 @@ for(var i = 0; i < rad.length; i++) {
                 rowAll = $("#RefundTicketDetailTableAdd tr").length;
                 if (rowIndex === rowAll) {
                     console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
-                    addRowRefundTicketDetailAdd(rowAll);
+                    addRowRefundTicketDetailAdd(parseInt($("#counterTableAdd").val())+1);
                 }
             }
         });
@@ -1661,41 +1661,47 @@ function checkRefundReady(row) {
         $("#buttonPrintRefund").removeAttr("disabled");
     } else{
         if(refund.length > 1){
-            var match = 0;
-            var error = 0;
-            var seq = 0;
-            for(var i=0; i<refund.length; i++){
-                var sectionRefund = refund[i];
-                var different = 0;
-                for(var j=0; j<issue.length; j++){
-                    var section = issue[j];               
-                    if(sectionRefund === section){
-                        var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
-                        if(((j >= seq) && ((section !== sectionRefundTemp)))){
-                            seq = j;
-                            delete issue[j];
-                            j = issue.length;
-                            match++;
-                        }      
-                    }else{
-                        different++;
-                    }
-                    if(j === ((issue.length)-1)){
-                        if(different > 0){
-                            error++;
-                        }                    
-                    }
-                }        
-            }
-            if(error === 0 && match > 0){
-                $("#inputSectorRefund" + row).css('border-color','green');
-                $("#buttonSaveRefund").removeAttr("disabled");
-                $("#buttonPrintRefund").removeAttr("disabled");
+            if((issueTemp.indexOf(",")) < 0){
+                var match = 0;
+                var error = 0;
+                var seq = 0;
+                for(var i=0; i<refund.length; i++){
+                    var sectionRefund = refund[i];
+                    var different = 0;
+                    for(var j=0; j<issue.length; j++){
+                        var section = issue[j];               
+                        if(sectionRefund === section){
+                            var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
+                            if(((j >= seq) && ((section !== sectionRefundTemp)))){
+                                seq = j;
+                                delete issue[j];
+                                j = issue.length;
+                                match++;
+                            }      
+                        }else{
+                            different++;
+                        }
+                        if(j === ((issue.length)-1)){
+                            if(different > 0){
+                                error++;
+                            }                    
+                        }
+                    }        
+                }
+                if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+                    $("#inputSectorRefund" + row).css('border-color','green');
+                    $("#buttonSaveRefund").removeAttr("disabled");
+                    $("#buttonPrintRefund").removeAttr("disabled");
+                }else{
+                    $("#inputSectorRefund" + row).css('border-color','red');
+                    $("#buttonSaveRefund").attr("disabled", "disabled");
+                    $("#buttonPrintRefund").attr("disabled", "disabled");
+                }
+                
             }else{
-                $("#inputSectorRefund" + row).css('border-color','red');
-                $("#buttonSaveRefund").attr("disabled", "disabled");
-                $("#buttonPrintRefund").attr("disabled", "disabled");
+                checkRefundWithComma(refundTemp,row);
             }
+            
         }else{
             $("#inputSectorRefund" + row).css('border-color','red');
             $("#buttonSaveRefund").attr("disabled", "disabled");
@@ -1733,7 +1739,7 @@ function addRowRefundTicketDetail(row,id){
     $("#RefundTicketDetailTable tbody").append(
         '<tr>' +
         '<td class="hidden"><input type="text" id="airticketrefunddetailid' + row + '" name="airticketrefunddetailid' + row + '" value="" /></td>'+
-        '<td>' + row + '</td>' +       
+        '<td id="rowTable' + row + '">' + row + '</td>' +       
         '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> <input type="hidden" id="ticketNoOnSelected' + row + '" name="ticketNoOnSelected' + row + '" value="" ></td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value="" readonly=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value="" onfocusout="checkRefundAdd(this,'+row+')"></td>' +
@@ -1743,6 +1749,7 @@ function addRowRefundTicketDetail(row,id){
         '</tr>'    
     );
     $("#counterTable").val(row++);
+    generateRowNo();
 }
 
 function addRowRefundTicketDetailAdd(row,id){
@@ -1752,7 +1759,7 @@ function addRowRefundTicketDetailAdd(row,id){
     $("#RefundTicketDetailTableAdd tbody").append(
         '<tr>' +
         '<td class="hidden"><input type="text" id="airticketrefunddetailidadd' + row + '" name="airticketrefunddetailidadd' + row + '" value="" /></td>'+
-        '<td>' + row + '</td>' +       
+        '<td id="rowTable' + row + '">' + row + '</td>' +       
         '<td><select id="SelectTocketNoadd' + row + '" name="SelectTocketNoadd' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> <input type="hidden" id="ticketNoOnSelectedAdd' + row + '" name="ticketNoOnSelectedAdd' + row + '" value="" ></td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSectoradd' + row + '" name="inputSectoradd' + row + '" value="" readonly="" ></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefundadd' + row + '" name="inputSectorRefundadd' + row + '" value="" onfocusout="checkRefundAdd(this,'+row+')"></td>' +
@@ -1762,6 +1769,45 @@ function addRowRefundTicketDetailAdd(row,id){
         '</tr>'    
     );
     $("#counterTableAdd").val(row++);
+    generateRowNo();
+}
+
+function generateRowNo(){
+    var rowAll = 0;
+    var countTable = 0;
+    var count = 1;
+    if($("#RefundTicketDetailAdd").hasClass("hidden")){
+        rowAll = $("#RefundTicketDetailTable tr").length;
+        countTable = parseInt($("#counterTable").val());
+    }else{
+        rowAll = $("#RefundTicketDetailTableAdd tr").length;
+        countTable = parseInt($("#counterTableAdd").val());
+    }
+    for(var i=1; i<=countTable; i++){
+        if($("#rowTable"+i).html() !== undefined){
+            $("#rowTable"+i).html('');
+        }
+    }
+    for(var i=1; i<=countTable; i++){
+        if($("#rowTable"+i).html() !== undefined){
+            if($("#rowTable"+i).html() === ''){
+                $("#rowTable"+i).html(count);
+                count++;
+            }           
+        }
+    }
+    
+//    alert(rowAll+" "+countTable);
+//    for(var i=1; i<=rowAll; i++){
+//        for(var j=count; j<=countTable; j++){
+//            if($("#rowTable"+j).html() !== undefined){
+//                $("#rowTable"+j).html('');
+//                $("#rowTable"+j).html(count);
+//                count++;
+//                j = countTable;
+//            }
+//        }     
+//    }
 }
 
 function setSectorRefund(row){
@@ -1909,6 +1955,8 @@ function DeleteRefundDetailConfirm() {
     }else{
         document.getElementById('RefundForm').submit();
     }
+    $('#counterTable').val(count+2);
+    generateRowNo();
 }
 
 function DeleteRefundDetailConfirmAdd() {
@@ -1924,6 +1972,8 @@ function DeleteRefundDetailConfirmAdd() {
         console.log("show button tr_FormulaAddRow : ");
         $("#tr_FormulaAddRowAdd").css("display", "block");
     }
+    $('#counterTableAdd').val(count+2);
+    generateRowNo();
 }
 
 function changeFormatChargeAddNumber(id){
@@ -2000,48 +2050,52 @@ function checkRefund(e,row) {
         e.style.borderColor = "";
         $("#buttonSaveRefund").removeAttr("disabled");
         $("#buttonPrintRefund").removeAttr("disabled");
-    } else{
+    } else{       
         if(refund.length > 1){
-            var match = 0;
-            var error = 0;
-            var seq = 0;
-            for(var i=0; i<refund.length; i++){
-                var sectionRefund = refund[i];
-                var different = 0;
-                for(var j=0; j<issue.length; j++){
-                    var section = issue[j];               
-                    if(sectionRefund === section){
-                        var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
-                        if(((j >= seq) && ((section !== sectionRefundTemp)))){
-                            seq = j;
-                            delete issue[j];
-                            j = issue.length;                   
-                            match++;
-                        }                  
-                    }else{
-                        different++;
-                    }
-                    if(j === ((issue.length)-1)){
-                        if(different > 0){
-                            error++;
-                        }                    
-                    }
-                }        
-            }
-            if(error === 0 && match > 0){
-                e.style.borderColor = "Green";
-                $("#buttonSaveRefund").removeAttr("disabled");
-                $("#buttonPrintRefund").removeAttr("disabled");
+            if((issueTemp.indexOf(",")) < 0){           
+                var match = 0;
+                var error = 0;
+                var seq = 0;
+                for(var i=0; i<refund.length; i++){
+                    var sectionRefund = refund[i];
+                    var different = 0;
+                    for(var j=0; j<issue.length; j++){
+                        var section = issue[j];
+                        if(sectionRefund === section){
+                            var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
+                            if(((j >= seq) && ((section !== sectionRefundTemp)))){
+                                seq = j;
+                                delete issue[j];
+                                j = issue.length;
+                                match++;
+                            }    
+                        }else{
+                            different++;
+                        }
+                        if(j === ((issue.length)-1)){
+                            if(different > 0){
+                                error++;
+                            }                    
+                        }
+                    }        
+                }
+                if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+                    e.style.borderColor = "Green";
+                    $("#buttonSaveRefund").removeAttr("disabled");
+                    $("#buttonPrintRefund").removeAttr("disabled");
+                }else{
+                    e.style.borderColor = "Red";
+                    $("#buttonSaveRefund").attr("disabled", "disabled");
+                    $("#buttonPrintRefund").attr("disabled", "disabled");
+                }
             }else{
-                e.style.borderColor = "Red";
-                $("#buttonSaveRefund").attr("disabled", "disabled");
-                $("#buttonPrintRefund").attr("disabled", "disabled");
+                checkRefundWithComma(e,row);
             }
         }else{
             e.style.borderColor = "Red";
             $("#buttonSaveRefund").attr("disabled", "disabled");
             $("#buttonPrintRefund").attr("disabled", "disabled");
-        }    
+        }   
     }
 }
 
@@ -2062,55 +2116,206 @@ function checkRefundAdd(e,row) {
     var refund = (e.value).split("-");
     var issue = ($("#inputSectoradd" + row).val()).split("-");
     var refundTemp = e.value;
-    var issueTemp = ($("#inputSector" + row).val());
-    
+    var issueTemp = ($("#inputSectoradd" + row).val());
+
     if (e.value === '') {
         e.style.borderColor = "";
         $("#buttonSaveRefund").removeAttr("disabled");
         $("#buttonPrintRefund").removeAttr("disabled");
     } else{
         if(refund.length > 1){
-            var match = 0;
-            var error = 0;
-            var seq = 0;
-            for(var i=0; i<refund.length; i++){
-                var sectionRefund = refund[i];
-                var different = 0;
-                for(var j=0; j<issue.length; j++){
-                    var section = issue[j];
-                    if(sectionRefund === section){
-                        var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
-                        if(((j >= seq) && ((section !== sectionRefundTemp)))){
-                            seq = j;
-                            delete issue[j];
-                            j = issue.length;
-                            match++;
-                        }    
-                    }else{
-                        different++;
-                    }
-                    if(j === ((issue.length)-1)){
-                        if(different > 0){
-                            error++;
-                        }                    
-                    }
-                }        
-            }
-            if(error === 0 && match > 0){
-                e.style.borderColor = "Green";
-                $("#buttonSaveRefund").removeAttr("disabled");
-                $("#buttonPrintRefund").removeAttr("disabled");
+            if((issueTemp.indexOf(",")) < 0){           
+                var match = 0;
+                var error = 0;
+                var seq = 0;
+                for(var i=0; i<refund.length; i++){
+                    var sectionRefund = refund[i];
+                    var different = 0;
+                    for(var j=0; j<issue.length; j++){
+                        var section = issue[j];
+                        if(sectionRefund === section){
+                            var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
+                            if(((j >= seq) && ((section !== sectionRefundTemp)))){
+                                seq = j;
+                                delete issue[j];
+                                j = issue.length;
+                                match++;
+                            }    
+                        }else{
+                            different++;
+                        }
+                        if(j === ((issue.length)-1)){
+                            if(different > 0){
+                                error++;
+                            }                    
+                        }
+                    }        
+                }
+                if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+                    e.style.borderColor = "Green";
+                    $("#buttonSaveRefund").removeAttr("disabled");
+                    $("#buttonPrintRefund").removeAttr("disabled");
+                }else{
+                    e.style.borderColor = "Red";
+                    $("#buttonSaveRefund").attr("disabled", "disabled");
+                    $("#buttonPrintRefund").attr("disabled", "disabled");
+                }
             }else{
-                e.style.borderColor = "Red";
-                $("#buttonSaveRefund").attr("disabled", "disabled");
-                $("#buttonPrintRefund").attr("disabled", "disabled");
-            }                     
+                checkRefundWithComma(e,row);
+            }
         }else{
             e.style.borderColor = "Red";
             $("#buttonSaveRefund").attr("disabled", "disabled");
             $("#buttonPrintRefund").attr("disabled", "disabled");
         }
     }    
+}
+
+function checkRefundWithComma(e,row){
+    var refundComma = (e.value).split(",");
+    var issueComma = ($("#inputSectoradd" + row).val()).split(",");
+//    var refundTemp = e.value;
+//    var issueTemp = ($("#inputSectoradd" + row).val());
+    
+    var mMatch = 0;
+    for(var i=0; i<refundComma.length; i++){
+        var refund = refundComma[i].split("-");                    
+        
+        for(var j=0; j<refund.length; j++){
+            var sectionRefund = refund[j];
+            var different = 0;
+            
+            for(var a=0; a<issueComma.length; a++){
+                var issue = issueComma[a].split("-");
+                var match = 0;
+                var error = 0;
+                var seq = 0;
+                
+                for(var k=0; k<issue.length; k++){
+                    var section = issue[k];
+                    
+                    if(sectionRefund === section){
+                        var sectionRefundTemp = (j > 0 ? refund[j-1] : '');
+                        
+                        if(((k >= seq) && ((section !== sectionRefundTemp)))){
+                            seq = k;
+                            delete issue[k];
+                            k = issue.length;
+                            match++;
+                        }    
+                    }else{
+                        different++;
+                    }
+                    
+                    if(k === ((issue.length)-1)){
+                        if(different > 0){
+                            error++;
+                        }                    
+                    }
+                }
+            }
+            if(error === 0 && match > 0){
+                var indexOf = 0;
+                for(var x=0; x<refundComma.length; x++){
+                    var refundTemp = refundComma[x];
+                    for(var y=0; y<issueComma.length; y++){
+                        var issueTemp = issueComma[x];
+
+                        if((issueTemp.indexOf(refundTemp) >= 0)){
+                            indexOf++;
+                        }
+                    }
+                }
+                if(indexOf > 0){
+                    mMatch++; 
+                }                
+             }
+        }              
+    }
+
+    if(mMatch > 0){
+        e.style.borderColor = "Green";
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+        
+    }else{
+        e.style.borderColor = "Red";
+        $("#buttonSaveRefund").attr("disabled", "disabled");
+        $("#buttonPrintRefund").attr("disabled", "disabled");
+    }
+}
+
+function checkRefundWithCommaReady(refundVal,row){
+    var refundComma = refundVal.split(",");
+    var issueComma = ($("#inputSectoradd" + row).val()).split(",");
+//    var refundTemp = e.value;
+//    var issueTemp = ($("#inputSectoradd" + row).val());
+    
+    var mMatch = 0;
+    for(var i=0; i<refundComma.length; i++){
+        var refund = refundComma[i].split("-");                    
+        
+        for(var j=0; j<refund.length; j++){
+            var sectionRefund = refund[j];
+            var different = 0;
+            
+            for(var a=0; a<issueComma.length; a++){
+                var issue = issueComma[a].split("-");
+                var match = 0;
+                var error = 0;
+                var seq = 0;
+                
+                for(var k=0; k<issue.length; k++){
+                    var section = issue[k];
+                    
+                    if(sectionRefund === section){
+                        var sectionRefundTemp = (j > 0 ? refund[j-1] : '');
+                        
+                        if(((k >= seq) && ((section !== sectionRefundTemp)))){
+                            seq = k;
+                            delete issue[k];
+                            k = issue.length;
+                            match++;
+                        }    
+                    }else{
+                        different++;
+                    }
+                    
+                    if(k === ((issue.length)-1)){
+                        if(different > 0){
+                            error++;
+                        }                    
+                    }
+                }
+            }
+            if(error === 0 && match > 0){
+                var indexOf = 0;
+                for(var x=0; x<refundComma.length; x++){
+                    var refundTemp = refundComma[x];
+                    for(var y=0; y<issueComma.length; y++){
+                        var issueTemp = issueComma[x];
+                        if((issueTemp.indexOf(refundTemp) >= 0)){
+                            indexOf++;
+                        }
+                    }
+                }
+                if(indexOf > 0){
+                    mMatch++; 
+                }                
+             }
+        }              
+    }
+
+    if(mMatch > 0){
+        $("#inputSectorRefund" + row).css('border-color','green');
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+        
+    }else{
+        $("#inputSectorRefund" + row).css('border-color','red');
+        $("#buttonSaveRefund").attr("disabled", "disabled");
+        $("#buttonPrintRefund").attr("disabled", "disabled");
+    }
 }
 
 function formatNumber(num) {
