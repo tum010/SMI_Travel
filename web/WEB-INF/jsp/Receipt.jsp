@@ -3046,6 +3046,7 @@
                         $("#tr_ProductDetailAddRow").removeClass("hide");
                         $("#tr_ProductDetailAddRow").addClass("show");
                     }
+                    calculateGrandTotal();
 //                AddRowProduct();
                 },
                 error: function() {
@@ -3057,7 +3058,6 @@
         $('#DeleteProduct').modal('hide');
 
     var tempcount = parseInt($("#ReceiptListTable tr").length);
-    
     if(tempcount == 1){
         $("#invoiceNo").removeAttr("disabled");
         $("#refNo").removeAttr("disabled");
@@ -3068,7 +3068,9 @@
         $("#ButtonSearchPaymentNoAir").removeAttr("disabled");
         $("#ButtonSearchPaymentNoTour").removeAttr("disabled");
     }else if(tempcount == 2){
-        $("#receiveProduct" + tempcount).parent().parent().remove();
+        var count = $("#counter").val();
+        count = count-1;
+        $("#receiveProduct" + count).parent().parent().remove();
         $("#counter").val(1);
         AddRowProduct(1);
         var amount = document.getElementById('receiveAmount1').value;

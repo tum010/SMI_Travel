@@ -32,7 +32,7 @@ function searchPaymentNoStock() {
     action.value = 'searchPayNo';
     var payNo = document.getElementById('payNo');
     payNo.value = $("#payNo").val();
-//    document.getElementById('PaymentStockForm').submit();
+    document.getElementById('PaymentStockForm').submit();
 }
 
 

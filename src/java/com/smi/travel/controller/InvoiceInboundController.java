@@ -532,6 +532,7 @@ public class InvoiceInboundController extends SMITravelController {
                     System.out.println(""+amount);
                     BigDecimal amountInt = new BigDecimal(amount.replaceAll(",", ""));
                     invoiceDetail.setAmount(amountInt);
+                    invoiceDetail.setAmountLocal(amountInt);
                 }
 
                 if(gross != null && !gross.equals("")){

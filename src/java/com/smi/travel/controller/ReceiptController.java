@@ -159,11 +159,15 @@ public class ReceiptController extends SMITravelController {
                         List<ReceiptDetail> recInvId = new ArrayList<ReceiptDetail>();
                         if(receiptDetailList != null){
                             for(int i = 0 ;i < receiptDetailList.size();i++){
-                                ReceiptDetail receiptD = new ReceiptDetail();
-                                receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
-                                receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
-                                receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
-                                recInvId.add(receiptD);
+                                if(receiptDetailList.get(i).getInvoiceDetail() != null){
+                                    if(receiptDetailList.get(i).getInvoiceDetail().getInvoice() != null){
+                                        ReceiptDetail receiptD = new ReceiptDetail();
+                                        receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
+                                        receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
+                                        receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
+                                        recInvId.add(receiptD);
+                                    }
+                                }
                             }
                             request.setAttribute(INVIDLIST, recInvId);
                             request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
@@ -511,10 +515,14 @@ public class ReceiptController extends SMITravelController {
             if(receiptDetailList != null){
                 for(int i = 0 ;i < receiptDetailList.size();i++){
                     ReceiptDetail receiptD = new ReceiptDetail();
-                    receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
-                    receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
-                    receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
-                    recInvId.add(receiptD);
+                    if(receiptDetailList.get(i).getInvoiceDetail() != null){
+                        if(receiptDetailList.get(i).getInvoiceDetail().getInvoice() != null){
+                            receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
+                            receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
+                            receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
+                            recInvId.add(receiptD);
+                        }
+                    }
                 }
                 request.setAttribute(INVIDLIST, recInvId);
             }
@@ -604,11 +612,15 @@ public class ReceiptController extends SMITravelController {
                     List<ReceiptDetail> recInvId = new ArrayList<ReceiptDetail>();
                     if(receiptDetailList != null){
                         for(int i = 0 ;i < receiptDetailList.size();i++){
-                            ReceiptDetail receiptD = new ReceiptDetail();
-                            receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
-                            receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
-                            receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
-                            recInvId.add(receiptD);
+                            if(receiptDetailList.get(i).getInvoiceDetail() != null){
+                                if(receiptDetailList.get(i).getInvoiceDetail().getInvoice() != null){
+                                    ReceiptDetail receiptD = new ReceiptDetail();
+                                    receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
+                                    receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
+                                    receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
+                                    recInvId.add(receiptD);
+                                }
+                            }
                         }
                         request.setAttribute(INVIDLIST, recInvId);
                         request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
@@ -637,11 +649,15 @@ public class ReceiptController extends SMITravelController {
                         List<ReceiptDetail> recInvId = new ArrayList<ReceiptDetail>();
                         if(receiptDetailList != null){
                             for(int i = 0 ;i < receiptDetailList.size();i++){
-                                ReceiptDetail receiptD = new ReceiptDetail();
-                                receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail() != null ? receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId() : "");
-                                receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail() != null ? receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo() : "");
-                                receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail() != null ? receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType() : "");
-                                recInvId.add(receiptD);
+                                if(receiptDetailList.get(i).getInvoiceDetail() != null){
+                                    if(receiptDetailList.get(i).getInvoiceDetail().getInvoice() != null){
+                                        ReceiptDetail receiptD = new ReceiptDetail();
+                                        receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail() != null ? receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId() : "");
+                                        receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail() != null ? receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo() : "");
+                                        receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail() != null ? receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType() : "");
+                                        recInvId.add(receiptD);
+                                    }
+                                }
                             }
                             request.setAttribute(INVIDLIST, recInvId);
                             request.setAttribute(PRODUCTROWCOUNT, receiptDetailList.size()+1);
