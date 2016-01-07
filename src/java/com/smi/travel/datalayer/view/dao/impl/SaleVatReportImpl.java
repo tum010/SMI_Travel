@@ -218,6 +218,9 @@ public class SaleVatReportImpl implements SaleVatReportDao{
         yearThai = Integer.parseInt(year) + 543 ;
         String orderNo = "";
         String departmentTemp = "";
+        int countWendy = 0;
+        int countOutbound = 0;
+        int countInbound = 0;
         for (Object[] B : QueryList){
             OutputTaxView otv = new OutputTaxView();
             
@@ -234,15 +237,17 @@ public class SaleVatReportImpl implements SaleVatReportDao{
             
             if("Wendy".equalsIgnoreCase(util.ConvertString(B[8]))){
                 departmentTemp = "Wendy" ;
+                countWendy++;
             }
             if("Outbound".equalsIgnoreCase(util.ConvertString(B[8]))){
-                departmentTemp = "Outbound" ; 
+                departmentTemp = "Outbound" ;
+                countOutbound++;
             }
             if("Inbound".equalsIgnoreCase(util.ConvertString(B[8]))){
                 departmentTemp = "Inbound" ;
+                countInbound++;
             }
-            
-            
+                        
             otv.setOrder(monthMM+"/"+orderNo);
             otv.setHeaderMonth(monthThai);
             otv.setHeaderYear(String.valueOf(yearThai));
@@ -262,6 +267,14 @@ public class SaleVatReportImpl implements SaleVatReportDao{
             otv.setMain(util.ConvertString(B[12]));
             otv.setBranchno(util.ConvertString(B[13]));
             data.add(otv);
+        }
+        
+        if(!QueryList.isEmpty()){
+            OutputTaxView otv = new OutputTaxView();
+            otv = (OutputTaxView) data.get(0);
+            otv.setWendyCount(countWendy);
+            otv.setOutboundCount(countOutbound);
+            otv.setInboundCount(countInbound);
         }
         
         this.sessionFactory.close();

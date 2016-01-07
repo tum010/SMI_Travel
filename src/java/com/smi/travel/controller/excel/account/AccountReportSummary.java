@@ -1333,50 +1333,50 @@ public class AccountReportSummary extends AbstractExcelView {
                 //Outbound
                 if("Outbound".equalsIgnoreCase(data.getDepartment())){
                     //Total Wendy
-                    if(tempcountW != 0){
-                        HSSFRow rowtotal = sheetWendy.createRow(tempcountW);
-                        String totalGross = "SUM(H" +11+":H"+(tempcountW)+")";
-                        String totalVat = "SUM(O" + 11+":O"+(tempcountW)+")";
-
-                        HSSFCellStyle styleTotal = wb.createCellStyle();
-                        styleTotal.setFont(excelFunction.getHeaderTable(wb.createFont()));
-                        styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-                        styleTotal.setBorderRight(HSSFCellStyle.BORDER_THIN);
-                        styleTotal.setBorderTop(HSSFCellStyle.BORDER_THIN);
-                        styleTotal.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-                        styleTotal.setAlignment(styleC22.ALIGN_RIGHT);
-
-                        HSSFCell cellTotal0 = rowtotal.createCell(0);
-                        cellTotal0.setCellStyle(stylebordertotalleft);
-                        HSSFCell cellTotal00 = rowtotal.createCell(1);
-                        cellTotal00.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotal01 = rowtotal.createCell(2);
-                         cellTotal01.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotal02 = rowtotal.createCell(3);
-                        cellTotal02.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotal03 = rowtotal.createCell(4);
-                        cellTotal03.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotal04 = rowtotal.createCell(5);
-                        cellTotal04.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotal05 = rowtotal.createCell(6);
-                        cellTotal05.setCellValue("TOTAL WENDY : ");
-                        cellTotal05.setCellStyle(styleC4);
-                        HSSFCell cellTotal06 = rowtotal.createCell(7);
-                        cellTotal06.setCellFormula(totalGross);
-                        cellTotal06.setCellStyle(styleC25);
-                        HSSFCell cellTotal07 = rowtotal.createCell(14);
-                        cellTotal07.setCellFormula(totalVat);
-                        cellTotal07.setCellStyle(styleC25);
-                        sheetWendy.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountW+1)+":N"+(tempcountW+1)));
-                        sheetWendy.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountW+1)+":T"+(tempcountW+1)));
-                        
-                        for(int k = 8 ; k < 20 ; k++){
-                            if(k != 7 && k != 14){
-                                HSSFCell cell0000 = rowtotal.createCell(k);
-                                cell0000.setCellStyle(styleC25);
-                            }
-                        }
-                    }
+//                    if(tempcountW != 0){
+//                        HSSFRow rowtotal = sheetWendy.createRow(tempcountW);
+//                        String totalGross = "SUM(H" +11+":H"+(tempcountW)+")";
+//                        String totalVat = "SUM(O" + 11+":O"+(tempcountW)+")";
+//
+//                        HSSFCellStyle styleTotal = wb.createCellStyle();
+//                        styleTotal.setFont(excelFunction.getHeaderTable(wb.createFont()));
+//                        styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//                        styleTotal.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//                        styleTotal.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//                        styleTotal.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//                        styleTotal.setAlignment(styleC22.ALIGN_RIGHT);
+//
+//                        HSSFCell cellTotal0 = rowtotal.createCell(0);
+//                        cellTotal0.setCellStyle(stylebordertotalleft);
+//                        HSSFCell cellTotal00 = rowtotal.createCell(1);
+//                        cellTotal00.setCellStyle(stylebordertotal);
+//                        HSSFCell cellTotal01 = rowtotal.createCell(2);
+//                         cellTotal01.setCellStyle(stylebordertotal);
+//                        HSSFCell cellTotal02 = rowtotal.createCell(3);
+//                        cellTotal02.setCellStyle(stylebordertotal);
+//                        HSSFCell cellTotal03 = rowtotal.createCell(4);
+//                        cellTotal03.setCellStyle(stylebordertotal);
+//                        HSSFCell cellTotal04 = rowtotal.createCell(5);
+//                        cellTotal04.setCellStyle(stylebordertotal);
+//                        HSSFCell cellTotal05 = rowtotal.createCell(6);
+//                        cellTotal05.setCellValue("TOTAL WENDY : ");
+//                        cellTotal05.setCellStyle(styleC4);
+//                        HSSFCell cellTotal06 = rowtotal.createCell(7);
+//                        cellTotal06.setCellFormula(totalGross);
+//                        cellTotal06.setCellStyle(styleC25);
+//                        HSSFCell cellTotal07 = rowtotal.createCell(14);
+//                        cellTotal07.setCellFormula(totalVat);
+//                        cellTotal07.setCellStyle(styleC25);
+//                        sheetWendy.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountW+1)+":N"+(tempcountW+1)));
+//                        sheetWendy.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountW+1)+":T"+(tempcountW+1)));
+//                        
+//                        for(int k = 8 ; k < 20 ; k++){
+//                            if(k != 7 && k != 14){
+//                                HSSFCell cell0000 = rowtotal.createCell(k);
+//                                cell0000.setCellStyle(styleC25);
+//                            }
+//                        }
+//                    }
                     
                     // set Header Report (Row 1)
                     HSSFCellStyle styleC1 = wb.createCellStyle();
@@ -1657,52 +1657,52 @@ public class AccountReportSummary extends AbstractExcelView {
                     x ++ ;
                 }
                 if("Inbound".equalsIgnoreCase(data.getDepartment())){
-                    if(x != 0){
-                        tempcountO = count+x;
-                        HSSFRow rowtotal = sheetOutbound.createRow(tempcountO);
-                        String totalGross = "SUM(H" + 11+":H"+(tempcountO)+")";
-                        String totalVat = "SUM(O" + 11+":O"+(tempcountO)+")";
-
-                        HSSFCellStyle styleTotal = wb.createCellStyle();
-                        styleTotal.setFont(excelFunction.getHeaderTable(wb.createFont()));
-                        styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
-                        styleTotal.setBorderRight(HSSFCellStyle.BORDER_THIN);
-                        styleTotal.setBorderTop(HSSFCellStyle.BORDER_THIN);
-                        styleTotal.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-                        styleTotal.setAlignment(styleC22.ALIGN_RIGHT);
-
-                        HSSFCell cellTotal0 = rowtotal.createCell(0);
-                        cellTotal0.setCellStyle(stylebordertotalleft);
-                        HSSFCell cellTotal00 = rowtotal.createCell(1);
-                        cellTotal00.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotal01 = rowtotal.createCell(2);
-                         cellTotal01.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotal02 = rowtotal.createCell(3);
-                        cellTotal02.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotal03 = rowtotal.createCell(4);
-                        cellTotal03.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotal04 = rowtotal.createCell(5);
-                        cellTotal04.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotal05 = rowtotal.createCell(6);
-                        cellTotal05.setCellValue("TOTAL OUTBOUND : ");
-                        cellTotal05.setCellStyle(styleC4);
-                        HSSFCell cellTotal06 = rowtotal.createCell(7);
-                        cellTotal06.setCellFormula(totalGross);
-                        cellTotal06.setCellStyle(styleC25);
-                        HSSFCell cellTotal07 = rowtotal.createCell(14);
-                        cellTotal07.setCellFormula(totalVat);
-                        cellTotal07.setCellStyle(styleC25);
-                        
-                        sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountO+1)+":N"+(tempcountO+1)));
-                        sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountO+1)+":T"+(tempcountO+1)));
-                        
-                        for(int k = 8 ; k < 20 ; k++){
-                            if(k != 7 && k != 14){
-                                HSSFCell cell0000 = rowtotal.createCell(k);
-                                cell0000.setCellStyle(styleC25);
-                            }
-                        }
-                    }
+//                    if(x != 0){
+//                        tempcountO = count+x;
+//                        HSSFRow rowtotal = sheetOutbound.createRow(tempcountO);
+//                        String totalGross = "SUM(H" + 11+":H"+(tempcountO)+")";
+//                        String totalVat = "SUM(O" + 11+":O"+(tempcountO)+")";
+//
+//                        HSSFCellStyle styleTotal = wb.createCellStyle();
+//                        styleTotal.setFont(excelFunction.getHeaderTable(wb.createFont()));
+//                        styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//                        styleTotal.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//                        styleTotal.setBorderTop(HSSFCellStyle.BORDER_THIN);
+//                        styleTotal.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//                        styleTotal.setAlignment(styleC22.ALIGN_RIGHT);
+//
+//                        HSSFCell cellTotal0 = rowtotal.createCell(0);
+//                        cellTotal0.setCellStyle(stylebordertotalleft);
+//                        HSSFCell cellTotal00 = rowtotal.createCell(1);
+//                        cellTotal00.setCellStyle(stylebordertotal);
+//                        HSSFCell cellTotal01 = rowtotal.createCell(2);
+//                         cellTotal01.setCellStyle(stylebordertotal);
+//                        HSSFCell cellTotal02 = rowtotal.createCell(3);
+//                        cellTotal02.setCellStyle(stylebordertotal);
+//                        HSSFCell cellTotal03 = rowtotal.createCell(4);
+//                        cellTotal03.setCellStyle(stylebordertotal);
+//                        HSSFCell cellTotal04 = rowtotal.createCell(5);
+//                        cellTotal04.setCellStyle(stylebordertotal);
+//                        HSSFCell cellTotal05 = rowtotal.createCell(6);
+//                        cellTotal05.setCellValue("TOTAL OUTBOUND : ");
+//                        cellTotal05.setCellStyle(styleC4);
+//                        HSSFCell cellTotal06 = rowtotal.createCell(7);
+//                        cellTotal06.setCellFormula(totalGross);
+//                        cellTotal06.setCellStyle(styleC25);
+//                        HSSFCell cellTotal07 = rowtotal.createCell(14);
+//                        cellTotal07.setCellFormula(totalVat);
+//                        cellTotal07.setCellStyle(styleC25);
+//                        
+//                        sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountO+1)+":N"+(tempcountO+1)));
+//                        sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountO+1)+":T"+(tempcountO+1)));
+//                        
+//                        for(int k = 8 ; k < 20 ; k++){
+//                            if(k != 7 && k != 14){
+//                                HSSFCell cell0000 = rowtotal.createCell(k);
+//                                cell0000.setCellStyle(styleC25);
+//                            }
+//                        }
+//                    }
 
                     // set Header Report (Row 1)
                     HSSFCellStyle styleC1 = wb.createCellStyle();
@@ -1985,6 +1985,98 @@ public class AccountReportSummary extends AbstractExcelView {
                 }
                 
                 if(i==(outputTaxViewList.size()-1)){
+                    if(tempcountW != 0){
+                        HSSFRow rowtotal = sheetWendy.createRow(tempcountW);
+                        String totalGross = "SUM(H" +11+":H"+(tempcountW)+")";
+                        String totalVat = "SUM(O" + 11+":O"+(tempcountW)+")";
+
+                        HSSFCellStyle styleTotal = wb.createCellStyle();
+                        styleTotal.setFont(excelFunction.getHeaderTable(wb.createFont()));
+                        styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+                        styleTotal.setBorderRight(HSSFCellStyle.BORDER_THIN);
+                        styleTotal.setBorderTop(HSSFCellStyle.BORDER_THIN);
+                        styleTotal.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+                        styleTotal.setAlignment(styleC22.ALIGN_RIGHT);
+
+                        HSSFCell cellTotal0 = rowtotal.createCell(0);
+                        cellTotal0.setCellStyle(stylebordertotalleft);
+                        HSSFCell cellTotal00 = rowtotal.createCell(1);
+                        cellTotal00.setCellStyle(stylebordertotal);
+                        HSSFCell cellTotal01 = rowtotal.createCell(2);
+                         cellTotal01.setCellStyle(stylebordertotal);
+                        HSSFCell cellTotal02 = rowtotal.createCell(3);
+                        cellTotal02.setCellStyle(stylebordertotal);
+                        HSSFCell cellTotal03 = rowtotal.createCell(4);
+                        cellTotal03.setCellStyle(stylebordertotal);
+                        HSSFCell cellTotal04 = rowtotal.createCell(5);
+                        cellTotal04.setCellStyle(stylebordertotal);
+                        HSSFCell cellTotal05 = rowtotal.createCell(6);
+                        cellTotal05.setCellValue("TOTAL WENDY : ");
+                        cellTotal05.setCellStyle(styleC4);
+                        HSSFCell cellTotal06 = rowtotal.createCell(7);
+                        cellTotal06.setCellFormula(totalGross);
+                        cellTotal06.setCellStyle(styleC25);
+                        HSSFCell cellTotal07 = rowtotal.createCell(14);
+                        cellTotal07.setCellFormula(totalVat);
+                        cellTotal07.setCellStyle(styleC25);
+                        sheetWendy.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountW+1)+":N"+(tempcountW+1)));
+                        sheetWendy.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountW+1)+":T"+(tempcountW+1)));
+                        
+                        for(int k = 8 ; k < 20 ; k++){
+                            if(k != 7 && k != 14){
+                                HSSFCell cell0000 = rowtotal.createCell(k);
+                                cell0000.setCellStyle(styleC25);
+                            }
+                        }
+                    }
+                    
+                    if(x != 0){
+                        tempcountO = count+x;
+                        HSSFRow rowtotal = sheetOutbound.createRow(tempcountO);
+                        String totalGross = "SUM(H" + 11+":H"+(tempcountO)+")";
+                        String totalVat = "SUM(O" + 11+":O"+(tempcountO)+")";
+
+                        HSSFCellStyle styleTotal = wb.createCellStyle();
+                        styleTotal.setFont(excelFunction.getHeaderTable(wb.createFont()));
+                        styleTotal.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+                        styleTotal.setBorderRight(HSSFCellStyle.BORDER_THIN);
+                        styleTotal.setBorderTop(HSSFCellStyle.BORDER_THIN);
+                        styleTotal.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+                        styleTotal.setAlignment(styleC22.ALIGN_RIGHT);
+
+                        HSSFCell cellTotal0 = rowtotal.createCell(0);
+                        cellTotal0.setCellStyle(stylebordertotalleft);
+                        HSSFCell cellTotal00 = rowtotal.createCell(1);
+                        cellTotal00.setCellStyle(stylebordertotal);
+                        HSSFCell cellTotal01 = rowtotal.createCell(2);
+                         cellTotal01.setCellStyle(stylebordertotal);
+                        HSSFCell cellTotal02 = rowtotal.createCell(3);
+                        cellTotal02.setCellStyle(stylebordertotal);
+                        HSSFCell cellTotal03 = rowtotal.createCell(4);
+                        cellTotal03.setCellStyle(stylebordertotal);
+                        HSSFCell cellTotal04 = rowtotal.createCell(5);
+                        cellTotal04.setCellStyle(stylebordertotal);
+                        HSSFCell cellTotal05 = rowtotal.createCell(6);
+                        cellTotal05.setCellValue("TOTAL OUTBOUND : ");
+                        cellTotal05.setCellStyle(styleC4);
+                        HSSFCell cellTotal06 = rowtotal.createCell(7);
+                        cellTotal06.setCellFormula(totalGross);
+                        cellTotal06.setCellStyle(styleC25);
+                        HSSFCell cellTotal07 = rowtotal.createCell(14);
+                        cellTotal07.setCellFormula(totalVat);
+                        cellTotal07.setCellStyle(styleC25);
+                        
+                        sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountO+1)+":N"+(tempcountO+1)));
+                        sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountO+1)+":T"+(tempcountO+1)));
+                        
+                        for(int k = 8 ; k < 20 ; k++){
+                            if(k != 7 && k != 14){
+                                HSSFCell cell0000 = rowtotal.createCell(k);
+                                cell0000.setCellStyle(styleC25);
+                            }
+                        }
+                    }
+                    
                     if( y != 0 ){
                         tempcountI = count+y;
                         HSSFRow rowtotal = sheetInbound.createRow(tempcountI);
@@ -2031,7 +2123,8 @@ public class AccountReportSummary extends AbstractExcelView {
                                 HSSFCell cell0000 = rowtotal.createCell(k);
                                 cell0000.setCellStyle(styleC25);
                             }
-                        }
+                        }                        
+                    }
                         
                         HSSFRow rowtotalbor = sheetInbound.createRow(tempcountI+1);
                         HSSFCell cellTotalBor0 = rowtotalbor.createCell(0);
@@ -2128,7 +2221,7 @@ public class AccountReportSummary extends AbstractExcelView {
                         HSSFCell cellTotalIn04 = rowtotalin.createCell(5);
                         cellTotalIn04.setCellStyle(stylebordertotal);
                         HSSFCell cellTotalIn05 = rowtotalin.createCell(6);
-                        cellTotalIn05.setCellValue("TOTAL INBOUND : ");
+                        cellTotalIn05.setCellValue("Wend : ");
                         cellTotalIn05.setCellStyle(styleC4);
                         HSSFCell cellTotalIn06 = rowtotalin.createCell(7);
                         cellTotalIn06.setCellValue((grossI).doubleValue());
@@ -2183,7 +2276,7 @@ public class AccountReportSummary extends AbstractExcelView {
                             }
                         }
                         
-                    }
+                    
                 }
 //                for (int j = 0; j < 4; j++) {
 //                    sheetWendy.autoSizeColumn(j, true);
