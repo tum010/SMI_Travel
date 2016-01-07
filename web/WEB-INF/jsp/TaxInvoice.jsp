@@ -1103,9 +1103,9 @@
         });
         
         var wildCardSearch = ($("#wildCardSearch").val()).indexOf("%");
-        if($("#TaxInvId").val() !== ''){
+//        if($("#TaxInvId").val() !== ''){
             $("#TaxInvNo").focus();
-        }        
+//        }        
         $("#TaxInvNo").keyup(function (event) {           
 //            var wildCardSearch = ($("#TaxInvNo").val()).indexOf("%");
             if (event.keyCode === 13) {

@@ -146,7 +146,7 @@
                             <tr class="datatable-header" >
                                 <th style="width:7%;">Receive No</th>
                                 <th style="width:10%;">Date</th>
-                                <th style="width:7%;">To</th>
+                                <th style="width:7%;">Code</th>
                                 <th style="width:15%;">Name</th>
                                 <th style="width:10%;">Invoice No</th>
                                 <th style="width:10%;">Amount</th>

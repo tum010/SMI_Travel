@@ -226,12 +226,12 @@
                                     <table id="taxDetail" class="display" cellspacing="0" width="100%">
                                         <thead>
                                             <tr class="datatable-header" >
-                                                <th style="width:10%;">No</th>
-                                                <th style="width:10%;">Product</th>
-                                                <th style="width:10%;">Refno</th>
-                                                <th style="width:10%;">Description</th>
-                                                <th style="width:10%;">Amount</th>
-                                                <th style="width:10%;">Cur</th>
+                                                <th style="width:3%;">No</th>
+                                                <th style="width:12%;">Product</th>
+                                                <th style="width:5%;">Refno</th>
+                                                <th style="width:55%;">Description</th>
+                                                <th style="width:18%;">Amount</th>
+                                                <th style="width:7%;">Cur</th>
                                             </tr>
                                         </thead>
                                         <tbody>

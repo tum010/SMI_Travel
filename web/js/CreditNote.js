@@ -19,9 +19,9 @@ $(document).ready(function() {
     }
 
     var wildCardSearch = ($("#wildCardSearch").val()).indexOf("%");
-    if ($("#cnId").val() !== '') {
+//    if ($("#cnId").val() !== '') {
         $("#cnNo").focus();
-    }
+//    }
     $("#cnNo").on("keyup", function(event) {
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if (keycode == '13') {
@@ -336,8 +336,8 @@ function show(taxNo) {
                         var html = "<tr>" +
                                 "<td style='text-align:center'>" + (i + 1) + "</td>" +
                                 "<td style='text-align:center'>" + detail.product + "</td>" +
-                                "<td style='text-align:center'>" + detail.refNo + "</td>" +
-                                "<td style='text-align:center'>" + detail.description + "</td>" +
+                                "<td style='text-align:center'>" + (detail.refNo !== undefined ? detail.refNo : '') + "</td>" +
+                                "<td>" + detail.description + "</td>" +
                                 "<td style='text-align:right'>" + detail.amount + "</td>" +
                                 "<td style='text-align:center'>" + detail.cur + "</td>" +
                                 "</tr>";
