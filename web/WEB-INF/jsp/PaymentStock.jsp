@@ -149,7 +149,8 @@
                                                 <td align="center">${table.stock.effectiveFrom}</td>
                                                 <td align="center">${table.stock.effectiveTo}</td>
                                                 <td class="text-center ">
-                                                    <a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" onclick="getStockDetail('${table.stock.id}')" class="glyphicon glyphicon glyphicon-list-alt"></span></a>
+                                                    <!--<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" onclick="getStockDetail('${table.stock.id}')" class="glyphicon glyphicon glyphicon-list-alt"></span></a>-->
+                                                    <a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" class="glyphicon glyphicon glyphicon-list-alt"></span></a>
                                                     <a href="#" onclick="" data-toggle="modal" data-target=""> <span id="SpanRemove" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentStockDetailList('${table.id}','${i.count}','');"></span></a>
                                                 </td>  
                                             </tr>

@@ -1103,7 +1103,7 @@ public class AJAXBean extends AbstractBean implements
 //                    + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control\" ></td>"
 //                    + "</tr>";
             newrow += "<tr>"
-                    + "<input type='hidden' id='psiIdTable" + no + "' name='psiIdTable" + no + "'  value='" + psiIdTable + "'>"
+//                    + "<input type='hidden' id='psiIdTable" + no + "' name='psiIdTable" + no + "'  value='" + psiIdTable + "'>"
                     + "<input type='hidden' id='psdIdTable" + no + "' name='psdIdTable" + no + "'  value='" + psdIdTable + "'>"
                     + "<input type='hidden' id='stockDetailIdTable" + no + "' name='stockDetailIdTable" + no + "'  value='" + stockDetailIdTable + "'>" 
                     + "<input type='hidden' id='stockIdTable" + no + "' name='stockIdTable" + no + "'  value='" + stockId + "'>"

@@ -45,9 +45,19 @@ function createStockDetails(stockid, productName, staff, addDate, effectiveFrom,
             return;
         }else{
             $('#fail').hide();
-        }
+        }        
     }
-                        
+    
+    for(var i=1; i<noStockTable; i++){
+        if(stockid === $("#stockId"+i).val()){
+            $("#SearchStock").modal("hide");
+            $('#fail').show();
+            return;
+        }else{
+            $('#fail').hide();
+        }        
+    }
+    
     $("#StockTable").append(
             '<tr>' +
             '<input type="hidden" id="paymentStockDetailId'+ noStockTable +'" name="paymentStockDetailId'+ noStockTable +'"  value=""> '+
@@ -57,11 +67,12 @@ function createStockDetails(stockid, productName, staff, addDate, effectiveFrom,
             '<td class="text-center ">' + noStockTable + '</td>' +
             '<td>' + productName + '</td>' +
             '<td>' + staff + '</td>' +
-            '<td>' + addDate + '</td>' +
-            '<td>' + effectiveFrom + '</td>' +
-            '<td>' + effectiveTo + '</td>' +
+            '<td class="text-center ">' + addDate + '</td>' +
+            '<td class="text-center ">' + effectiveFrom + '</td>' +
+            '<td class="text-center ">' + effectiveTo + '</td>' +
             '<td class="text-center ">' +
-            '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" onclick="getStockDetail('+ stockid +')" class="glyphicon glyphicon glyphicon-list-alt"></span></a>' +
+            '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" class="glyphicon glyphicon glyphicon-list-alt"></span></a>' +
+//            '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" onclick="getStockDetail('+ stockid +')" class="glyphicon glyphicon glyphicon-list-alt"></span></a>' +
             '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="SpanRemove" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentStockDetailList(\'\', \'' + noStockTable + '\' , \'' + stockid + '\');"></span></a>' +
             '</td>' +
             '<tr>'
@@ -124,15 +135,15 @@ function CallAjax(param) {
 //    $("#noStockTable").val(countRowStockDetail);
 }
 
-function deletelist(productName,no){
-    var noStockDetailTable = parseInt($("#noStockDetailTable").val());
-    $("#chk" + no).parent().parent().remove();
-    for(var i=1; i<=noStockDetailTable; i++){
-        if(productName === $("#del"+i).val()){
-            $("#del" + i).parent().parent().remove();
-        }
-    }
-}
+//function deletelist(productName,no){
+//    var noStockDetailTable = parseInt($("#noStockDetailTable").val());
+//    $("#chk" + no).parent().parent().remove();
+//    for(var i=1; i<=noStockDetailTable; i++){
+//        if(productName === $("#del"+i).val()){
+//            $("#del" + i).parent().parent().remove();
+//        }
+//    }
+//}
 
 function deletePaymentStockDetailList(paymentStockDetailId , row , stockid){
     if(paymentStockDetailId === ''){
@@ -141,7 +152,7 @@ function deletePaymentStockDetailList(paymentStockDetailId , row , stockid){
         for(var i=1 ; i < countRowStockDetail ; i++){
             var sit = $("#stockIdTable"+i).val();
             if(sit === stockid){
-                $("#psdIdTable" + i).parent().parent().remove();
+                $("#psdIdTable" + i).parent().remove();
             }
         }
 
@@ -176,10 +187,10 @@ function DeleteRowPaymentStock(){
                 var psdId = $("#psdIdTable"+i).val();
                 var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
                 if(paymentStockDetailId  === psdIdDelete){
-                    $("#paymentStockDetailId" + i).parent().parent().remove();
+                    $("#paymentStockDetailId" + i).parent().remove();
                 }
                 if(psdId === psdIdDelete){
-                    $("#psdIdTable" + i).parent().parent().remove();
+                    $("#psdIdTable" + i).parent().remove();
                 }
             }
         }
@@ -196,10 +207,10 @@ function DeleteRowPaymentStock(){
                         var psdId = $("#psdIdTable"+i).val();
                         var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
                         if(paymentStockDetailId  === psdIdDelete){
-                            $("#paymentStockDetailId" + i).parent().parent().remove();
+                            $("#paymentStockDetailId" + i).parent().remove();
                         }
                         if(psdId === psdIdDelete){
-                            $("#psdIdTable" + i).parent().parent().remove();
+                            $("#psdIdTable" + i).parent().remove();
                         }
                     }
                     

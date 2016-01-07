@@ -77,10 +77,12 @@ public class PaymentStockController extends SMITravelController{
                     if(!paymentStock.getId().isEmpty()){
                         List<PaymentStockDetail> paymentStockDetailList = paymentStockService.getListPaymentStockDetailFromPaymentStockId(paymentStock.getId());
                         List<PaymentStockItem> paymentStockItemList = paymentStockService.getListPaymentStockItemFromPaymentStockId(paymentStock.getId());
-
+                        
                         request.setAttribute(PAYMENTSTOCKDETAILLIST,paymentStockDetailList);
                         request.setAttribute(PAYMENTSTOCKITEMLIST,paymentStockItemList);
-
+                        if(paymentStockDetailList != null){
+                            request.setAttribute(NOSTOCKTABLE,paymentStockDetailList.size()+1);
+                        }
                         request.setAttribute(PAYMENTSTOCK,paymentStock);
                         request.setAttribute(CREATEDATE,String.valueOf(paymentStock.getCreateDate()));
                     }
@@ -130,13 +132,9 @@ public class PaymentStockController extends SMITravelController{
             }
             
             for (int i = 1; i < rowsStock ; i++) {
-                
                 String paymentStockId = request.getParameter("paymentStockId" + i);
                 String stockId = request.getParameter("stockId" + i);
                 String paymentStockDetailId = request.getParameter("paymentStockDetailId" + i);
-//                System.out.println(" paymentStockId  ============= " + paymentStockId);
-//                System.out.println(" paymentStockDetailId ============= " + paymentStockDetailId);
-//                System.out.println(" stockId ============= " + stockId);
                 PaymentStockDetail psd = new PaymentStockDetail();
                 psd.setId(paymentStockDetailId); // save Payment Stock Detail Id
                 psd.setPaymentStock(paymentStock);
@@ -147,26 +145,18 @@ public class PaymentStockController extends SMITravelController{
 
                 for (int j = 1; j < rowsDetail ; j++) {
                     PaymentStockItem psi = new PaymentStockItem();
-                    
                     String psiIdTable = request.getParameter("psiIdTable" + j);
                     String psdIdTable = request.getParameter("psdIdTable" + j);
                     String stockDetailIdTable = request.getParameter("stockDetailIdTable" + j);
                     String cost = request.getParameter("cost" + j);
                     String sale = request.getParameter("sale" + j);
                     String stockIdTable = request.getParameter("stockIdTable" + j);
-                    
-                    System.out.println(" paymentStockDetailId  ============= " + paymentStockDetailId);
-                    System.out.println(" psdIdTable ============= " + psdIdTable);
-                    System.out.println(" psiIdTable ============= " + psiIdTable);
                     if((!"".equalsIgnoreCase(stockIdTable) && stockIdTable != null ) && (!"".equalsIgnoreCase(stockId) && stockId!=null)){
+                        System.out.println(" stockId "+ i + " ____ " + stockId);
+                        System.out.println(" stockIdTable "+ j + " ____ " + stockIdTable);
                         if(stockId.equalsIgnoreCase(stockIdTable)){
-//                            PaymentStockItem psi = new PaymentStockItem();
-//                            if(psiIdTable != null){
-                                psi.setId(psiIdTable);
-//                            }
-
-    //                        PaymentStockDetail psdtemp = new PaymentStockDetail(); // save Payment Stock Detail Id
-    //                        psdtemp.setId(psdIdTable); 
+                            System.out.println(" psiIdTable "+ j + " ____ " + psiIdTable);
+                            psi.setId(psiIdTable);
                             psi.setPaymentStockDetail(psd);
 
                             StockDetail stockDetail = new StockDetail();
@@ -175,25 +165,10 @@ public class PaymentStockController extends SMITravelController{
 
                             psi.setCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(cost) ? cost.replaceAll(",","") : 0)));
                             psi.setSale(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(sale) ? sale.replaceAll(",","") : 0)));
-
-                         }
+                            psd.getPaymentStockItems().add(psi);
+                        }
                     }
-//                    else{
-//                        psi.setId(psiIdTable);
-//                        psi.setPaymentStockDetail(psd);
-//                        StockDetail stockDetail = new StockDetail();
-//                        stockDetail.setId(stockDetailIdTable);
-//                        psi.setStockDetail(stockDetail);
-//                        psi.setCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(cost) ? cost.replaceAll(",","") : 0)));
-//                        psi.setSale(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(sale) ? sale.replaceAll(",","") : 0)));
-//                       
-//                    }
-                    psd.getPaymentStockItems().add(psi);
                 }
-                
-                
-                
-                
                 paymentStock.getPaymentStockDetails().add(psd);
             }
             
@@ -214,7 +189,6 @@ public class PaymentStockController extends SMITravelController{
 
             request.setAttribute(PAYMENTSTOCKDETAILLIST,paymentStockDetailList);
             request.setAttribute(PAYMENTSTOCKITEMLIST,paymentStockItemList);
-            System.out.println(" createDate after save " + createDate);
             request.setAttribute(CREATEDATE,createDate);
             request.setAttribute(NOSTOCKTABLE,noStockTable);
         }

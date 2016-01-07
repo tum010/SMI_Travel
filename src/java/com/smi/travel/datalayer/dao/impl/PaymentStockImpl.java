@@ -167,7 +167,6 @@ public class PaymentStockImpl implements PaymentStockDao {
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            
             if("".equalsIgnoreCase(paymentStock.getId()) || paymentStock.getId() == null){
                 result = generatePayNo();
                 paymentStock.setPayStockNo(result);
@@ -192,7 +191,9 @@ public class PaymentStockImpl implements PaymentStockDao {
                 List<PaymentStockDetail> paymentStockDetails = paymentStock.getPaymentStockDetails();
                 if(paymentStockDetails != null){
                     System.out.println(" paymentStockDetails.size()  " + paymentStockDetails.size());
+                    
                     for(int i = 0; i < paymentStockDetails.size(); i++){
+                        System.out.println(" paymentStockDetails.get(i).getId() " + paymentStockDetails.get(i).getId());
                         if("".equalsIgnoreCase(paymentStockDetails.get(i).getId()) || paymentStockDetails.get(i).getId() == null){
                             session.save(paymentStockDetails.get(i));
                         }else{
@@ -201,8 +202,9 @@ public class PaymentStockImpl implements PaymentStockDao {
                         
                         List<PaymentStockItem> paymentStockItems = paymentStockDetails.get(i).getPaymentStockItems();
                         if(paymentStockItems != null){
+                            System.out.println("  paymentStockItems.size()  " +  paymentStockItems.size());
                             for(int j = 0; j < paymentStockItems.size(); j++){
-                                if("".equalsIgnoreCase(paymentStockDetails.get(i).getId()) || paymentStockDetails.get(i).getId() == null){
+                                if("".equalsIgnoreCase(paymentStockItems.get(j).getId()) || paymentStockItems.get(j).getId() == null){
                                     session.save(paymentStockItems.get(j));
                                 }else{
                                     session.update(paymentStockItems.get(j));
