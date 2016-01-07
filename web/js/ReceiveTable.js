@@ -43,11 +43,10 @@ $(document).ready(function() {
         "iDisplayLength": 10
     });
 
-    var periodTable;
-    periodTable = $('#periodTable').dataTable({bJQueryUI: true,
+    $('#periodTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": false,
-        "bFilter": false,
+        "bFilter": true,
         "bPaginate": true,
         "bInfo": false,
         "bLengthChange": false,
@@ -835,10 +834,27 @@ function CallAjaxCheckPeriod(param) {
             data: param,
             success: function(msg) {
                 if (msg !== 'fail') {
-                    $('#periodTable > tbody  > tr').each(function() {
-                        $(this).remove();
-                    });
-                    $("#periodTable tbody").append(msg);
+                    var result = msg.split("//");
+//                    $('#periodTable > tbody  > tr').each(function() {
+//                        $(this).remove();
+//                    });
+//                    $("#periodTable tbody").append(msg);
+                    if(result[1] !== ''){
+                        $('#periodTable').dataTable().fnClearTable();
+                        $('#periodTable').dataTable().fnDestroy();
+                        $("#periodTable tbody").empty().append(result[1]);
+                        $('#periodTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": true,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 10
+                        });
+                    }    
+                    
+                    $("#periodTable tbody").append(result[0]);
                     $("#periodId").val($("#periodIdTemp").val());
                     $("#receiveFrom").val($("#periodFromTemp").val());
                     $("#receiveTo").val($("#periodToTemp").val());
@@ -1097,10 +1113,25 @@ function CallAjaxDeletePeriod(param, periodId) {
             data: param,
             success: function(msg) {
                 if (msg !== 'fail') {
-                    $('#periodTable > tbody  > tr').each(function() {
-                        $(this).remove();
-                    });
-                    $("#periodTable tbody").append(msg);
+//                    $('#periodTable > tbody  > tr').each(function() {
+//                        $(this).remove();
+//                    });
+                    var result = msg.split("//");
+                    if(result[1] !== ''){
+                        $('#periodTable').dataTable().fnClearTable();
+                        $('#periodTable').dataTable().fnDestroy();
+                        $("#periodTable tbody").empty().append(result[1]);
+                        $('#periodTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": true,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 10
+                        });
+                    }    
+                    $("#periodTable tbody").append(result[0]);
                     $("#periodSize").val($("#periodSizeTemp").val());
                     var periodSize = parseInt($("#periodSize").val());
                     if(periodSize > 0){
@@ -1217,10 +1248,25 @@ function CallAjaxUpdateReceivePeriod(param) {
             data: param,
             success: function(msg) {
                 if(msg !== 'fail'){
-                    $('#periodTable > tbody  > tr').each(function() {
-                        $(this).remove();
-                    });
-                    $("#periodTable tbody").append(msg);
+//                    $('#periodTable > tbody  > tr').each(function() {
+//                        $(this).remove();
+//                    });
+                    var result = msg.split("//");
+                    if(result[1] !== ''){
+                        $('#periodTable').dataTable().fnClearTable();
+                        $('#periodTable').dataTable().fnDestroy();
+                        $("#periodTable tbody").empty().append(result[1]);
+                        $('#periodTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": true,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 10
+                        });
+                    }    
+                    $("#periodTable tbody").append(result[0]);
                     $("#periodId").val($("#periodIdTemp").val());
                     $("#receiveFrom").val($("#periodFromTemp").val());
                     $("#receiveTo").val($("#periodToTemp").val());
