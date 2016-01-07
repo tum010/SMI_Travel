@@ -439,27 +439,27 @@
                 <input type="hidden" name="createDate" id="createDate" value=""/>
             </div>
         </div>
-        <div id="textAlertDivSavePeriod"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivSavePeriod()"><span aria-hidden="true">&times;</span></button>
+        <div id="textAlertDivSavePeriod"  style="display:none;" class="alert alert-success">
+            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDivSavePeriod()"><span aria-hidden="true">&times;</span></button>
             <strong>Save Period Success!</strong> 
         </div>
-        <div id="textAlertDivNotSavePeriod"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivNotSavePeriod()"><span aria-hidden="true">&times;</span></button>
+        <div id="textAlertDivNotSavePeriod"  style="display:none;" class="alert alert-danger">
+            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDivNotSavePeriod()"><span aria-hidden="true">&times;</span></button>
             <strong>Period has already used!</strong> 
         </div>
-        <div id="textAlertDivDeletePeriod"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivDeletePeriod()"><span aria-hidden="true">&times;</span></button>
+        <div id="textAlertDivDeletePeriod"  style="display:none;" class="alert alert-success">
+            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDivDeletePeriod()"><span aria-hidden="true">&times;</span></button>
             <strong>Delete Period Success!</strong> 
         </div>
-        <div id="textAlertDivPeriodMeaasge"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertPeriodMessage()"><span aria-hidden="true">&times;</span></button>
+        <div id="textAlertDivPeriodMeaasge"  style="display:none;" class="alert alert-danger">
+            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertPeriodMessage()"><span aria-hidden="true">&times;</span></button>
             <strong id="periodAlertMessage"></strong>
             <button type="button" id="btnUpdate" name="btnUpdate" onclick="updateReceivePeriod()" class="btn btn-xs btn-warning">
                 <i class="glyphicon glyphicon-usd"></i> Update            
             </button>
         </div>
-        <div id="textAlertDivUpdatePeriod"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="hideTextAlertDivUpdatePeriod()"><span aria-hidden="true">&times;</span></button>
+        <div id="textAlertDivUpdatePeriod"  style="display:none;" class="alert alert-success">
+            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDivUpdatePeriod()"><span aria-hidden="true">&times;</span></button>
             <strong>Update Period Success!</strong> 
         </div>
         <div class="panel panel-default ${panelborder}">
