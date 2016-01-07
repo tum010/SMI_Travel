@@ -2126,55 +2126,55 @@ public class AccountReportSummary extends AbstractExcelView {
                         }                        
                     }
                         
-                        HSSFRow rowtotalbor = sheetInbound.createRow(tempcountI+1);
-                        HSSFCell cellTotalBor0 = rowtotalbor.createCell(0);
-                        cellTotalBor0.setCellStyle(stylebordertotalleft);
-                        HSSFCell cellTotalBor00 = rowtotalbor.createCell(1);
-                        cellTotalBor00.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotalBor01 = rowtotalbor.createCell(2);
-                        cellTotalBor01.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotalBor02 = rowtotalbor.createCell(3);
-                        cellTotalBor02.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotalBor03 = rowtotalbor.createCell(4);
-                        cellTotalBor03.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotalBor04 = rowtotalbor.createCell(5);
-                        cellTotalBor04.setCellStyle(stylebordertotal);
+                    HSSFRow rowtotalbor = sheetInbound.createRow(tempcountI+1);
+                    HSSFCell cellTotalBor0 = rowtotalbor.createCell(0);
+                    cellTotalBor0.setCellStyle(stylebordertotalleft);
+                    HSSFCell cellTotalBor00 = rowtotalbor.createCell(1);
+                    cellTotalBor00.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotalBor01 = rowtotalbor.createCell(2);
+                    cellTotalBor01.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotalBor02 = rowtotalbor.createCell(3);
+                    cellTotalBor02.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotalBor03 = rowtotalbor.createCell(4);
+                    cellTotalBor03.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotalBor04 = rowtotalbor.createCell(5);
+                    cellTotalBor04.setCellStyle(stylebordertotal);
                         
-                        HSSFRow rowtotalwen = sheetInbound.createRow(tempcountI+2);
-                        HSSFCell cellTotalWen0 = rowtotalwen.createCell(0);
-                        cellTotalWen0.setCellStyle(stylebordertotalleft);
-                        HSSFCell cellTotalWen00 = rowtotalwen.createCell(1);
-                        cellTotalWen00.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotalWen01 = rowtotalwen.createCell(2);
-                         cellTotalWen01.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotalWen02 = rowtotalwen.createCell(3);
-                        cellTotalWen02.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotalWen03 = rowtotalwen.createCell(4);
-                        cellTotalWen03.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotalWen04 = rowtotalwen.createCell(5);
-                        cellTotalWen04.setCellStyle(stylebordertotal);
-                        HSSFCell cellTotalWen05 = rowtotalwen.createCell(6);
-                        cellTotalWen05.setCellValue("TOTAL WENDY : ");
-                        cellTotalWen05.setCellStyle(styleC4);
-                        HSSFCell cellTotalWen06 = rowtotalwen.createCell(7);
-                        cellTotalWen06.setCellValue((grossW).doubleValue());
-                        cellTotalWen06.setCellStyle(styleC25);
-                        HSSFCell cellTotalWen07 = rowtotalwen.createCell(14);
-                        cellTotalWen07.setCellValue((vatW).doubleValue());
-                        cellTotalWen07.setCellStyle(styleC25);
+                    HSSFRow rowtotalwen = sheetInbound.createRow(tempcountI+2);
+                    HSSFCell cellTotalWen0 = rowtotalwen.createCell(0);
+                    cellTotalWen0.setCellStyle(stylebordertotalleft);
+                    HSSFCell cellTotalWen00 = rowtotalwen.createCell(1);
+                    cellTotalWen00.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotalWen01 = rowtotalwen.createCell(2);
+                     cellTotalWen01.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotalWen02 = rowtotalwen.createCell(3);
+                    cellTotalWen02.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotalWen03 = rowtotalwen.createCell(4);
+                    cellTotalWen03.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotalWen04 = rowtotalwen.createCell(5);
+                    cellTotalWen04.setCellStyle(stylebordertotal);
+                    HSSFCell cellTotalWen05 = rowtotalwen.createCell(6);
+                    cellTotalWen05.setCellValue("TOTAL WENDY : ");
+                    cellTotalWen05.setCellStyle(styleC4);
+                    HSSFCell cellTotalWen06 = rowtotalwen.createCell(7);
+                    cellTotalWen06.setCellValue((grossW).doubleValue());
+                    cellTotalWen06.setCellStyle(styleC25);
+                    HSSFCell cellTotalWen07 = rowtotalwen.createCell(14);
+                    cellTotalWen07.setCellValue((vatW).doubleValue());
+                    cellTotalWen07.setCellStyle(styleC25);
                         
-                        sheetInbound.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountI+3)+":N"+(tempcountI+3)));
-                        sheetInbound.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountI+3)+":T"+(tempcountI+3)));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("H"+(tempcountI+3)+":N"+(tempcountI+3)));
+                    sheetInbound.addMergedRegion(CellRangeAddress.valueOf("O"+(tempcountI+3)+":T"+(tempcountI+3)));
                         
-                        for(int k = 8 ; k < 20 ; k++){
-                            if(k != 7 && k != 14){
-                                HSSFCell cell0000 = rowtotalwen.createCell(k);
-                                cell0000.setCellStyle(styleC25);
-                            }
+                    for(int k = 8 ; k < 20 ; k++){
+                        if(k != 7 && k != 14){
+                            HSSFCell cell0000 = rowtotalwen.createCell(k);
+                            cell0000.setCellStyle(styleC25);
                         }
+                    }
                         
                         
-                        HSSFRow rowtotalout = sheetInbound.createRow(tempcountI+3);
+                    HSSFRow rowtotalout = sheetInbound.createRow(tempcountI+3);
                         HSSFCell cellTotalOut0 = rowtotalout.createCell(0);
                         cellTotalOut0.setCellStyle(stylebordertotalleft);
                         HSSFCell cellTotalOut00 = rowtotalout.createCell(1);
@@ -2221,7 +2221,7 @@ public class AccountReportSummary extends AbstractExcelView {
                         HSSFCell cellTotalIn04 = rowtotalin.createCell(5);
                         cellTotalIn04.setCellStyle(stylebordertotal);
                         HSSFCell cellTotalIn05 = rowtotalin.createCell(6);
-                        cellTotalIn05.setCellValue("Wend : ");
+                        cellTotalIn05.setCellValue("TOTAL INBOUND : ");
                         cellTotalIn05.setCellStyle(styleC4);
                         HSSFCell cellTotalIn06 = rowtotalin.createCell(7);
                         cellTotalIn06.setCellValue((grossI).doubleValue());
