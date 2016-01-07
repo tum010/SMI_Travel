@@ -161,7 +161,8 @@ public class InvoiceImpl implements InvoiceReportDao{
                 invoice.setVat(df.format(B[6]));
             }
             if(B[7] != null){
-                invoice.setTotal(df.format(B[7]));
+                String totalTemp = util.ConvertString(B[7]);
+                invoice.setTotal("0.00".equalsIgnoreCase(totalTemp) ? "0.00" : df.format(B[7]));
             }         
             if(B[8] != null){
                 invoice.setTotalvat(df.format(B[8])); 
