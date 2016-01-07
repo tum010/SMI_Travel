@@ -161,9 +161,9 @@ public class PaymentStockController extends SMITravelController{
                     if((!"".equalsIgnoreCase(stockIdTable) && stockIdTable != null ) && (!"".equalsIgnoreCase(stockId) && stockId!=null)){
                         if(stockId.equalsIgnoreCase(stockIdTable)){
 //                            PaymentStockItem psi = new PaymentStockItem();
-                            if(psiIdTable != null){
+//                            if(psiIdTable != null){
                                 psi.setId(psiIdTable);
-                            }
+//                            }
 
     //                        PaymentStockDetail psdtemp = new PaymentStockDetail(); // save Payment Stock Detail Id
     //                        psdtemp.setId(psdIdTable); 
