@@ -547,4 +547,22 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
 //        session.close();
         return taxInvoiceList.get(0);
     }
+
+    @Override
+    public int getOutputTaxStatus(String taxInvId) {
+        Session session = this.sessionFactory.openSession();
+        TaxInvoice taxInvoice = new TaxInvoice();
+        StringBuffer query = new StringBuffer(" FROM TaxInvoice t WHERE t.id = :id ");
+
+        List<TaxInvoice> taxInvoiceList = session.createQuery(query.toString())
+            .setParameter("id", taxInvId)
+            .setMaxResults(1)
+            .list();
+      
+        int outputTaxStatus = taxInvoiceList.get(0).getOutputTaxStatus();
+        session.close();
+        this.sessionFactory.close();
+                                      
+        return outputTaxStatus;
+    }
 }

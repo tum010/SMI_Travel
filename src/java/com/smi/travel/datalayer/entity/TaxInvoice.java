@@ -3,6 +3,7 @@ package com.smi.travel.datalayer.entity;
 
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -184,7 +185,7 @@ public class TaxInvoice   {
             }
             if(amount != null){
                 BigDecimal hundred = new BigDecimal("100.0000");
-                sumAmount = sumAmount.add(amount.multiply(hundred).divide(vat.add(hundred), BigDecimal.ROUND_HALF_UP));
+                sumAmount = sumAmount.add(amount.multiply(hundred).divide(vat.add(hundred), 2,RoundingMode.HALF_UP));
             }
 
         }

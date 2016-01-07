@@ -106,7 +106,7 @@ public class TaxInvoiceController extends SMITravelController {
         String vatDefault = request.getParameter("vatDefault");
         String department = request.getParameter("department");
         String postDate = request.getParameter("postDate");
-        String outputTaxStatus = request.getParameter("outputTaxStatus");
+//        String outputTaxStatus = request.getParameter("outputTaxStatus");
         String wildCardSearch = request.getParameter("wildCardSearch");
         String keyCode = request.getParameter("keyCode");
         String checkInvoiceDetail = "";
@@ -157,8 +157,10 @@ public class TaxInvoiceController extends SMITravelController {
                 
                 invToDateConvert = utilty.convertStringToDate(createDate);
                 taxInvoice.setCreateDate(invToDateConvert);
-                taxInvoice.setDepartment(department);               
-                taxInvoice.setOutputTaxStatus(Integer.parseInt(outputTaxStatus));
+                taxInvoice.setDepartment(department); 
+                
+                int outputTaxStatus = taxInvoiceService.getOutputTaxStatus(taxInvId);
+                taxInvoice.setOutputTaxStatus(outputTaxStatus);
                 if(!"".equalsIgnoreCase(postDate) && postDate != null){
                     SimpleDateFormat dateformat = new SimpleDateFormat();
                     dateformat.applyPattern("yyyy-MM-dd HH:mm:ss");

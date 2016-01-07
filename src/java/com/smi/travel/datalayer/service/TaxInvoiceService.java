@@ -59,6 +59,9 @@ public class TaxInvoiceService {
     public TaxInvoice getTaxInvoiceByWildCardSearch(String taxInvId, String taxInvNo, String wildCardSearch, String keyCode, String department) {
         return taxInvoiceDao.getTaxInvoiceByWildCardSearch(taxInvId,taxInvNo,wildCardSearch,keyCode,department);
     }
-    
-    
+
+    public int getOutputTaxStatus(String taxInvId) {
+        return taxInvoiceDao.getOutputTaxStatus(taxInvId);
+    }
+      
 }
