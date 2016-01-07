@@ -352,7 +352,7 @@ public class TaxInvoiceController extends SMITravelController {
             }else{
                 if((taxInvNo.indexOf("%") >= 0)){
                     request.setAttribute("wildCardSearch", taxInvNo);
-                }else if((!"".equalsIgnoreCase(wildCardSearch)) && (wildCardSearch.indexOf("%") == 0)){
+                }else if(wildCardSearch != null && (!"".equalsIgnoreCase(wildCardSearch)) && (wildCardSearch.indexOf("%") == 0)){
                     request.setAttribute("wildCardSearch", wildCardSearch);
                 }else{
                     request.setAttribute("wildCardSearch", ""); 
