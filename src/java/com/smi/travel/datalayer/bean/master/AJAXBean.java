@@ -2623,6 +2623,7 @@ public class AJAXBean extends AbstractBean implements
                     + "</tr>";
             html.append(newrow);
         }
+        html.append("//");
          
         if(advanceReceivePeriodList != null){
             for(int i=0; i<advanceReceivePeriodList.size(); i++){
