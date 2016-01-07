@@ -30,9 +30,9 @@ public class OutputTaxView {
     private String agttaxno;
     private String main;
     private String branchno;
-    private int wendyCount;
-    private int outboundCount;
-    private int inboundCount;
+    private int countWendy;
+    private int countOutbound;
+    private int countInbound;
 
     public String getTaxid() {
         return taxid;
@@ -178,27 +178,28 @@ public class OutputTaxView {
         this.order = order;
     }
 
-    public int getWendyCount() {
-        return wendyCount;
+    public int getCountWendy() {
+        return countWendy;
     }
 
-    public void setWendyCount(int wendyCount) {
-        this.wendyCount = wendyCount;
+    public void setCountWendy(int countWendy) {
+        this.countWendy = countWendy;
     }
 
-    public int getOutboundCount() {
-        return outboundCount;
+    public int getCountOutbound() {
+        return countOutbound;
     }
 
-    public void setOutboundCount(int outboundCount) {
-        this.outboundCount = outboundCount;
+    public void setCountOutbound(int countOutbound) {
+        this.countOutbound = countOutbound;
     }
 
-    public int getInboundCount() {
-        return inboundCount;
+    public int getCountInbound() {
+        return countInbound;
     }
 
-    public void setInboundCount(int inboundCount) {
-        this.inboundCount = inboundCount;
+    public void setCountInbound(int countInbound) {
+        this.countInbound = countInbound;
     }
+    
 }

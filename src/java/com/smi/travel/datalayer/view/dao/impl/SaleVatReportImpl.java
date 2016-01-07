@@ -272,9 +272,19 @@ public class SaleVatReportImpl implements SaleVatReportDao{
         if(!QueryList.isEmpty()){
             OutputTaxView otv = new OutputTaxView();
             otv = (OutputTaxView) data.get(0);
-            otv.setWendyCount(countWendy);
-            otv.setOutboundCount(countOutbound);
-            otv.setInboundCount(countInbound);
+            otv.setCountWendy(countWendy);
+            otv.setCountOutbound(countOutbound);
+            otv.setCountInbound(countInbound);
+        
+        }else{
+            OutputTaxView otv = new OutputTaxView();
+            otv.setCountWendy(countWendy);
+            otv.setCountOutbound(countOutbound);
+            otv.setCountInbound(countInbound);
+            otv.setHeaderMonth(monthThai);
+            otv.setHeaderYear(String.valueOf(yearThai));
+            otv.setDepartment("");
+            data.add(otv);
         }
         
         this.sessionFactory.close();

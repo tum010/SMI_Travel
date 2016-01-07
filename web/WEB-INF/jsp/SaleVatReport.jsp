@@ -120,8 +120,6 @@
                     </button>
                 </div>
             </div>
-
-            <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
                 <div class="col-xs-12"><br></div> 
                 <div class="col-xs-12">
@@ -174,7 +172,6 @@
                     </table>    
                 </div>
             </div>
-            <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
                 <div class="col-xs-1 text-right" style="width: 890px"></div>
                 <div class="col-xs-1 text-right" style="">
