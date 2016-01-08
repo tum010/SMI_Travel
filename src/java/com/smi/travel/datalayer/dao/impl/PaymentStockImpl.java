@@ -56,7 +56,7 @@ public class PaymentStockImpl implements PaymentStockDao {
     }
 
     @Override
-    public List<StockDetail> getListPaymentStockItemFromStockId(String stockId) {
+    public List<StockDetail> getListStockDetailFromStockId(String stockId) {
         Session session = this.sessionFactory.openSession();
         List<StockDetail> stockDetails = session.createQuery("From StockDetail st where st.stock = '"+stockId+"'")
                 .list();
@@ -228,6 +228,17 @@ public class PaymentStockImpl implements PaymentStockDao {
         }
         System.out.println("result::"+result);
         return result;
+    }
+
+    @Override
+    public List<PaymentStockItem> getListPaymentStockItemFromPaymentStockDetailId(String psdId) {
+        Session session = this.sessionFactory.openSession();
+        List<PaymentStockItem> paymentStockItems = session.createQuery("From PaymentStockItem psi where psi.paymentStockDetail.id = '"+psdId+"'")
+                .list();
+        if (paymentStockItems.isEmpty()) {
+            return null;
+        }
+        return paymentStockItems;
     }
     
 }

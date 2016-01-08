@@ -64,7 +64,7 @@ function createStockDetails(stockid, productName, staff, addDate, effectiveFrom,
             '<input type="hidden" id="paymentStockId'+ noStockTable +'" name="paymentStockId'+ noStockTable +'"  value="">' +
             '<input type="hidden" id="stockId'+ noStockTable +'" name="stockId'+ noStockTable +'"  value="'+ stockid +'"> '+
             '<td class="hidden"><input type="hidden" id="chk'+ noStockTable +'" name="chk'+ noStockTable +'" value="' + productName + '"/></td>' +
-            '<td class="text-center ">' + noStockTable + '</td>' +
+            '<td class="text-center ">'+ noStockTable +'</td>' +
             '<td>' + productName + '</td>' +
             '<td>' + staff + '</td>' +
             '<td class="text-center ">' + addDate + '</td>' +
@@ -77,7 +77,7 @@ function createStockDetails(stockid, productName, staff, addDate, effectiveFrom,
             '</td>' +
             '<tr>'
             );
-    
+
     $("#noStockTable").val(noStockTable+1);
     getStockDetail(stockid);
     $("#SearchStock").modal("hide");
@@ -110,7 +110,8 @@ function CallAjax(param) {
 //                    $('#StockDetailTable').dataTable().fnClearTable();
 //                    $('#StockDetailTable').dataTable().fnDestroy();
                     $("#StockDetailTable tbody").append(msg);
-
+                    var countRowStockDetail = $("#StockDetailTable tr").length; 
+                    $("#noStockDetailTable").val(countRowStockDetail); 
 //                    $('#StockDetailTable').dataTable({bJQueryUI: true,
 //                        "sPaginationType": "full_numbers",
 //                        "bAutoWidth": false,
@@ -131,33 +132,23 @@ function CallAjax(param) {
     } catch (e) {
         alert(e);
     }
-//    var countRowStockDetail = $("#StockDetailTable tr").length; 
-//    $("#noStockTable").val(countRowStockDetail);
-}
 
-//function deletelist(productName,no){
-//    var noStockDetailTable = parseInt($("#noStockDetailTable").val());
-//    $("#chk" + no).parent().parent().remove();
-//    for(var i=1; i<=noStockDetailTable; i++){
-//        if(productName === $("#del"+i).val()){
-//            $("#del" + i).parent().parent().remove();
-//        }
-//    }
-//}
+}
 
 function deletePaymentStockDetailList(paymentStockDetailId , row , stockid){
     if(paymentStockDetailId === ''){
         $("#paymentStockDetailId" + row).parent().remove();
-        var countRowStockDetail = $("#StockDetailTable tr").length; 
+//        var countRowStockDetail = $("#StockDetailTable tr").length; 
+        var countRowStockDetail = $("#noStockDetailTable").val();
         for(var i=1 ; i < countRowStockDetail ; i++){
             var sit = $("#stockIdTable"+i).val();
             if(sit === stockid){
                 $("#psdIdTable" + i).parent().remove();
             }
         }
-
         var countRowStock = $("#StockDetailTable tr").length;   
         if(countRowStock === 1){
+            $("#noStockTable").val(1);
             document.getElementById('totalCost').value = formatNumber(0);
             document.getElementById('totalSale').value = formatNumber(0);
         }else{
@@ -181,16 +172,51 @@ function DeleteRowPaymentStock(){
     var psdIdDelete = document.getElementById('paymentStockDetailIdDelete').value;
     var row = document.getElementById('paymentStockRowDelete').value;
         if (psdIdDelete === '') {
-            var countRowStock = $("#StockTable tr").length;    
-            var countRowStockDetail = $("#StockDetailTable tr").length; 
-            for(var i=0 ; i < countRowStockDetail ; i++){
-                var psdId = $("#psdIdTable"+i).val();
+            for(var i=1 ; i < 100; i++){
+                var checktemp = false;
                 var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
-                if(paymentStockDetailId  === psdIdDelete){
+                for(var j=1 ;j < 500 ; j++){
+                    if(paymentStockDetailId  === psdIdDelete){
+                        var checkStockId = $("#stockId"+i).val(); 
+                        var stockIdTable = $("#stockIdTable"+j).val();
+                        if(checkStockId === stockIdTable){
+                            $("#psdIdTable" + j).parent().remove();
+                            checktemp = true;
+                        }
+                    }
+                }
+                if(checktemp){
                     $("#paymentStockDetailId" + i).parent().remove();
                 }
-                if(psdId === psdIdDelete){
-                    $("#psdIdTable" + i).parent().remove();
+            }
+            
+            
+            
+//            var countRowStock = $("#StockTable tr").length;   
+//            var countRowStockDetail = $("#StockDetailTable tr").length;   
+//            for(var i=0 ; i < countRowStock ; i++){
+//                var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
+//                for(var j=0 ;j < countRowStockDetail ; j++){
+//                    if(paymentStockDetailId  === psdIdDelete){
+//                        $("#paymentStockDetailId" + i).parent().remove();
+//                        var stockId = $("#stockId"+i).val();
+//                        var stockIdTable = $("#stockIdTable"+j).val();
+//                        if(stockId === stockIdTable){
+//                            $("#psdIdTable" + j).parent().remove();
+//                        }
+//                    }
+//                }
+//            }
+            countRowStock = $("#StockDetailTable tr").length;   
+            if(countRowStock === 1){
+                document.getElementById('totalCost').value = formatNumber(0);
+                document.getElementById('totalSale').value = formatNumber(0);
+                $("#noStockTable").val(1);
+            }else{
+                for(var i=1;i<countRowStock;i++){
+                    setFormatCurrency(i);
+                    calculateCostTotal();
+                    calculateSaleTotal();
                 }
             }
         }
@@ -200,46 +226,43 @@ function DeleteRowPaymentStock(){
                 type: 'get',
                 data: {psdIdDelete: psdIdDelete},
                 success: function() {
-                    var countRowStock = $("#StockTable tr").length;    
-                    var countRowStockDetail = $("#StockDetailTable tr").length;    
-                    
-                    for(var i=1 ; i < countRowStockDetail ; i++){
-                        var psdId = $("#psdIdTable"+i).val();
+                    for(var i=1 ; i < 100; i++){
+                        var checktemp = false;
                         var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
-                        if(paymentStockDetailId  === psdIdDelete){
-                            $("#paymentStockDetailId" + i).parent().remove();
+                        for(var j=1 ;j < 500 ; j++){
+                            if(paymentStockDetailId  === psdIdDelete){
+                                var checkStockId = $("#stockId"+i).val(); 
+                                var stockIdTable = $("#stockIdTable"+j).val();
+                                if(checkStockId === stockIdTable){
+                                    $("#psdIdTable" + j).parent().remove();
+                                    checktemp = true;
+                                }
+                            }
                         }
-                        if(psdId === psdIdDelete){
-                            $("#psdIdTable" + i).parent().remove();
+                        if(checktemp){
+                            $("#paymentStockDetailId" + i).parent().remove();
                         }
                     }
                     
+                    countRowStock = $("#StockDetailTable tr").length;  
+                    if(countRowStock === 1){
+                        $("#noStockTable").val(1);
+                        document.getElementById('totalCost').value = formatNumber(0);
+                        document.getElementById('totalSale').value = formatNumber(0);
+                    }else{
+                        for(var i=1;i<countRowStock;i++){
+                            setFormatCurrency(i);
+                            calculateCostTotal();
+                            calculateSaleTotal();
+                        }
+                    }
                 },
                 error: function() {
                     console.log("error");
-//                    result = 0;
                 }
             });
         }
     $('#DeletePaymentStock').modal('hide');  
-//    var countRowStockDetail = $("#StockDetailTable tr").length; 
-//    for(var i=1 ; i < countRowStockDetail ; i++){
-//        setFormatCurrency(i);
-//        calculateCostTotal();
-//        calculateSaleTotal();
-//    }
-    
-    countRowStock = $("#StockDetailTable tr").length;   
-    if(countRowStock === 1){
-        document.getElementById('totalCost').value = formatNumber(0);
-        document.getElementById('totalSale').value = formatNumber(0);
-    }else{
-        for(var i=1;i<countRowStock;i++){
-            setFormatCurrency(i);
-            calculateCostTotal();
-            calculateSaleTotal();
-        }
-    }
 }
 
 function calculateCostTotal() {

@@ -1035,13 +1035,23 @@ public class AJAXBean extends AbstractBean implements
             if("getStockDetail".equalsIgnoreCase(type)){
                 String stockId = map.get("stockId").toString();
                 String countRowDetail = map.get("countRowDetail").toString();
-                List<StockDetail> stockDetails = paymentStockDao.getListPaymentStockItemFromStockId(stockId);
+                List<StockDetail> stockDetails = paymentStockDao.getListStockDetailFromStockId(stockId);
                 if (stockDetails != null) {
                     result = buildPaymentStockDetailHTML(stockDetails,countRowDetail);
                 } else {
                     result = "null";
                 }
-            }      
+            } 
+            if("getPaymentStockItemCostSale".equalsIgnoreCase(type)){
+                String psdId = map.get("psdId").toString();
+                String countRowDetail = map.get("countRowDetail").toString();
+                List<PaymentStockItem> paymentStockItems = paymentStockDao.getListPaymentStockItemFromPaymentStockDetailId(psdId);
+                if (paymentStockItems != null) {
+                    result = getPaymentStockItemCostSale(paymentStockItems,countRowDetail);
+                } else {
+                    result = "null";
+                }
+            } 
         }
 
         
@@ -1050,6 +1060,39 @@ public class AJAXBean extends AbstractBean implements
         return result;
     }
 
+    private String getPaymentStockItemCostSale(List<PaymentStockItem> paymentStockItems,String row) {
+        StringBuffer html = new StringBuffer();     
+        UtilityFunction utilty = new UtilityFunction();
+        int no = 1;
+        String paystockitemid = "" ;
+        String paystockdetailid = "" ;
+        String stockdetailid = "" ;     
+        String cost = "" ;
+        String sale = "";
+        String noMaxTemp = String.valueOf(paymentStockItems.size());
+        System.out.println(" paymentStockItems.size() " + paymentStockItems.size());
+        for (int i = 0; i < paymentStockItems.size(); i++) {
+            PaymentStockItem paymentStockItem = new PaymentStockItem();
+            paymentStockItem = paymentStockItems.get(i);
+            
+            paystockitemid = paymentStockItem.getId() ;
+            paystockdetailid = paymentStockItem.getPaymentStockDetail().getId() ;
+            stockdetailid = paymentStockItem.getStockDetail().getId() ;     
+            cost = String.valueOf(paymentStockItem.getCost());
+            sale = String.valueOf(paymentStockItem.getSale());
+            
+            String newrow = "";              
+            newrow += "<input type='hidden' id='noMaxTemp' name='noMaxTemp'  value='" + noMaxTemp + "'>"
+                    + "<input type='hidden' id='psiIdTemp" + no + "' name='psiIdTemp" + no + "'  value='" + paystockitemid + "'>"
+                    + "<input type='hidden' id='psdIdTemp" + no + "' name='psdIdTemp" + no + "'  value='" + paystockdetailid + "'>" 
+                    + "<input type='hidden' id='stockDetailIdTemp" + no + "' name='stockDetailIdTemp" + no + "'  value='" + stockdetailid + "'>"
+                    + "<input id=\"costTemp" + no + "\" name=\"costTemp" + no + "\" type=\"hidden\" class=\"form-control text-right\" value='" + cost + "' >"
+                    + "<input id=\"saleTemp" + no + "\" name=\"saleTemp" + no + "\" type=\"hidden\" class=\"form-control text-right\" value='" + sale + "' >";
+            html.append(newrow);
+            no++;
+        } 
+        return html.toString();
+    }
     
     private String buildPaymentStockDetailHTML(List<StockDetail> stockDetails,String row) {
         StringBuffer html = new StringBuffer();     

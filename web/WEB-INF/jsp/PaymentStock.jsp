@@ -10,6 +10,8 @@
 <c:set var="stockList" value="${requestScope['StockList']}" />
 <c:set var="currencyList" value="${requestScope['currencyList']}" />
 
+<c:set var="StockDetailList" value="${requestScope['StockDetailList']}" /> 
+
 <section class="content-header" >
     <h1>
         Checking - Payment Stock
@@ -142,15 +144,15 @@
                                                 <input type="hidden" id="paymentStockDetailId${i.count}" name="paymentStockDetailId${i.count}"  value="${table.id}"> 
                                                 <input type="hidden" id="paymentStockId${i.count}" name="paymentStockId${i.count}"  value="${table.paymentStock.id}"> 
                                                 <input type="hidden" id="stockId${i.count}" name="stockId${i.count}"  value="${table.stock.id}"> 
-                                                <td align="center">${i.count}</td>
+                                                <td align="center">${table.stock.id}</td>
                                                 <td align="left">${table.stock.product.name}</td>
                                                 <td align="left">${table.stock.staff.username}</td>
                                                 <td align="center">${table.stock.createDate}</td>
                                                 <td align="center">${table.stock.effectiveFrom}</td>
                                                 <td align="center">${table.stock.effectiveTo}</td>
                                                 <td class="text-center ">
-                                                    <!--<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" onclick="getStockDetail('${table.stock.id}')" class="glyphicon glyphicon glyphicon-list-alt"></span></a>-->
-                                                    <a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" class="glyphicon glyphicon glyphicon-list-alt"></span></a>
+                                                    <a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" onclick="getPaymentStockItemCostSale('${table.id}')" class="glyphicon glyphicon glyphicon-list-alt"></span></a>
+                                                    <!--<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" class="glyphicon glyphicon glyphicon-list-alt"></span></a>-->
                                                     <a href="#" onclick="" data-toggle="modal" data-target=""> <span id="SpanRemove" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentStockDetailList('${table.id}','${i.count}','');"></span></a>
                                                 </td>  
                                             </tr>
@@ -184,26 +186,47 @@
                                             <th style="width: 10%">Sale</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <c:forEach var="table" items="${PaymentStockItemList}" varStatus="i">
+                                    <tbody> 
+                                        <c:forEach var="table" items="${StockDetailList}" varStatus="i">
                                             <tr>
-                                                <input type="hidden" id="psiIdTable${i.count}" name="psiIdTable${i.count}"  value="${table.id}">
-                                                <input type="hidden" id="psdIdTable${i.count}" name="psdIdTable${i.count}"  value="${table.paymentStockDetail.id}">
-                                                <input type="hidden" id="stockDetailIdTable${i.count}" name="stockDetailIdTable${i.count}"  value="${table.stockDetail.id}">
-                                                <input type="hidden" id="stockIdTable${i.count}" name="stockIdTable${i.count}"  value="${table.stockDetail.stock.id}"> 
-                                                <td align="center">${i.count}</td>
-                                                <td align="left">${table.stockDetail.code}</td>
-                                                <td align="left">${table.stockDetail.typeId.name}</td>
-                                                <td align="center">${table.stockDetail.otherBooking.master.referenceNo}</td>
-                                                <td align="center">${table.stockDetail.staff.name}</td>
-                                                <td align="center">${table.stockDetail.pickupDate}</td>
-                                                <td><input maxlength="10" id="cost${i.count}" name="cost${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="setFormatCurrencyOnFocusOut('${i.count}')" value="${table.cost}"></td>
-                                                <td><input maxlength="10" id="sale${i.count}" name="sale${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="setFormatCurrencyOnFocusOut('${i.count}')" value="${table.sale}"></td>
+                                                <input type="hidden" id="psdIdTable${i.count}" name="psdIdTable${i.count}"  value="">
+                                                <input type="hidden" id="psiIdTable${i.count}" name="psiIdTable${i.count}"  value="">
+                                                <input type="hidden" id="stockDetailIdTable${i.count}" name="stockDetailIdTable${i.count}"  value="${table.id}">
+                                                <input type="hidden" id="stockIdTable${i.count}" name="stockIdTable${i.count}"  value="${table.stock.id}"> 
+                                                <td align="center">${table.stock.id}</td>
+                                                <td align="left">${table.code}</td>
+                                                <td align="left">${table.typeId.name}</td>
+                                                <td align="center">${table.otherBooking.master.referenceNo}</td>
+                                                <td align="center">${table.staff.name}</td>
+                                                <td align="center">${table.pickupDate}</td>
+                                                <td><input maxlength="10" id="cost${i.count}" name="cost${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="setFormatCurrencyOnFocusOut('${i.count}')" value=""></td>
+                                                <td><input maxlength="10" id="sale${i.count}" name="sale${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="setFormatCurrencyOnFocusOut('${i.count}')" value=""></td>
                                             </tr>
                                         </c:forEach>                                    
                                     </tbody>
                                 </table>
-                            </div>   
+                            </div>
+                            
+                            
+                            <div class="col-xs-11" style="width: 1030px">
+                                <table class="hidden" id="StockDetailTableTemp">
+                                    <thead>
+                                        <tr class="datatable-header">
+                                            <th style="width: 5%">No</th>                                   
+                                            <th style="width: 10%">Code</th>
+                                            <th style="width: 10%">Type</th>
+                                            <th style="width: 10%">Ref No</th>
+                                            <th style="width: 10%">Pick Up</th>
+                                            <th style="width: 10%">Pick Date</th>                                                                      
+                                            <th style="width: 10%">Cost</th>
+                                            <th style="width: 10%">Sale</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody> 
+                                                                        
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <div class="row" style="padding-top: 15px;padding-bottom:  15px; padding-left:  100px;">
                             <div class="col-xs-1 text-right" style="width: 130px">
@@ -331,7 +354,6 @@
 
 <script type="text/javascript" charset="utf-8">
 
-
     $(document).ready(function() {
         
         var countRowStock = $("#StockDetailTable tr").length;    
@@ -366,5 +388,66 @@
 
         document.getElementById('PaymentStockForm').submit();
     }
+    
+    function getPaymentStockItemCostSale(psdId) {
+        var countRowStockDetail = $("#StockDetailTable tr").length;
+        var servletName = 'PaymentStockServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&psdId=' + psdId +
+                '&countRowDetail=' + countRowStockDetail +
+                '&type=' + 'getPaymentStockItemCostSale';
+        CallAjaxPaymentStockItemCostSale(param);
+    }
+
+    function CallAjaxPaymentStockItemCostSale(param) {
+        var url = 'AJAXServlet';
+        $("#ajaxload").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    if(msg !== 'null'){
+                        $('#StockDetailTableTemp').dataTable().fnClearTable();
+                        $('#StockDetailTableTemp').dataTable().fnDestroy();
+                        $("#StockDetailTableTemp tbody").append(msg);
+                        var countRowStockDetail = $("#StockDetailTable tr").length;
+                        var noMaxTemp = $("#noMaxTemp").val();
+                        for(var i = 1 ; i<countRowStockDetail ; i++ ){
+                            for(var j = 1 ; j < noMaxTemp+1 ; j++ ){
+                                var stockDetailIdTable = $("#stockDetailIdTable"+i).val(); 
+                                var stockDetailIdTemp = $("#stockDetailIdTemp"+j).val();
+                                if(stockDetailIdTable === stockDetailIdTemp){
+                                    $("#cost"+i).val( $("#costTemp"+j).val()); 
+                                    $("#sale"+i).val( $("#saleTemp"+j).val()); 
+                                    $("#psiIdTable"+i).val( $("#psiIdTemp"+j).val());
+                                    $("#psdIdTable"+i).val( $("#psdIdTemp"+j).val());
+                                    
+                                    setFormatCurrency(i);
+                                    calculateCostTotal();
+                                    calculateSaleTotal();
+                                }
+                            }
+                        }
+                        
+                        var countRowStockDetail = $("#StockDetailTable tr").length; 
+                        $("#noStockDetailTable").val(countRowStockDetail);
+                    }
+
+                }, error: function(msg) {
+                    alert('error');
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+
+    }
+
     
 </script>    

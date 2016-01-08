@@ -19,11 +19,11 @@ import java.util.List;
  */
 public interface PaymentStockDao {
     public List<Stock> getListStock();
-    public List<StockDetail> getListPaymentStockItemFromStockId(String stockId);
+    public List<StockDetail> getListStockDetailFromStockId(String stockId);
     public PaymentStock getPaymentStockFromPayNo(String PayNo);
     public List<PaymentStockDetail> getListPaymentStockDetailFromPaymentStockId(String paymentStockId);
     public List<PaymentStockItem> getListPaymentStockItemFromPaymentStockId(String paymentStockId);
     public String deletePaymentStock(String paymentStockDetailId);
     public String insertOrUpdatePaymentStock(PaymentStock paymentStock);
-
+    public List<PaymentStockItem> getListPaymentStockItemFromPaymentStockDetailId(String psdId);
 }

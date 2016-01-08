@@ -29,7 +29,7 @@ public class PaymentStockServlet implements AbstractAJAXServlet {
         String Name = request.getParameter("name");
         String stockId = request.getParameter("stockId");
         String countRowDetail = request.getParameter("countRowDetail");
-        
+        String psdId = request.getParameter("psdId");
         
         Map result = new HashMap();
 
@@ -38,6 +38,7 @@ public class PaymentStockServlet implements AbstractAJAXServlet {
         result.put("type", Type);
         result.put("stockId", stockId);
         result.put("countRowDetail", countRowDetail);
+        result.put("psdId", psdId);
         
         return result;
     }
