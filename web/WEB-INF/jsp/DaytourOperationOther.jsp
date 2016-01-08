@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -144,17 +145,17 @@
                             <tbody>
                                 <c:forEach var="table" items="${listOtherBooking}" varStatus="status">
                                 <tr>
-                                    <td><center><c:out value="${table.adCost}" /></center></td>
+                                    <td class="money"><center><c:out value="${table.adCost}" /></center></td>
                                     <td><center><c:out value="${table.adQty}" /></center></td>
-                                    <td><center><c:out value="${table.adPrice}" /></center></td>
-                                    <td><center><c:out value="${table.chCost}" /></center></td>
+                                    <td class="money"><center><c:out value="${table.adPrice}" /></center></td>
+                                    <td class="money"><center><c:out value="${table.chCost}" /></center></td>
                                     <td><center><c:out value="${table.chQty}" /></center></td>
-                                    <td><center><c:out value="${table.chPrice}" /></center></td>
-                                    <td><center><c:out value="${table.inCost}" /></center></td>
+                                    <td class="money"><center><c:out value="${table.chPrice}" /></center></td>
+                                    <td class="money"><center><c:out value="${table.inCost}" /></center></td>
                                     <td><center><c:out value="${table.inQty}" /></center></td>
-                                    <td><center><c:out value="${table.inPrice}" /></center></td>
-                                    <td><center><c:out value="" /></center></td>
-                                    <td><center><c:out value="" /></center></td>
+                                    <td class="money"><center><c:out value="${table.inPrice}" /></center></td>
+                                    <td><center><c:out value="${table.curCost}" /></center></td>
+                                    <td class="money"><center><c:out value="${(table.adQty*table.adPrice)+(table.chQty*table.chPrice)+(table.inQty*table.inPrice)}" /></center></td>
                                 </tr>
                                 </c:forEach>
                             </tbody>
@@ -164,14 +165,13 @@
                         <table class="display" style="width:97%;margin-top: 10px; margin-bottom: 20px">
                             <thead class="datatable-header">
                                 <tr>
-                                    <th>No</th>
-                                    <th>Code</th>
-                                    <th>Name</th>
-                                    <th>Age</th>
-                                    <th>Room</th>
-                                    <th>Tel</th>
-                                    <th>Nationality</th>
-                                    <th>Reader</th>
+                                    <th style="width: 3%">No</th>
+                                    <th style="width: 10%">Code</th>
+                                    <th style="width: 30%">Name</th>
+                                    <th style="width: 5%">Age</th>
+                                    <th style="width: 10%">Tel</th>
+                                    <th style="width: 10%">Nationality</th>
+                                    <th style="width: 5%">Reader</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -179,12 +179,29 @@
                                 <tr>
                                     <td><center><c:out value="${table1.id}" /></center></td>
                                     <td><center><c:out value="${table1.customer.code}" /></center></td>
-                                    <td><center><c:out value="${table1.customer.firstName}" />&nbsp;<c:out value="" /></center></td>
-                                    <td><center><c:out value="" /></center></td>
-                                    <td><center><c:out value="" /></center></td>
-                                    <td><center><c:out value="" /></center></td>
-                                    <td><center><c:out value="" /></center></td>
-                                    <td><center><c:out value="" /></center></td>
+                                    <td><c:out value="${table1.customer.firstName}" />&nbsp;<c:out value="" /></td>
+                                    <td>
+                                        <center>
+                                            <c:if test="${table1.customer.birthDate != '' && table1.customer.birthDate != null}">
+                                                <c:set var="today" value="<%=new Date()%>"/>
+                                                <fmt:formatDate var="yearNow" value="${today}" pattern="yyyy"/>
+                                                <c:set var="birthDate" value="${table1.customer.birthDate}"/>
+                                                <fmt:formatDate var="yearDate" value="${birthDate}" pattern="yyyy"/>                                            
+                                                ${yearNow-yearDate}
+                                            </c:if>
+                                        </center>
+                                    </td>
+                                    <td><center><c:out value="${table1.customer.tel}" /></center></td>
+                                    <td><center><c:out value="${table1.customer.nationality}" /></center></td>
+                                    <td>
+                                        <center>
+                                            <c:set var="leader" value="Yes"/>
+                                            <c:if test="${table1.isLeader == 0}">
+                                                <c:set var="leader" value="No"/>
+                                            </c:if>
+                                            <c:out value="${leader}" />
+                                        </center>
+                                    </td>
                                 </tr>
                                 </c:forEach>
                             </tbody>
