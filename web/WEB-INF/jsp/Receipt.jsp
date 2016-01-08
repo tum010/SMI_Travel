@@ -1547,9 +1547,9 @@
 //        $(".moneyformat").mask('000,000,000', {reverse: true});
 
         var wildCardSearch = ($("#wildCardSearch").val()).indexOf("%");
-        if ($("#receiveId").val() !== '') {
+//        if ($("#receiveId").val() !== '') {
             $("#receiveNo").focus();
-        }
+//        }
         $("#receiveNo").keyup(function(event) {
             if (event.keyCode === 13) {
                 searchReceiveNo();
