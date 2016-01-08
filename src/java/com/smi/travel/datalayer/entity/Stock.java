@@ -3,8 +3,10 @@ package com.smi.travel.datalayer.entity;
 
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -21,11 +23,12 @@ public class Stock {
      private Date createDate;
      private String description;
      private List stockDetails = new LinkedList<StockDetail>();
+     private List paymentStockDetails = new LinkedList<PaymentStockDetail>();
 
     public Stock() {
     }
 
-    public Stock(Product product, SystemUser staff, Date effectiveFrom, Date effectiveTo, Date createDate, String description, List stockDetails) {
+    public Stock(Product product, SystemUser staff, Date effectiveFrom, Date effectiveTo, Date createDate, String description, List stockDetails,List paymentStockDetails){
        this.product = product;
        this.staff = staff;
        this.effectiveFrom = effectiveFrom;
@@ -33,6 +36,8 @@ public class Stock {
        this.createDate = createDate;
        this.description = description;
        this.stockDetails = stockDetails;
+       this.stockDetails = stockDetails;
+       this.paymentStockDetails = paymentStockDetails;
     }
    
     public String getId() {
@@ -90,6 +95,14 @@ public class Stock {
     
     public void setStockDetails(List stockDetails) {
         this.stockDetails = stockDetails;
+    }
+
+    public List getPaymentStockDetails() {
+        return paymentStockDetails;
+    }
+
+    public void setPaymentStockDetails(List paymentStockDetails) {
+        this.paymentStockDetails = paymentStockDetails;
     }
 
 
