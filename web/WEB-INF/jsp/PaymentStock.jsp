@@ -144,7 +144,7 @@
                                                 <input type="hidden" id="paymentStockDetailId${i.count}" name="paymentStockDetailId${i.count}"  value="${table.id}"> 
                                                 <input type="hidden" id="paymentStockId${i.count}" name="paymentStockId${i.count}"  value="${table.paymentStock.id}"> 
                                                 <input type="hidden" id="stockId${i.count}" name="stockId${i.count}"  value="${table.stock.id}"> 
-                                                <td align="center">${table.stock.id}</td>
+                                                <td align="center">${i.count}</td>
                                                 <td align="left">${table.stock.product.name}</td>
                                                 <td align="left">${table.stock.staff.username}</td>
                                                 <td align="center">${table.stock.createDate}</td>
@@ -193,7 +193,7 @@
                                                 <input type="hidden" id="psiIdTable${i.count}" name="psiIdTable${i.count}"  value="">
                                                 <input type="hidden" id="stockDetailIdTable${i.count}" name="stockDetailIdTable${i.count}"  value="${table.id}">
                                                 <input type="hidden" id="stockIdTable${i.count}" name="stockIdTable${i.count}"  value="${table.stock.id}"> 
-                                                <td align="center">${table.stock.id}</td>
+                                                <td align="center">${i.count}</td>
                                                 <td align="left">${table.code}</td>
                                                 <td align="left">${table.typeId.name}</td>
                                                 <td align="center">${table.otherBooking.master.referenceNo}</td>
