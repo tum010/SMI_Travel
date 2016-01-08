@@ -335,9 +335,11 @@ function formatNumber(num) {
 
 function calculateGross(row) {
     console.log("Row : " + row);
+    var countTable = parseInt($("#counterTable").val());
     var amount = document.getElementById('InputAmount' + row).value;
     var gross = document.getElementById('InputGross' + row).value;
-    var varTemp = $('#vatBase').val();
+//    var varTemp = $('#vatBase').val();
+    var varTemp = $('#InputVatTemp'+row).val();
     var vatDefaultData = parseFloat(varTemp);
     var grossTotal =0;
     $('#checkUse' + row).val();
@@ -348,12 +350,14 @@ function calculateGross(row) {
     grossTotal = parseFloat(amount);
     if ($('#checkUse' + row).is(":checked")) {
         if (countVat !== 0) {
-            var vatT = $('#vatBase').val();
+//            var vatT = $('#vatBase').val();
+            var vatT= $('#InputVatTemp'+row).val();
             var vatTT = parseFloat(vatT);
             console.log("Vat : " + formatNumber(vatTT));
             document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = formatNumber(vatTT);
             grossTotal = (amount * 100) / (100 + vatTT);
             document.getElementById('InputGross' + row).value = formatNumber(grossTotal);
+            document.getElementById('InputVatTemp' + row).value = formatNumber(countVat+1 < countTable ? parseFloat($('#InputVatTemp'+row).val()) : parseFloat($('#vatBase').val()));
         } else {
             document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = formatNumber(vatDefaultData);
             if(amount !== 0){
@@ -363,12 +367,14 @@ function calculateGross(row) {
             }
 
             document.getElementById('InputGross' + row).value = formatNumber(grossTotal);
+            document.getElementById('InputVatTemp' + row).value = formatNumber(countVat+1 < countTable ? parseFloat($('#InputVatTemp'+row).val()) : parseFloat($('#vatBase').val()));
         }
         countVat++;
     } else {
         console.log("Vat : " + vatTT);
         document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = '';
         document.getElementById('InputGross' + row).value = '';
+        document.getElementById('InputVatTemp' + row).value = formatNumber(countVat+1 < countTable ? parseFloat($('#InputVatTemp'+row).val()) : parseFloat($('#vatBase').val()));
     }
     CalculateTotalNet(row);
 
@@ -618,7 +624,8 @@ function CalculateTotalNet(id) {
                     var total = parseFloat(amount);
                     grandTotal += total;
 
-                    var vatT = $('#vatBase').val();
+//                    var vatT = $('#vatBase').val();
+                    var vatT = $('#InputVatTemp'+i).val();
                     var vatTT = parseFloat(vatT);
                     grossTotal = (amount * 100) / (100 + vatTT);
                     totalnet += grossTotal;
