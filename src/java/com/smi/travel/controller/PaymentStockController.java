@@ -19,9 +19,11 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -128,7 +130,7 @@ public class PaymentStockController extends SMITravelController{
             }else{
                 System.out.println(" createDate " + createDate);
                 paymentStock.setCreateBy(createBy);
-                paymentStock.setCreateDate(utilty.convertStringToDate(createDate != "" ? createDate : ""));
+                paymentStock.setCreateDate(utilty.convertStringToDate(new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(utilty.convertStringToDate(createDate))));
                 paymentStock.setUpdateBy(user.getUsername());
                 paymentStock.setUpdateDate(new Date());
             }
@@ -227,7 +229,7 @@ public class PaymentStockController extends SMITravelController{
                         request.setAttribute(PAYMENTSTOCKDETAILLIST,paymentStockDetailList);
 //            request.setAttribute(PAYMENTSTOCKDETAILLIST,paymentStockDetailList);
 //            request.setAttribute(PAYMENTSTOCKITEMLIST,paymentStockItemList);
-            request.setAttribute(CREATEDATE,paymentStock.getCreateDate());
+            request.setAttribute(CREATEDATE,new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(paymentStock.getCreateDate()));
             request.setAttribute(NOSTOCKTABLE,noStockTable);
         }
         

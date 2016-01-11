@@ -651,7 +651,7 @@
                             </div>
                             </br>
                             <div class="row">
-                                <input type="text" class="text" id="counterTableAdd" name="counterTableAdd" value="1" >
+                                <input type="hidden" class="text" id="counterTableAdd" name="counterTableAdd" value="1" >
                                 <input type="text" class="hidden" id="refunddetailidadd" name="refunddetailidadd" value="0" />
                                 <div class="col-sm-12 form-group text-center">
                                     <table  class="display" id="RefundTicketDetailTableAdd" style="width: 1000px;">
