@@ -80,7 +80,7 @@ function reloadData(response, targetId, haveAll, action) {
     }
 }
 
-function toWords(s){
+function toWords(s,currency){
     if(s === 0){
         var defaultWord = '';
         return  defaultWord;
@@ -123,7 +123,15 @@ function toWords(s){
             sk=0;
         }
     } 
-    str += ' baht ';
+    if(currency === 'THB'){
+        str += ' BAHT ';
+    }else if(currency === 'JPY'){
+        str += ' YEN ';    
+    }else if(currency === 'USD'){
+        str += ' DOLLAR ';    
+    }else{
+        str += ''+currency;
+    }
     if (x != s.length) {
         var y = s.length; str += 'point '; 
         for (var i=x+1; i<y; i++) str += dg[n[i]] +' ';
