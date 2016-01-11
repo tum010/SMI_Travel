@@ -108,20 +108,20 @@
                         <option value="Outbound" ${selectDepartOutbound}>Outbound </option>
                         <option value="Inbound" ${selectDepartInbound}>Inbound </option>
                     </select>
+                </div>                   
+                <div class="col-xs-1 text-right" style="width: 120px">
+                    <button type="submit"  id="btnSearchPost"  name="btnSearchPost"  onclick="searchActionPost()"  class="btn btn-primary btn-primary">
+                        <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
+                    </button>
                 </div>
                 <div class="col-xs-1 text-right" style="width: 120px">
                     <button  style="width: 88px" type="button"  id="btnPrint"  name="btnPrint"  onclick="printAction()"  class="btn btn-primary btn-primary">
                         <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print   
                     </button>
                 </div>    
-                <div class="col-xs-1 text-right" style="width: 120px">
-                    <button type="submit"  id="btnSearchPost"  name="btnSearchPost"  onclick="searchActionPost()"  class="btn btn-primary btn-primary">
-                        <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
-                    </button>
-                </div>
             </div>
             <div class="col-xs-12">
-                <div class="col-xs-12"><br></div> 
+                <!--<div class="col-xs-12"><br></div>--> 
                 <div class="col-xs-12">
                     <input type="hidden" id="postCount" name="postCount" value="${listPost.size()}"/>
                     <table id="CancelPostDataListTable" class="display paginated" cellspacing="0" width="100%">
