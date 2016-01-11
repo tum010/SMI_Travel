@@ -302,10 +302,11 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                 BigDecimal gross = new BigDecimal(0);
                 if(taxInvoiceDetail.getIsVat() == 1){
                     if(taxInvoiceDetail.getAmount() != null){
-                        amount = taxInvoiceDetail.getAmount();           
-                        vat = taxInvoiceDetail.getVat();
+                        amount = (taxInvoiceDetail.getAmount() != null ? taxInvoiceDetail.getAmount() : amount);           
+//                        vat = taxInvoiceDetail.getVat();
 
-                        gross = ((amount.multiply(onehundred)).divide((vat.add(onehundred)), 4, RoundingMode.HALF_UP));                       
+//                        gross = ((amount.multiply(onehundred)).divide((vat.add(onehundred)), 4, RoundingMode.HALF_UP));
+                        gross = (taxInvoiceDetail.getGross() != null  && taxInvoiceDetail.getIsVat() == 1 ? taxInvoiceDetail.getGross() : gross);
                         vat = amount.subtract(gross);
 
                         totalAmount = totalAmount.add(amount);

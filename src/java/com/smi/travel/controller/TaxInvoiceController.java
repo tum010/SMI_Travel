@@ -232,6 +232,9 @@ public class TaxInvoiceController extends SMITravelController {
             mFinanceItemstatus.setName("NORMAL");
             taxInvoice.setMFinanceItemstatus(mFinanceItemstatus);
             
+            int outputTaxStatus = taxInvoiceService.getOutputTaxStatus(taxInvId);
+            taxInvoice.setOutputTaxStatus(outputTaxStatus);
+            
             invToDateConvert = utilty.convertStringToDate(createDate);
             taxInvoice.setCreateDate(invToDateConvert);
             
@@ -270,6 +273,9 @@ public class TaxInvoiceController extends SMITravelController {
             Date invToDateConvert = new Date();
             invToDateConvert = utilty.convertStringToDate(invToDate);
             taxInvoice.setTaxInvDate(invToDateConvert);
+            
+            int outputTaxStatus = taxInvoiceService.getOutputTaxStatus(taxInvId);
+            taxInvoice.setOutputTaxStatus(outputTaxStatus);
             
             creditNoteUse = taxInvoiceService.checkCreditNote(taxInvoice.getId());
             System.out.println("creditNoteUse : "+creditNoteUse);

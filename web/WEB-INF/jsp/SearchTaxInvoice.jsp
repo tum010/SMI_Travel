@@ -131,7 +131,6 @@
                                 <th style="width: 9%">Date</th>
                                 <th style="width: 5%">Code</th>
                                 <th style="width: 10%">Name</th>
-                                <th style="width: 8%">Detail</th>
                                 <th style="width: 7%">Invoice No</th>
                                 <th style="width: 7%">Receipt No</th>
                                 <th style="width: 7%">Gross</th>
@@ -151,7 +150,6 @@
                                     <td align="center">${taxInvoice.taxDate}</td>
                                     <td>${taxInvoice.taxTo}</td>
                                     <td>${taxInvoice.name}</td>
-                                    <td>${taxInvoice.detail}</td>
                                     <td>${taxInvoice.invoiceNo}</td>
                                     <td>${taxInvoice.receiptNo}</td>
                                     <td class="money" align="right">${taxInvoice.totalGross}</td>

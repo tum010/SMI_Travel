@@ -867,7 +867,7 @@ public class AJAXBean extends AbstractBean implements
                 System.out.println("invoiceNo ::: " + invoiceNo);
                 Invoice invoice = new Invoice();
                 invoice = invoicedao.searchInvoiceForTaxInvoice(invoiceNo, department);
-                if ("".equals(invoice.getId()) || null == invoice.getId()) {
+                if (invoice == null) {
                     result = "null";
                 } else {
                     result = buildTaxInvoiceListHTML(invoice);
@@ -875,29 +875,38 @@ public class AJAXBean extends AbstractBean implements
             }else if("searchRefNo".equalsIgnoreCase(type)){
                 String searchRefNo = map.get("refNo").toString();
                 Billable bill = billableDao.getBillableBookingForTaxInvoice(searchRefNo);
-                if ("".equals(bill.getId()) || null == bill.getId()) {
+//                if ("".equals(bill.getId()) || null == bill.getId()) {
+//                    result = "null";
+//                }
+                if (bill != null) {
+                    if ("".equals(bill.getId()) || null == bill.getId()) {
+                        result = "null";
+                    }else{
+                        BillableDesc billableDescTemp = new BillableDesc();
+                        billableDescTemp = (BillableDesc) bill.getBillableDescs().get(0);
+                        Invoice invoice = billableDao.getInvoiceForTaxInvoice(billableDescTemp.getId());
+                        if ("".equals(invoice.getId()) || null == invoice.getId()){
+                            result = "null";
+                        } else {
+                            if("O".equalsIgnoreCase(bill.getMaster().getBookingType())){
+                                result = buildBillableListTaxHTML(bill,invoice);
+                            } else {
+                                result = bill.getMaster().getBookingType();
+                            }
+
+                        }
+                    }
+                }else{
                     result = "null";
                 } 
-                BillableDesc billableDescTemp = new BillableDesc();
-                billableDescTemp = (BillableDesc) bill.getBillableDescs().get(0);
-                Invoice invoice = billableDao.getInvoiceForTaxInvoice(billableDescTemp.getId());
-                if ("".equals(invoice.getId()) || null == invoice.getId()){
-                    result = "null";
-                } else {
-                    if("O".equalsIgnoreCase(bill.getMaster().getBookingType())){
-                        result = buildBillableListTaxHTML(bill,invoice);
-                    } else {
-                        result = bill.getMaster().getBookingType();
-                    }
-                    
-                }
+               
             }else if("getTaxInvoice".equalsIgnoreCase(type)){
                 String invoiceNo = map.get("invoiceNo").toString();
                 TaxInvoice taxInv = taxInvoiceDao.getTaxInvoiceByTaxNo(invoiceNo);
                 JSONObject obj = new JSONObject(convertInvoiceToMap(taxInv));
                 result = obj.toJSONString();
-
-            } 
+            }
+            
         }else if (CREDITNOTE.equalsIgnoreCase(servletName)) {
             if ("delete".equalsIgnoreCase(type)) {
                 String cnDetailId = map.get("cnDetailId").toString();
@@ -1309,10 +1318,10 @@ public class AJAXBean extends AbstractBean implements
             BigDecimal amountInvoice = new BigDecimal(0);
             invoiceDetail = invoiceDetaillList.get(i);
             invDetailId = invoiceDetail.getId();
-            product = invoiceDetail.getMbillType().getName();
+            product = (invoiceDetail.getMbillType() != null ? invoiceDetail.getMbillType().getName() : "");
             description = invoiceDetail.getDescription();
-            curCost = invoiceDetail.getCurCost();
-            curAmount = invoiceDetail.getCurAmount();
+            curCost = (!"".equalsIgnoreCase(invoiceDetail.getCurCost()) && invoiceDetail.getCurCost() != null ? invoiceDetail.getCurCost() : "");
+            curAmount = (!"".equalsIgnoreCase(invoiceDetail.getCurAmount()) && invoiceDetail.getCurAmount() != null ? invoiceDetail.getCurAmount() : "");
             isVat = String.valueOf(invoiceDetail.getIsVat());
             
             if (invoiceDetail.getCost() != null) {
@@ -1367,7 +1376,7 @@ public class AJAXBean extends AbstractBean implements
             row++;
         }
         return html.toString();
-    }
+    }				
     
     private String buildPaymentOutboundViewHTML(List<BookingOutboundView> bookingOutboundViewList) {
         StringBuffer html = new StringBuffer();      
@@ -1577,7 +1586,8 @@ public class AJAXBean extends AbstractBean implements
         int No = 1;
         String receiveFrom = invoice.getInvTo();
         String receiveName = invoice.getInvName();
-        String receiveAddress = (invoice.getInvAddress()).replaceAll("(\r\n|\n)", "<br>");
+//        String receiveAddress = (invoice.getInvAddress()).replaceAll("(\r\n|\n)", "<br>");
+        String receiveAddress = invoice.getInvAddress();
         String arcode = invoice.getArcode();
         String invNo = invoice.getInvNo();
         System.out.println("invoiceDetaill.size() " + String.valueOf(invoiceDetaill.size()));
