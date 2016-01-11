@@ -4,6 +4,28 @@
  * and open the template in the editor. test
  */
 $(document).ready(function() {
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
+    $(".decimalexrate").inputmask({
+        alias: "decimal",
+        integerDigits: 6,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 4,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.0000",
+    });
+    
+    $("#InvNo").focus();
     $(".money").mask('0000000000', {reverse: true});
 
     $(".numerical").on('input', function() {
@@ -432,18 +454,18 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">' + selectT + '</select> </td>' +
                 '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')"></td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="' + des + '" > </td>' +
-                '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="' + cos + '" ></td>' +
+                '<td><input type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="' + cos + '" ></td>' +
                 '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">' + selectCC + '</select></td>' +
-                '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="' + cos + '" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control text-right"></td>' +
+                '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="' + cos + '" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control text-right decimal"></td>' +
                 '<td class="hidden"><input type="text" value="' + cos + '" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>' +
                 '<td  ' + vathidden + '><input type="checkbox" ' + check + ' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross(' + row + ')"></td>' +
                 '<td align="center" ' + vathidden + '>' + vatValue + '</td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="' + vat + '" ></td>' +
-                '<td ' + vathidden + ' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
-                '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" value="' + price + '" ></td>' +
+                '<td ' + vathidden + ' ><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
+                '<td><input type="text" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control decimal text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" value="' + price + '" ></td>' +
                 '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="validFromInvoice()">' + selectC + '</select></td>' +
-                '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right" ></td>' +
-                '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right" ></td>' +
+                '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +
+                '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right decimal" ></td>' +
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
                 '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +
                 '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> ' + description + '</textarea> </td>' +
@@ -465,18 +487,18 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">' + selectT + '</select> </td>' +
                 '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')"></td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="' + des + '" > </td>' +
-                '<td><input  maxlength ="15" type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="' + cos + '" ></td>' +
+                '<td><input type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control decimal text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="' + cos + '" ></td>' +
                 '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">' + selectCC + '</select></td>' +
-                '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="' + cos + '" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control text-right"></td>' +
+                '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="' + cos + '" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control text-right decimal"></td>' +
                 '<td class="hidden"><input type="text" value="' + cos + '" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>' +
                 '<td  ' + vathidden + '><input type="checkbox" ' + check + ' id="checkUse' + row + '" name="checkUse' + row + '"  onclick="calculateGross(' + row + ')"></td>' +
                 '<td align="center" ' + vathidden + '>' + vatValue + '</td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="' + vat + '" ></td>' +
-                '<td ' + vathidden + ' ><input type="text" maxlength ="15" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
-                '<td><input type="text" maxlength ="15" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="' + price + '" ></td>' +
+                '<td ' + vathidden + ' ><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
+                '<td><input type="text" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control decimal text-right" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="' + price + '" ></td>' +
                 '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="validFromInvoice()">' + selectC + '</select></td>' +
-                '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right" ></td>' +
-                '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right" ></td>' +
+                '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +
+                '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right decimal" ></td>' +
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
                 '<td align="center" ><span  class="glyphicon glyphicon-th-list" data-toggle="modal" data-target="#DescriptionInvoiceDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"></span><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBill(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +
                 '<td class="hidden"><textarea id="DescriptionInvoiceDetail' + row + '" name="DescriptionInvoiceDetail' + row + '"> ' + description + '</textarea> </td>' +
@@ -490,6 +512,27 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 );
         calculateAmountLocal(row, 'amountLocal');
     }
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
+    $(".decimalexrate").inputmask({
+        alias: "decimal",
+        integerDigits: 6,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 4,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.0000",
+    });
+    
     var count = document.getElementById('counterTable');
     count.value = row++;
 
@@ -547,68 +590,68 @@ function subStringDescription(description, row) {
 
 }
 function changeFormatAmountNumber(id) {
-    var count = document.getElementById('InputAmount' + id).value;
-
-    var curamount = document.getElementById('SelectCurrencyAmount' + id).value;
-    if (curamount === '') {
-        $('#textAlertCurrencyAmountNotEmpty').show();
-        document.getElementById("saveInvoice").disabled = true;
-    } else {
-        $('#textAlertInvoiceNotEmpty').hide();
-        document.getElementById("saveInvoice").disabled = false;
-    }
-
-    count = count.replace(/\,/g, '');
-    count = parseFloat(count);
-    if (isNaN(count)) {
-        document.getElementById('InputAmount' + id).value = "";
-    } else {
-        count = parseFloat(count);
-        document.getElementById('InputAmount' + id).value = formatNumber(count);
-    }
+//    var count = document.getElementById('InputAmount' + id).value;
+//
+//    var curamount = document.getElementById('SelectCurrencyAmount' + id).value;
+//    if (curamount === '') {
+//        $('#textAlertCurrencyAmountNotEmpty').show();
+//        document.getElementById("saveInvoice").disabled = true;
+//    } else {
+//        $('#textAlertInvoiceNotEmpty').hide();
+//        document.getElementById("saveInvoice").disabled = false;
+//    }
+//
+//    count = count.replace(/\,/g, '');
+//    count = parseFloat(count);
+//    if (isNaN(count)) {
+//        document.getElementById('InputAmount' + id).value = "";
+//    } else {
+//        count = parseFloat(count);
+//        document.getElementById('InputAmount' + id).value = formatNumber(count);
+//    }
     CalculateGrandTotal(id);
     calculateGross(id);
 }
 function changeFormatAmountLocalNumber(id) {
-    var count = parseFloat(document.getElementById('InputAmountLocal' + id).value);
-
-    if (isNaN(count)) {
-        document.getElementById('InputAmountLocal' + id).value = "";
-    } else {
-        count = parseFloat((document.getElementById('InputAmountLocal' + id).value).replace(/,/g, ""));
-        document.getElementById('InputAmountLocal' + id).value = formatNumber(count);
-    }
+//    var count = parseFloat(document.getElementById('InputAmountLocal' + id).value);
+//
+//    if (isNaN(count)) {
+//        document.getElementById('InputAmountLocal' + id).value = "";
+//    } else {
+//        count = parseFloat((document.getElementById('InputAmountLocal' + id).value).replace(/,/g, ""));
+//        document.getElementById('InputAmountLocal' + id).value = formatNumber(count);
+//    }
 }
 function changeFormatAmountLocalTempNumber(id) {
-    var count = parseFloat(document.getElementById('InputAmountLocalTemp' + id).value);
-
-    if (isNaN(count)) {
-        document.getElementById('InputAmountLocalTemp' + id).value = "";
-    } else {
-        count = parseFloat(document.getElementById('InputAmountLocalTemp' + id).value);
-        document.getElementById('InputAmountLocalTemp' + id).value = formatNumber(count);
-    }
+//    var count = parseFloat(document.getElementById('InputAmountLocalTemp' + id).value);
+//
+//    if (isNaN(count)) {
+//        document.getElementById('InputAmountLocalTemp' + id).value = "";
+//    } else {
+//        count = parseFloat(document.getElementById('InputAmountLocalTemp' + id).value);
+//        document.getElementById('InputAmountLocalTemp' + id).value = formatNumber(count);
+//    }
 }
 function changeFormatCostNumber(id) {
-    var count = document.getElementById('InputCost' + id).value;
-    count = count.replace(/\,/g, '');
-    count = parseFloat(count);
-    if (isNaN(count)) {
-        document.getElementById('InputCost' + id).value = "";
-    } else {
-        count = parseFloat(count);
-        document.getElementById('InputCost' + id).value = formatNumber(count);
-    }
+//    var count = document.getElementById('InputCost' + id).value;
+//    count = count.replace(/\,/g, '');
+//    count = parseFloat(count);
+//    if (isNaN(count)) {
+//        document.getElementById('InputCost' + id).value = "";
+//    } else {
+//        count = parseFloat(count);
+//        document.getElementById('InputCost' + id).value = formatNumber(count);
+//    }
 }
 function changeFormatCostLocalNumber(id) {
-    var count = parseFloat(document.getElementById('InputCostLocal' + id).value);
-
-    if (isNaN(count)) {
-        document.getElementById('InputCostLocal' + id).value = "";
-    } else {
-        count = parseFloat((document.getElementById('InputCostLocal' + id).value).replace(/,/g, ""));
-        document.getElementById('InputCostLocal' + id).value = formatNumber(count);
-    }
+//    var count = parseFloat(document.getElementById('InputCostLocal' + id).value);
+//
+//    if (isNaN(count)) {
+//        document.getElementById('InputCostLocal' + id).value = "";
+//    } else {
+//        count = parseFloat((document.getElementById('InputCostLocal' + id).value).replace(/,/g, ""));
+//        document.getElementById('InputCostLocal' + id).value = formatNumber(count);
+//    }
 }
 function changeFormatGrossNumber(id) {
     //    var count = parseFloat(document.getElementById('InputGross' + id).value);
@@ -619,7 +662,7 @@ function changeFormatGrossNumber(id) {
 //        document.getElementById('InputGross' + id).value = formatNumber(count);
 //    }
 
-    var count = document.getElementById('InputAmount' + id).value;
+//    var count = document.getElementById('InputAmount' + id).value;
 
 //    var curamount = document.getElementById('SelectCurrencyAmount' + id).value;
 //    if (curamount === '') {
@@ -630,26 +673,26 @@ function changeFormatGrossNumber(id) {
 //        document.getElementById("saveInvoice").disabled = false;
 //    }
 
-    count = count.replace(/\,/g, '');
-    count = parseFloat(count);
-    if (isNaN(count)) {
-        document.getElementById('InputAmount' + id).value = "";
-    } else {
-        count = parseFloat(count);
-        document.getElementById('InputAmount' + id).value = formatNumber(count);
-    }
+//    count = count.replace(/\,/g, '');
+//    count = parseFloat(count);
+//    if (isNaN(count)) {
+//        document.getElementById('InputAmount' + id).value = "";
+//    } else {
+//        count = parseFloat(count);
+//        document.getElementById('InputAmount' + id).value = formatNumber(count);
+//    }
     CalculateGrandTotal(id);
     calculateGross(id);
 }
 function changeFormatExRateNumber(id) {
-    var count = parseFloat(document.getElementById('InputExRate' + id).value);
-
-    if (isNaN(count)) {
-        document.getElementById('InputExRate' + id).value = "";
-    } else {
-        count = parseFloat((document.getElementById('InputExRate' + id).value).replace(/,/g, ""));
-        document.getElementById('InputExRate' + id).value = formatExRateNumber(count);
-    }
+//    var count = parseFloat(document.getElementById('InputExRate' + id).value);
+//
+//    if (isNaN(count)) {
+//        document.getElementById('InputExRate' + id).value = "";
+//    } else {
+//        count = parseFloat((document.getElementById('InputExRate' + id).value).replace(/,/g, ""));
+//        document.getElementById('InputExRate' + id).value = formatExRateNumber(count);
+//    }
 }
 
 function DeleteDetailBill(rowID, code) {
@@ -1153,7 +1196,13 @@ function setDescriptionAirAdditional(data, row) {
 }
 
 function formatNumber(num) {
-    return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    var numTemp1 = String(num);
+    var numTemp2 = (numTemp1.indexOf(".") >= 0 ? String(num.toFixed(2)) : '');
+    if(numTemp1.length <= 8 || (numTemp2 !== '' && numTemp2.length <= 10)){
+        return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    }else{
+        return '';
+    }   
 }
 
  function formatExRateNumber(num) {
