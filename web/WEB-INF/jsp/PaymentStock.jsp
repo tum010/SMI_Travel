@@ -496,9 +496,8 @@
                                 }
                             }
                         }
-//                        $("div").find($('.collapse')).collapse('hide');
-                        hideCollapse();
-                        $('.collapse').collapse('show');
+//                        hideCollapse();
+//                        $('.collapse').collapse('show');
                             
                     }
                 }, error: function(msg) {
@@ -549,6 +548,7 @@ function DeleteRowPaymentStock(){
             document.getElementById('totalCost').value = formatNumber(0);
             document.getElementById('totalSale').value = formatNumber(0);
             $('.collapse').collapse('hide');
+           
         }
         else {
             $.ajax({

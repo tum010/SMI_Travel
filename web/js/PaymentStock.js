@@ -123,9 +123,10 @@ function CallAjax(param,psdId,stockid) {
                     if(psdId !== "null" && psdId !== null){
                         getPaymentStockItemCostSaleAjax(psdId);
                     }else{
-                        hideCollapse();
+//                        hideCollapse();
                         $('.collapse').collapse('show');
                     }
+                    
                 }
             }, error: function(msg) {
                alert('error');
