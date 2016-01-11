@@ -64,7 +64,9 @@ public class PaymentStockController extends SMITravelController{
         String curCost = request.getParameter("curCost");
         String curSale = request.getParameter("curSale");
         String noStockTable = request.getParameter("noStockTable");
-
+        
+        System.out.println("===== createDate =====" + createDate);
+        
         request.setAttribute(NOSTOCKTABLE,1);
         String saveresult = "" ;
         
@@ -225,7 +227,7 @@ public class PaymentStockController extends SMITravelController{
                         request.setAttribute(PAYMENTSTOCKDETAILLIST,paymentStockDetailList);
 //            request.setAttribute(PAYMENTSTOCKDETAILLIST,paymentStockDetailList);
 //            request.setAttribute(PAYMENTSTOCKITEMLIST,paymentStockItemList);
-            request.setAttribute(CREATEDATE,createDate);
+            request.setAttribute(CREATEDATE,paymentStock.getCreateDate());
             request.setAttribute(NOSTOCKTABLE,noStockTable);
         }
         

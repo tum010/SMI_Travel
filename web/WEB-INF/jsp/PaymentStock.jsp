@@ -11,7 +11,7 @@
 <c:set var="currencyList" value="${requestScope['currencyList']}" />
 
 <c:set var="StockDetailList" value="${requestScope['StockDetailList']}" /> 
-
+<!--testtt-->
 <section class="content-header" >
     <h1>
         Checking - Payment Stock
