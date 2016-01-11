@@ -26,12 +26,36 @@
     <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
         <div ng-include="'WebContent/Checking/CheckingOutboundMenu.html'"></div>
     </div>
+    
+    <div class="col-sm-10">
+        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Success!</strong> 
+        </div>
+        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Unsuccess!</strong> 
+        </div>
+        <div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Delete Success!</strong> 
+        </div>
+        <div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Delete Unsuccess!</strong> 
+        </div>       
+        <div id="textAlertPayNo"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Pay No. not available !</strong> 
+        </div>
+        <div id="fail"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Stock is already add!</strong> 
+        </div>
+    </div> 
+    
     <!--Content -->
     <div class="col-sm-10">
-        <div id="fail"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Stock is already add!</strong> 
-        </div>
         <div class="row" style="padding-left: 0px">  
             <div class="col-sm-6" style="padding-right: 15px">
                 <h4><b>Payment Stock</b></h4>
@@ -164,122 +188,122 @@
                     </div>            
                 </div>
             </div>
-            <div class="panel panel-default ">
-                <div class="panel-heading ">
-                    <h4 class="panel-title">Detail</h4>
-                </div>
-                <div class="panel-body"  style="padding-right: 0px;">                                                              
-                    <div class="row" style="padding-left: 15px;">             
-                        <div class="row">
-                            <div class="col-xs-11" style="width: 1030px">
-                                <input type="hidden" id="noStockDetailTable" name="noStockDetailTable" value="1"/>
-                                <table class="display" id="StockDetailTable">
-                                    <thead>
-                                        <tr class="datatable-header">
-                                            <th style="width: 5%">No</th>                                   
-                                            <th style="width: 10%">Code</th>
-                                            <th style="width: 10%">Type</th>
-                                            <th style="width: 10%">Ref No</th>
-                                            <th style="width: 10%">Pick Up</th>
-                                            <th style="width: 10%">Pick Date</th>                                                                      
-                                            <th style="width: 10%">Cost</th>
-                                            <th style="width: 10%">Sale</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody> 
-                                        <c:forEach var="table" items="${StockDetailList}" varStatus="i">
-                                            <tr>
-                                                <input type="hidden" id="psdIdTable${i.count}" name="psdIdTable${i.count}"  value="">
-                                                <input type="hidden" id="psiIdTable${i.count}" name="psiIdTable${i.count}"  value="">
-                                                <input type="hidden" id="stockDetailIdTable${i.count}" name="stockDetailIdTable${i.count}"  value="${table.id}">
-                                                <input type="hidden" id="stockIdTable${i.count}" name="stockIdTable${i.count}"  value="${table.stock.id}"> 
-                                                <td align="center">${i.count}</td>
-                                                <td align="left">${table.code}</td>
-                                                <td align="left">${table.typeId.name}</td>
-                                                <td align="center">${table.otherBooking.master.referenceNo}</td>
-                                                <td align="center">${table.staff.name}</td>
-                                                <td align="center">${table.pickupDate}</td>
-                                                <td><input maxlength="10" id="cost${i.count}" name="cost${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="setFormatCurrencyOnFocusOut('${i.count}')" value=""></td>
-                                                <td><input maxlength="10" id="sale${i.count}" name="sale${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="setFormatCurrencyOnFocusOut('${i.count}')" value=""></td>
+            <div class="collapse" id="paneldetail">                    
+                <div class="panel panel-default ">
+                    <div class="panel-heading ">
+                        <h4 class="panel-title">Detail</h4>
+                    </div>
+                    <div class="panel-body"  style="padding-right: 0px;">                                                              
+                        <div class="row" style="padding-left: 15px;">             
+                            <div class="row">
+                                <div class="col-xs-11" style="width: 1030px">
+                                    <input type="hidden" id="noStockDetailTable" name="noStockDetailTable" value="1"/>
+                                    <table class="display" id="StockDetailTable">
+                                        <thead>
+                                            <tr class="datatable-header">
+                                                <th style="width: 5%">No</th>                                   
+                                                <th style="width: 10%">Code</th>
+                                                <th style="width: 10%">Type</th>
+                                                <th style="width: 10%">Ref No</th>
+                                                <th style="width: 10%">Pick Up</th>
+                                                <th style="width: 10%">Pick Date</th>                                                                      
+                                                <th style="width: 10%">Cost</th>
+                                                <th style="width: 10%">Sale</th>
                                             </tr>
-                                        </c:forEach>                                    
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody> 
+                                            <c:forEach var="table" items="${StockDetailList}" varStatus="i">
+                                                <tr>
+                                                    <input type="hidden" id="psdIdTable${i.count}" name="psdIdTable${i.count}"  value="">
+                                                    <input type="hidden" id="psiIdTable${i.count}" name="psiIdTable${i.count}"  value="">
+                                                    <input type="hidden" id="stockDetailIdTable${i.count}" name="stockDetailIdTable${i.count}"  value="${table.id}">
+                                                    <input type="hidden" id="stockIdTable${i.count}" name="stockIdTable${i.count}"  value="${table.stock.id}"> 
+                                                    <td align="center">${i.count}</td>
+                                                    <td align="left">${table.code}</td>
+                                                    <td align="left">${table.typeId.name}</td>
+                                                    <td align="center">${table.otherBooking.master.referenceNo}</td>
+                                                    <td align="center">${table.staff.name}</td>
+                                                    <td align="center">${table.pickupDate}</td>
+                                                    <td><input maxlength="10" id="cost${i.count}" name="cost${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeydown="setFormatCurrencyOnFocusOut('${i.count}')"  value=""></td>
+                                                    <td><input maxlength="10" id="sale${i.count}" name="sale${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeydown="setFormatCurrencyOnFocusOut('${i.count}')" value=""></td>
+                                                </tr>
+                                            </c:forEach>                                    
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-xs-11" style="width: 1030px">
+                                    <table class="hidden" id="StockDetailTableTemp">
+                                        <thead>
+                                            <tr class="datatable-header">
+                                                <th style="width: 5%">No</th>                                   
+                                                <th style="width: 10%">Code</th>
+                                                <th style="width: 10%">Type</th>
+                                                <th style="width: 10%">Ref No</th>
+                                                <th style="width: 10%">Pick Up</th>
+                                                <th style="width: 10%">Pick Date</th>                                                                      
+                                                <th style="width: 10%">Cost</th>
+                                                <th style="width: 10%">Sale</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody> 
+
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            
-                            
-                            <div class="col-xs-11" style="width: 1030px">
-                                <table class="hidden" id="StockDetailTableTemp">
-                                    <thead>
-                                        <tr class="datatable-header">
-                                            <th style="width: 5%">No</th>                                   
-                                            <th style="width: 10%">Code</th>
-                                            <th style="width: 10%">Type</th>
-                                            <th style="width: 10%">Ref No</th>
-                                            <th style="width: 10%">Pick Up</th>
-                                            <th style="width: 10%">Pick Date</th>                                                                      
-                                            <th style="width: 10%">Cost</th>
-                                            <th style="width: 10%">Sale</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody> 
-                                                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row" style="padding-top: 15px;padding-bottom:  15px; padding-left:  100px;">
-                            <div class="col-xs-1 text-right" style="width: 130px">
-                                <label class="control-label text-right">Total Cost</label>
-                            </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <input type="text" class="form-control text-right" id="totalCost" name="totalCost" value="${paymentStock.costAmount}" readonly=""/>
-                            </div>
-                            <div class="col-xs-1" style="width: 100px">
-                                <select class="form-control" name="curCost" id="curCost" >
-                                    <option  value="" >---------</option>
-                                    <c:forEach var="curCost" items="${currencyList}" varStatus="status">                                       
-                                        <c:set var="select" value="" />
-                                        <c:if test="${curCost.code == paymentStock.curCost}">
-                                            <c:set var="select" value="selected" />
-                                        </c:if>
-                                        <option  value="${curCost.code}" ${select} >${curCost.code}</option>
-                                    </c:forEach>
-                                </select>
-                            </div> 
-                            <div class="col-xs-1 text-right" style="width: 130px">
-                                <label class="control-label text-right">Total Sale</label>
-                            </div>
-                            <div class="col-xs-1" style="width: 200px">
-                                <input type="text" class="form-control text-right" id="totalSale" name="totalSale" value="${paymentStock.saleAmount}" readonly=""/>
-                            </div>
-                             <div class="col-xs-1" style="width: 100px">
-                                <select class="form-control" name="curSale" id="curSale" >
-                                    <option  value="" >---------</option>
-                                    <c:forEach var="curSale" items="${currencyList}" varStatus="status">                                       
-                                        <c:set var="select" value="" />
-                                        <c:if test="${curSale.code == paymentStock.curCost}">
-                                            <c:set var="select" value="selected" />
-                                        </c:if>
-                                        <option  value="${curSale.code}" ${select} >${curSale.code}</option>
-                                    </c:forEach>
-                                </select>
-                            </div> 
-                        </div>
-                        
-                        <br>
-                        <div class="row">
-                            <div class="col-xs-12 text-center">
-                                <input type="hidden" class="form-control" id="countRowStock" name="countRowStock" value="${requestScope['countRowStock']}" />
-                                <input type="hidden" class="form-control" id="countRowDetail" name="countRowDetail" value="${requestScope['countRowDetail']}" />
-                                <button type="button" id="btnSave" name="btnSave" class="btn btn-success" onclick="saveAction()">
-                                    <i class="fa fa-save"></i> Save             
-                                </button>
-                            </div>
-                        </div>    
-                    </div>            
+                        </div>            
+                    </div>
                 </div>
-            </div>
+            </div>                    
+            <div class="row" style="padding-top: 15px;padding-bottom:  15px; padding-left:  100px;">
+                <div class="col-xs-1 text-right" style="width: 130px">
+                    <label class="control-label text-right">Total Cost</label>
+                </div>
+                <div class="col-xs-1" style="width: 200px">
+                    <input type="text" class="form-control text-right" id="totalCost" name="totalCost" value="${paymentStock.costAmount}" readonly=""/>
+                </div>
+                <div class="col-xs-1" style="width: 100px">
+                    <select class="form-control" name="curCost" id="curCost" >
+                        <option  value="" >---------</option>
+                        <c:forEach var="curCost" items="${currencyList}" varStatus="status">                                       
+                            <c:set var="select" value="" />
+                            <c:if test="${curCost.code == paymentStock.curCost}">
+                                <c:set var="select" value="selected" />
+                            </c:if>
+                            <option  value="${curCost.code}" ${select} >${curCost.code}</option>
+                        </c:forEach>
+                    </select>
+                </div> 
+                <div class="col-xs-1 text-right" style="width: 130px">
+                    <label class="control-label text-right">Total Sale</label>
+                </div>
+                <div class="col-xs-1" style="width: 200px">
+                    <input type="text" class="form-control text-right" id="totalSale" name="totalSale" value="${paymentStock.saleAmount}" readonly=""/>
+                </div>
+                 <div class="col-xs-1" style="width: 100px">
+                    <select class="form-control" name="curSale" id="curSale" >
+                        <option  value="" >---------</option>
+                        <c:forEach var="curSale" items="${currencyList}" varStatus="status">                                       
+                            <c:set var="select" value="" />
+                            <c:if test="${curSale.code == paymentStock.curCost}">
+                                <c:set var="select" value="selected" />
+                            </c:if>
+                            <option  value="${curSale.code}" ${select} >${curSale.code}</option>
+                        </c:forEach>
+                    </select>
+                </div> 
+            </div>                    
+            <br>
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <input type="hidden" class="form-control" id="countRowStock" name="countRowStock" value="${requestScope['countRowStock']}" />
+                    <input type="hidden" class="form-control" id="countRowDetail" name="countRowDetail" value="${requestScope['countRowDetail']}" />
+                    <button type="button" id="btnSave" name="btnSave" class="btn btn-success" onclick="saveAction()">
+                        <i class="fa fa-save"></i> Save             
+                    </button>
+                </div>
+            </div>                     
+      
         </form>    
     </div>
 </div>
@@ -352,9 +376,39 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<c:if test="${! empty requestScope['saveresult']}">
+    <c:if test="${requestScope['saveresult'] =='save successful'}">        
+        <script language="javascript">
+            $('#textAlertDivSave').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['saveresult'] =='save unsuccessful'}">        
+        <script language="javascript">
+            $('#textAlertDivNotSave').show();
+        </script>
+    </c:if>
+</c:if>
+<c:if test="${! empty requestScope['deleteresult']}">
+    <c:if test="${requestScope['deleteresult'] =='delete successful'}">        
+        <script language="javascript">
+            $('#textAlertDivDelete').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['deleteresult'] =='delete unsuccessful'}">        
+        <script language="javascript">
+            $('#textAlertDivNotDelete').show();
+        </script>
+    </c:if>
+</c:if>
+        
 <script type="text/javascript" charset="utf-8">
-
+    
+    function hideCollapse() {
+        $("div").find($('.collapse')).collapse('hide');
+    }
+    
     $(document).ready(function() {
+        $('.collapse').collapse('hide');
         
         var countRowStock = $("#StockDetailTable tr").length;    
         if(countRowStock === 1){
@@ -377,7 +431,13 @@
     });
     
     function saveAction() {
-
+        $('#textAlertDivSave').hide();
+        $('#textAlertDivNotSave').hide();
+        $('#textAlertDivDelete').hide();
+        $('#textAlertDivNotDelete').hide();
+        $('#textAlertPayNo').hide();
+        $('#fail').hide();
+        
         var action = document.getElementById('action');
         action.value = 'savePaymentStock';
 
@@ -450,4 +510,151 @@
     }
 
     
+function deletePaymentStockDetailList(paymentStockDetailId , row , stockid){
+    $('#textAlertDivSave').hide();
+    $('#textAlertDivNotSave').hide();
+    $('#textAlertDivDelete').hide();
+    $('#textAlertDivNotDelete').hide();
+    $('#textAlertPayNo').hide();
+    $('#fail').hide();
+    if(paymentStockDetailId === ''){
+        $("#paymentStockDetailId" + row).parent().remove();
+//        var countRowStockDetail = $("#StockDetailTable tr").length; 
+        var countRowStockDetail = $("#noStockDetailTable").val();
+        for(var i=1 ; i < countRowStockDetail ; i++){
+            var sit = $("#stockIdTable"+i).val();
+            if(sit === stockid){
+                $("#psdIdTable" + i).parent().remove();
+                $('#textAlertDivDelete').show();
+            }
+        }
+        
+        var countRowStock = $("#StockDetailTable tr").length;   
+        if(countRowStock === 1){
+            $("#noStockTable").val(1);
+            document.getElementById('totalCost').value = formatNumber(0);
+            document.getElementById('totalSale').value = formatNumber(0);
+        }else{
+            for(var i=1;i<countRowStock;i++){
+                setFormatCurrency(i);
+                calculateCostTotal();
+                calculateSaleTotal();
+            }
+        }
+    }else{
+        document.getElementById('paymentStockDetailIdDelete').value = paymentStockDetailId;
+        document.getElementById('paymentStockRowDelete').value = row;
+        $("#delPaymentStock").text('Are you sure to delete stock from this payment ?');
+        $('#DeletePaymentStock').modal('show');
+    }
+    
+    
+}
+
+function DeleteRowPaymentStock(){
+    $('#textAlertDivSave').hide();
+    $('#textAlertDivNotSave').hide();
+    $('#textAlertDivDelete').hide();
+    $('#textAlertDivNotDelete').hide();
+    $('#textAlertPayNo').hide();
+    $('#fail').hide();
+    
+    var psdIdDelete = document.getElementById('paymentStockDetailIdDelete').value;
+    var row = document.getElementById('paymentStockRowDelete').value;
+        if (psdIdDelete === '') {
+            for(var i=1 ; i < 100; i++){
+                var checktemp = false;
+                var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
+                for(var j=1 ;j < 500 ; j++){
+                    if(paymentStockDetailId  === psdIdDelete){
+                        var checkStockId = $("#stockId"+i).val(); 
+                        var stockIdTable = $("#stockIdTable"+j).val();
+                        if(checkStockId === stockIdTable){
+                            $("#psdIdTable" + j).parent().remove();
+                            checktemp = true;
+                        }
+                    }
+                }
+                if(checktemp){
+                    $("#paymentStockDetailId" + i).parent().remove();
+                    $('#textAlertDivDelete').show();
+                }
+            }
+            
+            
+            
+//            var countRowStock = $("#StockTable tr").length;   
+//            var countRowStockDetail = $("#StockDetailTable tr").length;   
+//            for(var i=0 ; i < countRowStock ; i++){
+//                var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
+//                for(var j=0 ;j < countRowStockDetail ; j++){
+//                    if(paymentStockDetailId  === psdIdDelete){
+//                        $("#paymentStockDetailId" + i).parent().remove();
+//                        var stockId = $("#stockId"+i).val();
+//                        var stockIdTable = $("#stockIdTable"+j).val();
+//                        if(stockId === stockIdTable){
+//                            $("#psdIdTable" + j).parent().remove();
+//                        }
+//                    }
+//                }
+//            }
+            var countRowStock = $("#StockDetailTable tr").length;   
+            if(countRowStock === 1){
+                document.getElementById('totalCost').value = formatNumber(0);
+                document.getElementById('totalSale').value = formatNumber(0);
+                $("#noStockTable").val(1);
+            }else{
+                for(var i=1;i<countRowStock;i++){
+                    setFormatCurrency(i);
+                    calculateCostTotal();
+                    calculateSaleTotal();
+                }
+            }
+        }
+        else {
+            $.ajax({
+                url: 'PaymentStock.smi?action=deletePaymentStock',
+                type: 'get',
+                data: {psdIdDelete: psdIdDelete},
+                success: function() {
+                    for(var i=1 ; i < 100; i++){
+                        var checktemp = false;
+                        var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
+                        for(var j=1 ;j < 500 ; j++){
+                            if(paymentStockDetailId  === psdIdDelete){
+                                var checkStockId = $("#stockId"+i).val(); 
+                                var stockIdTable = $("#stockIdTable"+j).val();
+                                if(checkStockId === stockIdTable){
+                                    $("#psdIdTable" + j).parent().remove();
+                                    checktemp = true;
+                                }
+                            }
+                        }
+                        if(checktemp){
+                            $("#paymentStockDetailId" + i).parent().remove();
+                            $('#textAlertDivDelete').show();
+                        }
+                    }
+                    
+                    var countRowStock = $("#StockDetailTable tr").length;  
+                    if(countRowStock === 1){
+                        $("#noStockTable").val(1);
+                        document.getElementById('totalCost').value = formatNumber(0);
+                        document.getElementById('totalSale').value = formatNumber(0);
+                    }else{
+                        for(var i=1;i<countRowStock;i++){
+                            setFormatCurrency(i);
+                            calculateCostTotal();
+                            calculateSaleTotal();
+                        }
+                    }
+                },
+                error: function() {
+                    console.log("error");
+                    $('#textAlertDivNotDelete').show();
+                }
+            });
+        }
+    $('#DeletePaymentStock').modal('hide');  
+}
 </script>    

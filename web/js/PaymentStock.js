@@ -81,6 +81,7 @@ function createStockDetails(stockid, productName, staff, addDate, effectiveFrom,
     $("#noStockTable").val(noStockTable+1);
     getStockDetail(stockid);
     $("#SearchStock").modal("hide");
+    
 }
 
 function getStockDetail(stockid) {
@@ -135,135 +136,6 @@ function CallAjax(param) {
 
 }
 
-function deletePaymentStockDetailList(paymentStockDetailId , row , stockid){
-    if(paymentStockDetailId === ''){
-        $("#paymentStockDetailId" + row).parent().remove();
-//        var countRowStockDetail = $("#StockDetailTable tr").length; 
-        var countRowStockDetail = $("#noStockDetailTable").val();
-        for(var i=1 ; i < countRowStockDetail ; i++){
-            var sit = $("#stockIdTable"+i).val();
-            if(sit === stockid){
-                $("#psdIdTable" + i).parent().remove();
-            }
-        }
-        var countRowStock = $("#StockDetailTable tr").length;   
-        if(countRowStock === 1){
-            $("#noStockTable").val(1);
-            document.getElementById('totalCost').value = formatNumber(0);
-            document.getElementById('totalSale').value = formatNumber(0);
-        }else{
-            for(var i=1;i<countRowStock;i++){
-                setFormatCurrency(i);
-                calculateCostTotal();
-                calculateSaleTotal();
-            }
-        }
-    }else{
-        document.getElementById('paymentStockDetailIdDelete').value = paymentStockDetailId;
-        document.getElementById('paymentStockRowDelete').value = row;
-        $("#delPaymentStock").text('Are you sure to delete stock from this payment ?');
-        $('#DeletePaymentStock').modal('show');
-    }
-    
-    
-}
-
-function DeleteRowPaymentStock(){
-    var psdIdDelete = document.getElementById('paymentStockDetailIdDelete').value;
-    var row = document.getElementById('paymentStockRowDelete').value;
-        if (psdIdDelete === '') {
-            for(var i=1 ; i < 100; i++){
-                var checktemp = false;
-                var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
-                for(var j=1 ;j < 500 ; j++){
-                    if(paymentStockDetailId  === psdIdDelete){
-                        var checkStockId = $("#stockId"+i).val(); 
-                        var stockIdTable = $("#stockIdTable"+j).val();
-                        if(checkStockId === stockIdTable){
-                            $("#psdIdTable" + j).parent().remove();
-                            checktemp = true;
-                        }
-                    }
-                }
-                if(checktemp){
-                    $("#paymentStockDetailId" + i).parent().remove();
-                }
-            }
-            
-            
-            
-//            var countRowStock = $("#StockTable tr").length;   
-//            var countRowStockDetail = $("#StockDetailTable tr").length;   
-//            for(var i=0 ; i < countRowStock ; i++){
-//                var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
-//                for(var j=0 ;j < countRowStockDetail ; j++){
-//                    if(paymentStockDetailId  === psdIdDelete){
-//                        $("#paymentStockDetailId" + i).parent().remove();
-//                        var stockId = $("#stockId"+i).val();
-//                        var stockIdTable = $("#stockIdTable"+j).val();
-//                        if(stockId === stockIdTable){
-//                            $("#psdIdTable" + j).parent().remove();
-//                        }
-//                    }
-//                }
-//            }
-            countRowStock = $("#StockDetailTable tr").length;   
-            if(countRowStock === 1){
-                document.getElementById('totalCost').value = formatNumber(0);
-                document.getElementById('totalSale').value = formatNumber(0);
-                $("#noStockTable").val(1);
-            }else{
-                for(var i=1;i<countRowStock;i++){
-                    setFormatCurrency(i);
-                    calculateCostTotal();
-                    calculateSaleTotal();
-                }
-            }
-        }
-        else {
-            $.ajax({
-                url: 'PaymentStock.smi?action=deletePaymentStock',
-                type: 'get',
-                data: {psdIdDelete: psdIdDelete},
-                success: function() {
-                    for(var i=1 ; i < 100; i++){
-                        var checktemp = false;
-                        var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
-                        for(var j=1 ;j < 500 ; j++){
-                            if(paymentStockDetailId  === psdIdDelete){
-                                var checkStockId = $("#stockId"+i).val(); 
-                                var stockIdTable = $("#stockIdTable"+j).val();
-                                if(checkStockId === stockIdTable){
-                                    $("#psdIdTable" + j).parent().remove();
-                                    checktemp = true;
-                                }
-                            }
-                        }
-                        if(checktemp){
-                            $("#paymentStockDetailId" + i).parent().remove();
-                        }
-                    }
-                    
-                    countRowStock = $("#StockDetailTable tr").length;  
-                    if(countRowStock === 1){
-                        $("#noStockTable").val(1);
-                        document.getElementById('totalCost').value = formatNumber(0);
-                        document.getElementById('totalSale').value = formatNumber(0);
-                    }else{
-                        for(var i=1;i<countRowStock;i++){
-                            setFormatCurrency(i);
-                            calculateCostTotal();
-                            calculateSaleTotal();
-                        }
-                    }
-                },
-                error: function() {
-                    console.log("error");
-                }
-            });
-        }
-    $('#DeletePaymentStock').modal('hide');  
-}
 
 function calculateCostTotal() {
     var count = $("#StockDetailTable tr").length;    
