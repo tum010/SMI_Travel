@@ -4,14 +4,15 @@
  * and open the template in the editor.
  */
 $(document).ready(function() {
-//    $('#StockDetailTable').dataTable({bJQueryUI: true,
-//        "sPaginationType": "full_numbers",
-//        "bAutoWidth": true,
-//        "bFilter": true,
-//        "bPaginate": true,
-//        "bInfo": false,
-//        "bLengthChange": false
-//    });
+    $('#StockDetailTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": false,
+        "bPaginate": true,
+        "bInfo": false,
+        "bLengthChange": false,
+        "iDisplayLength": 10
+    });
     $('#SearchStockTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
         "bAutoWidth": true,
@@ -71,33 +72,32 @@ function createStockDetails(stockid, productName, staff, addDate, effectiveFrom,
             '<td class="text-center ">' + effectiveFrom + '</td>' +
             '<td class="text-center ">' + effectiveTo + '</td>' +
             '<td class="text-center ">' +
-            '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" class="glyphicon glyphicon glyphicon-list-alt"></span></a>' +
-//            '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" onclick="getStockDetail('+ stockid +')" class="glyphicon glyphicon glyphicon-list-alt"></span></a>' +
+            '<a id="ButtonEdit'+ noStockTable +'" onclick="getStockDetail(' + stockid + ',' + "null" + ');hideCollapse();" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#payStockDetail'+ noStockTable +'" aria-expanded="true" aria-controls="collapseExample">'+
+            '<span id="SpanEdit'+ noStockTable +'" class="glyphicon glyphicon glyphicon-list-alt"></span></a>'+
             '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="SpanRemove" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentStockDetailList(\'\', \'' + noStockTable + '\' , \'' + stockid + '\');"></span></a>' +
             '</td>' +
             '<tr>'
             );
 
     $("#noStockTable").val(noStockTable+1);
-    getStockDetail(stockid);
+    getStockDetail(stockid,"null");
     $("#SearchStock").modal("hide");
     
 }
 
-function getStockDetail(stockid) {
-    var countRowStockDetail = $("#StockDetailTable tr").length;
+function getStockDetail(stockid,psdId) {
     var servletName = 'PaymentStockServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
             '&servletName=' + servletName +
             '&servicesName=' + servicesName +
             '&stockId=' + stockid +
-            '&countRowDetail=' + countRowStockDetail +
+            '&countRowDetail=' + 1 +
             '&type=' + 'getStockDetail';
-    CallAjax(param);
+    CallAjax(param,psdId,stockid);
 }
 
-function CallAjax(param) {
+function CallAjax(param,psdId,stockid) {
     var url = 'AJAXServlet';
     $("#ajaxload").removeClass("hidden");
     try {
@@ -108,26 +108,27 @@ function CallAjax(param) {
             data: param,
             success: function(msg) {
                 if(msg !== 'null'){
-//                    $('#StockDetailTable').dataTable().fnClearTable();
-//                    $('#StockDetailTable').dataTable().fnDestroy();
+                    $('#StockDetailTable').dataTable().fnClearTable();
+                    $('#StockDetailTable').dataTable().fnDestroy();
                     $("#StockDetailTable tbody").append(msg);
-                    var countRowStockDetail = $("#StockDetailTable tr").length; 
-                    $("#noStockDetailTable").val(countRowStockDetail); 
-//                    $('#StockDetailTable').dataTable({bJQueryUI: true,
-//                        "sPaginationType": "full_numbers",
-//                        "bAutoWidth": false,
-//                        "bFilter": false,
-//                        "bPaginate": true,
-//                        "bInfo": false,
-//                        "bLengthChange": false,
-//                        "iDisplayLength": 5
-//                    });
+                    $('#StockDetailTable').dataTable({bJQueryUI: true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": false,
+                        "bPaginate": true,
+                        "bInfo": false,
+                        "bLengthChange": false,
+                        "iDisplayLength": 10
+                    });
+                    if(psdId !== "null" && psdId !== null){
+                        getPaymentStockItemCostSaleAjax(psdId);
+                    }else{
+                        hideCollapse();
+                        $('.collapse').collapse('show');
+                    }
                 }
-//                $("#ajaxload").addClass("hidden");
-
             }, error: function(msg) {
-//                $("#ajaxload").addClass("hidden");
-                alert('error');
+               alert('error');
             }
         });
     } catch (e) {

@@ -1054,9 +1054,6 @@ public class AJAXBean extends AbstractBean implements
             } 
         }
 
-        
-        
-        
         return result;
     }
 
@@ -1107,11 +1104,8 @@ public class AJAXBean extends AbstractBean implements
         String psdIdTable = "" ;
         String stockDetailIdTable = "" ;
         String stockId = "";
-        
-        
         String cost = "" ;
         String sale = "";
-        
         for (int i = 0; i < stockDetails.size(); i++) {
             StockDetail stockDetail = new StockDetail();
             stockDetail = stockDetails.get(i);
@@ -1126,28 +1120,12 @@ public class AJAXBean extends AbstractBean implements
                 pickup = stockDetail.getStaff().getName();
             }
             pickdate = utilty.convertDateToString(stockDetail.getPickupDate());
-            
-//            psiIdTable = paymentStockItem.getId() ;
-//            psdIdTable = paymentStockItem.getPaymentStockDetail().getId() ;
             stockDetailIdTable = stockDetail.getId();
             stockId = stockDetail.getStock().getId();
-//            cost = String.valueOf(paymentStockItemList.get(i).getCost());
-//            sale = String.valueOf(paymentStockItemList.get(i).getSale());             
-//            System.out.println(" stockId " + stockId);
             String newrow = "";              
-//            newrow += "<tr>"
-//                    + "<td class='text-center'>" + no + "</td>"
-//                    + "<td class='text-left'>" + code + "</td>"
-//                    + "<td class='text-left'>" + type + "</td>"
-//                    + "<td class='text-left'>" + refno + "</td>"
-//                    + "<td class='text-center'>" + pickup + "</td>"
-//                    + "<td class='text-center'>" + pickdate + "</td>"
-//                    + "<td><input maxlength=\"10\" id=\"cost" + no + "\" name=\"cost" + no + "\" type=\"text\" class=\"form-control\" ></td>"
-//                    + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control\" ></td>"
-//                    + "</tr>";
             newrow += "<tr>"
-//                    + "<input type='hidden' id='psiIdTable" + no + "' name='psiIdTable" + no + "'  value='" + psiIdTable + "'>"
                     + "<input type='hidden' id='psdIdTable" + no + "' name='psdIdTable" + no + "'  value='" + psdIdTable + "'>"
+                    + "<input type='hidden' id='psiIdTable" + no + "' name='psiIdTable" + no + "'  value='" +  psiIdTable + "'>"
                     + "<input type='hidden' id='stockDetailIdTable" + no + "' name='stockDetailIdTable" + no + "'  value='" + stockDetailIdTable + "'>" 
                     + "<input type='hidden' id='stockIdTable" + no + "' name='stockIdTable" + no + "'  value='" + stockId + "'>"
                     + "<td class='text-center'>" + no + "</td>"

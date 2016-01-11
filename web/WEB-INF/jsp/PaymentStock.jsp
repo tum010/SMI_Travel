@@ -175,8 +175,9 @@
                                                 <td align="center">${table.stock.effectiveFrom}</td>
                                                 <td align="center">${table.stock.effectiveTo}</td>
                                                 <td class="text-center ">
-                                                    <a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" onclick="getPaymentStockItemCostSale('${table.id}')" class="glyphicon glyphicon glyphicon-list-alt"></span></a>
-                                                    <!--<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="editStockDetail" class="glyphicon glyphicon glyphicon-list-alt"></span></a>-->
+                                                    <a id="ButtonEdit${i.count}" onclick="getPaymentStockItemCostSale('${table.id}','${table.stock.id}');hideCollapse();" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#payStockDetail" aria-expanded="true" aria-controls="collapseExample">
+                                                        <span id="SpanEdit${i.count}" class="glyphicon glyphicon glyphicon-list-alt"></span>
+                                                    </a>
                                                     <a href="#" onclick="" data-toggle="modal" data-target=""> <span id="SpanRemove" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentStockDetailList('${table.id}','${i.count}','');"></span></a>
                                                 </td>  
                                             </tr>
@@ -188,7 +189,8 @@
                     </div>            
                 </div>
             </div>
-            <div class="collapse" id="paneldetail">                    
+            <%--<c:forEach var="data" items="${PaymentStockDetailList}" varStatus="i">--%>  
+            <div class="collapse" id="payStockDetail">                    
                 <div class="panel panel-default ">
                     <div class="panel-heading ">
                         <h4 class="panel-title">Detail</h4>
@@ -198,7 +200,7 @@
                             <div class="row">
                                 <div class="col-xs-11" style="width: 1030px">
                                     <input type="hidden" id="noStockDetailTable" name="noStockDetailTable" value="1"/>
-                                    <table class="display" id="StockDetailTable">
+                                    <table class="display" id="StockDetailTable" >
                                         <thead>
                                             <tr class="datatable-header">
                                                 <th style="width: 5%">No</th>                                   
@@ -212,22 +214,16 @@
                                             </tr>
                                         </thead>
                                         <tbody> 
-                                            <c:forEach var="table" items="${StockDetailList}" varStatus="i">
-                                                <tr>
-                                                    <input type="hidden" id="psdIdTable${i.count}" name="psdIdTable${i.count}"  value="">
-                                                    <input type="hidden" id="psiIdTable${i.count}" name="psiIdTable${i.count}"  value="">
-                                                    <input type="hidden" id="stockDetailIdTable${i.count}" name="stockDetailIdTable${i.count}"  value="${table.id}">
-                                                    <input type="hidden" id="stockIdTable${i.count}" name="stockIdTable${i.count}"  value="${table.stock.id}"> 
-                                                    <td align="center">${i.count}</td>
-                                                    <td align="left">${table.code}</td>
-                                                    <td align="left">${table.typeId.name}</td>
-                                                    <td align="center">${table.otherBooking.master.referenceNo}</td>
-                                                    <td align="center">${table.staff.name}</td>
-                                                    <td align="center">${table.pickupDate}</td>
-                                                    <td><input maxlength="10" id="cost${i.count}" name="cost${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeydown="setFormatCurrencyOnFocusOut('${i.count}')"  value=""></td>
-                                                    <td><input maxlength="10" id="sale${i.count}" name="sale${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeydown="setFormatCurrencyOnFocusOut('${i.count}')" value=""></td>
-                                                </tr>
-                                            </c:forEach>                                    
+                                            <tr>
+                                                <td align="center">1</td>
+                                                <td align="left">1</td>
+                                                <td align="left">1</td>
+                                                <td align="center">1</td>
+                                                <td align="center">1</td>
+                                                <td align="center">1</td>
+                                                <td align="center">1</td>
+                                                <td align="center">1</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -254,12 +250,14 @@
                         </div>            
                     </div>
                 </div>
-            </div>                    
+            </div> 
+            <%--</c:forEach>--%> 
             <div class="row" style="padding-top: 15px;padding-bottom:  15px; padding-left:  100px;">
                 <div class="col-xs-1 text-right" style="width: 130px">
                     <label class="control-label text-right">Total Cost</label>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
+                    <input type="hidden" class="form-control text-right" id="totalCostTmp" name="totalCostTmp" value="" readonly=""/>
                     <input type="text" class="form-control text-right" id="totalCost" name="totalCost" value="${paymentStock.costAmount}" readonly=""/>
                 </div>
                 <div class="col-xs-1" style="width: 100px">
@@ -328,7 +326,6 @@
                             <th style="width: 1px" >Action</th>
                         </tr>
                     </thead>
-                    
                     
                     <tbody> 
                         <c:forEach var="table" items="${stockList}" varStatus="i">
@@ -407,20 +404,21 @@
         $("div").find($('.collapse')).collapse('hide');
     }
     
-    $(document).ready(function() {
-        $('.collapse').collapse('hide');
+    $(document).ready(function() {  
+        document.getElementById('totalCost').value = formatNumber(0);
+        document.getElementById('totalSale').value = formatNumber(0);
         
-        var countRowStock = $("#StockDetailTable tr").length;    
-        if(countRowStock === 1){
-            document.getElementById('totalCost').value = formatNumber(0);
-            document.getElementById('totalSale').value = formatNumber(0);
-        }else{
-            for(var i=1;i<countRowStock;i++){
-                setFormatCurrency(i);
-                calculateCostTotal();
-                calculateSaleTotal();
-            }
-        }
+//        var countRowStock = $("#StockDetailTable tr").length;    
+//        if(countRowStock === 1){
+//            document.getElementById('totalCost').value = formatNumber(0);
+//            document.getElementById('totalSale').value = formatNumber(0);
+//        }else{
+//            for(var i=1;i<countRowStock;i++){
+//                setFormatCurrency(i);
+//                calculateCostTotal();
+//                calculateSaleTotal();
+//            }
+//        }
         
         $("#payNo").keyup(function(event) {
            if (event.keyCode === 13) {
@@ -428,6 +426,7 @@
            }
         });
         
+        $('.collapse').collapse('hide');
     });
     
     function saveAction() {
@@ -449,19 +448,23 @@
         document.getElementById('PaymentStockForm').submit();
     }
     
-    function getPaymentStockItemCostSale(psdId) {
-        var countRowStockDetail = $("#StockDetailTable tr").length;
+    function getPaymentStockItemCostSale(psdId,stockid) {
+        getStockDetail(stockid,psdId,stockid);
+    }
+    
+    function getPaymentStockItemCostSaleAjax(psdId){
         var servletName = 'PaymentStockServlet';
         var servicesName = 'AJAXBean';
         var param = 'action=' + 'text' +
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
                 '&psdId=' + psdId +
-                '&countRowDetail=' + countRowStockDetail +
+                '&countRowDetail=' + 1 +
                 '&type=' + 'getPaymentStockItemCostSale';
         CallAjaxPaymentStockItemCostSale(param);
+        
+        
     }
-
     function CallAjaxPaymentStockItemCostSale(param) {
         var url = 'AJAXServlet';
         $("#ajaxload").removeClass("hidden");
@@ -485,20 +488,19 @@
                                 if(stockDetailIdTable === stockDetailIdTemp){
                                     $("#cost"+i).val( $("#costTemp"+j).val()); 
                                     $("#sale"+i).val( $("#saleTemp"+j).val()); 
-                                    $("#psiIdTable"+i).val( $("#psiIdTemp"+j).val());
-                                    $("#psdIdTable"+i).val( $("#psdIdTemp"+j).val());
-                                    
+                                    $("#psiIdTable"+i).val($("#psiIdTemp"+j).val());
+                                    $("#psdIdTable"+i).val($("#psdIdTemp"+j).val());
                                     setFormatCurrency(i);
                                     calculateCostTotal();
                                     calculateSaleTotal();
                                 }
                             }
                         }
-                        
-                        var countRowStockDetail = $("#StockDetailTable tr").length; 
-                        $("#noStockDetailTable").val(countRowStockDetail);
+//                        $("div").find($('.collapse')).collapse('hide');
+                        hideCollapse();
+                        $('.collapse').collapse('show');
+                            
                     }
-
                 }, error: function(msg) {
                     alert('error');
                 }
@@ -519,36 +521,16 @@ function deletePaymentStockDetailList(paymentStockDetailId , row , stockid){
     $('#fail').hide();
     if(paymentStockDetailId === ''){
         $("#paymentStockDetailId" + row).parent().remove();
-//        var countRowStockDetail = $("#StockDetailTable tr").length; 
-        var countRowStockDetail = $("#noStockDetailTable").val();
-        for(var i=1 ; i < countRowStockDetail ; i++){
-            var sit = $("#stockIdTable"+i).val();
-            if(sit === stockid){
-                $("#psdIdTable" + i).parent().remove();
-                $('#textAlertDivDelete').show();
-            }
-        }
-        
-        var countRowStock = $("#StockDetailTable tr").length;   
-        if(countRowStock === 1){
-            $("#noStockTable").val(1);
-            document.getElementById('totalCost').value = formatNumber(0);
-            document.getElementById('totalSale').value = formatNumber(0);
-        }else{
-            for(var i=1;i<countRowStock;i++){
-                setFormatCurrency(i);
-                calculateCostTotal();
-                calculateSaleTotal();
-            }
-        }
+        $('.collapse').collapse('hide');
+        document.getElementById('totalCost').value = formatNumber(0);
+        document.getElementById('totalSale').value = formatNumber(0);
+        $('#textAlertDivDelete').show();
     }else{
         document.getElementById('paymentStockDetailIdDelete').value = paymentStockDetailId;
         document.getElementById('paymentStockRowDelete').value = row;
         $("#delPaymentStock").text('Are you sure to delete stock from this payment ?');
         $('#DeletePaymentStock').modal('show');
     }
-    
-    
 }
 
 function DeleteRowPaymentStock(){
@@ -562,54 +544,11 @@ function DeleteRowPaymentStock(){
     var psdIdDelete = document.getElementById('paymentStockDetailIdDelete').value;
     var row = document.getElementById('paymentStockRowDelete').value;
         if (psdIdDelete === '') {
-            for(var i=1 ; i < 100; i++){
-                var checktemp = false;
-                var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
-                for(var j=1 ;j < 500 ; j++){
-                    if(paymentStockDetailId  === psdIdDelete){
-                        var checkStockId = $("#stockId"+i).val(); 
-                        var stockIdTable = $("#stockIdTable"+j).val();
-                        if(checkStockId === stockIdTable){
-                            $("#psdIdTable" + j).parent().remove();
-                            checktemp = true;
-                        }
-                    }
-                }
-                if(checktemp){
-                    $("#paymentStockDetailId" + i).parent().remove();
-                    $('#textAlertDivDelete').show();
-                }
-            }
-            
-            
-            
-//            var countRowStock = $("#StockTable tr").length;   
-//            var countRowStockDetail = $("#StockDetailTable tr").length;   
-//            for(var i=0 ; i < countRowStock ; i++){
-//                var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
-//                for(var j=0 ;j < countRowStockDetail ; j++){
-//                    if(paymentStockDetailId  === psdIdDelete){
-//                        $("#paymentStockDetailId" + i).parent().remove();
-//                        var stockId = $("#stockId"+i).val();
-//                        var stockIdTable = $("#stockIdTable"+j).val();
-//                        if(stockId === stockIdTable){
-//                            $("#psdIdTable" + j).parent().remove();
-//                        }
-//                    }
-//                }
-//            }
-            var countRowStock = $("#StockDetailTable tr").length;   
-            if(countRowStock === 1){
-                document.getElementById('totalCost').value = formatNumber(0);
-                document.getElementById('totalSale').value = formatNumber(0);
-                $("#noStockTable").val(1);
-            }else{
-                for(var i=1;i<countRowStock;i++){
-                    setFormatCurrency(i);
-                    calculateCostTotal();
-                    calculateSaleTotal();
-                }
-            }
+            $("#paymentStockDetailId" + row).parent().remove();
+            $('#textAlertDivDelete').show();
+            document.getElementById('totalCost').value = formatNumber(0);
+            document.getElementById('totalSale').value = formatNumber(0);
+            $('.collapse').collapse('hide');
         }
         else {
             $.ajax({
@@ -617,37 +556,11 @@ function DeleteRowPaymentStock(){
                 type: 'get',
                 data: {psdIdDelete: psdIdDelete},
                 success: function() {
-                    for(var i=1 ; i < 100; i++){
-                        var checktemp = false;
-                        var paymentStockDetailId = $("#paymentStockDetailId"+i).val();
-                        for(var j=1 ;j < 500 ; j++){
-                            if(paymentStockDetailId  === psdIdDelete){
-                                var checkStockId = $("#stockId"+i).val(); 
-                                var stockIdTable = $("#stockIdTable"+j).val();
-                                if(checkStockId === stockIdTable){
-                                    $("#psdIdTable" + j).parent().remove();
-                                    checktemp = true;
-                                }
-                            }
-                        }
-                        if(checktemp){
-                            $("#paymentStockDetailId" + i).parent().remove();
-                            $('#textAlertDivDelete').show();
-                        }
-                    }
-                    
-                    var countRowStock = $("#StockDetailTable tr").length;  
-                    if(countRowStock === 1){
-                        $("#noStockTable").val(1);
-                        document.getElementById('totalCost').value = formatNumber(0);
-                        document.getElementById('totalSale').value = formatNumber(0);
-                    }else{
-                        for(var i=1;i<countRowStock;i++){
-                            setFormatCurrency(i);
-                            calculateCostTotal();
-                            calculateSaleTotal();
-                        }
-                    }
+                    $("#paymentStockDetailId" + row).parent().remove();
+                    $('#textAlertDivDelete').show();
+                    document.getElementById('totalCost').value = formatNumber(0);
+                    document.getElementById('totalSale').value = formatNumber(0);
+                    $('.collapse').collapse('hide');
                 },
                 error: function() {
                     console.log("error");
