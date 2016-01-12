@@ -277,6 +277,9 @@
                                             <c:when test="${inv.type == 'T'}">
                                                 <c:set var="typeName" value="Temp" />
                                             </c:when>
+                                            <c:when test="${inv.type == 'A'}">
+                                                <c:set var="typeName" value="Ticket" />
+                                            </c:when>
                                         </c:choose>    
                                         ${typeName}
                                     </td>
@@ -294,6 +297,9 @@
                                                     </c:when>
                                                     <c:when test="${inv.type == 'T'}">
                                                         <c:set var="type" value="T" />
+                                                    </c:when>
+                                                    <c:when test="${inv.type == 'A'}">
+                                                        <c:set var="type" value="A" />
                                                     </c:when>
                                                 </c:choose>
                                             </c:when>

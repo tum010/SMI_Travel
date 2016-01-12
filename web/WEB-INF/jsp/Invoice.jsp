@@ -530,7 +530,7 @@
                                 <div role="tabpanel" class="tab-pane  active" id="infoDetailBillable">
                                     <div class="panel-body">
                                         <div class="col-xs-12" style="margin-left: -15px; width: 1075px;">    
-                                            <div id="textAlertCurrency"  style="display:block;" class="alert alert-danger alert-dismissible" role="alert">
+                                            <div id="textAlertCurrency"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 <strong>Currency is not match!!! </strong> 
                                             </div> 
@@ -615,7 +615,7 @@
                                                                 <td ><input type="text" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})" class="form-control decimal" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
                                                                 <td><input type="text" class="form-control text-right decimal" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');"></td>
                                                                 <td class="priceCurrencyAmount">
-                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="validFromInvoice()">
+                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="validFromInvoice(); CalculateGrandTotal('')">
                                                                         <option value='' ></option>
                                                                         <c:forEach var="cur" items="${listCurrency}">
                                                                             <c:set var="selectA" value="" />
@@ -737,7 +737,7 @@
                                                                 <td class="hidden" ><input type="text" onfocusout="changeFormatGrossNumber(${taxdesc.count})" class="form-control decimal" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
                                                                 <td><input type="text" class="form-control decimal text-right" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');"></td>
                                                                 <td class="priceCurrencyAmount">
-                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="validFromInvoice()">
+                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="validFromInvoice(); CalculateGrandTotal('')">
                                                                         <option value='' ></option>
                                                                         <c:forEach var="cur" items="${listCurrency}">
                                                                             <c:set var="selectA" value="" />

@@ -463,7 +463,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="' + vat + '" ></td>' +
                 '<td ' + vathidden + ' ><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control decimal text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" value="' + price + '" ></td>' +
-                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="validFromInvoice()">' + selectC + '</select></td>' +
+                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="validFromInvoice(); CalculateGrandTotal(\'\')">' + selectC + '</select></td>' +
                 '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right decimal" ></td>' +
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
@@ -496,7 +496,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="' + vat + '" ></td>' +
                 '<td ' + vathidden + ' ><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control decimal text-right" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="' + price + '" ></td>' +
-                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="validFromInvoice()">' + selectC + '</select></td>' +
+                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="validFromInvoice(); CalculateGrandTotal(\'\')">' + selectC + '</select></td>' +
                 '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right decimal" ></td>' +
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
@@ -1282,10 +1282,49 @@ function CalculateGrandTotal(id) {
 
         document.getElementById('TotalNet').value = formatNumber(grandTotal);
         if (grandTotal !== 0) {
-            var bathString = toWords((grandTotal));
+            var currency = getCurrency();
+            var bathString = toWords(grandTotal,currency);
             document.getElementById('TextAmount').value = bathString;
         }
     }
+}
+
+function getCurrency(){
+    var countTaxInvoice = parseInt($("#counterTable").val());
+    var currency = '';
+    for(var i=1; i<=countTaxInvoice; i++){
+        var currency1 = document.getElementById('SelectCurrencyAmount'+i);
+        var product1 = document.getElementById('SelectProductType'+i);
+        var description1 = document.getElementById('BillDescriptionTemp'+i);
+        var cost1  = document.getElementById('InputCost'+i);
+        var costLocal1 = document.getElementById('InputCostLocal'+i);
+        var amount1 = document.getElementById('InputAmount'+i);
+        if(currency1 !== null){
+            if(product1.value !== '' || description1.value !== '' || cost1.value !== '' || costLocal1.value !== ''  || amount1.value !== ''){
+                currency = currency1.value;
+                var currencyTemp1 = currency1.value;
+                for(var j=i+1; j<=countTaxInvoice; j++){
+                    var currency2 = document.getElementById('SelectCurrencyAmount'+j);
+                    var product2 = document.getElementById('SelectProductType'+j);
+                    var description2 = document.getElementById('BillDescriptionTemp'+j);
+                    var cost2 = document.getElementById('InputCost'+j);
+                    var costLocal2 = document.getElementById('InputCostLocal'+j);
+                    var amount2 = document.getElementById('InputAmount'+j);
+                    if(currency2 !== null){
+                        if(product2.value !== '' || description2.value !== '' || cost2.value !== '' || costLocal2.value !== '' || amount2.value !== ''){
+                            var currencyTemp2 = currency2.value;
+                            if((currencyTemp1 !== currencyTemp2)){
+                                currency = ''; 
+                                i = countTaxInvoice+1;
+                                j = countTaxInvoice+1;
+                            }
+                        }    
+                    }
+                }
+            }    
+        }    
+    }
+    return currency;
 }
 
 function checkVatInvoiceAll() {
