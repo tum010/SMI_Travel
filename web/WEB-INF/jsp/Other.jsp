@@ -244,8 +244,9 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label" for="nameProduct">Mark up</label>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control percent text-right " id="markup" disabled name="markup" value="${markup}">
+                                    <div class="col-sm-6">                                       
+                                        <fmt:parseNumber var="markupShow" type="number" value="${markup}" />
+                                        <input type="text" class="form-control text-right" id="markup" disabled name="markup" value="${markupShow}%">
                                     </div>
                                 </div>
                             </div>
