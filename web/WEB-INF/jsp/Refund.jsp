@@ -1650,63 +1650,143 @@ function checkRefundReady(row) {
 //        $("#buttonPrintRefund").attr("disabled", "disabled");
 //        return;
 //    }
-    var refund = ($("#inputSectorRefund" + row).val()).split("-");
-    var issue = ($("#inputSector" + row).val()).split("-");
-    var refundTemp = ($("#inputSectorRefund" + row).val());
-    var issueTemp = ($("#inputSector" + row).val());
+//    var refund = ($("#inputSectorRefund" + row).val()).split("-");
+//    var issue = ($("#inputSector" + row).val()).split("-");
+//    var refundTemp = ($("#inputSectorRefund" + row).val());
+//    var issueTemp = ($("#inputSector" + row).val());
+//    
+//    if ($("#inputSectorRefund" + row).val() === '') {
+//        $("#inputSectorRefund" + row).css('border-color','');
+//        $("#buttonSaveRefund").removeAttr("disabled");
+//        $("#buttonPrintRefund").removeAttr("disabled");
+//    } else{
+//        if(refund.length > 1){
+//            if((issueTemp.indexOf(",")) < 0){
+//                var match = 0;
+//                var error = 0;
+//                var seq = 0;
+//                for(var i=0; i<refund.length; i++){
+//                    var sectionRefund = refund[i];
+//                    var different = 0;
+//                    for(var j=0; j<issue.length; j++){
+//                        var section = issue[j];               
+//                        if(sectionRefund === section){
+//                            var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
+//                            if(((j >= seq) && ((section !== sectionRefundTemp)))){
+//                                seq = j;
+//                                delete issue[j];
+//                                j = issue.length;
+//                                match++;
+//                            }      
+//                        }else{
+//                            different++;
+//                        }
+//                        if(j === ((issue.length)-1)){
+//                            if(different > 0){
+//                                error++;
+//                            }                    
+//                        }
+//                    }        
+//                }
+//                if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+//                    $("#inputSectorRefund" + row).css('border-color','green');
+//                    $("#buttonSaveRefund").removeAttr("disabled");
+//                    $("#buttonPrintRefund").removeAttr("disabled");
+//                }else{
+//                    $("#inputSectorRefund" + row).css('border-color','red');
+//                    $("#buttonSaveRefund").attr("disabled", "disabled");
+//                    $("#buttonPrintRefund").attr("disabled", "disabled");
+//                }
+//                
+//            }else{
+//                checkRefundWithComma(refundTemp,row);
+//            }
+//            
+//        }else{
+//            $("#inputSectorRefund" + row).css('border-color','red');
+//            $("#buttonSaveRefund").attr("disabled", "disabled");
+//            $("#buttonPrintRefund").attr("disabled", "disabled");
+//        }    
+//    }
+    var refundComma = ($("#inputSectorRefund" + row).val()).split(",");
+    var issueComma = ($("#inputSector" + row).val()).split(",");
+    var validate = true;
     
-    if ($("#inputSectorRefund" + row).val() === '') {
-        $("#inputSectorRefund" + row).css('border-color','');
-        $("#buttonSaveRefund").removeAttr("disabled");
-        $("#buttonPrintRefund").removeAttr("disabled");
-    } else{
-        if(refund.length > 1){
-            if((issueTemp.indexOf(",")) < 0){
-                var match = 0;
-                var error = 0;
-                var seq = 0;
-                for(var i=0; i<refund.length; i++){
-                    var sectionRefund = refund[i];
-                    var different = 0;
-                    for(var j=0; j<issue.length; j++){
-                        var section = issue[j];               
-                        if(sectionRefund === section){
-                            var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
-                            if(((j >= seq) && ((section !== sectionRefundTemp)))){
-                                seq = j;
-                                delete issue[j];
-                                j = issue.length;
-                                match++;
-                            }      
-                        }else{
-                            different++;
+    if($("#inputSectorRefund" + row).val() !== ''){
+        for(var i=0; i<refundComma.length; i++){
+            var refundLine = refundComma[i].split("-");
+            var checkLink = 0;
+            
+            if(refundLine.length > 1){
+                var checkCode = 0;
+                for(var j=0; j<refundLine.length; j++){
+                    var refundTemp = refundLine[j];
+                    
+                    if(refundTemp !== ''){                    
+                        for(var x=0; x<issueComma.length; x++){
+                            var issueLine = issueComma[x].split("-");
+
+                            for(var y=0; y<issueLine.length; y++){
+                                var issueTemp = issueLine[y];
+//                                alert(refundTemp+" "+issueTemp);
+                                if(refundTemp === issueTemp){
+                                    delete issueLine[y];
+                                    checkCode++;
+                                    y = issueLine.length;
+                                    x = issueComma.length;
+                                }
+                            }
                         }
-                        if(j === ((issue.length)-1)){
-                            if(different > 0){
-                                error++;
-                            }                    
-                        }
-                    }        
+                    
+                    }else{
+                        validate = false;
+                        i = refundComma.length;
+                    }    
                 }
-                if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
-                    $("#inputSectorRefund" + row).css('border-color','green');
-                    $("#buttonSaveRefund").removeAttr("disabled");
-                    $("#buttonPrintRefund").removeAttr("disabled");
+//                alert(checkCode+" "+refundLine.length);
+                if(checkCode === refundLine.length){
+                    var refundTemp = refundComma[i];
+                    
+                    for(var a=0; a<issueComma.length; a++){
+                        var issueTemp = issueComma[a];
+                        
+                        if(issueTemp.indexOf(refundTemp) >= 0){
+                            checkLink++;
+                            a = issueComma.length;
+                        }                       
+                    }
+//                    alert(checkLink);
+                    if(checkLink === 0){
+                        validate = false;
+                        i = refundComma.length;                        
+                    }
+                
                 }else{
-                    $("#inputSectorRefund" + row).css('border-color','red');
-                    $("#buttonSaveRefund").attr("disabled", "disabled");
-                    $("#buttonPrintRefund").attr("disabled", "disabled");
+                    validate = false;
+                    i = refundComma.length;
                 }
                 
             }else{
-                checkRefundWithComma(refundTemp,row);
+                validate = false;
+                i = refundComma.length;
             }
-            
+        }
+        
+        if(validate){
+            $("#inputSectorRefund" + row).css('border-color','green');
+            $("#buttonSaveRefund").removeAttr("disabled");
+            $("#buttonPrintRefund").removeAttr("disabled");
+        
         }else{
             $("#inputSectorRefund" + row).css('border-color','red');
             $("#buttonSaveRefund").attr("disabled", "disabled");
             $("#buttonPrintRefund").attr("disabled", "disabled");
-        }    
+        }
+    
+    }else{
+        $("#inputSectorRefund" + row).css('border-color','');
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
     }
 }
 
@@ -2041,61 +2121,141 @@ function checkRefund(e,row) {
 //        $("#buttonPrintRefund").attr("disabled", "disabled");
 //        return;
 //    }
-    var refund = (e.value).split("-");
-    var issue = ($("#inputSector" + row).val()).split("-");
-    var refundTemp = e.value;
-    var issueTemp = ($("#inputSector" + row).val());
+//    var refund = (e.value).split("-");
+//    var issue = ($("#inputSector" + row).val()).split("-");
+//    var refundTemp = e.value;
+//    var issueTemp = ($("#inputSector" + row).val());
+//    
+//    if (e.value === '') {
+//        e.style.borderColor = "";
+//        $("#buttonSaveRefund").removeAttr("disabled");
+//        $("#buttonPrintRefund").removeAttr("disabled");
+//    } else{       
+//        if(refund.length > 1){
+//            if((issueTemp.indexOf(",")) < 0){           
+//                var match = 0;
+//                var error = 0;
+//                var seq = 0;
+//                for(var i=0; i<refund.length; i++){
+//                    var sectionRefund = refund[i];
+//                    var different = 0;
+//                    for(var j=0; j<issue.length; j++){
+//                        var section = issue[j];
+//                        if(sectionRefund === section){
+//                            var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
+//                            if(((j >= seq) && ((section !== sectionRefundTemp)))){
+//                                seq = j;
+//                                delete issue[j];
+//                                j = issue.length;
+//                                match++;
+//                            }    
+//                        }else{
+//                            different++;
+//                        }
+//                        if(j === ((issue.length)-1)){
+//                            if(different > 0){
+//                                error++;
+//                            }                    
+//                        }
+//                    }        
+//                }
+//                if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+//                    e.style.borderColor = "Green";
+//                    $("#buttonSaveRefund").removeAttr("disabled");
+//                    $("#buttonPrintRefund").removeAttr("disabled");
+//                }else{
+//                    e.style.borderColor = "Red";
+//                    $("#buttonSaveRefund").attr("disabled", "disabled");
+//                    $("#buttonPrintRefund").attr("disabled", "disabled");
+//                }
+//            }else{
+//                checkRefundWithComma(e,row);
+//            }
+//        }else{
+//            e.style.borderColor = "Red";
+//            $("#buttonSaveRefund").attr("disabled", "disabled");
+//            $("#buttonPrintRefund").attr("disabled", "disabled");
+//        }   
+//    }
+    var refundComma = (e.value).split(",");
+    var issueComma = ($("#inputSector" + row).val()).split(",");
+    var validate = true;
     
-    if (e.value === '') {
-        e.style.borderColor = "";
-        $("#buttonSaveRefund").removeAttr("disabled");
-        $("#buttonPrintRefund").removeAttr("disabled");
-    } else{       
-        if(refund.length > 1){
-            if((issueTemp.indexOf(",")) < 0){           
-                var match = 0;
-                var error = 0;
-                var seq = 0;
-                for(var i=0; i<refund.length; i++){
-                    var sectionRefund = refund[i];
-                    var different = 0;
-                    for(var j=0; j<issue.length; j++){
-                        var section = issue[j];
-                        if(sectionRefund === section){
-                            var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
-                            if(((j >= seq) && ((section !== sectionRefundTemp)))){
-                                seq = j;
-                                delete issue[j];
-                                j = issue.length;
-                                match++;
-                            }    
-                        }else{
-                            different++;
+    if(e.value !== ''){
+        for(var i=0; i<refundComma.length; i++){
+            var refundLine = refundComma[i].split("-");
+            var checkLink = 0;
+            
+            if(refundLine.length > 1){
+                var checkCode = 0;
+                for(var j=0; j<refundLine.length; j++){
+                    var refundTemp = refundLine[j];
+                    
+                    if(refundTemp !== ''){                    
+                        for(var x=0; x<issueComma.length; x++){
+                            var issueLine = issueComma[x].split("-");
+
+                            for(var y=0; y<issueLine.length; y++){
+                                var issueTemp = issueLine[y];
+//                                alert(refundTemp+" "+issueTemp);
+                                if(refundTemp === issueTemp){
+                                    delete issueLine[y];
+                                    checkCode++;
+                                    y = issueLine.length;
+                                    x = issueComma.length;
+                                }
+                            }
                         }
-                        if(j === ((issue.length)-1)){
-                            if(different > 0){
-                                error++;
-                            }                    
-                        }
-                    }        
+                    
+                    }else{
+                        validate = false;
+                        i = refundComma.length;
+                    }    
                 }
-                if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
-                    e.style.borderColor = "Green";
-                    $("#buttonSaveRefund").removeAttr("disabled");
-                    $("#buttonPrintRefund").removeAttr("disabled");
+//                alert(checkCode+" "+refundLine.length);
+                if(checkCode === refundLine.length){
+                    var refundTemp = refundComma[i];
+                    
+                    for(var a=0; a<issueComma.length; a++){
+                        var issueTemp = issueComma[a];
+                        
+                        if(issueTemp.indexOf(refundTemp) >= 0){
+                            checkLink++;
+                            a = issueComma.length;
+                        }                       
+                    }
+//                    alert(checkLink);
+                    if(checkLink === 0){
+                        validate = false;
+                        i = refundComma.length;                        
+                    }
+                
                 }else{
-                    e.style.borderColor = "Red";
-                    $("#buttonSaveRefund").attr("disabled", "disabled");
-                    $("#buttonPrintRefund").attr("disabled", "disabled");
+                    validate = false;
+                    i = refundComma.length;
                 }
+                
             }else{
-                checkRefundWithComma(e,row);
+                validate = false;
+                i = refundComma.length;
             }
+        }
+        
+        if(validate){
+            e.style.borderColor = "Green";
+            $("#buttonSaveRefund").removeAttr("disabled");
+            $("#buttonPrintRefund").removeAttr("disabled");
+        
         }else{
             e.style.borderColor = "Red";
             $("#buttonSaveRefund").attr("disabled", "disabled");
             $("#buttonPrintRefund").attr("disabled", "disabled");
-        }   
+        }
+    
+    }else{
+        e.style.borderColor = "";
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
     }
 }
 
@@ -2113,62 +2273,143 @@ function checkRefundAdd(e,row) {
 //        $("#buttonPrintRefund").attr("disabled", "disabled");
 //        return;
 //    }
-    var refund = (e.value).split("-");
-    var issue = ($("#inputSectoradd" + row).val()).split("-");
-    var refundTemp = e.value;
-    var issueTemp = ($("#inputSectoradd" + row).val());
+//    var refund = (e.value).split("-");
+//    var issue = ($("#inputSectoradd" + row).val()).split("-");
+//    var refundTemp = e.value;
+//    var issueTemp = ($("#inputSectoradd" + row).val());
+//
+//    if (e.value === '') {
+//        e.style.borderColor = "";
+//        $("#buttonSaveRefund").removeAttr("disabled");
+//        $("#buttonPrintRefund").removeAttr("disabled");
+//    } else{
+//        if(refund.length > 1){
+//            if((issueTemp.indexOf(",")) < 0){           
+//                var match = 0;
+//                var error = 0;
+//                var seq = 0;
+//                for(var i=0; i<refund.length; i++){
+//                    var sectionRefund = refund[i];
+//                    var different = 0;
+//                    for(var j=0; j<issue.length; j++){
+//                        var section = issue[j];
+//                        if(sectionRefund === section){
+//                            var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
+//                            if(((j >= seq) && ((section !== sectionRefundTemp)))){
+//                                seq = j;
+//                                delete issue[j];
+//                                j = issue.length;
+//                                match++;
+//                            }    
+//                        }else{
+//                            different++;
+//                        }
+//                        if(j === ((issue.length)-1)){
+//                            if(different > 0){
+//                                error++;
+//                            }                    
+//                        }
+//                    }        
+//                }
+//                if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+//                    e.style.borderColor = "Green";
+//                    $("#buttonSaveRefund").removeAttr("disabled");
+//                    $("#buttonPrintRefund").removeAttr("disabled");
+//                }else{
+//                    e.style.borderColor = "Red";
+//                    $("#buttonSaveRefund").attr("disabled", "disabled");
+//                    $("#buttonPrintRefund").attr("disabled", "disabled");
+//                }
+//            }else{
+//                checkRefundWithComma(e,row);
+//            }
+//        }else{
+//            e.style.borderColor = "Red";
+//            $("#buttonSaveRefund").attr("disabled", "disabled");
+//            $("#buttonPrintRefund").attr("disabled", "disabled");
+//        }
+//    }
 
-    if (e.value === '') {
-        e.style.borderColor = "";
-        $("#buttonSaveRefund").removeAttr("disabled");
-        $("#buttonPrintRefund").removeAttr("disabled");
-    } else{
-        if(refund.length > 1){
-            if((issueTemp.indexOf(",")) < 0){           
-                var match = 0;
-                var error = 0;
-                var seq = 0;
-                for(var i=0; i<refund.length; i++){
-                    var sectionRefund = refund[i];
-                    var different = 0;
-                    for(var j=0; j<issue.length; j++){
-                        var section = issue[j];
-                        if(sectionRefund === section){
-                            var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
-                            if(((j >= seq) && ((section !== sectionRefundTemp)))){
-                                seq = j;
-                                delete issue[j];
-                                j = issue.length;
-                                match++;
-                            }    
-                        }else{
-                            different++;
+    var refundComma = (e.value).split(",");
+    var issueComma = ($("#inputSectoradd" + row).val()).split(",");
+    var validate = true;
+    
+    if(e.value !== ''){
+        for(var i=0; i<refundComma.length; i++){
+            var refundLine = refundComma[i].split("-");
+            var checkLink = 0;
+            
+            if(refundLine.length > 1){
+                var checkCode = 0;
+                for(var j=0; j<refundLine.length; j++){
+                    var refundTemp = refundLine[j];
+                    
+                    if(refundTemp !== ''){                    
+                        for(var x=0; x<issueComma.length; x++){
+                            var issueLine = issueComma[x].split("-");
+
+                            for(var y=0; y<issueLine.length; y++){
+                                var issueTemp = issueLine[y];
+//                                alert(refundTemp+" "+issueTemp);
+                                if(refundTemp === issueTemp){
+                                    delete issueLine[y];
+                                    checkCode++;
+                                    y = issueLine.length;
+                                    x = issueComma.length;
+                                }
+                            }
                         }
-                        if(j === ((issue.length)-1)){
-                            if(different > 0){
-                                error++;
-                            }                    
-                        }
-                    }        
+                    
+                    }else{
+                        validate = false;
+                        i = refundComma.length;
+                    }    
                 }
-                if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
-                    e.style.borderColor = "Green";
-                    $("#buttonSaveRefund").removeAttr("disabled");
-                    $("#buttonPrintRefund").removeAttr("disabled");
+//                alert(checkCode+" "+refundLine.length);
+                if(checkCode === refundLine.length){
+                    var refundTemp = refundComma[i];
+                    
+                    for(var a=0; a<issueComma.length; a++){
+                        var issueTemp = issueComma[a];
+                        
+                        if(issueTemp.indexOf(refundTemp) >= 0){
+                            checkLink++;
+                            a = issueComma.length;
+                        }                       
+                    }
+//                    alert(checkLink);
+                    if(checkLink === 0){
+                        validate = false;
+                        i = refundComma.length;                        
+                    }
+                
                 }else{
-                    e.style.borderColor = "Red";
-                    $("#buttonSaveRefund").attr("disabled", "disabled");
-                    $("#buttonPrintRefund").attr("disabled", "disabled");
+                    validate = false;
+                    i = refundComma.length;
                 }
+                
             }else{
-                checkRefundWithComma(e,row);
+                validate = false;
+                i = refundComma.length;
             }
+        }
+        
+        if(validate){
+            e.style.borderColor = "Green";
+            $("#buttonSaveRefund").removeAttr("disabled");
+            $("#buttonPrintRefund").removeAttr("disabled");
+        
         }else{
             e.style.borderColor = "Red";
             $("#buttonSaveRefund").attr("disabled", "disabled");
             $("#buttonPrintRefund").attr("disabled", "disabled");
         }
-    }    
+    
+    }else{
+        e.style.borderColor = "";
+        $("#buttonSaveRefund").removeAttr("disabled");
+        $("#buttonPrintRefund").removeAttr("disabled");
+    }
 }
 
 function checkRefundWithComma(e,row){
