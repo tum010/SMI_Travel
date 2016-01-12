@@ -536,9 +536,12 @@ public class InvoiceInboundController extends SMITravelController {
                 }
 
                 if(gross != null && !gross.equals("")){
-                        System.out.println("Gross"+gross);  
-                        BigDecimal grossInt = new BigDecimal(gross.replaceAll(",", ""));
-                        invoiceDetail.setGross(grossInt);
+                    System.out.println("Gross"+gross);  
+                    BigDecimal grossInt = new BigDecimal(gross.replaceAll(",", ""));
+                    invoiceDetail.setGross(grossInt);
+                    
+                    invoiceDetail.setCost(BigDecimal.ZERO);
+                    invoiceDetail.setCostLocal(BigDecimal.ZERO);
                 }
 
                 if(amountCurren != null){

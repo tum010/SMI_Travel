@@ -3,8 +3,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!--<script type="text/javascript" src="js/workspace.js"></script> -->
+<script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 
 <c:set var="dataPVList" value="${requestScope['PVList']}" />
 <c:set var="type" value="${requestScope['typeReceipt']}" />
@@ -404,8 +406,7 @@
                                 <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchInvno()">
                                     <span id="SpanEdit${advanced.search}">Invoice No.</span>
                                 </a>
-                                <label class="control-label text-right">&nbsp;&nbsp;/&nbsp;&nbsp;</label>
-                                
+                                <label class="control-label text-right">&nbsp;&nbsp;/&nbsp;&nbsp;</label>                               
                                 <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchRefno()">
                                     <span id="SpanEdit${advanced.search}">Ref No.</span>
                                 </a>
@@ -556,8 +557,8 @@
                                             <th style="width:12%;">Description</th>
                                             <th style="width:10%;">Cost</th>
                                             <th style="width:7%;">Cur</th>
-                                            <th style="width:5%;">Is Vat</th>
-                                            <th style="width:4%;">Vat</th>
+                                            <th style="width:4%;"><u>Is Vat</u></th>
+                                            <th style="width:2%;">Vat</th>
                                             <!--<th style="width:10%;">Gross</th>-->
                                             <th style="width:10%;">Amount</th>
                                             <th style="width:7%;">Cur</th>
@@ -588,7 +589,7 @@
                                             </select>                                                                  
                                         </td>
                                         <td><input maxlength="255" id="receiveDes${i.count}" name="receiveDes${i.count}" type="text" class="form-control" value="${table.description}"></td>
-                                        <td><input maxlength="10" id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control text-right"  value="${table.cost}" onkeyup="insertCommas(this)" readonly=""></td>
+                                        <td><input id="receiveCost${i.count}"  name="receiveCost${i.count}"  type="text" class="form-control decimal"  value="${table.cost}" readonly=""></td>
                                         <td>                                   
                                             <select class="form-control" name="receiveCurCostTemp${i.count}" id="receiveCurCostTemp${i.count}" disabled="disabled">
                                                 <option  value="" >---------</option>
@@ -637,17 +638,18 @@
                                                 </c:when>          
                                             </c:choose>
                                         </td> 
-                                        <td>
+                                        <td align="right">
+                                            <fmt:parseNumber var="vatShow" type="number" value="${requestScope['vat']}" />
                                             <c:choose>
                                                 <c:when test="${table.isVat == '1'}">
-                                                    <div id="receiveVat${i.count}" name="receiveVat${i.count}"  value="">${requestScope['vat']}</div>                                                        
+                                                    <div id="receiveVat${i.count}" name="receiveVat${i.count}"  value="">${vatShow}</div>                                                        
                                                 </c:when>
                                                 <c:when test="${table.isVat == '0'}">
                                                     <div id="receiveVat${i.count}" name="receiveVat${i.count}" style="display:none" ></div>
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onkeypress="setFormatCurrencyOnFocusOut('${i.count}')"  value="${table.amount}"></td>
+                                        <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control decimal" value="${table.amount}"></td>
                                         <td>                                   
                                             <select class="form-control" name="receiveCurrency${i.count}" id="receiveCurrency${i.count}">
                                                 <option  value="" >---------</option>
@@ -660,7 +662,7 @@
                                                 </c:forEach>
                                             </select>                                                                  
                                         </td>
-                                        <td><input type="text" value="${table.exRate}" id="receiveExRate${i.count}" name="receiveExRate${i.count}" class="form-control text-right" onkeypress="setFormatExRateOnFocusOut('${i.count}')"></td>
+                                        <td><input type="text" value="${table.exRate}" id="receiveExRate${i.count}" name="receiveExRate${i.count}" class="form-control decimalexrate"></td>
                                         <td class="hidden"><input type="text" value="${table.exRate}" id="curExRateTemp${i.count}" name="curExRateTemp${i.count}" class="form-control" ></td>
                                         <td class="text-center">
                                             <a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail('${i.count}')"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp
@@ -687,7 +689,8 @@
                         <input type="hidden" name="action" id="action" value="">
                         <input type="hidden" class="form-control" id="countRowCredit" name="countRowCredit" value="${requestScope['creditRowCount']}" />
                         <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['productRowCount']}" />
-                        <input type="hidden" name="vatValue" id="vatValue" value="${requestScope['vat']}">
+                        <fmt:parseNumber var="mVat" type="number" value="${requestScope['vat']}" />
+                        <input type="hidden" name="vatValue" id="vatValue" value="${mVat}">
                         <input type="hidden" name="searchReceipt" id="searchReceipt" value="${requestScope['searchReceipt']}">
                         <select class="hidden" name="billTypeList" id="billTypeList">
                             <c:forEach var="product" items="${billTypeList}" varStatus="status">                                
@@ -730,25 +733,25 @@
                                         <label class="control-label text-right">W/T </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="withTax" name="withTax" type="text" class="form-control"  maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${receipt.withTax}">
+                                        <input style="width: 130px" id="withTax" name="withTax" type="text" class="form-control decimal" value="${receipt.withTax}">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Cash </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="cashAmount" name="cashAmount" type="text" class="form-control" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)" value="${receipt.cashAmount}" >
+                                        <input style="width: 130px" id="cashAmount" name="cashAmount" type="text" class="form-control decimal" value="${receipt.cashAmount}" >
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Cash(-) </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 170px">
-                                        <input id="cashMinusAmount" name="cashMinusAmount" type="text" class="form-control" value="${receipt.cashMinusAmount}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
+                                        <input id="cashMinusAmount" name="cashMinusAmount" type="text" class="form-control decimal" value="${receipt.cashMinusAmount}" >
                                     </div>
                                     <div class="col-xs-1 text-left" style="width: 130px">
                                         <label class="control-label text-right">Bank Transfer </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="bankTransfer" name="bankTransfer" type="text" class="form-control" value="${receipt.bankTransfer}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
+                                        <input style="width: 130px" id="bankTransfer" name="bankTransfer" type="text" class="form-control decimal" value="${receipt.bankTransfer}" >
                                     </div>
                                 </div><hr/>
                                 <div class="row">
@@ -778,7 +781,7 @@
                                         <label class="control-label text-right">Amount </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="chqAmount1" name="chqAmount1" type="text" class="form-control" value="${receipt.chqAmount1}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
+                                        <input style="width: 130px" id="chqAmount1" name="chqAmount1" type="text" class="form-control decimal" value="${receipt.chqAmount1}">
                                     </div>
                                     <div class="col-xs-1" style="width: 50px;">
                                         <h4><a class="col-xs-1">
@@ -813,7 +816,7 @@
                                         <label class="control-label text-right">Amount </label>                                    
                                     </div>
                                     <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px"  id="chqAmount2" name="chqAmount2" type="text" class="form-control" value="${receipt.chqAmount2}" maxlength="12" style="text-align: right" onkeyup="insertCommas(this)">
+                                        <input style="width: 130px"  id="chqAmount2" name="chqAmount2" type="text" class="form-control decimal" value="${receipt.chqAmount2}">
                                     </div>
                                     <div class="col-xs-1" style="width: 50px ;">
                                         <h4><a class="col-xs-1">
@@ -1331,19 +1334,20 @@
                 <h4 class="modal-title"  id="Titlemodel">Print Receipt</h4>
             </div>
             <div class="modal-body" id="printReceiptModal" >
-                <div class="col-xs-1" style="width: 500px">
+                <div class="col-xs-1" style="width: 280px">
                     <label class="text-right">select option for print receipt<font style="color: red">*</font></label>                                    
                 </div>
-                <div class="text-center" style="width: 250px" >
+                <div class="col-xs-1" style="width: 200px" >
                     <select name="optionPrint" id="optionPrint" class="form-control" style="height:34px">
                         <option value="1" >Not Show Description</option>
                         <option value="2" >Show Description</option>
                         <option value="3" >Print Format Package Tour</option>
                     </select>
                 </div>
+                </br>
+                </br>
             </div>
             <div class="modal-footer">
-
                 <button type="button" class="btn btn-default" onclick="confirmPrintReceipt()"  data-dismiss="modal">
                     <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Print 
                 </button>          
@@ -1373,7 +1377,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="row">
+<!--                <div class="row">
                     <div class="col-md-5">
                         <h5>Sales Staff </h5>
                     </div>
@@ -1383,7 +1387,7 @@
                             <option value="0">Not  Show Sales Staff</option>
                         </select>
                     </div>
-                </div>
+                </div>-->
                 <div class="row">
                     <div class="col-md-5">
                         <h5>Show Leader to Invoice </h5>
@@ -1845,6 +1849,27 @@
 
             }
         }
+        
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
+        $(".decimalexrate").inputmask({
+            alias: "decimal",
+            integerDigits: 6,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 4,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.0000",
+        });
     });
 
 //    function setFormatCurrencyDetail(){
@@ -2047,7 +2072,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
-                    '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" onkeyup="insertCommas(this)" readonly="" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" readonly="" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +
                     '</td>' +
@@ -2057,13 +2082,13 @@
                     '<td align="center">' +
                     '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,' + row + ');" value="" >' +
                     '</td>' +
-                    '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
-                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
+                    '<td align="right"><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
+                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +
                     '</td>' +
                     '<td>' +
-                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control text-right" >' +
+                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control decimalexrate" >' +
                     '</td>' +
                     '<td class="hidden">' +
                     '<input type="text" value="" id="curExRateTemp' + row + '" name="curExRateTemp' + row + '" class="form-control" >' +
@@ -2085,7 +2110,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
-                    '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control" onkeyup="insertCommas(this)" readonly="" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" onkeyup="insertCommas(this)" readonly="" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +
                     '</td>' +
@@ -2095,13 +2120,13 @@
                     '<td align="center">' +
                     '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="return false" value="" >' +
                     '</td>' +
-                    '<td><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
-                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
+                    '<td align="right"><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
+                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal"></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +
                     '</td>' +
                     '<td>' +
-                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control text-right" >' +
+                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control decimalexrate" >' +
                     '</td>' +
                     '<td class="text-center">' +
                     '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp&nbsp' +
@@ -2126,6 +2151,26 @@
         });
         $("#receiveExRate" + row).focusout(function() {
             setFormatExRate(row);
+        });
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
+        $(".decimalexrate").inputmask({
+            alias: "decimal",
+            integerDigits: 6,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 4,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.0000",
         });
 //            var tempCount = parseInt($("#counter").val()) + 1;
         $("#counter").val(row + 1);
@@ -2266,7 +2311,7 @@
                 '</td>' +
                 '<td><input maxlength="20" id="creditNo' + row + '" name="creditNo' + row + '" type="text" class="form-control" ></td>' +
                 '<td><div class="input-group date"><input id="creditExpired' + row + '" name="creditExpired' + row + '"  type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value=""><span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
-                '<td><input id="creditAmount' + row + '" name="creditAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)"></td>' +
+                '<td><input id="creditAmount' + row + '" name="creditAmount' + row + '" type="text" class="form-control decimal"></td>' +
                 '<td class="text-center">' +
                 '<a class="remCF" onclick="deleteCreditList(\'\', \'' + row + '\')">  ' +
                 '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
@@ -2286,6 +2331,27 @@
                 document.getElementById("creditAmount" + row).value = "";
             }
             sumTotalCreditAmount();
+        });
+        
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
+        $(".decimalexrate").inputmask({
+            alias: "decimal",
+            integerDigits: 6,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 4,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.0000",
         });
 
         var tempCount = parseInt($("#countRowCredit").val()) + 1;
@@ -2526,7 +2592,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="' + product + '" selected></option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="' + description + '"></td>' +
-                    '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control text-right" value="' + cost + '" onkeyup="insertCommas(this)" readonly="" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" value="' + cost + '" readonly="" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="' + cur + '" ></option></select>' +
                     '</td>' +
@@ -2536,13 +2602,13 @@
                     '<td align="center">' +
                     '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="' + isVat + '"  onclick="handleClick(this,' + row + ');">' +
                     '</td>' +
-                    '<td><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
-                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
+                    '<td align="right"><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
+                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="' + currency + '"></option></select>' +
                     '</td>' +
                     '<td>' +
-                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control text-right" >' +
+                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control decimalexrate" >' +
                     '</td>' +
                     '<td class="text-center">' +
                     '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp' +
@@ -2566,7 +2632,7 @@
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="' + product + '" selected></option></select>' +
                     '</td>' +
                     '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" value="' + description + '"></td>' +
-                    '<td><input maxlength="10" id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control text-right" value="' + cost + '" onkeyup="insertCommas(this)" readonly="" ></td>' +
+                    '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" value="' + cost + '" readonly="" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="' + cur + '" ></option></select>' +
                     '</td>' +
@@ -2576,13 +2642,13 @@
                     '<td align="center">' +
                     '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="' + isVat + '"  onclick="return false">' +
                     '</td>' +
-                    '<td><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
-                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control text-right" onkeyup="insertCommas(this)" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
+                    '<td align="right"><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
+                    '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="' + currency + '"></option></select>' +
                     '</td>' +
                     '<td>' +
-                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control text-right" >' +
+                    '<input type="text" value="" id="receiveExRate' + row + '" name="receiveExRate' + row + '" class="form-control decimalexrate" >' +
                     '</td>' +
                     '<td class="text-center">' +
                     '<a href="#/inv" data-toggle="modal" data-target="#DescriptionReceiptDetailModal" onclick="getDescriptionDetail(' + row + ')" id="InputDescription' + row + '"><span class="glyphicon glyphicon-th-list"></span></a>&nbsp' +
@@ -2644,6 +2710,26 @@
             setFormatExRate(row);
         });
         setFormatCurrency(row);
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
+        $(".decimalexrate").inputmask({
+            alias: "decimal",
+            integerDigits: 6,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 4,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.0000",
+        });
         var tempCount = parseInt($("#counter").val()) + 1;
         $("#counter").val(tempCount);
         AddRowProduct(tempCount);

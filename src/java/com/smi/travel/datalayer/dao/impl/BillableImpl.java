@@ -406,7 +406,7 @@ public class BillableImpl implements BillableDao {
                 }    
                 
                 //TAX
-                tax += flightDetail.getAdTax() + flightDetail.getChTax() +flightDetail.getInTax();
+                tax += (flightDetail.getAdTax() != null ? flightDetail.getAdTax() : 0) + (flightDetail.getChTax() != null ? flightDetail.getChTax() : 0) + (flightDetail.getInTax() != null ? flightDetail.getInTax() : 0);
                 
             }
             if(ticketlife.length() > 0){
