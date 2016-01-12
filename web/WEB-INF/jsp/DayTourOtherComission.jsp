@@ -43,7 +43,7 @@
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/Book/OperationOther.html'"></div>
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-10" style="padding-right: 0px;">
             <div id="textAlertDivSaveAddGuide"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Guide Success!</strong> 
@@ -142,11 +142,11 @@
                     <thead class="datatable-header">
                         <tr>
                             <th class="hide">Booking ID</th>
-                            <th style="width:5%">Code</th>
-                            <th style="width:10%">Name</th>
-                            <th style="width:10%">Date</th>
+                            <th style="width:4%">Code</th>
+                            <th style="width:9%">Name</th>
+                            <th style="width:13%">Date</th>
                             <th style="width:5%">Ref. No</th>
-                            <th style="width:15%">Client Name</th>
+                            <th style="width:14%">Client Name</th>
                             <th style="width:15%">Guide Name</th>
                             <th style="width:6%">Guide Comm</th>
                             <th style="width:12%">Remark Guide</th>
