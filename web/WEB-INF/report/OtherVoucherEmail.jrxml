@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelVoucher" language="groovy" pageWidth="575" pageHeight="500" columnWidth="574" leftMargin="1" rightMargin="0" topMargin="0" bottomMargin="0" uuid="053f4d0e-4534-4ae9-bd3a-d9c39367ad2d">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="51"/>
+	<property name="ireport.y" value="137"/>
 	<queryString>
 		<![CDATA[SELECT
      *,
@@ -37,168 +37,164 @@ FROM
 	<background>
 		<band splitType="Stretch"/>
 	</background>
-	<title>
-		<band height="133" splitType="Stretch">
-			<rectangle radius="10">
-				<reportElement x="10" y="80" width="555" height="36" uuid="01c8d6a0-911f-4a30-963d-1e35e9d18170"/>
-			</rectangle>
-			<staticText>
-				<reportElement x="381" y="83" width="53" height="21" uuid="046ea5b4-12e9-4f64-8372-06840e8b1bd7"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[REF NO. :]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="381" y="97" width="52" height="20" uuid="47836cd4-9f95-4862-ba18-24492a066fa2"/>
-				<textElement>
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[DATE     :]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="435" y="83" width="119" height="20" uuid="a8342fea-6e1e-4492-9936-f9e0457672bf"/>
-				<textElement>
-					<font fontName="SansSerif" size="11" isBold="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{refno}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="435" y="96" width="119" height="20" uuid="7692ad40-059c-4229-81a8-e74b98110917"/>
-				<textElement>
-					<font fontName="SansSerif" size="11" isItalic="false" pdfEncoding="Cp1252"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{createdate}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="79" y="11" width="149" height="17" uuid="6e72300c-5bf7-4c05-8185-485621d8c9e5"/>
-				<textElement>
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[S.M.I Travel Co., Ltd.]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="79" y="65" width="177" height="13" uuid="7c4ee75d-365c-4b8e-8113-b890670cf365"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="79" y="52" width="271" height="13" uuid="ed0533b6-b6c6-4f64-ae1a-b83c05a5d7d4"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[Tel : (66-2) 216-2201 Fax : (66-2) 216-2202]]></text>
-			</staticText>
-			<image>
-				<reportElement x="10" y="10" width="65" height="66" uuid="ffef01e5-8eb0-4af6-adb9-c45ba9facf33"/>
-				<imageExpression><![CDATA["resource/images/wendy-logo.jpg"]]></imageExpression>
-			</image>
-			<staticText>
-				<reportElement x="79" y="26" width="204" height="13" uuid="35f67157-2291-44b4-8832-51c390578d6e"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[9th Floor, Siam At Siam Hotel Building,]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="211" y="73" width="138" height="46" uuid="bfc2976e-7ed7-41ac-bb90-ca10cff996c3"/>
-				<textElement>
-					<font fontName="Serif" size="36" isBold="true" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[Voucher]]></text>
-			</staticText>
-		</band>
-	</title>
 	<pageHeader>
-		<band height="61" splitType="Stretch">
+		<band height="220" splitType="Stretch">
 			<staticText>
-				<reportElement x="20" y="10" width="76" height="20" uuid="47812be1-17cf-4258-84a9-5b4e91bc6ae3"/>
+				<reportElement x="20" y="169" width="76" height="20" uuid="47812be1-17cf-4258-84a9-5b4e91bc6ae3"/>
 				<textElement>
 					<font size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[LEADER :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="96" y="9" width="119" height="20" uuid="d83dea76-148c-4e20-a467-54f394784529"/>
+				<reportElement x="96" y="168" width="285" height="38" uuid="d83dea76-148c-4e20-a467-54f394784529"/>
 				<textElement>
 					<font fontName="SansSerif" size="11" isBold="false" isItalic="false" pdfEncoding="Cp1252"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{leadername}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="379" y="47" width="62" height="14" uuid="d434df6e-184a-43a1-967c-80ab3d09868d"/>
+				<reportElement x="379" y="206" width="62" height="14" uuid="d434df6e-184a-43a1-967c-80ab3d09868d"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Time]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement mode="Transparent" x="437" y="47" width="36" height="13" uuid="b703dec1-5606-4d01-b261-29376cfef38d"/>
+				<reportElement mode="Transparent" x="437" y="206" width="36" height="13" uuid="b703dec1-5606-4d01-b261-29376cfef38d"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="477" y="48" width="50" height="13" uuid="bdb827f8-172e-43d4-87de-2e34aca2236b"/>
+				<reportElement x="477" y="207" width="50" height="13" uuid="bdb827f8-172e-43d4-87de-2e34aca2236b"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Child]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement mode="Transparent" x="288" y="47" width="87" height="13" uuid="f5c12b20-03a4-424e-9a3f-20d9283cf93f"/>
+				<reportElement mode="Transparent" x="288" y="206" width="87" height="13" uuid="f5c12b20-03a4-424e-9a3f-20d9283cf93f"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="21" y="47" width="80" height="13" uuid="0317e1c7-9014-4fa3-b4be-e7b15304c5d7"/>
+				<reportElement mode="Transparent" x="21" y="206" width="80" height="13" uuid="0317e1c7-9014-4fa3-b4be-e7b15304c5d7"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="441" y="47" width="36" height="13" uuid="23a3b4c7-5cf1-4747-9b7b-5b4e17a14605"/>
+				<reportElement x="441" y="206" width="36" height="13" uuid="23a3b4c7-5cf1-4747-9b7b-5b4e17a14605"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Adult]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement mode="Transparent" x="473" y="47" width="36" height="13" uuid="c5042637-f9c5-42e8-8a1b-e06e73828121"/>
+				<reportElement mode="Transparent" x="473" y="206" width="36" height="13" uuid="c5042637-f9c5-42e8-8a1b-e06e73828121"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="105" y="47" width="183" height="13" uuid="0b738f93-d7cf-43ef-be86-a0edf870fb39"/>
+				<reportElement x="105" y="206" width="183" height="13" uuid="0b738f93-d7cf-43ef-be86-a0edf870fb39"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Description]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="300" y="47" width="81" height="14" uuid="495760cf-d56f-4f6b-9210-f7a4dba27ec1"/>
+				<reportElement x="300" y="206" width="81" height="14" uuid="495760cf-d56f-4f6b-9210-f7a4dba27ec1"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Date]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement mode="Transparent" x="375" y="47" width="62" height="13" uuid="aaa0d524-7feb-4cbc-96ab-dd1638003c35"/>
+				<reportElement mode="Transparent" x="375" y="206" width="62" height="13" uuid="aaa0d524-7feb-4cbc-96ab-dd1638003c35"/>
 			</rectangle>
 			<line>
-				<reportElement x="21" y="47" width="524" height="1" uuid="7f2749a2-0feb-4677-80bb-a9242000c98f"/>
+				<reportElement x="21" y="206" width="524" height="1" uuid="7f2749a2-0feb-4677-80bb-a9242000c98f"/>
 			</line>
 			<rectangle>
-				<reportElement mode="Transparent" x="102" y="47" width="186" height="13" uuid="d75ecfc9-5ee4-4269-a5c1-97037d78c9b9"/>
+				<reportElement mode="Transparent" x="102" y="206" width="186" height="13" uuid="d75ecfc9-5ee4-4269-a5c1-97037d78c9b9"/>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="509" y="47" width="36" height="13" uuid="ad4ded7a-22a3-412e-ba9c-8be684eb4912"/>
+				<reportElement mode="Transparent" x="509" y="206" width="36" height="13" uuid="ad4ded7a-22a3-412e-ba9c-8be684eb4912"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="513" y="47" width="32" height="14" uuid="58f0b89f-0716-442a-b9d1-7b20cc269c41"/>
+				<reportElement x="513" y="206" width="32" height="14" uuid="58f0b89f-0716-442a-b9d1-7b20cc269c41"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Infant]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="26" y="47" width="80" height="13" uuid="d42726d5-b2b9-4b64-a8b0-7ba754c0534a"/>
+				<reportElement x="26" y="206" width="80" height="13" uuid="d42726d5-b2b9-4b64-a8b0-7ba754c0534a"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Code]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="9" y="80" width="555" height="36" uuid="01c8d6a0-911f-4a30-963d-1e35e9d18170"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="380" y="83" width="53" height="21" uuid="046ea5b4-12e9-4f64-8372-06840e8b1bd7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[REF NO. :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="97" width="52" height="20" uuid="47836cd4-9f95-4862-ba18-24492a066fa2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE     :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="434" y="83" width="119" height="20" uuid="a8342fea-6e1e-4492-9936-f9e0457672bf"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" isBold="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{refno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="96" width="119" height="20" uuid="7692ad40-059c-4229-81a8-e74b98110917"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" isItalic="false" pdfEncoding="Cp1252"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{createdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="78" y="11" width="149" height="17" uuid="6e72300c-5bf7-4c05-8185-485621d8c9e5"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[S.M.I Travel Co., Ltd.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="65" width="177" height="13" uuid="7c4ee75d-365c-4b8e-8113-b890670cf365"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[E-Mail : yoyaku@wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="52" width="271" height="13" uuid="ed0533b6-b6c6-4f64-ae1a-b83c05a5d7d4"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Tel : (66-2) 216-2201 Fax : (66-2) 216-2202]]></text>
+			</staticText>
+			<image>
+				<reportElement x="9" y="10" width="65" height="66" uuid="ffef01e5-8eb0-4af6-adb9-c45ba9facf33"/>
+				<imageExpression><![CDATA["resource/images/wendy-logo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="78" y="26" width="204" height="13" uuid="35f67157-2291-44b4-8832-51c390578d6e"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[9th Floor, Siam At Siam Hotel Building,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="73" width="138" height="46" uuid="bfc2976e-7ed7-41ac-bb90-ca10cff996c3"/>
+				<textElement>
+					<font fontName="Serif" size="36" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Voucher]]></text>
 			</staticText>
 		</band>
 	</pageHeader>
@@ -259,7 +255,7 @@ FROM
 		<band height="98">
 			<staticText>
 				<reportElement x="295" y="2" width="95" height="18" uuid="5ee2a8fa-db0e-41fc-b718-ac6d9edc4436"/>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[REMARKS]]></text>
@@ -292,7 +288,7 @@ FROM
 				<textFieldExpression><![CDATA[$F{passenger}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="291" y="0" width="100" height="18" uuid="9e71e5a3-6e27-4111-b7ac-71f4965f14bd"/>
+				<reportElement mode="Transparent" x="291" y="2" width="100" height="18" uuid="9e71e5a3-6e27-4111-b7ac-71f4965f14bd"/>
 			</rectangle>
 		</band>
 	</columnFooter>
