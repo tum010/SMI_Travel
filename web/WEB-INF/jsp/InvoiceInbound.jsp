@@ -6,6 +6,7 @@
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <script type="text/javascript" src="js/selectize.js"></script>
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
@@ -236,8 +237,8 @@
                                                     </td>
                                                     <td class="hidden">${ind.vat}</td>
                                                     <td class="hidden">
-                                                        <input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})" 
-                                                        class="form-control numerical" id="InputGross${taxdesc.count}" 
+                                                        <input type="text" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})" 
+                                                        class="form-control decimal" id="InputGross${taxdesc.count}" 
                                                         name="InputGross${taxdesc.count}" value="${ind.gross}" >
                                                     </td>
                                                 </c:when>
@@ -254,21 +255,26 @@
                                                         <input type="text" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}"  
                                                         value="${ind.vat}">
                                                     </td>
-                                                    <td>${ind.vat}</td>
+                                                    <td class="text-right">
+                                                        <c:if test="${ind.isVat == 1}">
+                                                            <fmt:parseNumber var="vatShow" type="number" value="${ind.vat}" />
+                                                            ${vatShow}
+                                                        </c:if>   
+                                                    </td>
                                                     <td>
-                                                        <input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})"
-                                                        class="form-control numerical" id="InputGross${taxdesc.count}" 
+                                                        <input type="text" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})"
+                                                        class="form-control decimal" id="InputGross${taxdesc.count}" 
                                                         name="InputGross${taxdesc.count}" value="${ind.gross}" >
                                                     </td>
                                                 </c:when>                        
                                             </c:choose>                             
                                             <td>
-                                                <input type="text" maxlength ="15" class="form-control numerical text-right" 
+                                                <input type="text" class="form-control decimal" 
                                                 id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" 
                                                 onfocusout="changeFormatAmountNumber(${taxdesc.count});"  value="${ind.amount}">
                                             </td>
                                             <td class="priceCurrencyAmount">
-                                                <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="checkCurrency()">
+                                                <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="checkCurrency()" onchange="CalculateGrandTotal('')">
                                                     <option value='' ></option>
                                                     <c:forEach var="cur" items="${listCurrency}">
                                                         <c:set var="selectA" value="" />
@@ -331,7 +337,7 @@
                                                         <label class="control-label" for="">Grand Total&nbsp;Net&nbsp;:</lable>                                     
                                                     </div>
                                                     <div class="col-sm-3" >
-                                                        <input  rows="3" cols="200" id="GrandTotal" name="GrandTotal" class="form-control" value="" readonly=""  onfocus="CalculateGrandTotal();">
+                                                        <input  rows="3" cols="200" id="GrandTotal" name="GrandTotal" class="form-control text-right" value="" readonly=""  onfocus="CalculateGrandTotal();">
                                                     </div>  
                                                 </c:when>
                                                 <c:when test="${fn:contains(page , 'RV')}">
@@ -339,7 +345,7 @@
                                                         <label class="control-label" for="">Total&nbsp;Net&nbsp;:</lable>                                         
                                                     </div>
                                                     <div class="col-sm-3" >
-                                                        <input  rows="3" cols="200" id="TotalNet" name="TotalNet" class="form-control" value="" readonly="">
+                                                        <input  rows="3" cols="200" id="TotalNet" name="TotalNet" class="form-control text-right" value="" readonly="">
                                                     </div>  
                                                 </c:when>
                                             </c:choose>                                                           
@@ -351,7 +357,7 @@
                                                 <label class="control-label" for="">Vat&nbsp;Net&nbsp;:</lable>                                         
                                             </div>
                                             <div class="col-sm-3" >
-                                                <input  rows="3" cols="200" id="VatNet" name="VatNet" class="form-control" value="" readonly="">
+                                                <input  rows="3" cols="200" id="VatNet" name="VatNet" class="form-control text-right" value="" readonly="">
                                             </div>
                                         </div> 
                                         <div class="sm_row col-xs-12 " ${setTotalNet}><br></div>
@@ -361,7 +367,7 @@
                                                 <label class="control-label" for="">Grand Total&nbsp;Net&nbsp;:</lable>                                         
                                             </div>
                                             <div class="col-sm-3" >
-                                                <input  rows="3" cols="200" id="GrandTotal" name="GrandTotal" class="form-control" value="" readonly="">
+                                                <input  rows="3" cols="200" id="GrandTotal" name="GrandTotal" class="form-control text-right" value="" readonly="">
                                             </div>
                                         </div> 
                                     </div>
@@ -749,6 +755,7 @@
 <input type="hidden" id="typeReport" name="typeReport" value="">
 <input type="hidden" value="${textVoid}">
 <input type="hidden" id="invoiceType" name="invoiceType" value="${invoiceType}">
-<input type="hidden" id="vatBase" name="vatBase" value="${vat}">
+<fmt:parseNumber var="mVat" type="number" value="${vat}" />
+<input type="hidden" id="vatBase" name="vatBase" value="${mVat}">
 <script type="text/javascript" src="js/invoiceinbound.js"></script>
 

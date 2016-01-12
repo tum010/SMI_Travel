@@ -15,6 +15,17 @@ $(document).ready(function() {
         value = value.replace(/\.[0-9]+\./g, '.');
         $(this).val(value);
     });
+    
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
 //    $(".numerical").mask('00000000', {reverse: true});
     
     // Invoice To Modal
@@ -354,12 +365,12 @@ function calculateGross(row) {
             var vatT= $('#InputVatTemp'+row).val();
             var vatTT = parseFloat(vatT);
             console.log("Vat : " + formatNumber(vatTT));
-            document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = formatNumber(vatTT);
+            document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = (vatTT);
             grossTotal = (amount * 100) / (100 + vatTT);
             document.getElementById('InputGross' + row).value = formatNumber(grossTotal);
             document.getElementById('InputVatTemp' + row).value = formatNumber(countVat+1 < countTable ? parseFloat($('#InputVatTemp'+row).val()) : parseFloat($('#vatBase').val()));
         } else {
-            document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = formatNumber(vatDefaultData);
+            document.getElementById("DetailBillableTable").rows[row].cells[4].innerHTML = (vatDefaultData);
             if(amount !== 0){
                 grossTotal = (amount * 100) / (100 + vatDefaultData);
             }else{
@@ -536,10 +547,43 @@ function CalculateGrandTotal(id) {
         }
         document.getElementById('GrandTotal').value = formatNumber(grandTotal);
         if (grandTotal !== 0) {
-            var bathString = toWordsMoney((grandTotal));
+            var currency = getCurrency();
+            var bathString = toWords(grandTotal,currency);
             document.getElementById('TextAmount').value = bathString;
         }
     }
+}
+
+function getCurrency(){
+    var count = parseInt($("#counterTable").val());
+    var currency = '';
+    for(var i=1; i<=count; i++){
+        var currency1 = document.getElementById('SelectCurrencyAmount'+i);
+        var description1 = document.getElementById('BillDescriptionTemp'+i);
+        var amount1 = document.getElementById('InputAmount'+i);
+        if(currency1 !== null){
+            if(description1.value !== '' || amount1.value !== ''){
+                currency = currency1.value;
+                var currencyTemp1 = currency1.value;
+                for(var j=i+1; j<=count; j++){
+                    var currency2 = document.getElementById('SelectCurrencyAmount'+j);
+                    var description2 = document.getElementById('BillDescriptionTemp'+j);
+                    var amount2 = document.getElementById('InputAmount'+j);
+                    if(currency2 !== null){
+                        if(description2.value !== '' || amount2.value !== ''){
+                            var currencyTemp2 = currency2.value;
+                            if((currencyTemp1 !== currencyTemp2)){
+                                currency = ''; 
+                                i = count+1;
+                                j = count+1;
+                            }
+                        }    
+                    }
+                }
+            }    
+        }    
+    }
+    return currency;
 }
 
 function toWordsMoney(s){
@@ -646,40 +690,40 @@ function CalculateTotalNet(id) {
 }
 
 function changeFormatGrossNumber(id) {
-    var count = document.getElementById('InputAmount' + id).value;
-
-    count = count.replace(/\,/g, '');
-    count = parseFloat(count);
-    if (isNaN(count)) {
-        document.getElementById('InputAmount' + id).value = "";
-        document.getElementById('InputGross' + id).value = "";
-    } else {
-        count = parseFloat(count);
-        document.getElementById('InputAmount' + id).value = formatNumber(count);
-    }
+//    var count = document.getElementById('InputAmount' + id).value;
+//
+//    count = count.replace(/\,/g, '');
+//    count = parseFloat(count);
+//    if (isNaN(count)) {
+//        document.getElementById('InputAmount' + id).value = "";
+//        document.getElementById('InputGross' + id).value = "";
+//    } else {
+//        count = parseFloat(count);
+//        document.getElementById('InputAmount' + id).value = formatNumber(count);
+//    }
     CalculateGrandTotal(id);
     CalculateTotalNet(id);
     calculateGross(id);
 }
 
 function changeFormatAmountNumber(id) {
-    var count = document.getElementById('InputAmount' + id).value;
-    var type = $("#InputTypeInvoiceInbound").val();
-    var curamount = document.getElementById('SelectCurrencyAmount' + id).value;
+//    var count = document.getElementById('InputAmount' + id).value;
+//    var type = $("#InputTypeInvoiceInbound").val();
+//    var curamount = document.getElementById('SelectCurrencyAmount' + id).value;
 //    if (curamount === '') {
 //        $('#textAlertCurrencyAmountNotEmpty').show();
 //    } else {
 //        $('#textAlertInvoiceNotEmpty').hide();
 //    }
 
-    count = count.replace(/\,/g, '');
-    count = parseFloat(count);
-    if (isNaN(count)) {
-        document.getElementById('InputAmount' + id).value = "";
-    } else {
-        count = parseFloat(count);
-        document.getElementById('InputAmount' + id).value = formatNumber(count);
-    }
+//    count = count.replace(/\,/g, '');
+//    count = parseFloat(count);
+//    if (isNaN(count)) {
+//        document.getElementById('InputAmount' + id).value = "";
+//    } else {
+//        count = parseFloat(count);
+//        document.getElementById('InputAmount' + id).value = formatNumber(count);
+//    }
     CalculateGrandTotal(id);
     calculateGross(id);
     if(type === 'RV'){
@@ -690,9 +734,11 @@ function changeFormatAmountNumber(id) {
 function addRowInvoiceInboundDetail(row){
     var typeInvoiceInbound = $("#InputTypeInvoiceInbound").val();
     var vatTemp = $('#vatBase').val();
-    var textHidden = "";
+    var textHidden = '';
+    var textHiddenVat = 'class="text-right"';
     if(typeInvoiceInbound === "PM"){
         textHidden = 'class="hidden"';
+        textHiddenVat = 'class="text-right hidden"'
     }
     var vat = $('#vatBase').val();
     $("#DetailBillableTable tbody").append(
@@ -701,13 +747,23 @@ function addRowInvoiceInboundDetail(row){
     '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '"   value=""></td>' +
     '<td '+ textHidden+'><input type="checkbox" id="checkUse' + row + '" name="checkUse' + row + '" onclick="calculateGross(' + row + ')" value="" checked></td>' +
     '<td class="hidden" ><input type="text" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '"  value="' + vat + '"></td>' +
-    '<td '+ textHidden+'>'+vatTemp+'</td>' +
-    '<td '+ textHidden+'><input type="text" maxlength ="15" readonly  onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control numerical" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
-    '<td><input type="text" maxlength ="15" class="form-control numerical text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" onfocusout="changeFormatAmountNumber(' + row + ');"  value=""></td>' +
-    '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="checkCurrency()">' + select + '</select></td>' +              
+    '<td '+ textHiddenVat+'>'+vatTemp+'</td>' +
+    '<td '+ textHidden+'><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
+    '<td><input type="text" class="form-control decimal" id="InputAmount' + row + '" name="InputAmount' + row + '" onfocusout="changeFormatAmountNumber(' + row + ');"  value=""></td>' +
+    '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="checkCurrency()" onchange="CalculateGrandTotal(\'\')">' + select + '</select></td>' +              
     '<td align="center" ><span  class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteDetailBillInbound(' + row + ',\'\')" data-toggle="modal" data-target="#DelDetailBill" >  </span></td>' +           
     '</tr>'
     );
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
     var count = document.getElementById('counterTable');
     count.value = row++;
 }
