@@ -462,50 +462,125 @@ function checkRefund(e) {
 //        return;
 //    }
 
-    var refund = (e.value).split("-");
-    var refundTemp = e.value;
-    var row = $(e).parent().parent().attr("row");
-    var issue = ($("#sectorIssue" + row).html()).split("-");
-    var issueTemp = ($("#sectorIssue" + row).html());
-    
-    if (e.value === '') {
-        e.style.borderColor = "";
-    } else{
-        if(refund.length > 1){
-            var match = 0;
-            var error = 0;
-            var seq = 0;
-            for(var i=0; i<refund.length; i++){
-                var sectionRefund = refund[i];
-                var different = 0;
-                for(var j=0; j<issue.length; j++){
-                    var section = issue[j];               
-                    if(sectionRefund === section){
-                        var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
-                        if(((j >= seq) && ((section !== sectionRefundTemp)))){
-                            seq = j;
-                            delete issue[j];
-                            j = issue.length;             
-                            match++;
-                        }    
+//    var refund = (e.value).split("-");
+//    var refundTemp = e.value;
+//    var row = $(e).parent().parent().attr("row");
+//    var issue = ($("#sectorIssue" + row).html()).split("-");
+//    var issueTemp = ($("#sectorIssue" + row).html());
+//    
+//    if (e.value === '') {
+//        e.style.borderColor = "";
+//    } else{
+//        if(refund.length > 1){
+//            var match = 0;
+//            var error = 0;
+//            var seq = 0;
+//            for(var i=0; i<refund.length; i++){
+//                var sectionRefund = refund[i];
+//                var different = 0;
+//                for(var j=0; j<issue.length; j++){
+//                    var section = issue[j];               
+//                    if(sectionRefund === section){
+//                        var sectionRefundTemp = (i > 0 ? refund[i-1] : '');
+//                        if(((j >= seq) && ((section !== sectionRefundTemp)))){
+//                            seq = j;
+//                            delete issue[j];
+//                            j = issue.length;             
+//                            match++;
+//                        }    
+//                    }else{
+//                        different++;
+//                    }
+//                    if(j === ((issue.length)-1)){
+//                        if(different > 0){
+//                            error++;
+//                        }                    
+//                    }
+//                }        
+//            }
+//            if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
+//                e.style.borderColor = "Green";
+//            }else{
+//                e.style.borderColor = "Red";
+//            }
+//        }else{
+//            e.style.borderColor = "Red";
+//        }                            
+//    }
+    var row = $(e).parent().parent().attr("row");    
+    var refundComma = (e.value).split(",");
+    var issueComma = ($("#sectorIssue" + row).html()).split(",");
+    var validate = true;
+
+    if(e.value !== ''){
+        for(var i=0; i<refundComma.length; i++){
+            var refundLine = refundComma[i].split("-");
+            var checkLink = 0;
+            
+            if(refundLine.length > 1){
+                var checkCode = 0;
+                for(var j=0; j<refundLine.length; j++){
+                    var refundTemp = refundLine[j];
+                    
+                    if(refundTemp !== ''){                    
+                        for(var x=0; x<issueComma.length; x++){
+                            var issueLine = issueComma[x].split("-");
+
+                            for(var y=0; y<issueLine.length; y++){
+                                var issueTemp = issueLine[y];
+//                                alert(refundTemp+" "+issueTemp);
+                                if(refundTemp === issueTemp){
+                                    delete issueLine[y];
+                                    checkCode++;
+                                    y = issueLine.length;
+                                    x = issueComma.length;
+                                }
+                            }
+                        }
+                    
                     }else{
-                        different++;
+                        validate = false;
+                        i = refundComma.length;
+                    }    
+                }
+//                alert(checkCode+" "+refundLine.length);
+                if(checkCode === refundLine.length){
+                    var refundTemp = refundComma[i];
+                    
+                    for(var a=0; a<issueComma.length; a++){
+                        var issueTemp = issueComma[a];
+                        
+                        if(issueTemp.indexOf(refundTemp) >= 0){
+                            checkLink++;
+                            a = issueComma.length;
+                        }                       
                     }
-                    if(j === ((issue.length)-1)){
-                        if(different > 0){
-                            error++;
-                        }                    
+//                    alert(checkLink);
+                    if(checkLink === 0){
+                        validate = false;
+                        i = refundComma.length;                        
                     }
-                }        
-            }
-            if(error === 0 && match > 0 && (issueTemp.indexOf(refundTemp) >= 0)){
-                e.style.borderColor = "Green";
+                
+                }else{
+                    validate = false;
+                    i = refundComma.length;
+                }
+                
             }else{
-                e.style.borderColor = "Red";
+                validate = false;
+                i = refundComma.length;
             }
+        }
+        
+        if(validate){
+            e.style.borderColor = "Green";
+        
         }else{
             e.style.borderColor = "Red";
-        }                            
+        }
+    
+    }else{
+        e.style.borderColor = "";
     }
 }
 
