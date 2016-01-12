@@ -291,6 +291,7 @@ public class CreditNoteImpl implements CreditNoteDao {
         noteview.setId(notedetail.getId());
         noteview.setApCode(notedetail.getApCode());
         noteview.setCnno(notedetail.getCnNo());
+        noteview.setCnname(notedetail.getCnName());
         noteview.setCndate(util.convertDateToString(notedetail.getCnDate()));
         noteview.setDepartment(notedetail.getDepartment());
         noteview.setStatus(notedetail.getMFinanceItemstatus().getName());
