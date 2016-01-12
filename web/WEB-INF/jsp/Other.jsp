@@ -120,12 +120,12 @@
 
             </div>
 
-            <div class="row" style="margin-left: 10px;margin-right: 10px;"> 
+            <div class="row" style="margin-left: 0px;margin-right: 0px;"> 
                 <table id="MasterOther" class="display" cellspacing="0"  >
                     <thead>
                         <tr class="datatable-header">
                             <th class="hidden" rowspan="2">Code</th>
-                            <th rowspan="2" style="width: 85px">Date</th>
+                            <th rowspan="2" style="width: 90px">Date</th>
                             <th rowspan="2">Product Name</th>
                             <th colspan="3" >Adult</th>
                             <th colspan="3">Child</th>
