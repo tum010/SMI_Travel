@@ -106,7 +106,7 @@
                                         <td class="text-center">
                                             <span id="RefBookTableButtonEdit" name="RefBookTableButtonEdit" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/OtherDetail.smi?referenceNo=${RefNo}&itemid=${table.id}&action=edit');"></span>
                                             <a  href="#" >
-                                                <span  class="glyphicon glyphicon-list-alt" id="SpanEdit${status.count}" onclick="selectListOther(${status.count})"  ></span>
+                                                <span  class="glyphicon glyphicon-list-alt" id="SpanEdit${status.count}" onclick="selectListOther(${status.count},${table.id})"  ></span>
                                             </a>
                                                 <input type="text" class="hidden" id="countClick${status.count}" name="countClick${status.count}" value="0">
                                         </td>
@@ -114,11 +114,13 @@
                                     </c:forEach>
                                 </c:if>
                                     <input type="hidden" id="countListOther" name="countListOther" value="${counter}" >
+                                    <input type="hidden" id="rowTable" name="rowTable" value=""/>
                             </tbody>
                         </table>
                     </div>
-                    <!--View Detail Tour Pop up -->
+                    <!--View Detail Tour Pop up -->                   
                     <c:forEach var="table2" items="${listOtherBooking}" varStatus="status">
+                        <c:set var="otherBookingId" value="${table2.id}"/>
                         <div class="hidden" id="TableOther${status.count}" name="TableOther${status.count}" >
                         <label class="control-label" style="margin-top: 10px;margin-left: 20px;">Price (<c:out value="${table2.product.code}" />)</label>
                         <table class="display" style="width:97%;margin-top: 10px;">
@@ -144,6 +146,7 @@
                             </thead>
                             <tbody>
                                 <c:forEach var="table" items="${listOtherBooking}" varStatus="status">
+                                <c:if test="${table.id == otherBookingId}">   
                                 <tr>
                                     <td class="money"><center><c:out value="${table.adCost}" /></center></td>
                                     <td><center><c:out value="${table.adQty}" /></center></td>
@@ -157,6 +160,7 @@
                                     <td><center><c:out value="${table.curCost}" /></center></td>
                                     <td class="money"><center><c:out value="${(table.adQty*table.adPrice)+(table.chQty*table.chPrice)+(table.inQty*table.inPrice)}" /></center></td>
                                 </tr>
+                                </c:if> 
                                 </c:forEach>
                             </tbody>
                         </table>

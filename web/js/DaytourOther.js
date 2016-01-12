@@ -3,22 +3,36 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-function selectListOther(counter){
+function selectListOther(counter,id){
     var count = document.getElementById('countListOther');
     var countClick = $('#countClick'+counter).val();
-    for(var i = 1 ; i <= count.value ; i++){
-        $("#TableOther"+i).addClass("hidden");
-    }
-    $('#SpanEdit'+ counter).click(function() {
+    var rowTable = $('#rowTable').val();
+    var countTable = parseInt($('#countTable').val());
+//    for(var i = 1 ; i <= count.value ; i++){
+//        $("#TableOther"+i).addClass("hidden");
+//    }
+//    $('#SpanEdit'+ counter).click(function() {
         var num = countClick++;
         $('#countClick'+counter).val(num);
         var clickcount = $('#countClick'+counter).val();    
-        console.log(">>>>>>>>Click : " + clickcount);
-        if($("#TableOther"+counter).hasClass("hidden")){
+        
+        if(parseInt(rowTable) !== id){
+            for(var i = 1 ; i <= count.value ; i++){
+                $("#TableOther"+i).addClass("hidden");
+            }
             $("#TableOther"+counter).removeClass("hidden");
+            $('#rowTable').val(id);
+        
         }else{
-            $("#TableOther"+counter).addClass("hidden");
+            if($("#TableOther"+counter).hasClass("hidden")){
+                $("#TableOther"+counter).removeClass("hidden");
+            }else{
+                $("#TableOther"+counter).addClass("hidden");
+            }
+            $('#rowTable').val(id);
         }
+        
+        
 //        if((clickcount%2) === 0){
 //            console.log("Click 0 / % TableOther"+ counter +" : " + (clickcount%2));
 //            $('#TableOther'+counter).css("display","block");
@@ -28,7 +42,7 @@ function selectListOther(counter){
 //            console.log("Click 1  % TableOther"+ counter +"  : " + (clickcount%2));
 //            
 //        }
-    });
+//    });
 }
 function searchAction() {
     //alert("OK");
