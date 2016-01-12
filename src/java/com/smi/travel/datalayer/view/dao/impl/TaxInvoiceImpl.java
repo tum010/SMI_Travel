@@ -77,17 +77,21 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             String curamount = "";
             if("THB".equalsIgnoreCase(util.ConvertString(B[16]))){
                 curamount = " BAHT ";
+            } else if("JPY".equalsIgnoreCase(util.ConvertString(B[16]))){
+                curamount = " YEN ";
+            } else if("USD".equalsIgnoreCase(util.ConvertString(B[16]))){
+                curamount = " DOLLAR ";
             } else {
-                curamount = " "+util.ConvertString(B[16])+" ";
+                curamount = " " + util.ConvertString(B[16]) + " ";
             }
             if(B[12] != null){
-                taxInvoiceView.setTotal(df.format(B[12]));
+                taxInvoiceView.setTotal(!"0.00".equalsIgnoreCase(util.ConvertString(B[12])) ? df.format(B[12]) : "0.00");
             }
             if(B[13] != null){
-                taxInvoiceView.setVat(df.format(B[13]));
+                taxInvoiceView.setVat(!"0.00".equalsIgnoreCase(util.ConvertString(B[13])) ? df.format(B[13]) : "0.00");
             }                        
             if(B[11] != null){
-                taxInvoiceView.setAmount(df.format(B[11]));
+                taxInvoiceView.setAmount(!"0.00".equalsIgnoreCase(util.ConvertString(B[11])) ? df.format(B[11]) : "0.00");
             }
 //            String total = taxInvoiceView.getGrandtotal().replaceAll(",", "");
 //            total = total.replaceAll("\\.", ",");

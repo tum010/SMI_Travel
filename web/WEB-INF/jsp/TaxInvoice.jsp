@@ -771,16 +771,20 @@
                         <tr>
                             <th style="width: 30%">Code</th>
                             <th style="width: 70%">Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="customerAgent" items="${customer_agent_list}">
-                            <tr onclick ="setupCustomerAgentValue('${customerAgent.billTo}', '${customerAgent.billName}', '${customerAgent.address}')">
-                                <td>${customerAgent.billTo}</td>
-                                <td>${customerAgent.billName}</td>
+                            <tr onclick ="setBillValue('${customerAgent.billTo}', '${customerAgent.billName}', '${customerAgent.address}', '${customerAgent.term}', '${customerAgent.pay}')">
+                                <td class="item-billto">${customerAgent.billTo}</td>
+                                <td class="item-name">${customerAgent.billName}</td>                                
+                                <td class="item-address hidden">${customerAgent.address}</td>
+                                <td class="item-tel hidden">${customerAgent.tel}</td>
                             </tr>
                             <script>
-                                taxInvoiceTo.push({name: "${customerAgent.billTo}", billTo: "${customerAgent.billName}", address: "${customerAgent.address}"});
+                                taxInvoiceTo.push({name: "${customerAgent.billTo}", billTo: "${customerAgent.billName}", address: "${customerAgent.address}", term: "${customerAgent.term}", pay: "${customerAgent.pay}"});
                             </script>
                             </tr>    
                         </c:forEach>    
@@ -1030,15 +1034,36 @@
             "iDisplayLength": 3
         });
         
-        $('#SearchTaxInvoiceToTable').dataTable({bJQueryUI: true,
-            "sPaginationType": "full_numbers",
-            "bAutoWidth": false,
-            "bFilter": false,
-            "bPaginate": true,
-            "bInfo": false,
-            "bLengthChange": false,
-            "iDisplayLength": 10
-        });
+//        $('#SearchTaxInvoiceToTable').dataTable({bJQueryUI: true,
+//            "sPaginationType": "full_numbers",
+//            "bAutoWidth": false,
+//            "bFilter": false,
+//            "bPaginate": true,
+//            "bInfo": false,
+//            "bLengthChange": false,
+//            "iDisplayLength": 10
+//        });
+        
+        var SearchTaxInvoiceToTable = $('#SearchTaxInvoiceToTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": false,
+                            "bPaginate": true,
+                            "bInfo": false,
+                            "bLengthChange": false,
+                            "iDisplayLength": 10
+                        });
+
+                        $('#SearchTaxInvoiceToTable tbody').on('click', 'tr', function() {
+                            $('.collapse').collapse('show');
+                            if ($(this).hasClass('row_selected')) {
+                                $(this).removeClass('row_selected');
+                            }
+                            else {
+                                SearchTaxInvoiceToTable.$('tr.row_selected').removeClass('row_selected');
+                                $(this).addClass('row_selected');
+                            }
+                        });
         
         $('#ARCodeTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
@@ -1243,10 +1268,10 @@
         
         $("#searchTaxInvoiceFrom").keyup(function(event) {
             if (event.keyCode === 13) {
-                if ($("#searchTaxInvoiceFrom").val() == "") {
+                if ($("#searchTaxInvoiceFrom").val() !== "") {
                     // alert('please input data');
-                }
-                searchCustomerAgentList($("#searchTaxInvoiceFrom").val());
+                    searchCustomerAgentList($("#searchTaxInvoiceFrom").val());
+                }               
             }
         });
         
@@ -1336,7 +1361,7 @@
         document.getElementById('TaxInvoiceForm').submit();
     }
     
-    function setupCustomerAgentValue(billTo,billName,address){      
+    function setBillValue(billTo,billName,address,term,pay){      
         document.getElementById('TaxInvTo').value = billTo;
         document.getElementById('InvToName').value = billName;
         document.getElementById('ARCode').value = billTo;
