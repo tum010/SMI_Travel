@@ -1726,7 +1726,8 @@ public class AJAXBean extends AbstractBean implements
         String mAccPay = "";
         String receiveFrom = billable.getBillTo();
         String receiveName = billable.getBillName();
-        String receiveAddress = (billable.getBillAddress()).replaceAll("(\r\n|\n)", "<br>");
+//        String receiveAddress = (billable.getBillAddress()).replaceAll("(\r\n|\n)", "<br>");
+        String receiveAddress = billable.getBillAddress();
         String arcode = billable.getBillTo();
         String refNo = billable.getMaster().getReferenceNo();
         String leader = ""; 

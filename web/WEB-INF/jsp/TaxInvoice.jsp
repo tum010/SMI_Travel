@@ -321,7 +321,7 @@
                         </div>  
                         <div class="col-md-2 form-group" >
                             <input type="hidden" class="form-control" id="ARCodeId" name="ARCodeId" value=""/>
-                            <input type="text" class="form-control" id="ARCode" name="ARCode" value="${taxInvoice.arCode}" style="background-color: #ffffff">                              
+                            <input type="text" maxlength="20" class="form-control" id="ARCode" name="ARCode" value="${taxInvoice.arCode}" style="background-color: #ffffff">                              
                         </div>        
                     </div>
                     <div class="col-xs-12 " style="margin-top: -10px">
@@ -329,7 +329,7 @@
                             <label class="control-label" for="">Name </lable>
                         </div>    
                         <div class="col-md-1 form-group" style="width: 585px">
-                            <input  type="text" id="InvToName" name="InvToName" class="form-control" value="${taxInvoice.taxInvName}">
+                            <input  type="text" maxlength="255" id="InvToName" name="InvToName" class="form-control" value="${taxInvoice.taxInvName}">
                         </div>  
                     </div>
                     <div class="col-xs-12 " style="margin-top: -10px">
@@ -337,7 +337,7 @@
                             <label class="control-label" for="">Address<font style="color: red">*</font></lable>
                         </div>
                         <div class="col-md-1 form-group" style="width: 585px">
-                            <textarea  rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" value="" >${taxInvoice.taxInvAddr}</textarea>
+                            <textarea maxlength="255" rows="3" cols="100" id="InvToAddress" name="InvToAddress" class="form-control" value="" >${taxInvoice.taxInvAddr}</textarea>
                         </div>
                     </div>
                     <div class="col-xs-12 " style="margin-top: -10px">
@@ -357,23 +357,20 @@
                             <input type="text"  class="form-control" id="PassengerName" name="PassengerName"  value="" readonly="">
                         </div>                       
                     </div>
-                    <div class="col-xs-12 " style="margin-top: -10px">
-                        <div class="col-md-1 text-left" style="margin-top: -5px">
+                    <div class="col-xs-12 " style="margin-top: -20px">
+                        <div class="col-md-1 text-left" style="width: 100px;">
                             <label class="control-label" for="">Search</lable>                           
                         </div>
                         <div class="col-md-1 text-left">
-                            <div class="col-xs-1  text-right" style="padding: 10px 20px 0px 0px;"><i id="ajaxloadsearch"  class="fa fa-spinner fa-spin hidden"></i></div>
-                        </div>
-                        <div class="col-md-1 text-left" style="width: 120px;">
-                            <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchInvoiceNo()">
-                                <span id="SpanEdit${advanced.search}">Invoice No</span>
-                            </a>                           
-                        </div>
-                        <div class="col-md-1 text-left ${outbound}" style="width: 120px;">
-                            <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchRefNo()">
-                                <span id="SpanEdit${advanced.search}">Ref No</span>
-                            </a>                           
-                        </div>    
+                            <div class="col-xs-1  text-right" style="padding: 10px 20px 0px 0px; "><i id="ajaxloadsearch"  class="fa fa-spinner fa-spin hidden"></i></div>
+                        </div>                        
+                        <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchInvoiceNo()">
+                            <span id="SpanEdit${advanced.search}">Invoice No.</span>
+                        </a>                                                   
+                        <label class="control-label text-right" sty>&nbsp;&nbsp;/&nbsp;&nbsp;</label>        
+                        <a class="${outbound}" data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchRefNo()">
+                            <span id="SpanEdit${advanced.search}">Ref No</span>
+                        </a>                                                       
                     </div>
                     <div class="col-xs-12 " id="searchInvoiceNo1">
                         <div class="col-xs-1 text-left" style="width: 160px;">
@@ -508,7 +505,7 @@
                                                         </select>      
                                                     </td>
                                                     <td><input class="form-control" type="text" maxlength="6" id="refNo${i.count}" name="refNo${i.count}" value="${taxDetail.master.referenceNo}" onfocusout="checkRefNo('${i.count}')"></td>
-                                                    <td><input class="form-control" type="text" id="description${i.count}" name="description${i.count}" value="${taxDetail.description}"></td>
+                                                    <td><input class="form-control" type="text" maxlength="255" id="description${i.count}" name="description${i.count}" value="${taxDetail.description}"></td>
                                                     <td align="right"><input class="form-control decimal" style="text-align:right;" type="text" id="cost${i.count}" name="cost${i.count}" value="${taxDetail.cost}" onfocusout="CalculateAmountTotal()"></td>
                                                     <td>
                                                         <select class="form-control" name="currencyCost${i.count}" id="currencyCost${i.count}" onchange="AddrowBySelect(${i.count})">
@@ -1766,7 +1763,7 @@
             '<td class="hidden"><input class="form-control" type="text" id="isProfit' + row + '" name="isProfit' + row + '" value=""></td>' +
             '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td><input class="form-control" maxlength="6" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
-            '<td><input class="form-control" type="text" id="description' + row + '" name="description' + row + '" value=""></td>' +
+            '<td><input class="form-control" type="text" maxlength="255" id="description' + row + '" name="description' + row + '" value=""></td>' +
             '<td><input class="form-control decimal" style="text-align:right;" type="text" id="cost' + row + '" name="cost' + row +'" value="" onfocusout="CalculateAmountTotal()"></td>' +
             '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')" checked></td>' +
@@ -1900,7 +1897,7 @@
                 '<td class="hidden"><input class="form-control" type="text" id="isProfit' + count + '" name="isProfit' + count + '" value=""></td>' +
                 '<td><select class="form-control" name="product' + count + '" id="product' + count + '" onchange="AddrowBySelect(\'' + count + '\')"><option  value="" >---------</option></select></td>' +
                 '<td><input class="form-control" maxlength="6" type="text" id="refNo' + count + '" name="refNo' + count + '" value="" onfocusout="checkRefNo(\'' + count + '\')"></td>' +
-                '<td><input class="form-control" type="text" id="description' + count + '" name="description' + count + '" value=""></td>' +
+                '<td><input class="form-control" type="text" maxlength="255" id="description' + count + '" name="description' + count + '" value=""></td>' +
                 '<td><input class="form-control decimal" style="text-align:right;" type="text" id="cost' + count + '" name="cost' + count +'" value="" onfocusout="CalculateAmountTotal()"></td>' +
                 '<td><select class="form-control" name="currencyCost' + count + '" id="currencyCost' + count + '" onchange="AddrowBySelect(\'' + count + '\')"><option  value="" >---------</option></select></td>' +
                 '<td align="center"><input type="checkbox" id="isVat' + count + '" name="isVat' + count + '" value="1" onclick="CalculateGross(\'' + count + '\')" checked></td>' +
@@ -2015,7 +2012,7 @@
             '<td class="hidden"><input class="form-control" type="text" id="isProfit' + count + '" name="isProfit' + count + '" value=""></td>' +
             '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td><input class="form-control" maxlength="6" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
-            '<td><input class="form-control" type="text" id="description' + row + '" name="description' + row + '" value=""></td>' +
+            '<td><input class="form-control" type="text" maxlength="255" id="description' + row + '" name="description' + row + '" value=""></td>' +
             '<td><input class="form-control decimal" style="text-align:right;" type="text" id="cost' + row + '" name="cost' + row +'" value="" onfocusout="CalculateAmountTotal()"></td>' +
             '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')" checked></td>' +
