@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OtherAgentCommissionSummary" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="b06d1a2e-b11c-4b1e-b48a-508e14a1844c">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.3579476910000037"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<field name="systemdate" class="java.lang.String"/>
@@ -86,54 +86,54 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="22" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<rectangle>
-				<reportElement mode="Transparent" x="0" y="1" width="76" height="20" forecolor="#CCCCCC" uuid="80ccfe1a-6b5a-4cbc-adf6-cb72429f9802"/>
+				<reportElement mode="Transparent" x="0" y="-1" width="76" height="20" forecolor="#CCCCCC" uuid="80ccfe1a-6b5a-4cbc-adf6-cb72429f9802"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="0" y="1" width="76" height="21" uuid="03f942a7-b8f4-426b-8129-4322987d0006"/>
+				<reportElement x="0" y="3" width="76" height="14" uuid="03f942a7-b8f4-426b-8129-4322987d0006"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="76" y="1" width="297" height="20" forecolor="#CCCCCC" uuid="04e75f1e-521e-498b-b744-5d1f5573612f"/>
+				<reportElement mode="Transparent" x="76" y="-1" width="297" height="20" forecolor="#CCCCCC" uuid="04e75f1e-521e-498b-b744-5d1f5573612f"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="78" y="1" width="295" height="21" uuid="b0764bfe-dae2-4066-87d4-02f5cb6eb7a9"/>
+				<reportElement x="78" y="0" width="295" height="17" uuid="b0764bfe-dae2-4066-87d4-02f5cb6eb7a9"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="13" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="373" y="1" width="86" height="20" forecolor="#CCCCCC" uuid="fbc45d8a-dd71-4ca4-8d00-6e17d2d5a7e7"/>
+				<reportElement mode="Transparent" x="373" y="-1" width="86" height="20" forecolor="#CCCCCC" uuid="fbc45d8a-dd71-4ca4-8d00-6e17d2d5a7e7"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="373" y="1" width="86" height="21" uuid="26d55ab9-882e-4f57-932e-20492bbedad6"/>
+				<reportElement x="373" y="4" width="86" height="13" uuid="26d55ab9-882e-4f57-932e-20492bbedad6"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{countbook}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="459" y="1" width="96" height="20" forecolor="#CCCCCC" uuid="da33a181-e72d-4dfd-8931-e96cce805e37"/>
+				<reportElement mode="Transparent" x="459" y="-1" width="96" height="20" forecolor="#CCCCCC" uuid="da33a181-e72d-4dfd-8931-e96cce805e37"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<textField pattern="#,##0">
-				<reportElement x="458" y="1" width="96" height="21" uuid="79e688ef-6f95-467a-9cc2-bcbb66388123"/>
+				<reportElement x="458" y="4" width="96" height="13" uuid="79e688ef-6f95-467a-9cc2-bcbb66388123"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
@@ -144,39 +144,39 @@
 	<columnFooter>
 		<band height="17" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="1" width="555" height="13" backcolor="#E6E6E6" uuid="dddad06e-84d4-4355-98a3-531a2061aa42"/>
+				<reportElement x="0" y="0" width="555" height="13" backcolor="#E6E6E6" uuid="dddad06e-84d4-4355-98a3-531a2061aa42"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineColor="#CCCCCC"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="24" y="0" width="38" height="14" uuid="1bf3d07b-f286-4016-823a-e39e46b4bfe3"/>
+				<reportElement x="337" y="-1" width="38" height="14" uuid="1bf3d07b-f286-4016-823a-e39e46b4bfe3"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total :]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement mode="Transparent" x="373" y="1" width="86" height="13" forecolor="#CCCCCC" uuid="4f0a91da-280b-4c9c-9916-58c5388199ac"/>
+				<reportElement mode="Transparent" x="373" y="0" width="86" height="13" forecolor="#CCCCCC" uuid="4f0a91da-280b-4c9c-9916-58c5388199ac"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="459" y="1" width="96" height="13" forecolor="#CCCCCC" uuid="564beb69-7fe2-40a3-9de9-b4242c64e369"/>
+				<reportElement mode="Transparent" x="459" y="0" width="96" height="13" forecolor="#CCCCCC" uuid="564beb69-7fe2-40a3-9de9-b4242c64e369"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<textField pattern="#,##0">
-				<reportElement x="459" y="1" width="96" height="13" uuid="54868c90-aada-4740-bee9-4760ea516256"/>
+				<reportElement x="459" y="0" width="96" height="13" uuid="54868c90-aada-4740-bee9-4760ea516256"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalcommission}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="374" y="2" width="85" height="14" uuid="4e437092-41fd-413c-8259-843b196a80ef"/>
+				<reportElement x="374" y="1" width="85" height="14" uuid="4e437092-41fd-413c-8259-843b196a80ef"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>

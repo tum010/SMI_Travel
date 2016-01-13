@@ -144,7 +144,7 @@
                             <th class="hide">Booking ID</th>
                             <th style="width:4%">Code</th>
                             <th style="width:9%">Name</th>
-                            <th style="width:13%">Date</th>
+                            <th style="width:14%">Date</th>
                             <th style="width:5%">Ref. No</th>
                             <th style="width:14%">Client Name</th>
                             <th style="width:15%">Guide Name</th>
