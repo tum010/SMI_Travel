@@ -563,9 +563,7 @@ public class InvoiceInboundController extends SMITravelController {
                 }
 
                 if(description != null && !"".equals(description)){
-                    invoiceDetail.setDescription(description);
-                    invoiceDetail.setInvoice(invoice);
-                    listInvoiceDetail.add(invoiceDetail);
+                    invoiceDetail.setDescription(description);                                    
                 }
 
                 if("update".equals(action)){
@@ -574,6 +572,8 @@ public class InvoiceInboundController extends SMITravelController {
                    invoiceDetail.setIsExport(0);
                 }
                 
+                invoiceDetail.setInvoice(invoice);   
+                listInvoiceDetail.add(invoiceDetail);
             }
         }       
         return listInvoiceDetail;
