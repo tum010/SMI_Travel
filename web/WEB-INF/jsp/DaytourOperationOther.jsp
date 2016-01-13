@@ -148,17 +148,17 @@
                                 <c:forEach var="table" items="${listOtherBooking}" varStatus="status">
                                 <c:if test="${table.id == otherBookingId}">   
                                 <tr>
-                                    <td class="money"><center><c:out value="${table.adCost}" /></center></td>
+                                    <td class="money text-right" ><c:out value="${table.adCost}" /></td>
                                     <td><center><c:out value="${table.adQty}" /></center></td>
-                                    <td class="money"><center><c:out value="${table.adPrice}" /></center></td>
-                                    <td class="money"><center><c:out value="${table.chCost}" /></center></td>
+                                    <td class="money text-right"><c:out value="${table.adPrice}" /></td>
+                                    <td class="money text-right"><c:out value="${table.chCost}" /></td>
                                     <td><center><c:out value="${table.chQty}" /></center></td>
-                                    <td class="money"><center><c:out value="${table.chPrice}" /></center></td>
-                                    <td class="money"><center><c:out value="${table.inCost}" /></center></td>
+                                    <td class="money text-right"><c:out value="${table.chPrice}" /></td>
+                                    <td class="money text-right"><c:out value="${table.inCost}" /></td>
                                     <td><center><c:out value="${table.inQty}" /></center></td>
-                                    <td class="money"><center><c:out value="${table.inPrice}" /></center></td>
+                                    <td class="money text-right"><c:out value="${table.inPrice}" /></td>
                                     <td><center><c:out value="${table.curCost}" /></center></td>
-                                    <td class="money"><center><c:out value="${(table.adQty*table.adPrice)+(table.chQty*table.chPrice)+(table.inQty*table.inPrice)}" /></center></td>
+                                    <td class="money text-right"><c:out value="${(table.adQty*table.adPrice)+(table.chQty*table.chPrice)+(table.inQty*table.inPrice)}" /></td>
                                 </tr>
                                 </c:if> 
                                 </c:forEach>
