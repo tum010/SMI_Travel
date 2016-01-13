@@ -19,6 +19,7 @@
 
 </style>
 <c:set var="page" value="${requestScope['page']}" />
+<c:set var="department" value="" />
 <section class="content-header" >
     <h1>
         <c:set var="type" value=""/>
@@ -29,18 +30,22 @@
                 <c:set var="type" value="Wendy"/>
                 <c:set var="panelheader" value="wendyheader"/>
                 <c:set var="panelborder" value="wendyborder"/>
+                <c:set var="department" value="Wendy" />
             </c:when>
             <c:when test="${fn:contains(page , 'O')}">
                 <c:set var="type" value="Outbound"/>
                 <c:set var="panelheader" value="outboundheader"/>
                 <c:set var="panelborder" value="outboundborder"/>
+                <c:set var="department" value="Outbound" />
             </c:when>     
             <c:when test="${fn:contains(page , 'I')}">
                 <c:set var="type" value="Inbound"/>
                 <c:set var="panelheader" value="inboundborderheader"/>
                 <c:set var="panelborder" value="inboundborder"/>
+                <c:set var="department" value="Inbound" />
             </c:when> 
-        </c:choose> 
+        </c:choose>
+        <input type="hidden" id="department" name="department" value="${department}"/>
         <h4><b>Finance & Cashier - Credit Note ${type} <font style="color: red;">${creditNote.MFinanceItemstatus.id == '2' ? 'VOID' : ''}</font></b></h4>
     </h1>
     <ol class="breadcrumb">
@@ -185,6 +190,10 @@
                                                 <td style="text-align:center">
                                                     <!--<input type="hidden" name="taxAmount" value="${creditNoteDetail.amount}"/>-->
                                                     <input type="text" id="taxAmount" name="taxAmount" class="form-control text-right decimal" value="${creditNoteDetail.amount}"/>
+                                                </td>
+                                                <td style="text-align:center" class="hidden">
+                                                    <!--<input type="hidden" name="taxRealCheck" value="${creditNoteDetail.amount}"/>-->
+                                                    <input type="text" id="taxRealCheck" name="taxRealCheck" class="form-control text-right decimal" value="${creditNoteDetail.realamount}"/>
                                                 </td>
                                                 <td style="text-align:center">
                                                     <!--<input type="hidden" name="taxReal" value="${creditNoteDetail.realamount}"/>-->
@@ -353,6 +362,10 @@
                 <td style="text-align:center">
                     <!--<input type="hidden" name="taxAmount"/>-->
                     <input type="text" id="taxAmount" name="taxAmount" class="form-control text-right decimal" />
+                </td>
+                <td style="text-align:center" class="hidden">
+                    <!--<input type="hidden" name="taxRealCheck" value="${creditNoteDetail.amount}"/>-->
+                    <input type="text" id="taxRealCheck" name="taxRealCheck" class="form-control text-right decimal"/>
                 </td>
                 <td style="text-align:center">
                     <!--<input type="hidden" name="taxReal"/>-->

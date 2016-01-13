@@ -81,6 +81,7 @@ public class CreditNoteController extends SMITravelController {
                 }else{
                     String createDate = request.getParameter("createDate");
                     cn.setCreateDate(utilty.convertStringToDate(createDate));
+                    cn.setDepartment(department);
                 }
                 result = creditNoteService.saveCreditNote(cn);
             }
