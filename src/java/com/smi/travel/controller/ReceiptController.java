@@ -218,7 +218,7 @@ public class ReceiptController extends SMITravelController {
             mFinanceItemstatus.setId("1"); // 1 = Normal
             invoice.setMFinanceItemstatus(mFinanceItemstatus);
             String receiveProducttemp = "";
-            for (int i = 0; i < rowsProduct ; i++) {
+            for (int i = 1; i < rowsProduct-1 ; i++) {
                 String tableId = request.getParameter("tableId" + i);
                 String receiveProduct = request.getParameter("receiveProduct" + i);
                 String receiveDes = request.getParameter("receiveDes" + i);
@@ -237,7 +237,6 @@ public class ReceiptController extends SMITravelController {
                 String displayDescription = request.getParameter("DescriptionReceiptDetail" + i);
                 String paymentTourId = request.getParameter("paymentTourId" + i);
                 String gross = request.getParameter("grossInvoice" + i);
-//                System.out.println(" invId " + invId);
 //                System.out.println(" airlineCode " + airlineCode);
                 ReceiptDetail receiptDetail = new ReceiptDetail();
                 receiptDetail.setId(tableId);
@@ -271,8 +270,7 @@ public class ReceiptController extends SMITravelController {
                     invoiceDetail.setId(invId);
                     receiptDetail.setInvoiceDetail(invoiceDetail);
                 }
-                
-                if(StringUtils.isEmpty(invId) || "".equals(invId)){
+                if(StringUtils.isEmpty(invId) || "".equalsIgnoreCase(invId)){
                     List<InvoiceDetail>  invoiceDetailList = null;
                     if(StringUtils.isNotEmpty(billDescId)){
                         invoiceDetailList = invoiceService.getInvoiceDetailFromBillableDescId(billDescId);
@@ -351,7 +349,6 @@ public class ReceiptController extends SMITravelController {
                             (receiveCurrency!="" && receiveCurrency!=null)){
                             invoice.setInvoiceDetails(listInvoiceDetail);
                         }
-                       
                        String invoiceNo = invoiceService.saveInvoiceDetail(invoice);
                        if("fail".equals(invoiceNo)){
                            System.out.println(" SAVE INVOICE FAIL ");
