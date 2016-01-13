@@ -64,7 +64,11 @@ public class CreditNoteImpl implements CreditNoteDao {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
             String cnNo = note.getCnNo();
-            List<CreditNote> cnList = session.createQuery("from  CreditNote c where  c.cnNo = :cnNo").setParameter("cnNo", cnNo).list();
+            String department = note.getDepartment();
+            List<CreditNote> cnList = session.createQuery("from  CreditNote c where  c.cnNo = :cnNo and c.department = :department ")
+                    .setParameter("cnNo", cnNo)
+                    .setParameter("department", department)
+                    .list();
             if (cnList.isEmpty()) {
                 return "";
             }

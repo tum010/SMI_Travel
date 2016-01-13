@@ -394,7 +394,7 @@
                                                 <c:forEach var="tableDetail" items="${RefundTicketDetail}" varStatus="statusDetail">
                                                     <tr>
                                                         <td class="hidden"><input type="text" id="airticketrefunddetailid${statusDetail.count}" name="airticketrefunddetailid${statusDetail.count}" value="${tableDetail.refunddetailid}" /></td>
-                                                        <td id="rowTable${statusDetail.count}">${statusDetail.count}</td>
+                                                        <td id="rowTable${statusDetail.count}" class="center">${statusDetail.count}</td>
                                                         <td>
                                                             <select id="SelectTocketNo${statusDetail.count}" name="SelectTocketNo${statusDetail.count}" class="form-control" onchange="setSectorRefund(${statusDetail.count});">
                                                                 <option value='' ></option>
@@ -1819,7 +1819,7 @@ function addRowRefundTicketDetail(row,id){
     $("#RefundTicketDetailTable tbody").append(
         '<tr>' +
         '<td class="hidden"><input type="text" id="airticketrefunddetailid' + row + '" name="airticketrefunddetailid' + row + '" value="" /></td>'+
-        '<td id="rowTable' + row + '">' + row + '</td>' +       
+        '<td id="rowTable' + row + '" class="center">' + row + '</td>' +       
         '<td><select id="SelectTocketNo' + row + '" name="SelectTocketNo' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> <input type="hidden" id="ticketNoOnSelected' + row + '" name="ticketNoOnSelected' + row + '" value="" ></td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSector' + row + '" name="inputSector' + row + '" value="" readonly=""></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefund' + row + '" name="inputSectorRefund' + row + '" value="" onfocusout="checkRefundAdd(this,'+row+')"></td>' +
@@ -1839,7 +1839,7 @@ function addRowRefundTicketDetailAdd(row,id){
     $("#RefundTicketDetailTableAdd tbody").append(
         '<tr>' +
         '<td class="hidden"><input type="text" id="airticketrefunddetailidadd' + row + '" name="airticketrefunddetailidadd' + row + '" value="" /></td>'+
-        '<td id="rowTable' + row + '">' + row + '</td>' +       
+        '<td id="rowTable' + row + '" class="center">' + row + '</td>' +       
         '<td><select id="SelectTocketNoadd' + row + '" name="SelectTocketNoadd' + row + '" class="form-control" onchange="setSectorRefund(' + row + ');">'+ selectTicket +'</select> <input type="hidden" id="ticketNoOnSelectedAdd' + row + '" name="ticketNoOnSelectedAdd' + row + '" value="" ></td>' +
         '<td><input type="text" maxlength ="255" class="form-control" id="inputSectoradd' + row + '" name="inputSectoradd' + row + '" value="" readonly="" ></td>' +
         '<td><input type="text" class="form-control" id="inputSectorRefundadd' + row + '" name="inputSectorRefundadd' + row + '" value="" onfocusout="checkRefundAdd(this,'+row+')"></td>' +
@@ -2178,7 +2178,7 @@ function checkRefund(e,row) {
 //        }   
 //    }
     var refundComma = (e.value).split(",");
-    var issueComma = ($("#inputSector" + row).val()).split(",");
+    var issueComma = ($("#inputSector" + row).val() !== undefined ? ($("#inputSector" + row).val()).split(",") : ($("#inputSectorAdd" + row).val()).split(","));
     var validate = true;
     
     if(e.value !== ''){
@@ -2331,7 +2331,7 @@ function checkRefundAdd(e,row) {
 //    }
 
     var refundComma = (e.value).split(",");
-    var issueComma = ($("#inputSectoradd" + row).val()).split(",");
+    var issueComma = ($("#inputSectoradd" + row).val() !== undefined ? ($("#inputSectoradd" + row).val()).split(",") : ($("#inputSector" + row).val()).split(","));
     var validate = true;
     
     if(e.value !== ''){

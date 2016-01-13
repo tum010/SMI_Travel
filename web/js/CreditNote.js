@@ -78,9 +78,28 @@ $(document).ready(function() {
         if ($("#inputDate").val() === "" || $("#name").val() === "" || $("#address").val() === "") {
             return;
         }
-        var action = document.getElementById('action');
-        action.value = 'save';
-        document.getElementById('CreditNoteForm').submit();
+        $('#ItemCreditTable tbody [name="taxNo"]').each(function() {
+            if (this.style.borderColor === "red") {
+                result = false;
+            }
+        });
+        $('#ItemCreditTable tbody [name="taxReal"]').each(function() {
+            if (this.style.borderColor === "red") {
+                result = false;
+                
+            }else if(this.value !== ''){
+                var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
+                if(parseFloat((this.value).replace(",","")) > parseFloat((taxRealCheck.val()).replace(",",""))){
+                    this.style.borderColor = "red";
+                    result = false;
+                }
+            }
+        });
+        if(result){
+            var action = document.getElementById('action');
+            action.value = 'save';
+            document.getElementById('CreditNoteForm').submit();
+        }    
     });
 
     $("#buttonNew").click(function() {
@@ -116,12 +135,24 @@ function addRow() {
             if (keycode == '13') {
                 var realAmount = this.value.replace(",", "");
                 var realAmountHidden = $(this).parent().parent().find("[name='taxReal']");
-                realAmountHidden.val(realAmount);
-                var vatAmount = $(this).parent().parent().find("[name='taxVat']");
-                var vatAmountID = $(this).parent().parent().find("[id='taxVat']");
-                var calVat = realAmount - (realAmount * 100 / (vat + 100));
-                vatAmount.val(calVat);
-                vatAmountID.val(Math.round(calVat * 100) / 100);
+                var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
+                if(parseFloat(realAmount) <= parseFloat((taxRealCheck.val()).replace(",", ""))){
+                    realAmountHidden.val(realAmount);
+                    var vatAmount = $(this).parent().parent().find("[name='taxVat']");
+                    var vatAmountID = $(this).parent().parent().find("[id='taxVat']");
+                    var calVat = realAmount - (realAmount * 100 / (vat + 100));
+                    vatAmount.val(calVat);
+                    vatAmountID.val(Math.round(calVat * 100) / 100);
+                    this.style.borderColor = "Green"; 
+                
+                }else if(realAmount === ''){
+                    realAmountHidden.val(realAmount);
+                    this.style.borderColor = ""; 
+                
+                }else{
+                    realAmountHidden.val(realAmount);
+                    this.style.borderColor = "Red"; 
+                }    
             }
         });
     });
@@ -145,74 +176,94 @@ function getTaxInv(input) {
     var ticketNo = ""
     ticketNo = input.value;
     var duplicate = false;
-    $('#ItemCreditTable tbody [name="taxNo"]').each(function() {
-        if (this != input && ticketNo !== "" && ticketNo === input.value) {
+    var count = 0;
+    var length = $('#ItemCreditTable tbody tr').length;
+    if(input.value !== ''){   
+        $('#ItemCreditTable tbody [name="taxNo"]').each(function() {
+//            alert("this.value : "+this.value+" input.value : "+input.value);
+            if (this.value === input.value) {
+                count++;
+    //            input.style.borderColor = "Red";
+    //            $("#alertTextFail").html("Duplicated tax invoice no " + ticketNo);
+    //            $("#alertFail").show();
+    //            duplicate = true;
+    //            return;
+            }
+        });
+//        alert("count : "+count+" length : "+length);
+        if(count > 1){
             input.style.borderColor = "Red";
             $("#alertTextFail").html("Duplicated tax invoice no " + ticketNo);
             $("#alertFail").show();
             duplicate = true;
-            return;
         }
-    });
-    if (!duplicate) {
-        var url = 'AJAXServlet';
-        var servletName = 'TaxInvoiceServlet';
-        var servicesName = 'AJAXBean';
-        var param = 'action=' + 'text' +
-                '&servletName=' + servletName +
-                '&servicesName=' + servicesName +
-                '&type=getTaxInvoice' +
-                '&invoiceNo=' + ticketNo;
-        //    var row = parseInt($(input).parent().parent().attr("row"));
-        try {
-            $.ajax({
-                type: "POST",
-                url: url,
-                cache: false,
-                data: param,
-                beforeSend: function() {
-                    $("#dataload").removeClass("hidden");
-                },
-                success: function(msg) {
-                    var tax = JSON.parse(msg);
-                    if (tax.status === "1") {
-                        var taxDate = $(input).parent().parent().find("[name='taxDate']");
-                        var amount = $(input).parent().parent().find("[name='taxAmount']");
-                        var amountId = $(input).parent().parent().find("[id='taxAmount']");
-                        var desc = $(input).parent().parent().find("[name='taxDesc']");
-                        var taxId = $(input).parent().parent().find("[name='taxId']");
-                        var btnDetail = $(input).parent().parent().find("[name='btnDetail']");
-                        $("#apCode").val(tax.taxTo);
-                        $("#name").val(tax.taxName);
-                        $("#address").val(tax.taxAddress);
-                        taxDate.val(tax.taxDate);
-                        amount.val(tax.taxAmount);
-                        amountId.val(tax.taxAmount)
-                        desc.val(tax.taxDesc);
-                        taxId.val(tax.taxId);
-                        btnDetail.attr('onclick', "show('" + ticketNo + "')");
-                        var index = $(input).parent().parent().index();
-                        var count = $('#ItemCreditTable tbody tr').length;
-                        if (index == (count - 1)) {
-                            addRow();
-                        }
-                    } else {
+//        alert(duplicate);
+        if (!duplicate) {
+            var url = 'AJAXServlet';
+            var servletName = 'TaxInvoiceServlet';
+            var servicesName = 'AJAXBean';
+            var department = $("#department").val();
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&type=getTaxInvoice' +
+                    '&invoiceNo=' + ticketNo +
+                    '&department=' + department;
+            //    var row = parseInt($(input).parent().parent().attr("row"));
+            try {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    cache: false,
+                    data: param,
+                    beforeSend: function() {
+                        $("#dataload").removeClass("hidden");
+                    },
+                    success: function(msg) {
+                        var tax = JSON.parse(msg);
+                        if (tax.status === "1") {
+                            var taxDate = $(input).parent().parent().find("[name='taxDate']");
+                            var amount = $(input).parent().parent().find("[name='taxAmount']");
+                            var amountId = $(input).parent().parent().find("[id='taxAmount']");
+                            var desc = $(input).parent().parent().find("[name='taxDesc']");
+                            var taxId = $(input).parent().parent().find("[name='taxId']");
+                            var btnDetail = $(input).parent().parent().find("[name='btnDetail']");
+                            var amountTotal = $(input).parent().parent().find("[name='taxRealCheck']");
+                            var amountTotalId = $(input).parent().parent().find("[id='taxRealCheck']");
+                            $("#apCode").val(tax.taxTo);
+                            $("#name").val(tax.taxName);
+                            $("#address").val(tax.taxAddress);
+                            taxDate.val(tax.taxDate);
+                            amount.val(tax.taxAmount);
+                            amountId.val(tax.taxAmount)
+                            desc.val(tax.taxDesc);
+                            taxId.val(tax.taxId);
+                            btnDetail.attr('onclick', "show('" + ticketNo + "')");
+                            amountTotal.val(tax.amountTotal);
+                            amountTotalId.val(tax.amountTotal)
+                            var index = $(input).parent().parent().index();
+                            var count = $('#ItemCreditTable tbody tr').length;
+                            if (index == (count - 1)) {
+                                addRow();
+                            }
+                        } else {
 
-                        $("#alertTextFail").html("Tax invoice no " + ticketNo + " has been void!");
+                            $("#alertTextFail").html("Tax invoice no " + ticketNo + " has been void!");
+                            $("#alertFail").show();
+                            $("#alertSuccess").hide();
+                        }
+                    }, error: function(msg) {
+                        input.style.borderColor = "Red";
+                        $("#alertTextFail").html("Cannot find tax invoice no " + ticketNo);
                         $("#alertFail").show();
                         $("#alertSuccess").hide();
                     }
-                }, error: function(msg) {
-                    input.style.borderColor = "Red";
-                    $("#alertTextFail").html("Cannot find tax invoice no " + ticketNo);
-                    $("#alertFail").show();
-                    $("#alertSuccess").hide();
-                }
-            });
-        } catch (e) {
-            alert(e);
+                });
+            } catch (e) {
+                alert(e);
+            }
         }
-    }
+    }    
 }
 
 function setDeletRow(btn) {
@@ -311,11 +362,13 @@ function show(taxNo) {
         var url = 'AJAXServlet';
         var servletName = 'TaxInvoiceServlet';
         var servicesName = 'AJAXBean';
+        var department = $("#department").val();
         var param = 'action=' + 'text' +
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
                 '&type=getTaxInvoice' +
-                '&invoiceNo=' + taxNo;
+                '&invoiceNo=' + taxNo +
+                '&department=' + department;
         try {
             $.ajax({
                 type: "POST",
@@ -337,8 +390,8 @@ function show(taxNo) {
                                 "<td style='text-align:center'>" + (i + 1) + "</td>" +
                                 "<td style='text-align:center'>" + detail.product + "</td>" +
                                 "<td style='text-align:center'>" + (detail.refNo !== undefined ? detail.refNo : '') + "</td>" +
-                                "<td>" + detail.description + "</td>" +
-                                "<td style='text-align:right'>" + detail.amount + "</td>" +
+                                "<td>" + (detail.description !== null ? detail.description : '') + "</td>" +
+                                "<td style='text-align:right'>" + (detail.amount !== '' && detail.amount !== null ? detail.amount : '0.00') + "</td>" +
                                 "<td style='text-align:center'>" + detail.cur + "</td>" +
                                 "</tr>";
                         table.append(html);

@@ -205,10 +205,11 @@
                         </br>
                         <hr>
                         <c:forEach var="function" items="${funcList}">
+                            <c:if test="${function.name != 'Account' && function.name != 'Account Code'}">
                             <div class="checkbox col-sm-offset-2 col-sm-9">
                                 <div class = "col-md-6">
-                                    <label>
-                                        <input type="checkbox" id="<c:out value="${function.id}" />" name="checkedFunction" value="<c:out value="${function.id}" />"><c:out value="${function.name}" />
+                                    <label>                                       
+                                        <input type="checkbox" id="<c:out value="${function.id}" />" name="checkedFunction" value="<c:out value="${function.id}" />"><c:out value="${function.name}" />                                       
                                     </label>
                                 </div>
                                 <div class = "col-md-6">
@@ -217,6 +218,7 @@
                                     </label>
                                 </div>
                             </div>
+                            </c:if>        
                         </c:forEach>
                     </div>
                     <input type="hidden" id="RoleID" name="RoleID" >

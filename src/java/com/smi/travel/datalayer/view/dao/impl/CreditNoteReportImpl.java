@@ -73,7 +73,7 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
             BigDecimal realamount = (BigDecimal) B[9] == null ? new BigDecimal(0):(BigDecimal) B[9];
             BigDecimal vat = (BigDecimal) B[8] == null ? new BigDecimal(0):(BigDecimal) B[8];
             //
-            BigDecimal subtotal = realamount.multiply(percent).divide(percent.add((BigDecimal) B[10]),4,RoundingMode.HALF_UP);
+            BigDecimal subtotal = realamount.multiply(percent).divide(percent.add((BigDecimal) B[10]),2,RoundingMode.HALF_UP);
             Difsubtotal = Difsubtotal.add(subtotal);
             sumvat = sumvat.add(vat);
             System.out.println("amount : "+amount);
@@ -105,7 +105,7 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
         }
         
         
-        
+                
         return data;
     }
     
