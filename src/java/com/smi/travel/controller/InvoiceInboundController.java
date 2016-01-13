@@ -546,6 +546,7 @@ public class InvoiceInboundController extends SMITravelController {
 
                 if(amountCurren != null){
                     invoiceDetail.setCurAmount(amountCurren);
+                    invoiceDetail.setCurCost(amountCurren);
                 }
 
                 if(vat != null && !vat.equals("")){
