@@ -77,10 +77,10 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             String curamount = "";
             if("THB".equalsIgnoreCase(util.ConvertString(B[16]))){
                 curamount = " BAHT ";
-            } else if("JPY".equalsIgnoreCase(util.ConvertString(B[16]))){
-                curamount = " YEN ";
-            } else if("USD".equalsIgnoreCase(util.ConvertString(B[16]))){
-                curamount = " DOLLAR ";
+//            } else if("JPY".equalsIgnoreCase(util.ConvertString(B[16]))){
+//                curamount = " YEN ";
+//            } else if("USD".equalsIgnoreCase(util.ConvertString(B[16]))){
+//                curamount = " DOLLAR ";
             } else {
                 curamount = " " + util.ConvertString(B[16]) + " ";
             }

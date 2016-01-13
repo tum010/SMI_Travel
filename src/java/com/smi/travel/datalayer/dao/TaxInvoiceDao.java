@@ -27,7 +27,7 @@ public interface TaxInvoiceDao {
     public List<TaxInvoiceDetail> getTaxInvoiceDetailFromInvDetailId(String invDetailId);
     public TaxInvoiceView getTaxInvoiceViewFromTaxNo(String TaxNo);
     public List<TaxInvoiceView> SearchTaxInvoiceFromFilter(String From,String To,String Department,String Status);
-    public TaxInvoice getTaxInvoiceByTaxNo(String invoiceNo);
+    public TaxInvoice getTaxInvoiceByTaxNo(String invoiceNo,String department);
     public String checkInvoiceDetailValue(String id, BigDecimal cost, BigDecimal amount);
     public String checkCreditNote(String id);
     public List<TaxInvoiceDetail> getTaxInvoiceDetailFromBillDescId(String invoiceDetailId);
