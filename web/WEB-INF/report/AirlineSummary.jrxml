@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
-	<property name="ireport.zoom" value="1.239669421487608"/>
+	<property name="ireport.zoom" value="1.5000000000000067"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="98"/>
+	<property name="ireport.y" value="67"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -282,7 +282,7 @@
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{air}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="57" y="0" width="71" height="20" uuid="29ee2495-509b-40e8-ac18-0c7be95d07be"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -293,8 +293,8 @@
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{ticketnum}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0">
-				<reportElement x="128" y="0" width="80" height="20" uuid="b73c66eb-5c4a-4d24-a4e1-87d6fee9be0c"/>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="128" y="0" width="83" height="20" uuid="b73c66eb-5c4a-4d24-a4e1-87d6fee9be0c"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -304,8 +304,8 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{sale}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0">
-				<reportElement x="211" y="0" width="82" height="20" uuid="02bf477f-64c5-409d-b652-47e0c285c0f4"/>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="211" y="0" width="85" height="20" uuid="02bf477f-64c5-409d-b652-47e0c285c0f4"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -315,8 +315,8 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{fare}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0">
-				<reportElement x="383" y="0" width="87" height="20" uuid="086ea543-35b1-432d-9a2e-8a4f22f8b799"/>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="383" y="0" width="90" height="20" uuid="086ea543-35b1-432d-9a2e-8a4f22f8b799"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -326,8 +326,8 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{profit}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0">
-				<reportElement x="300" y="0" width="80" height="20" uuid="5a8606bb-221d-42b5-bc55-4fc28cdeaa36"/>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="296" y="0" width="87" height="20" uuid="5a8606bb-221d-42b5-bc55-4fc28cdeaa36"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -337,8 +337,8 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{tax}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="false">
-				<reportElement x="473" y="0" width="79" height="20" uuid="93069285-7bd5-467b-81c8-f5678ff172c7"/>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="473" y="0" width="82" height="20" uuid="93069285-7bd5-467b-81c8-f5678ff172c7"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -362,33 +362,33 @@
 				<reportElement x="3" y="0" width="54" height="13" uuid="1d49fa25-ced4-4fd6-9c33-258ab1cfdf88"/>
 				<text><![CDATA[Grand total]]></text>
 			</staticText>
-			<textField pattern="¤ #,##0">
-				<reportElement x="128" y="0" width="80" height="14" uuid="258e3c03-a2f9-4c87-b37b-c339af738bd6"/>
+			<textField pattern="#,##0">
+				<reportElement x="128" y="0" width="83" height="14" uuid="258e3c03-a2f9-4c87-b37b-c339af738bd6"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{totalsale}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0">
-				<reportElement x="211" y="0" width="82" height="14" uuid="2c910c5c-6721-4f0c-8b25-40384f2fbf55"/>
+			<textField pattern="#,##0">
+				<reportElement x="211" y="0" width="85" height="14" uuid="2c910c5c-6721-4f0c-8b25-40384f2fbf55"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{totalfare}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0">
-				<reportElement x="300" y="0" width="80" height="14" uuid="b2954d2f-e150-43d9-8013-4875f23bf555"/>
+			<textField pattern="#,##0">
+				<reportElement x="296" y="0" width="87" height="14" uuid="b2954d2f-e150-43d9-8013-4875f23bf555"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{totaltax}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0">
-				<reportElement x="383" y="0" width="87" height="14" uuid="344c9d73-16cc-49ac-8a1e-d6f92050d286"/>
+			<textField pattern="#,##0">
+				<reportElement x="383" y="0" width="90" height="14" uuid="344c9d73-16cc-49ac-8a1e-d6f92050d286"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
 			</textField>
-			<textField pattern="¤ #,##0">
+			<textField pattern="#,##0">
 				<reportElement x="57" y="-1" width="71" height="14" uuid="be111b39-a6e1-4652-834a-2c4566956620"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$V{totalnum}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0.00" isBlankWhenNull="true">
-				<reportElement x="473" y="0" width="79" height="14" uuid="36c97314-1d11-49e3-98ed-e616289d87c0"/>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement x="473" y="0" width="82" height="14" uuid="36c97314-1d11-49e3-98ed-e616289d87c0"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{totalrefund}]]></textFieldExpression>
 			</textField>
