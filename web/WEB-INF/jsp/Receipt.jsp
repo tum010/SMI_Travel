@@ -126,6 +126,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Amount over than invoice.</strong> 
             </div>
+
         </div>               
         <div class="col-sm-10">
             <!--<hr/>-->
@@ -545,6 +546,16 @@
                                     <tbody>
                                     </tbody>
                                 </table>
+                            </div>
+                        </div>
+                        <div class="col-xs-12" style="margin-bottom: 5px" >
+                            <div id="textAlertCurrencyAmountNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>Currency Amount Not Empty</strong> 
+                            </div>
+                            <div id="textAlertCurrencyAmountNotMatch"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>Currency Amount Not Match</strong> 
                             </div>
                         </div>
                         <!---Table-->
@@ -2772,12 +2783,88 @@
         var arCode = document.getElementById('arCode').value;
         var receiveFromDate = document.getElementById('receiveFromDate').value;
         var inputStatus = document.getElementById('inputStatus').value;
-
-            
+        
+        //Check Currency
+        var countRec = counter.value;
+        var currencyNotMatch = false;
+        var currencyNotEmpty = 0;
+        for(var i=1; i<=countRec; i++){
+            var currency1 = document.getElementById('receiveCurrency'+i);
+            var product1 = document.getElementById('receiveProduct'+i);
+            var description1 = document.getElementById('receiveDes'+i);
+            var amount1 = document.getElementById('receiveAmount'+i);
+            var exrate1 = document.getElementById('receiveExRate'+i);
+            if(currency1 !== null){
+                if(product1.value !== '' || description1.value !== '' || amount1.value !== '' || amount1.value !== '' || exrate1.value !== ''){
+                    var currencyTemp1 = currency1.value;
+                    for(var j=i+1; j<=countRec; j++){
+                        var currency2 = document.getElementById('receiveCurrency'+j);
+                        var product2 = document.getElementById('receiveProduct'+j);
+                        var description2 = document.getElementById('receiveDes'+j);
+                        var amount2 = document.getElementById('receiveAmount'+j);
+                        var exrate2 = document.getElementById('receiveExRate'+j);
+                        if(currency2 !== null){
+                            if(product2.value !== '' || description2.value !== '' || amount2.value !== '' || amount2.value !== '' || exrate2.value !== ''){
+                                var currencyTemp2 = currency2.value;
+                                if((currencyTemp1 !== currencyTemp2)){
+                                    currencyNotMatch = true;
+                                    i = countRec+1;
+                                    j = countRec+1;
+                                }
+                                if(currencyTemp1 === '' && currencyTemp2 === ''){
+                                    currencyNotEmpty++;
+                                }
+                            }    
+                        }
+                    }
+                }    
+            }    
+        }
+        if(currencyNotEmpty > 0){
+            $("#textAlertCurrencyAmountNotEmpty").hide();
+            $("#textAlertCurrencyAmountNotMatch").hide();
+            for(var i=1; i<=countRec; i++){
+                var currency = document.getElementById('receiveCurrency'+i);
+                var product = document.getElementById('receiveProduct'+i);
+                var description = document.getElementById('receiveDes'+i);
+                var amount = document.getElementById('receiveAmount'+i);
+                var exrate = document.getElementById('receiveExRate'+i);
+                if(currency !== null){
+                    if(product.value !== '' || description.value !== '' || amount.value !== '' || exrate.value !== ''){  
+                        currency.style.borderColor = 'red';
+                    }    
+                }    
+            }
+            $("#textAlertCurrencyAmountNotEmpty").show();
+            return;
+        }
+        if(currencyNotMatch){
+            $("#textAlertCurrencyAmountNotEmpty").hide();
+            $("#textAlertCurrencyAmountNotMatch").hide();
+            for(var i=1; i<=countRec; i++){
+                 var currency = document.getElementById('receiveCurrency'+i);
+                 var product = document.getElementById('receiveProduct'+i);
+                 var description = document.getElementById('receiveDes'+i);
+                 var amount = document.getElementById('receiveAmount'+i);
+                 var exrate = document.getElementById('receiveExRate'+i);
+                 if(currency !== null){
+                     if(product.value !== '' || description.value !== '' || amount.value !== '' || exrate.value !== ''){  
+                         currency.style.borderColor = 'red';
+                     }    
+                 }    
+             }
+             $("#textAlertCurrencyAmountNotMatch").show();
+             return;
+        }
+        $("#textAlertCurrencyAmountNotEmpty").hide();
+        $("#textAlertCurrencyAmountNotMatch").hide();
         if (counter.value > 2) {
             for (i = 1; i < counter.value - 1; i++) {
                 var amountTemp = document.getElementById('receiveAmountTemp' + i).value;
                 var amount = document.getElementById('receiveAmount' + i).value;
+                var currency = document.getElementById('receiveCurrency'+i);
+                currency.style.borderColor = 'green';
+               
                 amount = replaceAll(",", "", amount.toString());
                 amountTemp = replaceAll(",", "", amountTemp.toString());
 

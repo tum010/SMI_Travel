@@ -2320,6 +2320,8 @@
             }    
         }
         if(currencyNotMatch){
+            $("#textAlertCurrencyAmountNotEmpty").hide();
+            $("#textAlertCurrencyAmountNotMatch").hide();
            for(var i=1; i<=countTaxInvoice; i++){
                 var currency = document.getElementById('currencyAmount'+i);
                 var product = document.getElementById('product'+i);
@@ -2337,6 +2339,8 @@
             return;
         }
         if(currencyNotEmpty > 0){
+            $("#textAlertCurrencyAmountNotEmpty").hide();
+            $("#textAlertCurrencyAmountNotMatch").hide();
             for(var i=1; i<=countTaxInvoice; i++){
                 var currency = document.getElementById('currencyAmount'+i);
                 var product = document.getElementById('product'+i);
@@ -2355,6 +2359,8 @@
         }
         
         if(!refNoNotMatch && !currencyNotMatch && currencyNotEmpty === 0){
+            $("#textAlertCurrencyAmountNotEmpty").hide();
+            $("#textAlertCurrencyAmountNotMatch").hide();
             document.getElementById('TaxInvoiceForm').submit();
         }
         
