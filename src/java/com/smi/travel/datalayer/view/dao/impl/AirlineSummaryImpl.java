@@ -39,6 +39,7 @@ public class AirlineSummaryImpl implements AirlineSummaryDao {
             + ",sum(at.sale_fare) AS selling "
             + ",sum(at.tax) AS tax "
             + ",(sum(at.sale_fare) - sum(at.net_fare)) AS profit  "
+            + ", sum(at.refund) AS refund "
             + ",AT.booktype as booktype "
             + "from airticket_ticket at  ";
 
@@ -67,6 +68,7 @@ public class AirlineSummaryImpl implements AirlineSummaryDao {
                 .addScalar("selling", Hibernate.INTEGER)
                 .addScalar("tax", Hibernate.INTEGER)
                 .addScalar("profit", Hibernate.INTEGER)
+                .addScalar("refund", Hibernate.STRING)
                 .list();
  
         
@@ -86,7 +88,7 @@ public class AirlineSummaryImpl implements AirlineSummaryDao {
             sum.setEnddate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(enddate)));
             sum.setFrom(ticketfrom);
             sum.setType(tickettype);
-
+            sum.setRefund((("null".equals(String.valueOf(B[6])) ? "0" : String.valueOf(B[6]))));
             data.add(sum);
         }
         

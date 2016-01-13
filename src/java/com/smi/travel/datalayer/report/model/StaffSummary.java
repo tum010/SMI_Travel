@@ -25,7 +25,8 @@ public class StaffSummary {
     private int fare;
     private int tax;
     private int profit;
-
+    private String refund;
+    
     public String getSystemdate() {
         return systemdate;
     }
@@ -121,6 +122,15 @@ public class StaffSummary {
     public void setProfit(int profit) {
         this.profit = profit;
     }
+
+    public String getRefund() {
+        return refund;
+    }
+
+    public void setRefund(String refund) {
+        this.refund = refund;
+    }
+
     
     
 }

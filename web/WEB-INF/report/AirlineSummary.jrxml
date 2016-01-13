@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="122"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="1.239669421487608"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="98"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -18,6 +18,7 @@
 	<field name="fare" class="java.lang.Integer"/>
 	<field name="tax" class="java.lang.Integer"/>
 	<field name="profit" class="java.lang.Integer"/>
+	<field name="refund" class="java.lang.String"/>
 	<variable name="totalsale" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{sale}]]></variableExpression>
 	</variable>
@@ -32,6 +33,9 @@
 	</variable>
 	<variable name="totalnum" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{ticketnum}]]></variableExpression>
+	</variable>
+	<variable name="totalrefund" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{refund})]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -192,7 +196,7 @@
 				<text><![CDATA[Airline]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="57" y="10" width="106" height="13" uuid="8d1446dc-26ab-4bc8-8577-83e239890a57"/>
+				<reportElement x="57" y="10" width="71" height="13" uuid="8d1446dc-26ab-4bc8-8577-83e239890a57"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -205,7 +209,7 @@
 				<text><![CDATA[Ticket Num]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="163" y="10" width="94" height="13" uuid="e483f3ca-4b44-422a-bc8d-de10314058ce"/>
+				<reportElement x="128" y="10" width="83" height="13" uuid="e483f3ca-4b44-422a-bc8d-de10314058ce"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -219,7 +223,7 @@
 				<text><![CDATA[Sale]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="453" y="10" width="101" height="13" backcolor="#FFFFFF" uuid="83edb736-492d-4623-8ee4-433b052f46a6"/>
+				<reportElement x="383" y="10" width="90" height="13" backcolor="#FFFFFF" uuid="83edb736-492d-4623-8ee4-433b052f46a6"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -232,14 +236,14 @@
 				<text><![CDATA[Profit]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="355" y="10" width="98" height="13" uuid="2c511a20-3573-420b-8c32-d6395dc30413"/>
+				<reportElement x="296" y="10" width="87" height="13" uuid="2c511a20-3573-420b-8c32-d6395dc30413"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tax]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="257" y="10" width="98" height="13" uuid="a8ea0ac2-ad92-4341-bd71-e24620414795"/>
+				<reportElement x="211" y="10" width="85" height="13" uuid="a8ea0ac2-ad92-4341-bd71-e24620414795"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -250,6 +254,19 @@
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fare]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="473" y="10" width="82" height="13" backcolor="#FFFFFF" uuid="bf3f6e9f-358c-4f2a-861c-201b2bfa28f3"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Refund]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -266,7 +283,7 @@
 				<textFieldExpression><![CDATA[$F{air}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="57" y="0" width="106" height="20" uuid="29ee2495-509b-40e8-ac18-0c7be95d07be"/>
+				<reportElement x="57" y="0" width="71" height="20" uuid="29ee2495-509b-40e8-ac18-0c7be95d07be"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -277,7 +294,7 @@
 				<textFieldExpression><![CDATA[$F{ticketnum}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0">
-				<reportElement x="163" y="0" width="94" height="20" uuid="b73c66eb-5c4a-4d24-a4e1-87d6fee9be0c"/>
+				<reportElement x="128" y="0" width="80" height="20" uuid="b73c66eb-5c4a-4d24-a4e1-87d6fee9be0c"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -288,7 +305,7 @@
 				<textFieldExpression><![CDATA[$F{sale}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0">
-				<reportElement x="257" y="0" width="98" height="20" uuid="02bf477f-64c5-409d-b652-47e0c285c0f4"/>
+				<reportElement x="211" y="0" width="82" height="20" uuid="02bf477f-64c5-409d-b652-47e0c285c0f4"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -299,7 +316,7 @@
 				<textFieldExpression><![CDATA[$F{fare}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0">
-				<reportElement x="453" y="0" width="101" height="20" uuid="086ea543-35b1-432d-9a2e-8a4f22f8b799"/>
+				<reportElement x="383" y="0" width="87" height="20" uuid="086ea543-35b1-432d-9a2e-8a4f22f8b799"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -310,7 +327,7 @@
 				<textFieldExpression><![CDATA[$F{profit}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0">
-				<reportElement x="355" y="0" width="98" height="20" uuid="5a8606bb-221d-42b5-bc55-4fc28cdeaa36"/>
+				<reportElement x="300" y="0" width="80" height="20" uuid="5a8606bb-221d-42b5-bc55-4fc28cdeaa36"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -320,12 +337,23 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{tax}]]></textFieldExpression>
 			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement x="473" y="0" width="79" height="20" uuid="93069285-7bd5-467b-81c8-f5678ff172c7"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[($F{refund} != null && !"null".equals($F{refund}) && $F{refund}.length() > 0) ? new BigDecimal($F{refund}) : "0.00"]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
 		<band height="14" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="554" height="13" backcolor="#E6E6E6" uuid="66b1da13-6576-49ca-b1b1-41e83eeccf59"/>
+				<reportElement x="0" y="0" width="555" height="13" backcolor="#E6E6E6" uuid="66b1da13-6576-49ca-b1b1-41e83eeccf59"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineColor="#CCCCCC"/>
 				</graphicElement>
@@ -335,29 +363,34 @@
 				<text><![CDATA[Grand total]]></text>
 			</staticText>
 			<textField pattern="¤ #,##0">
-				<reportElement x="163" y="0" width="94" height="14" uuid="258e3c03-a2f9-4c87-b37b-c339af738bd6"/>
+				<reportElement x="128" y="0" width="80" height="14" uuid="258e3c03-a2f9-4c87-b37b-c339af738bd6"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{totalsale}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0">
-				<reportElement x="257" y="0" width="98" height="14" uuid="2c910c5c-6721-4f0c-8b25-40384f2fbf55"/>
+				<reportElement x="211" y="0" width="82" height="14" uuid="2c910c5c-6721-4f0c-8b25-40384f2fbf55"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{totalfare}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0">
-				<reportElement x="355" y="0" width="98" height="14" uuid="b2954d2f-e150-43d9-8013-4875f23bf555"/>
+				<reportElement x="300" y="0" width="80" height="14" uuid="b2954d2f-e150-43d9-8013-4875f23bf555"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{totaltax}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0">
-				<reportElement x="452" y="0" width="102" height="14" uuid="344c9d73-16cc-49ac-8a1e-d6f92050d286"/>
+				<reportElement x="383" y="0" width="87" height="14" uuid="344c9d73-16cc-49ac-8a1e-d6f92050d286"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0">
-				<reportElement x="57" y="-1" width="106" height="14" uuid="be111b39-a6e1-4652-834a-2c4566956620"/>
+				<reportElement x="57" y="-1" width="71" height="14" uuid="be111b39-a6e1-4652-834a-2c4566956620"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$V{totalnum}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="473" y="0" width="79" height="14" uuid="36c97314-1d11-49e3-98ed-e616289d87c0"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalrefund}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
@@ -428,7 +461,7 @@
 			</pieChart>
 			<pieChart>
 				<chart>
-					<reportElement x="95" y="177" width="180" height="140" uuid="5e02c8b2-4053-4721-bcd5-fd6e20c7657d"/>
+					<reportElement x="7" y="177" width="180" height="140" uuid="5e02c8b2-4053-4721-bcd5-fd6e20c7657d"/>
 					<chartTitle>
 						<font size="14" isBold="true"/>
 						<titleExpression><![CDATA["Tax"]]></titleExpression>
@@ -449,7 +482,7 @@
 			</pieChart>
 			<pieChart>
 				<chart>
-					<reportElement x="275" y="177" width="180" height="140" uuid="63f5c2c1-36bc-4de5-b899-c30054afbbb6"/>
+					<reportElement x="187" y="177" width="180" height="140" uuid="63f5c2c1-36bc-4de5-b899-c30054afbbb6"/>
 					<chartTitle>
 						<font size="14" isBold="true"/>
 						<titleExpression><![CDATA["Profit"]]></titleExpression>
@@ -462,6 +495,27 @@
 				<pieDataset>
 					<keyExpression><![CDATA[$F{air}]]></keyExpression>
 					<valueExpression><![CDATA[$F{profit}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart>
+					<reportElement x="367" y="177" width="180" height="140" uuid="a8dd119d-fd6a-4f76-889d-b0eb4314081b"/>
+					<chartTitle>
+						<font size="14" isBold="true"/>
+						<titleExpression><![CDATA["Refund"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Right">
+						<font size="5"/>
+					</chartLegend>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{air}]]></keyExpression>
+					<valueExpression><![CDATA[($F{refund} != null && !"null".equals($F{refund}) && $F{refund}.length() > 0) ? new BigDecimal($F{refund}) : "0.00"]]></valueExpression>
 				</pieDataset>
 				<piePlot isShowLabels="false">
 					<plot/>

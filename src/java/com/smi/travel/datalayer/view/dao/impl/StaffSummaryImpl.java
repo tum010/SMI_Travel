@@ -30,6 +30,7 @@ public class StaffSummaryImpl implements StaffSummaryDao {
             + ",sum(at.sale_fare) AS selling "
             + ",sum(at.tax) AS tax "
             + ",(sum(at.sale_fare) - sum(at.net_fare)) AS profit  "
+            + ", sum(at.refund) AS refund "
             + ",AT.booktype as booktype "
             + "from staff st "
             + ", airticket_ticket at "
@@ -63,6 +64,7 @@ public class StaffSummaryImpl implements StaffSummaryDao {
                 .addScalar("selling", Hibernate.INTEGER)
                 .addScalar("tax", Hibernate.INTEGER)
                 .addScalar("profit", Hibernate.INTEGER)
+                .addScalar("refund", Hibernate.STRING)
                 .list();
         for (Object[] B : QueryStaffList) {
             StaffSummary sum = new StaffSummary();
@@ -79,6 +81,7 @@ public class StaffSummaryImpl implements StaffSummaryDao {
             sum.setEnddate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(enddate)));
             sum.setFrom(ticketfrom);
             sum.setType(tickettype);
+            sum.setRefund((("null".equals(String.valueOf(B[6])) ? "0" : String.valueOf(B[6]))));
             data.add(sum);
         }
 
