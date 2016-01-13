@@ -532,7 +532,7 @@
                                                             ${vatShow}
                                                         </c:if>    
                                                     </td>
-                                                    <td class="hidden"><input class="form-control decimal" style="text-align:right;" type="text" id="vat${i.count}" name="vat${i.count}" readonly="" value="${taxDetail.vat}"></td>
+                                                    <td class="hidden"><input class="form-control" style="text-align:right;" type="text" id="vat${i.count}" name="vat${i.count}" readonly="" value="${taxDetail.vat}"></td>
                                                     <td align="right"><input class="form-control decimal" style="text-align:right;" type="text" id="gross${i.count}" name="gross${i.count}" value="${taxDetail.gross}" readonly=""></td>
                                                     <td align="right"><input class="form-control decimal" style="text-align:right;" type="text" id="amount${i.count}" name="amount${i.count}" value="${taxDetail.amount}" onfocusout="CalculateAmountTotal('${i.count}')"></td>
                                                     <td>
@@ -1793,7 +1793,7 @@
             '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')" checked></td>' +
             '<td align="right" id="vatShow' + row + '"></td>' +
-            '<td class="hidden"><input class="form-control numerical" style="text-align:right;" type="text" id="vat' + row + '" name="vat' + row + '" readonly=""></td>' +
+            '<td class="hidden"><input class="form-control" style="text-align:right;" type="text" id="vat' + row + '" name="vat' + row + '" readonly=""></td>' +
             '<td><input class="form-control decimal" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="0.00" readonly=""></td>' +
             '<td><input class="form-control decimal" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')"></td>' +
             '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\'); CalculateAmountTotal(\'\');"><option  value="" >---------</option></select></td>' +
@@ -1910,7 +1910,36 @@
         if (!row) {
             row = 1;
         }
-        if(document.getElementById("invoiceDetailId"+(count-1))===null){
+        
+        var rowAll = row + 1;
+        for (var i = 1; i < rowAll; i++) {
+            if ($("#product" + i).val() !== undefined
+                    || $("#refNo" + i).val() !== undefined
+                    || $("#description" + i).val() !== undefined
+                    || $("#cost" + i).val() !== undefined
+                    || $("#currencyCost" + i).val() !== undefined
+                    || $("#amount" + i).val() !== undefined
+                    || $("#currencyAmount" + i).val() !== undefined
+                    ) {
+                if ($("#product" + i).val() !== ""
+                        || $("#refNo" + i).val() !== ""
+                        || $("#description" + i).val() !== ""
+                        || $("#cost" + i).val() !== ""
+                        || $("#currencyCost" + i).val() !== ""
+                        || $("#amount" + i).val() !== ""
+                        || $("#currencyAmount" + i).val() !== ""
+                        ) {
+
+                } else {
+                    $("#product" + i).parent().parent().remove();
+                    row = parseInt(i);
+                    count = parseInt(i);
+//                    $("#counter").val(row);
+                }
+            }    
+        }
+        
+//        if(document.getElementById("invoiceDetailId"+(count-1))===null){
            $("#TaxInvoiceTable tbody").append(           
                 '<tr>' +
                 '<td class="hidden"><input class="form-control" type="text" id="taxDetailId' + count + '" name="taxDetailId' + count + '" value=""></td>' +
@@ -1918,7 +1947,7 @@
                 '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailCost' + count + '" name="invoiceDetailCost' + count + '" value=""></td>' +
                 '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount' + count + '" name="invoiceDetailAmount' + count + '" value=""></td>' +
                 '<td class="hidden"><input class="form-control" type="text" id="isExport' + count + '" name="isExport' + count + '" value=""></td>' +
-                '<td class="hidden"><input class="form-control" type="text" id="exportDate' + row + '" name="exportDate' + row + '" value=""></td>' +
+                '<td class="hidden"><input class="form-control" type="text" id="exportDate' + count + '" name="exportDate' + count + '" value=""></td>' +
                 '<td class="hidden"><input class="form-control" type="text" id="isProfit' + count + '" name="isProfit' + count + '" value=""></td>' +
                 '<td><select class="form-control" name="product' + count + '" id="product' + count + '" onchange="AddrowBySelect(\'' + count + '\')"><option  value="" >---------</option></select></td>' +
                 '<td><input class="form-control" maxlength="6" type="text" id="refNo' + count + '" name="refNo' + count + '" value="" onfocusout="checkRefNo(\'' + count + '\')"></td>' +
@@ -1927,7 +1956,7 @@
                 '<td><select class="form-control" name="currencyCost' + count + '" id="currencyCost' + count + '" onchange="AddrowBySelect(\'' + count + '\')"><option  value="" >---------</option></select></td>' +
                 '<td align="center"><input type="checkbox" id="isVat' + count + '" name="isVat' + count + '" value="1" onclick="CalculateGross(\'' + count + '\')" checked></td>' +
                 '<td align="right" id="vatShow' + count + '"></td>' +
-                '<td class="hidden"><input class="form-control numerical" style="text-align:right;" type="text" id="vat' + count + '" name="vat' + count + '" readonly=""></td>' +
+                '<td class="hidden"><input class="form-control" style="text-align:right;" type="text" id="vat' + count + '" name="vat' + count + '" readonly=""></td>' +
                 '<td><input class="form-control decimal" style="text-align:right;" type="text" id="gross' + count + '" name="gross' + count + '" value="0.00" readonly=""></td>' +
                 '<td><input class="form-control decimal" style="text-align:right;" type="text" id="amount' + count + '" name="amount' + count + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')"></td>' +
                 '<td><select class="form-control" name="currencyAmount' + count + '" id="currencyAmount' + count + '" onchange="AddrowBySelect(\'' + count + '\'); CalculateAmountTotal(\'\');"><option  value="" >---------</option></select></td>' +
@@ -1958,8 +1987,8 @@
             $('[name=currencyAmount' + count + '] option').filter(function() { 
                 return ($(this).text() === curAmount);
             }).prop('selected', true);
-            document.getElementById('vatShow'+(count-1)).innerHTML = (vat !== '' ? parseFloat(vat) : parseFloat($("#vatDefault").val()));
-            document.getElementById('vat'+(count-1)).value = (vat !== '' ? parseFloat(vat) : parseFloat($("#vatDefault").val()));
+            document.getElementById('vatShow'+(count)).innerHTML = (vat !== '' ? parseFloat(vat) : parseFloat($("#vatDefault").val()));
+            document.getElementById('vat'+(count)).value = (vat !== '' ? parseFloat(vat) : parseFloat($("#vatDefault").val()));
             if (isVat === '1'){
                 $('#isVat'+count).prop('checked', true);
 //                var vatData = parseFloat($("#vatDefault").val());
@@ -1982,106 +2011,126 @@
 //            document.getElementById('vatShow'+count).innerHTML = vatData;
             $("#refNo" + count).val(refNo);
             row = count + 1;
-        } else {
-            if(isProfit !== ''){
-                $("#invoiceDetailId" + (count-1)).val(id);
-                $("#isProfit" + (count-1)).val(isProfit);
-                $('[name=product' + (count-1) + '] option').filter(function() { 
-                    return ($(this).val() === product);
-                }).prop('selected', true);
-            } else {
-                $("#invoiceDetailId" + (count-1)).val(id);
-                $('[name=product' + (count-1) + '] option').filter(function() { 
-                    return ($(this).text() === product);
-                }).prop('selected', true);
-            }
-//            $("#invoiceDetailId" + (count-1)).val(id);
-            $("#invoiceDetailCost" + (count-1)).val(formatNumber(parseFloat(cost)));
-            $("#invoiceDetailAmount" + (count-1)).val(formatNumber(parseFloat(amount)));
-            $("#description" + (count-1)).val(description);
-            $("#cost" + (count-1)).val(formatNumber(parseFloat(cost)));
-            $('[name=currencyCost' + (count-1) + '] option').filter(function() { 
-                return ($(this).text() === curCost);
-            }).prop('selected', true);
-            $("#amount" + (count-1)).val(formatNumber(parseFloat(amount)));
-            $('[name=currencyAmount' + (count-1) + '] option').filter(function() { 
-                return ($(this).text() === curAmount);
-            }).prop('selected', true);
-            document.getElementById('vatShow'+(count-1)).innerHTML = (vat !== '' ? parseFloat(vat) : parseFloat($("#vatDefault").val()));
-            document.getElementById('vat'+(count-1)).value = (vat !== '' ? parseFloat(vat) : parseFloat($("#vatDefault").val()));
-            if (isVat === '1'){
-                $('#isVat'+(count-1)).prop('checked', true);
-//                var vatData = parseFloat($("#vatDefault").val());
-//                document.getElementById('vatShow'+(count-1)).innerHTML = vatData;
-                CalculateGross((count-1));
-            } else {
-                $('#isVat'+(count-1)).prop('checked', true);
-//                var vatData = parseFloat($("#vatDefault").val());
-//                document.getElementById('vatShow'+(count-1)).innerHTML = vatData;
-                CalculateGross((count-1));
-            }
-//            var vatData = parseFloat($("#vatDefault").val());
-//            document.getElementById('vatShow'+(count-1)).innerHTML = vatData;            
-            $("#refNo" + (count-1)).val(refNo);
-            row = count + 1;
-        }    
+            $('#TaxInvoiceTable input:last').addClass('lastrow');
+            $("#refNo"+count+",#description"+count+",#cost"+count+",#gross"+count+",#amount"+count).focus(function() {
+                if($("#amount"+count).hasClass("lastrow")){
+                   AddRowTaxInvoiceTable(parseInt($("#countTaxInvoice").val()));
+                }
+            });	
+            var tempCount = row+1;
+            $(".decimal").inputmask({
+                alias: "decimal",
+                integerDigits: 8,
+                groupSeparator: ',',
+                autoGroup: true,
+                digits: 2,
+                allowMinus: false,
+                digitsOptional: false,
+                placeholder: "0.00",
+            });
+            $("#countTaxInvoice").val(row);
+            CalculateAmountTotal();
+            AddRowTaxInvoiceTable(parseInt($("#countTaxInvoice").val()));
+//        } else {
+//            if(isProfit !== ''){
+//                $("#invoiceDetailId" + (count-1)).val(id);
+//                $("#isProfit" + (count-1)).val(isProfit);
+//                $('[name=product' + (count-1) + '] option').filter(function() { 
+//                    return ($(this).val() === product);
+//                }).prop('selected', true);
+//            } else {
+//                $("#invoiceDetailId" + (count-1)).val(id);
+//                $('[name=product' + (count-1) + '] option').filter(function() { 
+//                    return ($(this).text() === product);
+//                }).prop('selected', true);
+//            }
+////            $("#invoiceDetailId" + (count-1)).val(id);
+//            $("#invoiceDetailCost" + (count-1)).val(formatNumber(parseFloat(cost)));
+//            $("#invoiceDetailAmount" + (count-1)).val(formatNumber(parseFloat(amount)));
+//            $("#description" + (count-1)).val(description);
+//            $("#cost" + (count-1)).val(formatNumber(parseFloat(cost)));
+//            $('[name=currencyCost' + (count-1) + '] option').filter(function() { 
+//                return ($(this).text() === curCost);
+//            }).prop('selected', true);
+//            $("#amount" + (count-1)).val(formatNumber(parseFloat(amount)));
+//            $('[name=currencyAmount' + (count-1) + '] option').filter(function() { 
+//                return ($(this).text() === curAmount);
+//            }).prop('selected', true);
+//            document.getElementById('vatShow'+(count-1)).innerHTML = (vat !== '' ? parseFloat(vat) : parseFloat($("#vatDefault").val()));
+//            document.getElementById('vat'+(count-1)).value = (vat !== '' ? parseFloat(vat) : parseFloat($("#vatDefault").val()));
+//            if (isVat === '1'){
+//                $('#isVat'+(count-1)).prop('checked', true);
+////                var vatData = parseFloat($("#vatDefault").val());
+////                document.getElementById('vatShow'+(count-1)).innerHTML = vatData;
+//                CalculateGross((count-1));
+//            } else {
+//                $('#isVat'+(count-1)).prop('checked', true);
+////                var vatData = parseFloat($("#vatDefault").val());
+////                document.getElementById('vatShow'+(count-1)).innerHTML = vatData;
+//                CalculateGross((count-1));
+//            }
+////            var vatData = parseFloat($("#vatDefault").val());
+////            document.getElementById('vatShow'+(count-1)).innerHTML = vatData;            
+//            $("#refNo" + (count-1)).val(refNo);
+//            row = count + 1;
+//        }    
                   
-        $("#TaxInvoiceTable tbody").append(           
-            '<tr>' +
-            '<td class="hidden"><input class="form-control" type="text" id="taxDetailId' + row + '" name="taxDetailId' + row + '" value=""></td>' +
-            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailId' + row + '" name="invoiceDetailId' + row + '" value=""></td>' +
-            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailCost' + row + '" name="invoiceDetailCost' + row + '" value=""></td>' +
-            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount' + row + '" name="invoiceDetailAmount' + row + '" value=""></td>' +
-            '<td class="hidden"><input class="form-control" type="text" id="isExport' + count + '" name="isExport' + count + '" value=""></td>' +
-            '<td class="hidden"><input class="form-control" type="text" id="exportDate' + row + '" name="exportDate' + row + '" value=""></td>' +
-            '<td class="hidden"><input class="form-control" type="text" id="isProfit' + count + '" name="isProfit' + count + '" value=""></td>' +
-            '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
-            '<td><input class="form-control" maxlength="6" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
-            '<td><input class="form-control" type="text" maxlength="255" id="description' + row + '" name="description' + row + '" value=""></td>' +
-            '<td><input class="form-control decimal" style="text-align:right;" type="text" id="cost' + row + '" name="cost' + row +'" value="" onfocusout="CalculateAmountTotal()"></td>' +
-            '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
-            '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')" checked></td>' +
-            '<td align="right" id="vatShow' + row + '"></td>' +
-            '<td class="hidden"><input class="form-control numerical" style="text-align:right;" type="text" id="vat' + row + '" name="vat' + row + '" readonly=""></td>' +
-            '<td><input class="form-control decimal" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="0.00" readonly=""></td>' +
-            '<td><input class="form-control decimal" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')"></td>' +
-            '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\'); CalculateAmountTotal(\'\');"><option  value="" >---------</option></select></td>' +
-            '<td>' + 
-                '<center>' +
-                '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" onclick="deleteTaxList(\'\',\'' + row + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' + 
-                '<span id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span>' +
-                '</a>' + 
-                '</center>' +
-            '</td>' +
-            '</tr>'           
-        );
-        $("#tr_TaxInvoiceDetailAddRow").removeClass("show");
-        $("#tr_TaxInvoiceDetailAddRow").addClass("hide");
-        $("#select_product_list option").clone().appendTo("#product" + row);
-        $("#select_currency_list option").clone().appendTo("#currencyCost" + row);
-        $("#select_currency_list option").clone().appendTo("#currencyAmount" + row);
-//        var vatData = parseFloat($("#vatDefault").val());
-        document.getElementById('vatShow'+row).innerHTML = parseFloat($("#vatDefault").val());
-        document.getElementById('vat'+row).value = parseFloat($("#vatDefault").val());
-        $('#TaxInvoiceTable input:last').addClass('lastrow');
-        $("#refNo"+row+",#description"+row+",#cost"+row+",#gross"+row+",#amount"+row).focus(function() {
-            if($("#amount"+row).hasClass("lastrow")){
-               AddRowTaxInvoiceTable(parseInt($("#countTaxInvoice").val()));
-            }
-        });	
-        var tempCount = row+1;
-        $(".decimal").inputmask({
-            alias: "decimal",
-            integerDigits: 8,
-            groupSeparator: ',',
-            autoGroup: true,
-            digits: 2,
-            allowMinus: false,
-            digitsOptional: false,
-            placeholder: "0.00",
-        });
-        $("#countTaxInvoice").val(tempCount);
-        CalculateAmountTotal();
+//        $("#TaxInvoiceTable tbody").append(           
+//            '<tr>' +
+//            '<td class="hidden"><input class="form-control" type="text" id="taxDetailId' + row + '" name="taxDetailId' + row + '" value=""></td>' +
+//            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailId' + row + '" name="invoiceDetailId' + row + '" value=""></td>' +
+//            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailCost' + row + '" name="invoiceDetailCost' + row + '" value=""></td>' +
+//            '<td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount' + row + '" name="invoiceDetailAmount' + row + '" value=""></td>' +
+//            '<td class="hidden"><input class="form-control" type="text" id="isExport' + count + '" name="isExport' + count + '" value=""></td>' +
+//            '<td class="hidden"><input class="form-control" type="text" id="exportDate' + row + '" name="exportDate' + row + '" value=""></td>' +
+//            '<td class="hidden"><input class="form-control" type="text" id="isProfit' + count + '" name="isProfit' + count + '" value=""></td>' +
+//            '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
+//            '<td><input class="form-control" maxlength="6" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
+//            '<td><input class="form-control" type="text" maxlength="255" id="description' + row + '" name="description' + row + '" value=""></td>' +
+//            '<td><input class="form-control decimal" style="text-align:right;" type="text" id="cost' + row + '" name="cost' + row +'" value="" onfocusout="CalculateAmountTotal()"></td>' +
+//            '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
+//            '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')" checked></td>' +
+//            '<td align="right" id="vatShow' + row + '"></td>' +
+//            '<td class="hidden"><input class="form-control numerical" style="text-align:right;" type="text" id="vat' + row + '" name="vat' + row + '" readonly=""></td>' +
+//            '<td><input class="form-control decimal" style="text-align:right;" type="text" id="gross' + row + '" name="gross' + row + '" value="0.00" readonly=""></td>' +
+//            '<td><input class="form-control decimal" style="text-align:right;" type="text" id="amount' + row + '" name="amount' + row + '" value="" onfocusout="CalculateAmountTotal(\'' + row + '\')"></td>' +
+//            '<td><select class="form-control" name="currencyAmount' + row + '" id="currencyAmount' + row + '" onchange="AddrowBySelect(\'' + row + '\'); CalculateAmountTotal(\'\');"><option  value="" >---------</option></select></td>' +
+//            '<td>' + 
+//                '<center>' +
+//                '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" onclick="deleteTaxList(\'\',\'' + row + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' + 
+//                '<span id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span>' +
+//                '</a>' + 
+//                '</center>' +
+//            '</td>' +
+//            '</tr>'           
+//        );
+//        $("#tr_TaxInvoiceDetailAddRow").removeClass("show");
+//        $("#tr_TaxInvoiceDetailAddRow").addClass("hide");
+//        $("#select_product_list option").clone().appendTo("#product" + row);
+//        $("#select_currency_list option").clone().appendTo("#currencyCost" + row);
+//        $("#select_currency_list option").clone().appendTo("#currencyAmount" + row);
+////        var vatData = parseFloat($("#vatDefault").val());
+//        document.getElementById('vatShow'+row).innerHTML = parseFloat($("#vatDefault").val());
+//        document.getElementById('vat'+row).value = parseFloat($("#vatDefault").val());
+//        $('#TaxInvoiceTable input:last').addClass('lastrow');
+//        $("#refNo"+row+",#description"+row+",#cost"+row+",#gross"+row+",#amount"+row).focus(function() {
+//            if($("#amount"+row).hasClass("lastrow")){
+//               AddRowTaxInvoiceTable(parseInt($("#countTaxInvoice").val()));
+//            }
+//        });	
+//        var tempCount = row+1;
+//        $(".decimal").inputmask({
+//            alias: "decimal",
+//            integerDigits: 8,
+//            groupSeparator: ',',
+//            autoGroup: true,
+//            digits: 2,
+//            allowMinus: false,
+//            digitsOptional: false,
+//            placeholder: "0.00",
+//        });
+//        $("#countTaxInvoice").val(tempCount);
+//        CalculateAmountTotal();
     }
     
     function CalculateAmountTotal(row){
@@ -2392,12 +2441,14 @@
         var count = parseInt(document.getElementById('countTaxInvoice').value);
         if(id === ''){
             $("#product" + row).parent().parent().remove();
-            AddRowTaxInvoiceTable(count++);
+//            AddRowTaxInvoiceTable(count++);
             var rowAll = $("#TaxInvoiceTable tr").length;
             if (rowAll <= 1) {
                 $("#tr_TaxInvoiceDetailAddRow").removeClass("hide");
                 $("#tr_TaxInvoiceDetailAddRow").addClass("show");
             }
+            $('#TaxInvoiceTable tr input:last').removeClass('lastrow');
+            $('#TaxInvoiceTable input:last').addClass('lastrow');
 //            $("#countTaxInvoice").val(count+1);
         } else {
             $.ajax({
@@ -2406,12 +2457,14 @@
                 data: {taxInvoiceDetailId: id},
                 success: function () {
                     $("#product" + row).parent().parent().remove();
-                    AddRowTaxInvoiceTable(count++);
+//                    AddRowTaxInvoiceTable(count++);
                     var rowAll = $("#TaxInvoiceTable tr").length;
                     if (rowAll <= 1) {
                         $("#tr_TaxInvoiceDetailAddRow").removeClass("hide");
                         $("#tr_TaxInvoiceDetailAddRow").addClass("show");
                     }
+                    $('#TaxInvoiceTable tr input:last').removeClass('lastrow');
+                    $('#TaxInvoiceTable input:last').addClass('lastrow');
 //                    $("#countTaxInvoice").val(count+1);
                 },
                 error: function () {
