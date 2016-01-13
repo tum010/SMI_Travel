@@ -223,7 +223,7 @@
                                             </td>
                                             <c:choose>
                                                 <c:when test="${fn:contains(page , 'PM')}">
-                                                    <td class="hidden" >
+                                                    <td class="hidden" align="center">
                                                         <c:set var="checkIsVat" value="" />
                                                         <c:if test="${ind.isVat == 1}">
                                                             <c:set var="checkIsVat" value="checked" />
@@ -243,7 +243,7 @@
                                                     </td>
                                                 </c:when>
                                                 <c:when test="${fn:contains(page , 'RV')}">
-                                                    <td >
+                                                    <td align="center">
                                                         <c:set var="checkIsVat" value="" />
                                                         <c:if test="${ind.isVat == 1}">
                                                             <c:set var="checkIsVat" value="checked" />

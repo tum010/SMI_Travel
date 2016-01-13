@@ -2010,7 +2010,7 @@
         var inv = invoice.split("|");
         var invoiceId = inv[0];
         var invType = inv[1];
-        var sale = document.getElementById('selectSalesStaff').value;
+//        var sale = document.getElementById('selectSalesStaff').value;
         var payment = document.getElementById('selectPayment').value;
         var sign = document.getElementById('SelectSign').value;
         var leader = document.getElementById('selectLeader').value;
@@ -2019,27 +2019,27 @@
             if (invoice === '') {
             } else {
                 if (invType === 'T') {
-                    window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                    window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
                 } else {
-                    window.open("report.smi?name=InvoiceReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                    window.open("report.smi?name=InvoiceReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
                 }
             }
         } else if (printtype == 4) {
             if (invoice === '') {
             } else {
                 if (invType === 'T') {
-                    window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                    window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
                 } else {
-                    window.open("report.smi?name=InvoiceEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                    window.open("report.smi?name=InvoiceEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
                 }
             }
         } else if (printtype == 5) {
             if (invoice === '') {
             } else {
                 if (invType === 'T') {
-                    window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                    window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
                 } else {
-                    window.open("SendMail.smi?reportname=Invoice&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                    window.open("SendMail.smi?reportname=Invoice&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
                 }
             }
         }

@@ -745,7 +745,7 @@ function addRowInvoiceInboundDetail(row){
     '<tr>' +
     '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
     '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '"   value=""></td>' +
-    '<td '+ textHidden+'><input type="checkbox" id="checkUse' + row + '" name="checkUse' + row + '" onclick="calculateGross(' + row + ')" value="" checked></td>' +
+    '<td align="center" '+ textHidden+'><input type="checkbox" id="checkUse' + row + '" name="checkUse' + row + '" onclick="calculateGross(' + row + ')" value="" checked></td>' +
     '<td class="hidden" ><input type="text" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '"  value="' + vat + '"></td>' +
     '<td '+ textHiddenVat+'>'+vatTemp+'</td>' +
     '<td '+ textHidden+'><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
