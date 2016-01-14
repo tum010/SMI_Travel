@@ -111,7 +111,7 @@ public class InvoiceImpl implements InvoiceReportDao{
             invoice.setRefno(util.ConvertString(B[20]) != null && !"".equals(util.ConvertString(B[20])) ? util.ConvertString(B[20]) : "");
             vat = ((Integer) (B[21] != null && (Integer) B[21] != 0 ? (Integer)B[21] : vat));
             invoice.setVatpercent(vat);
-            invoice.setAmount(df.format(B[11]));
+            invoice.setAmount(B[11] != null ? df.format(B[11]) : "0.00");
             invoice.setBank1(Bank1);
             invoice.setBank2(Bank2);
             invoice.setBranch1(Branch1);
@@ -155,10 +155,12 @@ public class InvoiceImpl implements InvoiceReportDao{
             }
             
             if(B[5] != null){
-                invoice.setGross(df.format(B[5]));
+                String grossTemp = util.ConvertString(B[5]);
+                invoice.setGross("0.00".equalsIgnoreCase(grossTemp) ? "0.00" : df.format(B[5]));
             }
             if(B[6] != null){
-                invoice.setVat(df.format(B[6]));
+                String totalTemp = util.ConvertString(B[6]);
+                invoice.setVat("0.00".equalsIgnoreCase(totalTemp) ? "0.00" :  df.format(B[6]));
             }
             if(B[7] != null){
                 String totalTemp = util.ConvertString(B[7]);

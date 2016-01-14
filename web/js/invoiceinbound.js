@@ -735,10 +735,10 @@ function addRowInvoiceInboundDetail(row){
     var typeInvoiceInbound = $("#InputTypeInvoiceInbound").val();
     var vatTemp = $('#vatBase').val();
     var textHidden = '';
-    var textHiddenVat = 'class="text-right"';
+    var textHiddenVat = 'class="text-center"';
     if(typeInvoiceInbound === "PM"){
         textHidden = 'class="hidden"';
-        textHiddenVat = 'class="text-right hidden"'
+        textHiddenVat = 'class="text-center hidden"'
     }
     var vat = $('#vatBase').val();
     $("#DetailBillableTable tbody").append(

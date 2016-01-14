@@ -281,7 +281,7 @@ public class InvoiceInboundController extends SMITravelController {
             }else{
                 request.setAttribute("invoice",null);
             }
-            request.setAttribute("thisdate", invoice.getInvDate());
+            request.setAttribute("thisdate", (invoice.getInvDate() != null ? invoice.getInvDate() : utilty.convertDateToString(new Date())));
             
         }else{
             request.setAttribute("thisdate", utilty.convertDateToString(new Date()));

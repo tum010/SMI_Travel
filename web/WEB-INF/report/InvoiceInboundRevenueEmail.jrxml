@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceInboundRevenueEmail" language="groovy" pageWidth="595" pageHeight="843" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="389"/>
-	<property name="ireport.y" value="528"/>
+	<property name="ireport.y" value="624"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -449,7 +449,7 @@
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="385" y="18" width="24" height="17" uuid="9d8f46a0-71e3-45cb-9db8-32c0a89129dd"/>
+				<reportElement x="380" y="18" width="24" height="17" uuid="9d8f46a0-71e3-45cb-9db8-32c0a89129dd"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -857,7 +857,7 @@
 				<textFieldExpression><![CDATA[$F{signname}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="412" y="18" width="19" height="15" uuid="baabaa43-1834-4831-abfe-9e91d3ac835c"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="407" y="18" width="24" height="15" uuid="baabaa43-1834-4831-abfe-9e91d3ac835c"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="8" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
