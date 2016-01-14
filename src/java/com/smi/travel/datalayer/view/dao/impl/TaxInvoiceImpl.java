@@ -127,12 +127,15 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
 //            data.add(taxInvoiceView);
         }
         if(option == 3){
+            invdescTemp = invdescTemp.replaceAll("\\s","");
+            invdescTemp = invdescTemp.replaceAll("Inv:", "");          
             String[] invdescs = invdescTemp.split(",");
-            String invdesc = invdescTemp;
+            String invdesc = "";
             for (int j=0;j<invdescs.length;j++){
                 for (int k=j+1;k<invdescs.length;k++){
                     if (k!=j && invdescs[k].equals(invdescs[j])){
-                        invdesc = invdescs[k];
+                        invdesc += (!"".equalsIgnoreCase(invdesc) ? " , " : "");
+                        invdesc += invdescs[k];
                     }
                 }
             }
