@@ -238,7 +238,7 @@
                                 <c:set var="colourStatusFirstrow" value="" />
 
                                 <%--<c:if test="${p.id == 2}"> Need to be fixed to status of PNR--%>
-                                <c:if test="${p.MItemstatus.id == 2}">
+                                <c:if test="${p.MItemstatus.id == 3}">
                                     <c:set var="colourStatus" value="style='background-color: #FFD3D3'" />
                                     <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                                 </c:if>

@@ -222,7 +222,7 @@ public class AirticketPnrImpl implements AirticketPnrDao {
     @Override
     public int cancelBookAirticketPNR(String PNRID) {
         int result = 0;
-        String hql = "UPDATE AirticketPnr Air set   Air.MItemstatus.id = 2"
+        String hql = "UPDATE AirticketPnr Air set   Air.MItemstatus.id = 3"
                 + "WHERE Air.id = :PNRID";
         try {
             Session session = this.sessionFactory.openSession();
