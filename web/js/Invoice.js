@@ -196,7 +196,7 @@ $(document).ready(function() {
     $("#counterTable").val(rowCount);
     AddRowDetailBillAble(rowCount++);
 
-    validFromInvoice();
+//    validFromInvoice();
 
     // Invoice No Key Up
     var wildCardSearch = ($("#wildCardSearch").val()).indexOf("%");
@@ -276,7 +276,17 @@ function searchInvoice() {
 
 var currency = 0;
 function validFromInvoice() {
-
+    var invDate = $("#InputInvDate").val();
+    var invTo = $("#InvTo").val();
+    var invToName = $("#InvToName").val();
+    var arCode = $("#ARCode").val();
+    if(invDate === '' || invTo === '' || invToName === '' || arCode === ''){
+        $('#InvoiceForm').bootstrapValidator('revalidateField', 'InputInvDate');
+        $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvTo');
+        $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvToName');
+        $('#InvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
+        return;
+    }
 
     var counter = $('#DetailBillableTable tbody tr').length;
     var different = 0;
@@ -309,15 +319,17 @@ function validFromInvoice() {
             });
         });
         $('#textAlertCurrency').show();
+        return;
         currency = 1;
-        document.getElementById("saveInvoice").disabled = true;
+//        document.getElementById("saveInvoice").disabled = true;
 //        alert("Currency : " + currency); 
 //        $('#InvoiceForm').bootstrapValidator('validateField', 'SelectCurrencyAmount2'+rowTemp);
         if (checkcur1) {
             $('#textAlertCurrencyAmountNotEmpty').show();
-            document.getElementById("saveInvoice").disabled = true;
+            return;
+//            document.getElementById("saveInvoice").disabled = true;
         }
-        return false;
+//        return false;
     } else {
         $('#DetailBillableTable').find('tr').each(function() {
             $(this).find('td').each(function() {
@@ -328,15 +340,16 @@ function validFromInvoice() {
         });
         $('#textAlertCurrency').hide();
         currency = 0;
-        document.getElementById("saveInvoice").disabled = false;
+//        document.getElementById("saveInvoice").disabled = false;
         if (checkcur1) {
             $('#textAlertCurrencyAmountNotEmpty').show();
-            document.getElementById("saveInvoice").disabled = true;
+//            document.getElementById("saveInvoice").disabled = true;
         } else {
             $('#textAlertInvoiceNotEmpty').hide();
-            document.getElementById("saveInvoice").disabled = false;
+//            document.getElementById("saveInvoice").disabled = false;
+            document.getElementById('InvoiceForm').submit();
         }
-        return true;
+//        return true;
     }
 }
 
@@ -463,7 +476,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="' + vat + '" ></td>' +
                 '<td ' + vathidden + ' ><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control decimal text-right" id="InputAmount' + row + '" name="InputAmount' + row + '" value="' + price + '" ></td>' +
-                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="validFromInvoice(); CalculateGrandTotal(\'\')">' + selectC + '</select></td>' +
+                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="CalculateGrandTotal(\'\')">' + selectC + '</select></td>' +
                 '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right decimal" ></td>' +
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
@@ -496,7 +509,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td class="hidden"><input type="text" class="form-control" id="InputVatTemp' + row + '" name="InputVatTemp' + row + '" value="' + vat + '" ></td>' +
                 '<td ' + vathidden + ' ><input type="text" readonly onfocusout="changeFormatGrossNumber(' + row + ')" class="form-control decimal text-right" id="InputGross' + row + '" name="InputGross' + row + '" value="" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountNumber(' + row + ');" class="form-control decimal text-right" id="InputAmount' + row + '" name="InputAmount' + row + '"  value="' + price + '" ></td>' +
-                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="validFromInvoice(); CalculateGrandTotal(\'\')">' + selectC + '</select></td>' +
+                '<td class="priceCurrencyAmount"><select id="SelectCurrencyAmount' + row + '" name="SelectCurrencyAmount' + row + '" class="form-control" onclick="" onchange="CalculateGrandTotal(\'\')">' + selectC + '</select></td>' +
                 '<td><input type="text" id="InputExRate' + row + '" onfocusout="changeFormatExRateNumber(' + row + ')" name="InputExRate' + row + '" class="form-control text-right decimalexrate" ></td>' +
                 '<td><input type="text" onfocusout="changeFormatAmountLocalNumber(' + row + ')" value="' + price + '" id="InputAmountLocal' + row + '" name="InputAmountLocal' + row + '" class="form-control text-right decimal" ></td>' +
                 '<td class="hidden"><input type="text" onfocusout="changeFormatAmountLocalTempNumber(' + row + ')" value="' + price + '" id="InputAmountLocalTemp' + row + '" name="InputAmountLocalTemp' + row + '"  ></td>' +
@@ -1105,9 +1118,9 @@ function addInvoiceDetail(rowId) {
         $("#counter").val(countTable);
         AddRowDetailBillAble(countTable);
     }
-    if (curChk === '') {
-        validFromInvoice();
-    }
+//    if (curChk === '') {
+//        validFromInvoice();
+//    }
 }
 
 function CallAjaxSearchDescription(param, rowId, des, RefNo) {

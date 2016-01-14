@@ -180,7 +180,7 @@
                 <strong>Currency Amount Not Empty</strong> 
             </div>
 
-            <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form" onsubmit="return validFromInvoice();">
+            <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form">
                 <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Void Success </strong> 
@@ -737,7 +737,7 @@
                                                                 <td class="hidden" ><input type="text" onfocusout="changeFormatGrossNumber(${taxdesc.count})" class="form-control decimal" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
                                                                 <td><input type="text" class="form-control decimal text-right" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');"></td>
                                                                 <td class="priceCurrencyAmount">
-                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="validFromInvoice(); CalculateGrandTotal('')">
+                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="CalculateGrandTotal('')">
                                                                         <option value='' ></option>
                                                                         <c:forEach var="cur" items="${listCurrency}">
                                                                             <c:set var="selectA" value="" />
@@ -909,7 +909,7 @@
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-right ">
-                                            <button type="submit"  id="saveInvoice" name="saveInvoice" class="btn btn-success" ${isSaveVoid}>
+                                            <button type="button"  id="saveInvoice" name="saveInvoice" class="btn btn-success" onclick="validFromInvoice();" ${isSaveVoid}>
                                                 <span id="SpanSave" class="fa fa-save"></span> Save 
                                             </button>
                                         </div>
