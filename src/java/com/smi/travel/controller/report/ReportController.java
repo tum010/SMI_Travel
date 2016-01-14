@@ -110,6 +110,7 @@ public class ReportController extends SMITravelController {
     private static final String RefundTicketSummaryReport = "RefundTicketSummaryReport";
     private static final String RefundAirticketReport = "RefundAirticketReport";
     private static final String Overdue = "OverdueSummaryReport";
+    private static final String PaymentOutboundReport = "PaymentOutboundReport";
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
     private ReportService reportservice;
@@ -386,8 +387,10 @@ public class ReportController extends SMITravelController {
             String clientcode_over = request.getParameter("clientcode");
             String clientname_over = request.getParameter("clientname");
             data = reportservice.listOverdueSummary(clientcode_over, clientname_over, staffcode_over, staffname_over, vattype_over, from_over, to_over, department_over, group_over, view_over, user.getRole().getName());
+        }else if(PaymentOutboundReport.equals(name)){
+            data = reportservice.getPaymentOutboundReport("", "", "", "", "", user.getRole().getName());
         }
-        
+
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);
 
         model.put("JRDataSource", dataSource);

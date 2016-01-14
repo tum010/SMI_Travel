@@ -179,6 +179,7 @@
         <property name="outboundSummaryDao" ref="OutboundSummaryDao" />
         <property name="receiveTableDao" ref="ReceiveTableDao" />
         <property name="overdueSummaryDao" ref="OverdueSummaryDao" />
+        <property name="paymentOutboundDao" ref="PaymentOutboundDao" />
     </bean> 
     
     

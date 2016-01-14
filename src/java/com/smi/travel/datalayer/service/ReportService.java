@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.dao.OverdueSummaryDao;
 import com.smi.travel.datalayer.dao.PackageTourDao;
 import com.smi.travel.datalayer.dao.PackageTourHotelDao;
 import com.smi.travel.datalayer.dao.PaymentAirTicketDao;
+import com.smi.travel.datalayer.dao.PaymentOutboundDao;
 import com.smi.travel.datalayer.dao.PaymentWendytourDao;
 import com.smi.travel.datalayer.dao.ReceiveTableDao;
 import com.smi.travel.datalayer.dao.SummaryTicketAdjustCostAndIncomeDao;
@@ -109,6 +110,7 @@ public class ReportService {
     private OutboundSummaryDao outboundSummaryDao;
     private ReceiveTableDao receiveTableDao;
     private OverdueSummaryDao overdueSummaryDao;
+    private PaymentOutboundDao paymentOutboundDao;
     
     public List getInvoiceMonthly(String BillTo,String ClientName,String Accno,String vattype,String from,String to,String department,String billingAttn,String billingFrom,String billingTel,String billingFax,String billingMail,String billingDate){
         return invoiceReportDao.getInvoiceMonthly(BillTo, ClientName, Accno, vattype, from, to, department, billingAttn, billingFrom, billingTel, billingFax, billingMail, billingDate);
@@ -299,7 +301,11 @@ public class ReportService {
     public List getBillAirAgentReportSummary(String agentCode,String invoiceFromDate,String InvoiceToDate,String issueFrom,String issueTo,String refundFrom,String refundTo,String department,String salebyUser,String termPay,String printby,String paymentType,String vat,String wht){
         return billAirAgentDao.getBillAirAgentReportSummary(agentCode, invoiceFromDate, InvoiceToDate, issueFrom, issueTo, refundFrom, refundTo, department, salebyUser, termPay,printby,paymentType,vat,wht);
     }
-
+    
+    public List getPaymentOutboundReport(String fromDate,String toDate,String status,String invSup,String refNo,String username){
+        return paymentOutboundDao.getPaymentOutboundReport(fromDate, toDate, status, invSup, refNo, username);
+    }
+    
     public HotelVoucherDao getHotelVoucherdao() {
         return hotelVoucherdao;
     }
@@ -802,5 +808,13 @@ public class ReportService {
     
     public List listOverdueSummary(String clientcode,String clientname,String staffcode,String staffname,String vattype,String from,String to,String depart,String group,String view,String printby){
         return overdueSummaryDao.listOverdueSummary(clientcode, clientname, staffcode, staffname, vattype, from, to, depart, group, view,printby);
+    }
+
+    public PaymentOutboundDao getPaymentOutboundDao() {
+        return paymentOutboundDao;
+    }
+
+    public void setPaymentOutboundDao(PaymentOutboundDao paymentOutboundDao) {
+        this.paymentOutboundDao = paymentOutboundDao;
     }
 }

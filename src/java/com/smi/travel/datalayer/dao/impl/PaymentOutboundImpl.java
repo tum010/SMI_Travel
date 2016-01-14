@@ -14,6 +14,7 @@ import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
 import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
+import com.smi.travel.datalayer.view.entity.PaymentOutboundSummary;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundView;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -397,5 +399,81 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             }
         }
         return result;
+    }
+
+    @Override
+    public List getPaymentOutboundReport(String fromDate, String toDate, String status, String invSupCode, String refNo, String username) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        Date thisDate = new Date();
+        List data = new ArrayList();
+        String Query = "SELECT * FROM `payment_outbound_summary` where paydate BETWEEN '"+fromDate+"' and '"+toDate+"' ";
+
+        if ((status != null) && (!"".equalsIgnoreCase(status))) {
+            Query += "  and status = '" + status + "'";
+        } 
+        
+        if ((invSupCode != null) && (!"".equalsIgnoreCase(invSupCode))) {
+            Query += "  and suppliercode = '" + invSupCode + "'";
+        }
+        
+        if ((refNo != null) && (!"".equalsIgnoreCase(refNo))) {
+            Query += "  and refno = '" + refNo + "'";
+        }
+                
+        System.out.println("Query : "+Query);
+        
+        List<Object[]> QueryTicketList = session.createSQLQuery(Query)
+                .addScalar("paymentid", Hibernate.STRING)
+                .addScalar("payno", Hibernate.STRING)
+                .addScalar("paydate", Hibernate.STRING)
+                .addScalar("duepaymentdate", Hibernate.STRING)
+                .addScalar("invoicesup", Hibernate.STRING)
+                .addScalar("suppliercode", Hibernate.STRING)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("leader", Hibernate.STRING)
+                .addScalar("invoiceno", Hibernate.STRING)
+                .addScalar("detail", Hibernate.STRING) 
+                .addScalar("amount", Hibernate.STRING)
+                .addScalar("sale", Hibernate.STRING)
+                .addScalar("export", Hibernate.STRING)
+                .addScalar("status", Hibernate.STRING)
+                .addScalar("diff", Hibernate.STRING)
+                .list();
+            
+            SimpleDateFormat dateformat = new SimpleDateFormat();
+            dateformat.applyPattern("dd-MM-yyyy");
+            
+        for (Object[] B : QueryTicketList) {
+            PaymentOutboundSummary sum = new PaymentOutboundSummary();
+
+            sum.setSystemdate(util.ConvertString(new SimpleDateFormat("dd MMM yyyy hh:mm:ss", new Locale("us", "us")).format(thisDate)));
+            sum.setUser(username);
+            sum.setHeaderfromdate(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(fromDate))));
+            sum.setHeadertodate(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(toDate))));
+            sum.setHeaderstatus(status);
+            sum.setHeaderrefno(refNo);
+            sum.setHeaderinvoicesupcode(invSupCode);
+            
+            sum.setPaymentid(util.ConvertString(B[0]));
+            sum.setPayno(util.ConvertString(B[1]));
+            sum.setPaydate("null".equals(String.valueOf(B[2])) ? "" : util.ConvertString(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[2])))));
+            sum.setDuepaymentdate("null".equals(String.valueOf(B[3])) ? "" : util.ConvertString(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[3])))));
+            sum.setInvoicesup(util.ConvertString(B[4]));
+            sum.setSuppliercode(util.ConvertString(B[5]));
+            sum.setRefno(util.ConvertString(B[6]));
+            sum.setLeader(util.ConvertString(B[7]));
+            sum.setInvoiceno(util.ConvertString(B[8]));
+            sum.setDetail(util.ConvertString(B[9])); 
+            sum.setAmount(!"null".equalsIgnoreCase(String.valueOf(B[10])) ? util.ConvertString(B[10]) : "0.00");
+            sum.setSale(!"null".equalsIgnoreCase(String.valueOf(B[11])) ? util.ConvertString(B[11]) : "0.00");
+            sum.setExport(util.ConvertString(B[12]));
+            sum.setStatus(util.ConvertString(B[13]));
+            sum.setDiff(!"null".equalsIgnoreCase(String.valueOf(B[14])) ? util.ConvertString(B[14]) : "0.00");
+            data.add(sum);            
+        }
+        session.close();
+        this.sessionFactory.close();
+        return data;
     }
 }

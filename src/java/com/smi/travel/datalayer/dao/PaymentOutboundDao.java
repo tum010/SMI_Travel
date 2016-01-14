@@ -30,4 +30,5 @@ public interface PaymentOutboundDao {
     public List<PaymentOutboundView> searchPaymentOutboundByFilter(String fromDate, String toDate, String status, String invSupCode, String invSupName, String refNo);
     public String deletePaymentOutbound(String paymentId);
     
+    public List getPaymentOutboundReport(String fromDate,String toDate,String status,String invSupCode,String refNo,String username);
 }
