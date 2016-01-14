@@ -120,24 +120,24 @@
             <div class="col-xs-12 form-group"></div>        
             <div class="sm_row col-xs-12 form-group"><hr/></div>
             <div class="sm_row row" >    
-                <div class="sm_row col-md-12">
-                    <table id="SearchTaxInvoiceTable" class="display" cellspacing="0" width="100%">
+                <div class="sm_row col-md-12" style="padding-right: 0px;">
+                    <table id="SearchTaxInvoiceTable" class="display" cellspacing="0" width="100%" style="table-layout: fixed">
                         <thead>
                             <tr class="datatable-header">
                                 <th class="hidden" >Id</th>
                                 <th class="hidden" >Department</th>
-                                <th style="width: 1%">No</th>
-                                <th style="width: 5%">Tax No</th>
+                                <th style="width: 4%">No</th>
+                                <th style="width: 8%">Tax No</th>
                                 <th style="width: 9%">Date</th>
-                                <th style="width: 5%">Code</th>
-                                <th style="width: 10%">Name</th>
-                                <th style="width: 7%">Invoice No</th>
-                                <th style="width: 7%">Receipt No</th>
-                                <th style="width: 7%">Gross</th>
-                                <th style="width: 7%">Vat</th>
-                                <th style="width: 7%">Amount</th>
-                                <th style="width: 1%">Status</th>
-                                <th style="width: 1%">Action</th>
+                                <th style="width: 8%">Code</th>
+                                <th style="width: 15%">Name</th>
+                                <th style="width: 10%">Invoice No</th>
+                                <th style="width: 8%">Receipt No</th>
+                                <th style="width: 11%">Gross</th>
+                                <th style="width: 9%">Vat</th>
+                                <th style="width: 11%">Amount</th>
+                                <th style="width: 7%">Status</th>
+                                <th style="width: 7%">Action</th>
                             </tr>
                         </thead>
                         <tbody>

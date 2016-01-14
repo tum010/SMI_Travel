@@ -225,20 +225,20 @@
             <div class="sm_row col-xs-12 form-group"><hr/></div>
             <div class="sm_row row">    
                 <div class="sm_row col-md-12">
-                    <table id="MasterInvoice" class="display" cellspacing="0" width="100%">
+                    <table id="MasterInvoice" class="display" cellspacing="0" width="100%" style="table-layout: fixed">
                         <thead>
                             <tr class="datatable-header">
                                 <th class="hidden" >Invoice Id</th>
-                                <th style="width: 8%" >Invoice No</th>
-                                <th style="width: 10%" >Invoice Date</th>
-                                <th style="width: 20%" >Name</th>         
-                                <th style="width: 20%">Address</th>
-                                <th style="width: 10%">Total Price</th>
-                                <th style="width: 5%">Currency</th>
-                                <th style="width: 5%">Department</th>
-                                <th style="width: 5%">Type</th>
-                                <th style="width: 15%">Term Pay</th>
-                                <th style="width: 2%">Action</th>
+                                <th style="width: 10%" >Invoice No</th>
+                                <th style="width: 9%" >Invoice Date</th>
+                                <th style="width: 15%" >Name</th>         
+                                <th style="width: 17%">Address</th>
+                                <th style="width: 9%">Total Price</th>
+                                <th style="width: 8%">Currency</th>
+                                <th style="width: 10%">Department</th>
+                                <th style="width: 6%">Type</th>
+                                <th style="width: 8%">Term Pay</th>
+                                <th style="width: 8%">Action</th>
                             </tr>
                         </thead>
                         <tbody> 
