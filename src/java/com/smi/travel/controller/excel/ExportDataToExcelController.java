@@ -5,8 +5,10 @@
  */
 package com.smi.travel.controller.excel;
 
+import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.ReportService;
+import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Jittima
  */
 public class ExportDataToExcelController  extends SMITravelController{
-    
+    private UtilityService utilityService;
     private ReportService reportservice; 
     private static final String TicketFareReport = "TicketFareReport";
     private static final String TicketFareAirlineReport = "TicketFareAirlineReport";
@@ -101,6 +103,11 @@ public class ExportDataToExcelController  extends SMITravelController{
         String salebyUser = request.getParameter("salebyName");
         String termPayt = request.getParameter("termPay");
         
+        MDefaultData mdVat = utilityService.getMDefaultDataFromType("vat");
+        MDefaultData mdWht = utilityService.getMDefaultDataFromType("withholding tax");
+        String vatMDE = mdVat.getValue();
+        String whtMDE = mdWht.getValue();
+            
         if(TicketFareReport.equalsIgnoreCase(name)){
             System.out.println("get excel data");
             data = reportservice.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,dateFrom,dateTo,department,staff,termPay,printby,invdateFrom,invdateTo);
@@ -142,7 +149,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             String vatTemp = request.getParameter("vatTemp");
             String whtTemp = request.getParameter("whtTemp");
             System.out.println("termPays : "+termPays);
-            data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays,printby,paymentTypes,vatTemp,whtTemp);
+            data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays,printby,paymentTypes,vatMDE,whtMDE);
             return new ModelAndView("BillAirAgentSummary",name,data).addObject(ReportName, name);
         }else if(ChangeARReport.equalsIgnoreCase(name)){
             System.out.println("get excel data agent");
@@ -164,7 +171,7 @@ public class ExportDataToExcelController  extends SMITravelController{
             String vatTemp = request.getParameter("vatTemp");
             String whtTemp = request.getParameter("whtTemp");
             System.out.println("termPays : "+termPays);
-            data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays, printby,paymentTypes,vatTemp,whtTemp);
+            data = reportservice.getBillAirAgentReportSummary(agentCode, invoiceFromDates, InvoiceToDates, issueFroms, issueTos, refundFrom, refundTo, departments, salebyUsers, termPays, printby,paymentTypes,vatMDE,whtMDE);
             return new ModelAndView("BillAirAgentSummary",name,data).addObject(ReportName, name);
         }else if(CollectionReport.equalsIgnoreCase(name)){
             //Collectipn Report
@@ -331,5 +338,13 @@ public class ExportDataToExcelController  extends SMITravelController{
 
     public void setReportservice(ReportService reportservice) {
         this.reportservice = reportservice;
+    }
+
+    public UtilityService getUtilityService() {
+        return utilityService;
+    }
+
+    public void setUtilityService(UtilityService utilityService) {
+        this.utilityService = utilityService;
     }
 }

@@ -181,7 +181,7 @@
                             <tbody>
                                 <c:forEach var="table1" items="${listPassenger}" varStatus="status">
                                 <tr>
-                                    <td><center><c:out value="${table1.id}" /></center></td>
+                                    <td><center><c:out value="${status.count}" /></center></td>
                                     <td><center><c:out value="${table1.customer.code}" /></center></td>
                                     <td><c:out value="${table1.customer.firstName}" />&nbsp;<c:out value="" /></td>
                                     <td>

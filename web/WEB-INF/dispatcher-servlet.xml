@@ -819,6 +819,7 @@
 	<bean id="ExportDataToExcelController"
 		class="com.smi.travel.controller.excel.ExportDataToExcelController">
             <property name="reportservice" ref="ReportService" />
+            <property name="utilityService" ref="UtilityService" />
 	</bean>
 
 	<bean id="Mail" class="com.smi.travel.util.Mail">
