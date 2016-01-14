@@ -81,12 +81,20 @@ public class RefundAirReportImpl implements RefundAirReportDao{
              report.setRefundtype(util.ConvertString(B[16]));
              report.setOtherreason(util.ConvertString(B[17]));
              
-             report.setTotalreceive(util.setFormatMoney(SumReceive) != null && !"0.00".equals(util.setFormatMoney(SumReceive)) ? util.setFormatMoney(SumReceive) : "");
-             report.setTotalpay(util.setFormatMoney(SumPayCus) != null && !"0.00".equals(util.setFormatMoney(SumPayCus)) ? util.setFormatMoney(SumPayCus) : "");
-             report.setTotalclientcharge(util.setFormatMoney(SumClient) != null && !"0.00".equals(util.setFormatMoney(SumClient)) ? util.setFormatMoney(SumClient) : "");
+//             report.setTotalreceive(util.setFormatMoney(SumReceive) != null && !"0.00".equals(util.setFormatMoney(SumReceive)) ? util.setFormatMoney(SumReceive) : "");
+//             report.setTotalpay(util.setFormatMoney(SumPayCus) != null && !"0.00".equals(util.setFormatMoney(SumPayCus)) ? util.setFormatMoney(SumPayCus) : "");
+//             report.setTotalclientcharge(util.setFormatMoney(SumClient) != null && !"0.00".equals(util.setFormatMoney(SumClient)) ? util.setFormatMoney(SumClient) : "");
              
              data.add(report);
             
+        }
+        if(QueryRefundList != null){
+            for(int i=0; i<data.size(); i++){
+                RefundAirReport refundAirReportTemp = (RefundAirReport) data.get(i);
+                refundAirReportTemp.setTotalreceive(util.setFormatMoney(SumReceive) != null && !"0.00".equals(util.setFormatMoney(SumReceive)) ? util.setFormatMoney(SumReceive) : "");
+                refundAirReportTemp.setTotalpay(util.setFormatMoney(SumPayCus) != null && !"0.00".equals(util.setFormatMoney(SumPayCus)) ? util.setFormatMoney(SumPayCus) : "");
+                refundAirReportTemp.setTotalclientcharge(util.setFormatMoney(SumClient) != null && !"0.00".equals(util.setFormatMoney(SumClient)) ? util.setFormatMoney(SumClient) : "");
+            }    
         }
 //        for(int i=0;i<data.size();i++){
 //            RefundAirReport temp = (RefundAirReport) data.get(i);

@@ -2081,6 +2081,19 @@ function changeFormatChargeNumber(id){
     }
 }
 
+function changeFormatClientchargeNumber(id){
+    console.log("Id Row : " + count);
+    var count = document.getElementById('inputClientcharge'+id).value;
+    count = count.replace(/\,/g,'');
+    count  = parseFloat(count);
+    if(isNaN(count)){
+        document.getElementById('inputClientcharge' + id).value = "";
+    }else{
+        count = parseFloat(count);
+        document.getElementById('inputClientcharge' + id).value = formatNumber(count);
+    }
+}
+
 function changeFormatClientcharge(id){
     console.log("Id Row : " + count);
     var count = document.getElementById('inputClientcharge'+id).value;
