@@ -141,19 +141,19 @@
             <!--Table-->
             <div class="sm_row row">
                 <div class="sm_row col-md-12 ">
-                    <table id="ReceiptListTable" class="display hidden active" cellspacing="0" width="100%">
+                    <table id="ReceiptListTable" class="display hidden active" cellspacing="0" width="100%" style="table-layout: fixed">
                         <thead> 
                             <tr class="datatable-header" >
                                 <th style="width:7%;">Receive No</th>
-                                <th style="width:10%;">Date</th>
+                                <th style="width:7%;">Date</th>
                                 <th style="width:7%;">Code</th>
-                                <th style="width:15%;">Name</th>
-                                <th style="width:10%;">Invoice No</th>
+                                <th style="width:20%;">Name</th>
+                                <th style="width:8%;">Invoice No</th>
                                 <th style="width:10%;">Amount</th>
                                 <th style="width:7%;">Status</th>
                                 <th style="width:7%;">Department</th>
                                 <th style="width:7%;">Status</th>
-                                <th style="width:1%;">Action</th>
+                                <th style="width:7%;">Action</th>
                             </tr>
                         </thead>
                         <tbody>

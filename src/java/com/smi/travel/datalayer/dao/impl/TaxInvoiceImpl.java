@@ -327,8 +327,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                         invNoChkList.add(invoiceNo);
                         totalInvoiceNo += invoiceNo;
                     } else {
-                        int matchInv = 0;
-                        invNoChkList.add(invoiceNo);
+                        int matchInv = 0;                       
                         for(int a=0;a<invNoChkList.size();a++){
                             String invNoChk = invNoChkList.get(a);
                             if(invoiceNo.equalsIgnoreCase(invNoChk)){
@@ -337,7 +336,8 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                             }
                         }
                         if(matchInv == 0){
-                            totalInvoiceNo += invoiceNo;
+                            totalInvoiceNo += "<br>"+invoiceNo;
+                            invNoChkList.add(invoiceNo);
                         }
                     }                                     
                     if(!"".equalsIgnoreCase(totalReceiptNo)){
@@ -356,8 +356,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                                 recNoChkList.add(receiptNo);
                                 totalReceiptNo += receiptNo;
                             } else {
-                                int matchRec = 0;
-                                recNoChkList.add(receiptNo);
+                                int matchRec = 0;                               
                                 for(int b=0;b<recNoChkList.size();b++){
                                     String recNoChk = recNoChkList.get(b);
                                     if(receiptNo.equalsIgnoreCase(recNoChk)){
@@ -366,7 +365,8 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                                     }
                                 }
                                 if(matchRec == 0){
-                                    totalReceiptNo += receiptNo;           
+                                    totalReceiptNo += "<br>"+receiptNo;
+                                    recNoChkList.add(receiptNo);
                                 }
                             }                                                            
                         }                       

@@ -133,18 +133,18 @@
                 <!--Table-->
                 <div class="sm_row row">
                     <div class="sm_row col-md-12 ">
-                        <table id="CreditNoteTable" class="display" cellspacing="0" width="100%">
+                        <table id="CreditNoteTable" class="display" cellspacing="0" width="100%" style="table-layout: fixed">
                             <thead>
                                 <tr class="datatable-header" >
-                                    <th style="width:10%;">CN No.</th>
-                                    <th style="width:10%;">Date</th>
-                                    <th style="width:20%;">Name</th>
-                                    <th style="width:10%;">AP Code</th>
-                                    <th style="width:10%;">Department</th>
-                                    <th style="width:10%;">Sub Total</th>
-                                    <th style="width:10%;">Grand Total</th>
-                                    <th style="width:9%;">Status</th>
-                                    <th style="width:1%;">Action</th>
+                                    <th style="width:8%;">CN No.</th>
+                                    <th style="width:9%;">Date</th>
+                                    <th style="width:23%;">Name</th>
+                                    <th style="width:11%;">AP Code</th>
+                                    <th style="width:11%;">Department</th>
+                                    <th style="width:12%;">Sub Total</th>
+                                    <th style="width:12%;">Grand Total</th>
+                                    <th style="width:7%;">Status</th>
+                                    <th style="width:7%;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

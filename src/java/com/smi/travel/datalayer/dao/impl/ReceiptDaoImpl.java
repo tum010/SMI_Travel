@@ -547,7 +547,7 @@ import org.hibernate.Transaction;
                             checkLap = 1;
                         }
                     }
-                    if(checkLap == 0) InvoiceNo += ","+invoice;
+                    if(checkLap == 0) InvoiceNo += "<br>"+invoice;
                 }
             }
             view.setInvoiceNo(InvoiceNo);
