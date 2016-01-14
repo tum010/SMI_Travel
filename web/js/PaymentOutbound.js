@@ -5,6 +5,26 @@
  */
 $(document).ready(function() {
     $(".money").mask('000,000,000.00', {reverse: true});
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
+    $(".decimalexrate").inputmask({
+        alias: "decimal",
+        integerDigits: 6,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 4,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.0000",
+    });
     $('.date').datetimepicker();
     $(".datemask").mask('0000-00-00', {reverse: true});
     $('.spandate').click(function() {
@@ -481,10 +501,10 @@ function addRowPaymentDetailTable(row) {
             '<input type="text" maxlength="6" name="refNo' + row + '" id="refNo' + row + '" class="form-control" onfocusout="checkRefNo(\'' + row + '\')" value=""/>' +
             '</td>' +
             '<td>' +
-            '<input type="text" name="invoice' + row + '" id="invoice' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="invoice' + row + '" id="invoice' + row + '" class="form-control" value="" maxlength="255"/>' +
             '</td>' +
             '<td>' +
-            '<input type="text" name="cost' + row + '" id="cost' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'cost\',\'' + row + '\')" value=""/>' +
+            '<input type="text" name="cost' + row + '" id="cost' + row + '" class="form-control decimal" value=""/>' +
             '</td>' +
             '<td>' +
             '<input type="text" name="gross' + row + '" id="gross' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" value="" readonly=""/>' +
@@ -497,10 +517,10 @@ function addRowPaymentDetailTable(row) {
             '<input type="text" id="vat' + row + '" name="vat' + row + '" value=""/>' +
             '</td>' +
             '<td>' +
-            '<input type="text" name="amount' + row + '" id="amount' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'amount\',\'' + row + '\'); calculateWhtAmount(\'\');" value=""/>' +
+            '<input type="text" name="amount' + row + '" id="amount' + row + '" class="form-control decimal" onfocusout="setFormatNumber(\'amount\',\'' + row + '\'); calculateWhtAmount(\'\');" value=""/>' +
             '</td>' +
             '<td>' +
-            '<input type="text" name="comm' + row + '" id="comm' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'comm\',\'' + row + '\'); calculateVatRecComAmount(\'\');" value=""/>' +
+            '<input type="text" name="comm' + row + '" id="comm' + row + '" class="form-control decimal" onfocusout="calculateVatRecComAmount(\'\');" value=""/>' +
             '</td>' +
             '<td>' +
             '<select class="form-control" name="cur' + row + '" id="cur' + row + '" onchange="addRow(\'' + row + '\')">' +
@@ -521,19 +541,19 @@ function addRowPaymentDetailTable(row) {
             '<b>Description</b>' +
             '</td>' +
             '<td colspan="2">' +
-            '<input type="text" name="description' + row + '" id="description' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="description' + row + '" id="description' + row + '" class="form-control" value="" maxlength="255"/>' +
             '</td>' +
             '<td colspan="1" align="right" bgcolor="#E8EAFF">' +
             '<b>Pay Stock</b>' +
             '</td>' +
             '<td colspan="3">' +
-            '<input type="text" name="payStock' + row + '" id="payStock' + row + '" class="form-control" value="" onfocusout="checkPayStock(\'' + row + '\')"/>' +
+            '<input type="text" name="payStock' + row + '" id="payStock' + row + '" class="form-control" value="" onfocusout="checkPayStock(\'' + row + '\')" maxlength="10"/>' +
             '</td>' +
             '<td colspan="1" align="right" bgcolor="#E8EAFF">' +
             '<b>Sale</b>' +
             '</td>' +
             '<td colspan="1">' +
-            '<input type="text" name="saleAmount' + row + '" id="saleAmount' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" onfocusout="setFormatNumber(\'saleAmount\',\'' + row + '\')" value=""/>' +
+            '<input type="text" name="saleAmount' + row + '" id="saleAmount' + row + '" class="form-control decimal" value=""/>' +
             '</td>' +
             '<td colspan="1">' +
             '<select class="form-control" name="saleCurrency' + row + '" id="saleCurrency' + row + '" onchange="addRow(\'' + row + '\')">' +
@@ -541,6 +561,16 @@ function addRowPaymentDetailTable(row) {
             '</td>' +
             '</tr>'
             );
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
     $("#tr_PaymentOutboundDetailAddRow").removeClass("show");
     $("#tr_PaymentOutboundDetailAddRow").addClass("hide");
     $("#typeClone option").clone().appendTo("#type" + row);

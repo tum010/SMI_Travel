@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/PaymentOutbound.js"></script> 
+<script type="text/javascript" src="js/PaymentOutbound.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -212,7 +214,7 @@
                     <div class="col-md-2 form-group text-left" style="width:150px;"> 
                         <div class="input-group">
                             <input type="hidden" class="form-control" id="invSupId" name="invSupId" value="" />
-                            <input type="text" class="form-control" id="invSupCode" name="invSupCode" value="${paymentOutbound.invoiceSup}" />
+                            <input type="text" class="form-control" id="invSupCode" name="invSupCode" value="${paymentOutbound.invoiceSup}" maxlength="30"/>
                             <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#SearchInvoiceSup">
                                 <span class="glyphicon-search glyphicon"></span>
                             </span>
@@ -227,7 +229,7 @@
                     <div class="col-md-1 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 180px;">
                         <div class="col-sm-12">
                             <div class="input-group" id="CodeValidate">
-                                <input name="invSupApCode" id="invSupApCode" type="text" class="form-control" value="${paymentOutbound.apCode}" />   
+                                <input name="invSupApCode" id="invSupApCode" type="text" class="form-control" value="${paymentOutbound.apCode}" maxlength="30"/>   
                             </div>    
                         </div> 
                     </div>
@@ -409,13 +411,17 @@
                                             <input type="text" maxlength="6" name="refNo${i.count}" id="refNo${i.count}" class="form-control" onfocusout="checkRefNo('${i.count}')" value="${detail.refNo}"/>
                                         </td>
                                         <td>
-                                            <input type="text" name="invoice${i.count}" id="invoice${i.count}" class="form-control" value="${detail.invoice}"/>
+                                            <input type="text" name="invoice${i.count}" id="invoice${i.count}" class="form-control" value="${detail.invoice}" maxlength="255"/>
                                         </td>                                                                   
                                         <td>
-                                           <input type="text" name="cost${i.count}" id="cost${i.count}" class="form-control" style="text-align:right;" onkeyup="insertCommas(this)" onfocusout="setFormatNumber('cost','${i.count}')" value="${detail.cost}"/> 
+                                           <input type="text" name="cost${i.count}" id="cost${i.count}" class="form-control decimal" value="${detail.cost}"/> 
                                         </td>
                                         <td>
-                                            <input type="text" name="gross${i.count}" id="gross${i.count}" class="form-control" style="text-align:right;" onkeyup="insertCommas(this)" value="${detail.gross}" readonly=""/>
+                                            <c:set var="gross" value=""/>
+                                            <c:if test="${detail.isVat == 1}">
+                                                <c:set var="gross" value="${detail.gross}"/>
+                                            </c:if>
+                                            <input type="text" name="gross${i.count}" id="gross${i.count}" class="form-control" style="text-align:right;" value="${gross}" readonly=""/>
                                         </td>                                
                                         <td align="center">
                                             <c:set var="isVat" value=""/>
@@ -433,10 +439,10 @@
                                             <input type="text" name="vat${i.count}" id="vat${i.count}" class="form-control" value="${detail.vat}"/>
                                         </td>
                                         <td>
-                                            <input type="text" name="amount${i.count}" id="amount${i.count}" class="form-control" style="text-align:right;" onkeyup="insertCommas(this)" onfocusout="setFormatNumber('amount','${i.count}'); calculateWhtAmount('');" value="${detail.amount}"/>
+                                            <input type="text" name="amount${i.count}" id="amount${i.count}" class="form-control decimal" onfocusout="setFormatNumber('amount','${i.count}'); calculateWhtAmount('');" value="${detail.amount}"/>
                                         </td>
                                         <td>
-                                            <input type="text" name="comm${i.count}" id="comm${i.count}" class="form-control" style="text-align:right;" onkeyup="insertCommas(this)" onfocusout="setFormatNumber('comm','${i.count}'); calculateVatRecComAmount();" value="${detail.comm}"/>
+                                            <input type="text" name="comm${i.count}" id="comm${i.count}" class="form-control decimal" onfocusout="setFormatNumber('comm','${i.count}'); calculateVatRecComAmount();" value="${detail.comm}"/>
                                         </td>
                                         <td>
                                             <select class="form-control" name="cur${i.count}" id="cur${i.count}" onchange="addRow('${i.count}')">
@@ -464,19 +470,19 @@
                                             <b>Description</b>
                                         </td>
                                         <td colspan="2">
-                                            <input type="text" name="description${i.count}" id="description${i.count}" class="form-control" value="${detail.description}"/>
+                                            <input type="text" name="description${i.count}" id="description${i.count}" class="form-control" value="${detail.description}" maxlength="255"/>
                                         </td>
                                         <td colspan="1" align="right" bgcolor="#E8EAFF">
                                             <b>Pay Stock</b>
                                         </td>
                                         <td colspan="3">
-                                            <input type="text" name="payStock${i.count}" id="payStock${i.count}" class="form-control" value="${detail.payStock}" onfocusout="checkPayStock('${i.count}')"/>
+                                            <input type="text" name="payStock${i.count}" id="payStock${i.count}" class="form-control" value="${detail.payStock}" onfocusout="checkPayStock('${i.count}')" maxlength="10"/>
                                         </td>
                                         <td colspan="1" align="right" bgcolor="#E8EAFF">
                                             <b>Sale</b>
                                         </td>
                                         <td colspan="1">
-                                            <input type="text" name="saleAmount${i.count}" id="saleAmount${i.count}" class="form-control" style="text-align:right;" onkeyup="insertCommas(this)" onfocusout="setFormatNumber('saleAmount','${i.count}')" value="${detail.saleAmount}"/>
+                                            <input type="text" name="saleAmount${i.count}" id="saleAmount${i.count}" class="form-control decimal" value="${detail.saleAmount}"/>
                                         </td>
                                         <td colspan="1">
                                             <select class="form-control" name="saleCurrency${i.count}" id="saleCurrency${i.count}" onchange="addRow('${i.count}')">
@@ -519,13 +525,13 @@
                     </div>
                     <div class="col-xs-1 text-right" style="width: 200px;">
                         <input type="hidden" class="form-control text-right" id="rowDetail" name="rowDetail" value=""/>
-                        <input type="text" class="form-control text-right numerical" id="realExRate" name="realExRate" value=""/>
+                        <input type="text" class="form-control decimalexrate" id="realExRate" name="realExRate" value=""/>
                     </div>
                     <div class="col-xs-1 text-left" style="width: 120px;">
                         <label class="control-label">Pay EX Rate</lable>
                     </div>
                     <div class="col-xs-1 text-right" style="width: 200px;">
-                        <input type="text" class="form-control text-right numerical" id="payExRate" name="payExRate" value=""/>
+                        <input type="text" class="form-control decimalexrate" id="payExRate" name="payExRate" value=""/>
                     </div>
                     <div class="col-xs-1 text-left" style="width: 70px;">
                         <label class="control-label">Detail</lable>
@@ -571,7 +577,7 @@
                         <label class="control-label">Value</lable>
                     </div>
                     <div class="col-xs-1 text-right" style="width: 200px;">
-                        <input type="text" class="form-control text-right numerical" id="value" name="value" value=""/>
+                        <input type="text" class="form-control decimal" id="value" name="value" value=""/>
                     </div>                       
                 </div>
                 <div class="row" style="padding-left: 25px; padding-top: 10px;">
