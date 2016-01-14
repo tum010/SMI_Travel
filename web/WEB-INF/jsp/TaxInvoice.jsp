@@ -1268,10 +1268,10 @@
         
         $("#searchTaxInvoiceFrom").keyup(function(event) {
             if (event.keyCode === 13) {
-                if ($("#searchTaxInvoiceFrom").val() !== "") {
+//                if ($("#searchTaxInvoiceFrom").val() !== "") {
                     // alert('please input data');
                     searchCustomerAgentList($("#searchTaxInvoiceFrom").val());
-                }               
+//                }               
             }
         });
         
@@ -1441,6 +1441,7 @@
                 }
             });
         } catch (e) {
+            $("#ajaxload").addClass("hidden");
             alert(e);
         }
     }
