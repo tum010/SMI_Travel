@@ -754,6 +754,8 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             query += " and currency = '"+currency+"'";
         }
         
+        query += " ORDER BY staff , departmentno ";
+        
         List<Object[]> QueryStaffList = session.createSQLQuery(query)
                 .addScalar("staff", Hibernate.STRING)
                 .addScalar("productType", Hibernate.STRING)
