@@ -4,6 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/workspace.js"></script> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
 <c:set var="agent_list" value="${requestScope['agent_list']}" />
 <c:set var="pvType_list" value="${requestScope['pvType_list']}" />
@@ -35,7 +37,7 @@
     </div>
     <!--Content -->
    
-    <form action="PaymentTourHotel.smi" method="post" id="PaymentTourHotelForm" autocomplete="off" role="form" onsubmit="return validateForm()">
+    <form action="PaymentTourHotel.smi" method="post" id="PaymentTourHotelForm" autocomplete="off" role="form" >
     <div class="col-sm-10">
         <c:if test="${requestScope['resultText'] =='success'}">                                            
             <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
@@ -394,7 +396,7 @@
                                         </c:forEach>
                                         </select>                                                                  
                                     </td>
-                                    <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.master.referenceNo}" onfocusout="checkRefNo('${i.count}')" onfocus="onfocusTour('${i.count}')"> </td>
+                                    <td> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="6"  type="text" class="form-control" value="${pl.master.referenceNo}" onfocusout="checkRefNo('${i.count}')" onfocus="onfocusTour('${i.count}')"> </td>
                                     <td> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}" onfocus="onfocusTour('${i.count}')">  </td>
                                     <td>
                                         <div class="input-group daydatepicker" id="daydatepicker${i.count}">
@@ -427,8 +429,8 @@
                                     <td class="hidden">
                                         <input class="form-control" type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
                                     </td>
-                                    <td> <input style="width: ${Amount};text-align:right;"  id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="CalculateGrandTotal('${pl.id}')" onfocus="onfocusTour('${i.count}')" onkeyup="insertCommas(this)" value="${pl.amount}"> </td>
-                                    <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" maxlength ="15"  type="text" class="form-control numerical" onfocusout="calculateComm('${i.count}')" onfocus="onfocusTour('${i.count}')" onkeyup="insertCommas(this)" value="${pl.recCom}"> </td>                               
+                                    <td> <input style="width: ${Amount};text-align:right;"  id="amount${i.count}" name="amount${i.count}" type="text" class="form-control decimal" onfocusout="CalculateGrandTotal('${pl.id}')" onfocus="onfocusTour('${i.count}')" value="${pl.amount}"> </td>
+                                    <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" type="text" class="form-control decimal" onfocusout="calculateComm('${i.count}')" onfocus="onfocusTour('${i.count}')" value="${pl.recCom}"> </td>                               
                                     <td> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}" onfocus="onfocusTour('${i.count}')"> </td>
                                     <td> <input style="width: ${AC}" id="ac${i.count}" name="ac${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.accCode}" readonly=""> </td>
                                     <td class="text-center">
@@ -505,7 +507,7 @@
                                         </select>                                                                  
                                     </td>
                                     <td align="center">${pl.master.referenceNo}</td>
-                                    <td class="hidden"> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="10"  type="text" class="form-control" value="${pl.master.referenceNo}"> </td>
+                                    <td class="hidden"> <input style="width: ${RefNo}" id="refNo${i.count}" name="refNo${i.count}" maxlength ="6"  type="text" class="form-control" value="${pl.master.referenceNo}"> </td>
                                     <td align="center">${pl.invoiceCreditor}</td>
                                     <td class="hidden"> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}">  </td>
                                     <td align="center">${pl.invDate}</td>
@@ -531,7 +533,11 @@
                                         <input type="checkbox" id="isVat${i.count}" name="isVat${i.count}" value="check" onclick="calculateGross('${i.count}')" ${vatChk}>
                                     </td>
                                     <td>
-                                        <input class="form-control" type="text" id="vat${i.count}" name="vat${i.count}" value="${pl.vat}" readonly="">
+                                        <c:set var="vatShow" value=""/>
+                                        <c:if test="${'1' == pl.isVat}">
+                                            <fmt:parseNumber var="vatShow" type="number" value="${pl.vat}" />
+                                        </c:if>    
+                                        <input class="form-control text-right" type="text" id="vat${i.count}" name="vat${i.count}" value="${vatShow}" readonly="">
                                     </td>
                                     <td>
                                         <input class="form-control" style="text-align:right;"  type="text" id="gross${i.count}" name="gross${i.count}" value="${pl.gross}" readonly="">
@@ -539,8 +545,8 @@
                                     <td class="hidden">
                                         <input class="form-control" type="text" id="amountCal${i.count}" name="amountCal$${i.count}" value="${pl.amount}">
                                     </td>
-                                    <td> <input style="width: ${Amount};text-align:right;" id="amount${i.count}" name="amount${i.count}" maxlength ="15"  type="text" class="form-control numerical" value="${pl.amount}" readonly=""> </td>
-                                    <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" maxlength ="15"  type="text" class="form-control numerical" value="${pl.recCom}" readonly=""> </td>
+                                    <td> <input style="width: ${Amount};text-align:right;" id="amount${i.count}" name="amount${i.count}" type="text" class="form-control decimal" value="${pl.amount}" readonly=""> </td>
+                                    <td> <input style="width: ${recCom};text-align:right;"  id="recCom${i.count}" name="recCom${i.count}" type="text" class="form-control decimal" value="${pl.recCom}" readonly=""> </td>
                                     <td>${pl.description}</td>
                                     <td class="hidden"> <input style="width: ${Description}" id="description${i.count}" name="description${i.count}" maxlength ="255"  type="text" class="form-control" value="${pl.description}"> </td>                                   
                                     <td align="center">${pl.accCode}</td>
@@ -705,7 +711,7 @@
         <div class="row text-center" >
             <div class="col-xs-6 text-right">
                                   
-                <button type="submit" id="btnSave" name="btnSave" class="btn btn-success" onclick="" value="add">
+                <button type="button" id="btnSave" name="btnSave" class="btn btn-success" onclick="validateForm()" value="add">
                     <i class="fa fa-save"></i> Save             
                 </button>
                 <input type="hidden" name="action" id="action" value="add" class="form-control" >    
@@ -1109,6 +1115,17 @@
             $(this).val(value)
         });
         
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
+        
         var idRole = '${idRole}';
         if(idRole === '19'){
             $('#PaymentTourHotelForm').bootstrapValidator({
@@ -1371,7 +1388,7 @@
         for(var i=0;i<=count;i++){
             var recCom = document.getElementById('recCom'+i);
             if((recCom!==null) && (recCom.value!=='')){
-                recCom.value = formatNumber(parseFloat(recCom.value));
+//                recCom.value = formatNumber(parseFloat(recCom.value));
             }
         }
     }
@@ -1404,7 +1421,7 @@
                 '<td>' + 
                 '<select class="form-control" name="select-product' + row + '" id="select-product' + row + '" onchange="checkProduct(\''+row+'\')" onclick="onfocusTour(\''+row+'\')"><option value="">---------</option></select>' +                          
                 '</td>' +
-                '<td><input maxlength ="10" id="refNo' + row + '" name="refNo' + row + '"   type="text" class="form-control " onfocusout="checkRefNo(\''+row+'\')" onfocus="onfocusTour(\''+row+'\')"></td>' +
+                '<td><input maxlength ="6" id="refNo' + row + '" name="refNo' + row + '"   type="text" class="form-control " onfocusout="checkRefNo(\''+row+'\')" onfocus="onfocusTour(\''+row+'\')"></td>' +
                 '<td><input maxlength ="15" id="invNo' + row + '" name="invNo' + row + '"   type="text" class="form-control " onfocus="onfocusTour(\''+row+'\')"></td>' +
                 '<td>' +
                     '<div class="input-group daydatepicker" id="daydatepicker' + row + '">' +
@@ -1416,8 +1433,8 @@
                 '<input type="radio" name="type' + row + '" id="typeT' + row + '" value="T" onclick="onfocusTour(\''+row+'\')"> T&nbsp;&nbsp;' +
                 '<input type="radio" name="type' + row + '" id="typeC' +row + '" value="C" onclick="onfocusTour(\''+row+'\')"> C' +
                 '</td>' +
-                '<td><input maxlength ="15" class="form-control numerical"  style="text-align:right;" id="amount' + row + '" name="amount' + row + '"  align="right" type="text" onfocusout="CalculateGrandTotal(\'\')" onfocus="onfocusTour(\''+row+'\')" onkeyup="insertCommas(this)"></td>' +
-                '<td><input maxlength ="15" class="form-control numerical"  style="text-align:right;" id="recCom' + row + '" name="recCom' + row + '"  align="right" type="text" onfocusout="calculateComm(\''+row+'\')" onfocus="onfocusTour(\''+row+'\')" onkeyup="insertCommas(this)"></td>' +
+                '<td><input class="form-control decimal" id="amount' + row + '" name="amount' + row + '" type="text" onfocusout="CalculateGrandTotal(\'\')" onfocus="onfocusTour(\''+row+'\')"></td>' +
+                '<td><input class="form-control decimal" id="recCom' + row + '" name="recCom' + row + '" type="text" onfocusout="calculateComm(\''+row+'\')" onfocus="onfocusTour(\''+row+'\')" ></td>' +
                 '<td><input class="form-control" maxlength="255" id="description' + row + '" name="description' + row + '" rows="2" onfocus="onfocusTour(\''+row+'\')"></td>' +
                 '<td><input id="ac' + row + '" name="ac' + row + '"   type="text" class="form-control" readonly=""></td>' +
                 '<td class="text-center">' +
@@ -1439,6 +1456,16 @@
                 '</tr>'
             );
             $("#select_product_list option").clone().appendTo("#select-product" + row);
+            $(".decimal").inputmask({
+                alias: "decimal",
+                integerDigits: 8,
+                groupSeparator: ',',
+                autoGroup: true,
+                digits: 2,
+                allowMinus: false,
+                digitsOptional: false,
+                placeholder: "0.00",
+            });
             var tempCount = parseInt($("#counter").val()) + 1;
             $("#counter").val(tempCount);
             reloadDatePicker();
@@ -1471,7 +1498,7 @@
     function calculateComm(row){
         var comm = document.getElementById('recCom'+row);
         if(comm.value !== ''){
-            document.getElementById('recCom'+row).value = formatNumber(parseFloat((comm.value).replace(/,/g,"")));
+//            document.getElementById('recCom'+row).value = formatNumber(parseFloat((comm.value).replace(/,/g,"")));
         }
     }
     
@@ -1490,7 +1517,7 @@
                         value = value.replace(/,/g,"");
                         var total = parseFloat(value);
                         grandTotal += total;
-                        document.getElementById('amount' + i).value = formatNumber(total);
+//                        document.getElementById('amount' + i).value = formatNumber(total);
                     }
                 }    
             }
@@ -1788,19 +1815,50 @@
         }    
     }
     
-    function validateForm(){
-//        var count = document.getElementById('counter').value;
-//        
-//        for(var i=0;i<=count;i++){
-//            var refNoField = document.getElementById('refNo'+i);
-//            
-//            if(refNoField !== null){
-//                var color = document.getElementById('refNo'+i).style.borderColor;
-//                if(color === "red"){
-//                    return false;
-//                }   
-//            }
-//        }
+    function validateForm(){              
+        var idRole = '${idRole}';
+        if((idRole === '22') || (idRole === '1')){
+            var invoiceSup = $("#InputInvoiceSupCode").val();
+            var apCode = $("#InputAPCode").val();
+            var status = $("#itemStatus").val();
+            if(invoiceSup === '' || apCode === '' || status === ''){
+                $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputInvoiceSupCode');
+                $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
+                $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'itemStatus');
+                return;
+            }
+            
+        }else if(idRole === '19'){
+            var invoiceSup = $("#InputInvoiceSupCode").val();
+            var apCode = $("#InputAPCode").val();
+            var status = $("#itemStatus").val();
+            var account1 = $("#account1").is(":checked");
+            var account2 = $("#account2").is(":checked");
+            if(invoiceSup === '' || apCode === '' || status === '' || !(account1 || account2)){
+                $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputInvoiceSupCode');
+                $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
+                $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'itemStatus');
+                $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'account');
+                $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputPayDate');
+                return;
+            }
+        }
+    
+        var count = document.getElementById('counter').value;       
+        for(var i=0;i<=count;i++){
+            var refNoField = document.getElementById('refNo'+i);
+            
+            if(refNoField !== null){
+                var color = document.getElementById('refNo'+i).style.borderColor;
+                if(color === "red"){
+                    return;
+                }   
+            }
+        }
+        
+        var action = document.getElementById("action");
+        action.value = "add";
+        document.getElementById('PaymentTourHotelForm').submit();
     }
     
     function checkVatAll(){
@@ -1886,7 +1944,7 @@
                                     document.getElementById('gross'+i).value = formatNumber(grossTotal);
                                     document.getElementById('vat'+i).value = vatDefaultData;
                                 } else {
-                                    document.getElementById('gross'+i).value = '';
+//                                    document.getElementById('gross'+i).value = '';
                                     document.getElementById('vat'+i).value = '';
                                 }
                             }
