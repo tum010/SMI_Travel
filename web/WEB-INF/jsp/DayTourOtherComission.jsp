@@ -138,21 +138,21 @@
             <!--Table show detail when search -->
            
             <form action="DayTourOtherComission.smi" id="saveDaytourCommissionForm" name="saveDaytourCommissionForm" method="post" role="form" >
-                <table class="display" id="CommissionTable" name="CommissionTable" cellspacing="0">
+                <table class="display" id="CommissionTable" name="CommissionTable" cellspacing="0" style="table-layout: fixed">
                     <thead class="datatable-header">
                         <tr>
                             <th class="hide">Booking ID</th>
-                            <th style="width:4%">Code</th>
+                            <th style="width:8%">Code</th>
                             <th style="width:9%">Name</th>
-                            <th style="width:14%">Date</th>
-                            <th style="width:5%">Ref. No</th>
+                            <th style="width:9%">Date</th>
+                            <th style="width:6%">Ref. No</th>
                             <th style="width:14%">Client Name</th>
-                            <th style="width:15%">Guide Name</th>
-                            <th style="width:6%">Guide Comm</th>
-                            <th style="width:12%">Remark Guide</th>
-                            <th style="width:15%">Agent Name</th>
-                            <th style="width:6%">Agent Comm</th>
-                            <th style="width:12%">Remark Agent</th>
+                            <th style="width:11%">Guide Name</th>
+                            <th style="width:8%">Guide Comm</th>
+                            <th style="width:8%">Remark Guide</th>
+                            <th style="width:11%">Agent Name</th>
+                            <th style="width:8%">Agent Comm</th>
+                            <th style="width:8%">Remark Agent</th>
                             <th class="hide" >Edit</th>
                         </tr>
                     </thead>
@@ -196,7 +196,7 @@
                                 <td>${item.master.customer.firstName} &nbsp; ${item.master.customer.lastName} </td>
                                 <td class="selectGuide form-group">  
                                     <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.guide.name}','guideComm-${status.count}');getGuideComm(${status.count});" class="selectize"   >
-                                        <option value="" >--- select ---</option>
+                                        <option value="" ></option>
                                         <c:forEach var="guide" items="${guideList}" >
                                             <c:set var="select" value="" />
                                             <c:set var="selectedId" value="${item.guide.id}" />
