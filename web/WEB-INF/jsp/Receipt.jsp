@@ -3315,6 +3315,16 @@
                 $("#tr_CreditDetailAddRow").removeClass("hide");
                 $("#tr_CreditDetailAddRow").addClass("show");
             }
+            var tempcount = parseInt($("#CreditDetailTable tr").length);
+            if(tempcount == 1){
+
+            }else if(tempcount == 2){
+                var count = $("#countRowCredit").val();
+                count = count-1;
+                $("#creditBank" + count).parent().parent().remove();
+                $("#countRowCredit").val(1);
+                AddRowCredit(1);
+            }
         }
         else {
             $.ajax({
@@ -3328,6 +3338,17 @@
                         $("#tr_CreditDetailAddRow").removeClass("hide");
                         $("#tr_CreditDetailAddRow").addClass("show");
                     }
+                    
+                    var tempcount = parseInt($("#CreditDetailTable tr").length);
+                    if(tempcount == 1){
+
+                    }else if(tempcount == 2){
+                        var count = $("#countRowCredit").val();
+                        count = count-1;
+                        $("#creditBank" + count).parent().parent().remove();
+                        $("#countRowCredit").val(1);
+                        AddRowCredit(1);
+                    }   
                 },
                 error: function() {
                     console.log("error");
@@ -3336,6 +3357,8 @@
             });
         }
         $('#DeleteReceiptCredit').modal('hide');
+        
+
     }
 
     function DisableVoidReceipt() {
