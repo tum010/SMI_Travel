@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" src="js/ReceiveTable.js"></script> 
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -284,19 +286,19 @@
                                     </div>    
                                 </div>
                                 <div class="col-xs-1 form-group" style="width: 290px">
-                                    <input name="receiveName" id="receiveName" type="text" class="form-control" style="text-transform: uppercase;" value="${advanceReceive.recName}" />
+                                    <input name="receiveName" id="receiveName" type="text" class="form-control" style="text-transform: uppercase;" value="${advanceReceive.recName}" maxlength="100"/>
                                 </div>
                                 <div class="col-xs-1 text-left" style="width: 100px">
                                     <label class="control-label">AR Code</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px">
-                                    <input name="receiveArCode" id="receiveArCode" type="text" class="form-control" value="${advanceReceive.arCode}" readonly=""/>
+                                    <input name="receiveArCode" id="receiveArCode" type="text" class="form-control" value="${advanceReceive.arCode}" readonly="" maxlength="20"/>
                                 </div>                                                                
                                 <div class="col-xs-1 text-right" style="width: 170px">
                                    <label class="control-label text-left">Receive Amount<font style="color: red">*</font></lable>        
                                 </div>                               
                                 <div class="col-xs-1 form-group" style="width: 200px">
-                                    <input maxlength="10" name="receiveAmount" id="receiveAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.recAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
+                                    <input name="receiveAmount" id="receiveAmount" type="text" class="form-control decimal" value="${advanceReceive.recAmount}" onfocusout="calculate(this)"/>
                                 </div>
                             </div>
                         </div><!-- End Row 2-->
@@ -306,13 +308,13 @@
                                     <label class="control-label text-left">Description</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 590px">
-                                    <textarea name="description" id="description" class="form-control" rows="3">${advanceReceive.description}</textarea>
+                                    <textarea name="description" id="description" class="form-control" rows="3" maxlength="255">${advanceReceive.description}</textarea>
                                 </div>
                                 <div class="col-xs-1 text-right" style="width: 170px">
                                     <label class="control-label ">Wht</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px">
-                                    <input maxlength="10" name="wht" id="wht" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.wht}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
+                                    <input name="wht" id="wht" type="text" class="form-control decimal" value="${advanceReceive.wht}" onfocusout="calculate(this)"/>
                                 </div>
                             </div>
                         </div><!-- End Row 3--><br>
@@ -322,21 +324,21 @@
                                     <label class="control-label text-left">Cash Amount</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px" id="cashAmountPanel">
-                                    <input maxlength="10" name="cashAmount" id="cashAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.cashAmount}" onkeyup="insertCommas(this);" onfocusout="calculate(this)"/>
+                                    <input name="cashAmount" id="cashAmount" type="text" class="form-control decimal" value="${advanceReceive.cashAmount}" onfocusout="calculate(this)"/>
                                 </div>
                                 <div class="col-xs-1" style="width: 60px"></div>
                                 <div class="col-xs-1" style="width: 130px">
                                     <label class="control-label text-left">Bank Amount</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px" id="bankAmountPanel">
-                                    <input maxlength="10" name="bankAmount" id="bankAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.bankAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
+                                    <input name="bankAmount" id="bankAmount" type="text" class="form-control decimal" value="${advanceReceive.bankAmount}" onfocusout="calculate(this)"/>
                                 </div>
                                 <div class="col-xs-1" style="width: 35px"></div>
                                 <div class="col-xs-1 text-right" style="width: 135px">
                                     <label class="control-label">Chq Amount</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px" id="chqAmountPanel">
-                                    <input maxlength="10" name="chqAmount" id="chqAmount" type="text" class="form-control numerical" style="text-align:right;" value="${advanceReceive.chqAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this)"/>
+                                    <input name="chqAmount" id="chqAmount" type="text" class="form-control decimal" value="${advanceReceive.chqAmount}" onfocusout="calculate(this)"/>
                                 </div>
                             </div>
                         </div><!-- End Row 4--><br>
@@ -346,7 +348,7 @@
                                     <label class="control-label text-left">Chq Bank</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px">
-                                    <input name="chqBank" id="chqBank" type="text" class="form-control" value="${advanceReceive.chqBank}" />
+                                    <input name="chqBank" id="chqBank" type="text" maxlength="50" class="form-control" value="${advanceReceive.chqBank}" />
                                 </div>
                                 <div class="col-xs-1" style="width: 60px"></div>
                                 <div class="col-xs-1" style="width: 130px">
@@ -363,7 +365,7 @@
                                     <label class="control-label">Chq No</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px">
-                                    <input name="chqNo" id="chqNo" type="text" class="form-control" value="${advanceReceive.chqNo}" />
+                                    <input name="chqNo" id="chqNo" type="text" maxlength="100" class="form-control" value="${advanceReceive.chqNo}" />
                                 </div>
                             </div>
                         </div><!-- End Row 5-->
@@ -397,7 +399,7 @@
                                                 </c:forEach>
                                             </select>
                                         </td>
-                                        <td><input class="form-control" type="text" id="creditNo${i.count}" name="creditNo${i.count}" value="${adReCre.creditNo}"></td>
+                                        <td><input class="form-control" type="text" id="creditNo${i.count}" name="creditNo${i.count}" value="${adReCre.creditNo}" maxlength="20"></td>
                                         <td>
                                             <div class="input-group daydatepicker" id="daydatepicker${i.count}">
                                                 <input type="text" name="creditExpire${i.count}" id="creditExpire${i.count}" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${adReCre.creditExpire}" />

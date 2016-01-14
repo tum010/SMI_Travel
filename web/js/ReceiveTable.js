@@ -22,6 +22,16 @@ $(document).ready(function() {
     });
 
     $(".money").mask('000,000,000,000.00', {reverse: true});
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
 
     $('#ReceiveTable').dataTable({bJQueryUI: true,
         "sPaginationType": "full_numbers",
@@ -506,14 +516,14 @@ function AddRowCreditTable(row) {
             '<td class="hidden"><input class="form-control" type="text" id="advanceReceiveCreditId' + row + '" name="advanceReceiveCreditId' + row + '" value=""></td>' +
             '<td class="hidden"><input class="form-control" type="text" id="advanceReceiveId' + row + '" name="advanceReceiveId' + row + '" value=""></td>' +
             '<td><select class="form-control" name="creditCard' + row + '" id="creditCard' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" ></option></select></td>' +
-            '<td><input class="form-control" type="text" id="creditNo' + row + '" name="creditNo' + row + '" value=""></td>' +
+            '<td><input class="form-control" type="text" id="creditNo' + row + '" name="creditNo' + row + '" value="" maxlength="20"></td>' +
             '<td>' +
             '<div class="input-group daydatepicker" id="daydatepicker' + row + '">' +
             '<input type="text" name="creditExpire' + row + '" id="creditExpire' + row + '" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />' +
             '<span class="input-group-addon spandate" id="spandate' + row + '" style="padding : 1px 10px;" onclick="AddrowBySelect(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
             '</div>' +
             '</td>' +
-            '<td><input maxlength="10" class="form-control numerical" style="text-align:right;" type="text" id="creditAmount' + row + '" name="creditAmount' + row + '" value="" onkeyup="insertCommas(this)" onfocusout="calculate(this); calculateCreditAmount(); setCreditAmount(); setCashOnDemand();"></td>' +
+            '<td><input class="form-control decimal" type="text" id="creditAmount' + row + '" name="creditAmount' + row + '" value="" onfocusout="calculate(this); calculateCreditAmount(); setCreditAmount(); setCashOnDemand();"></td>' +
             '<td>' +
             '<center>' +
             '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" onclick="deleteAdvanceReceiveCreditConfirm(\'\',\'' + row + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' +
@@ -525,6 +535,16 @@ function AddRowCreditTable(row) {
             );
 //    $("#tr_CreditTableAddRow").removeClass("show");
 //    $("#tr_CreditTableAddRow").addClass("hide");
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
     $("#select_bank_list option").clone().appendTo("#creditCard" + row);
     $("#countCredit").val(row + 1);
     reloadDatePicker();

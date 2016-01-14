@@ -255,7 +255,7 @@
                                                         <input type="text" id="InputVatTemp${taxdesc.count}" name="InputVatTemp${taxdesc.count}"  
                                                         value="${ind.vat}">
                                                     </td>
-                                                    <td class="text-right">
+                                                    <td class="text-center">
                                                         <c:if test="${ind.isVat == 1}">
                                                             <fmt:parseNumber var="vatShow" type="number" value="${ind.vat}" />
                                                             ${vatShow}
