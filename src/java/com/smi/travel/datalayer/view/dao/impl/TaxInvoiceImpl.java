@@ -127,18 +127,46 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
 //            data.add(taxInvoiceView);
         }
         if(option == 3){
+//            invdescTemp = invdescTemp.replaceAll("\\s","");
+//            invdescTemp = invdescTemp.replaceAll("Inv:", "");          
+//            String[] invdescs = invdescTemp.split(",");
+//            String invdesc = "";
+//            for (int j=0;j<invdescs.length;j++){
+//                for (int k=j+1;k<invdescs.length;k++){
+//                    if (k!=j && invdescs[k].equals(invdescs[j])){
+//                        invdesc += (!"".equalsIgnoreCase(invdesc) ? " , " : "");
+//                        invdesc += invdescs[k];
+//                    }
+//                }
+//            }
+            
             invdescTemp = invdescTemp.replaceAll("\\s","");
             invdescTemp = invdescTemp.replaceAll("Inv:", "");          
             String[] invdescs = invdescTemp.split(",");
             String invdesc = "";
-            for (int j=0;j<invdescs.length;j++){
-                for (int k=j+1;k<invdescs.length;k++){
-                    if (k!=j && invdescs[k].equals(invdescs[j])){
-                        invdesc += (!"".equalsIgnoreCase(invdesc) ? " , " : "");
-                        invdesc += invdescs[k];
+            List<String> invdescsChkList = new ArrayList<String>();
+            for(int i=0;i<invdescs.length;i++){
+                String invNo1 = invdescs[i];
+                int match = 0;
+                if(!invdescsChkList.isEmpty()){
+                    for(int j=0;j<invdescsChkList.size();j++){
+                        String invNo2 = invdescsChkList.get(j);
+                        if(invNo1.equalsIgnoreCase(invNo2)){
+                            match++;
+                            j = invdescsChkList.size();
+                        }
                     }
-                }
+                    if(match == 0){
+                        invdesc += " , ";
+                        invdescsChkList.add(invNo1);
+                        invdesc += invNo1;
+                    }
+                } else {
+                    invdescsChkList.add(invNo1);
+                    invdesc += invNo1;
+                }           
             }
+            
             taxInvoiceViewTemp.setDescription("TOUR" + " " + invdesc);
             taxInvoiceViewTemp.setInvoice("");
             data.add(taxInvoiceViewTemp);

@@ -63,7 +63,7 @@
                             </div>
                             <div class="col-xs-1" style="padding: 20px 0px 0px 50px"><i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i></div>
                             <div class="col-xs-10 text-right">
-                                <label class="col-sm-1 control-label text-right">To : </label>
+                                <label class="col-sm-1 control-label text-right">To<font style="color: red">*</font> : </label>
                                 <div class="input-group text-left" >
                                     <input type="text" class="form-control " id="recipient" name="recipient" size="50" style="width: 200%" value="${requestScope['recipient']}" onkeypress="sendEmailStatusCancel()" onfocusout="checkEmailTo()"> 
                                 </div>
@@ -83,7 +83,7 @@
                             <div class="col-xs-1 text-right">
                             </div>
                             <div class="col-xs-10 text-right">
-                                <label class="col-sm-2 control-label text-right" style="width: 177px">Subject : </label>
+                                <label class="col-sm-2 control-label text-right" style="width: 177px">Subject<font style="color: red">*</font> : </label>
                                 <div class="input-group text-left" >
                                     <input type="text" class="form-control" id="subject" name="subject" size="50" style="width: 200%" value="${requestScope['subject']}" onkeypress="sendEmailStatusCancel()"> 
                                 </div>

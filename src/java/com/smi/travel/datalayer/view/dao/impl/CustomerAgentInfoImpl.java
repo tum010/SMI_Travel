@@ -88,15 +88,15 @@ public class CustomerAgentInfoImpl implements CustomerAgentInfoDao{
         List<CustomerAgentInfo> CustomerAgentInfoList =  new LinkedList<CustomerAgentInfo>();
         for(Object[] B : QueryList){
             CustomerAgentInfo CustomerAgent = new CustomerAgentInfo();
-            CustomerAgent.setBillTo(B[0].toString());
-            CustomerAgent.setBillName(B[1].toString());
-            CustomerAgent.setTel(util.inputString(B[2]));
-            CustomerAgent.setAddress(util.inputString(B[3]));
+            CustomerAgent.setBillTo(B[0] != null ? B[0].toString() : "");
+            CustomerAgent.setBillName(B[1] != null ? B[1].toString() : "");
+            CustomerAgent.setTel(B[2] != null ? util.inputString(B[2]) : "");
+            CustomerAgent.setAddress(B[3] != null ? util.inputString(B[3]) : "");
             if(B[4] != null){
-                CustomerAgent.setTerm(util.ConvertInt(B[4]));
+                CustomerAgent.setTerm(B[4] != null ? util.ConvertInt(B[4]) : null);
             }
             if(B[5] != null){
-                CustomerAgent.setPay(util.ConvertInt(B[5]));
+                CustomerAgent.setPay(B[5] != null ? util.ConvertInt(B[5]) : null);
             }
             CustomerAgentInfoList.add(CustomerAgent);
         }
