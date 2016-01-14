@@ -231,12 +231,12 @@
                         </div>
                     </div>-->
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-10">
                             <div class="form-group">
-                                <div class="col-sm-7 text-right">
+                                <div class="col-sm-12 text-center">
                                     <button type="button"  class="btn btn-success" id="btnPrint" onclick="printOutboundHotelSummary();"><span class="glyphicon glyphicon-print" ></span> Print</button>
                                 </div>
-                                <div class="col-sm-2 text-left">
+                                <div class="col-sm-2 text-left hidden">
                                     <button type="button" onclick="" class="btn btn-warning"><span class="glyphicon glyphicon-print"></span> Cancel</button>
                                 </div>
                             </div>
