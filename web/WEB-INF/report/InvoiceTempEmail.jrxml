@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceTempEmail" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd8bfceb-88e3-46d6-b967-516fc07ba6ea">
-	<property name="ireport.zoom" value="1.2100000000000248"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="864"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="389"/>
+	<property name="ireport.y" value="288"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="co" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
@@ -29,6 +29,8 @@
 	<field name="bankid" class="java.lang.String"/>
 	<field name="showstaff" class="java.lang.String"/>
 	<field name="showleader" class="java.lang.String"/>
+	<field name="duedate" class="java.lang.String"/>
+	<field name="payment" class="java.lang.String"/>
 	<background>
 		<band height="785">
 			<line>
@@ -140,7 +142,7 @@
 			</textField>
 			<staticText>
 				<reportElement x="388" y="187" width="9" height="19" uuid="f6ee51ae-695b-4568-bad8-333f8c65af9d">
-					<printWhenExpression><![CDATA[$F{showstaff}.equalsIgnoreCase("0")]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{showstaff}.equalsIgnoreCase("1")]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
@@ -170,7 +172,7 @@
 				<textFieldExpression><![CDATA[$F{staff}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="32" y="127" width="297" height="79" uuid="9dadfa4e-1f56-4c67-9458-185dda6b320e"/>
+				<reportElement x="32" y="127" width="297" height="20" uuid="9dadfa4e-1f56-4c67-9458-185dda6b320e"/>
 				<textElement>
 					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -227,6 +229,41 @@
 				</textElement>
 				<text><![CDATA[Ref No.]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="32" y="147" width="297" height="59" uuid="ec1cb16e-92c2-45ea-b6dc-e81d2e25e9bd"/>
+				<textElement>
+					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="203" width="55" height="17" uuid="f12b2b80-3791-4aa6-90a5-9fe95abc4f98"/>
+				<textElement>
+					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Due Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="202" width="9" height="19" uuid="f6876dab-09c5-49f6-9e6d-b35dd5588d5f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="399" y="219" width="156" height="20" uuid="d82a0d57-9715-4993-93f1-daf5af561647"/>
+				<textElement>
+					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{payment}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="399" y="203" width="125" height="19" uuid="a3ca4601-8229-4b2c-8987-27fe21ec6b6c"/>
+				<textElement>
+					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{duedate}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>

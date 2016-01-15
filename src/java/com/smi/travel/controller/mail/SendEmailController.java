@@ -51,7 +51,8 @@ public class SendEmailController extends SMITravelController {
     private static final String MESSAGE = "message";       
     private static final String SIGN = "sign"; 
     private static final String InvoiceInboundRevenueEmail = "InvoiceInboundRevenueEmail";
-    private static final String InvoiceInboundPerformaEmail = "InvoiceInboundPerformaEmail";        
+    private static final String InvoiceInboundPerformaEmail = "InvoiceInboundPerformaEmail";
+    private static final String InvoiceTempEmail = "InvoiceTempEmail";     
     
     private JavaMailSender mailSender;
     private ReportService reportservice;
@@ -153,6 +154,17 @@ public class SendEmailController extends SMITravelController {
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "InvoiceInboundEmail.jasper";
                 pdfFileName = "InvoiceInboundProformaEmail.pdf";
+                pathAttachfile = path[0] + "\\" + username;
+                System.out.println("path : " + path[0] + username);
+                if (checkDirectory(path[0] + username)) {
+                    result = reportservice.printreport(jasperFileName, username + "\\" + pdfFileName, dataSource);
+                }
+            }
+            if (InvoiceTempEmail.equalsIgnoreCase(name)) {
+                data = reportservice.getInvoice(reportid,bankid,showstaff,showleader,sign,user.getName());
+                JRDataSource dataSource = new JRBeanCollectionDataSource(data);
+                jasperFileName = "InvoiceTempEmail.jasper";
+                pdfFileName = "InvoiceTempEmail.pdf";
                 pathAttachfile = path[0] + "\\" + username;
                 System.out.println("path : " + path[0] + username);
                 if (checkDirectory(path[0] + username)) {

@@ -37,70 +37,74 @@
         </c:if>
         <c:set var="panelheader" value=""/>
         <c:set var="panelborder" value=""/>
+        <c:set var="departmentPage" value=""/>
         <c:choose>
             <c:when test="${fn:contains(page , 'OT')}">
                 <c:set var="typeInvoice" value="O/T" />
                 <c:set var="typeBooking" value="O" />
                 <h4><b>Finance & Cashier - Invoice Temp Outbound  <font style="color: red;"> ${textVoid}</font></b></h4>
-                        <c:set var="panelheader" value="outboundheader"/>
-                        <c:set var="panelborder" value="outboundborder"/>
-                    </c:when>
-                    <c:when test="${fn:contains(page , 'OV')}">
-                        <c:set var="typeInvoice" value="O/V" />
-                        <c:set var="typeBooking" value="O" />
-                        <c:set var="showvat" value="true" />
-                    <h4><b>Finance & Cashier - Invoice Vat Outbound <font style="color: red;"> ${textVoid} </font></b></h4>
-                    <c:set var="panelheader" value="outboundheader"/>
-                    <c:set var="panelborder" value="outboundborder"/>
-                </c:when>
-                <c:when test="${fn:contains(page , 'WT')}">
-                    <c:set var="typeInvoice" value="W/T" />
-                    <c:set var="typeBooking" value="I" />
-                    <h4><b>Finance & Cashier - Invoice Temp Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
-                        <c:set var="panelheader" value="wendyheader"/>
-                        <c:set var="panelborder" value="wendyborder"/>
-                    </c:when>
-                    <c:when test="${fn:contains(page , 'WV')}">
-                        <c:set var="typeInvoice" value="W/V" />
-                        <c:set var="typeBooking" value="I" />
-                        <c:set var="showvat" value="true" />
-                    <h4><b>Finance & Cashier - Invoice Vat Wendy <font style="color: red;"> ${textVoid} </font></b></h4>
+                <c:set var="panelheader" value="outboundheader"/>
+                <c:set var="panelborder" value="outboundborder"/>
+            </c:when>
+            <c:when test="${fn:contains(page , 'OV')}">
+                    <c:set var="typeInvoice" value="O/V" />
+                    <c:set var="typeBooking" value="O" />
+                    <c:set var="showvat" value="true" />
+                <h4><b>Finance & Cashier - Invoice Vat Outbound <font style="color: red;"> ${textVoid} </font></b></h4>
+                <c:set var="panelheader" value="outboundheader"/>
+                <c:set var="panelborder" value="outboundborder"/>
+            </c:when>
+            <c:when test="${fn:contains(page , 'WT')}">
+                <c:set var="typeInvoice" value="W/T" />
+                <c:set var="typeBooking" value="I" />
+                <h4><b>Finance & Cashier - Invoice Temp Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
                     <c:set var="panelheader" value="wendyheader"/>
                     <c:set var="panelborder" value="wendyborder"/>
                 </c:when>
-                <c:when test="${fn:contains(page , 'WN')}">
-                    <c:set var="typeInvoice" value="W/N" />
+                <c:when test="${fn:contains(page , 'WV')}">
+                    <c:set var="typeInvoice" value="W/V" />
                     <c:set var="typeBooking" value="I" />
-                    <h4><b>Finance & Cashier - Invoice No Vat Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
-                    <c:set var="panelheader" value="wendyheader"/>
-                    <c:set var="panelborder" value="wendyborder"/>
-                </c:when> 
-                <c:when test="${fn:contains(page , 'ON')}">
-                    <c:set var="typeInvoice" value="O/N" />
-                    <c:set var="typeBooking" value="O" />
-                    <h4><b>Finance & Cashier - Invoice No Vat Outbound <font style="color: red;"> ${textVoid}</font></b></h4>
-                    <c:set var="panelheader" value="outboundheader"/>
-                    <c:set var="panelborder" value="outboundborder"/>
-                </c:when> 
-                <c:when test="${fn:contains(page , 'WA')}">
-                    <c:set var="typeInvoice" value="W/A" />
-                    <c:set var="invType" value="Air Ticket" />
-                    <c:set var="typeBooking" value="I" />
-                    <h4><b>Finance & Cashier - Invoice Air Ticket Wendy <font style="color: red;"> ${textVoid}</font></b>
-                    <img src="${pageContext.request.contextPath}/img/airplain.png" style="width:100px;height:40px;margin-left: 10px;"></h4>
-                    <c:set var="panelheader" value="wendyheader"/>
-                    <c:set var="panelborder" value="wendyborder"/>
-                </c:when> 
-                <c:when test="${fn:contains(page , 'OA')}">
-                    <c:set var="typeInvoice" value="O/A" />
-                    <c:set var="invType" value="Air Ticket" />
-                    <c:set var="typeBooking" value="O" />
-                    <h4><b>Finance & Cashier - Invoice Air Ticket Outbound <font style="color: red;"> ${textVoid}</font></b>
-                    <img src="${pageContext.request.contextPath}/img/airplain.png" style="width:120px;height:50px;margin-left: 10px;"></h4>
-                    <c:set var="panelheader" value="outboundheader"/>
-                    <c:set var="panelborder" value="outboundborder"/>
-                </c:when> 
-            </c:choose>
+                    <c:set var="showvat" value="true" />
+                <h4><b>Finance & Cashier - Invoice Vat Wendy <font style="color: red;"> ${textVoid} </font></b></h4>
+                <c:set var="panelheader" value="wendyheader"/>
+                <c:set var="panelborder" value="wendyborder"/>
+            </c:when>
+            <c:when test="${fn:contains(page , 'WN')}">
+                <c:set var="typeInvoice" value="W/N" />
+                <c:set var="typeBooking" value="I" />
+                <h4><b>Finance & Cashier - Invoice No Vat Wendy <font style="color: red;"> ${textVoid}</font></b></h4>
+                <c:set var="panelheader" value="wendyheader"/>
+                <c:set var="panelborder" value="wendyborder"/>
+            </c:when> 
+            <c:when test="${fn:contains(page , 'ON')}">
+                <c:set var="typeInvoice" value="O/N" />
+                <c:set var="typeBooking" value="O" />
+                <h4><b>Finance & Cashier - Invoice No Vat Outbound <font style="color: red;"> ${textVoid}</font></b></h4>
+                <c:set var="panelheader" value="outboundheader"/>
+                <c:set var="panelborder" value="outboundborder"/>
+            </c:when> 
+            <c:when test="${fn:contains(page , 'WA')}">
+                <c:set var="typeInvoice" value="W/A" />
+                <c:set var="invType" value="Air Ticket" />
+                <c:set var="typeBooking" value="I" />
+                <h4><b>Finance & Cashier - Invoice Air Ticket Wendy <font style="color: red;"> ${textVoid}</font></b>
+                <img src="${pageContext.request.contextPath}/img/airplain.png" style="width:100px;height:40px;margin-left: 10px;"></h4>
+                <c:set var="panelheader" value="wendyheader"/>
+                <c:set var="panelborder" value="wendyborder"/>
+                <c:set var="departmentPage" value="ticket"/>
+            </c:when> 
+            <c:when test="${fn:contains(page , 'OA')}">
+                <c:set var="typeInvoice" value="O/A" />
+                <c:set var="invType" value="Air Ticket" />
+                <c:set var="typeBooking" value="O" />
+                <h4><b>Finance & Cashier - Invoice Air Ticket Outbound <font style="color: red;"> ${textVoid}</font></b>
+                <img src="${pageContext.request.contextPath}/img/airplain.png" style="width:120px;height:50px;margin-left: 10px;"></h4>
+                <c:set var="panelheader" value="outboundheader"/>
+                <c:set var="panelborder" value="outboundborder"/>
+                <c:set var="departmentPage" value="ticket"/>
+            </c:when> 
+        </c:choose>
+            <input type="hidden" name="departmentPage" id="departmentPage" value="${departmentPage}"/>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i> Finance & Cashier </a></li>          
@@ -174,11 +178,7 @@
             <div id="textAlertInvoiceNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Cannot delete invoice detail. It use in receipt.</strong> 
-            </div>
-            <div id="textAlertCurrencyAmountNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Currency Amount Not Empty</strong> 
-            </div>
+            </div>            
 
             <form action="Invoice${page}.smi" method="post" id="InvoiceForm" role="form">
                 <div id="textAlertDisable"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
@@ -533,7 +533,11 @@
                                             <div id="textAlertCurrency"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 <strong>Currency is not match!!! </strong> 
-                                            </div> 
+                                            </div>
+                                            <div id="textAlertCurrencyAmountNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <strong>Currency Amount Not Empty</strong> 
+                                            </div>
                                         </div>
                                         <input type="text" class="hidden" id="counterTable" name="counterTable" value="1" >
                                         <input type="text" class="hidden" id="idDeleteDetailBillable" name="idDeleteDetailBillable" value="0" >
@@ -584,7 +588,7 @@
                                                                     </select>
                                                                 </td>
                                                                 <td> 
-                                                                    <input type="text" class="form-control" id="BillDescriptionTemp${taxdesc.count}" name="BillDescriptionTemp${taxdesc.count}" value="${ind.description}" onkeyup="setDescription(${taxdesc.count})">                                           
+                                                                    <input type="text" class="form-control" id="BillDescriptionTemp${taxdesc.count}" name="BillDescriptionTemp${taxdesc.count}" value="${ind.description}" onkeyup="setDescription(${taxdesc.count})" onchange="setDescription(${taxdesc.count})">                                           
                                                                 </td>
                                                                 <td class="hidden"><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
                                                                 <td><input type="text" class="form-control text-right decimal" onfocusout="changeFormatCostNumber('${taxdesc.count}')" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}"></td>
@@ -615,7 +619,7 @@
                                                                 <td ><input type="text" readonly  onfocusout="changeFormatGrossNumber(${taxdesc.count})" class="form-control decimal" id="InputGross${taxdesc.count}" name="InputGross${taxdesc.count}" value="${ind.gross}" ></td>
                                                                 <td><input type="text" class="form-control text-right decimal" id="InputAmount${taxdesc.count}" name="InputAmount${taxdesc.count}" value="${ind.amount}" onfocusout="changeFormatAmountNumber('${taxdesc.count}');"></td>
                                                                 <td class="priceCurrencyAmount">
-                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="validFromInvoice(); CalculateGrandTotal('')">
+                                                                    <select id="SelectCurrencyAmount${taxdesc.count}" name="SelectCurrencyAmount${taxdesc.count}" class="form-control" onclick="" onchange="CalculateGrandTotal('')">
                                                                         <option value='' ></option>
                                                                         <c:forEach var="cur" items="${listCurrency}">
                                                                             <c:set var="selectA" value="" />
@@ -706,7 +710,7 @@
                                                                     </select>
                                                                 </td>
                                                                 <td> 
-                                                                    <input type="text" class="form-control" id="BillDescriptionTemp${taxdesc.count}" name="BillDescriptionTemp${taxdesc.count}" value="${ind.description}" onkeyup="setDescription(${taxdesc.count})">                                           
+                                                                    <input type="text" class="form-control" id="BillDescriptionTemp${taxdesc.count}" name="BillDescriptionTemp${taxdesc.count}" value="${ind.description}" onkeyup="setDescription(${taxdesc.count})" onchange="setDescription(${taxdesc.count})">                                           
                                                                 </td>
                                                                 <td class="hidden"><input type="text" class="form-control" id="BillDescription${taxdesc.count}" name="BillDescription${taxdesc.count}" value="${ind.description}" > </td>
                                                                 <td><input type="text" onfocusout="changeFormatCostNumber(${taxdesc.count})" class="form-control decimal text-right" id="InputCost${taxdesc.count}" name="InputCost${taxdesc.count}" value="${ind.cost}" ></td>

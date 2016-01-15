@@ -270,88 +270,233 @@ function searchInvoiceFromInvoiceNo() {
     document.getElementById('InvoiceForm').submit();
 }
 
-function searchInvoice() {
-
-}
-
-var currency = 0;
-function validFromInvoice() {
-    var invDate = $("#InputInvDate").val();
-    var invTo = $("#InvTo").val();
-    var invToName = $("#InvToName").val();
-    var arCode = $("#ARCode").val();
-    if(invDate === '' || invTo === '' || invToName === '' || arCode === ''){
-        $('#InvoiceForm').bootstrapValidator('revalidateField', 'InputInvDate');
-        $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvTo');
-        $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvToName');
-        $('#InvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
-        return;
-    }
-
-    var counter = $('#DetailBillableTable tbody tr').length;
-    var different = 0;
-    var rowTemp = 0;
-    var checkcur1 = false;
-    for (var i = 1; i <= (counter - 1); i++) {
-        var currency1 = $('#SelectCurrencyAmount' + i).find(":selected").text();
-        if (currency1 === '') {
-            checkcur1 = true;
-        } else {
-            $('#textAlertCurrencyAmountNotEmpty').hide();
-        }
-        for (var j = 2; j <= (counter - 1); j++) {
-            var type = $('#SelectProductType' + j).find(":selected").text();
-            if (type !== "") {
-                var currency2 = $('#SelectCurrencyAmount' + j).find(":selected").text();
-                if (currency1 !== currency2) {
-                    rowTemp = j;
-                    different++;
-                }
-            }
-        }
-    }
-    if (different > 0) {
-        $('#DetailBillableTable').find('tr').each(function() {
-            $(this).find('td').each(function() {
-                if ($(this).hasClass('priceCurrencyAmount')) {
-                    $(this).addClass("alert-danger");
-                }
-            });
-        });
-        $('#textAlertCurrency').show();
-        return;
-        currency = 1;
-//        document.getElementById("saveInvoice").disabled = true;
-//        alert("Currency : " + currency); 
-//        $('#InvoiceForm').bootstrapValidator('validateField', 'SelectCurrencyAmount2'+rowTemp);
-        if (checkcur1) {
-            $('#textAlertCurrencyAmountNotEmpty').show();
+function validFromInvoice(){
+    var departmentPage = $("#departmentPage").val();    
+    if(departmentPage !== 'ticket'){
+        var invDate = $("#InputInvDate").val();
+        var invTo = $("#InvTo").val();
+        var invToName = $("#InvToName").val();
+        var arCode = $("#ARCode").val();
+        if(invDate === '' || invTo === '' || invToName === '' || arCode === ''){
+            $('#InvoiceForm').bootstrapValidator('revalidateField', 'InputInvDate');
+            $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvTo');
+            $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvToName');
+            $('#InvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
             return;
-//            document.getElementById("saveInvoice").disabled = true;
         }
-//        return false;
-    } else {
-        $('#DetailBillableTable').find('tr').each(function() {
-            $(this).find('td').each(function() {
-                if ($(this).hasClass('priceCurrencyAmount')) {
-                    $(this).removeClass("alert-danger");
-                }
-            });
-        });
-        $('#textAlertCurrency').hide();
-        currency = 0;
-//        document.getElementById("saveInvoice").disabled = false;
-        if (checkcur1) {
-            $('#textAlertCurrencyAmountNotEmpty').show();
-//            document.getElementById("saveInvoice").disabled = true;
-        } else {
-            $('#textAlertInvoiceNotEmpty').hide();
-//            document.getElementById("saveInvoice").disabled = false;
-            document.getElementById('InvoiceForm').submit();
+        
+    }else if(departmentPage === 'ticket'){
+        var invDate = $("#InputInvDate").val();
+        var invTo = $("#InvTo").val();
+        var invToName = $("#InvToName").val();
+        var arCode = $("#ARCode").val();
+        var departmentAirticket = $("#DepartmentAirTicket").is(":checked");
+        var departmentPackage = $("#DepartmentPackage").is(":checked");
+        if(invDate === '' || invTo === '' || invToName === '' || arCode === '' || !(departmentAirticket || departmentPackage)){
+            $('#InvoiceForm').bootstrapValidator('revalidateField', 'InputInvDate');
+            $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvTo');
+            $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvToName');
+            $('#InvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
+            $('#InvoiceForm').bootstrapValidator('revalidateField', 'Department');
+            return;
         }
-//        return true;
     }
+
+    var count = parseInt($("#counterTable").val());   
+    //Check Currency
+    var currencyNotMatch = false;
+    var currencyNotEmpty = 0;
+    for(var i=1; i<=count; i++){
+        var currency1 = document.getElementById('SelectCurrencyAmount'+i);
+        var product1 = document.getElementById('SelectProductType'+i);
+        var description1 = document.getElementById('BillDescription'+i);
+        var cost1 = document.getElementById('InputCost'+i);
+        var amount1 = document.getElementById('InputAmount'+i);
+        var curCost1 = document.getElementById('SelectCurrencyCost'+i);
+        var costLocal1 = document.getElementById('InputCostLocal'+i);
+        var exRate1 = document.getElementById('InputExRate'+i);
+        var amountLocal1 = document.getElementById('InputAmountLocal'+i);
+        if(currency1 !== null){
+            if(product1.value !== '' || description1.value !== '' || cost1.value !== '' || amount1.value !== '' || curCost1.value !== '' || costLocal1.value !== '' || exRate1.value !== '' || amountLocal1.value !== ''){
+                var currencyTemp1 = currency1.value;
+                for(var j=i+1; j<=count; j++){
+                    var currency2 = document.getElementById('SelectCurrencyAmount'+j);
+                    var product2 = document.getElementById('SelectProductType'+j);
+                    var description2 = document.getElementById('BillDescription'+j);
+                    var cost2 = document.getElementById('InputCost'+j);
+                    var amount2 = document.getElementById('InputAmount'+j);
+                    var curCost2 = document.getElementById('SelectCurrencyCost'+j);
+                    var costLocal2 = document.getElementById('InputCostLocal'+j);
+                    var exRate2 = document.getElementById('InputExRate'+j);
+                    var amountLocal2 = document.getElementById('InputAmountLocal'+j);
+                    if(currency2 !== null){
+                        var currencyTemp2 = currency2.value;
+                        if(product2.value !== '' || description2.value !== '' || cost2.value !== '' || amount2.value !== '' || curCost2.value !== '' || costLocal2.value !== '' || exRate2.value !== '' || amountLocal2.value !== ''){                               
+                            if((currencyTemp1 !== currencyTemp2)){
+                                currencyNotMatch = true;
+                                i = count+1;
+                                j = count+1;
+                            }                               
+                        }
+                        if(currencyTemp1 === '' && currencyTemp2 === ''){
+                            currencyNotEmpty++;
+                        }
+                    }
+                }
+            }    
+        }    
+    }
+    if(currencyNotMatch){
+        $("#textAlertCurrencyAmountNotEmpty").hide();
+        $("#textAlertCurrency").hide();
+       for(var i=1; i<=count; i++){
+            var currency = document.getElementById('SelectCurrencyAmount'+i);
+            var product = document.getElementById('SelectProductType'+i);
+            var description = document.getElementById('BillDescription'+i);
+            var cost = document.getElementById('InputCost'+i);
+            var amount = document.getElementById('InputAmount'+i);
+            var curCost = document.getElementById('SelectCurrencyCost'+i);
+            var costLocal = document.getElementById('InputCostLocal'+i);
+            var exRate = document.getElementById('InputExRate'+i);
+            var amountLocal = document.getElementById('InputAmountLocal'+i);
+            if(currency !== null){
+                if(product.value !== '' || description.value !== '' || cost.value !== '' || amount.value !== '' || curCost.value !== '' || costLocal.value !== '' || exRate.value !== '' || amountLocal.value !== ''){  
+                    currency.style.borderColor = 'red';
+                }    
+            }    
+        }
+        $("#textAlertCurrency").show();
+        return;
+    }
+    if(currencyNotEmpty > 0){
+        $("#textAlertCurrencyAmountNotEmpty").hide();
+        $("#textAlertCurrency").hide();
+        for(var i=1; i<=count; i++){
+            var currency = document.getElementById('SelectCurrencyAmount'+i);
+            var product = document.getElementById('SelectProductType'+i);
+            var description = document.getElementById('BillDescription'+i);
+            var cost = document.getElementById('InputCost'+i);
+            var amount = document.getElementById('InputAmount'+i);
+            var curCost = document.getElementById('SelectCurrencyCost'+i);
+            var costLocal = document.getElementById('InputCostLocal'+i);
+            var exRate = document.getElementById('InputExRate'+i);
+            var amountLocal = document.getElementById('InputAmountLocal'+i);
+            if(currency !== null){
+                if(product.value !== '' || description.value !== '' || cost.value !== '' || amount.value !== '' || curCost.value !== '' || costLocal.value !== '' || exRate.value !== '' || amountLocal.value !== ''){  
+                    currency.style.borderColor = 'red';
+                }    
+            }     
+        }
+        $("#textAlertCurrencyAmountNotEmpty").show();
+        return;
+    }
+
+    if(!currencyNotMatch && currencyNotEmpty === 0){
+        $("#textAlertCurrencyAmountNotEmpty").hide();
+        $("#textAlertCurrency").hide();
+        document.getElementById('InvoiceForm').submit();
+    }
+
 }
+
+//var currency = 0;
+//function validFromInvoice() {
+//    var departmentPage = $("#departmentPage").val();    
+//    if(departmentPage !== 'ticket'){
+//        var invDate = $("#InputInvDate").val();
+//        var invTo = $("#InvTo").val();
+//        var invToName = $("#InvToName").val();
+//        var arCode = $("#ARCode").val();
+//        if(invDate === '' || invTo === '' || invToName === '' || arCode === ''){
+//            $('#InvoiceForm').bootstrapValidator('revalidateField', 'InputInvDate');
+//            $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvTo');
+//            $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvToName');
+//            $('#InvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
+//            return;
+//        }
+//        
+//    }else if(departmentPage === 'ticket'){
+//        var invDate = $("#InputInvDate").val();
+//        var invTo = $("#InvTo").val();
+//        var invToName = $("#InvToName").val();
+//        var arCode = $("#ARCode").val();
+//        var departmentAirticket = $("#DepartmentAirTicket").is(":checked");
+//        var departmentPackage = $("#DepartmentPackage").is(":checked");
+//        if(invDate === '' || invTo === '' || invToName === '' || arCode === '' || !(departmentAirticket || departmentPackage)){
+//            $('#InvoiceForm').bootstrapValidator('revalidateField', 'InputInvDate');
+//            $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvTo');
+//            $('#InvoiceForm').bootstrapValidator('revalidateField', 'InvToName');
+//            $('#InvoiceForm').bootstrapValidator('revalidateField', 'ARCode');
+//            $('#InvoiceForm').bootstrapValidator('revalidateField', 'Department');
+//            return;
+//        }
+//    }    
+//
+////    var counter = $('#DetailBillableTable tbody tr').length;
+//    var counter = parseInt($("#counterTable"));
+//    var different = 0;
+//    var rowTemp = 0;
+//    var checkcur1 = false;
+//    for (var i = 1; i <= (counter - 1); i++) {
+//        var currency1 = $('#SelectCurrencyAmount' + i).find(":selected").text();
+//        if (currency1 === '') {
+//            checkcur1 = true;
+//        } else {
+//            $('#textAlertCurrencyAmountNotEmpty').hide();
+//        }
+//        for (var j = 2; j <= (counter - 1); j++) {
+//            var type = $('#SelectProductType' + j).find(":selected").text();
+//            if (type !== "") {
+//                var currency2 = $('#SelectCurrencyAmount' + j).find(":selected").text();
+//                if (currency1 !== currency2) {
+//                    rowTemp = j;
+//                    different++;
+//                }
+//            }
+//        }
+//    }
+//    if (different > 0) {
+//        $('#DetailBillableTable').find('tr').each(function() {
+//            $(this).find('td').each(function() {
+//                if ($(this).hasClass('priceCurrencyAmount')) {
+//                    $(this).addClass("alert-danger");
+//                }
+//            });
+//        });
+//        $('#textAlertCurrency').show();
+//        return;
+//        currency = 1;
+////        document.getElementById("saveInvoice").disabled = true;
+////        alert("Currency : " + currency); 
+////        $('#InvoiceForm').bootstrapValidator('validateField', 'SelectCurrencyAmount2'+rowTemp);
+//        if (checkcur1) {
+//            $('#textAlertCurrencyAmountNotEmpty').show();
+//            return;
+////            document.getElementById("saveInvoice").disabled = true;
+//        }
+////        return false;
+//    } else {
+//        $('#DetailBillableTable').find('tr').each(function() {
+//            $(this).find('td').each(function() {
+//                if ($(this).hasClass('priceCurrencyAmount')) {
+//                    $(this).removeClass("alert-danger");
+//                }
+//            });
+//        });
+//        $('#textAlertCurrency').hide();
+//        currency = 0;
+////        document.getElementById("saveInvoice").disabled = false;
+//        if (checkcur1) {
+//            $('#textAlertCurrencyAmountNotEmpty').show();
+////            document.getElementById("saveInvoice").disabled = true;
+//        } else {
+//            $('#textAlertInvoiceNotEmpty').hide();
+////            document.getElementById("saveInvoice").disabled = false;
+//            document.getElementById('InvoiceForm').submit();
+//        }
+////        return true;
+//    }
+//}
 
 function checkCurrencyCost() {
 //    alert("check");
@@ -465,7 +610,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="DetailBillId' + row + '" name="DetailBillId' + row + '" value="' + id + '" > </td>' +
                 '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">' + selectT + '</select> </td>' +
-                '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')"></td>' +
+                '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')" onchange="setDescription(' + row + ')"></td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="' + des + '" > </td>' +
                 '<td><input type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="' + cos + '" ></td>' +
                 '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">' + selectCC + '</select></td>' +
@@ -498,7 +643,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td class="hidden"><input type="text" class="form-control" id="detailId' + row + '" name="detailId' + row + '" value="" > </td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="DetailBillId' + row + '" name="DetailBillId' + row + '" value="' + id + '" > </td>' +
                 '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">' + selectT + '</select> </td>' +
-                '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')"></td>' +
+                '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')" onchange="setDescription(' + row + ')"></td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="' + des + '" > </td>' +
                 '<td><input type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control decimal text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="' + cos + '" ></td>' +
                 '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">' + selectCC + '</select></td>' +
@@ -768,7 +913,7 @@ function printInvoiceNew() {
         }
     } else if (type === 'email') {
         if (invoiceType === 'T') {
-            window.open("report.smi?name=InvoiceTempEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+            window.open("SendMail.smi?reportname=InvoiceTempEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         } else {
             window.open("SendMail.smi?reportname=Invoice&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
         }
@@ -801,7 +946,7 @@ function DeleteBill() {
                 '&servicesName=' + servicesName +
                 '&name=' + DetailBillId +
                 '&type=' + 'deleteInvoiceDetail';
-        CallAjaxDeleteBill(param, row);
+        CallAjaxDeleteBill(param, row);        
 
     } else {
         $("#BillDescription" + rowId.value).parent().parent().remove();
@@ -811,7 +956,8 @@ function DeleteBill() {
             console.log("show button tr_FormulaAddRow : ");
             $("#tr_FormulaAddRow").css("display", "block");
         }
-        count.value = count.value - 1;
+//        count.value = count.value - 1;
+        CalculateGrandTotal('');
     }
 }
 
@@ -835,6 +981,7 @@ function CallAjaxDeleteBill(param, row) {
                     $('#textAlertInvoiceNotEmpty').show();
                 }
                 $("#ajaxload").addClass("hidden");
+                CalculateGrandTotal('');
 
             }, error: function(msg) {
                 $("#ajaxload").addClass("hidden");
