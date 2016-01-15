@@ -411,14 +411,16 @@
                                 <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchRefno()">
                                     <span id="SpanEdit${advanced.search}">Ref No.</span>
                                 </a>
-                                <label class="control-label text-right">&nbsp;&nbsp;/&nbsp;&nbsp;</label>
-                                <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchAirCom()">
-                                    <span id="SpanEdit${advanced.search}">Air Commission</span>
-                                </a>
-                                <label class="control-label text-right">&nbsp;&nbsp;/&nbsp;&nbsp;</label>
-                                <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchTourCom()">
-                                    <span id="SpanEdit${advanced.search}">Tour Commission</span>
-                                </a>
+                                <c:if test="${typeDepartment != 'Inbound'}">
+                                    <label class="control-label text-right">&nbsp;&nbsp;/&nbsp;&nbsp;</label>
+                                    <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchAirCom()">
+                                        <span id="SpanEdit${advanced.search}">Air Commission</span>
+                                    </a>
+                                    <label class="control-label text-right">&nbsp;&nbsp;/&nbsp;&nbsp;</label>
+                                    <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchTourCom()">
+                                        <span id="SpanEdit${advanced.search}">Tour Commission</span>
+                                    </a>
+                                </c:if>
                             </div>
                         </div>            
 
@@ -1551,6 +1553,7 @@
     var setinvoice = 0;
 
     $(document).ready(function() {
+        
         $("#inv,#ref,#com").removeClass('hidden');
         $('.datemask').mask('0000-00-00');
         $('.date').datetimepicker();
