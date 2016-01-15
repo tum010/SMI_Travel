@@ -790,7 +790,7 @@ function calculateVatTotal() {
             if (isVat.checked) {
                 var amountTemp = (amount.value !== '' ? parseFloat((amount.value).replace(/,/g, "")) : 0.00);
                 var vatTemp = parseFloat(document.getElementById('vat' + i).value);
-                var vat = amountTemp - (amountTemp * (100 / (100 + vatTemp)));
+                var vat = parseFloat(amountTemp - (amountTemp * (100 / (100 + vatTemp))).toFixed(2));
                 vatTotal += vat;
             }
         }

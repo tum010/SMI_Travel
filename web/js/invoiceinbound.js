@@ -671,9 +671,9 @@ function CalculateTotalNet(id) {
 //                    var vatT = $('#vatBase').val();
                     var vatT = $('#InputVatTemp'+i).val();
                     var vatTT = parseFloat(vatT);
-                    grossTotal = (amount * 100) / (100 + vatTT);
+                    grossTotal = parseFloat(((amount * 100) / (100 + vatTT)).toFixed(2));
                     totalnet += grossTotal;
-                    vatnet += (amount - grossTotal);
+                    vatnet += total - grossTotal;
                 }else if(amount !== '' && !isVat_temp.checked){
                     var total = parseFloat(amount);
                     totalnet += total;
