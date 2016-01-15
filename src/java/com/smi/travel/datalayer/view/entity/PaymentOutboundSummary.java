@@ -17,6 +17,7 @@ public class PaymentOutboundSummary {
     private String headerstatus;
     private String headerinvoicesupcode;
     private String headerrefno;
+    private String datefromto;
     
     private String paymentid;
     private String payno;
@@ -33,7 +34,12 @@ public class PaymentOutboundSummary {
     private String export;
     private String status;
     private String diff;
-
+    private String owner;
+    
+    private String amountcur;
+    private String salecur;
+    private String value;
+    
     public String getSystemdate() {
         return systemdate;
     }
@@ -208,5 +214,45 @@ public class PaymentOutboundSummary {
 
     public void setDiff(String diff) {
         this.diff = diff;
+    }
+
+    public String getDatefromto() {
+        return datefromto;
+    }
+
+    public void setDatefromto(String datefromto) {
+        this.datefromto = datefromto;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getAmountcur() {
+        return amountcur;
+    }
+
+    public void setAmountcur(String amountcur) {
+        this.amountcur = amountcur;
+    }
+
+    public String getSalecur() {
+        return salecur;
+    }
+
+    public void setSalecur(String salecur) {
+        this.salecur = salecur;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

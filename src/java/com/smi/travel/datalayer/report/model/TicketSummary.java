@@ -21,10 +21,10 @@ public class TicketSummary {
     private String billto;
     private String routing;
     private String invoiceno;
-    private int salefare;
-    private int netfare;
-    private int tax;
-    private int profit;
+    private String salefare;
+    private String netfare;
+    private String tax;
+    private String profit;
     private String owner;
     private String refno;
     private String from;
@@ -35,8 +35,7 @@ public class TicketSummary {
     private String startdate;
     private String enddate;
     private String ticketdate;
-    
-    
+
     public int getNo() {
         return no;
     }
@@ -45,8 +44,6 @@ public class TicketSummary {
         this.no = no;
     }
 
-
-    
     public String getAir() {
         return air;
     }
@@ -95,39 +92,37 @@ public class TicketSummary {
         this.invoiceno = invoiceno;
     }
 
-    public int getSalefare() {
+    public String getSalefare() {
         return salefare;
     }
 
-    public void setSalefare(int salefare) {
+    public void setSalefare(String salefare) {
         this.salefare = salefare;
     }
 
-    public int getNetfare() {
+    public String getNetfare() {
         return netfare;
     }
 
-    public void setNetfare(int netfare) {
+    public void setNetfare(String netfare) {
         this.netfare = netfare;
     }
 
-    public int getTax() {
+    public String getTax() {
         return tax;
     }
 
-    public void setTax(int tax) {
+    public void setTax(String tax) {
         this.tax = tax;
     }
 
-    public int getProfit() {
+    public String getProfit() {
         return profit;
     }
 
-    public void setProfit(int profit) {
+    public void setProfit(String profit) {
         this.profit = profit;
     }
-
-   
 
     public String getOwner() {
         return owner;
@@ -145,6 +140,13 @@ public class TicketSummary {
         this.refno = refno;
     }
 
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
 
     public String getType() {
         return type;
@@ -178,16 +180,6 @@ public class TicketSummary {
         this.systemdate = systemdate;
     }
 
-
-
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
     public String getStartdate() {
         return startdate;
     }
@@ -204,14 +196,6 @@ public class TicketSummary {
         this.enddate = enddate;
     }
 
-//    public Date getTicketdate() {
-//        return ticketdate;
-//    }
-//
-//    public void setTicketdate(Date ticketdate) {
-//        this.ticketdate = ticketdate;
-//    }
-
     public String getTicketdate() {
         return ticketdate;
     }
@@ -219,13 +203,7 @@ public class TicketSummary {
     public void setTicketdate(String ticketdate) {
         this.ticketdate = ticketdate;
     }
-
-  
-   
-
-   
-
     
-
-
+    
+    
 }

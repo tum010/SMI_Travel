@@ -399,10 +399,14 @@ $(document).ready(function () {
     function printPaymentOutbound(){
         var fromdate = document.getElementById("fromDate").value;
         var todate= document.getElementById("toDate").value;
+        var status = document.getElementById("status").value;
+        var invSupCode= document.getElementById("invSupCode").value;
+        var refNo= document.getElementById("refNo").value;
+        
         if((fromdate === '') || (todate === '')){
            validateDate();
         } else {
-//            window.open("report.smi?name=TaxInvoiceSummaryReport&fromdate="+fromdate+"&todate="+todate+"&department="+department+"&comfirm="+strStatus+"&systemuser="+systemuser);
+            window.open("report.smi?name=PaymentOutboundSummaryReport&fromdate="+fromdate+"&todate="+todate+"&status="+status+"&invSupCode="+invSupCode+"&refno="+refNo);
         }    
     }
     

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
-	<property name="ireport.zoom" value="2.196150000000001"/>
-	<property name="ireport.x" value="821"/>
+	<property name="ireport.zoom" value="2.6573415000000034"/>
+	<property name="ireport.x" value="1233"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[]]>
@@ -12,10 +12,10 @@
 	<field name="billto" class="java.lang.String"/>
 	<field name="routing" class="java.lang.String"/>
 	<field name="invoiceno" class="java.lang.String"/>
-	<field name="salefare" class="java.lang.Integer"/>
-	<field name="netfare" class="java.lang.Integer"/>
-	<field name="tax" class="java.lang.Integer"/>
-	<field name="profit" class="java.lang.Integer"/>
+	<field name="salefare" class="java.lang.String"/>
+	<field name="netfare" class="java.lang.String"/>
+	<field name="tax" class="java.lang.String"/>
+	<field name="profit" class="java.lang.String"/>
 	<field name="owner" class="java.lang.String"/>
 	<field name="refno" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -27,17 +27,17 @@
 	<field name="no" class="java.lang.String"/>
 	<field name="username" class="java.lang.String"/>
 	<field name="systemdate" class="java.lang.String"/>
-	<variable name="totalsale" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{salefare}]]></variableExpression>
+	<variable name="totalsale" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{salefare})]]></variableExpression>
 	</variable>
-	<variable name="totalfare" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{netfare}]]></variableExpression>
+	<variable name="totalfare" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{netfare})]]></variableExpression>
 	</variable>
-	<variable name="totaltax" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{tax}]]></variableExpression>
+	<variable name="totaltax" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{tax})]]></variableExpression>
 	</variable>
-	<variable name="totalprofit" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{profit}]]></variableExpression>
+	<variable name="totalprofit" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{profit})]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -220,9 +220,39 @@
 	</columnHeader>
 	<detail>
 		<band height="23" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="553" y="0" width="55" height="23" forecolor="#CCCCCC" uuid="e5e8e908-4c98-4c1c-b1c8-a854d0af8823"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="608" y="0" width="55" height="23" forecolor="#CCCCCC" uuid="b9547a9f-ab75-40ef-9972-4f1b9caaf84e"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="663" y="0" width="55" height="23" forecolor="#CCCCCC" uuid="614bf867-5b10-4021-9fe5-19404b24029d"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="718" y="0" width="55" height="23" forecolor="#CCCCCC" uuid="b1aeafea-7b50-4111-8e06-4661ddedd40d"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="14" height="23" forecolor="#CCCCCC" uuid="4c4becba-7296-4a50-a711-7ed716ff552e"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
 			<textField>
-				<reportElement x="3" y="0" width="9" height="20" uuid="3df63e76-8729-43c6-ac91-82afb79d8eca"/>
-				<textElement textAlignment="Right">
+				<reportElement x="0" y="0" width="14" height="20" uuid="3df63e76-8729-43c6-ac91-82afb79d8eca"/>
+				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
@@ -276,19 +306,19 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invoiceno}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="553" y="0" width="51" height="20" uuid="006a7b4f-5a4e-412b-a652-d061c8dc6a2e"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{salefare}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{salefare} != null && !"null".equals($F{salefare}) && !"".equals($F{salefare}) && $F{salefare}.length() > 0) ? new BigDecimal($F{salefare}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="608" y="0" width="51" height="20" uuid="c5d1f02c-ec85-4111-a2c5-15a2668bd3fc"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{netfare}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{netfare} != null && !"null".equals($F{netfare}) && !"".equals($F{netfare}) && $F{netfare}.length() > 0) ? new BigDecimal($F{netfare}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="776" y="0" width="26" height="20" uuid="d0b62417-9343-4818-9a6e-fce6a8067446"/>
@@ -297,26 +327,20 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{owner}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="663" y="0" width="51" height="20" uuid="faef5964-a76c-4afe-8990-1769531142b8"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{tax}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{tax} != null && !"null".equals($F{tax}) && !"".equals($F{tax}) && $F{tax}.length() > 0) ? new BigDecimal($F{tax}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="718" y="0" width="51" height="20" uuid="565daa34-ce23-4da4-a860-35da3acca7bc"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{profit}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{profit} != null && !"null".equals($F{profit}) && !"".equals($F{profit}) && $F{profit}.length() > 0) ? new BigDecimal($F{profit}) : new BigDecimal("0")]]></textFieldExpression>
 			</textField>
-			<rectangle>
-				<reportElement mode="Transparent" x="0" y="0" width="14" height="23" forecolor="#CCCCCC" uuid="4c4becba-7296-4a50-a711-7ed716ff552e"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</rectangle>
 			<rectangle>
 				<reportElement mode="Transparent" x="14" y="0" width="47" height="23" forecolor="#CCCCCC" uuid="269a3e63-9f1c-4ccb-b5d7-2453952c07b7"/>
 				<graphicElement>
@@ -360,30 +384,6 @@
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="553" y="0" width="55" height="23" forecolor="#CCCCCC" uuid="e5e8e908-4c98-4c1c-b1c8-a854d0af8823"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="608" y="0" width="55" height="23" forecolor="#CCCCCC" uuid="b9547a9f-ab75-40ef-9972-4f1b9caaf84e"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="663" y="0" width="55" height="23" forecolor="#CCCCCC" uuid="614bf867-5b10-4021-9fe5-19404b24029d"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="718" y="0" width="55" height="23" forecolor="#CCCCCC" uuid="b1aeafea-7b50-4111-8e06-4661ddedd40d"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</rectangle>
-			<rectangle>
 				<reportElement mode="Transparent" x="773" y="0" width="29" height="23" forecolor="#CCCCCC" uuid="88dd9a87-9480-4027-ad0a-698758000d97"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
@@ -402,35 +402,35 @@
 			<staticText>
 				<reportElement x="495" y="0" width="58" height="14" uuid="95b03520-9458-46d8-ae63-1f242146dc30"/>
 				<textElement>
-					<font fontName="Tahoma" size="9"/>
+					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<text><![CDATA[Grand total]]></text>
 			</staticText>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="553" y="1" width="51" height="13" uuid="f92bd5df-1c52-4cf6-9047-968333427280"/>
 				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="9"/>
+					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalsale}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="608" y="1" width="51" height="13" uuid="26bc72a6-6546-4612-98db-55c8c2793e79"/>
 				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="9"/>
+					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalfare}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="663" y="1" width="51" height="13" uuid="af1cc90e-18e9-4202-b19c-7734c733950b"/>
 				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="9"/>
+					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totaltax}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="718" y="1" width="51" height="13" uuid="af71065a-c100-494f-bf0f-d862577a293d"/>
 				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="9"/>
+					<font fontName="Tahoma" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
 			</textField>

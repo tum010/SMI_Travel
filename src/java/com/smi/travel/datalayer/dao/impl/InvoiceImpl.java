@@ -676,8 +676,8 @@ public class InvoiceImpl implements InvoiceDao{
                 .list();
         if(invoiceList != null){
             for (int i = 0; i < invoiceList.size(); i++) {
-                amountInt = amountInt.subtract(invoiceList.get(i).getAmount());
-                costInt = costInt.subtract(invoiceList.get(i).getCost());
+                amountInt = amountInt.subtract(invoiceList.get(i).getAmount() == null ? BigDecimal.ZERO : invoiceList.get(i).getAmount());
+                costInt = costInt.subtract(invoiceList.get(i).getCost() == null ? BigDecimal.ZERO : invoiceList.get(i).getCost());
             }
         }
         

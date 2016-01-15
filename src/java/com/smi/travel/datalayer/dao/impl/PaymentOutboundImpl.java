@@ -402,7 +402,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
     }
 
     @Override
-    public List getPaymentOutboundReport(String fromDate, String toDate, String status, String invSupCode, String refNo, String username) {
+    public List getPaymentOutboundSummaryReport(String fromDate, String toDate, String status, String invSupCode, String refNo, String username) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         Date thisDate = new Date();
@@ -420,7 +420,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         if ((refNo != null) && (!"".equalsIgnoreCase(refNo))) {
             Query += "  and refno = '" + refNo + "'";
         }
-                
+        
+        Query += "  group by invoicesup ";        
         System.out.println("Query : "+Query);
         
         List<Object[]> QueryTicketList = session.createSQLQuery(Query)
@@ -439,6 +440,10 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 .addScalar("export", Hibernate.STRING)
                 .addScalar("status", Hibernate.STRING)
                 .addScalar("diff", Hibernate.STRING)
+                .addScalar("owner", Hibernate.STRING)
+                .addScalar("amount_cur", Hibernate.STRING)
+                .addScalar("sale_cur", Hibernate.STRING)
+                .addScalar("value", Hibernate.STRING)
                 .list();
             
             SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -470,6 +475,10 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             sum.setExport(util.ConvertString(B[12]));
             sum.setStatus(util.ConvertString(B[13]));
             sum.setDiff(!"null".equalsIgnoreCase(String.valueOf(B[14])) ? util.ConvertString(B[14]) : "0.00");
+            sum.setOwner(util.ConvertString(B[15]));
+            sum.setAmountcur(util.ConvertString(B[16]));
+            sum.setSalecur(util.ConvertString(B[17]));
+            sum.setValue(util.ConvertString(B[18]));
             data.add(sum);            
         }
         session.close();

@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.report.model.TicketSummaryAirline;
 import com.smi.travel.datalayer.report.model.TicketSummaryList;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.util.UtilityFunction;
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.SimpleDateFormat;
@@ -40,6 +41,7 @@ public class TicketSummaryImpl implements TicketSummaryDao {
     }
     @Override
     public List getTicketSummary(String ticketfrom, String tickettype, String startdate, String enddate, String billto, String passenger,String username,String department) {
+        System.out.println(" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         Date thisDate = new Date();
@@ -54,10 +56,10 @@ public class TicketSummaryImpl implements TicketSummaryDao {
                 .addScalar("passenger_name", Hibernate.STRING)
                 .addScalar("bill_to", Hibernate.STRING)
                 .addScalar("routing", Hibernate.STRING)
-                .addScalar("sale_fare", Hibernate.INTEGER)
-                .addScalar("net_fare", Hibernate.INTEGER)
-                .addScalar("tax", Hibernate.INTEGER)
-                .addScalar("profit", Hibernate.INTEGER)
+                .addScalar("sale_fare", Hibernate.STRING)
+                .addScalar("net_fare", Hibernate.STRING)
+                .addScalar("tax", Hibernate.STRING)
+                .addScalar("profit", Hibernate.STRING)
                 .addScalar("owner", Hibernate.STRING)
                 .addScalar("ref_no", Hibernate.STRING)
                 .addScalar("ticket_from", Hibernate.STRING)
@@ -82,10 +84,10 @@ public class TicketSummaryImpl implements TicketSummaryDao {
             sum.setPassengername(util.ConvertString(B[2]));
             sum.setBillto(util.ConvertString(B[3]));
             sum.setRouting(util.ConvertString(B[4]));
-            sum.setSalefare( B[5]== null ? 0:(Integer)B[5]);
-            sum.setNetfare( B[6]== null ? 0:(Integer)B[6]);
-            sum.setTax( B[7]== null ? 0:(Integer)B[7]);
-            sum.setProfit( B[8]== null ? 0:(Integer)B[8]);
+            sum.setSalefare(!"null".equalsIgnoreCase(String.valueOf(B[5])) ? util.ConvertString(B[5]) : "0.00");
+            sum.setNetfare(!"null".equalsIgnoreCase(String.valueOf(B[6])) ? util.ConvertString(B[6]) : "0.00");
+            sum.setTax(!"null".equalsIgnoreCase(String.valueOf(B[7])) ? util.ConvertString(B[7]) : "0.00");
+            sum.setProfit(!"null".equalsIgnoreCase(String.valueOf(B[8])) ? util.ConvertString(B[8]) : "0.00");
             sum.setOwner(util.ConvertString(B[9]));
             sum.setRefno(util.ConvertString(B[10]));
             sum.setFrom(setDisplayValueTicketFrom(ticketfrom));
