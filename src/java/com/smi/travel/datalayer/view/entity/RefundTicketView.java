@@ -29,7 +29,8 @@ public class RefundTicketView {
     private String  profit;
     private String refundby;
     private String paiddate;
-    
+    private String invoice;
+    private String receipt;
     //Header
     private String refundagentPage;
     private String refundbyPage;
@@ -267,6 +268,22 @@ public class RefundTicketView {
 
     public void setTypeprintPage(String typeprintPage) {
         this.typeprintPage = typeprintPage;
+    }
+
+    public String getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(String invoice) {
+        this.invoice = invoice;
+    }
+
+    public String getReceipt() {
+        return receipt;
+    }
+
+    public void setReceipt(String receipt) {
+        this.receipt = receipt;
     }
 
    

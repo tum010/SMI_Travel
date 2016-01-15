@@ -220,20 +220,22 @@ public class RefundAirReportImpl implements RefundAirReportDao{
                 .addScalar("air", Hibernate.STRING)
                 .addScalar("docno", Hibernate.STRING)
                 .addScalar("airlineagent", Hibernate.STRING)
-               .addScalar("agentname", Hibernate.STRING)
+                .addScalar("agentname", Hibernate.STRING)
                 .addScalar("passenger", Hibernate.STRING)
-               .addScalar("sectorrefund", Hibernate.STRING)
-               .addScalar("receiveairline", Hibernate.STRING)
+                .addScalar("sectorrefund", Hibernate.STRING)
+                .addScalar("receiveairline", Hibernate.STRING)
                 .addScalar("receivedate", Hibernate.STRING)
-               .addScalar("payno", Hibernate.STRING)
+                .addScalar("payno", Hibernate.STRING)
                 .addScalar("export", Hibernate.STRING)
-               .addScalar("paydate", Hibernate.STRING)
-               .addScalar("paycustomer", Hibernate.STRING)
-               .addScalar("airlinecomm", Hibernate.STRING)
+                .addScalar("paydate", Hibernate.STRING)
+                .addScalar("paycustomer", Hibernate.STRING)
+                .addScalar("airlinecomm", Hibernate.STRING)
                 .addScalar("airlineagentname", Hibernate.STRING)
                 .addScalar("profit", Hibernate.STRING)
                 .addScalar("refundby", Hibernate.STRING)
                 .addScalar("paiddate", Hibernate.STRING)
+                .addScalar("inv", Hibernate.STRING)
+                .addScalar("rec", Hibernate.STRING)
                 .list();
         if(refundTicketDetailList != null && refundTicketDetailList.size() != 0){
         for (Object[] B : refundTicketDetailList) {
@@ -303,6 +305,8 @@ public class RefundAirReportImpl implements RefundAirReportDao{
             refund.setProfit((util.ConvertString(B[16])) == "" ? "0" : util.ConvertString(B[16]));
             refund.setRefundby((util.ConvertString(B[17])) == "" ? "" : util.ConvertString(B[17]));
             refund.setPaiddate((util.ConvertString(B[18])) == "" ? "" : util.ConvertString(B[18]));
+            refund.setInvoice((util.ConvertString(B[19])) == "" ? "" : util.ConvertString(B[19]).replaceAll(",", "\n"));
+            refund.setReceipt((util.ConvertString(B[20])) == "" ? "" : util.ConvertString(B[20]).replaceAll(",", "\n"));
             data.add(refund);
         }   
     }else{

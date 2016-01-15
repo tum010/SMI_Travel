@@ -79,11 +79,14 @@ public class RefundAirsummary extends AbstractExcelView {
             styleDetailTable.setAlignment(styleDetailTable.ALIGN_LEFT);
             styleDetailTable.setBorderLeft(styleDetailTable.BORDER_THIN);
             styleDetailTable.setBorderRight(styleDetailTable.BORDER_THIN);
+            styleDetailTable.setWrapText(true);
+            styleDetailTable.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
         HSSFCellStyle styleDetailTableNumber = wb.createCellStyle();
             styleDetailTableNumber.setDataFormat(currency.getFormat("#,##0.00"));
             styleDetailTableNumber.setAlignment(styleDetailTableNumber.ALIGN_RIGHT);
             styleDetailTableNumber.setBorderLeft(styleDetailTableNumber.BORDER_THIN);
             styleDetailTableNumber.setBorderRight(styleDetailTableNumber.BORDER_THIN);
+            styleDetailTableNumber.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
         HSSFCellStyle styleBorderTop = wb.createCellStyle();
             styleBorderTop.setBorderTop(styleBorderTop.BORDER_THIN);
             
@@ -260,6 +263,14 @@ public class RefundAirsummary extends AbstractExcelView {
         cell77.setCellValue("Profit");
         cell77.setCellStyle(styleAlignRightBorderAllHeaderTable);
         sheet.autoSizeColumn(15);
+        HSSFCell cell78 = row6.createCell(16);
+        cell78.setCellValue("Invoice");
+        cell78.setCellStyle(styleAlignRightBorderAllHeaderTable);
+        sheet.autoSizeColumn(16);
+        HSSFCell cell79 = row6.createCell(17);
+        cell79.setCellValue("Receipt");
+        cell79.setCellStyle(styleAlignRightBorderAllHeaderTable);
+        sheet.autoSizeColumn(17);
         
         List<RefundTicketView> listRefund = refundTicket;
         
@@ -343,8 +354,14 @@ public class RefundAirsummary extends AbstractExcelView {
                 cell15.setCellValue((profit != null) ? profit.doubleValue() : new BigDecimal("0").doubleValue());
                 cell15.setCellStyle(styleDetailTableNumber);
                 sheet.autoSizeColumn(15);
-        
-        
+            HSSFCell cell16 = row.createCell(16);
+                cell16.setCellValue(listRefund.get(r-9).getInvoice());
+                cell16.setCellStyle(styleDetailTable);
+                sheet.autoSizeColumn(16);    
+            HSSFCell cell17 = row.createCell(17);
+                cell17.setCellValue(listRefund.get(r-9).getReceipt());
+                cell17.setCellStyle(styleDetailTable);
+                sheet.autoSizeColumn(17);        
         
             if(r == (count-1)){
                     HSSFRow rows = sheet.createRow(r+1);
@@ -387,7 +404,9 @@ public class RefundAirsummary extends AbstractExcelView {
                     rows.createCell(10).setCellStyle(styleBorderTop);
                     rows.createCell(11).setCellStyle(styleBorderTop);
                     rows.createCell(12).setCellStyle(styleBorderTop);
-                   
+                    rows.createCell(16).setCellStyle(styleBorderTop);
+                    rows.createCell(17).setCellStyle(styletotal);
+                    
                     HSSFRow rowL = sheet.createRow(r+2);
                     rowL.createCell(0).setCellStyle(styleBorderTop);
                     rowL.createCell(1).setCellStyle(styleBorderTop);
@@ -400,6 +419,8 @@ public class RefundAirsummary extends AbstractExcelView {
                     rowL.createCell(10).setCellStyle(styleBorderTop);
                     rowL.createCell(11).setCellStyle(styleBorderTop);
                     rowL.createCell(12).setCellStyle(styleBorderTop);
+                    rowL.createCell(16).setCellStyle(styleBorderTop);
+                    rowL.createCell(17).setCellStyle(styleBorderTop);
             }
         }
         }else{
