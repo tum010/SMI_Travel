@@ -459,7 +459,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             sum.setHeaderstatus(status);
             sum.setHeaderrefno(refNo);
             sum.setHeaderinvoicesupcode(invSupCode);
-            
+            sum.setDatefromto(sum.getHeaderfromdate() + " to " + sum.getHeadertodate());
             sum.setPaymentid(util.ConvertString(B[0]));
             sum.setPayno(util.ConvertString(B[1]));
             sum.setPaydate("null".equals(String.valueOf(B[2])) ? "" : util.ConvertString(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[2])))));
