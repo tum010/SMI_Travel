@@ -1987,14 +1987,16 @@
             $("#amount" + count).val(formatNumber(parseFloat(amount)));
             $('[name=currencyAmount' + count + '] option').filter(function() { 
                 return ($(this).text() === curAmount);
-            }).prop('selected', true);
-            document.getElementById('vatShow'+(count)).innerHTML = (vat !== '' ? parseFloat(vat) : parseFloat($("#vatDefault").val()));
+            }).prop('selected', true);           
             document.getElementById('vat'+(count)).value = (vat !== '' ? parseFloat(vat) : parseFloat($("#vatDefault").val()));
             if (isVat === '1'){
                 $('#isVat'+count).prop('checked', true);
+                document.getElementById('vatShow'+(count)).innerHTML = (vat !== '' ? parseFloat(vat) : parseFloat($("#vatDefault").val()));
 //                var vatData = parseFloat($("#vatDefault").val());
 //                document.getElementById('vatShow'+count).innerHTML = vatData;
                 CalculateGross(count);
+            }else{
+                $('#isVat'+count).prop('checked', false);
             }
             if(isProfit !== ''){
                 $("#invoiceDetailId" + count).val(id);
@@ -2353,17 +2355,17 @@
                         var cost2 = document.getElementById('cost'+j);
                         var amount2 = document.getElementById('amount'+j);
                         if(currency2 !== null){
-                            if(product2.value !== '' || refNo2.value !== '' || description2.value !== '' || cost2.value !== '' || amount2.value !== ''){
-                                var currencyTemp2 = currency2.value;
+                            var currencyTemp2 = currency2.value;
+                            if(product2.value !== '' || refNo2.value !== '' || description2.value !== '' || cost2.value !== '' || amount2.value !== ''){                               
                                 if((currencyTemp1 !== currencyTemp2)){
                                     currencyNotMatch = true;
                                     i = countTaxInvoice+1;
                                     j = countTaxInvoice+1;
-                                }
-                                if(currencyTemp1 === '' && currencyTemp2 === ''){
-                                    currencyNotEmpty++;
-                                }
-                            }    
+                                }                               
+                            }
+                            if(currencyTemp1 === '' && currencyTemp2 === ''){
+                                currencyNotEmpty++;
+                            }
                         }
                     }
                 }    

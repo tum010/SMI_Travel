@@ -2804,17 +2804,17 @@
                         var amount2 = document.getElementById('receiveAmount'+j);
                         var exrate2 = document.getElementById('receiveExRate'+j);
                         if(currency2 !== null){
-                            if(product2.value !== '' || description2.value !== '' || amount2.value !== '' || amount2.value !== '' || exrate2.value !== ''){
-                                var currencyTemp2 = currency2.value;
+                            var currencyTemp2 = currency2.value;
+                            if(product2.value !== '' || description2.value !== '' || amount2.value !== '' || amount2.value !== '' || exrate2.value !== ''){                               
                                 if((currencyTemp1 !== currencyTemp2)){
                                     currencyNotMatch = true;
                                     i = countRec+1;
                                     j = countRec+1;
-                                }
-                                if(currencyTemp1 === '' && currencyTemp2 === ''){
-                                    currencyNotEmpty++;
-                                }
-                            }    
+                                }                              
+                            }
+                            if(currencyTemp1 === '' && currencyTemp2 === ''){
+                                currencyNotEmpty++;
+                            }
                         }
                     }
                 }    
