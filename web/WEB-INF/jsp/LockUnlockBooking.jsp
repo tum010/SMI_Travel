@@ -22,14 +22,22 @@
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">
     <div class="row">
         <!--Alert Save and Update-->
-        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success">
+            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDivSave()"><span aria-hidden="true">&times;</span></button>
             <strong>Save Success!</strong> 
         </div>
-        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger">
+            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDivSave()"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Unsuccess!</strong> 
+        </div> 
+<!--        <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Save Success!</strong> 
+        </div>-->
+<!--        <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Save Unsuccess!</strong> 
-        </div>
+        </div>-->
     </div>
     <div class="col-sm-3"></div>
     <div class="col-sm-6">
@@ -59,7 +67,7 @@
                     <div class="col-md-2 form-group text-left" style="padding-left:0px;padding-right:0px;width:150px;">
                         <div class="col-sm-12">
                             <input id="inputBookStatus" value="${bookStatusFromRefNo.MBookingstatus.id}" hidden="">
-                            <select name="SelectStatus" id="SelectStatus" class="form-control" value="${requestScope['SelectStatus']}">
+                            <select name="SelectStatus" id="SelectStatus" class="form-control" value="${requestScope['SelectStatus']}" onchange="hideTextAlertDivSave()">
                                 <c:forEach var="table" items="${statusList}" >
                                     <c:set var="select" value="" />
                                     <c:set var="selectedId" value="${bookStatusFromRefNo.MBookingstatus.id}" />
@@ -191,6 +199,8 @@
 });
 
 function setCheckboxFlag(){
+    $("#textAlertDivSave").hide();
+    $("#textAlertDivNotSave").hide();
     var flagAir = $("#flagAir").val();
     var flagHotel = $("#flagHotel").val();
     var flagDaytour = $("#flagDaytour").val();
@@ -264,6 +274,8 @@ function setCheckboxFlag(){
 }
     
 function searchBookStatus(refNo) {
+    $("#textAlertDivSave").hide();
+    $("#textAlertDivNotSave").hide();
     var servletName = 'BookingStatusServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
@@ -390,7 +402,7 @@ function clearAction() {
 
 function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode;
-
+    
     if (charCode == 45 || (charCode >= 48 && charCode <= 57)){
        return true;
     }
@@ -398,6 +410,10 @@ function isNumberKey(evt){
        return false;
     }
 //    return true;
+}
+function hideTextAlertDivSave(){
+    $("#textAlertDivSave").hide();
+    $("#textAlertDivNotSave").hide();
 }
 
     $('input[type="checkbox"]').checkbox({

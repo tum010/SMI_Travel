@@ -700,6 +700,7 @@ public class AJAXBean extends AbstractBean implements
                     master.setCreateDate(masterlist.getCreateDate());
                     master.setCurrency(masterlist.getCurrency());
                     master.setMBookingstatus(mbookstatus);
+                    master.setDepartmentNo(masterlist.getDepartmentNo());
                     master.setFlagAir(Integer.parseInt(String.valueOf(flagAir)));
                     master.setFlagHotel(Integer.parseInt(String.valueOf(flagHotel)));
                     master.setFlagDaytour(Integer.parseInt(String.valueOf(flagDaytour)));
