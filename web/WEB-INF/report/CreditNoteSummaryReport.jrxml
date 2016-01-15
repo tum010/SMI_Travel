@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CreditNoteSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="886f6a61-cb51-422c-a379-c72412e46d94">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="883"/>
-	<property name="ireport.y" value="153"/>
+	<property name="ireport.x" value="892"/>
+	<property name="ireport.y" value="297"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="from" class="java.lang.String"/>
@@ -23,34 +23,35 @@
 	<field name="status" class="java.lang.String"/>
 	<field name="departmentshow" class="java.lang.String"/>
 	<variable name="totalsubtotal" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum">
-		<variableExpression><![CDATA[new BigDecimal($F{subtotal})]]></variableExpression>
+		<variableExpression><![CDATA[("VOID".equals($F{status})) ? new BigDecimal("0.00") : new BigDecimal($F{subtotal})
+]]></variableExpression>
 	</variable>
 	<variable name="totalsubreal" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum">
-		<variableExpression><![CDATA[new BigDecimal($F{subtotalreal})]]></variableExpression>
+		<variableExpression><![CDATA[("VOID".equals($F{status})) ? new BigDecimal("0.00") : new BigDecimal($F{subtotalreal})]]></variableExpression>
 	</variable>
 	<variable name="totaldiff" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum">
-		<variableExpression><![CDATA[new BigDecimal($F{differ})]]></variableExpression>
+		<variableExpression><![CDATA[("VOID".equals($F{status})) ? new BigDecimal("0.00") : new BigDecimal($F{differ})]]></variableExpression>
 	</variable>
 	<variable name="totalvat" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum">
-		<variableExpression><![CDATA[new BigDecimal($F{vat})]]></variableExpression>
+		<variableExpression><![CDATA[("VOID".equals($F{status})) ? new BigDecimal("0.00") : new BigDecimal($F{vat})]]></variableExpression>
 	</variable>
 	<variable name="totalamount" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum">
-		<variableExpression><![CDATA[new BigDecimal($F{amount})]]></variableExpression>
+		<variableExpression><![CDATA[("VOID".equals($F{status})) ? new BigDecimal("0.00") : new BigDecimal($F{amount})]]></variableExpression>
 	</variable>
 	<variable name="totalsubtotalpage" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[new BigDecimal($F{subtotal})]]></variableExpression>
+		<variableExpression><![CDATA[("VOID".equals($F{status})) ? new BigDecimal("0.00") : new BigDecimal($F{subtotal})]]></variableExpression>
 	</variable>
 	<variable name="totalsubrealpage" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[new BigDecimal($F{subtotalreal})]]></variableExpression>
+		<variableExpression><![CDATA[("VOID".equals($F{status})) ? new BigDecimal("0.00") : new BigDecimal($F{subtotalreal})]]></variableExpression>
 	</variable>
 	<variable name="totaldiffpage" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[new BigDecimal($F{differ})]]></variableExpression>
+		<variableExpression><![CDATA[("VOID".equals($F{status})) ? new BigDecimal("0.00") : new BigDecimal($F{differ})]]></variableExpression>
 	</variable>
 	<variable name="totalvatpage" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[new BigDecimal($F{vat})]]></variableExpression>
+		<variableExpression><![CDATA[("VOID".equals($F{status})) ? new BigDecimal("0.00") : new BigDecimal($F{vat})]]></variableExpression>
 	</variable>
 	<variable name="totalamountpage" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[new BigDecimal($F{amount})]]></variableExpression>
+		<variableExpression><![CDATA[("VOID".equals($F{status})) ? new BigDecimal("0.00") : new BigDecimal($F{amount})]]></variableExpression>
 	</variable>
 	<variable name="countNo" class="java.lang.Integer" resetType="Group" resetGroup="departmentGroup" calculation="DistinctCount">
 		<variableExpression><![CDATA[($V{countNo}==null?0:$V{countNo}+1)]]></variableExpression>
