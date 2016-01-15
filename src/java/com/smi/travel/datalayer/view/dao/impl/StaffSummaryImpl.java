@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.report.model.StaffSummary;
 import com.smi.travel.datalayer.view.dao.StaffSummaryDao;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -60,10 +61,10 @@ public class StaffSummaryImpl implements StaffSummaryDao {
         List<Object[]> QueryStaffList = session.createSQLQuery(Query)
                 .addScalar("staff", Hibernate.STRING)
                 .addScalar("passenger", Hibernate.INTEGER)
-                .addScalar("net", Hibernate.INTEGER)
-                .addScalar("selling", Hibernate.INTEGER)
-                .addScalar("tax", Hibernate.INTEGER)
-                .addScalar("profit", Hibernate.INTEGER)
+                .addScalar("net", Hibernate.STRING)
+                .addScalar("selling", Hibernate.STRING)
+                .addScalar("tax", Hibernate.STRING)
+                .addScalar("profit", Hibernate.STRING)
                 .addScalar("refund", Hibernate.STRING)
                 .list();
         for (Object[] B : QueryStaffList) {
@@ -71,10 +72,35 @@ public class StaffSummaryImpl implements StaffSummaryDao {
             System.out.println("sum data :");
             sum.setStaff(util.ConvertString(B[0]));
             sum.setTicketnum(B[1]== null ? 0:(Integer)B[1]);
-            sum.setFare(B[2]== null ? 0:(Integer)B[2]);
-            sum.setSale(B[3]== null ? 0:(Integer)B[3]);
-            sum.setTax(B[4]== null ? 0:(Integer)B[4]);
-            sum.setProfit(B[5]== null ? 0:(Integer)B[5]);
+            
+            if(B[2] != null){
+                BigDecimal fare = new BigDecimal(util.ConvertString(B[2]));
+                sum.setFare(fare);
+            }else{
+                sum.setFare(new BigDecimal("0.0"));
+            }
+            if(B[3] != null){
+                BigDecimal sale = new BigDecimal(util.ConvertString(B[3]));
+                sum.setSale(sale);
+            }else{
+                sum.setSale(new BigDecimal("0.0"));
+            }
+            if(B[4] != null){
+                BigDecimal tax = new BigDecimal(util.ConvertString(B[4]));
+                sum.setTax(tax);
+            }else{
+                sum.setTax(new BigDecimal("0.0"));
+            }
+            if(B[5] != null){
+                BigDecimal profit = new BigDecimal(util.ConvertString(B[5]));
+                sum.setProfit(profit);
+            }else{
+                sum.setProfit(new BigDecimal("0.0"));
+            }
+//            sum.setFare(B[2]== null ? 0:(Integer)B[2]);
+//            sum.setSale(B[3]== null ? 0:(Integer)B[3]);
+//            sum.setTax(B[4]== null ? 0:(Integer)B[4]);
+//            sum.setProfit(B[5]== null ? 0:(Integer)B[5]);
             sum.setSystemdate(new SimpleDateFormat("dd MMM yyyy hh:mm:ss", new Locale("us", "us")).format(thisDate));
             sum.setUsername(username);
             sum.setStartdate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format(util.convertStringToDate(startdate)));

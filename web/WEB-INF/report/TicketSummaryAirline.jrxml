@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketSummaryAirline" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isTitleNewPage="true" uuid="aead4a18-a210-4c34-a9ce-3eb73e00e8ca">
 	<property name="ireport.zoom" value="1.607691607500001"/>
-	<property name="ireport.x" value="313"/>
+	<property name="ireport.x" value="146"/>
 	<property name="ireport.y" value="0"/>
 	<field name="billingname" class="java.lang.String"/>
 	<field name="airline" class="java.lang.String"/>
@@ -171,35 +171,35 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{sumticketnum}]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0">
+				<textField pattern="#,##0.00">
 					<reportElement x="200" y="0" width="102" height="24" uuid="39346d20-c942-4975-bfa6-980b40da8768"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{sumtotalsalefare}]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0">
+				<textField pattern="#,##0.00">
 					<reportElement x="315" y="0" width="89" height="24" uuid="189fdfd4-395c-473a-954d-d380e80ed64b"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{sumtotalnetfare}]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0">
+				<textField pattern="#,##0.00">
 					<reportElement x="418" y="0" width="97" height="24" uuid="38ab703c-0513-4bc4-9683-6364ad7a146e"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{sumtotaltax}]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0">
+				<textField pattern="#,##0.00">
 					<reportElement x="528" y="0" width="100" height="24" uuid="fc3308ad-5c72-440b-921c-2224daf6317e"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{sumprofit}]]></textFieldExpression>
 				</textField>
-				<textField pattern="#,##0">
+				<textField pattern="#,##0.00">
 					<reportElement x="643" y="0" width="90" height="24" uuid="42f77b35-74a8-452a-8ca3-5463a5d2c2b2"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Tahoma" size="8"/>
@@ -214,6 +214,18 @@
 	</background>
 	<detail>
 		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Transparent" x="528" y="0" width="115" height="20" forecolor="#CCCCCC" uuid="12584ba4-214c-4a81-8293-b7f934a35b9f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="315" y="0" width="103" height="20" forecolor="#CCCCCC" uuid="6abcf0ea-1edf-4781-bade-6ade055a6720"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
 			<rectangle>
 				<reportElement mode="Transparent" x="0" y="0" width="92" height="20" forecolor="#CCCCCC" uuid="9ebe977f-a87e-436d-b115-e5c70c835d3d"/>
 				<graphicElement>
@@ -299,18 +311,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{totalnetfare}]]></textFieldExpression>
 			</textField>
-			<rectangle>
-				<reportElement mode="Transparent" x="315" y="0" width="103" height="20" forecolor="#CCCCCC" uuid="6abcf0ea-1edf-4781-bade-6ade055a6720"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</rectangle>
-			<rectangle>
-				<reportElement mode="Transparent" x="528" y="0" width="115" height="20" forecolor="#CCCCCC" uuid="12584ba4-214c-4a81-8293-b7f934a35b9f"/>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</rectangle>
 		</band>
 	</detail>
 </jasperReport>

@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.report.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -21,10 +22,10 @@ public class AirlineSummary {
     private String type;
     private String air;
     private int ticketnum;
-    private int sale;
-    private int fare;
-    private int tax;
-    private int profit;
+    private BigDecimal sale;
+    private BigDecimal fare;
+    private BigDecimal tax;
+    private BigDecimal profit;
     private String refund;
 
     public String getSystemdate() {
@@ -91,38 +92,6 @@ public class AirlineSummary {
         this.ticketnum = ticketnum;
     }
 
-    public int getSale() {
-        return sale;
-    }
-
-    public void setSale(int sale) {
-        this.sale = sale;
-    }
-
-    public int getFare() {
-        return fare;
-    }
-
-    public void setFare(int fare) {
-        this.fare = fare;
-    }
-
-    public int getTax() {
-        return tax;
-    }
-
-    public void setTax(int tax) {
-        this.tax = tax;
-    }
-
-    public int getProfit() {
-        return profit;
-    }
-
-    public void setProfit(int profit) {
-        this.profit = profit;
-    }
-
     public String getRefund() {
         return refund;
     }
@@ -131,7 +100,39 @@ public class AirlineSummary {
         this.refund = refund;
     }
 
-    
+    public BigDecimal getSale() {
+        return sale;
+    }
+
+    public void setSale(BigDecimal sale) {
+        this.sale = sale;
+    }
+
+    public BigDecimal getFare() {
+        return fare;
+    }
+
+    public void setFare(BigDecimal fare) {
+        this.fare = fare;
+    }
+
+    public BigDecimal getTax() {
+        return tax;
+    }
+
+    public void setTax(BigDecimal tax) {
+        this.tax = tax;
+    }
+
+    public BigDecimal getProfit() {
+        return profit;
+    }
+
+    public void setProfit(BigDecimal profit) {
+        this.profit = profit;
+    }
+
+       
     
     
 }

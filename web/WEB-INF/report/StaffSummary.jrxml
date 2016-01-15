@@ -22,24 +22,24 @@ group by booking_airline.airline_code]]>
 	<field name="type" class="java.lang.String"/>
 	<field name="staff" class="java.lang.String"/>
 	<field name="ticketnum" class="java.lang.Integer"/>
-	<field name="sale" class="java.lang.Integer"/>
-	<field name="fare" class="java.lang.Integer"/>
-	<field name="tax" class="java.lang.Integer"/>
-	<field name="profit" class="java.lang.Integer"/>
+	<field name="sale" class="java.math.BigDecimal"/>
+	<field name="fare" class="java.math.BigDecimal"/>
+	<field name="tax" class="java.math.BigDecimal"/>
+	<field name="profit" class="java.math.BigDecimal"/>
 	<field name="refund" class="java.lang.String"/>
 	<variable name="totalnum" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{ticketnum}]]></variableExpression>
 	</variable>
-	<variable name="totalsale" class="java.lang.Integer" calculation="Sum">
+	<variable name="totalsale" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{sale}]]></variableExpression>
 	</variable>
-	<variable name="totalfare" class="java.lang.Integer" calculation="Sum">
+	<variable name="totalfare" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{fare}]]></variableExpression>
 	</variable>
-	<variable name="totaltax" class="java.lang.Integer" calculation="Sum">
+	<variable name="totaltax" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{tax}]]></variableExpression>
 	</variable>
-	<variable name="totalprofit" class="java.lang.Integer" calculation="Sum">
+	<variable name="totalprofit" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{profit}]]></variableExpression>
 	</variable>
 	<variable name="totalrefund" class="java.math.BigDecimal" calculation="Sum">
@@ -309,7 +309,7 @@ group by booking_airline.airline_code]]>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{ticketnum}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="187" y="0" width="75" height="20" uuid="5ed3dfcf-39c5-4e5b-81ac-f1b74790e0b4"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -320,7 +320,7 @@ group by booking_airline.airline_code]]>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{sale}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="333" y="0" width="75" height="20" uuid="44baff15-cc51-4b61-be40-4b6fd36f575f"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -331,7 +331,7 @@ group by booking_airline.airline_code]]>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{tax}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="408" y="0" width="77" height="20" uuid="ea0faa38-b2d2-48da-ae0c-793f566708ae"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -342,7 +342,7 @@ group by booking_airline.airline_code]]>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{profit}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0" isBlankWhenNull="true">
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="262" y="0" width="71" height="20" uuid="5f6a4348-0810-4541-a629-9c5d7382919a"/>
 				<box>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -384,22 +384,22 @@ group by booking_airline.airline_code]]>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$V{totalnum}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="187" y="0" width="75" height="14" uuid="8b00fc62-b1d5-4784-8486-9e0f42d173a7"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{totalsale}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="262" y="0" width="71" height="14" uuid="69fe0405-d6df-4638-bfc4-25fce00d975d"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{totalfare}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="333" y="0" width="75" height="14" uuid="9ce84fca-3a93-4702-b6ac-e6e97ca8bfe8"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{totaltax}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="408" y="0" width="77" height="14" uuid="2ed19015-2de7-4eed-8d42-6706e832998d"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
