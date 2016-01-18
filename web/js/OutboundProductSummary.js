@@ -125,11 +125,24 @@ function printOutboundProductSummary(){
     var productname  = $("#InputProductName").val();
     var salename  = $("#salebyName").val();
     var status = $("#SelectStatus").val();
-    if((from === '') || (to === '')){
-        validateDate();
-    } else {
+    
+    
+    if(((from !== '') && (to !== '')) && from < to ){
+        $("#printbutton").removeClass("disabled");
         window.open("Excel.smi?name=OutboundProduct&fromdate="+from+"&todate="+to+"&productid="+productid+"&saleby="+saleby+"&payby="+payby+"&bank="+bank+"&productname="+productname+"&salename="+salename+"&status="+status);   
+    }else if((((from !== '') && (to !== '')) && from === to) ) {
+        $("#printbutton").removeClass("disabled");
+        window.open("Excel.smi?name=OutboundProduct&fromdate="+from+"&todate="+to+"&productid="+productid+"&saleby="+saleby+"&payby="+payby+"&bank="+bank+"&productname="+productname+"&salename="+salename+"&status="+status);   
+    }else {
+        $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'FromDate');
+        $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'ToDate');
+        $("#printbutton").addClass("disabled");
     }
+//    if((from === '') || (to === '')){
+//        validateDate();
+//    } else {
+//        window.open("Excel.smi?name=OutboundProduct&fromdate="+from+"&todate="+to+"&productid="+productid+"&saleby="+saleby+"&payby="+payby+"&bank="+bank+"&productname="+productname+"&salename="+salename+"&status="+status);   
+//    }
 }
 
 function validateDate(date,option){

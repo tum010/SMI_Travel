@@ -103,11 +103,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group" id="invfromdatepanel">
+                            <div class="form-group" id="fromdatepanel">
                                 <label class="col-md-6 control-label text-right">From</label>
                                 <div class="col-md-5">  
-                                    <div class="form-group" id="DateFrom">
-                                        <div class='input-group date'>
+                                    <div class="form-group" >
+                                        <div class='input-group date' id="DateFrom">
                                             <input type='text' id="FromDate" name="FromDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -119,11 +119,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <div class="form-group" id="invtodatepanel">
+                            <div class="form-group" id="todatepanel">
                                 <label class="col-md-6 control-label text-right">To</label>
                                 <div class="col-md-5">  
-                                    <div class="form-group" id="DateTo">
-                                        <div class='input-group date' >
+                                    <div class="form-group" >
+                                        <div class='input-group date' id="DateTo">
                                             <input type='text' id="ToDate" name="ToDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -476,13 +476,44 @@ $(document).ready(function() {
                     data.fv.revalidateField('FromDate');
                 }
             });
-            $('#DateFrom').datetimepicker().on('dp.change', function (e) {
-//                alert("1");
-                $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'FromDate');
-            });
-            $('#DateTo').datetimepicker().on('dp.change', function (e) {
-                $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'ToDate');
-            });  
+            
+    $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+        $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'FromDate');
+        $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'ToDate');
+        var fromdate = document.getElementById("FromDate").value;
+        var todate = document.getElementById("ToDate").value;
+        if(((fromdate !== '') && (todate !== '')) && fromdate < todate){
+            $("#printbutton").removeClass("disabled");
+        }else if((((fromdate !== '') && (todate !== '')) && fromdate === todate)) {
+            $("#printbutton").removeClass("disabled");
+        }else{
+            $("#printbutton").addClass("disabled");
+        }
+    });
+    $('#DateTo').datetimepicker().on('dp.change', function (e) {
+        $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'FromDate');
+        $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'ToDate');
+        var fromdate = document.getElementById("FromDate").value;
+        var todate = document.getElementById("ToDate").value;
+        if(((fromdate !== '') && (todate !== '')) && fromdate < todate){
+            $("#printbutton").removeClass("disabled");
+        }else if((((fromdate !== '') && (todate !== '')) && fromdate === todate)) {
+            $("#printbutton").removeClass("disabled");
+        }else{
+            $("#printbutton").addClass("disabled");
+        }
+    });  
+            
+            
+            
+            
+//            $('#DateFrom').datetimepicker().on('dp.change', function (e) {
+////                alert("1");
+//                $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'FromDate');
+//            });
+//            $('#DateTo').datetimepicker().on('dp.change', function (e) {
+//                $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'ToDate');
+//            });  
     
 });
 </script>

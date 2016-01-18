@@ -4,64 +4,6 @@
  * and open the template in the editor.
  */
 $(document).ready(function() {
-    $('.date').datetimepicker();
-    $('.datemask').mask('0000-00-00', {reverse: true});
-    $('.spandate').click(function() {
-        var position = $(this).offset();
-        console.log("positon :" + position.top);
-        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-
-    });
-
-    $("#HotelSummaryReportFrom")
-            .bootstrapValidator({
-                framework: 'bootstrap',
-                feedbackIcons: {
-                    valid: 'uk-icon-check',
-                    invalid: 'uk-icon-times',
-                    validating: 'uk-icon-refresh'
-                },
-                fields: {
-                    FromDate: {
-                        trigger: 'focus keyup change',
-                        validators: {
-                            date: {
-                                format: 'YYYY-MM-DD',
-                                max: 'ToDate',
-                                message: 'The Date From is not a valid'
-                            }, notEmpty: {
-                                message: 'The Date From is required'
-                            }
-                        }
-                    },
-                    ToDate: {
-                        trigger: 'focus keyup change',
-                        validators: {
-                            date: {
-                                format: 'YYYY-MM-DD',
-                                min: 'FromDate',
-                                message: 'The Date To is not a valid'
-                            }, notEmpty: {
-                                message: 'The Date To is required'
-                            }
-                        }
-                    }
-                }
-            }).on('success.field.fv', function(e, data) {
-        if (data.field === 'FromDate' && data.fv.isValidField('ToDate') === false) {
-            data.fv.revalidateField('ToDate');
-        }
-
-        if (data.field === 'ToDate' && data.fv.isValidField('FromDate') === false) {
-            data.fv.revalidateField('FromDate');
-        }
-    });
-    $('#DateFrom').datetimepicker().on('dp.change', function(e) {
-        $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'FromDate');
-    });
-    $('#DateTo').datetimepicker().on('dp.change', function(e) {
-        $('#OutboundProductSummaryForm').bootstrapValidator('revalidateField', 'ToDate');
-    });
 
     Selectize.define('clear_selection', function(options) {
         var self = this;
@@ -177,12 +119,23 @@ function printOutboundHotelSummary(){
     var status = $("#SelectStatus :selected").text()
     var country  = $("#SelectCountry").val();
     var city  = $("#SelectCity").val();
-
-    if((from === '') || (to === '')){
-        validateDate();
-    } else {
+    
+    if(((from !== '') && (to !== '')) && from < to ){
+        $("#printbutton").removeClass("disabled");
         window.open("Excel.smi?name=OutboundHotelSummary&fromdate="+from+"&todate="+to+"&hotelid="+hotelid+"&saleby="+saleby+"&payby="+payby+"&bank="+bank+"&status="+status+"&country="+country+"&city="+city);   
+    }else if((((from !== '') && (to !== '')) && from === to) ) {
+        $("#printbutton").removeClass("disabled");
+        window.open("Excel.smi?name=OutboundHotelSummary&fromdate="+from+"&todate="+to+"&hotelid="+hotelid+"&saleby="+saleby+"&payby="+payby+"&bank="+bank+"&status="+status+"&country="+country+"&city="+city);   
+    }else {
+        $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'FromDate');
+        $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'ToDate');
+        $("#printbutton").addClass("disabled");
     }
+    
+//    if((from === '') || (to === '')){
+//        validateDate();
+//    } else {
+//    }
 }
 
 function validateDate(date,option){

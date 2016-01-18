@@ -300,7 +300,7 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
             other.setSeller(B[18]== null ? "" :util.ConvertString(B[18]));
             // Set Header
             if(productname != null && !"".equals(productname)){
-                other.setProductnamepage(productname);
+                other.setProductnamepage(util.ConvertString(B[3]));
             }else{
                 other.setProductnamepage("");
             }
