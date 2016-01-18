@@ -283,8 +283,8 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         Invoice invoice = new Invoice();
         String query = "";
-       
-        if((InvoiceNumber.indexOf("%")) >= 0){
+
+        if( InvoiceNumber != null && (InvoiceNumber.indexOf("%")) >= 0){
             query = " FROM Invoice inv where inv.invNo LIKE '" + InvoiceNumber + "'";
             query += " AND inv.department = :department ";
             query += " AND inv.invType = :invType ORDER BY inv.id desc ";

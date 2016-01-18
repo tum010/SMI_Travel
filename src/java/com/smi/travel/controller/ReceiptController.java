@@ -101,6 +101,8 @@ public class ReceiptController extends SMITravelController {
         String receiveDate = request.getParameter("receiveDate");
         String wildCardSearch = request.getParameter("wildCardSearch");
         String keyCode = request.getParameter("keyCode");
+        String invoiceTableNo = request.getParameter("invoiceTableNo1");
+        String invoiceTableId = request.getParameter("invoiceTableId1");
         
         System.out.println(" callPageFrom " + callPageFrom);
         if(!"".equals(callPageFrom)){
@@ -139,8 +141,6 @@ public class ReceiptController extends SMITravelController {
             request.setAttribute("roleName", roleName);
         }
         
-        String refNo = "";
-        
         if("new".equalsIgnoreCase(action)){
             System.out.println(" CLEAR DATA ");
         }else if ("edit".equalsIgnoreCase(action)){
@@ -161,11 +161,23 @@ public class ReceiptController extends SMITravelController {
                             for(int i = 0 ;i < receiptDetailList.size();i++){
                                 if(receiptDetailList.get(i).getInvoiceDetail() != null){
                                     if(receiptDetailList.get(i).getInvoiceDetail().getInvoice() != null){
-                                        ReceiptDetail receiptD = new ReceiptDetail();
-                                        receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
-                                        receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
-                                        receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
-                                        recInvId.add(receiptD);
+                                        if(i > 0){
+                                            String invNotemp1 = receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo();
+                                            String invNotemp2 = receiptDetailList.get(i-1).getInvoiceDetail().getInvoice().getInvNo();      
+                                            if(!invNotemp1.equalsIgnoreCase(invNotemp2)){
+                                                ReceiptDetail receiptD = new ReceiptDetail();
+                                                receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
+                                                receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
+                                                receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
+                                                recInvId.add(receiptD);
+                                            }
+                                        }else{
+                                            ReceiptDetail receiptD = new ReceiptDetail();
+                                            receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
+                                            receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
+                                            receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
+                                            recInvId.add(receiptD);
+                                        }
                                     }
                                 }
                             }
@@ -197,7 +209,7 @@ public class ReceiptController extends SMITravelController {
             }
             
             Invoice invoice = new Invoice();
-            invoice.setInvNo(receiveNo);
+            invoice.setInvNo(invoiceTableNo);
             invoice.setInvTo(receiveFromCode);
             invoice.setInvName(receiveFromName);
             invoice.setInvAddress(receiveFromAddress);
@@ -218,6 +230,11 @@ public class ReceiptController extends SMITravelController {
             mFinanceItemstatus.setId("1"); // 1 = Normal
             invoice.setMFinanceItemstatus(mFinanceItemstatus);
             String receiveProducttemp = "";
+            
+            if(StringUtils.isNotEmpty(invoiceTableId)){
+                invoice.setId(invoiceTableId);
+            }
+                            
             for (int i = 1; i < rowsProduct-1 ; i++) {
                 String tableId = request.getParameter("tableId" + i);
                 String receiveProduct = request.getParameter("receiveProduct" + i);
@@ -236,7 +253,7 @@ public class ReceiptController extends SMITravelController {
                 String airlineCode = request.getParameter("airlineCode" + i);
                 String displayDescription = request.getParameter("DescriptionReceiptDetail" + i);
                 String paymentTourId = request.getParameter("paymentTourId" + i);
-                String gross = request.getParameter("grossInvoice" + i);
+                String gross = request.getParameter("grossInvoice" + i);               
 //                System.out.println(" airlineCode " + airlineCode);
                 ReceiptDetail receiptDetail = new ReceiptDetail();
                 receiptDetail.setId(tableId);
@@ -300,8 +317,8 @@ public class ReceiptController extends SMITravelController {
 
                        List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
                        InvoiceDetail invoiceDetail = new InvoiceDetail();
-                       
                        String displaydescfromrefno = "";
+                       String refNo = "";
                        if(StringUtils.isNotEmpty(billDescId)){
                             BillableDesc bill = new BillableDesc();
                             bill.setId(billDescId);
@@ -313,7 +330,7 @@ public class ReceiptController extends SMITravelController {
                        }    
                        invoiceDetail.setInvoice(invoice);
                        invoiceDetail.setDescription(receiptDetail.getDescription());
-                       
+
                        if(!"".equalsIgnoreCase(refNo)){
                             if("1".equalsIgnoreCase(receiveProducttemp)){
                                 displaydescfromrefno = receiptService.getDescriptionInvoiceAirTicket(refNo);
@@ -511,13 +528,26 @@ public class ReceiptController extends SMITravelController {
             List<ReceiptDetail> recInvId = new ArrayList<ReceiptDetail>();
             if(receiptDetailList != null){
                 for(int i = 0 ;i < receiptDetailList.size();i++){
-                    ReceiptDetail receiptD = new ReceiptDetail();
+//                    ReceiptDetail receiptD = new ReceiptDetail();
                     if(receiptDetailList.get(i).getInvoiceDetail() != null){
                         if(receiptDetailList.get(i).getInvoiceDetail().getInvoice() != null){
-                            receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
-                            receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
-                            receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
-                            recInvId.add(receiptD);
+                            if(i > 0){
+                                String invNotemp1 = receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo();
+                                String invNotemp2 = receiptDetailList.get(i-1).getInvoiceDetail().getInvoice().getInvNo();      
+                                if(!invNotemp1.equalsIgnoreCase(invNotemp2)){
+                                    ReceiptDetail receiptD = new ReceiptDetail();
+                                    receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
+                                    receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
+                                    receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
+                                    recInvId.add(receiptD);
+                                }
+                            }else{
+                                ReceiptDetail receiptD = new ReceiptDetail();
+                                receiptD.setInvoiceId(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getId());
+                                receiptD.setInvoiceNo(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo());
+                                receiptD.setInvoiceType(receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvType());
+                                recInvId.add(receiptD);
+                            }
                         }
                     }
                 }

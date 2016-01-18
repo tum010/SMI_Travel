@@ -584,6 +584,8 @@
                                             <tr>
                                         <input type="hidden" name="count${i.count}" id="count${i.count}" value="${i.count}">
                                         <input id="invId${i.count}"  name="invId${i.count}"   type="hidden" value="${table.invoiceDetail.id}" >
+                                        <input id="invoiceTableNo${i.count}"  name="invoiceTableNo${i.count}"   type="hidden" value="${table.invoiceDetail.invoice.invNo}" >
+                                        <input id="invoiceTableId${i.count}"  name="invoiceTableId${i.count}"   type="hidden" value="${table.invoiceDetail.invoice.id}" >
                                         <input type="hidden" name="tableId${i.count}" id="tableId${i.count}" value="${table.id}">
                                         <input id="receiveAmountTemp${i.count}" name="receiveAmountTemp${i.count}"  type="hidden" value="${table.amount}" >
                                         <input id="paymentTourId${i.count}" name="paymentTourId${i.count}"  type="hidden" value="${table.paymentDetailWendy.id}" >
@@ -651,7 +653,7 @@
                                                 </c:when>          
                                             </c:choose>
                                         </td> 
-                                        <td align="right">
+                                        <td align="center">
                                             <fmt:parseNumber var="vatShow" type="number" value="${requestScope['vat']}" />
                                             <c:choose>
                                                 <c:when test="${table.isVat == '1'}">
@@ -2096,7 +2098,7 @@
                     '<td align="center">' +
                     '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="handleClick(this,' + row + ');" value="" >' +
                     '</td>' +
-                    '<td align="right"><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
+                    '<td align="center"><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
                     '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +
@@ -2134,7 +2136,7 @@
                     '<td align="center">' +
                     '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" onclick="return false" value="" >' +
                     '</td>' +
-                    '<td align="right"><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
+                    '<td align="center"><div id="receiveVat' + row + '" style="display:none" ></div></td>' +
                     '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal"></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="">---------</option></select>' +
@@ -2484,7 +2486,7 @@
         $('#invoicenopanel').removeClass('has-error');
     }
     
-    function addProduct(product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, checkadd, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress) {
+    function addProduct(product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, checkadd, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress,invTableId) {
         var receiveAddressTemp = replaceAll("<br>", "\n" , receiveAddress.toString());
         $('#textAlertDuplicateProduct').hide();
         var tempCount = parseInt($("#counter").val());
@@ -2551,12 +2553,12 @@
 
         }
         if (!checkAddDuplicate) {
-            AddDataRowProduct(tempCount, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddressTemp);
+            AddDataRowProduct(tempCount, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddressTemp,invTableId);
         } else {
             $('#textAlertDuplicateProduct').show();
         }
     }
-    function AddDataRowProduct(row, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress) {
+    function AddDataRowProduct(row, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress,invTableId) {
         var grossinv = 0;
         if (vat !== '' && isVat !== '0') {
             var x = parseFloat(amount);
@@ -2593,6 +2595,7 @@
         if(typeRec === "V"){
             $("#ReceiptListTable tbody").append(
                     '<tr style="higth 100px">' +
+                    '<input id="invoiceTableId' + row + '"  name="invoiceTableId' + row + '"   type="hidden" value="' + invTableId + '" >' +
                     '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="' + grossinv + '" >' +
                     '<input id="invId' + row + '" name="invId' + row + '"  type="hidden" value="' + invId + '" >' +
                     '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
@@ -2616,7 +2619,7 @@
                     '<td align="center">' +
                     '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="' + isVat + '"  onclick="handleClick(this,' + row + ');">' +
                     '</td>' +
-                    '<td align="right"><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
+                    '<td align="center"><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
                     '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="' + currency + '"></option></select>' +
@@ -2633,6 +2636,7 @@
         }else{
             $("#ReceiptListTable tbody").append(
                     '<tr style="higth 100px">' +
+                    '<input id="invoiceTableId' + row + '"  name="invoiceTableId' + row + '"   type="hidden" value="' + invTableId + '" >' +
                     '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="' + grossinv + '" >' +
                     '<input id="invId' + row + '" name="invId' + row + '"  type="hidden" value="' + invId + '" >' +
                     '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
@@ -2656,7 +2660,7 @@
                     '<td align="center">' +
                     '<input type="checkbox" name="receiveIsVat' + row + '" id="receiveIsVat' + row + '" value="' + isVat + '"  onclick="return false">' +
                     '</td>' +
-                    '<td align="right"><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
+                    '<td align="center"><div id="receiveVat' + row + '" style="display:none" value="' + vat + '"></div></td>' +
                     '<td><input id="receiveAmount' + row + '" name="receiveAmount' + row + '" type="text" class="form-control decimal" onfocusout="checkAmount(' + row + ')" value="' + amount + '"></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurrency' + row + '" id="receiveCurrency' + row + '" ><option value="' + currency + '"></option></select>' +
