@@ -133,26 +133,99 @@ function addRow() {
         $(this).on("keyup", function(event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == '13') {
+                var creDetailId = $(this).parent().parent().find("[name='id']");
+                var taxNo = $(this).parent().parent().find("[name='taxNo']");
+                if(taxNo.val() === ''){
+                   taxNo.css("border-color", "red"); 
+                   return;
+                }
+                var realAmountBorder = this.style;
                 var realAmount = this.value.replace(",", "");
                 var realAmountHidden = $(this).parent().parent().find("[name='taxReal']");
                 var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
-                if(parseFloat(realAmount) <= parseFloat((taxRealCheck.val()).replace(",", ""))){
-                    realAmountHidden.val(realAmount);
-                    var vatAmount = $(this).parent().parent().find("[name='taxVat']");
-                    var vatAmountID = $(this).parent().parent().find("[id='taxVat']");
-                    var calVat = realAmount - (realAmount * 100 / (vat + 100));
-                    vatAmount.val(calVat);
-                    vatAmountID.val(Math.round(calVat * 100) / 100);
-                    this.style.borderColor = "Green"; 
-                
-                }else if(realAmount === ''){
-                    realAmountHidden.val(realAmount);
-                    this.style.borderColor = ""; 
-                
-                }else{
-                    realAmountHidden.val(realAmount);
-                    this.style.borderColor = "Red"; 
-                }    
+                var vatAmount = $(this).parent().parent().find("[name='taxVat']");
+                var vatAmountID = $(this).parent().parent().find("[id='taxVat']");
+                var url = 'AJAXServlet';
+                var servletName = 'TaxInvoiceServlet';
+                var servicesName = 'AJAXBean';
+                var department = $("#department").val();
+                var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&type=getTaxInvoiceAmountTotal' +
+                        '&invoiceNo=' + taxNo.val() +
+                        '&id=' + creDetailId.val() +
+                        '&department=' + department;
+                try {
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        cache: false,
+                        data: param,
+                        beforeSend: function() {
+                            $("#dataload").removeClass("hidden");
+                        },
+                        success: function(msg) {
+                            if(msg === "null"){
+                                realAmountBorder.borderColor = "Red";
+                                $("#alertTextFail").html("Tax Invoice "+ taxNo.val() +" Amount Total much over.");
+                                $("#alertFail").show();
+                                return;
+                            }
+                            var amountTotal = msg;
+//                            var realAmount = this.value.replace(",", "");
+//                            var realAmountHidden = $(this).parent().parent().find("[name='taxReal']");
+//                            var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
+                            
+//                            if(parseFloat(realAmount) <= parseFloat((taxRealCheck.val()).replace(",", ""))){
+                            if(parseFloat(realAmount) <= parseFloat(amountTotal)){
+                                realAmountHidden.val(realAmount);
+//                                var vatAmount = $(this).parent().parent().find("[name='taxVat']");
+//                                var vatAmountID = $(this).parent().parent().find("[id='taxVat']");
+                                var calVat = realAmount - (realAmount * 100 / (vat + 100));
+                                vatAmount.val(calVat);
+                                vatAmountID.val(Math.round(calVat * 100) / 100);
+//                                this.style.borderColor = "Green";
+                                realAmountBorder.borderColor = "Green";
+
+                            }else if(realAmount === ''){
+                                realAmountHidden.val(realAmount);
+//                                this.style.borderColor = "";
+                                realAmountBorder.borderColor = "";    
+
+                            }else{
+                                realAmountHidden.val(realAmount);
+//                                this.style.borderColor = "Red"; 
+                                realAmountBorder.borderColor = "Red";
+                            }
+
+                        }, error: function(msg) {
+
+                        }
+                    });
+                } catch (e) {
+                    alert(e);
+                }
+//                var realAmount = this.value.replace(",", "");
+//                var realAmountHidden = $(this).parent().parent().find("[name='taxReal']");
+//                var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
+//                if(parseFloat(realAmount) <= parseFloat((taxRealCheck.val()).replace(",", ""))){
+//                    realAmountHidden.val(realAmount);
+//                    var vatAmount = $(this).parent().parent().find("[name='taxVat']");
+//                    var vatAmountID = $(this).parent().parent().find("[id='taxVat']");
+//                    var calVat = realAmount - (realAmount * 100 / (vat + 100));
+//                    vatAmount.val(calVat);
+//                    vatAmountID.val(Math.round(calVat * 100) / 100);
+//                    this.style.borderColor = "Green"; 
+//                
+//                }else if(realAmount === ''){
+//                    realAmountHidden.val(realAmount);
+//                    this.style.borderColor = ""; 
+//                
+//                }else{
+//                    realAmountHidden.val(realAmount);
+//                    this.style.borderColor = "Red"; 
+//                }    
             }
         });
     });
@@ -167,6 +240,32 @@ function addRow() {
         digitsOptional: false,
         placeholder: "0.00",
     });
+}
+
+function callAjaxAmountTotalTaxInvoice(url,param){
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            beforeSend: function() {
+                $("#dataload").removeClass("hidden");
+            },
+            success: function(msg) {
+                if(msg !== "null"){
+                    return parseFloat(msg);
+                }else{
+                    return 0;
+                }
+                
+            }, error: function(msg) {
+                
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
 }
 
 function getTaxInv(input) {
@@ -458,4 +557,9 @@ function validFrom() {
                 }
             });
 
+}
+
+function hideAlert(){
+    $("#alertSuccess").hide();
+    $("#alertFail").hide(); 
 }

@@ -61,12 +61,12 @@
         </div>
         <div class="col-sm-10">
             <form action="CreditNote${page}.smi" method="post" id="CreditNoteForm" name="CreditNoteForm" role="form" class="ng-pristine ng-valid bv-form">
-                <div id="alertSuccess"  style="" class="alert alert-success alert-dismissible" role="alert" <c:if test="${successStatus != true}">hidden="true"</c:if> >
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div id="alertSuccess"  style="" class="alert alert-success" <c:if test="${successStatus != true}">hidden="true"</c:if> >
+                        <button type="button" class="close" aria-label="Close" onclick="hideAlert()><span aria-hidden="true">&times;</span></button>
                         <strong id="alertTextSuccess">${successMessage}</strong> 
                 </div>
-                <div id="alertFail"  style="" class="alert alert-danger alert-dismissible" role="alert"  <c:if test="${failStatus != true}">hidden="true"</c:if>>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div id="alertFail"  style="" class="alert alert-danger"  <c:if test="${failStatus != true}">hidden="true"</c:if>>
+                        <button type="button" class="close" aria-label="Close" onclick="hideAlert()"><span aria-hidden="true">&times;</span></button>
                         <strong id="alertTextFail">${failMessage}</strong> 
                 </div>
                 <input type="hidden" name="action" id="action" value="search">
