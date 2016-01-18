@@ -466,7 +466,7 @@ public class AddTicketFareController extends SMITravelController {
             
             request.setAttribute(OPTIONSAVE,optionSave); 
             List<TicketFareInvoice> ticketinv = new ArrayList<TicketFareInvoice>(ticketFareAirline.getTicketFareInvoices());
-            if(ticketinv != null){
+            if(ticketinv != null && !ticketinv.isEmpty()){
                 request.setAttribute(INVDETAILID,ticketinv.get(0).getId());
             }
             request.setAttribute(TICKETFARE,ticketFareAirline);

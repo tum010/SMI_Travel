@@ -350,7 +350,7 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class="input-group">
-                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control money" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" value="${ticketFare.invAmount}">
+                                    <input id="invoiceAmount" name="invoiceAmount" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.invAmount}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right"  style="width: 128px">
@@ -770,7 +770,7 @@
 
 <!--List Invno Modal-->
 <div class="modal fade" id="ListInvnoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 50%">
+    <div class="modal-dialog" style="width: 55%">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
@@ -1129,6 +1129,8 @@
         });
             
         $("#invoiceAmount").focusout(function(){
+            setFormatCurrency();
+            setDataCurrency();
             calculateVat();
             setDataCurrency();
         });
@@ -1400,7 +1402,12 @@ function setFormatCurrency(){
     airlineCharge = parseFloat(airlineCharge); 
     document.getElementById("airlineCharge").value = formatNumber(airlineCharge);    
     
-    
+    var invoiceAmount = replaceAll(",","",$('#invoiceAmount').val()); 
+    if (invoiceAmount == ""){
+        invoiceAmount = 0;
+    }
+    invoiceAmount = parseFloat(invoiceAmount); 
+    document.getElementById("invoiceAmount").value = formatNumber(invoiceAmount);    
 }
 
 function setDataCurrency(){    
@@ -1460,7 +1467,13 @@ function setDataCurrency(){
     if (airlineCharge == "" || airlineCharge == 0){
         document.getElementById("airlineCharge").value = ""; 
     }
+    
+    var invoiceAmount = replaceAll(",","",$('#invoiceAmount').val()); 
+    if (invoiceAmount == "" || invoiceAmount == 0){
+        document.getElementById("invoiceAmount").value = ""; 
+    }
 }
+
 function isNumberKey(evt){
     var charCode = (evt.which) ? evt.which : evt.keyCode;
 

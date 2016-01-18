@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="js/TicketSummary.js"></script> 
+<!--<script type="text/javascript" src="js/TicketSummary.js"></script>--> 
 <link href="css/jquery-ui.css" rel="stylesheet">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -77,30 +77,27 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
-                                <label class="col-md-6 control-label text-right"> From Date<font style="color: red">*</font></label>
-                                <div class="col-md-6">  
-                                    <div class="form-group" id="fromdatepanel">
-                                        <div class='input-group date' id='fromdate'>
-                                            <input type='text' id="startdate" name="startdate" class="form-control" data-date-format="YYYY-MM-DD" />
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-                                            </span>
-                                        </div>
-                                    </div>
+                        <label class="col-md-6 control-label text-right"> From Date <font style="color: red;">*</font></label>
+                        <div class="col-md-6">  
+                            <div class="form-group" id="DateFrom">
+                                <div class='input-group date fromdate' id="fromdatepanel">
+                                    <input type='text' id="fromdate" name="fromdate" class="form-control" data-date-format="YYYY-MM-DD" />
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
                                 </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
-
-            </div>
+            </div>            
             <div class="row">
                 <div class="col-md-8">
-                    <div class="form-group" id="todatepanel">
-                        <label class="col-md-6 control-label text-right"> To Date<font style="color: red">*</font></label>
+                    <div class="form-group" id="DateTo">
+                        <label class="col-md-6 control-label text-right"> To Date <font style="color: red;">*</font></label>
                         <div class="col-md-6">  
                             <div class="form-group">
-                                <div class='input-group date' id='todate'>
-                                    <input   type='text' id="enddate" name="enddate" class="form-control" data-date-format="YYYY-MM-DD"  />
+                                <div class='input-group date todate' id="todatepanel">
+                                    <input   type='text' id="todate" name="todate" class="form-control" data-date-format="YYYY-MM-DD"  />
                                     <span class="input-group-addon"><span  class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
@@ -147,7 +144,7 @@
                         <label class="col-md-6 control-label text-right" for="rept"></label>
                         <div class="col-md-6">  
                             <div class="form-group">
-                                <button type="button" onclick="printTicketSummary();" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
+                                <button type="button" onclick="printTicketSummary();" id="printbutton" name="printbutton"  class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
                             </div>
                         </div>   
                     </div>
@@ -304,3 +301,128 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
+
+<!--Script-->
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () { 
+        $('.date').datetimepicker();
+        $('span').click(function () {
+            var position = $(this).offset();
+            console.log("positon :"+position.top);
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+
+        });
+        
+//        var from = setValueFromDate();
+//        var to = setValueToDate();
+//        $("#fromdate").val(from);
+//        $("#todate").val(to);
+
+        $('.fromdate').datetimepicker().change(function(){                          
+            checkFromDateField();
+        });
+        $('.todate').datetimepicker().change(function(){                          
+            checkToDateField();
+        });
+    });   
+    
+    function validateDate(date,option){
+        if(option === 'over'){
+            $("#fromdatepanel").removeClass("has-success");
+            $("#fromdatepanel").addClass("has-error");                                 
+            $("#todatepanel").removeClass("has-success");
+            $("#todatepanel").addClass("has-error");   
+            $("#printbutton").addClass("disabled");
+        } else {
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success"); 
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
+            $("#printbutton").addClass("disabled");
+        }
+    }
+    
+    function checkFromDateField(){      
+        var inputFromDate = document.getElementById("fromdate");
+        var InputToDate = document.getElementById("todate");
+        if(InputToDate.value === '' && inputFromDate.value === ''){
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");  
+            $("#printbutton").removeClass("disabled");
+        }else if(inputFromDate.value === '' || InputToDate.value === ''){
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success");
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
+            $("#printbutton").addClass("disabled");
+        } else {
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#issuefromdatepanel").removeClass("has-error");
+            $("#issuetodatepanel").removeClass("has-error");
+            $("#fromdatepanel").addClass("has-success");
+            $("#todatepanel").addClass("has-success");
+            $("#printbutton").removeClass("disabled");
+            checkDateValue("from","");
+        }
+    }
+    
+    function checkToDateField(){
+        var InputToDate = document.getElementById("todate");
+        var inputFromDate = document.getElementById("fromdate");
+        if(InputToDate.value === '' && inputFromDate.value === ''){
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");  
+            $("#printbutton").removeClass("disabled");
+        }else if(inputFromDate.value === '' || InputToDate.value === ''){
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success");
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
+            $("#printbutton").addClass("disabled");
+        }else{
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#issuefromdatepanel").removeClass("has-error");
+            $("#issuetodatepanel").removeClass("has-error");
+            $("#fromdatepanel").addClass("has-success");
+            $("#todatepanel").addClass("has-success");
+            $("#printbutton").removeClass("disabled");
+            checkDateValue("to","");
+        }       
+    }
+    
+    function checkDateValue(date){
+        var inputFromDate = document.getElementById("fromdate");
+        var InputToDate = document.getElementById("todate");
+        if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+            var fromDate = (inputFromDate.value).split('-');
+            var toDate = (InputToDate.value).split('-');
+            if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+                validateDate(date,"over");
+            }
+            if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+                validateDate(date,"over");
+            }
+            if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+                validateDate(date,"over");
+            }          
+        }
+    }
+    
+    function printTicketSummary() {
+        var ticketfrom = document.getElementById("ticketFrom").value;
+        var tickettype = document.getElementById("ticketType").value;
+        var startdate = document.getElementById("fromdate").value;
+        var enddate = document.getElementById("todate").value;
+        var billto = document.getElementById("billto").value;
+        var fromdatepanel = document.getElementById("fromdatepanel");
+        
+        if((startdate !== '') && (enddate !== '')){
+            window.open("report.smi?name=TicketSummary&ticketfrom=" + ticketfrom + "&tickettype=" + tickettype + "&startdate=" + startdate + "&enddate=" + enddate + "&billto=" + billto);
+        }else{    
+            validateDate();
+        }  
+    }
+   
+</script>
