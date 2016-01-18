@@ -960,11 +960,25 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 routing = util.GetRounting(flightList);
             }
         }
-        if(airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null) {
-            String masterId = airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId();
-            System.out.println(" masterId " + masterId);
-            invoiceDetailList = session.createQuery(InvoiceDetailQuery).setParameter("masterId", masterId).list();
+        if(airticketPassList!=null && !airticketPassList.isEmpty()){
+            String masterId = "";
+            for(int x = 0 ; x < airticketPassList.size() ; x++){
+                if(airticketPassList.get(x).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null) {
+                    masterId += ", '"+airticketPassList.get(x).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId()+"'";
+                }
+            }
+            if(!"".equalsIgnoreCase(masterId)){
+                masterId = masterId.substring(1);
+                System.out.println(" masterId " + masterId);
+                invoiceDetailList = session.createQuery("from InvoiceDetail invd where invd.billableDesc.billable.master.id in ("+masterId+") and invd.billableDesc.MBilltype.name = 'Air Ticket' GROUP BY invd.invoice.id").list();
+            }
         }
+        
+//        if(airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null) {
+//            String masterId = airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId();
+//            System.out.println(" masterId " + masterId);
+//            invoiceDetailList = session.createQuery(InvoiceDetailQuery).setParameter("masterId", masterId).list();
+//        }
         
         if (invoiceDetailList.isEmpty()) {
             System.out.println(" invoiceDetailList.isEmpty() ");
