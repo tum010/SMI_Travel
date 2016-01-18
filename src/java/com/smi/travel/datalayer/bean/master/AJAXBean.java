@@ -907,6 +907,23 @@ public class AJAXBean extends AbstractBean implements
                 TaxInvoice taxInv = taxInvoiceDao.getTaxInvoiceByTaxNo(invoiceNo,department);
                 JSONObject obj = new JSONObject(convertInvoiceToMap(taxInv));
                 result = obj.toJSONString();
+            
+            }else if("getTaxInvoiceAmountTotal".equalsIgnoreCase(type)){
+                String invoiceNo = map.get("invoiceNo").toString();
+                String department = map.get("department").toString();
+                String id = map.get("id").toString();
+                TaxInvoice taxInv = taxInvoiceDao.getTaxInvoiceByTaxNo(invoiceNo,department);
+                if(taxInv != null){
+                    BigDecimal amountTotal = taxInvoiceDao.getTaxInvoiceAmountTotal(taxInv,id);
+                    if(amountTotal != null){
+                        result = amountTotal;
+                    }else{
+                        result = "null";
+                    }
+                    
+                }else{
+                    result = "null";
+                }                    
             }
             
         }else if (CREDITNOTE.equalsIgnoreCase(servletName)) {

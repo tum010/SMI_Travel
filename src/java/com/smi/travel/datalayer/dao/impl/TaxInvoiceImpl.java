@@ -14,6 +14,7 @@ import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -568,5 +569,45 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         this.sessionFactory.close();
                                       
         return outputTaxStatus;
+    }
+
+    @Override
+    public BigDecimal getTaxInvoiceAmountTotal(TaxInvoice taxInv, String creditNoteDetailId) {
+        Session session = this.sessionFactory.openSession();
+        String queryTaxInvoiceDetail = "from TaxInvoiceDetail tax WHERE tax.taxInvoice.id = :id and tax.taxInvoice.MFinanceItemstatus.id = 1";
+        List<TaxInvoiceDetail> taxInvoiceDetailList = session.createQuery(queryTaxInvoiceDetail)
+                .setParameter("id", taxInv.getId())
+                .list();
+        if(taxInvoiceDetailList.isEmpty()){
+            return null;
+        }       
+        BigDecimal amountTotal = new BigDecimal(BigInteger.ZERO);
+        for(int i=0; i<taxInvoiceDetailList.size(); i++){
+            TaxInvoiceDetail taxInvoiceDetail = taxInvoiceDetailList.get(i);
+            BigDecimal amount = (taxInvoiceDetail.getAmount() != null ? (taxInvoiceDetail.getAmount()) : new BigDecimal(BigInteger.ZERO));
+            amountTotal = amountTotal.add(amount);
+        }
+        
+        String queryCreditNoteDetail = "from CreditNoteDetail cre WHERE cre.taxInvoice.id = :id and cre.creditNote.MFinanceItemstatus.id = 1";
+        queryCreditNoteDetail += (!"".equalsIgnoreCase(creditNoteDetailId) && creditNoteDetailId != null ? " and cre.id != '" + creditNoteDetailId + "'" : "");
+        List<CreditNoteDetail> creditNoteDetailList = session.createQuery(queryCreditNoteDetail)
+                .setParameter("id", taxInv.getId())
+                .list();
+        if(creditNoteDetailList.isEmpty()){
+            return amountTotal;
+        }
+        for(int i=0; i<creditNoteDetailList.size(); i++){
+            CreditNoteDetail creiditNoteDetail = creditNoteDetailList.get(i);
+            BigDecimal amount = (creiditNoteDetail.getRealamount() != null ? (creiditNoteDetail.getRealamount()) : new BigDecimal(BigInteger.ZERO));
+            amountTotal = amountTotal.subtract(amount);
+        }
+        
+        if(amountTotal.compareTo(new BigDecimal(BigInteger.ZERO)) == 0){
+            return null;
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return amountTotal;
     }
 }
