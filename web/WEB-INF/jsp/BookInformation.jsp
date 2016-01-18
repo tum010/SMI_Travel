@@ -204,21 +204,21 @@
                 <c:set var="colorTr" value="#D6F1D4"/>
                 <c:choose>                  
                     <c:when test="${requestScope['search_type'] == '1'}">
-                        <table id="BookList" class="displayblackcolor paginated" cellspacing="0" width="100%">
+                        <table id="BookList" class="displayblackcolor paginated" cellspacing="0" width="100%" style="table-layout: fixed;">
                         <thead>
                             <tr class="datatable-header" >
-                                <th style="width: 1%">No</th>
+                                <th style="width: 5%">No</th>
                                 <th style="width: 5%">Ref No</th>
-                                <th style="width: 6%">Ref Date</th>
-                                <th style="width: 15%">Agent</th>
-                                <th style="width: 10%">Leader</th>
-                                <th style="width: 2%">Flight</th>
-                                <th style="width: 3%">Pax</th>
-                                <th style="width: 3%">Pnr</th>
-                                <th style="width: 3%">Dept</th>
-                                <th style="width: 3%">Arrv</th>
-                                <th style="width: 7%">Depart Date</th>
-                                <th style="width: 3%">Action</th>   
+                                <th style="width: 7%">Ref Date</th>
+                                <th style="width: 20%">Agent</th>
+                                <th style="width: 20%">Leader</th>
+                                <th style="width: 6%">Flight</th>
+                                <th style="width: 6%">Pax</th>
+                                <th style="width: 6%">Pnr</th>
+                                <th style="width: 6%">Dept</th>
+                                <th style="width: 6%">Arrv</th>
+                                <th style="width: 8%">Depart Date</th>
+                                <th style="width: 4%">Action</th>   
                             </tr>
                         </thead>
                         <tbody>
@@ -259,19 +259,19 @@
                     <table id="BookList" class="displayblackcolor paginated" cellspacing="0" style="table-layout: fixed">
                         <thead>
                             <tr class="datatable-header" >
-                                <th style="width: 2%">No</th>
-                                <th style="width: 4%">Ref No</th>
-                                <th style="width: 5%">Ref Date</th>
+                                <th style="width: 3%">No</th>
+                                <th style="width: 5%">Ref No</th>
+                                <th style="width: 7%">Ref Date</th>
                                 <th style="width: 12%">Agent</th>
-                                <th style="width: 12%">Leader</th>
-                                <th style="width: 8%">Hotel</th>
-                                <th style="width: 5%">Check In</th>
-                                <th style="width: 5%">Check Out</th>
-                                <th style="width: 5%">Total Cost</th>
-                                <th style="width: 2%">Cur</th>
-                                <th style="width: 5%">Total Price</th>
-                                <th style="width: 2%">Cur</th>
-                                <th style="width: 3%">Action</th>
+                                <th style="width: 18%">Leader</th>
+                                <th style="width: 12%">Hotel</th>
+                                <th style="width: 7%">Check In</th>
+                                <th style="width: 7%">Check Out</th>
+                                <th style="width: 7%">Total Cost</th>
+                                <th style="width: 7%">Cur</th>
+                                <th style="width: 7%">Total Price</th>
+                                <th style="width: 4%">Cur</th>
+                                <th style="width: 4%">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -313,14 +313,14 @@
                     <table id="BookList" class="displayblackcolor paginated" cellspacing="0" style="table-layout: fixed">
                         <thead>
                             <tr class="datatable-header" >
-                                <th style="width: 2%">No</th>
-                                <th style="width: 4%">Ref No</th>
-                                <th style="width: 5%">Ref Date</th>
-                                <th style="width: 18%">Agent</th>
-                                <th style="width: 18%">Leader</th>
-                                <th style="width: 10%">Code</th>
-                                <th style="width: 10%">Name</th>
-                                <th style="width: 3%">Action</th>   
+                                <th style="width: 5%">No</th>
+                                <th style="width: 5%">Ref No</th>
+                                <th style="width: 10%">Ref Date</th>
+                                <th style="width: 20%">Agent</th>
+                                <th style="width: 20%">Leader</th>
+                                <th style="width: 16%">Code</th>
+                                <th style="width: 18%">Name</th>
+                                <th style="width: 6%">Action</th>   
                             </tr>
                         </thead>
                         <tbody>
