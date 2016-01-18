@@ -181,7 +181,7 @@
                             <c:forEach var="flight" items="${flights}" varStatus="i">
                                 <c:set var="colourStatus" value="" />
                                 <c:set var="colourStatusFirstrow" value="" />
-                                <c:if test="${flight.MItemstatus.id == 2}">
+                                <c:if test="${flight.MItemstatus.id == 3}">
                                     <c:set var="colourStatus" value="style='background-color: #FFD3D3'" />
                                     <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                                 </c:if>
@@ -244,31 +244,27 @@
                                     <td class="text-right moneyformat">${flight.totalCost}</td>
                                     <td class="text-right moneyformat">${flight.totalPrice}</td>
                                     <td>${flight.MItemstatus.getName()}</td>
-                                    <c:if test="${currentPnr.MItemstatus.id != 2}">
-                                        <td class="text-center">
-                                            <c:if test="${flight.MItemstatus.id != 2}">
-                                                <a id="ButtonEdit${i.count}" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#flight${i.count}" aria-expanded="true" aria-controls="collapseExample">
-                                                    <span id="SpanEdit${i.count}" class="glyphicon glyphicon-edit editicon"></span>
-                                                </a>
-                                            </c:if>
-                                            <c:if test="${flight.MItemstatus.id != 2}">
-                                                <c:if test="${lockUnlockBooking == 0}">
-                                                    <c:if test="${flight.isBill == 0}">
-                                                        <span id="SpanRemove${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#DisableFlight" ></span>
-                                                    </c:if>
-                                                    <c:if test="${flight.isBill == 1}">
-                                                        <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                                    </c:if>
+                                    <td class="text-center">
+                                        <a id="ButtonEdit${i.count}" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#flight${i.count}" aria-expanded="true" aria-controls="collapseExample">
+                                            <span id="SpanEdit${i.count}" class="glyphicon glyphicon-edit editicon"></span>
+                                        </a>
+                                        <c:if test="${flight.MItemstatus.id != 3}">
+                                            <c:if test="${lockUnlockBooking == 0}">
+                                                <c:if test="${flight.isBill == 0}">
+                                                    <span id="SpanRemove${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#DisableFlight" ></span>
                                                 </c:if>
-                                                <c:if test="${lockUnlockBooking == 1}">
+                                                <c:if test="${flight.isBill == 1}">
                                                     <span class="glyphicon glyphicon-remove deleteicon" ></span>
-                                                </c:if>                                                
+                                                </c:if>
                                             </c:if>
-                                            <c:if test="${flight.MItemstatus.id == 2}">
-                                                <span id="SpanPlus${i.count}" class="glyphicon glyphicon-plus addicon" onclick="setEnableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#EnableFlight" ></span>
-                                            </c:if>
-                                        </td>
-                                    </c:if>
+                                            <c:if test="${lockUnlockBooking == 1}">
+                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                            </c:if>                                                
+                                        </c:if>
+                                        <c:if test="${flight.MItemstatus.id == 3}">
+                                            <span id="SpanPlus${i.count}" class="glyphicon glyphicon-plus addicon" onclick="setEnableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#EnableFlight" ></span>
+                                        </c:if>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </tbody>

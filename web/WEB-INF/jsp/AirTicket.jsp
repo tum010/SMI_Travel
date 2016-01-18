@@ -253,7 +253,7 @@
                                             <a id="AEdit${loopCounter.count}" href="AirTicketDetail.smi?referenceNo=${param.referenceNo}&pnr=${p.id}&action=edit">
                                             <span id="SpanGlyphiconEdit${loopCounter.count}" class="glyphicon glyphicon-edit editicon"></span>
                                         </a>
-                                        <c:if test="${p.MItemstatus.id == 2}">
+                                        <c:if test="${p.MItemstatus.id == 3}">
                                             <span id="SpanGlyphiconAdd${loopCounter.count}" class="glyphicon glyphicon-plus addicon"   onclick="setEnablePnrForm('${p.id}', ' ${p.pnr}');" data-toggle="modal" data-target="#EnablePnr" ></span>
                                         </c:if>
                                         <c:if test="${p.MItemstatus.id == 1}">
