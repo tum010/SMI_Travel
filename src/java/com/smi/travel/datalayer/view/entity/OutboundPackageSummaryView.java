@@ -41,9 +41,6 @@ public class OutboundPackageSummaryView {
     private String packageid;
     
     private String packagecode;
-    private String netad;
-    private String netch;
-    private String netin;
     private String banktransfer;
     private String statusname;
     private String remark;
@@ -278,31 +275,7 @@ public class OutboundPackageSummaryView {
 
     public void setPackagecode(String packagecode) {
         this.packagecode = packagecode;
-    }
-
-    public String getNetad() {
-        return netad;
-    }
-
-    public void setNetad(String netad) {
-        this.netad = netad;
-    }
-
-    public String getNetch() {
-        return netch;
-    }
-
-    public void setNetch(String netch) {
-        this.netch = netch;
-    }
-
-    public String getNetin() {
-        return netin;
-    }
-
-    public void setNetin(String netin) {
-        this.netin = netin;
-    }
+    }  
 
     public String getBanktransfer() {
         return banktransfer;

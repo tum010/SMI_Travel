@@ -140,9 +140,6 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
                 .addScalar("seller", Hibernate.STRING)
                 .addScalar("invno", Hibernate.STRING)
                 .addScalar("packagecode", Hibernate.STRING)
-                .addScalar("netad", Hibernate.STRING)
-                .addScalar("netch", Hibernate.STRING)
-                .addScalar("netin", Hibernate.STRING)
                 .addScalar("banktransfer", Hibernate.STRING)
                 .addScalar("statusname", Hibernate.STRING)
                 .addScalar("remark", Hibernate.STRING)
@@ -177,12 +174,9 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
             opsv.setSeller(util.ConvertString(B[14]));
             opsv.setInvno(util.ConvertString(B[15]));
             opsv.setPackagecode(util.ConvertString(B[16]));
-            opsv.setNetad((B[17]) != null ? util.ConvertString(B[17]) : "0.00");
-            opsv.setNetch((B[18]) != null ? util.ConvertString(B[18]) : "0.00");
-            opsv.setNetin((B[19]) != null ? util.ConvertString(B[19]) : "0.00");
-            opsv.setBanktransfer(util.ConvertString(B[20]));
-            opsv.setStatusname(util.ConvertString(B[21]));
-            opsv.setRemark(util.ConvertString(B[22]));
+            opsv.setBanktransfer(util.ConvertString(B[17]));
+            opsv.setStatusname(util.ConvertString(B[18]));
+            opsv.setRemark(util.ConvertString(B[19]));
             data.add(opsv);
         }
         this.sessionFactory.close();

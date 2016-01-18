@@ -183,37 +183,28 @@ public class OutboundPackageSummary extends AbstractExcelView {
         HSSFCell cell069 = row5.createCell(9);
         cell069.setCellValue("");
         cell069.setCellStyle(styletop);
-        HSSFCell cell688 = row5.createCell(10);
-        cell688.setCellValue("NETT");
-        cell688.setCellStyle(styletop);
-        HSSFCell cell69 = row5.createCell(11);
-        cell69.setCellValue("NETT");
-        cell69.setCellStyle(styletop);
-        HSSFCell cell70 = row5.createCell(12);
-        cell70.setCellValue("NETT");
+        HSSFCell cell70 = row5.createCell(10);
+        cell70.setCellValue("TOTAL");
         cell70.setCellStyle(styletop);
-        HSSFCell cell71 = row5.createCell(13);
+        HSSFCell cell71 = row5.createCell(11);
         cell71.setCellValue("TOTAL");
         cell71.setCellStyle(styletop);
-        HSSFCell cell72 = row5.createCell(14);
-        cell72.setCellValue("TOTAL");
+        HSSFCell cell72 = row5.createCell(12);
+        cell72.setCellValue("PROFIT");
         cell72.setCellStyle(styletop);
-        HSSFCell cell73 = row5.createCell(15);
-        cell73.setCellValue("PROFIT");
+        HSSFCell cell73 = row5.createCell(13);
+        cell73.setCellValue("BANK");
         cell73.setCellStyle(styletop);
-        HSSFCell cell733 = row5.createCell(16);
-        cell733.setCellValue("BANK");
-        cell733.setCellStyle(styletop);
-        HSSFCell cell74 = row5.createCell(17);
+        HSSFCell cell74 = row5.createCell(14);
         cell74.setCellValue("DATE");
         cell74.setCellStyle(styletop);
-        HSSFCell cell75 = row5.createCell(18);
+        HSSFCell cell75 = row5.createCell(15);
         cell75.setCellValue("STATUS");
         cell75.setCellStyle(styletop);
-        HSSFCell cell76 = row5.createCell(19);
+        HSSFCell cell76 = row5.createCell(16);
         cell76.setCellValue("REMARK");
         cell76.setCellStyle(styletop);
-        HSSFCell cell77 = row5.createCell(20);
+        HSSFCell cell77 = row5.createCell(17);
         cell77.setCellValue("SELLER");
         cell77.setCellStyle(styletop);
         
@@ -225,8 +216,8 @@ public class OutboundPackageSummary extends AbstractExcelView {
         sheet.addMergedRegion(CellRangeAddress.valueOf("F6:F7"));
         sheet.addMergedRegion(CellRangeAddress.valueOf("G6:G7"));
         sheet.addMergedRegion(CellRangeAddress.valueOf("H6:J6"));
-        sheet.addMergedRegion(CellRangeAddress.valueOf("S6:S7"));
-        sheet.addMergedRegion(CellRangeAddress.valueOf("U6:U7"));
+        sheet.addMergedRegion(CellRangeAddress.valueOf("P6:P7"));
+        sheet.addMergedRegion(CellRangeAddress.valueOf("R6:R7"));
         
         HSSFRow row6 = sheet.createRow(6);
         HSSFCell cell78 = row6.createCell(0);
@@ -256,38 +247,29 @@ public class OutboundPackageSummary extends AbstractExcelView {
         cell86.setCellStyle(styleC3);
         HSSFCell cell87 = row6.createCell(9);
         cell87.setCellValue("INFANT");
-        cell87.setCellStyle(styleC3);
-        HSSFCell cell88 = row6.createCell(10);
-        cell88.setCellValue("PRICE PP.");
-        cell88.setCellStyle(stylebottom);
-        HSSFCell cell89 = row6.createCell(11);
-        cell89.setCellValue("CHD N/B");
-        cell89.setCellStyle(stylebottom);
-        HSSFCell cell90 = row6.createCell(12);
-        cell90.setCellValue("CHD W/B");
-        cell90.setCellStyle(stylebottom);
-        HSSFCell cell91 = row6.createCell(13);
+        cell87.setCellStyle(styleC3);       
+        HSSFCell cell91 = row6.createCell(10);
         cell91.setCellValue("NETT");
         cell91.setCellStyle(stylebottom);
-        HSSFCell cell92 = row6.createCell(14);
+        HSSFCell cell92 = row6.createCell(11);
         cell92.setCellValue("SALE");
         cell92.setCellStyle(stylebottom);
-        HSSFCell cell93 = row6.createCell(15);
+        HSSFCell cell93 = row6.createCell(12);
         cell93.setCellValue("TOTAL");
         cell93.setCellStyle(stylebottom);
-        HSSFCell cell94 = row6.createCell(16);
+        HSSFCell cell94 = row6.createCell(13);
         cell94.setCellValue("TRSF");
         cell94.setCellStyle(stylebottom);
-        HSSFCell cell95 = row6.createCell(17);
+        HSSFCell cell95 = row6.createCell(14);
         cell95.setCellValue("TRSF");
         cell95.setCellStyle(stylebottom);
-        HSSFCell cell96 = row6.createCell(18);
+        HSSFCell cell96 = row6.createCell(15);
         cell96.setCellValue("");
         cell96.setCellStyle(stylebottom);
-        HSSFCell cell97 = row6.createCell(19);
+        HSSFCell cell97 = row6.createCell(16);
         cell97.setCellValue("SUPPLIER");
         cell97.setCellStyle(stylebottom);
-        HSSFCell cell98 = row6.createCell(20);
+        HSSFCell cell98 = row6.createCell(17);
         cell98.setCellValue("");
         cell98.setCellStyle(stylebottom);
         
@@ -352,59 +334,46 @@ public class OutboundPackageSummary extends AbstractExcelView {
             celldata7.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPaxadult())) ? 0 : new BigDecimal(data.getPaxadult()).doubleValue());
             celldata7.setCellStyle(styleC23);
             
-            HSSFCell celldata14 = row.createCell(8);
-            celldata14.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPaxchild())) ? 0 : new BigDecimal(data.getPaxchild()).doubleValue());
-            celldata14.setCellStyle(styleC23);
+            HSSFCell celldata8 = row.createCell(8);
+            celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPaxchild())) ? 0 : new BigDecimal(data.getPaxchild()).doubleValue());
+            celldata8.setCellStyle(styleC23);
   
             //set data 
-            HSSFCell celldata8 = row.createCell(9);
-            celldata8.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPaxinfant())) ? 0 : new BigDecimal(data.getPaxinfant()).doubleValue());
-            celldata8.setCellStyle(styleC23);
+            HSSFCell celldata9 = row.createCell(9);
+            celldata9.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPaxinfant())) ? 0 : new BigDecimal(data.getPaxinfant()).doubleValue());
+            celldata9.setCellStyle(styleC23);
             
-            HSSFCell celldata9 = row.createCell(10);
-            celldata9.setCellValue("".equalsIgnoreCase(String.valueOf(data.getNetad())) ? 0 : new BigDecimal(data.getNetad()).doubleValue());
-            celldata9.setCellStyle(styleC25);
-            
-            HSSFCell celldata10 = row.createCell(11);
-            celldata10.setCellValue("".equalsIgnoreCase(String.valueOf(data.getNetch())) ? 0 : new BigDecimal(data.getNetch()).doubleValue());
+            HSSFCell celldata10 = row.createCell(10);
+            celldata10.setCellValue("".equalsIgnoreCase(String.valueOf(data.getNet())) ? 0 : new BigDecimal(data.getNet()).doubleValue());
             celldata10.setCellStyle(styleC25);
             
-            HSSFCell celldata11 = row.createCell(12);
-            celldata11.setCellValue("".equalsIgnoreCase(String.valueOf(data.getNetin())) ? 0 : new BigDecimal(data.getNetin()).doubleValue());
+            HSSFCell celldata11 = row.createCell(11);
+            celldata11.setCellValue("".equalsIgnoreCase(String.valueOf(data.getSell())) ? 0 : new BigDecimal(data.getSell()).doubleValue());
             celldata11.setCellStyle(styleC25);
             
-            HSSFCell celldata12 = row.createCell(13);
-            celldata12.setCellValue("".equalsIgnoreCase(String.valueOf(data.getNet())) ? 0 : new BigDecimal(data.getNet()).doubleValue());
+            HSSFCell celldata12 = row.createCell(12);
+            celldata12.setCellValue("".equalsIgnoreCase(String.valueOf(data.getProfit())) ? 0 : new BigDecimal(data.getProfit()).doubleValue());
             celldata12.setCellStyle(styleC25);
             
-            HSSFCell celldata15 = row.createCell(14);
-            celldata15.setCellValue("".equalsIgnoreCase(String.valueOf(data.getSell())) ? 0 : new BigDecimal(data.getSell()).doubleValue());
-            celldata15.setCellStyle(styleC25);
+            HSSFCell celldata13 = row.createCell(13);
+            celldata13.setCellValue(data.getBanktransfer());
+            celldata13.setCellStyle(styleC23);
+             
+            HSSFCell celldata14 = row.createCell(14);
+            celldata14.setCellValue(data.getTransferdate());
+            celldata14.setCellStyle(styleC23);
             
-            HSSFCell celldata13 = row.createCell(15);
-            celldata13.setCellValue("".equalsIgnoreCase(String.valueOf(data.getProfit())) ? 0 : new BigDecimal(data.getProfit()).doubleValue());
-            celldata13.setCellStyle(styleC25);
+            HSSFCell celldata15 = row.createCell(15);
+            celldata15.setCellValue(data.getStatusname());
+            celldata15.setCellStyle(styleC23);
             
             HSSFCell celldata16 = row.createCell(16);
-            celldata16.setCellValue(data.getBanktransfer());
-            celldata16.setCellStyle(styleC23);
-             
+            celldata16.setCellValue(data.getRemark());
+            celldata16.setCellStyle(styleC24);
+            
             HSSFCell celldata17 = row.createCell(17);
-            celldata17.setCellValue(data.getTransferdate());
-            celldata17.setCellStyle(styleC23);
-            
-            HSSFCell celldata18 = row.createCell(18);
-            celldata18.setCellValue(data.getStatusname());
-            celldata18.setCellStyle(styleC23);
-            
-            HSSFCell celldata19 = row.createCell(19);
-            celldata19.setCellValue(data.getRemark());
-            celldata19.setCellStyle(styleC24);
-            
-            HSSFCell celldata20 = row.createCell(20);
-            celldata20.setCellValue(data.getSeller());
-            celldata20.setCellStyle(styleC23);
-            
+            celldata17.setCellValue(data.getSeller());
+            celldata17.setCellStyle(styleC23);           
            
         }
         
@@ -427,9 +396,9 @@ public class OutboundPackageSummary extends AbstractExcelView {
         sheet.setColumnWidth(15, 256*15);
         sheet.setColumnWidth(16, 256*15);
         sheet.setColumnWidth(17, 256*15);
-        sheet.setColumnWidth(18, 256*15);
-        sheet.setColumnWidth(19, 256*15);
-        sheet.setColumnWidth(20, 256*15);
+//        sheet.setColumnWidth(18, 256*15);
+//        sheet.setColumnWidth(19, 256*15);
+//        sheet.setColumnWidth(20, 256*15);
         
         
     }
