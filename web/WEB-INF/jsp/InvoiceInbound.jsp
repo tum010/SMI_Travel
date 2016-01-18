@@ -79,6 +79,18 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Invoice Not Empty</strong> 
             </div>
+            <div id="textAlertTaxinvoice"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Cannot void invoice. It use in tax invoice no </strong> 
+            </div>
+            <div id="textAlertRecipt"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Cannot void invoice. It use in receipt no </strong> 
+            </div>
+            <div id="textAlertInvoiceNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Cannot delete invoice detail. It use in receipt.</strong> 
+            </div> 
             
         <form action="InvoiceInbound${page}.smi" method="post" id="InvoiceInboundForm" name="InvoiceInboundForm" role="form" >
             <input type="text" class="hidden" id="action" name="action" value="save" >
@@ -662,6 +674,20 @@
         $('#collapseExample${advanced.search}').on('hidden.bs.collapse', function () {
            $(".arrowReservstion").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
         });
+        
+        var recipt = $('#checkRecipt').val();
+        if(recipt === "yesReceipt"){
+            console.log("C");
+            $('#textAlertRecipt').show();
+        }else if(recipt === "noReceipt"){
+             $('#textAlertRecipt').hide();
+        }
+        var taxin = $('#checkTaxinvoice').val();
+        if(taxin === "yesTaxinvoice"){
+            $('#textAlertTaxinvoice').show();
+        }else if(taxin === "noTaxinvoice"){
+             $('#textAlertTaxinvoice').hide();
+        }    
     });
     
     $("#InvoiceInboundForm")
@@ -721,20 +747,7 @@
             if (data.field === 'InputInvDate' && data.fv.isValidField('InputInvDate') === false) {
                 data.fv.revalidateField('InputInvDate');
             }
-        
-        var recipt = $('#checkRecipt').val();
-        if(recipt === "yesReceipt"){
-            console.log("C");
-            $('#textAlertRecipt').show();
-        }else if(recipt === "noReceipt"){
-             $('#textAlertRecipt').hide();
-        }
-        var taxin = $('#checkTaxinvoice').val();
-        if(taxin === "yesTaxinvoice"){
-            $('#textAlertTaxinvoice').show();
-        }else if(taxin === "noTaxinvoice"){
-             $('#textAlertTaxinvoice').hide();
-        }       
+                  
     }); 
 </script>
 <c:if test="${defaultData != null}">        

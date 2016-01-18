@@ -880,7 +880,7 @@
                                                 <%--</c:if>--%>
                                                 <%--<c:if test="${roleName =='NO'}">--%>        
                                                 <%--<c:set var="isEnableVoid" value="disabled='true'" />--%>
-                                                <%--<c:set var="isSaveVoid" value="disabled='true'" />--%>
+                                                <c:set var="isSaveVoid" value="disabled='true'" />
                                                 <%--<c:set var="textVoid" value="VOID" />--%>
                                                 <%--</c:if>--%>
                                             </c:if>
@@ -889,7 +889,7 @@
                                                 <c:set var="isEnableVoid" value="style='display: block;'" />
                                                 <%--<c:if test="${roleName =='YES'}">        
                                                     <c:set var="isEnableVoid" value="" />
-                                                    <c:set var="isSaveVoid" value="disabled='true'" />
+--%>                                                    <c:set var="isSaveVoid" value="disabled='true'" /><%--
                                                     <c:set var="textVoid" value="VOID" />
                                                 </c:if>
                                                 <c:if test="${roleName =='NO'}">        

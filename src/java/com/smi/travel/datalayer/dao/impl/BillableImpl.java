@@ -657,9 +657,9 @@ public class BillableImpl implements BillableDao {
                         int infant = list.get(i).getInboundInQty();
                         sum = adult + child + infant;
                         if(sum != 0){
-                            description += "<P>"+ sum +"  PAX </P>";
+                            description += " "+ sum +"  PAX ";
                         }else{
-                            description += "<P> 0  PAX </P>";
+                            description += " 0  PAX ";
                         } 
                     }else if ("O".equals(list.get(i).getMaster().getBookingType())){
                         int sum = 0;
