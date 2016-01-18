@@ -183,14 +183,43 @@
             
             $(".invoiceTemp").show();
             $("#tempBox").val("");
-            $("#classShowTemp").show();
-            $("#classHideTemp").hide();
+//            $("#classShowTemp").show();
+//            $("#classHideTemp").hide();
+            $('#Type')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="T">Temp</option>')
+                .val('')
+            ;
+            $('[name=Type] option').filter(function() { 
+                return ($(this).val() === 'T');
+            }).prop('selected', true);  
 //            window.location.href = "SearchInvoiceST.smi";
         }else if($("#tempBox").val() === "2222"){
             $(".invoiceTemp").hide();
             $("#tempBox").val("");
-            $("#classHideTemp").show();
-            $("#classShowTemp").hide();
+//            $("#classHideTemp").show();
+//            $("#classShowTemp").hide();
+            $('#Type')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="">--select--</option>')
+                .val('')
+            ;
+            $('#Type').append($('<option>', {
+                value: 'V',
+                text: 'Vat'
+            }));
+            $('#Type').append($('<option>', {
+                value: 'N',
+                text: 'No Vat'
+            }));
+            $('#Type').append($('<option>', {
+                value: 'A',
+                text: 'Ticket'
+            }));
         }
 }
 </script>

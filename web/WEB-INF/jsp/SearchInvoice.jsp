@@ -121,7 +121,7 @@
                     <div class="col-xs-1 text-left" style="padding: 0px 0px 0px 25px; width: 140px">
                         <label class="control-label" for="">Type</lable>
                     </div>
-                    <div class="col-md-1 form-group" style="padding: 0px 0px 0px 30px;width: 125px" id="classHideTemp" >
+                    <div class="col-md-1 form-group" style="padding: 0px 0px 0px 30px; width: 125px" id="classHideTemp" >
                         <select class="form-control" id="Type" name="Type">   
                             <option value="">--select--</option>
                                 <c:choose>
@@ -143,10 +143,10 @@
                             <option value="A" ${accountSelectedA}>Ticket</option>
                         </select>    
                     </div>
-                    <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px" id="classShowTemp" hidden="">
-                        <select class="form-control" id="Type" name="Type">   
+                    <div class="col-md-2 form-group" style="padding: 0px 0px 0px 30px; width: 125px" id="classShowTemp" hidden="">
+<!--                        <select class="form-control" id="Type" name="Type">   
                             <option value="T" ${accountSelectedT}>Temp</option>
-                        </select>    
+                        </select>    -->
                     </div>
                 </div>
                 <!--<div class="sm_row col-xs-12 form-group"></div>-->        
