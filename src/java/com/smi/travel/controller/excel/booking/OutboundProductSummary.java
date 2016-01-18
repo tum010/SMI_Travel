@@ -474,7 +474,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                             cell.setCellValue(listOutboundProduct.get(num).getProductname());
 //                            cell.setCellStyle(styleAlignRightBorderAll);
                         row0.createCell(19).setCellStyle(styleAlignRightBorderAll);
-                        String add = "A"+(r+1)+":U"+(r+1)+"";
+                        String add = "A"+(r+1)+":T"+(r+1)+"";
                         System.out.println("Add : " + add);
                         sheet.addMergedRegion(CellRangeAddress.valueOf(add));
                         
