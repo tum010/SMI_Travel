@@ -300,28 +300,28 @@ FROM
 				<textElement>
 					<font fontName="SansSerif" size="11" pdfEncoding="Cp1252"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{passenger2} != null ? $F{passenger2} : "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{passenger4} != null ? $F{passenger4} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="23" y="38" width="178" height="20" uuid="ea048415-fbff-4cce-bf53-cfddb947763e"/>
 				<textElement>
 					<font fontName="SansSerif" size="11" pdfEncoding="Cp1252"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{passenger3} != null ? $F{passenger3} : "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{passenger2} != null ? $F{passenger2} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="23" y="54" width="178" height="20" uuid="08d51c45-d811-404b-8228-65783b5bc1e0"/>
 				<textElement>
 					<font fontName="SansSerif" size="11" pdfEncoding="Cp1252"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{passenger5} != null ? $F{passenger5} : "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{passenger3} != null ? $F{passenger3} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="208" y="38" width="178" height="20" uuid="38ec7dcb-7e1e-40c3-b5a5-e35f94b49ed6"/>
 				<textElement>
 					<font fontName="SansSerif" size="11" pdfEncoding="Cp1252"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{passenger4} != null ? $F{passenger4} : "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{passenger5} != null ? $F{passenger5} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="208" y="54" width="178" height="20" uuid="e9b9b2b2-1184-465e-8aa6-c9f20d8b2c49"/>

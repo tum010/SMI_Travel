@@ -74,28 +74,30 @@ public class DaytourOtherImpl implements DaytourOtherDao{
              data.add(daytourother);  
          }
         
-        if(QueryDaytourOtherList != null){
-            DaytourOther daytourOtherTemp = (DaytourOther) data.get(0);
+        if(QueryDaytourOtherList != null){           
             List<String> queryLand = session.createSQLQuery("SELECT * FROM `land_voucher_passenger` where ref_no = '"+refno+"'")
                     .addScalar("leader_name", Hibernate.STRING)
                     .list();
 
-            for (int i=0; i<queryLand.size(); i++) {
-                String passergerName = queryLand.get(i);
-                if(i == 0){
-                    daytourOtherTemp.setPassenger1(passergerName);
-                }else if(i == 1){
-                    daytourOtherTemp.setPassenger2(passergerName);
-                }else if(i == 2){
-                    daytourOtherTemp.setPassenger3(passergerName);
-                }else if(i == 3){
-                    daytourOtherTemp.setPassenger4(passergerName);
-                }else if(i == 4){
-                    daytourOtherTemp.setPassenger5(passergerName);
-                }else if(i == 5){
-                    daytourOtherTemp.setPassenger6(passergerName);
+            for(int i=0; i<data.size(); i++){
+                DaytourOther daytourOther = (DaytourOther) data.get(i);
+                for (int j=0; j<queryLand.size(); j++) {
+                    String passergerName = queryLand.get(j);
+                    if(j == 0){
+                        daytourOther.setPassenger1(passergerName);
+                    }else if(j == 1){
+                        daytourOther.setPassenger2(passergerName);
+                    }else if(j == 2){
+                        daytourOther.setPassenger3(passergerName);
+                    }else if(j == 3){
+                        daytourOther.setPassenger4(passergerName);
+                    }else if(j == 4){
+                        daytourOther.setPassenger5(passergerName);
+                    }else if(j == 5){
+                        daytourOther.setPassenger6(passergerName);
+                    }
                 }
-            }
+            }    
         }    
         
         if("OK".equals(status)){
