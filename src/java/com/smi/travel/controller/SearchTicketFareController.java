@@ -115,6 +115,11 @@ public class SearchTicketFareController extends SMITravelController {
                     request.setAttribute(TICKETALREADYUSE, ticketNo);
                 }
             }
+            
+            List<TicketFareView> listTicket = new ArrayList<TicketFareView>();
+            listTicket = ticketFareAirlineService.getListTicketFare(ticketFareView,1);
+            request.setAttribute(DATALIST, listTicket);
+            request.setAttribute(TICKETFARE,ticketFareView);
         } 
 
         request.setAttribute(TICKETROUTING,ticketRouting);
@@ -122,6 +127,8 @@ public class SearchTicketFareController extends SMITravelController {
         request.setAttribute(INVOICENO,invoiceNo);
         request.setAttribute(REFNO,refNumber);
         request.setAttribute(DEPARTMENT,department);
+        request.setAttribute(TICKETFARE,ticketFareView);
+        
         return SearchTicketFare;
     }
 

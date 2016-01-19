@@ -73,6 +73,18 @@
                                         </c:when>
                                     </c:choose>
                                     <option value="A" ${selectedA}>AGENT</option>
+                                    <c:choose>
+                                        <c:when test="${requestScope['TicketType'] == 'TI'}">
+                                            <c:set var="selectedTI" value="selected" />
+                                        </c:when>
+                                    </c:choose>
+                                    <option value="TI" ${selectedTI}>TG Inter</option>
+                                    <c:choose>
+                                        <c:when test="${requestScope['TicketType'] == 'TD'}">
+                                            <c:set var="selectedTD" value="selected" />
+                                        </c:when>
+                                    </c:choose>
+                                    <option value="TD" ${selectedTD}>TG Domestic</option>
                                 </select>
                             </div>
                             <div class="col-xs-1 text-right" style="width: 150px">
@@ -105,7 +117,7 @@
                                 <label class="control-label text-right">Airline&nbsp;</label>
                             </div>
                             <div class="col-xs-1" style="width: 180px">
-                                <select name="ticketAirline" id="ticketAirline" class="form-control">
+                                <select name="ticketAirline" id="ticketAirline" class="form-control" >
                                     <option value="">--- Airline ---</option> 
                                     <c:forEach var="table" items="${airlineList}" >
                                         <c:set var="select" value="" />
@@ -115,8 +127,12 @@
                                         </c:if>
                                         <option value="${table.id}" ${select}>${table.code}</option>  
                                     </c:forEach>
+                                        <!--<option value="OTHER">OTHER</option>-->
                                 </select>
-                            </div>    
+                            </div>   
+<!--                            <div class="col-xs-1" style="width:140px">
+                                <input id="ticketAirlineOther" name="ticketAirlineOther" type="text" class="form-control" maxlength="50" value="" disabled="">
+                            </div>-->
                         </div>
                         <div class="col-xs-12 ">
                             <div class="col-xs-1 text-right" style="width: 150px">
@@ -407,6 +423,13 @@
         $('.todate').datetimepicker().change(function(){                          
             checkToDateField();
         });
+        
+//        if($('#ticketAirlineOther').val() === ''){
+//            $("#ticketAirlineOther").attr("disabled", "disabled");
+//        }else{
+//            $('#ticketAirline').val('OTHER');
+//            $("#ticketAirlineOther").removeAttr("disabled");
+//        }
     });
     
 function checkFromDateField(){      
@@ -529,4 +552,13 @@ function Delete() {
     document.getElementById('SearchTicketFareForm').submit();
 }
 
+//function checkAirlineSelected(){
+//    var air = $("#ticketAirline").val(); 
+//    if(air === 'OTHER'){
+//        $("#ticketAirlineOther").removeAttr("disabled");
+//    }else{
+//        $("#ticketAirlineOther").val("");
+//        $("#ticketAirlineOther").attr("disabled", "disabled");
+//    }
+//}
 </script>
