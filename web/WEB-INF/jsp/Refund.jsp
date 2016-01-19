@@ -1185,12 +1185,12 @@ for(var i = 0; i < rad.length; i++) {
         }
     });
     
-//    $("#refundBy").autocomplete({
-//        source: customerCode,
-//        close: function (event, ui) {
-//            $("#refundBy").trigger('keyup');
-//        }
-//    });
+    $("#refundBy").autocomplete({
+        source: customerCode,
+        close: function (event, ui) {
+            $("#refundBy").trigger('keyup');
+        }
+    });
 
     //autocomplete
     $("#refundBy").keyup(function(event){   

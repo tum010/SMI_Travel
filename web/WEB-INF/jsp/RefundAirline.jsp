@@ -382,6 +382,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <script>
+                            customerRefund = [];
+                        </script>
                         <c:forEach var="item" items="${cust}">
                             <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">
                                 <td class="item-billto">${item.billTo}</td>
@@ -389,6 +392,10 @@
                                 <td class="item-address hidden">${item.address}</td>
                                 <td class="item-tel hidden">${item.tel}</td>
                             </tr>
+                            <script>
+                                customerRefund.push({id: "${item.billTo}", code: "${item.billTo}", name: "${item.billName}",
+                                    address: "${item.address}", tel: "${item.tel}", fax: "${item.tel}"});
+                            </script>
                         </c:forEach>
                     </tbody>
                 </table>
@@ -549,7 +556,70 @@
 //                }
 //            });
 //        });
+    // Refund 
+    $("#refundCustTable tr").on('click', function () {
+        var user_id = $(this).find(".item-billto").text();
+        var user_name = $(this).find(".item-name").text();
+        $("#refundBy").val(user_id);
+        $("#refundByName").val(user_name);
+        $("#refundCustModal").modal('hide');
+    });
+    
+    var customerCode = [];
+    $.each(customerRefund, function (key, value) {
+        customerCode.push(value.code);
+        customerCode.push(value.name);
+        if ($("#refundBy").val() === value.code) {
+            $("#refundByName").val(value.name);
+        }
+    });
+    
+    $("#refundBy").autocomplete({
+        source: customerCode,
+        close: function (event, ui) {
+            $("#refundBy").trigger('keyup');
+        }
+    });
 
+    //autocomplete
+    $("#refundBy").keyup(function(event){   
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left); 
+        if($(this).val() === ""){
+            $("#refundByName").val("");
+        }else{
+            if(event.keyCode === 13){
+                searchCustomerAutoList(this.value); 
+            }
+        }
+    });
+    
+    $("#refundBy").keydown(function(){
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left); 
+    });
+    
+    $("#refundBy").on('keyup', function(){
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+        var code = this.value.toUpperCase();
+        var name = this.value.toUpperCase();
+        console.log("Name :" + name);
+        $("#refundByName").val(null);
+        $.each(customerRefund, function (key, value) {
+            if (value.code.toUpperCase() === code) {
+                $("#refundByName").val(value.name);
+                $("#refundBy").val(value.code);
+            }
+            else if (value.name.toUpperCase() === name) {
+                $("#refundBy").val(value.code);
+                $("#refundByName").val(value.name);
+            }
+        });
+    }); 
 
     });
 
