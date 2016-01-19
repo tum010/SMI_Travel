@@ -38,10 +38,11 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <div class='input-group' >
-                                            <input type='text' id="billto" name="billto"  class="form-control" />
-                                            <span class="input-group-addon"><span class="glyphicon glyphicon-search" data-toggle="modal" data-target="#BillToModal"></span>
+                                            <input type="hidden" class="form-control" id="receiveFromId" name="receiveFromId" value=""/>
+                                            <input type="text" class="form-control" id="receiveFromCode" name="receiveFromCode" maxlength="11" value="" style="text-transform:uppercase"/>
+                                            <span class="input-group-addon" id="receive_modal"  data-toggle="modal" data-target="#ReceiveFromModal">
+                                                <span class="glyphicon-search glyphicon"></span>
                                             </span>
-
                                         </div>
                                     </div>
                                 </div>
@@ -54,7 +55,7 @@
                                 <label class="col-md-6 control-label text-right"> Bill name</label>
                                 <div class="col-md-6">  
                                     <div class="form-group">
-                                        <input type='text' readonly="" id="billname" name="billname" class="form-control" />
+                                        <input type="text" class="form-control" id="receiveFromName" name="receiveFromName" value="" readonly="">  
                                     </div>
                                 </div>
                             </div>
@@ -141,121 +142,265 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="BillToModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+<!--List Receive From Modal-->
+<div class="modal fade" id="ReceiveFromModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Bill To</h4>
+                <h4  class="modal-title">Receive From</h4>
             </div>
             <div class="modal-body">
-                <!--Bill To List Table-->
-                <table class="display" id="BillToTable">
+                <!-- Receive From List Table-->
+                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchReceiveFrom" name="searchReceiveFrom"/> </div> 
+                <table class="display" id="ReceiveFromTable">
                     <thead>                        
                         <tr class="datatable-header">
-                            <th>Bill To</th>
-                            <th>Bill Name</th>
-                            <th>Address</th>
-                            <th>Tel</th>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
                         </tr>
                     </thead>
-                    <script>
-                        bill = [];
-                    </script>
                     <tbody>
                         <c:forEach var="item" items="${customerAgentList}">
-                            <tr>                                
+                            <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">                                
                                 <td class="item-billto">${item.billTo}</td>
                                 <td class="item-name">${item.billName}</td>                                
-                                <td class="item-address ">${item.address}</td>
-                                <td class="item-tel ">${item.tel}</td>
+                                <td class="item-address hidden">${item.address}</td>
+                                <td class="item-tel hidden">${item.tel}</td>
                             </tr>
-                        <script>
-                            bill.push({code: "${item.billTo}", name: "${item.billName}", address: "${item.address}" , tel: "${item.tel}"})
-                        </script>
                         </c:forEach>
-                            
                     </tbody>
-
                 </table>
-                <!--Script Bill To List Table-->
+                <!--Script Receive From List Table-->
                 <script>
-                    $(document).ready(function () {
-                        var billTo = [];
-                        $.each(bill, function (key, value) {
-                            billTo.push(value.code);
-                            if ( !(value.name in billTo) ){
-                               billTo.push(value.name);
-                            }
-                        });
-
-                        $("#billto").autocomplete({
-                            source: billTo,
-                            close:function( event, ui ) {
-                               $("#billto").trigger('keyup');
-                            }
-                        });
-                        $("#billto").keyup(function () {
-                            var position = $(this).offset();
-                            $(".ui-widget").css("top", position.top + 30);
-                            $(".ui-widget").css("left", position.left);
-                            var code = this.value.toUpperCase();
-                            var name = this.value;
-                            $("#billname").val(null);
-                            $.each(bill, function (key, value) {
-                                if (value.code.toUpperCase() === code) {
-                                    $("#billname").val(value.name);                                   
-                                }
-                                if(name === value.name){
-                                    $("#billto").val(value.code);
-                                    $("#billname").val(value.name);    
-                                    code = $("#billto").val().toUpperCase();
-                                }
-                                
-                            });
-                        });
-                        
-                        $("#BillToTable tr").on('click', function () {
-                            var billto = $(this).find(".item-billto").text();
-                            var billname = $(this).find(".item-name").text();
-                            var address = $(this).find(".item-address").text();
-                            var tel = $(this).find(".item-tel").text();
-                            $("#billto").val(billto);
-                            $("#billname").val(billname);
-                            $("#address").val(address);
-                            $("#BillToModal").modal('hide');
-                        });
-
-                        // BillTo Table
-                        var BillToTable = $('#BillToTable').dataTable({bJQueryUI: true,
+                    var showflag = 1;
+                    $(document).ready(function() {
+                        // Receive From Table
+                        var ReceiveFromTable = $('#ReceiveFromTable').dataTable({bJQueryUI: true,
                             "sPaginationType": "full_numbers",
                             "bAutoWidth": false,
-                            "bFilter": true,
+                            "bFilter": false,
                             "bPaginate": true,
                             "bInfo": false,
                             "bLengthChange": false,
                             "iDisplayLength": 10
                         });
-                        $('#BillToTable tbody').on('click', 'tr', function () {
+
+                        $('#ReceiveFromTable tbody').on('click', 'tr', function() {
                             $('.collapse').collapse('show');
                             if ($(this).hasClass('row_selected')) {
                                 $(this).removeClass('row_selected');
                             }
                             else {
-                                BillToTable.$('tr.row_selected').removeClass('row_selected');
+                                ReceiveFromTable.$('tr.row_selected').removeClass('row_selected');
                                 $(this).addClass('row_selected');
                             }
                         });
 
+                        $("#searchReceiveFrom").keyup(function(event) {
+                            if (event.keyCode === 13) {
+                                if ($("#searchReceiveFrom").val() == "") {
+                                    // alert('please input data');
+                                }
+                                searchCustomerAgentList($("#searchReceiveFrom").val());
+                            }
+                        });
+
+//                        autocomplete
+                        $("#receiveFromCode").keyup(function(event) {
+                            var position = $(this).offset();
+                            $(".ui-widget").css("top", position.top + 30);
+                            $(".ui-widget").css("left", position.left);
+                            if ($(this).val() === "") {
+                                $("#receiveFromName").val("");
+                                $("#receiveFromAddress").val("");
+                                $("#arCode").val("");
+                            } else {
+                                if(event.keyCode === 13){
+                                    searchCustomerAutoList(this.value);
+                                }
+                            }
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+                        });
+                        $("#receiveFromCode").keydown(function() {
+                            var position = $(this).offset();
+                            $(".ui-widget").css("top", position.top + 30);
+                            $(".ui-widget").css("left", position.left);
+                            if (showflag == 0) {
+                                $(".ui-widget").css("top", -1000);
+                                showflag = 1;
+                            }
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+                        });
                     });
 
-                </script>
+                    function setBillValue(billto, billname, address, term, pay) {
+                        $("#receiveFromCode").val(billto);
+                        $("#arCode").val(billto);
+                        $("#receiveFromName").val(billname);
+                        if (address == 'null') {
+                            $("#receiveFromAddress").val("");
+                        } else {
+                            $("#receiveFromAddress").val(address);
+                        }
+                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+                        $("#ReceiveFromModal").modal('hide');
+                    }
 
+                    function searchCustomerAgentList(name) {
+                        var servletName = 'BillableServlet';
+                        var servicesName = 'AJAXBean';
+                        var param = 'action=' + 'text' +
+                                '&servletName=' + servletName +
+                                '&servicesName=' + servicesName +
+                                '&name=' + name +
+                                '&type=' + 'getListBillto';
+                        CallAjax(param);
+                    }
+
+                    function CallAjax(param) {
+                        var url = 'AJAXServlet';
+                        $("#ajaxload").removeClass("hidden");
+                        try {
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                cache: false,
+                                data: param,
+                                success: function(msg) {
+                                    $('#ReceiveFromTable').dataTable().fnClearTable();
+                                    $('#ReceiveFromTable').dataTable().fnDestroy();
+                                    $("#ReceiveFromTable tbody").empty().append(msg);
+
+                                    $('#ReceiveFromTable').dataTable({bJQueryUI: true,
+                                        "sPaginationType": "full_numbers",
+                                        "bAutoWidth": false,
+                                        "bFilter": false,
+                                        "bPaginate": true,
+                                        "bInfo": false,
+                                        "bLengthChange": false,
+                                        "iDisplayLength": 10
+                                    });
+                                    $("#ajaxload").addClass("hidden");
+
+                                }, error: function(msg) {
+                                    $("#ajaxload").addClass("hidden");
+                                    alert('error');
+                                }
+                            });
+                        } catch (e) {
+                            alert(e);
+                        }
+                    }
+
+                    function searchCustomerAutoList(name) {
+                        var servletName = 'BillableServlet';
+                        var servicesName = 'AJAXBean';
+                        var param = 'action=' + 'text' +
+                                '&servletName=' + servletName +
+                                '&servicesName=' + servicesName +
+                                '&name=' + name +
+                                '&type=' + 'getAutoListBillto';
+                        CallAjaxAuto(param);
+                    }
+
+                    function CallAjaxAuto(param) {
+                        var url = 'AJAXServlet';
+                        var billArray = [];
+                        var billListId = [];
+                        var billListName = [];
+                        var billListAddress = [];
+                        var billid, billname, billaddr;
+                        $("#receiveFromCode").autocomplete("destroy");
+                        try {
+                            $.ajax({
+                                type: "POST",
+                                url: url,
+                                cache: false,
+                                data: param,
+                                beforeSend: function() {
+                                    $("#dataload").removeClass("hidden");
+                                },
+                                success: function(msg) {
+                                    var billJson = JSON.parse(msg);
+                                    for (var i in billJson) {
+                                        if (billJson.hasOwnProperty(i)) {
+                                            billid = billJson[i].id;
+                                            billname = billJson[i].name;
+                                            billaddr = billJson[i].address;
+                                            billArray.push(billid);
+                                            billArray.push(billname);
+                                            billListId.push(billid);
+                                            billListName.push(billname);
+                                            billListAddress.push(billaddr);
+                                        }
+                                        $("#dataload").addClass("hidden");
+                                    }
+                                    $("#receiveFromId").val(billid);
+                                    $("#receiveFromName").val(billname);
+                                    $("#receiveFromAddress").val(billaddr);
+
+                                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+
+                                    $("#receiveFromCode").autocomplete({
+                                        source: billArray,
+                                        close: function() {
+                                            $("#receiveFromCode").trigger("keyup");
+                                            var billselect = $("#receiveFromCode").val();
+                                            for (var i = 0; i < billListId.length; i++) {
+                                                if ((billselect == billListName[i]) || (billselect == billListId[i])) {
+                                                    $("#receiveFromCode").val(billListId[i]);
+                                                    $("#arCode").val(billListId[i]);
+                                                    $("#receiveFromName").val(billListName[i]);
+                                                    $("#receiveFromAddress").val(billListAddress[i]);
+
+                                                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                                                    $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+                                                }
+                                            }
+                                        }
+                                    });
+
+                                    var billval = $("#receiveFromCode").val();
+                                    for (var i = 0; i < billListId.length; i++) {
+                                        if (billval == billListName[i]) {
+                                            $("#receiveFromCode").val(billListId[i]);
+                                            $("#arCode").val(billListId[i]);
+                                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                                            $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+                                        }
+                                    }
+                                    if (billListId.length == 1) {
+                                        showflag = 0;
+                                        $("#receiveFromCode").val(billListId[0]);
+                                        $("#arCode").val(billListId[0]);
+                                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
+                                        $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
+                                    }
+                                    var event = jQuery.Event('keydown');
+                                    event.keyCode = 40;
+                                    $("#receiveFromCode").trigger(event);
+
+                                }, error: function(msg) {
+                                    console.log('auto ERROR');
+                                    $("#dataload").addClass("hidden");
+                                }
+                            });
+                        } catch (e) {
+                            alert(e);
+                        }
+                    }
+                </script>
             </div>
             <div class="modal-footer">
                 <div class="text-right">
-                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                    <button id="ButtonBilltoModal" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -375,7 +520,7 @@
         var tickettype = document.getElementById("ticketType").value;
         var startdate = document.getElementById("fromdate").value;
         var enddate = document.getElementById("todate").value;
-        var billto = document.getElementById("billto").value;
+        var billto = document.getElementById("receiveFromCode").value;
 
         if((startdate !== '') && (enddate !== '')){
             window.open("report.smi?name=TicketSummary&ticketfrom=" + ticketfrom + "&tickettype=" + tickettype + "&startdate=" + startdate + "&enddate=" + enddate + "&billto=" + billto + "&department=Outbound");

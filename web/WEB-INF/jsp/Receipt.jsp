@@ -1059,9 +1059,9 @@
                                 $("#receiveFromAddress").val("");
                                 $("#arCode").val("");
                             } else {
-//                                if(event.keyCode === 13){
-                                searchCustomerAutoList(this.value);
-//                                }
+                                if(event.keyCode === 13){
+                                    searchCustomerAutoList(this.value);
+                                }
                             }
                             $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
                             $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
