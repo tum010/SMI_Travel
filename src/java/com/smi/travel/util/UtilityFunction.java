@@ -437,7 +437,7 @@ public class UtilityFunction {
             }
         }
 	System.out.println("Amount :  " + text);
-	return text;
+	return text.toUpperCase();
     }
     public String GetRounting( List<AirticketFlight> FlightList){
         String rounting = "";
