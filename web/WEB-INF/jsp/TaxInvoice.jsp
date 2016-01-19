@@ -534,6 +534,7 @@
                                                     </td>
                                                     <td class="hidden"><input class="form-control" style="text-align:right;" type="text" id="vat${i.count}" name="vat${i.count}" readonly="" value="${taxDetail.vat}"></td>
                                                     <td align="right"><input class="form-control decimal" style="text-align:right;" type="text" id="gross${i.count}" name="gross${i.count}" value="${taxDetail.gross}" readonly=""></td>
+                                                    <td class="hidden"><input class="form-control" style="text-align:right;" type="text" id="grossTemp${i.count}" name="grossTemp${i.count}" value="${taxDetail.gross}"></td>
                                                     <td align="right"><input class="form-control decimal" style="text-align:right;" type="text" id="amount${i.count}" name="amount${i.count}" value="${taxDetail.amount}" onfocusout="CalculateAmountTotal('${i.count}')"></td>
                                                     <td>
                                                         <select class="form-control" name="currencyAmount${i.count}" id="currencyAmount${i.count}" onchange="AddrowBySelect(${i.count}); CalculateAmountTotal('');">
@@ -2266,15 +2267,13 @@
     function setGross(){
         var count = parseInt(document.getElementById('countTaxInvoice').value);   
         for(var i=1;i<count+1;i++){
-            var gross = document.getElementById("gross" + i);
+            var gross = document.getElementById("grossTemp" + i);
             if (gross !== null){
                 var grossVal = gross.value;                   
                 if(grossVal !== ''){
                     grossVal = grossVal.replace(/,/g,"");
                     var grossTotal = parseFloat(grossVal);
-                    document.getElementById('gross' + i).value = formatNumber(grossTotal);
-                    
- 
+                    document.getElementById('gross' + i).value = formatNumber(grossTotal);                  
                 }
             }
         }
