@@ -20,7 +20,12 @@ public class DaytourOther {
     private int adult;
     private int child;
     private int infant;
-    private String passenger;
+    private String passenger1;
+    private String passenger2;
+    private String passenger3;
+    private String passenger4;
+    private String passenger5;
+    private String passenger6;
     private String remark;
 
     public int getAdult() {
@@ -45,10 +50,6 @@ public class DaytourOther {
 
     public String getLeadername() {
         return leadername;
-    }
-
-    public String getPassenger() {
-        return passenger;
     }
 
     public String getRefno() {
@@ -91,10 +92,6 @@ public class DaytourOther {
         this.leadername = leadername;
     }
 
-    public void setPassenger(String passenger) {
-        this.passenger = passenger;
-    }
-
     public void setRefno(String refno) {
         this.refno = refno;
     }
@@ -117,5 +114,53 @@ public class DaytourOther {
 
     public String getTime() {
         return time;
+    }
+
+    public String getPassenger1() {
+        return passenger1;
+    }
+
+    public void setPassenger1(String passenger1) {
+        this.passenger1 = passenger1;
+    }
+
+    public String getPassenger2() {
+        return passenger2;
+    }
+
+    public void setPassenger2(String passenger2) {
+        this.passenger2 = passenger2;
+    }
+
+    public String getPassenger3() {
+        return passenger3;
+    }
+
+    public void setPassenger3(String passenger3) {
+        this.passenger3 = passenger3;
+    }
+
+    public String getPassenger4() {
+        return passenger4;
+    }
+
+    public void setPassenger4(String passenger4) {
+        this.passenger4 = passenger4;
+    }
+
+    public String getPassenger5() {
+        return passenger5;
+    }
+
+    public void setPassenger5(String passenger5) {
+        this.passenger5 = passenger5;
+    }
+
+    public String getPassenger6() {
+        return passenger6;
+    }
+
+    public void setPassenger6(String passenger6) {
+        this.passenger6 = passenger6;
     }
 }

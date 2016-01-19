@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelVoucher" language="groovy" pageWidth="575" pageHeight="392" columnWidth="574" leftMargin="1" rightMargin="0" topMargin="0" bottomMargin="0" uuid="053f4d0e-4534-4ae9-bd3a-d9c39367ad2d">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="19"/>
+	<property name="ireport.y" value="211"/>
 	<queryString>
 		<![CDATA[SELECT
      *,
@@ -32,8 +32,13 @@ FROM
 	<field name="adult" class="java.lang.String"/>
 	<field name="child" class="java.lang.String"/>
 	<field name="infant" class="java.lang.String"/>
-	<field name="passenger" class="java.lang.String"/>
+	<field name="passenger1" class="java.lang.String"/>
 	<field name="remark" class="java.lang.String"/>
+	<field name="passenger2" class="java.lang.String"/>
+	<field name="passenger3" class="java.lang.String"/>
+	<field name="passenger4" class="java.lang.String"/>
+	<field name="passenger5" class="java.lang.String"/>
+	<field name="passenger6" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -254,7 +259,7 @@ FROM
 	<columnFooter>
 		<band height="100">
 			<staticText>
-				<reportElement x="295" y="2" width="95" height="18" uuid="5ee2a8fa-db0e-41fc-b718-ac6d9edc4436"/>
+				<reportElement x="395" y="2" width="95" height="18" uuid="5ee2a8fa-db0e-41fc-b718-ac6d9edc4436"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
@@ -274,7 +279,7 @@ FROM
 				<reportElement mode="Transparent" x="23" y="2" width="109" height="18" uuid="fd9bedf7-121e-4ab3-8bae-6baf98e51344"/>
 			</rectangle>
 			<textField>
-				<reportElement x="291" y="22" width="221" height="60" uuid="41d7f2e3-64a3-45bf-92ff-51c49f0a2487"/>
+				<reportElement x="391" y="22" width="156" height="60" uuid="41d7f2e3-64a3-45bf-92ff-51c49f0a2487"/>
 				<textElement>
 					<font fontName="SansSerif" size="11" pdfEncoding="Cp1252"/>
 				</textElement>
@@ -285,11 +290,46 @@ FROM
 				<textElement>
 					<font fontName="SansSerif" size="11" pdfEncoding="Cp1252"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{passenger}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{passenger1} != null ? $F{passenger1} : "")]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="291" y="2" width="100" height="18" uuid="9e71e5a3-6e27-4111-b7ac-71f4965f14bd"/>
+				<reportElement mode="Transparent" x="391" y="2" width="100" height="18" uuid="9e71e5a3-6e27-4111-b7ac-71f4965f14bd"/>
 			</rectangle>
+			<textField>
+				<reportElement x="208" y="22" width="178" height="20" uuid="ac772864-a9d1-4e29-a1b1-a8900bc4df10"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" pdfEncoding="Cp1252"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{passenger2} != null ? $F{passenger2} : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="23" y="38" width="178" height="20" uuid="ea048415-fbff-4cce-bf53-cfddb947763e"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" pdfEncoding="Cp1252"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{passenger3} != null ? $F{passenger3} : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="23" y="54" width="178" height="20" uuid="08d51c45-d811-404b-8228-65783b5bc1e0"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" pdfEncoding="Cp1252"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{passenger5} != null ? $F{passenger5} : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="208" y="38" width="178" height="20" uuid="38ec7dcb-7e1e-40c3-b5a5-e35f94b49ed6"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" pdfEncoding="Cp1252"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{passenger4} != null ? $F{passenger4} : "")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="208" y="54" width="178" height="20" uuid="e9b9b2b2-1184-465e-8aa6-c9f20d8b2c49"/>
+				<textElement>
+					<font fontName="SansSerif" size="11" pdfEncoding="Cp1252"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{passenger6} != null ? $F{passenger6} : "")]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnFooter>
 	<pageFooter>

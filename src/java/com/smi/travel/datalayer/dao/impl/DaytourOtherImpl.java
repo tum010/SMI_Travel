@@ -69,11 +69,35 @@ public class DaytourOtherImpl implements DaytourOtherDao{
              daytourother.setTime(util.ConvertString(B[6]));
              daytourother.setAdult(util.ConvertInt(B[7]));
              daytourother.setChild(util.ConvertInt(B[8]));
-             daytourother.setInfant(util.ConvertInt(B[9]));
-             daytourother.setPassenger(util.ConvertString(B[10]));
+             daytourother.setInfant(util.ConvertInt(B[9]));             
              daytourother.setRemark(util.ConvertString(B[11]));
              data.add(daytourother);  
          }
+        
+        if(QueryDaytourOtherList != null){
+            DaytourOther daytourOtherTemp = (DaytourOther) data.get(0);
+            List<String> queryLand = session.createSQLQuery("SELECT * FROM `land_voucher_passenger` where ref_no = '"+refno+"'")
+                    .addScalar("leader_name", Hibernate.STRING)
+                    .list();
+
+            for (int i=0; i<queryLand.size(); i++) {
+                String passergerName = queryLand.get(i);
+                if(i == 0){
+                    daytourOtherTemp.setPassenger1(passergerName);
+                }else if(i == 1){
+                    daytourOtherTemp.setPassenger2(passergerName);
+                }else if(i == 2){
+                    daytourOtherTemp.setPassenger3(passergerName);
+                }else if(i == 3){
+                    daytourOtherTemp.setPassenger4(passergerName);
+                }else if(i == 4){
+                    daytourOtherTemp.setPassenger5(passergerName);
+                }else if(i == 5){
+                    daytourOtherTemp.setPassenger6(passergerName);
+                }
+            }
+        }    
+        
         if("OK".equals(status)){
             data = checkReportUni(data);
         }
@@ -103,5 +127,5 @@ public class DaytourOtherImpl implements DaytourOtherDao{
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
-    }
+    }   
 }
