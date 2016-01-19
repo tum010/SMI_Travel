@@ -15,6 +15,8 @@ import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -477,9 +479,14 @@ public class TaxInvoiceController extends SMITravelController {
                 }
                 
                 if("1".equalsIgnoreCase(isVat)){
-                    taxInvoiceDetail.setIsVat(1);                                
+                    taxInvoiceDetail.setIsVat(1);
+                    BigDecimal amountTemp = (!"".equalsIgnoreCase(amount) && amount != null ? new BigDecimal(amount.replaceAll(",","")) : new BigDecimal(BigInteger.ZERO));
+                    BigDecimal vatTemp = (!"".equalsIgnoreCase(vat) && vat != null ? new BigDecimal(vat) : new BigDecimal(BigInteger.ZERO));
+                    BigDecimal grossTemp = (amountTemp.multiply(new BigDecimal(100))).divide(vatTemp.add(new BigDecimal(100)), 4, RoundingMode.UP);
+                    taxInvoiceDetail.setGross(grossTemp);
                 } else {
                     taxInvoiceDetail.setIsVat(0);
+                    taxInvoiceDetail.setGross(null);
                 }
                 
                 if(vat!="" && vat!=null){
@@ -487,10 +494,10 @@ public class TaxInvoiceController extends SMITravelController {
                     taxInvoiceDetail.setVat(vatRe);      
                 }
                 
-                if(gross!="" && gross!=null){
-                    BigDecimal grossRe = new BigDecimal(gross.replaceAll(",",""));
-                    taxInvoiceDetail.setGross(grossRe);
-                }
+//                if(gross!="" && gross!=null){
+//                    BigDecimal grossRe = new BigDecimal(gross.replaceAll(",",""));
+//                    taxInvoiceDetail.setGross(grossRe);
+//                }
                 
 //                if(vat!="" && vat!=null){
 //                    BigDecimal vatRe = new BigDecimal(vat);

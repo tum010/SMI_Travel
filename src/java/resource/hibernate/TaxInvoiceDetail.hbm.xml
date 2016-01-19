@@ -59,7 +59,7 @@
             <column name="export_date"/>
         </property>
         <property name="gross" type="big_decimal">
-            <column name="gross" precision="10" />
+            <column name="gross" precision="12" />
         </property>
     </class>
 </hibernate-mapping>
