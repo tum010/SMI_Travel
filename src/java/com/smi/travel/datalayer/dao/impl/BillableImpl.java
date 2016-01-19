@@ -131,16 +131,29 @@ public class BillableImpl implements BillableDao {
     }
     
     @Override
-    public Invoice getInvoiceForTaxInvoice(String billDescId) {
+    public Invoice getInvoiceForTaxInvoice(Billable bill) {
         Session session = this.sessionFactory.openSession();
-        String queryInv = "from InvoiceDetail inv where inv.billableDesc.id = :id ";
-        List<InvoiceDetail> invoiceDetailList = session.createQuery(queryInv).setParameter("id",billDescId).list();
         Invoice invoice = new Invoice();
-        invoice.setId(invoiceDetailList.get(0).getId());
-        invoice.setInvTo(invoiceDetailList.get(0).getInvoice().getInvTo());
-        invoice.setInvName(invoiceDetailList.get(0).getInvoice().getInvName());
-        invoice.setInvAddress(invoiceDetailList.get(0).getInvoice().getInvAddress());
-        invoice.setArcode(invoiceDetailList.get(0).getInvoice().getArcode());
+        List<BillableDesc> billableDescList = bill.getBillableDescs();
+        List<InvoiceDetail> invoiceDetailList = new ArrayList<InvoiceDetail>();
+        for(int i=0; i<billableDescList.size(); i++){
+            BillableDesc billableDesc = billableDescList.get(i);
+            String queryInv = "from InvoiceDetail inv where inv.billableDesc.id = :id ";
+            List<InvoiceDetail> queryInvoiceDetailList = session.createQuery(queryInv).setParameter("id",billableDesc.getId()).list();            
+            if(i==0){
+//                invoice.setId(invoiceDetailList.get(0).getId());
+                invoice.setId(queryInvoiceDetailList.get(0).getInvoice().getId());
+                invoice.setInvTo(queryInvoiceDetailList.get(0).getInvoice().getInvTo());
+                invoice.setInvName(queryInvoiceDetailList.get(0).getInvoice().getInvName());
+                invoice.setInvAddress(queryInvoiceDetailList.get(0).getInvoice().getInvAddress());
+                invoice.setArcode(queryInvoiceDetailList.get(0).getInvoice().getArcode());
+            }
+            InvoiceDetail invoiceDetail = new InvoiceDetail();           
+            invoiceDetail.setId(queryInvoiceDetailList.get(0).getId());
+            invoiceDetail.setBillableDesc(billableDesc);
+            invoiceDetailList.add(invoiceDetail);
+        }
+        invoice.setInvoiceDetails(invoiceDetailList);
         session.close();
         return invoice;
     }

@@ -37,7 +37,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
 //    
 
     @Override
-    public List getInvoiceSummary(String fromData, String toDate, String department, String type,String agent,String statusInvoice) {
+    public List getInvoiceSummary(String fromData, String toDate, String department, String type,String agent,String statusInvoice,String printBy) {
         List<InvoiceSummary> listInovicSummary = new LinkedList<InvoiceSummary>();
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
@@ -210,7 +210,8 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             }
                 
             sum.setSystemdate(util.convertDateToString(new Date()));
-            sum.setUsername(util.ConvertString(B[10]));
+//            sum.setUsername(util.ConvertString(B[10]));
+            sum.setUsername(printBy);
             if("N".equals(type)){
                 sum.setHeadertype("Invoice No Vat");
             }else if("A".equals(type)){

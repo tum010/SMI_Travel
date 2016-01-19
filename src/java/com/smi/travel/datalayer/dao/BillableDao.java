@@ -26,7 +26,7 @@ public interface BillableDao {
     public String getDescriptionInvoiceOthersFromRefId(String refId);
     public String getDescriptionInvoiceDayTourFromRefId(String refId);
     public Billable getBillableBookingForTaxInvoice(String searchRefNo);
-    public Invoice getInvoiceForTaxInvoice(String billDescId);
+    public Invoice getInvoiceForTaxInvoice(Billable bill);
     public String printTicketOrder(String refNo);
     public String DeleteBillableDesc(String billdescId);
 
