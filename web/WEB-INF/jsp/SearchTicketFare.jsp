@@ -22,22 +22,22 @@
 
 <div style="padding-top: 15px;padding-right: 0px "ng-app=""> 
     <div class="row">
-        <!-- Alert Del-->
-        <div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Delete Success!</strong> 
-        </div>
-        <!-- Alert Not Del-->
-        <div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-danger" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Delete Not Success!</strong> 
-        </div>
-        
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/Checking/CheckingAirTicketMenu.html'"></div>
         </div>
         
         <div class="col-sm-10">
+            <!-- Alert Del-->
+            <div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Delete Success!</strong> 
+            </div>
+            <!-- Alert Not Del-->
+            <div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Delete Not Success!</strong> 
+            </div>
+        
             <div class="row" style="padding-left: 15px">  
                 <div class="col-sm-6" style="padding-right: 15px">
                     <h4><b>Search Ticket Fare</b></h4>
@@ -318,7 +318,6 @@
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-        
         $('.date').datetimepicker();
         $('.datemask').mask('0000-00-00');
         $(".money").mask('000,000,000.00', {reverse: true});
