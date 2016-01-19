@@ -1675,7 +1675,15 @@
                 }
             }
         });
-
+        
+        var chqBank2 = $('#chqBank2').val();
+        var chqNo2 = $('#chqNo2').val();
+        var chqAmount2 = $('#chqAmount2').val();
+        
+        if (chqBank2 != "" || chqNo2 != "" || chqAmount2 != "") {
+            $("#addChq").removeClass('hidden');
+        } 
+        
         $('#addChqButton').on('click', function() {
             $("#addChq").removeClass('hidden');
         });

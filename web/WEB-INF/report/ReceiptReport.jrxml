@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptReport" language="groovy" pageWidth="648" pageHeight="396" columnWidth="592" leftMargin="28" rightMargin="28" topMargin="38" bottomMargin="28" uuid="dc4cbcaf-4345-4a4d-b4b9-fb43ae05e9b5">
-	<property name="ireport.zoom" value="3.2153832150000055"/>
-	<property name="ireport.x" value="1276"/>
-	<property name="ireport.y" value="495"/>
+	<property name="ireport.zoom" value="1.5000000000000056"/>
+	<property name="ireport.x" value="26"/>
+	<property name="ireport.y" value="200"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -27,6 +27,12 @@
 	<field name="textmoney" class="java.lang.String"/>
 	<field name="invdesc" class="java.lang.String"/>
 	<field name="totalamount" class="java.lang.String"/>
+	<field name="chqno2" class="java.lang.String"/>
+	<field name="chqdate2" class="java.lang.String"/>
+	<field name="chqbankflag2" class="java.lang.String"/>
+	<field name="chqvalue2" class="java.lang.String"/>
+	<field name="chqbank2" class="java.lang.String"/>
+	<field name="chqbank" class="java.lang.String"/>
 	<background>
 		<band height="328">
 			<rectangle radius="10">
@@ -297,7 +303,7 @@
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement x="8" y="39" width="15" height="14" uuid="415f862c-d814-4bdc-8e14-59f2056c8824"/>
+				<reportElement x="8" y="54" width="15" height="14" uuid="415f862c-d814-4bdc-8e14-59f2056c8824"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
@@ -329,7 +335,7 @@
 				<text><![CDATA[Cheque Bank :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="26" y="39" width="49" height="14" uuid="e832a696-9d81-4d41-a9ae-e07ddcd40b39"/>
+				<reportElement x="26" y="54" width="49" height="14" uuid="e832a696-9d81-4d41-a9ae-e07ddcd40b39"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -364,7 +370,7 @@
 				<text><![CDATA[Date : ]]></text>
 			</staticText>
 			<textField pattern="#,##0.00">
-				<reportElement x="74" y="39" width="425" height="14" uuid="d5d405e0-5815-43e4-9926-2c6c07fff885"/>
+				<reportElement x="74" y="54" width="425" height="14" uuid="d5d405e0-5815-43e4-9926-2c6c07fff885"/>
 				<textElement textAlignment="Left">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -413,14 +419,14 @@
 				<textFieldExpression><![CDATA[($F{tax} != null && !"null".equals($F{tax}) && $F{tax}.length() > 0) ? new BigDecimal($F{tax}) : ""]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="99" y="57" width="320" height="32" uuid="c3db3df8-d8ba-40df-95bb-9e4ec2250f62"/>
+				<reportElement x="99" y="71" width="320" height="29" uuid="c3db3df8-d8ba-40df-95bb-9e4ec2250f62"/>
 				<textElement textAlignment="Left">
 					<font fontName="TH SarabunPSK" size="12" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{textmoney}]]></textFieldExpression>
 			</textField>
 			<image>
-				<reportElement x="10" y="41" width="12" height="10" uuid="7e9929c7-7a83-490f-8141-67ccbe283c46"/>
+				<reportElement x="10" y="56" width="12" height="10" uuid="7e9929c7-7a83-490f-8141-67ccbe283c46"/>
 				<imageExpression><![CDATA[("1".equals(String.valueOf($F{creditflag}))) ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg"]]></imageExpression>
 			</image>
 			<image>
@@ -452,6 +458,74 @@
 					<font fontName="TH SarabunPSK" size="20" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="8" y="38" width="15" height="14" uuid="0c13755a-90b7-4c5b-92b7-0aa3c65036ef">
+					<printWhenExpression><![CDATA[($F{chqvalue2} != null && !"null".equals($F{chqvalue2}) && $F{chqvalue2}.length() > 0)]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="386" y="38" width="57" height="14" uuid="d5f673fe-50ec-4dd5-918d-7dcea4769b03">
+					<printWhenExpression><![CDATA[($F{chqvalue2} != null && !"null".equals($F{chqvalue2}) && $F{chqvalue2}.length() > 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{chqdate2}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="80" y="38" width="61" height="14" uuid="6fbb4b23-a666-48af-b22e-51abe3d92721">
+					<printWhenExpression><![CDATA[($F{chqvalue2} != null && !"null".equals($F{chqvalue2}) && $F{chqvalue2}.length() > 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{chqvalue2} != null && !"null".equals($F{chqvalue2}) && $F{chqvalue2}.length() > 0) ? new BigDecimal($F{chqvalue2}) : ""]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="10" y="40" width="12" height="10" uuid="dd8945fa-61f3-486c-82a9-ba66f6c565b1">
+					<printWhenExpression><![CDATA[($F{chqvalue2} != null && !"null".equals($F{chqvalue2}) && $F{chqvalue2}.length() > 0)]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[("1".equals(String.valueOf($F{chqbankflag2}))) ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="26" y="38" width="54" height="14" uuid="efc7a32a-dacd-4380-873f-6f3aaf40d3da">
+					<printWhenExpression><![CDATA[($F{chqvalue2} != null && !"null".equals($F{chqvalue2}) && $F{chqvalue2}.length() > 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Cheque Bank :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="38" width="36" height="14" uuid="9c21136e-400e-4887-97c5-85a6c3ead9d5">
+					<printWhenExpression><![CDATA[($F{chqvalue2} != null && !"null".equals($F{chqvalue2}) && $F{chqvalue2}.length() > 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Chq No. : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="272" y="38" width="54" height="14" uuid="3ac3c3b7-f32b-4797-8cb8-07be9366158d">
+					<printWhenExpression><![CDATA[($F{chqvalue2} != null && !"null".equals($F{chqvalue2}) && $F{chqvalue2}.length() > 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{chqno2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="362" y="38" width="23" height="14" uuid="8547cda2-2e37-4917-ace7-a7bf344fddc6">
+					<printWhenExpression><![CDATA[($F{chqvalue2} != null && !"null".equals($F{chqvalue2}) && $F{chqvalue2}.length() > 0)]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Date : ]]></text>
 			</staticText>
 		</band>
 	</pageFooter>

@@ -56,6 +56,11 @@ public class ReceiptImpl implements ReceiptDao{
                 .addScalar("chqflag",Hibernate.STRING)
                 .addScalar("credit",Hibernate.STRING)
                 .addScalar("creditflag",Hibernate.STRING)
+                .addScalar("chqbank2",Hibernate.STRING)
+                .addScalar("chqno2",Hibernate.STRING)
+                .addScalar("chqdate2",Hibernate.STRING)
+                .addScalar("chqvalue2",Hibernate.STRING)
+                .addScalar("chqflag2",Hibernate.STRING)
                 .list();
         
         List data = new ArrayList();
@@ -86,11 +91,17 @@ public class ReceiptImpl implements ReceiptDao{
             receiptView.setTaxflag((("0.00".equals(String.valueOf(T[18])) ? "" : String.valueOf(T[18]))));
             receiptView.setChqbank((("null".equals(String.valueOf(T[19])) ? "" : String.valueOf(T[19]))));
             receiptView.setChqno((("null".equals(String.valueOf(T[20])) ? "" : String.valueOf(T[20]))));
-            receiptView.setChqdate((("null".equals(String.valueOf(T[21])) ? "" : String.valueOf(T[21]))));
+            receiptView.setChqdate((("null".equals(String.valueOf(T[21])) ? "" : String.valueOf(sf.format(util.convertStringToDate(String.valueOf(T[21])))))));
             receiptView.setChqvalue((("0.00".equals(String.valueOf(T[22])) ? "" : String.valueOf(T[22]))));
             receiptView.setChqbankflag((("0.00".equals(String.valueOf(T[23]))? "" : String.valueOf(T[23]))));
             receiptView.setCredit((("null".equals(String.valueOf(T[24])) ? "" : String.valueOf(T[24]))));
             receiptView.setCreditflag((("0.00".equals(String.valueOf(T[25])) ? "" : String.valueOf(T[25]))));
+            receiptView.setChqbank2((("null".equals(String.valueOf(T[26])) ? "" : String.valueOf(T[26]))));
+            receiptView.setChqno2((("null".equals(String.valueOf(T[27])) ? "" : String.valueOf(T[27]))));
+            receiptView.setChqdate2((("null".equals(String.valueOf(T[28])) ? "" : String.valueOf(sf.format(util.convertStringToDate(String.valueOf(T[28])))))));
+            receiptView.setChqvalue2((("0.00".equals(String.valueOf(T[29])) ? "" : String.valueOf(T[29]))));
+            receiptView.setChqbankflag2((("0.00".equals(String.valueOf(T[30]))? "" : String.valueOf(T[30]))));
+            
             System.err.println("receiptView cash " +receiptView.getCash());
 //            String total = (receiptView.getTotalamount()).replaceAll("\\.", ",");
 //            String[] totals = total.split(",");
