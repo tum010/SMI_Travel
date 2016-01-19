@@ -118,7 +118,7 @@ public class PostSaleVatImpl implements PostSaleVatDao {
     @Override
     public String UpdateOutputTaxStatus(List<OutputTaxView> outputTaxViewList) {
         int result = 0;
-        
+        int resultCN = 0;
         try {
             Session session = this.sessionFactory.openSession();
             setTransaction(session.beginTransaction());
@@ -128,15 +128,21 @@ public class PostSaleVatImpl implements PostSaleVatDao {
                 String taxId = otv.getTaxid();
                 Date thisdate = new Date();
                 String hql = "update TaxInvoice tax set tax.postDate = :thisdate , tax.outputTaxStatus = 1 where tax.id = '"+taxId+"'";
+                String hqlCN = "update CreditNote cn set cn.postDate = :thisdate , cn.outputTaxStatus = 1 where cn.id = '"+taxId+"'";
                 try {
                     Query query = session.createQuery(hql);
                     query.setParameter("thisdate", thisdate);
+                    Query queryCN = session.createQuery(hqlCN);
+                    queryCN.setParameter("thisdate", thisdate);
                     System.out.println(" query " + query);
+                    System.out.println(" queryCN " + queryCN);
                     result = query.executeUpdate();
+                    resultCN = queryCN.executeUpdate();
                     System.out.println("Rows affected: " + result);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     result = 0;
+                    resultCN = 0;
                 }
             }
             getTransaction().commit();

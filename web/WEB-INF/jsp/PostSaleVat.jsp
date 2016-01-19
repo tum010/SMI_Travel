@@ -126,11 +126,15 @@
                     <c:if test="${Status == 'Change'}">
                         <c:set var="selectChange" value="selected" />
                     </c:if>
+                    <c:if test="${Status == 'Void'}">
+                        <c:set var="selectVoid" value="selected" />
+                    </c:if>
                     <select class="form-control" id="postStatus" name="postStatus">
                         <option value="">--Select--</option>
                         <option value="Normal" ${selectNormal}>Normal </option>
                         <option value="Post" ${selectPost}>Post </option>
                         <option value="Change" ${selectChange}>Change </option>
+                        <option value="Void" ${selectVoid}>Void </option>
                     </select>
                 </div>
                 <div class="col-xs-1 text-right" style="width: 100px">

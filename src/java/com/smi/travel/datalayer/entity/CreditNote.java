@@ -26,12 +26,15 @@ public class CreditNote  {
      private String apCode;
      private String invoiceType;
      private String department;
+     private Integer outputTaxStatus;
+     private Date postDate;
+     private Date updateDate;
      private List creditNoteDetails = new LinkedList<CreditNoteDetail>();
 
     public CreditNote() {
     }
 
-    public CreditNote(String createBy, Date createDate, String cnNo, Date cnDate, String cnName, String cnAddress, String cnRemark, String apCode, String invoiceType, List creditNoteDetails,String department,MFinanceItemstatus MFinanceItemstatus) {
+    public CreditNote(String createBy, Date createDate, String cnNo, Date cnDate, String cnName, String cnAddress, String cnRemark, String apCode, String invoiceType, List creditNoteDetails,String department,MFinanceItemstatus MFinanceItemstatus, Integer outputTaxStatus, Date postDate, Date updateDate) {
        this.createBy = createBy;
        this.createDate = createDate;
        this.cnNo = cnNo;
@@ -44,6 +47,9 @@ public class CreditNote  {
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.creditNoteDetails = creditNoteDetails;
        this.department = department;
+       this.outputTaxStatus = outputTaxStatus;
+       this.postDate = postDate;
+       this.updateDate = updateDate;
     }
    
     public String getId() {
@@ -138,6 +144,30 @@ public class CreditNote  {
 
     public void setMFinanceItemstatus(MFinanceItemstatus MFinanceItemstatus) {
         this.MFinanceItemstatus = MFinanceItemstatus;
+    }
+
+    public Integer getOutputTaxStatus() {
+        return outputTaxStatus;
+    }
+
+    public void setOutputTaxStatus(Integer outputTaxStatus) {
+        this.outputTaxStatus = outputTaxStatus;
+    }
+
+    public Date getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(Date postDate) {
+        this.postDate = postDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
 

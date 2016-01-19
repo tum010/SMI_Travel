@@ -111,6 +111,7 @@ public class SaleVatReportImpl implements SaleVatReportDao{
     @Override
     public String UpdateOutputTaxStatusCancel(List<OutputTaxView> outputTaxViewList) {
         int result = 0;
+        int resultCN = 0;
         try {
             Session session = this.sessionFactory.openSession();
             setTransaction(session.beginTransaction());
@@ -119,10 +120,14 @@ public class SaleVatReportImpl implements SaleVatReportDao{
                 OutputTaxView otv = outputTaxViewList.get(i);
                 String taxId = otv.getTaxid();
                 String hql = "update TaxInvoice tax set tax.postDate = null , tax.outputTaxStatus = 0 where tax.id = '"+taxId+"'";
+                String hqlCN = "update CreditNote cn set cn.postDate = null , cn.outputTaxStatus = 0 where cn.id = '"+taxId+"'";
                 try {
                     Query query = session.createQuery(hql);
+                    Query queryCN = session.createQuery(hqlCN);
                     System.out.println(" query " + query);
+                    System.out.println(" queryCN " + queryCN);
                     result = query.executeUpdate();
+                    resultCN = queryCN.executeUpdate();
                     System.out.println("Rows affected: " + result);
                 } catch (Exception ex) {
                     ex.printStackTrace();
