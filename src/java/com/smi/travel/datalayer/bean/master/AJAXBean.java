@@ -87,6 +87,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import javax.swing.text.Document;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -1621,7 +1622,11 @@ public class AJAXBean extends AbstractBean implements
         }
         for (int i = 0; i < invoiceDetaill.size(); i++) {
             invId = invoiceDetaill.get(i).getId();
-            description = invoiceDetaill.get(i).getDescription();
+            if(!"null".equalsIgnoreCase(String.valueOf(invoiceDetaill.get(i).getDescription())) && invoiceDetaill.get(i).getDescription() != null){
+                description = invoiceDetaill.get(i).getDescription();
+            }else{
+                description = "";
+            }
             if(invoiceDetaill.get(i).getAmount() != null){
                 amountinvoice = invoiceDetaill.get(i).getAmount().compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : invoiceDetaill.get(i).getAmount();
             }
@@ -1657,7 +1662,6 @@ public class AJAXBean extends AbstractBean implements
             String displaydesTemp = "";
             if ("1".equals(product)) {                
                 displaydescription = billTypeName;
-
             } else if ("2".equals(product) || "8".equals(product)) {
                 if (!"".equals(refItemId)) {
                     displaydescription += billTypeName + " :- ";

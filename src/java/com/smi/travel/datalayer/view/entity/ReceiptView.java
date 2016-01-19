@@ -40,6 +40,11 @@ public class ReceiptView {
     private String credit;
     private String creditflag;
     private String textmoney;
+    private String chqbank2;
+    private String chqno2;
+    private String chqdate2;
+    private String chqvalue2;
+    private String chqbankflag2;
     
     //Receipt Summary
     private String systemdate;
@@ -440,6 +445,46 @@ public class ReceiptView {
 
     public void setCashminus(String cashminus) {
         this.cashminus = cashminus;
+    }
+
+    public String getChqbank2() {
+        return chqbank2;
+    }
+
+    public void setChqbank2(String chqbank2) {
+        this.chqbank2 = chqbank2;
+    }
+
+    public String getChqno2() {
+        return chqno2;
+    }
+
+    public void setChqno2(String chqno2) {
+        this.chqno2 = chqno2;
+    }
+
+    public String getChqdate2() {
+        return chqdate2;
+    }
+
+    public void setChqdate2(String chqdate2) {
+        this.chqdate2 = chqdate2;
+    }
+
+    public String getChqvalue2() {
+        return chqvalue2;
+    }
+
+    public void setChqvalue2(String chqvalue2) {
+        this.chqvalue2 = chqvalue2;
+    }
+
+    public String getChqbankflag2() {
+        return chqbankflag2;
+    }
+
+    public void setChqbankflag2(String chqbankflag2) {
+        this.chqbankflag2 = chqbankflag2;
     }
 
    
