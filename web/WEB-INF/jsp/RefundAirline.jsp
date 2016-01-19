@@ -229,7 +229,7 @@
                                 </tr>
                                 <tr row="${varRefundAirline.index + 1}">
                                     <td  style="text-align:center"><span id="ticketDate" name="ticketDate">${detail.ticketFareAirline["TicketDate"]}</span></td>
-                                    <td ><span id="sectorIssue${index}">${detail.ticketFareAirline["Sector"]}</span></td>
+                                    <td><span id="sectorIssue${index}" colName="sectorIssue">${detail.ticketFareAirline["Sector"]}</span></td>
                                     <!--<td style="text-align:center"><span id="total">${detail.ticketFareAirline["Total"]}</span></td>-->
                                     <td style="text-align:center"><fmt:formatNumber type="number" maxFractionDigits="3" minFractionDigits="2" value="${detail.ticketFareAirline['Total']}"/></td>
                                     <td ><span id="department">${detail.ticketFareAirline["Dept"]}</span></td>       
@@ -620,6 +620,249 @@
             }
         });
     }); 
+    
+    $("#RefundAirlineForm").bootstrapValidator({
+//        excluded: [':disabled', ':hidden', ':not(:visible)'],
+        framework: 'bootstrap',
+        feedbackIcons: {
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
+        },
+        fields: {
+            agentCode: {
+                validators: {
+                    notEmpty: {
+                        message: 'The agent is required'
+                    }
+                }
+            }
+        }
+    });
+
+    $("#RefundAgentTable tr").on('click', function () {
+        var agent_id = $(this).find(".agent-id").text();
+        var agent_user = $(this).find(".agent-user").text();
+        var agent_name = $(this).find(".agent-name").text();
+        $("#refundAgentId").val(agent_id);
+        $("#refundAgentCode").val(agent_user);
+        $("#refundAgentName").val(agent_name);
+        $("#RefundAgentModal").modal('hide');
+    });
+    
+    var agentCode = [];
+    $.each(agent, function (key, value) {
+        agentCode.push(value.code);
+        agentCode.push(value.name);
+    });
+
+    $("#receiveUserTable tr").on('click', function () {
+        var user_id = $(this).find(".user-id").text();
+        var user_user = $(this).find(".user-user").text();
+        var user_name = $(this).find(".user-name").text();
+        $("#receiveBy").val(user_user);
+        $("#receiveByName").val(user_name);
+        $("#receiveUserModal").modal('hide');
+    });
+
+    var userCode = [];
+    $.each(user, function (key, value) {
+        userCode.push(value.code);
+        userCode.push(value.name);
+        if ($("#receiveBy").val() === value.code) {
+            $("#receiveByName").val(value.name);
+        }
+    });
+
+
+
+    $("#refundAgentCode").autocomplete({
+        source: agentCode,
+        close: function (event, ui) {
+            $("#refundAgentCode").trigger('keyup');
+        }
+    });
+
+    $("#receiveBy").autocomplete({
+        source: userCode,
+        close: function (event, ui) {
+            $("#receiveBy").trigger('keyup');
+        }
+    });
+    $("#refundAgentCode").keyup(function(event){   
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left); 
+        if($(this).val() === ""){
+            $("#refundAgentName").val("");
+        }
+    });
+    $("#refundAgentCode").on('keyup', function () {
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+        var code = this.value.toUpperCase();
+        var name = this.value.toUpperCase();
+        console.log("Name :" + name);
+        $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
+        $.each(agent, function (key, value) {
+            if (value.code.toUpperCase() === code) {
+                $("#refundAgentId").val(value.id);
+                $("#refundAgentName").val(value.name);
+                $("#refundAgentCode").val(value.code);
+            }
+            else if (value.name.toUpperCase() === name) {
+                $("#refundAgentCode").val(value.code);
+                $("#refundAgentId").val(value.id);
+                $("#refundAgentName").val(value.name);
+            }
+        });
+    });
+    
+    $("#receiveBy").keyup(function(event){   
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left); 
+        if($(this).val() === ""){
+            $("#receiveByName").val("");
+        }
+    });
+    
+    $("#receiveBy").on('keyup', function () {
+        var position = $(this).offset();
+        $(".ui-widget").css("top", position.top + 30);
+        $(".ui-widget").css("left", position.left);
+        var code = this.value.toUpperCase();
+        var name = this.value.toUpperCase();
+        console.log("Name :" + name);
+        $("#agent_id,#agent_name,#agent_addr,#agent_tel").val(null);
+        $.each(user, function (key, value) {
+            if (value.code.toUpperCase() === code) {
+                $("#receiveByName").val(value.name);
+                $("#receiveBy").val(value.code);
+            }
+            else if (value.name.toUpperCase() === name) {
+                $("#receiveBy").val(value.code);
+                $("#receiveByName").val(value.name);
+            }
+        });
+    });
+
+    //autocomplete
+//    $("#refundBy").keyup(function (event) {
+//        var position = $(this).offset();
+//        $(".ui-widget").css("top", position.top + 30);
+//        $(".ui-widget").css("left", position.left);
+//        if ($(this).val() === "") {
+//            $("#refundBy").val("");
+//            $("#refundByName").val("");
+//        } else {
+//            if (event.keyCode === 13) {
+//                searchCustomerAutoList(this.value);
+//            }
+//        }
+//    });
+
+    var showflag = 1;
+//    $("#refundBy").keydown(function () {
+//
+//        var position = $(this).offset();
+//        $(".ui-widget").css("top", position.top + 30);
+//        $(".ui-widget").css("left", position.left);
+//        if (showflag == 0) {
+//            $(".ui-widget").css("top", -1000);
+//            showflag = 1;
+//        }
+//    });
+
+
+    $("#searchCustFrom").keyup(function (event) {
+        if (event.keyCode === 13) {
+            if ($("#searchCustFrom").val() == "") {
+                // alert('please input data');
+            }
+            searchCustomerAgentList($("#searchCustFrom").val());
+        }
+    });
+
+    //Add Blank row for user input.
+    /*Auto Add lastrow */
+
+    $("#refundNo").on("keyup", function (e) {
+        if (e.which == 13) {
+
+            var action = document.getElementById('action');
+            action.value = 'search';
+            document.getElementById('RefundAirlineForm').submit();
+        }
+    });
+
+    $("#ButtonSearch").click(function () {
+
+        if ($("#refundNo").val() === "") {
+            return;
+        }
+        var action = document.getElementById('action');
+        action.value = 'search';
+        document.getElementById('RefundAirlineForm').submit();
+    });
+
+    $("#buttonSave").click(function () {
+
+        $('#RefundAirlineForm').bootstrapValidator('revalidateField', 'agentCode');
+
+        if ($("#refundAgentId").val() === "") {
+            return;
+        }
+        var valid = true;
+        for (var i = 1; i < $("#counter").val(); i++) {
+            var refund = $("#refund" + i).val();
+            var sector = $("#sectorIssue" + i).html();
+            if ("" === refund || sector.indexOf(refund) < 0) {
+                $("#refund" + i).css('border-color', "Red");
+                valid = false;
+            } else {
+                $("#refund" + i).css('border-color', "Green");
+            }
+        }
+        if (valid) {
+            var action = document.getElementById('action');
+            action.value = 'save';
+            document.getElementById('RefundAirlineForm').submit();
+        }
+    });
+
+
+    $("#ButtonSaveAndNew").click(function () {
+
+        $('#RefundAirlineForm').bootstrapValidator('revalidateField', 'agentCode');
+
+        if ($("#refundAgentId").val() === "") {
+            return;
+        }
+        var valid = true;
+        for (var i = 1; i < $("#counter").val(); i++) {
+            var refund = $("#refund" + i).val();
+            var sector = $("#sectorIssue" + i).html();
+            if ("" === refund || sector.indexOf(refund) < 0) {
+                $("#refund" + i).css('border-color', "Red");
+                valid = false;
+            } else {
+                $("#refund" + i).css('border-color', "Green");
+            }
+        }
+        if (valid) {
+            var action = document.getElementById('action');
+            action.value = 'saveAndNew';
+            document.getElementById('RefundAirlineForm').submit();
+        }
+    });
+//
+//    $.each(customer, function (key, value) {
+//        if ($("#refundBy").val() === value.code) {
+//            $("#refundByName").val(value.name);
+//        }
+//    });
 
     });
 
