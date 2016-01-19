@@ -159,8 +159,18 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.delete(ticket);
-            transaction.commit();
+            String query ="from TicketFareAirline t where t.id = :ticketId"; 
+            System.out.println(" ticket.getId() " + ticket.getId());
+            List<TicketFareAirline> list = session.createQuery(query).setParameter("ticketId", ticket.getId()).list();
+
+            if (list.isEmpty()) {
+            } else {
+                for(int i = 0 ; i < list.get(0).getTicketFareInvoices().size() ; i++ ){
+                    session.delete(list.get(0).getTicketFareInvoices().get(i));
+                }
+                session.delete(list.get(0));
+                transaction.commit();
+            }
             session.close();
             this.sessionFactory.close();
             result = 1;
@@ -531,6 +541,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         List<TicketFareInvoice> list = new ArrayList<TicketFareInvoice>();
         String ticketfareid = "";
         Session session = this.sessionFactory.openSession();
+        boolean checktemp = false;
         if((ticket.getInvoiceNo() != null) &&(!"".equalsIgnoreCase(ticket.getInvoiceNo())) 
             && (ticket.getReferenceNo()!= null) &&(!"".equalsIgnoreCase(ticket.getReferenceNo()))){
             String queryInvoice = "from TicketFareInvoice tk where tk.invoice.invNo = :invNo and tk.ticketFareAirline.Master.referenceNo = :referenceNo";
@@ -538,18 +549,21 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                     .setParameter("invNo",ticket.getInvoiceNo())
                     .setParameter("referenceNo",ticket.getReferenceNo())
                     .list();
+            checktemp = true;
         }else if((ticket.getInvoiceNo() != null) &&(!"".equalsIgnoreCase(ticket.getInvoiceNo())) 
             && ((ticket.getReferenceNo()!= null) || (!"".equalsIgnoreCase(ticket.getReferenceNo())))){
             String queryInvoice = "from TicketFareInvoice tk where tk.invoice.invNo = :invNo";
             list = session.createQuery(queryInvoice)
                     .setParameter("invNo",ticket.getInvoiceNo())
                     .list();
+            checktemp = true;
         }else if( ((ticket.getInvoiceNo() == null) || ("".equalsIgnoreCase(ticket.getInvoiceNo()))) 
             && (ticket.getReferenceNo()!= null) &&(!"".equalsIgnoreCase(ticket.getReferenceNo()))){
             String queryInvoice = "from TicketFareInvoice tk where tk.ticketFareAirline.Master.referenceNo = :referenceNo";
             list = session.createQuery(queryInvoice)
                     .setParameter("referenceNo",ticket.getReferenceNo())
                     .list();
+            checktemp = true;
         }
         
         int temp = list.size()-1;
@@ -560,7 +574,6 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 }else{
                     ticketfareid += "'" + list.get(i).getTicketFareAirline().getId() + "'";
                 }
-                
             }
         }
         String query ="from TicketFareAirline t where";
@@ -578,11 +591,18 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
              query += " t.ticketType "+queryOperation+" '"+Prefix_Subfix+ticket.getType()+Prefix_Subfix+"'";
              check =1;
         }
-        if(!"".equalsIgnoreCase(ticketfareid)){
-            if(check == 1){query += " and ";}
-            query += " t.id in ("+ticketfareid.trim()+")";
-            check =1;
+        if(checktemp){
+            if(!"".equalsIgnoreCase(ticketfareid)){
+                if(check == 1){query += " and ";}
+                query += " t.id in ("+ticketfareid.trim()+")";
+                check =1;
+            }else{
+                if(check == 1){query += " and ";}
+                query += " t.id in ('XXXXXXXXXX')";
+                check =1;
+            }
         }
+        
         if((ticket.getRouting()!= null) &&(!"".equalsIgnoreCase(ticket.getRouting()))){
             if(check == 1){query += " and ";}
             query += " t.ticketRouting "+queryOperation+" '"+Prefix_Subfix+ticket.getRouting()+Prefix_Subfix+"'";
@@ -638,7 +658,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         List<TicketFareAirline> listAirline =  session.createQuery(query).list();
         List<TicketFareView> listView = new ArrayList<TicketFareView>();
         System.out.println("listAirline.size() "+listAirline.size());
-        
+    
         if(listAirline.isEmpty()){
             System.out.println("List null ");
             return null;
@@ -724,7 +744,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
     @Override
     public int checkDeleteRefundFromTicketNo(String ticketNo) {
         int result = 0;
-        String query = "from RefundAirticketDetail  refund where refund.ticketFareAirline.ticketNo =:ticketNo";
+        String query = "from RefundAirticketDetail  refund where refund.ticketNo =:ticketNo";
         Session session = this.sessionFactory.openSession();
         List<RefundAirticketDetail> refundList = session.createQuery(query).setParameter("ticketNo", ticketNo).list();
         if (refundList.isEmpty()) {
@@ -960,11 +980,25 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 routing = util.GetRounting(flightList);
             }
         }
-        if(airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null) {
-            String masterId = airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId();
-            System.out.println(" masterId " + masterId);
-            invoiceDetailList = session.createQuery(InvoiceDetailQuery).setParameter("masterId", masterId).list();
+        if(airticketPassList!=null && !airticketPassList.isEmpty()){
+            String masterId = "";
+            for(int x = 0 ; x < airticketPassList.size() ; x++){
+                if(airticketPassList.get(x).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null) {
+                    masterId += ", '"+airticketPassList.get(x).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId()+"'";
+                }
+            }
+            if(!"".equalsIgnoreCase(masterId)){
+                masterId = masterId.substring(1);
+                System.out.println(" masterId " + masterId);
+                invoiceDetailList = session.createQuery("from InvoiceDetail invd where invd.billableDesc.billable.master.id in ("+masterId+") and invd.billableDesc.MBilltype.name = 'Air Ticket' GROUP BY invd.invoice.id").list();
+            }
         }
+        
+//        if(airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null) {
+//            String masterId = airticketPassList.get(0).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId();
+//            System.out.println(" masterId " + masterId);
+//            invoiceDetailList = session.createQuery(InvoiceDetailQuery).setParameter("masterId", masterId).list();
+//        }
         
         if (invoiceDetailList.isEmpty()) {
             System.out.println(" invoiceDetailList.isEmpty() ");

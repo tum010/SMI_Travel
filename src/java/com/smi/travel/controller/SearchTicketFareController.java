@@ -76,7 +76,7 @@ public class SearchTicketFareController extends SMITravelController {
         
         if ("search".equalsIgnoreCase(action)) {
             List<TicketFareView> listTicket = new ArrayList<TicketFareView>();
-            listTicket = ticketFareAirlineService.getListTicketFare(ticketFareView,2);
+            listTicket = ticketFareAirlineService.getListTicketFare(ticketFareView,1);
             request.setAttribute(DATALIST, listTicket);
             request.setAttribute(TICKETFARE,ticketFareView);
         }
@@ -85,6 +85,7 @@ public class SearchTicketFareController extends SMITravelController {
             TicketFareAirline ticketFareAirline = new TicketFareAirline();
             ticketFareAirline.setId(ticketId);
             ticketFareAirline.setTicketNo(ticketNo);
+            
             int deletePayment = ticketFareAirlineService.checkDeletePaymentFromTicketNo(ticketNo); // 0 = not use , 1 = use
             int deleteRefund = ticketFareAirlineService.checkDeleteRefundFromTicketNo(ticketNo);
            
