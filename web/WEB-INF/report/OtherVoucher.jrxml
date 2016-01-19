@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelVoucher" language="groovy" pageWidth="575" pageHeight="392" columnWidth="574" leftMargin="1" rightMargin="0" topMargin="0" bottomMargin="0" uuid="053f4d0e-4534-4ae9-bd3a-d9c39367ad2d">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="16"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="210"/>
 	<queryString>
 		<![CDATA[SELECT
@@ -261,28 +261,28 @@ FROM
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{passenger3} != null ? $F{passenger3} : "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{passenger2} != null ? $F{passenger2} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="11" y="54" width="173" height="20" isPrintInFirstWholeBand="true" uuid="443f3670-f1db-4d87-8c86-df84ce1493ff"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{passenger5} != null ? $F{passenger5} : "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{passenger3} != null ? $F{passenger3} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="189" y="21" width="178" height="20" isPrintInFirstWholeBand="true" uuid="90fbcd62-602a-4057-b02b-f91139d87f49"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{passenger2} != null ? $F{passenger2} : "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{passenger4} != null ? $F{passenger4} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="189" y="37" width="178" height="20" isPrintInFirstWholeBand="true" uuid="0d3404b1-147e-48e1-9f2d-ea4ea4068cd4"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="14" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[($F{passenger4} != null ? $F{passenger4} : "")]]></textFieldExpression>
+				<textFieldExpression><![CDATA[($F{passenger5} != null ? $F{passenger5} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="189" y="54" width="178" height="20" isPrintInFirstWholeBand="true" uuid="81b5019e-95cb-47b5-a0d5-12445298605d"/>
