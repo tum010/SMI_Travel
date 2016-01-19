@@ -229,16 +229,16 @@
                         <thead>
                             <tr class="datatable-header">
                                 <th class="hidden" >Invoice Id</th>
-                                <th style="width: 10%" >Invoice No</th>
+                                <th style="width: 9%" >Invoice No</th>
                                 <th style="width: 9%" >Invoice Date</th>
                                 <th style="width: 15%" >Name</th>         
                                 <th style="width: 17%">Address</th>
-                                <th style="width: 9%">Total Price</th>
+                                <th style="width: 11%">Total Price</th>
                                 <th style="width: 8%">Currency</th>
                                 <th style="width: 10%">Department</th>
                                 <th style="width: 6%">Type</th>
                                 <th style="width: 8%">Term Pay</th>
-                                <th style="width: 8%">Action</th>
+                                <th style="width: 7%">Action</th>
                             </tr>
                         </thead>
                         <tbody> 
@@ -249,7 +249,8 @@
                                     <td >${inv.invoiceDate}</td>
                                     <td >${inv.name}</td>
                                     <td >${inv.address}</td>
-                                    <td align="right"><fmt:formatNumber type="number" maxFractionDigits="3" value="${inv.totalPrice}"/> </td>
+<!--                                    <td align="right" class="money"><fmt:formatNumber type="number" maxFractionDigits="3" value="${inv.totalPrice}"/> </td>-->
+                                    <td align="right" class="money">${inv.totalPrice}</td>
                                     <td align="center">${inv.currency}</td>
                                     <td>${inv.department}
                                         <c:set var="depart" value="" />

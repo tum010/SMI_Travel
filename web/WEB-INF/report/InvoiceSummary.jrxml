@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceSummary2" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ce5d0eb5-af68-44b4-b287-253094472c71">
 	<property name="ireport.zoom" value="2.727272727272742"/>
-	<property name="ireport.x" value="1545"/>
-	<property name="ireport.y" value="256"/>
+	<property name="ireport.x" value="1509"/>
+	<property name="ireport.y" value="208"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="username" class="java.lang.String"/>
 	<field name="invfrom" class="java.lang.String"/>
@@ -43,7 +43,7 @@
 	<variable name="countNo" class="java.lang.Integer" resetType="Group" resetGroup="invoicesummary" calculation="DistinctCount">
 		<variableExpression><![CDATA[($V{countNo}==null?0:$V{countNo}+1)]]></variableExpression>
 	</variable>
-	<group name="invoicesummary" isStartNewPage="true" keepTogether="true">
+	<group name="invoicesummary" isStartNewPage="true" isReprintHeaderOnEachPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{invtype}]]></groupExpression>
 		<groupHeader>
 			<band height="59">
@@ -76,28 +76,28 @@
 					<textFieldExpression><![CDATA[$F{invto}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="488" y="5" width="75" height="13" uuid="99b5044d-68d1-4b0a-8348-3d6baf461545"/>
+					<reportElement x="445" y="5" width="75" height="13" uuid="99b5044d-68d1-4b0a-8348-3d6baf461545"/>
 					<textElement>
 						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Invoice Type]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="563" y="5" width="89" height="13" isPrintInFirstWholeBand="true" uuid="e53443c6-a8ff-490b-96cd-46a5e0f9a978"/>
+					<reportElement x="520" y="5" width="89" height="13" isPrintInFirstWholeBand="true" uuid="e53443c6-a8ff-490b-96cd-46a5e0f9a978"/>
 					<textElement textAlignment="Left">
 						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{headertype}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="659" y="5" width="64" height="13" uuid="79ac56e2-fdd9-4eef-aae5-14369097c9c9"/>
+					<reportElement x="616" y="5" width="64" height="13" uuid="79ac56e2-fdd9-4eef-aae5-14369097c9c9"/>
 					<textElement>
 						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Department]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="723" y="5" width="65" height="13" uuid="60280c19-08d7-4903-b449-9c4862b22e14"/>
+					<reportElement x="680" y="5" width="116" height="13" uuid="60280c19-08d7-4903-b449-9c4862b22e14"/>
 					<textElement textAlignment="Center">
 						<font fontName="Tahoma" size="10" isBold="true"/>
 					</textElement>

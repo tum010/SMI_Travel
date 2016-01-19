@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */ 
 $(document).ready(function () {
-    $(".money").mask('0000000000', {reverse: true});
+    $(".money").mask('00,000,000.00', {reverse: true});
      
     $(".numerical").on('input', function() { 
         var value=$(this).val().replace(/[^0-9.,]*/g, '');
@@ -72,7 +72,62 @@ $(document).ready(function () {
     $('.todate').datetimepicker().change(function(){                          
         checkToDateField();
     });
+    
+    $("#searchInvoiceFrom").keyup(function(event) {
+        if (event.keyCode === 13) {
+            if ($("#searchInvoiceFrom").val() == "") {
+                // alert('please input data');
+            }
+            searchCustomerAgentList($("#searchInvoiceFrom").val());
+        }
+    });
 });
+
+function searchCustomerAgentList(name) {
+    var servletName = 'BillableServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&name=' + name +
+            '&type=' + 'getListBillto';
+    CallAjax(param);
+}
+
+function CallAjax(param) {
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                $('#AgentTable').dataTable().fnClearTable();
+                $('#AgentTable').dataTable().fnDestroy();
+                $("#AgentTable tbody").empty().append(msg);
+
+                $('#AgentTable').dataTable({bJQueryUI: true,
+                    "sPaginationType": "full_numbers",
+                    "bAutoWidth": false,
+                    "bFilter": false,
+                    "bPaginate": true,
+                    "bInfo": false,
+                    "bLengthChange": false,
+                    "iDisplayLength": 10
+                });
+                $("#ajaxload").addClass("hidden");
+
+            }, error: function(msg) {
+                $("#ajaxload").addClass("hidden");
+                alert('error');
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}
 
 function setBillValue(billto, billname, address, term, pay) {
     $("#InvTo").val(billto);

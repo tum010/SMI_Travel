@@ -271,8 +271,8 @@ function searchInvoiceFromInvoiceNo() {
 }
 
 function validFromInvoice(){
-    var departmentPage = $("#departmentPage").val();    
-    if(departmentPage !== 'ticket'){
+    var departmentPage = $("#InputInvoiceType").val();    
+    if(departmentPage !== 'W/A'){
         var invDate = $("#InputInvDate").val();
         var invTo = $("#InvTo").val();
         var invToName = $("#InvToName").val();
@@ -285,7 +285,7 @@ function validFromInvoice(){
             return;
         }
         
-    }else if(departmentPage === 'ticket'){
+    }else if(departmentPage === 'W/A'){
         var invDate = $("#InputInvDate").val();
         var invTo = $("#InvTo").val();
         var invToName = $("#InvToName").val();
