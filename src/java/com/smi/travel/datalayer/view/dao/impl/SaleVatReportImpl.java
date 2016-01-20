@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.view.dao.SaleVatReportDao;
 import com.smi.travel.datalayer.view.entity.OutputTaxView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +96,7 @@ public class SaleVatReportImpl implements SaleVatReportDao{
          
         SimpleDateFormat dateformat = new SimpleDateFormat();
         dateformat.applyPattern("dd-MM-yyyy");
-        
+        DecimalFormat df = new DecimalFormat("#.00"); 
         for (Object[] B : QueryList) {
             OutputTaxView otv = new OutputTaxView();
             otv.setTaxid(util.ConvertString(B[0]));
@@ -103,12 +104,12 @@ public class SaleVatReportImpl implements SaleVatReportDao{
             otv.setTaxdate("null".equals(String.valueOf(B[2])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[2])))));
             otv.setArcode(util.ConvertString(B[3]));
             otv.setTaxinvname(util.ConvertString(B[4]));
-            otv.setGross((B[5]) != null ? new BigDecimal(util.ConvertString(B[5])) : new BigDecimal("0.00"));
-            otv.setVat((B[6]) != null ? new BigDecimal(util.ConvertString(B[6])) : new BigDecimal("0.00"));
-            otv.setAmount((B[7]) != null ? new BigDecimal(util.ConvertString(B[7])) : new BigDecimal("0.00"));
+            otv.setGross((B[5]) != null ? new BigDecimal(util.ConvertString((df.format(new BigDecimal(util.ConvertString(B[5])))))) : new BigDecimal("0.00"));
+            otv.setVat((B[6]) != null ? new BigDecimal(util.ConvertString((df.format(new BigDecimal(util.ConvertString(B[6])))))) : new BigDecimal("0.00"));
+            otv.setAmount((B[7]) != null ? new BigDecimal(util.ConvertString((df.format(new BigDecimal(util.ConvertString(B[7])))))) : new BigDecimal("0.00"));
             otv.setDepartment(util.ConvertString(B[8]));
             otv.setDescription(util.ConvertString(B[9]));
-            otv.setStatus(util.ConvertString(B[10]));
+            otv.setStatus((util.ConvertString(B[10])).equalsIgnoreCase("VoidPost") ? "Void" : util.ConvertString(B[10]));
             otv.setType(util.ConvertString(B[14]));
             outputTaxViewList.add(otv);
         }

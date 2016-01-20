@@ -35,11 +35,11 @@ public class PostSaleVatController extends SMITravelController {
         String from = request.getParameter("postFromDate");
         String to = request.getParameter("postToDate");
         String status = request.getParameter("postStatus");
-        
+        String type = request.getParameter("postType");
         //Search
         if("searchPostSaleVat".equals(action)){
            List<OutputTaxView> listPost = new LinkedList<>();
-           listPost = postsalevatservice.SearchOutputTaxViewFromFilter(from, to, department, status);
+           listPost = postsalevatservice.SearchOutputTaxViewFromFilter(from, to, department, status,type);
             if(listPost != null){
                 request.setAttribute("listPost", listPost);
             }else{
@@ -69,7 +69,7 @@ public class PostSaleVatController extends SMITravelController {
                 System.out.println("Update ??? : " + isUpdate);
                 request.setAttribute("update", isUpdate);
                 
-                listPost = postsalevatservice.SearchOutputTaxViewFromFilter(from, to, department, status);
+                listPost = postsalevatservice.SearchOutputTaxViewFromFilter(from, to, department, status,type);
                 request.setAttribute("listPost", listPost);
             }else{
                 request.setAttribute("listPost", null);
@@ -79,7 +79,7 @@ public class PostSaleVatController extends SMITravelController {
         request.setAttribute("From", from);
         request.setAttribute("To", to);
         request.setAttribute("Status", status);
-        
+        request.setAttribute("Type", type);
         return PostSaleVat;
     }
 

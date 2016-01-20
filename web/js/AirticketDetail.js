@@ -190,9 +190,9 @@ $(document).ready(function () {
             alert('please add Passengers...');
             return false;
         } else {
-            
+            document.getElementById('AirticketForm').submit();
             console.log('submit');
-            return true;
+//            return true;
         }
     });
 

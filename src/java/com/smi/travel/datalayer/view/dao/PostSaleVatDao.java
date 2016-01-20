@@ -13,6 +13,6 @@ import java.util.List;
  * @author Jittima
  */
 public interface PostSaleVatDao {
-    public List<OutputTaxView> SearchOutputTaxViewFromFilter(String from,String to,String department,String status);   
+    public List<OutputTaxView> SearchOutputTaxViewFromFilter(String from,String to,String department,String status,String type);   
     public String UpdateOutputTaxStatus(List<OutputTaxView> outputTaxViewList);
 }

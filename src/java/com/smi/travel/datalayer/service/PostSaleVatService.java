@@ -16,8 +16,8 @@ import java.util.List;
 public class PostSaleVatService {
     private PostSaleVatDao postSaleVatDao;
 
-    public List<OutputTaxView> SearchOutputTaxViewFromFilter(String from,String to,String department,String status){
-        return postSaleVatDao.SearchOutputTaxViewFromFilter(from, to, department, status);
+    public List<OutputTaxView> SearchOutputTaxViewFromFilter(String from,String to,String department,String status,String type){
+        return postSaleVatDao.SearchOutputTaxViewFromFilter(from, to, department, status,type);
     }
     
     public String UpdateOutputTaxStatus(List<OutputTaxView> outputTaxViews){

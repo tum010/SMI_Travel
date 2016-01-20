@@ -12,6 +12,7 @@
 <c:set var="To" value="${requestScope['To']}" />
 <c:set var="Status" value="${requestScope['Status']}" />
 <c:set var="listPost" value="${requestScope['listPost']}" />
+<c:set var="Type" value="${requestScope['Type']}" />
 <section class="content-header" >
     <h1>
         Tax Invoice Report
@@ -53,7 +54,25 @@
                     <button type="button" class="close" aria-label="Close" onclick="hideDiv()"><span aria-hidden="true">&times;</span></button>
                    <strong>Please choose the post tax invoice list.!</strong> 
                 </div>
-                <div class="col-xs-1 text-right" style="width: 60px">
+                <div class="col-xs-1 text-left" style="width: 50px">
+                    <label class="control-label">Type</lable>
+                </div>
+                <div class="col-xs-1 form-group" style="width: 120px">
+                    <c:set var="selectTX" value="" />
+                    <c:set var="selectCN" value="" />
+                    <c:if test="${Type == 'TX'}">
+                        <c:set var="selectTX" value="selected" />
+                    </c:if>
+                    <c:if test="${Type == 'CN'}">
+                        <c:set var="selectCN" value="selected" />
+                    </c:if>
+                    <select class="form-control" id="postType" name="postType">
+                        <option value="">--Select--</option>
+                        <option value="TX" ${selectTX}> TX </option>
+                        <option value="CN" ${selectCN}> CN </option>
+                    </select>
+                </div>
+                <div class="col-xs-1 text-right" style="width: 50px">
                     <label class="control-label" for="">From<font style="color: red">*</font></lable>
                 </div>
                 <div class="col-xs-1 form-group" style="width: 170px">
@@ -70,7 +89,7 @@
                     </c:if>                             
                     </div>  
                 </div>
-                <div class="col-xs-1 text-right" style="width: 40px">
+                <div class="col-xs-1 text-right" style="width: 30px">
                     <label class="control-label">To<font style="color: red">*</font></lable>
                 </div>
                 <div class="col-xs-1 form-group" style="width: 170px">
@@ -87,10 +106,10 @@
                     </c:if>                             
                     </div>   
                 </div>
-                <div class="col-xs-1 text-left" style="width: 100px">
+                <div class="col-xs-1 text-left" style="width: 90px">
                     <label class="control-label">Department</lable>
                 </div>
-                <div class="col-xs-1 form-group" style="width: 140px">
+                <div class="col-xs-1 form-group" style="width: 125px">
                     <c:set var="selectDepartWendy" value="" />
                     <c:set var="selectDepartOutbound" value="" />
                     <c:set var="selectDepartInbound" value="" />
@@ -110,7 +129,7 @@
                         <option value="Inbound" ${selectDepartInbound}>Inbound </option>
                     </select>
                 </div>
-                <div class="col-xs-1 text-right" style="width: 70px">
+                <div class="col-xs-1 text-right" style="width: 60px">
                     <label class="control-label" for="">Status</lable>
                 </div>
                 <div class="col-xs-1" style="width: 120px">
@@ -138,20 +157,17 @@
                         <option value="Void" ${selectVoid}>Void </option>
                     </select>
                 </div>
-                <div class="col-xs-1 text-right" style="width: 100px">
+            </div>
+            <div class="col-xs-12"> 
+                <div class="col-xs-10" style="width: 867px">
+                </div>
+                <div class="col-xs-1 text-right" style="width: 50px">
                     <button type="submit"  id="btnSearch"  name="btnSearch"  onclick="searchPostSaleVat()"  class="btn btn-primary btn-primary">
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                     </button>
                 </div>
             </div>
-<!--            <div class="col-xs-12"> 
-                <div class="col-xs-1 text-right" style="width: 920px">
-                    <button type="submit"  id="btnSearch"  name="btnSearch"  onclick="searchPostSaleVat()"  class="btn btn-primary btn-primary">
-                        <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
-                    </button>
-                </div>
-            </div>-->
-            <!--<div class="col-xs-12"><br></div>-->
+            <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
                 <!--<div class="col-xs-12"><br></div>--> 
                 <div class="col-xs-12">

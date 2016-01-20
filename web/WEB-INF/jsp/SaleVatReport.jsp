@@ -113,7 +113,7 @@
                 <div class="col-xs-1 text-right" style="width: 70px">
                     <label class="control-label" for="">Status</lable>
                 </div>
-                <div class="col-xs-1" style="width: 150px">
+                <div class="col-xs-1" style="width: 170px">
                     <c:set var="selectPost" value="" />
                     <c:set var="selectChange" value="" />
                     <c:set var="selectVoidPost" value="" />
@@ -130,7 +130,7 @@
                         <option value="">--Select--</option>
                         <option value="Post" ${selectPost}>Post </option>
                         <option value="Change" ${selectChange}>Change </option>
-                        <option value="VoidPost" ${selectVoidPost}>VoidPost</option>
+                        <option value="VoidPost" ${selectVoidPost}>Void</option>
                     </select>
                 </div>
             </div>
@@ -203,7 +203,7 @@
                 </div>
             </div>
             <div class="col-xs-12">
-                <div class="col-xs-1 text-right" style="width: 890px"></div>
+                <div class="col-xs-1 text-right" style="width: 809px"></div>
                 <div class="col-xs-1 text-right" style="">
                     <button type="button" class="btn btn-success btn-default" onclick="cancelAction()"  data-dismiss="modal">
                         <span id="btnCancel" class="glyphicon glyphicon-export" ></span> Cancel Post
