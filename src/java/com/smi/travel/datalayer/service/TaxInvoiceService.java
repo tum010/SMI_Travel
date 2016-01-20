@@ -60,8 +60,8 @@ public class TaxInvoiceService {
         return taxInvoiceDao.getTaxInvoiceByWildCardSearch(taxInvId,taxInvNo,wildCardSearch,keyCode,department);
     }
 
-    public int getOutputTaxStatus(String taxInvId) {
-        return taxInvoiceDao.getOutputTaxStatus(taxInvId);
+    public TaxInvoice getPostVatData(String taxInvId) {
+        return taxInvoiceDao.getPostVatData(taxInvId);
     }
-      
+     
 }
