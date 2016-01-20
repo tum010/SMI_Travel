@@ -3,7 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<script type="text/javascript" src="js/workspace.js"></script> 
+<!--<script type="text/javascript" src="js/workspace.js"></script>--> 
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/jquery.inputmask.js"></script>
 <script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
@@ -399,7 +399,7 @@
                                 </div>-->
                             </div>
                         </div>
-                        <div class="col-xs-12" style="margin-top: -30px">
+                        <div class="col-xs-12" style="margin-top: -25px">
                             <div class="col-xs-12">
                                 <div class="col-xs-1  text-right" style="width: 147px">
                                     <label class="control-label text-right" > Search &nbsp;&nbsp;</label>
@@ -407,11 +407,16 @@
                                 <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchInvno()">
                                     <span id="SpanEdit${advanced.search}">Invoice No.</span>
                                 </a>
-                                <label class="control-label text-right">&nbsp;&nbsp;/&nbsp;&nbsp;</label>                               
-                                <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchRefno()">
-                                    <span id="SpanEdit${advanced.search}">Ref No.</span>
-                                </a>
+                                <c:if test="${typeDepartment == 'Inbound'}">   
+                                    <label class="control-label text-right">&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                </c:if>
                                 <c:if test="${typeDepartment != 'Inbound'}">
+                                    <label class="control-label text-right">&nbsp;&nbsp;/&nbsp;&nbsp;</label>
+                                    <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchRefno()">
+                                        <span id="SpanEdit${advanced.search}">Ref No.</span>
+                                    </a>
+                                </c:if>
+                                <c:if test="${typeDepartment == 'Wendy'}">
                                     <label class="control-label text-right">&nbsp;&nbsp;/&nbsp;&nbsp;</label>
                                     <a data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchAirCom()">
                                         <span id="SpanEdit${advanced.search}">Air Commission</span>
@@ -1610,7 +1615,7 @@
         });
         $("#refNo").keyup(function(event) {
             if (event.keyCode === 13) {
-                searchRefNo();
+                searchRefNo(); 
             }
         });
         $("#searchPaymentNoAir").keyup(function(event) {
