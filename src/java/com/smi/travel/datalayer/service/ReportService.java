@@ -817,4 +817,8 @@ public class ReportService {
     public void setPaymentOutboundDao(PaymentOutboundDao paymentOutboundDao) {
         this.paymentOutboundDao = paymentOutboundDao;
     }
+
+    public List getDaytourOperationOtherReport(String otherId, String passengerId, String refNo, String status, String printby) {
+        return daytourOtherdao.getDaytourOperationOtherReport(otherId,passengerId,refNo,status,printby);
+    }
 }

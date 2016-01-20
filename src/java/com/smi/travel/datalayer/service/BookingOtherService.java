@@ -37,8 +37,8 @@ public class BookingOtherService {
         return otherBookDao.getListBookingAll();
     }
     
-    public List<OtherBookingView> getListBookingAllView(){
-        return otherBookDao.getListBookingAllView();
+    public List<OtherBookingView> getListBookingAllView(String name){
+        return otherBookDao.getListBookingAllView(name);
     }
     
     public List<OtherBooking> getListBookingDaytourComission(String StartDate, String EndDate,String agentID,String guideID) {

@@ -101,7 +101,7 @@ public class DaytourOperationOtherController extends SMITravelController {
         }
         
         //Bookig List View 
-        listOtherBookingAllView = otherBookingService.getListBookingAllView();
+        listOtherBookingAllView = otherBookingService.getListBookingAllView("");
         if(listOtherBookingAllView == null){
 
             request.setAttribute("ListBookingAllView", null);

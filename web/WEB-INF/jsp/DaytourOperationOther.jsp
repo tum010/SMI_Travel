@@ -55,9 +55,13 @@
                 </div>
             </div>
             <hr/>
-            <div id="textAlertDivNotPrint"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div id="textAlertDivNotPrint"  style="display:none;" class="alert alert-danger">
+                <button type="button" class="close" aria-label="Close" onclick="hideTextAlert()"><span aria-hidden="true">&times;</span></button>
                 <strong>Please Select Report Type !</strong> 
+            </div>
+            <div id="textAlertDivSelect"  style="display:none;" class="alert alert-danger">
+                <button type="button" class="close" aria-label="Close" onclick="hideTextAlert()"><span aria-hidden="true">&times;</span></button>
+                <strong>Please Select Product !</strong> 
             </div>
             <div class="col-xs-12 form-group">
                 <div class="col-xs-1 text-right">
@@ -73,7 +77,9 @@
                 </div>
             </div>
     
-            <!--Information --> 
+            <!--Information -->
+            <input type="hidden" id="countOther" name="countOther" value="${listOtherBooking.size()}"/>
+            <input type="hidden" id="countPassenger" name="countPassenger" value="${listPassenger.size()}"/>
             <div class="col-xs-12 form-group">
                 <!--Ref No Book  -->
                 <div class="panel panel-default"> 
@@ -84,6 +90,7 @@
                         <table class="display" id="RefBookTable" name="RefBookTable">
                             <thead class="datatable-header">
                                 <tr>
+                                    <th style="width:1%;"></th>
                                     <th style="width:10%;">Code</th>
                                     <th style="width:40%;">Name</th>
                                     <th style="width:10%;">Date</th>
@@ -98,6 +105,12 @@
                                     <c:forEach var="table" items="${listOtherBooking}" varStatus="status">
                                     <c:set var="counter" value="${status.count}"></c:set>               
                                     <tr>
+                                        <td>
+                                            <center>
+                                                <input type="checkbox" id="otherCheck${status.count}" name="otherCheck${status.count}" checked=""/>
+                                                <input type="hidden" id="otherId${status.count}" name="otherId${status.count}" value="${table.id}"/>
+                                            </center>
+                                        </td>
                                         <td><center><c:out value="${table.product.code}" /></center></td>
                                         <td><center><c:out value="${table.product.name}" /></center></td>
                                         <td><center><c:out value="${table.otherDate}" /></center></td>
@@ -163,12 +176,15 @@
                                 </c:if> 
                                 </c:forEach>
                             </tbody>
-                        </table>
-                        
-                        <label class="control-label" style="margin-top: 20px;margin-left: 20px;">Passenger (<c:out value="${table2.product.code}" />) </label>
-                        <table class="display" style="width:97%;margin-top: 10px; margin-bottom: 20px">
+                        </table>                                              
+                    </div> <!--collapse -->
+                    </c:forEach>
+                    <div class="panel-body">
+                        <label class="control-label" style="margin-top: 10px;margin-left: 10px;">Passenger</label>
+                        <table class="display" id="PassengerTable" name="PassengerTable">                           
                             <thead class="datatable-header">
                                 <tr>
+                                    <th style="width: 1%"></th>
                                     <th style="width: 3%">No</th>
                                     <th style="width: 10%">Code</th>
                                     <th style="width: 30%">Name</th>
@@ -181,9 +197,21 @@
                             <tbody>
                                 <c:forEach var="table1" items="${listPassenger}" varStatus="status">
                                 <tr>
+                                    <c:set var="leader" value="Yes"/>
+                                    <c:set var="leaderCheck" value="checked"/>
+                                    <c:if test="${table1.isLeader == 0}">
+                                        <c:set var="leader" value="No"/>
+                                        <c:set var="leaderCheck" value=""/>
+                                    </c:if>
+                                    <td>
+                                        <center>
+                                            <input type="checkbox" id="passengerCheck${status.count}" name="passengerCheck${status.count}" ${leaderCheck}/>
+                                            <input type="hidden" id="passengerId${status.count}" name="passengerId${status.count}" value="${table1.customer.id}"/>
+                                        </center>
+                                    </td>
                                     <td><center><c:out value="${status.count}" /></center></td>
                                     <td><center><c:out value="${table1.customer.code}" /></center></td>
-                                    <td><c:out value="${table1.customer.firstName}" />&nbsp;<c:out value="" /></td>
+                                    <td><c:out value="${table1.customer.MInitialname.name}" />&nbsp;<c:out value="${table1.customer.firstName}" />&nbsp;<c:out value="${table1.customer.lastName}" /></td>
                                     <td>
                                         <center>
                                             <c:if test="${table1.customer.birthDate != '' && table1.customer.birthDate != null}">
@@ -198,11 +226,7 @@
                                     <td><center><c:out value="${table1.customer.tel}" /></center></td>
                                     <td><center><c:out value="${table1.customer.nationality}" /></center></td>
                                     <td>
-                                        <center>
-                                            <c:set var="leader" value="Yes"/>
-                                            <c:if test="${table1.isLeader == 0}">
-                                                <c:set var="leader" value="No"/>
-                                            </c:if>
+                                        <center>                                           
                                             <c:out value="${leader}" />
                                         </center>
                                     </td>
@@ -210,10 +234,9 @@
                                 </c:forEach>
                             </tbody>
                         </table>
-                    </div> <!--collapse -->
-                    </c:forEach>
-                </div> <!--End Ref No Book  --> 
-                
+                    </div>
+                </div> <!--End Ref No Book  -->
+                                              
                 <div class="col-xs-12 form-group"> <!--Select Print Report -->
                     <div class="col-xs-2 text-right">
                         <label class="control-label text-right" align="left">Report &nbsp;Type</lable>
@@ -253,19 +276,19 @@
                 <table class="display" id="PacketTable">
                     <thead class="datatable-header">
                         <tr>
-                            <th style="width:40px;">Ref No</th>
-                            <th style="width:90px;">Ref Date</th>
-                            <th style="width:150px;">Leader</th>
-                            <th style="width:150px;">Product Name</th>
-                            <th style="width:70px;">Status</th>
-                            <th style="width:40px;">Action</th>
+                            <th style="width:8%;">Ref No</th>
+                            <th style="width:11%;">Other Date</th>
+                            <th style="width:20%;">Leader</th>
+                            <th style="width:24%;">Product Name</th>
+                            <th style="width:10%;">Status</th>
+                            <th style="width:7%;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="table1" items="${ListBookingAllView}" varStatus="dayStatus">
                             <tr>
 <!--                                <td class="pack-date"><div style="width: 31px" >${table1.refno}</div></td>
-                                <td class="text-center"><div style="width: 65px" >${table1.createdate}</div></td>
+                                <td class="text-center"><div style="width: 65px" >${table1.otherdate}</div></td>
                                 <td class="text-left"><div style="width: 140px" > ${table1.leader}</div></td>
                                 <td class="text-left"><div style="width: 160px" >${table1.product}</div></td>
                                 <td class="text-center"><div style="width: 10px" >${table1.status}</div></td>
@@ -274,8 +297,16 @@
                                         <span class="glyphicon glyphicon-check"></span>
                                     </a>
                                 </td>-->
-                                <td class="pack-date">${table1.refno}</td>
-                                <td class="text-center">${table1.createdate}</td>
+                                <td class="pack-date text-center">
+                                    <c:set var="refno1" value="${fn:substring(table1.refno, 0, 2)}" />
+                                    <c:set var="refno2" value="${fn:substring(table1.refno, 2,7)}" />
+                                    <c:choose>
+                                        <c:when test="${not empty table1.refno}">
+                                            ${refno1}-${refno2}
+                                        </c:when>
+                                    </c:choose>                                   
+                                </td>
+                                <td class="text-center">${table1.otherdate}</td>
                                 <td class="text-left"> ${table1.leader}</td>
                                 <td class="text-left">${table1.product}</td>
                                 <td class="text-center">${table1.status}</td>

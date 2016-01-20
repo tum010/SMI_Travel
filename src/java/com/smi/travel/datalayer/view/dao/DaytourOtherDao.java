@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface DaytourOtherDao {
     public List getDaytourOtherReport(String refno,String status);
+    public List getDaytourOperationOtherReport(String otherId, String passengerId, String refno, String status, String printby);
 }

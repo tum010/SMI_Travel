@@ -27,6 +27,7 @@ public class DaytourOther {
     private String passenger5;
     private String passenger6;
     private String remark;
+    private String printby;
 
     public int getAdult() {
         return adult;
@@ -162,5 +163,13 @@ public class DaytourOther {
 
     public void setPassenger6(String passenger6) {
         this.passenger6 = passenger6;
+    }
+
+    public String getPrintby() {
+        return printby;
+    }
+
+    public void setPrintby(String printby) {
+        this.printby = printby;
     }
 }

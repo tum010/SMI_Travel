@@ -67,6 +67,7 @@ import com.smi.travel.datalayer.view.entity.AdvanceReceivePeriodView;
 import com.smi.travel.datalayer.view.entity.BookSummary;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
+import com.smi.travel.datalayer.view.entity.OtherBookingView;
 import com.smi.travel.datalayer.view.entity.PaymentTourCommissionView;
 import com.smi.travel.datalayer.view.entity.TicketAircommissionView;
 import com.smi.travel.util.Mail;
@@ -353,25 +354,25 @@ public class AJAXBean extends AbstractBean implements
 //                    customer.setLastName(pathname[0]);
 //                    customer.setCode(pathname[0] + pathname[1]);
 //                }
-                List<OtherBooking> summaryList = otherBookingDao.searchOtherBooking(name);
-                
-                
-                
+//                List<OtherBooking> summaryList = otherBookingDao.searchOtherBooking(name);
+                List<OtherBookingView> summaryList = otherBookingDao.getListBookingAllView(name);                                             
                 if (summaryList != null) {
                     for (int i = 0; i < summaryList.size(); i++) {
 
-                        OtherBooking otherBooking = summaryList.get(i);
+                        OtherBookingView otherBooking = summaryList.get(i);
 //                            if (bookDetail.getDateTour() != null) {
 //                                tourdate = bookDetail.getDateTour().toString();
 //                            }
-
+                        String refNo1 = otherBooking.getRefno().substring(0, 2);
+                        String refNo2 = otherBooking.getRefno().substring(2, 6);
                         result += "<tr>"
-                                + "<td class=\"text-center\">" + otherBooking.getMaster().getReferenceNo().trim() + "</td>"
-                                + "<td class=\"text-center\">" + otherBooking.getCreateDate() + "</td>"
-                                + "<td class=\"text-left\">" + otherBooking.getMaster().getCustomer().getFirstName() + " "  + otherBooking.getMaster().getCustomer().getLastName() + "</td>"
-                                + "<td class=\"text-left\">" + otherBooking.getProduct().getName() + "</td>"
-                                + "<td class=\"text-center\">" + otherBooking.getStatus().getName() + "</td>" 
-                                + "<td class=\"text-center\"><a href='DaytourOperationOther.smi?InputRefNo="+otherBooking.getMaster().getReferenceNo()+ "&action=search'><span class='glyphicon glyphicon-check'></span></a></td>"
+//                                + "<td class=\"text-center\">" + otherBooking.getMaster().getReferenceNo().trim() + "</td>"
+                                + "<td class=\"text-center\">" + refNo1+"-"+refNo2 + "</td>"
+                                + "<td class=\"text-center\">" + (otherBooking.getOtherdate()!= null ? otherBooking.getOtherdate() : "") + "</td>"
+                                + "<td class=\"text-left\">" + otherBooking.getLeader() + "</td>"
+                                + "<td class=\"text-left\">" + otherBooking.getProduct() + "</td>"
+                                + "<td class=\"text-center\">" + otherBooking.getStatus() + "</td>" 
+                                + "<td class=\"text-center\"><a href='DaytourOperationOther.smi?InputRefNo="+otherBooking.getRefno()+ "&action=search'><span class='glyphicon glyphicon-check'></span></a></td>"
                                 + "</tr>";
                     }
                 }
