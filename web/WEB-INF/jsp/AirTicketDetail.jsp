@@ -186,7 +186,7 @@
                                     <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                                 </c:if>
                                 <tr ${colourStatus}>
-                                    <td>                              
+                                    <td  ${colourStatus} class="text-center">                              
                                         <c:choose>
                                             <c:when test="${(flight.flightOrder != '') && (flight.flightOrder != null)}">
                                                 <input type="text" id="flight-${i.count}-flightOrder" name="flight-${i.count}-flightOrder" class="form-control money2" maxlength="11" value="${flight.flightOrder}" />                               

@@ -243,7 +243,7 @@
                                     <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                                 </c:if>
                                 <tr ${colourStatus} id="${p.id}">                                
-                                    <td>${loopCounter.count}</td>
+                                    <td  ${colourStatus} class="text-center">${loopCounter.count}</td>
                                     <td>${p.pnr}</td>
                                     <td><c:out value="${p.airticketAirlines.toArray()[0].airticketFlights.toArray()[0].flightNo}"></c:out></td>
                                     <td><c:out value="${p.airticketAirlines.toArray()[0].airticketPassengers.toArray()[0].lastName}"></c:out></td>
