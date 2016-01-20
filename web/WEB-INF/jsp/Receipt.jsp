@@ -2404,29 +2404,31 @@
     }
 
     function searchInvoice() {
-        var invoiceNo = $("#invoiceNo").val();
-        var department = "${typeDepartment}";
-        var invType = "${typeReceipt}";
-        var invoicenopanel = $("#invoicenopanel").val();
-        if (invoiceNo == "") {
-            if (!$('#invoicenopanel').hasClass('has-feedback')) {
-                $('#invoicenopanel').addClass('has-feedback');
+        if($("#ajaxload1").hasClass("hidden")){
+            var invoiceNo = $("#invoiceNo").val();
+            var department = "${typeDepartment}";
+            var invType = "${typeReceipt}";
+            var invoicenopanel = $("#invoicenopanel").val();
+            if (invoiceNo == "") {
+                if (!$('#invoicenopanel').hasClass('has-feedback')) {
+                    $('#invoicenopanel').addClass('has-feedback');
+                }
+                $('#invoicenopanel').removeClass('has-success');
+                $('#invoicenopanel').addClass('has-error');
             }
-            $('#invoicenopanel').removeClass('has-success');
-            $('#invoicenopanel').addClass('has-error');
-        }
-        else {
-            var servletName = 'ReceiptServlet';
-            var servicesName = 'AJAXBean';
-            var param = 'action=' + 'text' +
-                    '&servletName=' + servletName +
-                    '&servicesName=' + servicesName +
-                    '&invoiceNo=' + invoiceNo +
-                    '&department=' + department +
-                    '&invType=' + invType +
-                    '&type=' + 'searchInvoiceNo';
-            CallAjaxSearchInvoice(param);
-        }
+            else {
+                var servletName = 'ReceiptServlet';
+                var servicesName = 'AJAXBean';
+                var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&invoiceNo=' + invoiceNo +
+                        '&department=' + department +
+                        '&invType=' + invType +
+                        '&type=' + 'searchInvoiceNo';
+                CallAjaxSearchInvoice(param);
+            }
+        }    
     }
 
     function CallAjaxSearchInvoice(param) {
@@ -2971,24 +2973,26 @@
     }
 
     function searchRefNo() {
-        var refNo = $("#refNo").val();
-        if (refNo == "") {
-            if (!$('#refnopanel').hasClass('has-feedback')) {
-                $('#refnopanel').addClass('has-feedback');
+        if($("#ajaxload1").hasClass("hidden")){
+            var refNo = $("#refNo").val();
+            if (refNo == "") {
+                if (!$('#refnopanel').hasClass('has-feedback')) {
+                    $('#refnopanel').addClass('has-feedback');
+                }
+                $('#refnopanel').removeClass('has-success');
+                $('#refnopanel').addClass('has-error');
             }
-            $('#refnopanel').removeClass('has-success');
-            $('#refnopanel').addClass('has-error');
-        }
-        else {
-            var servletName = 'ReceiptServlet';
-            var servicesName = 'AJAXBean';
-            var param = 'action=' + 'text' +
-                    '&servletName=' + servletName +
-                    '&servicesName=' + servicesName +
-                    '&refNo=' + refNo +
-                    '&type=' + 'searchRefNo';
-            CallAjaxSearchRef(param);
-        }
+            else {
+                var servletName = 'ReceiptServlet';
+                var servicesName = 'AJAXBean';
+                var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&refNo=' + refNo +
+                        '&type=' + 'searchRefNo';
+                CallAjaxSearchRef(param);
+            }
+        }    
     }
 
     function CallAjaxSearchRef(param) {
@@ -3070,17 +3074,17 @@
     }
 
     function searchPaymentNoAir() {
-        var paymentNoAir = $("#searchPaymentNoAir").val();
-        var servletName = 'ReceiptServlet';
-        var servicesName = 'AJAXBean';
-        var param = 'action=' + 'text' +
-                '&servletName=' + servletName +
-                '&servicesName=' + servicesName +
-                '&paymentNo=' + paymentNoAir +
-                '&type=' + 'searchPaymentNoAir';
-        CallAjaxSearchPaymentNoAir(param);
-
-
+        if($("#ajaxload1").hasClass("hidden")){
+            var paymentNoAir = $("#searchPaymentNoAir").val();
+            var servletName = 'ReceiptServlet';
+            var servicesName = 'AJAXBean';
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&paymentNo=' + paymentNoAir +
+                    '&type=' + 'searchPaymentNoAir';
+            CallAjaxSearchPaymentNoAir(param);
+        }    
     }
 
     function CallAjaxSearchPaymentNoAir(param) {
@@ -3159,16 +3163,17 @@
         }
     }
     function searchPaymentNoTour() {
-        var paymentNoTour = $("#searchPaymentNoTour").val();
-        var servletName = 'ReceiptServlet';
-        var servicesName = 'AJAXBean';
-        var param = 'action=' + 'text' +
-                '&servletName=' + servletName +
-                '&servicesName=' + servicesName +
-                '&paymentNo=' + paymentNoTour +
-                '&type=' + 'searchPaymentNoTour';
-        CallAjaxSearchPaymentNoTour(param);
-
+        if($("#ajaxload1").hasClass("hidden")){
+            var paymentNoTour = $("#searchPaymentNoTour").val();
+            var servletName = 'ReceiptServlet';
+            var servicesName = 'AJAXBean';
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&paymentNo=' + paymentNoTour +
+                    '&type=' + 'searchPaymentNoTour';
+            CallAjaxSearchPaymentNoTour(param);
+        }    
     }
 
     function CallAjaxSearchPaymentNoTour(param) {
