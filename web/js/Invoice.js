@@ -258,7 +258,7 @@ $(document).ready(function() {
     //autocomplete
     $("#SearchRefNo").keyup(function(event) {
         if (event.keyCode === 13) {
-            searchAction();
+            searchAction();         
         }
     });
 
@@ -1128,29 +1128,30 @@ function CallAjaxAuto(param) {
 }
 
 function searchAction() {
-    $('#MasterReservation > tbody  > tr').each(function() {
-        $(this).remove();
-    });
+    if($("#ajaxloadsearch").hasClass("hidden")){
+        $('#MasterReservation > tbody  > tr').each(function() {
+            $(this).remove();
+        });
 
-    var searchNo = $("#SearchRefNo").val();
-    var invType = $("#invType").val();
-//    alert("Ref : " + searchNo);
-    console.log("inv type : " + invType + ":");
-    if (searchNo !== "") {
-        var servletName = 'InvoiceServlet';
-        var servicesName = 'AJAXBean';
-        var param = 'action=' + 'text' +
-                '&servletName=' + servletName +
-                '&servicesName=' + servicesName +
-                '&refNo=' + searchNo +
-                '&invType=' + invType +
-                '&type=' + 'searchInvoice';
-        CallAjaxAdd(param);
-    } else {
-        $('#SearchRefNo').focus();
-        $("#searchRefNo2").addClass("hidden");
+        var searchNo = $("#SearchRefNo").val();
+        var invType = $("#invType").val();
+    //    alert("Ref : " + searchNo);
+        console.log("inv type : " + invType + ":");
+        if (searchNo !== "") {
+            var servletName = 'InvoiceServlet';
+            var servicesName = 'AJAXBean';
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&refNo=' + searchNo +
+                    '&invType=' + invType +
+                    '&type=' + 'searchInvoice';
+            CallAjaxAdd(param);
+        } else {
+            $('#SearchRefNo').focus();
+            $("#searchRefNo2").addClass("hidden");
+        }
     }
-
 }
 function CallAjaxAdd(param) {
     var url = 'AJAXServlet';
@@ -1162,6 +1163,11 @@ function CallAjaxAdd(param) {
             url: url,
             cache: false,
             data: param,
+            beforeSend: function() {
+                $('#MasterReservation > tbody  > tr').each(function() {
+                    $(this).remove();
+                });              
+            },
             success: function(msg) {
                 var strx = msg.split('||');
                 var array = [];

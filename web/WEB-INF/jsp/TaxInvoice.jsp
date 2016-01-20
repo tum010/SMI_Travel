@@ -1549,33 +1549,35 @@
     }
     
     function searchInvoiceNo(){
-        var invoiceNo = $("#invoiceNo").val();
-        var invoicenopanel = $("#invoicenopanel").val();
-        var department = '${page}';
-        if("W" === department){
-            department = "Wendy";
-        } else if("O" === department){
-            department = "Outbound";
-        } else if("I" === department){
-            department = "Inbound";
-        }
-        if(invoiceNo === ""){
-            if(!$('#invoicenopanel').hasClass('has-feedback')) {
-                $('#invoicenopanel').addClass('has-feedback');
+        if($("#ajaxloadsearch").hasClass("hidden")){
+            var invoiceNo = $("#invoiceNo").val();
+            var invoicenopanel = $("#invoicenopanel").val();
+            var department = '${page}';
+            if("W" === department){
+                department = "Wendy";
+            } else if("O" === department){
+                department = "Outbound";
+            } else if("I" === department){
+                department = "Inbound";
             }
-            $('#invoicenopanel').removeClass('has-success');
-            $('#invoicenopanel').addClass('has-error');
-        } else {
-            var servletName = 'TaxInvoiceServlet';
-            var servicesName = 'AJAXBean';
-            var param = 'action=' + 'text' +
-                    '&servletName=' + servletName +
-                    '&servicesName=' + servicesName +
-                    '&invoiceNo=' + invoiceNo +
-                    '&department=' + department +
-                    '&type=' + 'searchInvoiceNo';
-            CallAjaxSearchInvoice(param);
-        }  
+            if(invoiceNo === ""){
+                if(!$('#invoicenopanel').hasClass('has-feedback')) {
+                    $('#invoicenopanel').addClass('has-feedback');
+                }
+                $('#invoicenopanel').removeClass('has-success');
+                $('#invoicenopanel').addClass('has-error');
+            } else {
+                var servletName = 'TaxInvoiceServlet';
+                var servicesName = 'AJAXBean';
+                var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&invoiceNo=' + invoiceNo +
+                        '&department=' + department +
+                        '&type=' + 'searchInvoiceNo';
+                CallAjaxSearchInvoice(param);
+            }
+        }    
     }
     
     function CallAjaxSearchInvoice(param) {
@@ -1656,24 +1658,26 @@
     }
     
     function searchRefNo() {
-        var refNo = $("#refNo").val();
-        if(refNo == ""){
-            if(!$('#refnopanel').hasClass('has-feedback')) {
-                $('#refnopanel').addClass('has-feedback');
+        if($("#ajaxloadsearch").hasClass("hidden")){
+            var refNo = $("#refNo").val();
+            if(refNo == ""){
+                if(!$('#refnopanel').hasClass('has-feedback')) {
+                    $('#refnopanel').addClass('has-feedback');
+                }
+                $('#refnopanel').removeClass('has-success');
+                $('#refnopanel').addClass('has-error');
             }
-            $('#refnopanel').removeClass('has-success');
-            $('#refnopanel').addClass('has-error');
-        }
-        else{
-            var servletName = 'TaxInvoiceServlet';
-            var servicesName = 'AJAXBean';
-            var param = 'action=' + 'text' +
-                    '&servletName=' + servletName +
-                    '&servicesName=' + servicesName +
-                    '&refNo=' + refNo +
-                    '&type=' + 'searchRefNo';
-            CallAjaxSearchRef(param);
-        }
+            else{
+                var servletName = 'TaxInvoiceServlet';
+                var servicesName = 'AJAXBean';
+                var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&refNo=' + refNo +
+                        '&type=' + 'searchRefNo';
+                CallAjaxSearchRef(param);
+            }
+        }    
     }
 
     function CallAjaxSearchRef(param) {
