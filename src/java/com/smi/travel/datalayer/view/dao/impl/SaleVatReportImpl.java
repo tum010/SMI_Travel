@@ -168,9 +168,9 @@ public class SaleVatReportImpl implements SaleVatReportDao{
         if ((department != null) && (!"".equalsIgnoreCase(department))) {
             query += " and department = '" + department + "'" ;
         }
-        query += " ORDER BY department desc , taxno , taxdate";
+        query += " ORDER BY department desc , taxno , taxdate , type ";
         
-        System.out.println(" 1111 query : "+query);
+        System.out.println(" query : "+query);
         
          List<Object[]> QueryList = session.createSQLQuery(query)
                 .addScalar("taxid", Hibernate.STRING)
@@ -187,6 +187,7 @@ public class SaleVatReportImpl implements SaleVatReportDao{
                 .addScalar("agttaxno", Hibernate.STRING)
                 .addScalar("main", Hibernate.STRING)
                 .addScalar("branchno", Hibernate.STRING)
+                .addScalar("type", Hibernate.STRING)
                 .list();
          
         SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -284,6 +285,7 @@ public class SaleVatReportImpl implements SaleVatReportDao{
             otv.setAgttaxno(util.ConvertString(B[11]));
             otv.setMain(util.ConvertString(B[12]));
             otv.setBranchno(util.ConvertString(B[13]));
+            otv.setType(util.ConvertString(B[14]));
             data.add(otv);
         }
         
