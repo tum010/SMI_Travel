@@ -32,6 +32,6 @@ public interface TaxInvoiceDao {
     public String checkCreditNote(String id);
     public List<TaxInvoiceDetail> getTaxInvoiceDetailFromBillDescId(String invoiceDetailId);
     public TaxInvoice getTaxInvoiceByWildCardSearch(String taxInvId, String taxInvNo, String wildCardSearch, String keyCode, String department);
-    public int getOutputTaxStatus(String taxInvId);
+    public TaxInvoice getPostVatData(String taxInvId);
     public BigDecimal getTaxInvoiceAmountTotal(TaxInvoice taxInv,String creditNoteDetailId);
 }

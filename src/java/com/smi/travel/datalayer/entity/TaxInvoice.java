@@ -3,6 +3,7 @@ package com.smi.travel.datalayer.entity;
 
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.Date;
 import java.util.Iterator;
@@ -178,16 +179,21 @@ public class TaxInvoice   {
         BigDecimal sumAmount = new BigDecimal("0.0000");
         for (Iterator detailList = this.getTaxInvoiceDetails().iterator(); detailList.hasNext();) {
             TaxInvoiceDetail detail = (TaxInvoiceDetail)detailList.next();
-            BigDecimal amount = detail.getAmount();
-            BigDecimal vat = new BigDecimal("0.0000");
-            if(detail.getVat() != null){
-                vat = detail.getVat();
+//            BigDecimal amount = detail.getAmount();
+//            BigDecimal vat = new BigDecimal("0.0000");
+//            if(detail.getVat() != null){
+//                vat = detail.getVat();
+//            }
+//            if(amount != null){
+//                BigDecimal hundred = new BigDecimal("100.0000");
+//                sumAmount = sumAmount.add(amount.multiply(hundred).divide(vat.add(hundred), 2,RoundingMode.HALF_UP));
+//            }
+            if(detail.getIsVat() == 1){
+                sumAmount = sumAmount.add(detail.getGross() != null ? detail.getGross() : new BigDecimal(BigInteger.ZERO));
+            
+            }else if(detail.getIsVat() == 0){
+                sumAmount = sumAmount.add(detail.getAmount() != null ? detail.getAmount() : new BigDecimal(BigInteger.ZERO));
             }
-            if(amount != null){
-                BigDecimal hundred = new BigDecimal("100.0000");
-                sumAmount = sumAmount.add(amount.multiply(hundred).divide(vat.add(hundred), 2,RoundingMode.HALF_UP));
-            }
-
         }
         return sumAmount;
     }

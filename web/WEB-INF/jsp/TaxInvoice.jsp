@@ -273,8 +273,8 @@
                             <input type="hidden" class="form-control" id="TaxInvStatus" name="TaxInvStatus" value="${taxInvoice.MFinanceItemstatus.id}"/>
                             <input type="hidden" class="form-control" id="createDate" name="createDate" value="${requestScope['createDate']}"/>
                             <input type="hidden" class="form-control" id="createBy" name="createBy" value="${taxInvoice.createBy}"/>
-                            <input type="hidden" class="form-control" id="postDate" name="postDate" value="${requestScope['postDate']}"/>
-                            <input type="hidden" class="form-control" id="outputTaxStatus" name="outputTaxStatus" value="${taxInvoice.outputTaxStatus}"/>
+                            <!--<input type="hidden" class="form-control" id="postDate" name="postDate" value="${requestScope['postDate']}"/>-->
+                            <!--<input type="hidden" class="form-control" id="outputTaxStatus" name="outputTaxStatus" value="${taxInvoice.outputTaxStatus}"/>-->
                             <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                             <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >                           
                             <input type="text" style="text-transform:uppercase" class="form-control" id="TaxInvNo" name="TaxInvNo" value="${taxInvoice.taxNo}" >

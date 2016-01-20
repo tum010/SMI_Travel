@@ -107,7 +107,7 @@ public class TaxInvoiceController extends SMITravelController {
         String count = request.getParameter("countTaxInvoice");
         String vatDefault = request.getParameter("vatDefault");
         String department = request.getParameter("department");
-        String postDate = request.getParameter("postDate");
+//        String postDate = request.getParameter("postDate");
 //        String outputTaxStatus = request.getParameter("outputTaxStatus");
         String wildCardSearch = request.getParameter("wildCardSearch");
         String keyCode = request.getParameter("keyCode");
@@ -161,14 +161,16 @@ public class TaxInvoiceController extends SMITravelController {
                 taxInvoice.setCreateDate(invToDateConvert);
                 taxInvoice.setDepartment(department); 
                 
-                int outputTaxStatus = taxInvoiceService.getOutputTaxStatus(taxInvId);
-                taxInvoice.setOutputTaxStatus(outputTaxStatus);
-                if(!"".equalsIgnoreCase(postDate) && postDate != null){
-                    SimpleDateFormat dateformat = new SimpleDateFormat();
-                    dateformat.applyPattern("yyyy-MM-dd HH:mm:ss");
-                    String postDateTemp = dateformat.format(utilty.convertStringToDateTime(postDate));
-                    taxInvoice.setPostDate(utilty.convertStringToDateTime(postDateTemp));
-                }    
+                TaxInvoice taxInvoiceTemp = taxInvoiceService.getPostVatData(taxInvId);
+                taxInvoice.setOutputTaxStatus(taxInvoiceTemp.getOutputTaxStatus());
+                taxInvoice.setPostDate(taxInvoiceTemp.getPostDate());
+                
+//                if(!"".equalsIgnoreCase(postDate) && postDate != null){
+//                    SimpleDateFormat dateformat = new SimpleDateFormat();
+//                    dateformat.applyPattern("yyyy-MM-dd HH:mm:ss");
+//                    String postDateTemp = dateformat.format(utilty.convertStringToDateTime(postDate));
+//                    taxInvoice.setPostDate(utilty.convertStringToDateTime(postDateTemp));
+//                }    
             }
             
             if(Integer.parseInt(count) > 1){
@@ -187,7 +189,7 @@ public class TaxInvoiceController extends SMITravelController {
             request.setAttribute(TAXINVOICE, taxInvoice);
             request.setAttribute("invToDate", invToDate);
             request.setAttribute("createDate", createDate);
-            request.setAttribute("postDate", postDate);
+//            request.setAttribute("postDate", postDate);
             request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
             request.setAttribute(RESULTTEXT, result);
             
@@ -234,8 +236,9 @@ public class TaxInvoiceController extends SMITravelController {
             mFinanceItemstatus.setName("NORMAL");
             taxInvoice.setMFinanceItemstatus(mFinanceItemstatus);
             
-            int outputTaxStatus = taxInvoiceService.getOutputTaxStatus(taxInvId);
-            taxInvoice.setOutputTaxStatus(outputTaxStatus);
+            TaxInvoice taxInvoiceTemp = taxInvoiceService.getPostVatData(taxInvId);
+            taxInvoice.setOutputTaxStatus(taxInvoiceTemp.getOutputTaxStatus());
+            taxInvoice.setPostDate(taxInvoiceTemp.getPostDate());
             
             invToDateConvert = utilty.convertStringToDate(createDate);
             taxInvoice.setCreateDate(invToDateConvert);
@@ -256,7 +259,7 @@ public class TaxInvoiceController extends SMITravelController {
             request.setAttribute(TAXINVOICE, taxInvoice);
             request.setAttribute("invToDate", invToDate);
             request.setAttribute("createDate", createDate);
-            request.setAttribute("postDate", postDate);
+//            request.setAttribute("postDate", postDate);
             request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
             request.setAttribute(RESULTTEXT, result);
             
@@ -276,8 +279,9 @@ public class TaxInvoiceController extends SMITravelController {
             invToDateConvert = utilty.convertStringToDate(invToDate);
             taxInvoice.setTaxInvDate(invToDateConvert);
             
-            int outputTaxStatus = taxInvoiceService.getOutputTaxStatus(taxInvId);
-            taxInvoice.setOutputTaxStatus(outputTaxStatus);
+            TaxInvoice taxInvoiceTemp = taxInvoiceService.getPostVatData(taxInvId);
+            taxInvoice.setOutputTaxStatus(taxInvoiceTemp.getOutputTaxStatus());
+            taxInvoice.setPostDate(taxInvoiceTemp.getPostDate());
             
             creditNoteUse = taxInvoiceService.checkCreditNote(taxInvoice.getId());
             System.out.println("creditNoteUse : "+creditNoteUse);
@@ -313,7 +317,7 @@ public class TaxInvoiceController extends SMITravelController {
             request.setAttribute(TAXINVOICE, taxInvoice);
             request.setAttribute("invToDate", invToDate);
             request.setAttribute("createDate", createDate);
-            request.setAttribute("postDate", postDate);
+//            request.setAttribute("postDate", postDate);
             request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
             if("success".equalsIgnoreCase(result)){
                 request.setAttribute(RESULTTEXT, "disableVoid success");
