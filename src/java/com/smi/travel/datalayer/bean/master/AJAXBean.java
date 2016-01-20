@@ -72,6 +72,7 @@ import com.smi.travel.datalayer.view.entity.TicketAircommissionView;
 import com.smi.travel.util.Mail;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -1177,19 +1178,21 @@ public class AJAXBean extends AbstractBean implements
     public String buildTicketAircommissionViewListHTML(List<TicketAircommissionView> ticketList) {
         StringBuffer html = new StringBuffer();
         int No = 0;
-        String airline = "";
-        String commission = "";
-        String isUse = "";
-        String paymentId = "";
-        String description = "";
-        String payNo = "";
-        String product = "";
-        String currency = "";
-        String receiveFrom = "";
-        String receiveName = "";
-        String receiveAddress = "";
-        String vat = "";
+
         for (int i = 0; i < ticketList.size(); i++) {
+            String airline = "";
+            String commission = "";
+            String isUse = "";
+            String paymentId = "";
+            String description = "";
+            String payNo = "";
+            String product = "";
+            String currency = "";
+            String receiveFrom = "";
+            String receiveName = "";
+            String receiveAddress = "";
+            String vat = "";
+            
             No = i + 1;
             product = "9";
             currency = "THB";
@@ -1238,20 +1241,22 @@ public class AJAXBean extends AbstractBean implements
     public String buildPaymentTourCommissionViewListHTML(List<PaymentTourCommissionView> paymentTourList) {
         StringBuffer html = new StringBuffer();
         int No = 0;
-        String airline = "";
-        String commission = "";
-        String isUse = "";
-        String paymentTourId = "";
-        String description = "";
-        String payNo = "";
-        String product = "";
-        String currency = "";
-        String receiveFrom = "";
-        String receiveName = "";
-        String receiveAddress = "";
-        String vat = "";
+
         for (int i = 0; i < paymentTourList.size(); i++) {
             No = i + 1;
+            String airline = "";
+            String commission = "";
+            String isUse = "";
+            String paymentTourId = "";
+            String description = "";
+            String payNo = "";
+            String product = "";
+            String currency = "";
+            String receiveFrom = "";
+            String receiveName = "";
+            String receiveAddress = "";
+            String vat = "";
+            
             product = "6";
             currency = "THB";
             paymentTourId = paymentTourList.get(i).getPaymentId();
@@ -1596,21 +1601,6 @@ public class AJAXBean extends AbstractBean implements
     public String buildInvoiceListHTML(Invoice invoice) {
         StringBuffer html = new StringBuffer();
         List<InvoiceDetail> invoiceDetaill = new ArrayList<InvoiceDetail>(invoice.getInvoiceDetails());
-        String invId = "";
-        String description = "";
-        BigDecimal amount = new BigDecimal(0);
-        BigDecimal cost = new BigDecimal(0);
-        BigDecimal amountinvoice = new BigDecimal(0);
-        BigDecimal costinvoice = new BigDecimal(0);
-        BigDecimal amountlocalinvoice = new BigDecimal(0);
-        String currency = "";
-        String product = "";
-        String cur = "";
-        String isVat = "";
-        String vat = "";
-        String refItemId = "";
-        String billTypeName = "";
-
         int No = 1;
         String receiveFrom = invoice.getInvTo();
         String receiveName = invoice.getInvName();
@@ -1629,6 +1619,21 @@ public class AJAXBean extends AbstractBean implements
             return html.toString();
         }
         for (int i = 0; i < invoiceDetaill.size(); i++) {
+            String invId = "";
+            String description = "";
+            String currency = "";
+            String product = "";
+            String cur = "";
+            String isVat = "";
+            String vat = "";
+            String refItemId = "";
+            String billTypeName = "";
+            BigDecimal amount = new BigDecimal(BigInteger.ZERO);
+            BigDecimal cost = new BigDecimal(BigInteger.ZERO);
+            BigDecimal amountinvoice = new BigDecimal(BigInteger.ZERO);
+            BigDecimal costinvoice = new BigDecimal(BigInteger.ZERO);
+            BigDecimal amountlocalinvoice = new BigDecimal(BigInteger.ZERO);
+            
             invId = invoiceDetaill.get(i).getId();
             if(!"null".equalsIgnoreCase(String.valueOf(invoiceDetaill.get(i).getDescription())) && invoiceDetaill.get(i).getDescription() != null){
                 description = invoiceDetaill.get(i).getDescription();
@@ -1736,17 +1741,7 @@ public class AJAXBean extends AbstractBean implements
     public String buildBillableListHTML(Billable billable) {
         StringBuffer html = new StringBuffer();
         List<BillableDesc> billableDescs = new ArrayList<BillableDesc>(billable.getBillableDescs());
-        String description = "";
-        String currency = "";
-        String product = "";
-        String cur = "";
-        String isVat = "";
-        String vat = "";
-        String billableDescId = "";
-        BigDecimal amount = new BigDecimal(0);
-        BigDecimal cost = new BigDecimal(0);
-        BigDecimal amountinvoice = new BigDecimal(0);
-        BigDecimal costinvoice = new BigDecimal(0);
+
         int No = 1;
 
 //        String displaydescription = "";
@@ -1785,6 +1780,18 @@ public class AJAXBean extends AbstractBean implements
             return html.toString();
         }
         for (int i = 0; i < billableDescs.size(); i++) {
+            String description = "";
+            String currency = "";
+            String product = "";
+            String cur = "";
+            String isVat = "";
+            String vat = "";
+            String billableDescId = "";
+            BigDecimal amount = new BigDecimal(BigInteger.ZERO);
+            BigDecimal cost = new BigDecimal(BigInteger.ZERO);
+            BigDecimal amountinvoice = new BigDecimal(BigInteger.ZERO);
+            BigDecimal costinvoice = new BigDecimal(BigInteger.ZERO);
+            
             billableDescId = billableDescs.get(i).getId();
 //            description = billableDescs.get(i).getDetail();
             BigDecimal amounttemp = new BigDecimal(billableDescs.get(i).getPrice());
