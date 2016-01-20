@@ -597,6 +597,7 @@ import org.hibernate.Transaction;
 
     @Override
     public List<ReceiptDetailView> getReceiptDetailViewFromInvDetailId(String invDetailId) {
+        System.out.println(" invDetailId _____________________-- " + invDetailId);
         Session session = this.sessionFactory.openSession();
         List<ReceiptDetailView> receiptDetailViewList = new ArrayList<ReceiptDetailView>();
         List<ReceiptDetail> list = session.createQuery("from ReceiptDetail d WHERE d.invoiceDetail.id = :invDetailId GROUP BY d.receipt.id").setParameter("invDetailId", invDetailId).list();

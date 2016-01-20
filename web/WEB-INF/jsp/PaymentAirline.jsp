@@ -1850,12 +1850,20 @@ function calculateTotalRefundVat() {
         } 
         document.getElementById("sumCommissionRefund").value = formatNumber(comTemp);
     }
+    var totalAmountRefund = replaceAll(",","",$('#totalAmountRefund').val()); 
+    if (totalAmountRefund == ""){
+        totalAmountRefund = 0;
+    }
+    var ttar = parseFloat(totalAmountRefund); 
+    
     var vatValue = replaceAll(",","",$('#vat').val()); 
     if (vatValue == ""){
         vatValue = 0;
     }
     var vat = parseFloat(vatValue); 
-    var totalRefundVat = comSum * ( 1 + (vat / 100));
+    
+    var totalRefundVat = ((vat * ttar)/ 100);
+    
     document.getElementById("totalAmountRefundVat").value = formatNumber(totalRefundVat);
     calculateWithodingTax();
     calculateTotalPayment();
@@ -2184,7 +2192,7 @@ function calculateWithodingTax(){
     var tax = document.getElementById('whtax').value;
     var whtax = parseFloat(tax);
 //    var withholdingTax = ( (sumcomm + sumCommRefund ) * (whtax / 100));
-    var withholdingTax = ( (sumcomm - sumCommRefund ) * (whtax / 100));
+    var withholdingTax = ( ((sumcomm * (1-(vat/100))) - (sumCommRefund * (1-(vat/100)))) * (whtax / 100));
     document.getElementById("withholdingTax").value = formatNumber(withholdingTax);
 }
 function deleteCreditList(id,Ccount) {

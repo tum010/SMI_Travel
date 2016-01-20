@@ -1015,6 +1015,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         }
         for (int i = 0; i < invoiceDetailList.size() ; i++) {
             InvoiceDetailView invoiceDetailView = new InvoiceDetailView();
+            invoiceDetailView.setId(invoiceDetailList.get(i).getId());
             invoiceDetailView.setOwner(owner);
             invoiceDetailView.setRouting(routing);
             invoiceDetailView.setInvAmount(new BigDecimal(String.valueOf(invamount)));
