@@ -357,7 +357,7 @@
                             </div>
                             <div class="col-md-2 form-group">                      
                                 <select class="form-control" id="TermPay" name="TermPay">
-                                    <!--<option value="" >--select--</option>-->
+                                    <option value="" ></option>
                                     <c:forEach var="item" items="${listTermPay}" >
                                         <c:set var="selectTerm" value="" />
                                         <c:if test="${item.id == invoice.MAccTerm.id}">
