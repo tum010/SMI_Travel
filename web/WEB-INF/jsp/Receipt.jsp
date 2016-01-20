@@ -669,7 +669,7 @@
                                                 </c:when>
                                             </c:choose>
                                         </td>
-                                        <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control decimal" value="${table.amount}"></td>
+                                        <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control decimal" value="${table.amount}" onfocusout="calculateGrandTotal();"></td>
                                         <td>                                   
                                             <select class="form-control" name="receiveCurrency${i.count}" id="receiveCurrency${i.count}">
                                                 <option  value="" >---------</option>

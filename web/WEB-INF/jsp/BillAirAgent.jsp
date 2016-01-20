@@ -331,7 +331,32 @@
     $(document).ready(function() {
     $('.datemask').mask('0000-00-00');
 
-
+    $("#BillAirAgent").bootstrapValidator({
+        framework: 'bootstrap',
+        feedbackIcons: {
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
+        },
+        fields: {
+            agentCode: {
+                trigger: 'focus keyup change',
+                validators: {
+                    notEmpty: {
+                            message: 'Input agentCode '
+                        }
+                }
+            },
+            agentName: {
+                trigger: 'focus keyup change',
+                validators: {
+                    notEmpty: {
+                            message: 'Input agentName '
+                        }
+                }
+            }
+        }
+        });
 
     });
     function setBillAgentValue(id, code, name) {
