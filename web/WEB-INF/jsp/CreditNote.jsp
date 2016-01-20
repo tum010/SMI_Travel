@@ -62,7 +62,7 @@
         <div class="col-sm-10">
             <form action="CreditNote${page}.smi" method="post" id="CreditNoteForm" name="CreditNoteForm" role="form" class="ng-pristine ng-valid bv-form">
                 <div id="alertSuccess"  style="" class="alert alert-success" <c:if test="${successStatus != true}">hidden="true"</c:if> >
-                        <button type="button" class="close" aria-label="Close" onclick="hideAlert()><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" aria-label="Close" onclick="hideAlert() > < span aria - hidden ="true">&times;</span></button>
                         <strong id="alertTextSuccess">${successMessage}</strong> 
                 </div>
                 <div id="alertFail"  style="" class="alert alert-danger"  <c:if test="${failStatus != true}">hidden="true"</c:if>>
@@ -189,7 +189,12 @@
                                                 </td>
                                                 <td style="text-align:center">
                                                     <!--<input type="hidden" name="taxAmount" value="${creditNoteDetail.amount}"/>-->
-                                                    <input type="text" id="taxAmount" name="taxAmount" class="form-control text-right decimal" value="${creditNoteDetail.amount}"/>
+                                                    <fmt:formatNumber var="taxAmount" type="number" minFractionDigits="2" maxFractionDigits="2" value="${creditNoteDetail.amount}" />
+                                                    <input type="text" id="taxAmount" name="taxAmount" class="form-control text-right decimal" value="${taxAmount}"/>
+                                                </td>
+                                                <td style="text-align:center" class="hidden">
+                                                    <!--<input type="hidden" name="taxAmountReal" value="${creditNoteDetail.amount}"/>-->
+                                                    <input type="text" id="taxAmountReal" name="taxAmountReal" class="form-control text-right" value="${creditNoteDetail.amount}"/>
                                                 </td>
                                                 <td style="text-align:center" class="hidden">
                                                     <!--<input type="hidden" name="taxRealCheck" value="${creditNoteDetail.amount}"/>-->
@@ -202,6 +207,10 @@
                                                 <td style="text-align:center">
                                                     <!--<input type="hidden" name="taxVat" value="${creditNoteDetail.vat}" readonly/>-->
                                                     <input type="text" id="taxVat" name="taxVat" class="form-control text-right decimal" value="${creditNoteDetail.vat2Digits}" readonly=""/>
+                                                </td>
+                                                <td style="text-align:center" class="hidden">
+                                                    <!--<input type="hidden" name="taxVatReal" value="${creditNoteDetail.vat}" readonly/>-->
+                                                    <input type="text" id="taxVatReal" name="taxVatReal" class="form-control text-right " value="${creditNoteDetail.vat}" readonly=""/>
                                                 </td>
                                                 <td style="text-align:center">
                                                     <input type="text" name="taxDesc" class="form-control" value="${creditNoteDetail.description}"/></td>
@@ -218,7 +227,8 @@
                                     </tbody>
                                 </table>
                                 <div id="addRow" class="text-center hide" style="padding-top: 10px">
-                                    <a class="btn btn-success" onclick="addRow(); this.hide()">
+                                    <a class="btn btn-success" onclick="addRow();
+                                            this.hide()">
                                         <i class="glyphicon glyphicon-plus"></i> Add
                                     </a>
                                 </div>
@@ -364,6 +374,10 @@
                     <input type="text" id="taxAmount" name="taxAmount" class="form-control text-right decimal" />
                 </td>
                 <td style="text-align:center" class="hidden">
+                    <!--<input type="hidden" name="taxAmountReal"/>-->
+                    <input type="text" id="taxAmountReal" name="taxAmountReal" class="form-control text-right" />
+                </td>
+                <td style="text-align:center" class="hidden">
                     <!--<input type="hidden" name="taxRealCheck" value="${creditNoteDetail.amount}"/>-->
                     <input type="text" id="taxRealCheck" name="taxRealCheck" class="form-control text-right decimal"/>
                 </td>
@@ -374,6 +388,10 @@
                 <td style="text-align:center">
                     <!--<input type="hidden" name="taxVat"/>-->
                     <input type="text" id="taxVat" name="taxVat" class="form-control text-right decimal" readonly=""/>
+                </td>
+                <td style="text-align:center" class="hidden">
+                    <!--<input type="hidden" name="taxVatReal"/>-->
+                    <input type="text" id="taxVatReal" name="taxVatReal" class="form-control text-right " readonly=""/>
                 </td>
                 <td style="text-align:center"><input type="text" name="taxDesc" class="form-control" /></td>
                 <td class="text-center">

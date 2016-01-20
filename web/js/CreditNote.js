@@ -145,6 +145,8 @@ function addRow() {
                 var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
                 var vatAmount = $(this).parent().parent().find("[name='taxVat']");
                 var vatAmountID = $(this).parent().parent().find("[id='taxVat']");
+                var vatAmountReal = $(this).parent().parent().find("[name='taxVatReal']");
+                var vatAmountRealID = $(this).parent().parent().find("[id='taxVatReal']");
                 var url = 'AJAXServlet';
                 var servletName = 'TaxInvoiceServlet';
                 var servicesName = 'AJAXBean';
@@ -183,8 +185,10 @@ function addRow() {
 //                                var vatAmount = $(this).parent().parent().find("[name='taxVat']");
 //                                var vatAmountID = $(this).parent().parent().find("[id='taxVat']");
                                 var calVat = realAmount - (realAmount * 100 / (vat + 100));
-                                vatAmount.val(calVat);
+                                vatAmount.val(parseFloat(calVat.toFixed(2)));
                                 vatAmountID.val(Math.round(calVat * 100) / 100);
+                                vatAmountReal.val(parseFloat(calVat.toFixed(4)));
+                                vatAmountRealID.val(parseFloat(calVat.toFixed(4)));
 //                                this.style.borderColor = "Green";
                                 realAmountBorder.borderColor = "Green";
 
@@ -324,6 +328,8 @@ function getTaxInv(input) {
                             var taxDate = $(input).parent().parent().find("[name='taxDate']");
                             var amount = $(input).parent().parent().find("[name='taxAmount']");
                             var amountId = $(input).parent().parent().find("[id='taxAmount']");
+                            var amountReal = $(input).parent().parent().find("[name='taxAmountReal']");
+                            var amountRealId = $(input).parent().parent().find("[id='taxAmountReal']");
                             var desc = $(input).parent().parent().find("[name='taxDesc']");
                             var taxId = $(input).parent().parent().find("[name='taxId']");
                             var btnDetail = $(input).parent().parent().find("[name='btnDetail']");
@@ -333,8 +339,10 @@ function getTaxInv(input) {
                             $("#name").val(tax.taxName);
                             $("#address").val(tax.taxAddress);
                             taxDate.val(tax.taxDate);
-                            amount.val(tax.taxAmount);
-                            amountId.val(tax.taxAmount)
+                            amount.val(parseFloat((tax.taxAmount).toFixed(2)));
+                            amountId.val(parseFloat((tax.taxAmount).toFixed(2)));
+                            amountReal.val(tax.taxAmount);
+                            amountRealId.val(tax.taxAmount);
                             desc.val(tax.taxDesc);
                             taxId.val(tax.taxId);
                             btnDetail.attr('onclick', "show('" + ticketNo + "')");

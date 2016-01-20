@@ -78,6 +78,7 @@ public class CreditNoteController extends SMITravelController {
                     cn.setDepartment(department);
                     cn.setCreateBy(user.getUsername());
                     cn.setCreateDate(Calendar.getInstance().getTime());
+                    cn.setOutputTaxStatus(0);
                 }else{
                     String createDate = request.getParameter("createDate");
                     cn.setCreateDate(utilty.convertStringToDate(createDate));
@@ -221,8 +222,10 @@ public class CreditNoteController extends SMITravelController {
             String[] taxDate = request.getParameterValues("taxDate");
             String[] taxType = request.getParameterValues("taxType");
             String[] taxAmount = request.getParameterValues("taxAmount");
+            String[] taxAmountReal = request.getParameterValues("taxAmountReal");
             String[] taxReal = request.getParameterValues("taxReal");
             String[] taxVat = request.getParameterValues("taxVat");
+            String[] taxVatReal = request.getParameterValues("taxVatReal");
             String[] taxDesc = request.getParameterValues("taxDesc");
             for (int i = 0; i < taxId.length; i++) {
                 if (null != taxId && null != taxId[i] && !"".equals(taxId[i])) {
@@ -233,14 +236,20 @@ public class CreditNoteController extends SMITravelController {
                         taxInv.setId(taxId[i]);
                         cnd.setTaxInvoice(taxInv);
                         cnd.setCreditNote(cn);
-                        if (taxAmount[i] != null && !taxAmount[i].equals("")) {
-                            cnd.setAmount(new BigDecimal(uf.StringUtilReplaceChar(taxAmount[i])));
+//                        if (taxAmount[i] != null && !taxAmount[i].equals("")) {
+//                            cnd.setAmount(new BigDecimal(uf.StringUtilReplaceChar(taxAmount[i])));
+//                        }
+                        if (taxAmountReal[i] != null && !taxAmountReal[i].equals("")) {
+                            cnd.setAmount(new BigDecimal(uf.StringUtilReplaceChar(taxAmountReal[i])));
                         }
                         if (taxReal[i] != null && !taxReal[i].equals("")) {
                             cnd.setRealamount(new BigDecimal(uf.StringUtilReplaceChar(taxReal[i])));
                         }
-                        if (taxVat[i] != null && !taxVat[i].equals("")) {
-                            cnd.setVat(new BigDecimal(uf.StringUtilReplaceChar(taxVat[i])));
+//                        if (taxVat[i] != null && !taxVat[i].equals("")) {
+//                            cnd.setVat(new BigDecimal(uf.StringUtilReplaceChar(taxVat[i])));
+//                        }
+                        if (taxVatReal[i] != null && !taxVatReal[i].equals("")) {
+                            cnd.setVat(new BigDecimal(uf.StringUtilReplaceChar(taxVatReal[i])));
                         }
                         
                         cnd.setDescription(taxDesc[i]);
