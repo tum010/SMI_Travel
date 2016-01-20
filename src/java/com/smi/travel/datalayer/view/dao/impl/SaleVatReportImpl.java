@@ -43,12 +43,12 @@ public class SaleVatReportImpl implements SaleVatReportDao{
     }
 
     @Override
-    public List<OutputTaxView> SearchOutputTaxViewFromFilter(String from, String to, String department) {
+    public List<OutputTaxView> SearchOutputTaxViewFromFilter(String from, String to, String department,String status) {
         UtilityFunction util = new UtilityFunction();
         List<OutputTaxView> outputTaxViewList = new ArrayList<OutputTaxView>();
         Session session = this.getSessionFactory().openSession();
-        StringBuffer query = new StringBuffer(" SELECT * FROM `output_tax_view` tax  where (`tax`.status = 'Post' || `tax`.status = 'Change') ");
-        boolean haveCondition = true;
+        StringBuffer query = new StringBuffer(" SELECT * FROM `output_tax_view` tax ");
+        boolean haveCondition = false;
                 
         if ((from != null) && (!"".equalsIgnoreCase(from))) {
             query.append(haveCondition ? " and" : " where");
@@ -65,7 +65,15 @@ public class SaleVatReportImpl implements SaleVatReportDao{
             query.append(" `tax`.department = '" + department + "'");
             haveCondition = true;
         }
-        
+        if ((status != null) && (!"".equalsIgnoreCase(status))) {
+            query.append(haveCondition ? " and" : " where");
+            query.append(" `tax`.status = '" + status + "'");
+            haveCondition = true;
+        }else{
+            query.append(haveCondition ? " and" : " where");
+            query.append(" ( `tax`.status = 'Post' or `tax`.status = 'Change' or `tax`.status = 'VoidPost' ) ");
+            haveCondition = true;
+        }
         query.append(" Order by tax.department desc, `tax`.taxno desc");
          List<Object[]> QueryList = session.createSQLQuery(query.toString())
                 .addScalar("taxid", Hibernate.STRING)
@@ -82,6 +90,7 @@ public class SaleVatReportImpl implements SaleVatReportDao{
                 .addScalar("agttaxno", Hibernate.STRING)
                 .addScalar("main", Hibernate.STRING)
                 .addScalar("branchno", Hibernate.STRING)
+                .addScalar("type", Hibernate.STRING)
                 .list();
          
         SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -100,6 +109,7 @@ public class SaleVatReportImpl implements SaleVatReportDao{
             otv.setDepartment(util.ConvertString(B[8]));
             otv.setDescription(util.ConvertString(B[9]));
             otv.setStatus(util.ConvertString(B[10]));
+            otv.setType(util.ConvertString(B[14]));
             outputTaxViewList.add(otv);
         }
         
@@ -111,7 +121,7 @@ public class SaleVatReportImpl implements SaleVatReportDao{
     @Override
     public String UpdateOutputTaxStatusCancel(List<OutputTaxView> outputTaxViewList) {
         int result = 0;
-        int resultCN = 0;
+        String hql = "" ;
         try {
             Session session = this.sessionFactory.openSession();
             setTransaction(session.beginTransaction());
@@ -119,15 +129,17 @@ public class SaleVatReportImpl implements SaleVatReportDao{
             for (int i = 0; i < outputTaxViewList.size(); i++) {
                 OutputTaxView otv = outputTaxViewList.get(i);
                 String taxId = otv.getTaxid();
-                String hql = "update TaxInvoice tax set tax.postDate = null , tax.outputTaxStatus = 0 where tax.id = '"+taxId+"'";
-                String hqlCN = "update CreditNote cn set cn.postDate = null , cn.outputTaxStatus = 0 where cn.id = '"+taxId+"'";
+                String taxType = otv.getType();
+                System.out.println("==== taxType ==== " + taxType);
+                if("CN".equalsIgnoreCase(taxType)){
+                    hql = "update CreditNote cn set cn.postDate = null , cn.outputTaxStatus = 0 where cn.id = '"+taxId+"'";
+                }else{
+                    hql = "update TaxInvoice tax set tax.postDate = null , tax.outputTaxStatus = 0 where tax.id = '"+taxId+"'";
+                }
                 try {
                     Query query = session.createQuery(hql);
-                    Query queryCN = session.createQuery(hqlCN);
                     System.out.println(" query " + query);
-                    System.out.println(" queryCN " + queryCN);
                     result = query.executeUpdate();
-                    resultCN = queryCN.executeUpdate();
                     System.out.println("Rows affected: " + result);
                 } catch (Exception ex) {
                     ex.printStackTrace();

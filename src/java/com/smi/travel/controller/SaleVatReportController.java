@@ -34,11 +34,13 @@ public class SaleVatReportController extends SMITravelController {
         String department = request.getParameter("department");
         String from = request.getParameter("postFromDate");
         String to = request.getParameter("postToDate");
+        String status = request.getParameter("status");
+        
         System.out.println(" ===== action ======  " + action);
         //Search
         if("searchPost".equals(action)){
            List<OutputTaxView> listPost = new LinkedList<>();
-           listPost = salevatreportservice.SearchOutputTaxViewFromFilter(from, to, department);
+           listPost = salevatreportservice.SearchOutputTaxViewFromFilter(from, to, department,status);
             if(listPost != null){
                 request.setAttribute("listPost", listPost);
             }else{
@@ -55,7 +57,9 @@ public class SaleVatReportController extends SMITravelController {
                 if(isSelect != null){
                     OutputTaxView otv = new OutputTaxView();
                     String taxId = request.getParameter("taxId"+i);
+                    String taxType = request.getParameter("taxType"+i);
                     otv.setTaxid(taxId);
+                    otv.setType(taxType);
                     listPost.add(otv);
                     System.out.println("data : "+otv);
                 }
@@ -66,7 +70,7 @@ public class SaleVatReportController extends SMITravelController {
                 System.out.println("Update ??? : " + isUpdate);
                 request.setAttribute("update", isUpdate);
                 
-                listPost = salevatreportservice.SearchOutputTaxViewFromFilter(from, to, department);
+                listPost = salevatreportservice.SearchOutputTaxViewFromFilter(from, to, department,status);
                 request.setAttribute("listPost", listPost);
             }else{
                 request.setAttribute("listPost", null);
@@ -75,6 +79,7 @@ public class SaleVatReportController extends SMITravelController {
         request.setAttribute("Department", department);
         request.setAttribute("From", from);
         request.setAttribute("To", to);
+        request.setAttribute("Status", status);
 
         return SaleVatReport;
     }

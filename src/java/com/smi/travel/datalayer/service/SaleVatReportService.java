@@ -16,8 +16,8 @@ import java.util.List;
 public class SaleVatReportService {
     private SaleVatReportDao saleVatReportDao;
     
-    public List<OutputTaxView> SearchOutputTaxViewFromFilter(String from,String to,String department){
-        return saleVatReportDao.SearchOutputTaxViewFromFilter(from, to, department);
+    public List<OutputTaxView> SearchOutputTaxViewFromFilter(String from,String to,String department,String status){
+        return saleVatReportDao.SearchOutputTaxViewFromFilter(from, to, department,status);
     }  
     
     public String UpdateOutputTaxStatusCancel(List<OutputTaxView> outputTaxViewList){

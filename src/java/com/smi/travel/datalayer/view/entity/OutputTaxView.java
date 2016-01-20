@@ -33,7 +33,8 @@ public class OutputTaxView {
     private int countWendy;
     private int countOutbound;
     private int countInbound;
-
+    private String type;
+    
     public String getTaxid() {
         return taxid;
     }
@@ -200,6 +201,14 @@ public class OutputTaxView {
 
     public void setCountInbound(int countInbound) {
         this.countInbound = countInbound;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
     
 }

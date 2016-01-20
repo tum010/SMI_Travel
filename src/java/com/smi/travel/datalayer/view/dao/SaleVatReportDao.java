@@ -13,7 +13,7 @@ import java.util.List;
  * @author Jittima
  */
 public interface SaleVatReportDao {
-    public List<OutputTaxView> SearchOutputTaxViewFromFilter(String from,String to,String department);   
+    public List<OutputTaxView> SearchOutputTaxViewFromFilter(String from,String to,String department,String status);   
     public String UpdateOutputTaxStatusCancel(List<OutputTaxView> outputTaxViewList);
     public List getSaleVatReportList(String month,String year,String department);
 }

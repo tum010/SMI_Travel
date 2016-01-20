@@ -11,6 +11,7 @@
 <c:set var="From" value="${requestScope['From']}" />
 <c:set var="To" value="${requestScope['To']}" />
 <c:set var="listPost" value="${requestScope['listPost']}" />
+<c:set var="Status" value="${requestScope['Status']}" />
 <section class="content-header" >
     <h1>
         Tax Invoice Report
@@ -108,18 +109,46 @@
                         <option value="Outbound" ${selectDepartOutbound}>Outbound </option>
                         <option value="Inbound" ${selectDepartInbound}>Inbound </option>
                     </select>
-                </div>                   
-                <div class="col-xs-1 text-right" style="width: 120px">
+                </div>
+                <div class="col-xs-1 text-right" style="width: 70px">
+                    <label class="control-label" for="">Status</lable>
+                </div>
+                <div class="col-xs-1" style="width: 150px">
+                    <c:set var="selectPost" value="" />
+                    <c:set var="selectChange" value="" />
+                    <c:set var="selectVoidPost" value="" />
+                    <c:if test="${Status == 'Post'}">
+                        <c:set var="selectPost" value="selected" />
+                    </c:if>
+                    <c:if test="${Status == 'Change'}">
+                        <c:set var="selectChange" value="selected" />
+                    </c:if>
+                    <c:if test="${Status == 'VoidPost'}">
+                        <c:set var="selectVoidPost" value="selected" />
+                    </c:if>
+                    <select class="form-control" id="status" name="status">
+                        <option value="">--Select--</option>
+                        <option value="Post" ${selectPost}>Post </option>
+                        <option value="Change" ${selectChange}>Change </option>
+                        <option value="VoidPost" ${selectVoidPost}>VoidPost</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="col-xs-9 text-right">
+                </div> 
+                <div class="col-xs-1 text-right" style="width: 100px">
                     <button type="submit"  id="btnSearchPost"  name="btnSearchPost"  onclick="searchActionPost()"  class="btn btn-primary btn-primary">
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                     </button>
                 </div>
-                <div class="col-xs-1 text-right" style="width: 120px">
+                <div class="col-xs-1 text-right" style="width: 100px">
                     <button  style="width: 88px" type="button"  id="btnPrint"  name="btnPrint"  onclick="printAction()"  class="btn btn-primary btn-primary">
                         <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print   
                     </button>
-                </div>    
+                </div> 
             </div>
+            <div class="col-xs-12"><br></div> 
             <div class="col-xs-12">
                 <!--<div class="col-xs-12"><br></div>--> 
                 <div class="col-xs-12">
@@ -144,6 +173,7 @@
                             <c:forEach var="table" items="${listPost}" varStatus="counter">
                             <tr>
                                 <td class="hidden"><input class="form-control" type="text" id="taxId${counter.count}" name="taxId${counter.count}" value="${table.taxid}"></td>
+                                <td class="hidden"><input class="form-control" type="text" id="taxType${counter.count}" name="taxType${counter.count}" value="${table.type}"></td>
                                 <td align="center">
                                     <c:choose>
                                         <c:when test="${table.status == 'Post'}">
@@ -280,29 +310,29 @@
         });
         $(".money").mask('000,000,000.00', {reverse: true});
         
-        var table = $('#CancelPostDataListTable').dataTable({bJQueryUI: true,
-            "sPaginationType": "full_numbers",
-            "bAutoWidth": false,
-            "bFilter": false,
-            "bInfo": false,
-            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-            "iDisplayLength": 50,
-            "bSort": false,
-            "bPaginate": false
-        });
+//        var table = $('#CancelPostDataListTable').dataTable({bJQueryUI: true,
+//            "sPaginationType": "full_numbers",
+//            "bAutoWidth": false,
+//            "bFilter": false,
+//            "bInfo": false,
+//            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+//            "iDisplayLength": 50,
+//            "bSort": false,
+//            "bPaginate": false
+//        });
         
-        $('#CancelPostDataListTable tbody').on('click', 'tr', function () {
-            if ($(this).hasClass('row_selected')) {
-                $(this).removeClass('row_selected');
-                $('#hdGridSelected').val('');
-            }
-            else {
-                table.$('tr.row_selected').removeClass('row_selected');
-                $(this).addClass('row_selected');
-                $('#hdGridSelected').val($('#CancelPostDataListTable tbody tr.row_selected').attr("id"));
-            }
-        });
-        
+//        $('#CancelPostDataListTable tbody').on('click', 'tr', function () {
+//            if ($(this).hasClass('row_selected')) {
+//                $(this).removeClass('row_selected');
+//                $('#hdGridSelected').val('');
+//            }
+//            else {
+//                table.$('tr.row_selected').removeClass('row_selected');
+//                $(this).addClass('row_selected');
+//                $('#hdGridSelected').val($('#CancelPostDataListTable tbody tr.row_selected').attr("id"));
+//            }
+//        });
+
         $('#InputFromDate').datetimepicker().on('dp.change', function (e) {
             $('#SaleVatReportForm').bootstrapValidator('revalidateField', 'postFromDate');
         });
@@ -401,6 +431,8 @@
             $pager.insertAfter($table).find('span.page-number:first').addClass('active');
             document.getElementById("pageNo").style.cursor="pointer";
         });
+        
+
                
     });
     

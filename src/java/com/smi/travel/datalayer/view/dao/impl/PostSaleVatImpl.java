@@ -57,6 +57,11 @@ public class PostSaleVatImpl implements PostSaleVatDao {
             query.append(" `tax`.status = '" + status + "'");
             haveCondition = true;
         }
+//        else{
+//            query.append(haveCondition ? " and" : " where");
+//            query.append(" `tax`.status = 'Normal' or `tax`.status = 'Post' or `tax`.status = 'Change' or `tax`.status = 'Void' ");
+//            haveCondition = true;
+//        }
         if ((from != null) && (!"".equalsIgnoreCase(from))) {
             query.append(haveCondition ? " and" : " where");
             query.append(" `tax`.taxdate >= '" + from + "'");
@@ -89,6 +94,7 @@ public class PostSaleVatImpl implements PostSaleVatDao {
                 .addScalar("agttaxno", Hibernate.STRING)
                 .addScalar("main", Hibernate.STRING)
                 .addScalar("branchno", Hibernate.STRING)
+                .addScalar("type", Hibernate.STRING)
                 .list();
          
         SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -107,6 +113,7 @@ public class PostSaleVatImpl implements PostSaleVatDao {
             otv.setDepartment(util.ConvertString(B[8]));
             otv.setDescription(util.ConvertString(B[9]));
             otv.setStatus(util.ConvertString(B[10]));
+            otv.setType(util.ConvertString(B[14]));
             outputTaxViewList.add(otv);
         }
         
@@ -118,7 +125,7 @@ public class PostSaleVatImpl implements PostSaleVatDao {
     @Override
     public String UpdateOutputTaxStatus(List<OutputTaxView> outputTaxViewList) {
         int result = 0;
-        int resultCN = 0;
+        String hql = "" ;
         try {
             Session session = this.sessionFactory.openSession();
             setTransaction(session.beginTransaction());
@@ -126,23 +133,23 @@ public class PostSaleVatImpl implements PostSaleVatDao {
             for (int i = 0; i < outputTaxViewList.size(); i++) {
                 OutputTaxView otv = outputTaxViewList.get(i);
                 String taxId = otv.getTaxid();
+                String taxType = otv.getType();
+                System.out.println("==== taxType ==== " + taxType);
+                if("CN".equalsIgnoreCase(taxType)){
+                    hql = "update CreditNote cn set cn.postDate = :thisdate , cn.outputTaxStatus = 1 where cn.id = '"+taxId+"'";
+                }else{
+                    hql = "update TaxInvoice tax set tax.postDate = :thisdate , tax.outputTaxStatus = 1 where tax.id = '"+taxId+"'";
+                }
                 Date thisdate = new Date();
-                String hql = "update TaxInvoice tax set tax.postDate = :thisdate , tax.outputTaxStatus = 1 where tax.id = '"+taxId+"'";
-                String hqlCN = "update CreditNote cn set cn.postDate = :thisdate , cn.outputTaxStatus = 1 where cn.id = '"+taxId+"'";
                 try {
                     Query query = session.createQuery(hql);
                     query.setParameter("thisdate", thisdate);
-                    Query queryCN = session.createQuery(hqlCN);
-                    queryCN.setParameter("thisdate", thisdate);
                     System.out.println(" query " + query);
-                    System.out.println(" queryCN " + queryCN);
                     result = query.executeUpdate();
-                    resultCN = queryCN.executeUpdate();
                     System.out.println("Rows affected: " + result);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                     result = 0;
-                    resultCN = 0;
                 }
             }
             getTransaction().commit();

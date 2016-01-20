@@ -114,6 +114,7 @@
                     <label class="control-label" for="">Status</lable>
                 </div>
                 <div class="col-xs-1" style="width: 120px">
+                    <c:set var="selectVoid" value="" />
                     <c:set var="selectNormal" value="" />
                     <c:set var="selectPost" value="" />
                     <c:set var="selectChange" value="" />
@@ -175,6 +176,7 @@
                             <c:forEach var="table" items="${listPost}" varStatus="counter">
                             <tr>
                                 <td class="hidden"><input class="form-control" type="text" id="taxId${counter.count}" name="taxId${counter.count}" value="${table.taxid}"></td>
+                                <td class="hidden"><input class="form-control" type="text" id="taxType${counter.count}" name="taxType${counter.count}" value="${table.type}"></td>
                                 <td align="center">
                                     <c:choose>
                                         <c:when test="${table.status == 'Normal'}">
@@ -248,29 +250,29 @@
 
         });
         $(".money").mask('000,000,000.00', {reverse: true});
+
+//        var table = $('#postSaleVatDataListTable').dataTable({bJQueryUI: true,
+//            "sPaginationType": "full_numbers",
+//            "bAutoWidth": false,
+//            "bFilter": false,
+//            "bInfo": false,
+//            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+//            "iDisplayLength": 50,
+//            "bSort": false,
+//            "bPaginate": false
+//        });
         
-        var table = $('#postSaleVatDataListTable').dataTable({bJQueryUI: true,
-            "sPaginationType": "full_numbers",
-            "bAutoWidth": false,
-            "bFilter": false,
-            "bInfo": false,
-            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-            "iDisplayLength": 50,
-            "bSort": false,
-            "bPaginate": false
-        });
-        
-        $('#postSaleVatDataListTable tbody').on('click', 'tr', function () {
-            if ($(this).hasClass('row_selected')) {
-                $(this).removeClass('row_selected');
-                $('#hdGridSelected').val('');
-            }
-            else {
-                table.$('tr.row_selected').removeClass('row_selected');
-                $(this).addClass('row_selected');
-                $('#hdGridSelected').val($('#postSaleVatDataListTable tbody tr.row_selected').attr("id"));
-            }
-        });
+//        $('#postSaleVatDataListTable tbody').on('click', 'tr', function () {
+//            if ($(this).hasClass('row_selected')) {
+//                $(this).removeClass('row_selected');
+//                $('#hdGridSelected').val('');
+//            }
+//            else {
+//                table.$('tr.row_selected').removeClass('row_selected');
+//                $(this).addClass('row_selected');
+//                $('#hdGridSelected').val($('#postSaleVatDataListTable tbody tr.row_selected').attr("id"));
+//            }
+//        });
         
         $('#InputFromDate').datetimepicker().on('dp.change', function (e) {
             $('#PostSaleVatForm').bootstrapValidator('revalidateField', 'postFromDate');
@@ -370,7 +372,7 @@
             $pager.insertAfter($table).find('span.page-number:first').addClass('active');
             document.getElementById("pageNo").style.cursor="pointer";
         });
-               
+
     });
     
     function postSaleVat(){

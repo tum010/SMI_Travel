@@ -56,7 +56,9 @@ public class PostSaleVatController extends SMITravelController {
                 if(isSelect != null){
                     OutputTaxView otv = new OutputTaxView();
                     String taxId = request.getParameter("taxId"+i);
+                    String taxType = request.getParameter("taxType"+i);
                     otv.setTaxid(taxId);
+                    otv.setType(taxType);
                     listPost.add(otv);
                     System.out.println("data : "+otv);
                 }
