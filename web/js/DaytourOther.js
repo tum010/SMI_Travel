@@ -124,7 +124,7 @@ function CallFilterAjax(param) {
                      $("#ajaxload").addClass("hidden");
                 }, error: function(msg) {
                     $("#ajaxload").addClass("hidden");
-                    alert(msg);
+//                    alert(msg);
                }
            });
         } catch (e) {
@@ -161,12 +161,30 @@ function printOtherVoucher(status) {
 //    if(status == "Duplicate"){
 //       checkDuplicate();  
 //    }
-
     var InputRefNo = document.getElementById("InputRefNo").value;
-    if (voucher == "OtherVouncher"){
-        window.open("report.smi?name=DaytourOther&refno=" + InputRefNo+"&comfirm="+status);
+    var otherId = "";
+    var countOther = parseInt($("#countOther").val());
+    for(var i=1; i<=countOther; i++){
+        if ($('#otherCheck' + i).is(":checked")) {
+            otherId += (otherId !== '' ? ',' + $('#otherId' + i).val() : $('#otherId' + i).val());
+        }
+    }
+    if(otherId === ''){
+        $('#textAlertDivSelect').show();
+        return;
+    }
+    var passengerId = "";
+    var countPassenger = parseInt($("#countPassenger").val());
+    for(var i=1; i<=countPassenger; i++){
+        if ($('#passengerCheck' + i).is(":checked")) {
+            passengerId += (passengerId !== '' ? ',' + $('#passengerId' + i).val() : $('#passengerId' + i).val());
+        }
+    }
+    
+    if (voucher === "OtherVouncher"){
+        window.open("report.smi?name=DaytourOther&otherId=" + otherId + "&passengerId=" + passengerId + "&refNo=" + InputRefNo + "&comfirm="+status);
     }else{
-        window.open("report.smi?name=OtherVouncherEmail&refno=" + InputRefNo+"&comfirm="+status);
+        window.open("report.smi?name=OtherVouncherEmail&otherId=" + otherId + "&passengerId=" + passengerId + "&refNo=" + InputRefNo + "&comfirm="+status);
     }
 }
 
@@ -183,4 +201,9 @@ function checkDuplicate(){
             printOtherVoucher('');
         }
     }
+}
+
+function hideTextAlert(){
+    $('#textAlertDivNotPrint').hide();
+    $('#textAlertDivSelect').hide();
 }

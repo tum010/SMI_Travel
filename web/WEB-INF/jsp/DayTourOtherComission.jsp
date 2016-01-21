@@ -40,10 +40,10 @@
 <div class ="container"  style="padding-top: 15px;" ng-app=""> 
     <div class="row">
         <!-- side bar -->
-        <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
+        <div class="col-sm-1" style="border-right:  solid 1px #01C632;padding-top: 10px; width: 160px; padding-left: 0px;">
             <div ng-include="'WebContent/Book/OperationOther.html'"></div>
         </div>
-        <div class="col-sm-10" style="padding-right: 0px;">
+        <div class="col-sm-10" style="padding-right: 0px; padding-left: 0px; width: 1120px;">
             <div id="textAlertDivSaveAddGuide"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Guide Success!</strong> 
@@ -143,9 +143,9 @@
                         <tr>
                             <th class="hide">Booking ID</th>
                             <th style="width:8%">Code</th>
-                            <th style="width:9%">Name</th>
-                            <th style="width:9%">Date</th>
-                            <th style="width:6%">Ref. No</th>
+                            <th style="width:8%">Name</th>
+                            <th style="width:8%">Date</th>
+                            <th style="width:7%">Ref. No</th>
                             <th style="width:14%">Client Name</th>
                             <th style="width:11%">Guide Name</th>
                             <th style="width:8%">Guide Comm</th>
@@ -192,8 +192,8 @@
                                 </td>
                                 <c:set var="refno1" value="${fn:substring(item.master.referenceNo,0,2)}" />
                                 <c:set var="refno2" value="${fn:substring(item.master.referenceNo,2,7)}" />   
-                                <td>${item.master.referenceNo}  </td>
-                                <td>${item.master.customer.firstName} &nbsp; ${item.master.customer.lastName} </td>
+                                <td><center>${refno1}-${refno2}</center></td>
+                                <td>${item.master.customer.firstName} ${item.master.customer.lastName}</td>
                                 <td class="selectGuide form-group">  
                                     <select class="guidename"  id="selectGuide-${status.count}" name="selectGuide-" onchange="getGuideCommission('${item.guide.name}','guideComm-${status.count}');getGuideComm(${status.count});" class="selectize"   >
                                         <option value="" ></option>
@@ -236,10 +236,10 @@
                         </c:forEach>
                     </tbody>
                 </table>
-                
+
                 <table class="display hide" id="EditTable" name="EditTable">
                     <tbody></tbody>
-                </table>
+                </table> 
                 <hr/>
                 <div class="text-center">
                     <input id="dayCommRows" name="dayCommRows" type="text" class="hidden" />

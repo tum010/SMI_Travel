@@ -39,7 +39,7 @@ public class RefundImpl implements RefundDao{
     private static final String SELECT_REFUND_AIRTICKET2 = "FROM AirticketRefund ar where ar.airticketBooking.id = :airbookingid  and ar.refundAirticket.id = :refundid";
     private static final String SELECT_REFUND_DETAIL = "FROM AirticketRefund ar where ar.id = :refundid";
     private static final String SELECT_TICKETNO = "From AirticketPassenger psg where psg.airticketAirline.airticketPnr.airticketBooking.master.referenceNo = :refno";
-    private static final String SELECT_SECTOR = "From AirticketPassenger psg where psg.id = :ticid";
+    private static final String SELECT_SECTOR = "From AirticketPassenger psg where psg.id = :ticid and psg.airticketAirline.airticketPnr.airticketBooking.id = :bookid";
     private static final String GET_REFUND = "FROM AirticketRefund ar where ar.refundAirticket.id = :refundId  and ar.refundAirticket.refundNo = :refundNo" ;
     private static final String DELETE_AIRTICKET_REFUND = "DELETE FROM AirticketRefund ar where ar.id = :airticketrefundid";
     private static final String DELETE_REFUND = "DELETE FROM RefundAirticket ar where ar.id = :refundid";
@@ -284,6 +284,7 @@ public class RefundImpl implements RefundDao{
                         // Sector
                         List<AirticketPassenger> ticketnoList = session.createQuery(SELECT_SECTOR)
                             .setParameter("ticid", rRefundAirticketDetail.get(j).getAirticketPassenger().getId())
+                            .setParameter("bookid", rRefundAirticketDetail.get(j).getAirticketPassenger().getAirticketAirline().getAirticketPnr().getAirticketBooking().getId())
                             .list();
                         List<AirticketFlight> list = new ArrayList<AirticketFlight>(ticketnoList.get(0).getAirticketAirline().getAirticketFlights());
                         String sector = util.GetRounting(list);

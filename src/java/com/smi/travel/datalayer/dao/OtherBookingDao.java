@@ -21,7 +21,7 @@ import java.util.List;
  */
 public interface OtherBookingDao {
     public List<OtherBooking> getListBookingOtherFromRefno(String refno);
-    public List<OtherBookingView> getListBookingAllView();
+    public List<OtherBookingView> getListBookingAllView(String name);
     public List<OtherBooking> getListBookingAll();
     public OtherBooking getBookDetailOtherFromID(String OtherBookingID);
     public List<OtherBooking> getListBookingOtherComission(String StartDate, String EndDate,String agentID,String guideID);

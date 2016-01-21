@@ -12,6 +12,7 @@ package com.smi.travel.datalayer.view.entity;
 public class OtherBookingView {
     private String refno;
     private String createdate;
+    private String otherdate;
     private String leader;
     private String product;
     private String status;
@@ -54,6 +55,14 @@ public class OtherBookingView {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getOtherdate() {
+        return otherdate;
+    }
+
+    public void setOtherdate(String otherdate) {
+        this.otherdate = otherdate;
     }
     
 }

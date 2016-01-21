@@ -666,26 +666,33 @@ public class OtherBookingImpl implements OtherBookingDao{
     }
 
     @Override
-    public List<OtherBookingView> getListBookingAllView() {
+    public List<OtherBookingView> getListBookingAllView(String name) {
         UtilityFunction util = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
         List<OtherBookingView> data = new LinkedList<OtherBookingView>();
         String query = "SELECT * FROM `other_operation_view` ";
+        if(!"".equalsIgnoreCase(name) && name != null){
+            query += " WHERE refno LIKE '%" + name + "%' OR leader LIKE '%" + name + "%' OR product_code LIKE '%" + name + "%' OR "
+                    + "product LIKE '%" + name + "%' OR other_date LIKE '%" + name + "%'";
+        }
+        query += " ORDER BY create_date DESC , refno ASC";
         List<Object[]> listBookingAll = session.createSQLQuery(query)
                 .addScalar("refno", Hibernate.STRING)
                 .addScalar("create_date", Hibernate.STRING)
+                .addScalar("other_date", Hibernate.STRING)
                 .addScalar("leader", Hibernate.STRING)
                 .addScalar("product", Hibernate.STRING)
                 .addScalar("status", Hibernate.STRING)
                 .list();
         System.out.println("Query Booking List : " + query);
         for (Object[] B : listBookingAll) {
-             OtherBookingView   otherBooking = new  OtherBookingView(); 
+             OtherBookingView otherBooking = new  OtherBookingView(); 
              otherBooking.setRefno(!"".equals(util.ConvertString(B[0])) ? util.ConvertString(B[0]) : "");
              otherBooking.setCreatedate(!"".equals(util.ConvertString(B[1]))  ? util.ConvertString(B[1]) : "");
-             otherBooking.setLeader(!"".equals(util.ConvertString(B[2]))  ? util.ConvertString(B[2]) : "");
-             otherBooking.setProduct(!"".equals(util.ConvertString(B[3]))  ? util.ConvertString(B[3]) : "");
-             otherBooking.setStatus(!"".equals(util.ConvertString(B[4]))  ? util.ConvertString(B[4]) : "");
+             otherBooking.setOtherdate(!"".equals(util.ConvertString(B[2]))  ? util.ConvertString(B[2]) : "");
+             otherBooking.setLeader(!"".equals(util.ConvertString(B[3]))  ? util.ConvertString(B[3]) : "");
+             otherBooking.setProduct(!"".equals(util.ConvertString(B[4]))  ? util.ConvertString(B[4]) : "");
+             otherBooking.setStatus(!"".equals(util.ConvertString(B[5]))  ? util.ConvertString(B[5]) : "");
              data.add(otherBooking);
         }              
         return data;
@@ -844,7 +851,9 @@ public class OtherBookingImpl implements OtherBookingDao{
 
     @Override
     public List<OtherBooking> searchOtherBooking(String name) {
-        String query = "from OtherBooking ob where ob.master.customer.firstName Like '%"+name+"%' OR ob.master.customer.lastName Like '%"+name+"%' OR ob.product.code = '"+name+"' OR  ob.product.name  Like '%"+name+"%' OR ob.master.referenceNo  = '"+name+"' ";
+        String query = "from OtherBooking ob where ob.master.customer.firstName Like '%"+name+"%' OR ob.master.customer.lastName Like '%"+name+"%' "
+                + "OR ob.product.code Like '%"+name+"%' OR  ob.product.name  Like '%"+name+"%' OR ob.master.referenceNo Like '%"+name+"%' "
+                + "OR ob.otherDate Like '%"+name+"%' ORDER BY ob.master.createDate DESC , ob.master.referenceNo";
         System.out.println("searchOtherBooking query : " + query);
         org.hibernate.Session session = this.sessionFactory.openSession();
         List<OtherBooking> list = session.createQuery(query).list();
