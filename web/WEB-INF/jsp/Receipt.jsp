@@ -2501,7 +2501,7 @@
         $('#invoicenopanel').removeClass('has-error');
     }
     
-    function addProduct(product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, checkadd, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress,invTableId) {
+    function addProduct(product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, checkadd, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress,invTableId,invTableNo) {
         var receiveAddressTemp = replaceAll("<br>", "\n" , receiveAddress.toString());
         $('#textAlertDuplicateProduct').hide();
         var tempCount = parseInt($("#counter").val());
@@ -2568,12 +2568,12 @@
 
         }
         if (!checkAddDuplicate) {
-            AddDataRowProduct(tempCount, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddressTemp,invTableId);
+            AddDataRowProduct(tempCount, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddressTemp,invTableId,invTableNo);
         } else {
             $('#textAlertDuplicateProduct').show();
         }
     }
-    function AddDataRowProduct(row, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress,invTableId) {
+    function AddDataRowProduct(row, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress,invTableId,invTableNo) {
         var grossinv = 0;
         if (vat !== '' && isVat !== '0') {
             var x = parseFloat(amount);
@@ -2610,6 +2610,7 @@
         if(typeRec === "V"){
             $("#ReceiptListTable tbody").append(
                     '<tr style="higth 100px">' +
+                    '<input id="invoiceTableNo' + row + '"  name="invoiceTableNo' + row + '"   type="hidden" value="' + invTableNo + '" >' +
                     '<input id="invoiceTableId' + row + '"  name="invoiceTableId' + row + '"   type="hidden" value="' + invTableId + '" >' +
                     '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="' + grossinv + '" >' +
                     '<input id="invId' + row + '" name="invId' + row + '"  type="hidden" value="' + invId + '" >' +
@@ -2651,6 +2652,7 @@
         }else{
             $("#ReceiptListTable tbody").append(
                     '<tr style="higth 100px">' +
+                    '<input id="invoiceTableNo' + row + '"  name="invoiceTableNo' + row + '"   type="hidden" value="' + invTableNo + '" >' +
                     '<input id="invoiceTableId' + row + '"  name="invoiceTableId' + row + '"   type="hidden" value="' + invTableId + '" >' +
                     '<input id="grossInvoice' + row + '"  name="grossInvoice' + row + '"   type="hidden" value="' + grossinv + '" >' +
                     '<input id="invId' + row + '" name="invId' + row + '"  type="hidden" value="' + invId + '" >' +

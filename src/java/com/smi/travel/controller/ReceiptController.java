@@ -161,6 +161,7 @@ public class ReceiptController extends SMITravelController {
                             for(int i = 0 ;i < receiptDetailList.size();i++){
                                 if(receiptDetailList.get(i).getInvoiceDetail() != null){
                                     if(receiptDetailList.get(i).getInvoiceDetail().getInvoice() != null){
+                                        
                                         if(i > 0){
                                             String invNotemp1 = receiptDetailList.get(i).getInvoiceDetail().getInvoice().getInvNo();
                                             String invNotemp2 = receiptDetailList.get(i-1).getInvoiceDetail().getInvoice().getInvNo();      
@@ -209,7 +210,10 @@ public class ReceiptController extends SMITravelController {
             }
             
             Invoice invoice = new Invoice();
-            invoice.setInvNo(invoiceTableNo);
+            System.out.println(" invoiceTableNo " + invoiceTableNo);
+            if(StringUtils.isNotEmpty(invoiceTableNo)){
+                invoice.setInvNo(invoiceTableNo);
+            }
             invoice.setInvTo(receiveFromCode);
             invoice.setInvName(receiveFromName);
             invoice.setInvAddress(receiveFromAddress);
@@ -231,11 +235,13 @@ public class ReceiptController extends SMITravelController {
             invoice.setMFinanceItemstatus(mFinanceItemstatus);
             String receiveProducttemp = "";
             
+            System.out.println(" invoiceTableId " + invoiceTableId);
             if(StringUtils.isNotEmpty(invoiceTableId)){
                 invoice.setId(invoiceTableId);
             }
-                            
-            for (int i = 1; i < rowsProduct-1 ; i++) {
+            
+            System.out.println(" ======================== rowsProduct ======================== " + rowsProduct);
+            for (int i = 1; i < rowsProduct; i++) {
                 String tableId = request.getParameter("tableId" + i);
                 String receiveProduct = request.getParameter("receiveProduct" + i);
                 String receiveDes = request.getParameter("receiveDes" + i);

@@ -1230,7 +1230,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
                         + "<td class='text-center'>" + isUse + "</td>"
-                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','1','" + vat + "','" + commission + "','" + currency + "','','','" + paymentId + "','" + airline + "','3','" + description + "','" + payNo + "','','" + receiveFrom + "','" + receiveName + "','" + receiveAddress + "','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','1','" + vat + "','" + commission + "','" + currency + "','','','" + paymentId + "','" + airline + "','3','" + description + "','" + payNo + "','','" + receiveFrom + "','" + receiveName + "','" + receiveAddress + "','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
             }
             html.append(newrow);
@@ -1294,7 +1294,7 @@ public class AJAXBean extends AbstractBean implements
 //                        + "<td>" + airline + "</td>"
                         + "<td class='money'>" + commission + "</td>"
                         + "<td class='text-center'>" + isUse + "</td>"
-                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','1','" + vat + "','" + commission + "','" + currency + "','','','','" + airline + "','4','" + description + "','" + payNo + "','" + paymentTourId + "','" + receiveFrom + "','" + receiveName + "','" + receiveAddress + "','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/com\"><span onclick=\"addProduct('" + product + "','" + description + "','','','1','" + vat + "','" + commission + "','" + currency + "','','','','" + airline + "','4','" + description + "','" + payNo + "','" + paymentTourId + "','" + receiveFrom + "','" + receiveName + "','" + receiveAddress + "','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
             }
             html.append(newrow);
@@ -1722,7 +1722,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td class='money'>" + amountinvoice + "</td>"
                         + "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
-                        + "<td><center><a href=\"#/inv\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','" + isVat + "','" + vat + "','" + amount + "','" + currency + "','" + invId + "','','','','1','" + displaydescription + "','" + invNo + "','','','','' ,'" + invoice.getId() + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/inv\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','" + isVat + "','" + vat + "','" + amount + "','" + currency + "','" + invId + "','','','','1','" + displaydescription + "','" + invNo + "','','','','' ,'" + invoice.getId() + "','" + invoice.getInvNo()+ "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;
@@ -1875,7 +1875,7 @@ public class AJAXBean extends AbstractBean implements
                         }
                 newrow += "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
-                        + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + currency + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "','','','','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + currency + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "','','','','','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;
@@ -2500,8 +2500,17 @@ public class AJAXBean extends AbstractBean implements
         for (int i = 0; i < invoiceDetailList.size(); i++) {
             cost = invoiceDetailList.get(i).getCost();
             amount = invoiceDetailList.get(i).getAmount();
-            resultCost = resultCost.add(cost);
-            resultAmount = resultAmount.add(amount);
+            if(cost != null){
+                resultCost = resultCost.add(cost);
+            }else{
+                resultCost = resultCost.add(BigDecimal.ZERO);
+            }
+            
+            if(amount != null){
+                resultAmount = resultAmount.add(amount);
+            }else{
+                resultAmount = resultAmount.add(BigDecimal.ZERO);
+            }
         }
 
         value[0] = resultCost;
@@ -2525,8 +2534,17 @@ public class AJAXBean extends AbstractBean implements
         for (int i = 0; i < taxInvoiceDetailList.size(); i++) {
             cost = taxInvoiceDetailList.get(i).getCost();
             amount = taxInvoiceDetailList.get(i).getAmount();
-            resultCost = resultCost.add(cost);
-            resultAmount = resultAmount.add(amount);
+            if(cost != null){
+                resultCost = resultCost.add(cost);
+            }else{
+                resultCost = resultCost.add(BigDecimal.ZERO);
+            }
+            
+            if(amount != null){
+                resultAmount = resultAmount.add(amount);
+            }else{
+                resultAmount = resultAmount.add(BigDecimal.ZERO);
+            }
         }
 
         value[0] = resultCost;
