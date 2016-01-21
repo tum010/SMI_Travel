@@ -2230,7 +2230,7 @@ public class AccountReportSummary extends AbstractExcelView {
                         HSSFRow rowtotal = sheetInbound.createRow(tempcountI+countITemp);
                         rowtotal.setHeightInPoints((short) heightPoint);
                         String totalGross = "SUM(H" + (count+tempContI+1+countITemp)+":H"+(tempcountI+countITemp)+") -" +grossICN.multiply(BigDecimal.valueOf(2));
-                        String totalVat = "SUM(O" + (count+tempContI+1+countITemp)+":H"+(tempcountI+countITemp)+")-" +vatICN.multiply(BigDecimal.valueOf(2));
+                        String totalVat = "SUM(O" + (count+tempContI+1+countITemp)+":O"+(tempcountI+countITemp)+")-" +vatICN.multiply(BigDecimal.valueOf(2));
 
                         HSSFCellStyle styleTotal = wb.createCellStyle();
                         styleTotal.setFont(excelFunction.getHeaderTable(wb.createFont()));
