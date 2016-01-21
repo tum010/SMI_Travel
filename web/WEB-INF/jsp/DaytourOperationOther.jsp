@@ -36,7 +36,7 @@
     <form action="DaytourOperationOther.smi" method="post" id="DaytourOtherForm" role="form">
     <div class="row">
         <!-- side bar -->
-        <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
+        <div class="col-sm-1" style="border-right:  solid 1px #01C632;padding-top: 10px; width: 160px; padding-left: 0px;">
             <div ng-include="'WebContent/Book/OperationOther.html'"></div>
             <input hidden="" value="${booking_size[0]}" id="input-airticket_size">
             <input hidden="" value="${booking_size[1]}" id="input-hotel_size">
