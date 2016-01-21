@@ -853,13 +853,13 @@ public class AccountReportSummary extends AbstractExcelView {
         UtilityExcelFunction excelFunction = new UtilityExcelFunction();
 //        OutputTaxView dataheader = new OutputTaxView();
         HSSFFont fontHeader = wb.createFont();
-        fontHeader.setFontHeightInPoints((short) 14);
+        fontHeader.setFontHeightInPoints((short) 15);
         fontHeader.setFontName("Arial");
         fontHeader.setBoldweight(fontHeader.BOLDWEIGHT_BOLD);
             
         HSSFFont fontHeaderDetail = wb.createFont();
         fontHeaderDetail.setFontName("Arial");
-        fontHeaderDetail.setFontHeightInPoints((short) 12);
+        fontHeaderDetail.setFontHeightInPoints((short) 13);
         
         HSSFFont fontHeaderDetailTotal = wb.createFont();
         fontHeaderDetailTotal.setFontName("Arial");
@@ -872,7 +872,7 @@ public class AccountReportSummary extends AbstractExcelView {
         
         HSSFFont fontHeaderTable = wb.createFont();
         fontHeaderTable.setFontName("Arial");
-        fontHeaderTable.setFontHeightInPoints((short) 10);
+        fontHeaderTable.setFontHeightInPoints((short) 8);
         fontHeaderTable.setBoldweight(fontHeaderTable.BOLDWEIGHT_BOLD);
         
         HSSFFont symbolcheck = wb.createFont();
@@ -883,15 +883,24 @@ public class AccountReportSummary extends AbstractExcelView {
         symbol.setFontName("Wingdings");
         symbol.setFontHeightInPoints((short) 9);
         
+        HSSFFont fontTaxNo = wb.createFont();
+        fontTaxNo.setFontName("Arial");
+        fontTaxNo.setFontHeightInPoints((short) 12);
+        
         HSSFDataFormat currency = wb.createDataFormat();
         // Set align Text
         HSSFCellStyle styleC21 = wb.createCellStyle();
         styleC21.setAlignment(styleC21.ALIGN_RIGHT);
+        styleC21.setVerticalAlignment(styleC21.VERTICAL_CENTER);
+        
         HSSFCellStyle styleC22 = wb.createCellStyle();
         styleC22.setAlignment(styleC22.ALIGN_LEFT);
+        styleC22.setVerticalAlignment(styleC22.VERTICAL_CENTER);
+        
         HSSFCellStyle styleC23 = wb.createCellStyle();
-        styleC23.setAlignment(styleC22.ALIGN_CENTER);
-
+        styleC23.setAlignment(styleC23.ALIGN_CENTER);
+        styleC23.setVerticalAlignment(styleC23.VERTICAL_CENTER);
+        
         HSSFCellStyle styleC25 = wb.createCellStyle();
         styleC25.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         styleC25.setBorderRight(HSSFCellStyle.BORDER_THIN);
@@ -899,6 +908,7 @@ public class AccountReportSummary extends AbstractExcelView {
         styleC25.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC25.setDataFormat(currency.getFormat("#,##0.00"));
         styleC25.setFont(fontDetail);
+        styleC25.setVerticalAlignment(styleC25.VERTICAL_CENTER);
         
         HSSFCellStyle styleC25CN = wb.createCellStyle();
         styleC25CN.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -908,6 +918,7 @@ public class AccountReportSummary extends AbstractExcelView {
         styleC25CN.setDataFormat(currency.getFormat("(#,##0.00)"));
         styleC25CN.setAlignment(styleC25CN.ALIGN_RIGHT);
         styleC25CN.setFont(fontDetail);
+        styleC25CN.setVerticalAlignment(styleC25CN.VERTICAL_CENTER);
 
         HSSFCellStyle styleC26 = wb.createCellStyle();
         styleC26.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -915,37 +926,54 @@ public class AccountReportSummary extends AbstractExcelView {
         styleC26.setBorderTop(HSSFCellStyle.BORDER_THIN);
         styleC26.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC26.setDataFormat(currency.getFormat("#,##0"));
-        styleC26.setAlignment(styleC22.ALIGN_CENTER);
+        styleC26.setAlignment(styleC26.ALIGN_CENTER);
         styleC26.setFont(fontDetail);
+        styleC26.setVerticalAlignment(styleC26.VERTICAL_CENTER);
         
         HSSFCellStyle styleC27 = wb.createCellStyle();
         styleC27.setAlignment(styleC27.ALIGN_RIGHT);
         styleC27.setDataFormat(currency.getFormat("#,##0.00"));
+        styleC27.setVerticalAlignment(styleC27.VERTICAL_CENTER);
 
         HSSFCellStyle styleC28 = wb.createCellStyle();
         styleC28.setAlignment(styleC28.ALIGN_CENTER);
         styleC28.setDataFormat(currency.getFormat("#,##0"));
+        styleC28.setVerticalAlignment(styleC28.VERTICAL_CENTER);
 
         HSSFCellStyle styleC29 = wb.createCellStyle();
         styleC29.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         styleC29.setBorderRight(HSSFCellStyle.BORDER_THIN);
         styleC29.setBorderTop(HSSFCellStyle.BORDER_THIN);
         styleC29.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC29.setVerticalAlignment(styleC29.VERTICAL_CENTER);
 
         HSSFCellStyle styleC30 = wb.createCellStyle();
         styleC30.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         styleC30.setBorderRight(HSSFCellStyle.BORDER_THIN);
         styleC30.setBorderTop(HSSFCellStyle.BORDER_THIN);
         styleC30.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        styleC30.setAlignment(styleC22.ALIGN_CENTER);
+        styleC30.setAlignment(styleC30.ALIGN_CENTER);
+        styleC30.setVerticalAlignment(styleC30.VERTICAL_CENTER);
         styleC30.setFont(fontDetail);
         
         HSSFCellStyle stylebordertotal = wb.createCellStyle();
         stylebordertotal.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        stylebordertotal.setVerticalAlignment(stylebordertotal.VERTICAL_CENTER);
         
         HSSFCellStyle stylebordertotalleft = wb.createCellStyle();
         stylebordertotalleft.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         stylebordertotalleft.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        stylebordertotalleft.setVerticalAlignment(stylebordertotalleft.VERTICAL_CENTER);
+        
+        HSSFCellStyle styleTaxNo = wb.createCellStyle();
+        styleTaxNo.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleTaxNo.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleTaxNo.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleTaxNo.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleTaxNo.setDataFormat(currency.getFormat("#,##0"));
+        styleTaxNo.setAlignment(styleTaxNo.ALIGN_CENTER);
+        styleTaxNo.setFont(fontTaxNo);
+        styleTaxNo.setVerticalAlignment(styleTaxNo.VERTICAL_CENTER);
 
             // Header Table
             HSSFCellStyle styleC3 = wb.createCellStyle();
@@ -955,8 +983,8 @@ public class AccountReportSummary extends AbstractExcelView {
             styleC3.setBorderLeft(HSSFCellStyle.BORDER_THIN);
             styleC3.setBorderRight(HSSFCellStyle.BORDER_THIN);
             styleC3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+            styleC3.setFont(fontHeaderTable);
             styleC3.setWrapText(true);
-            
             // Header Table
             HSSFCellStyle styleC6 = wb.createCellStyle();
             styleC6.setAlignment(styleC6.ALIGN_LEFT);
@@ -967,7 +995,6 @@ public class AccountReportSummary extends AbstractExcelView {
             styleC6.setBorderTop(HSSFCellStyle.BORDER_THIN);
             styleC6.setWrapText(true);
             styleC6.setFont(fontHeaderDetailTotal);
-            
             // Header Table
             HSSFCellStyle styleC4 = wb.createCellStyle();
             styleC4.setAlignment(styleC4.ALIGN_RIGHT);
@@ -976,7 +1003,8 @@ public class AccountReportSummary extends AbstractExcelView {
             styleC4.setBorderLeft(HSSFCellStyle.BORDER_THIN);
             styleC4.setBorderRight(HSSFCellStyle.BORDER_THIN);
             styleC4.setBorderTop(HSSFCellStyle.BORDER_THIN);
-
+            styleC4.setVerticalAlignment(styleC4.VERTICAL_CENTER);
+            
             int count = 11;
             int countW = 11;
             int countI = 11;
@@ -1025,10 +1053,10 @@ public class AccountReportSummary extends AbstractExcelView {
             sheetWendy.setColumnWidth(0, 256*6);
             sheetWendy.setColumnWidth(1, 256*9);
             sheetWendy.setColumnWidth(2, 256*7);
-            sheetWendy.setColumnWidth(3, 256*36);//27
-            sheetWendy.setColumnWidth(4, 256*13);
+            sheetWendy.setColumnWidth(3, 256*38);//27
+            sheetWendy.setColumnWidth(4, 256*12);
             sheetWendy.setColumnWidth(5, 256*8);
-            sheetWendy.setColumnWidth(6, 256*6);
+            sheetWendy.setColumnWidth(6, 256*5);
             sheetWendy.setColumnWidth(7, 200*2);//512
             sheetWendy.setColumnWidth(8, 200*2);
             sheetWendy.setColumnWidth(9, 200*2);
@@ -1046,10 +1074,10 @@ public class AccountReportSummary extends AbstractExcelView {
             sheetOutbound.setColumnWidth(0, 256*6);
             sheetOutbound.setColumnWidth(1, 256*9);
             sheetOutbound.setColumnWidth(2, 256*7);
-            sheetOutbound.setColumnWidth(3, 256*36);
-            sheetOutbound.setColumnWidth(4, 256*13);
+            sheetOutbound.setColumnWidth(3, 256*38);
+            sheetOutbound.setColumnWidth(4, 256*12);
             sheetOutbound.setColumnWidth(5, 256*8);
-            sheetOutbound.setColumnWidth(6, 256*6);
+            sheetOutbound.setColumnWidth(6, 256*5);
             sheetOutbound.setColumnWidth(7, 200*2);
             sheetOutbound.setColumnWidth(8, 200*2);
             sheetOutbound.setColumnWidth(9, 200*2);
@@ -1067,10 +1095,10 @@ public class AccountReportSummary extends AbstractExcelView {
             sheetInbound.setColumnWidth(0, 256*6);
             sheetInbound.setColumnWidth(1, 256*9);
             sheetInbound.setColumnWidth(2, 256*7);
-            sheetInbound.setColumnWidth(3, 256*36);
-            sheetInbound.setColumnWidth(4, 256*13);
+            sheetInbound.setColumnWidth(3, 256*38);
+            sheetInbound.setColumnWidth(4, 256*12);
             sheetInbound.setColumnWidth(5, 256*8);
-            sheetInbound.setColumnWidth(6, 256*6);
+            sheetInbound.setColumnWidth(6, 256*5);
             sheetInbound.setColumnWidth(7, 200*2);
             sheetInbound.setColumnWidth(8, 200*2);
             sheetInbound.setColumnWidth(9, 200*2);
@@ -1145,7 +1173,8 @@ public class AccountReportSummary extends AbstractExcelView {
             cell36.setCellStyle(styleSymbol);
             HSSFCell cell37 = row3.createCell(18);
             cell37.setCellStyle(styleSymbol);
-
+            row3.setHeightInPoints((short) 16);
+            
             HSSFRow rowX = sheetWendy.createRow(3);
             rowX.setHeightInPoints((short) 2);
 
@@ -1161,50 +1190,51 @@ public class AccountReportSummary extends AbstractExcelView {
             sheetWendy.addMergedRegion(CellRangeAddress.valueOf("E5:G5"));
             HSSFCell cell43 = row4.createCell(7);
             cell43.setCellValue("0");
-            cell43.setCellStyle(styleC26);
+            cell43.setCellStyle(styleTaxNo);
             HSSFCell cell44 = row4.createCell(8);
             cell44.setCellValue("1");
-            cell44.setCellStyle(styleC26);
+            cell44.setCellStyle(styleTaxNo);
             HSSFCell cell45 = row4.createCell(9);
             cell45.setCellValue("0");
-            cell45.setCellStyle(styleC26);
+            cell45.setCellStyle(styleTaxNo);
             HSSFCell cell46 = row4.createCell(10);
             cell46.setCellValue("5");
-            cell46.setCellStyle(styleC26);
+            cell46.setCellStyle(styleTaxNo);
             HSSFCell cell47 = row4.createCell(11);
             cell47.setCellValue("5");
-            cell47.setCellStyle(styleC26);
+            cell47.setCellStyle(styleTaxNo);
             HSSFCell cell48 = row4.createCell(12);
             cell48.setCellValue("2");
-            cell48.setCellStyle(styleC26);
+            cell48.setCellStyle(styleTaxNo);
             HSSFCell cell49 = row4.createCell(13);
             cell49.setCellValue("3");
-            cell49.setCellStyle(styleC26);
+            cell49.setCellStyle(styleTaxNo);
             HSSFCell cell50 = row4.createCell(14);
             cell50.setCellValue("0");
-            cell50.setCellStyle(styleC26);
+            cell50.setCellStyle(styleTaxNo);
             HSSFCell cell51 = row4.createCell(15);
             cell51.setCellValue("2");
-            cell51.setCellStyle(styleC26);
+            cell51.setCellStyle(styleTaxNo);
             HSSFCell cell52 = row4.createCell(16);
             cell52.setCellValue("0");
-            cell52.setCellStyle(styleC26);
+            cell52.setCellStyle(styleTaxNo);
             HSSFCell cell53 = row4.createCell(17);
             cell53.setCellValue("1");
-            cell53.setCellStyle(styleC26);
+            cell53.setCellStyle(styleTaxNo);
             HSSFCell cell54 = row4.createCell(18);
             cell54.setCellValue("3");
-            cell54.setCellStyle(styleC26);
+            cell54.setCellStyle(styleTaxNo);
             HSSFCell cell55 = row4.createCell(19);
             cell55.setCellValue("2");
-            cell55.setCellStyle(styleC26);
-
+            cell55.setCellStyle(styleTaxNo);
+            row4.setHeightInPoints((short) 16);
+            
             HSSFRow rowDepartment = sheetWendy.createRow(6);
             HSSFCell cellDepartment = rowDepartment.createCell(0);
             cellDepartment.setCellValue("Department : WENDY");
             cellDepartment.setCellStyle(styleC6);
             sheetWendy.addMergedRegion(CellRangeAddress.valueOf("A7:T7"));
-            
+            rowDepartment.setHeightInPoints((short) 16);
             //wendy
             HSSFRow row5 = sheetWendy.createRow(7);
             HSSFCell cell81 = row5.createCell(0);
@@ -1255,7 +1285,6 @@ public class AccountReportSummary extends AbstractExcelView {
             sheetWendy.addMergedRegion(CellRangeAddress.valueOf("G10:G11"));
             
             HSSFRow row6 = sheetWendy.createRow(8);
-            
             for(int i=0 ; i <20; i++){
                 if(i > 1 && i != 3 && i != 4 && i != 5  && i != 7 && i != 14){
                     HSSFCell cell92 = row5.createCell(i);
@@ -1276,6 +1305,7 @@ public class AccountReportSummary extends AbstractExcelView {
             }
 
             HSSFRow row8 = sheetWendy.createRow(10);
+            row8.setHeightInPoints((short) 31);
             for(int k = 0 ; k < 20 ; k++){
                 HSSFCell cell0000 = row8.createCell(k);
                 cell0000.setCellStyle(styleC3);
@@ -1320,7 +1350,8 @@ public class AccountReportSummary extends AbstractExcelView {
             cell36Outbound.setCellStyle(styleSymbol);
             HSSFCell cell37Outbound = row3Outbound.createCell(18);
             cell37Outbound.setCellStyle(styleSymbol);
-
+            row3Outbound.setHeightInPoints((short) 16);
+            
             HSSFRow rowXOutbound = sheetOutbound.createRow(3);
             rowXOutbound.setHeightInPoints((short) 2);
 
@@ -1336,49 +1367,51 @@ public class AccountReportSummary extends AbstractExcelView {
             sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("E5:G5"));
             HSSFCell cell43Outbound = row4Outbound.createCell(7);
             cell43Outbound.setCellValue("0");
-            cell43Outbound.setCellStyle(styleC26);
+            cell43Outbound.setCellStyle(styleTaxNo);
             HSSFCell cell44Outbound = row4Outbound.createCell(8);
             cell44Outbound.setCellValue("1");
-            cell44Outbound.setCellStyle(styleC26);
+            cell44Outbound.setCellStyle(styleTaxNo);
             HSSFCell cell45Outbound = row4Outbound.createCell(9);
             cell45Outbound.setCellValue("0");
-            cell45Outbound.setCellStyle(styleC26);
+            cell45Outbound.setCellStyle(styleTaxNo);
             HSSFCell cell46Outbound = row4Outbound.createCell(10);
             cell46Outbound.setCellValue("5");
-            cell46Outbound.setCellStyle(styleC26);
+            cell46Outbound.setCellStyle(styleTaxNo);
             HSSFCell cell47Outbound = row4Outbound.createCell(11);
             cell47Outbound.setCellValue("5");
-            cell47Outbound.setCellStyle(styleC26);
+            cell47Outbound.setCellStyle(styleTaxNo);
             HSSFCell cell48Outbound = row4Outbound.createCell(12);
             cell48Outbound.setCellValue("2");
-            cell48Outbound.setCellStyle(styleC26);
+            cell48Outbound.setCellStyle(styleTaxNo);
             HSSFCell cell49Outbound = row4Outbound.createCell(13);
             cell49Outbound.setCellValue("3");
-            cell49Outbound.setCellStyle(styleC26);
+            cell49Outbound.setCellStyle(styleTaxNo);
             HSSFCell cell50Outbound = row4Outbound.createCell(14);
             cell50Outbound.setCellValue("0");
-            cell50Outbound.setCellStyle(styleC26);
+            cell50Outbound.setCellStyle(styleTaxNo);
             HSSFCell cell51Outbound = row4Outbound.createCell(15);
             cell51Outbound.setCellValue("2");
-            cell51Outbound.setCellStyle(styleC26);
+            cell51Outbound.setCellStyle(styleTaxNo);
             HSSFCell cell52Outbound = row4Outbound.createCell(16);
             cell52Outbound.setCellValue("0");
-            cell52Outbound.setCellStyle(styleC26);
+            cell52Outbound.setCellStyle(styleTaxNo);
             HSSFCell cell53Outbound = row4Outbound.createCell(17);
             cell53Outbound.setCellValue("1");
-            cell53Outbound.setCellStyle(styleC26);
+            cell53Outbound.setCellStyle(styleTaxNo);
             HSSFCell cell54Outbound = row4Outbound.createCell(18);
             cell54Outbound.setCellValue("3");
-            cell54Outbound.setCellStyle(styleC26);
+            cell54Outbound.setCellStyle(styleTaxNo);
             HSSFCell cell55Outbound = row4Outbound.createCell(19);
             cell55Outbound.setCellValue("2");
-            cell55Outbound.setCellStyle(styleC26);
-            
+            cell55Outbound.setCellStyle(styleTaxNo);
+            row4Outbound.setHeightInPoints((short) 16);
+
             HSSFRow rowDepartmentO = sheetOutbound.createRow(6);
             HSSFCell cellDepartmentO = rowDepartmentO.createCell(0);
             cellDepartmentO.setCellValue("Department : OUTBOUND");
             cellDepartmentO.setCellStyle(styleC6);
             sheetOutbound.addMergedRegion(CellRangeAddress.valueOf("A7:T7"));
+            rowDepartmentO.setHeightInPoints((short) 16);
             
             //Outbound
             HSSFRow row5Outbound = sheetOutbound.createRow(7);
@@ -1450,6 +1483,7 @@ public class AccountReportSummary extends AbstractExcelView {
             }
 
             HSSFRow row8Outbound = sheetOutbound.createRow(10);
+            row8Outbound.setHeightInPoints((short) 31);
             for(int k = 0 ; k < 20 ; k++){
                 HSSFCell cell0000Outbound = row8Outbound.createCell(k);
                 cell0000Outbound.setCellStyle(styleC3);
@@ -1494,7 +1528,8 @@ public class AccountReportSummary extends AbstractExcelView {
             cell36Inbound.setCellStyle(styleSymbol);
             HSSFCell cell37Inbound = row3Inbound.createCell(18);
             cell37Inbound.setCellStyle(styleSymbol);
-
+            row3Inbound.setHeightInPoints((short) 16);
+            
             HSSFRow rowXInbound = sheetInbound.createRow(3);
             rowXInbound.setHeightInPoints((short) 2);
 
@@ -1510,50 +1545,52 @@ public class AccountReportSummary extends AbstractExcelView {
             sheetInbound.addMergedRegion(CellRangeAddress.valueOf("E5:G5"));
             HSSFCell cell43Inbound = row4Inbound.createCell(7);
             cell43Inbound.setCellValue("0");
-            cell43Inbound.setCellStyle(styleC26);
+            cell43Inbound.setCellStyle(styleTaxNo);
             HSSFCell cell44Inbound = row4Inbound.createCell(8);
             cell44Inbound.setCellValue("1");
-            cell44Inbound.setCellStyle(styleC26);
+            cell44Inbound.setCellStyle(styleTaxNo);
             HSSFCell cell45Inbound = row4Inbound.createCell(9);
             cell45Inbound.setCellValue("0");
-            cell45Inbound.setCellStyle(styleC26);
+            cell45Inbound.setCellStyle(styleTaxNo);
             HSSFCell cell46Inbound = row4Inbound.createCell(10);
             cell46Inbound.setCellValue("5");
-            cell46Inbound.setCellStyle(styleC26);
+            cell46Inbound.setCellStyle(styleTaxNo);
             HSSFCell cell47Inbound = row4Inbound.createCell(11);
             cell47Inbound.setCellValue("5");
-            cell47Inbound.setCellStyle(styleC26);
+            cell47Inbound.setCellStyle(styleTaxNo);
             HSSFCell cell48Inbound = row4Inbound.createCell(12);
             cell48Inbound.setCellValue("2");
-            cell48Inbound.setCellStyle(styleC26);
+            cell48Inbound.setCellStyle(styleTaxNo);
             HSSFCell cell49Inbound = row4Inbound.createCell(13);
             cell49Inbound.setCellValue("3");
-            cell49Inbound.setCellStyle(styleC26);
+            cell49Inbound.setCellStyle(styleTaxNo);
             HSSFCell cell50Inbound = row4Inbound.createCell(14);
             cell50Inbound.setCellValue("0");
-            cell50Inbound.setCellStyle(styleC26);
+            cell50Inbound.setCellStyle(styleTaxNo);
             HSSFCell cell51Inbound = row4Inbound.createCell(15);
             cell51Inbound.setCellValue("2");
-            cell51Inbound.setCellStyle(styleC26);
+            cell51Inbound.setCellStyle(styleTaxNo);
             HSSFCell cell52Inbound = row4Inbound.createCell(16);
             cell52Inbound.setCellValue("0");
-            cell52Inbound.setCellStyle(styleC26);
+            cell52Inbound.setCellStyle(styleTaxNo);
             HSSFCell cell53Inbound = row4Inbound.createCell(17);
             cell53Inbound.setCellValue("1");
-            cell53Inbound.setCellStyle(styleC26);
+            cell53Inbound.setCellStyle(styleTaxNo);
             HSSFCell cell54Inbound = row4Inbound.createCell(18);
             cell54Inbound.setCellValue("3");
-            cell54Inbound.setCellStyle(styleC26);
+            cell54Inbound.setCellStyle(styleTaxNo);
             HSSFCell cell55Inbound = row4Inbound.createCell(19);
             cell55Inbound.setCellValue("2");
-            cell55Inbound.setCellStyle(styleC26);
+            cell55Inbound.setCellStyle(styleTaxNo);
+            row4Inbound.setHeightInPoints((short) 16);
             
             HSSFRow rowDepartmentI = sheetInbound.createRow(6);
             HSSFCell cellDepartmentI = rowDepartmentI.createCell(0);
             cellDepartmentI.setCellValue("Department : INBOUND");
             cellDepartmentI.setCellStyle(styleC6);
             sheetInbound.addMergedRegion(CellRangeAddress.valueOf("A7:T7"));
-            
+            rowDepartmentI.setHeightInPoints((short) 16);
+
             //wendy
             HSSFRow row5Inbound = sheetInbound.createRow(7);
             HSSFCell cell81Inbound = row5Inbound.createCell(0);
@@ -1604,7 +1641,6 @@ public class AccountReportSummary extends AbstractExcelView {
             sheetInbound.addMergedRegion(CellRangeAddress.valueOf("G10:G11"));
 
             HSSFRow row6Inbound = sheetInbound.createRow(8);
-
             for(int i=0 ; i <20; i++){
                 if(i > 1 && i != 3 && i != 4 && i != 5  && i != 7 && i != 14){
                     HSSFCell cell92Inbound = row5Inbound.createCell(i);
@@ -1627,6 +1663,7 @@ public class AccountReportSummary extends AbstractExcelView {
             
             
             HSSFRow row8Inbound = sheetInbound.createRow(10);
+            row8Inbound.setHeightInPoints((short) 31);
             for(int k = 0 ; k < 20 ; k++){
                 HSSFCell cell0000Inbound = row8Inbound.createCell(k);
                 cell0000Inbound.setCellStyle(styleC3);
@@ -1637,12 +1674,14 @@ public class AccountReportSummary extends AbstractExcelView {
             int cCount = 0 ;
             int cCountO = 0 ;
             int cCountI = 0 ;
-            int cCountRowPrint = 50 ;
+            int cCountRowPrint = 30 ;
+            int heightPoint = 20;
             for(int i=0;i<outputTaxViewList.size();i++){
                 OutputTaxView data = (OutputTaxView)outputTaxViewList.get(i);
                 if("Wendy".equalsIgnoreCase(data.getDepartment())){
                      if(cCount == cCountRowPrint){
                         HSSFRow rowtotal = sheetWendy.createRow(count + i + countWTemp);
+                        rowtotal.setHeightInPoints((short) heightPoint);
                         String totalGross = "SUM(H" +(count+tempContW+1+countWTemp)+":H"+(count+i+countWTemp)+") -" +grossWCN.multiply(BigDecimal.valueOf(2));
                         String totalVat = "SUM(O" + (count+tempContW+1+countWTemp)+":O"+(count+i+countWTemp)+") -" +vatWCN.multiply(BigDecimal.valueOf(2));
 
@@ -1694,6 +1733,7 @@ public class AccountReportSummary extends AbstractExcelView {
                     
                     
                     HSSFRow row = sheetWendy.createRow(count + i + countWTemp);
+                    row.setHeightInPoints((short) heightPoint);
                     HSSFCell celldata0 = row.createCell(0);
                     celldata0.setCellValue(String.valueOf(data.getOrder()));
                     celldata0.setCellStyle(styleC26);
@@ -1793,6 +1833,7 @@ public class AccountReportSummary extends AbstractExcelView {
                 if("Outbound".equalsIgnoreCase(data.getDepartment())){
                      if(cCountO == cCountRowPrint){
                         HSSFRow rowtotal = sheetOutbound.createRow(count + x + countOTemp);
+                        rowtotal.setHeightInPoints((short) heightPoint);
                         String totalGross = "SUM(H" + (count+tempContO+1+countOTemp)+":H"+(count+x+countOTemp)+") -" +grossOCN.multiply(BigDecimal.valueOf(2));
                         String totalVat = "SUM(O" + (count+tempContO+1+countOTemp)+":O"+(count+x+countOTemp)+") -" +vatOCN.multiply(BigDecimal.valueOf(2));
 
@@ -1844,6 +1885,7 @@ public class AccountReportSummary extends AbstractExcelView {
                     
                     
                     HSSFRow row = sheetOutbound.createRow(count + x + countOTemp);
+                    row.setHeightInPoints((short) heightPoint);
                     HSSFCell celldata0 = row.createCell(0);
                     celldata0.setCellValue(String.valueOf(data.getOrder()));
                     celldata0.setCellStyle(styleC26);
@@ -1941,6 +1983,7 @@ public class AccountReportSummary extends AbstractExcelView {
                 if("Inbound".equalsIgnoreCase(data.getDepartment())){
                     if(cCountI == cCountRowPrint){
                         HSSFRow rowtotal = sheetInbound.createRow(count + y + countITemp);
+                        rowtotal.setHeightInPoints((short) heightPoint);
                         String totalGross = "SUM(H" + (count+tempContI+1+countITemp)+":H"+(count+y+countITemp)+") -" +grossICN.multiply(BigDecimal.valueOf(2));
                         String totalVat = "SUM(O" + (count+tempContI+1+countITemp)+":O"+(count+y+countITemp)+") -" +vatICN.multiply(BigDecimal.valueOf(2));
 
@@ -1992,6 +2035,7 @@ public class AccountReportSummary extends AbstractExcelView {
                         cCountI = 0;
                     }
                     HSSFRow row = sheetInbound.createRow(count + y +countITemp);
+                    row.setHeightInPoints((short) heightPoint);
                     HSSFCell celldata0 = row.createCell(0);
                     celldata0.setCellValue(String.valueOf(data.getOrder()));
                     celldata0.setCellStyle(styleC26);
@@ -2090,6 +2134,7 @@ public class AccountReportSummary extends AbstractExcelView {
                     if(tempcountW != 0 || countWendy == 0){
                         tempcountW = (tempcountW != 0 ? tempcountW : 11);
                         HSSFRow rowtotal = sheetWendy.createRow(tempcountW+countWTemp);
+                        rowtotal.setHeightInPoints((short) heightPoint);
                         String totalGross = "SUM(H" +(count+tempContW+1+countWTemp)+":H"+(tempcountW+countWTemp)+") -" +grossWCN.multiply(BigDecimal.valueOf(2));
                         String totalVat = "SUM(O" + (count+tempContW+1+countWTemp)+":O"+(tempcountW+countWTemp)+") -" +vatWCN.multiply(BigDecimal.valueOf(2));
 
@@ -2136,6 +2181,7 @@ public class AccountReportSummary extends AbstractExcelView {
                     if(x != 0 || countOutbound == 0){
                         tempcountO = (x != 0 ? count+x : 11);
                         HSSFRow rowtotal = sheetOutbound.createRow(tempcountO+countOTemp);
+                        rowtotal.setHeightInPoints((short) heightPoint);
                         String totalGross = "SUM(H" + (count+tempContO+1+countOTemp)+":H"+(tempcountO+countOTemp)+") -" +grossOCN.multiply(BigDecimal.valueOf(2));
                         String totalVat = "SUM(O" + (count+tempContO+1+countOTemp)+":O"+(tempcountO+countOTemp)+") -" +vatOCN.multiply(BigDecimal.valueOf(2));
 
@@ -2182,7 +2228,7 @@ public class AccountReportSummary extends AbstractExcelView {
                     if( y != 0 || countInbound == 0){
                         tempcountI = (y != 0 ? count+y : 11);
                         HSSFRow rowtotal = sheetInbound.createRow(tempcountI+countITemp);
-                        
+                        rowtotal.setHeightInPoints((short) heightPoint);
                         String totalGross = "SUM(H" + (count+tempContI+1+countITemp)+":H"+(tempcountI+countITemp)+") -" +grossICN.multiply(BigDecimal.valueOf(2));
                         String totalVat = "SUM(O" + (count+tempContI+1+countITemp)+":H"+(tempcountI+countITemp)+")-" +vatICN.multiply(BigDecimal.valueOf(2));
 
@@ -2228,6 +2274,7 @@ public class AccountReportSummary extends AbstractExcelView {
                     }
                                          
                     HSSFRow rowtotalbor = sheetInbound.createRow(count + y + countITemp+1);
+                    rowtotalbor.setHeightInPoints((short) heightPoint);
                     HSSFCell cellTotalBor0 = rowtotalbor.createCell(0);
                     cellTotalBor0.setCellStyle(stylebordertotalleft);
                     HSSFCell cellTotalBor00 = rowtotalbor.createCell(1);
@@ -2242,6 +2289,7 @@ public class AccountReportSummary extends AbstractExcelView {
                     cellTotalBor04.setCellStyle(stylebordertotal);
                         
                     HSSFRow rowtotalwen = sheetInbound.createRow(count + y + countITemp+2);
+                    rowtotalwen.setHeightInPoints((short) heightPoint);
                     HSSFCell cellTotalWen0 = rowtotalwen.createCell(0);
                     cellTotalWen0.setCellStyle(stylebordertotalleft);
                     HSSFCell cellTotalWen00 = rowtotalwen.createCell(1);
@@ -2276,6 +2324,7 @@ public class AccountReportSummary extends AbstractExcelView {
                         
                         
                     HSSFRow rowtotalout = sheetInbound.createRow(count + y + countITemp+3);
+                    rowtotalout.setHeightInPoints((short) heightPoint);
                         HSSFCell cellTotalOut0 = rowtotalout.createCell(0);
                         cellTotalOut0.setCellStyle(stylebordertotalleft);
                         HSSFCell cellTotalOut00 = rowtotalout.createCell(1);
@@ -2309,6 +2358,7 @@ public class AccountReportSummary extends AbstractExcelView {
                         }
                         
                         HSSFRow rowtotalin = sheetInbound.createRow(count + y + countITemp+4);
+                        rowtotalin.setHeightInPoints((short) heightPoint);
                         HSSFCell cellTotalIn0 = rowtotalin.createCell(0);
                         cellTotalIn0.setCellStyle(stylebordertotalleft);
                         HSSFCell cellTotalIn00 = rowtotalin.createCell(1);
@@ -2345,6 +2395,7 @@ public class AccountReportSummary extends AbstractExcelView {
                         String totalVatAll = "SUM(O" + (count + y + countITemp+3)+":O"+(count + y + countITemp+5)+")";
                         
                         HSSFRow rowtotalall = sheetInbound.createRow(count + y + countITemp+5);
+                        rowtotalall.setHeightInPoints((short) heightPoint);
                         HSSFCell cellTotalAll0 = rowtotalall.createCell(0);
                         cellTotalAll0.setCellStyle(stylebordertotalleft);
                         HSSFCell cellTotalAll00 = rowtotalall.createCell(1);
