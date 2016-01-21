@@ -163,7 +163,8 @@ public class SaleVatReportImpl implements SaleVatReportDao{
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<OutputTaxView>();
-        String query = "SELECT * FROM `output_tax_view` where month(taxdate) = '"+month+"' and YEAR(taxdate) = '"+year+"' and (status = 'Post' || status = 'Change') ";
+//        String query = "SELECT * FROM `output_tax_view` where month(taxdate) = '"+month+"' and YEAR(taxdate) = '"+year+"' and (status = 'Post' || status = 'Change') ";
+        String query = "SELECT * FROM `output_tax_view`  ";
 
         if ((department != null) && (!"".equalsIgnoreCase(department))) {
             query += " and department = '" + department + "'" ;
