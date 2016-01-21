@@ -3270,6 +3270,36 @@
                 $("#tr_ProductDetailAddRow").removeClass("hide");
                 $("#tr_ProductDetailAddRow").addClass("show");
             }
+            
+            var tempcount = parseInt($("#ReceiptListTable tr").length);
+            if(tempcount == 1){
+                $("#invoiceNo").removeAttr("disabled");
+                $("#refNo").removeAttr("disabled");
+                $("#ButtonSearchRefNo").removeAttr("disabled");
+                $("#ButtonSearchInvoice").removeAttr("disabled");
+                $("#searchPaymentNoAir").removeAttr("disabled");
+                $("#searchPaymentNoTour").removeAttr("disabled");
+                $("#ButtonSearchPaymentNoAir").removeAttr("disabled");
+                $("#ButtonSearchPaymentNoTour").removeAttr("disabled");
+
+            }else if(tempcount == 2){
+                var count = $("#counter").val();
+                count = count-1;
+                $("#receiveProduct" + count).parent().parent().remove();
+                $("#counter").val(1);
+                AddRowProduct(1);
+                var amount = document.getElementById('receiveAmount1').value;
+                if(amount === ""){
+                    $("#invoiceNo").removeAttr("disabled");
+                    $("#refNo").removeAttr("disabled");
+                    $("#ButtonSearchRefNo").removeAttr("disabled");
+                    $("#ButtonSearchInvoice").removeAttr("disabled");
+                    $("#searchPaymentNoAir").removeAttr("disabled");
+                    $("#searchPaymentNoTour").removeAttr("disabled");
+                    $("#ButtonSearchPaymentNoAir").removeAttr("disabled");
+                    $("#ButtonSearchPaymentNoTour").removeAttr("disabled");
+                }
+            }
         }
         else {
             $.ajax({
@@ -3284,6 +3314,36 @@
                         $("#tr_ProductDetailAddRow").addClass("show");
                     }
                     calculateGrandTotal();
+                    
+                    var tempcount = parseInt($("#ReceiptListTable tr").length);
+                    if(tempcount == 1){
+                        $("#invoiceNo").removeAttr("disabled");
+                        $("#refNo").removeAttr("disabled");
+                        $("#ButtonSearchRefNo").removeAttr("disabled");
+                        $("#ButtonSearchInvoice").removeAttr("disabled");
+                        $("#searchPaymentNoAir").removeAttr("disabled");
+                        $("#searchPaymentNoTour").removeAttr("disabled");
+                        $("#ButtonSearchPaymentNoAir").removeAttr("disabled");
+                        $("#ButtonSearchPaymentNoTour").removeAttr("disabled");
+
+                    }else if(tempcount == 2){
+                        var count = $("#counter").val();
+                        count = count-1;
+                        $("#receiveProduct" + count).parent().parent().remove();
+                        $("#counter").val(1);
+                        AddRowProduct(1);
+                        var amount = document.getElementById('receiveAmount1').value;
+                        if(amount === ""){
+                            $("#invoiceNo").removeAttr("disabled");
+                            $("#refNo").removeAttr("disabled");
+                            $("#ButtonSearchRefNo").removeAttr("disabled");
+                            $("#ButtonSearchInvoice").removeAttr("disabled");
+                            $("#searchPaymentNoAir").removeAttr("disabled");
+                            $("#searchPaymentNoTour").removeAttr("disabled");
+                            $("#ButtonSearchPaymentNoAir").removeAttr("disabled");
+                            $("#ButtonSearchPaymentNoTour").removeAttr("disabled");
+                        }
+                    }
 //                AddRowProduct();
                 },
                 error: function() {
@@ -3294,34 +3354,7 @@
         }
         $('#DeleteProduct').modal('hide');
 
-    var tempcount = parseInt($("#ReceiptListTable tr").length);
-    if(tempcount == 1){
-        $("#invoiceNo").removeAttr("disabled");
-        $("#refNo").removeAttr("disabled");
-        $("#ButtonSearchRefNo").removeAttr("disabled");
-        $("#ButtonSearchInvoice").removeAttr("disabled");
-        $("#searchPaymentNoAir").removeAttr("disabled");
-        $("#searchPaymentNoTour").removeAttr("disabled");
-        $("#ButtonSearchPaymentNoAir").removeAttr("disabled");
-        $("#ButtonSearchPaymentNoTour").removeAttr("disabled");
-    }else if(tempcount == 2){
-        var count = $("#counter").val();
-        count = count-1;
-        $("#receiveProduct" + count).parent().parent().remove();
-        $("#counter").val(1);
-        AddRowProduct(1);
-        var amount = document.getElementById('receiveAmount1').value;
-        if(amount === ""){
-            $("#invoiceNo").removeAttr("disabled");
-            $("#refNo").removeAttr("disabled");
-            $("#ButtonSearchRefNo").removeAttr("disabled");
-            $("#ButtonSearchInvoice").removeAttr("disabled");
-            $("#searchPaymentNoAir").removeAttr("disabled");
-            $("#searchPaymentNoTour").removeAttr("disabled");
-            $("#ButtonSearchPaymentNoAir").removeAttr("disabled");
-            $("#ButtonSearchPaymentNoTour").removeAttr("disabled");
-        }
-    }
+    
         calculateGrandTotal();
     }
 
