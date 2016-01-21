@@ -164,10 +164,11 @@ public class SaleVatReportImpl implements SaleVatReportDao{
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<OutputTaxView>();
         String query = "SELECT * FROM `output_tax_view` where month(taxdate) = '"+month+"' and YEAR(taxdate) = '"+year+"' and (status = 'Post' || status = 'Change') ";
-        
+
         if ((department != null) && (!"".equalsIgnoreCase(department))) {
             query += " and department = '" + department + "'" ;
         }
+        
         query += " ORDER BY department desc , taxno , taxdate , type ";
         
         System.out.println(" query : "+query);
