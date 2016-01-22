@@ -639,14 +639,19 @@ public class TaxInvoiceController extends SMITravelController {
         }
         for(int i=0; i<taxInvoiceList.size(); i++){
             TaxInvoiceDetail taxInvoiceDetail = taxInvoiceList.get(i);
-            String billableDescId = (taxInvoiceDetail.getInvoiceDetail().getBillableDesc() != null ? taxInvoiceDetail.getInvoiceDetail().getBillableDesc().getId() : "");
-            if(!"".equalsIgnoreCase(billableDescId)){
-                result = "disbledInvoice";
-                i = taxInvoiceList.size();
+            if(taxInvoiceDetail.getInvoiceDetail() != null){
+                String billableDescId = (taxInvoiceDetail.getInvoiceDetail().getBillableDesc() != null ? taxInvoiceDetail.getInvoiceDetail().getBillableDesc().getId() : "");
+                if(!"".equalsIgnoreCase(billableDescId)){
+                    result = "disbledInvoice";
+                    i = taxInvoiceList.size();
+                }else{
+                    result = "disbledRefno";
+                    i = taxInvoiceList.size();
+                }
+            
             }else{
-                result = "disbledRefno";
                 i = taxInvoiceList.size();
-            }
+            }    
         }
         return result;
     }
