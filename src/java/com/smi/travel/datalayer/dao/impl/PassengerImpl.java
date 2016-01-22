@@ -26,7 +26,7 @@ public class PassengerImpl implements PassengerDao {
 
     @Override
     public List<Passenger> getPassengerFromRefno(String refno) {
-        String query = "from Passenger pass where pass.master.referenceNo = :refno";
+        String query = "from Passenger pass where pass.master.referenceNo = :refno order by orderNo ";
         Session session = this.sessionFactory.openSession();
 
         List<Passenger> PassengerList = session.createQuery(query).setParameter("refno", refno).list();

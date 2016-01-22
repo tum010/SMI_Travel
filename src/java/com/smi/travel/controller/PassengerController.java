@@ -37,7 +37,9 @@ public class PassengerController extends SMITravelController {
     private static final String[] resultText
             = {"Save unsuccessful",
                 "Save successful",
-                "Cannot Delete Family Leader"
+                "Cannot Delete Family Leader",
+                "Delete successful",
+                "Delete unsuccessful"
             };
 
     @Override
@@ -70,7 +72,9 @@ public class PassengerController extends SMITravelController {
             result = passengerService.DeletePassenger(passenger);
             if (result == 1) {
                 request.setAttribute(TransactionResult, "delete successful");
+                result = 3;
             } else {
+                result = 4;
                 request.setAttribute(TransactionResult, "delete unsuccessful");
             }
             return new ModelAndView("redirect:Passenger.smi?referenceNo=" + refNo + "&action=edit&result=" + result);
