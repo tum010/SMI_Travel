@@ -55,7 +55,7 @@
                    <strong>Please choose the post tax invoice list.!</strong> 
                 </div>
                 <div class="col-xs-1 text-left" style="width: 50px">
-                    <label class="control-label">Type</lable>
+                    <label class="control-label">Type<font style="color: red">*</font></lable>
                 </div>
                 <div class="col-xs-1 form-group" style="width: 120px">
                     <c:set var="selectTX" value="" />
@@ -329,6 +329,14 @@
                                     format: 'YYYY-MM-DD',
                                     min: 'postFromDate',
                                     message: 'The Date To is not a valid'
+                                }
+                            }
+                        },
+                        postType: {
+                            trigger: 'focus keyup change',
+                            validators: {
+                                notEmpty: {
+                                    message: 'Type is required'
                                 }
                             }
                         }
