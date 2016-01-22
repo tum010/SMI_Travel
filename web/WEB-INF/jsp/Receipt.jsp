@@ -1386,18 +1386,22 @@
             </div>
             <div class="modal-body" >
                 <div class="row">
+                    <c:set var="inbound" value=""/>
+                    <c:if test="${typeDepartment == 'Inbound'}">
+                        <c:set var="inbound" value="hidden"/>
+                    </c:if>
                     <div class="col-md-5">
                         <h5>Invoice No </h5>
                     </div>
                     <div class="col-md-7">
                         <select id="selectInvoiceId" name="selectInvoiceId" class="form-control">
                             <c:forEach var="table" items="${invoiceIdList}" >
-                                <option value="${table.invoiceId} | ${table.invoiceType}">${table.invoiceNo}</option>  
+                                <option value="${table.invoiceId}|${table.invoiceType}">${table.invoiceNo}</option>  
                             </c:forEach>
                         </select>
                     </div>
                 </div>
-<!--                <div class="row">
+                <div class="row ${inbound}">
                     <div class="col-md-5">
                         <h5>Sales Staff </h5>
                     </div>
@@ -1407,8 +1411,8 @@
                             <option value="0">Not  Show Sales Staff</option>
                         </select>
                     </div>
-                </div>-->
-                <div class="row">
+                </div>
+                <div class="row ${inbound}">
                     <div class="col-md-5">
                         <h5>Show Leader to Invoice </h5>
                     </div>
@@ -2039,37 +2043,65 @@
         var inv = invoice.split("|");
         var invoiceId = inv[0];
         var invType = inv[1];
-//        var sale = document.getElementById('selectSalesStaff').value;
+        var sale = document.getElementById('selectSalesStaff').value;
         var payment = document.getElementById('selectPayment').value;
         var sign = document.getElementById('SelectSign').value;
         var leader = document.getElementById('selectLeader').value;
-
+        var department = "${typeDepartment}";
+        
         if (printtype == 3) {
             if (invoice === '') {
             } else {
-                if (invType === 'T') {
-                    window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
-                } else {
-                    window.open("report.smi?name=InvoiceReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
-                }
+                if(department !== 'Inbound'){
+                    if (invType === 'T') {
+                        window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                    } else {
+                        window.open("report.smi?name=InvoiceReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                    }
+                
+                }else{
+                    if (invType === "T") {
+                        window.open("report.smi?name=InvoiceInboundPerformaReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
+                    } else {
+                        window.open("report.smi?name=InvoiceInboundRevenueReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
+                    }
+                }    
             }
         } else if (printtype == 4) {
             if (invoice === '') {
             } else {
-                if (invType === 'T') {
-                    window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
-                } else {
-                    window.open("report.smi?name=InvoiceEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
-                }
+                if(department !== 'Inbound'){
+                    if (invType === 'T') {
+                        window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                    } else {
+                        window.open("report.smi?name=InvoiceEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                    }
+                
+                }else{
+                    if (invType === "T") {
+                        window.open("report.smi?name=InvoiceInboundPerformaReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
+                    } else {
+                        window.open("report.smi?name=InvoiceInboundRevenueReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
+                    }
+                }  
             }
         } else if (printtype == 5) {
             if (invoice === '') {
             } else {
-                if (invType === 'T') {
-                    window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
-                } else {
-                    window.open("SendMail.smi?reportname=Invoice&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
-                }
+                if(department !== 'Inbound'){
+                    if (invType === 'T') {
+                        window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
+                    } else {
+                        window.open("SendMail.smi?reportname=Invoice&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
+                    }
+                
+                }else{
+                    if (invType === "T") {
+                        window.open("report.smi?name=InvoiceInboundPerformaReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
+                    } else {
+                        window.open("report.smi?name=InvoiceInboundRevenueReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
+                    }
+                }  
             }
         }
     }
