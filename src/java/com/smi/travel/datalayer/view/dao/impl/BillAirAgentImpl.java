@@ -158,6 +158,8 @@ public class BillAirAgentImpl implements BillAirAgentDao{
             paymentTypeTemp = "TG INTER";
         }else if("TD".equalsIgnoreCase(paymentType)){
             paymentTypeTemp = "TG DOMESTIC";
+        }else{
+            paymentTypeTemp = "ALL";
         }
         
         String query = "";
@@ -411,15 +413,16 @@ public class BillAirAgentImpl implements BillAirAgentDao{
                 .addScalar("comm_rec",Hibernate.STRING)
                 .addScalar("vat",Hibernate.STRING)
                 .addScalar("refund_receive_date",Hibernate.STRING)
+                .addScalar("agent_name",Hibernate.STRING)
                 .list();
         for (Object[] B : QueryList2) {
             BillAirAgentRefund bil = new BillAirAgentRefund();
             //header
           
             if(agentCode != null && !"".equals(agentCode)){
-                bil.setAgentPage(agentCode);
+                bil.setAgentPage(util.ConvertString(B[12]));
             }else{
-                bil.setAgentPage("");
+                bil.setAgentPage("ALL");
             }
             if(issueFrom != null && !"".equals(issueFrom)){
                 String issue = "" + issueFrom + " To " + issueTo;

@@ -142,7 +142,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="refundfromdatepanel">
-                                <label class="col-md-6 control-label text-right">Refund Receive From </label>
+                                <label class="col-md-6 control-label text-right">Refund Receive From <font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date refundfromdate' id='DateFromRefund'>
@@ -158,7 +158,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="refundtodatepanel">
-                                <label class="col-md-6 control-label text-right">Refund Receive To</label>
+                                <label class="col-md-6 control-label text-right">Refund Receive To <font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date refundtodate' id='DateToRefund'>
@@ -354,6 +354,32 @@
                             message: 'Input agentName '
                         }
                 }
+            },
+            refundFrom: {
+                trigger: 'focus keyup change',
+                validators: {
+                    notEmpty: {
+                        message: 'Refund Date From is required'
+                    },
+                    date: {
+                        format: 'YYYY-MM-DD',
+                        max: 'refundTo:',
+                        message: 'Refund Date From is not a valid'
+                    }
+                }
+            },
+            refundTo: {
+                trigger: 'focus keyup change',
+                validators: {
+                    notEmpty: {
+                        message: 'Refund Date To is required'
+                    },
+                    date: {
+                        format: 'YYYY-MM-DD',
+                        min: 'refundFrom',
+                        message: 'Refund Date To is not a valid'
+                    }
+                }
             }
         }
         });
@@ -363,46 +389,31 @@
         $("#agentId").val(id);
         $("#agentCode").val(code);
         $("#agentName").val(name);
-                
-        $('#BillAirAgent').bootstrapValidator('revalidateField', 'agentCode');
+        
         $('#BillAirAgent').bootstrapValidator('revalidateField', 'agentName');
+        $('#BillAirAgent').bootstrapValidator('revalidateField', 'agentCode');
         $("#AgentModal").modal('hide');
     }
     
     function validateBillAirAgent(){
+//        $("#agentcodepanel").removeClass("has-success"); 
+//        $("#agentnamepanel").removeClass("has-success"); 
+//        
+//        $("#agentcodepanel").addClass("has-error"); 
+//        $("#agentnamepanel").addClass("has-error"); 
+        $('#BillAirAgent').bootstrapValidator('revalidateField', 'agentName');
+        $('#BillAirAgent').bootstrapValidator('revalidateField', 'agentCode');
         
-        $("#BillAirAgent").bootstrapValidator({
-        framework: 'bootstrap',
-        feedbackIcons: {
-            valid: 'uk-icon-check',
-            invalid: 'uk-icon-times',
-            validating: 'uk-icon-refresh'
-        },
-        fields: {
-            agentCode: {
-                trigger: 'focus keyup change',
-                validators: {
-                    notEmpty: {
-                            message: 'Input agentCode '
-                        }
-                }
-            },
-            agentName: {
-                trigger: 'focus keyup change',
-                validators: {
-                    notEmpty: {
-                            message: 'Input agentName '
-                        }
-                }
-            }
-        }
-        });
-        $("#agentcodepanel").removeClass("has-success"); 
-        $("#agentnamepanel").removeClass("has-success"); 
-        
-        $("#agentcodepanel").addClass("has-error"); 
-        $("#agentnamepanel").addClass("has-error"); 
 //        $("#printbutton").addClass("disabled");
+    }
+    
+    function validateRefundDate(){
+        $("#refundfromdatepanel").removeClass("has-success"); 
+        $("#refundtodatepanel").removeClass("has-success"); 
+        
+        $("#refundfromdatepanel").addClass("has-error"); 
+        $("#refundtodatepanel").addClass("has-error"); 
+        
     }
 </script>  
 <script type="text/javascript" src="js/BillAirAgent.js"></script> 

@@ -190,7 +190,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
         // Row 2
         HSSFRow row2 = sheet.createRow(1);
         HSSFCell cell21 = row2.createCell(0);
-        cell21.setCellValue("Agent All : ");
+        cell21.setCellValue("Agent : ");
         cell21.setCellStyle(styleAlignRight);
         HSSFCell cell22 = row2.createCell(1);
         cell22.setCellValue(bil.getAgentPage());
@@ -640,7 +640,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
         // Row 2
         HSSFRow row02 = sheet1.createRow(1);
         HSSFCell cell021 = row02.createCell(0);
-            cell021.setCellValue("Agent All : ");
+            cell021.setCellValue("Agent : ");
             cell021.setCellStyle(styleC21);
         HSSFCell cell022 = row02.createCell(1);
             cell022.setCellValue(bil.getAgentPage());
@@ -906,7 +906,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
                 // Row 2
                 HSSFRow row32 = sheet2.createRow(1);
                 HSSFCell cell321 = row32.createCell(0);
-                cell321.setCellValue("Agent Name : ");
+                cell321.setCellValue("Agent : ");
                 cell321.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(0);
                 HSSFCell cell322 = row32.createCell(1);

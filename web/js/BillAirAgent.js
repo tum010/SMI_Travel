@@ -215,7 +215,7 @@ function printBillAirAgent(){
     var vatTemp = document.getElementById("vatTemp").value;
     var whtTemp = document.getElementById("whtTemp").value;
     console.log("Agent : " + agentCode);
-    if(agentCode !== ''){
+    if(agentCode !== '' && refundFrom !== '' && refundTo !== ''){
         if((invoiceFrom !== '') && (invoiceTo !== '')){
             window.open("Excel.smi?name=BillAirAgentSummary&agentCode=" + agentCode + "&invoiceFrom=" + invoiceFrom + "&invoiceTo=" + invoiceTo + "&issueFrom=" + issueFrom + "&issueTo=" + issueTo +  "&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&department=" + departments+ "&salebyUser=" + salebyUsers + "&termPay=" + termPays +"&paymentType="+paymentType+"&vatTemp="+vatTemp+"&whtTemp="+whtTemp);
         }else if((issueFrom !== '') && (issueTo !== '')){
@@ -225,9 +225,15 @@ function printBillAirAgent(){
         }else {
             validateDate();  
         }
-    }else{
-        validateBillAirAgent();  
+    }else if(refundFrom === '' && refundTo === '' && agentCode !== ''){
+        validateRefundDate();
+    }else if(refundFrom !== '' && refundTo !== '' && agentCode === ''){
+        validateBillAirAgent();
+    } else {
+        validateBillAirAgent();
+        validateRefundDate();
     }
+    
     
 //    if(reportType == 1){
 //        window.open("Excel.smi?name=TicketFareAirlineReport&ticketType=" + ticketType + "&ticketBuy=" + ticketBuy + "&airline=" + airline + "&airlineCode=" + airlineCode + "&dateFrom=" + from + "&dateTo=" + to + "&department=" + department + "&staff=" + salebyUser + "&termPay=" + termPay);
