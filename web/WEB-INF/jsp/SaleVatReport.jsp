@@ -498,13 +498,13 @@
     }
     
     function printAction(){
-        var postFromDate = $('#postFromDate').val();
-        var postToDate = $('#postToDate').val();
-        if((postFromDate === '') || (postToDate === '')){
-            $('#SaleVatReportForm').bootstrapValidator('revalidateField', 'postFromDate');
-            $('#SaleVatReportForm').bootstrapValidator('revalidateField', 'postToDate');
-//            $("#btnPrint").addClass("disabled");
-        }else{
+//        var postFromDate = $('#postFromDate').val();
+//        var postToDate = $('#postToDate').val();
+//        if((postFromDate === '') || (postToDate === '')){
+//            $('#SaleVatReportForm').bootstrapValidator('revalidateField', 'postFromDate');
+//            $('#SaleVatReportForm').bootstrapValidator('revalidateField', 'postToDate');
+////            $("#btnPrint").addClass("disabled");
+//        }else{
             var monthyear = setValueMonth();
             var parts = (monthyear.toString()).split('|');
             var month = parts[0];
@@ -512,7 +512,7 @@
             document.getElementById('selectMonth').value = month;
             document.getElementById('selectYear').value = year;
             $('#PrintReportModal').modal('show'); 
-        }
+//        }
     }
     
     function selectMonthChange(){

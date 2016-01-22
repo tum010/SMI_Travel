@@ -37,7 +37,7 @@ public class InvoiceImpl implements InvoiceReportDao{
         System.out.println("Sign : " + sign + "Print By : " + printBy);
         UtilityFunction util = new UtilityFunction();  
         List data = new ArrayList();
-        DecimalFormat df = new DecimalFormat("###,###.00");
+        DecimalFormat df = new DecimalFormat("###,##0.00");
         String accName = "S.M.I. TRAVEL CO., LTD.";
         String accType = "CURRENT ACCOUNT";
         String Branch1 = "";

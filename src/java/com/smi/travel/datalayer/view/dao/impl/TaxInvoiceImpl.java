@@ -33,7 +33,7 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList();
-        DecimalFormat df = new DecimalFormat("###,###.00");
+        DecimalFormat df = new DecimalFormat("###,##0.00");
         List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `taxinvoice_view` where `taxinvoice_view`.id =  " + taxInvId)
                 .addScalar("id",Hibernate.STRING)
                 .addScalar("customer",Hibernate.STRING)

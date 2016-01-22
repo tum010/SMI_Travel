@@ -212,7 +212,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[($F{currency} == null || "".equalsIgnoreCase($F{currency}))? "":$F{currency}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
 				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="439" y="2" width="78" height="20" uuid="947a5225-ea47-4395-9c48-c96c7d90de49"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>

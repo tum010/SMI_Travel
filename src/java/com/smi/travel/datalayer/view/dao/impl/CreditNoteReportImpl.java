@@ -34,7 +34,7 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();  
         List data = new ArrayList();
-        DecimalFormat df = new DecimalFormat("###,###.00");
+        DecimalFormat df = new DecimalFormat("###,##0.00");
         BigDecimal Subtotal = new BigDecimal(0);
         BigDecimal Grandtotal = new BigDecimal(0);
         BigDecimal Difsubtotal = new BigDecimal(0);
