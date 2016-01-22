@@ -179,21 +179,30 @@ public class TaxInvoice   {
         BigDecimal sumAmount = new BigDecimal("0.0000");
         for (Iterator detailList = this.getTaxInvoiceDetails().iterator(); detailList.hasNext();) {
             TaxInvoiceDetail detail = (TaxInvoiceDetail)detailList.next();
-//            BigDecimal amount = detail.getAmount();
-//            BigDecimal vat = new BigDecimal("0.0000");
-//            if(detail.getVat() != null){
-//                vat = detail.getVat();
-//            }
-//            if(amount != null){
-//                BigDecimal hundred = new BigDecimal("100.0000");
-//                sumAmount = sumAmount.add(amount.multiply(hundred).divide(vat.add(hundred), 2,RoundingMode.HALF_UP));
-//            }
+            BigDecimal amount = detail.getAmount();
+            BigDecimal vat = new BigDecimal("0.0000");
             if(detail.getIsVat() == 1){
-                sumAmount = sumAmount.add(detail.getGross() != null ? detail.getGross() : new BigDecimal(BigInteger.ZERO));
-            
+                if(detail.getVat() != null){
+                    vat = detail.getVat();
+                }
+                if(amount != null){
+                    BigDecimal hundred = new BigDecimal("100.0000");
+                    sumAmount = sumAmount.add(amount.multiply(hundred).divide(vat.add(hundred), 8,RoundingMode.HALF_UP));
+                }
+                
             }else if(detail.getIsVat() == 0){
-                sumAmount = sumAmount.add(detail.getAmount() != null ? detail.getAmount() : new BigDecimal(BigInteger.ZERO));
-            }
+                if(amount != null){
+                    vat = new BigDecimal(BigInteger.ZERO);
+                    BigDecimal hundred = new BigDecimal("100.0000");
+                    sumAmount = sumAmount.add(amount.multiply(hundred).divide(vat.add(hundred), 8,RoundingMode.HALF_UP));
+                }
+            }    
+//            if(detail.getIsVat() == 1){
+//                sumAmount = sumAmount.add(detail.getGross() != null ? detail.getGross() : new BigDecimal(BigInteger.ZERO));
+//            
+//            }else if(detail.getIsVat() == 0){
+//                sumAmount = sumAmount.add(detail.getAmount() != null ? detail.getAmount() : new BigDecimal(BigInteger.ZERO));
+//            }
         }
         return sumAmount;
     }

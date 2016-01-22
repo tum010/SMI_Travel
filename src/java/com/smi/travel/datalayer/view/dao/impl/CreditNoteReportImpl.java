@@ -54,7 +54,10 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
                  .addScalar("vat", Hibernate.BIG_DECIMAL)
                  .addScalar("realamount", Hibernate.BIG_DECIMAL)
                  .addScalar("realvat", Hibernate.BIG_DECIMAL)
+                 .addScalar("curamount", Hibernate.STRING)
                  .list();
+        
+        String curAmount = "";
         for (Object[] B : QueryCNList) {
             CreditNoteReport cn = new CreditNoteReport();
             cn.setCustomer(util.ConvertString(B[0]));
@@ -83,9 +86,13 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
             Realsubtotal = Realsubtotal.add(RealTotal);
             cn.setRemark(util.ConvertString(B[6]));
             cn.setUser(util.ConvertString(B[7]));
+            curAmount = util.ConvertString(B[11]);
             data.add(cn);
         }
         
+        if("THB".equalsIgnoreCase(curAmount)){
+            curAmount = "BAHT";
+        }
         for(int i =0;i<data.size();i++){
             CreditNoteReport re = (CreditNoteReport) data.get(i);
             re.setSubtotal(util.setFormatMoney(Subtotal));
@@ -100,7 +107,7 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
             if(!"".equalsIgnoreCase(totals[0])){
                 totalWord = Integer.parseInt(String.valueOf(totals[0]));
             }  
-            re.setTextamount(utilityFunction.convert(totalWord)+" BATH");
+            re.setTextamount(utilityFunction.convert(totalWord)+" "+curAmount);
             data.set(i, re);
         }
         
