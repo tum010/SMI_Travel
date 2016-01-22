@@ -84,7 +84,7 @@ public class PostSaleVatImpl implements PostSaleVatDao {
             haveCondition = true;
         }
         
-        query.append(" Order by `tax`.taxno desc");
+        query.append(" Order by `tax`.department desc , `tax`.taxno desc");
          List<Object[]> QueryList = session.createSQLQuery(query.toString())
                 .addScalar("taxid", Hibernate.STRING)
                 .addScalar("taxno", Hibernate.STRING)
