@@ -157,26 +157,29 @@
 				</rectangle>
 				<staticText>
 					<reportElement x="224" y="1" width="66" height="14" uuid="e6d57c08-ddf6-476f-b269-c44f4fdb4337"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
 					<text><![CDATA[Grand Total :]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="308" y="2" width="24" height="13" uuid="91a3e1fd-a1b4-4ea0-a742-dafcd00bb692"/>
+					<reportElement x="308" y="0" width="24" height="15" uuid="91a3e1fd-a1b4-4ea0-a742-dafcd00bb692"/>
 					<textElement textAlignment="Center">
-						<font size="8"/>
+						<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalpax}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0" isBlankWhenNull="true">
-					<reportElement x="332" y="2" width="58" height="13" uuid="a9a92abb-1f11-43fd-bd0f-83e0496ccc57"/>
+					<reportElement x="332" y="0" width="58" height="15" uuid="a9a92abb-1f11-43fd-bd0f-83e0496ccc57"/>
 					<textElement textAlignment="Right">
-						<font size="8"/>
+						<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalcommission}]]></textFieldExpression>
 				</textField>
 				<textField pattern="#,##0" isBlankWhenNull="true">
-					<reportElement x="392" y="2" width="58" height="13" uuid="cad4e31a-93b6-4617-9890-037622e79393"/>
+					<reportElement x="392" y="0" width="58" height="15" uuid="cad4e31a-93b6-4617-9890-037622e79393"/>
 					<textElement textAlignment="Right">
-						<font size="8"/>
+						<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalselling}]]></textFieldExpression>
 				</textField>

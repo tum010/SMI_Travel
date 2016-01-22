@@ -136,27 +136,30 @@
 					</graphicElement>
 				</rectangle>
 				<textField pattern="#,##0">
-					<reportElement x="493" y="3" width="60" height="14" uuid="b5cf78ca-34d0-4b6e-ba49-a0a404536235"/>
+					<reportElement x="493" y="2" width="60" height="15" uuid="b5cf78ca-34d0-4b6e-ba49-a0a404536235"/>
 					<textElement textAlignment="Right">
-						<font size="8"/>
+						<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalselling}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="410" y="3" width="22" height="14" uuid="33c88666-4f33-4ab6-b36c-dd7c937c4372"/>
+					<reportElement x="410" y="2" width="22" height="15" uuid="33c88666-4f33-4ab6-b36c-dd7c937c4372"/>
 					<textElement textAlignment="Center">
-						<font size="8"/>
+						<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalpax}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="337" y="2" width="66" height="14" uuid="a188b297-a166-4e9d-ab1e-62351fd845e3"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
 					<text><![CDATA[Grand Total :]]></text>
 				</staticText>
 				<textField pattern="#,##0">
-					<reportElement x="432" y="3" width="59" height="14" uuid="f2e01964-2c2c-4707-9b1d-6a90ff39a4b6"/>
+					<reportElement x="432" y="2" width="59" height="15" uuid="f2e01964-2c2c-4707-9b1d-6a90ff39a4b6"/>
 					<textElement textAlignment="Right">
-						<font size="8"/>
+						<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalcom}]]></textFieldExpression>
 				</textField>
