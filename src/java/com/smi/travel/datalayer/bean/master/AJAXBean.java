@@ -1516,8 +1516,10 @@ public class AJAXBean extends AbstractBean implements
             BigDecimal[] value = checkTaxInvoiceDetailFromBilldescId(invoiceDetailId);
             BigDecimal costTemp = value[0];
             BigDecimal amountTemp = value[1];
-            amount = amountinvoice.subtract(amountTemp);
-            cost = costinvoice.subtract(costTemp);
+//            amount = amountinvoice.subtract(amountTemp);
+//            cost = costinvoice.subtract(costTemp);
+            amount = amountinvoice;
+            cost = costinvoice;
             System.out.println(" amount =  " + amountinvoice + "-" + amountTemp + " = " + amount);
             System.out.println(" cost =  " + costinvoice + "-" + costTemp + " = " + cost);
 
@@ -1528,14 +1530,17 @@ public class AJAXBean extends AbstractBean implements
             
             BigDecimal exrate = new BigDecimal(0);
             BigDecimal profit = new BigDecimal(0);
+            BigDecimal remain = new BigDecimal(0);
             exrate = billableDescs.get(i).getExRate();           
             if((curcost.equalsIgnoreCase(curamount)) && (!"".equalsIgnoreCase(curcost)) && (!"".equalsIgnoreCase(curamount))){
                 profit = amount.subtract(cost);
+                remain = profit.subtract(amountTemp);
             } else {
                 if(exrate == null){
                     exrate = new BigDecimal(0);
                 }
                 profit = amount.subtract(cost.multiply(exrate)).setScale(2, RoundingMode.HALF_UP);
+                remain = profit.subtract(amountTemp);
             }
 
 //            if ("1".equals(product)) {
@@ -1566,7 +1571,7 @@ public class AJAXBean extends AbstractBean implements
 //
 //            System.out.println("displaydescription" + displaydescription);
 
-            if (amount.compareTo(BigDecimal.ZERO) != 0) {
+            if (remain.compareTo(BigDecimal.ZERO) != 0) {
                 String newrow = "";              
                 newrow += "<tr>"
                         + "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>"
@@ -1581,7 +1586,8 @@ public class AJAXBean extends AbstractBean implements
                         + "<td class='text-center'>" + curamount + "</td>"
                         + "<td class='text-right money3'>" + ("0".equalsIgnoreCase(String.valueOf(exrate)) ? "" : exrate) + "</td>"
                         + "<td class='text-right money'>" + profit + "</td>"
-                        + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + profit + "','" + curamount + "','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td class='text-right money'>" + remain + "</td>"
+                        + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + remain + "','" + curamount + "','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;
@@ -2526,6 +2532,8 @@ public class AJAXBean extends AbstractBean implements
         BigDecimal resultCost = new BigDecimal(0);
 
         List<TaxInvoiceDetail> taxInvoiceDetailList = taxInvoiceDao.getTaxInvoiceDetailFromBillDescId(invoiceDetailId);
+        System.out.println("taxInvoiceDetailList : "+taxInvoiceDetailList);
+        System.out.println("invoiceDetailId : "+invoiceDetailId); 
         if (taxInvoiceDetailList == null || taxInvoiceDetailList.size() == 0) {
             value[0] = resultCost;
             value[1] = resultAmount;
@@ -2546,7 +2554,8 @@ public class AJAXBean extends AbstractBean implements
                 resultAmount = resultAmount.add(BigDecimal.ZERO);
             }
         }
-
+        System.out.println("resultCost : "+resultCost);
+        System.out.println("resultAmount : "+resultAmount); 
         value[0] = resultCost;
         value[1] = resultAmount;
         return value;

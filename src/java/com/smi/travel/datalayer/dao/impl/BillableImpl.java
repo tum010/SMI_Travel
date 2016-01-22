@@ -113,11 +113,11 @@ public class BillableImpl implements BillableDao {
         }
         List<BillableDesc> billableDescResult = new ArrayList<BillableDesc>();
         for(int a=0;a<billableDescList.size();a++){
-            String queryTaxInvDetail = "from TaxInvoiceDetail taxDetail where taxDetail.invoiceDetail.billableDesc.id = :id ";
-            List<TaxInvoiceDetail> taxInvoiceDetailList = session.createQuery(queryTaxInvDetail).setParameter("id", billableDescList.get(a).getId()).list();
-            if(taxInvoiceDetailList.isEmpty()){
+//            String queryTaxInvDetail = "from TaxInvoiceDetail taxDetail where taxDetail.invoiceDetail.billableDesc.id = :id ";
+//            List<TaxInvoiceDetail> taxInvoiceDetailList = session.createQuery(queryTaxInvDetail).setParameter("id", billableDescList.get(a).getId()).list();
+//            if(taxInvoiceDetailList.isEmpty()){
                 billableDescResult.add(billableDescList.get(a));
-            }
+//            }
         }
         billableList.get(0).setBillableDescs(billableDescResult);  
         Billable billable = new Billable();
