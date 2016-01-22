@@ -55,13 +55,26 @@
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
 <!--Alert Save -->
 <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Success!</strong> 
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Save Success!</strong> 
 </div>
-<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Save Success!</strong> 
+<div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Save Unsuccess!</strong> 
 </div>
+<div id="textAlertDivDelete"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Delete Success!</strong> 
+</div>
+<div id="textAlertDivNotDelete"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Delete Unsuccess!</strong> 
+</div>       
+<div id="textAlertDivNotDeleteLeader"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Cannot Delete Family Leader!</strong> 
+</div>
+
             <!--Head-->
             <div class="row" style="padding-left: 15px">  
                 <div class="col-md-6">
@@ -110,7 +123,7 @@
                 <tbody>
                     <c:forEach var="passenger" items="${passengerList}" varStatus="varPassenger">
                         <tr>
-                            <td>${passenger.orderNo}</td>
+                            <td>${varPassenger.count}</td>
                             <td class="codeCustomer">${passenger.getCustomer().getCode()}</td>
                             <td>${passenger.getCustomer().getLastName()}    
                                 ${passenger.getCustomer().getFirstName()}</td>

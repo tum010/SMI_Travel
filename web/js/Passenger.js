@@ -54,11 +54,20 @@ function Delete() {
 $(document).ready(function () {
     var bla = $('#resultText').val();
    
-    if(bla == "save successful"){
-        
+    if(bla == "Save successful"){
         $('#textAlertDivSave').show();
     }else if ( bla === ""){
         $('#textAlertDivSave').hide();
+        $('#textAlertDivNotDeleteLeader').hide();
+        $('#textAlertDivDelete').hide();
+        $('#textAlertDivNotDelete').hide();
+        $('#textAlertDivNotSave').hide();
+    }else if ( bla === 'Cannot Delete Family Leader'){
+        $('#textAlertDivNotDeleteLeader').show();
+    }else if ( bla === 'Delete successful'){
+        $('#textAlertDivDelete').show();
+    }else if ( bla === 'Delete unsuccessful'){
+        $('#textAlertDivNotDelete').show();
     }else {
         $('#textAlertDivNotSave').show();
     }
