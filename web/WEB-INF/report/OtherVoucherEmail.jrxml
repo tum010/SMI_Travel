@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelVoucher" language="groovy" pageWidth="575" pageHeight="392" columnWidth="574" leftMargin="1" rightMargin="0" topMargin="0" bottomMargin="0" uuid="053f4d0e-4534-4ae9-bd3a-d9c39367ad2d">
-	<property name="ireport.zoom" value="1.99650000000001"/>
-	<property name="ireport.x" value="126"/>
-	<property name="ireport.y" value="373"/>
+	<property name="ireport.zoom" value="2.657341500000017"/>
+	<property name="ireport.x" value="739"/>
+	<property name="ireport.y" value="623"/>
 	<queryString>
 		<![CDATA[SELECT
      *,
@@ -293,7 +293,7 @@ FROM
 	<columnFooter>
 		<band height="177">
 			<rectangle radius="10">
-				<reportElement x="20" y="121" width="360" height="20" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="bd30c8f5-58da-47d9-ac72-6108f7b8bf5b"/>
+				<reportElement x="8" y="121" width="360" height="20" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="bd30c8f5-58da-47d9-ac72-6108f7b8bf5b"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="395" y="2" width="95" height="18" uuid="5ee2a8fa-db0e-41fc-b718-ac6d9edc4436"/>
@@ -322,7 +322,7 @@ FROM
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="392" y="22" width="156" height="101" uuid="41d7f2e3-64a3-45bf-92ff-51c49f0a2487"/>
+				<reportElement x="392" y="22" width="170" height="101" uuid="41d7f2e3-64a3-45bf-92ff-51c49f0a2487"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="13" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -377,34 +377,34 @@ FROM
 				<textFieldExpression><![CDATA[($F{passenger6} != null ? $F{passenger6} : "")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="392" y="123" width="156" height="20" uuid="c6fe071e-f2b0-47bb-aec3-b74db78f4330"/>
+				<reportElement x="392" y="123" width="172" height="20" uuid="c6fe071e-f2b0-47bb-aec3-b74db78f4330"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{printby}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="23" y="123" width="245" height="20" uuid="7a928aa1-5f79-4bd9-a36f-de31e55b33b3"/>
+				<reportElement x="11" y="123" width="245" height="20" uuid="7a928aa1-5f79-4bd9-a36f-de31e55b33b3"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[PAYMENT BY : Wendy Tour / S.M.I Travel Co., Ltd.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="23" y="143" width="245" height="20" uuid="0d2cd497-210f-4d76-88ac-226e30325180"/>
+				<reportElement x="24" y="143" width="245" height="20" uuid="0d2cd497-210f-4d76-88ac-226e30325180"/>
 				<textElement>
 					<font fontName="TH SarabunPSK" size="13" isBold="false" isItalic="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Thank you for choosing S.M.I. Travel]]></text>
 			</staticText>
 			<line>
-				<reportElement x="392" y="143" width="155" height="1" uuid="41d0d092-4539-43ff-88d3-de869371325f"/>
+				<reportElement x="392" y="143" width="171" height="1" uuid="41d0d092-4539-43ff-88d3-de869371325f"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="392" y="144" width="156" height="20" uuid="8c416db0-73f6-4beb-af1d-f674f483f46f"/>
+				<reportElement x="392" y="144" width="172" height="20" uuid="8c416db0-73f6-4beb-af1d-f674f483f46f"/>
 				<textElement textAlignment="Center">
 					<font fontName="TH SarabunPSK" size="13" isBold="false" isItalic="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>

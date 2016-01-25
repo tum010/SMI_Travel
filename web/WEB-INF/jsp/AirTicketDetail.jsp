@@ -363,11 +363,12 @@
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <div class="input-group times">
-                                                <input type="text" class="form-control" value="${flight.departTime}" name="flight-${fStatus.count}-departTime" 
+<!--                                                <input type="text" class="form-control" value="${flight.departTime}" name="flight-${fStatus.count}-departTime" 
                                                        id="flight-${fStatus.count}-departTime" maxlength="4"
                                                        data-bv-notempty data-bv-notempty-message="The Time is required"/>
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
-                                                </span>
+                                                </span>-->
+                                                <input id="flight-${fStatus.count}-departTime" name="flight-${fStatus.count}-departTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="${flight.departTime}" >
                                             </div>
                                         </div>
                                     </div>
@@ -409,11 +410,12 @@
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <div class="input-group times" id="arrive-time">
-                                                <input name="flight-${fStatus.count}-arriveTime" id="flight-${fStatus.count}-arriveTime" 
+<!--                                                <input name="flight-${fStatus.count}-arriveTime" id="flight-${fStatus.count}-arriveTime" 
                                                        type="text" class="form-control" value="${flight.arriveTime}"  maxlength="4"
                                                        data-bv-notempty data-bv-notempty-message="The time is required"/>
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
-                                                </span>
+                                                </span>-->
+                                                <input id="flight-${fStatus.count}-arriveTime" name="flight-${fStatus.count}-arriveTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="${flight.arriveTime}">
                                             </div>
                                         </div>
                                     </div>
@@ -2002,6 +2004,7 @@
 <script type="text/javascript">
     var tabindex = 1; //start tabindex || 150 is last tabindex
     $(document).keypress(function(event) {
+        $('.time').mask('00:00');
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if(keycode == '13') { //onEnter
             tabindex++;
