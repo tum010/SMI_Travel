@@ -2071,7 +2071,7 @@
             } else {
                 if(department !== 'Inbound'){
                     if (invType === 'T') {
-                        window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                        window.open("report.smi?name=InvoiceTempEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
                     } else {
                         window.open("report.smi?name=InvoiceEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
                     }
@@ -2080,7 +2080,7 @@
                     if (invType === "T") {
                         window.open("report.smi?name=InvoiceInboundPerformaReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     } else {
-                        window.open("report.smi?name=InvoiceInboundRevenueReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
+                        window.open("report.smi?name=InvoiceInboundRevenueEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     }
                 }  
             }
@@ -2089,16 +2089,16 @@
             } else {
                 if(department !== 'Inbound'){
                     if (invType === 'T') {
-                        window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
+                        window.open("SendMail.smi?reportname=InvoiceTempEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
                     } else {
                         window.open("SendMail.smi?reportname=Invoice&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
                     }
                 
                 }else{
                     if (invType === "T") {
-                        window.open("report.smi?name=InvoiceInboundPerformaReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
+                        window.open("SendMail.smi?reportname=InvoiceTempEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     } else {
-                        window.open("report.smi?name=InvoiceInboundRevenueReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
+                        window.open("SendMail.smi?reportname=InvoiceInboundRevenueEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     }
                 }  
             }
