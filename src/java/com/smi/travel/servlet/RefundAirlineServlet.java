@@ -26,11 +26,13 @@ public class RefundAirlineServlet implements AbstractAJAXServlet{
         String ticketNo = request.getParameter("ticketNo");
         String detailId = request.getParameter("detailId");
         String type = request.getParameter("type");
+        String AirBooking = request.getParameter("AirBooking");
         Map result = new HashMap();
         result.put("ticketNo", ticketNo);
         result.put("detailId", detailId);
         result.put("servletName", servletName);
         result.put("type", type);
+        result.put("AirBooking", AirBooking);
         
                  
         return result;

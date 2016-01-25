@@ -37,7 +37,7 @@ public interface TicketFareAirlineDao {
     public int checkDeletePaymentFromTicketNo(String ticketNo);
     public int checkDeleteRefundFromTicketNo(String ticketNo);
     public HashMap<String,Object> getDetailTicketFareAirline(String TicketNo);
-    
+    public HashMap<String,Object> getDetailTicketFareAirline(String TicketNo,String AirBookid);
     public List<InvoiceDetailView> getInvoiceDetailFromTicketNo(String ticketNo);
     public String getListTicketFareFromTicketNo(String ticketNo);
     public List<RefundAirticketDetail> getRefundAirticketDetailFromTicketNo(String ticketNo);

@@ -2194,7 +2194,9 @@ function calculateWithodingTax(){
     var tax = document.getElementById('whtax').value;
     var whtax = parseFloat(tax);
 //    var withholdingTax = ( (sumcomm + sumCommRefund ) * (whtax / 100));
-    var withholdingTax = ( ((sumcomm * (1-(vat/100))) - (sumCommRefund * (1-(vat/100)))) * (whtax / 100));
+   // alert((sumcomm * (100/(100 + vat))));
+    
+    var withholdingTax = ( (sumcomm  - sumCommRefund ) * (whtax / 100));
     document.getElementById("withholdingTax").value = formatNumber(withholdingTax);
 }
 function deleteCreditList(id,Ccount) {

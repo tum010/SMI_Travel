@@ -34,6 +34,7 @@ public class InvoiceSummary {
     private String username;
     private String systemdate;
     private Double profit;
+    private Double amountlocal;
 
     public void setHeadertype(String headertype) {
         this.headertype = headertype;
@@ -261,6 +262,14 @@ public class InvoiceSummary {
 
     public String getInvto() {
         return invto;
+    }
+
+    public Double getAmountlocal() {
+        return amountlocal;
+    }
+
+    public void setAmountlocal(Double amountlocal) {
+        this.amountlocal = amountlocal;
     }
     
     

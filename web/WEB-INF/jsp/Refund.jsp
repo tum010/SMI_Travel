@@ -1894,8 +1894,10 @@ function setSectorRefund(row){
 //    alert("1");
     var txt = $("#SelectTocketNoadd"+ row + " option:selected").text();
     var txtNo = $("#SelectTocketNo"+ row + " option:selected").text();
+    var airbook = $('#airbookingid').val();
     console.log("Text : " + txt);
-    console.log("Text : " + txtNo);
+    console.log("rrrr : " + txtNo);
+    
     $("#ticketNoOnSelected"+row).val(txtNo);
     $("#ticketNoOnSelectedAdd"+row).val(txt);
     if(txt !== ''){
@@ -1905,7 +1907,8 @@ function setSectorRefund(row){
         var param = 'action=' + 'text' +
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
-                '&type=getTicketFare' +
+                '&type=getTicketFareBooking' +
+                '&AirBooking=' + airbook + 
                 '&ticketNo=' + txt ;
         try {
             $.ajax({
@@ -1938,8 +1941,9 @@ function setSectorRefund(row){
         var param = 'action=' + 'text' +
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
-                '&type=getTicketFare' +
-                '&ticketNo=' + txtNo ;
+                '&type=getTicketFareBooking' +
+                '&AirBooking=' + airbook + 
+                '&ticketNo=' + txtNo ;         
         try {
             $.ajax({
                 type: "POST",
