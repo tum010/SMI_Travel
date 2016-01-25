@@ -808,6 +808,22 @@ public class AJAXBean extends AbstractBean implements
                 } else {
                     result = "";
                 }
+            }else if ("getTicketFareBooking".equalsIgnoreCase(type)) {
+                String ticketNo = map.get("ticketNo").toString();
+                String AirBooking = map.get("AirBooking").toString();
+                System.out.println("ticketNo : "+ticketNo +" , AirBooking : "+AirBooking);
+                HashMap<String, Object> ticketFare = ticketFareAirlineDao.getDetailTicketFareAirline(ticketNo,AirBooking);
+                if (ticketFare != null) {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    DecimalFormat df = new DecimalFormat("###,##0.00");
+                    ticketFare.put("TicketDate", sdf.format(ticketFare.get("TicketDate")));
+                    String total = ticketFare.get("Total").toString();
+                    ticketFare.put("Total", df.format(Double.valueOf(total) * 1.00));
+                    JSONObject obj = new JSONObject(ticketFare);
+                    result = obj.toJSONString();
+                } else {
+                    result = "";
+                }
             } else if ("delete".equalsIgnoreCase(type)) {
                 result = false;
                 String detailId = map.get("detailId").toString();
