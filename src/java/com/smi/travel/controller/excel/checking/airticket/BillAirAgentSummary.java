@@ -929,7 +929,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
                 cell331.setCellStyle(styleAlignRight);
                         sheet2.autoSizeColumn(0);
                 HSSFCell cell332 = row33.createCell(1);
-                cell332.setCellValue("");
+                cell332.setCellValue(bill.getRefunddatePage());
                 cell332.setCellStyle(styleAlignLeft);
                         sheet2.autoSizeColumn(1);
                 HSSFCell cell333 = row33.createCell(2);

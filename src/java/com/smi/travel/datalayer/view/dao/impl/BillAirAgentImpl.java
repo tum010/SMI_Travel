@@ -147,6 +147,8 @@ public class BillAirAgentImpl implements BillAirAgentDao{
         List dataAgent = new ArrayList<BillAirAgent>();
         List dataRefund = new ArrayList<BillAirAgentRefund>();
         String paymentTypeTemp = "";
+        SimpleDateFormat sf = new SimpleDateFormat();
+        sf.applyPattern("dd-MM-yyyy");
         
         if("B".equalsIgnoreCase(paymentType)){
             paymentTypeTemp = "BSP";
@@ -311,14 +313,14 @@ public class BillAirAgentImpl implements BillAirAgentDao{
                 bil.setAgentPage("ALL");
             }
             if(issueFrom != null && !"".equals(issueFrom)){
-                String issue = "" + issueFrom + " To " + issueTo;
+                String issue = "" + String.valueOf(sf.format(util.convertStringToDate(issueFrom)))  + " To " + String.valueOf(sf.format(util.convertStringToDate(issueTo))) ;
                 bil.setIssuedatePage(issue);
             }else{
                 bil.setIssuedatePage("ALL");
             }
             System.out.println("Invoice Date : " + invoiceFromDate);
             if(invoiceFromDate != null && !"".equals(invoiceFromDate)){
-                String invoice = ""+ invoiceFromDate + " To " + InvoiceToDate;
+                String invoice = ""+ String.valueOf(sf.format(util.convertStringToDate(invoiceFromDate)))  + " To " + String.valueOf(sf.format(util.convertStringToDate(InvoiceToDate))) ;
                 bil.setInvoicedatePage(invoice);
             }else{
                 bil.setInvoicedatePage("ALL");
@@ -425,18 +427,27 @@ public class BillAirAgentImpl implements BillAirAgentDao{
                 bil.setAgentPage("ALL");
             }
             if(issueFrom != null && !"".equals(issueFrom)){
-                String issue = "" + issueFrom + " To " + issueTo;
+                String issue = "" + String.valueOf(sf.format(util.convertStringToDate(issueFrom)))  + " To " + String.valueOf(sf.format(util.convertStringToDate(issueTo)));
                 bil.setIssuedatePage(issue);
             }else{
                 bil.setIssuedatePage("");
             }
             System.out.println("Invoice Date : " + invoiceFromDate);
             if(invoiceFromDate != null && !"".equals(invoiceFromDate)){
-                String invoice = ""+ invoiceFromDate + " To " + InvoiceToDate;
+                String invoice = ""+ String.valueOf(sf.format(util.convertStringToDate(invoiceFromDate)))  + " To " +String.valueOf(sf.format(util.convertStringToDate(InvoiceToDate)));
                 bil.setInvoicedatePage(invoice);
             }else{
                 bil.setInvoicedatePage("");
             }
+            
+            if(refundFrom != null && !"".equals(refundTo)){
+                String refund = ""+ String.valueOf(sf.format(util.convertStringToDate(refundFrom)))  + " To " + String.valueOf(sf.format(util.convertStringToDate(refundTo)));
+                bil.setRefunddatePage(refund);
+            }else{
+                bil.setRefunddatePage("");
+            }
+            
+                    
             bil.setPrintbyPage(printby);
             bil.setPaymenttypePage(paymentTypeTemp);
             
