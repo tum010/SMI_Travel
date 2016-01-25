@@ -78,7 +78,22 @@ $(document).ready(function() {
         if ($("#inputDate").val() === "" || $("#name").val() === "" || $("#address").val() === "") {
             return;
         }
+//        $('#ItemCreditTable tbody [name="taxId"]').each(function() {
+//            var taxNo = $(this).parent().parent().find("[name='taxNo']");
+//            if (taxNo.val() !== '' && this.value === '') {
+//                taxNo.style.borderColor = "red";
+//                result = false;
+//            }
+//        });
         $('#ItemCreditTable tbody [name="taxNo"]').each(function() {
+            var taxId = $(this).parent().parent().find("[name='taxId']");
+            if(this.value !== '' && taxId.val() === ''){
+                this.value = '';
+                this.style.borderColor = "red";
+                $("#alertTextFail").html("Please press enter when fill in complete tax invoice no.");
+                $("#alertFail").show();
+                result = false;
+            }
             if (this.style.borderColor === "red") {
                 result = false;
             }
