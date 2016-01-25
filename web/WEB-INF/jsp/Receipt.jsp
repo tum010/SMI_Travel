@@ -293,7 +293,6 @@
                             </div>
                         </div>
                     </div>-->
-
                     <div class="panel panel-default ${panelborder}">
                         <div class="panel-heading ${panelheader}">
                             <h4 class="panel-title">Receipt Detail</h4>
@@ -2539,12 +2538,12 @@
         var tempCount = parseInt($("#counter").val());
         var checkAddDuplicate = false;
         if (checkadd == 1) {
-            $("#ButtonSearchRefNo").attr("disabled", "disabled");
-            $("#searchPaymentNoAir").attr("disabled", "disabled");
-            $("#searchPaymentNoTour").attr("disabled", "disabled");
-            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
-            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
-            $("#refNo").attr("disabled", "disabled");
+//            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+//            $("#searchPaymentNoAir").attr("disabled", "disabled");
+//            $("#searchPaymentNoTour").attr("disabled", "disabled");
+//            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+//            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
+//            $("#refNo").attr("disabled", "disabled");
             var rowAll = tempCount;
             for (var i = 1; i < rowAll; i++) {
                 var invoiceId = $("#invId" + i).val();
@@ -2554,12 +2553,12 @@
             }
 
         } else if (checkadd == 2) {
-            $("#invoiceNo").attr("disabled", "disabled");
-            $("#ButtonSearchInvoice").attr("disabled", "disabled");
-            $("#searchPaymentNoAir").attr("disabled", "disabled");
-            $("#searchPaymentNoTour").attr("disabled", "disabled");
-            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
-            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
+//            $("#invoiceNo").attr("disabled", "disabled");
+//            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+//            $("#searchPaymentNoAir").attr("disabled", "disabled");
+//            $("#searchPaymentNoTour").attr("disabled", "disabled");
+//            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+//            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
             var rowAll = tempCount;
             for (var i = 1; i < rowAll; i++) {
                 var billId = $("#billDescId" + i).val();
@@ -2569,12 +2568,12 @@
             }
 
         } else if (checkadd == 3) {
-            $("#invoiceNo").attr("disabled", "disabled");
-            $("#refNo").attr("disabled", "disabled");
-            $("#ButtonSearchRefNo").attr("disabled", "disabled");
-            $("#ButtonSearchInvoice").attr("disabled", "disabled");
-            $("#searchPaymentNoTour").attr("disabled", "disabled");
-            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
+//            $("#invoiceNo").attr("disabled", "disabled");
+//            $("#refNo").attr("disabled", "disabled");
+//            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+//            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+//            $("#searchPaymentNoTour").attr("disabled", "disabled");
+//            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
             var rowAll = tempCount;
             for (var i = 1; i < rowAll; i++) {
                 var payId = $("#paymentId" + i).val();
@@ -2584,12 +2583,12 @@
             }
 
         } else if (checkadd == 4) {
-            $("#invoiceNo").attr("disabled", "disabled");
-            $("#refNo").attr("disabled", "disabled");
-            $("#ButtonSearchRefNo").attr("disabled", "disabled");
-            $("#ButtonSearchInvoice").attr("disabled", "disabled");
-            $("#searchPaymentNoAir").attr("disabled", "disabled");
-            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+//            $("#invoiceNo").attr("disabled", "disabled");
+//            $("#refNo").attr("disabled", "disabled");
+//            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+//            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+//            $("#searchPaymentNoAir").attr("disabled", "disabled");
+//            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
             var rowAll = tempCount;
             for (var i = 1; i < rowAll; i++) {
                 var paymentTour = $("#paymentTourId" + i).val();
