@@ -15,9 +15,9 @@
 <c:set var="taxInvoice" value="${requestScope['taxInvoice']}" />
 <c:set var="taxInvoiceDetail" value="${requestScope['taxInvoiceDetail_list']}" />
 <c:set var="roleName" value="${requestScope['roleName']}" />
-<c:set var="disabledFieldSearch" value="${requestScope['disabledFieldSearch']}" />
+<%--<c:set var="disabledFieldSearch" value="${requestScope['disabledFieldSearch']}" />--%>
 <input type="hidden" id="Type" name="Type" value="${param.Department}">
-<input type="hidden" id="disabledFieldSearch" name="disabledFieldSearch" value="${disabledFieldSearch}">
+<!--<input type="hidden" id="disabledFieldSearch" name="disabledFieldSearch" value="${disabledFieldSearch}">-->
 <section class="content-header" >
     <h1>
         <c:set var="voidTaxInvoice" value="" />
@@ -489,16 +489,16 @@
                                                     <td class="hidden"><input class="form-control" type="text" id="invoiceDetailAmount${i.count}" name="invoiceDetailAmount${i.count}" value="${taxDetail.invoiceDetail.amount}"></td>
                                                     <td class="hidden"><input class="form-control" type="text" id="isExport${i.count}" name="isExport${i.count}" value="${taxDetail.isExport}"></td>
                                                     <td class="hidden"><input class="form-control" type="text" id="isProfit${i.count}" name="isProfit${i.count}" value="${taxDetail.isProfit}"></td>
-                                                    <c:set var="fromAjax" value=""/>
-                                                    <c:choose>
-                                                        <c:when test="${disabledFieldSearch == 'disbledInvoice'}">
-                                                            <c:set var="fromAjax" value="refNo"/>
-                                                        </c:when>
-                                                        <c:when test="${disabledFieldSearch == 'disbledRefNo'}">
-                                                            <c:set var="fromAjax" value="invoice"/>
-                                                        </c:when>
-                                                    </c:choose>
-                                                    <td class="hidden"><input class="form-control" type="text" id="fromAjax${i.count}" name="fromAjax${i.count}" value="${fromAjax}"></td>
+                                                    <%--<c:set var="fromAjax" value=""/>--%>
+                                                    <%--<c:choose>--%>
+                                                        <%--<c:when test="${disabledFieldSearch == 'disbledInvoice'}">--%>
+                                                            <%--<c:set var="fromAjax" value="refNo"/>--%>
+                                                        <%--</c:when>--%>
+                                                        <%--<c:when test="${disabledFieldSearch == 'disbledRefNo'}">--%>
+                                                            <%--<c:set var="fromAjax" value="invoice"/>--%>
+                                                        <%--</c:when>--%>
+                                                    <%--</c:choose>--%>
+                                                    <!--<td class="hidden"><input class="form-control" type="text" id="fromAjax${i.count}" name="fromAjax${i.count}" value="${fromAjax}"></td>-->
                                                     <td class="hidden">
                                                         <input class="form-control" type="text" id="exportDate${i.count}" name="exportDate${i.count}" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd HH:mm:ss' value="${taxDetail.exportDate}" />">
                                                     </td>
@@ -1998,7 +1998,7 @@
                 '<td class="hidden"><input class="form-control" type="text" id="isExport' + count + '" name="isExport' + count + '" value=""></td>' +
                 '<td class="hidden"><input class="form-control" type="text" id="exportDate' + count + '" name="exportDate' + count + '" value=""></td>' +
                 '<td class="hidden"><input class="form-control" type="text" id="isProfit' + count + '" name="isProfit' + count + '" value=""></td>' +
-                '<td class="hidden"><input class="form-control" type="text" id="fromAjax' + count + '" name="fromAjax' + count + '" value=""></td>' +
+//                '<td class="hidden"><input class="form-control" type="text" id="fromAjax' + count + '" name="fromAjax' + count + '" value=""></td>' +
                 '<td><select class="form-control" name="product' + count + '" id="product' + count + '" onchange="AddrowBySelect(\'' + count + '\')"><option  value="" >---------</option></select></td>' +
                 '<td><input class="form-control" maxlength="6" type="text" id="refNo' + count + '" name="refNo' + count + '" value="" onfocusout="checkRefNo(\'' + count + '\')"></td>' +
                 '<td><input class="form-control" type="text" maxlength="255" id="description' + count + '" name="description' + count + '" value=""></td>' +
@@ -2062,7 +2062,7 @@
 //            var vatData = parseFloat($("#vatDefault").val());
 //            document.getElementById('vatShow'+count).innerHTML = vatData;
             $("#refNo" + count).val(refNo);
-            $("#fromAjax" + count).val(fromAjax);
+//            $("#fromAjax" + count).val(fromAjax);
             row = count + 1;
             $('#TaxInvoiceTable input:last').addClass('lastrow');
             $("#refNo"+count+",#description"+count+",#cost"+count+",#gross"+count+",#amount"+count).focus(function() {
@@ -2070,7 +2070,7 @@
                    AddRowTaxInvoiceTable(parseInt($("#countTaxInvoice").val()));
                 }
             });	
-            disbledFieldSearch();
+//            disbledFieldSearch();
             var tempCount = row+1;
             $(".decimal").inputmask({
                 alias: "decimal",
@@ -2501,7 +2501,7 @@
             }
             $('#TaxInvoiceTable tr input:last').removeClass('lastrow');
             $('#TaxInvoiceTable input:last').addClass('lastrow');
-            disbledFieldSearch();
+//            disbledFieldSearch();
 //            $("#countTaxInvoice").val(count+1);
         } else {
             $.ajax({
@@ -2518,7 +2518,7 @@
                     }
                     $('#TaxInvoiceTable tr input:last').removeClass('lastrow');
                     $('#TaxInvoiceTable input:last').addClass('lastrow');
-                    disbledFieldSearch();
+//                    disbledFieldSearch();
 //                    $("#countTaxInvoice").val(count+1);
                 },
                 error: function () {

@@ -69,7 +69,7 @@ public class InvoiceInboundController extends SMITravelController {
         System.out.println("callPageFrom : "+callPageFrom);
         if(callPageFrom != null){
            request.setAttribute("typeInvoice", callPageFrom.substring(1));
-           department =  callPageFrom.substring(0,1);
+            department =  callPageFrom.substring(0,1);
            invoiceType   =  callPageFrom.substring(1);
         }
         System.out.println("invoiceType : "+invoiceType);
@@ -558,7 +558,7 @@ public class InvoiceInboundController extends SMITravelController {
                     invoiceDetail.setIsVat(0);
                     invoiceDetail.setGross(null);
 //                    invoiceDetail.setVat(null);
-                }else{
+                }else if("V".equalsIgnoreCase(invoice.getInvType())){
                     invoiceDetail.setIsVat(1);
                 }
 
