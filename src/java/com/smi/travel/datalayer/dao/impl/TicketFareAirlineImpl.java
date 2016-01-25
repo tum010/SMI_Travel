@@ -790,19 +790,6 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         if(ticketFare.getMInitialname() != null ){
             Initialname = ticketFare.getMInitialname().getName();
         }
-        //AirticketPassenger.airticketAirline.airticketPnr.airticketBooking.master.bookingType
-//        String queryrefundby = "from TicketFareInvoice finv where finv.ticketFareAirline.ticketNo = :ticketno";
-//        List<TicketFareInvoice> ticketFareInvoices = session.createQuery(queryrefundby).setParameter("ticketno", TicketNo).list();
-//        String invTo = "";
-//        String invName = "";
-//        if (ticketFareInvoices.isEmpty()){
-//            System.out.println(" ticketFareInvoices isEmpty ");
-//        }else{
-//            if(ticketFareInvoices.get(0).getInvoice() != null){
-//                invTo =  String.valueOf(ticketFareInvoices.get(0).getInvoice().getInvTo());
-//                invName = String.valueOf(ticketFareInvoices.get(0).getInvoice().getInvName());
-//            }
-//        }
         
         String queryrefundby = "from TicketFareAirline ticket where ticket.ticketNo = :ticketno";
         List<TicketFareAirline> ticketFareAirlines = session.createQuery(queryrefundby).setParameter("ticketno", TicketNo).list();
@@ -885,6 +872,112 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         this.sessionFactory.close();
         return result;
     }
+    
+    
+    
+    @Override
+    public HashMap<String, Object> getDetailTicketFareAirline(String TicketNo,String AirBookid) {
+        HashMap<String, Object> result = new HashMap<String, Object>();
+        AirticketPassenger ticketFare = new AirticketPassenger();
+        String query = "from AirticketPassenger t where t.series1||t.series2||t.series3 = :ticketNo and t.airticketAirline.airticketPnr.airticketBooking.id = :AirBookid";
+        Session session = this.sessionFactory.openSession();
+        List<AirticketPassenger> ticketFareList = session.createQuery(query)
+                .setParameter("ticketNo", TicketNo)
+                .setParameter("AirBookid", AirBookid)
+                .list();
+        if (ticketFareList.isEmpty()) {
+            return null;
+        }else{
+            ticketFare =  ticketFareList.get(0);
+        }
+        String Initialname ="";
+        if(ticketFare.getMInitialname() != null ){
+            Initialname = ticketFare.getMInitialname().getName();
+        }
+        
+        String queryrefundby = "from TicketFareAirline ticket where ticket.ticketNo = :ticketno";
+        List<TicketFareAirline> ticketFareAirlines = session.createQuery(queryrefundby).setParameter("ticketno", TicketNo).list();
+        String agentId = "";
+        String invTo = "";
+        String invName = "";
+        if (ticketFareAirlines.isEmpty()){
+            System.out.println(" ticketFareInvoices isEmpty ");
+        }else{
+            if(ticketFareAirlines.get(0) != null){
+                agentId =  String.valueOf(ticketFareAirlines.get(0).getAgentId());
+                Agent agent = new Agent();
+                String queryagent = "from Agent a where a.id= :agentid";
+                List<Agent> agentList = session.createQuery(queryagent).setParameter("agentid", agentId).list();
+                if (!agentList.isEmpty()) {
+                    agent =  agentList.get(0);
+                    invTo = String.valueOf(agent.getCode());
+                    invName = String.valueOf(agent.getName());
+                }
+            }
+        }
+        
+        //AirticketPassenger.airticketAirline.airticketPnr.airticketBooking.master.bookingType
+        String queryticketno = "From RefundAirticketDetail ref where ( ref.airticketPassenger.series1 || ref.airticketPassenger.series2 || ref.airticketPassenger.series3) = :ticketno";
+        List<RefundAirticketDetail> refundAirticketDetails = session.createQuery(queryticketno).setParameter("ticketno", TicketNo).list();
+        String sizeData = "";
+        if (refundAirticketDetails.isEmpty()){
+            System.out.println(" refundAirticketDetails isEmpty ");
+        }else{
+            sizeData = String.valueOf(refundAirticketDetails.size());
+        }
+        
+        String BookingType = "";
+        if(ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster() != null){
+            if(! "null".equals(ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType())
+               || ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType() != null){
+                BookingType = ticketFare.getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType();
+            }
+        }
+        List<AirticketFlight> FlightList = new ArrayList<AirticketFlight>(ticketFare.getAirticketAirline().getAirticketFlights());
+        String rounting = "";
+        int price = 0;
+        for(int i =0;i<FlightList.size();i++){
+            System.out.println(FlightList.get(i).getSourceCode()+"-"+FlightList.get(i).getDesCode());
+            String source = FlightList.get(i).getSourceCode();
+            String des = FlightList.get(i).getDesCode();
+            if(i == 0){
+                rounting += source + "-" + des;
+            }else{
+                if (!rounting.substring(rounting.lastIndexOf("-") + 1).equalsIgnoreCase(source)) {
+                    rounting += "," + source + "-" + des;
+                } else {
+                    rounting += "-" + des;
+                }
+            }
+            if(ticketFare.getMPricecategory() != null){
+                String passType = ticketFare.getMPricecategory().getName();
+                if(passType.equalsIgnoreCase("ADULT")){
+                    price += FlightList.get(i).getAdPrice();
+                }else if(passType.equalsIgnoreCase("CHILD")){
+                    price += FlightList.get(i).getChPrice();
+                }else if(passType.equalsIgnoreCase("INFANT")){
+                    price += FlightList.get(i).getInPrice();
+                }
+            }
+        }
+        //check price
+        System.out.println("price : "+price);
+        result.put("Id",ticketFare.getId()); 
+        result.put("TicketNo",TicketNo); 
+        result.put("TicketDate", ticketFare.getAirticketAirline().getTicketDate());
+        result.put("Dept", BookingType.equalsIgnoreCase("O")? "Outbound":"Wendy");
+        result.put("Passenger", Initialname+" " + ticketFare.getLastName() +" "+ticketFare.getFirstName());
+        result.put("Total", price+ticketFare.getTicketTax());
+        result.put("Sector", rounting);
+        result.put("InvTo", invTo);
+        result.put("InvName", invName);
+        result.put("SizeData", sizeData);
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    }
+    
+
 
     @Override
     public List<AirticketFlightView> getListAirticketFlightFromTicketNo(String ticketNo) {
