@@ -1361,7 +1361,7 @@ public class AJAXBean extends AbstractBean implements
             invoiceDetail = invoiceDetaillList.get(i);
             invDetailId = invoiceDetail.getId();
             product = (invoiceDetail.getMbillType() != null ? invoiceDetail.getMbillType().getName() : "");
-            description = invoiceDetail.getDescription();
+            description = (invoiceDetail.getDescription() != null && !"".equalsIgnoreCase(invoiceDetail.getDescription()) ? invoiceDetail.getDescription() : "");
             curCost = (!"".equalsIgnoreCase(invoiceDetail.getCurCost()) && invoiceDetail.getCurCost() != null ? invoiceDetail.getCurCost() : "");
             curAmount = (!"".equalsIgnoreCase(invoiceDetail.getCurAmount()) && invoiceDetail.getCurAmount() != null ? invoiceDetail.getCurAmount() : "");
             isVat = String.valueOf(invoiceDetail.getIsVat());
@@ -1669,7 +1669,10 @@ public class AJAXBean extends AbstractBean implements
             if(invoiceDetaill.get(i).getAmountLocal()!= null){
                 amountlocalinvoice = invoiceDetaill.get(i).getAmountLocal().compareTo(BigDecimal.ZERO) == 0 ? BigDecimal.ZERO : invoiceDetaill.get(i).getAmountLocal();
             }
-            currency = "THB";
+            if(invoiceDetaill.get(i).getCurAmount() != null && !"".equalsIgnoreCase(invoiceDetaill.get(i).getCurAmount())){
+                currency = invoiceDetaill.get(i).getCurAmount();
+            }
+//            currency = "THB";
             if (invoiceDetaill.get(i).getMbillType() != null) {
                 product = invoiceDetaill.get(i).getMbillType().getId();
                 billTypeName = invoiceDetaill.get(i).getMbillType().getName();
