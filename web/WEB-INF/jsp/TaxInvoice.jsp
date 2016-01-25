@@ -1897,7 +1897,7 @@
         var isProfit = 1;
         console.log(match);
         if(match === 0){          
-            AddDataRowProduct(row,count,id,product,description,cost,curcost,amount,curamount,'',refNo,isProfit,'','refNo');
+            AddDataRowProduct(row,count,id,product,description,cost,curcost,amount,curamount,'1',refNo,isProfit,'','refNo');
         }    
     }
     
