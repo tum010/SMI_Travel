@@ -125,6 +125,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
                 .addScalar("department", Hibernate.STRING)
                 .addScalar("to", Hibernate.STRING)
                 .addScalar("profit", Hibernate.DOUBLE)
+                .addScalar("amountlocal", Hibernate.DOUBLE)
                 .list();
         int count = 1;
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
@@ -161,11 +162,14 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             if(B[8] != null){
                 Double amount = Double.parseDouble(util.ConvertString(B[8]));
                 sum.setAmount(amount);
-            }
-            
+            }           
             if(B[14] != null){
                 Double profit = Double.parseDouble(util.ConvertString(B[14]));
                 sum.setProfit(profit);
+            }
+            if(B[15] != null){
+                Double amountlocal = Double.parseDouble(util.ConvertString(B[15]));
+                sum.setAmountlocal(amountlocal);
             }
             sum.setAmountcur(util.ConvertString(B[9]));
             sum.setStaff(util.ConvertString(B[10]));

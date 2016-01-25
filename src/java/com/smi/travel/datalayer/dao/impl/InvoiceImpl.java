@@ -443,7 +443,16 @@ public class InvoiceImpl implements InvoiceDao{
                AndQuery = 1;
                query += " st.invType = '" + type + "'";
            }
+        }else{
+            if(AndQuery == 1){
+                query += " and st.invType != 'T'";
+           }else{
+               AndQuery = 1;
+               query += " st.invType != 'T'";
+           }
         }
+        
+        
         
         if(agent != null && (!"".equalsIgnoreCase(agent))){
             if(AndQuery == 1){

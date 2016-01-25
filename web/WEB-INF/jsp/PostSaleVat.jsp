@@ -177,10 +177,10 @@
                             <tr class="datatable-header">
                                 <th class="hidden">Id</th>
                                 <th style="width: 1%" onclick="selectAll()"><u>Post</u></th>
-                                <th style="width: 13%" >Tax No.</th>
-                                <th style="width: 15%">Tax Date</th>
+                                <th style="width: 9%" >No.</th>
+                                <th style="width: 12%">Date</th>
                                 <th style="width: 9%">A/R</th>
-                                <th style="width: 22%">Tax Inv Name</th>
+                                <th style="width: 22%">Name</th>
                                 <th style="width: 12%">Gross</th>
                                 <th style="width: 7%">Vat</th>
                                 <th style="width: 12%">Amount</th>

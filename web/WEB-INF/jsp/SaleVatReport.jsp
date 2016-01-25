@@ -158,15 +158,16 @@
                             <tr class="datatable-header">
                                 <th class="hidden">Id</th>
                                 <th style="width: 1%" onclick="selectAll()"><u>Cancel</u></th>
-                                <th style="width: 10%" >Tax No.</th>
-                                <th style="width: 17%">Tax Date</th>
-                                <th style="width: 9%">A/R</th>
-                                <th style="width: 24%">Tax Inv Name</th>
-                                <th style="width: 12%">Gross</th>
+                                <th style="width: 9%" >No.</th>
+                                <th style="width: 12%">Date</th>
+                                <th style="width: 8%">A/R</th>
+                                <th style="width: 25%">Name</th>
+                                <th style="width: 11%">Gross</th>
                                 <th style="width: 7%">Vat</th>
-                                <th style="width: 12%">Amount</th>
+                                <th style="width: 11%">Amount</th>
                                 <th style="width: 8%">Department</th>
                                 <th style="width: 8%">Status</th>
+                                <th style="width: 8%">Type</th>
                              </tr>
                         </thead>
                         <tbody>
@@ -199,6 +200,7 @@
                                 <td align="right" class="money">${table.amount}</td>
                                 <td align="center">${table.department}</td>
                                 <td align="center">${table.status}</td>
+                                <td align="center">${table.type}</td>
                             </tr>
                             </c:forEach>
                         </tbody>
