@@ -211,7 +211,7 @@
                                     </td>
                                     <td><center><c:out value="${status.count}" /></center></td>
                                     <td><center><c:out value="${table1.customer.code}" /></center></td>
-                                    <td><c:out value="${table1.customer.MInitialname.name}" />&nbsp;<c:out value="${table1.customer.firstName}" />&nbsp;<c:out value="${table1.customer.lastName}" /></td>
+                                    <td><c:out value="${table1.customer.MInitialname.name}" />&nbsp;<c:out value="${table1.customer.lastName}" />&nbsp;<c:out value="${table1.customer.firstName}" /></td>
                                     <td>
                                         <center>
                                             <c:if test="${table1.customer.birthDate != '' && table1.customer.birthDate != null}">
