@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="col-xs-3">
-                    <input id="InputRefNo" name="InputRefNo"  type="text"  class="form-control"  value="<c:out value="${RefNo}" />">
+                    <input id="InputRefNo" name="InputRefNo"  type="text"  class="form-control number"  value="<c:out value="${RefNo}" />">
                 </div>
                 <div class="col-xs-3">
                     <input type="hidden" name="action" id="action">
@@ -369,6 +369,7 @@
     
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () { 
+        $(".number").mask('00000000000', {reverse: true});
         $(".money").mask('000,000,000,000', {reverse: true});
     });
 </script>   

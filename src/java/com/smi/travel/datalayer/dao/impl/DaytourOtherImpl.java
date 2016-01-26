@@ -187,7 +187,7 @@ public class DaytourOtherImpl implements DaytourOtherDao{
          }
         
         if(QueryDaytourOtherList != null && !"".equalsIgnoreCase(passengerId)){
-            List<String> queryLand = session.createSQLQuery("SELECT * FROM `land_voucher_passenger` where customerId IN (" + passengerId + ") AND ref_no = '" + refno + "'")
+            List<String> queryLand = session.createSQLQuery("SELECT * FROM `land_voucher_passenger` where customerId IN (" + passengerId + ") AND ref_no = '" + refno + "' order by orderno")
                     .addScalar("leader_name", Hibernate.STRING)
                     .list();
 
