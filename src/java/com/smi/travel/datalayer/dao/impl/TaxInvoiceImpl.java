@@ -428,7 +428,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     @Override
     public List<TaxInvoiceDetail> getTaxInvoiceDetailFromInvDetailId(String invDetailId) {
         Session session = this.sessionFactory.openSession();
-        String query = " from TaxInvoiceDetail t WHERE t.invoiceDetail.id = :invDetailId and t.taxInvoice.MFinanceItemstatus.name = 'NORMAL'";
+        String query = " from TaxInvoiceDetail t WHERE t.invoiceDetail.id = :invDetailId and t.taxInvoice.MFinanceItemstatus.name = 'NORMAL' AND t.taxInvoice.isProfit != '1'";
         List<TaxInvoiceDetail> taxInvoiceDetailList = session.createQuery(query).setParameter("invDetailId", invDetailId).list();
         if(taxInvoiceDetailList.isEmpty()){
             return null;

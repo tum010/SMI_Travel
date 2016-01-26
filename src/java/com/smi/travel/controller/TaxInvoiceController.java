@@ -110,6 +110,7 @@ public class TaxInvoiceController extends SMITravelController {
         String count = request.getParameter("countTaxInvoice");
         String vatDefault = request.getParameter("vatDefault");
         String department = request.getParameter("department");
+        String disabledFieldSearch = request.getParameter("disabledFieldSearch");
 //        String postDate = request.getParameter("postDate");
 //        String outputTaxStatus = request.getParameter("outputTaxStatus");
         String wildCardSearch = request.getParameter("wildCardSearch");
@@ -137,7 +138,8 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoice.setTaxInvName(invToName);
             taxInvoice.setTaxInvAddr(invToAddress);
             taxInvoice.setArCode(arCode);
-            taxInvoice.setRemark(remark);            
+            taxInvoice.setRemark(remark);
+            taxInvoice.setIsProfit("1".equalsIgnoreCase(disabledFieldSearch) ? 1 : 0);
             
             Date invToDateConvert = new Date();
             invToDateConvert = utilty.convertStringToDate(invToDate);

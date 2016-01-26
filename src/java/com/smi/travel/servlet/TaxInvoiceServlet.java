@@ -27,6 +27,7 @@ public class TaxInvoiceServlet implements AbstractAJAXServlet{
         String department = request.getParameter("department");
         String type = request.getParameter("type");
         String id = request.getParameter("id");
+        String isProfit = request.getParameter("isProfit");
         Map result = new HashMap();
         
         result.put("refNo", refNo);
@@ -34,7 +35,8 @@ public class TaxInvoiceServlet implements AbstractAJAXServlet{
         result.put("servletName", servletName);
         result.put("department", department);
         result.put("type", type);
-         result.put("id", id);
+        result.put("id", id);
+        result.put("isProfit", isProfit);
                  
         return result;    
     }
