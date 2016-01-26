@@ -314,7 +314,7 @@ public class ReceiptController extends SMITravelController {
                     if(StringUtils.isNotEmpty(billDescId)){
                         invoiceDetailList = invoiceService.getInvoiceDetailFromBillableDescId(billDescId);
                     }
-                    if(invoiceDetailList == null){
+//                    if(invoiceDetailList == null){
 //                       Invoice invoice = new Invoice();
 //                       invoice.setInvNo(receiveNo);
 //                       invoice.setInvTo(receiveFromCode);
@@ -412,7 +412,7 @@ public class ReceiptController extends SMITravelController {
                                receiptDetail.setInvoiceDetail(invD);
                            }
                        }
-                   }
+//                   }
                 }
                 
                 if(StringUtils.isNotEmpty(paymentId)){
