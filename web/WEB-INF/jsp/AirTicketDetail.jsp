@@ -201,7 +201,13 @@
                                     <td>${flight.sourceCode}</td>
                                     <td>${flight.desCode}</td>
                                     <td>${flight.departDate}</td>
-                                    <td>${flight.departTime}</td>
+                                    <td>
+                                        <c:set var="departTimeTemp1" value="${fn:substring(flight.departTime, 0, 2)}" />
+                                        <c:set var="departTimeTemp2" value="${fn:substring(flight.departTime, 2, 4)}" />
+                                        <c:set value="${departTimeTemp1}:${departTimeTemp2}" var="dateDepartTimeTemps" />
+                                        <fmt:parseDate value="${dateDepartTimeTemps}" var="dateDepartTimes" pattern="HH:mm" />
+                                        <fmt:formatDate value="${dateDepartTimes}" pattern="HH:mm" />  
+                                    </td>
                                     <td>
                                         <script>
                                             var tickettype = [];
@@ -368,7 +374,12 @@
                                                        data-bv-notempty data-bv-notempty-message="The Time is required"/>
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
                                                 </span>-->
-                                                <input id="flight-${fStatus.count}-departTime" name="flight-${fStatus.count}-departTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="${flight.departTime}" >
+                                                <c:set var="departTime1" value="${fn:substring(flight.departTime, 0, 2)}" />
+                                                <c:set var="departTime2" value="${fn:substring(flight.departTime, 2,4)}" />
+                                                <c:set value="${departTime1}:${departTime2}" var="dateDepartTimeTemp" />
+                                                <fmt:parseDate value="${dateDepartTimeTemp}" var="dateDepartTime"
+                                                pattern="HH:mm" />
+                                                <input id="flight-${fStatus.count}-departTime" name="flight-${fStatus.count}-departTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="<fmt:formatDate value="${dateDepartTime}" pattern="HH:mm" />" >
                                             </div>
                                         </div>
                                     </div>
@@ -415,7 +426,15 @@
                                                        data-bv-notempty data-bv-notempty-message="The time is required"/>
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
                                                 </span>-->
-                                                <input id="flight-${fStatus.count}-arriveTime" name="flight-${fStatus.count}-arriveTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="${flight.arriveTime}">
+                                                
+                                                <c:set var="arriveTime1" value="${fn:substring(flight.arriveTime, 0, 2)}" />
+                                                <c:set var="arriveTime2" value="${fn:substring(flight.arriveTime, 2,4)}" />
+                                                <c:set value="${arriveTime1}:${arriveTime2}" var="dateArriveTimeTemp" />
+                                                <fmt:parseDate value="${dateArriveTimeTemp}" var="dateArriveTime"
+                                                pattern="HH:mm" />
+                                                <input id="flight-${fStatus.count}-arriveTime" name="flight-${fStatus.count}-arriveTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="<fmt:formatDate value="${dateArriveTime}" pattern="HH:mm" />">
+                                                
+                                                <!--<input id="flight-${fStatus.count}-arriveTime" name="flight-${fStatus.count}-arriveTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="${flight.arriveTime}">-->
                                             </div>
                                         </div>
                                     </div>
