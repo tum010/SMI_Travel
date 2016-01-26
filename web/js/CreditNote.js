@@ -99,10 +99,7 @@ $(document).ready(function() {
             }
         });
         $('#ItemCreditTable tbody [name="taxReal"]').each(function() {
-            if (this.style.borderColor === "red") {
-                result = false;
-                
-            }else if(this.value !== ''){
+            if(this.value !== ''){
                 var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
                 if(parseFloat((this.value).replace(",","")) > parseFloat((taxRealCheck.val()).replace(",",""))){
                     this.style.borderColor = "red";
@@ -110,17 +107,56 @@ $(document).ready(function() {
                 }
             }
         });
+        
         if(result){
             var action = document.getElementById('action');
             action.value = 'save';
             document.getElementById('CreditNoteForm').submit();
-        }    
+        } 
     });
 
     $("#buttonNew").click(function() {
         var action = document.getElementById('action');
         action.value = 'new';
         document.getElementById('CreditNoteForm').submit();
+    });
+    
+    $('#ItemCreditTable tbody [name="taxReal"]').each(function() {
+        var creDetailId = $(this).parent().parent().find("[name='id']");
+        var taxNo = $(this).parent().parent().find("[name='taxNo']");
+        var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
+        if(this.value !== '' && taxNo.val() !== ''){
+            var url = 'AJAXServlet';
+            var servletName = 'TaxInvoiceServlet';
+            var servicesName = 'AJAXBean';
+            var department = $("#department").val();
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&type=getTaxInvoiceAmountTotal' +
+                    '&invoiceNo=' + taxNo.val() +
+                    '&id=' + creDetailId.val() +
+                    '&department=' + department;
+            try {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    cache: false,
+                    data: param,
+                    beforeSend: function() {
+                        $("#dataload").removeClass("hidden");
+                    },
+                    success: function(msg) {
+                        var amountTotal = msg;             
+                        taxRealCheck.val(amountTotal);                                                      
+                    }, error: function(msg) {
+
+                    }
+                });
+            } catch (e) {
+                alert(e);
+            }                            
+        }
     });
 
     addRow();
@@ -192,8 +228,8 @@ function addRow() {
                             var amountTotal = msg;
 //                            var realAmount = this.value.replace(",", "");
 //                            var realAmountHidden = $(this).parent().parent().find("[name='taxReal']");
-//                            var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
-                            
+                            var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
+                            taxRealCheck.val(amountTotal);
 //                            if(parseFloat(realAmount) <= parseFloat((taxRealCheck.val()).replace(",", ""))){
                             if(parseFloat(realAmount) <= parseFloat(amountTotal)){
                                 realAmountHidden.val(realAmount);

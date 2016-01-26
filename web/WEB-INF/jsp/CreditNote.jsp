@@ -61,11 +61,11 @@
         </div>
         <div class="col-sm-10">
             <form action="CreditNote${page}.smi" method="post" id="CreditNoteForm" name="CreditNoteForm" role="form" class="ng-pristine ng-valid bv-form">
-                <div id="alertSuccess" style="display:none;" class="alert alert-success" <c:if test="${successStatus != true}">hidden="true"</c:if> >
+                <div id="alertSuccess" style="" class="alert alert-success" <c:if test="${successStatus != true}">hidden="true"</c:if> >
                         <button type="button" class="close" aria-label="Close" onclick="hideAlert()"><span aria-hidden="true">&times;</span></button>
                         <strong id="alertTextSuccess">${successMessage}</strong> 
                 </div>
-                <div id="alertFail" style="display:none;" class="alert alert-danger"  <c:if test="${failStatus != true}">hidden="true"</c:if>>
+                <div id="alertFail" style="" class="alert alert-danger"  <c:if test="${failStatus != true}">hidden="true"</c:if>>
                         <button type="button" class="close" aria-label="Close" onclick="hideAlert()"><span aria-hidden="true">&times;</span></button>
                         <strong id="alertTextFail">${failMessage}</strong> 
                 </div>
@@ -100,7 +100,7 @@
                                 <div class="col-xs-1"  style="width: 200px">
                                     <div class='input-group date'>
                                         <input id="inputDate" name="inputDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${creditNote.createDate}">
+                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd' value="${creditNote.cnDate}" />">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>

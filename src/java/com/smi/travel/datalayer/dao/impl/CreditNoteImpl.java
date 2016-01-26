@@ -73,7 +73,7 @@ public class CreditNoteImpl implements CreditNoteDao {
                 return "";
             }
             CreditNote dbCreditNote = cnList.get(0);
-            dbCreditNote.setCreateDate(note.getCreateDate());
+//            dbCreditNote.setCreateDate(note.getCreateDate());
             dbCreditNote.setApCode(note.getApCode());
             dbCreditNote.setCnName(note.getCnName());
             dbCreditNote.setCnAddress(note.getCnAddress());
