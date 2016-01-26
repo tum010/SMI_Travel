@@ -147,7 +147,7 @@ $(document).ready(function() {
                         $("#dataload").removeClass("hidden");
                     },
                     success: function(msg) {
-                        var amountTotal = msg;             
+                        var amountTotal = (msg !== "null" ? msg : 0);    
                         taxRealCheck.val(amountTotal);                                                      
                     }, error: function(msg) {
 

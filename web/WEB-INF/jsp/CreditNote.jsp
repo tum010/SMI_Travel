@@ -198,7 +198,7 @@
                                                 </td>
                                                 <td style="text-align:center" class="hidden">
                                                     <!--<input type="hidden" name="taxRealCheck" value="${creditNoteDetail.amount}"/>-->
-                                                    <input type="text" id="taxRealCheck" name="taxRealCheck" class="form-control text-right decimal" value="${creditNoteDetail.realamount}"/>
+                                                    <input type="text" id="taxRealCheck" name="taxRealCheck" class="form-control text-right" value="${creditNoteDetail.realamount}"/>
                                                 </td>
                                                 <td style="text-align:center">
                                                     <!--<input type="hidden" name="taxReal" value="${creditNoteDetail.realamount}"/>-->
@@ -379,7 +379,7 @@
                 </td>
                 <td style="text-align:center" class="hidden">
                     <!--<input type="hidden" name="taxRealCheck" value="${creditNoteDetail.amount}"/>-->
-                    <input type="text" id="taxRealCheck" name="taxRealCheck" class="form-control text-right decimal"/>
+                    <input type="text" id="taxRealCheck" name="taxRealCheck" class="form-control text-right"/>
                 </td>
                 <td style="text-align:center">
                     <!--<input type="hidden" name="taxReal"/>-->
