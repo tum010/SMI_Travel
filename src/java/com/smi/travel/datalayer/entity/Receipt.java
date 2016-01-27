@@ -43,13 +43,14 @@ public class Receipt {
      private String department;
      private Date createDate;
      private String createBy;
+     private Integer isRef;
      private List receiptDetails = new LinkedList<ReceiptDetail>();
      private List receiptCredits = new LinkedList<ReceiptCredit>();
 
     public Receipt() {
     }
 
-    public Receipt(MFinanceItemstatus MFinanceItemstatus, String recNo, String recFrom, String recName, String recAddress, String arCode, Date recDate, Integer payType, String remark, BigDecimal withTax, BigDecimal cashAmount, BigDecimal cashMinusAmount, BigDecimal bankTransfer, String chqBank1, String chqBank2, Date chqDate1, Date chqDate2, BigDecimal chqAmount1, BigDecimal chqAmount2, List receiptDetails, List receiptCredits,String chqNo1,String chqNo2,MItemstatus MItemStatus,String recType,String department,Date createDate,String createBy,MAccpay MAccpay,Date receiveDate) {
+    public Receipt(MFinanceItemstatus MFinanceItemstatus, String recNo, String recFrom, String recName, String recAddress, String arCode, Date recDate, Integer payType, String remark, BigDecimal withTax, BigDecimal cashAmount, BigDecimal cashMinusAmount, BigDecimal bankTransfer, String chqBank1, String chqBank2, Date chqDate1, Date chqDate2, BigDecimal chqAmount1, BigDecimal chqAmount2, List receiptDetails, List receiptCredits,String chqNo1,String chqNo2,MItemstatus MItemStatus,String recType,String department,Date createDate,String createBy,MAccpay MAccpay,Date receiveDate, Integer isRef) {
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.MItemStatus =  MItemStatus;
        this.recNo = recNo;
@@ -80,6 +81,7 @@ public class Receipt {
        this.createDate = createDate;
        this.createBy = createBy;
        this.MAccpay = MAccpay;
+       this.isRef = isRef;
     }
    
     public String getId() {
@@ -313,6 +315,14 @@ public class Receipt {
 
     public void setReceiveDate(Date receiveDate) {
         this.receiveDate = receiveDate;
+    }
+
+    public Integer getIsRef() {
+        return isRef;
+    }
+
+    public void setIsRef(Integer isRef) {
+        this.isRef = isRef;
     }
 
 

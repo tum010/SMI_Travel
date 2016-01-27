@@ -303,6 +303,7 @@
                                     <label class="control-label text-right">Receive No </label>                                    
                                 </div> 
                                 <div class="col-xs-1" style="width: 80px; margin-top: -10px" id='receivenumber'>
+                                    <input type="hidden" class="form-control" id="isref" name="isref"  value="${receipt.isRef}" >        
                                     <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                                     <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                                     <input id="receiveId" name="receiveId" type="hidden" class="form-control" maxlength="11" value="${receipt.id}">
@@ -1562,8 +1563,7 @@
 
     var setinvoice = 0;
 
-    $(document).ready(function() {
-        
+    $(document).ready(function() {        
         $("#inv,#ref,#com").removeClass('hidden');
         $('.datemask').mask('0000-00-00');
         $('.date').datetimepicker();
@@ -1643,7 +1643,38 @@
         $('#ReceiveDate').datetimepicker().on('dp.change', function(e) {
             $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
         });
-
+        
+        var isref = $("#isref").val();
+        if(isref === '0'){
+            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+            $("#searchPaymentNoAir").attr("disabled", "disabled");
+            $("#searchPaymentNoTour").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
+            $("#refNo").attr("disabled", "disabled");
+        }else if(isref === '1'){
+            $("#invoiceNo").attr("disabled", "disabled");
+            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+            $("#searchPaymentNoAir").attr("disabled", "disabled");
+            $("#searchPaymentNoTour").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
+        }else if(isref === '2'){
+            $("#invoiceNo").attr("disabled", "disabled");
+            $("#refNo").attr("disabled", "disabled");
+            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+            $("#searchPaymentNoTour").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
+        }else if(isref === '3'){
+            $("#invoiceNo").attr("disabled", "disabled");
+            $("#refNo").attr("disabled", "disabled");
+            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+            $("#searchPaymentNoAir").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+        }
+        
         $('#ReceiptForm').bootstrapValidator({
             container: 'tooltip',
             excluded: [':disabled'],
@@ -2538,12 +2569,13 @@
         var tempCount = parseInt($("#counter").val());
         var checkAddDuplicate = false;
         if (checkadd == 1) {
-//            $("#ButtonSearchRefNo").attr("disabled", "disabled");
-//            $("#searchPaymentNoAir").attr("disabled", "disabled");
-//            $("#searchPaymentNoTour").attr("disabled", "disabled");
-//            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
-//            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
-//            $("#refNo").attr("disabled", "disabled");
+            $("#isref").val("0");
+            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+            $("#searchPaymentNoAir").attr("disabled", "disabled");
+            $("#searchPaymentNoTour").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
+            $("#refNo").attr("disabled", "disabled");
             var rowAll = tempCount;
             for (var i = 1; i < rowAll; i++) {
                 var invoiceId = $("#invId" + i).val();
@@ -2553,12 +2585,13 @@
             }
 
         } else if (checkadd == 2) {
-//            $("#invoiceNo").attr("disabled", "disabled");
-//            $("#ButtonSearchInvoice").attr("disabled", "disabled");
-//            $("#searchPaymentNoAir").attr("disabled", "disabled");
-//            $("#searchPaymentNoTour").attr("disabled", "disabled");
-//            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
-//            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
+            $("#isref").val("1");
+            $("#invoiceNo").attr("disabled", "disabled");
+            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+            $("#searchPaymentNoAir").attr("disabled", "disabled");
+            $("#searchPaymentNoTour").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
             var rowAll = tempCount;
             for (var i = 1; i < rowAll; i++) {
                 var billId = $("#billDescId" + i).val();
@@ -2568,12 +2601,13 @@
             }
 
         } else if (checkadd == 3) {
-//            $("#invoiceNo").attr("disabled", "disabled");
-//            $("#refNo").attr("disabled", "disabled");
-//            $("#ButtonSearchRefNo").attr("disabled", "disabled");
-//            $("#ButtonSearchInvoice").attr("disabled", "disabled");
-//            $("#searchPaymentNoTour").attr("disabled", "disabled");
-//            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
+            $("#isref").val("2");
+            $("#invoiceNo").attr("disabled", "disabled");
+            $("#refNo").attr("disabled", "disabled");
+            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+            $("#searchPaymentNoTour").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
             var rowAll = tempCount;
             for (var i = 1; i < rowAll; i++) {
                 var payId = $("#paymentId" + i).val();
@@ -2581,14 +2615,14 @@
                     checkAddDuplicate = true;
                 }
             }
-
         } else if (checkadd == 4) {
-//            $("#invoiceNo").attr("disabled", "disabled");
-//            $("#refNo").attr("disabled", "disabled");
-//            $("#ButtonSearchRefNo").attr("disabled", "disabled");
-//            $("#ButtonSearchInvoice").attr("disabled", "disabled");
-//            $("#searchPaymentNoAir").attr("disabled", "disabled");
-//            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+            $("#isref").val("3");
+            $("#invoiceNo").attr("disabled", "disabled");
+            $("#refNo").attr("disabled", "disabled");
+            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+            $("#searchPaymentNoAir").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
             var rowAll = tempCount;
             for (var i = 1; i < rowAll; i++) {
                 var paymentTour = $("#paymentTourId" + i).val();

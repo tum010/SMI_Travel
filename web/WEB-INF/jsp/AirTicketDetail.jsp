@@ -366,6 +366,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <label class="col-sm-1 control-label text-right">Time</label>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <div class="input-group times" id="departtimepanel${fStatus.count}">
@@ -418,6 +419,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <label class="col-sm-1 control-label text-right">Time</label>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <div class="input-group times" id="arrivetimepanel${fStatus.count}">
