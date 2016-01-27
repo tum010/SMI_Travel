@@ -368,7 +368,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <div class="input-group times">
+                                            <div class="input-group times" id="departtimepanel${fStatus.count}">
 <!--                                                <input type="text" class="form-control" value="${flight.departTime}" name="flight-${fStatus.count}-departTime" 
                                                        id="flight-${fStatus.count}-departTime" maxlength="4"
                                                        data-bv-notempty data-bv-notempty-message="The Time is required"/>
@@ -379,7 +379,7 @@
                                                 <c:set value="${departTime1}:${departTime2}" var="dateDepartTimeTemp" />
                                                 <fmt:parseDate value="${dateDepartTimeTemp}" var="dateDepartTime"
                                                 pattern="HH:mm" />
-                                                <input id="flight-${fStatus.count}-departTime" name="flight-${fStatus.count}-departTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="<fmt:formatDate value="${dateDepartTime}" pattern="HH:mm" />" >
+                                                <input id="flight-${fStatus.count}-departTime" name="flight-${fStatus.count}-departTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="<fmt:formatDate value="${dateDepartTime}" pattern="HH:mm" />" onkeyup="validateTimeDepart(this,${fStatus.count});" >
                                             </div>
                                         </div>
                                     </div>
@@ -420,7 +420,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <div class="input-group times" id="arrive-time">
+                                            <div class="input-group times" id="arrivetimepanel${fStatus.count}">
 <!--                                                <input name="flight-${fStatus.count}-arriveTime" id="flight-${fStatus.count}-arriveTime" 
                                                        type="text" class="form-control" value="${flight.arriveTime}"  maxlength="4"
                                                        data-bv-notempty data-bv-notempty-message="The time is required"/>
@@ -432,7 +432,7 @@
                                                 <c:set value="${arriveTime1}:${arriveTime2}" var="dateArriveTimeTemp" />
                                                 <fmt:parseDate value="${dateArriveTimeTemp}" var="dateArriveTime"
                                                 pattern="HH:mm" />
-                                                <input id="flight-${fStatus.count}-arriveTime" name="flight-${fStatus.count}-arriveTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="<fmt:formatDate value="${dateArriveTime}" pattern="HH:mm" />">
+                                                <input id="flight-${fStatus.count}-arriveTime" name="flight-${fStatus.count}-arriveTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="<fmt:formatDate value="${dateArriveTime}" pattern="HH:mm" />" onkeyup="validateTimeArrive(this,${fStatus.count});">
                                                 
                                                 <!--<input id="flight-${fStatus.count}-arriveTime" name="flight-${fStatus.count}-arriveTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="${flight.arriveTime}">-->
                                             </div>
@@ -2041,6 +2041,54 @@
         var input = $(this);
         tabindex = input.attr("tabindex");
     })
+    
+    function validateTimeDepart(el,row){
+        var result;
+        // first, check if input is fully correct
+        if (el.value.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)){
+            result = "OK";
+            $("#departtimepanel"+row).removeClass("has-error");
+            $("#departtimepanel"+row).addClass("has-success");
+            $("#ButtonSave").removeClass("disabled");
+        }
+        // then, check if it is not wrong
+        else if (el.value.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3])?(:([0-5]|[0-5][0-9])?)?$/)){
+            result=""; // don't bother user with excess messages
+            $("#departtimepanel"+row).removeClass("has-error");
+            $("#departtimepanel"+row).addClass("has-success");
+            $("#ButtonSave").removeClass("disabled");
+        }
+        else{
+            result="Please, correct your input";
+            $("#departtimepanel"+row).removeClass("has-success");
+            $("#departtimepanel"+row).addClass("has-error");
+            $("#ButtonSave").addClass("disabled"); 
+        }
+    }
+    
+    function validateTimeArrive(el,row){
+        var result;
+        // first, check if input is fully correct
+        if (el.value.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/)){
+            result = "OK";
+            $("#arrivetimepanel"+row).removeClass("has-error");
+            $("#arrivetimepanel"+row).addClass("has-success");
+            $("#ButtonSave").removeClass("disabled");
+        }
+        // then, check if it is not wrong
+        else if (el.value.match(/^([0-9]|0[0-9]|1[0-9]|2[0-3])?(:([0-5]|[0-5][0-9])?)?$/)){
+            result=""; // don't bother user with excess messages
+            $("#arrivetimepanel"+row).removeClass("has-error");
+            $("#arrivetimepanel"+row).addClass("has-success");
+            $("#ButtonSave").removeClass("disabled");
+        }
+        else{
+            result="Please, correct your input";
+            $("#arrivetimepanel"+row).removeClass("has-success");
+            $("#arrivetimepanel"+row).addClass("has-error");
+            $("#ButtonSave").addClass("disabled"); 
+        }
+    }
 </script>
 <input type="hidden" id="checkPnr" name="checkPnr" value="${checkPnr_list}"/>
 
