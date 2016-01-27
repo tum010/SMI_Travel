@@ -234,7 +234,8 @@ public class ReportController extends SMITravelController {
         } else if (TicketProfitSummary.equalsIgnoreCase(name)) {
             data = reportservice.getTicketProfitVolumn(ticketfrom, tickettype, startdate, enddate);
         } else if (InvoiceSummary.equalsIgnoreCase(name)) {
-            data = reportservice.getInvoiceSummary(from, to, department, typeInvoice,agent,statusInvoice,user.getUsername()+"-"+user.getRole().getName());
+            String subDepartment = request.getParameter("subDepartment");
+            data = reportservice.getInvoiceSummary(from, to, department, typeInvoice,agent,statusInvoice,user.getUsername()+"-"+user.getRole().getName(),subDepartment);
         } else if (GuideJob.equalsIgnoreCase(name)) {
             data = reportservice.getGuildJobReport(tourDate, tourCode, user.getName());
         } else if (TransferJob.equalsIgnoreCase(name)) {
