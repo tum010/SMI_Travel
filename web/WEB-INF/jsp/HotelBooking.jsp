@@ -128,9 +128,9 @@
             <table class="display" id="HotelTable">
                 <thead class="datatable-header">
                     <tr>
-                        <th>No</th>
+                        <th >No</th>
                         <th>Hotel</th>
-                        <th>Check In</th>
+                        <th style="width: 9%">Check In</th>
                         <th>Check Out</th>
                         <th>No.night</th>
                         <th>Remarks</th>
