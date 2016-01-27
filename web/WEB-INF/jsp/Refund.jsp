@@ -1602,17 +1602,19 @@ function saveRefund(){
         for(var i=1; i<count; i++){
             var inputSectorRefund = document.getElementById('inputSectorRefund'+i);
             if(inputSectorRefund !== null){
-                if(inputSectorRefund.style.borderColor === 'red'){
+                if(inputSectorRefund.style.borderColor === 'red' || inputSectorRefund.value === ''){
+                    inputSectorRefund.style.borderColor = 'red';
                     error++;
-                    i = count;
+//                    i = count;
                 }
                 
             }
             var inputSectorRefundAdd = document.getElementById('inputSectorRefundadd'+i);
             if(inputSectorRefundAdd !== null){
-                if(inputSectorRefundAdd.style.borderColor === 'red'){
+                if(inputSectorRefundAdd.style.borderColor === 'red' || inputSectorRefundAdd.value === ''){
+                    inputSectorRefundAdd.style.borderColor = 'red';
                     error++;
-                    i = count;
+//                    i = count;
                 }                
             }           
         }    
