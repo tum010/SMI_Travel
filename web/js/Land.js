@@ -60,15 +60,21 @@ function setformat() {
 }
 
 function printVoucher(refno){
+    $('#textAlertSelectLand').hide();
+    $('#textAlertSelectVoucher').hide();
     var printtype = document.getElementById('printtype').value;
     var landId = "";
     $('#MasterLand tr.row_selected').each(function () {
         landId = $(this).attr('id');
     });
     if(landId == ""){
-        alert("please select land to print voucher");
+//        alert("please select land to print voucher");
+        $('#textAlertSelectVoucher').hide();
+        $('#textAlertSelectLand').show();
     }else if(printtype == 0){
-        alert('please select voucher to print');
+        $('#textAlertSelectLand').hide();
+        $('#textAlertSelectVoucher').show();
+//        alert('please select voucher to print');
     }else if(printtype == 1){
         window.open("report.smi?name=LandVoucher&refno="+refno+"&landId="+landId);
     }else if(printtype == 2){
