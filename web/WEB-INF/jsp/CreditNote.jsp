@@ -100,7 +100,7 @@
                                 <div class="col-xs-1"  style="width: 200px">
                                     <div class='input-group date'>
                                         <input id="inputDate" name="inputDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd' value="${creditNote.cnDate}" />">
+                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${creditNote.cnDate}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>

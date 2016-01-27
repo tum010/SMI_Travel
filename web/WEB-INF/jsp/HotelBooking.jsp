@@ -63,13 +63,13 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Success!</strong> 
             </div>
-            <div id="textAlertSelectHotel"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Please select hotel to print voucher!</strong> 
+            <div id="textAlertVoucher"  style="display:none;" class="alert alert-danger">
+                <button type="button" class="close" aria-label="Close" onclick="hideTextAlert()"><span aria-hidden="true">&times;</span></button>
+                <strong>Please select hotel to print voucher!</strong> 
             </div>
-            <div id="textAlertSelectVoucher"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Please select voucher to print!</strong> 
+            <div id="textAlertPrint"  style="display:none;" class="alert alert-danger">
+                <button type="button" class="close" aria-label="Close" onclick="hideTextAlert()"><span aria-hidden="true">&times;</span></button>
+                <strong>Please select voucher to print!</strong> 
             </div>
 
             <div class="row" style="padding-left: 15px">  
