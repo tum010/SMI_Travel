@@ -63,19 +63,23 @@ public class DaytourOperationOtherController extends SMITravelController {
                 }
                 request.setAttribute("listOtherBooking", listOtherBooking);
                 
+                
+                //Passenger
+                if (listPassenger != null) {
+
+                    for(int i = 0; i < listPassenger.size(); i++) {
+                        System.out.println(""+listPassenger.get(i).getCustomer().getFirstName());
+                    }
+                    request.setAttribute("listPassenger", listPassenger);
+                }else{
+                    request.setAttribute("listPassenger", null);
+                } 
             }else{
                 request.setAttribute("listOtherBooking", null);
-            }
-            //Passenger
-            if (listPassenger != null) {
-                
-                for(int i = 0; i < listPassenger.size(); i++) {
-                    System.out.println(""+listPassenger.get(i).getCustomer().getFirstName());
-                }
-                request.setAttribute("listPassenger", listPassenger);
-            }else{
                 request.setAttribute("listPassenger", null);
-            }    
+                request.setAttribute("NODATA", "nodataotherbooking");
+            }
+   
             
         }else{
             listOtherBooking = otherBookingService.getListBookingOtherFromRefno(refNo);

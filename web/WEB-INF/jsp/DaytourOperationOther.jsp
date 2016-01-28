@@ -16,13 +16,14 @@
 <c:set var="ListBookingAll" value="${requestScope['ListBookingAll']}" />
 <c:set var="ListBookingAllView" value="${requestScope['ListBookingAllView']}" />
 <c:set var="isDuplicate" value="${requestScope['Duplicate']}" />
+<c:set var="noDataOther" value="${requestScope['NODATA']}" />
 
 <input type="hidden" value="${param.referenceNo}" id="getUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <input type="hidden" value="${param.tourID}" id="tourID">
 <input type="hidden" value="${isDuplicate}" id="Duplicate">
-
+<input type="hidden" value="${noDataOther}" id="noDataOther">
 <section class="content-header" >
     <h1>
         Operation - Day Tours Operation Others 
@@ -62,6 +63,10 @@
             <div id="textAlertDivSelect"  style="display:none;" class="alert alert-danger">
                 <button type="button" class="close" aria-label="Close" onclick="hideTextAlert()"><span aria-hidden="true">&times;</span></button>
                 <strong>Please Select Product !</strong> 
+            </div>
+            <div id="textAlertDivNoOther"  style="display:none;" class="alert alert-danger">
+                <button type="button" class="close" aria-label="Close" onclick="hideTextAlert()"><span aria-hidden="true">&times;</span></button>
+                <strong>This ref no don't have data other booking!</strong> 
             </div>
             <div class="col-xs-12 form-group">
                 <div class="col-xs-1 text-right">
@@ -369,6 +374,12 @@
     
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () { 
+        var checknodata = $("#noDataOther").val();
+        if( checknodata === 'nodataotherbooking'){
+        $('#textAlertDivNoOther').show();
+        }
+        
+        
         $(".number").mask('00000000000', {reverse: true});
         $(".money").mask('000,000,000,000', {reverse: true});
     });

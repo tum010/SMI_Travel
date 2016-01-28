@@ -731,8 +731,18 @@ public class InvoiceImpl implements InvoiceDao{
                 }
 
                 for(int j=0;j<invoiceList.size();j++){
-                    InvoiceCost = InvoiceCost.add(invoiceList.get(j).getCost());
-                    InvoicePrice = InvoicePrice.add(invoiceList.get(j).getAmount());
+                    if(invoiceList.get(j).getCost() != null && !"".equalsIgnoreCase(String.valueOf(invoiceList.get(j).getCost()))){
+                        InvoiceCost = InvoiceCost.add(invoiceList.get(j).getCost());
+                    }else{
+                        InvoiceCost = InvoiceCost.add(BigDecimal.ZERO);
+                    }
+                    
+                    if(invoiceList.get(j).getAmount() != null && !"".equalsIgnoreCase(String.valueOf(invoiceList.get(j).getAmount()))){
+                        InvoicePrice = InvoicePrice.add(invoiceList.get(j).getAmount());
+                    }else{
+                        InvoicePrice = InvoicePrice.add(BigDecimal.ZERO);
+                    }
+                    
                 }
                 System.out.println("InvoiceCost : "+InvoiceCost +"InvoicePrice : "+InvoicePrice);
                 
