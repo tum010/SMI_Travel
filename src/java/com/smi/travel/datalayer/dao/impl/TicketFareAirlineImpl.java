@@ -410,7 +410,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 System.out.println("ticketFareList.is not Empty");
                 ticketFareAirline =  ticketFareList.get(0);
             }
-            if("".equals(String.valueOf(ticketFareAirline.getId())) || "null".equals(String.valueOf(ticketFareAirline.getId()))){
+//            if("".equals(String.valueOf(ticketFareAirline.getId())) || "null".equals(String.valueOf(ticketFareAirline.getId()))){
                 BigDecimal fare = new BigDecimal(ticketfare);
                 fare = fare.setScale(2, BigDecimal.ROUND_HALF_EVEN);
                 ticketFare = String.valueOf(fare);
@@ -439,25 +439,27 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                         if(!"null".equals(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId())
                         || airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId() != null){
                             masterId = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId());
+                            System.out.println(" airPassengerList.get(i). ===== " + airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getReferenceNo());
                             referno = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getReferenceNo());
                         }
     //                    department = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getBookingType());
     //                    masterId = String.valueOf(airPassengerList.get(i).getAirticketAirline().getAirticketPnr().getAirticketBooking().getMaster().getId());
                     }
                 }
-            }else{
-                ticketId = ticketFareAirline.getId();
-                name = ticketFareAirline.getPassenger();
-                ticketFare = String.valueOf(ticketFareAirline.getTicketFare());
-                ticketTax = String.valueOf(ticketFareAirline.getTicketTax());
-                issueDate = String.valueOf(ticketFareAirline.getIssueDate());
-                ticketRouting = ticketFareAirline.getTicketRouting();
-                airline = ticketFareAirline.getMAirlineAgent().getCode();
-                ticketBy = ticketFareAirline.getTicketBuy();
-                department = ticketFareAirline.getDepartment();
-                masterId =  ticketFareAirline.getMaster().getId();
-                referno = ticketFareAirline.getMaster().getReferenceNo();
-            }   
+//            }
+//                else{
+//                ticketId = ticketFareAirline.getId();
+//                name = ticketFareAirline.getPassenger();
+//                ticketFare = String.valueOf(ticketFareAirline.getTicketFare());
+//                ticketTax = String.valueOf(ticketFareAirline.getTicketTax());
+//                issueDate = String.valueOf(ticketFareAirline.getIssueDate());
+//                ticketRouting = ticketFareAirline.getTicketRouting();
+//                airline = ticketFareAirline.getMAirlineAgent().getCode();
+//                ticketBy = ticketFareAirline.getTicketBuy();
+//                department = ticketFareAirline.getDepartment();
+//                masterId =  ticketFareAirline.getMaster().getId();
+//                referno = ticketFareAirline.getMaster().getReferenceNo();
+//            }   
             
             if(!"".equalsIgnoreCase(refno)){
                 String newrow
@@ -1176,6 +1178,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
                 return null;
             }else{
                 String query2 = " from AirticketPassenger  airP where airP.airticketAirline.airticketPnr.airticketBooking.master.referenceNo = :refno";
+                System.out.println(" airticketAirlines.get(0).getId() " + airticketAirlines.get(0).getId());
+                System.out.println(" airticketAirlines.get(0).getAirticketPnr().getAirticketBooking().getMaster().getReferenceNo() " + airticketAirlines.get(0).getAirticketPnr().getAirticketBooking().getMaster().getReferenceNo());
                 List<AirticketPassenger> ticketPassList = session.createQuery(query2).setParameter("refno", airticketAirlines.get(0).getAirticketPnr().getAirticketBooking().getMaster().getReferenceNo()).list();
                 if (ticketPassList.isEmpty()){
                     return null;
