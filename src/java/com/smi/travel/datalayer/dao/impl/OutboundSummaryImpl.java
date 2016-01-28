@@ -149,7 +149,8 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
         
         SimpleDateFormat dateformat = new SimpleDateFormat();
         dateformat.applyPattern("dd-MMM-yyyy");
-       
+        SimpleDateFormat dateformatDetail = new SimpleDateFormat();
+        dateformatDetail.applyPattern("dd-MM-yyyy");
         for (Object[] B : QueryList){
             OutboundPackageSummaryView opsv = new OutboundPackageSummaryView();
             opsv.setHeadercity(cityname);
@@ -158,7 +159,7 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
             opsv.setHeaderbank(bankname);
             opsv.setHeaderstatus(statusname);
             opsv.setHeaderdate(util.ConvertString(dateformat.format(util.convertStringToDate(fromdate))) + " to " + util.ConvertString(dateformat.format(util.convertStringToDate(todate))));
-            opsv.setDepartdate("null".equals(String.valueOf(B[0])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[0])))));
+            opsv.setDepartdate("null".equals(String.valueOf(B[0])) ? "" : util.ConvertString(dateformatDetail.format(util.convertStringToDate(String.valueOf(B[0])))));
             opsv.setRefno(util.ConvertString(B[1]));
             opsv.setRecondno(util.ConvertString(B[2]));
             opsv.setLeader(util.ConvertString(B[3]));
@@ -171,7 +172,7 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
             opsv.setNet((B[10]) != null ? util.ConvertString(B[10]) : "0.00");
             opsv.setSell((B[11]) != null ? util.ConvertString(B[11]) : "0.00");
             opsv.setProfit((B[12]) != null ? util.ConvertString(B[12]) : "0.00");
-            opsv.setTransferdate("".equals(String.valueOf(B[13])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[13])))));
+            opsv.setTransferdate("".equals(String.valueOf(B[13])) ? "" : util.ConvertString(dateformatDetail.format(util.convertStringToDate(String.valueOf(B[13])))));
             opsv.setSeller(util.ConvertString(B[14]));
             opsv.setInvno(util.ConvertString(B[15]));
             opsv.setPackagecode(util.ConvertString(B[16]));
@@ -278,7 +279,7 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
         
         for (Object[] B : QueryStaffList) {
             OutboundProductSummaryExcel other = new OutboundProductSummaryExcel();
-            other.setSaledate(B[0]== null ? "" :util.ConvertString(B[0]));
+            other.setSaledate(B[0] != null ?  util.SetFormatDate( util.convertStringToDate(util.ConvertString(B[0])),"dd-MM-yyyy") : "");
             other.setRecordno(B[2]== null ? "" :util.ConvertString(B[2]));
             other.setTravoxno(B[1]== null ? "" :util.ConvertString(B[1])); // 
             other.setPasstype(B[3]== null ? "" :util.ConvertString(B[3])); // 
@@ -297,7 +298,7 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
             other.setTotalsaleinfant((BigDecimal)B[14]);
             other.setProfittotal((BigDecimal)B[15]);
             other.setPayby(B[16]== null ? "" :util.ConvertString(B[16]));
-            other.setDatetrsf(B[17]== null ? "" :util.ConvertString(B[17]));
+            other.setDatetrsf(B[17]== null ? "" :util.SetFormatDate( util.convertStringToDate(util.ConvertString(B[17])),"dd-MM-yyyy"));
             other.setSeller(B[18]== null ? "" :util.ConvertString(B[18]));
             // Set Header
             if(productname != null && !"".equals(productname)){

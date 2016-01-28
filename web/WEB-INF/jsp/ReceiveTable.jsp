@@ -285,7 +285,7 @@
                                         </span>
                                     </div>    
                                 </div>
-                                <div class="col-xs-1 form-group" style="width: 290px">
+                                <div class="col-xs-1 form-group" style="width: 290px" id="menu-container">
                                     <input name="receiveName" id="receiveName" type="text" class="form-control" style="text-transform: uppercase;" value="${advanceReceive.recName}" maxlength="100"/>
                                 </div>
                                 <div class="col-xs-1 text-left" style="width: 100px">
@@ -298,7 +298,7 @@
                                    <label class="control-label text-left">Receive Amount<font style="color: red">*</font></lable>        
                                 </div>                               
                                 <div class="col-xs-1 form-group" style="width: 200px">
-                                    <input name="receiveAmount" id="receiveAmount" type="text" class="form-control decimal" value="${advanceReceive.recAmount}" onfocusout="calculate(this)"/>
+                                    <input name="receiveAmount" id="receiveAmount" type="text" class="form-control decimal" value="${advanceReceive.recAmount}"/>
                                 </div>
                             </div>
                         </div><!-- End Row 2-->
@@ -314,7 +314,7 @@
                                     <label class="control-label ">Wht</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px">
-                                    <input name="wht" id="wht" type="text" class="form-control decimal" value="${advanceReceive.wht}" onfocusout="calculate(this)"/>
+                                    <input name="wht" id="wht" type="text" class="form-control decimal" value="${advanceReceive.wht}" />
                                 </div>
                             </div>
                         </div><!-- End Row 3--><br>
@@ -324,21 +324,21 @@
                                     <label class="control-label text-left">Cash Amount</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px" id="cashAmountPanel">
-                                    <input name="cashAmount" id="cashAmount" type="text" class="form-control decimal" value="${advanceReceive.cashAmount}" onfocusout="calculate(this)"/>
+                                    <input name="cashAmount" id="cashAmount" type="text" class="form-control decimal" value="${advanceReceive.cashAmount}" />
                                 </div>
                                 <div class="col-xs-1" style="width: 60px"></div>
                                 <div class="col-xs-1" style="width: 130px">
                                     <label class="control-label text-left">Bank Amount</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px" id="bankAmountPanel">
-                                    <input name="bankAmount" id="bankAmount" type="text" class="form-control decimal" value="${advanceReceive.bankAmount}" onfocusout="calculate(this)"/>
+                                    <input name="bankAmount" id="bankAmount" type="text" class="form-control decimal" value="${advanceReceive.bankAmount}"/>
                                 </div>
                                 <div class="col-xs-1" style="width: 35px"></div>
                                 <div class="col-xs-1 text-right" style="width: 135px">
                                     <label class="control-label">Chq Amount</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px" id="chqAmountPanel">
-                                    <input name="chqAmount" id="chqAmount" type="text" class="form-control decimal" value="${advanceReceive.chqAmount}" onfocusout="calculate(this)"/>
+                                    <input name="chqAmount" id="chqAmount" type="text" class="form-control decimal" value="${advanceReceive.chqAmount}"/>
                                 </div>
                             </div>
                         </div><!-- End Row 4--><br>
@@ -406,7 +406,7 @@
                                                 <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
                                             </div>
                                         </td>
-                                        <td><input maxlength="10" class="form-control numerical" style="text-align:right;" type="text" id="creditAmount${i.count}" name="creditAmount${i.count}" value="${adReCre.creditAmount}" onkeyup="insertCommas(this)" onfocusout="calculate(this); calculateCreditAmount(); setCreditAmount(); setCashOnDemand();"></td>
+                                        <td><input class="form-control" style="text-align:right;" type="text" id="creditAmount${i.count}" name="creditAmount${i.count}" value="${adReCre.creditAmount}" onfocusout="calculateCreditAmount(); setCreditAmount(); setCashOnDemand();"></td>
                                         <td>
                                             <center>
                                                 <a id="expenButtonRemove${i.count}" name="expenButtonRemove${i.count}" onclick="deleteAdvanceReceiveCreditConfirm('${adReCre.id}','${i.count}')"  data-toggle="modal">
