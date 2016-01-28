@@ -923,8 +923,9 @@ public class AJAXBean extends AbstractBean implements
             }else if("getTaxInvoice".equalsIgnoreCase(type)){
                 String invoiceNo = map.get("invoiceNo").toString();
                 String department = map.get("department").toString();
+                String creditNoteId = map.get("id").toString();
                 TaxInvoice taxInv = taxInvoiceDao.getTaxInvoiceByTaxNo(invoiceNo,department);
-                JSONObject obj = new JSONObject(convertInvoiceToMap(taxInv));
+                JSONObject obj = new JSONObject(convertInvoiceToMap(taxInv,creditNoteId));
                 result = obj.toJSONString();
             
             }else if("getTaxInvoiceAmountTotal".equalsIgnoreCase(type)){
@@ -2607,7 +2608,7 @@ public class AJAXBean extends AbstractBean implements
         this.paymentairticketdao = paymentairticketdao;
     }
 
-    private Map convertInvoiceToMap(TaxInvoice tax) {
+    private Map convertInvoiceToMap(TaxInvoice tax, String creditNoteId) {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("taxId", tax.getId());
         map.put("taxNo", tax.getTaxNo());
@@ -2620,10 +2621,14 @@ public class AJAXBean extends AbstractBean implements
         String invNo = "";
         List<Map<String, Object>> detailMapList = new ArrayList<Map<String, Object>>();
         Set set = new HashSet();
-        BigDecimal amountTotal = new BigDecimal(0);
+//        BigDecimal amountTotal = new BigDecimal(0);
+        BigDecimal amountTotal = taxInvoiceDao.getTaxInvoiceAmountTotal(tax,creditNoteId);
+        if(amountTotal == null){
+            amountTotal = new BigDecimal(BigInteger.ZERO);
+        }
         for (Iterator detailList = tax.getTaxInvoiceDetails().iterator(); detailList.hasNext();) {
             TaxInvoiceDetail detail = (TaxInvoiceDetail) detailList.next();
-            amountTotal = amountTotal.add(detail.getAmount() != null ? detail.getAmount() : new BigDecimal(0));
+//            amountTotal = amountTotal.add(detail.getAmount() != null ? detail.getAmount() : new BigDecimal(0));
             BigDecimal detailAmount = detail.getAmount();
             BigDecimal datailVat = new BigDecimal("0.00");
             if (detail.getVat() != null && !"".equals(detail.getVat())) {
@@ -2636,9 +2641,12 @@ public class AJAXBean extends AbstractBean implements
                 set.add(detail.getInvoiceDetail().getInvoice().getInvNo());
             }
             Map<String, Object> detailMap = new HashMap<String, Object>();
-            detailMap.put("product", detail.getMbillType().getName());
+            if(detail.getMbillType() != null){
+               detailMap.put("product", detail.getMbillType().getName()); 
+            }           
             if(detail.getMaster() != null){
                 detailMap.put("refNo", detail.getMaster().getReferenceNo());
+                System.out.println("refNo : " + detail.getMaster().getReferenceNo());
             }
             
             detailMap.put("description", detail.getDescription());

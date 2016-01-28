@@ -411,7 +411,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     public TaxInvoice getTaxInvoiceByTaxNo(String taxNo,String department) {
         Session session = this.sessionFactory.openSession();
         TaxInvoice taxInvoice = new TaxInvoice();
-        String query = "FROM TaxInvoice t where t.taxNo = :TaxInvNo AND t.department = :department ";
+        String query = "FROM TaxInvoice t where t.taxNo = :TaxInvNo AND t.department = :department AND t.MFinanceItemstatus.id = 1";
         List<TaxInvoice> taxInvoiceList = session.createQuery(query)
                 .setParameter("TaxInvNo", taxNo)
                 .setParameter("department", department)
@@ -421,7 +421,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         } 
         
         taxInvoice = taxInvoiceList.get(0);
-               
+        System.out.println("---------------taxInvoice------------------"+taxInvoice.getId());       
         return taxInvoice;
     }
 
