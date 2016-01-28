@@ -94,7 +94,7 @@
                             <td class="text-left" ><c:out value="${item.staff.username}" /></td>
                             <td class="text-center">
                                 <a id="ButtonEdit${loopCounter.count}" onclick="hideCollapse()" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#historyBooking${loopCounter.count}" aria-expanded="true" aria-controls="collapseExample">
-                                    <span id="SpanEdit${loopCounter.count}" class="glyphicon glyphicon-edit editicon"></span>
+                                    <span id="SpanEdit${loopCounter.count}" class="glyphicon glyphicon-th-list"></span>
                                 </a>
                             </td>
 <!--                            <td class="text-center">
