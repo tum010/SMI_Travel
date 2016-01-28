@@ -156,10 +156,10 @@ public class OutboundPackageSummary extends AbstractExcelView {
         cell61.setCellValue("SALE DATE");
         cell61.setCellStyle(styletop);
         HSSFCell cell62 = row5.createCell(1);
-        cell62.setCellValue("CODE NO");
+        cell62.setCellValue("RECORD NO");
         cell62.setCellStyle(styletop);
         HSSFCell cell63 = row5.createCell(2);
-        cell63.setCellValue("TRAVOX NO");
+        cell63.setCellValue("REF NO");
         cell63.setCellStyle(styletop);
         HSSFCell cell64 = row5.createCell(3);
         cell64.setCellValue("TOUR CODE");
@@ -175,7 +175,7 @@ public class OutboundPackageSummary extends AbstractExcelView {
         cell67.setCellValue("PERIOD");
         cell67.setCellStyle(styletop);
         HSSFCell cell68 = row5.createCell(7);
-        cell68.setCellValue("NUMBER OF PAX");
+        cell68.setCellValue("PAX");
         cell68.setCellStyle(styletop);
         HSSFCell cell068 = row5.createCell(8);
         cell068.setCellValue("");
@@ -190,7 +190,7 @@ public class OutboundPackageSummary extends AbstractExcelView {
         cell71.setCellValue("TOTAL");
         cell71.setCellStyle(styletop);
         HSSFCell cell72 = row5.createCell(12);
-        cell72.setCellValue("PROFIT");
+        cell72.setCellValue("TOTAL");
         cell72.setCellStyle(styletop);
         HSSFCell cell73 = row5.createCell(13);
         cell73.setCellValue("BANK");
@@ -240,13 +240,13 @@ public class OutboundPackageSummary extends AbstractExcelView {
         cell84.setCellValue("");
         cell84.setCellStyle(stylebottom);
         HSSFCell cell85 = row6.createCell(7);
-        cell85.setCellValue("ADULT");
+        cell85.setCellValue("AD");
         cell85.setCellStyle(styleC3);
         HSSFCell cell86 = row6.createCell(8);
-        cell86.setCellValue("CHILD");
+        cell86.setCellValue("CH");
         cell86.setCellStyle(styleC3);
         HSSFCell cell87 = row6.createCell(9);
-        cell87.setCellValue("INFANT");
+        cell87.setCellValue("IN");
         cell87.setCellStyle(styleC3);       
         HSSFCell cell91 = row6.createCell(10);
         cell91.setCellValue("NETT");
@@ -255,7 +255,7 @@ public class OutboundPackageSummary extends AbstractExcelView {
         cell92.setCellValue("SALE");
         cell92.setCellStyle(stylebottom);
         HSSFCell cell93 = row6.createCell(12);
-        cell93.setCellValue("TOTAL");
+        cell93.setCellValue("PROFIT");
         cell93.setCellStyle(stylebottom);
         HSSFCell cell94 = row6.createCell(13);
         cell94.setCellValue("TRSF");
@@ -297,6 +297,13 @@ public class OutboundPackageSummary extends AbstractExcelView {
         styleC25.setBorderTop(HSSFCellStyle.BORDER_THIN);
         styleC25.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC25.setDataFormat(currency.getFormat("#,##0.00"));
+        
+        HSSFCellStyle styleC26 = wb.createCellStyle();
+        styleC26.setAlignment(styleC26.ALIGN_CENTER);
+        styleC26.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderBottom(HSSFCellStyle.BORDER_THIN);
 
         for(int i=0;i<opslist.size();i++){
             OutboundPackageSummaryView data = (OutboundPackageSummaryView)opslist.get(i);
@@ -328,7 +335,7 @@ public class OutboundPackageSummary extends AbstractExcelView {
             
             HSSFCell celldata6 = row.createCell(6);
             celldata6.setCellValue(data.getPeriod());
-            celldata6.setCellStyle(styleC24);
+            celldata6.setCellStyle(styleC26);
             
             HSSFCell celldata7 = row.createCell(7);
             celldata7.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPaxadult())) ? 0 : new BigDecimal(data.getPaxadult()).doubleValue());
@@ -373,7 +380,7 @@ public class OutboundPackageSummary extends AbstractExcelView {
             
             HSSFCell celldata17 = row.createCell(17);
             celldata17.setCellValue(data.getSeller());
-            celldata17.setCellStyle(styleC23);           
+            celldata17.setCellStyle(styleC24);           
            
         }
         
