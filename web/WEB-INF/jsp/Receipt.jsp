@@ -2566,7 +2566,13 @@
     
     function addProduct(product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, checkadd, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress,invTableId,invTableNo) {
         var receiveAddressTemp = replaceAll("<br>", "\n" , receiveAddress.toString());
+        $('#textAlertDivSave').hide();
+        $('#textAlertDivNotSave').hide();
+        $('#textAlertDivDelete').hide();
+        $('#textAlertDivNotDelete').hide();
+        $('#textAlertReceiveNo').hide();
         $('#textAlertDuplicateProduct').hide();
+        $('#textAlertReceiveAmount').hide();
         var tempCount = parseInt($("#counter").val());
         var checkAddDuplicate = false;
         if (checkadd == 1) {
