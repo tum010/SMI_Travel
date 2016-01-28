@@ -21,6 +21,7 @@ import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -447,14 +448,15 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
                 .addScalar("transferdate", Hibernate.STRING)
                 .addScalar("seller", Hibernate.STRING)
                 .addScalar("invno", Hibernate.STRING)
-                .addScalar("bank", Hibernate.STRING)
+                .addScalar("banktransfer", Hibernate.STRING)
                 .addScalar("supplier", Hibernate.STRING)
                 .list();
-        
+         //util.
         
         SimpleDateFormat dateformat = new SimpleDateFormat();
         dateformat.applyPattern("dd-MMM-yyyy");
-       
+        SimpleDateFormat dateformatdetail = new SimpleDateFormat();
+        dateformatdetail.applyPattern("dd-mm-yyyy");
         for (Object[] B : QueryList){
             OutboundHotelSummaryView outboundHotelSummaryView = new OutboundHotelSummaryView();
             outboundHotelSummaryView.setHeadcountry(countryname);
@@ -480,7 +482,7 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
             outboundHotelSummaryView.setTotelnet(B[13] != null ? util.ConvertString(B[13]) : "0.00");
             outboundHotelSummaryView.setTotalsell(B[14] != null ? util.ConvertString(B[14]) : "0.00");
             outboundHotelSummaryView.setTotalprofit(B[15] != null ? util.ConvertString(B[15]) : "0.00");
-            outboundHotelSummaryView.setTransferdate(B[16] != null ? util.ConvertString(B[16]) : "");
+            outboundHotelSummaryView.setTransferdate(B[16] != null ?  util.SetFormatDate( util.convertStringToDate(util.ConvertString(B[16])),"dd-MM-yyyy") : "");
             outboundHotelSummaryView.setSeller(B[17] != null ? util.ConvertString(B[17]) : "");
             outboundHotelSummaryView.setInvno(B[18] != null ? util.ConvertString(B[18]) : "");
             outboundHotelSummaryView.setBank(B[19] != null ? util.ConvertString(B[19]) : "");

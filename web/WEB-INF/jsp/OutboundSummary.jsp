@@ -33,7 +33,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-6">
-                    <h3>Outbound Hotel Summary Report</h3>
+                    <h3> Hotel Summary</h3>
                 </div>
             </div>
             <div class="col-md-10" >

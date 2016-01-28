@@ -169,7 +169,7 @@ public class OutboundHotelSummary extends AbstractExcelView{
         cell62.setCellValue("RECORD NO");
         cell62.setCellStyle(styletop);
         HSSFCell cell63 = row6.createCell(2);
-        cell63.setCellValue("TRAVOX NO");
+        cell63.setCellValue("REF NO");
         cell63.setCellStyle(styletop);
         HSSFCell cell64 = row6.createCell(3);
         cell64.setCellValue("HOTEL NAME");
@@ -182,7 +182,7 @@ public class OutboundHotelSummary extends AbstractExcelView{
         cell66.setCellStyle(styletop);
         sheet.autoSizeColumn(5);
         HSSFCell cell67 = row6.createCell(6);
-        cell67.setCellValue("NUMBER");
+        cell67.setCellValue("PAX");
         cell67.setCellStyle(styletop);
         HSSFCell cell68 = row6.createCell(7);
         cell68.setCellValue("NETT");
@@ -224,6 +224,7 @@ public class OutboundHotelSummary extends AbstractExcelView{
         sheet.addMergedRegion(CellRangeAddress.valueOf("D7:D8"));
         sheet.addMergedRegion(CellRangeAddress.valueOf("E7:E8"));
         sheet.addMergedRegion(CellRangeAddress.valueOf("F7:F8"));
+        sheet.addMergedRegion(CellRangeAddress.valueOf("G7:G8"));
         sheet.addMergedRegion(CellRangeAddress.valueOf("O7:O8"));
         sheet.addMergedRegion(CellRangeAddress.valueOf("P7:P8"));
         sheet.addMergedRegion(CellRangeAddress.valueOf("Q7:Q8"));
@@ -242,9 +243,9 @@ public class OutboundHotelSummary extends AbstractExcelView{
         cell75.setCellStyle(stylebottom);
         HSSFCell cell76 = row7.createCell(5);
         cell76.setCellStyle(stylebottom);
-        HSSFCell cell77 = row7.createCell(6);
-        cell77.setCellValue("OF PAX");
-        cell77.setCellStyle(stylebottom);
+//        HSSFCell cell77 = row7.createCell(6);
+//        cell77.setCellValue("OF PAX");
+//        cell77.setCellStyle(stylebottom);
         HSSFCell cell78 = row7.createCell(7);
         cell78.setCellValue("ROOM/NIGHT");
         cell78.setCellStyle(stylebottom);
