@@ -34,4 +34,6 @@ public interface TaxInvoiceDao {
     public TaxInvoice getTaxInvoiceByWildCardSearch(String taxInvId, String taxInvNo, String wildCardSearch, String keyCode, String department);
     public TaxInvoice getPostVatData(String taxInvId);
     public BigDecimal getTaxInvoiceAmountTotal(TaxInvoice taxInv,String creditNoteDetailId);
+    public String checkIsProfitForSearchInvoice(String invDetailId);
+    public String checkIsProfitForSearchRefNo(String invoiceDetailId);
 }

@@ -293,7 +293,6 @@
                             </div>
                         </div>
                     </div>-->
-
                     <div class="panel panel-default ${panelborder}">
                         <div class="panel-heading ${panelheader}">
                             <h4 class="panel-title">Receipt Detail</h4>
@@ -304,6 +303,7 @@
                                     <label class="control-label text-right">Receive No </label>                                    
                                 </div> 
                                 <div class="col-xs-1" style="width: 80px; margin-top: -10px" id='receivenumber'>
+                                    <input type="hidden" class="form-control" id="isref" name="isref"  value="${receipt.isRef}" >        
                                     <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                                     <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                                     <input id="receiveId" name="receiveId" type="hidden" class="form-control" maxlength="11" value="${receipt.id}">
@@ -1563,8 +1563,7 @@
 
     var setinvoice = 0;
 
-    $(document).ready(function() {
-        
+    $(document).ready(function() {        
         $("#inv,#ref,#com").removeClass('hidden');
         $('.datemask').mask('0000-00-00');
         $('.date').datetimepicker();
@@ -1644,7 +1643,38 @@
         $('#ReceiveDate').datetimepicker().on('dp.change', function(e) {
             $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
         });
-
+        
+        var isref = $("#isref").val();
+        if(isref === '0'){
+            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+            $("#searchPaymentNoAir").attr("disabled", "disabled");
+            $("#searchPaymentNoTour").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
+            $("#refNo").attr("disabled", "disabled");
+        }else if(isref === '1'){
+            $("#invoiceNo").attr("disabled", "disabled");
+            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+            $("#searchPaymentNoAir").attr("disabled", "disabled");
+            $("#searchPaymentNoTour").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
+        }else if(isref === '2'){
+            $("#invoiceNo").attr("disabled", "disabled");
+            $("#refNo").attr("disabled", "disabled");
+            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+            $("#searchPaymentNoTour").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
+        }else if(isref === '3'){
+            $("#invoiceNo").attr("disabled", "disabled");
+            $("#refNo").attr("disabled", "disabled");
+            $("#ButtonSearchRefNo").attr("disabled", "disabled");
+            $("#ButtonSearchInvoice").attr("disabled", "disabled");
+            $("#searchPaymentNoAir").attr("disabled", "disabled");
+            $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
+        }
+        
         $('#ReceiptForm').bootstrapValidator({
             container: 'tooltip',
             excluded: [':disabled'],
@@ -2072,7 +2102,7 @@
             } else {
                 if(department !== 'Inbound'){
                     if (invType === 'T') {
-                        window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
+                        window.open("report.smi?name=InvoiceTempEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
                     } else {
                         window.open("report.smi?name=InvoiceEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
                     }
@@ -2081,7 +2111,7 @@
                     if (invType === "T") {
                         window.open("report.smi?name=InvoiceInboundPerformaReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     } else {
-                        window.open("report.smi?name=InvoiceInboundRevenueReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
+                        window.open("report.smi?name=InvoiceInboundRevenueEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     }
                 }  
             }
@@ -2090,16 +2120,16 @@
             } else {
                 if(department !== 'Inbound'){
                     if (invType === 'T') {
-                        window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
+                        window.open("SendMail.smi?reportname=InvoiceTempEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
                     } else {
                         window.open("SendMail.smi?reportname=Invoice&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
                     }
                 
                 }else{
                     if (invType === "T") {
-                        window.open("report.smi?name=InvoiceInboundPerformaReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
+                        window.open("SendMail.smi?reportname=InvoiceTempEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     } else {
-                        window.open("report.smi?name=InvoiceInboundRevenueReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
+                        window.open("SendMail.smi?reportname=InvoiceInboundRevenueEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     }
                 }  
             }
@@ -2539,6 +2569,7 @@
         var tempCount = parseInt($("#counter").val());
         var checkAddDuplicate = false;
         if (checkadd == 1) {
+            $("#isref").val("0");
             $("#ButtonSearchRefNo").attr("disabled", "disabled");
             $("#searchPaymentNoAir").attr("disabled", "disabled");
             $("#searchPaymentNoTour").attr("disabled", "disabled");
@@ -2554,6 +2585,7 @@
             }
 
         } else if (checkadd == 2) {
+            $("#isref").val("1");
             $("#invoiceNo").attr("disabled", "disabled");
             $("#ButtonSearchInvoice").attr("disabled", "disabled");
             $("#searchPaymentNoAir").attr("disabled", "disabled");
@@ -2569,6 +2601,7 @@
             }
 
         } else if (checkadd == 3) {
+            $("#isref").val("2");
             $("#invoiceNo").attr("disabled", "disabled");
             $("#refNo").attr("disabled", "disabled");
             $("#ButtonSearchRefNo").attr("disabled", "disabled");
@@ -2582,8 +2615,8 @@
                     checkAddDuplicate = true;
                 }
             }
-
         } else if (checkadd == 4) {
+            $("#isref").val("3");
             $("#invoiceNo").attr("disabled", "disabled");
             $("#refNo").attr("disabled", "disabled");
             $("#ButtonSearchRefNo").attr("disabled", "disabled");

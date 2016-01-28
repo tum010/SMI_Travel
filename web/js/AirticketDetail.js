@@ -109,7 +109,8 @@ $(document).ready(function () {
         format: 'HH:mm'
     });
 
-
+    $('.time').mask('00:00');
+     
     $('#passenger_table,#TableAir').on('click', 'a', function () {
         console.log('hide collapse');
         $('.collapse').collapse('hide');
@@ -260,12 +261,11 @@ function addFight(rowId) {
             + '</div>'
             + '</div>'
             + '</div>'
+            + '<label class="col-sm-1 control-label text-right">Time</label>'
             + '<div class="col-sm-2">'
             + '<div class="form-group">'
             + '<div class="input-group times">'
-            + '<input type="text" class="form-control" name="flight-' + rowId + '-departTime" id="flight-' + rowId + '-departTime" maxlength="4"/>'
-            + '<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>'
-            + '</span>'
+            + '<input name="flight-' + rowId + '-departTime" id="flight-' + rowId + '-departTime" type="text" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" />'
             + '</div>'
             + '</div>'
             + '</div>'
@@ -298,12 +298,11 @@ function addFight(rowId) {
             + '</div>'
             + '</div>'
             + '</div>'
+            + '<label class="col-sm-1 control-label text-right">Time</label>'
             + '<div class="col-sm-2">'
             + '<div class="form-group">'
-            + '<div class="input-group times" id="arrive-time">'
-            + '<input name="flight-' + rowId + '-arriveTime" id="flight-' + rowId + '-arriveTime" type="text" class="form-control"  maxlength="4" />'
-            + '<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>'
-            + '</span>'
+            + '<div class="input-group times">'
+            + '<input name="flight-' + rowId + '-arriveTime" id="flight-' + rowId + '-arriveTime" type="text" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" />'
             + '</div>'
             + '</div>'
             + '</div>'

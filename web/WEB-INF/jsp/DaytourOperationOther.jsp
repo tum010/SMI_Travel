@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="col-xs-3">
-                    <input id="InputRefNo" name="InputRefNo"  type="text"  class="form-control"  value="<c:out value="${RefNo}" />">
+                    <input id="InputRefNo" name="InputRefNo"  type="text"  class="form-control number"  value="<c:out value="${RefNo}" />">
                 </div>
                 <div class="col-xs-3">
                     <input type="hidden" name="action" id="action">
@@ -211,7 +211,7 @@
                                     </td>
                                     <td><center><c:out value="${status.count}" /></center></td>
                                     <td><center><c:out value="${table1.customer.code}" /></center></td>
-                                    <td><c:out value="${table1.customer.MInitialname.name}" />&nbsp;<c:out value="${table1.customer.firstName}" />&nbsp;<c:out value="${table1.customer.lastName}" /></td>
+                                    <td><c:out value="${table1.customer.MInitialname.name}" />&nbsp;<c:out value="${table1.customer.lastName}" />&nbsp;<c:out value="${table1.customer.firstName}" /></td>
                                     <td>
                                         <center>
                                             <c:if test="${table1.customer.birthDate != '' && table1.customer.birthDate != null}">
@@ -369,6 +369,7 @@
     
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () { 
+        $(".number").mask('00000000000', {reverse: true});
         $(".money").mask('000,000,000,000', {reverse: true});
     });
 </script>   

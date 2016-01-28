@@ -84,6 +84,10 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Delete Not Success! This Refund is in path of checking airticket </strong> 
             </div>
+             <div id="textAlertSelectRefund"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Please select airticket refund!</strong> 
+            </div>
             <input type="hidden" value="${master.customer.MInitialname.name}" id="initialname_tmp">
             <input type="hidden" value="${master.customer.firstName}" id="firstname_tmp">
             <input type="hidden" value="${master.customer.lastName}" id="lastname_tmp">   
@@ -1269,7 +1273,7 @@ for(var i = 0; i < rad.length; i++) {
         "bLengthChange": false,
         "iDisplayLength": 10
     });
-//     validateRefundForm();    
+//     validateRefundForm();   
     $("#RefundForm")
         .bootstrapValidator({
 //                framework: 'bootstrap',
@@ -1363,6 +1367,17 @@ for(var i = 0; i < rad.length; i++) {
             $("#otherReason").attr("disabled", "disabled");
             $("#otherReason").val('');
         }
+        
+        $("#tr_FormulaAddRowAdd a").click(function() {
+            $(this).parent().removeClass("show");
+            $(this).parent().addClass("hide");
+        });
+        
+        $("#tr_FormulaAddRow a").click(function() {
+            $(this).parent().removeClass("show");
+            $(this).parent().addClass("hide");
+        });
+        
  }); 
   
 function setBillValue(billto, billname, address, term, pay) {
@@ -1602,17 +1617,19 @@ function saveRefund(){
         for(var i=1; i<count; i++){
             var inputSectorRefund = document.getElementById('inputSectorRefund'+i);
             if(inputSectorRefund !== null){
-                if(inputSectorRefund.style.borderColor === 'red'){
+                if(inputSectorRefund.style.borderColor === 'red' || inputSectorRefund.value === ''){
+                    inputSectorRefund.style.borderColor = 'red';
                     error++;
-                    i = count;
+//                    i = count;
                 }
                 
             }
             var inputSectorRefundAdd = document.getElementById('inputSectorRefundadd'+i);
             if(inputSectorRefundAdd !== null){
-                if(inputSectorRefundAdd.style.borderColor === 'red'){
+                if(inputSectorRefundAdd.style.borderColor === 'red' || inputSectorRefundAdd.value === ''){
+                    inputSectorRefundAdd.style.borderColor = 'red';
                     error++;
-                    i = count;
+//                    i = count;
                 }                
             }           
         }    
@@ -1625,6 +1642,12 @@ function saveRefund(){
             $("#buttonSaveRefund").attr("disabled", "disabled");
             $("#buttonPrintRefund").attr("disabled", "disabled");
         }        
+    }else{
+        $('#RefundForm').bootstrapValidator('revalidateField', 'refundBy');
+        $('#RefundForm').bootstrapValidator('revalidateField', 'refundByName');
+        $('#RefundForm').bootstrapValidator('revalidateField', 'receiveBy');
+        $('#RefundForm').bootstrapValidator('revalidateField', 'receiveByName');
+        $('#RefundForm').bootstrapValidator('revalidateField', 'receiveDate');
     }
     // Check Change
    
@@ -2032,9 +2055,14 @@ function DeleteRefundDetailConfirm() {
         $("#inputSector" + rowId).parent().parent().remove();
         count = count - 1;
         $('#DeleteRefundDetail').modal('hide');
-        if (count  <= 1) {
-            console.log("show button tr_FormulaAddRow : ");
-            $("#tr_FormulaAddRow").css("display", "block");
+//        if (count  <= 1) {
+//            console.log("show button tr_FormulaAddRow : ");
+//            $("#tr_FormulaAddRow").css("display", "block");
+//        }
+        var rowAll = $("#RefundTicketDetailTable tr").length;
+        if (rowAll < 2) {
+            $("#tr_FormulaAddRow").removeClass("hide");
+            $("#tr_FormulaAddRow").addClass("show");
         }
     }else{
         document.getElementById('RefundForm').submit();
@@ -2052,10 +2080,17 @@ function DeleteRefundDetailConfirmAdd() {
     count = count - 1;
     console.log("Count Table : " + count);
     $('#DeleteRefundDetailAdd').modal('hide');
-    if (count <= 1) {
-        console.log("show button tr_FormulaAddRow : ");
-        $("#tr_FormulaAddRowAdd").css("display", "block");
+//    if (count <= 1) {
+//        console.log("show button tr_FormulaAddRow : ");
+//        $("#tr_FormulaAddRowAdd").css("display", "block");
+//    }
+    
+    var rowAll = $("#RefundTicketDetailTableAdd tr").length;
+    if (rowAll < 2) {
+        $("#tr_FormulaAddRowAdd").removeClass("hide");
+        $("#tr_FormulaAddRowAdd").addClass("show");
     }
+    
     $('#counterTableAdd').val(count+2);
     generateRowNo();
 }
@@ -2581,13 +2616,14 @@ function formatNumber(num) {
 }
 
 function printAirticketRefund(){
+    $('#textAlertSelectRefund').hide();
     var PnrID = "";
     $('#RefundTable tr.row_selected').each(function () {
         PnrID = $(this).attr('id');
     });
 //    alert("ID : " + PnrID);
     if (PnrID === "") {
-        alert("please select airticket refund");
+         $('#textAlertSelectRefund').show();
     } else {
         window.open("report.smi?name=RefundAirticketReport&refundId="+PnrID);
     }

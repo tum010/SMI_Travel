@@ -78,34 +78,92 @@ $(document).ready(function() {
         if ($("#inputDate").val() === "" || $("#name").val() === "" || $("#address").val() === "") {
             return;
         }
+//        $('#ItemCreditTable tbody [name="taxId"]').each(function() {
+//            var taxNo = $(this).parent().parent().find("[name='taxNo']");
+//            if (taxNo.val() !== '' && this.value === '') {
+//                taxNo.style.borderColor = "red";
+//                result = false;
+//            }
+//        });
         $('#ItemCreditTable tbody [name="taxNo"]').each(function() {
+            var taxId = $(this).parent().parent().find("[name='taxId']");
+            if(this.value !== '' && taxId.val() === ''){
+                this.value = '';
+                this.style.borderColor = "red";
+                $("#alertTextFail").html("Please press enter when fill in complete tax invoice no.");
+                $("#alertFail").show();
+                result = false;
+            }
             if (this.style.borderColor === "red") {
                 result = false;
             }
         });
+        var taxNoList = '';
         $('#ItemCreditTable tbody [name="taxReal"]').each(function() {
-            if (this.style.borderColor === "red") {
-                result = false;
-                
-            }else if(this.value !== ''){
+            if(this.value !== ''){
+                var taxNo = $(this).parent().parent().find("[name='taxNo']");
                 var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
                 if(parseFloat((this.value).replace(",","")) > parseFloat((taxRealCheck.val()).replace(",",""))){
+                    taxNoList += (taxNoList !== '' ? ' , '+taxNo.val() : taxNo.val());
                     this.style.borderColor = "red";
                     result = false;
                 }
             }
         });
+        
         if(result){
             var action = document.getElementById('action');
             action.value = 'save';
             document.getElementById('CreditNoteForm').submit();
-        }    
+        
+        }else if(!result){
+            $("#alertTextFail").html("Tax Invoice "+ taxNoList +" Amount Total much over.");
+            $("#alertFail").show();
+        }
     });
 
     $("#buttonNew").click(function() {
         var action = document.getElementById('action');
         action.value = 'new';
         document.getElementById('CreditNoteForm').submit();
+    });
+    
+    $('#ItemCreditTable tbody [name="taxReal"]').each(function() {
+        var creDetailId = $(this).parent().parent().find("[name='id']");
+        var taxNo = $(this).parent().parent().find("[name='taxNo']");
+        var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
+        if(taxNo.val() !== ''){
+            var url = 'AJAXServlet';
+            var servletName = 'TaxInvoiceServlet';
+            var servicesName = 'AJAXBean';
+            var department = $("#department").val();
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&type=getTaxInvoiceAmountTotal' +
+                    '&invoiceNo=' + taxNo.val() +
+                    '&id=' + creDetailId.val() +
+                    '&department=' + department;
+            try {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    cache: false,
+                    data: param,
+                    beforeSend: function() {
+                        $("#dataload").removeClass("hidden");
+                    },
+                    success: function(msg) {
+                        var amountTotal = (msg !== "null" ? msg : 0);   
+                        taxRealCheck.val(amountTotal);                                                      
+                    }, error: function(msg) {
+
+                    }
+                });
+            } catch (e) {
+                alert(e);
+            }                            
+        }
     });
 
     addRow();
@@ -177,8 +235,8 @@ function addRow() {
                             var amountTotal = msg;
 //                            var realAmount = this.value.replace(",", "");
 //                            var realAmountHidden = $(this).parent().parent().find("[name='taxReal']");
-//                            var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
-                            
+                            var taxRealCheck = $(this).parent().parent().find("[name='taxRealCheck']");
+                            taxRealCheck.val(amountTotal);
 //                            if(parseFloat(realAmount) <= parseFloat((taxRealCheck.val()).replace(",", ""))){
                             if(parseFloat(realAmount) <= parseFloat(amountTotal)){
                                 realAmountHidden.val(realAmount);
@@ -302,6 +360,7 @@ function getTaxInv(input) {
         }
 //        alert(duplicate);
         if (!duplicate) {
+            var creDetailId = $(this).parent().parent().find("[name='id']");
             var url = 'AJAXServlet';
             var servletName = 'TaxInvoiceServlet';
             var servicesName = 'AJAXBean';
@@ -311,6 +370,7 @@ function getTaxInv(input) {
                     '&servicesName=' + servicesName +
                     '&type=getTaxInvoice' +
                     '&invoiceNo=' + ticketNo +
+                    '&id=' + creDetailId.val() +
                     '&department=' + department;
             //    var row = parseInt($(input).parent().parent().attr("row"));
             try {
@@ -475,6 +535,7 @@ function show(taxNo) {
                 '&servicesName=' + servicesName +
                 '&type=getTaxInvoice' +
                 '&invoiceNo=' + taxNo +
+                '&id='+
                 '&department=' + department;
         try {
             $.ajax({

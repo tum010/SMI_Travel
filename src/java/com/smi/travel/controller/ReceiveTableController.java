@@ -45,7 +45,7 @@ public class ReceiveTableController extends SMITravelController {
     private UtilityFunction util;
     
     @Override
-    protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+    protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {       
         UtilityFunction utilty = new UtilityFunction();
         String receiveDepartment = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");
         if("".equalsIgnoreCase(receiveDepartment)){        
@@ -110,7 +110,10 @@ public class ReceiveTableController extends SMITravelController {
             request.setAttribute(ADVANCERECEIVELIST, advanceReceiveList);
             request.setAttribute("inputDate", inputDate);
             request.setAttribute("selectStatus", selectStatus);
+            String resultRedirect = request.getParameter("resultRedirect");
+            request.setAttribute(RESULT, resultRedirect);
             getReceivePeriod(request,inputDate,department,selectStatus);
+            
         }else if("save".equalsIgnoreCase(action)){
             AdvanceReceive advanceReceive = new AdvanceReceive();
             if("".equalsIgnoreCase(receiveId)){
@@ -156,6 +159,8 @@ public class ReceiveTableController extends SMITravelController {
                 request.setAttribute("inputDate", receiveDate);
                 request.setAttribute("selectStatus", vatType);
             }
+
+            return new ModelAndView(new RedirectView("ReceiveTable"+receiveDepartment+".smi?action=search&InputDate="+receiveDate+"&SelectStatus="+vatType+"&department="+department+"&resultRedirect="+result, true));
             
         }else if("edit".equalsIgnoreCase(action)){
             List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive("","",department,receiveId);

@@ -45,7 +45,7 @@ public class TaxInvoiceController extends SMITravelController {
     private static final String RESULTTEXT ="result_text";
     private static final String REFNO ="refNo";
     private static final String INVOICENO ="invoiceNo";
-    private static final String DISABLEDFIELDSEARCH ="disabledFieldSearch";
+//    private static final String DISABLEDFIELDSEARCH ="disabledFieldSearch";
     private PaymentTourHotelService paymentTourHotelService;
     private TaxInvoiceService taxInvoiceService;
     
@@ -110,6 +110,7 @@ public class TaxInvoiceController extends SMITravelController {
         String count = request.getParameter("countTaxInvoice");
         String vatDefault = request.getParameter("vatDefault");
         String department = request.getParameter("department");
+        String disabledFieldSearch = request.getParameter("disabledFieldSearch");
 //        String postDate = request.getParameter("postDate");
 //        String outputTaxStatus = request.getParameter("outputTaxStatus");
         String wildCardSearch = request.getParameter("wildCardSearch");
@@ -137,7 +138,8 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoice.setTaxInvName(invToName);
             taxInvoice.setTaxInvAddr(invToAddress);
             taxInvoice.setArCode(arCode);
-            taxInvoice.setRemark(remark);            
+            taxInvoice.setRemark(remark);
+            taxInvoice.setIsProfit("1".equalsIgnoreCase(disabledFieldSearch) ? 1 : 0);
             
             Date invToDateConvert = new Date();
             invToDateConvert = utilty.convertStringToDate(invToDate);
@@ -193,8 +195,8 @@ public class TaxInvoiceController extends SMITravelController {
            
             List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
             taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
-            String disabledFieldSearch = checkDisabledFieldSearch(taxInvoiceList);
-            request.setAttribute(DISABLEDFIELDSEARCH, disabledFieldSearch);
+//            String disabledFieldSearch = checkDisabledFieldSearch(taxInvoiceList);
+//            request.setAttribute(DISABLEDFIELDSEARCH, disabledFieldSearch);
             request.setAttribute(TAXINVOICE, taxInvoice);
             request.setAttribute("invToDate", invToDate);
             request.setAttribute("createDate", createDate);
@@ -211,8 +213,8 @@ public class TaxInvoiceController extends SMITravelController {
             }
             List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
             taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
-            String disabledFieldSearch = checkDisabledFieldSearch(taxInvoiceList);
-            request.setAttribute(DISABLEDFIELDSEARCH, disabledFieldSearch);
+//            String disabledFieldSearch = checkDisabledFieldSearch(taxInvoiceList);
+//            request.setAttribute(DISABLEDFIELDSEARCH, disabledFieldSearch);
             request.setAttribute(TAXINVOICE, taxInvoice);
             request.setAttribute("invToDate", taxInvoice.getTaxInvDate());
             request.setAttribute("createDate", taxInvoice.getCreateDate());
@@ -269,8 +271,8 @@ public class TaxInvoiceController extends SMITravelController {
             
             List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
             taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
-            String disabledFieldSearch = checkDisabledFieldSearch(taxInvoiceList);
-            request.setAttribute(DISABLEDFIELDSEARCH, disabledFieldSearch);
+//            String disabledFieldSearch = checkDisabledFieldSearch(taxInvoiceList);
+//            request.setAttribute(DISABLEDFIELDSEARCH, disabledFieldSearch);
             request.setAttribute(TAXINVOICE, taxInvoice);
             request.setAttribute("invToDate", invToDate);
             request.setAttribute("createDate", createDate);
@@ -331,8 +333,8 @@ public class TaxInvoiceController extends SMITravelController {
             
             List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
             taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
-            String disabledFieldSearch = checkDisabledFieldSearch(taxInvoiceList);
-            request.setAttribute(DISABLEDFIELDSEARCH, disabledFieldSearch);
+//            String disabledFieldSearch = checkDisabledFieldSearch(taxInvoiceList);
+//            request.setAttribute(DISABLEDFIELDSEARCH, disabledFieldSearch);
             request.setAttribute(TAXINVOICE, taxInvoice);
             request.setAttribute("invToDate", invToDate);
             request.setAttribute("createDate", createDate);
@@ -351,8 +353,8 @@ public class TaxInvoiceController extends SMITravelController {
                 taxInvoice = taxInvoiceService.getTaxInvoiceFromTaxInvNo(taxInvNo,department);            
                 List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
                 taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
-                String disabledFieldSearch = checkDisabledFieldSearch(taxInvoiceList);
-                request.setAttribute(DISABLEDFIELDSEARCH, disabledFieldSearch);
+//                String disabledFieldSearch = checkDisabledFieldSearch(taxInvoiceList);
+//                request.setAttribute(DISABLEDFIELDSEARCH, disabledFieldSearch);
                 request.setAttribute(TAXINVOICE, taxInvoice);
                 request.setAttribute("invToDate", taxInvoice.getTaxInvDate());
                 request.setAttribute("createDate", taxInvoice.getCreateDate());
@@ -365,8 +367,8 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoice = taxInvoiceService.getTaxInvoiceByWildCardSearch(taxInvId,taxInvNo,wildCardSearch,keyCode,page);            
             List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
             taxInvoiceList = (taxInvoice != null ? taxInvoice.getTaxInvoiceDetails() : null);
-            String disabledFieldSearch = checkDisabledFieldSearch(taxInvoiceList);
-            request.setAttribute(DISABLEDFIELDSEARCH, disabledFieldSearch);
+//            String disabledFieldSearch = checkDisabledFieldSearch(taxInvoiceList);
+//            request.setAttribute(DISABLEDFIELDSEARCH, disabledFieldSearch);
             request.setAttribute(TAXINVOICE, taxInvoice);
             request.setAttribute("invToDate", taxInvoice.getTaxInvDate());
             request.setAttribute("createDate", taxInvoice.getCreateDate());

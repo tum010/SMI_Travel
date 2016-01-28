@@ -411,7 +411,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     public TaxInvoice getTaxInvoiceByTaxNo(String taxNo,String department) {
         Session session = this.sessionFactory.openSession();
         TaxInvoice taxInvoice = new TaxInvoice();
-        String query = "FROM TaxInvoice t where t.taxNo = :TaxInvNo AND t.department = :department ";
+        String query = "FROM TaxInvoice t where t.taxNo = :TaxInvNo AND t.department = :department AND t.MFinanceItemstatus.id = 1";
         List<TaxInvoice> taxInvoiceList = session.createQuery(query)
                 .setParameter("TaxInvNo", taxNo)
                 .setParameter("department", department)
@@ -421,14 +421,14 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         } 
         
         taxInvoice = taxInvoiceList.get(0);
-               
+        System.out.println("---------------taxInvoice------------------"+taxInvoice.getId());       
         return taxInvoice;
     }
 
     @Override
     public List<TaxInvoiceDetail> getTaxInvoiceDetailFromInvDetailId(String invDetailId) {
         Session session = this.sessionFactory.openSession();
-        String query = " from TaxInvoiceDetail t WHERE t.invoiceDetail.id = :invDetailId and t.taxInvoice.MFinanceItemstatus.name = 'NORMAL'";
+        String query = " from TaxInvoiceDetail t WHERE t.invoiceDetail.id = :invDetailId and t.taxInvoice.MFinanceItemstatus.name = 'NORMAL' AND t.taxInvoice.isProfit != '1'";
         List<TaxInvoiceDetail> taxInvoiceDetailList = session.createQuery(query).setParameter("invDetailId", invDetailId).list();
         if(taxInvoiceDetailList.isEmpty()){
             return null;
@@ -607,5 +607,35 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         session.close();
         this.sessionFactory.close();
         return amountTotal;
+    }
+
+    @Override
+    public String checkIsProfitForSearchInvoice(String invDetailId) {
+        String result = "success";
+        Session session = this.sessionFactory.openSession();
+        List<TaxInvoiceDetail> list = session.createQuery("from TaxInvoiceDetail tax WHERE tax.invoiceDetail.id = :invoiceDetailId and tax.taxInvoice.MFinanceItemstatus.id = 1 and tax.taxInvoice.isProfit = 1")
+                .setParameter("invoiceDetailId", invDetailId)
+                .list();
+        if(!list.isEmpty()){
+            result = "fail";
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    }
+
+    @Override
+    public String checkIsProfitForSearchRefNo(String invDetailId) {
+        String result = "success";
+        Session session = this.sessionFactory.openSession();
+        List<TaxInvoiceDetail> list = session.createQuery("from TaxInvoiceDetail tax WHERE tax.invoiceDetail.id = :invoiceDetailId and tax.taxInvoice.MFinanceItemstatus.id = 1 and tax.taxInvoice.isProfit != 1")
+                .setParameter("invoiceDetailId", invDetailId)
+                .list();
+        if(!list.isEmpty()){
+            result = "fail";
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
     }
 }

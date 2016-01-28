@@ -15,9 +15,8 @@
 <c:set var="taxInvoice" value="${requestScope['taxInvoice']}" />
 <c:set var="taxInvoiceDetail" value="${requestScope['taxInvoiceDetail_list']}" />
 <c:set var="roleName" value="${requestScope['roleName']}" />
-<c:set var="disabledFieldSearch" value="${requestScope['disabledFieldSearch']}" />
 <input type="hidden" id="Type" name="Type" value="${param.Department}">
-<input type="hidden" id="disabledFieldSearch" name="disabledFieldSearch" value="${disabledFieldSearch}">
+
 <section class="content-header" >
     <h1>
         <c:set var="voidTaxInvoice" value="" />
@@ -278,7 +277,8 @@
                             <!--<input type="hidden" class="form-control" id="postDate" name="postDate" value="${requestScope['postDate']}"/>-->
                             <!--<input type="hidden" class="form-control" id="outputTaxStatus" name="outputTaxStatus" value="${taxInvoice.outputTaxStatus}"/>-->
                             <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
-                            <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >                           
+                            <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
+                            <input type="hidden" id="disabledFieldSearch" name="disabledFieldSearch" value="${taxInvoice.isProfit}">
                             <input type="text" style="text-transform:uppercase" class="form-control" id="TaxInvNo" name="TaxInvNo" value="${taxInvoice.taxNo}" >
                         </div>
                         <div class="col-md-1" >
@@ -491,10 +491,10 @@
                                                     <td class="hidden"><input class="form-control" type="text" id="isProfit${i.count}" name="isProfit${i.count}" value="${taxDetail.isProfit}"></td>
                                                     <c:set var="fromAjax" value=""/>
                                                     <c:choose>
-                                                        <c:when test="${disabledFieldSearch == 'disbledInvoice'}">
+                                                        <c:when test="${disabledFieldSearch == '1'}">
                                                             <c:set var="fromAjax" value="refNo"/>
                                                         </c:when>
-                                                        <c:when test="${disabledFieldSearch == 'disbledRefNo'}">
+                                                        <c:when test="${disabledFieldSearch == '0'}">
                                                             <c:set var="fromAjax" value="invoice"/>
                                                         </c:when>
                                                     </c:choose>
@@ -1024,11 +1024,11 @@
 <script language="javascript">
     var showflag = 1;
     $(document).ready(function () {
-        if($("#disabledFieldSearch").val() === 'disbledInvoice'){
+        if($("#disabledFieldSearch").val() === '1'){
             $("#invoiceNo").val(''); 
             $("#invoiceNo").attr("disabled", "disabled"); 
         }
-        if($("#disabledFieldSearch").val() === 'disbledRefNo'){
+        if($("#disabledFieldSearch").val() === '0'){
             $("#refNo").val(''); 
             $("#refNo").attr("disabled", "disabled"); 
         }
@@ -1066,25 +1066,25 @@
 //        });
         
         var SearchTaxInvoiceToTable = $('#SearchTaxInvoiceToTable').dataTable({bJQueryUI: true,
-                            "sPaginationType": "full_numbers",
-                            "bAutoWidth": false,
-                            "bFilter": false,
-                            "bPaginate": true,
-                            "bInfo": false,
-                            "bLengthChange": false,
-                            "iDisplayLength": 10
-                        });
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+        });
 
-                        $('#SearchTaxInvoiceToTable tbody').on('click', 'tr', function() {
-                            $('.collapse').collapse('show');
-                            if ($(this).hasClass('row_selected')) {
-                                $(this).removeClass('row_selected');
-                            }
-                            else {
-                                SearchTaxInvoiceToTable.$('tr.row_selected').removeClass('row_selected');
-                                $(this).addClass('row_selected');
-                            }
-                        });
+        $('#SearchTaxInvoiceToTable tbody').on('click', 'tr', function() {
+            $('.collapse').collapse('show');
+            if ($(this).hasClass('row_selected')) {
+                $(this).removeClass('row_selected');
+            }
+            else {
+                SearchTaxInvoiceToTable.$('tr.row_selected').removeClass('row_selected');
+                $(this).addClass('row_selected');
+            }
+        });
         
         $('#ARCodeTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
@@ -1594,7 +1594,8 @@
                         '&servicesName=' + servicesName +
                         '&invoiceNo=' + invoiceNo +
                         '&department=' + department +
-                        '&type=' + 'searchInvoiceNo';
+                        '&type=' + 'searchInvoiceNo' +
+                        '&isProfit=0';
                 CallAjaxSearchInvoice(param);
             }
         }    
@@ -1694,7 +1695,8 @@
                         '&servletName=' + servletName +
                         '&servicesName=' + servicesName +
                         '&refNo=' + refNo +
-                        '&type=' + 'searchRefNo';
+                        '&type=' + 'searchRefNo' +
+                        '&isProfit=1';
                 CallAjaxSearchRef(param);
             }
         }    
@@ -1897,7 +1899,7 @@
         var isProfit = 1;
         console.log(match);
         if(match === 0){          
-            AddDataRowProduct(row,count,id,product,description,cost,curcost,amount,curamount,'',refNo,isProfit,'','refNo');
+            AddDataRowProduct(row,count,id,product,description,cost,curcost,amount,curamount,'1',refNo,isProfit,'','refNo');
         }    
     }
     
@@ -1909,11 +1911,13 @@
                 if(fromAjax === 'invoice'){                                          
                     $("#refNo").val(''); 
                     $("#refNo").attr("disabled", "disabled");
+                    $("#disabledFieldSearch").val(''); 
                     return;
                                    
                 }else if(fromAjax === 'refNo'){
                     $("#invoiceNo").val(''); 
-                    $("#invoiceNo").attr("disabled", "disabled"); 
+                    $("#invoiceNo").attr("disabled", "disabled");
+                    $("#disabledFieldSearch").val('1'); 
                     return;
                 }
             }

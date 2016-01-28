@@ -262,12 +262,13 @@ function deleteDesc(bookId, descId) {
 }
 
 function printTicketOrder(refno) {
+    $('#textAlertSelectPnr').hide();
     var PnrID = "";
     $('#TableAir tr.row_selected').each(function () {
         PnrID = $(this).attr('id');
     });
     if (PnrID == "") {
-        alert("please select a PNR to print ticket order")
+        $('#textAlertSelectPnr').show();
     } else {
         window.open("report.smi?name=TicketOrder&refno=" + refno + "&pnrID=" + PnrID);
     }

@@ -1,4 +1,5 @@
  $(document).ready(function () {
+     
         //Table
         var table = $('#HotelTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
@@ -55,15 +56,18 @@ function Delete() {
 }
 
 function printVoucher(){
+    hideTextAlert();
     var printtype = document.getElementById('printtype').value;
     var HotelID = "";
     $('#HotelTable tr.row_selected').each(function () {
         HotelID = $(this).attr('id');
     });
     if(HotelID == ""){
-        alert("please select hotel to print voucher")
+        $("#textAlertVoucher").show();
+//        alert("please select hotel to print voucher");
     }else if(printtype == 0){
-        alert('please select voucher to print');
+        $("#textAlertPrint").show();
+//        alert('please select voucher to print');
     }else if(printtype == 1){
         window.open("report.smi?name=HotelVoucher&hotelID="+HotelID);
     }else if(printtype == 2){
@@ -72,6 +76,10 @@ function printVoucher(){
         window.open("report.smi?name=HotelVoucherEmail&hotelID="+HotelID);
     }else if(printtype == 4){
         window.open("report.smi?name=HotelVoucherEmailAgent&hotelID="+HotelID);
-    }
-    
+    }   
+}
+
+function hideTextAlert(){
+    $("#textAlertVoucher").hide();
+    $("#textAlertPrint").hide();
 }

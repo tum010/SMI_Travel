@@ -14,6 +14,7 @@ public class BillAirAgentRefund {
     private String agentPage;
     private String issuedatePage;
     private String invoicedatePage;
+    private String refunddatePage;
     private String printbyPage;
     private String paymenttypePage;
     
@@ -155,6 +156,14 @@ public class BillAirAgentRefund {
 
     public void setVat(String vat) {
         this.vat = vat;
+    }
+
+    public String getRefunddatePage() {
+        return refunddatePage;
+    }
+
+    public void setRefunddatePage(String refunddatePage) {
+        this.refunddatePage = refunddatePage;
     }
     
     

@@ -95,6 +95,9 @@
         <property name="createBy" type="string">
             <column name="create_by" length="20" />
         </property>
+        <property name="isRef" type="java.lang.Integer">
+            <column name="is_ref" />
+        </property>
         <bag name="receiptDetails" table="receipt_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="rec_id" />

@@ -37,7 +37,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
 //    
 
     @Override
-    public List getInvoiceSummary(String fromData, String toDate, String department, String type,String agent,String statusInvoice,String printBy) {
+    public List getInvoiceSummary(String fromData, String toDate, String department, String type,String agent,String statusInvoice,String printBy,String subdepartment) {
         List<InvoiceSummary> listInovicSummary = new LinkedList<InvoiceSummary>();
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
@@ -65,6 +65,15 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
                 String[] departmentTemp = department.split(",");
                 query += " st.department in ('" + departmentTemp[0] + "','" + departmentTemp[1] + "') ";
             }          
+        }
+            
+        if (subdepartment != null && (!"".equalsIgnoreCase(subdepartment)) ) {
+            if(AndQuery == 1){
+                 query += " and st.subdepartment = '" + subdepartment + "'";
+            }else{
+                AndQuery = 1;
+                query += " st.subdepartment = '" + subdepartment + "'";
+            }
         }
        
         if (type != null && (!"".equalsIgnoreCase(type)) ) {

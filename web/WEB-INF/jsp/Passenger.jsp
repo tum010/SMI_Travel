@@ -123,7 +123,7 @@
                 <tbody>
                     <c:forEach var="passenger" items="${passengerList}" varStatus="varPassenger">
                         <tr>
-                            <td>${varPassenger.count}</td>
+                            <td class="center">${varPassenger.count}</td>
                             <td class="codeCustomer">${passenger.getCustomer().getCode()}</td>
                             <td>${passenger.getCustomer().getLastName()}    
                                 ${passenger.getCustomer().getFirstName()}</td>

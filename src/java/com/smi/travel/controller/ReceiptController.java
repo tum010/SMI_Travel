@@ -103,6 +103,7 @@ public class ReceiptController extends SMITravelController {
         String keyCode = request.getParameter("keyCode");
         String invoiceTableNo = request.getParameter("invoiceTableNo1");
         String invoiceTableId = request.getParameter("invoiceTableId1");
+        String isref = request.getParameter("isref");
         
         System.out.println(" callPageFrom " + callPageFrom);
         if(!"".equals(callPageFrom)){
@@ -314,7 +315,7 @@ public class ReceiptController extends SMITravelController {
                     if(StringUtils.isNotEmpty(billDescId)){
                         invoiceDetailList = invoiceService.getInvoiceDetailFromBillableDescId(billDescId);
                     }
-                    if(invoiceDetailList == null){
+//                    if(invoiceDetailList == null){
 //                       Invoice invoice = new Invoice();
 //                       invoice.setInvNo(receiveNo);
 //                       invoice.setInvTo(receiveFromCode);
@@ -412,7 +413,7 @@ public class ReceiptController extends SMITravelController {
                                receiptDetail.setInvoiceDetail(invD);
                            }
                        }
-                   }
+//                   }
                 }
                 
                 if(StringUtils.isNotEmpty(paymentId)){
@@ -486,7 +487,9 @@ public class ReceiptController extends SMITravelController {
             receipt.setReceiveDate(util.convertStringToDate(receiveDate != "" ? receiveDate : ""));
             receipt.setArCode(arCode);
             receipt.setRemark(remark);
-
+            if(!"".equalsIgnoreCase(isref) && isref != null){
+                receipt.setIsRef(Integer.parseInt(isref));
+            }
 //            MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
             mFinanceItemstatus.setId("1"); // 1 = Normal
             receipt.setMFinanceItemstatus(mFinanceItemstatus);

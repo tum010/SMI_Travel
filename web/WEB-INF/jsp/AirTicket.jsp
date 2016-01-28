@@ -84,10 +84,14 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Save Success!</strong> 
             </div>
-            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+            <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Save Unsuccess!</strong> 
-            </div>            
+            </div>     
+            <div id="textAlertSelectPnr"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Please select a PNR to print ticket order!</strong> 
+            </div>
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
 
             <form action="AirTicket.smi" method="post" id="AirTicket" role="form">

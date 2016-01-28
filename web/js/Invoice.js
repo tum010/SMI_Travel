@@ -791,15 +791,15 @@ function changeFormatAmountLocalTempNumber(id) {
 //    }
 }
 function changeFormatCostNumber(id) {
-//    var count = document.getElementById('InputCost' + id).value;
-//    count = count.replace(/\,/g, '');
-//    count = parseFloat(count);
-//    if (isNaN(count)) {
-//        document.getElementById('InputCost' + id).value = "";
-//    } else {
-//        count = parseFloat(count);
-//        document.getElementById('InputCost' + id).value = formatNumber(count);
-//    }
+    var count = document.getElementById('InputCost' + id).value;
+    count = count.replace(/\,/g, '');
+    count = parseFloat(count);
+    if (isNaN(count)) {
+        document.getElementById('InputCost' + id).value = "";
+    } else {
+        count = parseFloat(count);
+        document.getElementById('InputCost' + id).value = formatNumber(count);
+    }
 }
 function changeFormatCostLocalNumber(id) {
 //    var count = parseFloat(document.getElementById('InputCostLocal' + id).value);

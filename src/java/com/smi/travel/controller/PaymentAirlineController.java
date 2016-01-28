@@ -389,6 +389,7 @@ public class PaymentAirlineController extends SMITravelController {
                 if(paymentAirticket.getPaymentAirCredits() == null){
                     paymentAirticket.setPaymentAirCredits(new ArrayList<PaymentAirCredit>());
                 }
+                System.out.println(" RowCredit " + RowCredit);
                 for (int i = 1; i < RowCredit  ; i++) {
                     String creditId = request.getParameter("creditId" + i);
                     String creditNote = request.getParameter("creditNote" + i);
@@ -408,7 +409,7 @@ public class PaymentAirlineController extends SMITravelController {
                         paymentAirCredit.setCreditAmount(new BigDecimal(0)); 
                     }
 
-                    if(!"".equalsIgnoreCase(creditNote) || !"".equalsIgnoreCase(creditAmount)){
+                    if((!"".equalsIgnoreCase(creditNote) && creditNote != null) || (!"".equalsIgnoreCase(creditAmount) && creditAmount != null)){
                         paymentAirticket.getPaymentAirCredits().add(paymentAirCredit);
                     }
                 }
@@ -435,7 +436,7 @@ public class PaymentAirlineController extends SMITravelController {
                         paymentAirDebit.setDebitAmount(new BigDecimal(0)); 
                     }
 
-                    if(!"".equalsIgnoreCase(debitNote) || !"".equalsIgnoreCase(debitAmount)){
+                    if((!"".equalsIgnoreCase(debitNote) && debitNote != null)  || (!"".equalsIgnoreCase(debitAmount) && debitAmount != null) ){
                         paymentAirticket.getPaymentAirDebits().add(paymentAirDebit);
                     }
                 }
