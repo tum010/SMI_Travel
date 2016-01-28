@@ -588,6 +588,7 @@
                                         <c:forEach var="table" items="${receiptDetailList}" varStatus="i">
                                             <tr>
                                         <input type="hidden" name="count${i.count}" id="count${i.count}" value="${i.count}">
+                                        <input id="billDescId${i.count}"  name="billDescId${i.count}"   type="hidden" value="${table.invoiceDetail.billableDesc.id}" >
                                         <input id="invId${i.count}"  name="invId${i.count}"   type="hidden" value="${table.invoiceDetail.id}" >
                                         <input id="invoiceTableNo${i.count}"  name="invoiceTableNo${i.count}"   type="hidden" value="${table.invoiceDetail.invoice.invNo}" >
                                         <input id="invoiceTableId${i.count}"  name="invoiceTableId${i.count}"   type="hidden" value="${table.invoiceDetail.invoice.id}" >
@@ -2565,7 +2566,13 @@
     
     function addProduct(product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, checkadd, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress,invTableId,invTableNo) {
         var receiveAddressTemp = replaceAll("<br>", "\n" , receiveAddress.toString());
+        $('#textAlertDivSave').hide();
+        $('#textAlertDivNotSave').hide();
+        $('#textAlertDivDelete').hide();
+        $('#textAlertDivNotDelete').hide();
+        $('#textAlertReceiveNo').hide();
         $('#textAlertDuplicateProduct').hide();
+        $('#textAlertReceiveAmount').hide();
         var tempCount = parseInt($("#counter").val());
         var checkAddDuplicate = false;
         if (checkadd == 1) {
@@ -3176,25 +3183,17 @@
                             $("#searchaircomtable").addClass("hidden");
                             $("#searchtourcomtable").addClass("hidden");
                             
-                            $('#AircommissionTable').dataTable().fnClearTable();
-                            $('#AircommissionTable').dataTable().fnDestroy();
-
-                            $('#AircommissionTable').dataTable({bJQueryUI: true,
-                                "sPaginationType": "full_numbers",
-                                "bAutoWidth": true,
-                                "bFilter": false,
-                                "bPaginate": true,
-                                "bInfo": false,
-                                "bLengthChange": false,
-                                "iDisplayLength": 5
+                            $('#AircommissionTable > tbody  > tr').each(function() {
+                                $(this).remove();
                             });
+                            
                             $("#AircommissionTable_wrapper").css("min-height", 100);
                         } else {
 //                            $("#searchaircomtable").removeClass("hidden");
-                            $('#AircommissionTable').dataTable().fnClearTable();
-                            $('#AircommissionTable').dataTable().fnDestroy();
+                            $('#AircommissionTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
                             $("#AircommissionTable tbody").empty().append(msg);
-                            
                             
                             var rowAll = $("#AircommissionTable tr").length;
                             if(rowAll === 1){
@@ -3202,16 +3201,6 @@
                             }else{
                                 $("#searchaircomtable").removeClass("hidden");
                             }
-                            
-                            $('#AircommissionTable').dataTable({bJQueryUI: true,
-                                "sPaginationType": "full_numbers",
-                                "bAutoWidth": true,
-                                "bFilter": false,
-                                "bPaginate": true,
-                                "bInfo": false,
-                                "bLengthChange": false,
-                                "iDisplayLength": 5
-                            });
 
 //                        document.getElementById("receiveFromCode").value = $("#receiveFromTicAir").val();
 //                        document.getElementById("receiveFromName").value = $("#receiveNameTicAir").val();
@@ -3265,24 +3254,18 @@
                             $("#searchaircomtable").addClass("hidden");
                             $("#searchtourcomtable").addClass("hidden");
                             
-                            $('#TourcommissionTable').dataTable().fnClearTable();
-                            $('#TourcommissionTable').dataTable().fnDestroy();
-                            $('#TourcommissionTable').dataTable({bJQueryUI: true,
-                                "sPaginationType": "full_numbers",
-                                "bAutoWidth": true,
-                                "bFilter": false,
-                                "bPaginate": true,
-                                "bInfo": false,
-                                "bLengthChange": false,
-                                "iDisplayLength": 5
+                            $('#TourcommissionTable > tbody  > tr').each(function() {
+                                $(this).remove();
                             });
+                            
                             $("#TourcommissionTable_wrapper").css("min-height", 100);
                         } else {
 //                            $("#searchtourcomtable").removeClass("hidden");
-                            
-                            $('#TourcommissionTable').dataTable().fnClearTable();
-                            $('#TourcommissionTable').dataTable().fnDestroy();
+                            $('#TourcommissionTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
                             $("#TourcommissionTable tbody").empty().append(msg);
+                            
                             
                             var rowAll = $("#TourcommissionTable tr").length;
                             if(rowAll === 1){
@@ -3290,16 +3273,6 @@
                             }else{
                                 $("#searchtourcomtable").removeClass("hidden");
                             }
-                            
-                            $('#TourcommissionTable').dataTable({bJQueryUI: true,
-                                "sPaginationType": "full_numbers",
-                                "bAutoWidth": true,
-                                "bFilter": false,
-                                "bPaginate": true,
-                                "bInfo": false,
-                                "bLengthChange": false,
-                                "iDisplayLength": 5
-                            });
                             $("#TourcommissionTable_wrapper").css("min-height", 100);
                         }
                         $("#ajaxload4").addClass("hidden");

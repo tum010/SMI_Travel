@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 $(document).ready(function() {
+    $('.datemask').mask('0000-00-00');
     $('.date').datetimepicker();
     $('.spandate').click(function() {
         var position = $(this).offset();
