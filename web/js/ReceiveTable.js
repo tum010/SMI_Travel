@@ -224,21 +224,21 @@ $(document).ready(function() {
     });
 
     //Set Status Format Calculate
-    $("#receiveAmount,#wht").keyup(function() {
+    $("#receiveAmount,#wht").focusout(function() {
         setStatusFormat();
     });
 
-    $("#cashAmount").keyup(function() {
+    $("#cashAmount").focusout(function() {
         setCashAmount(this.value);
         setCashOnDemand()
     });
 
-    $("#bankAmount").keyup(function() {
+    $("#bankAmount").focusout(function() {
         setBankAmount(this.value);
         setCashOnDemand()
     });
 
-    $("#chqAmount").keyup(function() {
+    $("#chqAmount").focusout(function() {
         setChqAmount(this.value);
         setCashOnDemand()
     });
@@ -523,7 +523,7 @@ function AddRowCreditTable(row) {
             '<span class="input-group-addon spandate" id="spandate' + row + '" style="padding : 1px 10px;" onclick="AddrowBySelect(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
             '</div>' +
             '</td>' +
-            '<td><input class="form-control decimal" type="text" id="creditAmount' + row + '" name="creditAmount' + row + '" value="" onfocusout="calculate(this); calculateCreditAmount(); setCreditAmount(); setCashOnDemand();"></td>' +
+            '<td><input class="form-control decimal" type="text" id="creditAmount' + row + '" name="creditAmount' + row + '" value="" onfocusout="calculateCreditAmount(); setCreditAmount(); setCashOnDemand();"></td>' +
             '<td>' +
             '<center>' +
             '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" onclick="deleteAdvanceReceiveCreditConfirm(\'\',\'' + row + '\')"  data-toggle="modal" data-target="#DeleteExpenModal">' +
@@ -1137,20 +1137,35 @@ function CallAjaxDeletePeriod(param, periodId) {
 //                        $(this).remove();
 //                    });
                     var result = msg.split("//");
-                    if(result[1] !== ''){
-                        $('#periodTable').dataTable().fnClearTable();
-                        $('#periodTable').dataTable().fnDestroy();
-                        $("#periodTable tbody").empty().append(result[1]);
-                        $('#periodTable').dataTable({bJQueryUI: true,
-                            "sPaginationType": "full_numbers",
-                            "bAutoWidth": false,
-                            "bFilter": true,
-                            "bPaginate": true,
-                            "bInfo": false,
-                            "bLengthChange": false,
-                            "iDisplayLength": 10
-                        });
-                    }    
+                    if(result.length === 2){
+                        if(result[1] !== ''){
+                            $('#periodTable').dataTable().fnClearTable();
+                            $('#periodTable').dataTable().fnDestroy();
+                            $("#periodTable tbody").empty().append(result[1]);
+                            $('#periodTable').dataTable({bJQueryUI: true,
+                                "sPaginationType": "full_numbers",
+                                "bAutoWidth": false,
+                                "bFilter": true,
+                                "bPaginate": true,
+                                "bInfo": false,
+                                "bLengthChange": false,
+                                "iDisplayLength": 10
+                            });
+                        
+                        }else{
+                            $('#periodTable').dataTable().fnClearTable();
+                            $('#periodTable').dataTable().fnDestroy();
+                            $('#periodTable').dataTable({bJQueryUI: true,
+                                "sPaginationType": "full_numbers",
+                                "bAutoWidth": false,
+                                "bFilter": true,
+                                "bPaginate": true,
+                                "bInfo": false,
+                                "bLengthChange": false,
+                                "iDisplayLength": 10
+                            });
+                        }                           
+                    }
                     $("#periodTable tbody").append(result[0]);
                     $("#periodSize").val($("#periodSizeTemp").val());
                     var periodSize = parseInt($("#periodSize").val());
