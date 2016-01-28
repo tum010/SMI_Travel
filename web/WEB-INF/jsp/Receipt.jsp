@@ -588,6 +588,7 @@
                                         <c:forEach var="table" items="${receiptDetailList}" varStatus="i">
                                             <tr>
                                         <input type="hidden" name="count${i.count}" id="count${i.count}" value="${i.count}">
+                                        <input id="billDescId${i.count}"  name="billDescId${i.count}"   type="hidden" value="${table.invoiceDetail.billableDesc.id}" >
                                         <input id="invId${i.count}"  name="invId${i.count}"   type="hidden" value="${table.invoiceDetail.id}" >
                                         <input id="invoiceTableNo${i.count}"  name="invoiceTableNo${i.count}"   type="hidden" value="${table.invoiceDetail.invoice.invNo}" >
                                         <input id="invoiceTableId${i.count}"  name="invoiceTableId${i.count}"   type="hidden" value="${table.invoiceDetail.invoice.id}" >

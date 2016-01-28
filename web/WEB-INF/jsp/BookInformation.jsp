@@ -30,8 +30,8 @@
                     <div class="form-group">
                         <label>Booking Date</label>
                         <div class=' col-sm-12 input-group date' id='effectivefromClass'>
-                            <input type='text' class="form-control"  id="bookDate" name="bookDate" 
-                                   data-date-format="YYYY-MM-DD" value="${requestScope['bookDate']}" />
+                            <input type='text' class="form-control datemask"  id="bookDate" name="bookDate" 
+                                   data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['bookDate']}" />
                             <span class="input-group-addon spandate">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -61,8 +61,8 @@
                     <div class="form-group">
                         <label>Dept Date</label>
                         <div class=' col-sm-12 input-group date' id='effectivefromClass'>
-                            <input type='text' class="form-control"  id="airDeptDate" name="airDeptDate" 
-                                   data-date-format="YYYY-MM-DD" value="${requestScope['airDeptDate']}" />
+                            <input type='text' class="form-control datemask"  id="airDeptDate" name="airDeptDate" 
+                                   data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['airDeptDate']}" />
                             <span class="input-group-addon spandate">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -84,8 +84,8 @@
                     <div class="form-group">
                         <label>Check In</label>
                         <div class=' col-sm-12 input-group date' id='effectivefromClass'>
-                            <input type='text' class="form-control"  id="hotelCheckIn" name="hotelCheckIn" 
-                                   data-date-format="YYYY-MM-DD" value="${requestScope['hotelCheckIn']}" />
+                            <input type='text' class="form-control datemask"  id="hotelCheckIn" name="hotelCheckIn" 
+                                   data-date-format="YYYY-MM-DD"  placeholder="YYYY-MM-DD" value="${requestScope['hotelCheckIn']}" />
                             <span class="input-group-addon spandate">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -96,8 +96,8 @@
                     <div class="form-group">
                         <label>Check Out</label>
                         <div class=' col-sm-12 input-group date' id='effectivefromClass'>
-                            <input type='text' class="form-control"  id="hotelCheckOut" name="hotelCheckOut" 
-                                   data-date-format="YYYY-MM-DD" value="${requestScope['hotelCheckOut']}" />
+                            <input type='text' class="form-control datemask"  id="hotelCheckOut" name="hotelCheckOut" 
+                                   data-date-format="YYYY-MM-DD"  placeholder="YYYY-MM-DD" value="${requestScope['hotelCheckOut']}" />
                             <span class="input-group-addon spandate">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -130,8 +130,8 @@
                     <div class="form-group">
                         <label>Tour Date</label>
                         <div class=' col-sm-12 input-group date' id='effectivefromClass'>
-                            <input type='text' class="form-control"  id="tourDate" name="tourDate" 
-                                   data-date-format="YYYY-MM-DD" value="${requestScope['tourDate']}" />
+                            <input type='text' class="form-control datemask"  id="tourDate" name="tourDate" 
+                                   data-date-format="YYYY-MM-DD"  placeholder="YYYY-MM-DD" value="${requestScope['tourDate']}" />
                             <span class="input-group-addon spandate">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -161,8 +161,8 @@
                     <div class="form-group">
                         <label>Other Date</label>
                         <div class=' col-sm-12 input-group date' id='effectivefromClass'>
-                            <input type='text' class="form-control"  id="otherDate" name="otherDate" 
-                                   data-date-format="YYYY-MM-DD" value="${requestScope['otherDate']}" />
+                            <input type='text' class="form-control datemask"  id="otherDate" name="otherDate" 
+                                   data-date-format="YYYY-MM-DD"  placeholder="YYYY-MM-DD"value="${requestScope['otherDate']}" />
                             <span class="input-group-addon spandate">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
