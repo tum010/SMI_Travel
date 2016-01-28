@@ -285,9 +285,11 @@
                                         </span>
                                     </div>    
                                 </div>
-                                <div class="col-xs-1 form-group" style="width: 290px" id="menu-container">
-                                    <input name="receiveName" id="receiveName" type="text" class="form-control" style="text-transform: uppercase;" value="${advanceReceive.recName}" maxlength="100"/>
-                                </div>
+                                <div class="col-xs-1 " style="width: 290px">
+                                    <div class="input-group" style="width: 270px">
+                                        <input name="receiveName" id="receiveName" type="text" class="form-control" style="text-transform: uppercase;" value="${advanceReceive.recName}" maxlength="100"/>                               
+                                    </div>
+                                </div>        
                                 <div class="col-xs-1 text-left" style="width: 100px">
                                     <label class="control-label">AR Code</lable>        
                                 </div>
