@@ -78,6 +78,8 @@ $(document).ready(function() {
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
+        $('.ui-widget').css('z-index','380px');
+//        $('.ui-widget').css('width','380px');
         if ($(this).val() === "") {
 //            $("#receiveCode").val("");
             $("#receiveName").val("");
@@ -92,8 +94,11 @@ $(document).ready(function() {
         var position = $(this).offset();
         $(".ui-widget").css("top", position.top + 30);
         $(".ui-widget").css("left", position.left);
+        $('.ui-widget').css('z-index','380px');
+//        $('.ui-widget').css('width','380px');
         if (showflag == 0) {
-            $(".ui-widget").css("top", -1000);
+//            $(".ui-widget").css("top", -1000);
+            $('.ui-widget').css('z-index','380px');
             showflag = 1;
         }
     });
@@ -380,6 +385,7 @@ function CallAjaxAuto(param) {
                 $("#receiveName").autocomplete({
                     source: billArray,
                     close: function() {
+                        $('.ui-widget').css('z-index','380px');
                         $("#receiveName").trigger("keyup");
                         var billselect = $("#receiveName").val();
                         for (var i = 0; i < billListName.length; i++) {
