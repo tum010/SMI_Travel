@@ -3183,25 +3183,17 @@
                             $("#searchaircomtable").addClass("hidden");
                             $("#searchtourcomtable").addClass("hidden");
                             
-                            $('#AircommissionTable').dataTable().fnClearTable();
-                            $('#AircommissionTable').dataTable().fnDestroy();
-
-                            $('#AircommissionTable').dataTable({bJQueryUI: true,
-                                "sPaginationType": "full_numbers",
-                                "bAutoWidth": true,
-                                "bFilter": false,
-                                "bPaginate": true,
-                                "bInfo": false,
-                                "bLengthChange": false,
-                                "iDisplayLength": 5
+                            $('#AircommissionTable > tbody  > tr').each(function() {
+                                $(this).remove();
                             });
+                            
                             $("#AircommissionTable_wrapper").css("min-height", 100);
                         } else {
 //                            $("#searchaircomtable").removeClass("hidden");
-                            $('#AircommissionTable').dataTable().fnClearTable();
-                            $('#AircommissionTable').dataTable().fnDestroy();
+                            $('#AircommissionTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
                             $("#AircommissionTable tbody").empty().append(msg);
-                            
                             
                             var rowAll = $("#AircommissionTable tr").length;
                             if(rowAll === 1){
@@ -3209,16 +3201,6 @@
                             }else{
                                 $("#searchaircomtable").removeClass("hidden");
                             }
-                            
-                            $('#AircommissionTable').dataTable({bJQueryUI: true,
-                                "sPaginationType": "full_numbers",
-                                "bAutoWidth": true,
-                                "bFilter": false,
-                                "bPaginate": true,
-                                "bInfo": false,
-                                "bLengthChange": false,
-                                "iDisplayLength": 5
-                            });
 
 //                        document.getElementById("receiveFromCode").value = $("#receiveFromTicAir").val();
 //                        document.getElementById("receiveFromName").value = $("#receiveNameTicAir").val();
@@ -3272,24 +3254,18 @@
                             $("#searchaircomtable").addClass("hidden");
                             $("#searchtourcomtable").addClass("hidden");
                             
-                            $('#TourcommissionTable').dataTable().fnClearTable();
-                            $('#TourcommissionTable').dataTable().fnDestroy();
-                            $('#TourcommissionTable').dataTable({bJQueryUI: true,
-                                "sPaginationType": "full_numbers",
-                                "bAutoWidth": true,
-                                "bFilter": false,
-                                "bPaginate": true,
-                                "bInfo": false,
-                                "bLengthChange": false,
-                                "iDisplayLength": 5
+                            $('#TourcommissionTable > tbody  > tr').each(function() {
+                                $(this).remove();
                             });
+                            
                             $("#TourcommissionTable_wrapper").css("min-height", 100);
                         } else {
 //                            $("#searchtourcomtable").removeClass("hidden");
-                            
-                            $('#TourcommissionTable').dataTable().fnClearTable();
-                            $('#TourcommissionTable').dataTable().fnDestroy();
+                            $('#TourcommissionTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
                             $("#TourcommissionTable tbody").empty().append(msg);
+                            
                             
                             var rowAll = $("#TourcommissionTable tr").length;
                             if(rowAll === 1){
@@ -3297,16 +3273,6 @@
                             }else{
                                 $("#searchtourcomtable").removeClass("hidden");
                             }
-                            
-                            $('#TourcommissionTable').dataTable({bJQueryUI: true,
-                                "sPaginationType": "full_numbers",
-                                "bAutoWidth": true,
-                                "bFilter": false,
-                                "bPaginate": true,
-                                "bInfo": false,
-                                "bLengthChange": false,
-                                "iDisplayLength": 5
-                            });
                             $("#TourcommissionTable_wrapper").css("min-height", 100);
                         }
                         $("#ajaxload4").addClass("hidden");
