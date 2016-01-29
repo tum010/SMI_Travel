@@ -331,7 +331,7 @@ public class UtilityFunction {
 
     public static String convert(long number) {
       // 0 to 999 999 999 999
-      if (number == 0) { return "zero"; }
+      if (number == 0) { return "ZERO"; }
 
       String snumber = Long.toString(number);
 
