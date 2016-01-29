@@ -83,6 +83,13 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
                AndQuery = 1;
                query += " st.type = '" + type + "'";
            }
+        }else{
+            if(AndQuery == 1){
+                query += " and st.type != 'T'";
+           }else{
+               AndQuery = 1;
+               query += " st.type != 'T'";
+           }
         }
         
         if(agent != null && (!"".equalsIgnoreCase(agent))){
