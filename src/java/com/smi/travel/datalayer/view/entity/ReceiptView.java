@@ -71,6 +71,8 @@ public class ReceiptView {
     private String wt;
     private String cashminus;
     
+    private String status;
+    
     public String getId() {
         return id;
     }
@@ -485,6 +487,14 @@ public class ReceiptView {
 
     public void setChqbankflag2(String chqbankflag2) {
         this.chqbankflag2 = chqbankflag2;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
    

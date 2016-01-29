@@ -226,6 +226,7 @@ public class ReceiptImpl implements ReceiptDao{
                                     .addScalar("banktransfer",Hibernate.STRING)
                                     .addScalar("wt",Hibernate.STRING)
                                     .addScalar("cashminus",Hibernate.STRING)
+                                    .addScalar("status",Hibernate.STRING)
                                     .list();
         List data = new ArrayList();
         SimpleDateFormat df = new SimpleDateFormat();
@@ -276,7 +277,8 @@ public class ReceiptImpl implements ReceiptDao{
             receiptView.setWt((("0.00".equals(String.valueOf(recSum[17])) ? "0" : String.valueOf(recSum[17]))));
             receiptView.setCashminus((("0.00".equals(String.valueOf(recSum[18])) ? "0" : String.valueOf(recSum[18]))));
             receiptView.setNo(String.valueOf(i));
-            
+            receiptView.setStatus((("null".equals(String.valueOf(recSum[19])) ? "" : String.valueOf(recSum[19]))));
+
             String recdetail = checkRecDetail(util.ConvertString(recSum[7]));
             receiptView.setRecdetail(recdetail);
             
