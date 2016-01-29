@@ -1501,7 +1501,7 @@ public class AJAXBean extends AbstractBean implements
 //        if (billable.getMAccpay() != null) {
 //            mAccPay = billable.getMAccpay().getId();
 //        }
-        if (billableDescs == null || billableDescs.size() == 0) {
+//        if (billableDescs == null || billableDescs.size() == 0) {
             String newrow = "";
             newrow += "<tr>"
                     + "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>"
@@ -1509,9 +1509,10 @@ public class AJAXBean extends AbstractBean implements
                     + "<input type='hidden' name='receiveInvToAddress' id='receiveInvToAddress' value='" + receiveInvToAddress + "'>"
                     + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>"
                     + "</tr>";
+            newrow += "//";
             html.append(newrow);
-            return html.toString();
-        }
+//            return html.toString();
+//        }
         for (int i = 0; i < billableDescs.size(); i++) {
             billableDescId = billableDescs.get(i).getId();
             for(int j=0; j<invoiceDetailList.size(); j++){
@@ -1599,7 +1600,7 @@ public class AJAXBean extends AbstractBean implements
     //            System.out.println("displaydescription" + displaydescription);
 
                 if (remain.compareTo(BigDecimal.ZERO) != 0) {
-                    String newrow = "";              
+                    newrow = "";              
                     newrow += "<tr>"
                             + "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>"
                             + "<input type='hidden' name='receiveInvToName' id='receiveInvToName' value='" + receiveInvToName + "'>"
@@ -1618,16 +1619,18 @@ public class AJAXBean extends AbstractBean implements
                             + "</tr>";
                     html.append(newrow);
                     No++;
-                } else {
-                    String newrow = "";
-                    newrow += "<tr>"
-                            + "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>"
-                            + "<input type='hidden' name='receiveInvToName' id='receiveInvToName' value='" + receiveInvToName + "'>"
-                            + "<input type='hidden' name='receiveInvToAddress' id='receiveInvToAddress' value='" + receiveInvToAddress + "'>"
-                            + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>"
-                            + "</tr>";
-                    html.append(newrow);
-                }
+                }    
+//                } else {
+//                    String newrow = "";
+//                    newrow += "<tr>"
+//                            + "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>"
+//                            + "<input type='hidden' name='receiveInvToName' id='receiveInvToName' value='" + receiveInvToName + "'>"
+//                            + "<input type='hidden' name='receiveInvToAddress' id='receiveInvToAddress' value='" + receiveInvToAddress + "'>"
+//                            + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>"
+//                            + "</tr>";
+//                    newrow += "//";
+//                    html.append(newrow);
+//                }
             }    
         }
         return html.toString();
