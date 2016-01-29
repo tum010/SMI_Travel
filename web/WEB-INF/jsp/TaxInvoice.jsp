@@ -15,6 +15,7 @@
 <c:set var="taxInvoice" value="${requestScope['taxInvoice']}" />
 <c:set var="taxInvoiceDetail" value="${requestScope['taxInvoiceDetail_list']}" />
 <c:set var="roleName" value="${requestScope['roleName']}" />
+<c:set var="disabledFieldSearch" value="${taxInvoice.isProfit}" />
 <input type="hidden" id="Type" name="Type" value="${param.Department}">
 
 <section class="content-header" >
@@ -413,7 +414,7 @@
                         </div>
                         <div class="col-xs-1 form-group" style="width: 180px" id="refnopanel">
                             <div class="input-group">
-                                <input id="refNo" name="refNo" type="text" class="form-control" value="${requestScope['refNo']}" onkeydown="refnoValidate()" >
+                                <input id="refNo" name="refNo" type="text" class="form-control" value="${requestScope['refNo']}" onkeydown="refnoValidate()" maxlength="6">
                             </div>
                         </div>
                         <div class="col-xs-1 text-left"  style="width: 100px">
@@ -443,7 +444,19 @@
                                                     
                             </tbody>
                         </table>
-                    </div>    
+                    </div>
+                    <div class="col-xs-12 hidden" style="padding: 0px 15px 0px 0px;">
+                        <table id="RefNoListTableTemp" class="display" cellspacing="0" width="100%" style="table-layout: fixed;">
+                            <thead>
+                                <tr class="datatable-header" >
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                                    
+                            </tbody>
+                        </table>
+                    </div>        
                 </div>             
             <!--</div>-->
             <!--<div role="tabpanel">-->
@@ -491,10 +504,10 @@
                                                     <td class="hidden"><input class="form-control" type="text" id="isProfit${i.count}" name="isProfit${i.count}" value="${taxDetail.isProfit}"></td>
                                                     <c:set var="fromAjax" value=""/>
                                                     <c:choose>
-                                                        <c:when test="${disabledFieldSearch == '1'}">
+                                                        <c:when test="${disabledFieldSearch == 1}">
                                                             <c:set var="fromAjax" value="refNo"/>
                                                         </c:when>
-                                                        <c:when test="${disabledFieldSearch == '0'}">
+                                                        <c:when test="${disabledFieldSearch == 0}">
                                                             <c:set var="fromAjax" value="invoice"/>
                                                         </c:when>
                                                     </c:choose>
@@ -1731,12 +1744,23 @@
                             $("#searchRefNo2").addClass("hidden");
                             $('#AlertBooking').show();
                         }else{
+                            var result = msg.split("//");
                             $('#RefNoListTable > tbody  > tr').each(function() {
                                 $(this).remove();
                             });
-                            $("#RefNoListTable tbody").append(msg);
-                            $('#AlertBooking').hide();
-
+                            $('#RefNoListTableTemp > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
+                            if(result[1] !== ''){
+                                $("#RefNoListTable tbody").append(result[1]);
+                                $("#searchRefNo2").removeClass("hidden");
+                                $('#AlertBooking').hide();
+                            
+                            }else if(result[1] === ''){
+                                $("#searchRefNo2").addClass("hidden");
+                            }
+                            
+                            $("#RefNoListTableTemp tbody").append(result[0]);                           
                             if(document.getElementById("receiveTaxInvTo")!==null && ($("#receiveTaxInvTo").val()!==undefined)){
                                 document.getElementById("TaxInvTo").value = $("#receiveTaxInvTo").val();
                             } else {
@@ -1759,11 +1783,11 @@
                             } else {
                                 document.getElementById("ARCode").value = '';
                             }
-                            if(msg !== ''){
-                                $("#searchRefNo2").removeClass("hidden");
-                            } else {
-                                $("#searchRefNo2").addClass("hidden");
-                            }
+//                            if(msg !== ''){
+//                                $("#searchRefNo2").removeClass("hidden");
+//                            } else {
+//                                $("#searchRefNo2").addClass("hidden");
+//                            }
                         }
                         $("#ajaxloadsearch").addClass("hidden");
 
