@@ -847,6 +847,7 @@ public class AJAXBean extends AbstractBean implements
                     }
                 }
                 invoice = invoicedao.searchInvoiceFromInvoiceNumber(invoiceNo, department, invType);
+                System.out.println(" invoice.getInvNo() ====  " + invoice.getInvNo());
                 if ("".equals(invoice.getId()) || null == invoice.getId()) {
                     result = "null";
                 } else {
@@ -878,6 +879,46 @@ public class AJAXBean extends AbstractBean implements
                 } else {
                     result = buildPaymentTourCommissionViewListHTML(paymentList);
                 }
+            }else if ("searchAmountByBillDescId".equalsIgnoreCase(type)) {
+                String billDescId = map.get("billDescId").toString();
+                String receiptDetailId = map.get("receiptDetailId").toString();
+                String recAmount = map.get("recAmount").toString();
+                System.out.println(" billDescId :: " +billDescId);
+                System.out.println(" receiptDetailId :: " +receiptDetailId);
+                System.out.println(" recAmount :: " +recAmount);
+                BillableDesc bill = billableDao.getBillableDescFromBillDescId(billDescId);
+                if (bill == null) {
+                    result = "null";
+                } else {
+                    result = checkInvoiceDetailFromBilldescIdAndRecDetailId(bill,billDescId,receiptDetailId,recAmount);
+                }
+            }else if ("searchAmountByPaymentId".equalsIgnoreCase(type)) {
+                String paymentTourId = map.get("paymentTourId").toString();
+                String recAmount = map.get("recAmount").toString();
+                System.out.println(" paymentTourId :: " +paymentTourId);
+                PaymentTourCommissionView ptcv = ticketAircommissionViewDao.getPaymentTourCommissionView(paymentTourId);
+                if (ptcv == null) {
+                    result = "null";
+                } else {
+                    BigDecimal receiptAmount = new BigDecimal(recAmount);
+                    BigDecimal paymentTourAmount = ptcv.getCommision();
+                    int resultcompare = paymentTourAmount.compareTo(receiptAmount);
+                    if(resultcompare == 0){
+                        result = "success";
+                    }else if(resultcompare == 1){
+                        result = "success";
+                    }else if(resultcompare == -1){
+                        result = "fail";
+                    }
+                }
+            }else if ("searchAmountByInvDetailId".equalsIgnoreCase(type)) {
+                String invDetailId = map.get("invDetailId").toString();
+                String receiptDetailId = map.get("receiptDetailId").toString();
+                String recAmount = map.get("recAmount").toString();
+                System.out.println(" invDetailId :: " +invDetailId);
+                
+                result = receiptdao.checkAmountReceiptDetailFromInvDetailId(invDetailId,receiptDetailId,recAmount);
+
             }
         } else if (TAXINVOICE.equalsIgnoreCase(servletName)) {
             if ("searchInvoiceNo".equalsIgnoreCase(type)) {
@@ -2843,5 +2884,32 @@ public class AJAXBean extends AbstractBean implements
 
     public void setOtherBookingDao(OtherBookingDao otherBookingDao) {
         this.otherBookingDao = otherBookingDao;
+    }
+    
+    public String checkInvoiceDetailFromBilldescIdAndRecDetailId(BillableDesc bill, String billDescId,String receiptDetailId,String recAmount){
+        String result = "";
+        BigDecimal invDetailAmount = new BigDecimal(0);
+        BigDecimal amount = new BigDecimal(0);
+        List<InvoiceDetail> invoiceDetailList = invoicedao.getInvoiceDetailFromBillDescIdAndRecDetailId(billDescId,receiptDetailId);
+        BigDecimal billDescAmount = new BigDecimal(bill.getPrice());
+        BigDecimal receiptAmount = new BigDecimal(recAmount);
+        if(invoiceDetailList != null){
+            for (int i = 0; i < invoiceDetailList.size(); i++) {
+                if(invoiceDetailList.get(i).getAmount() != null){
+                    invDetailAmount = invDetailAmount.add(invoiceDetailList.get(i).getAmount());
+                }
+            }    
+        }
+        amount = receiptAmount.add(invDetailAmount);
+        int resultcompare = billDescAmount.compareTo(amount);
+        
+        if(resultcompare == 0){
+            result = "success";
+        }else if(resultcompare == 1){
+            result = "success";
+        }else if(resultcompare == -1){
+            result = "fail";
+        }
+        return result;
     }
 }

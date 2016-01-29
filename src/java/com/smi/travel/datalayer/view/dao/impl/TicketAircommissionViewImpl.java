@@ -106,4 +106,40 @@ public class TicketAircommissionViewImpl implements TicketAircommissionViewDao{
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
+    public PaymentTourCommissionView getPaymentTourCommissionView(String paymentId) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `payment_tour_commission_view` pay where pay.paymentid = '"+paymentId+"'")
+                .addScalar("paymentid",Hibernate.STRING)
+                .addScalar("payno",Hibernate.STRING)
+                .addScalar("detail",Hibernate.STRING)
+                .addScalar("commission",Hibernate.BIG_DECIMAL)
+                .addScalar("is_use",Hibernate.STRING)
+                .addScalar("supcode",Hibernate.STRING)
+                .addScalar("supname",Hibernate.STRING)
+                .addScalar("supaddress",Hibernate.STRING)
+                .list();
+              
+        List<PaymentTourCommissionView> paymentTourCommissionViewList =  new LinkedList<PaymentTourCommissionView>();
+        for(Object[] T : QueryList){
+            PaymentTourCommissionView payment = new PaymentTourCommissionView();
+            payment.setPaymentId(util.ConvertString(T[0]));
+            payment.setPayNo(util.ConvertString(T[1]));
+            payment.setDetail(util.ConvertString(T[2]));
+            payment.setCommision(new BigDecimal(String.valueOf(T[3])));
+            payment.setIsUse(util.ConvertString(T[4]));
+            payment.setSupcode(util.ConvertString(T[5]));
+            payment.setSupname(util.ConvertString(T[6]));
+            payment.setSupaddress(util.ConvertString(T[7]));
+            paymentTourCommissionViewList.add(payment); 
+        }
+       
+        if (paymentTourCommissionViewList.isEmpty()) {
+            return null;
+        }
+        
+        session.close();
+        return paymentTourCommissionViewList.get(0);   
+    }
 }

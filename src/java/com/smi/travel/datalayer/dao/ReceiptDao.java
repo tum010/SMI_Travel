@@ -42,4 +42,6 @@ public interface ReceiptDao {
     public Receipt getReceiptByWildCardSearch(String receiveId, String receiveNo, String wildCardSearch, String keyCode, String InputDepartment, String InputReceiptType);
     
     public String getRefitemidFromBillableDescId(String billabledescId);
+    
+    public String checkAmountReceiptDetailFromInvDetailId(String invDetailId,String receiptDetailId,String recAmount);
 }

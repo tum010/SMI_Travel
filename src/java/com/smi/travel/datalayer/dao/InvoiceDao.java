@@ -45,5 +45,9 @@ public interface InvoiceDao {
     public String insertInvoiceDetail(Invoice invoice);
     public String updateInvoiceDetail(Invoice invoice);
     public List<InvoiceDetail> getInvoiceDetailFromBillDescId(String billableDescId); //for ajax check invoice detail 
+    public List<InvoiceDetail> getInvoiceDetailFromBillDescIdAndRecDetailId(String billableDescId,String receiptDetailId); //for ajax check invoice detail 
+    
     public Invoice getInvoiceByWildCardSearch(String invoiceId, String invoiceNo, String wildCardSearch, String keyCode, String department, String invoiceType);
+    public InvoiceDetail getInvoiceDetailFromId(String invoiceDetailId);
+
 }

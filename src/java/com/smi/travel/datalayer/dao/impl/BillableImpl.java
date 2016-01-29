@@ -1237,4 +1237,17 @@ public class BillableImpl implements BillableDao {
         this.sessionFactory.close();
         return result;
     }
+
+    @Override
+    public BillableDesc getBillableDescFromBillDescId(String billDescId) {
+        Session session = this.sessionFactory.openSession();
+        List<BillableDesc> list = session.createQuery("from BillableDesc B where B.id = :billDescId ")
+                .setParameter("billDescId", billDescId).list();
+
+        if (list.isEmpty()) {
+            return null;
+        }
+
+        return list.get(0);
+    }
 }

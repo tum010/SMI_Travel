@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.ReceiptDao;
 import com.smi.travel.datalayer.entity.BillableDesc;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.entity.ReceiptCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
@@ -737,6 +738,69 @@ import org.hibernate.Transaction;
         session.close();
         this.sessionFactory.close();
         return refno;
+    }
+
+    @Override
+    public String checkAmountReceiptDetailFromInvDetailId(String invDetailId, String receiptDetailId, String recAmount) {
+        Session session = this.sessionFactory.openSession();
+        String result = "";
+        BigDecimal receiptAmountTemp = new BigDecimal(0);
+        System.out.println(" invDetailId " + invDetailId);
+        BigDecimal amount = new BigDecimal(0);
+        BigDecimal invDetailAmount = new BigDecimal(0);
+        String query = "from ReceiptDetail rec WHERE rec.invoiceDetail.id = :invDetailId ";
+        if(!"".equalsIgnoreCase(receiptDetailId)){
+            query += " and rec.id <> '"+receiptDetailId+"' ";
+        }
+        List<ReceiptDetail> list = session.createQuery(query)
+                .setParameter("invDetailId", invDetailId)
+                .list();
+        if(list.isEmpty()){
+            String queryinv = "from InvoiceDetail inv WHERE inv.id = :invDetailId ";
+            List<InvoiceDetail> listinv = session.createQuery(queryinv)
+                    .setParameter("invDetailId", invDetailId)
+                    .list();
+            
+            if(!listinv.isEmpty()){
+                invDetailAmount = listinv.get(0).getAmount();
+                BigDecimal receiptAmount = new BigDecimal(recAmount);
+                int resultcompare = invDetailAmount.compareTo(receiptAmount);
+                if(resultcompare == 0){
+                    result = "success";
+                }else if(resultcompare == 1){
+                    result = "success";
+                }else if(resultcompare == -1){
+                    result = "fail";
+                }
+            }
+        }else{
+            
+            for(int i=0;i<list.size();i++){
+                invDetailAmount = list.get(0).getInvoiceDetail().getAmount();
+                if(list.get(i).getAmount() != null){
+                    receiptAmountTemp = receiptAmountTemp.add(list.get(i).getAmount());
+                }
+            }
+            BigDecimal receiptAmount = new BigDecimal(recAmount);
+            System.out.println("=========== invDetailAmount =========== " + invDetailAmount);
+            System.out.println("=========== receiptAmount =========== " + receiptAmount);
+            System.out.println("=========== receiptAmountTemp =========== " + receiptAmountTemp);
+            amount = receiptAmount.add(receiptAmountTemp);
+            
+            int resultcompare = invDetailAmount.compareTo(amount);
+            
+            if(resultcompare == 0){
+                result = "success";
+            }else if(resultcompare == 1){
+                result = "success";
+            }else if(resultcompare == -1){
+                result = "fail";
+            }
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    
     }
     
 }

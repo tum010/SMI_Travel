@@ -1060,4 +1060,46 @@ public class InvoiceImpl implements InvoiceDao{
         }
         return result;
     }
+    
+    @Override
+    public List<InvoiceDetail> getInvoiceDetailFromBillDescIdAndRecDetailId(String billableDescId,String receiptDetailId) {
+        Session session = this.sessionFactory.openSession();
+        String invdetailIdTemp = "";
+        if(receiptDetailId != null && !"".equalsIgnoreCase(receiptDetailId)){
+            List<ReceiptDetail> listRec = session.createQuery("from ReceiptDetail rec WHERE rec.id = '"+receiptDetailId+"'")
+                    .list();
+            if(!listRec.isEmpty()){
+                invdetailIdTemp = listRec.get(0).getInvoiceDetail().getId();
+            }
+        }
+        String query = "from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId and inv.invoice.MFinanceItemstatus = '1' ";
+        if(!"".equalsIgnoreCase(invdetailIdTemp)){
+            query += " and inv.id <> '"+invdetailIdTemp+"' ";
+        }
+        List<InvoiceDetail> list = session.createQuery(query)
+                .setParameter("billableDescId", billableDescId)
+                .list();
+        if(list.isEmpty()){
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return list;
+    }
+
+    @Override
+    public InvoiceDetail getInvoiceDetailFromId(String invoiceDetailId) {
+        Session session = this.sessionFactory.openSession();
+        String query = "from InvoiceDetail inv WHERE inv.id = '"+invoiceDetailId+"' ";
+
+        List<InvoiceDetail> list = session.createQuery(query)
+                .list();
+        if(list.isEmpty()){
+            return null;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return list.get(0);
+    
+    }
 }

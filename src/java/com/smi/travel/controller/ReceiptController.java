@@ -253,7 +253,7 @@ public class ReceiptController extends SMITravelController {
             String receiveProducttemp = "";
             
             System.out.println(" invoiceTableId " + invoiceTableId);
-            if(StringUtils.isNotEmpty(invoiceTableId)){
+            if(StringUtils.isNotEmpty(invoiceTableId) && !"".equalsIgnoreCase(invoiceTableId)){
                 invoice.setId(invoiceTableId);
             }
             
@@ -304,42 +304,16 @@ public class ReceiptController extends SMITravelController {
                 receiptDetail.setAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveAmount) ? receiveAmount.replaceAll(",","") : 0)));
                 receiptDetail.setExRate(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(receiveExRate) ? receiveExRate.replaceAll(",","") : 0)));
                 receiptDetail.setCurAmount(receiveCurrency);
-                
                 if(StringUtils.isNotEmpty(invId)){
                     InvoiceDetail invoiceDetail = new InvoiceDetail();
                     invoiceDetail.setId(invId);
                     receiptDetail.setInvoiceDetail(invoiceDetail);
                 }
-                if(StringUtils.isEmpty(invId) || "".equalsIgnoreCase(invId)){
-                    List<InvoiceDetail>  invoiceDetailList = null;
-                    if(StringUtils.isNotEmpty(billDescId)){
-                        invoiceDetailList = invoiceService.getInvoiceDetailFromBillableDescId(billDescId);
-                    }
-//                    if(invoiceDetailList == null){
-//                       Invoice invoice = new Invoice();
-//                       invoice.setInvNo(receiveNo);
-//                       invoice.setInvTo(receiveFromCode);
-//                       invoice.setInvName(receiveFromName);
-//                       invoice.setInvAddress(receiveFromAddress);
-//                       invoice.setArcode(arCode);
-//                       invoice.setInvDate(util.convertStringToDate(receiveFromDate != "" ? receiveFromDate : ""));
-//                       invoice.setDepartment(InputDepartment);
-//                       invoice.setInvType(InputReceiptType);
-//                       invoice.setIsLock(1);
-//                       invoice.setCreateBy(user.getUsername());
-//                       invoice.setCreateDate(new Date());
-//                       if(StringUtils.isNotEmpty(inputStatus)){
-//                           MAccpay mAccpay = new MAccpay();
-//                           mAccpay.setId(inputStatus);
-//                           invoice.setMAccpay(mAccpay);
-//                       }
-//                       invoice.setStaff(user);
-//                       MFinanceItemstatus mFinanceItemstatus = new MFinanceItemstatus();
-//                       mFinanceItemstatus.setId("1"); // 1 = Normal
-//                       invoice.setMFinanceItemstatus(mFinanceItemstatus);
-
+                if(!"0".equalsIgnoreCase(isref)){
+                    System.out.println("============== invId ============== " + invId);
                        List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
-                       InvoiceDetail invoiceDetail = new InvoiceDetail();
+                        InvoiceDetail invoiceDetail = new InvoiceDetail();
+                        invoiceDetail.setId(invId);                       
                        String displaydescfromrefno = "";
                        String refNo = "";
                        if(StringUtils.isNotEmpty(billDescId)){
@@ -389,6 +363,7 @@ public class ReceiptController extends SMITravelController {
                             (receiveCurrency!="" && receiveCurrency!=null)){
                             invoice.setInvoiceDetails(listInvoiceDetail);
                         }
+
                        String invoiceNo = invoiceService.saveInvoiceDetail(invoice);
                        if("fail".equals(invoiceNo)){
                            System.out.println(" SAVE INVOICE FAIL ");

@@ -29,6 +29,12 @@ public class ReceiptServlet implements AbstractAJAXServlet{
         String paymentNo = request.getParameter("paymentNo");
         String department = request.getParameter("department");
         String invType = request.getParameter("invType");
+        String billDescId = request.getParameter("billDescId");
+        String receiptDetailId = request.getParameter("receiptDetailId");
+        String recAmount = request.getParameter("recAmount");
+        String paymentTourId = request.getParameter("paymentTourId");
+        String invDetailId = request.getParameter("invDetailId");
+
         Map result = new HashMap();
         
         result.put("invoiceNo", invoiceNo);
@@ -38,6 +44,11 @@ public class ReceiptServlet implements AbstractAJAXServlet{
         result.put("paymentNo", paymentNo);
         result.put("department", department);
         result.put("invType", invType);
+        result.put("billDescId", billDescId);
+        result.put("receiptDetailId", receiptDetailId);
+        result.put("recAmount", recAmount);
+        result.put("paymentTourId", paymentTourId);
+        result.put("invDetailId", invDetailId);
         return result;    
     }
     

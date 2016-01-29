@@ -16,4 +16,5 @@ import java.util.List;
 public interface TicketAircommissionViewDao {
      public List<TicketAircommissionView> getListTicketAircommissionView(String paymentNo);
      public List<PaymentTourCommissionView> getListPaymentTourCommissionView(String paymentNo);
+     public PaymentTourCommissionView getPaymentTourCommissionView(String paymentId);
 }

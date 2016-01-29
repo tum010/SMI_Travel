@@ -105,4 +105,7 @@ public class InvoiceService {
     public Invoice getInvoiceFromId(String invoiceId){
         return invoiceDao.getInvoiceFromId(invoiceId);
     }
+    public InvoiceDetail getInvoiceDetailFromId(String invoiceDetailId){
+        return invoiceDao.getInvoiceDetailFromId(invoiceDetailId);
+    }
 }
