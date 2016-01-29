@@ -423,7 +423,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         }
         
 
-        query+= " AND (`rec`.`accpay_status` <> 6) AND (`rec`.`accpay_status` <> 7) ";
+        query+= " AND (`rec`.`accpay_status` <> 6) AND (`rec`.`accpay_status` <> 7) AND (`rec`.`status` <> 2) ";
         
         System.out.println(" query :::: " +query);
                
@@ -526,7 +526,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             
             haveCondition = true;
         }
-        queryReceiveSummary += " AND ((`ar`.`rec_status` <> 6) AND (`ar`.`rec_status` <> 7))";
+        queryReceiveSummary += " AND ((`ar`.`rec_status` <> 6) AND (`ar`.`rec_status` <> 7)) AND (`rec`.`status` <> 2) ";
         queryReceiveSummary += " GROUP BY `ar`.`rec_date` ";
        
 //        List<Object[]> QueryReceiptSummary = session.createSQLQuery(queryReceiptSummary)
