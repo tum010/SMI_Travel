@@ -104,7 +104,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="fromdatepanel">
-                                <label class="col-md-6 control-label text-right">From</label>
+                                <label class="col-md-6 control-label text-right">From<font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group" >
                                         <div class='input-group date' id="DateFrom">
@@ -120,7 +120,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group" id="todatepanel">
-                                <label class="col-md-6 control-label text-right">To</label>
+                                <label class="col-md-6 control-label text-right">To<font style="color: red">*</font></label>
                                 <div class="col-md-5">  
                                     <div class="form-group" >
                                         <div class='input-group date' id="DateTo">

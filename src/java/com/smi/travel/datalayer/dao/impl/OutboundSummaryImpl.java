@@ -159,7 +159,12 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
             opsv.setHeaderbank(bankname);
             opsv.setHeaderstatus(statusname);
             opsv.setHeaderdate(util.ConvertString(dateformat.format(util.convertStringToDate(fromdate))) + " to " + util.ConvertString(dateformat.format(util.convertStringToDate(todate))));
-            opsv.setDepartdate("null".equals(String.valueOf(B[0])) ? "" : util.ConvertString(dateformatDetail.format(util.convertStringToDate(String.valueOf(B[0])))));
+//            opsv.setDepartdate("null".equals(String.valueOf(B[0])) ? "" : util.ConvertString(dateformatDetail.format(util.convertStringToDate(String.valueOf(B[0])))));
+            if(!"null".equalsIgnoreCase(String.valueOf(B[0])) && !"".equalsIgnoreCase(String.valueOf(B[0]))){
+                opsv.setDepartdate(util.ConvertString(dateformatDetail.format(util.convertStringToDate(String.valueOf(B[0])))));
+            }else{
+                opsv.setDepartdate("");
+            }
             opsv.setRefno(util.ConvertString(B[1]));
             opsv.setRecondno(util.ConvertString(B[2]));
             opsv.setLeader(util.ConvertString(B[3]));
@@ -172,7 +177,11 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
             opsv.setNet((B[10]) != null ? util.ConvertString(B[10]) : "0.00");
             opsv.setSell((B[11]) != null ? util.ConvertString(B[11]) : "0.00");
             opsv.setProfit((B[12]) != null ? util.ConvertString(B[12]) : "0.00");
-            opsv.setTransferdate("".equals(String.valueOf(B[13])) ? "" : util.ConvertString(dateformatDetail.format(util.convertStringToDate(String.valueOf(B[13])))));
+            if(!"null".equalsIgnoreCase(String.valueOf(B[13])) && !"".equalsIgnoreCase(String.valueOf(B[13]))){
+                opsv.setTransferdate(util.ConvertString(dateformatDetail.format(util.convertStringToDate(String.valueOf(B[13])))));
+            }else{
+                opsv.setTransferdate("");
+            }
             opsv.setSeller(util.ConvertString(B[14]));
             opsv.setInvno(util.ConvertString(B[15]));
             opsv.setPackagecode(util.ConvertString(B[16]));
