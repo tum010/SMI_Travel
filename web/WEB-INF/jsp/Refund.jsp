@@ -498,7 +498,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    <label for="Owner" class="col-sm-3 control-label text-right">Refund By</label>
+                                    <label for="Owner" class="col-sm-3 control-label text-right">Refund By<font style="color: red">*</font></label>
                                     <div class="col-lg-4">
                                         <div class="">
                                             <div class="input-group ">
@@ -531,7 +531,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-6 form-group">
-                                    <label for="Owner" class="col-sm-3 control-label text-right">Receive By</label>
+                                    <label for="Owner" class="col-sm-3 control-label text-right">Receive By<font style="color: red">*</font></label>
                                     <div class="col-lg-4">
                                         <div class="">
                                             <div class="input-group ">
@@ -548,7 +548,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    <label  class="col-sm-3 control-label text-right">Receive Date</label>
+                                    <label  class="col-sm-3 control-label text-right">Receive Date<font style="color: red">*</font></label>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker4'>
@@ -1614,25 +1614,37 @@ function saveRefund(){
     if(refundby !== '' && refundname !== '' && receiveby !== '' &&  receivename !== '' && receivedate !== ''){
         var error = 0;
         var count = ($("#counterTable").val() !== undefined ? parseInt($("#counterTable").val()) : parseInt($("#counterTableAdd").val()));
-        for(var i=1; i<count; i++){
+        for(var i=1; i<=count; i++){
             var inputSectorRefund = document.getElementById('inputSectorRefund'+i);
             if(inputSectorRefund !== null){
-                if(inputSectorRefund.style.borderColor === 'red' || inputSectorRefund.value === ''){
-                    inputSectorRefund.style.borderColor = 'red';
-                    error++;
-//                    i = count;
+                var SelectTocketNo = document.getElementById('SelectTocketNo'+i).value;
+                var inputSector = document.getElementById('inputSector'+i).value;
+                var inputCharge = document.getElementById('inputCharge'+i).value;
+                var inputClientcharge = document.getElementById('inputClientcharge'+i).value;
+                if(SelectTocketNo !== '' || inputSector !== '' || inputCharge !== '' || inputClientcharge !== ''){
+                    if(inputSectorRefund.style.borderColor === 'red' || inputSectorRefund.value === ''){
+                        inputSectorRefund.style.borderColor = 'red';
+                        error++;
+    //                    i = count;
+                    }
                 }
-                
             }
             var inputSectorRefundAdd = document.getElementById('inputSectorRefundadd'+i);
             if(inputSectorRefundAdd !== null){
-                if(inputSectorRefundAdd.style.borderColor === 'red' || inputSectorRefundAdd.value === ''){
-                    inputSectorRefundAdd.style.borderColor = 'red';
-                    error++;
-//                    i = count;
-                }                
+                var SelectTocketNoAdd = document.getElementById('SelectTocketNoadd'+i).value;
+                var inputSectorAdd = document.getElementById('inputSectoradd'+i).value;
+                var inputChargeAdd = document.getElementById('inputChargeadd'+i).value;
+                var inputClientchargeAdd = document.getElementById('inputClientchargeadd'+i).value;
+                if(SelectTocketNoAdd !== '' || inputSectorAdd !== '' || inputChargeAdd !== '' || inputClientchargeAdd !== ''){
+                    if(inputSectorRefundAdd.style.borderColor === 'red' || inputSectorRefundAdd.value === ''){
+                        inputSectorRefundAdd.style.borderColor = 'red';
+                        error++;
+    //                    i = count;
+                    }
+                }    
             }           
-        }    
+        }
+
         if(error === 0){
             $("#buttonSaveRefund").removeAttr("disabled");
             $("#buttonPrintRefund").removeAttr("disabled");

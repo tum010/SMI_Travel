@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 /**
  *
  * @author top
@@ -112,6 +113,11 @@ public class RefundController extends SMITravelController {
                 request.setAttribute("ownerbyDefault", ownerby);
             }
         }
+        //Redirect Result
+        String resultRedirect = request.getParameter("resultRedirect");
+        if(!"".equalsIgnoreCase(resultRedirect) && resultRedirect != null){
+            request.setAttribute("result", resultRedirect);
+        }
             
         // Action 
         if("searchRefund".equals(action)){
@@ -163,6 +169,9 @@ public class RefundController extends SMITravelController {
             }else{
                 request.setAttribute("listRefundTicket", null);
             }
+            String refundIdTemp = (!"".equalsIgnoreCase(airticketRefund.getId()) ? airticketRefund.getId() : "");
+            return new ModelAndView(new RedirectView("Refund.smi?action=searchRefund&refundid="+refundIdTemp+"&airbookingid="+airbookingid+"&referenceNo="+refNo+"&resultRedirect="+resultsave, true));
+            
         }else if("add".equals(action)){
             request.setAttribute("RefundTicket", null);
         }else if("deleteAirTicketRefund".equals(action)){
