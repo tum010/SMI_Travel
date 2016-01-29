@@ -1646,10 +1646,10 @@ public class AJAXBean extends AbstractBean implements
         System.out.println("invoiceDetaill.size() " + String.valueOf(invoiceDetaill.size()));
         if (invoiceDetaill == null || invoiceDetaill.size() == 0) {
             String newrow = "";
-            newrow += "<tr><input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='" + receiveFrom + "'>"
+            newrow += "<input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='" + receiveFrom + "'>"
                     + "<input type='hidden' name='receiveNameInvoice' id='receiveNameInvoice' value='" + receiveName + "'>"
                     + "<input type='hidden' name='receiveAddressInvoice' id='receiveAddressInvoice' value='" + receiveAddress + "'>"
-                    + "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='" + arcode + "'></tr>";
+                    + "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='" + arcode + "'>";
             html.append(newrow);
             return html.toString();
         }
@@ -1765,10 +1765,10 @@ public class AJAXBean extends AbstractBean implements
                 No++;
             } else {
                 String newrow = "";
-                newrow += "<tr><input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='" + receiveFrom + "'>"
+                newrow += "<input type='hidden' name='receiveFromInvoice' id='receiveFromInvoice' value='" + receiveFrom + "'>"
                         + "<input type='hidden' name='receiveNameInvoice' id='receiveNameInvoice' value='" + receiveName + "'>"
                         + "<input type='hidden' name='receiveAddressInvoice' id='receiveAddressInvoice' value='" + receiveAddress + "'>"
-                        + "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='" + arcode + "'></tr>"
+                        + "<input type='hidden' name='arcodeInvoice' id='arcodeInvoice' value='" + arcode + "'>"
                         ;
                 html.append(newrow);
             }
@@ -1918,14 +1918,14 @@ public class AJAXBean extends AbstractBean implements
                 No++;
             } else {
                 String newrow = "";
-                newrow += "<tr>" 
-                        + "<input type='hidden' name='masterBookType' id='masterBookType' value='" + billable.getMaster().getBookingType() + "'>"
+                newrow +=  
+                         "<input type='hidden' name='masterBookType' id='masterBookType' value='" + billable.getMaster().getBookingType() + "'>"
                         + "<input type='hidden' name='receiveFromBillable' id='receiveFromBillable' value='" + receiveFrom + "'>"
                         + "<input type='hidden' name='receiveNameBillable' id='receiveNameBillable' value='" + receiveName + "'>"
                         + "<input type='hidden' name='receiveAddressBillable' id='receiveAddressBillable' value='" + receiveAddress + "'>"
                         + "<input type='hidden' name='arcodeBillable' id='arcodeBillable' value='" + arcode + "'>"
                         + "<input type='hidden' name='mAccPayBillable' id='mAccPayBillable' value='" + mAccPay + "'>"
-                        + "</tr>";
+                        + "";
                         
                 html.append(newrow);
             }
