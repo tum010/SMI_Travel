@@ -526,7 +526,7 @@ public class ReceiveTableImpl implements ReceiveTableDao{
             
             haveCondition = true;
         }
-        queryReceiveSummary += " AND ((`ar`.`rec_status` <> 6) AND (`ar`.`rec_status` <> 7)) AND (`rec`.`status` <> 2) ";
+        queryReceiveSummary += " AND ((`ar`.`rec_status` <> 6) AND (`ar`.`rec_status` <> 7))";
         queryReceiveSummary += " GROUP BY `ar`.`rec_date` ";
        
 //        List<Object[]> QueryReceiptSummary = session.createSQLQuery(queryReceiptSummary)
