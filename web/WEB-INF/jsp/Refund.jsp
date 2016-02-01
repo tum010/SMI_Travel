@@ -193,7 +193,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6 form-group">
-                                        <label for="Owner" class="col-sm-3 control-label text-right">Refund By</label>
+                                        <label for="Owner" class="col-sm-3 control-label text-right">Refund By<font style="color: red">*</font></label>
                                         <div class="col-lg-4">
                                             <div class="">
                                                 <div class="input-group" id="refundpanel">
@@ -233,7 +233,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6 form-group">
-                                        <label for="Owner" class="col-sm-3 control-label text-right">Receive By</label>
+                                        <label for="Owner" class="col-sm-3 control-label text-right">Receive By<font style="color: red">*</font></label>
                                         <div class="col-lg-4">
                                             <div class="">
                                                 <div class="input-group" id="receivepanel">
@@ -264,7 +264,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6 form-group">
-                                        <label  class="col-sm-3 control-label text-right">Receive Date</label>
+                                        <label  class="col-sm-3 control-label text-right">Receive Date<font style="color: red">*</font></label>
                                         <div class="col-lg-4">
                                             <div class="form-group" id="receivedatepanel">
                                                 <div class='input-group date' id='datetimepicker4'>
