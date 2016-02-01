@@ -74,6 +74,7 @@ public class AddTicketFareController extends SMITravelController {
     private static final String REFUNDDETAILLIST = "refundDetailList";
     private static final String SELECTINVID = "selectInvIdTemp";
     private static final String INVDETAILID = "invDetailTableId";
+    private static final String INVOICENOFILTER = "invNoFilter";
     private UtilityService utilityService;
     private TicketFareAirlineService ticketFareAirlineService;
     private AgentService agentService;
@@ -137,7 +138,8 @@ public class AddTicketFareController extends SMITravelController {
         String invoiceId = request.getParameter("selectInvId");
         String invoiceDetailTableId = request.getParameter("invoiceDetailTableId");
         String ticketAirlineOther = request.getParameter("ticketAirlineOther");
-        
+        String invNoFilter = request.getParameter("invNoFilter");
+        request.setAttribute(INVOICENOFILTER, invNoFilter);
         String result = "";
         setResponseAttribute(request,refno,invno);
         Agent agents = new Agent();
@@ -631,16 +633,29 @@ public class AddTicketFareController extends SMITravelController {
                                 request.setAttribute(SELECTINVID,invoiceDetailViewList.get(i).getInvoiceId());
                             }
                         }else{
-                            BigDecimal invAmounttemp = invoiceDetailViewList.get(0).getInvAmount();
-                            invAmount = invAmounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-                            invNo = invoiceDetailViewList.get(0).getInvNo();
-                            invDate = String.valueOf(invoiceDetailViewList.get(0).getInvDate());
-                            invcredit =  invoiceDetailViewList.get(0).getCredit();
-                            invcreditvalue = invoiceDetailViewList.get(0).getCreditValue();
-                            staffowner =  invoiceDetailViewList.get(0).getOwner();
-                            ticketflightrouting = invoiceDetailViewList.get(0).getRouting();
-                            invTo = String.valueOf(invoiceDetailViewList.get(0).getInvTo());
-                            request.setAttribute(SELECTINVID,invoiceDetailViewList.get(0).getInvoiceId());
+                            if(invNoFilter.equalsIgnoreCase(invoiceDetailViewList.get(i).getInvNo())){
+                                BigDecimal invAmounttemp = invoiceDetailViewList.get(i).getInvAmount();
+                                invAmount = invAmounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                                invNo = invoiceDetailViewList.get(i).getInvNo();
+                                invDate = String.valueOf(invoiceDetailViewList.get(i).getInvDate());
+                                invcredit =  invoiceDetailViewList.get(i).getCredit();
+                                invcreditvalue = invoiceDetailViewList.get(i).getCreditValue();
+                                staffowner =  invoiceDetailViewList.get(i).getOwner();
+                                ticketflightrouting = invoiceDetailViewList.get(i).getRouting();
+                                invTo = String.valueOf(invoiceDetailViewList.get(i).getInvTo());
+                                request.setAttribute(SELECTINVID,invoiceDetailViewList.get(i).getInvoiceId());
+                            }else{
+                                BigDecimal invAmounttemp = invoiceDetailViewList.get(0).getInvAmount();
+                                invAmount = invAmounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                                invNo = invoiceDetailViewList.get(0).getInvNo();
+                                invDate = String.valueOf(invoiceDetailViewList.get(0).getInvDate());
+                                invcredit =  invoiceDetailViewList.get(0).getCredit();
+                                invcreditvalue = invoiceDetailViewList.get(0).getCreditValue();
+                                staffowner =  invoiceDetailViewList.get(0).getOwner();
+                                ticketflightrouting = invoiceDetailViewList.get(0).getRouting();
+                                invTo = String.valueOf(invoiceDetailViewList.get(0).getInvTo());
+                                request.setAttribute(SELECTINVID,invoiceDetailViewList.get(0).getInvoiceId());
+                            }
                         }
                         
                         if (StringUtils.isNotEmpty(invTo)){
@@ -807,8 +822,6 @@ public class AddTicketFareController extends SMITravelController {
                     request.setAttribute(TICKETFAREFLAG,"notdummy");
                     request.setAttribute(DUEDATE, dueDate);
                 }
-                
-
             }
         }else if ("searchTicketnoNew".equalsIgnoreCase(action)) {
             System.out.print("ticketNo : " +ticketNo);
@@ -828,15 +841,28 @@ public class AddTicketFareController extends SMITravelController {
                 if(((invoiceDetailViewList != null))&&(!"null".equals(invoiceDetailViewList.get(0).getInvoiceId()))){
                     request.setAttribute(INVOICEDETAILLIST, invoiceDetailViewList);
                     for (int i = 0; i < invoiceDetailViewList.size() ; i++) {
-                        BigDecimal invAmounttemp = invoiceDetailViewList.get(0).getInvAmount();
-                        invAmount = invAmounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-                        invNo = invoiceDetailViewList.get(0).getInvNo();
-                        invDate = String.valueOf(invoiceDetailViewList.get(0).getInvDate());
-                        invcredit =  invoiceDetailViewList.get(0).getCredit();
-                        invcreditvalue = invoiceDetailViewList.get(0).getCreditValue();
-                        staffowner =  invoiceDetailViewList.get(0).getOwner();
-                        ticketflightrouting = invoiceDetailViewList.get(0).getRouting();
-                        request.setAttribute(SELECTINVID,invoiceDetailViewList.get(0).getInvoiceId());
+                        if(invNoFilter.equalsIgnoreCase(invoiceDetailViewList.get(i).getInvNo())){
+                            BigDecimal invAmounttemp = invoiceDetailViewList.get(i).getInvAmount();
+                            invAmount = invAmounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                            invNo = invoiceDetailViewList.get(i).getInvNo();
+                            invDate = String.valueOf(invoiceDetailViewList.get(i).getInvDate());
+                            invcredit =  invoiceDetailViewList.get(i).getCredit();
+                            invcreditvalue = invoiceDetailViewList.get(i).getCreditValue();
+                            staffowner =  invoiceDetailViewList.get(i).getOwner();
+                            ticketflightrouting = invoiceDetailViewList.get(i).getRouting();
+                            invTo = String.valueOf(invoiceDetailViewList.get(i).getInvTo());
+                            request.setAttribute(SELECTINVID,invoiceDetailViewList.get(i).getInvoiceId());
+                        }else{
+                            BigDecimal invAmounttemp = invoiceDetailViewList.get(0).getInvAmount();
+                            invAmount = invAmounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                            invNo = invoiceDetailViewList.get(0).getInvNo();
+                            invDate = String.valueOf(invoiceDetailViewList.get(0).getInvDate());
+                            invcredit =  invoiceDetailViewList.get(0).getCredit();
+                            invcreditvalue = invoiceDetailViewList.get(0).getCreditValue();
+                            staffowner =  invoiceDetailViewList.get(0).getOwner();
+                            ticketflightrouting = invoiceDetailViewList.get(0).getRouting();
+                            request.setAttribute(SELECTINVID,invoiceDetailViewList.get(0).getInvoiceId());
+                        }
                         receiptDetailViewListTemp = receiptService.getReceiptDetailViewFromInvDetailId(invoiceDetailViewList.get(i).getId());
                         if(receiptDetailViewListTemp != null){
                             for (int j = 0; j < receiptDetailViewListTemp.size() ; j++) {

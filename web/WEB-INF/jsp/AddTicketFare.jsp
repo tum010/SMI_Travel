@@ -72,6 +72,8 @@
                 <input type="hidden" name="departmentTemp" id="departmentTemp" value="">
                 <input type="hidden" name="masterIdTemp" id="masterIdTemp" value="">
                 <input type="hidden" name="countRow" id="countRow" value="">
+                <input type="hidden" name="invNoFilter" id="invNoFilter" value="${requestScope['invNoFilter']}">
+
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="col-xs-1 text-right" style="width: 150px">
@@ -777,7 +779,7 @@
                 <h4 class="modal-title">List Ticket No</h4>
             </div>
             <div class="modal-body">
-                <div style="text-align: right;padding-bottom: 12px"><i id="ajaxloadInvno"  class="fa fa-spinner fa-spin hidden"></i>Search : <input placeholder ="Inv No" type="text" style="width: 175px" id="filtercusInvno" name="filtercusInvno"/> </div> 
+                <div style="text-align: right;padding-bottom: 12px"><i id="ajaxloadInvno"  class="fa fa-spinner fa-spin hidden"></i>Search : <input placeholder ="Inv No" type="text" style="width: 175px" id="filtercusInvno" name="filtercusInvno" /> </div> 
                 <table class="display" id="ListInvnoTable">
                     <thead class="datatable-header">
                         <tr>
@@ -965,7 +967,6 @@
             "bLengthChange": false,
             "iDisplayLength": 10
         });
-        
         $('#ListInvnoTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
@@ -989,6 +990,7 @@
         //on modal List Ticket
         $("#filtercusInvno").keyup(function (event) {
             if (event.keyCode === 13) {
+                $("#invNoFilter").val($("#filtercusInvno").val());
                 FilterTicketListByInvoice($("#filtercusInvno").val());
             }
         });
