@@ -286,6 +286,50 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
                 .addScalar("bank", Hibernate.STRING)
                 .list();
         
+            String paybyTemp = "";
+            
+            if("1".equalsIgnoreCase(payby)){
+                paybyTemp = "Cash";
+            }else if("2".equalsIgnoreCase(payby)){
+                paybyTemp = "Cash on Demand";
+            }else if("3".equalsIgnoreCase(payby)){
+                paybyTemp = "Credit Card";
+            }else if("4".equalsIgnoreCase(payby)){
+                paybyTemp = "Bank Transfer";
+            }else if("5".equalsIgnoreCase(payby)){
+                paybyTemp = "Cheque";
+            }else if("6".equalsIgnoreCase(payby)){
+                paybyTemp = "Void";
+            }else if("7".equalsIgnoreCase(payby)){
+                paybyTemp = "Wait";
+            }else{
+                paybyTemp = "ALL";
+            }
+            
+            String statusTemp = "";
+                    
+            if("1".equalsIgnoreCase(status)){
+                statusTemp = "OK";
+            }else if("2".equalsIgnoreCase(status)){
+                statusTemp = "WAIT";
+            }else if("3".equalsIgnoreCase(status)){
+                statusTemp = "CANCEL";
+            }else{
+                statusTemp = "ALL";
+            }
+            
+            String bankTemp = "";
+            if(bank != null && !"".equals(bank)){
+                String queryBank = "from MBank b where b.id = '"+bank+"' ";
+                List<MBank> mBanks = session.createQuery(queryBank).list();
+                if(mBanks!=null){
+                MBank mBank = mBanks.get(0);
+                bankTemp = mBank.getName();
+                }
+            }else{
+                bankTemp = "ALL";
+            }        
+            
         for (Object[] B : QueryStaffList) {
             OutboundProductSummaryExcel other = new OutboundProductSummaryExcel();
             other.setSaledate(B[0] != null ?  util.SetFormatDate( util.convertStringToDate(util.ConvertString(B[0])),"dd-MM-yyyy") : "");
@@ -313,18 +357,18 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
             if(productname != null && !"".equals(productname)){
                 other.setProductnamepage(util.ConvertString(B[3]));
             }else{
-                other.setProductnamepage("");
+                other.setProductnamepage("ALL");
             }
             other.setProductname(B[3]== null ? "" :util.ConvertString(B[3]));
             if(salename != null && !"".equals(salename)){
                 other.setSalebypage(salename);
             }else{
-                other.setSalebypage("");
+                other.setSalebypage("ALL");
             }          
             if(bank != null && !"".equals(bank)){
-                other.setBankpage(bank);
+                other.setBankpage(bankTemp);
             }else{
-                other.setBankpage("");
+                other.setBankpage("ALL");
             }
             if(from != null && !"".equals(from)){
                 if(to != null && !"".equals(to)){
@@ -335,17 +379,17 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
                     other.setSaledatepage("");
                 }
             }else{
-                other.setSaledatepage("");
+                other.setSaledatepage("ALL");
             }          
             if(payby != null && !"".equals(payby)){
-                other.setPaybypage(payby);
+                other.setPaybypage(paybyTemp);
             }else{
-                other.setPaybypage("");
+                other.setPaybypage("ALL");
             }
             if(status != null && !"".equals(status)){
-                other.setStatuspage(status);           
+                other.setStatuspage(statusTemp);           
             }else{
-                other.setStatuspage("");           
+                other.setStatuspage("ALL");           
             }
             data.add(other);
         }
