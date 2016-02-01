@@ -1959,6 +1959,10 @@ function setSectorRefund(row){
                         var fare = JSON.parse(msg);
                         console.log("Sector : "+fare.Sector);
                         $("#inputSectoradd" + row).val(fare.Sector);
+                        var inputSectorRefundadd = document.getElementById("inputSectorRefundadd"+row);
+                        if(inputSectorRefundadd.value !== ''){
+                            checkRefundAdd(inputSectorRefundadd,row);
+                        }
                     } 
                 }, error: function (msg) {
                     console.log('auto ERROR');
@@ -1993,6 +1997,10 @@ function setSectorRefund(row){
                         var fare = JSON.parse(msg);
                         console.log("Sector : "+fare.Sector);
                         $("#inputSector" + row).val(fare.Sector);
+                        var inputSectorRefund = document.getElementById("inputSectorRefund"+row);
+                        if(inputSectorRefund.value !== ''){
+                            checkRefund(inputSectorRefund,row);
+                        }
                     } 
                 }, error: function (msg) {
                     console.log('auto ERROR');
