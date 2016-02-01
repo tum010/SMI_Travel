@@ -672,7 +672,7 @@
                                         </td>
                                         <td><input id="receiveAmount${i.count}" name="receiveAmount${i.count}" type="text" class="form-control decimal" value="${table.amount}" onfocusout="calculateGrandTotal();"></td>
                                         <td>                                   
-                                            <select class="form-control" name="receiveCurrency${i.count}" id="receiveCurrency${i.count}">
+                                            <select class="form-control" name="receiveCurrency${i.count}" id="receiveCurrency${i.count}" >
                                                 <option  value="" >---------</option>
                                                 <c:forEach var="curAmount" items="${currencyList}" varStatus="status">                                       
                                                     <c:set var="select" value="" />
@@ -2960,19 +2960,23 @@
                 var amountTemp = document.getElementById('receiveAmountTemp' + i).value;
                 var amount = document.getElementById('receiveAmount' + i).value;
                 var currency = document.getElementById('receiveCurrency'+i);
-                var billDescId = document.getElementById('billDescId'+i).value;
-                var receiptDetailId = document.getElementById('tableId'+i).value;
-                
-                var paymentTourId = document.getElementById('paymentTourId'+i).value;
-                var invdId = document.getElementById('invId'+i).value;
+//                var billDescId = document.getElementById('billDescId'+i).value;
+//                var receiptDetailId = document.getElementById('tableId'+i).value;
+//                var paymentTourId = document.getElementById('paymentTourId'+i).value;
+//                var invdId = document.getElementById('invId'+i).value;
+
+                var billDescId = $("#billDescId"+i).val();
+                var receiptDetailId = $("#tableId"+i).val();
+                var paymentTourId = $("#paymentTourId"+i).val();
+                var invdId = $("#invId"+i).val();
                 currency.style.borderColor = 'green';
                 amount = replaceAll(",", "", amount.toString());
-                var isref = document.getElementById('isref').value; 
+                var isref =  $("#isref").val();
                 if(isref === "0"){
                     checkAmountBeforeSaveInvoiceId(invdId,receiptDetailId,amount,checksave);
                 }else if(isref === "1"){
                     checkAmountBeforeSaveRefNo(billDescId,receiptDetailId,amount,checksave);
-                }else if(isref === "2"){
+                }else if(isref === "2" || isref === "" ){
                     if (parseFloat(amount) > parseFloat(amountTemp)) {
                         //         $('#textAlertReceiveAmount').show();
                         $('#textAlertAmountOver').show();
