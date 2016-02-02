@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.TaxInvoiceDao;
 import com.smi.travel.datalayer.entity.CreditNoteDetail;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.TaxInvoice;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
@@ -637,5 +638,20 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         session.close();
         this.sessionFactory.close();
         return result;
+    }
+
+    @Override
+    public String getInvoiceNoByInvoiceDetailId(String invoiceDetailId) {
+        String invNo = "";
+        Session session = this.sessionFactory.openSession();
+        List<InvoiceDetail> list = session.createQuery("from InvoiceDetail invDetail WHERE invDetail.id = :invoiceDetailId ")
+                .setParameter("invoiceDetailId", invoiceDetailId)
+                .list();
+        if(!list.isEmpty()){
+            invNo = list.get(0).getInvoice().getInvNo();
+        }
+        session.close();
+        this.sessionFactory.close();
+        return invNo;
     }
 }

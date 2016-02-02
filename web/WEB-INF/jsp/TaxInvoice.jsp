@@ -433,12 +433,13 @@
                             <thead>
                                 <tr class="datatable-header" >
                                     <th style="width:3%;">No</th>
-                                    <th style="width:20%;">Description</th>
+                                    <th style="width:10%;">Invoice No</th>
+                                    <th style="width:15%;">Description</th>
                                     <th style="width:10%;">Cost</th>
                                     <th style="width:5%;">Cur</th>
                                     <th style="width:10%;">Amount</th>
                                     <th style="width:5%;">Cur</th>
-                                    <th style="width:10%;">Ex Rate</th>
+                                    <th style="width:5%;">Ex Rate</th>
                                     <th style="width:10%;">Profit</th>
                                     <th style="width:10%;">Remain</th>
                                     <th style="width:7%;">Action</th>

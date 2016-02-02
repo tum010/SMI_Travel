@@ -36,4 +36,5 @@ public interface TaxInvoiceDao {
     public BigDecimal getTaxInvoiceAmountTotal(TaxInvoice taxInv,String creditNoteDetailId);
     public String checkIsProfitForSearchInvoice(String invDetailId);
     public String checkIsProfitForSearchRefNo(String invoiceDetailId);
+    public String getInvoiceNoByInvoiceDetailId(String invoiceDetailId);
 }

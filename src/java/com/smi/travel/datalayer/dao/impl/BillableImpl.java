@@ -103,11 +103,11 @@ public class BillableImpl implements BillableDao {
             for(int j=0;j<billableDescListTemp.size();j++){
                 List<InvoiceDetail> invoiceDetailList = session.createQuery(queryInvDetail).setParameter("id", billableDescListTemp.get(j).getId()).list();
                 if(!invoiceDetailList.isEmpty()){
-                    for(int k=0;k<invoiceDetailList.size();k++){
+//                    for(int k=0;k<invoiceDetailList.size();k++){
                         BillableDesc billableDesc = new BillableDesc();
-                        billableDesc = invoiceDetailList.get(k).getBillableDesc();
+                        billableDesc = invoiceDetailList.get(0).getBillableDesc();
                         billableDescList.add(billableDesc);
-                    }                  
+//                    }                  
                 }
             }                 
         }
@@ -139,19 +139,22 @@ public class BillableImpl implements BillableDao {
         for(int i=0; i<billableDescList.size(); i++){
             BillableDesc billableDesc = billableDescList.get(i);
             String queryInv = "from InvoiceDetail inv where inv.billableDesc.id = :id ";
-            List<InvoiceDetail> queryInvoiceDetailList = session.createQuery(queryInv).setParameter("id",billableDesc.getId()).list();            
-            if(i==0){
-//                invoice.setId(invoiceDetailList.get(0).getId());
-                invoice.setId(queryInvoiceDetailList.get(0).getInvoice().getId());
-                invoice.setInvTo(queryInvoiceDetailList.get(0).getInvoice().getInvTo());
-                invoice.setInvName(queryInvoiceDetailList.get(0).getInvoice().getInvName());
-                invoice.setInvAddress(queryInvoiceDetailList.get(0).getInvoice().getInvAddress());
-                invoice.setArcode(queryInvoiceDetailList.get(0).getInvoice().getArcode());
-            }
-            InvoiceDetail invoiceDetail = new InvoiceDetail();           
-            invoiceDetail.setId(queryInvoiceDetailList.get(0).getId());
-            invoiceDetail.setBillableDesc(billableDesc);
-            invoiceDetailList.add(invoiceDetail);
+            System.out.println("----------------------billableDesc.getId()-----------------------"+billableDesc.getId());
+            List<InvoiceDetail> queryInvoiceDetailList = session.createQuery(queryInv).setParameter("id",billableDesc.getId()).list();
+            for(int j=0; j<queryInvoiceDetailList.size(); j++){
+                if(i==0){
+    //                invoice.setId(invoiceDetailList.get(0).getId());
+                    invoice.setId(queryInvoiceDetailList.get(0).getInvoice().getId());
+                    invoice.setInvTo(queryInvoiceDetailList.get(0).getInvoice().getInvTo());
+                    invoice.setInvName(queryInvoiceDetailList.get(0).getInvoice().getInvName());
+                    invoice.setInvAddress(queryInvoiceDetailList.get(0).getInvoice().getInvAddress());
+                    invoice.setArcode(queryInvoiceDetailList.get(0).getInvoice().getArcode());
+                }
+                InvoiceDetail invoiceDetail = new InvoiceDetail();           
+                invoiceDetail.setId(queryInvoiceDetailList.get(j).getId());
+                invoiceDetail.setBillableDesc(billableDesc);
+                invoiceDetailList.add(invoiceDetail);
+            }    
         }
         invoice.setInvoiceDetails(invoiceDetailList);
         session.close();
