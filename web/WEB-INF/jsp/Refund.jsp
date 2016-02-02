@@ -217,7 +217,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6 form-group">
-                                        <label  class="col-sm-3 control-label text-right">Refund Date</label>
+                                        <label  class="col-sm-3 control-label text-right">Refund Date<font style="color: red">*</font></label>
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 <div class='input-group date' id='datetimepicker3'>
@@ -515,7 +515,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    <label  class="col-sm-3 control-label text-right">Refund Date</label>
+                                    <label  class="col-sm-3 control-label text-right">Refund Date<font style="color: red">*</font></label>
                                     <div class="col-lg-4">
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker3'>
@@ -1321,6 +1321,13 @@ for(var i = 0; i < rad.length; i++) {
                             message: ' receiveDate is required'
                         }
                     }
+                },
+                refundDate: {
+                    validators: {
+                        notEmpty: {
+                            message: ' refundDate is required'
+                        }
+                    }
                 }
             }
         })
@@ -1337,8 +1344,11 @@ for(var i = 0; i < rad.length; i++) {
             if (data.field === 'receiveByName' && data.fv.isValidField('receiveByName') === false) {
                 data.fv.revalidateField('receiveByName');
             }
-             if (data.field === 'receiveDate' && data.fv.isValidField('receiveDate') === false) {
+            if (data.field === 'receiveDate' && data.fv.isValidField('receiveDate') === false) {
                 data.fv.revalidateField('receiveDate');
+            }
+            if (data.field === 'refundDate' && data.fv.isValidField('refundDate') === false) {
+                data.fv.revalidateField('refundDate');
             }
         });
            
@@ -1611,7 +1621,8 @@ function saveRefund(){
     var receiveby = $("#receiveBy").val();
     var receivename = $("#receiveByName").val();
     var receivedate = $("#receiveDate").val();
-    if(refundby !== '' && refundname !== '' && receiveby !== '' &&  receivename !== '' && receivedate !== ''){
+    var refundDate = $("#refundDate").val();
+    if(refundby !== '' && refundname !== '' && receiveby !== '' &&  receivename !== '' && receivedate !== '' && refundDate !== ''){
         var error = 0;
         var count = ($("#counterTable").val() !== undefined ? parseInt($("#counterTable").val()) : parseInt($("#counterTableAdd").val()));
         for(var i=1; i<=count; i++){
@@ -1660,6 +1671,7 @@ function saveRefund(){
         $('#RefundForm').bootstrapValidator('revalidateField', 'receiveBy');
         $('#RefundForm').bootstrapValidator('revalidateField', 'receiveByName');
         $('#RefundForm').bootstrapValidator('revalidateField', 'receiveDate');
+        $('#RefundForm').bootstrapValidator('revalidateField', 'refundDate');
     }
     // Check Change
    
