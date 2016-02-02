@@ -612,7 +612,7 @@ function AddRowDetailBillAble(row, prod, des, cos, id, price, RefNo, cur, cur_c,
                 '<td><select id="SelectProductType' + row + '" name="SelectProductType' + row + '" class="form-control">' + selectT + '</select> </td>' +
                 '<td><input type="text" class="form-control" id="BillDescriptionTemp' + row + '" name="BillDescriptionTemp' + row + '" value="" onkeyup="setDescription(' + row + ')" onchange="setDescription(' + row + ')"></td>' +
                 '<td class="hidden"><input type="text" class="form-control" id="BillDescription' + row + '" name="BillDescription' + row + '" value="' + des + '" > </td>' +
-                '<td><input type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control numerical text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="' + cos + '" ></td>' +
+                '<td><input type="text" onfocusout="changeFormatCostNumber(' + row + ')" class="form-control decimal text-right" id="InputCost' + row + '" name="InputCost' + row + '" value="' + cos + '" ></td>' +
                 '<td><select id="SelectCurrencyCost' + row + '" name="SelectCurrencyCost' + row + '" class="form-control">' + selectCC + '</select></td>' +
                 '<td><input type="text" onfocusout="changeFormatCostLocalNumber(' + row + ')"  value="' + cos + '" id="InputCostLocal' + row + '" name="InputCostLocal' + row + '" class="form-control text-right decimal"></td>' +
                 '<td class="hidden"><input type="text" value="' + cos + '" id="InputCostLocalTemp' + row + '" name="InputCostLocalTemp' + row + '"></td>' +
