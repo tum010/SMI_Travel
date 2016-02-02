@@ -235,7 +235,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         HSSFCell cell73 = row6.createCell(12);
             cell73.setCellValue("Overdue Status");
             cell73.setCellStyle(styleAlignRightBorderAllHeaderTable);
-            sheet1.autoSizeColumn(11);
+            sheet1.autoSizeColumn(12);
             
 
         
@@ -243,7 +243,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                 //Detail of Table
         if(listOver != null){
             for (int r = 0 ; r < listOver.size(); r++) {
-                System.out.println("Size " + (r)+" : " + listOver.get(r).getStaffname_page() );
+//                System.out.println("Size " + (r)+" : " + listOver.get(r).getStaffname_page() );
                 
                 count = 9 + listOver.size();
             }
@@ -260,7 +260,6 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                             if("Owner".equals(listOver.get(num-1).getGroup())){
                                 String temp = listOver.get(num-1).getOwnername();
                                 if(temp.equals(listOver.get(num).getOwnername())){ // equal type	
-                                    System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
                                     if(num  != (listOver.size()-1)){ // check not last row
                                         HSSFRow row = sheet1.createRow(r);
                                         createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
@@ -268,9 +267,6 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                                         num++; 
                                     }else{ // last row
                                         end = r+1;					
-                                        System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
-                                        System.out.println("Start : " + start +  " End  : " + end);
-                                        System.out.println("Last");
                                         HSSFRow row = sheet1.createRow(r);
                                         createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
                                         sheet1.autoSizeColumn(13);
@@ -279,9 +275,6 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                                 }else{ // not equal type
                                     if(num  == (listOver.size()-1)){ // check  last row
                                         end = r+1;					
-                                        System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
-                                        System.out.println("Start : " + start +  " End  : " + end);
-                                        System.out.println("Last");
                                         HSSFRow row = sheet1.createRow(r);
                                         createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
                                         sheet1.autoSizeColumn(13);
@@ -294,7 +287,6 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                                             cell.setCellStyle(styleAlignRightBorderAllDetailTable);
                                         
                                         String add = "A"+(r+1)+":M"+(r+1)+"";
-                                        System.out.println("Add : " + add);
                                         sheet1.addMergedRegion(CellRangeAddress.valueOf(add));
                                         row0.createCell(12).setCellStyle(styleAlignRightBorderAllColor);
                                         HSSFRow row122 = sheet1.createRow(r+1);
@@ -308,7 +300,6 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                             }else if("Agent".equals(listOver.get(num-1).getGroup())){
                                 String temp = listOver.get(num-1).getInvto();
                                 if(temp.equals(listOver.get(num).getInvto())){ // equal type	
-                                    System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
                                     if(num  != (listOver.size()-1)){ // check not last row
                                         HSSFRow row = sheet1.createRow(r);
                                         createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
@@ -316,9 +307,6 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                                         num++; 
                                     }else{ // last row
                                         end = r+1;					
-                                        System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
-                                        System.out.println("Start : " + start +  " End  : " + end);
-                                        System.out.println("Last");
                                         HSSFRow row = sheet1.createRow(r);
                                         createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
                                         sheet1.autoSizeColumn(13);
@@ -327,9 +315,9 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                                 }else{ // not equal type
                                     if(num  == (listOver.size()-1)){ // check  last row
                                         end = r+1;					
-                                        System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
-                                        System.out.println("Start : " + start +  " End  : " + end);
-                                        System.out.println("Last");
+//                                        System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
+//                                        System.out.println("Start : " + start +  " End  : " + end);
+//                                        System.out.println("Last");
                                         HSSFRow row = sheet1.createRow(r);
                                         createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
                                         sheet1.autoSizeColumn(13);
@@ -341,7 +329,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                                         cell.setCellValue(listOver.get(num).getInvto());
                                         cell.setCellStyle(styleAlignRightBorderAllDetailTable);
                                         String add = "A"+(r+1)+":M"+(r+1)+"";
-                                        System.out.println("Add : " + add);
+//                                        System.out.println("Add : " + add);
                                         sheet1.addMergedRegion(CellRangeAddress.valueOf(add));
                                         row0.createCell(12).setCellStyle(styleAlignRightBorderAllColor);
                                         HSSFRow row122 = sheet1.createRow(r+1);
@@ -354,7 +342,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                                 }
                             }
                         }else{ // row first
-                            System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
+//                            System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
                             HSSFRow row0 = sheet1.createRow(r);
                             if("Owner".equals(listOver.get(num).getGroup())){  
                                 HSSFCell cell = row0.createCell(0);
@@ -367,7 +355,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                             }
                             
                             String add = "A"+(r+1)+":M"+(r+1)+"";
-                            System.out.println("Add : " + add);
+//                            System.out.println("Add : " + add);
                             sheet1.addMergedRegion(CellRangeAddress.valueOf(add));
                             row0.createCell(12).setCellStyle(styleAlignRightBorderAllColor);
                             HSSFRow row = sheet1.createRow(r+1);
@@ -445,7 +433,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
 //                        }
 //                    }                
                 }
-                for(int i = 0 ; i < listOver.size() ; i++){
+                for(int i = 0 ; i < 30 ; i++){
                     sheet1.autoSizeColumn(i);
                 }
             }
@@ -467,19 +455,23 @@ public class OverdueSummaryExcel extends AbstractExcelView{
             cell3.setCellValue(listAgent.get(num).getDetail());
             cell3.setCellStyle(styleDe);
         HSSFCell cell4 = row.createCell(3);
-            cell4.setCellValue(listAgent.get(num).getBath());
+//            cell4.setCellValue(listAgent.get(num).getBath());
+            cell4.setCellValue("".equalsIgnoreCase(String.valueOf(listAgent.get(num).getBath())) ? 0 : (new BigDecimal(listAgent.get(num).getBath())).doubleValue());
             cell4.setCellStyle(styleNum);
         HSSFCell cell55 = row.createCell(4);
-            cell55.setCellValue(listAgent.get(num).getJpy());
+//            cell55.setCellValue(listAgent.get(num).getJpy());
+            cell55.setCellValue("".equalsIgnoreCase(String.valueOf(listAgent.get(num).getJpy())) ? 0 : (new BigDecimal(listAgent.get(num).getJpy())).doubleValue());
             cell55.setCellStyle(styleNum);
         HSSFCell cell5 = row.createCell(5);
-            cell5.setCellValue(listAgent.get(num).getUsd());
+//            cell5.setCellValue(listAgent.get(num).getUsd());
+            cell5.setCellValue("".equalsIgnoreCase(String.valueOf(listAgent.get(num).getUsd())) ? 0 : (new BigDecimal(listAgent.get(num).getUsd())).doubleValue());
             cell5.setCellStyle(styleNum);
         HSSFCell cell6 = row.createCell(6);
             cell6.setCellValue(listAgent.get(num).getRecno());
             cell6.setCellStyle(styleNum);
         HSSFCell cell7 = row.createCell(7);
-            cell7.setCellValue(listAgent.get(num).getRecamt());
+//            cell7.setCellValue(listAgent.get(num).getRecamt());
+            cell7.setCellValue("".equalsIgnoreCase(String.valueOf(listAgent.get(num).getRecamt())) ? 0 : (new BigDecimal(listAgent.get(num).getRecamt())).doubleValue());
             cell7.setCellStyle(styleNum);
         HSSFCell cell8 = row.createCell(8);
             cell8.setCellValue(listAgent.get(num).getDepartment());
