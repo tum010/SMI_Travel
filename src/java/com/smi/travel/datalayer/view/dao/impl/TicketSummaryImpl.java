@@ -324,7 +324,7 @@ public class TicketSummaryImpl implements TicketSummaryDao {
             sum.setTicketno(util.ConvertString(B[2]));
             sum.setRefno(util.ConvertString(B[3]));
             sum.setRefundby(util.ConvertString(B[4]));
-            sum.setSectorrefund(B[5] != null ? util.ConvertString(B[5]) : "0.00");
+            sum.setSectorrefund(B[5] != null ? util.ConvertString(B[5]) : "");
             sum.setSalefare(B[6] != null ? util.ConvertString(B[6]) : "0.00");
             sum.setNetfare(B[7] != null ? util.ConvertString(B[7]) : "0.00");
             sum.setTax(B[8] != null ? util.ConvertString(B[8]) : "0.00");

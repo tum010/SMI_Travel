@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RefundTicketSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="93ebb579-a6b8-4cb5-8231-f35a3b386db3">
 	<property name="ireport.zoom" value="2.1435888100000358"/>
-	<property name="ireport.x" value="748"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="1006"/>
+	<property name="ireport.y" value="48"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="refundfrom" class="java.lang.String"/>
 	<field name="refundto" class="java.lang.String"/>
@@ -365,7 +365,7 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="577" y="1" width="52" height="20" uuid="a24f8101-fc2c-4b26-8f9e-2ede4b1e795d"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8"/>
@@ -384,7 +384,7 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField>
+			<textField pattern="#,##0.00">
 				<reportElement x="745" y="1" width="52" height="20" uuid="75f8854b-cf2d-4da8-a899-f83d66e5efe6"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8"/>
@@ -398,7 +398,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sectorrefund}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="521" y="1" width="52" height="20" uuid="b5625551-fa59-42e6-b037-a9a7128b21cd"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8"/>
@@ -417,7 +417,7 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="688" y="1" width="53" height="20" uuid="e1e41b89-5762-4dbc-84aa-f064f61ededb"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8"/>
@@ -430,7 +430,7 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="633" y="1" width="51" height="20" uuid="40acc18b-5e0f-4162-99a6-2b1dc3507d0c"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="8"/>
