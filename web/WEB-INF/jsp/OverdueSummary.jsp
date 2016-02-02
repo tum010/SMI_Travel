@@ -213,13 +213,14 @@
             </div>
             <div class="modal-body">
                 <!--Bill To List Table-->
-                <table class="display" id="BillToTable">
+                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchBillTo" name="searchBillTo" placeholder="Bill To,Name"/> </div> 
+                <table class="display" id="BillToTable" style="table-layout: fixed;">
                     <thead>                        
                         <tr class="datatable-header">
-                            <th>Bill To</th>
-                            <th>Bill Name</th>
-                            <th>Address</th>
-                            <th>Tel</th>
+                            <th style="width: 15%;">Bill To</th>
+                            <th style="width: 30%;">Bill Name</th>
+                            <th style="width: 35%;">Address</th>
+                            <th style="width: 20%;">Tel</th>
                         </tr>
                     </thead>
                     <script>
@@ -293,7 +294,7 @@
                         var BillToTable = $('#BillToTable').dataTable({bJQueryUI: true,
                             "sPaginationType": "full_numbers",
                             "bAutoWidth": false,
-                            "bFilter": true,
+                            "bFilter": false,
                             "bPaginate": true,
                             "bInfo": false,
                             "bLengthChange": false,
@@ -309,7 +310,7 @@
                                 $(this).addClass('row_selected');
                             }
                         });
-
+                        
                     });
 
                 </script>
@@ -441,6 +442,11 @@ $(document).ready(function() {
     $('.todate').datetimepicker().change(function(){                          
         checkToDateField();
     });
+    $("#searchBillTo").keyup(function(event) {
+        if (event.keyCode === 13) {
+            searchBillTo($("#searchBillTo").val());             
+        }
+    });
 });
 
 function checkFromDateField(){      
@@ -550,5 +556,52 @@ function printOverdueSummary(){
             window.open("Excel.smi?name=Overdue"+"&from="+from+"&to="+to+"&department="+department+"&clientcode="+clientcode+"&clientname="+clientname+"&staffcode="+staffcode+"&staffname="+staffname+"&vattype="+vattype+"&group="+group+"&view="+view);  
         }
     } 
+}
+
+function searchBillTo(name){
+    var servletName = 'BillableServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&name=' + name +
+            '&type=' + 'getListBilltoOverdueSummary';
+    callAjax(param);
+}
+
+function callAjax(param){
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                $('#BillToTable').dataTable().fnClearTable();
+                $('#BillToTable').dataTable().fnDestroy();
+                $("#BillToTable tbody").empty().append(msg);
+
+                $('#BillToTable').dataTable({bJQueryUI: true,
+                    "sPaginationType": "full_numbers",
+                    "bAutoWidth": false,
+                    "bFilter": false,
+                    "bPaginate": true,
+                    "bInfo": false,
+                    "bLengthChange": false,
+                    "iDisplayLength": 10
+                });
+                $("#ajaxload").addClass("hidden");
+
+            }, error: function(msg) {
+                $("#ajaxload").addClass("hidden");
+                alert('error');
+            }
+        });
+    } catch (e) {
+        $("#ajaxload").addClass("hidden");
+        alert(e);
+    }
 }
 </script>
