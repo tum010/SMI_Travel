@@ -309,8 +309,9 @@ public class ReceiptController extends SMITravelController {
                     invoiceDetail.setId(invId);
                     receiptDetail.setInvoiceDetail(invoiceDetail);
                 }
-                if(!"0".equalsIgnoreCase(isref)){
+                if(!"0".equalsIgnoreCase(isref) && ((!"".equalsIgnoreCase(billDescId)&& billDescId != null) || (!"".equalsIgnoreCase(paymentId)&& paymentId != null) || (!"".equalsIgnoreCase(paymentTourId)&& paymentTourId != null))){
                     System.out.println("============== invId ============== " + invId);
+                    System.out.println("============== billDescID ============== " + billDescId);
                        List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
                         InvoiceDetail invoiceDetail = new InvoiceDetail();
                         invoiceDetail.setId(invId);                       

@@ -2960,15 +2960,15 @@
                 var amountTemp = document.getElementById('receiveAmountTemp' + i).value;
                 var amount = document.getElementById('receiveAmount' + i).value;
                 var currency = document.getElementById('receiveCurrency'+i);
-//                var billDescId = document.getElementById('billDescId'+i).value;
-//                var receiptDetailId = document.getElementById('tableId'+i).value;
-//                var paymentTourId = document.getElementById('paymentTourId'+i).value;
-//                var invdId = document.getElementById('invId'+i).value;
-
-                var billDescId = $("#billDescId"+i).val();
-                var receiptDetailId = $("#tableId"+i).val();
-                var paymentTourId = $("#paymentTourId"+i).val();
-                var invdId = $("#invId"+i).val();
+//                
+                var receiptDetailId = document.getElementById('tableId'+i).value;
+                var paymentTourId = document.getElementById('paymentTourId'+i).value;
+                var invdId = document.getElementById('invId'+i).value;
+                var billDescId = document.getElementById('billDescId'+i).value;
+//                var billDescId = $("#billDescId"+i).val();
+//                var receiptDetailId = $("#tableId"+i).val();
+//                var paymentTourId = $("#paymentTourId"+i).val();
+//                var invdId = $("#invId"+i).val();
                 currency.style.borderColor = 'green';
                 amount = replaceAll(",", "", amount.toString());
                 var isref =  $("#isref").val();
@@ -3867,7 +3867,6 @@
                     $('#textAlertReceiveAmount').show();
                     checksave = 2;
                 }
-
                 if (checksave === 1) {
                     $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
                     $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');

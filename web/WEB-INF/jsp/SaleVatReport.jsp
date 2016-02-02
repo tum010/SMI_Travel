@@ -158,8 +158,8 @@
                             <tr class="datatable-header">
                                 <th class="hidden">Id</th>
                                 <th style="width: 1%" onclick="selectAll()"><u>Cancel</u></th>
-                                <th style="width: 9%" >No.</th>
-                                <th style="width: 12%">Date</th>
+                                <th style="width: 8%" >No.</th>
+                                <th style="width: 14%">Date</th>
                                 <th style="width: 8%">A/R</th>
                                 <th style="width: 25%">Name</th>
                                 <th style="width: 11%">Gross</th>

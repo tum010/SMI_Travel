@@ -789,7 +789,11 @@ public class InvoiceImpl implements InvoiceDao{
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
             if(invoiceDetail != null){
                 for (int i = 0; i < invoiceDetail.size(); i++) {
-                    session.save(invoiceDetail.get(i));
+                    if (invoiceDetail.get(i).getId() != null && !"".equalsIgnoreCase(invoiceDetail.get(i).getId())) {
+                        session.update(invoiceDetail.get(i));
+                    } else {
+                        session.save(invoiceDetail.get(i));
+                    }
                 }
             }
             transaction.commit();
@@ -817,10 +821,10 @@ public class InvoiceImpl implements InvoiceDao{
             
             List<InvoiceDetail> invoiceDetail = invoice.getInvoiceDetails();
             for (int i = 0; i < invoiceDetail.size(); i++) {
-                if (invoiceDetail.get(i).getId() == null) {
-                    session.save(invoiceDetail.get(i));
-                } else {
+                if (invoiceDetail.get(i).getId() != null && !"".equalsIgnoreCase(invoiceDetail.get(i).getId())) {
                     session.update(invoiceDetail.get(i));
+                } else {
+                    session.save(invoiceDetail.get(i));
                 }
             }
 

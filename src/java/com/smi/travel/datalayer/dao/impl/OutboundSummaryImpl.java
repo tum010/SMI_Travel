@@ -66,7 +66,7 @@ public class OutboundSummaryImpl implements OutboundSummaryDao{
         String query = "SELECT * FROM `outbound_package_summary` op where op.departdate BETWEEN '"+fromdate+"' and '"+todate+"'";
         
         if((cityId != null) && (!"".equalsIgnoreCase(cityId))) {
-            query += " and op.city like '%" + cityId + "%'" ;
+            query += " and op.city like '%C" + cityId + "%,'" ;
             
             String querycity = "from MCity c where c.id = '"+cityId+"'";
             List<MCity> mCity = session.createQuery(querycity).list();

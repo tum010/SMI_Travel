@@ -75,9 +75,11 @@ public class InvoiceService {
     }
     
     public String saveInvoiceDetail(Invoice invoice){
-        if(invoice.getId() != null){
+        if(invoice.getId() != null && !"".equalsIgnoreCase(String.valueOf(invoice.getId()))){
+            System.out.println(" invoice.getId() update " + invoice.getId());
             return invoiceDao.updateInvoiceDetail(invoice);
         }else{
+            System.out.println(" invoice.getId() save " + invoice.getId());
             return invoiceDao.insertInvoiceDetail(invoice);
         }
     }
