@@ -238,24 +238,24 @@ function setEnvironment() {
         }
     }
 
-    var row = parseInt($("#countPaymentDetail").val());
-    for (var i = 1; i <= row; i++) {
-        if ($("#cost" + i).val() !== '') {
-            $("#cost" + i).val(formatNumber(parseFloat($("#cost" + i).val())));
-        }
-        if ($("#gross" + i).val() !== '') {
-            $("#gross" + i).val(formatNumber(parseFloat($("#gross" + i).val())));
-        }
-        if ($("#amount" + i).val() !== '') {
-            $("#amount" + i).val(formatNumber(parseFloat($("#amount" + i).val())));
-        }
-        if ($("#comm" + i).val() !== '') {
-            $("#comm" + i).val(formatNumber(parseFloat($("#comm" + i).val())));
-        }
-        if ($("#saleAmount" + i).val() !== '') {
-            $("#saleAmount" + i).val(formatNumber(parseFloat($("#saleAmount" + i).val())));
-        }
-    }
+//    var row = parseInt($("#countPaymentDetail").val());
+//    for (var i = 1; i <= row; i++) {
+//        if ($("#cost" + i).val() !== '') {
+//            $("#cost" + i).val(formatNumber(parseFloat($("#cost" + i).val())));
+//        }
+//        if ($("#gross" + i).val() !== '') {
+//            $("#gross" + i).val(formatNumber(parseFloat($("#gross" + i).val())));
+//        }
+//        if ($("#amount" + i).val() !== '') {
+//            $("#amount" + i).val(formatNumber(parseFloat($("#amount" + i).val())));
+//        }
+//        if ($("#comm" + i).val() !== '') {
+//            $("#comm" + i).val(formatNumber(parseFloat($("#comm" + i).val())));
+//        }
+//        if ($("#saleAmount" + i).val() !== '') {
+//            $("#saleAmount" + i).val(formatNumber(parseFloat($("#saleAmount" + i).val())));
+//        }
+//    }
     calculateGrossTotal();
     calculateGrandTotal();
     calculateVatTotal();
@@ -530,7 +530,7 @@ function addRowPaymentDetailTable(row) {
             '<td class="text-center" rowspan="2">' +
             '<a href="#" onclick=""  data-toggle="modal" data-target=""> ' +
             '<span id="editPaymentDetail' + row + '" onclick="editPaymentDetail(\'' + row + '\')" class="glyphicon glyphicon glyphicon-list-alt"></span>' +
-            '</a>' +
+            '</a> ' +
             '<a href="#" onclick=""  data-toggle="modal" data-target="">' +
             '<span id="spanDelete' + row + '" class="glyphicon glyphicon-remove deleteicon"  onclick="deletePaymentDetailList(\'\',\'' + row + '\')" data-toggle="modal" ></span>' +
             '</a>' +

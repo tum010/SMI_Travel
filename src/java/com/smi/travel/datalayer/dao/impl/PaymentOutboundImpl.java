@@ -421,7 +421,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             Query += "  and refno = '" + refNo + "'";
         }
         
-        Query += "  group by invoicesup order by payno ";        
+        Query += " order by payno ";        
         System.out.println("Query : "+Query);
         
         List<Object[]> QueryTicketList = session.createSQLQuery(Query)

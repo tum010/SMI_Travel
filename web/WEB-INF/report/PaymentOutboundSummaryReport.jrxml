@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentOutboundSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="50a6b64f-0918-4925-9fda-7e1fdc5afe86">
 	<property name="ireport.zoom" value="2.35794769100005"/>
-	<property name="ireport.x" value="975"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
 	<field name="datefromto" class="java.lang.String"/>
@@ -21,7 +21,7 @@
 	<field name="amountcur" class="java.lang.String"/>
 	<field name="salecur" class="java.lang.String"/>
 	<group name="InvoiceSup">
-		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
+		<groupExpression><![CDATA[$F{invoicesup}]]></groupExpression>
 		<groupHeader>
 			<band height="41">
 				<staticText>
