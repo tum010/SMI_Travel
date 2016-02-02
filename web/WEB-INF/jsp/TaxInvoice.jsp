@@ -98,7 +98,11 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Cannot void Tax invoice. It use in credit note no ${requestScope['cnNoList']}</strong> 
         </div>
-        </c:if>        
+        </c:if>
+        <div id="textAlertDivDuplicate"  style="display:none;" class="alert alert-danger">
+            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
+            <strong>Duplicate!</strong> 
+        </div>
         <form action="TaxInvoice${page}.smi" method="post" id="TaxInvoiceForm" role="form" autocomplete="off" >
         <!--Search Invoice-->
 <!--           <div role="tabpanel">
@@ -1913,7 +1917,10 @@
         console.log(match);
         if(match === 0){
             AddDataRowProduct(row,count,id,product,description,cost,curCost,amount,curAmount,isVat,refNo,'',vat,'invoice');
-        }    
+        
+        }else{
+            $("#textAlertDivDuplicate").show();
+        }      
     }
     
     function AddRefNo(product,description,cost,curcost,amount,curamount,id,displaydescription,refNo){
@@ -1924,6 +1931,9 @@
         console.log(match);
         if(match === 0){          
             AddDataRowProduct(row,count,id,product,description,cost,curcost,amount,curamount,'1',refNo,isProfit,'','refNo');
+        
+        }else{
+            $("#textAlertDivDuplicate").show();
         }    
     }
     
@@ -2771,5 +2781,9 @@
             $("#searchRefNo1").addClass("hidden");
         }
         $("#searchRefNo2").addClass("hidden");
+    }
+    
+    function hideTextAlertDiv(){
+        $("#textAlertDivDuplicate").hide();
     }
 </script>
