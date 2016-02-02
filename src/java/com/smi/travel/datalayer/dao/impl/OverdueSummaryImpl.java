@@ -143,7 +143,7 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
             }
             
             if(staffname != null && !"".equals(staffname)){
-                overdue.setStaffname_page(clientname);
+                overdue.setStaffname_page(staffname);
             }else{
                 overdue.setStaffname_page("ALL");
             }
