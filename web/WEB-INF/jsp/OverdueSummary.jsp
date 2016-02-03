@@ -190,12 +190,15 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <div class="col-sm-7 text-right">
+                                <label class="col-md-5 control-label text-right" ></label>
+                                <div class="col-md-5">  
+                                    <div class="form-group">
                                     <button type="button"  class="btn btn-success" id="printbutton"  name="printbutton" onclick="printOverdueSummary();"><span class="glyphicon glyphicon-print" ></span> Print</button>
                                 </div>
-                                <div class="col-sm-2 text-left">
+                                    </div>
+<!--                                <div class="col-sm-2 text-left">
                                     <button type="button" onclick="" class="btn btn-warning"><span class="glyphicon glyphicon-print"></span> Cancel</button>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -228,7 +231,7 @@
                     </script>
                     <tbody>
                         <c:forEach var="item" items="${customerAgentList}">
-                            <tr>                                
+                            <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">                             
                                 <td class="item-billto">${item.billTo}</td>
                                 <td class="item-name">${item.billName}</td>                                
                                 <td class="item-address ">${item.address}</td>
@@ -449,6 +452,12 @@ $(document).ready(function() {
     });
 });
 
+function setBillValue(billto, billname, address, term, pay) {
+
+       $("#billto").val(billto);
+       $("#billname").val(billname);
+       $("#BillToModal").modal('hide');
+}
 function checkFromDateField(){      
     var inputFromDate = document.getElementById("FromDate");
     var InputToDate = document.getElementById("ToDate");

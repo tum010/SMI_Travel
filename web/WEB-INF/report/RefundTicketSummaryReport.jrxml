@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RefundTicketSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="93ebb579-a6b8-4cb5-8231-f35a3b386db3">
 	<property name="ireport.zoom" value="2.1435888100000358"/>
-	<property name="ireport.x" value="1006"/>
-	<property name="ireport.y" value="48"/>
+	<property name="ireport.x" value="998"/>
+	<property name="ireport.y" value="0"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="refundfrom" class="java.lang.String"/>
 	<field name="refundto" class="java.lang.String"/>
@@ -506,35 +506,35 @@
 				</textElement>
 				<text><![CDATA[TOTAL]]></text>
 			</staticText>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="688" y="1" width="53" height="13" uuid="7ffd770f-2ae3-4334-9b68-b06b82faf6cf"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="633" y="1" width="51" height="13" uuid="a455e42c-e53d-41dd-9a47-9058295f5c84"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totaltax}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="521" y="1" width="52" height="13" uuid="af92c73d-e4ff-42c5-818c-392953e21f13"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalsale}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="577" y="1" width="52" height="13" uuid="a02cc896-17c0-4309-9110-d2599d6f58f9"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalnet}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
+			<textField pattern="#,##0.00">
 				<reportElement x="745" y="1" width="52" height="13" uuid="fef942bc-fcc5-47c4-92d0-84f490a62a35"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="9"/>

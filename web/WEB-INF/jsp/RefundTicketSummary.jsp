@@ -42,7 +42,7 @@
                             <div class="form-group">
                                  <div class='input-group' >
                                     <input type='text' id="refundBy" name="refundBy"  class="form-control" />
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-search" data-toggle="modal" data-target="#BillToModal"></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-search" data-toggle="modal" data-target="#refundCustModal"></span>
                                     </span>
                                 </div>
                             </div>
@@ -56,13 +56,12 @@
                         <label class="col-md-6 control-label text-right">Refund Name</label>
                         <div class="col-md-6">  
                             <div class="form-group">
-                                <input type='text' readonly="" id="refundName" name="refundName" class="form-control" />
+                                <input type='text' readonly="" id="refundByName" name="refundByName" class="form-control" />
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-                
+            </div>  
             <div class="row">
                 <div class="col-md-8">
                     <div class="form-group">
@@ -146,6 +145,47 @@
 </div>
 </div>
 
+<!--Modal  Customer-->
+<div class="modal fade" id="refundCustModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Refund By</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: right"> 
+                    <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchCustFrom" name="searchCustFrom"/> 
+                </div> 
+                <table class="display" id="refundCustTable">
+                    <thead >   
+                        <tr class="datatable-header">
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th class="hidden">Address</th>
+                            <th class="hidden">Tel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="item" items="${customerAgentList}">
+                            <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">
+                                <td class="item-billto">${item.billTo}</td>
+                                <td class="item-name">${item.billName}</td>                                
+                                <td class="item-address hidden">${item.address}</td>
+                                <td class="item-tel hidden">${item.tel}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="text-right">
+                    <button id="rrefundCustModalClose" type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
         $('.date').datetimepicker({
@@ -158,7 +198,53 @@
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
             
         });
-        
+
+        var refundCustTable = $('#refundCustTable').dataTable({bJQueryUI: true,
+            "sPaginationType": "full_numbers",
+            "bAutoWidth": false,
+            "bFilter": false,
+            "bPaginate": true,
+            "bInfo": false,
+            "bLengthChange": false,
+            "iDisplayLength": 10
+        });
+       
+        //autocomplete
+        $("#refundBy").keyup(function (event) {
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left);
+            if ($(this).val() === "") {
+                $("#refundBy").val("");
+                $("#refundByName").val("");
+            } else {
+                if (event.keyCode === 13) {
+                    searchCustomerAutoList(this.value);
+                }
+            }
+        });
+
+        var showflag = 1;
+        $("#refundBy").keydown(function () {
+
+            var position = $(this).offset();
+            $(".ui-widget").css("top", position.top + 30);
+            $(".ui-widget").css("left", position.left);
+            if (showflag == 0) {
+                $(".ui-widget").css("top", -1000);
+                showflag = 1;
+            }
+        });
+
+
+        $("#searchCustFrom").keyup(function (event) {
+            if (event.keyCode === 13) {
+                if ($("#searchCustFrom").val() === "") {
+                    // alert('please input data');
+                }
+                searchCustomerAgentList($("#searchCustFrom").val());
+            }
+        });
 //        var from = setValueFromDate();
 //        var to = setValueToDate();
 //        $("#fromdate").val(from);
@@ -336,9 +422,6 @@
         var refundBy = document.getElementById("refundBy").value;
         $('#RefundTicketSummaryForm').bootstrapValidator('revalidateField', 'refundTo');
         $('#RefundTicketSummaryForm').bootstrapValidator('revalidateField', 'refundFrom');
-        
-        
-        
         if(((refundFrom !== '') && (refundTo !== '')) && refundFrom < refundTo){
             window.open("report.smi?name=RefundTicketSummaryReport&refundFrom=" + refundFrom + "&refundTo=" + refundTo + "&refundBy=" + refundBy + "&ticketFrom=" + fromdate + "&ticketTo=" + todate);
         }else if((((refundFrom !== '') && (refundTo !== '')) && refundFrom === refundTo)) {
@@ -355,125 +438,54 @@
     function checkValidateRefundFrom(){
         $('#RefundTicketSummaryForm').bootstrapValidator('revalidateField', 'refundFrom');
     }
-</script>
 
-<div class="modal fade" id="BillToModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Bill To</h4>
-            </div>
-            <div class="modal-body">
-                <!--Bill To List Table-->
-                <table class="display" id="BillToTable">
-                    <thead>                        
-                        <tr class="datatable-header">
-                            <th>Bill To</th>
-                            <th>Bill Name</th>
-                            <th>Address</th>
-                            <th>Tel</th>
-                        </tr>
-                    </thead>
-                    <script>
-                        bill = [];
-                    </script>
-                    <tbody>
-                        <c:forEach var="item" items="${customerAgentList}">
-                            <tr>                                
-                                <td class="item-billto">${item.billTo}</td>
-                                <td class="item-name">${item.billName}</td>                                
-                                <td class="item-address ">${item.address}</td>
-                                <td class="item-tel ">${item.tel}</td>
-                            </tr>
-                        <script>
-                            bill.push({code: "${item.billTo}", name: "${item.billName}", address: "${item.address}" , tel: "${item.tel}"})
-                        </script>
-                        </c:forEach>
-                            
-                    </tbody>
+    function searchCustomerAgentList(name) {
+        var servletName = 'BillableServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&name=' + name +
+                '&type=' + 'getListBillto';
+        var url = 'AJAXServlet';
+        $("#ajaxload").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function (msg) {
+                    $('#refundCustTable').dataTable().fnClearTable();
+                    $('#refundCustTable').dataTable().fnDestroy();
+                    $("#refundCustTable tbody").empty().append(msg);
 
-                </table>
-                <!--Script Bill To List Table-->
-                <script>
-                    $(document).ready(function () {
-                        var billTo = [];
-                        $.each(bill, function (key, value) {
-                            billTo.push(value.code);
-                            if ( !(value.name in billTo) ){
-                               billTo.push(value.name);
-                            }
-                        });
-
-                        $("#refundBy").autocomplete({
-                            source: billTo,
-                            close:function( event, ui ) {
-                               $("#refundBy").trigger('keyup');
-                            }
-                        });
-                        $("#refundBy").keyup(function () {
-                            var position = $(this).offset();
-                            $(".ui-widget").css("top", position.top + 30);
-                            $(".ui-widget").css("left", position.left);
-                            var code = this.value.toUpperCase();
-                            var name = this.value;
-                            $("#refundName").val(null);
-                            $.each(bill, function (key, value) {
-                                if (value.code.toUpperCase() === code) {
-                                    $("#refundName").val(value.name);                                   
-                                }
-                                if(name === value.name){
-                                    $("#refundBy").val(value.code);
-                                    $("#refundName").val(value.name);    
-                                    code = $("#refundBy").val().toUpperCase();
-                                }
-                                
-                            });
-                        });
-                        
-                        $("#BillToTable tr").on('click', function () {
-                            var billto = $(this).find(".item-billto").text();
-                            var billname = $(this).find(".item-name").text();
-                            var address = $(this).find(".item-address").text();
-                            var tel = $(this).find(".item-tel").text();
-                            $("#refundBy").val(billto);
-                            $("#refundName").val(billname);
-                            $("#address").val(address);
-                            $("#BillToModal").modal('hide');
-                        });
-
-                        // BillTo Table
-                        var BillToTable = $('#BillToTable').dataTable({bJQueryUI: true,
-                            "sPaginationType": "full_numbers",
-                            "bAutoWidth": false,
-                            "bFilter": true,
-                            "bPaginate": true,
-                            "bInfo": false,
-                            "bLengthChange": false,
-                            "iDisplayLength": 10
-                        });
-                        $('#BillToTable tbody').on('click', 'tr', function () {
-                            $('.collapse').collapse('show');
-                            if ($(this).hasClass('row_selected')) {
-                                $(this).removeClass('row_selected');
-                            }
-                            else {
-                                BillToTable.$('tr.row_selected').removeClass('row_selected');
-                                $(this).addClass('row_selected');
-                            }
-                        });
-
+                    $('#refundCustTable').dataTable({bJQueryUI: true,
+                        "sPaginationType": "full_numbers",
+                        "bAutoWidth": false,
+                        "bFilter": false,
+                        "bPaginate": true,
+                        "bInfo": false,
+                        "bLengthChange": false,
+                        "iDisplayLength": 10
                     });
+                    $("#ajaxload").addClass("hidden");
 
-                </script>
+                }, error: function (msg) {
+                    $("#ajaxload").addClass("hidden");
+                    alert('error');
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
 
-            </div>
-            <div class="modal-footer">
-                <div class="text-right">
-                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>
+    function setBillValue(billto, billname, address, term, pay) {
+
+       $("#refundBy").val(billto);
+       $("#refundByName").val(billname);
+       $("#refundCustModal").modal('hide');
+    }
+</script>
 
