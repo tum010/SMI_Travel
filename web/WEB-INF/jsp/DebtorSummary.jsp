@@ -176,7 +176,7 @@
             </div>
             <div class="modal-body">
                 <!--Bill To List Table-->
-                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchInvoiceFrom" name="searchInvoiceFrom"/> </div> 
+                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchAgent" name="searchAgent"/> </div> 
                 <table class="display" id="AgentTable">
                     <thead>                        
                         <tr class="datatable-header">
@@ -268,6 +268,11 @@
         $('.todate').datetimepicker().change(function(){                          
             checkToDateField();
         });
+        $("#searchAgent").keyup(function(event) {
+        if (event.keyCode === 13) {
+            searchAgent($("#searchAgent").val());             
+        }
+    });
 });
     
 function checkFromDateField(){      
@@ -383,5 +388,52 @@ function printDebtorSummary(){
         window.open("report.smi?name=InvoiceSummary"+"&fromdate="+from+"&todate="+to+"&department="+department+"&type="+type+"&agent="+agent+"&status="+status);  
     }  
 
+}
+
+function searchAgent(name){
+    var servletName = 'BillableServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&name=' + name +
+            '&type=' + 'getListBillto';
+    callAjax(param);
+}
+
+function callAjax(param){
+    var url = 'AJAXServlet';
+    $("#ajaxload").removeClass("hidden");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                $('#AgentTable').dataTable().fnClearTable();
+                $('#AgentTable').dataTable().fnDestroy();
+                $("#AgentTable tbody").empty().append(msg);
+
+                $('#AgentTable').dataTable({bJQueryUI: true,
+                    "sPaginationType": "full_numbers",
+                    "bAutoWidth": false,
+                    "bFilter": false,
+                    "bPaginate": true,
+                    "bInfo": false,
+                    "bLengthChange": false,
+                    "iDisplayLength": 10
+                });
+                $("#ajaxload").addClass("hidden");
+
+            }, error: function(msg) {
+                $("#ajaxload").addClass("hidden");
+                alert('error');
+            }
+        });
+    } catch (e) {
+        $("#ajaxload").addClass("hidden");
+        alert(e);
+    }
 }
 </script>
