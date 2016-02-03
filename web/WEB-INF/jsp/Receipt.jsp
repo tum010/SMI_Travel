@@ -2160,6 +2160,9 @@
                     '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
                     '<input id="DescriptionReceiptDetail' + row + '" name="DescriptionReceiptDetail' + row + '"  type="hidden" >' +
                     '<input id="receiveAmountTemp' + row + '" name="receiveAmountTemp' + row + '"  type="hidden" value="9999999" >' +
+                    '<input id="paymentTourId' + row + '" name="paymentTourId' + row + '"  type="hidden" value="" >' +
+                    '<input id="billDescId' + row + '"  name="billDescId' + row + '"   type="hidden" value="" >' +
+                    '<input id="invId' + row + '"  name="invId' + row + '"   type="hidden" value="" >' +
                     '<td>' +
                     '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +
                     '</td>' +
