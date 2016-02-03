@@ -265,7 +265,7 @@
                             validators: {
                                 date: {
                                     format: 'YYYY-MM-DD',
-                                    max: 'todate',
+                                    max: 'refundTo',
                                     message: 'The Refund From is not a valid'
                                 },notEmpty: {
                                     message: 'The Refund From is required'
@@ -277,7 +277,7 @@
                             validators: {
                                 date: {
                                     format: 'YYYY-MM-DD',
-                                    min: 'fromdate',
+                                    min: 'refundFrom',
                                     message: 'The Refund To is not a valid'
                                 },notEmpty: {
                                     message: 'The Refund To is required'
@@ -287,12 +287,12 @@
                 }
             }).on('success.field.fv', function (e, data) {
 //                alert("1");
-                if (data.field === 'fromdate' && data.fv.isValidField('todate') === false) {
-                    data.fv.revalidateField('todate');
+                if (data.field === 'refundFrom' && data.fv.isValidField('refundTo') === false) {
+                    data.fv.revalidateField('refundTo');
                 }
 
-                if (data.field === 'todate' && data.fv.isValidField('fromdate') === false) {
-                    data.fv.revalidateField('fromdate');
+                if (data.field === 'refundTo' && data.fv.isValidField('refundFrom') === false) {
+                    data.fv.revalidateField('refundFrom');
                 }
             });
             
