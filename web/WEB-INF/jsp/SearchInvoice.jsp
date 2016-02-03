@@ -128,13 +128,13 @@
                                     <c:when test="${type == 'V'}">
                                     <c:set var="accountSelectedV" value="selected" />
                                     </c:when>
-                                     <c:when test="${type == 'N'}">
+                                    <c:when test="${type == 'N'}">
                                         <c:set var="accountSelectedN" value="selected" />
                                     </c:when>
-                                     <c:when test="${type == 'T'}">
+                                    <c:when test="${type == 'T'}">
                                         <c:set var="accountSelectedT" value="selected" />
                                     </c:when>
-                                     <c:when test="${type == 'A'}">
+                                    <c:when test="${type == 'A'}">
                                         <c:set var="accountSelectedA" value="selected" />
                                     </c:when>
                                 </c:choose>         
@@ -373,6 +373,21 @@
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
+        var typetemp = '${requestScope['type']}' ;
+        
+        if(typetemp === 'T'){
+            $('#Type')
+                .find('option')
+                .remove()
+                .end()
+                .append('<option value="T">Temp</option>')
+                .val('')
+            ;
+            $('[name=Type] option').filter(function() { 
+                return ($(this).val() === 'T');
+            }).prop('selected', true);  
+        }
+        
         var table = $('#MasterInvoice').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,

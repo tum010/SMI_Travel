@@ -50,6 +50,7 @@ public class SearchInvoiceController extends SMITravelController {
         } 
         
         if("search".equals(action)){
+            System.out.println(" type " + type);
             List<Invoice> listInvoice = new LinkedList<Invoice>();
             List<InvoiceView> listView = new LinkedList<InvoiceView>();
             listInvoice = invoiceService.SearchInvoice(fromdate, todate, department, type,agent,status,airticketWendy);

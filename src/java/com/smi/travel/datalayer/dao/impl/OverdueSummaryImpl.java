@@ -104,10 +104,10 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
         
         if ((group != null )&&(!"".equalsIgnoreCase(group))) {
             if("1".equals(group)){// agent
-                 query += " ORDER BY  ovs.invto DESC ";
+                 query += " ORDER BY  ovs.invto DESC , ovs.invno ASC  ";
             }else if("2".equals(group)){
                 checkQuery = 1;
-                 query += " ORDER BY  ovs.ownername  DESC ";
+                 query += " ORDER BY  ovs.ownername  DESC , ovs.invno ASC  ";
             }
         }
         
