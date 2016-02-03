@@ -198,7 +198,7 @@ public class ReceiptImpl implements ReceiptDao{
         }
         
         if((status != null) &&(!"".equalsIgnoreCase(status))){
-            if("NORMAL".equalsIgnoreCase(status)){status = "";}
+            if("NORMAL".equalsIgnoreCase(status)){status = "NORMAL";}
             if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
             query += prefix+ " status = '"+status+"'";
         }

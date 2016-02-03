@@ -350,10 +350,12 @@ function printReceiptSummary(){
     var department = document.getElementById('department').value;
     var inputToDate = document.getElementById('inputToDate').value;
     var inputFromDate = document.getElementById('inputFromDate').value;
-    var status = document.getElementById("status");
-    var strStatus = status.options[status.selectedIndex].text;
-    if(strStatus === '----'){
-        strStatus = "";
+    var status = document.getElementById("status").value;
+    var strStatus = '';
+    if(status === '1'){
+        strStatus = "NORMAL";
+    }else if(status === '2'){
+        strStatus = "VOID";
     }
     if(department === 'WendyOutbound'){
         department = 'Wendy,Outbound';
