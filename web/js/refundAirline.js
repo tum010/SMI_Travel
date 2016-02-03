@@ -747,6 +747,9 @@ function calculateProfit(e){
         $("#buttonPrint").addClass("disabled");
         
         document.getElementById("profit"+row).value = (0);
+        document.getElementById("profit"+row).placeholder = "0.00";
+//        $("#pay"+row).attr("placeholder", "0.00");
+        
     }else{
         var receiveField = document.getElementById('receive'+row);
         receiveField.style.borderColor = "";
@@ -757,7 +760,16 @@ function calculateProfit(e){
         $("#ButtonSaveAndNew").removeClass("disabled");
         $("#buttonPrint").removeClass("disabled");
         var profit = receivetemp - paytemp ;
-        document.getElementById("profit"+row).value = (profit);
+        if(profit !== 0){
+//            $("#pay"+row).removeAttr("placeholder", "0.00");
+            document.getElementById("profit"+row).placeholder = "";
+            document.getElementById("profit"+row).value = (profit);
+        
+        }else if(profit === 0){
+//           $("#pay"+row).attr("placeholder", "0.00");
+            document.getElementById("profit"+row).value = (profit);
+            document.getElementById("profit"+row).placeholder = "0.00";
+        }    
     }
     
     
