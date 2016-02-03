@@ -284,7 +284,7 @@ public class TicketSummaryImpl implements TicketSummaryDao {
         }
         
         if ((refundBy != null) && (!"".equalsIgnoreCase(refundBy))) {
-            Query += "  and refundby = '" + refundBy + "'";
+            Query += "  and refundbycode = '" + refundBy + "'";
         }        
         
         System.out.println("Query : "+Query);
