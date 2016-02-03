@@ -1,7 +1,6 @@
 var deleteRowNo = 0;
 $(document).ready(function () {
 
-
     $('.datemask').mask('0000-00-00');
     addRowRefundAirlineList();
     $(".decimal").inputmask({
@@ -15,6 +14,7 @@ $(document).ready(function () {
         placeholder: "0.00"
     });
 
+    calculateProfitReady();
 
 //    $("#RefundAirlineForm").bootstrapValidator({
 ////        excluded: [':disabled', ':hidden', ':not(:visible)'],
@@ -719,6 +719,31 @@ function setBillValue(billto, billname, address, term, pay) {
     $("#refundCustModal").modal('hide');
 }
 
+function calculateProfitReady(){
+    var count = parseInt(document.getElementById('counter').value);
+    for(var i=1; i<=count; i++){
+        if(($("#receive"+i).val() !== undefined) && ($("#pay"+i).val() !== undefined) && ($("#receive"+i).val() !== '') && ($("#pay"+i).val() !== '')){
+            var receive = replaceAll(",","",$("#receive"+i).val());
+            if (receive === ""){
+                receive = 0;
+            }
+
+            var receivetemp = parseFloat(receive);
+
+            var pay = replaceAll(",","",$("#pay"+i).val());
+            if (pay === ""){
+                pay = 0;
+            }
+
+            var paytemp = parseFloat(pay);
+            if((receivetemp-paytemp) === 0){
+                document.getElementById("profit"+i).value = (0);
+                document.getElementById("profit"+i).placeholder = "0.00";
+
+            }
+        }      
+    }    
+}
 
 function calculateProfit(e){
     var row = $(e).parent().parent().attr("row");
