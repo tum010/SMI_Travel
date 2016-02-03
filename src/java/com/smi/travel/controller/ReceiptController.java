@@ -142,6 +142,11 @@ public class ReceiptController extends SMITravelController {
             request.setAttribute("roleName", roleName);
         }
         
+        String resultRedirect = request.getParameter("resultRedirect");
+        if(!"".equalsIgnoreCase(resultRedirect) && resultRedirect != null){
+            request.setAttribute(SAVERESULT, "save successful");
+        }
+        
         if("new".equalsIgnoreCase(action)){
             System.out.println(" CLEAR DATA ");
         }else if ("edit".equalsIgnoreCase(action)){
@@ -505,9 +510,11 @@ public class ReceiptController extends SMITravelController {
                 request.setAttribute(SAVERESULT, "save unsuccessful");
             } else if (result == "success"){
                 request.setAttribute(SAVERESULT, "save successful");
+                return new ModelAndView(new RedirectView("Receipt"+callPageFrom+".smi?action=searchReceiveNo&receiveNo="+receipt.getRecNo()+"&InputDepartment="+InputDepartment+"&InputReceiptType="+InputReceiptType+"&resultRedirect=save successful", true));
             } else{
                 receipt.setRecNo(result);
                 request.setAttribute(SAVERESULT, "save successful");
+                return new ModelAndView(new RedirectView("Receipt"+callPageFrom+".smi?action=searchReceiveNo&receiveNo="+result+"&InputDepartment="+InputDepartment+"&InputReceiptType="+InputReceiptType+"&resultRedirect=save successful", true));
             }
             request.setAttribute(RECEIPT,receipt);
             request.setAttribute(RECEIPTDATE,receiveFromDate);
