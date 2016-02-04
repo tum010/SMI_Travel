@@ -80,12 +80,12 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
         }
         
         if ((staffcode != null )&&(!"".equalsIgnoreCase(staffcode))) {
-//            if(checkQuery == 1){
-//                 query += " and ovs.owner = '" + staffcode + "' ";
-//            }else{
-//                checkQuery = 1;
-//                 query += " ovs.owner  = '" + staffcode + "' ";
-//            }
+            if(checkQuery == 1){
+                 query += " and ovs.owner = '" + staffcode + "' ";
+            }else{
+                checkQuery = 1;
+                 query += " ovs.owner  = '" + staffcode + "' ";
+            }
             List<SystemUser> list = session.createQuery("select u from SystemUser u WHERE  u.username = '" +staffcode+ "' ").list();
             if (!list.isEmpty()) {
                 staffnameTemp = list.get(0).getName();
