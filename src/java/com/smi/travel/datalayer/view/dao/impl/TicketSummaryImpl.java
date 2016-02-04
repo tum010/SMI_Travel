@@ -253,16 +253,16 @@ public class TicketSummaryImpl implements TicketSummaryDao {
             if(B[5] != null && B[1] != null){
                 BigDecimal profit = new BigDecimal(util.ConvertString(B[5]));
                 BigDecimal ticketnum = new BigDecimal(util.ConvertString(B[1]));
-                System.out.println("Profit : " + profit  + "  Ticket Num : " + ticketnum);
+//                System.out.println("Profit : " + profit  + "  Ticket Num : " + ticketnum);
                 BigDecimal sumProfitAvg = profit.divide(ticketnum, MathContext.DECIMAL128);
-                System.out.println("Sum Total Profit Avg : " + sumProfitAvg);
+//                System.out.println("Sum Total Profit Avg : " + sumProfitAvg);
                 sum.setProfitavg(sumProfitAvg);
             }else{
                 sum.setProfitavg(new BigDecimal("0.0"));
             }
             
             data.add(sum);
-            System.out.println("sum data :");
+//            System.out.println("sum data :");
             
         }
         

@@ -759,7 +759,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
                 if(num != 0){ // Check not row first
                     String temp = listAgent.get(num-1).getAgentname();
                     if(temp.equals(listAgent.get(num).getAgentname())){ // equal type	
-                        System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
+//                        System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
                         if(num  != (listAgent.size()-1)){ // check not last row
                             HSSFRow row = sheet1.createRow(r);
                             createCell(row,listAgent,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
@@ -767,9 +767,9 @@ public class BillAirAgentSummary extends AbstractExcelView {
                             num++; 
                         }else{ // last row
                             end = r+1;					
-                            System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
-                            System.out.println("Start : " + start +  " End  : " + end);
-                            System.out.println("Last");
+//                            System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
+//                            System.out.println("Start : " + start +  " End  : " + end);
+//                            System.out.println("Last");
                             HSSFRow row = sheet1.createRow(r);
                             createCell(row,listAgent,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
                             sheet1.autoSizeColumn(13);
@@ -797,9 +797,9 @@ public class BillAirAgentSummary extends AbstractExcelView {
                     }else{ // not equal type
                         if(num  == (listAgent.size()-1)){ // check  last row
                             end = r+1;					
-                            System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
-                            System.out.println("Start : " + start +  " End  : " + end);
-                            System.out.println("Last");
+//                            System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
+//                            System.out.println("Start : " + start +  " End  : " + end);
+//                            System.out.println("Last");
                             HSSFRow row = sheet1.createRow(r);
                             createCell(row,listAgent,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
                             sheet1.autoSizeColumn(13);
@@ -825,8 +825,8 @@ public class BillAirAgentSummary extends AbstractExcelView {
                                     rowT.createCell(12).setCellStyle(styleAlignRightBorderBottomRight);
                             }else{                                          
                                 end = r;					 
-                                System.out.println("Start : " + start +  " End  : " + end);
-                                System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
+//                                System.out.println("Start : " + start +  " End  : " + end);
+//                                System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
                                 // total
                                 int rowstart = r;
                                 int rowend = r+1;
@@ -853,7 +853,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
 //                                    cell.setCellStyle(styleAlignRightBorderAll);
                                 row0.createCell(12).setCellStyle(styleAlignRightBorderAll);
                                 String add = "A"+(r+4)+":M"+(r+4)+"";
-                                System.out.println("Add : " + add);
+//                                System.out.println("Add : " + add);
                                 sheet1.addMergedRegion(CellRangeAddress.valueOf(add));
                                 HSSFRow row122 = sheet1.createRow(r+4);
                                 createCell(row122,listAgent,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
@@ -864,7 +864,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
                             }
                         }
                     }else{ // row first
-                        System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
+//                        System.out.println("Num : " + num + " Last Row : " + (listAgent.size()-1));
                         
                         HSSFRow row0 = sheet1.createRow(r);
                         HSSFCell cell = row0.createCell(0);
@@ -872,7 +872,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
 //                            cell.setCellStyle(styleAlignRightBorderAll);
                         row0.createCell(12).setCellStyle(styleAlignRightBorderAll);
                         String add = "A"+(r+1)+":M"+(r+1)+"";
-                        System.out.println("Add : " + add);
+//                        System.out.println("Add : " + add);
                         sheet1.addMergedRegion(CellRangeAddress.valueOf(add));
                         
                         HSSFRow row = sheet1.createRow(r+1);
@@ -1002,7 +1002,7 @@ public class BillAirAgentSummary extends AbstractExcelView {
             int count2 = 4 + listAgentRefund.size();
             int startrefund  = listAgentRefund.size();
             int endrefund = 5 + listAgentRefund.size();
-            System.out.println("Start Refund : " + startrefund + " End Refund : " + endrefund +" Size : " + listAgentRefund.size() );
+//            System.out.println("Start Refund : " + startrefund + " End Refund : " + endrefund +" Size : " + listAgentRefund.size() );
 
         if(listAgentRefund != null && listAgentRefund.size() != 0){
             for (int r = 5; r <= count2; r++) {

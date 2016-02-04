@@ -134,22 +134,27 @@ public class OutboundProductSummary extends AbstractExcelView  {
             styleHeader.setBorderLeft(styleHeader.BORDER_THIN);
             styleHeader.setBorderBottom(styleHeader.BORDER_THIN);
             styleHeader.setBorderRight(styleHeader.BORDER_THIN);
+            styleHeader.setVerticalAlignment(styleHeader.VERTICAL_CENTER);
         HSSFCellStyle styleDetailTable = wb.createCellStyle();
             styleDetailTable.setAlignment(styleDetailTable.ALIGN_LEFT);
             styleDetailTable.setBorderLeft(styleDetailTable.BORDER_THIN);
             styleDetailTable.setBorderRight(styleDetailTable.BORDER_THIN);
+            styleDetailTable.setVerticalAlignment(styleDetailTable.VERTICAL_CENTER);
         HSSFCellStyle styleDetailTableCenter = wb.createCellStyle();
             styleDetailTableCenter.setAlignment(styleDetailTableCenter.ALIGN_CENTER);
             styleDetailTableCenter.setBorderTop(styleDetailTableCenter.BORDER_THIN);
             styleDetailTableCenter.setBorderBottom(styleDetailTableCenter.BORDER_THIN);
             styleDetailTableCenter.setBorderRight(styleDetailTableCenter.BORDER_THIN);
             styleDetailTableCenter.setBorderLeft(styleDetailTableCenter.BORDER_THIN);
-            
+            styleDetailTableCenter.setWrapText(true);
+            styleDetailTableCenter.setVerticalAlignment(styleDetailTableCenter.VERTICAL_CENTER);
         HSSFCellStyle styleDetailTableNumber = wb.createCellStyle();
             styleDetailTableNumber.setAlignment(styleDetailTableNumber.ALIGN_RIGHT);
             styleDetailTableNumber.setBorderLeft(styleDetailTableNumber.BORDER_THIN);
             styleDetailTableNumber.setBorderRight(styleDetailTableNumber.BORDER_THIN);
             styleDetailTableNumber.setDataFormat(currency.getFormat("#,##0.00"));
+            styleDetailTableNumber.setWrapText(true);
+            styleDetailTableNumber.setVerticalAlignment(styleDetailTableNumber.VERTICAL_CENTER);
         HSSFCellStyle styleDetailTableBorderBottom = wb.createCellStyle();
             styleDetailTableBorderBottom.setBorderTop(styleDetailTableBorderBottom.BORDER_THIN);
         HSSFCellStyle styleBorderTop =  wb.createCellStyle();
@@ -163,26 +168,30 @@ public class OutboundProductSummary extends AbstractExcelView  {
             styleBorderBottomAndRight.setBorderRight(styleBorderBottomAndRight.BORDER_THIN);
             styleBorderBottomAndRight.setBorderBottom(styleBorderBottomAndRight.BORDER_THIN);
             styleBorderBottomAndRight.setAlignment(styleBorderBottomAndRight.ALIGN_CENTER);
-        
+            styleBorderBottomAndRight.setVerticalAlignment(styleBorderBottomAndRight.VERTICAL_CENTER);
             
             HSSFCellStyle styleAlignLeftBorderTopRight = wb.createCellStyle(); // use
                 styleAlignLeftBorderTopRight.setAlignment(styleAlignLeftBorderTopRight.ALIGN_LEFT);
                 styleAlignLeftBorderTopRight.setBorderTop(styleAlignLeftBorderTopRight.BORDER_THIN);
                 styleAlignLeftBorderTopRight.setBorderRight(styleAlignLeftBorderTopRight.BORDER_THIN);
+                styleAlignLeftBorderTopRight.setVerticalAlignment(styleAlignLeftBorderTopRight.VERTICAL_CENTER);
         HSSFCellStyle styleAlignLeftBorderTopLeft = wb.createCellStyle(); // use
                 styleAlignLeftBorderTopLeft.setAlignment(styleAlignLeftBorderTopLeft.ALIGN_LEFT);
                 styleAlignLeftBorderTopLeft.setBorderTop(styleAlignLeftBorderTopLeft.BORDER_THIN);
                 styleAlignLeftBorderTopLeft.setBorderLeft(styleAlignLeftBorderTopLeft.BORDER_THIN);
+                styleAlignLeftBorderTopLeft.setVerticalAlignment(styleAlignLeftBorderTopLeft.VERTICAL_CENTER);
         HSSFCellStyle styleBorderTopP = wb.createCellStyle(); // use
                 styleBorderTopP.setBorderTop(styleBorderTopP.BORDER_THIN);
         HSSFCellStyle styleAlignRightBorderBottomRight = wb.createCellStyle();//use
                 styleAlignRightBorderBottomRight.setAlignment(styleAlignRightBorderBottomRight.ALIGN_LEFT);
                 styleAlignRightBorderBottomRight.setBorderBottom(styleAlignRightBorderBottomRight.BORDER_THIN);
                 styleAlignRightBorderBottomRight.setBorderRight(styleAlignRightBorderBottomRight.BORDER_THIN);
+                styleAlignRightBorderBottomRight.setVerticalAlignment(styleAlignRightBorderBottomRight.VERTICAL_CENTER);
         HSSFCellStyle styleAlignRightBorderBottomLeft = wb.createCellStyle();
                 styleAlignRightBorderBottomLeft.setAlignment(styleAlignRightBorderBottomLeft.ALIGN_LEFT);
                 styleAlignRightBorderBottomLeft.setBorderBottom(styleAlignRightBorderBottomLeft.BORDER_THIN);
                 styleAlignRightBorderBottomLeft.setBorderLeft(styleAlignRightBorderBottomLeft.BORDER_THIN);
+                styleAlignRightBorderBottomLeft.setVerticalAlignment(styleAlignRightBorderBottomLeft.VERTICAL_CENTER);
         HSSFCellStyle styleBorderBottom = wb.createCellStyle(); //use
                 styleBorderBottom.setBorderBottom(styleBorderBottom.BORDER_THIN);
         HSSFCellStyle styleAlignRightBorderRight = wb.createCellStyle(); //use
@@ -201,13 +210,15 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 styleAlignRightBorderAllNumber.setBorderBottom(styleAlignRightBorderAllNumber.BORDER_THIN);
                 styleAlignRightBorderAllNumber.setBorderRight(styleAlignRightBorderAllNumber.BORDER_THIN);
                 styleAlignRightBorderAllNumber.setBorderLeft(styleAlignRightBorderAllNumber.BORDER_THIN);
+                styleAlignRightBorderAllNumber.setVerticalAlignment(styleAlignRightBorderAllNumber.VERTICAL_CENTER);
         HSSFCellStyle styleAlignRightBorderAll = wb.createCellStyle();
                 styleAlignRightBorderAll.setAlignment(styleAlignRightBorderAll.ALIGN_LEFT);
                 styleAlignRightBorderAll.setBorderTop(styleAlignRightBorderAll.BORDER_THIN);
                 styleAlignRightBorderAll.setBorderBottom(styleAlignRightBorderAll.BORDER_THIN);
                 styleAlignRightBorderAll.setBorderRight(styleAlignRightBorderAll.BORDER_THIN);
                 styleAlignRightBorderAll.setBorderLeft(styleAlignRightBorderAll.BORDER_THIN);
-        
+                styleAlignRightBorderAll.setVerticalAlignment(styleAlignRightBorderAll.VERTICAL_CENTER);
+                styleAlignRightBorderAll.setWrapText(true);
         HSSFRow row4 = sheet.createRow(6);
             row4.createCell(7).setCellStyle(styleBorderTop);
             row4.createCell(8).setCellStyle(styleBorderTop);
@@ -359,7 +370,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 if(num != 0){ // Check not row first
                     String temp = listOutboundProduct.get(num-1).getProductname();
                     if(temp.equals(listOutboundProduct.get(num).getProductname())){ // equal type	
-                        System.out.println("Num : " + num + " Last Row : " + (listOutboundProduct.size()-1));
+//                        System.out.println("Num : " + num + " Last Row : " + (listOutboundProduct.size()-1));
                         if(num  != (listOutboundProduct.size()-1)){ // check not last row
                             HSSFRow row = sheet.createRow(r);
                             createCell(row,listOutboundProduct,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll,styleDetailTableCenter);
@@ -368,7 +379,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                             }
                             num++; 
                         }else{ // last row				
-                            System.out.println("Num : " + num + " Last Row : " + (listOutboundProduct.size()-1));
+//                            System.out.println("Num : " + num + " Last Row : " + (listOutboundProduct.size()-1));
                             HSSFRow row = sheet.createRow(r);
                             createCell(row,listOutboundProduct,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll,styleDetailTableCenter);                                                    
                             if(listOutboundProduct.get(num).getInvno() != null && !"".equals(listOutboundProduct.get(num).getInvno())){
@@ -401,7 +412,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                         }
                     }else{ // not equal type
                         if(num  == (listOutboundProduct.size()-1)){ // check  last row				
-                            System.out.println("Num : " + num + " Last Row : " + (listOutboundProduct.size()-1));
+//                            System.out.println("Num : " + num + " Last Row : " + (listOutboundProduct.size()-1));
                             HSSFRow row = sheet.createRow(r);
                             createCell(row,listOutboundProduct,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll,styleDetailTableCenter);                                                    
                             if(listOutboundProduct.get(num).getInvno() != null && !"".equals(listOutboundProduct.get(num).getInvno())){
@@ -431,7 +442,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                                     rowT.createCell(18).setCellStyle(styleBorderBottom);
                                     rowT.createCell(19).setCellStyle(styleAlignRightBorderBottomRight);
                             }else{                                          
-                                System.out.println("Num : " + num + " Last Row : " + (listOutboundProduct.size()-1));
+//                                System.out.println("Num : " + num + " Last Row : " + (listOutboundProduct.size()-1));
                                 // total
                                 HSSFRow rowT = sheet.createRow(r);
                                     rowT.createCell(0).setCellStyle(styleBorderBottom);
@@ -464,7 +475,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                                     sheet.autoSizeColumn(5);
                                 }
                                 String add = "A"+(r+2)+":M"+(r+2)+"";
-                                System.out.println("Add : " + add);
+//                                System.out.println("Add : " + add);
                                 sheet.addMergedRegion(CellRangeAddress.valueOf(add));
                                 HSSFRow row122 = sheet.createRow(r+2);
                                 createCell(row122,listOutboundProduct,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll,styleDetailTableCenter);
@@ -474,7 +485,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                             }
                         }
                     }else{ // row first
-                        System.out.println("Num : " + num + " Last Row : " + (listOutboundProduct.size()-1));
+//                        System.out.println("Num : " + num + " Last Row : " + (listOutboundProduct.size()-1));
                         
                         HSSFRow row0 = sheet.createRow(r);
                         HSSFCell cell = row0.createCell(0);
@@ -482,7 +493,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
 //                            cell.setCellStyle(styleAlignRightBorderAll);
                         row0.createCell(19).setCellStyle(styleAlignRightBorderAll);
                         String add = "A"+(r+1)+":T"+(r+1)+"";
-                        System.out.println("Add : " + add);
+//                        System.out.println("Add : " + add);
                         sheet.addMergedRegion(CellRangeAddress.valueOf(add));
                         
                         HSSFRow row = sheet.createRow(r+1);
@@ -500,6 +511,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 }
             }
         }
+//        sheet.setColumnWidth(3, 256*15);
     }
     
     private void createCell(HSSFRow row,List<OutboundProductSummaryExcel> listOutboundProduct,int num,HSSFCellStyle styleNumber,HSSFCellStyle styleDetail,HSSFCellStyle styleDetailCenter){
@@ -535,9 +547,10 @@ public class OutboundProductSummary extends AbstractExcelView  {
 //                cell8.setCellValue("");
 //            }
 //            cell8.setCellStyle(styleDetailTable);
+            
         HSSFCell cell9 = row.createCell(3);
             if(listOutboundProduct.get(num).getPassno()!= null ){
-                cell9.setCellValue(listOutboundProduct.get(num).getPassno());
+                cell9.setCellValue(listOutboundProduct.get(num).getPassno().replaceAll(",", "\n"));
             }else{
                 cell9.setCellValue("");
             }
