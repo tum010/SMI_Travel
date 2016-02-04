@@ -487,5 +487,92 @@
        $("#refundByName").val(billname);
        $("#refundCustModal").modal('hide');
     }
+    
+       
+    function searchCustomerAutoList(name) {
+        var servletName = 'BillableServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&name=' + name +
+                '&type=' + 'getAutoListBillto';
+
+        var url = 'AJAXServlet';
+        var billArray = [];
+        var billListId = [];
+        var billListName = [];
+        var billListAddress = [];
+        var billid, billname, billaddr;
+        $("#refundBy").autocomplete("destroy");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                beforeSend: function () {
+                    $("#dataload").removeClass("hidden");
+                },
+                success: function (msg) {
+                    var billJson = JSON.parse(msg);
+                    var billselect = $("#refundBy").val();
+                    for (var i in billJson) {
+                        if (billJson.hasOwnProperty(i)) {
+                            billid = billJson[i].id;
+                            billname = billJson[i].name;
+                            billaddr = billJson[i].address;
+                            billArray.push(billid);
+                            billArray.push(billname);
+                            billListId.push(billid);
+                            billListName.push(billname);
+                            billListAddress.push(billaddr);
+                            if ((billselect === billid) || (billselect === billname)) {
+                                $("#refundBy").val(billListId[i]);
+                                $("#refundByName").val(billListName[i]);
+                            }
+                        }
+                        $("#dataload").addClass("hidden");
+                    }
+                    // $("#refundBy").val(billid);
+                    //$("#refundByName").val(billname);
+
+                    $("#refundBy").autocomplete({
+                        source: billArray,
+                        close: function () {
+                            $("#refundBy").trigger("keyup");
+                            var billselect = $("#refundBy").val();
+                            for (var i = 0; i < billListId.length; i++) {
+                                if ((billselect == billListName[i]) || (billselect == billListId[i])) {
+                                    $("#refundBy").val(billListId[i]);
+                                    $("#refundByName").val(billListName[i]);
+                                }
+                            }
+                        }
+                    });
+
+                    var billval = $("#refundBy").val();
+                    for (var i = 0; i < billListId.length; i++) {
+                        if (billval == billListName[i]) {
+                            $("#refundBy").val(billListId[i]);
+                        }
+                    }
+                    if (billListId.length == 1) {
+                        showflag = 0;
+                        $("#refundBy").val(billListId[0]);
+                    }
+                    var event = jQuery.Event('keydown');
+                    event.keyCode = 40;
+                    $("#refundBy").trigger(event);
+
+                }, error: function (msg) {
+                    console.log('auto ERROR');
+                    $("#dataload").addClass("hidden");
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+    }
 </script>
 
