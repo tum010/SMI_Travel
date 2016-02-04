@@ -7,6 +7,8 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.OverdueSummaryDao;
 import com.smi.travel.datalayer.entity.OverdueSummartExcel;
+import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,6 +37,8 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         String query = "";
+        String clientnameTemp = "ALL";
+        String staffnameTemp = "ALL";
         int checkQuery = 0;
         if( clientcode == null  && staffcode == null  && vattype == null  && from == null  && to == null  && depart  == null && group == null && view == null ){
             query = "SELECT * FROM `overdue_summary`  ovs ";
@@ -64,14 +68,27 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
                 checkQuery = 1;
                  query += " ovs.invto  = '" + clientcode + "' ";
             }
+            
+            List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `customer_agent_info` where bill_to = '" +clientcode+ "' ")
+                .addScalar("bill_To",Hibernate.STRING)
+                .addScalar("bill_Name",Hibernate.STRING)
+                .list();
+            
+            for(Object[] B : QueryList){
+                clientnameTemp = String.valueOf(B[1]);
+            }
         }
         
-        if ((staffname != null )&&(!"".equalsIgnoreCase(staffname))) {
+        if ((staffcode != null )&&(!"".equalsIgnoreCase(staffcode))) {
             if(checkQuery == 1){
-                 query += " and ovs.ownername  = '" + staffname + "' ";
+                 query += " and ovs.owner = '" + staffcode + "' ";
             }else{
                 checkQuery = 1;
-                 query += " ovs.ownername  = '" + staffname + "' ";
+                 query += " ovs.owner  = '" + staffcode + "' ";
+            }
+            List<SystemUser> list = session.createQuery("select u from SystemUser u WHERE  u.username = '" +staffcode+ "' ").list();
+            if (!list.isEmpty()) {
+                staffnameTemp = list.get(0).getName();
             }
         }
         
@@ -137,18 +154,18 @@ public class OverdueSummaryImpl implements OverdueSummaryDao{
             OverdueSummartExcel overdue = new OverdueSummartExcel();
             //Header 
             if(clientname != null && !"".equals(clientname)){
-                overdue.setClientname_page(clientname);
+                overdue.setClientname_page(clientnameTemp);
             }else{
                 overdue.setClientname_page("ALL");
             }
             
-            if(staffname != null && !"".equals(staffname)){
-                overdue.setStaffname_page(staffname);
+            if(staffcode != null && !"".equals(staffcode)){
+                overdue.setStaffname_page(staffnameTemp);
             }else{
                 overdue.setStaffname_page("ALL");
             }
             
-            System.out.println(" Date Over : " + from + " : " + to );
+//            System.out.println(" Date Over : " + from + " : " + to );
             if(from != null && !"".equals(from)){
                 overdue.setFrom_page(df.format(util.convertStringToDate(from)) + " To " + df.format(util.convertStringToDate(to)));
             }else{

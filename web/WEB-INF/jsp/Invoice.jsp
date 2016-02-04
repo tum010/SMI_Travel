@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="js/jquery.inputmask.js"></script>
@@ -29,7 +29,7 @@
 <c:set var="textVoid" value="" />
 <c:set var="invoiceType" value="${requestScope['invoiceType']}" />
 <c:set var="vat" value="${requestScope['vat']}" />
-
+<c:set var="duedate" value="${requestScope['duedate']}" />
 <section class="content-header" >
     <h1>
         <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
@@ -328,7 +328,7 @@
                                 <div class='input-group date' id='InputDatePicker'>
                                     <c:if test='${invoice.dueDate != null}'>
                                         <input id="InputDueDate" name="InputDueDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${invoice.dueDate}">
+                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${duedate}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                         
                                         </c:if>
                                         <c:if test='${invoice.dueDate == null}'>

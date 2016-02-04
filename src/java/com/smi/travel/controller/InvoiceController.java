@@ -79,7 +79,7 @@ public class InvoiceController extends SMITravelController {
         request.setAttribute("invoiceType", invoiceType);
         System.out.println("invoiceType : "+invoiceType);
         System.out.println("department : "+department);
-        
+        request.setAttribute("duedate", dueDate);
         //Role User
         SystemUser  user = (SystemUser) session.getAttribute("USER");
         String roleName = user.getRole().getName();

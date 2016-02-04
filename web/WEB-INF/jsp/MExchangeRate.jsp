@@ -62,45 +62,48 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Currency and exchange date already exist!</strong> 
             </div>
-            <div class="row">
+            <div class="row" style="padding-left: 15px">
                 <form action="MExchangeRate.smi" method="post" id="SearchExchange" name="SearchExchange"  role="form">
-                    <div class="col-xs-1 text-right">
-                        <label class="control-label" for="">From</lable>
-                    </div>
-                    <div class="col-md-2 form-group"> 
-                        <div class='input-group date fromdate' id="DateFrom">
-                            <input id="FromDate" name="FromDate"  type="text" 
-                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${fromdate}">
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                                          
+                    <div class="col-md-2 ">
+                        <div class="form-group">
+                            <label>From</label>
+                            <div class='input-group date fromdate' id="DateFrom">
+                                <input id="FromDate" name="FromDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${fromdate}">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                                          
+                            </div>
                         </div>
                     </div>
-                    <div class="col-xs-1 text-left" >
-                        <label class="control-label" for="">To</lable>
-                    </div>
-                    <div class="col-md-2 form-group" > 
-                        <div class='input-group date todate' id="DateTo">
-                            <input id="ToDate" name="ToDate"  type="text" 
-                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${todate}">
-                            <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                        
+                                
+                     <div class="col-md-2 ">
+                        <div class="form-group">
+                            <label>To</label>
+                            <div class='input-group date todate' id="DateTo">
+                                <input id="ToDate" name="ToDate"  type="text" 
+                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${todate}">
+                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                        
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xs-1 text-right" >
-                        <label class="control-label" for="">Currency</lable>
-                    </div>
-                    <div class="col-md-2 form-group" >
-                        <select class="form-control" id="CurrencyS" name="CurrencyS">
-                            <option value="">--select--</option>
-                            <c:forEach var="cur" items="${listCurrency}">
-                                <c:set var="selectA" value="" />
-                                <c:if test="${cur.code == currency_exchange}">
-                                    <c:set var="selectA" value="selected" />
-                                </c:if> 
-                                <option value='${cur.code}' ${selectA}>${cur.code}</option>
-                            </c:forEach>
-                        </select>    
-                    </div>
-                    <div class="col-xs-3 form-group">
-                        <div>   
+                    </div>            
+                                
+                    <div class="col-md-2 ">
+                        <div class="form-group">
+                            <label>Currency</label>
+                            <select class="form-control" id="CurrencyS" name="CurrencyS">
+                                <option value="">--select--</option>
+                                <c:forEach var="cur" items="${listCurrency}">
+                                    <c:set var="selectA" value="" />
+                                    <c:if test="${cur.code == currency_exchange}">
+                                        <c:set var="selectA" value="selected" />
+                                    </c:if> 
+                                    <option value='${cur.code}' ${selectA}>${cur.code}</option>
+                                </c:forEach>
+                            </select>  
+                        </div>
+                    </div>      
+                                
+                    <div class="col-md-2">
+                        <div style="padding-top: 20px">   
                             <button type="submit" id="ButtonSearch"  name="ButtonSearch" onclick="searchExchange()"  class="btn btn-primary"><span class="fa fa-search"></span>Search</button>           
                             <input type="hidden" name="actionSearch" id="actionSearch"/>
                         </div>

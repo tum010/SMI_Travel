@@ -243,7 +243,7 @@
             $(".ui-widget").css("top", position.top + 30);
             $(".ui-widget").css("left", position.left); 
             if($(this).val() === ""){
-                $("#InvToId").val("");
+                $("#InvTo").val("");
                 $("#InvToName").val("");
     //            $("#InvToAddress").val("");
             }else{
@@ -274,7 +274,92 @@
         }
     });
 });
-    
+   
+function searchCustomerAutoList(name) {
+    var servletName = 'BillableServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&name=' + name +
+            '&type=' + 'getAutoListBillto';
+
+    var url = 'AJAXServlet';
+    var billArray = [];
+    var billListId = [];
+    var billListName = [];
+    var billListAddress = [];
+    var billid, billname, billaddr;
+    $("#InvTo").autocomplete("destroy");
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            beforeSend: function () {
+//                $("#dataload").removeClass("hidden");
+            },
+            success: function (msg) {
+                var billJson = JSON.parse(msg);
+                var billselect = $("#InvTo").val();
+                for (var i in billJson) {
+                    if (billJson.hasOwnProperty(i)) {
+                        billid = billJson[i].id;
+                        billname = billJson[i].name;
+                        billaddr = billJson[i].address;
+                        billArray.push(billid);
+                        billArray.push(billname);
+                        billListId.push(billid);
+                        billListName.push(billname);
+                        billListAddress.push(billaddr);
+                        if ((billselect === billid) || (billselect === billname)) {
+                            $("#InvTo").val(billListId[i]);
+                            $("#InvToName").val(billListName[i]);
+                        }
+                    }
+//                    $("#dataload").addClass("hidden");
+                }
+                // $("#refundBy").val(billid);
+                //$("#refundByName").val(billname);
+
+                $("#InvTo").autocomplete({
+                    source: billArray,
+                    close: function () {
+                        $("#InvTo").trigger("keyup");
+                        var billselect = $("#InvTo").val();
+                        for (var i = 0; i < billListId.length; i++) {
+                            if ((billselect == billListName[i]) || (billselect == billListId[i])) {
+                                $("#InvTo").val(billListId[i]);
+                                $("#InvToName").val(billListName[i]);
+                            }
+                        }
+                    }
+                });
+
+                var billval = $("#InvTo").val();
+                for (var i = 0; i < billListId.length; i++) {
+                    if (billval == billListName[i]) {
+                        $("#InvTo").val(billListId[i]);
+                    }
+                }
+                if (billListId.length == 1) {
+                    showflag = 0;
+                    $("#billto").val(billListId[0]);
+                }
+                var event = jQuery.Event('keydown');
+                event.keyCode = 40;
+                $("#InvTo").trigger(event);
+
+            }, error: function (msg) {
+                console.log('auto ERROR');
+//                $("#dataload").addClass("hidden");
+            }
+        });
+    } catch (e) {
+        alert(e);
+    }
+}   
 function checkFromDateField(){      
     var inputFromDate = document.getElementById("FromDate");
     var InputToDate = document.getElementById("ToDate");
