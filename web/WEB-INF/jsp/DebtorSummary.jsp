@@ -141,8 +141,8 @@
                                     <div class="form-group">
                                         <select name="airTicketWendy" id="airTicketWendy"  class="form-control">
                                             <option value=""  selected="selected">-- ALL --</option>
-                                            <option value="airticket">Air Ticket</option>
-                                            <option value="package">Package</option>
+                                            <option value="AirTicket">Air Ticket</option>
+                                            <option value="Package">Package</option>
                                         </select>
                                     </div>
                                 </div>   
@@ -470,7 +470,7 @@ function printDebtorSummary(){
     if((from === '') || (to === '')){
         validateDate();
     } else {
-        window.open("report.smi?name=InvoiceSummary"+"&fromdate="+from+"&todate="+to+"&department="+department+"&type="+type+"&agent="+agent+"&status="+status);  
+        window.open("report.smi?name=InvoiceSummary"+"&fromdate="+from+"&todate="+to+"&department="+department+"&type="+type+"&agent="+agent+"&status="+status+"&subDepartment="+airTicketWendy);  
     }  
 
 }
