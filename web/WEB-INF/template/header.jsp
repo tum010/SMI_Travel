@@ -82,7 +82,8 @@
                                             "<li><a id='menu-DefineVar' href='DefineVar.smi'>Define Variable</a></li>",
                                             "<li><a id='menu-mhost' href='MHost.smi'>Host</a></li>",
                                     //	"<li><a id='menu-maccount' href='MAccountCode.smi'>Account</a></li>",
-                                            "<li><a id='menu-mpackage' href='MPackage.smi'>Package</a></li>" ];
+                                            "<li><a id='menu-mpackage' href='MPackage.smi'>Package</a></li>",
+                                            "<li><a id='menu-mexchangerate' href='MExchangeRate.smi'>Exchange Rate</a></li>" ];
 
                             var bookingMenu = [ "<li><a id='menu-book' href='Book.smi'> Booking</a></li>",
                                                "<li><a id='menu-information' href='BookInformation.smi'>Information</a></li>" ];

@@ -115,8 +115,8 @@
     }
     
     function checkToDateField(){
-        var InputToDate = document.getElementById("invoiceDateFrom");
-        var inputFromDate = document.getElementById("invoiceDateTo");
+        var InputToDate = document.getElementById("invoiceDateTo");
+        var inputFromDate = document.getElementById("invoiceDateFrom");
         if(InputToDate.value === '' && inputFromDate.value === ''){
             $("#fromdatepanel").removeClass("has-error");
             $("#todatepanel").removeClass("has-error");  

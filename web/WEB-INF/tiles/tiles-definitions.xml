@@ -744,4 +744,9 @@
         <put-attribute name="title" value="Report : Refund Ticket Summary" />
         <put-attribute name="body" value="/WEB-INF/jsp/RefundTicketSummary.jsp" />
     </definition>
+    
+    <definition name="MExchangeRate" extends="baseLayout">
+        <put-attribute name="title" value="Master : Exchange Rate" />
+        <put-attribute name="body" value="/WEB-INF/jsp/MExchangeRate.jsp" />
+    </definition>
 </tiles-definitions>

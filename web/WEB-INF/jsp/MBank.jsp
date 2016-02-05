@@ -350,7 +350,6 @@
     });
     
     function validateFail(){
-        alert('a');
         $("#BankIdEdit").val("<c:out value="${bankData.id}" />");
         $("#BankCode").val("<c:out value="${bankData.code}" />");
         $("#BankName").val("<c:out value="${bankData.name}" />");

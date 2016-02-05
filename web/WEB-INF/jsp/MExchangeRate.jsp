@@ -69,7 +69,7 @@
                     <div class="col-md-2 ">
                         <div class="form-group">
                             <label>From</label>
-                            <div class='input-group date fromdate' id="DateFrom">
+                            <div class='input-group date fromdate' id='fromdatepanel'> 
                                 <input id="FromDate" name="FromDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${fromdate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                                          
@@ -80,7 +80,7 @@
                      <div class="col-md-2 ">
                         <div class="form-group">
                             <label>To</label>
-                            <div class='input-group date todate' id="DateTo">
+                            <div class='input-group date todate' id='todatepanel'> 
                                 <input id="ToDate" name="ToDate"  type="text" 
                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${todate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                        
@@ -106,7 +106,7 @@
                                 
                     <div class="col-md-2">
                         <div style="padding-top: 20px">   
-                            <button type="submit" id="ButtonSearch"  name="ButtonSearch" onclick="searchExchange()"  class="btn btn-primary"><span class="fa fa-search"></span>Search</button>           
+                            <button type="button" id="ButtonSearch"  name="ButtonSearch" onclick="searchExchange()"  class="btn btn-primary"><span class="fa fa-search"></span>Search</button>           
                             <input type="hidden" name="actionSearch" id="actionSearch"/>
                         </div>
                     </div>
@@ -141,9 +141,9 @@
                         <c:forEach var="table" items="${ExchangeList}" varStatus="dataStatus">
                             <tr>
                                 <td class="hidden" ><c:out value="${table.id}" /></td>
-                                <td><c:out value="${fn:toUpperCase(table.exdate)}"  /></td>
-                                <td><c:out value="${fn:toUpperCase(table.currency)}"/></td>
-                                <td><fmt:formatNumber type="currency" pattern="#,##0.0000" value="${fn:toUpperCase(table.exrate)}" /></td>
+                                <td class="text-center"><c:out value="${fn:toUpperCase(table.exdate)}"  /></td>
+                                <td class="text-center"><c:out value="${fn:toUpperCase(table.currency)}"/></td>
+                                <td class="text-right"><fmt:formatNumber type="currency" pattern="#,##0.0000" value="${fn:toUpperCase(table.exrate)}" /></td>
                                 <td>
                                 <center> 
                                     <span id="editSpan${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditExchange('${table.id}', '${table.exdate}', '${table.currency}', '${table.exrate}', '${table.createby}', '${table.createdate}')" data-toggle="modal" data-target="#ExchangeRateModal" ></span>
@@ -280,7 +280,14 @@ $(document).ready(function() {
         console.log("positon :" + position.top);
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
     });
-        
+    
+    var table = $('#ExchangeRateTable').dataTable({bJQueryUI: true,
+        "sPaginationType": "full_numbers",
+        "bAutoWidth": false,
+        "bFilter": false,
+        "bInfo": false
+    });   
+    
     $(".decimalexrate").inputmask({
         alias: "decimal",
         integerDigits: 6,
@@ -291,6 +298,95 @@ $(document).ready(function() {
         digitsOptional: false,
         placeholder: "0.0000",
     });
+    $('.fromdate').datetimepicker().change(function(){                          
+        checkFromDateField();
+    });
+    $('.todate').datetimepicker().change(function(){                          
+        checkToDateField();
+    });
 });
-        
+
+    function checkFromDateField(){      
+        var inputFromDate = document.getElementById("FromDate");
+        var InputToDate = document.getElementById("ToDate");
+        if(InputToDate.value === '' && inputFromDate.value === ''){
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");  
+            $("#ButtonSearch").removeClass("disabled");
+        }else if(inputFromDate.value === '' || InputToDate.value === ''){
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success");
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
+            $("#ButtonSearch").addClass("disabled");
+        } else {
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#issuefromdatepanel").removeClass("has-error");
+            $("#issuetodatepanel").removeClass("has-error");
+            $("#fromdatepanel").addClass("has-success");
+            $("#todatepanel").addClass("has-success");
+            $("#ButtonSearch").removeClass("disabled");
+            checkDateValue("from","");
+        }
+    }
+    
+    function checkToDateField(){
+        var InputToDate = document.getElementById("ToDate");
+        var inputFromDate = document.getElementById("FromDate");
+        if(InputToDate.value === '' && inputFromDate.value === ''){
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");  
+            $("#ButtonSearch").removeClass("disabled");
+        }else if(inputFromDate.value === '' || InputToDate.value === ''){
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success");
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
+            $("#ButtonSearch").addClass("disabled");
+        }else{
+            $("#fromdatepanel").removeClass("has-error");
+            $("#todatepanel").removeClass("has-error");
+            $("#issuefromdatepanel").removeClass("has-error");
+            $("#issuetodatepanel").removeClass("has-error");
+            $("#fromdatepanel").addClass("has-success");
+            $("#todatepanel").addClass("has-success");
+            $("#ButtonSearch").removeClass("disabled");
+            checkDateValue("to","");
+        }       
+    }
+    
+    function checkDateValue(date){
+        var inputFromDate = document.getElementById("FromDate");
+        var InputToDate = document.getElementById("ToDate");
+        if((inputFromDate.value !== '') && (InputToDate.value !== '')){
+            var fromDate = (inputFromDate.value).split('-');
+            var toDate = (InputToDate.value).split('-');
+            if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+                validateDate(date,"over");
+            }
+            if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+                validateDate(date,"over");
+            }
+            if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+                validateDate(date,"over");
+            }          
+        }
+    }
+    
+    function validateDate(date,option){
+        if(option === 'over'){
+            $("#fromdatepanel").removeClass("has-success");
+            $("#fromdatepanel").addClass("has-error");                                 
+            $("#todatepanel").removeClass("has-success");
+            $("#todatepanel").addClass("has-error");   
+            $("#ButtonSearch").addClass("disabled");
+        } else {
+            $("#fromdatepanel").removeClass("has-success");
+            $("#todatepanel").removeClass("has-success"); 
+            $("#fromdatepanel").addClass("has-error");
+            $("#todatepanel").addClass("has-error");
+            $("#ButtonSearch").addClass("disabled");
+        }
+    }       
 </script>
