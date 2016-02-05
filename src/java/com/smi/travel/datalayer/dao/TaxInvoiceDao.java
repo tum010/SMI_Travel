@@ -6,6 +6,10 @@
 
 package com.smi.travel.datalayer.dao;
 
+import com.smi.travel.datalayer.entity.Billable;
+import com.smi.travel.datalayer.entity.BillableDesc;
+import com.smi.travel.datalayer.entity.Invoice;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.TaxInvoice;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
@@ -37,4 +41,7 @@ public interface TaxInvoiceDao {
     public String checkIsProfitForSearchInvoice(String invDetailId);
     public String checkIsProfitForSearchRefNo(String invoiceDetailId);
     public String getInvoiceNoByInvoiceDetailId(String invoiceDetailId);
+    public BillableDesc checkBillabledesc(String invoiceDetailId);
+    public BigDecimal getProfitFromTaxInvoice(String invoiceDetailId, String taxInvoiceDetailId);
+    public BigDecimal getExRateFromInvoiceDetail(String invoiceDetailId);
 }

@@ -1,4 +1,7 @@
 package com.smi.travel.controller;
+import com.smi.travel.datalayer.entity.Billable;
+import com.smi.travel.datalayer.entity.BillableDesc;
+import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.entity.MCurrency;
@@ -629,9 +632,89 @@ public class TaxInvoiceController extends SMITravelController {
             }
 //            result = taxInvoiceService.checkInvoiceDetailValue(id,cost,amount);
         }
+        
+        if(taxInvoice.getIsProfit() == 1){
+            String profit = checkProfit(taxInvoice);
+            if("fail".equalsIgnoreCase(profit)){
+                result = "amount much over";
+                return result; 
+            }
+        }    
+        
         result = "success";
         
         return result;
+    }
+    
+    private String checkProfit(TaxInvoice taxInvoice) {
+        String result = "success";
+        String taxInvoiceDetailId = "";
+        List<String> invoiceDetailIdList = new ArrayList<String>();
+        List<String> billableDescIdList = new ArrayList<String>();
+        List<BigDecimal> profitList = new ArrayList<BigDecimal>();
+        List<TaxInvoiceDetail> taxInvDetailList = new ArrayList<TaxInvoiceDetail>();
+        taxInvDetailList = taxInvoice.getTaxInvoiceDetails();
+        boolean haveBillabledesc = false;
+        
+        for(int i=0; i<taxInvDetailList.size(); i++){
+            TaxInvoiceDetail taxInvoiceDetail = taxInvDetailList.get(i);
+            
+            if(taxInvoiceDetail.getInvoiceDetail() != null){
+                BillableDesc billableDesc = taxInvoiceService.checkBillabledesc(taxInvoiceDetail.getInvoiceDetail().getId());
+                
+                if(!"".equalsIgnoreCase(billableDesc.getId())){
+                    haveBillabledesc = true;
+                    invoiceDetailIdList.add(taxInvoiceDetail.getInvoiceDetail().getId());
+                }
+            }
+        }
+        if(haveBillabledesc){
+            for(int i=0; i<invoiceDetailIdList.size(); i++){
+                String invoiceDetailId = invoiceDetailIdList.get(i);
+                BillableDesc billableDesc = taxInvoiceService.checkBillabledesc(invoiceDetailId);
+                BigDecimal mProfit = getMasterProfit(billableDesc,invoiceDetailId);
+                BigDecimal profitTaxInvoice = new BigDecimal(BigInteger.ZERO);
+                
+                for(int j=0; j<taxInvDetailList.size(); j++){
+                    if(taxInvDetailList.get(j).getInvoiceDetail() != null){
+                        TaxInvoiceDetail taxInvoiceDetail = taxInvDetailList.get(j);
+                        InvoiceDetail invoiceDetail = taxInvDetailList.get(j).getInvoiceDetail();
+                        BillableDesc billableDescTemp = taxInvoiceService.checkBillabledesc(invoiceDetail.getId());
+                        
+                        if(billableDesc.getId().equalsIgnoreCase(billableDescTemp.getId())){
+                            profitTaxInvoice = profitTaxInvoice.add((taxInvoiceDetail.getAmount() != null ? taxInvoiceDetail.getAmount() : new BigDecimal(BigInteger.ZERO)));
+                            if(!"".equalsIgnoreCase(taxInvoiceDetail.getId()) && taxInvoiceDetail.getId() != null){
+                                taxInvoiceDetailId += (!"".equalsIgnoreCase(taxInvoiceDetailId) ? ",'"+taxInvoiceDetail.getId()+"'" : "'"+taxInvoiceDetail.getId()+"'");
+                            }
+                        }
+                    }    
+                }
+                
+                profitTaxInvoice = profitTaxInvoice.add(taxInvoiceService.getProfitFromTaxInvoice(billableDesc.getId(),taxInvoiceDetailId));
+                if(mProfit.compareTo(profitTaxInvoice) < 0 ){
+                    result = "fail";
+                    i = invoiceDetailIdList.size();
+                }
+            }
+        }
+        return result;
+    }
+    
+    private BigDecimal getMasterProfit(BillableDesc billableDesc, String invoiceDetailId) {
+        String curcost = billableDesc.getCurCost();
+        String curamount = billableDesc.getCurrency();
+        BigDecimal cost = new BigDecimal(billableDesc.getCost());
+        BigDecimal amount = new BigDecimal(billableDesc.getPrice());
+        BigDecimal exRate = taxInvoiceService.getExRateFromInvoiceDetail(invoiceDetailId);
+        BigDecimal profit = new BigDecimal(BigInteger.ZERO);
+        if(!"THB".equalsIgnoreCase(curcost) && !"THB".equalsIgnoreCase(curamount) && !"".equalsIgnoreCase(curcost) && !"".equalsIgnoreCase(curamount)){
+            profit = ((amount.multiply(exRate)).subtract(cost.multiply(exRate))).setScale(2, RoundingMode.UP);
+        
+        }else{
+            profit = (amount.subtract(cost)).setScale(2, RoundingMode.UP);
+        }
+
+        return profit;
     }
     
     private String checkDisabledFieldSearch(List<TaxInvoiceDetail> taxInvoiceList) {

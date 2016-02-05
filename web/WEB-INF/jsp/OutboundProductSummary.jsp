@@ -398,18 +398,30 @@
                         var name = this.value.toUpperCase();
                        // console.log("Name :"+ name);
                         $("#InputId,#InputProductName").val(null);
-                        $.each(productCode, function (key, value) {
-                            if (value.code.toUpperCase() === code ) {  
-                                $("#InputId").val(value.id);
-                                $("#InputProductId").val(value.code);
-                                $("#InputProductName").val(value.name);
-                            }
-                            else if(value.name.toUpperCase() === name){
-                                $("#InputProductId").val(value.code);
-                                $("#InputId").val(value.id);
-                                $("#InputProductName").val(value.name);
-                            }
-                        }); 
+                        if($("#InputProductId").val() !== ''){
+                            $.each(productCode, function (key, value) {                           
+                                if (value.code.toUpperCase() === code ) {  
+                                    $("#InputId").val(value.id);
+                                    $("#InputProductId").val(value.code);
+                                    $("#InputProductName").val(value.name);
+                                }
+                                else if(value.name.toUpperCase() === name){
+                                    $("#InputProductId").val(value.code);
+                                    $("#InputId").val(value.id);
+                                    $("#InputProductName").val(value.name);
+                                }
+    //                            else if(value.name === '' && value.code === ''){
+    //                                $("#InputProductId").val('');
+    //                                $("#InputId").val('');
+    //                                $("#InputProductName").val('');
+    //                            }
+                            });
+                        
+                        }else{
+                            $("#InputProductId").val('');
+                            $("#InputId").val('');
+                            $("#InputProductName").val('');
+                        }
                     }); 
                 });        
             </script>

@@ -7,6 +7,10 @@
 package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.TaxInvoiceDao;
+import com.smi.travel.datalayer.entity.Billable;
+import com.smi.travel.datalayer.entity.BillableDesc;
+import com.smi.travel.datalayer.entity.Invoice;
+import com.smi.travel.datalayer.entity.InvoiceDetail;
 import com.smi.travel.datalayer.entity.TaxInvoice;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
@@ -63,5 +67,20 @@ public class TaxInvoiceService {
     public TaxInvoice getPostVatData(String taxInvId) {
         return taxInvoiceDao.getPostVatData(taxInvId);
     }
-     
+
+    public BillableDesc checkBillabledesc(String invoiceDetailId) {
+        return taxInvoiceDao.checkBillabledesc(invoiceDetailId);
+    }
+
+    public BigDecimal getProfitFromTaxInvoice(String invoiceDetailId, String taxInvoiceDetailId) {
+        return taxInvoiceDao.getProfitFromTaxInvoice(invoiceDetailId,taxInvoiceDetailId);
+    }
+
+    public String checkIsProfitForSearchRefNo(String invoiceDetailId) {
+        return taxInvoiceDao.checkIsProfitForSearchRefNo(invoiceDetailId);
+    }
+
+    public BigDecimal getExRateFromInvoiceDetail(String billableDescId) {
+        return taxInvoiceDao.getExRateFromInvoiceDetail(billableDescId);
+    }
 }
