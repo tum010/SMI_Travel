@@ -7,8 +7,12 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.TaxInvoiceDao;
+import com.smi.travel.datalayer.entity.Billable;
+import com.smi.travel.datalayer.entity.BillableDesc;
 import com.smi.travel.datalayer.entity.CreditNoteDetail;
+import com.smi.travel.datalayer.entity.Invoice;
 import com.smi.travel.datalayer.entity.InvoiceDetail;
+import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.TaxInvoice;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
@@ -654,4 +658,68 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         this.sessionFactory.close();
         return invNo;
     }
+
+    @Override
+    public BillableDesc checkBillabledesc(String invoiceDetailId) {
+        BillableDesc billableDesc = new BillableDesc();
+        Session session = this.sessionFactory.openSession();
+        List<InvoiceDetail> list = session.createQuery("from InvoiceDetail invDetail WHERE invDetail.id = :invoiceDetailId ")
+                .setParameter("invoiceDetailId", invoiceDetailId)
+                .list();
+        
+        InvoiceDetail invoiceDetailTemp = list.get(0);       
+        if(invoiceDetailTemp.getBillableDesc() != null){
+            billableDesc.setId(invoiceDetailTemp.getBillableDesc() != null ? invoiceDetailTemp.getBillableDesc().getId() : "");
+            billableDesc.setCost(invoiceDetailTemp.getBillableDesc().getCost() != 0 ? invoiceDetailTemp.getBillableDesc().getCost() : 0);
+            billableDesc.setPrice(invoiceDetailTemp.getBillableDesc().getPrice() != 0 ? invoiceDetailTemp.getBillableDesc().getPrice() : 0);
+            billableDesc.setCurCost(!"".equalsIgnoreCase(invoiceDetailTemp.getBillableDesc().getCurCost()) ? invoiceDetailTemp.getBillableDesc().getCurCost() : "");
+            billableDesc.setCurrency(!"".equalsIgnoreCase(invoiceDetailTemp.getBillableDesc().getCurrency()) ? invoiceDetailTemp.getBillableDesc().getCurrency() : "");
+        }
+        session.close();
+        this.sessionFactory.close();
+        return billableDesc;
+    }
+
+    @Override
+    public BigDecimal getProfitFromTaxInvoice(String billableDescId, String taxInvoiceDetailId) {
+        BigDecimal profit = new BigDecimal(BigInteger.ZERO);
+        Session session = this.sessionFactory.openSession();
+        String query = "from TaxInvoiceDetail tax WHERE tax.invoiceDetail.billableDesc.id = :billableDescId";
+        if(!"".equalsIgnoreCase(taxInvoiceDetailId) && taxInvoiceDetailId != null){
+            query += " AND tax.id NOT IN (" + taxInvoiceDetailId + ")";
+        }       
+        List<TaxInvoiceDetail> list = session.createQuery(query)
+                .setParameter("billableDescId", billableDescId)
+                .list();
+        
+        if(!list.isEmpty()){
+            for(int i=0; i<list.size(); i++){
+                TaxInvoiceDetail taxInvoiceDetail = list.get(i);
+                profit = profit.add((taxInvoiceDetail.getAmount() != null ? taxInvoiceDetail.getAmount() : new BigDecimal(BigInteger.ZERO)));
+            }           
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return profit;
+    }
+
+    @Override
+    public BigDecimal getExRateFromInvoiceDetail(String invoiceDetailId) {
+        BigDecimal exRate = new BigDecimal(BigInteger.ZERO);
+        Session session = this.sessionFactory.openSession();
+        List<InvoiceDetail> list = session.createQuery("from InvoiceDetail invDetail WHERE invDetail.id = :invoiceDetailId ")
+                .setParameter("invoiceDetailId", invoiceDetailId)
+                .list();
+        
+        if(!list.isEmpty()){
+            InvoiceDetail invoiceDetail = list.get(0);
+            exRate = exRate.add((invoiceDetail.getExRate()!= null ? invoiceDetail.getExRate() : new BigDecimal(BigInteger.ONE)));          
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return exRate;
+    }
+
 }

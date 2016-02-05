@@ -27,6 +27,8 @@ import com.smi.travel.datalayer.entity.PaymentAirCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -152,6 +154,7 @@ public class BillableImpl implements BillableDao {
                 }
                 InvoiceDetail invoiceDetail = new InvoiceDetail();           
                 invoiceDetail.setId(queryInvoiceDetailList.get(j).getId());
+                invoiceDetail.setExRate(queryInvoiceDetailList.get(j).getExRate() != null ? queryInvoiceDetailList.get(j).getExRate() : new BigDecimal(BigInteger.ZERO));
                 invoiceDetail.setBillableDesc(billableDesc);
                 invoiceDetailList.add(invoiceDetail);
             }    

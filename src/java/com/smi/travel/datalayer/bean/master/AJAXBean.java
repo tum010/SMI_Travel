@@ -74,6 +74,7 @@ import com.smi.travel.util.Mail;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -1574,122 +1575,129 @@ public class AJAXBean extends AbstractBean implements
         for (int i = 0; i < billableDescs.size(); i++) {
             billableDescId = billableDescs.get(i).getId();
             for(int j=0; j<invoiceDetailList.size(); j++){
-                if(billableDescId.equalsIgnoreCase(invoiceDetailList.get(j).getBillableDesc().getId())){
-                    invoiceDetailId = invoiceDetailList.get(j).getId();
-//                    j = invoiceDetailList.size();
-                    String isProfit = taxInvoiceDao.checkIsProfitForSearchRefNo(invoiceDetailId);
-                    System.out.println("-----------------invoiceDetailId-----------------"+invoiceDetailId);
-                    System.out.println("-----------------billableDescId-----------------"+billableDescId);
-                    System.out.println("-----------------isProfit-----------------"+isProfit);
-                    if("success".equalsIgnoreCase(isProfit)){
-                        String invNo = taxInvoiceDao.getInvoiceNoByInvoiceDetailId(invoiceDetailId);
-                        description = billableDescs.get(i).getDetail();
-                        BigDecimal amounttemp = new BigDecimal(billableDescs.get(i).getPrice());
-                        amountinvoice = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-                        curcost = (billableDescs.get(i).getCurCost() == null ? "" : billableDescs.get(i).getCurCost());
-                        if (billableDescs.get(i).getMBilltype() != null) {
-                            product = billableDescs.get(i).getMBilltype().getId();
-                            billTypeName = billableDescs.get(i).getMBilltype().getName();
-                        }
+                BigDecimal exrate = invoiceDetailList.get(j).getExRate();
+                curcost = (billableDescs.get(i).getCurCost() == null ? "" : billableDescs.get(i).getCurCost());
+                curamount = (billableDescs.get(i).getCurrency() == null ? "" : billableDescs.get(i).getCurrency());
+                BigDecimal profitTaxInvoice = new BigDecimal(BigInteger.ZERO);
+                BigDecimal costCheck = (billableDescs.get(i).getCost() != 0 ? new BigDecimal(billableDescs.get(i).getCost()) : new BigDecimal(BigInteger.ZERO));
+                BigDecimal amountCheck = (billableDescs.get(i).getPrice()!= 0 ? new BigDecimal(billableDescs.get(i).getPrice()) : new BigDecimal(BigInteger.ZERO));
+                BigDecimal profitCheck = new BigDecimal(BigInteger.ZERO);
+                
+                if(billableDescId.equalsIgnoreCase(invoiceDetailList.get(j).getBillableDesc().getId()) && !"".equalsIgnoreCase(curcost) && !"".equalsIgnoreCase(curamount)){
+                    boolean check = true;
+                    if(!"THB".equalsIgnoreCase(curcost) || !"THB".equalsIgnoreCase(curamount)){
+                        if(exrate.compareTo(BigDecimal.ZERO) == 0){
+                            check = false;
+                        
+                        }else{
+                            profitTaxInvoice = taxInvoiceDao.getProfitFromTaxInvoice(billableDescId,"");                           
+                            if(!"THB".equalsIgnoreCase(curcost) && !"THB".equalsIgnoreCase(curamount)){
+                                profitCheck = ((amountCheck.multiply(exrate)).subtract(costCheck.multiply(exrate))).setScale(2, RoundingMode.UP);
 
-                        BigDecimal costtemp = new BigDecimal(billableDescs.get(i).getCost());
-                        costinvoice = costtemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-
-                        curamount = (billableDescs.get(i).getCurrency() == null ? "" : billableDescs.get(i).getCurrency());
-
-
-                        BigDecimal[] value = checkTaxInvoiceDetailFromBilldescId(invoiceDetailId);
-                        BigDecimal costTemp = value[0];
-                        BigDecimal amountTemp = value[1];
-            //            amount = amountinvoice.subtract(amountTemp);
-            //            cost = costinvoice.subtract(costTemp);
-                        amount = amountinvoice;
-                        cost = costinvoice;
-                        System.out.println(" amount =  " + amountinvoice + "-" + amountTemp + " = " + amount);
-                        System.out.println(" cost =  " + costinvoice + "-" + costTemp + " = " + cost);
-
-                        refItemId = billableDescs.get(i).getRefItemId();
-
-                        String displaydescription = "";
-                        String displaydesTemp = "";
-
-                        BigDecimal exrate = new BigDecimal(0);
-                        BigDecimal profit = new BigDecimal(0);
-                        BigDecimal remain = new BigDecimal(0);
-                        exrate = billableDescs.get(i).getExRate();           
-                        if((curcost.equalsIgnoreCase(curamount)) && (!"".equalsIgnoreCase(curcost)) && (!"".equalsIgnoreCase(curamount))){
-                            profit = amount.subtract(cost);
-                            remain = profit.subtract(amountTemp);
-                        } else {
-                            if(exrate == null){
-                                exrate = new BigDecimal(0);
+                            }else{
+                                profitCheck = (amountCheck.subtract(costCheck)).setScale(2, RoundingMode.UP);
                             }
-                            profit = amount.subtract(cost.multiply(exrate)).setScale(2, RoundingMode.HALF_UP);
-                            remain = profit.subtract(amountTemp);
+                            
+                            if(profitCheck.compareTo(profitTaxInvoice) == 0 || profitCheck.compareTo(profitTaxInvoice) < 0){
+                                check = false;
+                            }
+                        }                       
+                    }
+                       
+                    if(check){
+                        invoiceDetailId = invoiceDetailList.get(j).getId();
+                        String isProfit = taxInvoiceDao.checkIsProfitForSearchRefNo(invoiceDetailId);
+
+                        if("success".equalsIgnoreCase(isProfit)){
+                            String invNo = taxInvoiceDao.getInvoiceNoByInvoiceDetailId(invoiceDetailId);
+                            description = billableDescs.get(i).getDetail();
+                            BigDecimal amounttemp = new BigDecimal(billableDescs.get(i).getPrice());
+                            amountinvoice = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+
+                            if (billableDescs.get(i).getMBilltype() != null) {
+                                product = billableDescs.get(i).getMBilltype().getId();
+                                billTypeName = billableDescs.get(i).getMBilltype().getName();
+                            }
+
+                            BigDecimal costtemp = new BigDecimal(billableDescs.get(i).getCost());
+                            costinvoice = costtemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);                      
+
+                            BigDecimal[] value = checkTaxInvoiceDetailFromBilldescId(invoiceDetailId);
+                            BigDecimal costTemp = value[0];
+//                            BigDecimal amountTemp = value[1];
+                            BigDecimal amountTemp = taxInvoiceDao.getProfitFromTaxInvoice(billableDescId,""); 
+
+                            amount = amountinvoice;
+                            cost = costinvoice;
+                            System.out.println(" amount =  " + amountinvoice + "-" + amountTemp + " = " + amount);
+                            System.out.println(" cost =  " + costinvoice + "-" + costTemp + " = " + cost);
+
+                            refItemId = billableDescs.get(i).getRefItemId();
+
+                            String displaydescription = "";
+                            String displaydesTemp = "";
+
+                            BigDecimal profit = new BigDecimal(0);
+                            BigDecimal remain = new BigDecimal(0);
+    //                        exrate = billableDescs.get(i).getExRate();
+
+                            if(exrate != null && exrate.compareTo(BigDecimal.ZERO) != 0){
+                                profit = ((amount.multiply(exrate)).subtract(cost.multiply(exrate))).setScale(2, RoundingMode.HALF_UP);
+                                remain = profit.subtract(amountTemp);
+
+                            }else{
+                                profit = amount.subtract(cost);
+                                remain = profit.subtract(amountTemp);
+                            }                        
+
+    //                        if((curcost.equalsIgnoreCase(curamount)) && (!"".equalsIgnoreCase(curcost)) && (!"".equalsIgnoreCase(curamount))){
+    //                            profit = amount.subtract(cost);
+    //                            remain = profit.subtract(amountTemp);
+    //                        } else {
+    //                            if(exrate == null){
+    //                                exrate = new BigDecimal(0);
+    //                            }
+    //                            profit = amount.subtract(cost.multiply(exrate)).setScale(2, RoundingMode.HALF_UP);
+    //                            remain = profit.subtract(amountTemp);
+    //                        }
+
+
+                            if (remain.compareTo(BigDecimal.ZERO) != 0 && remain.compareTo(BigDecimal.ZERO) != -1) {
+                                newrow = "";              
+                                newrow += "<tr>"
+                                        + "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>"
+                                        + "<input type='hidden' name='receiveInvToName' id='receiveInvToName' value='" + receiveInvToName + "'>"
+                                        + "<input type='hidden' name='receiveInvToAddress' id='receiveInvToAddress' value='" + receiveInvToAddress + "'>"
+                                        + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>"
+                                        + "<td class='text-center'>" + No + "</td>"
+                                        + "<td class='text-center'>" + invNo + "</td>"
+                                        + "<td>" + description + "</td>"
+                                        + "<td class='text-right money'>" + cost + "</td>"
+                                        + "<td class='text-center'>" + curcost + "</td>"
+                                        + "<td class='text-right money'>" + amount + "</td>"
+                                        + "<td class='text-center'>" + curamount + "</td>"
+                                        + "<td class='text-right money3'>" + ("0".equalsIgnoreCase(String.valueOf(exrate)) ? "" : exrate) + "</td>"
+                                        + "<td class='text-right money'>" + profit + "</td>"
+                                        + "<td class='text-right money'>" + remain + "</td>"
+                                        + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + remain + "','THB','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+    //                                    + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + remain + "','" + curamount + "','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                                        + "</tr>";
+                                html.append(newrow);
+                                No++;
+                            }    
+            //                } else {
+            //                    String newrow = "";
+            //                    newrow += "<tr>"
+            //                            + "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>"
+            //                            + "<input type='hidden' name='receiveInvToName' id='receiveInvToName' value='" + receiveInvToName + "'>"
+            //                            + "<input type='hidden' name='receiveInvToAddress' id='receiveInvToAddress' value='" + receiveInvToAddress + "'>"
+            //                            + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>"
+            //                            + "</tr>";
+            //                    newrow += "//";
+            //                    html.append(newrow);
+            //                }
                         }
-
-            //            if ("1".equals(product)) {
-            //                displaydescription = billTypeName;
-            //            } else if ("2".equals(product) || "8".equals(product)) {
-            //                if (!"".equals(refItemId)) {
-            //                    displaydescription += billTypeName + " #-- ";
-            //                    displaydesTemp = billableDao.getDescriptionInvoiceOthersFromRefId(refItemId);
-            //                    if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
-            //                    String[] parts = displaydesTemp.split("\\|");
-            //                        displaydescription += parts[4] + " : " + parts[5];
-            //                    }
-            //                }
-            //            } else if ("3".equals(product)) {
-            //                displaydescription = billTypeName;
-            //            } else if ("4".equals(product)) {
-            //                displaydescription = billTypeName;
-            //            } else if ("6".equals(product)) {
-            //                if (!"".equals(refItemId)) {
-            //                    displaydescription += billTypeName + " ";
-            //                    displaydesTemp = billableDao.getDescriptionInvoiceDayTourFromRefId(refItemId);
-            //                    if(displaydesTemp != null && !"".equalsIgnoreCase(displaydesTemp)){
-            //                        String[] parts = displaydesTemp.split("\\|");
-            //                        displaydescription += parts[5] + " : " + parts[6];
-            //                    }
-            //                }
-            //            }
-            //
-            //            System.out.println("displaydescription" + displaydescription);
-
-                        if (remain.compareTo(BigDecimal.ZERO) != 0 && remain.compareTo(BigDecimal.ZERO) != -1) {
-                            newrow = "";              
-                            newrow += "<tr>"
-                                    + "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>"
-                                    + "<input type='hidden' name='receiveInvToName' id='receiveInvToName' value='" + receiveInvToName + "'>"
-                                    + "<input type='hidden' name='receiveInvToAddress' id='receiveInvToAddress' value='" + receiveInvToAddress + "'>"
-                                    + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>"
-                                    + "<td class='text-center'>" + No + "</td>"
-                                    + "<td class='text-center'>" + invNo + "</td>"
-                                    + "<td>" + description + "</td>"
-                                    + "<td class='text-right money'>" + cost + "</td>"
-                                    + "<td class='text-center'>" + curcost + "</td>"
-                                    + "<td class='text-right money'>" + amount + "</td>"
-                                    + "<td class='text-center'>" + curamount + "</td>"
-                                    + "<td class='text-right money3'>" + ("0".equalsIgnoreCase(String.valueOf(exrate)) ? "" : exrate) + "</td>"
-                                    + "<td class='text-right money'>" + profit + "</td>"
-                                    + "<td class='text-right money'>" + remain + "</td>"
-                                    + "<td><center><a href=\"#/ref\"><span onclick=\"AddRefNo('" + product + "','" + description + "','" + cost + "','" + curcost + "','" + remain + "','" + curamount + "','" + invoiceDetailId + "','" + displaydescription + "','" + refNo + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
-                                    + "</tr>";
-                            html.append(newrow);
-                            No++;
-                        }    
-        //                } else {
-        //                    String newrow = "";
-        //                    newrow += "<tr>"
-        //                            + "<input type='hidden' name='receiveTaxInvTo' id='receiveTaxInvTo' value='" + receiveTaxInvTo + "'>"
-        //                            + "<input type='hidden' name='receiveInvToName' id='receiveInvToName' value='" + receiveInvToName + "'>"
-        //                            + "<input type='hidden' name='receiveInvToAddress' id='receiveInvToAddress' value='" + receiveInvToAddress + "'>"
-        //                            + "<input type='hidden' name='receiveARCode' id='receiveARCode' value='" + receiveARCode + "'>"
-        //                            + "</tr>";
-        //                    newrow += "//";
-        //                    html.append(newrow);
-        //                }
-                    } 
+                    }    
                 }
             }
             
