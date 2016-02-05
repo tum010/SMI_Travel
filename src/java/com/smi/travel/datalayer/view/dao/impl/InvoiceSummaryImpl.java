@@ -153,7 +153,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             sum.setInvno(util.ConvertString(B[1]));
             if(!"".equals(util.ConvertString(B[2]))){
                 String dayy[] = util.ConvertString(B[2]).split("-");
-                System.out.println("Date : " + util.ConvertString(B[2]));
+//                System.out.println("Date : " + util.ConvertString(B[2]));
                 String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
                 try {
 
@@ -201,7 +201,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             sum.setTo(util.ConvertString(B[13]));
             if(!"".equals(fromData) && fromData != null){
                 String dayy[] = fromData.split("-");
-                System.out.println("Date From : " + fromData);
+//                System.out.println("Date From : " + fromData);
                 String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
                 try {
 
@@ -213,7 +213,7 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
             }
             if(!"".equals(toDate) && toDate != null){
                 String dayy[] = toDate.split("-");
-                System.out.println("Date From : " + toDate);
+//                System.out.println("Date From : " + toDate);
                 String date = ""+dayy[2]+"-"+dayy[1]+"-"+dayy[0];
                 try {
 

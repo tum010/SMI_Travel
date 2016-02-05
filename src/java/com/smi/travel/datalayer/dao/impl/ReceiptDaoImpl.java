@@ -762,8 +762,8 @@ import org.hibernate.Transaction;
                     .list();
             
             if(!listinv.isEmpty()){
-                if(listinv.get(0).getAmount() != null && !"".equalsIgnoreCase(String.valueOf(listinv.get(0).getAmount()))){
-                    invDetailAmount = listinv.get(0).getAmount();
+                if(listinv.get(0).getAmountLocal() != null && !"".equalsIgnoreCase(String.valueOf(listinv.get(0).getAmountLocal()))){
+                    invDetailAmount = listinv.get(0).getAmountLocal();
                 }
                 BigDecimal receiptAmount = new BigDecimal(recAmount);
                 int resultcompare = invDetailAmount.compareTo(receiptAmount);
@@ -778,8 +778,8 @@ import org.hibernate.Transaction;
         }else{
             
             for(int i=0;i<list.size();i++){
-                if( list.get(0).getInvoiceDetail().getAmount() != null && !"".equalsIgnoreCase(String.valueOf(list.get(0).getInvoiceDetail().getAmount()))){
-                    invDetailAmount = list.get(0).getInvoiceDetail().getAmount();
+                if( list.get(0).getInvoiceDetail().getAmountLocal() != null && !"".equalsIgnoreCase(String.valueOf(list.get(0).getInvoiceDetail().getAmountLocal()))){
+                    invDetailAmount = list.get(0).getInvoiceDetail().getAmountLocal();
                 }
                 if(list.get(i).getAmount() != null){
                     receiptAmountTemp = receiptAmountTemp.add(list.get(i).getAmount());

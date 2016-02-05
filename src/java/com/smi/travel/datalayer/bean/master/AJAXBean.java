@@ -1824,7 +1824,7 @@ public class AJAXBean extends AbstractBean implements
                         + "<td class='money'>" + amountinvoice + "</td>"
                         + "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
-                        + "<td><center><a href=\"#/inv\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','" + isVat + "','" + vat + "','" + amount + "','" + currency + "','" + invId + "','','','','1','" + displaydescription + "','" + invNo + "','','','','' ,'" + invoice.getId() + "','" + invoice.getInvNo()+ "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/inv\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','" + isVat + "','" + vat + "','" + amount + "','" + "THB" + "','" + invId + "','','','','1','" + displaydescription + "','" + invNo + "','','','','' ,'" + invoice.getId() + "','" + invoice.getInvNo()+ "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;
@@ -1977,7 +1977,7 @@ public class AJAXBean extends AbstractBean implements
                         }
                 newrow += "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
-                        + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + currency + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "','','','','','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + "THB" + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "','','','','','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;
