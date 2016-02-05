@@ -9,8 +9,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/MExchangeRate.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <c:set var="ExchangeList" value="${requestScope['ExchangeList']}" />
-
 <c:set var="listCurrency" value="${requestScope['listCurrency']}" />
 <section class="content-header" >
     <h1>
@@ -141,7 +143,7 @@
                                 <td class="hidden" ><c:out value="${table.id}" /></td>
                                 <td><c:out value="${fn:toUpperCase(table.exdate)}"  /></td>
                                 <td><c:out value="${fn:toUpperCase(table.currency)}"/></td>
-                                <td><c:out value="${fn:toUpperCase(table.exrate)}" /></td>
+                                <td><fmt:formatNumber type="currency" pattern="#,##0.0000" value="${fn:toUpperCase(table.exrate)}" /></td>
                                 <td>
                                 <center> 
                                     <span id="editSpan${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditExchange('${table.id}', '${table.exdate}', '${table.currency}', '${table.exrate}', '${table.createby}', '${table.createdate}')" data-toggle="modal" data-target="#ExchangeRateModal" ></span>
@@ -186,7 +188,7 @@
                     <div class="form-group">
                         <label for="ExchangeRate" class="col-sm-4 control-label" >Exchange Rate </label>
                         <div class="col-sm-7">  
-                            <input type="text" class="form-control" maxlength="50" id="ExchangeRate" name="ExchangeRate"  onfocusout="formatDecimal();">
+                            <input type="text" class="form-control decimalexrate" maxlength="50" id="ExchangeRate" name="ExchangeRate" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -269,3 +271,26 @@
         </script>
     </c:if>
 </c:if>
+  <script type="text/javascript" charset="utf-8">      
+$(document).ready(function() {
+    $('.date').datetimepicker();
+    $('.datemask').mask('0000-00-00');
+    $('.spandate').click(function() {
+        var position = $(this).offset();
+        console.log("positon :" + position.top);
+        $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+    });
+        
+    $(".decimalexrate").inputmask({
+        alias: "decimal",
+        integerDigits: 6,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 4,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.0000",
+    });
+});
+        
+</script>
