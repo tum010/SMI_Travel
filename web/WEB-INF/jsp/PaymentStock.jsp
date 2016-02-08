@@ -9,7 +9,6 @@
 <c:set var="PaymentStockItemList" value="${requestScope['PaymentStockItemList']}" /> 
 <c:set var="stockList" value="${requestScope['StockList']}" />
 <c:set var="currencyList" value="${requestScope['currencyList']}" />
-
 <c:set var="StockDetailList" value="${requestScope['StockDetailList']}" /> 
 <!--testtt-->
 <section class="content-header" >
@@ -46,7 +45,7 @@
         </div>       
         <div id="textAlertPayNo"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <strong>Pay No. not available !</strong> 
+            <strong>Pay No. not available!</strong> 
         </div>
         <div id="fail"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -175,7 +174,7 @@
                                                 <td align="center">${table.stock.effectiveFrom}</td>
                                                 <td align="center">${table.stock.effectiveTo}</td>
                                                 <td class="text-center ">
-                                                    <a id="ButtonEdit${i.count}" onclick="getPaymentStockItemCostSale('${table.id}','${table.stock.id}');hideCollapse();" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#payStockDetail" aria-expanded="true" aria-controls="collapseExample">
+                                                    <a id="ButtonEdit${i.count}" onclick="getPaymentStockItemCostSale('${table.id}','${table.stock.id}','${table.stock.product.name}');hideCollapse();" data-toggle="collapse" data-target="#payStockDetail" >
                                                         <span id="SpanEdit${i.count}" class="glyphicon glyphicon glyphicon-list-alt"></span>
                                                     </a>
                                                     <a href="#" onclick="" data-toggle="modal" data-target=""> <span id="SpanRemove" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentStockDetailList('${table.id}','${i.count}','');"></span></a>
@@ -189,18 +188,18 @@
                     </div>            
                 </div>
             </div>
-            <%--<c:forEach var="data" items="${PaymentStockDetailList}" varStatus="i">--%>  
             <div class="collapse" id="payStockDetail">                    
                 <div class="panel panel-default ">
                     <div class="panel-heading ">
-                        <h4 class="panel-title">Detail</h4>
+                        <h4 class="panel-title"><div id="detailName" name="detailName" style="display:none" ></div>
+                        </h4>
                     </div>
                     <div class="panel-body"  style="padding-right: 0px;">                                                              
                         <div class="row" style="padding-left: 15px;">             
                             <div class="row">
                                 <div class="col-xs-11" style="width: 1030px">
                                     <input type="hidden" id="noStockDetailTable" name="noStockDetailTable" value="1"/>
-                                    <table class="display" id="StockDetailTable" >
+                                    <table class="display paginated" id="StockDetailTable" >
                                         <thead>
                                             <tr class="datatable-header">
                                                 <th style="width: 5%">No</th>                                   
@@ -257,7 +256,8 @@
                     <label class="control-label text-right">Total Cost</label>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
-                    <input type="hidden" class="form-control text-right" id="totalCostTmp" name="totalCostTmp" value="" readonly=""/>
+<!--                    <input type="hidden" class="form-control text-right" id="totalCostTmp" name="totalCostTmp" value="" readonly=""/>-->
+                    <input type="hidden" class="form-control text-right" id="totalCostTempCal" name="totalCostTempCal" value="${paymentStock.costAmount}" readonly=""/>
                     <input type="text" class="form-control text-right" id="totalCost" name="totalCost" value="${paymentStock.costAmount}" readonly=""/>
                 </div>
                 <div class="col-xs-1" style="width: 100px">
@@ -276,6 +276,7 @@
                     <label class="control-label text-right">Total Sale</label>
                 </div>
                 <div class="col-xs-1" style="width: 200px">
+                    <input type="hidden" class="form-control text-right" id="totalSaleTempCal" name="totalSaleTempCal" value="${paymentStock.saleAmount}" readonly=""/>
                     <input type="text" class="form-control text-right" id="totalSale" name="totalSale" value="${paymentStock.saleAmount}" readonly=""/>
                 </div>
                  <div class="col-xs-1" style="width: 100px">
@@ -397,16 +398,37 @@
         </script>
     </c:if>
 </c:if>
+<c:if test="${! empty requestScope['searchresult']}">
+    <c:if test="${requestScope['searchresult'] =='searchfail'}">        
+        <script language="javascript">
+            $('#textAlertPayNo').show();
+        </script>
+    </c:if>
+</c:if>       
+        
         
 <script type="text/javascript" charset="utf-8">
     
     function hideCollapse() {
-        $("div").find($('.collapse')).collapse('hide');
+//        $("div").find($('.collapse')).collapse('show');
     }
     
     $(document).ready(function() {  
-        document.getElementById('totalCost').value = formatNumber(0);
-        document.getElementById('totalSale').value = formatNumber(0);
+//        document.getElementById('totalCost').value = formatNumber(0);
+//        document.getElementById('totalSale').value = formatNumber(0);
+        var totalCost = replaceAll(",", "", $('#totalCost').val());
+        if (totalCost == "") {
+            totalCost = 0;
+        }
+        totalCost = parseFloat(totalCost);
+        document.getElementById("totalCost").value = formatNumber(totalCost);
+    
+        var totalSale = replaceAll(",", "", $('#totalSale').val());
+        if (totalSale == "") {
+            totalSale = 0;
+        }
+        totalSale = parseFloat(totalSale);
+        document.getElementById("totalSale").value = formatNumber(totalSale);
         
 //        var countRowStock = $("#StockDetailTable tr").length;    
 //        if(countRowStock === 1){
@@ -426,7 +448,7 @@
            }
         });
         
-        $('.collapse').collapse('hide');
+//        $('.collapse').collapse('hide');
     });
     
     function saveAction() {
@@ -448,8 +470,8 @@
         document.getElementById('PaymentStockForm').submit();
     }
     
-    function getPaymentStockItemCostSale(psdId,stockid) {
-        getStockDetail(stockid,psdId,stockid);
+    function getPaymentStockItemCostSale(psdId,stockid,productname) {
+        getStockDetail(stockid,psdId,productname);
     }
     
     function getPaymentStockItemCostSaleAjax(psdId){
@@ -496,9 +518,6 @@
                                 }
                             }
                         }
-//                        hideCollapse();
-//                        $('.collapse').collapse('show');
-                            
                     }
                 }, error: function(msg) {
                     alert('error');
@@ -520,7 +539,6 @@ function deletePaymentStockDetailList(paymentStockDetailId , row , stockid){
     $('#fail').hide();
     if(paymentStockDetailId === ''){
         $("#paymentStockDetailId" + row).parent().remove();
-        $('.collapse').collapse('hide');
         document.getElementById('totalCost').value = formatNumber(0);
         document.getElementById('totalSale').value = formatNumber(0);
         $('#textAlertDivDelete').show();
@@ -547,8 +565,6 @@ function DeleteRowPaymentStock(){
             $('#textAlertDivDelete').show();
             document.getElementById('totalCost').value = formatNumber(0);
             document.getElementById('totalSale').value = formatNumber(0);
-            $('.collapse').collapse('hide');
-           
         }
         else {
             $.ajax({
@@ -560,7 +576,6 @@ function DeleteRowPaymentStock(){
                     $('#textAlertDivDelete').show();
                     document.getElementById('totalCost').value = formatNumber(0);
                     document.getElementById('totalSale').value = formatNumber(0);
-                    $('.collapse').collapse('hide');
                 },
                 error: function() {
                     console.log("error");

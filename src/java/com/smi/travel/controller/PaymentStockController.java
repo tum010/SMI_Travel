@@ -19,6 +19,7 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,6 +50,7 @@ public class PaymentStockController extends SMITravelController{
     private static final String CREATEDATE = "createDate"; // save result
     private static final String NOSTOCKTABLE = "noStockTable"; // save result
     private static final String STOCKDETAILLIST = "StockDetailList";
+    private static final String SEARCHRESULT = "searchresult";
     private UtilityService utilityService;
     private PaymentStockService paymentStockService;
     
@@ -66,7 +68,8 @@ public class PaymentStockController extends SMITravelController{
         String curCost = request.getParameter("curCost");
         String curSale = request.getParameter("curSale");
         String noStockTable = request.getParameter("noStockTable");
-        
+        String totalSaleTempCal = request.getParameter("totalSaleTempCal");
+        String totalCostTempCal = request.getParameter("totalCostTempCal");
         System.out.println("===== createDate =====" + createDate);
         
         request.setAttribute(NOSTOCKTABLE,1);
@@ -107,6 +110,8 @@ public class PaymentStockController extends SMITravelController{
                         request.setAttribute(PAYMENTSTOCK,paymentStock);
                         request.setAttribute(CREATEDATE,String.valueOf(paymentStock.getCreateDate()));
                     }
+                }else{
+                    request.setAttribute(SEARCHRESULT, "searchfail");
                 }
             }
         }else if("deletePaymentStock".equalsIgnoreCase(action)){
@@ -120,6 +125,9 @@ public class PaymentStockController extends SMITravelController{
             }
         }
         else if("savePaymentStock".equalsIgnoreCase(action)){
+            BigDecimal totalcost = new BigDecimal(BigInteger.ZERO);
+            BigDecimal totalsale = new BigDecimal(BigInteger.ZERO);
+            
             PaymentStock paymentStock = new PaymentStock();
             paymentStock.setId(payId);
             paymentStock.setPayStockNo(payNo);
@@ -135,8 +143,9 @@ public class PaymentStockController extends SMITravelController{
                 paymentStock.setUpdateDate(new Date());
             }
             
-            paymentStock.setSaleAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(totalCost) ? totalCost.replaceAll(",","") : 0)));
-            paymentStock.setCostAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(totalSale) ? totalSale.replaceAll(",","") : 0)));
+            totalcost = totalcost.add(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(totalCostTempCal) ? totalCostTempCal.replaceAll(",","") : 0)));
+            totalsale = totalsale.add(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(totalSaleTempCal) ? totalSaleTempCal.replaceAll(",","") : 0)));
+            
             paymentStock.setCurCost(curCost);
             paymentStock.setCurSale(curSale);
 
@@ -172,11 +181,12 @@ public class PaymentStockController extends SMITravelController{
                     String cost = request.getParameter("cost" + j);
                     String sale = request.getParameter("sale" + j);
                     String stockIdTable = request.getParameter("stockIdTable" + j);
+                    
                     if((!"".equalsIgnoreCase(stockIdTable) && stockIdTable != null ) && (!"".equalsIgnoreCase(stockId) && stockId!=null)){
                         System.out.println(" stockId "+ i + " ____ " + stockId);
                         System.out.println(" stockIdTable "+ j + " ____ " + stockIdTable);
                         if(stockId.equalsIgnoreCase(stockIdTable)){
-                            if(  (!"".equalsIgnoreCase(cost) && cost != null ) || (!"".equalsIgnoreCase(sale) && sale!=null)  ){
+                                if((!"".equalsIgnoreCase(cost) && cost != null ) || (!"".equalsIgnoreCase(sale) && sale!=null)  ){
                                 System.out.println(" psiIdTable "+ j + " ____ " + psiIdTable);
                                 psi.setId(psiIdTable);
                                 psi.setPaymentStockDetail(psd);
@@ -184,7 +194,10 @@ public class PaymentStockController extends SMITravelController{
                                 StockDetail stockDetail = new StockDetail();
                                 stockDetail.setId(stockDetailIdTable);
                                 psi.setStockDetail(stockDetail);
-
+                                
+                                totalcost = totalcost.add(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(cost) ? cost.replaceAll(",","") : 0)));
+                                totalsale = totalsale.add(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(sale) ? sale.replaceAll(",","") : 0)));
+            
                                 psi.setCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(cost) ? cost.replaceAll(",","") : 0)));
                                 psi.setSale(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(sale) ? sale.replaceAll(",","") : 0)));
                                 psd.getPaymentStockItems().add(psi);
@@ -194,7 +207,8 @@ public class PaymentStockController extends SMITravelController{
                 }
                 paymentStock.getPaymentStockDetails().add(psd);
             }
-            
+            paymentStock.setCostAmount(totalcost);
+            paymentStock.setSaleAmount(totalsale);
             saveresult = paymentStockService.insertOrUpdatePaymentStock(paymentStock);
             System.out.println(" saveresult " + saveresult);
             if("fail".equalsIgnoreCase(saveresult)){

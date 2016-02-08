@@ -58,7 +58,6 @@ function createStockDetails(stockid, productName, staff, addDate, effectiveFrom,
             $('#fail').hide();
         }        
     }
-    
     $("#StockTable").append(
             '<tr>' +
             '<input type="hidden" id="paymentStockDetailId'+ noStockTable +'" name="paymentStockDetailId'+ noStockTable +'"  value=""> '+
@@ -72,20 +71,21 @@ function createStockDetails(stockid, productName, staff, addDate, effectiveFrom,
             '<td class="text-center ">' + effectiveFrom + '</td>' +
             '<td class="text-center ">' + effectiveTo + '</td>' +
             '<td class="text-center ">' +
-            '<a id="ButtonEdit'+ noStockTable +'" onclick="getStockDetail(' + stockid + ',' + "null" + ');hideCollapse();" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#payStockDetail'+ noStockTable +'" aria-expanded="true" aria-controls="collapseExample">'+
+            '<a id="ButtonEdit'+ noStockTable +'" onclick="getStockDetail( \'' + stockid + '\', \'' + "null" + '\' , \'' + productName + '\');hideCollapse();" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#payStockDetail" aria-expanded="true" aria-controls="collapseExample">'+
             '<span id="SpanEdit'+ noStockTable +'" class="glyphicon glyphicon glyphicon-list-alt"></span></a>'+
             '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="SpanRemove" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentStockDetailList(\'\', \'' + noStockTable + '\' , \'' + stockid + '\');"></span></a>' +
             '</td>' +
             '<tr>'
             );
-
     $("#noStockTable").val(noStockTable+1);
-    getStockDetail(stockid,"null");
+    getStockDetail(stockid,"null",productName);
     $("#SearchStock").modal("hide");
     
 }
 
-function getStockDetail(stockid,psdId) {
+function getStockDetail(stockid,psdId,productname) {
+    document.getElementById('detailName').style.display = 'block';
+    document.getElementById('detailName').innerHTML = "Detail (" + productname + ")";
     var servletName = 'PaymentStockServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
@@ -111,15 +111,66 @@ function CallAjax(param,psdId,stockid) {
                     $('#StockDetailTable').dataTable().fnClearTable();
                     $('#StockDetailTable').dataTable().fnDestroy();
                     $("#StockDetailTable tbody").append(msg);
+
                     $('#StockDetailTable').dataTable({bJQueryUI: true,
                         "sPaginationType": "full_numbers",
                         "bAutoWidth": false,
-                        "bFilter": false,
-                        "bPaginate": true,
+                        "bFilter": true,
                         "bInfo": false,
-                        "bLengthChange": false,
-                        "iDisplayLength": 10
+                        "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                        "iDisplayLength": 10,
+                        "bSort": false,
+                        "bPaginate": false
                     });
+                    
+                    
+                    $('table.paginated').each(function() {
+                        var currentPage = 0;
+                        var numPerPage = 10;
+                        var $table = $(this);
+                        $table.bind('repaginate', function() {
+                            $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+                        });
+                        $table.trigger('repaginate');
+                        var numRows = $table.find('tbody tr').length;
+                        var numPages = Math.ceil(numRows / numPerPage);
+                        var $pager = $('<div class="col-xs-12 text-right" id="pageNo"><font style="color: #499DD5"></font>&nbsp;</div>');
+                        var $br = $('<div class="col-xs-12"><br></div>');
+                        for (var page = 0; page < numPages; page++) {
+                            if(page === 0){
+                                $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + "First" + "  ").bind('click', {
+                                newPage: page
+                                }, function(event) {
+                                    currentPage = event.data['newPage'];
+                                    $table.trigger('repaginate');
+                                    $(this).addClass('active').siblings().removeClass('active');
+                                }).appendTo($pager).addClass('clickable');
+                            }
+
+                            $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + "  ").bind('click', {
+                                newPage: page
+                            }, function(event) {
+                                currentPage = event.data['newPage'];
+                                $table.trigger('repaginate');
+                                $(this).addClass('active').siblings().removeClass('active');
+                            }).appendTo($pager).addClass('clickable');
+
+                            if(page === (numPages - 1)){
+                                $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + "Last" + "  ").bind('click', {
+                                newPage: page
+                                }, function(event) {
+                                    currentPage = event.data['newPage'];
+                                    $table.trigger('repaginate');
+                                    $(this).addClass('active').siblings().removeClass('active');
+                                }).appendTo($pager).addClass('clickable');
+                            }
+                        }
+                        $br.insertAfter($table).addClass('active');
+                        $pager.insertAfter($table).find('span.page-number:first').addClass('active');
+                        document.getElementById("pageNo").style.cursor="pointer";
+                    });
+                    
+                    
                     if(psdId !== "null" && psdId !== null){
                         getPaymentStockItemCostSaleAjax(psdId);
                     }else{
@@ -159,7 +210,7 @@ function calculateCostTotal() {
 }
 
 function calculateSaleTotal() {
-    var count = $("#StockDetailTable tr").length; 
+    var count = $("#StockDetailTable tr").length;
     var i;
     var grandTotal = 0;
     for (i = 1; i < count + 1; i++) {
