@@ -211,7 +211,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button id="btnSave" type="submit"  class="btn btn-success"><span  class="fa fa-save"></span> Save</button>
+                    <button id="btnSave" type="button" onclick="saveMExchangeRate()" class="btn btn-success"><span  class="fa fa-save"></span> Save</button>
                     <button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div><!-- /.modal-content -->
@@ -298,6 +298,37 @@ $(document).ready(function() {
         digitsOptional: false,
         placeholder: "0.0000",
     });
+    
+    $('#DateExchange').datetimepicker().on('dp.change', function (e) {
+        $('#ExchangeRateForm').bootstrapValidator('revalidateField', 'InvToDate');
+    });
+        
+    $('#ExchangeRateForm').bootstrapValidator({
+        container: 'tooltip',
+        excluded: [':disabled'],
+        feedbackIcons: {
+            valid: 'uk-icon-check',
+            invalid: 'uk-icon-times',
+            validating: 'uk-icon-refresh'
+        },
+        fields: {
+            ExchangeDate: {
+                validators: {
+                    notEmpty: {
+                        message: 'The exchange date is required'
+                    }
+                }
+            },
+            Currency: {
+                validators: {
+                    notEmpty: {
+                        message: 'The currency is required'
+                    }
+                }
+            }
+        }
+    });
+        
     $('.fromdate').datetimepicker().change(function(){                          
         checkFromDateField();
     });
