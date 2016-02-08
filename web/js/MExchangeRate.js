@@ -54,6 +54,18 @@ function formatDecimal() {
     return;  
 }
 
+function saveMExchangeRate(){
+    var exrateId = $("#ExchangeID").val();
+    var exrateDate = $("#ExchangeDate").val();
+    var exrateCurrency = $("#Currency").val();
+    if(exrateDate === '' || exrateCurrency === ''){
+        $('#ExchangeRateForm').bootstrapValidator('revalidateField', 'ExchangeDate');
+        $('#ExchangeRateForm').bootstrapValidator('revalidateField', 'Currency');
+        return;
+    }
+    document.getElementById('ExchangeRateForm').submit();
+}
+
 $(document).ready(function() {
     $('.date').datetimepicker();
     $('.datemask').mask('0000-00-00');
