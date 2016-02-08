@@ -11,6 +11,8 @@ import com.smi.travel.datalayer.entity.PaymentStockDetail;
 import com.smi.travel.datalayer.entity.PaymentStockItem;
 import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.entity.StockDetail;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -189,9 +191,11 @@ public class PaymentStockImpl implements PaymentStockDao {
                 System.out.println("+++++++++++++++++++++ UPDATE +++++++++++++++++++++ ");
                 session.update(paymentStock);
                 List<PaymentStockDetail> paymentStockDetails = paymentStock.getPaymentStockDetails();
+                BigDecimal totalCost = new BigDecimal(BigInteger.ZERO);
+                BigDecimal totalSale = new BigDecimal(BigInteger.ZERO);
+                
                 if(paymentStockDetails != null){
                     System.out.println(" paymentStockDetails.size()  " + paymentStockDetails.size());
-                    
                     for(int i = 0; i < paymentStockDetails.size(); i++){
                         System.out.println(" paymentStockDetails.get(i).getId() " + paymentStockDetails.get(i).getId());
                         if("".equalsIgnoreCase(paymentStockDetails.get(i).getId()) || paymentStockDetails.get(i).getId() == null){
@@ -211,9 +215,20 @@ public class PaymentStockImpl implements PaymentStockDao {
                                 }
                             }
                         }
-                       
+                    }
+                    
+                }
+                List<PaymentStockItem> psi = session.createQuery("From PaymentStockItem psi where psi.paymentStockDetail.paymentStock = '"+paymentStock.getId()+"'")
+                .list();
+                if(psi != null){
+                    for(int j = 0; j < psi.size(); j++){
+                        totalCost = totalCost.add(psi.get(j).getCost());
+                        totalSale = totalSale.add(psi.get(j).getSale());
                     }
                 }
+                paymentStock.setCostAmount(totalCost);
+                paymentStock.setSaleAmount(totalSale);
+                session.update(paymentStock);
                 checkupdate = true ;
             }
             transaction.commit();
