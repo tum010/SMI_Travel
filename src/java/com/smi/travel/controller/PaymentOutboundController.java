@@ -83,8 +83,20 @@ public class PaymentOutboundController extends SMITravelController {
         
         if("save".equalsIgnoreCase(action)){
             PaymentOutbound paymentOutbound = new PaymentOutbound();
+            PaymentOutbound paymentOutboundTemp = new PaymentOutbound();
+            if(!"".equalsIgnoreCase(payId) && payId != null){
+                paymentOutboundTemp = paymentOutboundService.getPaymentOutbound(payId);
+                paymentOutbound.setCreateBy(createBy);
+                paymentOutbound.setCreateDate(paymentOutboundTemp.getCreateDate());
+            
+            }else{
+                paymentOutbound.setCreateBy(user.getUsername());
+                createDate = sdf.format(date);
+                paymentOutbound.setCreateDate(utilfunction.convertStringToDate(createDate));
+            }
+            
             paymentOutbound.setId(payId);
-            paymentOutbound.setPayNo(!"".equalsIgnoreCase(payId) ? payNo : "");
+            paymentOutbound.setPayNo(!"".equalsIgnoreCase(payId) ? paymentOutboundTemp.getPayNo() : "");
             paymentOutbound.setPayDate(utilfunction.convertStringToDate(payDate));
             paymentOutbound.setAccount(Integer.parseInt(account));
             paymentOutbound.setInvoiceSup(invSupCode);
@@ -94,15 +106,6 @@ public class PaymentOutboundController extends SMITravelController {
             MItemstatus mItemstatus = new MItemstatus();
             mItemstatus.setId(status);
             paymentOutbound.setMItemstatus(mItemstatus);
-            
-            if((!"".equalsIgnoreCase(payId)) && (payId != null)){
-                paymentOutbound.setCreateBy(createBy);
-                paymentOutbound.setCreateDate(utilfunction.convertStringToDate(createDate));
-            }else{
-                paymentOutbound.setCreateBy(user.getUsername());
-                createDate = sdf.format(date);
-                paymentOutbound.setCreateDate(utilfunction.convertStringToDate(createDate));
-            }
             
             if(Integer.parseInt(countPaymentDetail) > 0){
                 setPaymentOutboundDetail(request, Integer.parseInt(countPaymentDetail), paymentOutbound);

@@ -510,7 +510,7 @@ function addRowPaymentDetailTable(row) {
             '<input type="text" name="gross' + row + '" id="gross' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" value="" readonly=""/>' +
             '</td>' +
             '<td align="center">' +
-            '<input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" onclick="calculateGross(\'' + row + '\')" value="">' +
+            '<input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" onclick="calculateGross(\'' + row + '\')" value="1">' +
             '</td>' +
             '<td align="right" id="vatShow' + row + '"></td>' +
             '<td class="hidden">' +
@@ -627,6 +627,7 @@ function deletePaymentDetailList(id, row) {
 function confirmDeletePaymentDetailList() {
     var row = document.getElementById('delPaymentDetailRow').value;
     var id = document.getElementById('delPaymentDetailId').value;
+    var count = parseInt($("#countPaymentDetail").val());
 
     if (id === '') {
         $("#type" + row).parent().parent().remove();
@@ -636,6 +637,7 @@ function confirmDeletePaymentDetailList() {
             $("#tr_PaymentOutboundDetailAddRow").removeClass("hide");
             $("#tr_PaymentOutboundDetailAddRow").addClass("show");
         }
+        $("#countPaymentDetail").val(++count);
 
     } else {
         $.ajax({
@@ -650,6 +652,7 @@ function confirmDeletePaymentDetailList() {
                     $("#tr_PaymentOutboundDetailAddRow").removeClass("hide");
                     $("#tr_PaymentOutboundDetailAddRow").addClass("show");
                 }
+                $("#countPaymentDetail").val(++count);
             },
             error: function() {
                 console.log("error");
@@ -821,13 +824,60 @@ function calculateGrandTotal() {
 function addRefNo(refNo, type, description, billType, cost, curCost, sale, curSale, bookId) {
     var countPaymentDetail = parseInt($("#countPaymentDetail").val());
     var count = 0;
-    for (var i = 1; i < countPaymentDetail - 1; i++) {
-        var countTemp = document.getElementById("count" + i);
+    for (var i = 1; i <= countPaymentDetail; i++) {
+        var countTemp = document.getElementById("count" + i);       
         if (countTemp !== null) {
-            count = parseInt(countTemp.value);
-        }
+            var typeTemp = $("#type"+i).val();
+            var refNoTemp = $("#refNo"+i).val();
+            var invoiceTemp = $("#invoice"+i).val();
+            var costTemp = $("#cost"+i).val();
+            var grossTemp = $("#gross"+i).val();
+            var amountTemp = $("#amount"+i).val();
+            var commTemp = $("#comm"+i).val();
+            var curTemp = $("#cur"+i).val();
+            var descriptionTemp = $("#description"+i).val();
+            var payStockTemp = $("#payStock"+i).val();
+            var saleAmountTemp = $("#saleAmount"+i).val();
+            var saleCurrencyTemp = $("#saleCurrency"+i).val();
+            
+            var realExRateTemp = $("#realExRate"+i).val();
+            var payExRateTemp = $("#payExRate"+i).val();
+            var whtAmountTemp = $("#whtAmount"+i).val();
+            var vatRecComAmountTemp = $("#vatRecComAmount"+i).val();
+            var valueTemp = $("#value"+i).val();
+            var whtTemp = $("#wht"+i).val();
+            var vatRecComTemp = $("#vatRecCom"+i).val();
+//            alert(typeTemp+":"+refNoTemp+":"+invoiceTemp+":"+costTemp+":"+grossTemp+":"+amountTemp+":"+commTemp+":"+curTemp+":"+descriptionTemp+":"+payStockTemp+":"+saleAmountTemp+":"+saleAmountTemp);
+//            alert(realExRateTemp+":"+payExRateTemp+":"+whtAmountTemp+":"+vatRecComAmountTemp+":"+valueTemp+":"+whtTemp+":"+vatRecComTemp);
+            
+            if(typeTemp === '' && refNoTemp === '' && invoiceTemp === '' && costTemp === '' && grossTemp === '' && amountTemp === '' && commTemp === '' &&
+                    curTemp === '' && descriptionTemp === '' && payStockTemp === '' && saleAmountTemp === '' && saleCurrencyTemp === '' &&
+                    realExRateTemp === '' && payExRateTemp === '' && whtAmountTemp === '' && vatRecComAmountTemp === '' && valueTemp === '' &&
+                    whtTemp === '' && vatRecComTemp === ''){
+                count = parseInt(countTemp.value);
+                
+                $("#isWht" + i).val('');
+                $("#isComVat" + i).val('');
+                $("#detailId" + i).val('');
+                $("#payId" + i).val('');
+                $("#bookDetailId" + i).val('');
+                $("#bookDetailType" + i).val('');
+                $("#accCode" + i).val('');
+                $("#exportDate" + i).val('');
+                $("#isExport" + i).val('');
+                $("#whtTemp" + i).val('');
+                $("#vatRecComTemp" + i).val('');
+                $("#vatRecComAmount" + i).val('');
+                $("#payStockId" + i).val('');
+               
+            }    
+        }      
     }
-    addRowPaymentDetailTableByRefNo(refNo, type, description, billType, parseFloat(cost), curCost, parseFloat(sale), curSale, bookId, count + 1);
+    if(count === 0){
+        count = ++countPaymentDetail;
+        addRowPaymentDetailTable(count);      
+    }
+    addRowPaymentDetailTableByRefNo(refNo, type, description, billType, parseFloat(cost), curCost, parseFloat(sale), curSale, bookId, count);
 }
 
 function addRowPaymentDetailTableByRefNo(refNo, type, description, billType, cost, curCost, sale, curSale, bookId, row) {
@@ -860,22 +910,73 @@ function addRowPaymentDetailTableByRefNo(refNo, type, description, billType, cos
 function addStock(stockId, payStockNo, costAmount, saleAmount, curCost, curSale) {
     var countPaymentDetail = parseInt($("#countPaymentDetail").val());
     var count = 0;
-    for (var i = 1; i < countPaymentDetail - 1; i++) {
-        var countTemp = document.getElementById("count" + i);
+    for (var i = 1; i <= countPaymentDetail; i++) {        
+        var countTemp = document.getElementById("count" + i);       
         if (countTemp !== null) {
-            count = parseInt(countTemp.value);
+            var typeTemp = $("#type"+i).val();
+            var refNoTemp = $("#refNo"+i).val();
+            var invoiceTemp = $("#invoice"+i).val();
+            var costTemp = $("#cost"+i).val();
+            var grossTemp = $("#gross"+i).val();
+            var amountTemp = $("#amount"+i).val();
+            var commTemp = $("#comm"+i).val();
+            var curTemp = $("#cur"+i).val();
+            var descriptionTemp = $("#description"+i).val();
+            var payStockTemp = $("#payStock"+i).val();
+            var saleAmountTemp = $("#saleAmount"+i).val();
+            var saleCurrencyTemp = $("#saleCurrency"+i).val();
+            
+            var realExRateTemp = $("#realExRate"+i).val();
+            var payExRateTemp = $("#payExRate"+i).val();
+            var whtAmountTemp = $("#whtAmount"+i).val();
+            var vatRecComAmountTemp = $("#vatRecComAmount"+i).val();
+            var valueTemp = $("#value"+i).val();
+            var whtTemp = $("#wht"+i).val();
+            var vatRecComTemp = $("#vatRecCom"+i).val();
+//            alert(typeTemp+":"+refNoTemp+":"+invoiceTemp+":"+costTemp+":"+grossTemp+":"+amountTemp+":"+commTemp+":"+curTemp+":"+descriptionTemp+":"+payStockTemp+":"+saleAmountTemp+":"+saleAmountTemp);
+//            alert(realExRateTemp+":"+payExRateTemp+":"+whtAmountTemp+":"+vatRecComAmountTemp+":"+valueTemp+":"+whtTemp+":"+vatRecComTemp);
+            
+            if(typeTemp === '' && refNoTemp === '' && invoiceTemp === '' && costTemp === '' && grossTemp === '' && amountTemp === '' && commTemp === '' &&
+                    curTemp === '' && descriptionTemp === '' && payStockTemp === '' && saleAmountTemp === '' && saleCurrencyTemp === '' &&
+                    realExRateTemp === '' && payExRateTemp === '' && whtAmountTemp === '' && vatRecComAmountTemp === '' && valueTemp === '' &&
+                    whtTemp === '' && vatRecComTemp === ''){
+                count = parseInt(countTemp.value);
+                
+                $("#isWht" + i).val('');
+                $("#isComVat" + i).val('');
+                $("#detailId" + i).val('');
+                $("#payId" + i).val('');
+                $("#bookDetailId" + i).val('');
+                $("#bookDetailType" + i).val('');
+                $("#accCode" + i).val('');
+                $("#exportDate" + i).val('');
+                $("#isExport" + i).val('');
+                $("#whtTemp" + i).val('');
+                $("#vatRecComTemp" + i).val('');
+                $("#vatRecComAmount" + i).val('');
+                $("#payStockId" + i).val('');
+               
+            }    
         }
     }
-    addRowPaymentDetailTableByStock(stockId, payStockNo, parseFloat(costAmount), curCost, parseFloat(saleAmount), curSale, count + 1);
+//    alert(count);
+    if(count === 0){
+        count = ++countPaymentDetail;
+        addRowPaymentDetailTable(count);      
+    }
+    addRowPaymentDetailTableByStock(stockId, payStockNo, parseFloat(costAmount), curCost, parseFloat(saleAmount), curSale, 'Others', count);
 }
 
-function addRowPaymentDetailTableByStock(stockId, payStockNo, costAmount, curCost, saleAmount, curSale, row) {
+function addRowPaymentDetailTableByStock(stockId, payStockNo, costAmount, curCost, saleAmount, curSale, type, row) {
     var color = (row % 2 === 0 ? "#F2F2F2" : "");
     if (!row) {
         row = 1;
     }
 
     $("#count" + row).val(row);
+    $("[name=type" + row + "] option").filter(function() {
+        return ($(this).text() === type);
+    }).prop('selected', true);
     $("#cost" + row).val(formatNumber(costAmount));
     $("[name=cur" + row + "] option").filter(function() {
         return ($(this).text() === curCost);
@@ -1257,29 +1358,143 @@ function validatePaymentOutbound(option) {
     if (booleanPaymentOutbound && booleanRefNo && booleanPayStock) {
         $("#btnSave").removeClass("disabled");
         if (option === 'save') {
-            for (var i = 1; i < count; i++) {
-                var curField1 = document.getElementById('cur' + i);
-                if (curField1 !== null) {
-                    var cur1 = curField1.value;
-                    for (var j = i+1; j < count; j++) {
-                        var curField2 = document.getElementById('cur' + j);
-                        if (curField2 !== null) {
-                            var cur2 = curField2.value;
-                            if(cur1 !== cur2 && cur2 !== ''){
-                                booleanCurrency = false;
-                                i = count;
-                                j = count;
-                                currencyMessage = "notMatch";
-                            }else if(cur1 === '' && cur2 === ''){
-                                booleanCurrency = false;
-                                i = count;
-                                j = count;
-                                currencyMessage = "empty";
+            var currencyNotMatch = false;
+            var currencyNotEmpty = 0;
+            for(var i=1; i<=count; i++){
+                var currency1 = document.getElementById('cur'+i);               
+                
+                if(currency1 !== null){
+                    var type1 = document.getElementById('type'+i).value;
+                    var refNo1 = document.getElementById('refNo'+i).value;
+                    var invoice1 = document.getElementById('invoice'+i).value;
+                    var cost1 = document.getElementById('cost'+i).value;
+                    var gross1 = document.getElementById('gross'+i).value;
+                    var amount1 = document.getElementById('amount'+i).value;
+                    var comm1 = document.getElementById('amount'+i).value;
+                    var description1 = document.getElementById('description'+i).value;
+                    var payStock1 = document.getElementById('payStock'+i).value;
+                    var saleAmount1 = document.getElementById('saleAmount'+i).value;
+                    var saleCurrency1 = document.getElementById('saleCurrency'+i).value;
+                    if(type1 !== '' || refNo1 !== '' || invoice1 !== '' || cost1 !== '' || gross1 !== '' || amount1 !== '' || 
+                            comm1 !== '' || description1 !== '' || payStock1 !== '' || saleAmount1 !== '' || saleCurrency1 !== ''){
+                        var currencyTemp1 = currency1.value;
+                        for(var j=i+1; j<=count; j++){
+                            var currency2 = document.getElementById('cur'+j);
+
+                            if(currency2 !== null){
+                                var type2 = document.getElementById('type'+j).value;
+                                var refNo2 = document.getElementById('refNo'+j).value;
+                                var invoice2 = document.getElementById('invoice'+j).value;
+                                var cost2 = document.getElementById('cost'+j).value;
+                                var gross2 = document.getElementById('gross'+j).value;
+                                var amount2 = document.getElementById('amount'+j).value;
+                                var comm2 = document.getElementById('amount'+j).value;
+                                var description2 = document.getElementById('description'+j).value;
+                                var payStock2 = document.getElementById('payStock'+j).value;
+                                var saleAmount2 = document.getElementById('saleAmount'+j).value;
+                                var saleCurrency2 = document.getElementById('saleCurrency'+j).value;
+                                
+                                var currencyTemp2 = currency2.value;
+                                if(type2 !== '' || refNo2 !== '' || invoice2 !== '' || cost2 !== '' || gross2 !== '' || amount2 !== '' || 
+                                        comm2 !== '' || description2 !== '' || payStock2 !== '' || saleAmount2 !== '' || saleCurrency2 !== ''){                                                                 
+                                    if((currencyTemp1 !== currencyTemp2)){
+                                        currencyNotMatch = true;
+                                        booleanCurrency = false;
+                                        i = count+1;
+                                        j = count+1;
+                                    }                               
+                                }
+                                if(currencyTemp1 === '' && currencyTemp2 === ''){
+                                    currencyNotEmpty++;
+                                    booleanCurrency = false;
+                                }
                             }
                         }
-                    }
-                }
+                    }    
+                }    
             }
+            if(currencyNotMatch){
+                $("#textAlertCurrencyNotMatch").hide();
+                $("#textAlertCurrencyNotEmpty").hide();
+               for(var i=1; i<=count; i++){
+                    var currency = document.getElementById('cur'+i);
+ 
+                    if(currency !== null){
+                        var type = document.getElementById('type'+i).value;
+                        var refNo = document.getElementById('refNo'+i).value;
+                        var invoice = document.getElementById('invoice'+i).value;
+                        var cost = document.getElementById('cost'+i).value;
+                        var gross = document.getElementById('gross'+i).value;
+                        var amount = document.getElementById('amount'+i).value;
+                        var comm = document.getElementById('amount'+i).value;
+                        var description = document.getElementById('description'+i).value;
+                        var payStock = document.getElementById('payStock'+i).value;
+                        var saleAmount = document.getElementById('saleAmount'+i).value;
+                        var saleCurrency = document.getElementById('saleCurrency'+i).value;
+                        if(type !== '' || refNo !== '' || invoice !== '' || cost !== '' || gross !== '' || amount !== '' || 
+                            comm !== '' || description !== '' || payStock !== '' || saleAmount !== '' || saleCurrency !== ''){
+                            currency.style.borderColor = 'red';
+                            booleanCurrency = false;
+                        }    
+                    }    
+                }
+                currencyMessage = "notMatch";
+//                $("#textAlertCurrencyAmountNotMatch").show();
+//                return;
+            }
+            if(currencyNotEmpty > 0){
+                $("#textAlertCurrencyNotMatch").hide();
+                $("#textAlertCurrencyNotEmpty").hide();
+                for(var i=1; i<=count; i++){
+                    var currency = document.getElementById('cur'+i);
+                    
+                    if(currency !== null){
+                        var type = document.getElementById('type'+i).value;
+                        var refNo = document.getElementById('refNo'+i).value;
+                        var invoice = document.getElementById('invoice'+i).value;
+                        var cost = document.getElementById('cost'+i).value;
+                        var gross = document.getElementById('gross'+i).value;
+                        var amount = document.getElementById('amount'+i).value;
+                        var comm = document.getElementById('amount'+i).value;
+                        var description = document.getElementById('description'+i).value;
+                        var payStock = document.getElementById('payStock'+i).value;
+                        var saleAmount = document.getElementById('saleAmount'+i).value;
+                        var saleCurrency = document.getElementById('saleCurrency'+i).value;
+                        if(type !== '' || refNo !== '' || invoice !== '' || cost !== '' || gross !== '' || amount !== '' || 
+                            comm !== '' || description !== '' || payStock !== '' || saleAmount !== '' || saleCurrency !== ''){
+                            currency.style.borderColor = 'red';
+                            booleanCurrency = false;
+                        }    
+                    }    
+                }
+                currencyMessage = "empty";
+//                $("#textAlertCurrencyAmountNotEmpty").show();
+//                return;
+            }
+            
+//            for (var i = 1; i < count; i++) {
+//                var curField1 = document.getElementById('cur' + i);
+//                if (curField1 !== null) {
+//                    var cur1 = curField1.value;
+//                    for (var j = i+1; j < count; j++) {
+//                        var curField2 = document.getElementById('cur' + j);
+//                        if (curField2 !== null) {
+//                            var cur2 = curField2.value;
+//                            if(cur1 !== cur2 && cur2 !== ''){
+//                                booleanCurrency = false;
+//                                i = count;
+//                                j = count;
+//                                currencyMessage = "notMatch";
+//                            }else if(cur1 === '' && cur2 === ''){
+//                                booleanCurrency = false;
+//                                i = count;
+//                                j = count;
+//                                currencyMessage = "empty";
+//                            }
+//                        }
+//                    }
+//                }
+//            }
             if(booleanCurrency){
                 $("#action").val("save");
                 document.getElementById("PaymentOutboundForm").submit();
@@ -1294,17 +1509,22 @@ function validatePaymentOutbound(option) {
 }
 
 function checkCurrency(option) {
-    var count = parseInt($("#countPaymentDetail").val());
-    for (var i = 1; i <= count; i++) {
-        var curField = document.getElementById('cur' + i);
-        if(curField != null){
-            curField.style.borderColor = "red";
-        }    
-    }
+//    var count = parseInt($("#countPaymentDetail").val());
+//    for (var i = 1; i <= count; i++) {
+//        var curField = document.getElementById('cur' + i);
+//        if(curField != null){
+//            curField.style.borderColor = "red";
+//        }    
+//    }
     if(option === 'notMatch'){
         $("#textAlertCurrencyNotMatch").show();
     }else if(option === 'empty'){
         $("#textAlertCurrencyNotEmpty").show();
     }
     
+}
+
+function hideTextAlertDiv(){
+    $("#textAlertCurrencyNotMatch").hide();
+    $("#textAlertCurrencyNotEmpty").hide();
 }
