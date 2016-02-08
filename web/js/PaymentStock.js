@@ -71,19 +71,19 @@ function createStockDetails(stockid, productName, staff, addDate, effectiveFrom,
             '<td class="text-center ">' + effectiveFrom + '</td>' +
             '<td class="text-center ">' + effectiveTo + '</td>' +
             '<td class="text-center ">' +
-            '<a id="ButtonEdit'+ noStockTable +'" onclick="getStockDetail( \'' + stockid + '\', \'' + "null" + '\' , \'' + productName + '\');hideCollapse();" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#payStockDetail" aria-expanded="true" aria-controls="collapseExample">'+
+            '<a id="ButtonEdit'+ noStockTable +'" onclick="getStockDetail( \'' + stockid + '\', \'' + "null" + '\' , \'' + productName + '\', \'' + noStockTable + '\');hideCollapse(\'' + noStockTable + '\');" data-target="#payStockDetail">'+
             '<span id="SpanEdit'+ noStockTable +'" class="glyphicon glyphicon glyphicon-list-alt"></span></a>'+
             '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="SpanRemove" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentStockDetailList(\'\', \'' + noStockTable + '\' , \'' + stockid + '\');"></span></a>' +
             '</td>' +
             '<tr>'
             );
     $("#noStockTable").val(noStockTable+1);
-    getStockDetail(stockid,"null",productName);
+    getStockDetail(stockid,"null",productName,noStockTable);
     $("#SearchStock").modal("hide");
     
 }
 
-function getStockDetail(stockid,psdId,productname) {
+function getStockDetail(stockid,psdId,productname,noStockTable) {
     document.getElementById('detailName').style.display = 'block';
     document.getElementById('detailName').innerHTML = "Detail (" + productname + ")";
     var servletName = 'PaymentStockServlet';
@@ -94,10 +94,10 @@ function getStockDetail(stockid,psdId,productname) {
             '&stockId=' + stockid +
             '&countRowDetail=' + 1 +
             '&type=' + 'getStockDetail';
-    CallAjax(param,psdId,stockid);
+    CallAjax(param,psdId,stockid,noStockTable);
 }
 
-function CallAjax(param,psdId,stockid) {
+function CallAjax(param,psdId,stockid,noStockTable) {
     var url = 'AJAXServlet';
     $("#ajaxload").removeClass("hidden");
     try {
@@ -172,10 +172,10 @@ function CallAjax(param,psdId,stockid) {
                     
                     
                     if(psdId !== "null" && psdId !== null){
-                        getPaymentStockItemCostSaleAjax(psdId);
+                        getPaymentStockItemCostSaleAjax(psdId,noStockTable);
                     }else{
-//                        hideCollapse();
                         $('.collapse').collapse('show');
+                        document.getElementById('hideCollapseCheck').value = noStockTable;
                     }
                     
                 }
@@ -194,7 +194,7 @@ function calculateCostTotal() {
     var count = $("#StockDetailTable tr").length;    
     var i;
     var grandTotal = 0;
-    for (i = 1; i < count + 1; i++) {
+    for (i = 1; i < count + 1; i++){
         var amount = document.getElementById("cost" + i);
         if (amount !== null) {
             var value = amount.value;

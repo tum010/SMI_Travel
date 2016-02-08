@@ -62,6 +62,7 @@
         </div>
         <hr/>
         <form action="PaymentStock.smi" method="post" id="PaymentStockForm" name="PaymentStockForm" role="form">
+            <input type="hidden" class="form-control" id="hideCollapseCheck" name="hideCollapseCheck" value="" />
             <input type="hidden" class="form-control" id="action" name="action" value="" />
             <input type="hidden" class="form-control" id="paymentStockDetailIdDelete" name="paymentStockDetailIdDelete" value="" />
             <input type="hidden" class="form-control" id="paymentStockRowDelete" name="paymentStockRowDelete" value="" />
@@ -174,7 +175,7 @@
                                                 <td align="center">${table.stock.effectiveFrom}</td>
                                                 <td align="center">${table.stock.effectiveTo}</td>
                                                 <td class="text-center ">
-                                                    <a id="ButtonEdit${i.count}" onclick="getPaymentStockItemCostSale('${table.id}','${table.stock.id}','${table.stock.product.name}');hideCollapse();" data-toggle="collapse" data-target="#payStockDetail" >
+                                                    <a id="ButtonEdit${i.count}" onclick="getPaymentStockItemCostSale('${table.id}','${table.stock.id}','${table.stock.product.name}','${i.count}');hideCollapse(${i.count});" data-target="#payStockDetail" >
                                                         <span id="SpanEdit${i.count}" class="glyphicon glyphicon glyphicon-list-alt"></span>
                                                     </a>
                                                     <a href="#" onclick="" data-toggle="modal" data-target=""> <span id="SpanRemove" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentStockDetailList('${table.id}','${i.count}','');"></span></a>
@@ -409,8 +410,15 @@
         
 <script type="text/javascript" charset="utf-8">
     
-    function hideCollapse() {
-//        $("div").find($('.collapse')).collapse('show');
+    function hideCollapse(count) {
+        var hideCollapseCheck = document.getElementById('hideCollapseCheck').value;
+        if(hideCollapseCheck == count){
+            $("div").find($('.collapse')).collapse('hide');
+            document.getElementById('hideCollapseCheck').value = '';
+        }else{
+            $('.collapse').collapse('show');
+            document.getElementById('hideCollapseCheck').value = count;
+        }
     }
     
     $(document).ready(function() {  
@@ -470,8 +478,8 @@
         document.getElementById('PaymentStockForm').submit();
     }
     
-    function getPaymentStockItemCostSale(psdId,stockid,productname) {
-        getStockDetail(stockid,psdId,productname);
+    function getPaymentStockItemCostSale(psdId,stockid,productname,noStockTable) {
+        getStockDetail(stockid,psdId,productname,noStockTable);
     }
     
     function getPaymentStockItemCostSaleAjax(psdId){
@@ -487,6 +495,7 @@
         
         
     }
+    
     function CallAjaxPaymentStockItemCostSale(param) {
         var url = 'AJAXServlet';
         $("#ajaxload").removeClass("hidden");
@@ -526,7 +535,6 @@
         } catch (e) {
             alert(e);
         }
-
     }
 
     
