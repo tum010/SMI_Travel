@@ -169,7 +169,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             paymentOutboundDetailView.setAmount(paymentOutboundDetail.getAmount() != null ? paymentOutboundDetail.getAmount() : null);
             paymentOutboundDetailView.setCur(!"".equalsIgnoreCase(paymentOutboundDetail.getCurrency()) ? paymentOutboundDetail.getCurrency() : "");
             paymentOutboundDetailView.setComm(paymentOutboundDetail.getRecCom() != null ? paymentOutboundDetail.getRecCom() : null);
-            paymentOutboundDetailView.setValue(paymentOutboundDetail.getValue() != null ? paymentOutboundDetail.getRecCom() : null);
+            paymentOutboundDetailView.setValue(paymentOutboundDetail.getValue() != null ? paymentOutboundDetail.getValue() : null);
             paymentOutboundDetailView.setAccCode(!"".equalsIgnoreCase(paymentOutboundDetail.getAccCode()) ? paymentOutboundDetail.getAccCode() : "");
             paymentOutboundDetailView.setBookDetailType(!"".equalsIgnoreCase(paymentOutboundDetail.getBookDetailType()) ? paymentOutboundDetail.getBookDetailType() : "");
             paymentOutboundDetailView.setPayStockId(paymentOutboundDetail.getPaymentStock()!= null ? paymentOutboundDetail.getPaymentStock().getId() : "");
@@ -474,7 +474,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             sum.setSale(!"null".equalsIgnoreCase(String.valueOf(B[11])) ? util.ConvertString(B[11]) : "0.00");
             sum.setExport(util.ConvertString(B[12]));
             sum.setStatus(util.ConvertString(B[13]));
-            sum.setDiff(!"null".equalsIgnoreCase(String.valueOf(B[14])) ? util.ConvertString(B[14]) : "0.00");
+            sum.setDiff(!"null".equalsIgnoreCase(String.valueOf(B[14])) ? util.ConvertString(B[14]) : "");
             sum.setOwner(util.ConvertString(B[15]));
             sum.setAmountcur(util.ConvertString(B[16]));
             sum.setSalecur(util.ConvertString(B[17]));
@@ -484,5 +484,21 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         session.close();
         this.sessionFactory.close();
         return data;
+    }
+
+    @Override
+    public PaymentOutbound getPaymentOutbound(String payId) {
+        String query = "from PaymentOutbound p where p.id = :payId ";       
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query);
+        HqlQuery.setParameter("payId", payId);
+//        HqlQuery.setMaxResults(MAX_ROW);
+        List<PaymentOutbound> paymentOutboundList = HqlQuery.list();
+        if (paymentOutboundList.isEmpty()) {
+            return null;
+        }
+        this.sessionFactory.close();
+        session.close();
+        return paymentOutboundList.get(0);
     }
 }

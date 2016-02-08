@@ -181,7 +181,8 @@
                     </div>
                     <div class="col-md-3 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 150px;">
                         <div class='input-group date payDate' id="payDateCheck">
-                            <input name="payDate" id="payDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.payDate}"/>" />
+                            <fmt:formatDate var="payDate" type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.payDate}"/>
+                            <input name="payDate" id="payDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${payDate}" />
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
@@ -338,12 +339,20 @@
                 </div>
                 <div class="col-xs-12" style="padding-left: 0px;">
                     <br>
-                    <div id="textAlertCurrencyNotMatch"  style="display:none; " class="alert alert-danger alert-dismissible" role="alert">
+<!--                    <div id="textAlertCurrencyNotMatch"  style="display:none; " class="alert alert-danger alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <strong>Amount Currency is not match.</strong> 
                     </div>
                     <div id="textAlertCurrencyNotEmpty"  style="display:none; " class="alert alert-danger alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Amount Currency is not empty.</strong> 
+                    </div>-->
+                    <div id="textAlertCurrencyNotMatch"  style="display:none;" class="alert alert-danger">
+                        <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
+                        <strong>Amount Currency is not match.</strong> 
+                    </div>
+                    <div id="textAlertCurrencyNotEmpty"  style="display:none;" class="alert alert-danger">
+                        <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
                         <strong>Amount Currency is not empty.</strong> 
                     </div>
                 </div>               
@@ -446,7 +455,7 @@
                                         </td>
                                         <td>
                                             <select class="form-control" name="cur${i.count}" id="cur${i.count}" onchange="addRow('${i.count}')">
-                                                <option  value="" >---------</option>
+                                                <option  value="" ></option>
                                                 <c:forEach var="currency" items="${currencyList}">                                       
                                                     <c:set var="select" value="" />
                                                     <c:if test="${currency.code == detail.cur}">
@@ -486,7 +495,7 @@
                                         </td>
                                         <td colspan="1">
                                             <select class="form-control" name="saleCurrency${i.count}" id="saleCurrency${i.count}" onchange="addRow('${i.count}')">
-                                                <option  value="" >---------</option>
+                                                <option  value="" ></option>
                                                 <c:forEach var="currency" items="${currencyList}">                                       
                                                     <c:set var="selectsaleCur" value="" />
                                                     <c:if test="${currency.code == detail.saleCurrency}">

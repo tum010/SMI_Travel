@@ -59,4 +59,8 @@ public class PaymentOutboundService {
     public String deletePaymentOutbound(String paymentId) {
         return paymentOutboundDao.deletePaymentOutbound(paymentId);
     }
+
+    public PaymentOutbound getPaymentOutbound(String payId) {
+        return paymentOutboundDao.getPaymentOutbound(payId);
+    }
 }
