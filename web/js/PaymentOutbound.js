@@ -220,7 +220,8 @@ $(document).ready(function() {
     $("#invSupApCode").keypress(function() {
         validatePaymentOutbound('paymentOutbound');
     });
-
+    
+    setDescription();
 });
 
 function reloadPage() {
@@ -541,7 +542,7 @@ function addRowPaymentDetailTable(row) {
             '<b>Description</b>' +
             '</td>' +
             '<td colspan="2">' +
-            '<input type="text" name="description' + row + '" id="description' + row + '" class="form-control" value="" maxlength="255"/>' +
+            '<input type="text" name="description' + row + '" id="description' + row + '" class="form-control" value="" maxlength="255" onfocusout=editDescription(\'' + row + '\')/>' +
             '</td>' +
             '<td colspan="1" align="right" bgcolor="#E8EAFF">' +
             '<b>Pay Stock</b>' +
@@ -1140,13 +1141,13 @@ function editPaymentDetail(row) {
         $("#whtAmount").val(($("#whtAmount" + row).val() !== '' ? formatNumber(parseFloat(($("#whtAmount" + row).val()).replace(/,/g, ""))) : ''));
         $("#vatRecComAmount").val(($("#vatRecComAmount" + row).val() !== '' ? formatNumber(parseFloat(($("#vatRecComAmount" + row).val()).replace(/,/g, ""))) : ''));
         $("#value").val(($("#value" + row).val() !== '' ? formatNumber(parseFloat(($("#value" + row).val()).replace(/,/g, ""))) : ''));
-        $("#wht").val(($("#wht" + row).val() !== '' ? formatNumber(parseFloat(($("#wht" + row).val()).replace(/,/g, ""))) : ''));
-        $("#vatRecCom").val(($("#vatRecCom" + row).val() !== '' ? formatNumber(parseFloat(($("#vatRecCom" + row).val()).replace(/,/g, ""))) : ''));
+        $("#wht").val(($("#wht" + row).val() !== '' ? (parseFloat(($("#wht" + row).val()).replace(/,/g, ""))) : ''));
+        $("#vatRecCom").val(($("#vatRecCom" + row).val() !== '' ? (parseFloat(($("#vatRecCom" + row).val()).replace(/,/g, ""))) : ''));
 
         $('#isWht').prop('checked', ($("#isWht" + row).val() === '1' ? true : false));
         $('#isComVat').prop('checked', ($("#isComVat" + row).val() === '1' ? true : false));
 
-        $("#paymentDescription").val($("#description" + row).val());
+        $("#paymentDescription").val(($("#description" + row).val()).replace(/\<br>/g,"\n"));
 
         $("#paymentDetailPanel").removeClass("hidden");
 
@@ -1178,7 +1179,7 @@ function savePaymentDetail() {
     $("#vatRecCom" + row).val($("#vatRecCom").val());
     $("#isWht" + row).val(($("#isWht").is(':checked') ? '1' : '0'));
     $("#isComVat" + row).val(($("#isComVat").is(':checked') ? '1' : '0'));
-    $("#description" + row).val($("#paymentDescription").val());
+    $("#description" + row).val(($("#paymentDescription").val()).replace(/\n/g, "<br>"));
 
     $("#rowDetail").val('');
     $("#realExRate").val('');
@@ -1527,4 +1528,21 @@ function checkCurrency(option) {
 function hideTextAlertDiv(){
     $("#textAlertCurrencyNotMatch").hide();
     $("#textAlertCurrencyNotEmpty").hide();
+}
+
+function setDescription(){
+    var count = parseInt($("#countPaymentDetail").val());
+    for(var i=1; i<=count; i++){
+        if($("#description" + i).val() !== undefined){         
+            var descriptionTemp = ($("#descriptionTemp"+i).val()).replace(/\n/g, "<br>");
+            $("#description" + i).val(descriptionTemp);
+        }
+    }
+}
+
+function editDescription(row){
+    if($("#rowDetail").val() === row){
+        var description = ($("#description"+row).val()).replace(/<br>/g, "\n");
+        $("#paymentDescription").val(description); 
+    }   
 }

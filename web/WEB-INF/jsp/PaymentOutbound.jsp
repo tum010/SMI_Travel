@@ -13,8 +13,9 @@
 <c:set var="paymentOutboundDetail" value="${requestScope['paymentOutboundDetail']}" />
 <c:set var="refNoList" value="${requestScope['refNoList']}" />
 <c:set var="result" value="${requestScope['result']}" />
-<c:set var="mVat" value="${requestScope['mVat']}" />
-<c:set var="mWht" value="${requestScope['mWht']}" />
+<fmt:parseNumber var="mVat" type="number" value="${requestScope['mVat']}" />
+<fmt:parseNumber var="mWht" type="number" value="${requestScope['mWht']}" />
+<c:set var="payDate" value="${requestScope['payDate']}" />
 <input type="hidden" id="mVat" name="mVat" value="${mVat}"/>
 <input type="hidden" id="mWht" name="mWht" value="${mWht}"/>
 <input type="hidden" id="refNoList" name="refNoList" value="${refNoList}"/>
@@ -394,15 +395,18 @@
                                             <input type="text" name="realExRate${i.count}" id="realExRate${i.count}" class="form-control" value="${detail.realExRate}"/>
                                             <input type="text" name="payExRate${i.count}" id="payExRate${i.count}" class="form-control" value="${detail.payExRate}"/>
                                             <input type="text" name="isWht${i.count}" id="isWht${i.count}" class="form-control" value="${detail.isWht}"/>
-                                            <input type="text" name="wht${i.count}" id="wht${i.count}" class="form-control" value="${detail.wht}"/>
-                                            <input type="text" name="whtTemp${i.count}" id="whtTemp${i.count}" class="form-control" value="${detail.wht}"/>
+                                            <fmt:parseNumber var="wht" type="number" value="${detail.wht}" />
+                                            <input type="text" name="wht${i.count}" id="wht${i.count}" class="form-control" value="${wht}"/>
+                                            <input type="text" name="whtTemp${i.count}" id="whtTemp${i.count}" class="form-control" value="${wht}"/>
                                             <input type="text" name="whtAmount${i.count}" id="whtAmount${i.count}" class="form-control" value="${detail.whtAmount}"/>
                                             <input type="text" name="isComVat${i.count}" id="isComVat${i.count}" class="form-control" value="${detail.isVatRecCom}"/>
-                                            <input type="text" name="vatRecCom${i.count}" id="vatRecCom${i.count}" class="form-control" value="${detail.vatRecCom}"/>
-                                            <input type="text" name="vatRecComTemp${i.count}" id="vatRecComTemp${i.count}" class="form-control" value="${detail.vatRecCom}"/>
+                                            <fmt:parseNumber var="vatRecCom" type="number" value="${detail.vatRecCom}" />
+                                            <input type="text" name="vatRecCom${i.count}" id="vatRecCom${i.count}" class="form-control" value="${vatRecCom}"/>
+                                            <input type="text" name="vatRecComTemp${i.count}" id="vatRecComTemp${i.count}" class="form-control" value="${vatRecCom}"/>
                                             <input type="text" name="vatRecComAmount${i.count}" id="vatRecComAmount${i.count}" class="form-control" value="${detail.vatRecComAmount}"/>
                                             <input type="text" name="value${i.count}" id="value${i.count}" class="form-control" value="${detail.value}"/>
                                             <input type="text" name="payStockId${i.count}" id="payStockId${i.count}" class="form-control" value="${detail.payStockId}"/>
+                                            <textarea rows="3" cols="255" class="form-control" id="descriptionTemp${i.count}" name="descriptionTemp${i.count}" maxlength="255" data-bv-field="detail">${detail.description}</textarea>
                                         </td>
                                         <td>
                                             <select class="form-control" name="type${i.count}" id="type${i.count}" onchange="addRow('${i.count}')">
@@ -430,7 +434,7 @@
                                             <c:if test="${detail.isVat == 1}">
                                                 <c:set var="gross" value="${detail.gross}"/>
                                             </c:if>
-                                            <input type="text" name="gross${i.count}" id="gross${i.count}" class="form-control" style="text-align:right;" value="${gross}" readonly=""/>
+                                            <input type="text" name="gross${i.count}" id="gross${i.count}" class="form-control decimal" style="text-align:right;" value="${gross}" readonly=""/>
                                         </td>                                
                                         <td align="center">
                                             <c:set var="isVat" value=""/>
@@ -441,7 +445,8 @@
                                         </td>    
                                         <td align="right" id="vatShow${i.count}">
                                             <c:if test="${detail.isVat == 1}">
-                                                ${detail.vat}
+                                                <fmt:parseNumber var="vat" type="number" value="${detail.vat}" />
+                                                ${vat}
                                             </c:if>                                          
                                         </td>
                                         <td class="hidden">
@@ -479,7 +484,7 @@
                                             <b>Description</b>
                                         </td>
                                         <td colspan="2">
-                                            <input type="text" name="description${i.count}" id="description${i.count}" class="form-control" value="${detail.description}" maxlength="255"/>
+                                            <input type="text" name="description${i.count}" id="description${i.count}" class="form-control" value="${detail.description}" maxlength="255" onfocusout="editDescription('${i.count}')"/>
                                         </td>
                                         <td colspan="1" align="right" bgcolor="#E8EAFF">
                                             <b>Pay Stock</b>
@@ -501,7 +506,7 @@
                                                     <c:if test="${currency.code == detail.saleCurrency}">
                                                         <c:set var="selectsaleCur" value="selected" />
                                                     </c:if>
-                                                    <option  value="${currency.code}" ${select}>${currency.code}</option>
+                                                    <option  value="${currency.code}" ${selectsaleCur}>${currency.code}</option>
                                                 </c:forEach>
                                             </select>
                                         </td>      

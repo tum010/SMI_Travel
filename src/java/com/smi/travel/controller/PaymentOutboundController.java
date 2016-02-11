@@ -39,6 +39,7 @@ public class PaymentOutboundController extends SMITravelController {
     private static final String PAYMENTOUTBOUND = "paymentOutbound";   
     private static final String PAYMENTOUTBOUNDDETAIL = "paymentOutboundDetail";
     private static final String RESULT = "result";
+    private static final String PAYDATE = "payDate";
     private UtilityService utilservice;
     private PaymentTourHotelService paymentTourHotelService;
     private PaymentOutboundService paymentOutboundService;        
@@ -116,6 +117,7 @@ public class PaymentOutboundController extends SMITravelController {
             paymentOutboundDetailView = paymentOutboundService.getPaymentOutboundDetail(paymentOutbound.getId());
             request.setAttribute(PAYMENTOUTBOUND, paymentOutbound);
             request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);
+            request.setAttribute(PAYDATE, paymentOutbound.getPayDate());
             request.setAttribute(RESULT, result);
             
         }else if("search".equalsIgnoreCase(action)){
@@ -125,7 +127,8 @@ public class PaymentOutboundController extends SMITravelController {
                 List<PaymentOutboundDetailView> paymentOutboundDetailView = new ArrayList<PaymentOutboundDetailView>();
                 paymentOutboundDetailView = paymentOutboundService.getPaymentOutboundDetail(paymentOutbound.getId());
                 request.setAttribute(PAYMENTOUTBOUND, paymentOutbound);
-                request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);               
+                request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);
+                request.setAttribute(PAYDATE, paymentOutbound.getPayDate());
             }else{
                 request.setAttribute(RESULT, "not found");
             }
@@ -141,7 +144,8 @@ public class PaymentOutboundController extends SMITravelController {
                 List<PaymentOutboundDetailView> paymentOutboundDetailView = new ArrayList<PaymentOutboundDetailView>();
                 paymentOutboundDetailView = paymentOutboundService.getPaymentOutboundDetail(paymentOutbound.getId());
                 request.setAttribute(PAYMENTOUTBOUND, paymentOutbound);
-                request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);               
+                request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);
+                request.setAttribute(PAYDATE, paymentOutbound.getPayDate());
             }
         }
                 
@@ -197,7 +201,7 @@ public class PaymentOutboundController extends SMITravelController {
                 PaymentOutboundDetail paymentOutboundDetail = new PaymentOutboundDetail();
                 paymentOutboundDetail.setId(!"".equalsIgnoreCase(detailId) && detailId != null ? detailId : "");
                 paymentOutboundDetail.setBookDetailId(!"".equalsIgnoreCase(bookDetailId) && bookDetailId != null ? Integer.parseInt(bookDetailId) : null);
-                paymentOutboundDetail.setDescription(!"".equalsIgnoreCase(description) && description != null ? description : "");
+                paymentOutboundDetail.setDescription(!"".equalsIgnoreCase(description) && description != null ? description.replaceAll("<br>", "\n") : "");
                 paymentOutboundDetail.setInvoiceCreditor(!"".equalsIgnoreCase(invoice) && invoice != null? invoice : "");
                 paymentOutboundDetail.setCost(!"".equalsIgnoreCase(cost) && cost != null ? new BigDecimal(cost.replaceAll(",", "")) : null);
                 paymentOutboundDetail.setGross(!"".equalsIgnoreCase(gross) && gross != null ? new BigDecimal(gross.replaceAll(",", "")) : null);
