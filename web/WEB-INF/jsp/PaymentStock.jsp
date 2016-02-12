@@ -594,8 +594,11 @@ function deletePaymentStockDetailList(paymentStockDetailId , row , stockid){
         $("#paymentStockDetailId" + row).parent().remove();
         document.getElementById('totalCost').value = formatNumber(0);
         document.getElementById('totalSale').value = formatNumber(0);
-        $('.collapse').collapse('hide');
-        document.getElementById('hideCollapseCheck').value = '';
+        var hideCollapseCheck = document.getElementById('hideCollapseCheck').value;
+        if(hideCollapseCheck !== ''){
+            $("div").find($('.collapse')).collapse('hide');
+            document.getElementById('hideCollapseCheck').value = '';
+        }
         $('#textAlertDivDelete').show();
         calculateCostTotalAll();
         calculateSaleTotalAll();
@@ -622,8 +625,11 @@ function DeleteRowPaymentStock(){
             $('#textAlertDivDelete').show();
             document.getElementById('totalCost').value = formatNumber(0);
             document.getElementById('totalSale').value = formatNumber(0);
-            $('.collapse').collapse('hide');
-            document.getElementById('hideCollapseCheck').value = '';
+            var hideCollapseCheck = document.getElementById('hideCollapseCheck').value;
+            if(hideCollapseCheck !== ''){
+                $("div").find($('.collapse')).collapse('hide');
+                document.getElementById('hideCollapseCheck').value = '';
+            }
             calculateCostTotalAll();
             calculateSaleTotalAll();
         }
@@ -637,8 +643,11 @@ function DeleteRowPaymentStock(){
                     $('#textAlertDivDelete').show();
                     document.getElementById('totalCost').value = formatNumber(0);
                     document.getElementById('totalSale').value = formatNumber(0);
-                    $('.collapse').collapse('hide');
-                    document.getElementById('hideCollapseCheck').value = '';
+                    var hideCollapseCheck = document.getElementById('hideCollapseCheck').value;
+                    if(hideCollapseCheck !== ''){
+                        $("div").find($('.collapse')).collapse('hide');
+                        document.getElementById('hideCollapseCheck').value = '';
+                    }
                     calculateCostTotalAll();
                     calculateSaleTotalAll();
                 },
