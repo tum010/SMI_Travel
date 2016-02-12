@@ -374,7 +374,7 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
         var typetemp = '${requestScope['type']}' ;
-        
+        $('.datemask').mask('0000-00-00');
         if(typetemp === 'T'){
             $('#Type')
                 .find('option')

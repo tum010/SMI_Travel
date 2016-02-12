@@ -3,6 +3,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 
 <c:set var="paymentStock" value="${requestScope['PaymentStock']}" /> 
 <c:set var="PaymentStockDetailList" value="${requestScope['PaymentStockDetailList']}" />
@@ -483,7 +485,17 @@
         });
         calculateCostTotalAll();
         calculateSaleTotalAll();
-
+        
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
     });
     
     function saveAction() {
@@ -809,7 +821,18 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
                             "bSort": false,
                             "bPaginate": false
                         });
-
+                        
+                        $(".decimal").inputmask({
+                            alias: "decimal",
+                            integerDigits: 8,
+                            groupSeparator: ',',
+                            autoGroup: true,
+                            digits: 2,
+                            allowMinus: false,
+                            digitsOptional: false,
+                            placeholder: "0.00",
+                        });
+                        
                         var countRowStockDetail = $("#StockDetailTable tr").length;
                         var countRow = $("#StockDetailTableTempCal tr").length;
                         

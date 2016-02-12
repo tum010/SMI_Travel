@@ -1253,8 +1253,8 @@ public class AJAXBean extends AbstractBean implements
                     + "<td class='text-left'>" + refno + "</td>"
                     + "<td class='text-center'>" + pickup + "</td>"
                     + "<td class='text-center'>" + pickdate + "</td>"
-                    + "<td><input maxlength=\"10\" id=\"cost" + no + "\" name=\"cost" + no + "\" type=\"text\" class=\"form-control text-right\" value='" + cost + "' onkeyup=\"insertCommas(this)\" onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' ,'"+  noStockTable + "')\" ></td>" 
-                    + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control text-right\" value='" + sale + "' onkeyup=\"insertCommas(this)\" onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' , '"+  noStockTable + "' )\" ></td>"
+                    + "<td><input maxlength=\"10\" id=\"cost" + no + "\" name=\"cost" + no + "\" type=\"text\" class=\"form-control decimal text-right\" value='" + cost + "' onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' ,'"+  noStockTable + "')\" ></td>" 
+                    + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control decimal text-right\" value='" + sale + "' onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' , '"+  noStockTable + "' )\" ></td>"
                     + "</tr>";
             html.append(newrow);
             no++;
