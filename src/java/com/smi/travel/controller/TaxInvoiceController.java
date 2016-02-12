@@ -134,6 +134,16 @@ public class TaxInvoiceController extends SMITravelController {
         String defaultInvToDate = dateFormat.format(cal.getTime());
         request.setAttribute("defaultInvToDate", defaultInvToDate);
         
+        String resultRedirect = request.getParameter("resultRedirect");
+        if(!"".equalsIgnoreCase(resultRedirect) && resultRedirect != null){
+            if("success".equalsIgnoreCase(resultRedirect)){
+                request.setAttribute(RESULTTEXT, resultRedirect);
+            
+            }else if("unsuccess".equalsIgnoreCase(resultRedirect)){
+                request.setAttribute(RESULTTEXT, resultRedirect);
+            }           
+        }
+        
         if("save".equalsIgnoreCase(action)){
             TaxInvoice taxInvoice = new TaxInvoice();
             taxInvoice.setId(taxInvId);
@@ -206,6 +216,9 @@ public class TaxInvoiceController extends SMITravelController {
 //            request.setAttribute("postDate", postDate);
             request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
             request.setAttribute(RESULTTEXT, result);
+            if("success".equalsIgnoreCase(result)){
+                return new ModelAndView(new RedirectView("TaxInvoice"+callPageFrom+".smi?action=search&TaxInvNo="+taxInvoice.getTaxNo()+"&resultRedirect="+result, true));
+            }
             
         } else if("search".equalsIgnoreCase(action)){
             TaxInvoice taxInvoice = new TaxInvoice();

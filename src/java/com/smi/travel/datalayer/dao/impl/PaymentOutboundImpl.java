@@ -347,8 +347,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             paymentOutboundView.setDuepaymentdate(B[3] != null ? util.ConvertString(B[3]) : "");
             paymentOutboundView.setInvoicesup(B[4] != null ? util.ConvertString(B[4]) : "");
             paymentOutboundView.setSuppliercode(B[5] != null ? util.ConvertString(B[5]) : "");
-            paymentOutboundView.setRefno(B[6] != null ? util.ConvertString(B[6]) : "");
-            paymentOutboundView.setInvoiceno(B[7] != null ? util.ConvertString(B[7]) : "");
+            paymentOutboundView.setRefno(B[6] != null ? (util.ConvertString(B[6])).replaceAll(",", " ") : "");
+            paymentOutboundView.setInvoiceno(B[7] != null ? (util.ConvertString(B[7])).replaceAll(",", " ") : "");
             paymentOutboundView.setAmount(B[8] != null ? util.ConvertString(B[8]) : "");
             paymentOutboundView.setSale(B[9] != null ? util.ConvertString(B[9]) : "");
             paymentOutboundView.setStatus(B[10] != null ? util.ConvertString(B[10]) : "");

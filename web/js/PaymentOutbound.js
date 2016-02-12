@@ -26,7 +26,7 @@ $(document).ready(function() {
         placeholder: "0.0000",
     });
     $('.date').datetimepicker();
-    $(".datemask").mask('0000-00-00', {reverse: true});
+    $(".datemask").mask('0000-00-00');
     $('.spandate').click(function() {
         var position = $(this).offset();
         console.log("positon :" + position.top);
@@ -475,7 +475,7 @@ function addRowPaymentDetailTable(row) {
             '<input type="text" name="count' + row + '" id="count' + row + '" class="form-control" value="' + row + '"/>' +
             '<input type="text" name="detailId' + row + '" id="detailId' + row + '" class="form-control" value=""/>' +
             '<input type="text" name="payId' + row + '" id="payId' + row + '" class="form-control" value=""/>' +
-            '<input type="text" name="bookDetailId' + row + '" id="payId' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="bookDetailId' + row + '" id="bookDetailId' + row + '" class="form-control" value=""/>' +
             '<input type="text" name="bookDetailType' + row + '" id="bookDetailType' + row + '" class="form-control" value=""/>' +
             '<input type="text" name="accCode' + row + '" id="accCode' + row + '" class="form-control" value=""/>' +
             '<input type="text" name="exportDate' + row + '" id="exportDate' + row + '" class="form-control" value=""/>' +
@@ -1533,7 +1533,7 @@ function hideTextAlertDiv(){
 function setDescription(){
     var count = parseInt($("#countPaymentDetail").val());
     for(var i=1; i<=count; i++){
-        if($("#description" + i).val() !== undefined){         
+        if($("#description" + i).val() !== undefined && $("#description" + i).val() !== ''){         
             var descriptionTemp = ($("#descriptionTemp"+i).val()).replace(/\n/g, "<br>");
             $("#description" + i).val(descriptionTemp);
         }
@@ -1542,7 +1542,9 @@ function setDescription(){
 
 function editDescription(row){
     if($("#rowDetail").val() === row){
-        var description = ($("#description"+row).val()).replace(/<br>/g, "\n");
-        $("#paymentDescription").val(description); 
+        if($("#description"+row).val() !== ''){
+            var description = ($("#description"+row).val()).replace(/<br>/g, "\n");
+            $("#paymentDescription").val(description); 
+        }        
     }   
 }
