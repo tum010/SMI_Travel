@@ -147,7 +147,7 @@
                     </c:when>
                 </c:choose>
             </div>
-            <form action="${callPage}" method="post" id="ReceiptForm" name="ReceiptForm" role="form">
+            <form action="Receipt${page}.smi" method="post" id="ReceiptForm" name="ReceiptForm" role="form">
                 <div role="tabpanel">
                     <!-- Nav tabs -->
 
