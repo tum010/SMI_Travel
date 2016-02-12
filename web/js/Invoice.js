@@ -1135,6 +1135,9 @@ function searchAction() {
 
         var searchNo = $("#SearchRefNo").val();
         var invType = $("#invType").val();
+        var InputInvoiceType = ($("#InputInvoiceType").val()).split("/");
+        var department = (InputInvoiceType[0] === 'O' ? "Outbound" : "");
+
     //    alert("Ref : " + searchNo);
         console.log("inv type : " + invType + ":");
         if (searchNo !== "") {
@@ -1145,6 +1148,7 @@ function searchAction() {
                     '&servicesName=' + servicesName +
                     '&refNo=' + searchNo +
                     '&invType=' + invType +
+                    '&department=' + department +
                     '&type=' + 'searchInvoice';
             CallAjaxAdd(param);
         } else {
