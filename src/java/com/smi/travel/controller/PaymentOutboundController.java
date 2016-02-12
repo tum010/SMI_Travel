@@ -117,7 +117,7 @@ public class PaymentOutboundController extends SMITravelController {
             paymentOutboundDetailView = paymentOutboundService.getPaymentOutboundDetail(paymentOutbound.getId());
             request.setAttribute(PAYMENTOUTBOUND, paymentOutbound);
             request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);
-            request.setAttribute(PAYDATE, paymentOutbound.getPayDate());
+            request.setAttribute(PAYDATE, utilfunction.convertDateToString(paymentOutbound.getPayDate()));
             request.setAttribute(RESULT, result);
             
         }else if("search".equalsIgnoreCase(action)){
@@ -128,7 +128,7 @@ public class PaymentOutboundController extends SMITravelController {
                 paymentOutboundDetailView = paymentOutboundService.getPaymentOutboundDetail(paymentOutbound.getId());
                 request.setAttribute(PAYMENTOUTBOUND, paymentOutbound);
                 request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);
-                request.setAttribute(PAYDATE, paymentOutbound.getPayDate());
+                request.setAttribute(PAYDATE, utilfunction.convertDateToString(paymentOutbound.getPayDate()));
             }else{
                 request.setAttribute(RESULT, "not found");
             }
@@ -145,7 +145,7 @@ public class PaymentOutboundController extends SMITravelController {
                 paymentOutboundDetailView = paymentOutboundService.getPaymentOutboundDetail(paymentOutbound.getId());
                 request.setAttribute(PAYMENTOUTBOUND, paymentOutbound);
                 request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);
-                request.setAttribute(PAYDATE, paymentOutbound.getPayDate());
+                request.setAttribute(PAYDATE, utilfunction.convertDateToString(paymentOutbound.getPayDate()));
             }
         }
                 

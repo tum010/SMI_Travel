@@ -182,7 +182,7 @@
                     </div>
                     <div class="col-md-3 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 150px;">
                         <div class='input-group date payDate' id="payDateCheck">
-                            <fmt:formatDate var="payDate" type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.payDate}"/>
+                            <fmt:formatDate var="payDateTemp" type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.payDate}"/>
                             <input name="payDate" id="payDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${payDate}" />
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
