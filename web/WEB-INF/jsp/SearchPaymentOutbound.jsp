@@ -112,35 +112,35 @@
             </div>
         </div>
         <div class="row" style="padding-left: 15px;width: 1040px;">
-            <table class="display" id="searchPaymentTable">
+            <table class="display" id="searchPaymentTable" style="table-layout: fixed;">
                 <thead class="datatable-header">
                     <tr>
-                        <th style="width: 10%">Pay No</th>
-                        <th style="width: 8%">Pay Date</th>
-                        <th style="width: 20%">Ref No.</th>
-                        <th style="width: 20%">Invoice Sup</th>
-                        <th style="width: 20%">Invoice No.</th>
-                        <th style="width: 10%">Amount</th>
-                        <th style="width: 12%">Cur</th>
-                        <th style="width: 20%">Sale</th>
-                        <th style="width: 12%">Cur</th>
-                        <th style="width: 15%">Status</th>
-                        <th style="width: 8%">Action</th>
+                        <th style="width: 8%">Pay No.</th>
+                        <th style="width: 9%">Pay Date</th>
+                        <th style="width: 8%">Ref No.</th>
+                        <th style="width: 17%">Invoice Sup</th>
+                        <th style="width: 10%">Invoice No.</th>
+                        <th style="width: 11%">Amount</th>
+                        <th style="width: 6%">Cur</th>
+                        <th style="width: 11%">Sale</th>
+                        <th style="width: 6%">Cur</th>
+                        <th style="width: 7%">Status</th>
+                        <th style="width: 7%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="paymentOutboundView" items="${paymentOutboundViewList}" varStatus="i">
                     <tr>
-                        <td>${paymentOutboundView.payno}</td>
-                        <td>${paymentOutboundView.paydate}</td>
-                        <td>${paymentOutboundView.refno}</td>
+                        <td align="center">${paymentOutboundView.payno}</td>
+                        <td align="center">${paymentOutboundView.paydate}</td>
+                        <td align="center">${paymentOutboundView.refno}</td>
                         <td>${paymentOutboundView.invoicesup}</td>
-                        <td>${paymentOutboundView.invoiceno}</td>
+                        <td align="center">${paymentOutboundView.invoiceno}</td>
                         <td class="money" align="right">${paymentOutboundView.amount}</td>
-                        <td>${paymentOutboundView.curamount}</td>
+                        <td align="center">${paymentOutboundView.curamount}</td>
                         <td class="money" align="right">${paymentOutboundView.sale}</td>
-                        <td>${paymentOutboundView.cursale}</td>
-                        <td>
+                        <td align="center">${paymentOutboundView.cursale}</td>
+                        <td align="center">
                             <c:set var="statusName" value="" />
                             <c:forEach var="status" items="${statusList}">                                                                       
                                 <c:if test="${status.id == paymentOutboundView.status}">
