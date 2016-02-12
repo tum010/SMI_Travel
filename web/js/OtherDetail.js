@@ -55,7 +55,9 @@ function setupotherdatevalue(booktype) {
         } else if (otherdate !== todaydate) {
             getvalueProduct('date', booktype);
         }
-    } else {
+    }else if((product_code !== '') && (otherdate === '')){ 
+        getvalueProduct('date', booktype);
+    }else {
         document.getElementById('ad_cost').value = '0';
         document.getElementById('ad_price').value = '0';
         document.getElementById('ch_cost').value = '0';
@@ -138,9 +140,6 @@ $(document).ready(function() {
 
         }
     });
-
-
-
 
     var codeAgent = [];
     $.each(agent, function(key, value) {
@@ -258,6 +257,17 @@ function getvalueProduct(order, booktype) {
                     '&type=' + 'getvalueProduct';
             CallAjax(param, booktype);
         }
+    
+    }else if ((product_code !== '') && (otherdate === '')) {
+        var servletName = 'BookOtherServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&productid=' + productid +
+                '&otherdate=' + otherdate +
+                '&type=' + 'getvalueProduct';
+        CallAjax(param, booktype);
     }
 }
 

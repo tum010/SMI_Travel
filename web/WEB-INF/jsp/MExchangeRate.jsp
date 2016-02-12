@@ -300,7 +300,7 @@ $(document).ready(function() {
     });
     
     $('#DateExchange').datetimepicker().on('dp.change', function (e) {
-        $('#ExchangeRateForm').bootstrapValidator('revalidateField', 'InvToDate');
+        $('#ExchangeRateForm').bootstrapValidator('revalidateField', 'ExchangeDate');
     });
         
     $('#ExchangeRateForm').bootstrapValidator({
