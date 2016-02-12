@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentOutboundSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="50a6b64f-0918-4925-9fda-7e1fdc5afe86">
 	<property name="ireport.zoom" value="2.35794769100005"/>
-	<property name="ireport.x" value="1191"/>
+	<property name="ireport.x" value="452"/>
 	<property name="ireport.y" value="118"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
@@ -472,8 +472,8 @@
 				<textFieldExpression><![CDATA[$F{leader}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="271" y="-2" width="55" height="20" uuid="b5b36d13-1c55-486f-9493-a95f7924cd78"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<reportElement stretchType="RelativeToBandHeight" x="267" y="-2" width="59" height="20" uuid="b5b36d13-1c55-486f-9493-a95f7924cd78"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invoiceno}]]></textFieldExpression>
@@ -493,8 +493,8 @@
 				<textFieldExpression><![CDATA[$F{export}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement stretchType="RelativeToBandHeight" x="330" y="-2" width="39" height="20" uuid="bacdd73c-119a-40d7-aa46-5c7071cdb614"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<reportElement stretchType="RelativeToBandHeight" x="326" y="-2" width="43" height="20" uuid="bacdd73c-119a-40d7-aa46-5c7071cdb614"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="TH SarabunPSK" size="12" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{owner}]]></textFieldExpression>

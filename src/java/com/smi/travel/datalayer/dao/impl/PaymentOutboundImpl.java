@@ -468,7 +468,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             sum.setSuppliercode(util.ConvertString(B[5]));
             sum.setRefno(util.ConvertString(B[6]));
             sum.setLeader(util.ConvertString(B[7]));
-            sum.setInvoiceno(util.ConvertString(B[8]));
+            sum.setInvoiceno(B[8] != null ? (util.ConvertString(B[8])).replaceAll(",", "\n") : "");
             sum.setDetail(util.ConvertString(B[9])); 
             sum.setAmount(!"null".equalsIgnoreCase(String.valueOf(B[10])) ? util.ConvertString(B[10]) : "0.00");
             sum.setSale(!"null".equalsIgnoreCase(String.valueOf(B[11])) ? util.ConvertString(B[11]) : "0.00");
