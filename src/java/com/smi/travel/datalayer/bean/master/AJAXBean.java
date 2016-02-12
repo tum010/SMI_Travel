@@ -787,8 +787,9 @@ public class AJAXBean extends AbstractBean implements
             if ("searchInvoice".equalsIgnoreCase(type)) {
                 String searchRefNo = map.get("refNo").toString();
                 String invType = map.get("invType").toString();
+                String department = map.get("department").toString();
                 Billable bill = billableDao.getBillableBooking(searchRefNo);
-                result = getListInvoice(bill, invType);
+                result = getListInvoice(bill, invType, department);
             } else if ("searchInvoiceDescription".equalsIgnoreCase(type)) {
                 String searchRefNo = map.get("refNo").toString();
                 String typeId = map.get("typeId").toString();
@@ -1429,13 +1430,13 @@ public class AJAXBean extends AbstractBean implements
                 curAmount = (!"".equalsIgnoreCase(invoiceDetail.getCurAmount()) && invoiceDetail.getCurAmount() != null ? invoiceDetail.getCurAmount() : "");
                 isVat = String.valueOf(invoiceDetail.getIsVat());
 
-                if (invoiceDetail.getCost() != null) {
-                    costInvoice = invoiceDetail.getCost();
+                if (invoiceDetail.getCostLocal()!= null) {
+                    costInvoice = invoiceDetail.getCostLocal();
                 } else {
                     costInvoice = new BigDecimal(0);
                 }
-                if (invoiceDetail.getAmount() != null) {
-                    amountInvoice = invoiceDetail.getAmount();
+                if (invoiceDetail.getAmountLocal()!= null) {
+                    amountInvoice = invoiceDetail.getAmountLocal();
                 } else {
                     amountInvoice = new BigDecimal(0);
                 }
@@ -1473,8 +1474,8 @@ public class AJAXBean extends AbstractBean implements
                             + "<td class='money' style=\"text-align:right;\">" + cost + "</td>"
                             + "<td style=\"text-align:center;\">" + curCost + "</td>"
                             + "<td class='money' style=\"text-align:right;\">" + amount + "</td>"
-                            + "<td style=\"text-align:center;\">" + curAmount + "</td>"
-                            + "<td><center><a href=\"\"><span onclick=\"AddProduct('"+invDetailId+"','"+product+"','"+description+"','"+cost+"','"+curCost+"','"+amount+"','"+curAmount+"','"+isVat+"','"+refNo+"','"+vat+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                            + "<td style=\"text-align:center;\">" + "THB" + "</td>"
+                            + "<td><center><a href=\"\"><span onclick=\"AddProduct('"+invDetailId+"','"+product+"','"+description+"','"+cost+"','"+curCost+"','"+amount+"','THB','"+isVat+"','"+refNo+"','"+vat+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                             + "</tr>";
                         html.append(newrow);
                 }
@@ -2431,7 +2432,7 @@ public class AJAXBean extends AbstractBean implements
         return data;
     }
 
-    public String getListInvoice(Billable bill, String invType) {
+    public String getListInvoice(Billable bill, String invType, String department) {
         UtilityFunction utility = new UtilityFunction();
         String result = "";
         String term = "";
@@ -2495,7 +2496,11 @@ public class AJAXBean extends AbstractBean implements
             }
         } else {
             for (int i = 0; i < billdeescList.size(); i++) {
-                if (!billdeescList.get(i).getMBilltype().getName().equals("Air Ticket") && !billdeescList.get(i).getMBilltype().getName().equals("Air Additional")) {
+                boolean isDaytour = true;
+                if("Outbound".equalsIgnoreCase(department)){
+                    isDaytour = (!billdeescList.get(i).getMBilltype().getName().equals("Day Tour") ? true : false);
+                }
+                if (!billdeescList.get(i).getMBilltype().getName().equals("Air Ticket") && !billdeescList.get(i).getMBilltype().getName().equals("Air Additional") && isDaytour) {
                     BigDecimal[] valueresult = invoicedao.checkBillDescInuse(billdeescList.get(i).getId(), String.valueOf(billdeescList.get(i).getCost()), String.valueOf(billdeescList.get(i).getPrice()));
                     System.out.println("valueresult[1] : " + valueresult[1]);
   
