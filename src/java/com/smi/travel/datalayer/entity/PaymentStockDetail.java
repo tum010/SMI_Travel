@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.entity;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class PaymentStockDetail {
     private String id;
     private Stock stock;
     private PaymentStock paymentStock;
+    private BigDecimal cost;
+    private BigDecimal sale;
     private List paymentStockItems = new LinkedList<PaymentStockItem>();
 
     public PaymentStockDetail() {
@@ -58,5 +61,21 @@ public class PaymentStockDetail {
 
     public void setPaymentStockItems(List paymentStockItems) {
         this.paymentStockItems = paymentStockItems;
+    }
+
+    public BigDecimal getCost() {
+        return cost;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
+    }
+
+    public BigDecimal getSale() {
+        return sale;
+    }
+
+    public void setSale(BigDecimal sale) {
+        this.sale = sale;
     }
 }

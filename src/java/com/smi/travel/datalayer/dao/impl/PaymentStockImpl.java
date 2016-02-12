@@ -191,8 +191,6 @@ public class PaymentStockImpl implements PaymentStockDao {
                 System.out.println("+++++++++++++++++++++ UPDATE +++++++++++++++++++++ ");
                 session.update(paymentStock);
                 List<PaymentStockDetail> paymentStockDetails = paymentStock.getPaymentStockDetails();
-                BigDecimal totalCost = new BigDecimal(BigInteger.ZERO);
-                BigDecimal totalSale = new BigDecimal(BigInteger.ZERO);
                 
                 if(paymentStockDetails != null){
                     System.out.println(" paymentStockDetails.size()  " + paymentStockDetails.size());
@@ -218,16 +216,6 @@ public class PaymentStockImpl implements PaymentStockDao {
                     }
                     
                 }
-                List<PaymentStockItem> psi = session.createQuery("From PaymentStockItem psi where psi.paymentStockDetail.paymentStock = '"+paymentStock.getId()+"'")
-                .list();
-                if(psi != null){
-                    for(int j = 0; j < psi.size(); j++){
-                        totalCost = totalCost.add(psi.get(j).getCost());
-                        totalSale = totalSale.add(psi.get(j).getSale());
-                    }
-                }
-                paymentStock.setCostAmount(totalCost);
-                paymentStock.setSaleAmount(totalSale);
                 session.update(paymentStock);
                 checkupdate = true ;
             }
@@ -248,6 +236,15 @@ public class PaymentStockImpl implements PaymentStockDao {
     @Override
     public List<PaymentStockItem> getListPaymentStockItemFromPaymentStockDetailId(String psdId) {
         Session session = this.sessionFactory.openSession();
+//        String psId = "";
+//        List<PaymentStockDetail> psdlist = session.createQuery("From PaymentStockDetail psd where psd.id = '"+psdId+"'")
+//                .list();
+//        if (psdlist.isEmpty()) {
+//            return null;
+//        }else{
+//            psId = psdlist.get(0).getPaymentStock().getId();
+//        }
+        
         List<PaymentStockItem> paymentStockItems = session.createQuery("From PaymentStockItem psi where psi.paymentStockDetail.id = '"+psdId+"'")
                 .list();
         if (paymentStockItems.isEmpty()) {

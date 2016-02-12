@@ -10,6 +10,7 @@
 <c:set var="stockList" value="${requestScope['StockList']}" />
 <c:set var="currencyList" value="${requestScope['currencyList']}" />
 <c:set var="StockDetailList" value="${requestScope['StockDetailList']}" /> 
+<c:set var="PaymentStockTemp" value="${requestScope['PaymentStockTemp']}" /> 
 <!--testtt-->
 <section class="content-header" >
     <h1>
@@ -155,13 +156,18 @@
                                         <tr class="datatable-header">
                                             <th style="width: 5%">No</th>                                   
                                             <th style="width: 30%">Product Name</th>
-                                            <th style="width: 10%">Staff</th>
-                                            <th style="width: 15%">Add Date</th>
-                                            <th style="width: 15%">Effective From</th>
-                                            <th style="width: 15%">Effective To</th>                                                                      
+                                            <th style="width: 5%">Staff</th>
+                                            <th style="width: 10%">Add Date</th>
+                                            <th style="width: 10%">Effective From</th>
+                                            <th style="width: 10%">Effective To</th> 
+                                            <th style="width: 12%">Cost</th> 
+                                            <th style="width: 12%">Sale</th> 
                                             <th style="width: 10%" >Action</th>
                                         </tr>
                                     </thead>
+                                    <script>
+                                        paymentstockdetail = [];
+                                    </script>
                                     <tbody>
                                         <c:forEach var="table" items="${PaymentStockDetailList}" varStatus="i">
                                             <tr>
@@ -174,6 +180,8 @@
                                                 <td align="center">${table.stock.createDate}</td>
                                                 <td align="center">${table.stock.effectiveFrom}</td>
                                                 <td align="center">${table.stock.effectiveTo}</td>
+                                                <td align="right"><input type="text" id="totalcostamount${i.count}" name="totalcostamount${i.count}" class="form-control money" value="${table.cost}" readonly=""></td>
+                                                <td align="right"><input type="text" id="totalsaleamount${i.count}" name="totalsaleamount${i.count}" class="form-control money" value="${table.sale}" readonly=""></td>
                                                 <td class="text-center ">
                                                     <a id="ButtonEdit${i.count}" onclick="getPaymentStockItemCostSale('${table.id}','${table.stock.id}','${table.stock.product.name}','${i.count}');hideCollapse(${i.count});" data-target="#payStockDetail" >
                                                         <span id="SpanEdit${i.count}" class="glyphicon glyphicon glyphicon-list-alt"></span>
@@ -181,12 +189,60 @@
                                                     <a href="#" onclick="" data-toggle="modal" data-target=""> <span id="SpanRemove" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentStockDetailList('${table.id}','${i.count}','');"></span></a>
                                                 </td>  
                                             </tr>
+                                            <script>
+                                                paymentstockdetail.push({
+                                                    psdId: "${table.id}",
+                                                    stockid: "${table.stock.id}",
+                                                    productname: "${table.stock.product.name}",
+                                                    noStockTable: "${i.count}",
+                                                    psId: "${table.paymentStock.id}"
+                                                });
+                                            </script>
                                         </c:forEach>
+                                            
                                     </tbody>
                                 </table>
                             </div>   
                         </div>
-                    </div>            
+                    </div>  
+                                
+                                
+                <div class="col-xs-1 text-right" style="width: 130px;padding-top: 8px">
+                    <label class="control-label text-right">Total Cost</label>
+                </div>
+                <div class="col-xs-1" style="width: 200px;padding-top: 8px">
+                    <input type="text" class="form-control money text-right" id="totalCostAll" name="totalCostAll" value="${paymentStock.costAmount}" readonly=""/>
+                </div>
+                <div class="col-xs-1" style="width: 100px;padding-top: 8px">
+                    <select class="form-control" name="curCost" id="curCost" >
+                        <option  value="" >---------</option>
+                        <c:forEach var="curCost" items="${currencyList}" varStatus="status">                                       
+                            <c:set var="select" value="" />
+                            <c:if test="${curCost.code == paymentStock.curCost}">
+                                <c:set var="select" value="selected" />
+                            </c:if>
+                            <option  value="${curCost.code}" ${select} >${curCost.code}</option>
+                        </c:forEach>
+                    </select>
+                </div> 
+                <div class="col-xs-1 text-right" style="width: 130px;padding-top: 8px">
+                    <label class="control-label text-right">Total Sale</label>
+                </div>
+                <div class="col-xs-1" style="width: 200px;padding-top: 8px">
+                    <input type="text" class="form-control money text-right" id="totalSaleAll" name="totalSaleAll" value="${paymentStock.saleAmount}" readonly=""/>
+                </div>
+                 <div class="col-xs-1" style="width: 100px;padding-top: 8px">
+                    <select class="form-control" name="curSale" id="curSale" >
+                        <option  value="" >---------</option>
+                        <c:forEach var="curSale" items="${currencyList}" varStatus="status">                                       
+                            <c:set var="select" value="" />
+                            <c:if test="${curSale.code == paymentStock.curSale}">
+                                <c:set var="select" value="selected" />
+                            </c:if>
+                            <option  value="${curSale.code}" ${select} >${curSale.code}</option>
+                        </c:forEach>
+                    </select>
+                </div>
                 </div>
             </div>
             <div class="collapse" id="payStockDetail">                    
@@ -246,53 +302,47 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="col-xs-11" style="width: 1030px">
+                                    <table  class="hidden" id="StockDetailTableTempCal">
+                                        <thead>
+                                            <tr class="datatable-header">
+                                                <th style="width: 5%">No</th>                                   
+                                                <th style="width: 10%">Code</th>
+                                                <th style="width: 10%">Type</th>
+                                                <th style="width: 10%">Ref No</th>
+                                                <th style="width: 10%">Pick Up</th>
+                                                <th style="width: 10%">Pick Date</th>                                                                      
+                                                <th style="width: 10%">Cost</th>
+                                                <th style="width: 10%">Sale</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody> 
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>            
                     </div>
+                    <div class="row" style="padding-top: 15px;padding-bottom:  15px; padding-left:  100px;">
+                        <div class="col-xs-1 text-right" style="width: 130px">
+                            <label class="control-label text-right">Total Cost</label>
+                        </div>
+                        <div class="col-xs-1" style="width: 200px">
+                            <input type="hidden" class="form-control text-right" id="totalCostTempCal" name="totalCostTempCal" value="${paymentStock.costAmount}" readonly=""/>
+                            <input type="text" class="form-control text-right" id="totalCost" name="totalCost" value="" readonly=""/>
+                        </div>
+
+                        <div class="col-xs-1 text-right" style="width: 130px">
+                            <label class="control-label text-right">Total Sale</label>
+                        </div>
+                        <div class="col-xs-1" style="width: 200px">
+                            <input type="hidden" class="form-control text-right" id="totalSaleTempCal" name="totalSaleTempCal" value="${paymentStock.saleAmount}" readonly=""/>
+                            <input type="text" class="form-control text-right" id="totalSale" name="totalSale" value="" readonly=""/>
+                        </div>
+                    </div> 
                 </div>
             </div> 
-            <%--</c:forEach>--%> 
-            <div class="row" style="padding-top: 15px;padding-bottom:  15px; padding-left:  100px;">
-                <div class="col-xs-1 text-right" style="width: 130px">
-                    <label class="control-label text-right">Total Cost</label>
-                </div>
-                <div class="col-xs-1" style="width: 200px">
-<!--                    <input type="hidden" class="form-control text-right" id="totalCostTmp" name="totalCostTmp" value="" readonly=""/>-->
-                    <input type="hidden" class="form-control text-right" id="totalCostTempCal" name="totalCostTempCal" value="${paymentStock.costAmount}" readonly=""/>
-                    <input type="text" class="form-control text-right" id="totalCost" name="totalCost" value="${paymentStock.costAmount}" readonly=""/>
-                </div>
-                <div class="col-xs-1" style="width: 100px">
-                    <select class="form-control" name="curCost" id="curCost" >
-                        <option  value="" >---------</option>
-                        <c:forEach var="curCost" items="${currencyList}" varStatus="status">                                       
-                            <c:set var="select" value="" />
-                            <c:if test="${curCost.code == paymentStock.curCost}">
-                                <c:set var="select" value="selected" />
-                            </c:if>
-                            <option  value="${curCost.code}" ${select} >${curCost.code}</option>
-                        </c:forEach>
-                    </select>
-                </div> 
-                <div class="col-xs-1 text-right" style="width: 130px">
-                    <label class="control-label text-right">Total Sale</label>
-                </div>
-                <div class="col-xs-1" style="width: 200px">
-                    <input type="hidden" class="form-control text-right" id="totalSaleTempCal" name="totalSaleTempCal" value="${paymentStock.saleAmount}" readonly=""/>
-                    <input type="text" class="form-control text-right" id="totalSale" name="totalSale" value="${paymentStock.saleAmount}" readonly=""/>
-                </div>
-                 <div class="col-xs-1" style="width: 100px">
-                    <select class="form-control" name="curSale" id="curSale" >
-                        <option  value="" >---------</option>
-                        <c:forEach var="curSale" items="${currencyList}" varStatus="status">                                       
-                            <c:set var="select" value="" />
-                            <c:if test="${curSale.code == paymentStock.curCost}">
-                                <c:set var="select" value="selected" />
-                            </c:if>
-                            <option  value="${curSale.code}" ${select} >${curSale.code}</option>
-                        </c:forEach>
-                    </select>
-                </div> 
-            </div>                    
             <br>
             <div class="row">
                 <div class="col-xs-12 text-center">
@@ -301,6 +351,8 @@
                     <button type="button" id="btnSave" name="btnSave" class="btn btn-success" onclick="saveAction()">
                         <i class="fa fa-save"></i> Save             
                     </button>
+                    
+                    <button type="button" id="ButtonNew" name="ButtonNew" onclick="clearNew()" class="btn btn-success"><i class="fa fa-plus-circle"></i> New</button>
                 </div>
             </div>                     
       
@@ -422,41 +474,16 @@
     }
     
     $(document).ready(function() {  
-//        document.getElementById('totalCost').value = formatNumber(0);
-//        document.getElementById('totalSale').value = formatNumber(0);
-        var totalCost = replaceAll(",", "", $('#totalCost').val());
-        if (totalCost == "") {
-            totalCost = 0;
-        }
-        totalCost = parseFloat(totalCost);
-        document.getElementById("totalCost").value = formatNumber(totalCost);
-    
-        var totalSale = replaceAll(",", "", $('#totalSale').val());
-        if (totalSale == "") {
-            totalSale = 0;
-        }
-        totalSale = parseFloat(totalSale);
-        document.getElementById("totalSale").value = formatNumber(totalSale);
-        
-//        var countRowStock = $("#StockDetailTable tr").length;    
-//        if(countRowStock === 1){
-//            document.getElementById('totalCost').value = formatNumber(0);
-//            document.getElementById('totalSale').value = formatNumber(0);
-//        }else{
-//            for(var i=1;i<countRowStock;i++){
-//                setFormatCurrency(i);
-//                calculateCostTotal();
-//                calculateSaleTotal();
-//            }
-//        }
-        
+        $(".money").mask('000,000,000.00', {reverse: true});
+
         $("#payNo").keyup(function(event) {
            if (event.keyCode === 13) {
                searchPaymentNoStock();
            }
         });
-        
-//        $('.collapse').collapse('hide');
+        calculateCostTotalAll();
+        calculateSaleTotalAll();
+
     });
     
     function saveAction() {
@@ -473,16 +500,17 @@
         var countRowStock = document.getElementById('countRowStock');
         countRowStock.value = $("#StockTable tr").length;
         var countRowDetail = document.getElementById('countRowDetail');
-        countRowDetail.value = $("#StockDetailTable tr").length;
+        countRowDetail.value = $("#StockDetailTableTempCal tr").length;
 
         document.getElementById('PaymentStockForm').submit();
     }
     
     function getPaymentStockItemCostSale(psdId,stockid,productname,noStockTable) {
         getStockDetail(stockid,psdId,productname,noStockTable);
+        getStockDetailTempCal(stockid,psdId,productname,noStockTable);
     }
     
-    function getPaymentStockItemCostSaleAjax(psdId){
+    function getPaymentStockItemCostSaleAjax(psdId,noStockTable){
         var servletName = 'PaymentStockServlet';
         var servicesName = 'AJAXBean';
         var param = 'action=' + 'text' +
@@ -491,12 +519,10 @@
                 '&psdId=' + psdId +
                 '&countRowDetail=' + 1 +
                 '&type=' + 'getPaymentStockItemCostSale';
-        CallAjaxPaymentStockItemCostSale(param);
-        
-        
+        CallAjaxPaymentStockItemCostSale(param,noStockTable);
     }
     
-    function CallAjaxPaymentStockItemCostSale(param) {
+    function CallAjaxPaymentStockItemCostSale(param,noStockTable) {
         var url = 'AJAXServlet';
         $("#ajaxload").removeClass("hidden");
         try {
@@ -521,12 +547,31 @@
                                     $("#sale"+i).val( $("#saleTemp"+j).val()); 
                                     $("#psiIdTable"+i).val($("#psiIdTemp"+j).val());
                                     $("#psdIdTable"+i).val($("#psdIdTemp"+j).val());
-                                    setFormatCurrency(i);
-                                    calculateCostTotal();
-                                    calculateSaleTotal();
+                                    setCostAmountToTableTemp(i);
+                                    setFormatCurrency(i,noStockTable);
+                                    calculateCostTotal(noStockTable);
+                                    calculateSaleTotal(noStockTable);
                                 }
                             }
                         }
+                        
+                        var countRowStockDetail = $("#StockDetailTable tr").length;
+                        var countRow = $("#StockDetailTableTempCal tr").length;
+                        for(var i = 1 ; i<countRowStockDetail ; i++ ){
+                            for(var j = 1 ; j < countRow ; j++ ){
+                                var stockDetailIdTable = $("#stockDetailIdTable"+i).val(); 
+                                var stockDetailIdTemp = $("#stockDetailIdTableTempCount"+j).val();
+                                if(stockDetailIdTable === stockDetailIdTemp){
+                                    $("#costTempCount"+j).val( $("#cost"+i).val()); 
+                                    $("#saleTempCount"+j).val( $("#sale"+i).val()); 
+                                    $("#psiIdTableTempCount"+j).val($("#psiIdTable"+i).val());
+                                    $("#psdIdTableTempCount"+j).val($("#psdIdTable"+i).val());
+//                                    calculateCostTotalAll();
+//                                    calculateSaleTotalAll();
+                                }
+                            }
+                        }
+
                     }
                 }, error: function(msg) {
                     alert('error');
@@ -549,7 +594,11 @@ function deletePaymentStockDetailList(paymentStockDetailId , row , stockid){
         $("#paymentStockDetailId" + row).parent().remove();
         document.getElementById('totalCost').value = formatNumber(0);
         document.getElementById('totalSale').value = formatNumber(0);
+        $('.collapse').collapse('hide');
+        document.getElementById('hideCollapseCheck').value = '';
         $('#textAlertDivDelete').show();
+        calculateCostTotalAll();
+        calculateSaleTotalAll();
     }else{
         document.getElementById('paymentStockDetailIdDelete').value = paymentStockDetailId;
         document.getElementById('paymentStockRowDelete').value = row;
@@ -573,6 +622,10 @@ function DeleteRowPaymentStock(){
             $('#textAlertDivDelete').show();
             document.getElementById('totalCost').value = formatNumber(0);
             document.getElementById('totalSale').value = formatNumber(0);
+            $('.collapse').collapse('hide');
+            document.getElementById('hideCollapseCheck').value = '';
+            calculateCostTotalAll();
+            calculateSaleTotalAll();
         }
         else {
             $.ajax({
@@ -584,6 +637,10 @@ function DeleteRowPaymentStock(){
                     $('#textAlertDivDelete').show();
                     document.getElementById('totalCost').value = formatNumber(0);
                     document.getElementById('totalSale').value = formatNumber(0);
+                    $('.collapse').collapse('hide');
+                    document.getElementById('hideCollapseCheck').value = '';
+                    calculateCostTotalAll();
+                    calculateSaleTotalAll();
                 },
                 error: function() {
                     console.log("error");
@@ -593,4 +650,424 @@ function DeleteRowPaymentStock(){
         }
     $('#DeletePaymentStock').modal('hide');  
 }
+
+function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
+        var countRow = $("#StockDetailTableTempCal tr").length;
+        var servletName = 'PaymentStockServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&stockId=' + stockid +
+                '&countRowDetail=' + countRow +
+                '&type=' + 'getStockDetailTempCal';
+        CallAjaxTempCal(param,psdId,stockid,noStockTable);
+    }
+    
+    function CallAjaxTempCal(param,psdId,stockid,noStockTable) {
+        var check = true;
+        var url = 'AJAXServlet';
+        $("#ajaxload").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    if(msg !== 'null'){
+                        var countRow = $("#StockDetailTableTempCal tr").length;
+                        for(var i = 1 ; i<countRow ; i++ ){
+                            var stockDetail = $("#stockIdTableTempCount"+i).val();
+                            if(stockDetail === stockid) {
+                                check = false;
+                            }
+                        }
+                        if(check){
+                            $("#StockDetailTableTempCal tbody").append(msg);
+                        }
+                    }
+                }, error: function(msg) {
+                   alert('error');
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+
+    }
+    
+    function searchStock() {
+        $("#SearchStock").modal("show");
+    }
+
+
+    function searchPaymentNoStock() {
+        var action = document.getElementById('action');
+        action.value = 'searchPayNo';
+        var payNo = document.getElementById('payNo');
+        payNo.value = $("#payNo").val();
+        document.getElementById('PaymentStockForm').submit();
+    }
+
+
+    function createStockDetails(stockid, productName, staff, addDate, effectiveFrom, effectiveTo) {
+        var noStockTable = parseInt($("#noStockTable").val());
+        for(var i=1; i<=noStockTable; i++){
+            if(productName === $("#chk"+i).val()){
+                $("#SearchStock").modal("hide");
+                $('#fail').show();
+                return;
+            }else{
+                $('#fail').hide();
+            }        
+        }
+
+        for(var i=1; i<noStockTable; i++){
+            if(stockid === $("#stockId"+i).val()){
+                $("#SearchStock").modal("hide");
+                $('#fail').show();
+                return;
+            }else{
+                $('#fail').hide();
+            }        
+        }
+        $("#StockTable").append(
+                '<tr>' +
+                '<input type="hidden" id="paymentStockDetailId'+ noStockTable +'" name="paymentStockDetailId'+ noStockTable +'"  value=""> '+
+                '<input type="hidden" id="paymentStockId'+ noStockTable +'" name="paymentStockId'+ noStockTable +'"  value="">' +
+                '<input type="hidden" id="stockId'+ noStockTable +'" name="stockId'+ noStockTable +'"  value="'+ stockid +'"> '+
+                '<td class="hidden"><input type="hidden" id="chk'+ noStockTable +'" name="chk'+ noStockTable +'" value="' + productName + '"/></td>' +
+                '<td class="text-center ">'+ noStockTable +'</td>' +
+                '<td>' + productName + '</td>' +
+                '<td>' + staff + '</td>' +
+                '<td class="text-center ">' + addDate + '</td>' +
+                '<td class="text-center ">' + effectiveFrom + '</td>' +
+                '<td class="text-center ">' + effectiveTo + '</td>' +
+                '<td class="text-right"><input type="text" id="totalcostamount'+ noStockTable +'" name="totalcostamount'+ noStockTable +'" class="form-control money" value="0.00" readonly=""></td>' +
+                '<td class="text-right"><input type="text" id="totalsaleamount'+ noStockTable +'" name="totalsaleamount'+ noStockTable +'" class="form-control money" value="0.00" readonly=""></td>' +
+                '<td class="text-center ">' +
+                '<a id="ButtonEdit'+ noStockTable +'" onclick="getStockDetail( \'' + stockid + '\', \'' + "null" + '\' , \'' + productName + '\', \'' + noStockTable + '\');hideCollapse(\'' + noStockTable + '\');" data-target="#payStockDetail">'+
+                '<span id="SpanEdit'+ noStockTable +'" class="glyphicon glyphicon glyphicon-list-alt"></span></a>'+
+                '<a href="#" onclick="" data-toggle="modal" data-target=""> <span id="SpanRemove" class="glyphicon glyphicon-remove deleteicon" onclick="deletePaymentStockDetailList(\'\', \'' + noStockTable + '\' , \'' + stockid + '\');"></span></a>' +
+                '</td>' +
+                '<tr>'
+                );
+        $("#noStockTable").val(noStockTable+1);
+        getStockDetail(stockid,"null",productName,noStockTable);
+        getStockDetailTempCal(stockid,"null",productName,noStockTable,"");
+        $("#SearchStock").modal("hide");
+
+    }
+
+    function getStockDetail(stockid,psdId,productname,noStockTable) {
+        document.getElementById('detailName').style.display = 'block';
+        document.getElementById('detailName').innerHTML = "Detail (" + productname + ")";
+        var servletName = 'PaymentStockServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&stockId=' + stockid +
+                '&countRowDetail=' + 1 +
+                '&noStockTable=' +noStockTable +
+                '&type=' + 'getStockDetail';
+        CallAjax(param,psdId,stockid,noStockTable);
+    }
+
+    function CallAjax(param,psdId,stockid,noStockTable) {
+        var url = 'AJAXServlet';
+        $("#ajaxload").removeClass("hidden");
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    if(msg !== 'null'){
+                        $('#StockDetailTable').dataTable().fnClearTable();
+                        $('#StockDetailTable').dataTable().fnDestroy();
+                        $("#StockDetailTable tbody").append(msg);
+
+                        $('#StockDetailTable').dataTable({bJQueryUI: true,
+                            "sPaginationType": "full_numbers",
+                            "bAutoWidth": false,
+                            "bFilter": true,
+                            "bInfo": false,
+                            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                            "iDisplayLength": 10,
+                            "bSort": false,
+                            "bPaginate": false
+                        });
+
+                        var countRowStockDetail = $("#StockDetailTable tr").length;
+                        var countRow = $("#StockDetailTableTempCal tr").length;
+                        
+                        for(var i = 1 ; i<countRowStockDetail ; i++ ){
+                            for(var j = 1 ; j < countRow ; j++ ){
+                                var stockDetailIdTable = $("#stockDetailIdTable"+i).val(); 
+                                var stockDetailIdTemp = $("#stockDetailIdTableTempCount"+j).val();
+                                if(stockDetailIdTable === stockDetailIdTemp){
+                                    $("#cost"+i).val( $("#costTempCount"+j).val()); 
+                                    $("#sale"+i).val( $("#saleTempCount"+j).val()); 
+                                    $("#psiIdTable"+i).val($("#psiIdTableTempCount"+j).val());
+                                    $("#psdIdTable"+i).val($("#psdIdTableTempCount"+j).val());
+                                    setFormatCurrency(i,noStockTable);
+                                    calculateCostTotalAll();
+                                    calculateSaleTotalAll();
+                                }
+                            }
+                        }
+
+                        $('table.paginated').each(function() {
+                            var currentPage = 0;
+                            var numPerPage = 10;
+                            var $table = $(this);
+                            $table.bind('repaginate', function() {
+                                $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+                            });
+                            $table.trigger('repaginate');
+                            var numRows = $table.find('tbody tr').length;
+                            var numPages = Math.ceil(numRows / numPerPage);
+                            var $pager = $('<div class="col-xs-12 text-right" id="pageNo"><font style="color: #499DD5"></font>&nbsp;</div>');
+                            var $br = $('<div class="col-xs-12"><br></div>');
+                            for (var page = 0; page < numPages; page++) {
+                                if(page === 0){
+                                    $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + "First" + "  ").bind('click', {
+                                    newPage: page
+                                    }, function(event) {
+                                        currentPage = event.data['newPage'];
+                                        $table.trigger('repaginate');
+                                        $(this).addClass('active').siblings().removeClass('active');
+                                    }).appendTo($pager).addClass('clickable');
+                                }
+
+                                $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + "  ").bind('click', {
+                                    newPage: page
+                                }, function(event) {
+                                    currentPage = event.data['newPage'];
+                                    $table.trigger('repaginate');
+                                    $(this).addClass('active').siblings().removeClass('active');
+                                }).appendTo($pager).addClass('clickable');
+
+                                if(page === (numPages - 1)){
+                                    $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + "Last" + "  ").bind('click', {
+                                    newPage: page
+                                    }, function(event) {
+                                        currentPage = event.data['newPage'];
+                                        $table.trigger('repaginate');
+                                        $(this).addClass('active').siblings().removeClass('active');
+                                    }).appendTo($pager).addClass('clickable');
+                                }
+                            }
+                            $br.insertAfter($table).addClass('active');
+                            $pager.insertAfter($table).find('span.page-number:first').addClass('active');
+                            document.getElementById("pageNo").style.cursor="pointer";
+                        });
+
+
+                        if(psdId !== "null" && psdId !== null){
+                            getPaymentStockItemCostSaleAjax(psdId,noStockTable);
+                        }else{
+                            $('.collapse').collapse('show');
+                            document.getElementById('hideCollapseCheck').value = noStockTable;
+                        }
+
+                    }
+                }, error: function(msg) {
+                   alert('error');
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
+
+    }
+
+
+    function calculateCostTotal(noStockTable) {
+        var count = $("#StockDetailTable tr").length;    
+        var i;
+        var grandTotal = 0;
+        for (i = 1; i < count + 1; i++){
+            var amount = document.getElementById("cost" + i);
+            if (amount !== null) {
+                var value = amount.value;
+                if (value !== '') {
+                    value = value.replace(/,/g, "");
+                    var total = parseFloat(value);
+                    grandTotal += total;
+                    document.getElementById('cost' + i).value = formatNumber(total);
+                }
+            }
+        }
+        document.getElementById('totalCost').value = formatNumber(grandTotal);
+        document.getElementById('totalcostamount'+(noStockTable)).value = $("#totalCost").val();
+        calculateCostTotalAll();
+    }
+
+    function calculateSaleTotal(noStockTable) {
+        var count = $("#StockDetailTable tr").length;
+        var i;
+        var grandTotal = 0;
+        for (i = 1; i < count + 1; i++) {
+            var amount = document.getElementById("sale" + i);
+            if (amount !== null) {
+                var value = amount.value;
+                if (value !== '') {
+                    value = value.replace(/,/g, "");
+                    var total = parseFloat(value);
+                    grandTotal += total;
+                    document.getElementById('sale' + i).value = formatNumber(total);
+                }
+            }
+        }
+        document.getElementById('totalSale').value = formatNumber(grandTotal);
+        document.getElementById('totalsaleamount'+noStockTable).value = $("#totalSale").val();
+        calculateSaleTotalAll();
+    }
+
+    function setFormatCurrencyOnFocusOut(row,noStockTable) {
+        $('#cost' + row).focusout(function() {
+            setFormatCurrency(row,noStockTable);
+            calculateCostTotal(noStockTable);
+            setCostAmountToTableTemp(row);
+        });
+
+        $('#sale' + row).focusout(function() {
+            setFormatCurrency(row,noStockTable);
+            calculateSaleTotal(noStockTable);
+            setCostAmountToTableTemp(row);
+        });
+    }
+
+    function setFormatCurrency(row,noStockTable) {
+        var cost = replaceAll(",", "", $('#cost' + row).val());
+        if (cost == "") {
+            cost = 0;
+        }
+        cost = parseFloat(cost);
+        document.getElementById("cost" + row).value = formatNumber(cost);
+
+        var sale = replaceAll(",", "", $('#sale' + row).val());
+        if (sale == "") {
+            sale = 0;
+        }
+        sale = parseFloat(sale);
+        document.getElementById("sale" + row).value = formatNumber(sale);
+
+        if (cost == "" || cost == 0) {
+            document.getElementById("cost" + row).value = "";
+        }
+
+        if (sale == "" || sale == 0) {
+            document.getElementById("sale" + row).value = "";
+        }
+
+        calculateCostTotal(noStockTable);
+        calculateSaleTotal(noStockTable);
+    }
+
+    function replaceAll(find, replace, str) {
+        return str.replace(new RegExp(find, 'g'), replace);
+    }
+
+    function formatNumber(num) {
+        return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+    }
+
+    function insertCommas(nField) {
+        if (/^0/.test(nField.value)) {
+            nField.value = nField.value.substring(0, 1);
+        }
+        if (Number(nField.value.replace(/,/g, ""))) {
+            var tmp = nField.value.replace(/,/g, "");
+            tmp = tmp.toString().split('').reverse().join('').replace(/(\d{3})/g, '$1,').split('').reverse().join('').replace(/^,/, '');
+            if (/\./g.test(tmp)) {
+                tmp = tmp.split(".");
+                tmp[1] = tmp[1].replace(/\,/g, "").replace(/ /, "");
+                nField.value = tmp[0] + "." + tmp[1]
+            } else {
+                nField.value = tmp.replace(/ /, "");
+            }
+        } else {
+            nField.value = nField.value.replace(/[^\d\,\.]/g, "").replace(/ /, "");
+        }
+    }
+    
+    function setCostAmountToTableTemp(row){
+
+        var stockdetailid = $('#stockDetailIdTable' + row).val();
+        var costtemp = $('#cost' + row).val();
+        var saletemp = $('#sale' + row).val();
+
+        var countRow = $("#StockDetailTableTempCal tr").length;
+        for(var i = 1 ; i<countRow ; i++ ){
+            var stockDetailIdTableTempCount = $("#stockDetailIdTableTempCount"+i).val();
+            if(stockDetailIdTableTempCount === stockdetailid) {
+                var cost = replaceAll(",", "",costtemp);
+                if (cost == "") {
+                    cost = 0;
+                }
+                cost = parseFloat(cost);
+                document.getElementById("costTempCount" + i).value = formatNumber(cost);
+
+                var sale = replaceAll(",", "",saletemp);
+                if (sale == "") {
+                    sale = 0;
+                }
+                sale = parseFloat(sale);
+                document.getElementById("saleTempCount" + i).value = formatNumber(sale);
+
+                calculateCostTotalAll();
+                calculateSaleTotalAll();
+            }
+        }
+    }
+
+
+    function calculateCostTotalAll() {
+        var count = $("#StockTable tr").length;    
+        var i;
+        var grandTotal = 0;
+        for (i = 1; i < count + 1; i++){
+            var amount = document.getElementById("totalcostamount" + i);
+            if (amount !== null) {
+                var value = amount.value;
+                if (value !== '') {
+                    value = value.replace(/,/g, "");
+                    var total = parseFloat(value);
+                    grandTotal += total;
+                    document.getElementById('totalcostamount' + i).value = formatNumber(total);
+                }
+            }
+        }
+        document.getElementById('totalCostAll').value = formatNumber(grandTotal);
+    }
+
+    function calculateSaleTotalAll() {
+        var count = $("#StockTable tr").length;
+        var i;
+        var grandTotal = 0;
+        for (i = 1; i < count + 1; i++) {
+            var amount = document.getElementById("totalsaleamount" + i);
+            if (amount !== null) {
+                var value = amount.value;
+                if (value !== '') {
+                    value = value.replace(/,/g, "");
+                    var total = parseFloat(value);
+                    grandTotal += total;
+                    document.getElementById('totalsaleamount' + i).value = formatNumber(total);
+                }
+            }
+        }
+        document.getElementById('totalSaleAll').value = formatNumber(grandTotal);
+    }
+    
+    function clearNew() {
+        var action = document.getElementById('action');
+        action.value = 'new';
+        document.getElementById('PaymentStockForm').submit();
+    }
 </script>    

@@ -1142,9 +1142,11 @@ public class AJAXBean extends AbstractBean implements
             if("getStockDetail".equalsIgnoreCase(type)){
                 String stockId = map.get("stockId").toString();
                 String countRowDetail = map.get("countRowDetail").toString();
+                String noStockTable = map.get("noStockTable").toString();
+                
                 List<StockDetail> stockDetails = paymentStockDao.getListStockDetailFromStockId(stockId);
                 if (stockDetails != null) {
-                    result = buildPaymentStockDetailHTML(stockDetails,countRowDetail);
+                    result = buildPaymentStockDetailHTML(stockDetails,countRowDetail,noStockTable);
                 } else {
                     result = "null";
                 }
@@ -1159,8 +1161,17 @@ public class AJAXBean extends AbstractBean implements
                     result = "null";
                 }
             } 
+            if("getStockDetailTempCal".equalsIgnoreCase(type)){
+                String stockId = map.get("stockId").toString();
+                String countRowDetail = map.get("countRowDetail").toString();
+                List<StockDetail> stockDetails = paymentStockDao.getListStockDetailFromStockId(stockId);
+                if (stockDetails != null) {
+                    result = buildPaymentStockDetailTempCountHTML(stockDetails,countRowDetail);
+                } else {
+                    result = "null";
+                }
+            } 
         }
-
         return result;
     }
 
@@ -1198,7 +1209,7 @@ public class AJAXBean extends AbstractBean implements
         return html.toString();
     }
     
-    private String buildPaymentStockDetailHTML(List<StockDetail> stockDetails,String row) {
+    private String buildPaymentStockDetailHTML(List<StockDetail> stockDetails,String row,String noStockTable) {
         StringBuffer html = new StringBuffer();     
         UtilityFunction utilty = new UtilityFunction();
         int no = Integer.parseInt(row);
@@ -1241,8 +1252,8 @@ public class AJAXBean extends AbstractBean implements
                     + "<td class='text-left'>" + refno + "</td>"
                     + "<td class='text-center'>" + pickup + "</td>"
                     + "<td class='text-center'>" + pickdate + "</td>"
-                    + "<td><input maxlength=\"10\" id=\"cost" + no + "\" name=\"cost" + no + "\" type=\"text\" class=\"form-control text-right\" value='" + cost + "' onkeyup=\"insertCommas(this)\" onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "')\" ></td>"
-                    + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control text-right\" value='" + sale + "' onkeyup=\"insertCommas(this)\" onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "')\" ></td>"
+                    + "<td><input maxlength=\"10\" id=\"cost" + no + "\" name=\"cost" + no + "\" type=\"text\" class=\"form-control text-right\" value='" + cost + "' onkeyup=\"insertCommas(this)\" onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' ,'"+  noStockTable + "')\" ></td>" 
+                    + "<td><input maxlength=\"10\" id=\"sale" + no + "\" name=\"sale" + no + "\" type=\"text\" class=\"form-control text-right\" value='" + sale + "' onkeyup=\"insertCommas(this)\" onkeydown=\"setFormatCurrencyOnFocusOut('"+  no + "' , '"+  noStockTable + "' )\" ></td>"
                     + "</tr>";
             html.append(newrow);
             no++;
@@ -1250,6 +1261,58 @@ public class AJAXBean extends AbstractBean implements
         return html.toString();
     }
     
+    private String buildPaymentStockDetailTempCountHTML(List<StockDetail> stockDetails,String row) {
+        StringBuffer html = new StringBuffer();     
+        UtilityFunction utilty = new UtilityFunction();
+        int no = Integer.parseInt(row);
+        String code = "" ;
+        String type = "" ;
+        String refno = "" ;
+        String pickup = "" ;
+        String pickdate = "" ;
+        String psiIdTable = "" ;
+        String psdIdTable = "" ;
+        String stockDetailIdTable = "" ;
+        String stockId = "";
+        String cost = "" ;
+        String sale = "";
+        for (int i = 0; i < stockDetails.size(); i++) {
+            StockDetail stockDetail = new StockDetail();
+            stockDetail = stockDetails.get(i);
+            code = stockDetail.getCode();
+            if(stockDetail.getTypeId() != null){
+                type = stockDetail.getTypeId().getName() ;
+            }
+            if(stockDetail.getOtherBooking() != null && stockDetail.getOtherBooking().getMaster() != null){
+                refno = stockDetail.getOtherBooking().getMaster().getReferenceNo();
+            }
+            if(stockDetail.getStaff() != null){
+                pickup = stockDetail.getStaff().getName();
+            }
+            pickdate = utilty.convertDateToString(stockDetail.getPickupDate());
+            stockDetailIdTable = stockDetail.getId();
+            stockId = stockDetail.getStock().getId();
+            
+            String newrow = "";              
+            newrow += "<tr>"
+                    + "<input type='hidden' id='psdIdTableTempCount" + no + "' name='psdIdTableTempCount" + no + "'  value='" + psdIdTable + "'>"
+                    + "<input type='hidden' id='psiIdTableTempCount" + no + "' name='psiIdTableTempCount" + no + "'  value='" +  psiIdTable + "'>"
+                    + "<input type='hidden' id='stockDetailIdTableTempCount" + no + "' name='stockDetailIdTableTempCount" + no + "'  value='" + stockDetailIdTable + "'>" 
+                    + "<input type='hidden' id='stockIdTableTempCount" + no + "' name='stockIdTableTempCount" + no + "'  value='" + stockId + "'>"
+                    + "<td class='text-center'>" + no + "</td>"
+                    + "<td class='text-left'>" + code + "</td>"
+                    + "<td class='text-left'>" + type + "</td>"
+                    + "<td class='text-left'>" + refno + "</td>"
+                    + "<td class='text-center'>" + pickup + "</td>"
+                    + "<td class='text-center'>" + pickdate + "</td>"
+                    + "<td><input maxlength=\"10\" id=\"costTempCount" + no + "\" name=\"costTempCount" + no + "\" type=\"text\" class=\"form-control text-right\" value='" + cost + "' onkeyup=\"insertCommas(this)\" onkeydown=\"setFormatCurrencyOnFocusOutTempCount('"+  no + "')\" ></td>"
+                    + "<td><input maxlength=\"10\" id=\"saleTempCount" + no + "\" name=\"saleTempCount" + no + "\" type=\"text\" class=\"form-control text-right\" value='" + sale + "' onkeyup=\"insertCommas(this)\" onkeydown=\"setFormatCurrencyOnFocusOutTempCount('"+  no + "')\" ></td>"
+                    + "</tr>";
+            html.append(newrow);
+            no++;
+        } 
+        return html.toString();
+    }
     
     
     public String buildTicketAircommissionViewListHTML(List<TicketAircommissionView> ticketList) {
