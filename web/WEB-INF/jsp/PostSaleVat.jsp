@@ -15,10 +15,10 @@
 <c:set var="Type" value="${requestScope['Type']}" />
 <section class="content-header" >
     <h1>
-        Tax Invoice Report
+        Sale Vat Report
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-book"></i>Tax Invoice Report</a></li>          
+        <li><a href="#"><i class="fa fa-book"></i>Sale Vat Report</a></li>          
         <li class="active"><a href="#"></a>Post Sale Vat</li>
     </ol>
 </section>

@@ -14,10 +14,10 @@
 <c:set var="Status" value="${requestScope['Status']}" />
 <section class="content-header" >
     <h1>
-        Tax Invoice Report
+        Sale Vat Report
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-book"></i>Tax Invoice Report</a></li>          
+        <li><a href="#"><i class="fa fa-book"></i>Sale Vat Report</a></li>          
         <li class="active"><a href="#"></a>Sale Vat Report</li>
     </ol>
 </section>
@@ -158,8 +158,8 @@
                             <tr class="datatable-header">
                                 <th class="hidden">Id</th>
                                 <th style="width: 1%" onclick="selectAll()"><u>Cancel</u></th>
-                                <th style="width: 8%" >No.</th>
-                                <th style="width: 14%">Date</th>
+                                <th style="width: 7%" >No.</th>
+                                <th style="width: 15%">Date</th>
                                 <th style="width: 8%">A/R</th>
                                 <th style="width: 25%">Name</th>
                                 <th style="width: 11%">Gross</th>
