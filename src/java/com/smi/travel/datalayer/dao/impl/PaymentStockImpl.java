@@ -105,10 +105,9 @@ public class PaymentStockImpl implements PaymentStockDao {
     public String deletePaymentStock(String paymentStockDetailId) {
         String result = "";
         PaymentStockDetail paymentStockDetail = new PaymentStockDetail();
+        Session session = this.sessionFactory.openSession();
+        transaction = session.beginTransaction();
         try {
-            Session session = this.sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            
             System.out.println(" paymentStockDetailId +++++++++++++= " + paymentStockDetailId);
             // DELETE PAYMENT STOCK DETAIL
             Query querydeleteitem = session.createQuery("Delete From PaymentStockItem psi where psi.paymentStockDetail.id = :paymentStockDetailId");
@@ -120,11 +119,13 @@ public class PaymentStockImpl implements PaymentStockDao {
             querydeletedetail.executeUpdate();
             
             transaction.commit();
-            session.close();
             result = "success";
         } catch (Exception ex) {
             ex.printStackTrace();
             result = "fail";
+        } finally {
+            session.close();
+            this.sessionFactory.close();
         }
         return result;
     }
