@@ -185,44 +185,47 @@ public class PaymentStockController extends SMITravelController{
                 String paymentStockId = request.getParameter("paymentStockId" + i);
                 String stockId = request.getParameter("stockId" + i);
                 String paymentStockDetailId = request.getParameter("paymentStockDetailId" + i);
-                PaymentStockDetail psd = new PaymentStockDetail();
-                psd.setId(paymentStockDetailId); // save Payment Stock Detail Id
-                psd.setPaymentStock(paymentStock);
-                
-                Stock stock = new Stock(); // save Stock Id
-                stock.setId(stockId);
-                psd.setStock(stock);
 
-                for (int j = 1; j < rowsDetail ; j++) {
-                    PaymentStockItem psi = new PaymentStockItem();
-                    String psiIdTable = request.getParameter("psiIdTableTempCount" + j);
-                    String psdIdTable = request.getParameter("psdIdTableTempCount" + j);
-                    String stockDetailIdTable = request.getParameter("stockDetailIdTableTempCount" + j);
-                    String cost = request.getParameter("costTempCount" + j);
-                    String sale = request.getParameter("saleTempCount" + j);
-                    String stockIdTable = request.getParameter("stockIdTableTempCount" + j);
-                    
-                    if((!"".equalsIgnoreCase(stockIdTable) && stockIdTable != null ) && (!"".equalsIgnoreCase(stockId) && stockId!=null)){
-                        System.out.println(" stockId "+ i + " ____ " + stockId);
-                        System.out.println(" stockIdTable "+ j + " ____ " + stockIdTable);
-                        if(stockId.equalsIgnoreCase(stockIdTable)){
-                                if((!"".equalsIgnoreCase(cost) && cost != null ) || (!"".equalsIgnoreCase(sale) && sale!=null)  ){
-                                System.out.println(" psiIdTable "+ j + " ____ " + psiIdTable);
-                                psi.setId(psiIdTable);
-                                psi.setPaymentStockDetail(psd);
+                if(!"".equalsIgnoreCase(stockId) && stockId != null){
+                    PaymentStockDetail psd = new PaymentStockDetail();
+                    psd.setId(paymentStockDetailId); // save Payment Stock Detail Id
+                    psd.setPaymentStock(paymentStock);
 
-                                StockDetail stockDetail = new StockDetail();
-                                stockDetail.setId(stockDetailIdTable);
-                                psi.setStockDetail(stockDetail);
-                                
-                                psi.setCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(cost) ? cost.replaceAll(",","") : 0)));
-                                psi.setSale(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(sale) ? sale.replaceAll(",","") : 0)));
-                                psd.getPaymentStockItems().add(psi);
+                    Stock stock = new Stock(); // save Stock Id
+                    stock.setId(stockId);
+                    psd.setStock(stock);
+
+                    for (int j = 1; j < rowsDetail ; j++) {
+                        PaymentStockItem psi = new PaymentStockItem();
+                        String psiIdTable = request.getParameter("psiIdTableTempCount" + j);
+                        String psdIdTable = request.getParameter("psdIdTableTempCount" + j);
+                        String stockDetailIdTable = request.getParameter("stockDetailIdTableTempCount" + j);
+                        String cost = request.getParameter("costTempCount" + j);
+                        String sale = request.getParameter("saleTempCount" + j);
+                        String stockIdTable = request.getParameter("stockIdTableTempCount" + j);
+
+                        if((!"".equalsIgnoreCase(stockIdTable) && stockIdTable != null ) && (!"".equalsIgnoreCase(stockId) && stockId!=null)){
+                            System.out.println(" stockId "+ i + " ____ " + stockId);
+                            System.out.println(" stockIdTable "+ j + " ____ " + stockIdTable);
+                            if(stockId.equalsIgnoreCase(stockIdTable)){
+                                    if((!"".equalsIgnoreCase(cost) && cost != null ) || (!"".equalsIgnoreCase(sale) && sale!=null)  ){
+                                    System.out.println(" psiIdTable "+ j + " ____ " + psiIdTable);
+                                    psi.setId(psiIdTable);
+                                    psi.setPaymentStockDetail(psd);
+
+                                    StockDetail stockDetail = new StockDetail();
+                                    stockDetail.setId(stockDetailIdTable);
+                                    psi.setStockDetail(stockDetail);
+
+                                    psi.setCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(cost) ? cost.replaceAll(",","") : 0)));
+                                    psi.setSale(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(sale) ? sale.replaceAll(",","") : 0)));
+                                    psd.getPaymentStockItems().add(psi);
+                                }
                             }
                         }
                     }
+                    paymentStock.getPaymentStockDetails().add(psd);
                 }
-                paymentStock.getPaymentStockDetails().add(psd);
             }
             paymentStock.setCostAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(totalCostAll) ? totalCostAll.replaceAll(",","") : 0)));
             paymentStock.setSaleAmount(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(totalSaleAll) ? totalSaleAll.replaceAll(",","") : 0)));

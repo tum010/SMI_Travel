@@ -508,12 +508,10 @@
         
         var action = document.getElementById('action');
         action.value = 'savePaymentStock';
-
         var countRowStock = document.getElementById('countRowStock');
         countRowStock.value = $("#StockTable tr").length;
         var countRowDetail = document.getElementById('countRowDetail');
         countRowDetail.value = $("#StockDetailTableTempCal tr").length;
-
         document.getElementById('PaymentStockForm').submit();
     }
     
@@ -733,6 +731,12 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
 
 
     function createStockDetails(stockid, productName, staff, addDate, effectiveFrom, effectiveTo) {
+        $('#textAlertDivSave').hide();
+        $('#textAlertDivNotSave').hide();
+        $('#textAlertDivDelete').hide();
+        $('#textAlertDivNotDelete').hide();
+        $('#textAlertPayNo').hide();
+        $('#fail').hide();
         var noStockTable = parseInt($("#noStockTable").val());
         for(var i=1; i<=noStockTable; i++){
             if(productName === $("#chk"+i).val()){

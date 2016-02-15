@@ -169,6 +169,8 @@ public class PaymentStockImpl implements PaymentStockDao {
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
+            PaymentStock payment = (PaymentStock) session.load(PaymentStock.class, paymentStock.getId());
+            session.refresh(payment);
             if("".equalsIgnoreCase(paymentStock.getId()) || paymentStock.getId() == null){
                 result = generatePayNo();
                 paymentStock.setPayStockNo(result);
@@ -184,7 +186,6 @@ public class PaymentStockImpl implements PaymentStockDao {
                                 session.save(paymentStockItems.get(j));
                             }
                         }
-                       
                     }
                 }
             }else{
@@ -192,31 +193,28 @@ public class PaymentStockImpl implements PaymentStockDao {
                 session.update(paymentStock);
                 List<PaymentStockDetail> paymentStockDetails = paymentStock.getPaymentStockDetails();
                 
-                if(paymentStockDetails != null){
+                if(paymentStockDetails != null && paymentStockDetails.size() != 0){
                     System.out.println(" paymentStockDetails.size()  " + paymentStockDetails.size());
                     for(int i = 0; i < paymentStockDetails.size(); i++){
-                        System.out.println(" paymentStockDetails.get(i).getId() " + paymentStockDetails.get(i).getId());
-                        if("".equalsIgnoreCase(paymentStockDetails.get(i).getId()) || paymentStockDetails.get(i).getId() == null){
-                            session.save(paymentStockDetails.get(i));
-                        }else{
+                        if(!"".equalsIgnoreCase(paymentStockDetails.get(i).getId()) && paymentStockDetails.get(i).getId() != null){
                             session.update(paymentStockDetails.get(i));
+                        }else{
+                            session.save(paymentStockDetails.get(i));
                         }
                         
                         List<PaymentStockItem> paymentStockItems = paymentStockDetails.get(i).getPaymentStockItems();
-                        if(paymentStockItems != null){
+                        if(paymentStockItems != null && paymentStockItems.size() != 0){
                             System.out.println("  paymentStockItems.size()  " +  paymentStockItems.size());
                             for(int j = 0; j < paymentStockItems.size(); j++){
-                                if("".equalsIgnoreCase(paymentStockItems.get(j).getId()) || paymentStockItems.get(j).getId() == null){
-                                    session.save(paymentStockItems.get(j));
-                                }else{
+                                if(!"".equalsIgnoreCase(paymentStockItems.get(j).getId()) && paymentStockItems.get(j).getId() != null){
                                     session.update(paymentStockItems.get(j));
+                                }else{
+                                    session.save(paymentStockItems.get(j));
                                 }
                             }
                         }
                     }
-                    
                 }
-                session.update(paymentStock);
                 checkupdate = true ;
             }
             transaction.commit();
