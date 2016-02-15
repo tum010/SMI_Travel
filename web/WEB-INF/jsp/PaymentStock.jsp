@@ -272,7 +272,7 @@
                                             </tr>
                                         </thead>
                                         <tbody> 
-                                            <tr>
+<!--                                            <tr>
                                                 <td align="center">1</td>
                                                 <td align="left">1</td>
                                                 <td align="left">1</td>
@@ -281,7 +281,7 @@
                                                 <td align="center">1</td>
                                                 <td align="center">1</td>
                                                 <td align="center">1</td>
-                                            </tr>
+                                            </tr>-->
                                         </tbody>
                                     </table>
                                 </div>
