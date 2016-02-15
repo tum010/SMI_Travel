@@ -646,7 +646,7 @@ public class TaxInvoiceController extends SMITravelController {
 //            result = taxInvoiceService.checkInvoiceDetailValue(id,cost,amount);
         }
         
-        if(taxInvoice.getIsProfit() == 1){
+        if(taxInvoice.getIsProfit() != null && taxInvoice.getIsProfit() == 1){
             String profit = checkProfit(taxInvoice);
             if("fail".equalsIgnoreCase(profit)){
                 result = "amount much over";
