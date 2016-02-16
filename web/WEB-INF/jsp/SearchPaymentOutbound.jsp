@@ -3,6 +3,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
+
 <c:set var="statusList" value="${requestScope['statusList']}" />
 <c:set var="paymentOutboundViewList" value="${requestScope['paymentOutboundViewList']}" />
 <c:set var="result" value="${requestScope['result']}" />
@@ -136,9 +140,11 @@
                         <td align="center">${paymentOutboundView.refno}</td>
                         <td>${paymentOutboundView.invoicesup}</td>
                         <td align="center">${paymentOutboundView.invoiceno}</td>
-                        <td class="money" align="right">${paymentOutboundView.amount}</td>
+                        <!--<td class="money" align="right">${paymentOutboundView.amount}</td>-->
+                        <td align="right">${paymentOutboundView.amount}</td>
                         <td align="center">${paymentOutboundView.curamount}</td>
-                        <td class="money" align="right">${paymentOutboundView.sale}</td>
+<!--                        <td class="money" align="right">${paymentOutboundView.sale}</td>-->
+                        <td align="right">${paymentOutboundView.sale}</td>
                         <td align="center">${paymentOutboundView.cursale}</td>
                         <td align="center">
                             <c:set var="statusName" value="" />
@@ -256,7 +262,16 @@ $(document).ready(function () {
         "bInfo": false,
         "bLengthChange": false
     });
-    
+     $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
     var codeInvoiceSup = [];
     $.each(invoiceSup, function (key, value) {
         codeInvoiceSup.push(value.code);

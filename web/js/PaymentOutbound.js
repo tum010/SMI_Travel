@@ -911,6 +911,7 @@ function addRowPaymentDetailTableByRefNo(refNo, type, description, billType, cos
 function addStock(stockId, payStockNo, costAmount, saleAmount, curCost, curSale) {
     var countPaymentDetail = parseInt($("#countPaymentDetail").val());
     var count = 0;
+    var checkAddDuplicate = false;
     for (var i = 1; i <= countPaymentDetail; i++) {        
         var countTemp = document.getElementById("count" + i);       
         if (countTemp !== null) {
@@ -924,6 +925,9 @@ function addStock(stockId, payStockNo, costAmount, saleAmount, curCost, curSale)
             var curTemp = $("#cur"+i).val();
             var descriptionTemp = $("#description"+i).val();
             var payStockTemp = $("#payStock"+i).val();
+            if(payStockNo === payStockTemp){
+               checkAddDuplicate = true ;     
+            }
             var saleAmountTemp = $("#saleAmount"+i).val();
             var saleCurrencyTemp = $("#saleCurrency"+i).val();
             
@@ -965,7 +969,11 @@ function addStock(stockId, payStockNo, costAmount, saleAmount, curCost, curSale)
         count = ++countPaymentDetail;
         addRowPaymentDetailTable(count);      
     }
-    addRowPaymentDetailTableByStock(stockId, payStockNo, parseFloat(costAmount), curCost, parseFloat(saleAmount), curSale, 'Others', count);
+    if(checkAddDuplicate){
+        $('#textAlertDuplicateStock').show();
+    }else{
+        addRowPaymentDetailTableByStock(stockId, payStockNo, parseFloat(costAmount), curCost, parseFloat(saleAmount), curSale, 'Others', count);
+    }
 }
 
 function addRowPaymentDetailTableByStock(stockId, payStockNo, costAmount, curCost, saleAmount, curSale, type, row) {
