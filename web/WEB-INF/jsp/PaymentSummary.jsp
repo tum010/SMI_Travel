@@ -449,7 +449,7 @@ function validateDate(date,option){
     }
 }
 
-function printOverdueSummary(){  
+function printPaymentSummary(){  
     var from = $('#FromDate').val();
     var to = $('#ToDate').val();
     var invSupCode = $('#invSupCode').val();

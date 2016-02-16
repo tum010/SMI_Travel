@@ -152,6 +152,7 @@
                     <div class="row" style="padding-left: 15px;">             
                         <div class="row">
                             <div class="col-xs-11" style="width: 1030px">
+                                <input type="hidden" id="noStockTableTemp" name="noStockTableTemp" value="${requestScope['noStockTable']}"/>
                                 <input type="hidden" id="noStockTable" name="noStockTable" value="${requestScope['noStockTable']}"/>
                                 <table class="display" id="StockTable">
                                     <thead>
@@ -176,7 +177,7 @@
                                                 <input type="hidden" id="paymentStockDetailId${i.count}" name="paymentStockDetailId${i.count}"  value="${table.id}"> 
                                                 <input type="hidden" id="paymentStockId${i.count}" name="paymentStockId${i.count}"  value="${table.paymentStock.id}"> 
                                                 <input type="hidden" id="stockId${i.count}" name="stockId${i.count}"  value="${table.stock.id}"> 
-                                                <td align="center">${i.count}</td>
+                                                <td align="center"><div id="runningNo${i.count}" value="${i.count}"></div></td>
                                                 <td align="left">${table.stock.product.name}</td>
                                                 <td align="left">${table.stock.staff.username}</td>
                                                 <td align="center">${table.stock.createDate}</td>
@@ -496,6 +497,18 @@
             digitsOptional: false,
             placeholder: "0.00",
         });
+        
+            var noStockTable = parseInt($("#noStockTable").val());
+            var no = 1;
+            for(var i = 1 ; i < noStockTable ; i++){
+                var runningNo = $("#runningNo"+i).val();
+                if(runningNo != null){
+                    document.getElementById('runningNo' + i).style.display = 'block';
+                    document.getElementById('runningNo' + i).innerHTML = no;
+                    no ++ ;
+                }   
+            }
+            $("#noStockTableTemp").val(no);
     });
     
     function saveAction() {
@@ -618,6 +631,17 @@ function deletePaymentStockDetailList(paymentStockDetailId , row , stockid){
         $("#delPaymentStock").text('Are you sure to delete stock from this payment ?');
         $('#DeletePaymentStock').modal('show');
     }
+    
+    var noStockTable = parseInt($("#noStockTable").val());
+    var no = 1;
+    for(var i = 1 ; i < noStockTable ; i++){
+        var runningNo = $("#runningNo"+i).val();
+        if(runningNo != null){
+            document.getElementById('runningNo' + i).innerHTML = no;
+            no ++ ;
+        }   
+    }
+    $("#noStockTableTemp").val(no);
 }
 
 function DeleteRowPaymentStock(){
@@ -642,6 +666,17 @@ function DeleteRowPaymentStock(){
             }
             calculateCostTotalAll();
             calculateSaleTotalAll();
+            
+            var noStockTable = parseInt($("#noStockTable").val());
+            var no = 1;
+            for(var i = 1 ; i < noStockTable ; i++){
+                var runningNo = $("#runningNo"+i).val();
+                if(runningNo != null){
+                    document.getElementById('runningNo' + i).innerHTML = no;
+                    no ++ ;
+                }   
+            }
+            $("#noStockTableTemp").val(no);
         }
         else {
             $.ajax({
@@ -660,6 +695,17 @@ function DeleteRowPaymentStock(){
                     }
                     calculateCostTotalAll();
                     calculateSaleTotalAll();
+                    
+                    var noStockTable = parseInt($("#noStockTable").val());
+                    var no = 1;
+                    for(var i = 1 ; i < noStockTable ; i++){
+                        var runningNo = $("#runningNo"+i).val();
+                        if(runningNo != null){
+                            document.getElementById('runningNo' + i).innerHTML = no;
+                            no ++ ;
+                        }   
+                    }
+                    $("#noStockTableTemp").val(no);
                 },
                 error: function() {
                     console.log("error");
@@ -738,16 +784,7 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
         $('#textAlertPayNo').hide();
         $('#fail').hide();
         var noStockTable = parseInt($("#noStockTable").val());
-        for(var i=1; i<=noStockTable; i++){
-            if(productName === $("#chk"+i).val()){
-                $("#SearchStock").modal("hide");
-                $('#fail').show();
-                return;
-            }else{
-                $('#fail').hide();
-            }        
-        }
-
+        var noStockTableTemp = parseInt($("#noStockTableTemp").val());
         for(var i=1; i<noStockTable; i++){
             if(stockid === $("#stockId"+i).val()){
                 $("#SearchStock").modal("hide");
@@ -763,7 +800,7 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
                 '<input type="hidden" id="paymentStockId'+ noStockTable +'" name="paymentStockId'+ noStockTable +'"  value="">' +
                 '<input type="hidden" id="stockId'+ noStockTable +'" name="stockId'+ noStockTable +'"  value="'+ stockid +'"> '+
                 '<td class="hidden"><input type="hidden" id="chk'+ noStockTable +'" name="chk'+ noStockTable +'" value="' + productName + '"/></td>' +
-                '<td class="text-center ">'+ noStockTable +'</td>' +
+                '<td class="text-center "><div id="runningNo' + noStockTable + '" value="' + noStockTableTemp + '"></div></td>' +
                 '<td>' + productName + '</td>' +
                 '<td>' + staff + '</td>' +
                 '<td class="text-center ">' + addDate + '</td>' +
@@ -778,7 +815,10 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
                 '</td>' +
                 '<tr>'
                 );
+        document.getElementById('runningNo' + noStockTable).style.display = 'block';
+        document.getElementById('runningNo' + noStockTable).innerHTML = noStockTableTemp;
         $("#noStockTable").val(noStockTable+1);
+        $("#noStockTableTemp").val(noStockTableTemp+1);
         getStockDetail(stockid,"null",productName,noStockTable);
         getStockDetailTempCal(stockid,"null",productName,noStockTable,"");
         $("#SearchStock").modal("hide");
@@ -866,7 +906,7 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
                             $table.trigger('repaginate');
                             var numRows = $table.find('tbody tr').length;
                             var numPages = Math.ceil(numRows / numPerPage);
-                            var $pager = $('<div class="col-xs-12 text-right" id="pageNo"><font style="color: #499DD5"></font>&nbsp;</div>');
+                            var $pager = $('<div class="col-xs-12 text-right" id="pageNo"><font style="color:#499DD5"></font>&nbsp;</div>');
                             var $br = $('<div class="col-xs-12"><br></div>');
                             for (var page = 0; page < numPages; page++) {
                                 if(page === 0){
@@ -879,14 +919,13 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
                                     }).appendTo($pager).addClass('clickable');
                                 }
 
-                                $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + "  ").bind('click', {
+                                $('<font style="color:#499DD5"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + "  ").bind('click', {
                                     newPage: page
                                 }, function(event) {
                                     currentPage = event.data['newPage'];
                                     $table.trigger('repaginate');
                                     $(this).addClass('active').siblings().removeClass('active');
                                 }).appendTo($pager).addClass('clickable');
-
                                 if(page === (numPages - 1)){
                                     $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + "Last" + "  ").bind('click', {
                                     newPage: page
