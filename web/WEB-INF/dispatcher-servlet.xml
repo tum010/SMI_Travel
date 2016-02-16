@@ -169,6 +169,7 @@
                                 <prop key="DebtorSummary.smi">DebtorSummaryController</prop>
                                 <prop key="ProfitLoss.smi">ProfitLossController</prop>
                                 <prop key="RefundTicketSummary.smi">RefundTicketSummaryReportController</prop>
+                                <prop key="PaymentSummary.smi">PaymentSummaryController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -726,6 +727,10 @@
     </bean>
     
     <bean id="OverdueSummaryController" class="com.smi.travel.controller.OverdueSummaryController">
+        <property name="utilityService" ref="UtilityService" />
+    </bean>
+    
+    <bean id="PaymentSummaryController" class="com.smi.travel.controller.PaymentSummaryController">
         <property name="utilityService" ref="UtilityService" />
     </bean>
     

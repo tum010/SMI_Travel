@@ -407,6 +407,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         UtilityFunction util = new UtilityFunction();
         Date thisDate = new Date();
         List data = new ArrayList();
+        String invSupCodeTemp = "ALL";
+        String refNoTemp = "ALL";
         String Query = "SELECT * FROM `payment_outbound_summary` where paydate BETWEEN '"+fromDate+"' and '"+toDate+"' ";
 
         if ((status != null) && (!"".equalsIgnoreCase(status))) {
@@ -419,7 +421,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         
         if ((refNo != null) && (!"".equalsIgnoreCase(refNo))) {
             Query += "  and refno = '" + refNo + "'";
-        }
+            refNoTemp = refNo;
+        }      
         
         Query += " order by payno ";        
         System.out.println("Query : "+Query);
@@ -457,8 +460,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             sum.setHeaderfromdate(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(fromDate))));
             sum.setHeadertodate(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(toDate))));
             sum.setHeaderstatus(status);
-            sum.setHeaderrefno(refNo);
-            sum.setHeaderinvoicesupcode(invSupCode);
+            sum.setHeaderrefno(refNoTemp);
+            sum.setHeaderinvoicesupcode(invSupCodeTemp);
             sum.setDatefromto(sum.getHeaderfromdate() + " to " + sum.getHeadertodate());
             sum.setPaymentid(util.ConvertString(B[0]));
             sum.setPayno(util.ConvertString(B[1]));
@@ -479,6 +482,11 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             sum.setAmountcur(util.ConvertString(B[16]));
             sum.setSalecur(util.ConvertString(B[17]));
             sum.setValue(util.ConvertString(B[18]));
+            
+            if ((invSupCode != null) && (!"".equalsIgnoreCase(invSupCode)) && (util.ConvertString(B[4]) != null) && (!"".equalsIgnoreCase(util.ConvertString(B[4])))) {
+                sum.setHeaderinvoicesupcode(util.ConvertString(B[4]));
+            }
+            
             data.add(sum);            
         }
         session.close();
@@ -501,4 +509,5 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         session.close();
         return paymentOutboundList.get(0);
     }
+
 }

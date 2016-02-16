@@ -2049,7 +2049,7 @@ public class AJAXBean extends AbstractBean implements
                         }
                 newrow += "<td class='money'>" + amount + "</td>"
                         + "<td>" + currency + "</td>"
-                        + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + "THB" + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "','','','','','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                        + "<td><center><a href=\"#/ref\"><span onclick=\"addProduct('" + product + "','" + description + "','" + cost + "','" + cur + "','','','" + amount + "','" + currency + "','','" + billableDescId + "','','','2','" + displaydescription + "','" + refNo + "','','','','','','')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                         + "</tr>";
                 html.append(newrow);
                 No++;
