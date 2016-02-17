@@ -1384,7 +1384,7 @@ function validatePaymentOutbound(option) {
                     var payStock1 = document.getElementById('payStock'+i).value;
                     var saleAmount1 = document.getElementById('saleAmount'+i).value;
                     var saleCurrency1 = document.getElementById('saleCurrency'+i).value;
-                    if(type1 !== '' || refNo1 !== '' || invoice1 !== '' || cost1 !== '' || gross1 !== '' || amount1 !== '' || 
+                    if(currency1.value !== '' || type1 !== '' || refNo1 !== '' || invoice1 !== '' || cost1 !== '' || gross1 !== '' || amount1 !== '' || 
                             comm1 !== '' || description1 !== '' || payStock1 !== '' || saleAmount1 !== '' || saleCurrency1 !== ''){
                         var currencyTemp1 = currency1.value;
                         for(var j=i+1; j<=count; j++){
@@ -1404,7 +1404,7 @@ function validatePaymentOutbound(option) {
                                 var saleCurrency2 = document.getElementById('saleCurrency'+j).value;
                                 
                                 var currencyTemp2 = currency2.value;
-                                if(type2 !== '' || refNo2 !== '' || invoice2 !== '' || cost2 !== '' || gross2 !== '' || amount2 !== '' || 
+                                if(currency2.value !== '' || type2 !== '' || refNo2 !== '' || invoice2 !== '' || cost2 !== '' || gross2 !== '' || amount2 !== '' || 
                                         comm2 !== '' || description2 !== '' || payStock2 !== '' || saleAmount2 !== '' || saleCurrency2 !== ''){                                                                 
                                     if((currencyTemp1 !== currencyTemp2)){
                                         currencyNotMatch = true;
@@ -1440,7 +1440,7 @@ function validatePaymentOutbound(option) {
                         var payStock = document.getElementById('payStock'+i).value;
                         var saleAmount = document.getElementById('saleAmount'+i).value;
                         var saleCurrency = document.getElementById('saleCurrency'+i).value;
-                        if(type !== '' || refNo !== '' || invoice !== '' || cost !== '' || gross !== '' || amount !== '' || 
+                        if(currency.value !== '' || type !== '' || refNo !== '' || invoice !== '' || cost !== '' || gross !== '' || amount !== '' || 
                             comm !== '' || description !== '' || payStock !== '' || saleAmount !== '' || saleCurrency !== ''){
                             currency.style.borderColor = 'red';
                             booleanCurrency = false;
@@ -1469,7 +1469,7 @@ function validatePaymentOutbound(option) {
                         var payStock = document.getElementById('payStock'+i).value;
                         var saleAmount = document.getElementById('saleAmount'+i).value;
                         var saleCurrency = document.getElementById('saleCurrency'+i).value;
-                        if(type !== '' || refNo !== '' || invoice !== '' || cost !== '' || gross !== '' || amount !== '' || 
+                        if(currency.value !== '' || type !== '' || refNo !== '' || invoice !== '' || cost !== '' || gross !== '' || amount !== '' || 
                             comm !== '' || description !== '' || payStock !== '' || saleAmount !== '' || saleCurrency !== ''){
                             currency.style.borderColor = 'red';
                             booleanCurrency = false;
