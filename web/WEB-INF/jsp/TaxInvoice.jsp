@@ -377,8 +377,8 @@
                         <label class="control-label text-right" sty>&nbsp;&nbsp;/&nbsp;&nbsp;</label>        
                         <a class="${outbound}" data-toggle="collapse" href="#collapseExample${advanced.search}" aria-expanded="false" aria-controls="collapseExample${advanced.search}" onclick="showSearchRefNo()">
                             <span id="SpanEdit${advanced.search}">Ref No</span>
-                        </a>                                                       
-                    </div>
+                        </a>                       
+                    </div>                       
                     <div class="col-xs-12 " id="searchInvoiceNo1">
                         <div class="col-xs-1 text-left" style="width: 160px;">
                             <label class="control-label text-right">Invoice No</label>
@@ -393,7 +393,13 @@
                                 <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                             </button> 
                         </div>
-                    </div> 
+                    </div>
+                    <div class="col-xs-12" style="padding: 0px 15px 0px 0px;">        
+                        <div id="textAlertDivInvoice"  style="display:none;" class="alert alert-danger">
+                            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
+                            <strong id="alertInvoice"></strong>
+                        </div>
+                    </div>          
                     <div class="col-xs-12 hidden" id="searchInvoiceNo2" style="padding: 0px 15px 0px 0px;">
                         <table id="InvoiceListTable" class="display" cellspacing="0" width="100px">
                             <thead>
@@ -428,6 +434,12 @@
                             <div id='AlertBooking' style='display:none'><font color="red">This Ref No can get billable detail from outbound only.</font></div>  
                         </div>      
                     </div>
+                    <div class="col-xs-12" style="padding: 0px 15px 0px 0px;">        
+                        <div id="textAlertDivRefNo"  style="display:none;" class="alert alert-danger">
+                            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
+                            <strong id="alertRefNo"></strong>
+                        </div>
+                    </div>    
                     <div class="col-xs-12 hidden" id="searchRefNo2" style="padding: 0px 15px 0px 0px;">
                         <table id="RefNoListTable" class="display" cellspacing="0" width="100%" style="table-layout: fixed;">
                             <thead>
@@ -469,14 +481,14 @@
                     <div role="tabpanel" class="tab-pane  active" id="infoMasterProduct">
                         <!--<div class="panel panel-default ${panelborder}">-->                              
                             <div class="panel-body">
-                                <div id="textAlertCurrencyAmountNotEmpty"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <div id="textAlertCurrencyAmountNotEmpty"  style="display:none;" class="alert alert-danger">
+                                    <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
                                     <strong>Currency Amount Not Empty</strong> 
                                 </div>
-                                <div id="textAlertCurrencyAmountNotMatch"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <div id="textAlertCurrencyAmountNotMatch"  style="display:none;" class="alert alert-danger">
+                                    <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
                                     <strong>Currency Amount Not Match</strong> 
-                                </div>
+                                </div>                               
                                 <div class="row" style="">    
                                     <div class="col-md-12">
                                         <input type="hidden" class="form-control" id="vatDefault" name="vatDefault" value="${vatDefault}"/>
@@ -1620,6 +1632,8 @@
     }
     
     function CallAjaxSearchInvoice(param) {
+        $("#textAlertDivInvoice").hide();
+        $("#alertInvoice").html('');
         var url = 'AJAXServlet';
         $("#ajaxloadsearch").removeClass("hidden");
         try {
@@ -1641,38 +1655,47 @@
                             document.getElementById("ARCode").value = '';
                             
                         }else{
+                            var result = msg.split("//");
                             $('#InvoiceListTable > tbody  > tr').each(function() {
                                 $(this).remove();
                             });
-                            $("#InvoiceListTable tbody").empty().append(msg);
-                            
-                            if(document.getElementById("receiveTaxInvTo")!==null && ($("#receiveTaxInvTo").val()!==undefined)){
-                                document.getElementById("TaxInvTo").value = $("#receiveTaxInvTo").val();
-                            } else {
-                                document.getElementById("TaxInvTo").value = '';
+                            if(result[0] !== ''){                                                              
+                                $("#InvoiceListTable tbody").empty().append(result[0]);
+
+                                if(document.getElementById("receiveTaxInvTo")!==null && ($("#receiveTaxInvTo").val()!==undefined)){
+                                    document.getElementById("TaxInvTo").value = $("#receiveTaxInvTo").val();
+                                } else {
+                                    document.getElementById("TaxInvTo").value = '';
+                                }
+                                if((document.getElementById("InvToName")!==null) && ($("#receiveInvToName").val()!==undefined)){
+                                    document.getElementById("InvToName").value = $("#receiveInvToName").val();
+                                } else {
+                                    document.getElementById("InvToName").value = '';
+                                }
+
+                                if((document.getElementById("InvToAddress")!==null) && ($("#receiveInvToAddress").val()!==undefined)){
+                                    document.getElementById("InvToAddress").value = $("#receiveInvToAddress").val();
+                                } else {
+                                   document.getElementById("InvToAddress").value = ''; 
+                                }
+
+                                if((document.getElementById("receiveARCode")!==null) && ($("#receiveARCode").val()!==undefined)){
+                                    document.getElementById("ARCode").value = $("#receiveARCode").val();
+                                } else {
+                                    document.getElementById("ARCode").value = '';
+                                }                              
                             }
-                            if((document.getElementById("InvToName")!==null) && ($("#receiveInvToName").val()!==undefined)){
-                                document.getElementById("InvToName").value = $("#receiveInvToName").val();
-                            } else {
-                                document.getElementById("InvToName").value = '';
-                            }
                             
-                            if((document.getElementById("InvToAddress")!==null) && ($("#receiveInvToAddress").val()!==undefined)){
-                                document.getElementById("InvToAddress").value = $("#receiveInvToAddress").val();
-                            } else {
-                               document.getElementById("InvToAddress").value = ''; 
-                            }
-                            
-                            if((document.getElementById("receiveARCode")!==null) && ($("#receiveARCode").val()!==undefined)){
-                                document.getElementById("ARCode").value = $("#receiveARCode").val();
-                            } else {
-                                document.getElementById("ARCode").value = '';
-                            }
-                            
-                            if(msg !== ''){
+                            if(result[1] !== 'fail'){
+                                $("#InvoiceListTable tbody").empty().append(result[1]);
                                 $("#searchInvoiceNo2").removeClass("hidden");
                             } else {
                                 $("#searchInvoiceNo2").addClass("hidden");
+                            }
+                            
+                            if(result[2] !== 'fail'){
+                                $("#alertInvoice").html(result[2]);
+                                $("#textAlertDivInvoice").show();
                             }
                             
 //                            if((document.getElementById("receiveInvToDate")!==null) && ($("#receiveInvToDate").val()!==undefined)){
@@ -1723,6 +1746,8 @@
     function CallAjaxSearchRef(param) {
         var url = 'AJAXServlet';
         $("#ajaxloadsearch").removeClass("hidden");
+        $("#textAlertDivRefNo").hide();
+        $("#alertRefNo").html('');
         try {
             $.ajax({
                 type: "POST",
@@ -1763,6 +1788,17 @@
                             
                             }else if(result[1] === ''){
                                 $("#searchRefNo2").addClass("hidden");
+                            }
+                            
+                            if(result[2] !== 'fail'){
+                                $("#alertRefNo").html(result[2]);
+                                $("#textAlertDivRefNo").show();
+                            }
+                            
+                            if(result[3] !== 'fail'){
+                                var result2 = $("#alertRefNo").html();
+                                $("#alertRefNo").html(result2 !== '' ? result2+'<br>'+result[3] : result[3]);
+                                $("#textAlertDivRefNo").show();
                             }
                             
                             $("#RefNoListTableTemp tbody").append(result[0]);                           
@@ -2786,5 +2822,9 @@
     
     function hideTextAlertDiv(){
         $("#textAlertDivDuplicate").hide();
+        $("#textAlertCurrencyAmountNotEmpty").hide();
+        $("#textAlertCurrencyAmountNotMatch").hide();
+        $("#textAlertDivRefNo").hide();
+        $("#textAlertDivInvoice").hide();
     }
 </script>

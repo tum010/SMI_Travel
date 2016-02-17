@@ -44,4 +44,7 @@ public interface TaxInvoiceDao {
     public BillableDesc checkBillabledesc(String invoiceDetailId);
     public BigDecimal getProfitFromTaxInvoice(String invoiceDetailId, String taxInvoiceDetailId);
     public BigDecimal getExRateFromInvoiceDetail(String invoiceDetailId);
+    public boolean checkInvNoProfit(String invoiceDetailId);
+    public List<TaxInvoice> checkInvoiceAlready(String billableDescId);
+    public List<TaxInvoice> checkRefNoAlready(String billableDescId);
 }

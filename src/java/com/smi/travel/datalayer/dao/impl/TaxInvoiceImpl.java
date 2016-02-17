@@ -728,4 +728,61 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         return exRate;
     }
 
+    @Override
+    public boolean checkInvNoProfit(String invDetailId) {
+        Session session = this.sessionFactory.openSession();
+        String query = " from TaxInvoiceDetail t WHERE t.invoiceDetail.id = :invDetailId and t.taxInvoice.MFinanceItemstatus.name = 'NORMAL' AND t.taxInvoice.isProfit = '1'";
+        List<TaxInvoiceDetail> taxInvoiceDetailList = session.createQuery(query).setParameter("invDetailId", invDetailId).list();
+        if(taxInvoiceDetailList.isEmpty()){
+            return true;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return false;
+    }
+
+    @Override
+    public List<TaxInvoice> checkInvoiceAlready(String billableDescId) {
+        List<TaxInvoice> taxInvoiceList = new ArrayList<TaxInvoice>();
+        Session session = this.sessionFactory.openSession();
+        List<TaxInvoiceDetail> list = session.createQuery("from TaxInvoiceDetail tax WHERE tax.invoiceDetail.billableDesc.id = :billableDescId and tax.taxInvoice.MFinanceItemstatus.id = 1 and tax.taxInvoice.isProfit != 1")
+                .setParameter("billableDescId", billableDescId)
+                .list();
+        if(list.isEmpty()){
+            session.close();
+            this.sessionFactory.close();
+            return null;
+        }
+        for(int i=0; i<list.size(); i++){
+            TaxInvoice taxInvoice = new TaxInvoice();
+            taxInvoice.setTaxNo(list.get(i).getTaxInvoice().getTaxNo());
+            taxInvoiceList.add(taxInvoice);
+        }
+        session.close();
+        this.sessionFactory.close();
+        return taxInvoiceList;
+    }
+
+    @Override
+    public List<TaxInvoice> checkRefNoAlready(String billableDescId) {
+        List<TaxInvoice> taxInvoiceList = new ArrayList<TaxInvoice>();
+        Session session = this.sessionFactory.openSession();
+        List<TaxInvoiceDetail> list = session.createQuery("from TaxInvoiceDetail tax WHERE tax.invoiceDetail.billableDesc.id = :billableDescId and tax.taxInvoice.MFinanceItemstatus.id = 1 and tax.taxInvoice.isProfit = 1")
+                .setParameter("billableDescId", billableDescId)
+                .list();
+        if(list.isEmpty()){
+            session.close();
+            this.sessionFactory.close();
+            return null;
+        }
+        for(int i=0; i<list.size(); i++){
+            TaxInvoice taxInvoice = new TaxInvoice();
+            taxInvoice.setTaxNo(list.get(i).getTaxInvoice().getTaxNo());
+            taxInvoiceList.add(taxInvoice);
+        }
+        session.close();
+        this.sessionFactory.close();
+        return taxInvoiceList;
+    }
+
 }

@@ -638,7 +638,8 @@ public class InvoiceImpl implements InvoiceDao{
     public Invoice searchInvoiceForTaxInvoice(String InvoiceNumber, String department) {       
         Session session = this.sessionFactory.openSession();
         Invoice invoice = new Invoice();
-        List<Invoice> invoiceList = session.createQuery(GET_INVOICE_FOR_TAX_INVOICE)
+        String query = "FROM Invoice inv where inv.invNo = :invoiceNo and inv.department = :department and inv.invType = 'V' and inv.MFinanceItemstatus.name = 'NORMAL'";
+        List<Invoice> invoiceList = session.createQuery(query)
                 .setParameter("invoiceNo", InvoiceNumber)
                 .setParameter("department", department)
                 .list(); 
