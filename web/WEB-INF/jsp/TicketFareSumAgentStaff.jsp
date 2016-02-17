@@ -86,7 +86,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Airline</label>
+                                <label class="col-md-6 control-label text-right" >Airline Code</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="airline" id="airline"  class="form-control">
@@ -104,7 +104,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Airline Airline</label>
+                                <label class="col-md-6 control-label text-right" >Airline</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="airlineCode" id="airlineCode"  class="form-control">

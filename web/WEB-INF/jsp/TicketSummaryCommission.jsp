@@ -125,7 +125,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" >Air</label>
+                                <label class="col-md-6 control-label text-right" >Airline</label>
                                 <div class="col-md-6">  
                                     <div class="form-group">
                                         <select name="airlineCode" id="airlineCode"  class="selectize form-control">
