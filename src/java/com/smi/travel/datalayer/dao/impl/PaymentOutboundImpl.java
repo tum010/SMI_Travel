@@ -555,7 +555,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 .addScalar("infant", Hibernate.STRING)
                 .addScalar("country", Hibernate.STRING)
                 .addScalar("city", Hibernate.STRING)
-                .addScalar("producttye", Hibernate.STRING)
+                .addScalar("producttype", Hibernate.STRING)
                 .addScalar("departdate", Hibernate.STRING)
                 .addScalar("price", Hibernate.STRING)
                 .addScalar("curprice", Hibernate.STRING)
@@ -575,27 +575,56 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 .addScalar("wht", Hibernate.STRING)
                 .addScalar("grosspay", Hibernate.STRING)
                 .addScalar("grossreal", Hibernate.STRING)
+                .addScalar("paycomdate", Hibernate.STRING)
+                .addScalar("paycompvno", Hibernate.STRING)
+                .addScalar("paycomstaff", Hibernate.STRING)
+                .addScalar("paycommission", Hibernate.STRING)
+                .addScalar("balanceprofit", Hibernate.STRING)
+                .addScalar("receiptno", Hibernate.STRING)
+                .addScalar("receiptdate", Hibernate.STRING)
                 .list();
             
             SimpleDateFormat dateformat = new SimpleDateFormat();
             dateformat.applyPattern("dd-MM-yyyy");
             
+            SimpleDateFormat dateformat1 = new SimpleDateFormat();
+            dateformat1.applyPattern("dd-MM-yyyy");
+            
         for (Object[] B : QueryTicketList) {
             PaymentOutboundAllDetail sum = new PaymentOutboundAllDetail();
             sum.setSystemdate(util.ConvertString(new SimpleDateFormat("dd MMM yyyy hh:mm:ss", new Locale("us", "us")).format(thisDate)));
             sum.setUser(username);
-            sum.setHeaderfromdate(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(fromDate))));
-            sum.setHeadertodate(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(toDate))));
+            sum.setHeaderfromdate(util.ConvertString(dateformat.format(util.convertStringToDate(fromDate))));
+            sum.setHeadertodate(util.ConvertString(dateformat.format(util.convertStringToDate(toDate))));
             sum.setHeaderrefno(refNoTemp);
             sum.setHeaderinvoicesupcode(invSupCodeTemp);
-            sum.setDatefromto(sum.getHeaderfromdate() + " to " + sum.getHeadertodate());
+            sum.setDatefromto(sum.getHeaderfromdate() + " To " + sum.getHeadertodate());
             sum.setHeaderstaff(saleByTemp);
             
             sum.setRefno(util.ConvertString(B[0]));
-            sum.setIssuedate("null".equals(String.valueOf(B[1])) ? "" : util.ConvertString(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[1])))));
+            if((!"null".equalsIgnoreCase(String.valueOf(B[1])) && B[1] != null) && !"".equalsIgnoreCase(String.valueOf(B[1]))){
+                sum.setIssuedate(util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[1])))));
+            }else{
+                sum.setIssuedate("");
+            }
             sum.setTourcode(util.ConvertString(B[2]));
             sum.setInvno(util.ConvertString(B[3]));
-            sum.setInvdate("null".equals(String.valueOf(B[4])) ? "" : util.ConvertString(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[4])))));
+            
+            if((!"null".equalsIgnoreCase(String.valueOf(B[4])) && B[4] != null) && !"".equalsIgnoreCase(String.valueOf(B[4]))){
+                String invdatemp="";
+                String invDate[] = String.valueOf(B[4]).split("\r\n");
+                if(invDate.length > 1 ){
+                   for(int x= 0; x<invDate.length;x++){
+                       invdatemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(invDate[x]))))+"\r\n";
+                       sum.setInvdate(invdatemp);
+                   }
+                }else{
+                  sum.setInvdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[4])))));
+                }
+            }else{
+                sum.setInvdate("");
+            }
+            
             sum.setDepartment(util.ConvertString(B[5]));
             sum.setStaff(util.ConvertString(B[6]));
             sum.setTerm(util.ConvertString(B[7]));
@@ -605,13 +634,39 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             sum.setInfant(util.ConvertString(B[11]));
             sum.setCountry(util.ConvertString(B[12]));
             sum.setCity(util.ConvertString(B[13]));
-            sum.setProducttye(util.ConvertString(B[14]));
-            sum.setDepartdate("null".equals(String.valueOf(B[15])) ? "" : util.ConvertString(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[15])))));
+            sum.setProducttype(util.ConvertString(B[14]));
+            if((!"null".equalsIgnoreCase(String.valueOf(B[15])) && B[15] != null) && !"".equalsIgnoreCase(String.valueOf(B[15]))){
+                String datetemp="";
+                String date[] = String.valueOf(B[15]).split("\r\n");
+                if(date.length > 1 ){
+                   for(int x= 0; x<date.length;x++){
+                       datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]))))+"\r\n";
+                       sum.setDepartdate(datetemp);
+                   }
+                }else{
+                  sum.setDepartdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[15])))));
+                }
+            }else{
+                sum.setDepartdate("");
+            }
             sum.setPrice(!"null".equalsIgnoreCase(String.valueOf(B[16])) ? util.ConvertString(B[16]) : "0.00");
             sum.setCurprice(util.ConvertString(B[17]));
             sum.setAcc(util.ConvertString(B[18]));
             sum.setPvno(util.ConvertString(B[19]));
-            sum.setPaydate("null".equals(String.valueOf(B[20])) ? "" : util.ConvertString(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[20])))));
+            if((!"null".equalsIgnoreCase(String.valueOf(B[20])) && B[20] != null) && !"".equalsIgnoreCase(String.valueOf(B[20]))){
+                String datetemp="";
+                String date[] = String.valueOf(B[20]).split("\r\n");
+                if(date.length > 1 ){
+                   for(int x= 0; x<date.length;x++){
+                       datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]))))+"\r\n";
+                       sum.setPaydate(datetemp);
+                   }
+                }else{
+                  sum.setPaydate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[20])))));
+                }
+            }else{
+                sum.setPaydate("");
+            }
             sum.setInvsup(util.ConvertString(B[21]));
             sum.setInvsupcode(util.ConvertString(B[22]));
             sum.setPayinvno(util.ConvertString(B[23]));
@@ -625,15 +680,53 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             sum.setWht(!"null".equalsIgnoreCase(String.valueOf(B[31])) ? util.ConvertString(B[31]) : "0.00");
             sum.setGrosspay(!"null".equalsIgnoreCase(String.valueOf(B[32])) ? util.ConvertString(B[32]) : "0.00");
             sum.setGrossreal(!"null".equalsIgnoreCase(String.valueOf(B[33])) ? util.ConvertString(B[33]) : "0.00");
+            if((!"null".equalsIgnoreCase(String.valueOf(B[34])) && B[34] != null) && !"".equalsIgnoreCase(String.valueOf(B[34]))){
+                String datetemp="";
+                String date[] = String.valueOf(B[34]).split("\r\n");
+                if(date.length > 1 ){
+                   for(int x= 0; x<date.length;x++){
+                       datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]))))+"\r\n";
+                       sum.setPaycomdate(datetemp);
+                   }
+                }else{
+                  sum.setPaycomdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[34])))));
+                }
+            }else{
+                sum.setPaycomdate("");
+            }
+            sum.setPaycompvno(util.ConvertString(B[35]));
+            sum.setPaycomstaff(util.ConvertString(B[36]));
+            sum.setPaycommission(!"null".equalsIgnoreCase(String.valueOf(B[37])) ? util.ConvertString(B[37]) : "0.00");
+            sum.setBalanceprofit(!"null".equalsIgnoreCase(String.valueOf(B[38])) ? util.ConvertString(B[38]) : "0.00");
+            sum.setReceiptno(util.ConvertString(B[39]));
+            if((!"null".equalsIgnoreCase(String.valueOf(B[40])) && B[40] != null) && !"".equalsIgnoreCase(String.valueOf(B[40]))){
+                String datetemp="";
+                String date[] = String.valueOf(B[40]).split("\r\n");
+                if(date.length > 1 ){
+                   for(int x= 0; x<date.length;x++){
+                       datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]))))+"\r\n";
+                       sum.setReceiptdate(datetemp);
+                   }
+                }else{
+                  sum.setReceiptdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[40])))));
+                }
+            }else{
+                sum.setReceiptdate("");
+            }
+           
+            if ((invSupCode != null) && (!"".equalsIgnoreCase(invSupCode)) && (util.ConvertString(B[21]) != null) && (!"".equalsIgnoreCase(util.ConvertString(B[21])))) {
+                sum.setHeaderinvoicesupcode(util.ConvertString(B[21]));
+            }
             
-            if ((invSupCode != null) && (!"".equalsIgnoreCase(invSupCode)) && (util.ConvertString(B[4]) != null) && (!"".equalsIgnoreCase(util.ConvertString(B[4])))) {
-                sum.setHeaderinvoicesupcode(util.ConvertString(B[4]));
+            if ((saleby != null) && (!"".equalsIgnoreCase(saleby)) && (util.ConvertString(B[6]) != null) && (!"".equalsIgnoreCase(util.ConvertString(B[6])))) {
+                sum.setHeaderstaff(util.ConvertString(B[6]));
             }
             
             data.add(sum);            
         }
         session.close();
         this.sessionFactory.close();
-        return data;    }
+        return data;   
+    }
 
 }
