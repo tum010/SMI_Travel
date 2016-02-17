@@ -126,18 +126,18 @@
                             <tr class="datatable-header">
                                 <th class="hidden" >Id</th>
                                 <th class="hidden" >Department</th>
-                                <th style="width: 4%">No</th>
                                 <th style="width: 8%">Tax No</th>
                                 <th style="width: 9%">Date</th>
                                 <th style="width: 8%">Code</th>
-                                <th style="width: 15%">Name</th>
+                                <th style="width: 16%">Name</th>
                                 <th style="width: 10%">Invoice No</th>
                                 <th style="width: 8%">Receipt No</th>
                                 <th style="width: 11%">Gross</th>
                                 <th style="width: 9%">Vat</th>
                                 <th style="width: 11%">Amount</th>
                                 <th style="width: 7%">Status</th>
-                                <th style="width: 7%">Action</th>
+                                <th style="width: 5%">Ref</th>
+                                <th style="width: 5%">Act</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -145,7 +145,6 @@
                                 <tr id="${taxInvoice.taxId}"> 
                                     <th class="hidden">${taxInvoice.taxId}</th>
                                     <th class="hidden">${taxInvoice.department}</th>
-                                    <td align="center">${i.count}</td>
                                     <td align="center">${taxInvoice.taxNo}</td>
                                     <td align="center">${taxInvoice.taxDate}</td>
                                     <td>${taxInvoice.taxTo}</td>
@@ -156,6 +155,7 @@
                                     <td class="money" align="right">${taxInvoice.totalVat}</td>
                                     <td class="money" align="right">${taxInvoice.totalAmount}</td>
                                     <td align="center">${taxInvoice.status}</td>
+                                    <td align="center">${taxInvoice.isProfit}</td>
                                     <td align="center" > 
                                         <center> 
                                         <span id="spanEdit${i.count}" class="glyphicon glyphicon-edit editicon"      

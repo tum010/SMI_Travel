@@ -27,12 +27,13 @@ public class TaxInvoiceView {
     private BigDecimal totalVat;
     private String status;
     private String department;
+    private String isProfit;
 
     public TaxInvoiceView(){
         
     }
     
-    public TaxInvoiceView(String taxId, String taxNo, String taxDate, String taxTo, String name, String address, String detail, String invoiceNo, String receiptNo, BigDecimal totalGross, BigDecimal totalAmount, BigDecimal totalVat, String status, String department) {
+    public TaxInvoiceView(String taxId, String taxNo, String taxDate, String taxTo, String name, String address, String detail, String invoiceNo, String receiptNo, BigDecimal totalGross, BigDecimal totalAmount, BigDecimal totalVat, String status, String department, String isProfit) {
         this.taxId = taxId;
         this.taxNo = taxNo;
         this.taxDate = taxDate;
@@ -45,7 +46,8 @@ public class TaxInvoiceView {
         this.totalGross = totalGross;
         this.totalAmount = totalAmount;
         this.totalVat = totalVat;
-        this.department = department;       
+        this.department = department;
+        this.isProfit = isProfit;
     }
 
     /**
@@ -243,6 +245,12 @@ public class TaxInvoiceView {
     public void setDepartment(String department) {
         this.department = department;
     }
-    
-   
+
+    public String getIsProfit() {
+        return isProfit;
+    }
+
+    public void setIsProfit(String isProfit) {
+        this.isProfit = isProfit;
+    }     
 }

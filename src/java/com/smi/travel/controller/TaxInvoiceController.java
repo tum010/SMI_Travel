@@ -255,6 +255,7 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoice.setTaxNo(taxInvNo);
             taxInvoice.setDepartment(department);
             taxInvoice.setCreateBy(createBy);
+            taxInvoice.setIsProfit("1".equalsIgnoreCase(disabledFieldSearch) ? 1 : 0);
             
             Date invToDateConvert = new Date();
             invToDateConvert = utilty.convertStringToDate(invToDate);
@@ -307,6 +308,7 @@ public class TaxInvoiceController extends SMITravelController {
             taxInvoice.setTaxNo(taxInvNo);
             taxInvoice.setDepartment(department);
             taxInvoice.setCreateBy(createBy);
+            taxInvoice.setIsProfit("1".equalsIgnoreCase(disabledFieldSearch) ? 1 : 0);
             
             Date invToDateConvert = new Date();
             invToDateConvert = utilty.convertStringToDate(invToDate);
