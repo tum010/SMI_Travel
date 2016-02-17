@@ -306,6 +306,10 @@ public class ReportService {
         return paymentOutboundDao.getPaymentOutboundSummaryReport(fromDate, toDate, status, invSup, refNo, username);
     }
     
+    public List getPaymentSummaryReport(String fromDate,String toDate,String saleby,String invSupCode,String refNo,String username){
+        return paymentOutboundDao.getPaymentSummaryReport(fromDate, toDate, saleby, invSupCode, refNo, username);
+    }
+
     public HotelVoucherDao getHotelVoucherdao() {
         return hotelVoucherdao;
     }

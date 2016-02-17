@@ -31,4 +31,7 @@ public interface PaymentOutboundDao {
     public String deletePaymentOutbound(String paymentId);  
     public List getPaymentOutboundSummaryReport(String fromDate,String toDate,String status,String invSupCode,String refNo,String username);
     public PaymentOutbound getPaymentOutbound(String payId);
+    
+    //Payment Summry Repot
+    public List getPaymentSummaryReport(String fromDate,String toDate,String saleby,String invSupCode,String refNo,String username);
 }

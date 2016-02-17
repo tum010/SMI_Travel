@@ -14,6 +14,7 @@ import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
 import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
+import com.smi.travel.datalayer.view.entity.PaymentOutboundAllDetail;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundSummary;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundView;
 import com.smi.travel.util.UtilityFunction;
@@ -509,5 +510,130 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         session.close();
         return paymentOutboundList.get(0);
     }
+
+    @Override
+    public List getPaymentSummaryReport(String fromDate, String toDate, String saleby, String invSupCode, String refNo, String username) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        Date thisDate = new Date();
+        List data = new ArrayList();
+        String invSupCodeTemp = "ALL";
+        String refNoTemp = "ALL";
+        String saleByTemp = "ALL";
+        String Query = "SELECT * FROM `payment_outbound_alldetail` where issuedate BETWEEN '"+fromDate+"' and '"+toDate+"' ";
+        
+        if ((invSupCode != null) && (!"".equalsIgnoreCase(invSupCode))) {
+            Query += "  and invsupcode = '" + invSupCode + "'";
+            invSupCodeTemp = invSupCode;
+        }
+        
+        if ((refNo != null) && (!"".equalsIgnoreCase(refNo))) {
+            Query += "  and refno = '" + refNo + "'";
+            refNoTemp = refNo;
+        } 
+        
+        if ((saleby != null) && (!"".equalsIgnoreCase(saleby))) {
+            Query += "  and staffusername = '" + saleby + "'";
+            saleByTemp = saleby;
+        } 
+        
+        Query += " order by refno ";        
+        System.out.println("Query : "+Query);
+        
+        List<Object[]> QueryTicketList = session.createSQLQuery(Query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("issuedate", Hibernate.STRING)
+                .addScalar("tourcode", Hibernate.STRING)
+                .addScalar("invno", Hibernate.STRING)
+                .addScalar("invdate", Hibernate.STRING)
+                .addScalar("department", Hibernate.STRING)
+                .addScalar("staff", Hibernate.STRING)
+                .addScalar("term", Hibernate.STRING)
+                .addScalar("invto", Hibernate.STRING)
+                .addScalar("adult", Hibernate.STRING)
+                .addScalar("child", Hibernate.STRING)
+                .addScalar("infant", Hibernate.STRING)
+                .addScalar("country", Hibernate.STRING)
+                .addScalar("city", Hibernate.STRING)
+                .addScalar("producttye", Hibernate.STRING)
+                .addScalar("departdate", Hibernate.STRING)
+                .addScalar("price", Hibernate.STRING)
+                .addScalar("curprice", Hibernate.STRING)
+                .addScalar("acc", Hibernate.STRING)
+                .addScalar("pvno", Hibernate.STRING)
+                .addScalar("paydate", Hibernate.STRING)
+                .addScalar("invsup", Hibernate.STRING)
+                .addScalar("invsupcode", Hibernate.STRING)
+                .addScalar("payinvno", Hibernate.STRING)
+                .addScalar("amount", Hibernate.STRING)
+                .addScalar("paycur", Hibernate.STRING)
+                .addScalar("payrate", Hibernate.STRING)
+                .addScalar("realrate", Hibernate.STRING)
+                .addScalar("amountlocalp", Hibernate.STRING)
+                .addScalar("amountlocalr", Hibernate.STRING)
+                .addScalar("vat", Hibernate.STRING)
+                .addScalar("wht", Hibernate.STRING)
+                .addScalar("grosspay", Hibernate.STRING)
+                .addScalar("grossreal", Hibernate.STRING)
+                .list();
+            
+            SimpleDateFormat dateformat = new SimpleDateFormat();
+            dateformat.applyPattern("dd-MM-yyyy");
+            
+        for (Object[] B : QueryTicketList) {
+            PaymentOutboundAllDetail sum = new PaymentOutboundAllDetail();
+            sum.setSystemdate(util.ConvertString(new SimpleDateFormat("dd MMM yyyy hh:mm:ss", new Locale("us", "us")).format(thisDate)));
+            sum.setUser(username);
+            sum.setHeaderfromdate(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(fromDate))));
+            sum.setHeadertodate(util.ConvertString(new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(util.convertStringToDate(toDate))));
+            sum.setHeaderrefno(refNoTemp);
+            sum.setHeaderinvoicesupcode(invSupCodeTemp);
+            sum.setDatefromto(sum.getHeaderfromdate() + " to " + sum.getHeadertodate());
+            sum.setHeaderstaff(saleByTemp);
+            
+            sum.setRefno(util.ConvertString(B[0]));
+            sum.setIssuedate("null".equals(String.valueOf(B[1])) ? "" : util.ConvertString(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[1])))));
+            sum.setTourcode(util.ConvertString(B[2]));
+            sum.setInvno(util.ConvertString(B[3]));
+            sum.setInvdate("null".equals(String.valueOf(B[4])) ? "" : util.ConvertString(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[4])))));
+            sum.setDepartment(util.ConvertString(B[5]));
+            sum.setStaff(util.ConvertString(B[6]));
+            sum.setTerm(util.ConvertString(B[7]));
+            sum.setInvto(util.ConvertString(B[8]));
+            sum.setAdult(util.ConvertString(B[9]));
+            sum.setChild(util.ConvertString(B[10]));
+            sum.setInfant(util.ConvertString(B[11]));
+            sum.setCountry(util.ConvertString(B[12]));
+            sum.setCity(util.ConvertString(B[13]));
+            sum.setProducttye(util.ConvertString(B[14]));
+            sum.setDepartdate("null".equals(String.valueOf(B[15])) ? "" : util.ConvertString(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[15])))));
+            sum.setPrice(!"null".equalsIgnoreCase(String.valueOf(B[16])) ? util.ConvertString(B[16]) : "0.00");
+            sum.setCurprice(util.ConvertString(B[17]));
+            sum.setAcc(util.ConvertString(B[18]));
+            sum.setPvno(util.ConvertString(B[19]));
+            sum.setPaydate("null".equals(String.valueOf(B[20])) ? "" : util.ConvertString(new SimpleDateFormat("dd/MM/yyyy", new Locale("us", "us")).format(util.convertStringToDate(util.ConvertString(B[20])))));
+            sum.setInvsup(util.ConvertString(B[21]));
+            sum.setInvsupcode(util.ConvertString(B[22]));
+            sum.setPayinvno(util.ConvertString(B[23]));
+            sum.setAmount(!"null".equalsIgnoreCase(String.valueOf(B[24])) ? util.ConvertString(B[24]) : "0.00");
+            sum.setPaycur(util.ConvertString(B[25]));
+            sum.setPayrate(!"null".equalsIgnoreCase(String.valueOf(B[26])) ? util.ConvertString(B[26]) : "0.00");
+            sum.setRealrate(!"null".equalsIgnoreCase(String.valueOf(B[27])) ? util.ConvertString(B[27]) : "0.00");
+            sum.setAmountlocalp(!"null".equalsIgnoreCase(String.valueOf(B[28])) ? util.ConvertString(B[28]) : "0.00");
+            sum.setAmountlocalr(!"null".equalsIgnoreCase(String.valueOf(B[29])) ? util.ConvertString(B[29]) : "0.00");
+            sum.setVat(!"null".equalsIgnoreCase(String.valueOf(B[30])) ? util.ConvertString(B[30]) : "0.00");
+            sum.setWht(!"null".equalsIgnoreCase(String.valueOf(B[31])) ? util.ConvertString(B[31]) : "0.00");
+            sum.setGrosspay(!"null".equalsIgnoreCase(String.valueOf(B[32])) ? util.ConvertString(B[32]) : "0.00");
+            sum.setGrossreal(!"null".equalsIgnoreCase(String.valueOf(B[33])) ? util.ConvertString(B[33]) : "0.00");
+            
+            if ((invSupCode != null) && (!"".equalsIgnoreCase(invSupCode)) && (util.ConvertString(B[4]) != null) && (!"".equalsIgnoreCase(util.ConvertString(B[4])))) {
+                sum.setHeaderinvoicesupcode(util.ConvertString(B[4]));
+            }
+            
+            data.add(sum);            
+        }
+        session.close();
+        this.sessionFactory.close();
+        return data;    }
 
 }

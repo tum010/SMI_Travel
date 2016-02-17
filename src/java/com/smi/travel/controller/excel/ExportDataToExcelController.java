@@ -332,7 +332,12 @@ public class ExportDataToExcelController  extends SMITravelController{
             String invSupCode = request.getParameter("invSupCode");
             String saleby = request.getParameter("salebyUser");
             String refno = request.getParameter("refno");
-//            data = reportservice.getPaymentOutboundSummaryReport(from_payments, to_payments,"",invSupCode, refno, user.getRole().getName(),saleby);
+            System.out.println("from_payments :: " + from_payments);
+            System.out.println("to_payments :: " + to_payments);
+            System.out.println("invSupCode :: " + invSupCode);
+            System.out.println("saleby :: " + saleby);
+            System.out.println("refno :: " + refno);
+            data = reportservice.getPaymentSummaryReport(from_payments, to_payments,saleby,invSupCode, refno, user.getRole().getName());
             return new ModelAndView("OutboundProduct",name,data).addObject(ReportName, name);
         }
 		

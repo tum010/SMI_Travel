@@ -222,6 +222,7 @@
 
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
+    
     $('.date').datetimepicker();
     $('.datemask').mask('0000-00-00', {reverse: true});
     $('.spandate').click(function() {
@@ -453,13 +454,13 @@ function printPaymentSummary(){
     var from = $('#FromDate').val();
     var to = $('#ToDate').val();
     var invSupCode = $('#invSupCode').val();
-    var staff = $('#salebyUser').val();
+    var salebyUser = $('#salebyUser').val();
     var refno = $('#refno').val();
 
     if((from === '') || (to === '')){
         validateDate();
     } else {
-        window.open("Excel.smi?name=PaymentSummaryReport"+"&from="+from+"&to="+to+"&invSupCode="+invSupCode+"&staff="+staff+"&refno="+refno); 
+        window.open("Excel.smi?name=PaymentSummaryReport"+"&from="+from+"&to="+to+"&invSupCode="+invSupCode+"&salebyUser="+salebyUser+"&refno="+refno); 
     } 
 }
    
