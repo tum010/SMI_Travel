@@ -319,7 +319,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         }
         if(!"".equalsIgnoreCase(refNo) && refNo != null){
             query += (haveCondition ? " AND " : " WHERE ");
-            query += " p.refno = '" + refNo + "' ";
+            query += " p.refno LIKE '%" + refNo + "%' ";
             haveCondition = true;
         }
         

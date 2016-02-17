@@ -281,6 +281,12 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
             } else {
                 taxInvoiceView.setStatus("Void");
             }
+            
+            if(taxInvoice.getIsProfit() == 1){
+                taxInvoiceView.setIsProfit("Y");
+            } else {
+                taxInvoiceView.setIsProfit("N");
+            }
 //            taxInvoiceView.setStatus(taxInvoice.getMFinanceItemstatus().getId());
             
             BigDecimal totalAmount = new BigDecimal(0);
