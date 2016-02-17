@@ -33,7 +33,7 @@ public class PaymentOutboundAllDetail {
     private String infant;
     private String country;
     private String city;
-    private String producttye;
+    private String producttype;
     private String departdate;
     private String price;
     private String curprice;
@@ -53,6 +53,13 @@ public class PaymentOutboundAllDetail {
     private String wht;
     private String grosspay;
     private String grossreal;
+    private String paycomdate;
+    private String paycompvno;
+    private String paycomstaff;
+    private String paycommission;
+    private String balanceprofit;
+    private String receiptno;
+    private String receiptdate;
 
     public String getSystemdate() {
         return systemdate;
@@ -230,12 +237,12 @@ public class PaymentOutboundAllDetail {
         this.city = city;
     }
 
-    public String getProducttye() {
-        return producttye;
+    public String getProducttype() {
+        return producttype;
     }
 
-    public void setProducttye(String producttye) {
-        this.producttye = producttye;
+    public void setProducttype(String producttype) {
+        this.producttype = producttype;
     }
 
     public String getDepartdate() {
@@ -390,5 +397,61 @@ public class PaymentOutboundAllDetail {
         this.grossreal = grossreal;
     }
 
-   
+    public String getPaycomdate() {
+        return paycomdate;
+    }
+
+    public void setPaycomdate(String paycomdate) {
+        this.paycomdate = paycomdate;
+    }
+
+    public String getPaycompvno() {
+        return paycompvno;
+    }
+
+    public void setPaycompvno(String paycompvno) {
+        this.paycompvno = paycompvno;
+    }
+
+    public String getPaycomstaff() {
+        return paycomstaff;
+    }
+
+    public void setPaycomstaff(String paycomstaff) {
+        this.paycomstaff = paycomstaff;
+    }
+
+    public String getPaycommission() {
+        return paycommission;
+    }
+
+    public void setPaycommission(String paycommission) {
+        this.paycommission = paycommission;
+    }
+
+    public String getBalanceprofit() {
+        return balanceprofit;
+    }
+
+    public void setBalanceprofit(String balanceprofit) {
+        this.balanceprofit = balanceprofit;
+    }
+
+    public String getReceiptno() {
+        return receiptno;
+    }
+
+    public void setReceiptno(String receiptno) {
+        this.receiptno = receiptno;
+    }
+
+    public String getReceiptdate() {
+        return receiptdate;
+    }
+
+    public void setReceiptdate(String receiptdate) {
+        this.receiptdate = receiptdate;
+    }
+    
+  
 }
