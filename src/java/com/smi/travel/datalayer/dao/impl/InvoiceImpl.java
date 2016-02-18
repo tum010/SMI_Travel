@@ -643,6 +643,7 @@ public class InvoiceImpl implements InvoiceDao{
                 .setParameter("invoiceNo", InvoiceNumber)
                 .setParameter("department", department)
                 .list(); 
+        
         if(!invoiceList.isEmpty()){
             invoice.setId(invoiceList.get(0).getId());
             invoice.setInvNo(invoiceList.get(0).getInvNo());
@@ -664,8 +665,11 @@ public class InvoiceImpl implements InvoiceDao{
             invoice.setRemark(invoiceList.get(0).getRemark());
             invoice.setStaff(invoiceList.get(0).getStaff());
             invoice.setSubDepartment(invoiceList.get(0).getSubDepartment());
-        }
         
+        }else{
+            invoice = null;
+        }
+   
         return invoice;    
     }
     
