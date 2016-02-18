@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.PaymentOutbound;
+import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
 import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
@@ -31,7 +32,9 @@ public interface PaymentOutboundDao {
     public String deletePaymentOutbound(String paymentId);  
     public List getPaymentOutboundSummaryReport(String fromDate,String toDate,String status,String invSupCode,String refNo,String username);
     public PaymentOutbound getPaymentOutbound(String payId);
+    public List<PaymentOutboundDetail> checkDuplicatePaymentStock(String payStockNo);
     
-    //Payment Summry Repot
+    //Payment Summry Report
     public List getPaymentSummaryReport(String fromDate,String toDate,String saleby,String invSupCode,String refNo,String username);
+    
 }

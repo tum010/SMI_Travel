@@ -52,6 +52,7 @@ import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackagePrice;
 import com.smi.travel.datalayer.entity.PackageTour;
+import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
 import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.entity.PaymentStockItem;
 import com.smi.travel.datalayer.entity.Place;
@@ -1125,10 +1126,16 @@ public class AJAXBean extends AbstractBean implements
             }else if("searchStock".equalsIgnoreCase(type)){
                 String payStockNo = map.get("payStockNo").toString();
                 List<PaymentStock> paymentStockList = paymentOutboundDao.getPaymentStock(payStockNo);
-                if (paymentStockList.size() > 0) {
+                List<PaymentOutboundDetail> paymentOutboundDetailList = paymentOutboundDao.checkDuplicatePaymentStock(payStockNo);
+                if (paymentStockList.size() > 0 && paymentOutboundDetailList == null) {
                     result = buildPaymentStockHTML(paymentStockList);
                 } else {
-                    result = "null";
+                    if(paymentOutboundDetailList != null){
+                        result = "duplicate";
+                    
+                    }else{
+                        result = "null";
+                    }                   
                 }
             }else if("checkPayStock".equalsIgnoreCase(type)){
                 String payStockNo = map.get("payStockNo").toString();

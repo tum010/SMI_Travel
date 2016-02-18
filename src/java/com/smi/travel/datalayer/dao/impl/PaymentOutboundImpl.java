@@ -288,6 +288,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
 //        HqlQuery.setMaxResults(MAX_ROW);
         List<PaymentStock> paymentStockList = HqlQuery.list();
         if (paymentStockList.isEmpty()) {
+            this.sessionFactory.close();
+            session.close();
             return null;
         }
         this.sessionFactory.close();
@@ -727,6 +729,23 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         session.close();
         this.sessionFactory.close();
         return data;   
+    }
+
+    @Override
+    public List<PaymentOutboundDetail> checkDuplicatePaymentStock(String payStockNo) {
+        String query = "from PaymentOutboundDetail p where p.paymentStock.payStockNo = :payStockNo ";       
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query);
+        HqlQuery.setParameter("payStockNo", payStockNo);
+        List<PaymentOutboundDetail> paymentOutboundDetailList = HqlQuery.list();
+        if (paymentOutboundDetailList.isEmpty()) {
+            this.sessionFactory.close();
+            session.close();
+            return null;
+        }
+        this.sessionFactory.close();
+        session.close();
+        return paymentOutboundDetailList;
     }
 
 }

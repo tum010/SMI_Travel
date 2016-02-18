@@ -374,6 +374,7 @@ function CallAjaxSearchRef(param) {
 }
 
 function searchStock() {
+    hideTextAlertDiv();
     var payStockNo = $("#payStockNo").val();
     if (payStockNo === "") {
         if (!$('#stockpanel').hasClass('has-feedback')) {
@@ -386,19 +387,38 @@ function searchStock() {
         });
         $('#searchStock2').addClass('hidden');
     } else {
-        var servletName = 'PaymentOutboundServlet';
-        var servicesName = 'AJAXBean';
-        var param = 'action=' + 'text' +
-                '&servletName=' + servletName +
-                '&servicesName=' + servicesName +
-                '&payStockNo=' + payStockNo +
-                '&type=' + 'searchStock';
-        CallAjaxSearchStock(param);
+        var countPaymentDetail = parseInt($("#countPaymentDetail").val());
+        var isNotDuplicate = true;
+        for(var i=1; i<=countPaymentDetail; i++){
+            var countTemp = document.getElementById("count" + i);       
+            if (countTemp !== null) {
+                var payStock = $("#payStock"+i).val();
+                if(payStock === payStockNo){
+                    isNotDuplicate = false;
+                    i = countPaymentDetail+1;
+                }
+            }  
+        }
+        
+        if(isNotDuplicate){
+            var servletName = 'PaymentOutboundServlet';
+            var servicesName = 'AJAXBean';
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&payStockNo=' + payStockNo +
+                    '&type=' + 'searchStock';
+            CallAjaxSearchStock(param);
+        
+        }else{
+//            $("#textAlertSearchDuplicateStock").show();
+        }    
     }
 }
 
 function CallAjaxSearchStock(param) {
     var url = 'AJAXServlet';
+    hideTextAlertDiv();
     $("#ajaxLoadSearch").removeClass("hidden");
     try {
         $.ajax({
@@ -408,16 +428,16 @@ function CallAjaxSearchStock(param) {
             data: param,
             success: function(msg) {
                 try {
-                    if (msg === "null") {
-                        $('#StockTable > tbody  > tr').each(function() {
-                            $(this).remove();
-                        });
+                    $('#StockTable > tbody  > tr').each(function() {
+                        $(this).remove();
+                    });
+                    if (msg === "null") {                        
                         $('#searchStock2').addClass('hidden');
 
+                    } else if(msg === "duplicate"){
+//                        $("#textAlertSearchDuplicateStock").show();
+                    
                     } else {
-                        $('#StockTable > tbody  > tr').each(function() {
-                            $(this).remove();
-                        });
                         $("#StockTable tbody").append(msg);
                         var rowAll = ($("#StockTable tr").length);
                         for (var i = 1; i < rowAll; i++) {
@@ -825,6 +845,7 @@ function calculateGrandTotal() {
 function addRefNo(refNo, type, description, billType, cost, curCost, sale, curSale, bookId) {
     var countPaymentDetail = parseInt($("#countPaymentDetail").val());
     var count = 0;
+    var checkAddDuplicate = false;
     for (var i = 1; i <= countPaymentDetail; i++) {
         var countTemp = document.getElementById("count" + i);       
         if (countTemp !== null) {
@@ -848,6 +869,10 @@ function addRefNo(refNo, type, description, billType, cost, curCost, sale, curSa
             var valueTemp = $("#value"+i).val();
             var whtTemp = $("#wht"+i).val();
             var vatRecComTemp = $("#vatRecCom"+i).val();
+            var bookIdTemp = $("#bookDetailId"+i).val();
+            if(bookIdTemp === bookId){
+                checkAddDuplicate = true;
+            }
 //            alert(typeTemp+":"+refNoTemp+":"+invoiceTemp+":"+costTemp+":"+grossTemp+":"+amountTemp+":"+commTemp+":"+curTemp+":"+descriptionTemp+":"+payStockTemp+":"+saleAmountTemp+":"+saleAmountTemp);
 //            alert(realExRateTemp+":"+payExRateTemp+":"+whtAmountTemp+":"+vatRecComAmountTemp+":"+valueTemp+":"+whtTemp+":"+vatRecComTemp);
             
@@ -878,7 +903,12 @@ function addRefNo(refNo, type, description, billType, cost, curCost, sale, curSa
         count = ++countPaymentDetail;
         addRowPaymentDetailTable(count);      
     }
-    addRowPaymentDetailTableByRefNo(refNo, type, description, billType, parseFloat(cost), curCost, parseFloat(sale), curSale, bookId, count);
+    
+    if(checkAddDuplicate){
+        $('#textAlertDuplicateRefNo').show();
+    }else{
+        addRowPaymentDetailTableByRefNo(refNo, type, description, billType, parseFloat(cost), curCost, parseFloat(sale), curSale, bookId, count);
+    }
 }
 
 function addRowPaymentDetailTableByRefNo(refNo, type, description, billType, cost, curCost, sale, curSale, bookId, row) {
@@ -1534,8 +1564,14 @@ function checkCurrency(option) {
 }
 
 function hideTextAlertDiv(){
+    $("#textAlertDivSave").hide();
+    $("#textAlertDivNotSave").hide();
+    $("#textAlertNotFound").hide();   
     $("#textAlertCurrencyNotMatch").hide();
     $("#textAlertCurrencyNotEmpty").hide();
+    $("#textAlertDuplicateStock").hide();
+    $("#textAlertDuplicateRefNo").hide();
+    $("#textAlertSearchDuplicateStock").hide();
 }
 
 function setDescription(){

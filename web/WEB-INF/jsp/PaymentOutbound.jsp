@@ -49,10 +49,19 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Pay No. is not found!</strong> 
         </div>
-        <div id="textAlertDuplicateStock"  style="display:none;" class="alert alert-danger alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div id="textAlertSearchDuplicateStock"  style="display:none;" class="alert alert-danger">
+            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
+            <strong>Not search duplicate stock!</strong> 
+        </div>
+        <div id="textAlertDuplicateStock"  style="display:none;" class="alert alert-danger">
+            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
             <strong>Not add duplicate stock!</strong> 
         </div>
+        <div id="textAlertDuplicateRefNo"  style="display:none;" class="alert alert-danger">
+            <button type="button" class="close" aria-label="Close" onclick="hideTextAlertDiv()"><span aria-hidden="true">&times;</span></button>
+            <strong>Not add duplicate ref no.!</strong> 
+        </div>
+        
     </div>    
     <!--Content -->
     <form action="PaymentOutbound.smi" method="post" id="PaymentOutboundForm" autocomplete="off" role="form">
