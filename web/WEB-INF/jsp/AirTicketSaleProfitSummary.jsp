@@ -84,38 +84,6 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-6 control-label text-right" for="ticketUse">Ticket From</label>
-                                <div class="col-md-6">  
-                                    <div class="form-group">
-                                        <select name="ticketFrom" id="ticketFrom"  class="form-control">
-                                            <option value=""  selected="selected">-- all --</option>
-                                            <option value="C" >In</option>
-                                            <option value="O" >Out</option>
-                                        </select>
-                                    </div>
-                                </div>   
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label class="col-md-6 control-label text-right" for="ticketType">Ticket Type</label>
-                                <div class="col-md-6">  
-                                    <div class="form-group">
-                                        <select name="ticketType" id="ticketType"  class="form-control">
-                                            <option value=""  selected="selected">-- all --</option>
-                                            <option value="I">Inter</option>
-                                            <option value="D">Domestic</option>
-                                        </select>
-                                    </div>
-                                </div>   
-                            </div>
-                        </div>
-                    </div>            
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
                                 <label class="col-md-6 control-label text-right" for="rept"></label>
                                 <div class="col-md-6">  
                                     <div class="form-group">
