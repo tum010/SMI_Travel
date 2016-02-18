@@ -61,6 +61,7 @@ public class ReceiptImpl implements ReceiptDao{
                 .addScalar("chqdate2",Hibernate.STRING)
                 .addScalar("chqvalue2",Hibernate.STRING)
                 .addScalar("chqflag2",Hibernate.STRING)
+                .addScalar("currency",Hibernate.STRING)
                 .list();
         
         List data = new ArrayList();
@@ -101,7 +102,7 @@ public class ReceiptImpl implements ReceiptDao{
             receiptView.setChqdate2((("null".equals(String.valueOf(T[28])) ? "" : String.valueOf(sf.format(util.convertStringToDate(String.valueOf(T[28])))))));
             receiptView.setChqvalue2((("0.00".equals(String.valueOf(T[29])) ? "" : String.valueOf(T[29]))));
             receiptView.setChqbankflag2((("0.00".equals(String.valueOf(T[30]))? "" : String.valueOf(T[30]))));
-            
+            String curtemp = "null".equals(String.valueOf(T[31])) ? "" : String.valueOf(T[31]);
             System.err.println("receiptView cash " +receiptView.getCash());
 //            String total = (receiptView.getTotalamount()).replaceAll("\\.", ",");
 //            String[] totals = total.split(",");
@@ -113,9 +114,17 @@ public class ReceiptImpl implements ReceiptDao{
             String part2 = parts[1]; // point
             String textmoney = (utilityFunction.convert(Integer.parseInt(part1)));
             String textmoneypoint = (utilityFunction.changPoint(String.valueOf(part2)));
-            String totalWord = textmoney +" BAHT"+ textmoneypoint;
+            String currency = "";
+            if("JPY".equalsIgnoreCase(curtemp)){
+                currency = " YEN";
+            }else if("THB".equalsIgnoreCase(curtemp)){
+                currency = " BAHT";
+            }else if("USD".equalsIgnoreCase(curtemp)){
+                currency = " DOLLAR";
+            }
+            String totalWord = textmoney + currency + textmoneypoint;
             if("".equalsIgnoreCase(textmoneypoint.trim())){
-                totalWord = textmoney +" BAHT ONLY";
+                totalWord = textmoney +currency+" ONLY";
             }
             System.out.println(" totalWord " + totalWord);
             receiptView.setTextmoney(totalWord.substring(0,1).toUpperCase() + totalWord.substring(1));
