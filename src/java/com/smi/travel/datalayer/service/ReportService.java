@@ -139,11 +139,11 @@ public class ReportService {
     
 
     
-    public List getTicketSaleVolumn(String ticketFrom,String ticketType,String startDate,String endDate){
-        return ticketsaleprofitVolumnDao.getTicketSaleVolumn(ticketFrom, ticketType, startDate, endDate);
+    public List getTicketSaleVolumn(String ticketFrom,String ticketType,String startDate,String endDate,String username){
+        return ticketsaleprofitVolumnDao.getTicketSaleVolumn(ticketFrom, ticketType, startDate, endDate ,username);
     }
-    public List getTicketProfitVolumn(String ticketFrom,String ticketType,String startDate,String endDate){
-        return ticketsaleprofitVolumnDao.getTicketProfitVolumn(ticketFrom, ticketType, startDate, endDate);
+    public List getTicketProfitVolumn(String ticketFrom,String ticketType,String startDate,String endDate ,String username){
+        return ticketsaleprofitVolumnDao.getTicketProfitVolumn(ticketFrom, ticketType, startDate, endDate , username);
     }
     
     public List getStaffSummary(String ticketfrom, String tickettype, String startdate, String enddate, String username, String department) {

@@ -13,6 +13,6 @@ import java.util.List;
  * @author Surachai
  */
 public interface TicketSaleProfitVolumnDao {
-    public List getTicketSaleVolumn(String ticketFrom,String ticketType,String startDate,String endDate);
-    public List getTicketProfitVolumn(String ticketFrom,String ticketType,String startDate,String endDate);
+    public List getTicketSaleVolumn(String ticketFrom,String ticketType,String startDate,String endDate ,String username);
+    public List getTicketProfitVolumn(String ticketFrom,String ticketType,String startDate,String endDate ,String username);
 }

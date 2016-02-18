@@ -58,8 +58,8 @@ public class ReportController extends SMITravelController {
     private static final String StaffSummary = "StaffSummary";
     private static final String AirlineSummary = "AirlineSummary";
     private static final String ReportName = "name";
-    private static final String TicketSaleSummary = "TicketSaleSummary";
-    private static final String TicketProfitSummary = "TicketProfitSummary";
+    private static final String TicketSaleSummary = "TicketSaleVolumn";
+    private static final String TicketProfitSummary = "TicketProfitVolumn";
     private static final String InvoiceSummary = "InvoiceSummary";
     private static final String GuideJob = "GuideJob";
     private static final String TransferJob = "TransferJob";
@@ -230,9 +230,9 @@ public class ReportController extends SMITravelController {
         } else if (StaffSummary.equalsIgnoreCase(name)) {
             data = reportservice.getStaffSummary(ticketfrom, tickettype, startdate, enddate, user.getName(), department);
         } else if (TicketSaleSummary.equalsIgnoreCase(name)) {
-            data = reportservice.getTicketSaleVolumn(ticketfrom, tickettype, startdate, enddate);
+            data = reportservice.getTicketSaleVolumn(ticketfrom, tickettype, startdate, enddate ,user.getRole().getName());
         } else if (TicketProfitSummary.equalsIgnoreCase(name)) {
-            data = reportservice.getTicketProfitVolumn(ticketfrom, tickettype, startdate, enddate);
+            data = reportservice.getTicketProfitVolumn(ticketfrom, tickettype, startdate, enddate,user.getRole().getName());
         } else if (InvoiceSummary.equalsIgnoreCase(name)) {
             String subDepartment = request.getParameter("subDepartment");
             data = reportservice.getInvoiceSummary(from, to, department, typeInvoice,agent,statusInvoice,user.getUsername()+"-"+user.getRole().getName(),subDepartment);

@@ -26,77 +26,113 @@ public class TicketSaleProfitVolumnImpl implements TicketSaleProfitVolumnDao {
 
     private SessionFactory sessionFactory;
     private static final String[] month = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-    private static final String TicketSaleVolumn = "";
-    private static final String TicketProfitVolumn = "select month(`tsl`.`ticket_date`) AS `mth` ,GET_SUM_PROFIT_BY_MONTH(sysdate(),2,1,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from ) AS `pre2_eco_cost` ,GET_SUM_PROFIT_BY_MONTH(sysdate(),1,1,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) AS `pre1_eco_cost` ,GET_SUM_PROFIT_BY_MONTH(sysdate(),0,1,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) AS `curr_eco_cost` ,	concat( 		ifnull(((( 			GET_SUM_PROFIT_BY_MONTH(sysdate(),1,1,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 			-  			GET_SUM_PROFIT_BY_MONTH(sysdate(),2,1,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) /  		GET_SUM_PROFIT_BY_MONTH(sysdate(),2,1,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) * 100),0) 		,'/' 		,ifnull(((( 			GET_SUM_PROFIT_BY_MONTH(sysdate(),0,1,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 			-  			GET_SUM_PROFIT_BY_MONTH(sysdate(),1,1,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) /  		GET_SUM_PROFIT_BY_MONTH(sysdate(),1,1,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) * 100),0)) AS `eco_growth` ,GET_SUM_PROFIT_BY_MONTH(sysdate(),2,2,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) AS `pre2_bus_cost` ,GET_SUM_PROFIT_BY_MONTH(sysdate(),1,2,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) AS `pre1_bus_cost` ,GET_SUM_PROFIT_BY_MONTH(sysdate(),0,2,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) AS `curr_bus_cost` ,	concat( 		ifnull(((( 			GET_SUM_PROFIT_BY_MONTH(sysdate(),1,2,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 			-  			GET_SUM_PROFIT_BY_MONTH(sysdate(),2,2,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) /  		GET_SUM_PROFIT_BY_MONTH(sysdate(),2,2,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) * 100),0) 		,'/' 		,ifnull(((( 			GET_SUM_PROFIT_BY_MONTH(sysdate(),0,2,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 			-  			GET_SUM_PROFIT_BY_MONTH(sysdate(),1,2,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) /  		GET_SUM_PROFIT_BY_MONTH(sysdate(),1,2,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) * 100),0)) AS `bus_growth` ,GET_SUM_PROFIT_BY_MONTH(sysdate(),2,3,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) AS `pre2_fst_cost` ,GET_SUM_PROFIT_BY_MONTH(sysdate(),1,3,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) AS `pre1_fst_cost` ,GET_SUM_PROFIT_BY_MONTH(sysdate(),0,3,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) AS `curr_fst_cost` ,	concat( 		ifnull(((( 			GET_SUM_PROFIT_BY_MONTH(sysdate(),1,3,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 			-  			GET_SUM_PROFIT_BY_MONTH(sysdate(),2,3,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) /  		GET_SUM_PROFIT_BY_MONTH(sysdate(),2,3,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) * 100),0) 		,'/' 		,ifnull(((( 			GET_SUM_PROFIT_BY_MONTH(sysdate(),0,3,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 			-  			GET_SUM_PROFIT_BY_MONTH(sysdate(),1,3,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) /  		GET_SUM_PROFIT_BY_MONTH(sysdate(),1,3,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) * 100),0)) AS `fst_growth` ,GET_ALL_PROFIT_BY_MONTH(sysdate(),2,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) AS `pre2_all_cost` ,GET_ALL_PROFIT_BY_MONTH(sysdate(),1,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) AS `pre1_all_cost` ,GET_ALL_PROFIT_BY_MONTH(sysdate(),0,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) AS `curr_all_cost` ,	concat( 		ifnull(((( 			GET_ALL_PROFIT_BY_MONTH(sysdate(),1,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 			-  			GET_ALL_PROFIT_BY_MONTH(sysdate(),2,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) /  		GET_ALL_PROFIT_BY_MONTH(sysdate(),2,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) * 100),0) 		,'/' 		,ifnull(((( 			GET_ALL_PROFIT_BY_MONTH(sysdate(),0,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 			-  			GET_ALL_PROFIT_BY_MONTH(sysdate(),1,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) /  		GET_ALL_PROFIT_BY_MONTH(sysdate(),1,month(`tsl`.`ticket_date`),`tsl`.`ticket_type`,tsl.ticket_from) 		) * 100),0)) AS `all_growth` ,`tsl`.`ticket_type` ,`tsl`.ticket_from from `ticket_sale_list` `tsl`  group by month(`tsl`.`ticket_date`) ,`tsl`.`ticket_type` ,`tsl`.ticket_from order by month(`tsl`.`ticket_date`)";
+    private static final String TicketSaleVolumn = "SELECT * FROM `airticket_saleprofit_volumn` where `YEAR(F.depart_date)` BETWEEN ";
 
     @Override
-    public List getTicketSaleVolumn(String ticketFrom, String ticketType, String startDate, String endDate) {
+    public List getTicketProfitVolumn(String ticketFrom, String ticketType, String startDate, String endDate,String username) {
         Session session = this.sessionFactory.openSession();
         List data = new ArrayList();
-        List<TicketSaleProfitVolumn> temp = new LinkedList<TicketSaleProfitVolumn>();
+        List<TicketSaleProfitVolumn> fromYear = new LinkedList<TicketSaleProfitVolumn>();
+        List<TicketSaleProfitVolumn> toYear = new LinkedList<TicketSaleProfitVolumn>();
         UtilityFunction util = new UtilityFunction();
-
-        List<Object[]> QuerySaleVolumn = session.createSQLQuery(TicketSaleVolumn)
-                .addScalar("pre2_eco_cost", Hibernate.INTEGER)
-                .addScalar("pre1_eco_cost", Hibernate.INTEGER)
-                .addScalar("curr_eco_cost", Hibernate.INTEGER)
-                .addScalar("pre2_bus_cost", Hibernate.INTEGER)
-                .addScalar("pre1_bus_cost", Hibernate.INTEGER)
-                .addScalar("curr_bus_cost", Hibernate.INTEGER)
-                .addScalar("pre2_fst_cost", Hibernate.INTEGER)
-                .addScalar("pre1_fst_cost", Hibernate.INTEGER)
-                .addScalar("curr_fst_cost", Hibernate.INTEGER)
-                .addScalar("pre2_all_cost", Hibernate.INTEGER)
-                .addScalar("pre1_all_cost", Hibernate.INTEGER)
-                .addScalar("curr_all_cost", Hibernate.INTEGER)
-                .addScalar("eco_growth", Hibernate.STRING)
-                .addScalar("bus_growth", Hibernate.STRING)
-                .addScalar("fst_growth", Hibernate.STRING)
-                .addScalar("all_growth", Hibernate.STRING)
-                .addScalar("mth", Hibernate.INTEGER)
+        
+        List<Object[]> QuerySaleVolumn = session.createSQLQuery(TicketSaleVolumn + " '" + startDate + "' and '" + endDate +"' " )
+                .addScalar("YEAR(F.depart_date)", Hibernate.STRING)
+                .addScalar("MONTH(F.depart_date)", Hibernate.STRING)
+                .addScalar("net_eco", Hibernate.STRING)
+                .addScalar("net_bus", Hibernate.STRING)
+                .addScalar("net_first", Hibernate.STRING)
+                .addScalar("net_total", Hibernate.STRING)
+                .addScalar("profit_eco", Hibernate.STRING)
+                .addScalar("profit_bus", Hibernate.STRING)
+                .addScalar("profit_first", Hibernate.STRING)
+                .addScalar("profit_total", Hibernate.STRING)
                 .list();
 
         for (Object[] B : QuerySaleVolumn) {
-            if (B[16] != null) {
-                TicketSaleProfitVolumn TicketVolumn = new TicketSaleProfitVolumn();
-                TicketVolumn.setPre2_eco_value(B[0] == null ? 0 : (Integer) B[0]);
-                TicketVolumn.setPre1_eco_value(B[1] == null ? 0 : (Integer) B[1]);
-                TicketVolumn.setCurr_eco_value(B[2] == null ? 0 : (Integer) B[2]);
-
-                TicketVolumn.setPre2_bus_value(B[3] == null ? 0 : (Integer) B[3]);
-                TicketVolumn.setPre1_bus_value(B[4] == null ? 0 : (Integer) B[4]);
-                TicketVolumn.setCurr_bus_value(B[5] == null ? 0 : (Integer) B[5]);
-
-                TicketVolumn.setPre2_fst_value(B[6] == null ? 0 : (Integer) B[6]);
-                TicketVolumn.setPre1_fst_value(B[7] == null ? 0 : (Integer) B[7]);
-                TicketVolumn.setCurr_fst_value(B[8] == null ? 0 : (Integer) B[8]);
-
-                TicketVolumn.setPre2_all_value(B[9] == null ? 0 : (Integer) B[9]);
-                TicketVolumn.setPre1_all_value(B[10] == null ? 0 : (Integer) B[10]);
-                TicketVolumn.setCurr_all_value(B[11] == null ? 0 : (Integer) B[11]);
-
-                TicketVolumn.setEco_growth(util.ConvertString(B[12]));
-                TicketVolumn.setBus_growth(util.ConvertString(B[13]));
-                TicketVolumn.setFst_growth(util.ConvertString(B[14]));
-                TicketVolumn.setAll_growth(util.ConvertString(B[15]));
-                TicketVolumn.setMonth(B[16] == null ? "0" : String.valueOf(B[12]));
-                temp.add(TicketVolumn);
+            TicketSaleProfitVolumn ticketVolumn = new TicketSaleProfitVolumn();
+            ticketVolumn.setYear(util.ConvertString(B[0]));
+            ticketVolumn.setMonth(util.ConvertString(B[1]));
+            ticketVolumn.setNeteco(util.ConvertString(B[2]));
+            ticketVolumn.setNetbus(util.ConvertString(B[3]));
+            ticketVolumn.setNetfirst(util.ConvertString(B[4]));
+            ticketVolumn.setNettotal(util.ConvertString(B[5]));
+            ticketVolumn.setProfiteco(util.ConvertString(B[6]));
+            ticketVolumn.setProfitbus(util.ConvertString(B[7]));
+            ticketVolumn.setProfitfirst(util.ConvertString(B[8]));
+            ticketVolumn.setProfittotal(util.ConvertString(B[9]));
+            if(startDate.equalsIgnoreCase(util.ConvertString(B[0]))){
+                fromYear.add(ticketVolumn);
+            }else if(endDate.equalsIgnoreCase(util.ConvertString(B[0]))){
+                toYear.add(ticketVolumn);
             }
-
         }
-        for (int i = 0; i < 12; i++) {
-            int check = 0;
-            for (int j = 0; j < temp.size(); j++) {
-                if (i == Integer.parseInt(temp.get(j).getMonth())) {
-                    temp.get(j).setMonth(mappingMonth(Integer.parseInt(temp.get(j).getMonth())));
-                    data.add(temp.get(j));
-                    check = 1;
-                    break;
+        int frommonth = 0 ;
+        int tomonth = 0 ;
+        
+        for (int i = 1; i < 13; i++) {
+            boolean checkmonthfrom = false;
+            boolean checkmonthto = false;
+            TicketSaleProfitVolumn ticketVolumn = new TicketSaleProfitVolumn();
+                ticketVolumn.setPre2(startDate);
+                ticketVolumn.setPre1(endDate);
+                ticketVolumn.setMonth(mappingMonth(i));
+                ticketVolumn.setTicketfrom(startDate);
+                ticketVolumn.setTicketto(endDate);
+                ticketVolumn.setSystemdate(util.ConvertString(new SimpleDateFormat("dd MMM yyyy hh:mm:ss", new Locale("us", "us")).format(new Date())));
+                ticketVolumn.setUser(username);
+            for(int j = 0 ; j < fromYear.size() ; j++){
+                TicketSaleProfitVolumn ticketVolumnFrom = fromYear.get(j);
+                frommonth = Integer.parseInt(fromYear.get(j).getMonth());
+                if(i == frommonth){
+                    ticketVolumn.setPre2_eco_value("".equalsIgnoreCase(ticketVolumnFrom.getProfiteco()) ? 0 : Integer.parseInt(ticketVolumnFrom.getProfiteco()));
+                    ticketVolumn.setPre2_bus_value("".equalsIgnoreCase(ticketVolumnFrom.getProfitbus()) ? 0 : Integer.parseInt(ticketVolumnFrom.getProfitbus()));
+                    ticketVolumn.setPre2_fst_value("".equalsIgnoreCase(ticketVolumnFrom.getProfitfirst()) ? 0 : Integer.parseInt(ticketVolumnFrom.getProfitfirst()));
+                    ticketVolumn.setPre2_all_value("".equalsIgnoreCase(ticketVolumnFrom.getProfittotal()) ? 0 : Integer.parseInt(ticketVolumnFrom.getProfittotal()));
+                    checkmonthfrom = true ;
                 }
             }
-            if (check == 0) {
-                data.add(SetBlankTicketVolumn(i));
+            for(int k = 0 ; k < toYear.size() ; k++){
+                TicketSaleProfitVolumn ticketVolumnTo = toYear.get(k);
+                if(i == tomonth){
+                    ticketVolumn.setPre1_eco_value("".equalsIgnoreCase(ticketVolumnTo.getProfiteco()) ? 0 : Integer.parseInt(ticketVolumnTo.getProfiteco()));
+                    ticketVolumn.setPre1_bus_value("".equalsIgnoreCase(ticketVolumnTo.getProfitbus()) ? 0 : Integer.parseInt(ticketVolumnTo.getProfitbus()));
+                    ticketVolumn.setPre1_fst_value("".equalsIgnoreCase(ticketVolumnTo.getProfitfirst()) ? 0 : Integer.parseInt(ticketVolumnTo.getProfitfirst()));
+                    ticketVolumn.setPre1_all_value("".equalsIgnoreCase(ticketVolumnTo.getProfittotal()) ? 0 : Integer.parseInt(ticketVolumnTo.getProfittotal()));
+                    checkmonthto = true ;
+                }
             }
+            if(!checkmonthfrom){
+                ticketVolumn.setPre2_eco_value(0);
+                ticketVolumn.setPre2_bus_value(0);
+                ticketVolumn.setPre2_fst_value(0);
+                ticketVolumn.setPre2_all_value(0);
+            }
+            if(!checkmonthto){
+                ticketVolumn.setPre1_eco_value(0);
+                ticketVolumn.setPre1_bus_value(0);
+                ticketVolumn.setPre1_fst_value(0);
+                ticketVolumn.setPre1_all_value(0);
+            }
+            int eco_end = ticketVolumn.getPre1_eco_value() ;
+            int eco_from = ticketVolumn.getPre2_eco_value() ;
+            int bus_end = ticketVolumn.getPre1_bus_value() ;
+            int bus_from = ticketVolumn.getPre2_bus_value() ;
+            int first_end = ticketVolumn.getPre1_fst_value() ;
+            int first_from = ticketVolumn.getPre2_fst_value() ;
+            int total_end = ticketVolumn.getPre1_all_value() ;
+            int total_from = ticketVolumn.getPre2_all_value() ;
+//            Growth Rate = (current - previous)/previous * 100
+            int eco = (eco_end - eco_from == 0) ? 0 : ((eco_end - eco_from ) / eco_from ) * 100 ;
+            int bus = (bus_end - bus_from == 0) ? 0 : ((bus_end - bus_from ) / bus_from ) * 100 ;
+            int first = (first_end - first_from == 0) ? 0 : ((first_end - first_from ) / first_from ) * 100 ;
+            int total = (total_end - total_from  == 0) ? 0 : ((total_end - total_from ) / total_from ) * 100 ;
+
+            ticketVolumn.setEco_growth(eco);
+            ticketVolumn.setBus_growth(bus);
+            ticketVolumn.setFst_growth(first);
+            ticketVolumn.setAll_growth(total);
+            data.add(ticketVolumn);
         }
         session.close();
         this.sessionFactory.close();
@@ -104,107 +140,118 @@ public class TicketSaleProfitVolumnImpl implements TicketSaleProfitVolumnDao {
     }
 
     @Override
-    public List getTicketProfitVolumn(String ticketFrom, String ticketType, String startDate, String endDate) {
+    public List getTicketSaleVolumn(String ticketFrom, String ticketType, String startDate, String endDate,String username) {
         Session session = this.sessionFactory.openSession();
         List data = new ArrayList();
+        List<TicketSaleProfitVolumn> fromYear = new LinkedList<TicketSaleProfitVolumn>();
+        List<TicketSaleProfitVolumn> toYear = new LinkedList<TicketSaleProfitVolumn>();
         UtilityFunction util = new UtilityFunction();
-        List<TicketSaleProfitVolumn> temp = new LinkedList<TicketSaleProfitVolumn>();
-        List<Object[]> QueryProfitVolumn = session.createSQLQuery(TicketProfitVolumn)
-                .addScalar("pre2_eco_cost", Hibernate.INTEGER)
-                .addScalar("pre1_eco_cost", Hibernate.INTEGER)
-                .addScalar("curr_eco_cost", Hibernate.INTEGER)
-                .addScalar("pre2_bus_cost", Hibernate.INTEGER)
-                .addScalar("pre1_bus_cost", Hibernate.INTEGER)
-                .addScalar("curr_bus_cost", Hibernate.INTEGER)
-                .addScalar("pre2_fst_cost", Hibernate.INTEGER)
-                .addScalar("pre1_fst_cost", Hibernate.INTEGER)
-                .addScalar("curr_fst_cost", Hibernate.INTEGER)
-                .addScalar("pre2_all_cost", Hibernate.INTEGER)
-                .addScalar("pre1_all_cost", Hibernate.INTEGER)
-                .addScalar("curr_all_cost", Hibernate.INTEGER)
-                .addScalar("eco_growth", Hibernate.STRING)
-                .addScalar("bus_growth", Hibernate.STRING)
-                .addScalar("fst_growth", Hibernate.STRING)
-                .addScalar("all_growth", Hibernate.STRING)
-                .addScalar("mth", Hibernate.STRING)
+        
+        List<Object[]> QuerySaleVolumn = session.createSQLQuery(TicketSaleVolumn + " '" + startDate + "' and '" + endDate +"' " )
+                .addScalar("YEAR(F.depart_date)", Hibernate.STRING)
+                .addScalar("MONTH(F.depart_date)", Hibernate.STRING)
+                .addScalar("net_eco", Hibernate.STRING)
+                .addScalar("net_bus", Hibernate.STRING)
+                .addScalar("net_first", Hibernate.STRING)
+                .addScalar("net_total", Hibernate.STRING)
+                .addScalar("profit_eco", Hibernate.STRING)
+                .addScalar("profit_bus", Hibernate.STRING)
+                .addScalar("profit_first", Hibernate.STRING)
+                .addScalar("profit_total", Hibernate.STRING)
                 .list();
-        for (Object[] B : QueryProfitVolumn) {
-            if (B[16] != null) {
-                TicketSaleProfitVolumn TicketVolumn = new TicketSaleProfitVolumn();
-                TicketVolumn.setPre2_eco_value(B[0] == null ? 0 : (Integer) B[0]);
-                TicketVolumn.setPre1_eco_value(B[1] == null ? 0 : (Integer) B[1]);
-                TicketVolumn.setCurr_eco_value(B[2] == null ? 0 : (Integer) B[2]);
 
-                TicketVolumn.setPre2_bus_value(B[3] == null ? 0 : (Integer) B[3]);
-                TicketVolumn.setPre1_bus_value(B[4] == null ? 0 : (Integer) B[4]);
-                TicketVolumn.setCurr_bus_value(B[5] == null ? 0 : (Integer) B[5]);
-
-                TicketVolumn.setPre2_fst_value(B[6] == null ? 0 : (Integer) B[6]);
-                TicketVolumn.setPre1_fst_value(B[7] == null ? 0 : (Integer) B[7]);
-                TicketVolumn.setCurr_fst_value(B[8] == null ? 0 : (Integer) B[8]);
-
-                TicketVolumn.setPre2_all_value(B[9] == null ? 0 : (Integer) B[9]);
-                TicketVolumn.setPre1_all_value(B[10] == null ? 0 : (Integer) B[10]);
-                TicketVolumn.setCurr_all_value(B[11] == null ? 0 : (Integer) B[11]);
-
-                TicketVolumn.setEco_growth(util.ConvertString(B[12]));
-                TicketVolumn.setBus_growth(util.ConvertString(B[13]));
-                TicketVolumn.setFst_growth(util.ConvertString(B[14]));
-                TicketVolumn.setAll_growth(util.ConvertString(B[15]));
-                TicketVolumn.setMonth(B[16] == null ? "0" : String.valueOf(B[16]));
-                System.out.println("B16 : "+String.valueOf(B[16]));
-                temp.add(TicketVolumn);
+        for (Object[] B : QuerySaleVolumn) {
+            TicketSaleProfitVolumn ticketVolumn = new TicketSaleProfitVolumn();
+            ticketVolumn.setYear(util.ConvertString(B[0]));
+            ticketVolumn.setMonth(util.ConvertString(B[1]));
+            ticketVolumn.setNeteco(util.ConvertString(B[2]));
+            ticketVolumn.setNetbus(util.ConvertString(B[3]));
+            ticketVolumn.setNetfirst(util.ConvertString(B[4]));
+            ticketVolumn.setNettotal(util.ConvertString(B[5]));
+            ticketVolumn.setProfiteco(util.ConvertString(B[6]));
+            ticketVolumn.setProfitbus(util.ConvertString(B[7]));
+            ticketVolumn.setProfitfirst(util.ConvertString(B[8]));
+            ticketVolumn.setProfittotal(util.ConvertString(B[9]));
+            if(startDate.equalsIgnoreCase(util.ConvertString(B[0]))){
+                fromYear.add(ticketVolumn);
+            }else if(endDate.equalsIgnoreCase(util.ConvertString(B[0]))){
+                toYear.add(ticketVolumn);
             }
-
         }
-        for (int i = 0; i < 12; i++) {
-            int check = 0;
-            for (int j = 0; j < temp.size(); j++) {
-                System.out.println("temp.get(j).getMonth() : "+temp.get(j).getMonth());
-                if (i == Integer.parseInt(temp.get(j).getMonth())) {
-                    temp.get(j).setMonth(temp.get(j).getMonth());
-                    data.add(temp.get(j));
-                    check = 1;
-                    break;
+        
+        int frommonth = 0 ;
+        int tomonth = 0 ;
+        
+        for (int i = 1; i < 13; i++) {
+            boolean checkmonthfrom = false;
+            boolean checkmonthto = false;
+            TicketSaleProfitVolumn ticketVolumn = new TicketSaleProfitVolumn();
+                ticketVolumn.setPre2(startDate);
+                ticketVolumn.setPre1(endDate);
+                ticketVolumn.setMonth(mappingMonth(i));
+                ticketVolumn.setTicketfrom(startDate);
+                ticketVolumn.setTicketto(endDate);
+                ticketVolumn.setSystemdate(util.ConvertString(new SimpleDateFormat("dd MMM yyyy hh:mm:ss", new Locale("us", "us")).format(new Date())));
+                ticketVolumn.setUser(username);
+            for(int j = 0 ; j < fromYear.size() ; j++){
+                TicketSaleProfitVolumn ticketVolumnFrom = fromYear.get(j);
+                frommonth = Integer.parseInt(fromYear.get(j).getMonth());
+                if(i == frommonth){
+                    ticketVolumn.setPre2_eco_value("".equalsIgnoreCase(ticketVolumnFrom.getNeteco()) ? 0 : Integer.parseInt(ticketVolumnFrom.getNeteco()));
+                    ticketVolumn.setPre2_bus_value("".equalsIgnoreCase(ticketVolumnFrom.getNetbus()) ? 0 : Integer.parseInt(ticketVolumnFrom.getNetbus()));
+                    ticketVolumn.setPre2_fst_value("".equalsIgnoreCase(ticketVolumnFrom.getNetfirst()) ? 0 : Integer.parseInt(ticketVolumnFrom.getNetfirst()));
+                    ticketVolumn.setPre2_all_value("".equalsIgnoreCase(ticketVolumnFrom.getNettotal()) ? 0 : Integer.parseInt(ticketVolumnFrom.getNettotal()));
+                    checkmonthfrom = true ;
                 }
             }
-            if (check == 0) {
-                data.add(SetBlankTicketVolumn(i));
+            for(int k = 0 ; k < toYear.size() ; k++){
+                TicketSaleProfitVolumn ticketVolumnTo = toYear.get(k);
+                if(i == tomonth){
+                    ticketVolumn.setPre1_eco_value("".equalsIgnoreCase(ticketVolumnTo.getNeteco()) ? 0 : Integer.parseInt(ticketVolumnTo.getNeteco()));
+                    ticketVolumn.setPre1_bus_value("".equalsIgnoreCase(ticketVolumnTo.getNetbus()) ? 0 : Integer.parseInt(ticketVolumnTo.getNetbus()));
+                    ticketVolumn.setPre1_fst_value("".equalsIgnoreCase(ticketVolumnTo.getNetfirst()) ? 0 : Integer.parseInt(ticketVolumnTo.getNetfirst()));
+                    ticketVolumn.setPre1_all_value("".equalsIgnoreCase(ticketVolumnTo.getNettotal()) ? 0 : Integer.parseInt(ticketVolumnTo.getNettotal()));
+                    checkmonthto = true ;
+                }
             }
-        }
+            if(!checkmonthfrom){
+                ticketVolumn.setPre2_eco_value(0);
+                ticketVolumn.setPre2_bus_value(0);
+                ticketVolumn.setPre2_fst_value(0);
+                ticketVolumn.setPre2_all_value(0);
+            }
+            if(!checkmonthto){
+                ticketVolumn.setPre1_eco_value(0);
+                ticketVolumn.setPre1_bus_value(0);
+                ticketVolumn.setPre1_fst_value(0);
+                ticketVolumn.setPre1_all_value(0);
+            }
+            int eco_end = ticketVolumn.getPre1_eco_value() ;
+            int eco_from = ticketVolumn.getPre2_eco_value() ;
+            int bus_end = ticketVolumn.getPre1_bus_value() ;
+            int bus_from = ticketVolumn.getPre2_bus_value() ;
+            int first_end = ticketVolumn.getPre1_fst_value() ;
+            int first_from = ticketVolumn.getPre2_fst_value() ;
+            int total_end = ticketVolumn.getPre1_all_value() ;
+            int total_from = ticketVolumn.getPre2_all_value() ;
+//            Growth Rate = (current - previous)/previous * 100
+            int eco = (eco_end - eco_from == 0) ? 0 : ((eco_end - eco_from ) / eco_from ) * 100 ;
+            int bus = (bus_end - bus_from == 0) ? 0 : ((bus_end - bus_from ) / bus_from ) * 100 ;
+            int first = (first_end - first_from == 0) ? 0 : ((first_end - first_from ) / first_from ) * 100 ;
+            int total = (total_end - total_from  == 0) ? 0 : ((total_end - total_from ) / total_from ) * 100 ;
 
+            ticketVolumn.setEco_growth(eco);
+            ticketVolumn.setBus_growth(bus);
+            ticketVolumn.setFst_growth(first);
+            ticketVolumn.setAll_growth(total);
+            data.add(ticketVolumn);
+        }
         session.close();
         this.sessionFactory.close();
         return data;
     }
 
-    public TicketSaleProfitVolumn SetBlankTicketVolumn(int month) {
-        String DefaultGrowth = "0.00/0.00";
-        TicketSaleProfitVolumn TicketVolumn = new TicketSaleProfitVolumn();
-        TicketVolumn.setPre2_eco_value(0);
-        TicketVolumn.setPre1_eco_value(0);
-        TicketVolumn.setCurr_eco_value(0);
-
-        TicketVolumn.setPre2_bus_value(0);
-        TicketVolumn.setPre1_bus_value(0);
-        TicketVolumn.setCurr_bus_value(0);
-
-        TicketVolumn.setPre2_fst_value(0);
-        TicketVolumn.setPre1_fst_value(0);
-        TicketVolumn.setCurr_fst_value(0);
-
-        TicketVolumn.setPre2_all_value(0);
-        TicketVolumn.setPre1_all_value(0);
-        TicketVolumn.setCurr_all_value(0);
-
-        TicketVolumn.setEco_growth(DefaultGrowth);
-        TicketVolumn.setBus_growth(DefaultGrowth);
-        TicketVolumn.setFst_growth(DefaultGrowth);
-        TicketVolumn.setAll_growth(DefaultGrowth);
-        TicketVolumn.setMonth(mappingMonth(month));
-        return TicketVolumn;
-    }
-    
+   
     private String setDisplayValueTicketType(String tickettype){
         String input = tickettype;
         System.out.println("tickettype : "+tickettype);
@@ -275,7 +322,7 @@ public class TicketSaleProfitVolumnImpl implements TicketSaleProfitVolumnDao {
         }
         return value;
     }
-
+   
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }

@@ -8,7 +8,7 @@ function addRangeYear(){
     var startdate = document.getElementById("startdate").value;
     var Enddate = document.getElementById("enddate");
     if(startdate != ""){
-        Enddate.value = parseInt(startdate) -3 ;
+        Enddate.value = parseInt(startdate) -1 ;
     }
 }
 
@@ -16,9 +16,8 @@ function printDocSummary() {
     var type = document.getElementById("Doctype").value;
     var ticketfrom = document.getElementById("ticketFrom").value;
     var tickettype = document.getElementById("ticketType").value;
-    var startdate = document.getElementById("startdate").value;
-    var enddate = document.getElementById("enddate").value;
-   
+    var enddate = document.getElementById("startdate").value;
+    var startdate = document.getElementById("enddate").value;
     if(startdate ==""){
         if (!$('#fromdatepanel').hasClass('has-feedback')) {
             $('#fromdatepanel').addClass('has-feedback');

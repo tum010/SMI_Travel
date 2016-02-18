@@ -6,7 +6,6 @@
 
 package com.smi.travel.datalayer.view.dao;
 
-import com.smi.travel.datalayer.view.entity.ReceiptView;
 import java.util.List;
 
 /**
