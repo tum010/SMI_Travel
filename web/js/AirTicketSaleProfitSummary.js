@@ -14,8 +14,8 @@ function addRangeYear(){
 
 function printDocSummary() {
     var type = document.getElementById("Doctype").value;
-    var ticketfrom = document.getElementById("ticketFrom").value;
-    var tickettype = document.getElementById("ticketType").value;
+//    var ticketfrom = document.getElementById("ticketFrom").value;
+//    var tickettype = document.getElementById("ticketType").value;
     var enddate = document.getElementById("startdate").value;
     var startdate = document.getElementById("enddate").value;
     if(startdate ==""){
@@ -35,9 +35,9 @@ function printDocSummary() {
        $('#startdate').focus();
        $('#enddate').focus();
        if(type == 1){
-           window.open("report.smi?name=TicketSaleVolumn&ticketfrom=" + ticketfrom + "&tickettype=" + tickettype + "&startdate=" + startdate + "&enddate=" + enddate );
+           window.open("report.smi?name=TicketSaleVolumn&startdate=" + startdate + "&enddate=" + enddate );
        }else{
-           window.open("report.smi?name=TicketProfitVolumn&ticketfrom=" + ticketfrom + "&tickettype=" + tickettype + "&startdate=" + startdate + "&enddate=" + enddate);
+           window.open("report.smi?name=TicketProfitVolumn&startdate=" + startdate + "&enddate=" + enddate);
        }
         
     }
