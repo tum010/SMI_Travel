@@ -242,6 +242,7 @@
                 </div>    
             </div>
             <input type="hidden" id="action" name="action" value="search"/>
+            <input type="hidden" id="page" name="page" value=""/>
         </form>
     </div>
 </div> 
@@ -376,39 +377,70 @@
             var $br = $('<div class="col-xs-12"><br></div>');
             for (var page = 0; page < numPages; page++) {
                 if(page === 0){
-                    $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + "First" + "  ").bind('click', {
+                    $('<font style="color: #499DD5" id="noFirst" onclick="changeColor(\'first\')"><span class="page-number glyphicon"></span></font>').text(" " + "First" + "  ").bind('click', {
                     newPage: page
                     }, function(event) {
+                        changeColor('first');
                         currentPage = event.data['newPage'];
                         $table.trigger('repaginate');
                         $(this).addClass('active').siblings().removeClass('active');
+                        $(this).css("color", "#AFEEEE");
                     }).appendTo($pager).addClass('clickable');
                 }
-                                             
-                $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + " ").bind('click', {
+                
+                $('<font style="color: #499DD5" id="no' + page + '" onclick="changeColor(\'' + page + '\')"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + "  ").bind('click', {
                     newPage: page
-                }, function(event) {
+                }, function(event) {                  
                     currentPage = event.data['newPage'];
                     $table.trigger('repaginate');
                     $(this).addClass('active').siblings().removeClass('active');
+                    $(this).css("color", "#AFEEEE");
                 }).appendTo($pager).addClass('clickable');
                 
                 if(page === (numPages - 1)){
-                    $('<font style="color: #499DD5"><span class="page-number glyphicon"></span></font>').text(" " + "Last" + "  ").bind('click', {
+                    $('<font style="color: #499DD5" id="noLast" onclick="changeColor(\'last\')"><span class="page-number glyphicon"></span></font>').text(" " + "Last" + "  ").bind('click', {
                     newPage: page
                     }, function(event) {
                         currentPage = event.data['newPage'];
                         $table.trigger('repaginate');
                         $(this).addClass('active').siblings().removeClass('active');
+                        $(this).css("color", "#AFEEEE");
                     }).appendTo($pager).addClass('clickable');
                 }
             }
             $br.insertAfter($table).addClass('active');
             $pager.insertAfter($table).find('span.page-number:first').addClass('active');
             document.getElementById("pageNo").style.cursor="pointer";
+            document.getElementById("page").value = numPages-1;
         });
         
     });
+    
+    function changeColor(row){
+        var page = parseInt($("#page").val())+1;
+        var rowTemp = parseInt(row);
+        var start = 0;
+        var end = page-1;
+        for(var i=0; i<page; i++){
+           if(i === rowTemp){
+                $("#no"+i).css("color", "#AFEEEE"); 
+           
+            }else{
+                $("#no"+i).css("color", "#499DD5");
+                $("#noFirst").css("color", "#499DD5");  
+                $("#noLast").css("color", "#499DD5");  
+            }
+            
+            if(row === 'first' || start === rowTemp){
+                $("#no"+start).css("color", "#AFEEEE"); 
+                $("#noFirst").css("color", "#AFEEEE"); 
+            
+            }else if(row === 'last' || end === rowTemp){
+                $("#no"+end).css("color", "#AFEEEE"); 
+                $("#noLast").css("color", "#AFEEEE");     
+            }
+        }       
+    }
     
     function exportAP(){
         var row = $('#apDataListTable tr').length;
