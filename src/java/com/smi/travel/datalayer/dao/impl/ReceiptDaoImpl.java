@@ -748,7 +748,7 @@ import org.hibernate.Transaction;
         System.out.println(" invDetailId " + invDetailId);
         BigDecimal amount = new BigDecimal(0);
         BigDecimal invDetailAmount = new BigDecimal(0);
-        String query = "from ReceiptDetail rec WHERE rec.invoiceDetail.id = :invDetailId ";
+        String query = "from ReceiptDetail rec WHERE rec.invoiceDetail.id = :invDetailId and rec.receipt.MFinanceItemstatus.id = '1'";
         if(!"".equalsIgnoreCase(receiptDetailId)){
             query += " and rec.id <> '"+receiptDetailId+"' ";
         }

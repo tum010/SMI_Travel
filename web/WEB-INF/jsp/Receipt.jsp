@@ -2512,13 +2512,12 @@
                 cache: false,
                 data: param,
                 success: function(msg) {
-                    try {
-                        if (msg == "null") {
+                    try {                        
+                        $("#searchreftable").addClass("hidden");
+                        $("#searchaircomtable").addClass("hidden");
+                        $("#searchtourcomtable").addClass("hidden");
+                        if (msg == "null") {   
                             $("#searchinvtable").addClass("hidden");
-                            $("#searchreftable").addClass("hidden");
-                            $("#searchaircomtable").addClass("hidden");
-                            $("#searchtourcomtable").addClass("hidden");
-
                             $('#InvoiceListTable > tbody  > tr').each(function() {
                                 $(this).remove();
                             });
@@ -2528,23 +2527,31 @@
                             document.getElementById("receiveFromAddress").value = '';
                             document.getElementById("arCode").value = '';
                         } else {
+                            var result = msg.split("//");
                             $('#InvoiceListTable > tbody  > tr').each(function() {
                                 $(this).remove();
                             });
-                            $("#InvoiceListTable tbody").empty().append(msg);
-                            
-                            var rowAll = $("#InvoiceListTable tr").length;
-                            if(rowAll === 1){
-                                $("#searchinvtable").addClass("hidden");
-                            }else{
-                                $("#searchinvtable").removeClass("hidden");
-                            }
-
+                            $("#InvoiceListTable tbody").empty().append(result[0]);
                             setinvoice = 1;
                             document.getElementById("receiveFromCode").value = $("#receiveFromInvoice").val();
                             document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();
                             document.getElementById("receiveFromAddress").value = $("#receiveAddressInvoice").val();
                             document.getElementById("arCode").value = $("#arcodeInvoice").val();
+                            if(result[1] !== ''){
+                                $("#InvoiceListTable tbody").empty().append(result[1]);
+                                $("#searchinvtable").removeClass("hidden");
+                            
+                            }else{
+                                $("#searchinvtable").addClass("hidden");
+                            }
+                            
+//                            var rowAll = $("#InvoiceListTable tr").length;
+//                            if(rowAll === 1){
+//                                $("#searchinvtable").addClass("hidden");
+//                            }else{
+//                                $("#searchinvtable").removeClass("hidden");
+//                            }
+                            
                         }
                         $("#ajaxload1").addClass("hidden");
 
@@ -3106,11 +3113,12 @@
                 data: param,
                 success: function(msg) {
                     try {
-                        if (msg == "null") {
-                            $("#searchinvtable").addClass("hidden");
-                            $("#searchreftable").addClass("hidden");
-                            $("#searchaircomtable").addClass("hidden");
-                            $("#searchtourcomtable").addClass("hidden");
+                        $("#searchinvtable").addClass("hidden");
+                        $("#searchaircomtable").addClass("hidden");
+                        $("#searchtourcomtable").addClass("hidden");
+                        
+                        if (msg == "null") {                           
+                            $("#searchreftable").addClass("hidden");                          
 //                        $('#RefNoListTable').dataTable().fnClearTable();
 //                        $('#RefNoListTable').dataTable().fnDestroy();
                             $('#RefNoListTable > tbody  > tr').each(function() {
@@ -3118,28 +3126,38 @@
                             });
 
                         } else {
-                            $("#RefNoListTable tbody").empty().append(msg);
-                            
-                            var rowAll = $("#RefNoListTable tr").length;
-                            if(rowAll === 1){
-                                $("#searchreftable").addClass("hidden");
-                            }else{
-                                $("#searchreftable").removeClass("hidden");
-                            }
-                            
+                            $('#RefNoListTable > tbody  > tr').each(function() {
+                                $(this).remove();
+                            });
+                            var result = msg.split("//");
+                            $("#RefNoListTable tbody").empty().append(result[0]);                                                                                  
+//                            var rowAll = $("#RefNoListTable tr").length;
+//                            if(rowAll === 1){
+//                                $("#searchreftable").addClass("hidden");
+//                            }else{
+//                                $("#searchreftable").removeClass("hidden");
+//                            }                           
                             BookintType = $("#masterBookType").val();
                             if (BookintType == $('#typeBooking').val()) {
-                                $('#RefNoListTable > tbody  > tr').each(function() {
-                                    $(this).remove();
-                                });
+//                                $('#RefNoListTable > tbody  > tr').each(function() {
+//                                    $(this).remove();
+//                                });
+                              
                                 $('#AlertBookingRefno').hide();
                                 try {
-                                    $("#RefNoListTable tbody").empty().append(msg);
+                                    $("#RefNoListTable tbody").empty().append(result[0]);
                                     document.getElementById("receiveFromCode").value = $("#receiveFromBillable").val();
                                     document.getElementById("receiveFromName").value = $("#receiveNameBillable").val();
                                     document.getElementById("receiveFromAddress").value = $("#receiveAddressBillable").val();
                                     document.getElementById("arCode").value = $("#arcodeBillable").val();
                                     document.getElementById("inputStatus").value = $("#mAccPayBillable").val();
+                                    if(result[1] !== ''){
+                                        $("#RefNoListTable tbody").empty().append(result[1]);
+                                        $("#searchreftable").removeClass("hidden");    
+
+                                    }else{
+                                       $("#searchreftable").addClass("hidden");    
+                                    }
                                 } catch (e) {
                                     alert(e);
                                 }
@@ -3148,6 +3166,7 @@
                                     $(this).remove();
                                 });
                                 $('#AlertBookingRefno').show();
+                                $("#searchreftable").addClass("hidden");   
                             }
 
                         }
