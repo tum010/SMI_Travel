@@ -76,6 +76,10 @@ public class PaymentOutboundController extends SMITravelController {
         String status = request.getParameter("status");
         String updateDate = request.getParameter("updateDate");
         String countPaymentDetail = request.getParameter("countPaymentDetail");
+        String resultRedirect = request.getParameter("resultRedirect");
+        if(!"".equalsIgnoreCase(resultRedirect) && resultRedirect != null){
+            request.setAttribute(RESULT, resultRedirect);
+        }
         
         UtilityFunction utilfunction = new UtilityFunction();
         Date date = Calendar.getInstance().getTime();
@@ -119,6 +123,9 @@ public class PaymentOutboundController extends SMITravelController {
             request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);
             request.setAttribute(PAYDATE, utilfunction.convertDateToString(paymentOutbound.getPayDate()));
             request.setAttribute(RESULT, result);
+            if("success".equalsIgnoreCase(result)){
+                return new ModelAndView(new RedirectView("PaymentOutbound.smi?action=search&payNo="+paymentOutbound.getPayNo()+"&resultRedirect="+result, true));
+            }
             
         }else if("search".equalsIgnoreCase(action)){
             PaymentOutbound paymentOutbound = new PaymentOutbound();
