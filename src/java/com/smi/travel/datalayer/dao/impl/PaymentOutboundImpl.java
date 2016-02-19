@@ -522,7 +522,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         String invSupCodeTemp = "ALL";
         String refNoTemp = "ALL";
         String saleByTemp = "ALL";
-        String Query = "SELECT * FROM `payment_outbound_alldetail` where issuedate BETWEEN '"+fromDate+"' and '"+toDate+"' ";
+        String Query = "SELECT * FROM `payment_outbound_alldetail` where paydate BETWEEN '"+fromDate+"' and '"+toDate+"' ";
         
         if ((invSupCode != null) && (!"".equalsIgnoreCase(invSupCode))) {
             Query += "  and invsupcode = '" + invSupCode + "'";
@@ -617,11 +617,13 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 String invDate[] = String.valueOf(B[4]).split("\r\n");
                 if(invDate.length > 1 ){
                    for(int x= 0; x<invDate.length;x++){
-                       invdatemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(invDate[x]))))+"\r\n";
-                       sum.setInvdate(invdatemp);
+                       if(invDate[x] != null && !"".equalsIgnoreCase(invDate[x].trim())){
+                            invdatemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(invDate[x]).trim())))+"\r\n";
+                            sum.setInvdate(invdatemp);
+                       }
                    }
                 }else{
-                  sum.setInvdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[4])))));
+                  sum.setInvdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[4]).trim()))));
                 }
             }else{
                 sum.setInvdate("");
@@ -642,11 +644,13 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 String date[] = String.valueOf(B[15]).split("\r\n");
                 if(date.length > 1 ){
                    for(int x= 0; x<date.length;x++){
-                       datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]))))+"\r\n";
-                       sum.setDepartdate(datetemp);
+                       if(date[x] != null && !"".equalsIgnoreCase(date[x].trim())){
+                            datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]).trim())))+"\r\n";
+                            sum.setDepartdate(datetemp);
+                       }
                    }
                 }else{
-                  sum.setDepartdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[15])))));
+                  sum.setDepartdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[15]).trim()))));
                 }
             }else{
                 sum.setDepartdate("");
@@ -660,11 +664,13 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 String date[] = String.valueOf(B[20]).split("\r\n");
                 if(date.length > 1 ){
                    for(int x= 0; x<date.length;x++){
-                       datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]))))+"\r\n";
+                       if(date[x] != null && !"".equalsIgnoreCase(date[x].trim())){
+                       datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]).trim())))+"\r\n";
                        sum.setPaydate(datetemp);
+                       }
                    }
                 }else{
-                  sum.setPaydate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[20])))));
+                  sum.setPaydate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[20]).trim()))));
                 }
             }else{
                 sum.setPaydate("");
@@ -687,11 +693,13 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 String date[] = String.valueOf(B[34]).split("\r\n");
                 if(date.length > 1 ){
                    for(int x= 0; x<date.length;x++){
-                       datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]))))+"\r\n";
-                       sum.setPaycomdate(datetemp);
+                       if(date[x] != null && !"".equalsIgnoreCase(date[x].trim())){
+                            datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]).trim())))+"\r\n";
+                            sum.setPaycomdate(datetemp);
+                       }
                    }
                 }else{
-                  sum.setPaycomdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[34])))));
+                  sum.setPaycomdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[34]).trim()))));
                 }
             }else{
                 sum.setPaycomdate("");
@@ -706,11 +714,13 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 String date[] = String.valueOf(B[40]).split("\r\n");
                 if(date.length > 1 ){
                    for(int x= 0; x<date.length;x++){
-                       datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]))))+"\r\n";
-                       sum.setReceiptdate(datetemp);
+                       if(date[x] != null && !"".equalsIgnoreCase(date[x].trim())){
+                            datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]).trim())))+"\r\n";
+                            sum.setReceiptdate(datetemp);
+                       }
                    }
                 }else{
-                  sum.setReceiptdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[40])))));
+                    sum.setReceiptdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[40]).trim()))));
                 }
             }else{
                 sum.setReceiptdate("");
