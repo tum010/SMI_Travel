@@ -47,7 +47,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
        
     }
     
-    private void genTicketProfitLossReport(HSSFWorkbook wb, List TicketProfitLoss) {
+    private void genTicketProfitLossReport(HSSFWorkbook wb, List ticketProfitLoss) {
         String sheetName = "Sheet1";// name of sheet
         HSSFSheet sheet = wb.createSheet(sheetName);
         
@@ -60,9 +60,10 @@ public class CheckingAirOthersummary extends AbstractExcelView {
         HSSFCellStyle styleC22 = wb.createCellStyle();
         styleC22.setAlignment(styleC22.ALIGN_LEFT); 
         
-        if(TicketProfitLoss != null){
-            dataheader = (TicketProfitLoss) TicketProfitLoss.get(0);
-        }
+        System.out.println(" ticketProfitLoss.size() " + ticketProfitLoss.size());
+        if(ticketProfitLoss != null && ticketProfitLoss.size() != 0){
+            dataheader = (TicketProfitLoss) ticketProfitLoss.get(0);
+        
         
         // set Header Report (Row 1)
         HSSFCellStyle styleC1 = wb.createCellStyle();
@@ -176,7 +177,7 @@ public class CheckingAirOthersummary extends AbstractExcelView {
         cell614.setCellValue("Total");
         cell614.setCellStyle(styleC3Center);
         sheet.autoSizeColumn(16);
-        
+        }
         //Detail of Table
         int count = 6 ;
         HSSFCellStyle styleC23 = wb.createCellStyle();
@@ -201,8 +202,8 @@ public class CheckingAirOthersummary extends AbstractExcelView {
         styleC25.setDataFormat(currency.getFormat("#,##0.00"));
         styleC25.setWrapText(true);
         styleC25.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
-        for(int i=0;i<TicketProfitLoss.size();i++){
-             TicketProfitLoss data = (TicketProfitLoss)TicketProfitLoss.get(i);
+        for(int i=0;i<ticketProfitLoss.size();i++){
+             TicketProfitLoss data = (TicketProfitLoss)ticketProfitLoss.get(i);
              HSSFRow row = sheet.createRow(count + i);            
              HSSFCell cell0 = row.createCell(0);
                 cell0.setCellValue(data.getNo());
