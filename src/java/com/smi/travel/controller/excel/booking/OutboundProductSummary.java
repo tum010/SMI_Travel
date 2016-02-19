@@ -1188,7 +1188,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 celldata36.setCellValue("".equalsIgnoreCase(String.valueOf(data.getBalanceprofit())) ? 0 : (new BigDecimal(data.getBalanceprofit())).doubleValue());
                 celldata36.setCellStyle(styleAlignRightBorderAllNumber);                
             HSSFCell celldata37 = row.createCell(37);
-                celldata37.setCellValue(String.valueOf(data.getRefno()));
+                celldata37.setCellValue(String.valueOf(data.getReceiptno()));
                 celldata37.setCellStyle(styleAlignLeftBorderAll);                
             HSSFCell celldata38 = row.createCell(38);
                 celldata38.setCellValue(String.valueOf(data.getReceiptdate()));
