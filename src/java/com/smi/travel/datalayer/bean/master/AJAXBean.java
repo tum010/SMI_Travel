@@ -1485,10 +1485,12 @@ public class AJAXBean extends AbstractBean implements
                     + "<input type='hidden' name='receiveInvToDate' id='receiveInvToDate' value='" + receiveInvToDate + "'>"
                     + "</tr>";
             newrow += "//";
+            html.append(newrow);
 //            return html.toString();
 //        }
         
         String alertMessage = "";
+        newrow = "";
         for (int i = 0; i < invoiceDetaillList.size(); i++) {
             InvoiceDetail invoiceDetail = new InvoiceDetail();
             invoiceDetail = invoiceDetaillList.get(i);
@@ -1536,8 +1538,7 @@ public class AJAXBean extends AbstractBean implements
                 cost = costInvoice.subtract(costTemp);
                 amount = amountInvoice.subtract(amountTemp);
 
-                if (amount.compareTo(BigDecimal.ZERO) != 0) {
-                    newrow = "";
+                if (amount.compareTo(BigDecimal.ZERO) != 0) {                    
                     newrow += "<tr>"
                             + "<input type='hidden' name='invoiceId' id='invoiceId' value='" + invoice.getId() + "'>"
                             + "<input type='hidden' name='invoiceId" + row + "' id='invoiceId" + row + "' value='" + invDetailId + "'>"
@@ -1549,7 +1550,7 @@ public class AJAXBean extends AbstractBean implements
                             + "<td style=\"text-align:center;\">" + "THB" + "</td>"
                             + "<td><center><a href=\"\"><span onclick=\"AddProduct('"+invDetailId+"','"+product+"','"+description+"','"+cost+"','"+curCost+"','"+amount+"','THB','"+isVat+"','"+refNo+"','"+vat+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                             + "</tr>";
-                        html.append(newrow);
+//                        html.append(newrow);
                 }
                 row++;
             
