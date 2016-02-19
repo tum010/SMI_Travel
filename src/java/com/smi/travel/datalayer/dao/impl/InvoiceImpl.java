@@ -17,6 +17,7 @@ import com.smi.travel.model.NonBillableView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -851,15 +852,23 @@ public class InvoiceImpl implements InvoiceDao{
     @Override
     public List<InvoiceDetail> getInvoiceDetailFromBillDescId(String billableDescId) {
         Session session = this.sessionFactory.openSession();
+        List<InvoiceDetail> listInvDetail = new ArrayList<InvoiceDetail>();
         List<InvoiceDetail> list = session.createQuery("from InvoiceDetail inv WHERE inv.billableDesc.id = :billableDescId and inv.invoice.MFinanceItemstatus = '1' ")
                 .setParameter("billableDescId", billableDescId)
                 .list();
         if(list.isEmpty()){
             return null;
+        }else{
+            for(int i = 0 ; i < list.size() ; i++){
+                List<ReceiptDetail> listrec = session.createQuery("from ReceiptDetail d WHERE d.invoiceDetail.id = :invDetailId and d.receipt.MFinanceItemstatus = '1'").setParameter("invDetailId", list.get(i).getId()).list();
+                if(!listrec.isEmpty()){
+                    listInvDetail.add(list.get(i));
+                }
+            }
         }
         session.close();
         this.sessionFactory.close();
-        return list;
+        return listInvDetail;
     }
 
     @Override
