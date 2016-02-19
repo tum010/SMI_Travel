@@ -1538,7 +1538,7 @@ public class AJAXBean extends AbstractBean implements
                 cost = costInvoice.subtract(costTemp);
                 amount = amountInvoice.subtract(amountTemp);
 
-                if (amount.compareTo(BigDecimal.ZERO) != 0) {                    
+                if (amount.compareTo(BigDecimal.ZERO) > 0) {                    
                     newrow += "<tr>"
                             + "<input type='hidden' name='invoiceId' id='invoiceId' value='" + invoice.getId() + "'>"
                             + "<input type='hidden' name='invoiceId" + row + "' id='invoiceId" + row + "' value='" + invDetailId + "'>"
