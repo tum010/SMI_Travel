@@ -9,12 +9,16 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.view.dao.BookingSummaryDao;
 import com.smi.travel.datalayer.view.entity.BookSummary;
 import com.smi.travel.datalayer.view.entity.BookingHeaderSummaryView;
+import com.smi.travel.datalayer.view.entity.BookingInvoiceView;
+import com.smi.travel.datalayer.view.entity.BookingNonInvoiceView;
 import com.smi.travel.datalayer.view.entity.BookingSummaryDetailView;
 import com.smi.travel.datalayer.view.entity.ConfirmSlipDetailReport;
 import com.smi.travel.datalayer.view.entity.ConfirmSlipHeaderReport;
 import com.smi.travel.datalayer.view.entity.OutboundStaffSummaryReport;
 import com.smi.travel.datalayer.view.entity.OutboundStaffSummarySubReport;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -777,6 +781,215 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             osssr.setDepartmentno(B[6]== null ? "" : util.ConvertString(B[6]));
             data.add(osssr);
         }
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+
+    @Override
+    public List getBookingInvoiceReport(String owner,String invto,String bookdatefrom,String bookdateto,String invdatefrom,String invdateto,String printby) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        int check = 0 ;
+        
+        boolean ownersearch = false;
+        boolean invtosearch = false;
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        DecimalFormat df = new DecimalFormat("#.00"); 
+        
+        String headerowner = "ALL";
+        String headerbookdate = "ALL";
+        String headerinvto = "ALL";
+        String headerinvdate = "ALL";
+        
+        String query = "SELECT * FROM `booking_invoice` where ";
+        
+        if((bookdatefrom != null && !"".equalsIgnoreCase(bookdatefrom)) && (bookdateto != null && !"".equalsIgnoreCase(bookdateto))){
+            query += " bookdate BETWEEN '"+bookdatefrom+"' and  '"+bookdateto+"' ";
+            check = 1;
+            headerbookdate = util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(bookdatefrom)))) + " To " +
+                    util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(bookdateto))));
+        }
+        
+        if((invdatefrom != null && !"".equalsIgnoreCase(invdatefrom)) && (invdateto != null && !"".equalsIgnoreCase(invdateto))){
+            if(check == 1){  query += " and "; }
+            query += " invdate BETWEEN '"+invdatefrom+"' and  '"+invdateto+"' ";
+            check = 1;
+            headerinvdate = util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(invdatefrom)))) + " To " +
+                    util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(invdateto))));
+        }
+        
+        if((owner != null && !"".equalsIgnoreCase(owner))){
+            if(check == 1){  query += " and "; }
+            query += " ownercode = '"+owner+"'";
+            check = 1;
+            ownersearch = true;
+        }
+        
+        if((invto != null && !"".equalsIgnoreCase(invto))){
+            if(check == 1){  query += " and "; }
+            query += " invcode like '%"+invto+"%'";
+            check = 1;
+            invtosearch = true;
+        }
+        
+        query += " ORDER BY refno , bookdate ";
+
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("owner", Hibernate.STRING)
+                .addScalar("bookdate", Hibernate.STRING)
+                .addScalar("invno", Hibernate.STRING)
+                .addScalar("invdate", Hibernate.STRING)
+                .addScalar("invto", Hibernate.STRING)
+                .addScalar("cost", Hibernate.STRING)
+                .addScalar("currency", Hibernate.STRING)
+                .addScalar("description", Hibernate.STRING)
+                .list();
+        
+        
+        for (Object[] B : QueryStaffList) {
+            BookingInvoiceView biv = new BookingInvoiceView();
+            biv.setHeaderbookingdate(headerbookdate);
+            biv.setHeaderinvdate(headerinvdate);
+            if(ownersearch){
+                biv.setHeaderowner(B[1]== null ? "" :util.ConvertString(B[1]));
+            }else{
+                biv.setHeaderowner(headerowner);
+            }
+            if(invtosearch){
+                biv.setHeaderinvto(B[5]== null ? "" : util.ConvertString(B[5]));
+            }else{
+                biv.setHeaderinvto(headerinvto);
+            }
+            biv.setRefno(B[0]== null ? "" :util.ConvertString(B[0]));
+            biv.setOwner(B[1]== null ? "" :util.ConvertString(B[1]));
+            biv.setBookdate("null".equals(String.valueOf(B[2])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[2])))));
+            biv.setInvno(B[3]== null ? "" : util.ConvertString(B[3]));
+            if((!"null".equalsIgnoreCase(String.valueOf(B[4])) && B[4] != null) && !"".equalsIgnoreCase(String.valueOf(B[4]))){
+                String invdatemp="";
+                String invDate[] = String.valueOf(B[4]).split("\r\n");
+                if(invDate.length > 1 ){
+                   for(int x= 0; x<invDate.length;x++){
+                       if(invDate[x] != null && !"".equalsIgnoreCase(invDate[x].trim())){
+                            invdatemp += util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(invDate[x]).trim())))+"\r\n";
+                            biv.setInvdate(invdatemp);
+                       }
+                   }
+                }else{
+                  biv.setInvdate(util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[4]).trim()))));
+                }
+            }else{
+                biv.setInvdate("");
+            }
+            biv.setInvto(B[5]== null ? "" : util.ConvertString(B[5]));
+            biv.setCost((B[6]) != null ? new BigDecimal(util.ConvertString((df.format(new BigDecimal(util.ConvertString(B[6])))))) : new BigDecimal("0.00"));
+            biv.setCurrency(B[7]== null ? "" : util.ConvertString(B[7]));
+            biv.setDescription(B[8]== null ? "" : util.ConvertString(B[8]));
+            data.add(biv);
+        }
+        this.sessionFactory.close();
+        session.close();
+        return data;
+    }
+
+    @Override
+    public List getBookingNonInvoiceReport(String owner,String invsup,String bookdatefrom,String bookdateto,String paydatefrom,String paydateto,String printby) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        int check = 0 ;
+        boolean ownersearch = false;
+        boolean invsupsearch = false;
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        DecimalFormat df = new DecimalFormat("#.00"); 
+        
+        String headerowner = "ALL";
+        String headerbookdate = "ALL";
+        String headerinvsup = "ALL";
+        String headerpaydate = "ALL";
+        
+        String query = "SELECT * FROM `booking_non_invoice` where ";
+        
+        if((bookdatefrom != null && !"".equalsIgnoreCase(bookdatefrom)) && (bookdateto != null && !"".equalsIgnoreCase(bookdateto))){
+            query += " bookdate BETWEEN '"+bookdatefrom+"' and  '"+bookdateto+"' ";
+            check = 1;
+            headerbookdate = util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(bookdatefrom)))) + " To " +
+                            util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(bookdateto))));
+        }
+        
+        if((paydatefrom != null && !"".equalsIgnoreCase(paydatefrom)) && (paydateto != null && !"".equalsIgnoreCase(paydateto))){
+            if(check == 1){  query += " and "; }
+            query += " paydate BETWEEN '"+paydatefrom+"' and  '"+paydateto+"' ";
+            check = 1;
+            headerpaydate = util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(paydatefrom)))) + " To " +
+                            util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(paydateto))));
+        }
+        
+        if((owner != null && !"".equalsIgnoreCase(owner))){
+            if(check == 1){  query += " and "; }
+            query += " ownercode = '"+owner+"'";
+            check = 1;
+            ownersearch = true;
+        }
+        
+        if((invsup != null && !"".equalsIgnoreCase(invsup))){
+            if(check == 1){  query += " and "; }
+            query += " supcode = '"+invsup+"'";
+            check = 1;
+            invsupsearch = true;
+        }
+        
+//        query += " ORDER BY payno , paydate ";
+
+        List<Object[]> QueryStaffList = session.createSQLQuery(query)
+                .addScalar("invoicesup", Hibernate.STRING)
+                .addScalar("payno", Hibernate.STRING)
+                .addScalar("paydate", Hibernate.STRING)
+                .addScalar("description", Hibernate.STRING)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("owner", Hibernate.STRING)
+                .addScalar("bookdate", Hibernate.STRING)
+                .addScalar("payamount", Hibernate.STRING)
+                .addScalar("currency", Hibernate.STRING)
+                .addScalar("sale", Hibernate.STRING)
+                .addScalar("salecurrency", Hibernate.STRING)
+                .list();
+        
+
+        
+        for (Object[] B : QueryStaffList) {
+            BookingNonInvoiceView bniv = new BookingNonInvoiceView();
+            bniv.setHeaderbookingdate(headerbookdate);
+            bniv.setHeaderpaydate(headerpaydate);
+            if(ownersearch){
+                bniv.setHeaderowner(B[5]== null ? "" : util.ConvertString(B[5]));
+            }else{
+                bniv.setHeaderowner(headerowner);
+            }
+            if(invsupsearch){
+                bniv.setHeaderinvoicesup(B[0]== null ? "" :util.ConvertString(B[0]));
+            }else{
+                bniv.setHeaderinvoicesup(headerinvsup);
+            }
+            bniv.setInvoicesup(B[0]== null ? "" :util.ConvertString(B[0]));
+            bniv.setPayno(B[1]== null ? "" :util.ConvertString(B[1]));
+            bniv.setPaydate("null".equals(String.valueOf(B[2])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[2])))));
+            bniv.setDescription(B[3]== null ? "" : util.ConvertString(B[3]));
+            bniv.setRefno(B[4]== null ? "" : util.ConvertString(B[4]));
+            bniv.setOwner(B[5]== null ? "" : util.ConvertString(B[5]));
+            bniv.setBookdate("null".equals(String.valueOf(B[6])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[6])))));
+            bniv.setPayamount((B[7]) != null ? new BigDecimal(util.ConvertString((df.format(new BigDecimal(util.ConvertString(B[7])))))) : new BigDecimal("0.00"));
+            bniv.setCurrency(B[8]== null ? "" : util.ConvertString(B[8]));
+            bniv.setSale((B[9]) != null ? new BigDecimal(util.ConvertString((df.format(new BigDecimal(util.ConvertString(B[9])))))) : new BigDecimal("0.00"));
+            bniv.setSalecurrency(B[10]== null ? "" : util.ConvertString(B[10]));
+            data.add(bniv);
+        }
+        
         this.sessionFactory.close();
         session.close();
         return data;

@@ -17,8 +17,6 @@
 
 	<!-- <mvc:resources mapping="/*" location="/" /> -->
 		
-
-
 	<!-- Most controllers will use the ControllerClassNameHandlerMapping above, 
 		but for the index controller we are using ParameterizableViewController, 
 		so we must define an explicit mapping for it. -->
@@ -170,6 +168,7 @@
                                 <prop key="ProfitLoss.smi">ProfitLossController</prop>
                                 <prop key="RefundTicketSummary.smi">RefundTicketSummaryReportController</prop>
                                 <prop key="PaymentSummary.smi">PaymentSummaryController</prop>
+                                <prop key="BookingSummary.smi">BookingSummaryController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -732,6 +731,11 @@
     
     <bean id="PaymentSummaryController" class="com.smi.travel.controller.PaymentSummaryController">
         <property name="utilityService" ref="UtilityService" />
+    </bean>
+    
+    <bean id="BookingSummaryController" class="com.smi.travel.controller.BookingSummaryController">
+        <property name="utilityService" ref="UtilityService" />
+        <property name="productService" ref="ProductService" />
     </bean>
     
     <bean id="DebtorSummaryController" class="com.smi.travel.controller.DebtorSummaryController">
