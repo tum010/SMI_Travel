@@ -73,7 +73,7 @@ public class BookingSummary extends AbstractExcelView  {
         styleC25.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC25.setDataFormat(currency.getFormat("#,##0.00"));
         styleC25.setAlignment(styleC25.ALIGN_RIGHT);
-        
+ 
         HSSFCellStyle styleC26 = wb.createCellStyle();
         styleC26.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         styleC26.setBorderRight(HSSFCellStyle.BORDER_THIN);
@@ -301,6 +301,7 @@ public class BookingSummary extends AbstractExcelView  {
         styleC25.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC25.setDataFormat(currency.getFormat("#,##0.00"));
         styleC25.setAlignment(styleC25.ALIGN_RIGHT);
+        styleC25.setVerticalAlignment(styleC25.VERTICAL_CENTER);
         
         HSSFCellStyle styleC26 = wb.createCellStyle();
         styleC26.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -309,7 +310,8 @@ public class BookingSummary extends AbstractExcelView  {
         styleC26.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC26.setDataFormat(currency.getFormat("#,##0"));
         styleC26.setAlignment(styleC22.ALIGN_CENTER);
-
+        styleC26.setVerticalAlignment(styleC26.VERTICAL_CENTER);
+        
         HSSFCellStyle styleC27 = wb.createCellStyle();
         styleC27.setAlignment(styleC27.ALIGN_RIGHT);
         styleC27.setDataFormat(currency.getFormat("#,##0.00"));
