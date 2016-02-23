@@ -103,7 +103,7 @@
                             </div>
                         </div>
                     </div>    
-                    <div class="row hidden active" id="booknoninvoice">                     
+                    <div class="hidden active" id="booknoninvoice">                     
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
@@ -156,7 +156,7 @@
                             </div>
                         </div>     
                     </div>      
-                    <div class="row hidden active" id="bookinvoice">                    
+                    <div class="hidden active" id="bookinvoice">                    
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
