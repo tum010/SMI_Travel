@@ -1004,8 +1004,8 @@ function printBookingSummary(){
     var bookToDate = document.getElementById("bookToDate").value;
     var invSupCode = document.getElementById("invSupCode").value;
     var invSupName = document.getElementById("invSupName").value;
-    var payFromDate = "'"+document.getElementById("payFromDate").value+"'";
-    var payToDate ="'"+ document.getElementById("payToDate").value+"'";
+    var payFromDate = document.getElementById("payFromDate").value;
+    var payToDate = document.getElementById("payToDate").value;
     var billto = document.getElementById("billto").value;
     var billname = document.getElementById("billname").value;
     var invFromDate = document.getElementById("invFromDate").value;
