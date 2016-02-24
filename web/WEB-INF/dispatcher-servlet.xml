@@ -169,6 +169,7 @@
                                 <prop key="RefundTicketSummary.smi">RefundTicketSummaryReportController</prop>
                                 <prop key="PaymentSummary.smi">PaymentSummaryController</prop>
                                 <prop key="BookingSummary.smi">BookingSummaryController</prop>
+                                <prop key="StockSummary.smi">StockSummaryController</prop>
 				<!-- add mapping url -->
 			</props>
 		</property>
@@ -736,6 +737,11 @@
     <bean id="BookingSummaryController" class="com.smi.travel.controller.BookingSummaryController">
         <property name="utilityService" ref="UtilityService" />
         <property name="productService" ref="ProductService" />
+    </bean>
+    
+    <bean id="StockSummaryController" class="com.smi.travel.controller.StockSummaryController">
+        <property name="productservice" ref="ProductService" />
+        <property name="utilityService" ref="UtilityService" />
     </bean>
     
     <bean id="DebtorSummaryController" class="com.smi.travel.controller.DebtorSummaryController">
