@@ -735,6 +735,11 @@
         <put-attribute name="body" value="/WEB-INF/jsp/DebtorSummary.jsp" />
     </definition>
     
+    <definition name="StockSummary" extends="baseLayout">
+        <put-attribute name="title" value="Stock Summary Report : StockSummary" />
+        <put-attribute name="body" value="/WEB-INF/jsp/StockSummary.jsp" />
+    </definition>
+    
     <definition name="ProfitLoss" extends="baseLayout">
         <put-attribute name="title" value="Profit and Loss Report : Profit and Loss" />
         <put-attribute name="body" value="/WEB-INF/jsp/ProfitLoss.jsp" />
