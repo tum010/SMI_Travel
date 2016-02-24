@@ -20,4 +20,6 @@ public interface BookingSummaryDao {
     public ConfirmSlipHeaderReport getConfirmSlipHeaderReport(String refno,String user);
     
     public OutboundStaffSummaryReport getOutboundStaffSummaryReport(String from,String to,String saleby,String currency,String detail,String user);
+    public List getBookingInvoiceReport(String owner,String invto,String bookdatefrom,String bookdateto,String invdatefrom,String invdateto,String printby);
+    public List getBookingNonInvoiceReport(String owner,String invsup,String bookdatefrom,String bookdateto,String paydatefrom,String paydateto,String printby);
 }

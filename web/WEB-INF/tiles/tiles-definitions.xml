@@ -760,4 +760,9 @@
         <put-attribute name="title" value="Payment Summary Report : Payment Summary" />
         <put-attribute name="body" value="/WEB-INF/jsp/PaymentSummary.jsp" />
     </definition>
+    
+    <definition name="BookingSummary" extends="baseLayout">
+        <put-attribute name="title" value="Booking Summary Report : Booking Summary" />
+        <put-attribute name="body" value="/WEB-INF/jsp/BookingSummary.jsp" />
+    </definition>
 </tiles-definitions>

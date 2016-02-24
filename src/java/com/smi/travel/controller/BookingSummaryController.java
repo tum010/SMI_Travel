@@ -12,7 +12,6 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.master.controller.SMITravelController;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,17 +23,16 @@ import org.springframework.web.servlet.view.RedirectView;
  *
  * @author Jittima
  */
-public class ProfitLossController extends SMITravelController{
-    private static final ModelAndView ProfitLoss = new ModelAndView("ProfitLoss");
-    private static final ModelAndView ProfitLoss_REFRESH = new ModelAndView(new RedirectView("ProfitLoss.smi", true));
+public class BookingSummaryController extends SMITravelController{
+    private static final ModelAndView BookingSummary = new ModelAndView("BookingSummary");
+    private static final ModelAndView BookingSummary_REFRESH = new ModelAndView(new RedirectView("BookingSummary.smi", true));
     private static final String INVOICESUPLIST = "invSupList";
     private static final String STAFFLIST = "staffList";
     private static final String PRODUCTLIST = "productList";
-    private static final String CITYLIST = "cityList";
+    private static final String CUSTOMERAGENTLIST = "customerAgentList";
     
     private UtilityService utilityService;
     private ProductService productService;
-    
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         
@@ -47,11 +45,10 @@ public class ProfitLossController extends SMITravelController{
         List<Product> listProduct = productService.searchProduct(new Product(), 2);
         request.setAttribute(PRODUCTLIST, listProduct);
         
-        
-        request.setAttribute(CITYLIST, utilityService.getListMCity());
-        return ProfitLoss;
+        request.setAttribute(CUSTOMERAGENTLIST,utilityService.getListCustomerAgentInfo());
+        return BookingSummary;
     }
-    
+
     public UtilityService getUtilityService() {
         return utilityService;
     }
@@ -67,4 +64,5 @@ public class ProfitLossController extends SMITravelController{
     public void setProductService(ProductService productService) {
         this.productService = productService;
     }
+    
 }

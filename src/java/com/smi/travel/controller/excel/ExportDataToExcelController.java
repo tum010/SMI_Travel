@@ -52,6 +52,8 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String OutboundHotelSummary = "OutboundHotelSummary";
     private static final String Overdue = "Overdue";
     private static final String PaymentSummaryReport = "PaymentSummaryReport";
+    private static final String BookingNonInvoiceSummary = "BookingNonInvoiceSummary";
+    private static final String BookingInvoiceSummary = "BookingInvoiceSummary";  
     
     private static final String StockInvoiceSummary = "StockInvoiceSummary";
     private static final String StockNonInvoiceSummary = "StockNonInvoiceSummary";
@@ -111,7 +113,7 @@ public class ExportDataToExcelController  extends SMITravelController{
         MDefaultData mdWht = utilityService.getMDefaultDataFromType("withholding tax");
         String vatMDE = mdVat.getValue();
         String whtMDE = mdWht.getValue();
-            
+        System.out.println(" name +++++++++++++++ " + name);
         if(TicketFareReport.equalsIgnoreCase(name)){
             System.out.println("get excel data");
             data = reportservice.getTicketFareReport(ticketType,ticketBuy,airline,airlineCode,dateFrom,dateTo,department,staff,termPay,printby,invdateFrom,invdateTo);
@@ -329,18 +331,33 @@ public class ExportDataToExcelController  extends SMITravelController{
             data = reportservice.listOverdueSummary(clientcode_over, clientname_over, staffcode_over, staffname_over, vattype_over, from_over, to_over, department_over, group_over, view_over, printby);
             return new ModelAndView("OverdueSummaryExcel",name,data).addObject(ReportName, name);
         }else if(PaymentSummaryReport.equals(name)){
+            System.out.println("get excel data ap PaymentSummaryReport");  
             String from_payments = request.getParameter("from");
             String to_payments = request.getParameter("to");
             String invSupCode = request.getParameter("invSupCode");
             String saleby = request.getParameter("salebyUser");
             String refno = request.getParameter("refno");
-            System.out.println("from_payments :: " + from_payments);
-            System.out.println("to_payments :: " + to_payments);
-            System.out.println("invSupCode :: " + invSupCode);
-            System.out.println("saleby :: " + saleby);
-            System.out.println("refno :: " + refno);
             data = reportservice.getPaymentSummaryReport(from_payments, to_payments,saleby,invSupCode, refno, user.getRole().getName());
             return new ModelAndView("OutboundProduct",name,data).addObject(ReportName, name);
+        }else if(BookingInvoiceSummary.equals(name)){
+            String owner = request.getParameter("owner");
+            String invto = request.getParameter("invto");
+            String bookdatefrom = request.getParameter("bookdatefrom");
+            String bookdateto = request.getParameter("bookdateto");
+            String invdatefrom = request.getParameter("invdatefrom");
+            String invdateto = request.getParameter("invdateto");
+            data = reportservice.getBookingInvoiceReport(owner, invto, bookdatefrom, bookdateto, invdatefrom, invdateto, user.getRole().getName());
+            return new ModelAndView("BookingInvoiceSummary",name,data).addObject(ReportName, name);
+        }else if(BookingNonInvoiceSummary.equals(name)){
+            String owner = request.getParameter("owner");
+            String invsup = request.getParameter("invsup");
+            String bookdatefrom = request.getParameter("bookdatefrom");
+            String bookdateto = request.getParameter("bookdateto");
+            String paydatefrom = request.getParameter("paydatefrom");
+            String paydateto = request.getParameter("paydateto");
+            data = reportservice.getBookingNonInvoiceReport(owner, invsup, bookdatefrom, bookdateto, paydatefrom, paydateto, user.getRole().getName());
+            return new ModelAndView("BookingInvoiceSummary",name,data).addObject(ReportName, name);
+            
         }else if(StockInvoiceSummary.equals(name)){
             String product = request.getParameter("product");
             String invTo = request.getParameter("invTo");

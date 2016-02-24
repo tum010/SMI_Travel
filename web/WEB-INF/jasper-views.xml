@@ -392,6 +392,9 @@
         <bean id="OutboundProduct" class="com.smi.travel.controller.excel.booking.OutboundProductSummary">
 	</bean>
         
+        <bean id="BookingInvoiceSummary" class="com.smi.travel.controller.excel.booking.BookingSummary">
+	</bean>
+        
         <bean id="InvoiceInboundPerformaEmail"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/InvoiceInboundEmail.jrxml"/>
