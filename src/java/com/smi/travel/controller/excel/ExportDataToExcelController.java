@@ -53,11 +53,10 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String Overdue = "Overdue";
     private static final String PaymentSummaryReport = "PaymentSummaryReport";
     private static final String BookingNonInvoiceSummary = "BookingNonInvoiceSummary";
-    private static final String BookingInvoiceSummary = "BookingInvoiceSummary";  
-    
+    private static final String BookingInvoiceSummary = "BookingInvoiceSummary";     
     private static final String StockInvoiceSummary = "StockInvoiceSummary";
     private static final String StockNonInvoiceSummary = "StockNonInvoiceSummary";
-
+    
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String output =  request.getParameter("output");
