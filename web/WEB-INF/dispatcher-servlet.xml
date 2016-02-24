@@ -653,7 +653,7 @@
         <property name="utilityService" ref="UtilityService" />
     </bean>
     <bean id="TicketProfitLossController" class="com.smi.travel.controller.TicketProfitLossController">
-
+    
     </bean>
     
     <bean id="TicketSummaryCommissionController" class="com.smi.travel.controller.TicketSummaryCommissionController">
@@ -744,6 +744,7 @@
     
     <bean id="ProfitLossController" class="com.smi.travel.controller.ProfitLossController">
         <property name="utilityService" ref="UtilityService" />
+        <property name="productService" ref="ProductService" />
     </bean>
     
     <bean id="RefundTicketSummaryReportController" class="com.smi.travel.controller.RefundTicketSummaryReportController">

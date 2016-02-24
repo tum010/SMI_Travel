@@ -29,6 +29,8 @@ public class BookingSummaryController extends SMITravelController{
     private static final String INVOICESUPLIST = "invSupList";
     private static final String STAFFLIST = "staffList";
     private static final String PRODUCTLIST = "productList";
+    private static final String CUSTOMERAGENTLIST = "customerAgentList";
+    
     private UtilityService utilityService;
     private ProductService productService;
     @Override
@@ -43,6 +45,7 @@ public class BookingSummaryController extends SMITravelController{
         List<Product> listProduct = productService.searchProduct(new Product(), 2);
         request.setAttribute(PRODUCTLIST, listProduct);
         
+        request.setAttribute(CUSTOMERAGENTLIST,utilityService.getListCustomerAgentInfo());
         return BookingSummary;
     }
 

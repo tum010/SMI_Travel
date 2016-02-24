@@ -5,8 +5,12 @@
  */
 package com.smi.travel.controller;
 
+import com.smi.travel.datalayer.entity.Product;
+import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.service.ProductService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
+import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.master.controller.SMITravelController;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +27,30 @@ import org.springframework.web.servlet.view.RedirectView;
 public class ProfitLossController extends SMITravelController{
     private static final ModelAndView ProfitLoss = new ModelAndView("ProfitLoss");
     private static final ModelAndView ProfitLoss_REFRESH = new ModelAndView(new RedirectView("ProfitLoss.smi", true));
+    private static final String INVOICESUPLIST = "invSupList";
+    private static final String STAFFLIST = "staffList";
+    private static final String PRODUCTLIST = "productList";
+    private static final String CITYLIST = "cityList";
+    
     private UtilityService utilityService;
+    private ProductService productService;
+    
+    @Override
+    protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        
+        List<InvoiceSupplier> invoiceSupplierList = utilityService.getListInvoiceSuppiler();
+        request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
+        
+        List<SystemUser> listStaff = utilityService.getUserList();
+        request.setAttribute(STAFFLIST, listStaff);
+        
+        List<Product> listProduct = productService.searchProduct(new Product(), 2);
+        request.setAttribute(PRODUCTLIST, listProduct);
+        
+        
+        request.setAttribute(CITYLIST, utilityService.getListMCity());
+        return ProfitLoss;
+    }
     
     public UtilityService getUtilityService() {
         return utilityService;
@@ -32,18 +59,12 @@ public class ProfitLossController extends SMITravelController{
     public void setUtilityService(UtilityService utilityService) {
         this.utilityService = utilityService;
     }
-    
-    @Override
-    protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        //List Agent
-        List<CustomerAgentInfo> listCustomerAgentInfo = new ArrayList<CustomerAgentInfo>();
-        listCustomerAgentInfo = utilityService.getListCustomerAgentInfo();
-        if(listCustomerAgentInfo != null){
-            request.setAttribute("listAgent", listCustomerAgentInfo);
-        }else{
-            request.setAttribute("listAgent", null);
-        } 
-        
-        return ProfitLoss;
+
+    public ProductService getProductService() {
+        return productService;
+    }
+
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
     }
 }

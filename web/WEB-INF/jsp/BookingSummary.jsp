@@ -11,6 +11,7 @@
 <c:set var="invSupList" value="${requestScope['invSupList']}" />
 <c:set var="userList" value="${requestScope['staffList']}" />
 <c:set var="productList" value="${requestScope['productList']}" />
+<c:set var="customerAgentList" value="${requestScope['customerAgentList']}" />
 
 <section class="content-header"  >
     <h4>
@@ -169,7 +170,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type='text' readonly="" id="billname" name="billname" class="form-control" />
+                                        <input type='text' readonly="" id="billname" name="billname" class="form-control" value="" readonly="" style="width: 132px">
                                     </div>
                                 </div>   
                             </div>
@@ -231,7 +232,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Sale By</h4>
+                <h4 class="modal-title">Owner</h4>
             </div>
             <div class="modal-body">
                 <!--Agent List Table-->
@@ -317,16 +318,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Bill To</h4>
+                <h4 class="modal-title">Inv To</h4>
             </div>
             <div class="modal-body">
                 <!--Bill To List Table-->
-                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchBillTo" name="searchBillTo" placeholder="Bill To,Name"/> </div> 
+                <div style="text-align: right"> <i id="ajaxload"  class="fa fa-spinner fa-spin hidden"></i> Search : <input type="text" style="width: 175px" id="searchBillTo" name="searchBillTo" placeholder="Inv To,Name"/> </div> 
                 <table class="display" id="BillToTable" style="table-layout: fixed;">
                     <thead>                        
                         <tr class="datatable-header">
-                            <th style="width: 15%;">Bill To</th>
-                            <th style="width: 30%;">Bill Name</th>
+                            <th style="width: 15%;">Inv To</th>
+                            <th style="width: 30%;">Inv Name</th>
                             <th style="width: 35%;">Address</th>
                             <th style="width: 20%;">Tel</th>
                         </tr>
@@ -335,7 +336,7 @@
                         bill = [];
                     </script>
                     <tbody>
-                        <c:forEach var="item" items="${customerList}">
+                        <c:forEach var="item" items="${customerAgentList}">
                             <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">                             
                                 <td class="item-billto">${item.billTo}</td>
                                 <td class="item-name">${item.billName}</td>                                
@@ -1033,5 +1034,14 @@ function printBookingSummary(){
         validateDate();  
     }
  
+}
+
+function setupInvSupValue(id, code, name, apcode) {
+    $('#SearchInvoiceSup').modal('hide');
+    document.getElementById('invSupId').value = id;
+    document.getElementById('invSupCode').value = code;
+    document.getElementById('invSupName').value = name;
+    document.getElementById('invSupApCode').value = apcode;
+    document.getElementById('invSupCode').focus();
 }
 </script>
