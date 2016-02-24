@@ -825,4 +825,12 @@ public class ReportService {
     public List getDaytourOperationOtherReport(String otherId, String passengerId, String refNo, String status, String printby) {
         return daytourOtherdao.getDaytourOperationOtherReport(otherId,passengerId,refNo,status,printby);
     }
+
+    public List getStockInvoiceSummaryReport(String product, String invTo, String effectiveDateFrom, String effectiveDateTo, String invoiceDateFrom, String invoiceDateTo, String addDate, String username) {
+        return paymentOutboundDao.getStockInvoiceSummaryReport(product, invTo, effectiveDateFrom, effectiveDateTo, invoiceDateFrom, invoiceDateTo, addDate, username);
+    }
+
+    public List getStockNonInvoiceSummaryReport(String product, String invoiceSup, String effectiveDateFrom, String effectiveDateTo, String payDateFrom, String payDateTo, String addDate, String username) {
+        return paymentOutboundDao.getStockNonInvoiceSummaryReport(product, invoiceSup, effectiveDateFrom, effectiveDateTo, payDateFrom, payDateTo, addDate, username);
+    }
 }

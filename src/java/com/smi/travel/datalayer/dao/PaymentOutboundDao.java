@@ -36,5 +36,7 @@ public interface PaymentOutboundDao {
     
     //Payment Summry Report
     public List getPaymentSummaryReport(String fromDate,String toDate,String saleby,String invSupCode,String refNo,String username);
+    public List getStockInvoiceSummaryReport(String product, String invTo, String effectiveDateFrom, String effectiveDateTo, String invoiceDateFrom, String invoiceDateTo, String addDate, String username);
+    public List getStockNonInvoiceSummaryReport(String product, String invoiceSup, String effectiveDateFrom, String effectiveDateTo, String payDateFrom, String payDateTo, String addDate, String username);
     
 }

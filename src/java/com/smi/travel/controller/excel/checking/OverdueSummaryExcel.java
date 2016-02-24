@@ -8,6 +8,8 @@ package com.smi.travel.controller.excel.checking;
 import com.smi.travel.controller.excel.master.UtilityExcelFunction;
 import com.smi.travel.datalayer.entity.OverdueSummartExcel;
 import com.smi.travel.datalayer.report.model.BillAirAgent;
+import com.smi.travel.datalayer.view.entity.StockInvoiceSummaryView;
+import com.smi.travel.datalayer.view.entity.StockNonInvoiceSummaryView;
 import java.awt.Color;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,7 +32,9 @@ import org.springframework.web.servlet.view.document.AbstractExcelView;
  * @author Kanokporn
  */
 public class OverdueSummaryExcel extends AbstractExcelView{
-    private static final String Overdue= "Overdue";
+    private static final String Overdue = "Overdue";
+    private static final String StockInvoiceSummary = "StockInvoiceSummary";
+    private static final String StockNonInvoiceSummary = "StockNonInvoiceSummary";
 
     @Override
     protected void buildExcelDocument(Map<String, Object> model, HSSFWorkbook workbook, HttpServletRequest hsr, HttpServletResponse response) throws Exception {
@@ -41,6 +45,12 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         if(name.equalsIgnoreCase(Overdue)){
             System.out.println("gen report OverdueSummary");
             getOverdueSummary(workbook, (List) model.get(name));
+        }else if(name.equalsIgnoreCase(StockInvoiceSummary)){
+            System.out.println("gen report StockInvoiceSummary");
+            getStockInvoiceSummary(workbook, (List) model.get(name));
+        }else if(name.equalsIgnoreCase(StockNonInvoiceSummary)){
+            System.out.println("gen report StockNonInvoiceSummary");
+            getStockNonInvoiceSummary(workbook, (List) model.get(name));
         }
     }
     
@@ -488,5 +498,519 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         HSSFCell cell12 = row.createCell(12);
             cell12.setCellValue(listAgent.get(num).getOverduesstatus());
             cell12.setCellStyle(styleDe);
+    }
+
+    private void getStockInvoiceSummary(HSSFWorkbook wb, List stockInvoiceSummary) {
+        String sheetStockInvoiceSummary = "StockInvoiceSummary";// name of sheet
+
+        UtilityExcelFunction excelFunction = new UtilityExcelFunction();
+
+        HSSFSheet sheet = wb.createSheet(sheetStockInvoiceSummary);
+
+        HSSFDataFormat currency = wb.createDataFormat();
+        // Set align Text
+        HSSFCellStyle styleC21 = wb.createCellStyle();
+        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
+        HSSFCellStyle styleC22 = wb.createCellStyle();
+        styleC22.setAlignment(styleC22.ALIGN_LEFT);
+        HSSFCellStyle styleC23 = wb.createCellStyle();
+        styleC23.setAlignment(styleC23.ALIGN_CENTER);
+
+        HSSFCellStyle styleC25 = wb.createCellStyle();
+        styleC25.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC25.setVerticalAlignment(styleC25.VERTICAL_CENTER);
+        styleC25.setDataFormat(currency.getFormat("#,##0.00"));
+
+        HSSFCellStyle styleC26 = wb.createCellStyle();
+        styleC26.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC26.setDataFormat(currency.getFormat("#,##0"));
+        styleC26.setAlignment(styleC22.ALIGN_CENTER);
+
+        HSSFCellStyle styleC27 = wb.createCellStyle();
+        styleC27.setAlignment(styleC27.ALIGN_RIGHT);
+        styleC27.setDataFormat(currency.getFormat("#,##0.00"));
+
+        HSSFCellStyle styleC28 = wb.createCellStyle();
+        styleC28.setAlignment(styleC28.ALIGN_CENTER);
+        styleC28.setDataFormat(currency.getFormat("#,##0"));
+
+        HSSFCellStyle styleC29 = wb.createCellStyle();
+        styleC29.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC29.setVerticalAlignment(styleC29.VERTICAL_CENTER);
+
+        HSSFCellStyle styleC30 = wb.createCellStyle();
+        styleC30.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC30.setAlignment(styleC22.ALIGN_CENTER);
+        styleC30.setVerticalAlignment(styleC30.VERTICAL_CENTER);
+
+        HSSFCellStyle styleC31 = wb.createCellStyle();
+        styleC31.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC31.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC31.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC31.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC31.setDataFormat(currency.getFormat("#,##0.00"));
+        
+        HSSFCellStyle styleC32 = wb.createCellStyle();
+        styleC32.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC32.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC32.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC32.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC32.setAlignment(styleC22.ALIGN_LEFT);
+        styleC32.setVerticalAlignment(styleC32.VERTICAL_CENTER);
+        styleC32.setWrapText(true);
+
+        StockInvoiceSummaryView dataheader = (StockInvoiceSummaryView)stockInvoiceSummary.get(0);
+
+        // set Header Report (Row 1)
+        HSSFCellStyle styleC1 = wb.createCellStyle();
+        HSSFRow row1 = sheet.createRow(0);
+        HSSFCell cell1 = row1.createCell(0);
+        cell1.setCellValue("Stock Invoice Summary");
+        styleC1.setFont(excelFunction.getHeaderFont(wb.createFont()));
+        cell1.setCellStyle(styleC1);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("A1:F1"));
+
+        // Row 2
+        HSSFRow row2 = sheet.createRow(1);
+        HSSFCell cell21 = row2.createCell(0);
+        cell21.setCellValue("Product : ");
+        cell21.setCellStyle(styleC21);
+        HSSFCell cell22 = row2.createCell(1);
+        cell22.setCellValue(dataheader.getProductHeader());
+        cell22.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B2:D2"));
+        HSSFCell cell23 = row2.createCell(4);
+        cell23.setCellValue("Inv To : ");
+        cell23.setCellStyle(styleC21);
+        HSSFCell cell24 = row2.createCell(5);
+        cell24.setCellValue(dataheader.getInvtoHeader());
+        cell24.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("F2:I2"));
+
+        // Row 3
+        HSSFRow row3 = sheet.createRow(2);
+        HSSFCell cell31 = row3.createCell(0);
+        cell31.setCellValue("Effective Date : ");
+        cell31.setCellStyle(styleC21);
+        HSSFCell cell32 = row3.createCell(1);
+        cell32.setCellValue(dataheader.getEffectivedateHeader());
+        cell32.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B3:D3"));
+        HSSFCell cell33 = row3.createCell(4);
+        cell33.setCellValue("Invoice Date : ");
+        cell33.setCellStyle(styleC21);
+        HSSFCell cell34 = row3.createCell(5);
+        cell34.setCellValue(dataheader.getInvoicedateHeader());
+        cell34.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("F3:I3"));
+
+        // Row 4
+        HSSFRow row4 = sheet.createRow(3);
+        HSSFCell cell41 = row4.createCell(0);
+        cell41.setCellValue("Add Date : ");
+        cell41.setCellStyle(styleC21);
+        HSSFCell cell42 = row4.createCell(1);
+        cell42.setCellValue(dataheader.getAdddateHeader());
+        cell42.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B4:D4"));       
+        
+        // Header Table
+        HSSFCellStyle styleC3 = wb.createCellStyle();
+        styleC3.setFont(excelFunction.getHeaderTable(wb.createFont()));
+        styleC3.setAlignment(styleC3.ALIGN_CENTER);
+        styleC3.setVerticalAlignment(styleC3.VERTICAL_CENTER);
+        styleC3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        
+        HSSFCellStyle styletop = wb.createCellStyle();
+        styletop.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styletop.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styletop.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styletop.setAlignment(styletop.ALIGN_CENTER);
+        styletop.setFont(excelFunction.getHeaderTable(wb.createFont()));
+        styletop.setVerticalAlignment(styletop.VERTICAL_CENTER);
+        
+        HSSFCellStyle stylebottom = wb.createCellStyle();
+        stylebottom.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        stylebottom.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        stylebottom.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        stylebottom.setAlignment(styletop.ALIGN_CENTER);
+        stylebottom.setFont(excelFunction.getHeaderTable(wb.createFont()));
+        stylebottom.setVerticalAlignment(styletop.VERTICAL_CENTER);
+        
+        HSSFRow row5 = sheet.createRow(5);
+        HSSFCell cell51 = row5.createCell(0);
+        cell51.setCellValue("Ref No");
+        cell51.setCellStyle(styletop);
+        HSSFCell cell62 = row5.createCell(1);
+        cell62.setCellValue("Owner");
+        cell62.setCellStyle(styletop);
+        HSSFCell cell63 = row5.createCell(2);
+        cell63.setCellValue("Inv No");
+        cell63.setCellStyle(styletop);
+        HSSFCell cell64 = row5.createCell(3);
+        cell64.setCellValue("Inv Name");
+        cell64.setCellStyle(styletop);
+        HSSFCell cell65 = row5.createCell(4);
+        cell65.setCellValue("Inv Date");
+        cell65.setCellStyle(styletop);
+        HSSFCell cell66 = row5.createCell(5);
+        cell66.setCellValue("Item No");
+        cell66.setCellStyle(styletop);
+        sheet.autoSizeColumn(5);
+        HSSFCell cell67 = row5.createCell(6);
+        cell67.setCellValue("Item type");
+        cell67.setCellStyle(styletop);
+        HSSFCell cell68 = row5.createCell(7);
+        cell68.setCellValue("Cost");
+        cell68.setCellStyle(styletop);
+        HSSFCell cell69 = row5.createCell(8);
+        cell69.setCellValue("Sale Price");
+        cell69.setCellStyle(styletop);
+        HSSFCell cell610 = row5.createCell(9);
+        cell610.setCellValue("Profit");
+        cell610.setCellStyle(styletop);
+        HSSFCell cell611 = row5.createCell(10);
+        cell611.setCellValue("Stock No");
+        cell611.setCellStyle(styletop);
+        
+        //Detail of Table
+        int count = 6 ;
+        for(int i=0;i<stockInvoiceSummary.size();i++){
+            StockInvoiceSummaryView data = (StockInvoiceSummaryView) stockInvoiceSummary.get(i);
+            HSSFRow row = sheet.createRow(count + i);
+            
+            HSSFCell celldata0 = row.createCell(0);
+            celldata0.setCellValue(!"".equalsIgnoreCase(data.getRefno()) && data.getRefno() != null ? data.getRefno() : "");
+            celldata0.setCellStyle(styleC30);
+            
+            HSSFCell celldata1 = row.createCell(1);
+            celldata1.setCellValue(!"".equalsIgnoreCase(data.getOwner()) && data.getOwner() != null ? data.getOwner() : "");
+            celldata1.setCellStyle(styleC30);
+            
+            HSSFCell celldata2 = row.createCell(2);
+            celldata2.setCellValue(!"".equalsIgnoreCase(data.getInvno()) && data.getInvno() != null ? data.getInvno() : "");
+            celldata2.setCellStyle(styleC32);
+            
+            HSSFCell celldata3 = row.createCell(3);
+            celldata3.setCellValue(!"".equalsIgnoreCase(data.getInvname()) && data.getInvname() != null ? data.getInvname() : "");
+            celldata3.setCellStyle(styleC29);
+            
+            HSSFCell celldata4 = row.createCell(4);
+            celldata4.setCellValue(!"".equalsIgnoreCase(data.getInvdate()) && data.getInvdate() != null ? data.getInvdate() : "");
+            celldata4.setCellStyle(styleC30);
+            
+            HSSFCell celldata5 = row.createCell(5);
+            celldata5.setCellValue(!"".equalsIgnoreCase(data.getItemno()) && data.getItemno() != null ? data.getItemno() : "");
+            celldata5.setCellStyle(styleC30);
+            
+            HSSFCell celldata6 = row.createCell(6);
+            celldata6.setCellValue(!"".equalsIgnoreCase(data.getItemtype()) && data.getItemtype() != null ? data.getItemtype() : "");
+            celldata6.setCellStyle(styleC30);
+            
+            HSSFCell celldata7 = row.createCell(7);
+            celldata7.setCellValue(!"".equalsIgnoreCase(data.getCost()) && data.getCost() != null ? new BigDecimal(data.getCost()).doubleValue() : 0);
+            celldata7.setCellStyle(styleC25);
+  
+            HSSFCell celldata8 = row.createCell(8);
+            celldata8.setCellValue(!"".equalsIgnoreCase(data.getSaleprice()) && data.getSaleprice() != null ? new BigDecimal(data.getSaleprice()).doubleValue() : 0);
+            celldata8.setCellStyle(styleC25);
+            
+            HSSFCell celldata9 = row.createCell(9);
+            celldata9.setCellValue(!"".equalsIgnoreCase(data.getProfit()) && data.getProfit() != null ? new BigDecimal(data.getProfit()).doubleValue() : 0);
+            celldata9.setCellStyle(styleC25);
+            
+            HSSFCell celldata10 = row.createCell(10);
+            celldata10.setCellValue(!"".equalsIgnoreCase(data.getStockno()) && data.getStockno() != null ? data.getStockno() : "");
+            celldata10.setCellStyle(styleC29);
+                       
+        }
+        
+        for(int j =0;j<11;j++){
+            sheet.autoSizeColumn(j);
+        }
+        
+//        sheet.setColumnWidth(0, 256*15);
+//        sheet.setColumnWidth(1, 256*15);
+//        sheet.setColumnWidth(2, 256*15);
+//        sheet.setColumnWidth(3, 256*15);
+//        sheet.setColumnWidth(4, 256*25);
+//        sheet.setColumnWidth(5, 256*25);
+//        sheet.setColumnWidth(6, 256*15);
+//        sheet.setColumnWidth(10, 256*15);
+//        sheet.setColumnWidth(11, 256*15);
+//        sheet.setColumnWidth(12, 256*15);
+//        sheet.setColumnWidth(13, 256*15);
+//        sheet.setColumnWidth(14, 256*15);
+//        sheet.setColumnWidth(15, 256*15);
+//        sheet.setColumnWidth(16, 256*15);
+//        sheet.setColumnWidth(17, 256*15);
+//        sheet.setColumnWidth(18, 256*15);
+//        sheet.setColumnWidth(19, 256*15);
+
+    }
+
+    private void getStockNonInvoiceSummary(HSSFWorkbook wb, List stockNonInvoiceSummary) {
+        String sheetStockNonInvoiceSummary = "StockNonInvoiceSummary";// name of sheet
+
+        UtilityExcelFunction excelFunction = new UtilityExcelFunction();
+
+        HSSFSheet sheet = wb.createSheet(sheetStockNonInvoiceSummary);
+
+        HSSFDataFormat currency = wb.createDataFormat();
+        // Set align Text
+        HSSFCellStyle styleC21 = wb.createCellStyle();
+        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
+        HSSFCellStyle styleC22 = wb.createCellStyle();
+        styleC22.setAlignment(styleC22.ALIGN_LEFT);
+        HSSFCellStyle styleC23 = wb.createCellStyle();
+        styleC23.setAlignment(styleC23.ALIGN_CENTER);
+
+        HSSFCellStyle styleC25 = wb.createCellStyle();
+        styleC25.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC25.setVerticalAlignment(styleC25.VERTICAL_CENTER);
+        styleC25.setDataFormat(currency.getFormat("#,##0.00"));
+
+        HSSFCellStyle styleC26 = wb.createCellStyle();
+        styleC26.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC26.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC26.setDataFormat(currency.getFormat("#,##0"));
+        styleC26.setAlignment(styleC22.ALIGN_CENTER);
+
+        HSSFCellStyle styleC27 = wb.createCellStyle();
+        styleC27.setAlignment(styleC27.ALIGN_RIGHT);
+        styleC27.setDataFormat(currency.getFormat("#,##0.00"));
+
+        HSSFCellStyle styleC28 = wb.createCellStyle();
+        styleC28.setAlignment(styleC28.ALIGN_CENTER);
+        styleC28.setDataFormat(currency.getFormat("#,##0"));
+
+        HSSFCellStyle styleC29 = wb.createCellStyle();
+        styleC29.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC29.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC29.setVerticalAlignment(styleC29.VERTICAL_CENTER);
+
+        HSSFCellStyle styleC30 = wb.createCellStyle();
+        styleC30.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC30.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC30.setAlignment(styleC22.ALIGN_CENTER);
+        styleC30.setVerticalAlignment(styleC30.VERTICAL_CENTER);
+
+        HSSFCellStyle styleC31 = wb.createCellStyle();
+        styleC31.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC31.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC31.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC31.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC31.setDataFormat(currency.getFormat("#,##0.00"));
+        
+        HSSFCellStyle styleC32 = wb.createCellStyle();
+        styleC32.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC32.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC32.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC32.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC32.setAlignment(styleC22.ALIGN_CENTER);
+        styleC32.setVerticalAlignment(styleC32.VERTICAL_CENTER);
+        styleC32.setWrapText(true);
+
+        StockNonInvoiceSummaryView dataheader = (StockNonInvoiceSummaryView)stockNonInvoiceSummary.get(0);
+
+        // set Header Report (Row 1)
+        HSSFCellStyle styleC1 = wb.createCellStyle();
+        HSSFRow row1 = sheet.createRow(0);
+        HSSFCell cell1 = row1.createCell(0);
+        cell1.setCellValue("Stock Non Invoice Summary");
+        styleC1.setFont(excelFunction.getHeaderFont(wb.createFont()));
+        cell1.setCellStyle(styleC1);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("A1:F1"));
+
+        // Row 2
+        HSSFRow row2 = sheet.createRow(1);
+        HSSFCell cell21 = row2.createCell(0);
+        cell21.setCellValue("Product : ");
+        cell21.setCellStyle(styleC21);
+        HSSFCell cell22 = row2.createCell(1);
+        cell22.setCellValue(dataheader.getProductHeader());
+        cell22.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B2:D2"));
+        HSSFCell cell23 = row2.createCell(4);
+        cell23.setCellValue("Invoice Sup : ");
+        cell23.setCellStyle(styleC21);
+        HSSFCell cell24 = row2.createCell(5);
+        cell24.setCellValue(dataheader.getInvoicesupHeader());
+        cell24.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("F2:H2"));
+
+        // Row 3
+        HSSFRow row3 = sheet.createRow(2);
+        HSSFCell cell31 = row3.createCell(0);
+        cell31.setCellValue("Effective Date : ");
+        cell31.setCellStyle(styleC21);
+        HSSFCell cell32 = row3.createCell(1);
+        cell32.setCellValue(dataheader.getEffectivedateHeader());
+        cell32.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B3:D3"));
+        HSSFCell cell33 = row3.createCell(4);
+        cell33.setCellValue("Pay Date : ");
+        cell33.setCellStyle(styleC21);
+        HSSFCell cell34 = row3.createCell(5);
+        cell34.setCellValue(dataheader.getPaydateHeader());
+        cell34.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("F3:H3"));
+
+        // Row 4
+        HSSFRow row4 = sheet.createRow(3);
+        HSSFCell cell41 = row4.createCell(0);
+        cell41.setCellValue("Add Date : ");
+        cell41.setCellStyle(styleC21);
+        HSSFCell cell42 = row4.createCell(1);
+        cell42.setCellValue(dataheader.getAdddateHeader());
+        cell42.setCellStyle(styleC22);
+        sheet.addMergedRegion(CellRangeAddress.valueOf("B4:D4"));       
+        
+        // Header Table
+        HSSFCellStyle styleC3 = wb.createCellStyle();
+        styleC3.setFont(excelFunction.getHeaderTable(wb.createFont()));
+        styleC3.setAlignment(styleC3.ALIGN_CENTER);
+        styleC3.setVerticalAlignment(styleC3.VERTICAL_CENTER);
+        styleC3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        
+        HSSFCellStyle styletop = wb.createCellStyle();
+        styletop.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styletop.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styletop.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styletop.setAlignment(styletop.ALIGN_CENTER);
+        styletop.setFont(excelFunction.getHeaderTable(wb.createFont()));
+        styletop.setVerticalAlignment(styletop.VERTICAL_CENTER);
+        
+        HSSFCellStyle stylebottom = wb.createCellStyle();
+        stylebottom.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        stylebottom.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        stylebottom.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        stylebottom.setAlignment(styletop.ALIGN_CENTER);
+        stylebottom.setFont(excelFunction.getHeaderTable(wb.createFont()));
+        stylebottom.setVerticalAlignment(styletop.VERTICAL_CENTER);
+        
+        HSSFRow row5 = sheet.createRow(5);
+        HSSFCell cell51 = row5.createCell(0);
+        cell51.setCellValue("Ref No");
+        cell51.setCellStyle(styletop);
+        HSSFCell cell62 = row5.createCell(1);
+        cell62.setCellValue("Owner");
+        cell62.setCellStyle(styletop);
+        HSSFCell cell63 = row5.createCell(2);
+        cell63.setCellValue("Item No");
+        cell63.setCellStyle(styletop);
+        HSSFCell cell64 = row5.createCell(3);
+        cell64.setCellValue("Item Type");
+        cell64.setCellStyle(styletop);
+        HSSFCell cell65 = row5.createCell(4);
+        cell65.setCellValue("Cost");
+        cell65.setCellStyle(styletop);
+        HSSFCell cell66 = row5.createCell(5);
+        cell66.setCellValue("Pay No");
+        cell66.setCellStyle(styletop);
+        sheet.autoSizeColumn(5);
+        HSSFCell cell67 = row5.createCell(6);
+        cell67.setCellValue("Pay Date");
+        cell67.setCellStyle(styletop);
+        HSSFCell cell68 = row5.createCell(7);
+        cell68.setCellValue("Invoice Sup");
+        cell68.setCellStyle(styletop);
+        HSSFCell cell69 = row5.createCell(8);
+        cell69.setCellValue("Stock No");
+        cell69.setCellStyle(styletop);
+        
+        //Detail of Table
+        int count = 6 ;
+        for(int i=0;i<stockNonInvoiceSummary.size();i++){
+            StockNonInvoiceSummaryView data = (StockNonInvoiceSummaryView) stockNonInvoiceSummary.get(i);
+            HSSFRow row = sheet.createRow(count + i);
+            
+            HSSFCell celldata0 = row.createCell(0);
+            celldata0.setCellValue(!"".equalsIgnoreCase(data.getRefno()) && data.getRefno() != null ? data.getRefno() : "");
+            celldata0.setCellStyle(styleC30);
+            
+            HSSFCell celldata1 = row.createCell(1);
+            celldata1.setCellValue(!"".equalsIgnoreCase(data.getOwner()) && data.getOwner() != null ? data.getOwner() : "");
+            celldata1.setCellStyle(styleC30);
+            
+            HSSFCell celldata2 = row.createCell(2);
+            celldata2.setCellValue(!"".equalsIgnoreCase(data.getItemno()) && data.getItemno() != null ? data.getItemno() : "");
+            celldata2.setCellStyle(styleC30);
+            
+            HSSFCell celldata3 = row.createCell(3);
+            celldata3.setCellValue(!"".equalsIgnoreCase(data.getItemtype()) && data.getItemtype() != null ? data.getItemtype() : "");
+            celldata3.setCellStyle(styleC30);
+            
+            HSSFCell celldata4 = row.createCell(4);
+            celldata4.setCellValue(!"".equalsIgnoreCase(data.getCost()) && data.getCost() != null ? new BigDecimal(data.getCost()).doubleValue() : 0);
+            celldata4.setCellStyle(styleC25);
+            
+            HSSFCell celldata5 = row.createCell(5);
+            celldata5.setCellValue(!"".equalsIgnoreCase(data.getPayno()) && data.getPayno() != null ? data.getPayno() : "");
+            celldata5.setCellStyle(styleC30);
+            
+            HSSFCell celldata6 = row.createCell(6);
+            celldata6.setCellValue(!"".equalsIgnoreCase(data.getPaydate()) && data.getPaydate() != null ? data.getPaydate() : "");
+            celldata6.setCellStyle(styleC30);
+            
+            HSSFCell celldata7 = row.createCell(7);
+            celldata7.setCellValue(!"".equalsIgnoreCase(data.getInvoicesup()) && data.getInvoicesup() != null ? data.getInvoicesup() : "");
+            celldata7.setCellStyle(styleC29);
+  
+            HSSFCell celldata8 = row.createCell(8);
+            celldata8.setCellValue(!"".equalsIgnoreCase(data.getStockno()) && data.getStockno() != null ? data.getStockno() : "");
+            celldata8.setCellStyle(styleC29);
+                       
+        }
+        
+        for(int j =0;j<9;j++){
+            sheet.autoSizeColumn(j);
+        }
+        
+//        sheet.setColumnWidth(0, 256*15);
+//        sheet.setColumnWidth(1, 256*15);
+//        sheet.setColumnWidth(2, 256*15);
+//        sheet.setColumnWidth(3, 256*15);
+//        sheet.setColumnWidth(4, 256*25);
+//        sheet.setColumnWidth(5, 256*25);
+//        sheet.setColumnWidth(6, 256*15);
+//        sheet.setColumnWidth(10, 256*15);
+//        sheet.setColumnWidth(11, 256*15);
+//        sheet.setColumnWidth(12, 256*15);
+//        sheet.setColumnWidth(13, 256*15);
+//        sheet.setColumnWidth(14, 256*15);
+//        sheet.setColumnWidth(15, 256*15);
+//        sheet.setColumnWidth(16, 256*15);
+//        sheet.setColumnWidth(17, 256*15);
+//        sheet.setColumnWidth(18, 256*15);
+//        sheet.setColumnWidth(19, 256*15);
+
     }
 }

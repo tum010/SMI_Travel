@@ -17,6 +17,8 @@ import com.smi.travel.datalayer.view.entity.BookingOutboundView;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundAllDetail;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundSummary;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundView;
+import com.smi.travel.datalayer.view.entity.StockInvoiceSummaryView;
+import com.smi.travel.datalayer.view.entity.StockNonInvoiceSummaryView;
 import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -756,6 +758,242 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         this.sessionFactory.close();
         session.close();
         return paymentOutboundDetailList;
+    }
+
+    @Override
+    public List getStockInvoiceSummaryReport(String product, String invTo, String effectiveDateFrom, String effectiveDateTo, String invoiceDateFrom, String invoiceDateTo, String addDate, String username) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        String query = "SELECT * FROM `stock_invoice` ";
+        boolean haveCondition = false;      
+        
+        if ((product != null) && (!"".equalsIgnoreCase(product))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " productcode = '" + product + "' ";
+            haveCondition = true;           
+        }
+        
+        if ((invTo != null) && (!"".equalsIgnoreCase(invTo))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " invcode LIKE '%" + invTo + "%' ";
+            haveCondition = true;
+        } 
+        
+        if ((effectiveDateFrom != null) && (!"".equalsIgnoreCase(effectiveDateFrom))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " effectivefrom >= '" + effectiveDateFrom + "' ";
+            haveCondition = true;            
+        }
+        
+        if ((effectiveDateTo != null) && (!"".equalsIgnoreCase(effectiveDateTo))){
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " effectiveto <= '" + effectiveDateTo + "' ";
+            haveCondition = true;     
+        }
+        
+        if ((invoiceDateFrom != null) && (!"".equalsIgnoreCase(invoiceDateFrom)) && (invoiceDateTo != null) && (!"".equalsIgnoreCase(invoiceDateTo))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " (invoicedate BETWEEN '" + invoiceDateFrom + "' AND '" + invoiceDateTo + "') ";
+            haveCondition = true;            
+        }
+        
+        if((addDate != null) && (!"".equalsIgnoreCase(addDate))){
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " adddate = '" + addDate + "' ";
+            haveCondition = true;
+        }
+        
+        List<Object[]> queryStockInvoiceSummaryReport = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("owner", Hibernate.STRING)
+                .addScalar("bookdate", Hibernate.STRING)
+                .addScalar("invoiceno", Hibernate.STRING)
+                .addScalar("invoiceto", Hibernate.STRING)
+                .addScalar("invoicedate", Hibernate.STRING)
+                .addScalar("itemno", Hibernate.STRING)
+                .addScalar("itemtype", Hibernate.STRING)
+                .addScalar("cost", Hibernate.STRING)
+                .addScalar("price", Hibernate.STRING)
+                .addScalar("profit", Hibernate.STRING)
+                .addScalar("stockno", Hibernate.STRING)                
+                .list();
+            
+        SimpleDateFormat dateformatInvoice = new SimpleDateFormat();
+        dateformatInvoice.applyPattern("dd/MM/yyyy");
+            
+        for (Object[] B : queryStockInvoiceSummaryReport) {
+            StockInvoiceSummaryView view = new StockInvoiceSummaryView();
+            view.setRefno(B[0] != null ? util.ConvertString(B[0]) : "");
+            view.setOwner(B[1] != null ? util.ConvertString(B[1]) : "");
+            view.setInvno(B[3] != null ? util.ConvertString(B[3]) : "");
+            view.setInvname(B[4] != null ? util.ConvertString(B[4]) : "");
+            if(B[5] != null){
+                String invdatemp="";
+                String invDate[] = String.valueOf(B[5]).split("\r\n");
+                if(invDate.length > 1 ){
+                   for(int x= 0; x<invDate.length;x++){
+                       if(invDate[x] != null && !"".equalsIgnoreCase(invDate[x].trim())){
+                            invdatemp += util.ConvertString(dateformatInvoice.format(util.convertStringToDate(String.valueOf(invDate[x]).trim())))+"\r\n";
+                            view.setInvdate(invdatemp);
+                       }
+                   }
+                }else{
+                  view.setInvdate(util.ConvertString(dateformatInvoice.format(util.convertStringToDate(String.valueOf(B[5]).trim()))));
+                }
+            }else{
+                view.setInvdate("");
+            }
+//            view.setInvdate(B[5] != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(util.ConvertString(B[5])))) : "");
+            view.setItemno(B[6] != null ? util.ConvertString(B[6]) : "");
+            view.setItemtype(B[7] != null ? util.ConvertString(B[7]) : "");
+            view.setCost(B[8] != null ? util.ConvertString(B[8]) : "");
+            view.setSaleprice(B[9] != null ? util.ConvertString(B[9]) : "");
+            view.setProfit(B[10] != null ? util.ConvertString(B[10]) : "");
+            view.setStockno(B[11] != null ? util.ConvertString(B[11]) : "");                               
+            data.add(view);            
+        }
+        
+        if(queryStockInvoiceSummaryReport != null && queryStockInvoiceSummaryReport.size() > 0){
+            StockInvoiceSummaryView header = (StockInvoiceSummaryView) data.get(0);
+            String effectiveDateFromTemp = (!"".equalsIgnoreCase(effectiveDateFrom) && effectiveDateFrom != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(effectiveDateFrom))) : "");
+            String effectiveDateToTemp = (!"".equalsIgnoreCase(effectiveDateTo) && effectiveDateTo != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(effectiveDateTo))) : "");
+            String invoiceDateFromTemp = (!"".equalsIgnoreCase(invoiceDateFrom) && invoiceDateFrom != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(invoiceDateFrom))) : "");
+            String invoiceDateToTemp = (!"".equalsIgnoreCase(invoiceDateTo) && invoiceDateTo != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(invoiceDateTo))) : "");
+            String addDateTemp = (!"".equalsIgnoreCase(addDate) && addDate != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(addDate))) : "");
+            header.setProductHeader(product);
+            header.setInvtoHeader(invTo);           
+            header.setEffectivedateHeader(!"".equalsIgnoreCase(effectiveDateFromTemp) && !"".equalsIgnoreCase(effectiveDateToTemp) ? effectiveDateFromTemp+" - "+effectiveDateToTemp : "");
+            header.setInvoicedateHeader(!"".equalsIgnoreCase(invoiceDateFromTemp) && !"".equalsIgnoreCase(invoiceDateToTemp) ? invoiceDateFromTemp+" - "+invoiceDateToTemp : "");
+            header.setAdddateHeader(addDateTemp);
+        
+        }else{
+            StockInvoiceSummaryView header = new StockInvoiceSummaryView();
+            String effectiveDateFromTemp = (!"".equalsIgnoreCase(effectiveDateFrom) && effectiveDateFrom != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(effectiveDateFrom))) : "");
+            String effectiveDateToTemp = (!"".equalsIgnoreCase(effectiveDateTo) && effectiveDateTo != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(effectiveDateTo))) : "");
+            String invoiceDateFromTemp = (!"".equalsIgnoreCase(invoiceDateFrom) && invoiceDateFrom != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(invoiceDateFrom))) : "");
+            String invoiceDateToTemp = (!"".equalsIgnoreCase(invoiceDateTo) && invoiceDateTo != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(invoiceDateTo))) : "");
+            String addDateTemp = (!"".equalsIgnoreCase(addDate) && addDate != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(addDate))) : "");
+            header.setProductHeader(product);
+            header.setInvtoHeader(invTo);           
+            header.setEffectivedateHeader(!"".equalsIgnoreCase(effectiveDateFromTemp) && !"".equalsIgnoreCase(effectiveDateToTemp) ? effectiveDateFromTemp+" - "+effectiveDateToTemp : "");
+            header.setInvoicedateHeader(!"".equalsIgnoreCase(invoiceDateFromTemp) && !"".equalsIgnoreCase(invoiceDateToTemp) ? invoiceDateFromTemp+" - "+invoiceDateToTemp : "");
+            header.setAdddateHeader(!"".equalsIgnoreCase(addDateTemp) ? addDateTemp : "");
+            data.add(header);
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return data;
+    }
+
+    @Override
+    public List getStockNonInvoiceSummaryReport(String product, String invoiceSup, String effectiveDateFrom, String effectiveDateTo, String payDateFrom, String payDateTo, String addDate, String username) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List data = new ArrayList();
+        String query = "SELECT * FROM `stock_non_invoice` ";
+        boolean haveCondition = false;      
+        
+        if ((product != null) && (!"".equalsIgnoreCase(product))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " productcode = '" + product + "' ";
+            haveCondition = true;           
+        }
+        
+        if ((invoiceSup != null) && (!"".equalsIgnoreCase(invoiceSup))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " supcode = '" + invoiceSup + "' ";
+            haveCondition = true;
+        } 
+        
+        if ((effectiveDateFrom != null) && (!"".equalsIgnoreCase(effectiveDateFrom))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " effectivefrom >= '" + effectiveDateFrom + "' ";
+            haveCondition = true;            
+        }
+        
+        if((effectiveDateTo != null) && (!"".equalsIgnoreCase(effectiveDateTo))){
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " effectiveto <= '" + effectiveDateTo + "' ";
+            haveCondition = true;  
+        }
+        
+        if ((payDateFrom != null) && (!"".equalsIgnoreCase(payDateFrom)) && (payDateTo != null) && (!"".equalsIgnoreCase(payDateTo))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " (paydate BETWEEN '" + payDateFrom + "' AND '" + payDateTo + "') ";
+            haveCondition = true;            
+        } 
+        
+        List<Object[]> queryStockNonInvoiceSummaryReport = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("bookdate", Hibernate.STRING)
+                .addScalar("itemno", Hibernate.STRING)
+                .addScalar("itemtype", Hibernate.STRING)
+                .addScalar("payno", Hibernate.STRING)
+                .addScalar("paydate", Hibernate.STRING)
+                .addScalar("invoicesup", Hibernate.STRING)
+                .addScalar("cost", Hibernate.STRING)
+                .addScalar("stockno", Hibernate.STRING)
+                .addScalar("productcode", Hibernate.STRING)
+                .addScalar("effectivefrom", Hibernate.STRING)
+                .addScalar("effectiveto", Hibernate.STRING)
+                .addScalar("adddate", Hibernate.STRING)
+                .addScalar("supcode", Hibernate.STRING)
+                .list();
+            
+        SimpleDateFormat dateformatNonInvoice = new SimpleDateFormat();
+        dateformatNonInvoice.applyPattern("dd-MM-yyyy");
+            
+        for (Object[] B : queryStockNonInvoiceSummaryReport) {
+            StockNonInvoiceSummaryView view = new StockNonInvoiceSummaryView();
+            view.setRefno(B[0] != null ? util.ConvertString(B[0]) : "");
+            view.setItemno(B[2] != null ? util.ConvertString(B[2]) : "");
+            view.setItemtype(B[3] != null ? util.ConvertString(B[3]) : "");
+            view.setPayno(B[4] != null ? util.ConvertString(B[4]) : "");
+            view.setPaydate(B[5] != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(util.ConvertString(B[5])))) : "");
+            view.setInvoicesup(B[6] != null ? util.ConvertString(B[6]) : "");
+            view.setCost(B[7] != null ? util.ConvertString(B[7]) : "");
+            view.setStockno(B[8] != null ? util.ConvertString(B[8]) : "");  
+            view.setProductcode(B[9] != null ? util.ConvertString(B[9]) : "");
+            view.setEffectivefrom(B[10] != null ? util.ConvertString(B[10]) : "");
+            view.setEffectiveto(B[11] != null ? util.ConvertString(B[11]) : "");
+            view.setAdddate(B[12] != null ? util.ConvertString(B[12]) : "");
+            view.setSupcode(B[13] != null ? util.ConvertString(B[13]) : "");
+            data.add(view);            
+        }
+        
+        if(queryStockNonInvoiceSummaryReport != null && queryStockNonInvoiceSummaryReport.size() > 0){
+            StockNonInvoiceSummaryView header = (StockNonInvoiceSummaryView) data.get(0);
+            String effectiveDateFromTemp = (!"".equalsIgnoreCase(effectiveDateFrom) && effectiveDateFrom != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(effectiveDateFrom))) : "");
+            String effectiveDateToTemp = (!"".equalsIgnoreCase(effectiveDateTo) && effectiveDateTo != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(effectiveDateTo))) : "");
+            String payDateFromTemp = (!"".equalsIgnoreCase(payDateFrom) && payDateFrom != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(payDateFrom))) : "");
+            String payDateToTemp = (!"".equalsIgnoreCase(payDateTo) && payDateTo != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(payDateTo))) : "");
+            String addDateTemp = (!"".equalsIgnoreCase(addDate) && addDate != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(addDate))) : "");
+            header.setProductHeader(product);
+            header.setInvoicesupHeader(invoiceSup);           
+            header.setEffectivedateHeader(!"".equalsIgnoreCase(effectiveDateFromTemp) && !"".equalsIgnoreCase(effectiveDateToTemp) ? effectiveDateFromTemp+" - "+effectiveDateToTemp : "");
+            header.setPaydateHeader(!"".equalsIgnoreCase(payDateFromTemp) && !"".equalsIgnoreCase(payDateToTemp) ? payDateFromTemp+" - "+payDateToTemp : "");
+            header.setAdddateHeader(!"".equalsIgnoreCase(addDateTemp) ? addDateTemp : "");
+        
+        }else{
+            StockNonInvoiceSummaryView header = new StockNonInvoiceSummaryView();
+            String effectiveDateFromTemp = (!"".equalsIgnoreCase(effectiveDateFrom) && effectiveDateFrom != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(effectiveDateFrom))) : "");
+            String effectiveDateToTemp = (!"".equalsIgnoreCase(effectiveDateTo) && effectiveDateTo != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(effectiveDateTo))) : "");
+            String payDateFromTemp = (!"".equalsIgnoreCase(payDateFrom) && payDateFrom != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(payDateFrom))) : "");
+            String payDateToTemp = (!"".equalsIgnoreCase(payDateTo) && payDateTo != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(payDateTo))) : "");
+            String addDateTemp = (!"".equalsIgnoreCase(addDate) && addDate != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(addDate))) : "");
+            header.setProductHeader(product);
+            header.setInvoicesupHeader(invoiceSup);           
+            header.setEffectivedateHeader(!"".equalsIgnoreCase(effectiveDateFromTemp) && !"".equalsIgnoreCase(effectiveDateToTemp) ? effectiveDateFromTemp+" - "+effectiveDateToTemp : "");
+            header.setPaydateHeader(!"".equalsIgnoreCase(payDateFromTemp) && !"".equalsIgnoreCase(payDateToTemp) ? payDateFromTemp+" - "+payDateToTemp : "");
+            header.setAdddateHeader(!"".equalsIgnoreCase(addDateTemp) ? addDateTemp : "");
+            data.add(header);      
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return data;
     }
 
 }

@@ -52,6 +52,9 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String OutboundHotelSummary = "OutboundHotelSummary";
     private static final String Overdue = "Overdue";
     private static final String PaymentSummaryReport = "PaymentSummaryReport";
+    
+    private static final String StockInvoiceSummary = "StockInvoiceSummary";
+    private static final String StockNonInvoiceSummary = "StockNonInvoiceSummary";
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -326,7 +329,6 @@ public class ExportDataToExcelController  extends SMITravelController{
             data = reportservice.listOverdueSummary(clientcode_over, clientname_over, staffcode_over, staffname_over, vattype_over, from_over, to_over, department_over, group_over, view_over, printby);
             return new ModelAndView("OverdueSummaryExcel",name,data).addObject(ReportName, name);
         }else if(PaymentSummaryReport.equals(name)){
-            System.out.println("get excel data ap PaymentSummaryReport");  
             String from_payments = request.getParameter("from");
             String to_payments = request.getParameter("to");
             String invSupCode = request.getParameter("invSupCode");
@@ -339,6 +341,26 @@ public class ExportDataToExcelController  extends SMITravelController{
             System.out.println("refno :: " + refno);
             data = reportservice.getPaymentSummaryReport(from_payments, to_payments,saleby,invSupCode, refno, user.getRole().getName());
             return new ModelAndView("OutboundProduct",name,data).addObject(ReportName, name);
+        }else if(StockInvoiceSummary.equals(name)){
+            String product = request.getParameter("product");
+            String invTo = request.getParameter("invTo");
+            String effectiveDateFrom = request.getParameter("effectiveDateFrom");
+            String effectiveDateTo = request.getParameter("effectiveDateTo");
+            String invoiceDateFrom = request.getParameter("invoiceDateFrom");
+            String invoiceDateTo = request.getParameter("invoiceDateTo");
+            String addDate = request.getParameter("addDate");
+            data = reportservice.getStockInvoiceSummaryReport(product, invTo, effectiveDateFrom, effectiveDateTo, invoiceDateFrom, invoiceDateTo, addDate, user.getRole().getName());
+            return new ModelAndView("OverdueSummaryExcel",name,data).addObject(ReportName, name);
+        }else if(StockNonInvoiceSummary.equals(name)){
+            String product = request.getParameter("product");
+            String invoiceSup = request.getParameter("invoiceSup");
+            String effectiveDateFrom = request.getParameter("effectiveDateFrom");
+            String effectiveDateTo = request.getParameter("effectiveDateTo");
+            String payDateFrom = request.getParameter("payDateFrom");
+            String payDateTo = request.getParameter("payDateTo");
+            String addDate = request.getParameter("addDate");
+            data = reportservice.getStockNonInvoiceSummaryReport(product, invoiceSup, effectiveDateFrom, effectiveDateTo, payDateFrom, payDateTo, addDate, user.getRole().getName());
+            return new ModelAndView("OverdueSummaryExcel",name,data).addObject(ReportName, name);
         }
 		
         
