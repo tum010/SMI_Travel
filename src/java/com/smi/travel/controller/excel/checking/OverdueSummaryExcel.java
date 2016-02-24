@@ -552,7 +552,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         styleC30.setBorderRight(HSSFCellStyle.BORDER_THIN);
         styleC30.setBorderTop(HSSFCellStyle.BORDER_THIN);
         styleC30.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        styleC30.setAlignment(styleC22.ALIGN_CENTER);
+        styleC30.setAlignment(styleC30.ALIGN_CENTER);
         styleC30.setVerticalAlignment(styleC30.VERTICAL_CENTER);
 
         HSSFCellStyle styleC31 = wb.createCellStyle();
@@ -567,7 +567,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         styleC32.setBorderRight(HSSFCellStyle.BORDER_THIN);
         styleC32.setBorderTop(HSSFCellStyle.BORDER_THIN);
         styleC32.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        styleC32.setAlignment(styleC22.ALIGN_LEFT);
+        styleC32.setAlignment(styleC32.ALIGN_CENTER);
         styleC32.setVerticalAlignment(styleC32.VERTICAL_CENTER);
         styleC32.setWrapText(true);
 
@@ -712,7 +712,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
             
             HSSFCell celldata4 = row.createCell(4);
             celldata4.setCellValue(!"".equalsIgnoreCase(data.getInvdate()) && data.getInvdate() != null ? data.getInvdate() : "");
-            celldata4.setCellStyle(styleC30);
+            celldata4.setCellStyle(styleC32);
             
             HSSFCell celldata5 = row.createCell(5);
             celldata5.setCellValue(!"".equalsIgnoreCase(data.getItemno()) && data.getItemno() != null ? data.getItemno() : "");
@@ -746,9 +746,9 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         
 //        sheet.setColumnWidth(0, 256*15);
 //        sheet.setColumnWidth(1, 256*15);
-//        sheet.setColumnWidth(2, 256*15);
+        sheet.setColumnWidth(2, 256*15);
 //        sheet.setColumnWidth(3, 256*15);
-//        sheet.setColumnWidth(4, 256*25);
+        sheet.setColumnWidth(4, 256*25);
 //        sheet.setColumnWidth(5, 256*25);
 //        sheet.setColumnWidth(6, 256*15);
 //        sheet.setColumnWidth(10, 256*15);
@@ -794,7 +794,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         styleC26.setBorderTop(HSSFCellStyle.BORDER_THIN);
         styleC26.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC26.setDataFormat(currency.getFormat("#,##0"));
-        styleC26.setAlignment(styleC22.ALIGN_CENTER);
+        styleC26.setAlignment(styleC26.ALIGN_CENTER);
 
         HSSFCellStyle styleC27 = wb.createCellStyle();
         styleC27.setAlignment(styleC27.ALIGN_RIGHT);
@@ -816,7 +816,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         styleC30.setBorderRight(HSSFCellStyle.BORDER_THIN);
         styleC30.setBorderTop(HSSFCellStyle.BORDER_THIN);
         styleC30.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        styleC30.setAlignment(styleC22.ALIGN_CENTER);
+        styleC30.setAlignment(styleC30.ALIGN_CENTER);
         styleC30.setVerticalAlignment(styleC30.VERTICAL_CENTER);
 
         HSSFCellStyle styleC31 = wb.createCellStyle();
@@ -831,7 +831,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         styleC32.setBorderRight(HSSFCellStyle.BORDER_THIN);
         styleC32.setBorderTop(HSSFCellStyle.BORDER_THIN);
         styleC32.setBorderBottom(HSSFCellStyle.BORDER_THIN);
-        styleC32.setAlignment(styleC22.ALIGN_CENTER);
+        styleC32.setAlignment(styleC32.ALIGN_CENTER);
         styleC32.setVerticalAlignment(styleC32.VERTICAL_CENTER);
         styleC32.setWrapText(true);
 
@@ -974,7 +974,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
             
             HSSFCell celldata5 = row.createCell(5);
             celldata5.setCellValue(!"".equalsIgnoreCase(data.getPayno()) && data.getPayno() != null ? data.getPayno() : "");
-            celldata5.setCellStyle(styleC30);
+            celldata5.setCellStyle(styleC32);
             
             HSSFCell celldata6 = row.createCell(6);
             celldata6.setCellValue(!"".equalsIgnoreCase(data.getPaydate()) && data.getPaydate() != null ? data.getPaydate() : "");
@@ -999,7 +999,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
 //        sheet.setColumnWidth(2, 256*15);
 //        sheet.setColumnWidth(3, 256*15);
 //        sheet.setColumnWidth(4, 256*25);
-//        sheet.setColumnWidth(5, 256*25);
+        sheet.setColumnWidth(5, 256*25);
 //        sheet.setColumnWidth(6, 256*15);
 //        sheet.setColumnWidth(10, 256*15);
 //        sheet.setColumnWidth(11, 256*15);
