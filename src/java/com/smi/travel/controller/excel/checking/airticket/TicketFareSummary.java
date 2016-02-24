@@ -985,7 +985,7 @@ public class TicketFareSummary extends AbstractExcelView {
         HSSFCellStyle styleC22 = wb.createCellStyle();
         styleC22.setAlignment(styleC22.ALIGN_LEFT);
         HSSFCellStyle styleC23 = wb.createCellStyle();
-        styleC23.setAlignment(styleC22.ALIGN_CENTER);
+        styleC23.setAlignment(styleC23.ALIGN_CENTER);
         
 
         
@@ -1513,7 +1513,7 @@ public class TicketFareSummary extends AbstractExcelView {
         HSSFCellStyle styleC22 = wb.createCellStyle();
         styleC22.setAlignment(styleC22.ALIGN_LEFT);
         HSSFCellStyle styleC23 = wb.createCellStyle();
-        styleC23.setAlignment(styleC22.ALIGN_CENTER);
+        styleC23.setAlignment(styleC23.ALIGN_CENTER);
         
 
         

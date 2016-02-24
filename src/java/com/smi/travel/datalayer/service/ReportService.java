@@ -309,7 +309,11 @@ public class ReportService {
     public List getPaymentSummaryReport(String fromDate,String toDate,String saleby,String invSupCode,String refNo,String username){
         return paymentOutboundDao.getPaymentSummaryReport(fromDate, toDate, saleby, invSupCode, refNo, username);
     }
-
+    
+    public List getPaymentProfitLossReport(String departFromDate,String departToDate,String invFromDate,String invToDate,String ownercode,String city,String producttypeid,String invsupcode,String payFromDate,String payToDate,String groupby){
+        return paymentOutboundDao.getPaymentProfitLossReport(departFromDate, departToDate, invFromDate, invToDate, ownercode, city, producttypeid, invsupcode, payFromDate, payToDate, groupby);
+    }
+    
     public HotelVoucherDao getHotelVoucherdao() {
         return hotelVoucherdao;
     }

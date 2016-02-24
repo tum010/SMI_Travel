@@ -7,6 +7,7 @@ package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.service.MProductTypeService;
 import com.smi.travel.datalayer.service.ProductService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
@@ -33,7 +34,7 @@ public class ProfitLossController extends SMITravelController{
     private static final String CITYLIST = "cityList";
     
     private UtilityService utilityService;
-    private ProductService productService;
+    private MProductTypeService mProductTypeService;
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -44,9 +45,7 @@ public class ProfitLossController extends SMITravelController{
         List<SystemUser> listStaff = utilityService.getUserList();
         request.setAttribute(STAFFLIST, listStaff);
         
-        List<Product> listProduct = productService.searchProduct(new Product(), 2);
-        request.setAttribute(PRODUCTLIST, listProduct);
-        
+        request.setAttribute(PRODUCTLIST, mProductTypeService.getlistProductType());
         
         request.setAttribute(CITYLIST, utilityService.getListMCity());
         return ProfitLoss;
@@ -60,11 +59,11 @@ public class ProfitLossController extends SMITravelController{
         this.utilityService = utilityService;
     }
 
-    public ProductService getProductService() {
-        return productService;
+    public MProductTypeService getmProductTypeService() {
+        return mProductTypeService;
     }
 
-    public void setProductService(ProductService productService) {
-        this.productService = productService;
+    public void setmProductTypeService(MProductTypeService mProductTypeService) {
+        this.mProductTypeService = mProductTypeService;
     }
 }

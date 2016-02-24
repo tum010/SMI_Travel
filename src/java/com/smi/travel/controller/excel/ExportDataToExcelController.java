@@ -56,6 +56,7 @@ public class ExportDataToExcelController  extends SMITravelController{
     private static final String BookingInvoiceSummary = "BookingInvoiceSummary";     
     private static final String StockInvoiceSummary = "StockInvoiceSummary";
     private static final String StockNonInvoiceSummary = "StockNonInvoiceSummary";
+    private static final String PaymentProfitLossSummary = "PaymentProfitLossSummary";
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -356,7 +357,6 @@ public class ExportDataToExcelController  extends SMITravelController{
             String paydateto = request.getParameter("paydateto");
             data = reportservice.getBookingNonInvoiceReport(owner, invsup, bookdatefrom, bookdateto, paydatefrom, paydateto, user.getRole().getName());
             return new ModelAndView("BookingInvoiceSummary",name,data).addObject(ReportName, name);
-            
         }else if(StockInvoiceSummary.equals(name)){
             String product = request.getParameter("product");
             String invTo = request.getParameter("invTo");
@@ -377,8 +377,23 @@ public class ExportDataToExcelController  extends SMITravelController{
             String addDate = request.getParameter("addDate");
             data = reportservice.getStockNonInvoiceSummaryReport(product, invoiceSup, effectiveDateFrom, effectiveDateTo, payDateFrom, payDateTo, addDate, user.getRole().getName());
             return new ModelAndView("OverdueSummaryExcel",name,data).addObject(ReportName, name);
+        }else if(PaymentProfitLossSummary.equals(name)){
+            String departFromDate = request.getParameter("departFromDate");
+            String departToDate = request.getParameter("departToDate");
+            String invFromDate = request.getParameter("invFromDate");
+            String invToDate = request.getParameter("invToDate");
+            String ownercode = request.getParameter("ownercode");
+            String city = request.getParameter("city");
+            String producttypeid = request.getParameter("producttypeid");
+            String invsupcode = request.getParameter("invsupcode");
+            String payFromDate = request.getParameter("payFromDate");
+            String payToDate = request.getParameter("payToDate");
+            String groupby = request.getParameter("groupby");
+            data = reportservice.getPaymentProfitLossReport(departFromDate, departToDate, invFromDate, invToDate, ownercode, city, producttypeid, invsupcode, payFromDate, payToDate, groupby);
+            return new ModelAndView("OutboundProduct",name,data).addObject(ReportName, name);
         }
 		
+        
         
         
         return new ModelAndView("ExportDataToExcelView",name,data).addObject(ReportName, name);

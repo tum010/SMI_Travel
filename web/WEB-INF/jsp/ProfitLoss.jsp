@@ -137,7 +137,7 @@
                                                 <c:if test="}">
                                                     <c:set var="select" value="selected" />
                                                 </c:if>
-                                                <option value="${term.id}" ${select}>${term.name}</option>  
+                                                <option value="${term.name}" ${select}>${term.name}</option>  
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -145,16 +145,16 @@
                             </div>
                         </div>
                     </div>
-<!--                    <div class="row">
+                    <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-5 control-label text-left" >City</label>
+                                <label class="col-md-5 control-label text-left" >Product Type</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
-                                        <select name="SelectCity" id="SelectCity"  class="form-control selectize">
+                                        <select name="SelectProduct" id="SelectProduct"  class="form-control selectize">
                                             <option value=""  selected="selected">-- ALL --</option>
                                             <c:set var="select" value="" />
-                                            <c:forEach var="term" items="${listCity}" >
+                                            <c:forEach var="term" items="${productList}" >
                                                 <c:if test="}">
                                                     <c:set var="select" value="selected" />
                                                 </c:if>
@@ -165,26 +165,7 @@
                                 </div>   
                             </div>
                         </div>
-                    </div>-->
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label class="col-md-5 control-label text-right" >Product</label>
-                                <div class="col-md-3 form-group">  
-                                    <div class="input-group">
-                                        <input type="hidden" class="form-control" id="InputProductId" name="InputProductId" value=""/>
-                                        <input type="text" class="form-control" id="InputProductCode" name="InputProductCode" value="" />
-                                        <span id="agentSearchButton" name="agentSearchButton" class="input-group-addon" data-toggle="modal" data-target="#ProductModal">
-                                            <span id="agentSearchButtonIcon" name="agentSearchButtonIcon" class="glyphicon-search glyphicon"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control" id="InputProductName" name="InputProductName" value="" readonly="" style="width: 132px">
-                                </div>
-                            </div>   
-                        </div>
-                    </div>                    
+                    </div>                   
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
@@ -359,121 +340,6 @@
 </div><!-- /.modal-dialog -->
 
 
-<!--Product Modal-->
-<div class="modal fade" id="ProductModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title">Product</h4>
-            </div>
-            <div class="modal-body">
-                <table class="display" id="productTable" name="productTable">
-                    <thead class="datatable-header">
-                        <tr>
-                            <th class="hidden">ID</th>
-                            <th style="width:20%">Code</th>
-                            <th>Name</th>
-                        </tr>
-                    </thead>
-                    <script>
-                        agentArray = [];
-                    </script>
-                    <tbody>
-                        <c:forEach var="product" items="${productList}">
-                            <tr>
-                                <td class="object-id hidden">${product.id}</td>
-                                <td class="object-code">${product.code}</td>
-                                <td class="object-name">${product.name}</td>
-                            </tr>
-                            <script>
-                                agentArray.push({id: "${product.id}", code: "${product.code}", name: "${product.name}"});
-                            </script>
-                        </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-            <!-- Script Product List table-->
-            <script>
-                $(document).ready(function () {
-                    $("#productTable tr").on('click', function () {
-                        agent_id = $(this).find(".object-id").text();
-                        agent_code = $(this).find(".object-code").text();
-                        agent_name = $(this).find(".object-name").text();
-                        $("#InputProductId").val(agent_id);
-                        $("#InputProductCode").val(agent_code);
-                        $("#InputProductName").val(agent_name);
-//                        alert("Tour id[" + $("#InputTourId").val() + "] name[" + $("#InputTourName").val() + "] code[" + $("#InputTourCode").val() + "]");
-                        $("#ProductModal").modal('hide');
-                    });
-                    // productTable
-                    var productTable = $('#productTable').dataTable({bJQueryUI: true,
-                        "sPaginationType": "full_numbers",
-                        "bAutoWidth": false,
-                        "bFilter": true,
-                        "bPaginate": true,
-                        "bInfo": false,
-                        "bLengthChange": false,
-                        "iDisplayLength": 10
-                    });
-                    $('#productTable tbody').on('click', 'tr', function () {
-                        //$('.collapse').collapse('show');
-                        if ($(this).hasClass('row_selected')) {
-                            $(this).removeClass('row_selected');
-                        }
-                        else {
-                            productTable.$('tr.row_selected').removeClass('row_selected');
-                            $(this).addClass('row_selected');
-                        }
-
-                    });
-                    // ON KEY INPUT AUTO SELECT TOURCODE-TOURNAME
-                    $(function () {
-                        var availableTags = [];
-//                                console.log(tourCode);
-                        $.each(agentArray, function (key, value) {
-                            availableTags.push(value.code);
-                        });
-//                                console.log(availableTags);
-                        $("#InputProductCode").autocomplete({
-                            source: availableTags,
-                            close:function( event, ui ) {
-                               //window.uiTmp = event;
-                               //window.uiTmp = ui;
-                               //alert('Test');    
-                               $("#InputProductCode").trigger('keyup');
-                            }
-                        });
-                        $("#InputProductCode").keyup(function () {
-                            var position = $(this).offset();
-                            $(".ui-widget").css("top", position.top + 30);
-                            $(".ui-widget").css("left", position.left);
-                            var code = this.value.toUpperCase();
-                            $("#InputProductName").val(null);
-                            $.each(agentArray, function (key, value) {
-                                //console.log('each : ' + value.code);
-                                //console.log('val : ' + $("#agent_user").val());
-                                if (value.code.toUpperCase() === code) {
-//                                console.log('ok');
-                                    $("#InputProductId").val(value.id);
-                                    $("#InputProductName").val(value.name);
-                                }
-                            }); //end each agentTable
-
-
-                        }); // end InputAgentCode keyup
-                    }); // end AutoComplete AgentCode AgentName
-
-//                    $('.date').mask('0000-00-00');    
-                });
-            </script>
-            <div class="modal-footer">
-                <button id="" type="button" onclick="" class="btn btn-success">OK</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div>           
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
@@ -529,6 +395,17 @@ $(document).ready(function() {
 
     var City = "#SelectCity";
     $(City).selectize({
+        removeItem: '',
+        sortField: 'text',
+        create: false,
+        dropdownParent: 'body',
+        plugins: {
+            'clear_selection': {}
+        }
+    });
+    
+    var Product = "#SelectProduct";
+    $(Product).selectize({
         removeItem: '',
         sortField: 'text',
         create: false,
@@ -899,9 +776,9 @@ function validateDate(date,option){
 
 
 function printProfitLoss(){
-    var owner = document.getElementById("salebyUser").value;
+    var ownercode = document.getElementById("salebyUser").value;
     var selectCity = document.getElementById("SelectCity").value;
-    var productCode = document.getElementById("InputProductCode").value;
+    var selectProduct = document.getElementById("SelectProduct").value;
     var selectGroup = document.getElementById("selectGroup").value;
     var departFromDate = document.getElementById("departFromDate").value;
     var departToDate = document.getElementById("departToDate").value;
@@ -910,41 +787,35 @@ function printProfitLoss(){
     var invFromDate = document.getElementById("invFromDate").value;
     var invToDate = document.getElementById("invToDate").value;
     var invSupCode = document.getElementById("invSupCode").value;
-    
-    
-    alert( " departFromDate " + departFromDate
-        + " departToDate " + departToDate
-        + " invFromDate " + invFromDate
-        + " invToDate " + invToDate
-        + " owner " + owner
-        + " selectCity " + selectCity
-        + " productCode " + productCode
-        + " invSupCode " + invSupCode
-        + " payFromDate " + payFromDate
-        + " payToDate " + payToDate
-        + " selectGroup " + selectGroup );
-//    if(((bookFromDate !== '') && (bookToDate !== '')) 
-//        || ((payFromDate !== '') && (payToDate !== '')) 
-//        || ((invFromDate !== '') && (invToDate !== ''))) {
-//        if(reportType == 1){
-//            window.open("Excel.smi?name=BookingInvoiceSummary&owner=" + owner + 
-//                "&invto=" + billto + 
-//                "&bookdatefrom=" + bookFromDate + 
-//                "&bookdateto=" + bookToDate+ 
-//                "&invdatefrom=" + invFromDate +""+
-//                "&invdateto=" + invToDate+"");
-//        }else if(reportType == 2){
-//            window.open("Excel.smi?name=BookingNonInvoiceSummary&owner=" + owner +
-//                "&invsup=" + invSupCode +
-//                "&bookdatefrom=" + bookFromDate + 
-//                "&bookdateto=" + bookToDate +
-//                "&paydatefrom=" + payFromDate +
-//                "&paydateto=" + payToDate);
-//        }
-//    } else {
-//        validateDate();  
-//    }
- 
+//    alert( " departFromDate " + departFromDate
+//        + " departToDate " + departToDate
+//        + " invFromDate " + invFromDate
+//        + " invToDate " + invToDate
+//        + " owner " + owner
+//        + " selectCity " + selectCity
+//        + " selectProduct " + selectProduct
+//        + " invSupCode " + invSupCode
+//        + " payFromDate " + payFromDate
+//        + " payToDate " + payToDate
+//        + " selectGroup " + selectGroup );
+    if(((departFromDate !== '') && (departToDate !== '')) 
+        || ((payFromDate !== '') && (payToDate !== '')) 
+        || ((invFromDate !== '') && (invToDate !== ''))) {
+        window.open("Excel.smi?name=PaymentProfitLossSummary&departFromDate=" + departFromDate + 
+            "&departToDate=" + departToDate + 
+            "&invFromDate=" + invFromDate + 
+            "&invToDate=" + invToDate+ 
+            "&invdatefrom=" + invFromDate +
+            "&ownercode=" + ownercode + 
+            "&city=" + selectCity + 
+            "&producttypeid=" + selectProduct + 
+            "&invsupcode=" + invSupCode+ 
+            "&payFromDate=" + payFromDate +
+            "&payToDate=" + payToDate +
+            "&groupby=" + selectGroup);
+    } else {
+        validateDate();  
+    }
 }
 
 function setupInvSupValue(id, code, name, apcode) {
