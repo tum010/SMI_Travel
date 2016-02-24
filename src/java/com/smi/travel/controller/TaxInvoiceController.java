@@ -473,19 +473,26 @@ public class TaxInvoiceController extends SMITravelController {
                 
                 if(invoiceDetailId!="" && invoiceDetailId!=null){
                     invoiceDetail.setId(invoiceDetailId);
+                    BigDecimal costLocal = taxInvoiceService.getCostLocalFromTaxInvoiceDetailByInvoiceDetail(invoiceDetailId,taxDetailId);
+                    BigDecimal amountLocal = taxInvoiceService.getAmountLocalFromTaxInvoiceDetailByInvoiceDetail(invoiceDetailId,taxDetailId);
+                    
                     if(invoiceDetailCost!="" && invoiceDetailCost !=null){
-                        BigDecimal invoiceDetailCostRe = new BigDecimal(invoiceDetailCost.replaceAll(",",""));
+                        BigDecimal invoiceDetailCostRe = new BigDecimal(invoiceDetailCost.replaceAll(",",""));                   
                         invoiceDetail.setCost(invoiceDetailCostRe);
+                        invoiceDetail.setCostLocal(costLocal);                   
                     } else {
                         BigDecimal invoiceDetailCostRe = new BigDecimal(0);
                         invoiceDetail.setCost(invoiceDetailCostRe);
+                        invoiceDetail.setCostLocal(costLocal);
                     }
                     if(invoiceDetailAmount!="" && invoiceDetailAmount!=null){
                         BigDecimal invoiceDetailAmountRe = new BigDecimal(invoiceDetailAmount.replaceAll(",",""));
                         invoiceDetail.setAmount(invoiceDetailAmountRe);
+                        invoiceDetail.setAmountLocal(amountLocal);
                     } else {
                         BigDecimal invoiceDetailAmountRe = new BigDecimal(0);
                         invoiceDetail.setAmount(invoiceDetailAmountRe);
+                        invoiceDetail.setAmountLocal(amountLocal);
                     }                  
                     taxInvoiceDetail.setInvoiceDetail(invoiceDetail);
                 }
@@ -617,8 +624,8 @@ public class TaxInvoiceController extends SMITravelController {
                         idList.add(id1);
                         costList.add(costTotal);
                         amountList.add(amountTotal);
-                        costLocalList.add(invoiceDetail1.getCost());
-                        amountLocalList.add(invoiceDetail1.getAmount());
+                        costLocalList.add(invoiceDetail1.getCostLocal());
+                        amountLocalList.add(invoiceDetail1.getAmountLocal());
                     }
 //                }               
             }    

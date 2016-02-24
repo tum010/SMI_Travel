@@ -1489,6 +1489,7 @@ public class AJAXBean extends AbstractBean implements
 //            return html.toString();
 //        }
         
+        boolean isTable = false;
         String alertMessage = "";
         newrow = "";
         for (int i = 0; i < invoiceDetaillList.size(); i++) {
@@ -1551,8 +1552,10 @@ public class AJAXBean extends AbstractBean implements
                             + "<td><center><a href=\"\"><span onclick=\"AddProduct('"+invDetailId+"','"+product+"','"+description+"','"+cost+"','"+curCost+"','"+amount+"','THB','"+isVat+"','"+refNo+"','"+vat+"')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                             + "</tr>";
 //                        html.append(newrow);
+                    isTable = true;
+                    row++;
                 }
-                row++;
+                
             
             }else{
                 String taxNo = "";
@@ -1563,7 +1566,7 @@ public class AJAXBean extends AbstractBean implements
             }    
         }
         
-        newrow += (!"".equalsIgnoreCase(newrow) ? "fail" : "");
+        newrow += (isTable ? "" : "fail");
         html.append(newrow);
         
         newrow = "";

@@ -83,4 +83,12 @@ public class TaxInvoiceService {
     public BigDecimal getExRateFromInvoiceDetail(String billableDescId) {
         return taxInvoiceDao.getExRateFromInvoiceDetail(billableDescId);
     }
+
+    public BigDecimal getCostLocalFromTaxInvoiceDetailByInvoiceDetail(String invoiceDetailId, String taxDetailId) {
+        return taxInvoiceDao.getCostLocalFromTaxInvoiceDetailByInvoiceDetail(invoiceDetailId, taxDetailId);
+    }
+
+    public BigDecimal getAmountLocalFromTaxInvoiceDetailByInvoiceDetail(String invoiceDetailId, String taxDetailId) {
+        return taxInvoiceDao.getAmountLocalFromTaxInvoiceDetailByInvoiceDetail(invoiceDetailId, taxDetailId);
+    }
 }

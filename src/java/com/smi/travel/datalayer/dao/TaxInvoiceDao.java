@@ -47,4 +47,6 @@ public interface TaxInvoiceDao {
     public boolean checkInvNoProfit(String invoiceDetailId);
     public List<TaxInvoice> checkInvoiceAlready(String billableDescId);
     public List<TaxInvoice> checkRefNoAlready(String billableDescId);
+    public BigDecimal getCostLocalFromTaxInvoiceDetailByInvoiceDetail(String invoiceDetailId, String taxDetailId);
+    public BigDecimal getAmountLocalFromTaxInvoiceDetailByInvoiceDetail(String invoiceDetailId, String taxDetailId);
 }
