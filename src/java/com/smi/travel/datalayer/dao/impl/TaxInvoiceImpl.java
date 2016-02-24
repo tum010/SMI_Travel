@@ -785,4 +785,90 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         return taxInvoiceList;
     }
 
+    @Override
+    public BigDecimal getCostLocalFromTaxInvoiceDetailByInvoiceDetail(String invoiceDetailId, String taxDetailId) {
+        BigDecimal costLocal = new BigDecimal(BigInteger.ZERO);
+        BigDecimal cost = new BigDecimal(BigInteger.ZERO);
+        String queryTaxInvoiceDetail = " from TaxInvoiceDetail tax WHERE tax.invoiceDetail.id = :invoiceDetailId and tax.taxInvoice.MFinanceItemstatus.id = 1 and tax.taxInvoice.isProfit = 0 ";
+        if(!"".equalsIgnoreCase(taxDetailId) && taxDetailId != null){
+            queryTaxInvoiceDetail += " and tax.id != '" + taxDetailId + "' ";
+        }
+        String queryInvoiceDetail = " from InvoiceDetail inv WHERE inv.id = :invoiceDetailId ";
+        
+        Session session = this.sessionFactory.openSession();
+        List<InvoiceDetail> invoiceDetailList = session.createQuery(queryInvoiceDetail)
+                .setParameter("invoiceDetailId", invoiceDetailId)
+                .list();
+
+        for(int i=0; i<invoiceDetailList.size(); i++){
+            InvoiceDetail invoiceDetail = new InvoiceDetail();
+            invoiceDetail = invoiceDetailList.get(i);
+            BigDecimal costLocalTemp = new BigDecimal(BigInteger.ZERO);
+            costLocalTemp = (invoiceDetail.getCostLocal() != null ? invoiceDetail.getCostLocal() : new BigDecimal(BigInteger.ZERO));
+            costLocal = costLocal.add(costLocalTemp);
+        }
+        
+        List<TaxInvoiceDetail> taxInvoiceDetailList = session.createQuery(queryTaxInvoiceDetail)
+                .setParameter("invoiceDetailId", invoiceDetailId)
+                .list();
+        if(taxInvoiceDetailList.isEmpty()){
+            session.close();
+            this.sessionFactory.close();
+            return costLocal;
+        }
+        for(int i=0; i<taxInvoiceDetailList.size(); i++){
+            TaxInvoiceDetail taxInvoiceDetail = new TaxInvoiceDetail();
+            taxInvoiceDetail = taxInvoiceDetailList.get(i);
+            BigDecimal costTemp = new BigDecimal(BigInteger.ZERO);
+            costTemp = (taxInvoiceDetail.getCost() != null ? taxInvoiceDetail.getCost() : new BigDecimal(BigInteger.ZERO));
+            cost = cost.add(costTemp);
+        }
+        session.close();
+        this.sessionFactory.close();
+        return costLocal.subtract(cost);
+    }
+
+    @Override
+    public BigDecimal getAmountLocalFromTaxInvoiceDetailByInvoiceDetail(String invoiceDetailId, String taxDetailId) {
+        BigDecimal amountLocal = new BigDecimal(BigInteger.ZERO);
+        BigDecimal amount = new BigDecimal(BigInteger.ZERO);
+        String queryTaxInvoiceDetail = " from TaxInvoiceDetail tax WHERE tax.invoiceDetail.id = :invoiceDetailId and tax.taxInvoice.MFinanceItemstatus.id = 1 and tax.taxInvoice.isProfit = 0 ";
+        if(!"".equalsIgnoreCase(taxDetailId) && taxDetailId != null){
+            queryTaxInvoiceDetail += " and tax.id != '" + taxDetailId + "' ";
+        }
+        String queryInvoiceDetail = " from InvoiceDetail inv WHERE inv.id = :invoiceDetailId ";
+        
+        Session session = this.sessionFactory.openSession();
+        List<InvoiceDetail> invoiceDetailList = session.createQuery(queryInvoiceDetail)
+                .setParameter("invoiceDetailId", invoiceDetailId)
+                .list();
+
+        for(int i=0; i<invoiceDetailList.size(); i++){
+            InvoiceDetail invoiceDetail = new InvoiceDetail();
+            invoiceDetail = invoiceDetailList.get(i);
+            BigDecimal amountLocalTemp = new BigDecimal(BigInteger.ZERO);
+            amountLocalTemp = (invoiceDetail.getAmountLocal() != null ? invoiceDetail.getAmountLocal() : new BigDecimal(BigInteger.ZERO));
+            amountLocal = amountLocal.add(amountLocalTemp);
+        }
+        
+        List<TaxInvoiceDetail> taxInvoiceDetailList = session.createQuery(queryTaxInvoiceDetail)
+                .setParameter("invoiceDetailId", invoiceDetailId)
+                .list();
+        if(taxInvoiceDetailList.isEmpty()){
+            session.close();
+            this.sessionFactory.close();
+            return amountLocal;
+        }
+        for(int i=0; i<taxInvoiceDetailList.size(); i++){
+            TaxInvoiceDetail taxInvoiceDetail = new TaxInvoiceDetail();
+            taxInvoiceDetail = taxInvoiceDetailList.get(i);
+            BigDecimal amountTemp = new BigDecimal(BigInteger.ZERO);
+            amountTemp = (taxInvoiceDetail.getAmount()!= null ? taxInvoiceDetail.getAmount(): new BigDecimal(BigInteger.ZERO));
+            amount = amount.add(amountTemp);
+        }
+        session.close();
+        this.sessionFactory.close();
+        return amountLocal.subtract(amount);
+    }
+
 }

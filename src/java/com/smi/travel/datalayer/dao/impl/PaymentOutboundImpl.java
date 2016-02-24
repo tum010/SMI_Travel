@@ -827,7 +827,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             StockInvoiceSummaryView view = new StockInvoiceSummaryView();
             view.setRefno(B[0] != null ? util.ConvertString(B[0]) : "");
             view.setOwner(B[1] != null ? util.ConvertString(B[1]) : "");
-            view.setInvno(B[3] != null ? util.ConvertString(B[3]) : "");
+            view.setInvno(B[3] != null ? (util.ConvertString(B[3])).trim() : "");
             view.setInvname(B[4] != null ? util.ConvertString(B[4]) : "");
             if(B[5] != null){
                 String invdatemp="";
@@ -941,6 +941,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 .addScalar("effectiveto", Hibernate.STRING)
                 .addScalar("adddate", Hibernate.STRING)
                 .addScalar("supcode", Hibernate.STRING)
+                .addScalar("owner", Hibernate.STRING)
                 .list();
             
         SimpleDateFormat dateformatNonInvoice = new SimpleDateFormat();
@@ -951,7 +952,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             view.setRefno(B[0] != null ? util.ConvertString(B[0]) : "");
             view.setItemno(B[2] != null ? util.ConvertString(B[2]) : "");
             view.setItemtype(B[3] != null ? util.ConvertString(B[3]) : "");
-            view.setPayno(B[4] != null ? util.ConvertString(B[4]) : "");
+            view.setPayno(B[4] != null ? (util.ConvertString(B[4])).trim() : "");
             view.setPaydate(B[5] != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(util.ConvertString(B[5])))) : "");
             view.setInvoicesup(B[6] != null ? util.ConvertString(B[6]) : "");
             view.setCost(B[7] != null ? util.ConvertString(B[7]) : "");
@@ -961,6 +962,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             view.setEffectiveto(B[11] != null ? util.ConvertString(B[11]) : "");
             view.setAdddate(B[12] != null ? util.ConvertString(B[12]) : "");
             view.setSupcode(B[13] != null ? util.ConvertString(B[13]) : "");
+            view.setOwner(B[14] != null ? util.ConvertString(B[14]) : "");
             data.add(view);            
         }
         

@@ -494,7 +494,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="1" align="right" bgcolor="#E8EAFF">
-                                            <b>Description</b>
+                                            <b>Detail</b>
                                         </td>
                                         <td colspan="2">
                                             <input type="text" name="description${i.count}" id="description${i.count}" class="form-control" value="${detail.description}" maxlength="255" onfocusout="editDescription('${i.count}')"/>

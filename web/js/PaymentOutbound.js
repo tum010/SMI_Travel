@@ -559,7 +559,7 @@ function addRowPaymentDetailTable(row) {
             '</tr>' +
             '<tr>' +
             '<td colspan="1" align="right" bgcolor="#E8EAFF" >' +
-            '<b>Description</b>' +
+            '<b>Detail</b>' +
             '</td>' +
             '<td colspan="2">' +
             '<input type="text" name="description' + row + '" id="description' + row + '" class="form-control" value="" maxlength="255" onfocusout=editDescription(\'' + row + '\')/>' +
