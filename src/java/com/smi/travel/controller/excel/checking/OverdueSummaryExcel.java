@@ -570,6 +570,15 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         styleC32.setAlignment(styleC32.ALIGN_CENTER);
         styleC32.setVerticalAlignment(styleC32.VERTICAL_CENTER);
         styleC32.setWrapText(true);
+        
+        HSSFCellStyle styleC33 = wb.createCellStyle();
+        styleC33.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC33.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC33.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC33.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC33.setAlignment(styleC33.ALIGN_LEFT);
+        styleC33.setVerticalAlignment(styleC33.VERTICAL_CENTER);
+        styleC33.setWrapText(true);
 
         StockInvoiceSummaryView dataheader = (StockInvoiceSummaryView)stockInvoiceSummary.get(0);
 
@@ -704,7 +713,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
             
             HSSFCell celldata2 = row.createCell(2);
             celldata2.setCellValue(!"".equalsIgnoreCase(data.getInvno()) && data.getInvno() != null ? data.getInvno() : "");
-            celldata2.setCellStyle(styleC32);
+            celldata2.setCellStyle(styleC33);
             
             HSSFCell celldata3 = row.createCell(3);
             celldata3.setCellValue(!"".equalsIgnoreCase(data.getInvname()) && data.getInvname() != null ? data.getInvname() : "");
@@ -712,7 +721,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
             
             HSSFCell celldata4 = row.createCell(4);
             celldata4.setCellValue(!"".equalsIgnoreCase(data.getInvdate()) && data.getInvdate() != null ? data.getInvdate() : "");
-            celldata4.setCellStyle(styleC32);
+            celldata4.setCellStyle(styleC33);
             
             HSSFCell celldata5 = row.createCell(5);
             celldata5.setCellValue(!"".equalsIgnoreCase(data.getItemno()) && data.getItemno() != null ? data.getItemno() : "");
@@ -748,7 +757,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
 //        sheet.setColumnWidth(1, 256*15);
         sheet.setColumnWidth(2, 256*15);
 //        sheet.setColumnWidth(3, 256*15);
-        sheet.setColumnWidth(4, 256*25);
+//        sheet.setColumnWidth(4, 256*25);
 //        sheet.setColumnWidth(5, 256*25);
 //        sheet.setColumnWidth(6, 256*15);
 //        sheet.setColumnWidth(10, 256*15);
