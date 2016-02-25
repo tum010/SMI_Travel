@@ -1121,8 +1121,10 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 .addScalar("supcode", Hibernate.STRING)
                 .addScalar("typeid", Hibernate.STRING)
                 .list();
-                        
-        for (Object[] B : QueryList) {
+        
+        String temprefno = "";    
+        
+        for (Object[] B : QueryList) {            
             PaymentProfitLossView pplv = new PaymentProfitLossView();
             if(searchprodcuct){
                 pplv.setHeaderproducttype(util.ConvertString(B[7]));
@@ -1159,8 +1161,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             pplv.setInvto(B[8] != null ? util.ConvertString(B[8]) : "");
             pplv.setInvno(B[9] != null ? util.ConvertString(B[9]) : "");
             pplv.setInvdate(B[10] != null ? util.ConvertString(B[10]) : "");
-            pplv.setReceipt(B[11] != null ? util.ConvertString(B[11]) : "");
-            pplv.setTaxinvoice(B[12] != null ? util.ConvertString(B[12]) : "");
+            pplv.setReceipt(B[11] != null ? util.ConvertString(B[11]).replaceAll(",", "\n") : "");
+            pplv.setTaxinvoice(B[12] != null ? util.ConvertString(B[12]).replaceAll(",", "\n") : "");
             pplv.setPayno(B[13] != null ? util.ConvertString(B[13]) : "");
             pplv.setSupplier(B[14] != null ? util.ConvertString(B[14]) : "");
             pplv.setPaydate(B[15] != null ? util.ConvertString(B[15]) : "");
