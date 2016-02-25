@@ -70,6 +70,7 @@
             <input type="hidden" class="form-control" id="paymentStockDetailIdDelete" name="paymentStockDetailIdDelete" value="" />
             <input type="hidden" class="form-control" id="paymentStockRowDelete" name="paymentStockRowDelete" value="" />
             <input type="hidden" class="form-control" id="page" name="page" value="" />
+            <input type="hidden" value="" id="currentPage" name="currentPage">
             <input type="hidden" class="form-control" id="createBy" name="createBy" value="${paymentStock.createBy}" />
             <input type="hidden" class="form-control" id="createDate" name="createDate" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['createDate']}" />
             
@@ -908,20 +909,35 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
                             var numPages = Math.ceil(numRows / numPerPage);
                             var $pager = $('<div class="col-xs-12 text-right" id="pageNo"><font style="color: #499DD5"></font>&nbsp;</div>');
                             var $br = $('<div class="col-xs-12"><br></div>');
+
                             for (var page = 0; page < numPages; page++) {
+                                var isShowPage = (page < 5 ? "" : "hidden");
                                 if(page === 0){
-                                    $('<font style="color: #499DD5" id="noFirst" onclick="changeColor(\'first\')"><span class="page-number glyphicon"></span></font>').text(" " + "First" + "  ").bind('click', {
+                                    $('<font style="color: #499DD5" id="noFirst" onclick="changeColor(\'noFirst\',\'first\',\''+page+'\')"><span class="page-number glyphicon"></span></font>').text(" " + "First" + "  ").bind('click', {
                                     newPage: page
                                     }, function(event) {
-                                        changeColor('first');
                                         currentPage = event.data['newPage'];
                                         $table.trigger('repaginate');
                                         $(this).addClass('active').siblings().removeClass('active');
                                         $(this).css("color", "#AFEEEE");
-                                    }).appendTo($pager).addClass('clickable');
+                                    }).appendTo($pager).addClass('clickable');                                      
+
+                                    if(numPages > 1){
+                                        for(var i=0; i<numPages; i++){
+                                            var isHidden = (i === 0 ? "" : "hidden");
+                                            $('<font style="color: #499DD5" id="noPrevious'+i+'" onclick="changeColor(\'noPrevious'+i+'\',\'previous\',\''+i+'\')" class="'+isHidden+'"><span class="page-number glyphicon"></span></font>').text(" " + "Previous" + "  ").bind('click', {
+                                            newPage: i
+                                            }, function(event) {
+                                                currentPage = event.data['newPage'];
+                                                $table.trigger('repaginate');
+                                                $(this).addClass('active').siblings().removeClass('active');
+                        //                        $(this).css("color", "#AFEEEE");
+                                            }).appendTo($pager).addClass('clickable');
+                                        }
+                                    }    
                                 }
 
-                                $('<font style="color: #499DD5" id="no' + page + '" onclick="changeColor(\'' + page + '\')"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + "  ").bind('click', {
+                                $('<font style="color: #499DD5" id="no' + page + '" onclick="changeColor(\'no'+page+'\',\'no\',\''+page+'\')" class="'+isShowPage+'"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + "  ").bind('click', {
                                     newPage: page
                                 }, function(event) {                  
                                     currentPage = event.data['newPage'];
@@ -931,20 +947,38 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
                                 }).appendTo($pager).addClass('clickable');
 
                                 if(page === (numPages - 1)){
-                                    $('<font style="color: #499DD5" id="noLast" onclick="changeColor(\'last\')"><span class="page-number glyphicon"></span></font>').text(" " + "Last" + "  ").bind('click', {
+                                    if(numPages > 1){
+                                        for(var i=0; i<numPages; i++){
+                                            var isHidden = (i === 1 ? "" : "hidden");
+                                            $('<font style="color: #499DD5" id="noNext'+i+'" onclick="changeColor(\'noNext'+i+'\',\'next\',\''+i+'\')" class="'+isHidden+'"><span class="page-number glyphicon"></span></font>').text(" " + "Next" + "  ").bind('click', {
+                                            newPage: i
+                                            }, function(event) {
+                                                currentPage = event.data['newPage'];
+                                                $table.trigger('repaginate');
+                                                $(this).addClass('active').siblings().removeClass('active');
+                        //                        $(this).css("color", "#AFEEEE");
+                                            }).appendTo($pager).addClass('clickable');
+                                        }
+                                    }    
+
+                                    $('<font style="color: #499DD5" id="noLast" onclick="changeColor(\'noLast\',\'last\',\''+page+'\')"><span class="page-number glyphicon"></span></font>').text(" " + "Last" + "  ").bind('click', {
                                     newPage: page
                                     }, function(event) {
                                         currentPage = event.data['newPage'];
                                         $table.trigger('repaginate');
                                         $(this).addClass('active').siblings().removeClass('active');
                                         $(this).css("color", "#AFEEEE");
-                                    }).appendTo($pager).addClass('clickable');
+                                    }).appendTo($pager).addClass('clickable');                                     
                                 }
                             }
                             $br.insertAfter($table).addClass('active');
                             $pager.insertAfter($table).find('span.page-number:first').addClass('active');
                             document.getElementById("pageNo").style.cursor="pointer";
                             document.getElementById("page").value = numPages-1;
+                            document.getElementById("currentPage").value = 0;
+                            $("#noFirst").css("color", "#AFEEEE");
+                            $("#no0").css("color", "#AFEEEE");
+                            $("#noPrevious0").css("color", "#AFEEEE");
                         });
 
 
@@ -966,30 +1000,75 @@ function getStockDetailTempCal(stockid,psdId,productname,noStockTable) {
 
     }
     
-    function changeColor(row){
-        var page = parseInt($("#page").val())+1;
-        var rowTemp = parseInt(row);
-        var start = 0;
-        var end = page-1;
-        for(var i=0; i<page; i++){
-           if(i === rowTemp){
-                $("#no"+i).css("color", "#AFEEEE"); 
-           
-            }else{
-                $("#no"+i).css("color", "#499DD5");
-                $("#noFirst").css("color", "#499DD5");  
-                $("#noLast").css("color", "#499DD5");  
+    function changeColor(id,type,page){
+        var pageNo = parseInt($("#page").val())+1;
+        for(var i=0; i<pageNo; i++){
+            $("#no"+i).css("color", "#499DD5");
+            $("#noPrevious"+i).css("color", "#499DD5");
+            $("#noNext"+i).css("color", "#499DD5");
+            $("#noFirst").css("color", "#499DD5");                
+            $("#noLast").css("color", "#499DD5");
+            
+            $("#no"+i).addClass("hidden");
+            $("#noPrevious"+i).addClass("hidden");
+            $("#noNext"+i).addClass("hidden");
+        }
+        
+        var pageShow = parseInt(page);
+        if(pageShow > 2 && pageShow < pageNo - 2){
+            for(var i=pageShow; i >= pageShow-2; i--){
+               $("#no"+i).removeClass("hidden"); 
+            }
+            for(var i=pageShow; i <= pageShow+2; i++){
+               $("#no"+i).removeClass("hidden");  
+            }
+        
+        }else{
+            if(pageShow <= 2){
+                for(var i=0; i < 5; i++){
+                    $("#no"+i).removeClass("hidden");  
+                } 
+            
+            }else if(pageShow <= pageNo-1){
+                for(var i=pageNo-5; i < pageNo; i++){
+                    $("#no"+i).removeClass("hidden");  
+                } 
             }
             
-            if(row === 'first' || start === rowTemp){
-                $("#no"+start).css("color", "#AFEEEE"); 
-                $("#noFirst").css("color", "#AFEEEE"); 
+        }    
+        
+        var previous = ((parseInt(page) === 0 ? 0 : parseInt(page)-1));
+        $("#noPrevious"+(previous)).removeClass("hidden");
+
+        var next = ((parseInt(page) === pageNo-1 ? pageNo-1 : parseInt(page)+1));
+        $("#noNext"+(next)).removeClass("hidden");
+        
+        $("#no"+page).css("color", "#AFEEEE");
+        
+        if(parseInt(page) === 0){
+            $("#noFirst").css("color", "#AFEEEE");
+            $("#noPrevious"+(previous)).css("color", "#AFEEEE");
+        
+        }else if(parseInt(page) === pageNo-1){
+            $("#noLast").css("color", "#AFEEEE");
+            $("#noNext"+(next)).css("color", "#AFEEEE");
+        }
+        
+        if(pageNo-1 === 0){
+            $("#noFirst").css("color", "#499DD5");                
+            $("#noLast").css("color", "#499DD5");
             
-            }else if(row === 'last' || end === rowTemp){
-                $("#no"+end).css("color", "#AFEEEE"); 
-                $("#noLast").css("color", "#AFEEEE");     
+            if(type === 'first'){
+                $("#noFirst").css("color", "#AFEEEE");
+                
+            }else if(type === 'last'){
+                $("#noLast").css("color", "#AFEEEE");
+                
             }
-        }       
+        }
+    
+        $("#currentPage").val(page);
+             
     }
 
     function calculateCostTotal(noStockTable) {
