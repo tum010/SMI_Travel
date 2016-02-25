@@ -248,7 +248,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
 //        styleC3.setFillForegroundColor(IndexedColors.ORANGE.getIndex());
 //        styleC3.setFillPattern(styleC3.SOLID_FOREGROUND);
         // Detail of Table
-        String temp = "";
+        String temp = "group";
         int count = 6;
         int ktemp = 9 ;
         String temprefno = "";
@@ -340,7 +340,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
             } 
             
             if(!temp.equalsIgnoreCase(groupbytemp)){
-                if(!"".equalsIgnoreCase(temp)){
+                if(!"group".equalsIgnoreCase(temp)){
                     HSSFRow row = sheet.createRow(count + i);
                     // Set align Text
                     HSSFCell cellTotal = row.createCell(0);
@@ -758,6 +758,10 @@ public class OutboundProductSummary extends AbstractExcelView  {
                     cellTotalAll04.setCellValue(totalprofitAll.doubleValue());
                     cellTotalAll04.setCellStyle(styleTotalCurrency);      
             }
+        }
+        
+        for(int x = 0 ; x < 17 ; x++){
+            sheet.autoSizeColumn(x);
         }
         sheet.setColumnWidth(6, 256*25);
         sheet.setColumnWidth(7, 256*25);
