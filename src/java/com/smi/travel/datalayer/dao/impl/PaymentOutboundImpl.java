@@ -1093,7 +1093,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             }else if("DEPARTURE DATE".equalsIgnoreCase(groupby)){
                 groupbytemp = " departdate ";
             }                                           
-            query += " group by " + groupbytemp + " , refno , sale desc ";
+            query += " group by " + groupbytemp + "  order by refno , sale desc ";
             groupheader = groupby;
         }
         
