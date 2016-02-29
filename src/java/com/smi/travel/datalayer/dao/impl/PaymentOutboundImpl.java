@@ -817,7 +817,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 .addScalar("cost", Hibernate.STRING)
                 .addScalar("price", Hibernate.STRING)
                 .addScalar("profit", Hibernate.STRING)
-                .addScalar("stockno", Hibernate.STRING)                
+                .addScalar("stockno", Hibernate.STRING)
+                .addScalar("id", Hibernate.STRING)  
                 .list();
             
         SimpleDateFormat dateformatInvoice = new SimpleDateFormat();
@@ -851,7 +852,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             view.setCost(B[8] != null ? util.ConvertString(B[8]) : "");
             view.setSaleprice(B[9] != null ? util.ConvertString(B[9]) : "");
             view.setProfit(B[10] != null ? util.ConvertString(B[10]) : "");
-            view.setStockno(B[11] != null ? util.ConvertString(B[11]) : "");                               
+            view.setStockno(B[11] != null ? util.ConvertString(B[11]) : "");
+            view.setId(B[12] != null ? util.ConvertString(B[12]) : "");       
             data.add(view);            
         }
         

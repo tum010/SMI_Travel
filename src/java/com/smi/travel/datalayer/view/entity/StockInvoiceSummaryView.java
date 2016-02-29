@@ -27,6 +27,7 @@ public class StockInvoiceSummaryView {
     private String saleprice;
     private String profit;
     private String stockno;
+    private String id;
 
     public String getProductHeader() {
         return productHeader;
@@ -154,6 +155,14 @@ public class StockInvoiceSummaryView {
 
     public void setAdddateHeader(String adddateHeader) {
         this.adddateHeader = adddateHeader;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
     
 }
