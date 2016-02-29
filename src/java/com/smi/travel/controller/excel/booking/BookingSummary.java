@@ -73,7 +73,8 @@ public class BookingSummary extends AbstractExcelView  {
         styleC25.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC25.setDataFormat(currency.getFormat("#,##0.00"));
         styleC25.setAlignment(styleC25.ALIGN_RIGHT);
- 
+        styleC25.setWrapText(true);
+        styleC25.setVerticalAlignment(styleC25.VERTICAL_CENTER);
         HSSFCellStyle styleC26 = wb.createCellStyle();
         styleC26.setBorderLeft(HSSFCellStyle.BORDER_THIN);
         styleC26.setBorderRight(HSSFCellStyle.BORDER_THIN);
@@ -81,7 +82,8 @@ public class BookingSummary extends AbstractExcelView  {
         styleC26.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC26.setDataFormat(currency.getFormat("#,##0"));
         styleC26.setAlignment(styleC22.ALIGN_CENTER);
-
+        styleC26.setWrapText(true);
+        styleC26.setVerticalAlignment(styleC26.VERTICAL_CENTER);
         HSSFCellStyle styleC27 = wb.createCellStyle();
         styleC27.setAlignment(styleC27.ALIGN_RIGHT);
         styleC27.setDataFormat(currency.getFormat("#,##0.00"));
@@ -95,6 +97,8 @@ public class BookingSummary extends AbstractExcelView  {
         styleC29.setBorderRight(HSSFCellStyle.BORDER_THIN);
         styleC29.setBorderTop(HSSFCellStyle.BORDER_THIN);
         styleC29.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        styleC29.setWrapText(true);
+        styleC29.setVerticalAlignment(styleC29.VERTICAL_CENTER);
         
         HSSFCellStyle styleC30 = wb.createCellStyle();
         styleC30.setBorderLeft(HSSFCellStyle.BORDER_THIN);
@@ -102,7 +106,8 @@ public class BookingSummary extends AbstractExcelView  {
         styleC30.setBorderTop(HSSFCellStyle.BORDER_THIN);
         styleC30.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC30.setAlignment(styleC30.ALIGN_CENTER);
-        
+        styleC30.setWrapText(true);
+        styleC30.setVerticalAlignment(styleC30.VERTICAL_CENTER);
         if(!listBooking.isEmpty()){
             dataheader = (BookingNonInvoiceView)listBooking.get(0);
         
@@ -180,9 +185,8 @@ public class BookingSummary extends AbstractExcelView  {
                 cell001.setCellValue("Invoice Sup ");
                 cell001.setCellStyle(styleC3);
                 HSSFCell cell002 = row000.createCell(1);
-                cell002.setCellValue(data.getInvoicesup());
+                cell002.setCellValue(data.getInvoicesup().replaceAll("\r\n", " "));
                 cell002.setCellStyle(styleC29);
-                
                 HSSFCell cell003 = row000.createCell(2);
                 cell003.setCellStyle(styleC29);
                 HSSFCell cell004 = row000.createCell(3);
@@ -195,44 +199,48 @@ public class BookingSummary extends AbstractExcelView  {
                 // Header Table
                 HSSFRow row09 = sheet.createRow(countss);
                 HSSFCell cell091 = row09.createCell(0);
-                cell091.setCellValue("Pay No");
+                cell091.setCellValue("Ref No");
                 cell091.setCellStyle(styleC3);
                 sheet.autoSizeColumn(0);
                 HSSFCell cell092 = row09.createCell(1);
-                cell092.setCellValue("Pay Date");
+                cell092.setCellValue("Booking Date");
                 cell092.setCellStyle(styleC3);
                 sheet.autoSizeColumn(1);
                 HSSFCell cell093 = row09.createCell(2);
-                cell093.setCellValue("Ref No");
+                cell093.setCellValue("Owner");
                 sheet.autoSizeColumn(2);
                 cell093.setCellStyle(styleC3);
                 HSSFCell cell094 = row09.createCell(3);
-                cell094.setCellValue("Booking Date");
+                cell094.setCellValue("Pay No");
                 cell094.setCellStyle(styleC3);
                 sheet.autoSizeColumn(3);
                 HSSFCell cell095 = row09.createCell(4);
-                cell095.setCellValue("Owner"); 
+                cell095.setCellValue("Pay Date"); 
                 cell095.setCellStyle(styleC3);
                 sheet.autoSizeColumn(4);
-                HSSFCell cell096 = row09.createCell(5);
-                cell096.setCellValue("Description"); 
-                cell096.setCellStyle(styleC3);
-                sheet.autoSizeColumn(5);
-                HSSFCell cell097 = row09.createCell(6);
-                cell097.setCellValue("Pay Amount");
+//                HSSFCell cell096 = row09.createCell(5);
+//                cell096.setCellValue("Invoice Sup"); 
+//                cell096.setCellStyle(styleC3);
+//                sheet.autoSizeColumn(5);
+                HSSFCell cell097 = row09.createCell(5);
+                cell097.setCellValue("Description");
                 cell097.setCellStyle(styleC3);
-                sheet.autoSizeColumn(6);
-                HSSFCell cell098 = row09.createCell(7);
-                cell098.setCellValue("Currency");
+                sheet.autoSizeColumn(5);
+                HSSFCell cell098 = row09.createCell(6);
+                cell098.setCellValue("Pay Amount");
                 cell098.setCellStyle(styleC3);
-                sheet.autoSizeColumn(7);
-                HSSFCell cell099 = row09.createCell(8);
-                cell099.setCellValue("Price From Billable");
+                sheet.autoSizeColumn(6);
+                HSSFCell cell099 = row09.createCell(7);
+                cell099.setCellValue("Currency");
                 cell099.setCellStyle(styleC3);
-                sheet.autoSizeColumn(8);
-                HSSFCell cell100 = row09.createCell(9);
-                cell100.setCellValue("Currency");
+                sheet.autoSizeColumn(7);
+                HSSFCell cell100 = row09.createCell(8);
+                cell100.setCellValue("Price From Billable");
                 cell100.setCellStyle(styleC3);
+                sheet.autoSizeColumn(8);
+                HSSFCell cell101 = row09.createCell(9);
+                cell101.setCellValue("Currency");
+                cell101.setCellStyle(styleC3);
                 sheet.autoSizeColumn(9);
                 count = count+2;
             }  
@@ -240,39 +248,40 @@ public class BookingSummary extends AbstractExcelView  {
             //set data 
             HSSFRow row = sheet.createRow(count + i);
             HSSFCell celldata01 = row.createCell(0);
-            celldata01.setCellValue(data.getPayno());
+            celldata01.setCellValue(data.getRefno());
             celldata01.setCellStyle(styleC29);
             HSSFCell celldata02 = row.createCell(1);
-            celldata02.setCellValue(data.getPaydate());
-            celldata02.setCellStyle(styleC30);
+            celldata02.setCellValue(data.getBookdate());
+            celldata02.setCellStyle(styleC29);
             HSSFCell celldata03 = row.createCell(2);
-            celldata03.setCellValue(data.getRefno());
+            celldata03.setCellValue(data.getOwner());
             celldata03.setCellStyle(styleC29);
             HSSFCell celldata04 = row.createCell(3);
-            celldata04.setCellValue(data.getBookdate());
-            celldata04.setCellStyle(styleC30);
+            celldata04.setCellValue(data.getPayno());
+            celldata04.setCellStyle(styleC29);
             HSSFCell celldata05 = row.createCell(4);
-            celldata05.setCellValue(data.getOwner());
+            celldata05.setCellValue(data.getPaydate());
             celldata05.setCellStyle(styleC29);
-            HSSFCell celldata06 = row.createCell(5);
-            celldata06.setCellValue(data.getDescription());
-            celldata06.setCellStyle(styleC29);
-            HSSFCell celldata07 = row.createCell(6);
-            celldata07.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPayamount())) ? 0 : data.getPayamount().doubleValue()); 
-            celldata07.setCellStyle(styleC25);
-            HSSFCell celldata08 = row.createCell(7);
-            celldata08.setCellValue(data.getCurrency());
-            celldata08.setCellStyle(styleC30);
-            HSSFCell celldata09 = row.createCell(8);
-            celldata09.setCellValue("".equalsIgnoreCase(String.valueOf(data.getSale())) ? 0 : data.getSale().doubleValue()); 
-            celldata09.setCellStyle(styleC25);
-            HSSFCell celldata10 = row.createCell(9);
-            celldata10.setCellValue(data.getSalecurrency());
-            celldata10.setCellStyle(styleC30);
-
+//            HSSFCell celldata06 = row.createCell(5);
+//            celldata06.setCellValue(data.getInvoicesup());
+//            celldata06.setCellStyle(styleC29);
+            HSSFCell celldata07 = row.createCell(5);
+            celldata07.setCellValue(data.getDescription()); 
+            celldata07.setCellStyle(styleC29);
+            HSSFCell celldata08 = row.createCell(6);
+            celldata08.setCellValue(data.getPayamount().trim());
+            celldata08.setCellStyle(styleC25);
+            HSSFCell celldata09 = row.createCell(7);
+            celldata09.setCellValue(data.getCurrency()); 
+            celldata09.setCellStyle(styleC30);
+            HSSFCell celldata10 = row.createCell(8);
+            celldata10.setCellValue(data.getSale().trim());
+            celldata10.setCellStyle(styleC25);
+            HSSFCell celldata11 = row.createCell(9);
+            celldata11.setCellValue(data.getSalecurrency());
+            celldata11.setCellStyle(styleC30);
         }
         
-                
         for(int j =0;j<10;j++){
             sheet.autoSizeColumn(j);
         }
@@ -309,7 +318,7 @@ public class BookingSummary extends AbstractExcelView  {
         styleC26.setBorderTop(HSSFCellStyle.BORDER_THIN);
         styleC26.setBorderBottom(HSSFCellStyle.BORDER_THIN);
         styleC26.setDataFormat(currency.getFormat("#,##0"));
-        styleC26.setAlignment(styleC22.ALIGN_CENTER);
+        styleC26.setAlignment(styleC26.ALIGN_CENTER);
         styleC26.setVerticalAlignment(styleC26.VERTICAL_CENTER);
         
         HSSFCellStyle styleC27 = wb.createCellStyle();
@@ -460,7 +469,7 @@ public class BookingSummary extends AbstractExcelView  {
             celldata07.setCellValue(data.getInvto()); 
             celldata07.setCellStyle(styleC29);
             HSSFCell celldata08 = row.createCell(7);
-            celldata08.setCellValue("".equalsIgnoreCase(String.valueOf(data.getCost())) ? 0 : data.getCost().doubleValue()); 
+            celldata08.setCellValue(data.getCost().trim()); 
             celldata08.setCellStyle(styleC25);
             HSSFCell celldata09 = row.createCell(8);
             celldata09.setCellValue(data.getCurrency());

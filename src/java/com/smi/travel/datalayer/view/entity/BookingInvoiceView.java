@@ -23,9 +23,41 @@ public class BookingInvoiceView {
     private String invno;
     private String invdate;
     private String invto;
-    private BigDecimal cost;
+    private String cost;
     private String currency;
     private String description;
+
+    public String getHeaderowner() {
+        return headerowner;
+    }
+
+    public void setHeaderowner(String headerowner) {
+        this.headerowner = headerowner;
+    }
+
+    public String getHeaderinvto() {
+        return headerinvto;
+    }
+
+    public void setHeaderinvto(String headerinvto) {
+        this.headerinvto = headerinvto;
+    }
+
+    public String getHeaderbookingdate() {
+        return headerbookingdate;
+    }
+
+    public void setHeaderbookingdate(String headerbookingdate) {
+        this.headerbookingdate = headerbookingdate;
+    }
+
+    public String getHeaderinvdate() {
+        return headerinvdate;
+    }
+
+    public void setHeaderinvdate(String headerinvdate) {
+        this.headerinvdate = headerinvdate;
+    }
 
     public String getRefno() {
         return refno;
@@ -75,7 +107,13 @@ public class BookingInvoiceView {
         this.invto = invto;
     }
 
+    public String getCost() {
+        return cost;
+    }
 
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
 
     public String getCurrency() {
         return currency;
@@ -92,46 +130,5 @@ public class BookingInvoiceView {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public BigDecimal getCost() {
-        return cost;
-    }
-
-    public void setCost(BigDecimal cost) {
-        this.cost = cost;
-    }
-
-    public String getHeaderowner() {
-        return headerowner;
-    }
-
-    public void setHeaderowner(String headerowner) {
-        this.headerowner = headerowner;
-    }
-
-    public String getHeaderinvto() {
-        return headerinvto;
-    }
-
-    public void setHeaderinvto(String headerinvto) {
-        this.headerinvto = headerinvto;
-    }
-
-    public String getHeaderbookingdate() {
-        return headerbookingdate;
-    }
-
-    public void setHeaderbookingdate(String headerbookingdate) {
-        this.headerbookingdate = headerbookingdate;
-    }
-
-    public String getHeaderinvdate() {
-        return headerinvdate;
-    }
-
-    public void setHeaderinvdate(String headerinvdate) {
-        this.headerinvdate = headerinvdate;
-    }
-    
 
 }

@@ -867,26 +867,29 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             }
             biv.setRefno(B[0]== null ? "" :util.ConvertString(B[0]));
             biv.setOwner(B[1]== null ? "" :util.ConvertString(B[1]));
-            biv.setBookdate("null".equals(String.valueOf(B[2])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[2])))));
+            biv.setBookdate(util.convertStringToDateFormat(String.valueOf(B[2])));
+//            biv.setBookdate("null".equals(String.valueOf(B[2])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[2])))));
             biv.setInvno(B[3]== null ? "" : util.ConvertString(B[3]));
-            if((!"null".equalsIgnoreCase(String.valueOf(B[4])) && B[4] != null) && !"".equalsIgnoreCase(String.valueOf(B[4]))){
-                String invdatemp="";
-                String invDate[] = String.valueOf(B[4]).split("\r\n");
-                if(invDate.length > 1 ){
-                   for(int x= 0; x<invDate.length;x++){
-                       if(invDate[x] != null && !"".equalsIgnoreCase(invDate[x].trim())){
-                            invdatemp += util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(invDate[x]).trim())))+"\r\n";
-                            biv.setInvdate(invdatemp);
-                       }
-                   }
-                }else{
-                  biv.setInvdate(util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[4]).trim()))));
-                }
-            }else{
-                biv.setInvdate("");
-            }
+//            if((!"null".equalsIgnoreCase(String.valueOf(B[4])) && B[4] != null) && !"".equalsIgnoreCase(String.valueOf(B[4]))){
+//                String invdatemp="";
+//                String invDate[] = String.valueOf(B[4]).split("\r\n");
+//                if(invDate.length > 1 ){
+//                   for(int x= 0; x<invDate.length;x++){
+//                       if(invDate[x] != null && !"".equalsIgnoreCase(invDate[x].trim())){
+//                            invdatemp += util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(invDate[x]).trim())))+"\r\n";
+//                            biv.setInvdate(invdatemp);
+//                       }
+//                   }
+//                }else{
+//                  biv.setInvdate(util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[4]).trim()))));
+//                }
+//            }else{
+//                biv.setInvdate("");
+//            }
+            
+            biv.setInvdate(util.convertStringToDateFormat(String.valueOf(B[4])));
             biv.setInvto(B[5]== null ? "" : util.ConvertString(B[5]));
-            biv.setCost((B[6]) != null ? new BigDecimal(util.ConvertString((df.format(new BigDecimal(util.ConvertString(B[6])))))) : new BigDecimal("0.00"));
+            biv.setCost(util.convertStringToDecimalFormat(util.ConvertString(B[6])));
             biv.setCurrency(B[7]== null ? "" : util.ConvertString(B[7]));
             biv.setDescription(B[8]== null ? "" : util.ConvertString(B[8]));
             data.add(biv);
@@ -906,7 +909,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
         boolean invsupsearch = false;
         SimpleDateFormat dateformat = new SimpleDateFormat();
         dateformat.applyPattern("dd-MM-yyyy");
-        DecimalFormat df = new DecimalFormat("#.00"); 
+        DecimalFormat df = new DecimalFormat("#,##0.00"); 
         
         String headerowner = "ALL";
         String headerbookdate = "ALL";
@@ -960,8 +963,6 @@ public class BookingSummaryImpl implements BookingSummaryDao{
                 .addScalar("salecurrency", Hibernate.STRING)
                 .list();
         
-
-        
         for (Object[] B : QueryStaffList) {
             BookingNonInvoiceView bniv = new BookingNonInvoiceView();
             bniv.setHeaderbookingdate(headerbookdate);
@@ -978,14 +979,14 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             }
             bniv.setInvoicesup(B[0]== null ? "" :util.ConvertString(B[0]));
             bniv.setPayno(B[1]== null ? "" :util.ConvertString(B[1]));
-            bniv.setPaydate("null".equals(String.valueOf(B[2])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[2])))));
+            bniv.setPaydate(util.convertStringToDateFormat(String.valueOf(B[2])));
             bniv.setDescription(B[3]== null ? "" : util.ConvertString(B[3]));
             bniv.setRefno(B[4]== null ? "" : util.ConvertString(B[4]));
             bniv.setOwner(B[5]== null ? "" : util.ConvertString(B[5]));
-            bniv.setBookdate("null".equals(String.valueOf(B[6])) ? "" : util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(B[6])))));
-            bniv.setPayamount((B[7]) != null ? new BigDecimal(util.ConvertString((df.format(new BigDecimal(util.ConvertString(B[7])))))) : new BigDecimal("0.00"));
+            bniv.setBookdate(util.convertStringToDateFormat(String.valueOf(B[6])));
+            bniv.setPayamount(util.convertStringToDecimalFormat(util.ConvertString(B[7])));
             bniv.setCurrency(B[8]== null ? "" : util.ConvertString(B[8]));
-            bniv.setSale((B[9]) != null ? new BigDecimal(util.ConvertString((df.format(new BigDecimal(util.ConvertString(B[9])))))) : new BigDecimal("0.00"));
+            bniv.setSale(util.convertStringToDecimalFormat(util.ConvertString(B[9])));
             bniv.setSalecurrency(B[10]== null ? "" : util.ConvertString(B[10]));
             data.add(bniv);
         }

@@ -23,11 +23,43 @@ public class BookingNonInvoiceView {
     private String description;
     private String refno;
     private String owner;
-    private BigDecimal payamount;
+    private String payamount;
     private String currency;
-    private BigDecimal sale;
+    private String sale;
     private String salecurrency;
     private String bookdate;
+
+    public String getHeaderowner() {
+        return headerowner;
+    }
+
+    public void setHeaderowner(String headerowner) {
+        this.headerowner = headerowner;
+    }
+
+    public String getHeaderinvoicesup() {
+        return headerinvoicesup;
+    }
+
+    public void setHeaderinvoicesup(String headerinvoicesup) {
+        this.headerinvoicesup = headerinvoicesup;
+    }
+
+    public String getHeaderbookingdate() {
+        return headerbookingdate;
+    }
+
+    public void setHeaderbookingdate(String headerbookingdate) {
+        this.headerbookingdate = headerbookingdate;
+    }
+
+    public String getHeaderpaydate() {
+        return headerpaydate;
+    }
+
+    public void setHeaderpaydate(String headerpaydate) {
+        this.headerpaydate = headerpaydate;
+    }
 
     public String getInvoicesup() {
         return invoicesup;
@@ -77,11 +109,11 @@ public class BookingNonInvoiceView {
         this.owner = owner;
     }
 
-    public BigDecimal getPayamount() {
+    public String getPayamount() {
         return payamount;
     }
 
-    public void setPayamount(BigDecimal payamount) {
+    public void setPayamount(String payamount) {
         this.payamount = payamount;
     }
 
@@ -93,11 +125,11 @@ public class BookingNonInvoiceView {
         this.currency = currency;
     }
 
-    public BigDecimal getSale() {
+    public String getSale() {
         return sale;
     }
 
-    public void setSale(BigDecimal sale) {
+    public void setSale(String sale) {
         this.sale = sale;
     }
 
@@ -116,38 +148,5 @@ public class BookingNonInvoiceView {
     public void setBookdate(String bookdate) {
         this.bookdate = bookdate;
     }
-
-    public String getHeaderowner() {
-        return headerowner;
-    }
-
-    public void setHeaderowner(String headerowner) {
-        this.headerowner = headerowner;
-    }
-
-    public String getHeaderinvoicesup() {
-        return headerinvoicesup;
-    }
-
-    public void setHeaderinvoicesup(String headerinvoicesup) {
-        this.headerinvoicesup = headerinvoicesup;
-    }
-
-    public String getHeaderbookingdate() {
-        return headerbookingdate;
-    }
-
-    public void setHeaderbookingdate(String headerbookingdate) {
-        this.headerbookingdate = headerbookingdate;
-    }
-
-    public String getHeaderpaydate() {
-        return headerpaydate;
-    }
-
-    public void setHeaderpaydate(String headerpaydate) {
-        this.headerpaydate = headerpaydate;
-    }
-
-  
+    
 }

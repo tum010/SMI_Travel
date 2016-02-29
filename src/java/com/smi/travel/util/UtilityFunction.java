@@ -8,6 +8,7 @@ package com.smi.travel.util;
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.Customer;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -502,6 +503,47 @@ public class UtilityFunction {
             output[1] += "\n";
         }
         return output;
+    }
+    
+    public String convertStringToDateFormat(String date){
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        String dateformatstring = "";
+        if((!"null".equalsIgnoreCase(String.valueOf(date)) && date != null) && !"".equalsIgnoreCase(String.valueOf(date))){
+            String datetemp = "";
+            String Date[] = String.valueOf(date).split("\r\n");
+            if(Date.length > 1 ){
+               for(int x= 0; x <Date.length;x++){
+                   if(Date[x] != null && !"".equalsIgnoreCase(Date[x].trim())){
+                        datetemp += ConvertString(dateformat.format(convertStringToDate(String.valueOf(Date[x]).trim())))+"\n";
+                        dateformatstring = datetemp ;
+                   }
+               }
+            }else{
+              dateformatstring = ConvertString(dateformat.format(convertStringToDate(String.valueOf(date).trim())));
+            }
+        }
+        return dateformatstring;
+    }
+    
+    public String convertStringToDecimalFormat(String data){
+        DecimalFormat df = new DecimalFormat("#,##0.00"); 
+        String decimalformatstring = "0.00";
+        if((!"null".equalsIgnoreCase(String.valueOf(data)) && data != null) && !"".equalsIgnoreCase(String.valueOf(data))){
+            String datatemp = "";
+            String dataarr[] = String.valueOf(data).split("\r\n");
+            if(dataarr.length > 1 ){
+               for(int x= 0; x <dataarr.length;x++){
+                   if(dataarr[x] != null && !"".equalsIgnoreCase(dataarr[x].trim())){
+                        datatemp += ConvertString(df.format(new BigDecimal(String.valueOf(dataarr[x]).trim())))+"\n";
+                        decimalformatstring = datatemp ;
+                   }
+               }
+            }else{
+              decimalformatstring = ConvertString(df.format(new BigDecimal(ConvertString(data).trim())));
+            }
+        }
+        return decimalformatstring;
     }
 
 }
