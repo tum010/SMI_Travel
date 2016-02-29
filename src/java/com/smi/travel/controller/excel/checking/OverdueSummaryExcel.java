@@ -927,29 +927,28 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         
         HSSFRow row5 = sheet.createRow(5);
         HSSFCell cell51 = row5.createCell(0);
-        cell51.setCellValue("Ref No");
+        cell51.setCellValue("Item No");
         cell51.setCellStyle(styletop);
         HSSFCell cell62 = row5.createCell(1);
-        cell62.setCellValue("Owner");
+        cell62.setCellValue("Item Type");
         cell62.setCellStyle(styletop);
         HSSFCell cell63 = row5.createCell(2);
-        cell63.setCellValue("Item No");
+        cell63.setCellValue("Ref No");
         cell63.setCellStyle(styletop);
         HSSFCell cell64 = row5.createCell(3);
-        cell64.setCellValue("Item Type");
+        cell64.setCellValue("Owner");
         cell64.setCellStyle(styletop);
         HSSFCell cell65 = row5.createCell(4);
-        cell65.setCellValue("Cost");
+        cell65.setCellValue("Pay No");
         cell65.setCellStyle(styletop);
         HSSFCell cell66 = row5.createCell(5);
-        cell66.setCellValue("Pay No");
+        cell66.setCellValue("Pay Date");
         cell66.setCellStyle(styletop);
-        sheet.autoSizeColumn(5);
         HSSFCell cell67 = row5.createCell(6);
-        cell67.setCellValue("Pay Date");
+        cell67.setCellValue("Invoice Sup");
         cell67.setCellStyle(styletop);
         HSSFCell cell68 = row5.createCell(7);
-        cell68.setCellValue("Invoice Sup");
+        cell68.setCellValue("Cost");
         cell68.setCellStyle(styletop);
         HSSFCell cell69 = row5.createCell(8);
         cell69.setCellValue("Stock No");
@@ -962,36 +961,36 @@ public class OverdueSummaryExcel extends AbstractExcelView{
             HSSFRow row = sheet.createRow(count + i);
             
             HSSFCell celldata0 = row.createCell(0);
-            celldata0.setCellValue(!"".equalsIgnoreCase(data.getRefno()) && data.getRefno() != null ? data.getRefno() : "");
-            celldata0.setCellStyle(styleC30);
+            celldata0.setCellValue(!"".equalsIgnoreCase(data.getItemno()) && data.getItemno() != null ? data.getItemno() : "");
+            celldata0.setCellStyle(styleC29);
             
             HSSFCell celldata1 = row.createCell(1);
-            celldata1.setCellValue(!"".equalsIgnoreCase(data.getOwner()) && data.getOwner() != null ? data.getOwner() : "");
+            celldata1.setCellValue(!"".equalsIgnoreCase(data.getItemtype()) && data.getItemtype() != null ? data.getItemtype() : "");
             celldata1.setCellStyle(styleC30);
             
             HSSFCell celldata2 = row.createCell(2);
-            celldata2.setCellValue(!"".equalsIgnoreCase(data.getItemno()) && data.getItemno() != null ? data.getItemno() : "");
+            celldata2.setCellValue(!"".equalsIgnoreCase(data.getRefno()) && data.getRefno() != null ? data.getRefno() : "");
             celldata2.setCellStyle(styleC30);
             
             HSSFCell celldata3 = row.createCell(3);
-            celldata3.setCellValue(!"".equalsIgnoreCase(data.getItemtype()) && data.getItemtype() != null ? data.getItemtype() : "");
-            celldata3.setCellStyle(styleC30);
+            celldata3.setCellValue(!"".equalsIgnoreCase(data.getOwner()) && data.getOwner() != null ? data.getOwner() : "");
+            celldata3.setCellStyle(styleC29);                      
             
             HSSFCell celldata4 = row.createCell(4);
-            celldata4.setCellValue(!"".equalsIgnoreCase(data.getCost()) && data.getCost() != null ? new BigDecimal(data.getCost()).doubleValue() : 0);
-            celldata4.setCellStyle(styleC25);
+            celldata4.setCellValue(!"".equalsIgnoreCase(data.getPayno()) && data.getPayno() != null ? data.getPayno() : "");
+            celldata4.setCellStyle(styleC32);
             
             HSSFCell celldata5 = row.createCell(5);
-            celldata5.setCellValue(!"".equalsIgnoreCase(data.getPayno()) && data.getPayno() != null ? data.getPayno() : "");
-            celldata5.setCellStyle(styleC32);
+            celldata5.setCellValue(!"".equalsIgnoreCase(data.getPaydate()) && data.getPaydate() != null ? data.getPaydate() : "");
+            celldata5.setCellStyle(styleC30);
             
             HSSFCell celldata6 = row.createCell(6);
-            celldata6.setCellValue(!"".equalsIgnoreCase(data.getPaydate()) && data.getPaydate() != null ? data.getPaydate() : "");
-            celldata6.setCellStyle(styleC30);
+            celldata6.setCellValue(!"".equalsIgnoreCase(data.getInvoicesup()) && data.getInvoicesup() != null ? data.getInvoicesup() : "");
+            celldata6.setCellStyle(styleC29);
             
             HSSFCell celldata7 = row.createCell(7);
-            celldata7.setCellValue(!"".equalsIgnoreCase(data.getInvoicesup()) && data.getInvoicesup() != null ? data.getInvoicesup() : "");
-            celldata7.setCellStyle(styleC29);
+            celldata7.setCellValue(!"".equalsIgnoreCase(data.getCost()) && data.getCost() != null ? new BigDecimal(data.getCost()).doubleValue() : 0);
+            celldata7.setCellStyle(styleC25);
   
             HSSFCell celldata8 = row.createCell(8);
             celldata8.setCellValue(!"".equalsIgnoreCase(data.getStockno()) && data.getStockno() != null ? data.getStockno() : "");
@@ -1008,7 +1007,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
 //        sheet.setColumnWidth(2, 256*15);
 //        sheet.setColumnWidth(3, 256*15);
 //        sheet.setColumnWidth(4, 256*25);
-        sheet.setColumnWidth(5, 256*25);
+//        sheet.setColumnWidth(5, 256*25);
 //        sheet.setColumnWidth(6, 256*15);
 //        sheet.setColumnWidth(10, 256*15);
 //        sheet.setColumnWidth(11, 256*15);
