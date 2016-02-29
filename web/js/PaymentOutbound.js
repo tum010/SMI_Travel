@@ -923,6 +923,7 @@ function addRowPaymentDetailTableByRefNo(refNo, type, description, billType, cos
     $("#refNo" + row).val(refNo);
     $("#description" + row).val(description);
     $("#cost" + row).val(formatNumber(cost));
+    $("#amount" + row).val(formatNumber(cost));
     $("[name=type" + row + "] option").filter(function() {
         return ($(this).text() === type);
     }).prop('selected', true);
@@ -1017,6 +1018,7 @@ function addRowPaymentDetailTableByStock(stockId, payStockNo, costAmount, curCos
         return ($(this).text() === type);
     }).prop('selected', true);
     $("#cost" + row).val(formatNumber(costAmount));
+    $("#amount" + row).val(formatNumber(costAmount));
     $("[name=cur" + row + "] option").filter(function() {
         return ($(this).text() === curCost);
     }).prop('selected', true);
