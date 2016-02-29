@@ -47,8 +47,8 @@
             
             <form action="SearchTicketFare.smi" method="post" id="SearchTicketFareForm" name="SearchTicketFareForm" role="form">
                 <div class="panel panel-default">
-                    <div class="panel-body"  style="width: 100%">
-                        <div class="col-xs-12 form-group">
+                    <div class="panel-body"  style="width: 100%" style="margin-top: -10px">
+                        <div class="col-xs-12 form-group" style="margin-top: -10px">
                             <div class="col-xs-1 text-right" style="width: 150px">
                                 <label class="control-label text-right">Ticket&nbsp;Type&nbsp;</label>
                             </div>
@@ -134,7 +134,7 @@
                                 <input id="ticketAirlineOther" name="ticketAirlineOther" type="text" class="form-control" maxlength="50" value="" disabled="">
                             </div>-->
                         </div>
-                        <div class="col-xs-12 ">
+                        <div class="col-xs-12 " style="margin-top: -10px">
                             <div class="col-xs-1 text-right" style="width: 150px">
                                 <label class="control-label text-right">Ticket No </label>
                             </div>
@@ -164,7 +164,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 form-group" style="margin-top: -10px">
                             <div class="col-xs-1 text-right" style="width: 150px">
                                 <label class="control-label text-right">Ref No </label>
                             </div>
@@ -210,7 +210,7 @@
                             </div>
                             <div class="col-xs-1 text-right" style="width: 150px">
                             </div>
-                            <div class="col-xs-1 text-right" style="width: 330px;padding-top: 15px">
+                            <div class="col-xs-1 text-right" style="width: 330px;margin-top: 3px;margin-bottom: -31px">
                                 <input type="hidden" id="ticketId" name="ticketId" >
                                 <input type="hidden" name="action" id="action" value="">
                                 <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchAction();" class="btn btn-primary btn-sm">
@@ -220,7 +220,7 @@
                     </div>
                 </div>
                 <!--Table-->
-                <div class="row">
+                <div class="row" style="margin-top: -10px">
                     <div class="col-md-12 ">
                         <table id="TicketFareList" class="display" cellspacing="0" width="100%">
                             <thead>

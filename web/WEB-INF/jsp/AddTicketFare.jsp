@@ -103,7 +103,7 @@
                     </div> 
                 </div>
                 <div class="row">
-                    <div class="col-xs-12" style="padding-top: 7px">
+                    <div class="col-xs-12" style="margin-top: -10px">
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label text-right">Ticket&nbsp;Type&nbsp;</label>
                         </div>
@@ -192,7 +192,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12" style="padding-top: 20px">
+                    <div class="col-xs-12" style="margin-top: 3px">
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label text-right">Passenger</label>
                         </div>
@@ -250,7 +250,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12" style="padding-top: 7px">
+                    <div class="col-xs-12" style="margin-top: -10px">
                         <div class="col-xs-1 text-right" style="width: 150px">
                             <label class="control-label text-right">PV Type</label>
                         </div>
@@ -287,12 +287,12 @@
                     <div class="col-xs-12" style="padding-top: 20px"></div>    
                 </div>
                 <!----- Ticket Detail ----->
-                <div class="panel panel-default" >
+                <div class="panel panel-default" style="margin-top: -13px">
                     <div class="panel-heading" >
                         <h4 class="panel-title">Ticket Detail</h4>
                     </div> 
-                    <div class="panel-body"  style="padding-right: 0px;" style="width: 100%" >
-                        <div class="col-xs-12">
+                    <div class="panel-body"  style="padding-right: 0px;" style="width: 100%" style="margin-top: -10px">
+                        <div class="col-xs-12" style="margin-top: -10px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Issue Date </label>
                             </div>
@@ -320,7 +320,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12" style="padding-top: 20px">
+                        <div class="col-xs-12" style="margin-top: 3px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Ticket Ins </label>
                             </div>
@@ -346,7 +346,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12" style="padding-top: 20px">
+                        <div class="col-xs-12" style="margin-top: 3px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Inv Amount</label>
                             </div>
@@ -373,7 +373,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12" style="padding-top: 20px">
+                        <div class="col-xs-12" style="margin-top: 3px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Ticket Comm Date </label>
                             </div>
@@ -409,7 +409,7 @@
                                 <label class="control-label text-right">Wait Pay</label>
                             </div>        
                         </div>        
-                        <div class="col-xs-12" style="padding-top: 20px">
+                        <div class="col-xs-12" style="margin-top: 3px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Agent</label>
                             </div>
@@ -436,7 +436,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12" style="padding-top: 20px">
+                        <div class="col-xs-12" style="margin-top: 3px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Remark </label>
                             </div>
@@ -446,7 +446,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12" style="padding-top: 20px">
+                        <div class="col-xs-12" style="margin-top: 3px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Inv No</label>
                             </div>
@@ -473,7 +473,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12" style="padding-top: 20px">
+                        <div class="col-xs-12" style="margin-top: 3px;margin-bottom: -10px">
                             <div class="col-xs-1 text-right"  style="width: 121px">
                                 <label class="control-label text-right">Owner</label>
                             </div>
@@ -494,19 +494,19 @@
                     </div>
                 </div>
                 <!----- Detail ----->
-                <div class="panel panel-default">
+                <div class="panel panel-default" style="margin-top: -13px" >
 <!--                    <div class="panel-heading">
                         <h4 class="panel-title"></h4>
                     </div> -->
-                    <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
-                        <div div class="col-sm-4"  style="border-right:solid 1px #D9D9D9">
-                            <div class="row" style="padding-top: 20px">
+                    <div class="panel-body"  style="padding-right: 0px;" style="width: 100%" >
+                        <div div class="col-sm-4" style="margin-top: -10px;margin-bottom: -10px">
+                            <div class="row" style="padding-top: 3px">
                                 <label class="col-lg-4 control-label text-right">Over Comm </label>
                                 <div class="col-sm-6">
                                     <input id="overCommission" name="overCommission" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.overCommission}" tabindex="1"/>
                                 </div>
                             </div>
-                            <div class="row" style="padding-top: 20px">
+                            <div class="row" style="padding-top: 3px">
                                 <label class="col-lg-4 control-label text-right">Date </label>
                                     <div class="col-sm-6">
                                     <div class='input-group date'>
@@ -517,14 +517,14 @@
                                 </div>
                             </div>         
                         </div>                
-                        <div div class="col-sm-4" style="border-right:solid 1px #D9D9D9">
-                            <div class="row" style="padding-top: 20px">
+                        <div div class="col-sm-4" style="margin-top: -10px;margin-bottom: -10px">
+                            <div class="row" style="padding-top: 3px">
                                 <label class="col-lg-4 control-label text-right">Little Comm </label>
                                 <div class="col-sm-6">
                                     <input id="litterCommission" name="litterCommission" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.litterCommission}" tabindex="3"/>
                                 </div>
                             </div>    
-                            <div class="row" style="padding-top: 20px">
+                            <div class="row" style="padding-top: 3px">
                                 <label class="col-lg-4 control-label text-right">Date </label>
                                 <div class="col-sm-6">                             
                                     <div class='input-group date'>
@@ -535,8 +535,8 @@
                                 </div>                            
                             </div>
                         </div>
-                        <div div class="col-sm-4" >
-                            <div class="row" style="padding-top: 20px">
+                        <div div class="col-sm-4" style="margin-top: -10px;margin-bottom: -10px">
+                            <div class="row" style="padding-top: 3px">
                                 <label class="col-lg-4 control-label text-right">Add Pay </label>
                                 <div class="col-sm-6">
                                     <div class="input-group">                                    
@@ -544,7 +544,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" style="padding-top: 20px">
+                            <div class="row" style="padding-top: 3px">
                                 <label class="col-lg-4 control-label text-right">Date </label>
                                 <div class="col-sm-6"> 
                                 <div class='input-group date'>
@@ -557,7 +557,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" style="padding-bottom: 20px">
+                <div class="row" style="margin-top: -12px">
                     <div class="col-xs-12">
                         <div class="col-xs-12 text-center" >  
                             <input type="hidden" name="airlinecode" id="airlinecode" value="">
@@ -574,11 +574,11 @@
                     </div>
                 </div>
                 <!----- Refund Detail ----->
-                <div class="panel panel-default">
+                <div class="panel panel-default" style="margin-top: 5px">
                     <div class="panel-heading">
                         <h4 class="panel-title">Refund Detail</h4>
                     </div> 
-                    <div class="panel-body">
+                    <div class="panel-body" style="margin-top: -10px;margin-bottom: -10px">
                         <table class="display" id="RefundDetailTable">
                             <thead class="datatable-header">
                                 <tr>
@@ -610,11 +610,11 @@
                     </div>
                 </div>             
                 <!----- Invoice Detail ----->
-                <div class="panel panel-default">
+                <div class="panel panel-default" style="margin-top: -12px">
                     <div class="panel-heading">
                         <h4 class="panel-title">Invoice Detail</h4>
                     </div> 
-                    <div class="panel-body">
+                    <div class="panel-body" style="margin-top: -10px;margin-bottom: -10px">
                         <table class="display" id="InvoiceDeailTable">
                             <thead class="datatable-header">
                                 <tr>
@@ -654,11 +654,11 @@
                     </div>
                 </div> 
                 <!----- Receipt Detail ----->
-                <div class="panel panel-default">
+                <div class="panel panel-default" style="margin-top: -12px">
                     <div class="panel-heading">
                         <h4 class="panel-title">Receipt Detail</h4>
                     </div> 
-                    <div class="panel-body">
+                    <div class="panel-body" style="margin-top: -10px;margin-bottom: -10px">
                         <table class="display" id="ReceiptDetailTable">
                             <thead class="datatable-header">
                                 <tr>
@@ -686,11 +686,11 @@
                     </div>
                 </div>  
                 <!----- Flight Detail ----->
-                <div id="flightPanel" class="panel panel-default hidden">
+                <div id="flightPanel" class="panel panel-default hidden" style="margin-top: -12px">
                     <div class="panel-heading">
                         <h4 class="panel-title">Flight Detail</h4>
                     </div> 
-                    <div class="panel-body">
+                    <div class="panel-body" style="margin-top: -10px;margin-bottom: -10px">
                         <table class="display" id="FlightDeailTable" cellspacing="0" >
                             <thead class="datatable-header">
                                 <tr>

@@ -94,8 +94,8 @@
                 <input type="hidden" name="debitRowDelete" id="debitRowDelete" value="">
                 
                 <div class="panel panel-default">
-                    <div class="panel-body"  style="padding-right: 0px;" style="width: 100%">
-                        <div class="col-xs-12">
+                    <div class="panel-body"  style="padding-right: 0px;" style="width: 100%" >
+                        <div class="col-xs-12" style="margin-top: -10px">
                             <div class="col-xs-1 text-right"  style="width: 128px">
                                 <label class="control-label text-right">Payment No </label>
                             </div>
@@ -132,7 +132,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12" style="padding-top: 15px">
+                        <div class="col-xs-12" style="margin-top: -10px">
                             <div class="col-xs-1 text-right"  style="width: 128px">
                                 <label class="control-label text-right">Invoice Sup<font style="color: red">*</font></label>
                             </div>
@@ -173,7 +173,7 @@
                                 <input type="radio" name="payto"  id="paytoC" value="C" ${checkC}/>&nbsp;Customer
                             </div>    
                         </div> 
-                        <div class="col-xs-12" style="padding-top: 5px">
+                        <div class="col-xs-12" style="margin-top: -10px;margin-bottom: -10px">
                             <div class="col-xs-1 text-right"  style="width: 128px">
                                 <label class="control-label text-right">Detail </label>
                             </div>
@@ -202,12 +202,12 @@
                     </div>
                 </div> 
 
-                <div class="panel panel-default">
+                <div class="panel panel-default" style="margin-top: -10px;">
                     <div class="panel-heading">
                         <h4 class="panel-title">Ticket Fare</h4>
                     </div> 
                     <div class="panel-body" style="width: 100%">
-                        <div class="col-xs-12"  style="padding-top: 5px">
+                        <div class="col-xs-12" style="margin-top: -10px">
                             <div class="col-xs-1 text-right" style="width: 128px">
                                 <label class="control-label text-right">Ticket From </label>
                             </div>
@@ -288,7 +288,7 @@
                                 </select>
                             </div>    
                         </div>
-                        <div class="col-xs-12" style="padding-top: 15px">
+                        <div class="col-xs-12" style="margin-top: 4px">
                             <div class="col-xs-1 text-right" style="width: 128px">
                                 <label class="control-label text-right">From </label>
                             </div>
@@ -316,7 +316,7 @@
                                 <button style="height:34px" type="button"  id="ButtonSearchTicket"  name="ButtonSearchTicket" onclick="searchTicketFare();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                             </div>
                         </div>
-                        <table class="display" id="TicketFareTable">
+                        <table class="display" id="TicketFareTable" style="margin-top: -20px">
                             <thead class="datatable-header">
                                 <tr>
                                     <!--<th style="width:5%;">Id</th>-->
@@ -358,7 +358,7 @@
                         </table>
                         <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['ticketFareCount']}" />
                         
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 form-group" style="margin-bottom:  -10px"> 
                             <div class="col-xs-1 text-right"  style="width: 400px">
                                 <label class="control-label text-right">Total Commission</label>
                             </div>
@@ -379,12 +379,12 @@
                     </div>
                 </div>
                             
-                <div class="panel panel-default">
+                <div class="panel panel-default" style="margin-top: -10px">
                     <div class="panel-heading">
                         <h4 class="panel-title">Refund Ticket</h4>
                     </div> 
                     <div class="panel-body" style="width: 100%">
-                        <div class="col-xs-12 form-group">
+                        <div class="col-xs-12 form-group" style="margin-top: -10px">
                             <div class="col-xs-1 text-right" style="width: 128px">
                                 <label class="control-label text-right">Refund </label>
                             </div>
@@ -398,7 +398,7 @@
                                 <button style="height:30px" type="button"  id="ButtonAdd"  name="ButtonAdd" onclick="addAction();" class="btn btn-primary btn-sm">&nbsp;&nbsp;Add&nbsp;&nbsp;</button>
                             </div>
                         </div>
-                        <table class="display" id="RefundTicketTable">
+                        <table class="display" id="RefundTicketTable" style="margin-top: -10px">
                             <thead class="datatable-header">
                                 <tr>
                                     <th style="width:5%;">Refund</th>
@@ -439,7 +439,7 @@
                                 <input type="hidden" name="searchPaymentNoFlag" id="searchPaymentNoFlag" value="${requestScope['searchPaymentNoFlag']}">
                             </tbody>
                         </table>
-                        <div class="col-xs-12 form-group" style="padding-top: 15px">
+                        <div class="col-xs-12 form-group" style="padding-top: 15px;margin-bottom: -10px">
                             <div class="col-xs-1 text-right"  style="width: 400px">
                                 <label class="control-label text-right">Total Amount Refund</label>
                             </div>
@@ -460,12 +460,12 @@
                     </div>
                 </div>
                             
-                <div class="panel panel-default">
+                <div class="panel panel-default" style="margin-top: -10px">
                     <div class="panel-heading">
                         <h4 class="panel-title">Credit Note</h4>
                     </div> 
                     <div class="panel-body" style="width: 100%;">    
-                        <table class="display" id="CreditDetailTable">
+                        <table class="display" id="CreditDetailTable" style="margin-top: -10px">
                             <thead class="datatable-header">
                                 <tr>
                                     <th style="width:10%;">No</th>
@@ -497,7 +497,7 @@
                                 <i class="glyphicon glyphicon-plus"></i> Add
                             </a>
                         </div>     
-                        <div class="col-xs-12 form-group" style="padding-top: 15px">
+                        <div class="col-xs-12 form-group" style="padding-top: 5px;margin-bottom: -10px">
                                 <div class="col-xs-1 text-right"  style="width: 820px">
                                 <label class="control-label text-right">Total Credit Amount</label>
                             </div>
@@ -510,12 +510,12 @@
                     </div>
                 </div>
                             
-                <div class="panel panel-default">
+                <div class="panel panel-default" style="margin-top: -10px">
                     <div class="panel-heading">
                         <h4 class="panel-title">Debit Note</h4>
                     </div> 
-                    <div class="panel-body" style="width: 100%;">    
-                        <table class="display" id="DebitDetailTable">
+                    <div class="panel-body" style="width: 100%;" >    
+                        <table class="display" id="DebitDetailTable" style="margin-top: -10px">
                             <thead class="datatable-header">
                                 <tr>
                                     <th style="width:10%;">No</th>
@@ -546,7 +546,7 @@
                                 <i class="glyphicon glyphicon-plus"></i> Add
                             </a>
                         </div>     
-                        <div class="col-xs-12 form-group" style="padding-top: 15px">
+                        <div class="col-xs-12 form-group" style="padding-top: 5px;margin-bottom: -10px">
                                 <div class="col-xs-1 text-right"  style="width: 820px">
                                 <label class="control-label text-right">Total Debit Amount</label>
                             </div>
@@ -560,12 +560,12 @@
                 </div>            
                             
                             
-                <div class="panel panel-default">
+                <div class="panel panel-default" style="margin-top: -10px">
 <!--                    <div class="panel-heading">
                         <h4 class="panel-title">Ticket Detail</h4>
                     </div> -->
                     <div class="panel-body" style="width: 100%">
-                        <div class="col-xs-12" style="padding-top: 15px">
+                        <div class="col-xs-12" style="margin-top: -10px">
                             <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Agent Amount </label>
                             </div>
@@ -591,7 +591,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12" style="padding-top: 15px">
+                        <div class="col-xs-12" style="margin-top: 5px;margin-bottom: -10px">
                             <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Chq No </label>
                             </div>
@@ -620,7 +620,7 @@
                     </div>
                 </div> 
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12" style="margin-top: -14px">
                         <div class="col-xs-12 text-right" >
                             <input type="hidden" name="optionSave" id="optionSave" value="${requestScope['optionSave']}">
                             <button type="button" id="ButtonPrint" name="ButtonPrint" onclick="printReport()" class="btn btn-primary"><i class="fa fa-print"></i> Print</button>

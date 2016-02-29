@@ -56,7 +56,7 @@
                 <input type="hidden" name="refundtype" id="refundtype" value="${refundAirline.refundType}">
                 <input type="hidden" name="otherreason" id="otherreason" value="${refundAirline.otherReason}">
                 <input type="hidden" name="masterid" id="masterid" value="${refundAirline.master.id}">
-                <div class="row">
+                <div class="row" >
                     <div class="col-xs-6 form-group">
                         <div class="col-xs-1 text-right" style="width: 140px">
                             <label class="control-label text-right">Refund No</label>
@@ -82,8 +82,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-6 form-group">
+                <div class="row" >
+                    <div class="col-xs-6 form-group" style="margin-top: -14px">
                         <div class="col-xs-1 text-right"  style="width: 140px;padding-left:10px">
                             <label class="control-label text-right">Request Airline <font style="color: red">*</font> </label>
                         </div>
@@ -100,7 +100,7 @@
                             <input type="text" class="form-control" id="refundAgentName" name="agentName" value="${refundAirline.agent.name}" readonly="">                           
                         </div>
                     </div>  
-                    <div class="col-xs-6 form-group">
+                    <div class="col-xs-6 form-group" style="margin-top: -14px">
                         <div class="col-xs-1 text-right" style="width: 140px">
                             <label class="control-label text-right">Refund By </label>
                         </div>
@@ -120,7 +120,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-6 form-group">
+                    <div class="col-xs-6 form-group" style="margin-top: -11px">
                         <div class="col-xs-1 text-right" style="width: 140px">
                             <label class="control-label text-right">Receive By </label>
                         </div>
@@ -138,7 +138,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-4 form-group">
+                    <div class="col-xs-4 form-group" style="margin-top: -11px">
                         <div class="col-xs-1 text-right"  style="width: 140px">
                             <label class="control-label text-right">Receive Date </label>
                         </div>
@@ -152,7 +152,7 @@
                     </div>
                 </div>                
                 <div class="row">
-                    <div class="col-xs-6 form-group">
+                    <div class="col-xs-6 form-group" style="margin-top: -11px">
                         <div class="col-xs-1 text-right"  style="width: 140px">
                             <label class="control-label text-right">Remark </label>
                         </div>
@@ -166,7 +166,7 @@
 
                 <!--Table-->
                 <div class="row">
-                    <div class="col-md-12 ">
+                    <div class="col-md-12 " style="margin-top: -11px">
                         <table id="RefundAirlineTable" class="display" cellspacing="0" width="100%">
                             <thead>
                                 <tr class="datatable-header" >
