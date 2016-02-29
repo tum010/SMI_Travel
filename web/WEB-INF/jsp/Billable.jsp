@@ -90,7 +90,7 @@
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <strong>Delete Unsuccess. Billable is use in invoice !</strong>
 </div> 
-                <div class="row" style="padding-left: 15px">  
+                <div class="row" style="padding-left: 15px; margin-top: -10px;">  
                     <div class="col-md-6">
                         <h4><b>Billable</b></h4>
                     </div>
@@ -98,16 +98,13 @@
                     </div>
 
                 </div>
-                <hr/>
-
-
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Detail</h3>
                     </div>
                     <div class="panel-body">
 
-                        <div class="col-sm-12">
+                        <div class="col-sm-12" style="margin-top: -5px;">
                             <div class="row">
                                 <label class="col-sm-1 control-label text-right">Passenger</label>
                                 <div class="col-sm-2" style="margin-left: 25px">
@@ -148,7 +145,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-7" style="margin-top: -10px;">
                             <div class="form-group">
                                 <label for="billTo" class="col-sm-2 control-label text-right">Bill To <strong style="color: red">*</strong></label>
                                 <div class="col-sm-10">
@@ -165,7 +162,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-5"  style="margin-bottom: 10px">
+                        <div class="col-sm-5"  style="margin-bottom: 10px; margin-top: -10px;">
                                 <div class="form-group">
                                     <label  class="col-sm-3 control-label text-right">Term Pay</label>
 
@@ -186,7 +183,7 @@
                                 </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-7">
+                            <div class="col-sm-7" style="margin-top: -5px;">
                                 <div class="form-group">
                                     <label for="billname" class="col-sm-2 control-label text-right">Name</label>
                                     <div class="col-sm-10">
@@ -194,7 +191,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-5">
+                            <div class="col-sm-5" style="margin-top: -5px;">
                                 <div class="form-group">
                                     <label  class="col-sm-3 control-label text-right">Pay By</label>
                                     <div class="col-sm-4" style="width: 194px">
@@ -252,7 +249,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-7">
+                            <div class="col-sm-7" style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label for="address" class="col-sm-2 control-label text-right">Address</label>
                                     <div class="col-sm-10">
@@ -269,7 +266,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-5">
+                            <div class="col-sm-5" style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label  class="col-sm-3 control-label text-right" id="bankAcc">Bank Transfer</label>
                                     <div class="col-sm-3" style="width: 194px">
@@ -282,7 +279,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-5">
+                            <div class="col-sm-5" style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label  class="col-sm-3 control-label text-right"  id="tranDateText" >Transfer Date</label>
                                     <div class="col-sm-4" style="width: 194px">

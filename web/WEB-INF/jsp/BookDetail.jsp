@@ -136,7 +136,7 @@
                         </div>
 
                         <!--Agent Ref-->
-                        <div class="row"  style="margin-bottom: 10px">
+                        <div class="row"  style="margin-bottom: 10px; margin-top: -10px;">
                             <div class="col-sm-6">
                                 <label class="col-sm-3 control-label text-right">Agent Ref</label>
                                 <div class="col-sm-9">                             
@@ -156,7 +156,7 @@
                             </div>
                         </div>
                         <!--Family Leader-->            
-                        <div class="row" style="margin-bottom: 10px">
+                        <div class="row" style="margin-bottom: 10px; margin-top: -10px;">
                             <div class="col-sm-12">
                                 <label class="col-sm-2 control-label text-right" style="width: 127px">Family Leader</label>
                                 <div class="col-sm-2 form-group"> 
@@ -188,8 +188,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-
+                        <div class="row" style="margin-top: -10px;">
                             <div class="col-sm-12">
                                 <div class="">
                                     <label class="col-sm-2 control-label text-right" style="width: 127px">Address</label>
@@ -209,7 +208,7 @@
 
                         </div>
                         <!--Adult-->
-                        <div class="row">
+                        <div class="row" style="margin-top: -10px;">
                             <div class="col-sm-10">
                                 <c:choose>
                                     <c:when test="${param.action == 'new'}">

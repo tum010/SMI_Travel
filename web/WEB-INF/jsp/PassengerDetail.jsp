@@ -57,7 +57,7 @@
             <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
 
-            <div class="row" style="padding-left: 15px">  
+            <div class="row" style="padding-left: 15px; margin-top: -5px;">  
                 <div class="col-md-6">
                     <h4>Passenger</h4>
                 </div>
@@ -66,7 +66,7 @@
                         <span id="SpanBack" class="glyphicon glyphicon-arrow-left"></span> Back</a>
                 </div>
             </div>
-            <hr/>
+
             <script>
                 $(document).ready(function(){
                     $("#passengerIdVal").keyup(function(){
@@ -102,10 +102,10 @@
             <!--form-->
             <form id="PassengerForm" action="PassengerDetail.smi" method="post">
                 <div class="panel panel-default">
-                    <div class="panel-body">
+                    <div class="panel-body" style="padding-top: 0px;">
                         <div class="row-fluid"> 
                             <div class="padding5">
-                                <div class="form-group">
+                                <div class="form-group" style="margin-top: 0px;">
                                     <input type="hidden" id="existCode" value="${EXISTCODE}" placeholder="code_Exist" />
                                     <input type="hidden" class="form-control" id="customerId" placeholder="id" name="customerId" value="${passenger.getCustomer().getId()}" />
                                     <label for="Order" class="col-sm-2 text-right">Order</label>
@@ -113,7 +113,7 @@
                                         <input  value="${passenger.orderNo}" type="text" class="form-control" id="Order" placeholder="Order" name="orderNo" readonly="" />
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="margin-top: 0px;">
                                     <label for="" class="col-sm-3 text-right">Profile Code</label>
                                     <div class="col-sm-4">
                                         <div class="form-group">
@@ -131,7 +131,7 @@
                                 </div>
                             </div>
                             <div class="padding5">
-                                <div class="form-group">
+                                <div class="form-group" >
                                     <label for="" class="col-sm-2 text-right">Name <strong style="color: red">*</strong></label>
                                     <div class="col-sm-1">
 <!--                                        <select class="form-control" name="MInitialname" id="MInitialname">

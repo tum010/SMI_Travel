@@ -128,7 +128,7 @@
                     </div>
                 </div>
                 <div class="row form-group" >
-                    <div class="col-md-12">
+                    <div class="col-md-12" style="margin-top: -10px;">
                         <div class="col-md-2 text-right">
                             <label class="control-label">Passenger&nbsp;Tour</label>
                         </div>
@@ -185,13 +185,13 @@
                             </c:if>                            
                             <label class="control-label" for="CheckPay">Pay</label>
                         </div>
-                        <div class="col-md-1 " >
+                        <div class="col-md-1 " style="padding-top: 5px;">
                             <input type="checkbox" id="CheckPay" name="CheckPay"  ${checkedPay}>
                         </div>
                     </div>
                 </div>
                 <div class="row " >
-                    <div class="col-md-12 ">
+                    <div class="col-md-12 " style="margin-top: -10px;">
                         <div class="col-md-2 text-right">
                             <label class="control-label text-right" for="SelectPickUp">&nbsp;&nbsp;&nbsp;&nbsp;Pick&nbsp;Up<font style="color: red">*</font></label>
                         </div>
@@ -215,7 +215,7 @@
                     </div>
                 </div>
                 <div class="row form-group "  >
-                    <div class="col-md-12">
+                    <div class="col-md-12" style="margin-top: -10px;">
                         <div class="col-md-2 text-right">
                             <label class="control-label">Room</lable>
                         </div>
@@ -243,7 +243,7 @@
                     </div>
                 </div>            
                 <div class="row form-group"  >            
-                    <div class="col-md-12">
+                    <div class="col-md-12" style="margin-top: -10px;">
                         <div class="col-md-2 text-right">
                             <label class="control-label" for="TestareaRequirement">Requirement</label>
                         </div>

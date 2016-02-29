@@ -113,7 +113,7 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Air Ticket Detail</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" style="padding-bottom: 0px;">
                         <div class="row">
                             <div class="row">
                                 <div class="col-sm-6 form-group">
@@ -156,8 +156,8 @@
                                     </div>
                                 </div>
                             </div>  
-                            <div class="row">
-                                <div class="col-sm-6">
+                            <div class="row" >
+                                <div class="col-sm-6" style="margin-top: -10px;">
                                     <label class="col-sm-3 control-label text-right">Deadline</label>
                                     <div class="col-sm-4">                                      
                                         <div class="form-group">
@@ -185,7 +185,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-6" style="margin-top: -10px;">
                                     <label for="Adult" class="col-sm-3 control-label text-right">Re-Confirm</label>
                                     <div class="col-sm-9">  
                                         <input type="text" class="form-control" id="reconfirm" name="reconfirm" value="${booking.reConfirm}" maxlength="255"/>
@@ -197,11 +197,11 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" style="padding-left: 15px">  
-                    <div class="col-md-6">
+                <div class="row" style="padding-left: 15px;">  
+                    <div class="col-md-6" style="margin-top: -10px;">
                         <h4><b>PNR List</b></h4>
                     </div>
-                    <div class="col-md-5 text-right">
+                    <div class="col-md-5 text-right" style="margin-top: -10px;">
                         <a id="ButtonRefund" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${booking.id}&action=edit" class="btn btn-primary">
                             <span id="SpanRefund" class="glyphicon glyphicon-usd"></span> refund
                         </a>
@@ -209,7 +209,7 @@
                             <span id="SpanPrint" class="glyphicon glyphicon-print"></span> Print
                         </button>
                     </div>
-                    <div class="col-md-1 text-right">
+                    <div class="col-md-1 text-right" style="margin-top: -10px;">
                         <c:if test="${lockUnlockBooking == 0}">
                             <a id="ButtonAdd"  href="AirTicketDetail.smi?referenceNo=${param.referenceNo}&action=add" class="btn btn-success ${add_button}">
                                 <span id="SpanAdd" class="glyphicon glyphicon-plus"></span> Add
@@ -222,7 +222,6 @@
                         </c:if>                       
                     </div>
                 </div>
-                <hr/>
                 <!-- Air Table --> 
                 <div class="row-fluid">
                     <table  class="display" id="TableAir">

@@ -76,12 +76,12 @@
                 <strong>Save Unsuccess!</strong> 
             </div> 
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
-            <div class="row">
-                <div class="col-sm-6">
+            <div class="row" >
+                <div class="col-sm-6" style="margin-top: -5px;">
                     <h4>Hotel Detail</h4>
                 </div>
 
-                <div class="col-sm-6 text-right">
+                <div class="col-sm-6 text-right" style="margin-top: -5px;">
                     <div class="row-fluid">
 
                         <a id="ButtonBack" class="btn btn-primary" href="HotelBooking.smi?referenceNo=${param.referenceNo}">
@@ -90,15 +90,14 @@
                     </div>
                 </div>
             </div>
-            <hr/>
             <!--form-->
             <form action="HotelDetail.smi" method="post"  role="form" id="HotelForm">
                 <!--Detail Panal-->
                 <div class="panel panel-default">
                     <div class="panel-heading">Detail</div>
-                    <div class="panel-body">
+                    <div class="panel-body" style="padding-bottom: 0px;">
                         <div class="row">
-                            <div class="col-sm-4 form-group">
+                            <div class="col-sm-4 form-group" style="margin-top: -5px;">
                                 <label class="col-sm-5 control-label text-right">Order</label>
                                 <div class="col-sm-6">
                                     <c:if test="${param.Order == null}">
@@ -110,7 +109,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-4">
+                                <div class="col-sm-4" style="margin-top: -5px;">
                                     <label class="col-sm-5 control-label text-right">Hotel <strong style="color: red">*</strong></label>
                                     <div class="col-sm-6">
                                         <div class="input-group">
@@ -123,7 +122,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-4" style="margin-top: -5px;">
                                     <div class="col-sm-12">
                                         <input name="hotelName" id="hotel-name" class="form-control" value="${hotelBooking.hotel.getName()}" readonly=""
                                                data-bv-notempty="true" data-bv-notempty-message="Hotel empty !">
@@ -132,7 +131,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-4 form-group">
+                            <div class="col-sm-4 form-group" style="margin-top: -10px;">
                                 <label class="col-sm-5 control-label text-right">Check In <strong style="color: red">*</strong></label>
                                 <div class="col-sm-6">
                                     <div class='input-group date'>
@@ -142,7 +141,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4 form-group">
+                            <div class="col-sm-4 form-group" style="margin-top: -10px;">
                                 <label class="col-sm-5 control-label text-right">Check Out <strong style="color: red">*</strong></label>
                                 <div class="col-sm-6">
                                     <div class='input-group date'>
@@ -152,7 +151,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4" style="margin-top: -10px;">
                                 <label class="col-sm-4 control-label text-right">Night</label>
                                 <div class="col-sm-8">
                                     <input name="day" id="day" class="form-control" disabled="">
@@ -160,7 +159,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-4" style="margin-top: -10px;">
                                 <label class="col-sm-5 control-label text-right">Meal</label>
                                 <div class="col-sm-6">
                                     <input value="${hotelBooking.getMMeal().getName()}" id="get-meal" type="hidden">
@@ -171,7 +170,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-4 form-group">
+                            <div class="col-sm-4 form-group" style="margin-top: -10px;">
                                 <label class="col-sm-5 control-label text-right">Deadline</label>
                                 <div class="col-sm-6">
                                     <div class="input-group date">
@@ -181,7 +180,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4" style="margin-top: -10px;">
                                 <!--<label class="col-sm-4 control-label text-right">Status</label>-->
                                 <div class="col-sm-8 hidden">
                                     <input value="${hotelBooking.getMItemstatus().getName()}" id="get-itemstatus" type="hidden">
@@ -200,19 +199,19 @@
                         <div class="row">
                             <c:choose>
                                 <c:when test="${param.action == 'new'}">
-                                    <div class="col-sm-4 form-group">
+                                    <div class="col-sm-4 form-group" style="margin-top: -10px;">
                                         <label class="col-sm-5 control-label text-right">Adult<strong style="color: red">*</strong></label>
                                         <div class="col-sm-3">
                                             <input name="adult" type="number" min="0" id="adult" class="form-control" value="${master.adult}" maxlength="11">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2 form-group" style="margin-left: -125px">
+                                    <div class="col-sm-2 form-group" style="margin-left: -125px; margin-top: -10px;">
                                         <label class="col-sm-4 control-label text-right">Child<strong style="color: red">*</strong></label>
                                         <div class="col-sm-7">
                                             <input name="child" id="child" type="number" min="0" class="form-control" value="${master.child}" maxlength="11">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2 form-group">
+                                    <div class="col-sm-2 form-group" style="margin-top: -10px;">
                                         <label class="col-sm-4 control-label text-right">Infant<strong style="color: red">*</strong></label>
                                         <div class="col-sm-7">
                                             <input name="infant" type="number" min="0" id="infant" class="form-control" value="${master.infant}" maxlength="11">
@@ -220,19 +219,19 @@
                                     </div>
                                 </c:when>
                                 <c:otherwise>
-                                    <div class="col-sm-4 form-group">
+                                    <div class="col-sm-4 form-group" style="margin-top: -10px;">
                                         <label class="col-sm-5 control-label text-right">Adult<strong style="color: red">*</strong></label>
                                         <div class="col-sm-3">
                                             <input name="adult" type="number" min="0" id="adult" class="form-control" value="${hotelBooking.adult}" maxlength="11">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2 form-group" style="margin-left: -125px">
+                                    <div class="col-sm-2 form-group" style="margin-left: -125px; margin-top: -10px;">
                                         <label class="col-sm-4 control-label text-right">Child<strong style="color: red">*</strong></label>
                                         <div class="col-sm-7">
                                             <input name="child" id="child" type="number" min="0" class="form-control" value="${hotelBooking.child}" maxlength="11">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2 form-group">
+                                    <div class="col-sm-2 form-group" style="margin-top: -10px;">
                                         <label class="col-sm-4 control-label text-right">Infant<strong style="color: red">*</strong></label>
                                         <div class="col-sm-7">
                                             <input name="infant" type="number" min="0" id="infant" class="form-control" value="${hotelBooking.infant}" maxlength="11">
@@ -241,13 +240,13 @@
                                 </c:otherwise>
                             </c:choose>
 
-                            <div class="col-sm-2">
+                            <div class="col-sm-2" style="margin-top: -10px;">
                                 <label class="col-sm-4 control-label text-right">Sum</label>
                                 <div class="col-sm-7">
                                     <input name="Sum"  type="number" min="0" id="sum" class="form-control" disabled="">
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-3" style="margin-top: -10px;">
                                 <label class="col-sm-3 control-label text-right">Flight</label>
                                 <div class="col-sm-9">
                                     <input class="form-control" maxlength="20" id="Flight" name="Flight" value="${hotelBooking.flight}" style="width: 180px;">
@@ -255,7 +254,7 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-sm-4">
+                            <div class="col-sm-4" style="margin-top: -10px;">
                                 <label class="col-sm-5 control-label text-right">Cost Currency</label>
                                 <div class="col-sm-6">
                                     <select id="select-currencycost" name="select-currencycost" class="form-control">
@@ -270,7 +269,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4" style="margin-top: -10px;">
                                 <label class="col-sm-5 control-label text-right">Price Currency</label>
                                 <div class="col-sm-6">
                                     <select id="select-currency" name="select-currency" class="form-control">
@@ -285,7 +284,7 @@
                                 </select>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4" style="margin-top: -10px;"> 
                                 <label class="col-sm-4 control-label text-right">Supplier</label>
                                 <div class="col-sm-6">
                                     <input class="form-control" type="text" maxlength="" id="Supplier" name="Supplier" 
@@ -294,7 +293,7 @@
                             </div>
                         </div>
                         <div class="row form-group">
-                            <div class="col-sm-12">
+                            <div class="col-sm-12" style="margin-top: -10px;">
                                 <label class="col-sm-1 control-label text-right"  style="margin-left: 45px;">Remarks</label>
                                 <div class="col-sm-4" style="width: 56.5%;">
                                     <input id="remark" name="remark" class="form-control" value="${hotelBooking.remark}" maxlength="100">

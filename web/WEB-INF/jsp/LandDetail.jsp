@@ -264,11 +264,11 @@
             <input type="hidden" id="requestLock" name="requestLock" value="${lockUnlockBooking}"/>
             <form  id="landForm" action="LandDetail.smi" method="post" role="form" class="form-horizontal">
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" style="margin-top: -5px;">
                         <h4>Booking Land Detail</h4>
                     </div>
 
-                    <div class="col-sm-9 text-right">
+                    <div class="col-sm-9 text-right" style="margin-top: -5px;">
                         <a class="btn btn-primary" href="Land.smi?referenceNo=${param.referenceNo}"><i class="glyphicon glyphicon-chevron-left"></i> Back</a>
                     </div>
                 </div>
@@ -280,11 +280,9 @@
                     </div>
 
 
-                    <div class="panel-body">
-
-
+                    <div class="panel-body" style="padding-bottom: 0px;">
                         <div class="row">
-                            <div class="col-sm-6" style="padding-left: 21px">
+                            <div class="col-sm-6" style="padding-left: 21px; margin-top: -5px;">
                                 <label  class="col-sm-3 control-label" >Agent<font style="color: red">*</font></label>
                                 <div class="col-sm-3">  
                                     <div class="form-group">
@@ -301,7 +299,7 @@
                                     <input type="text" class="form-control" id="agent_name" readonly="" name="agent_name" value='${requestScope['agent_name']}'>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="margin-top: -5px;">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label" for="nameProduct" style="width: 130px">Category</label>
                                     <div class="col-sm-7">
@@ -309,10 +307,9 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>    
                         <div class="row">
-                            <div class="col-md-6 ">
+                            <div class="col-md-6 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label style="margin-left: 8px" class="col-sm-3 control-label" for="nameProduct">OK by</label>
                                     <div class="col-sm-8"  style="width: 377px;margin-left: -12px">
@@ -321,7 +318,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label  class="col-sm-3 control-label" for="nameProduct" style="width: 130px">Description</label>
                                     <div class="col-sm-7">
@@ -334,25 +331,25 @@
                         <c:choose>
                             <c:when test="${booktype == 'i'}">
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    <div class="col-md-3" style="margin-top: -10px;">
                                         <div class="form-group" style="padding-left: 30px">
                                             <label class="col-sm-3 col-md-offset-7 control-label" for="nameProduct">Cost</label>
 
                                         </div>
                                     </div>
-                                    <div class="col-md-1 " style="padding-left: 30px" >
+                                    <div class="col-md-1 " style="padding-left: 30px; margin-top: -10px;" >
                                         <div class="form-group">
                                             <label class="col-sm-3  control-label"  for="nameProduct">Qty</label>
 
                                         </div>
                                     </div>
-                                    <div class="col-md-2 " style="padding-left: 45px">
+                                    <div class="col-md-2 " style="padding-left: 45px; margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="col-sm-1  control-label"  for="nameProduct">Price</label>
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="margin-top: -10px;">
                                         <div class="form-group">
                                         <label class="col-sm-3 control-label" style="width: 130px">Hotel</label>
                                         <div class="col-sm-7">                             
@@ -383,7 +380,7 @@
                                     </div>
                                 </div> -->
                                 <div class="row">
-                                    <div class="col-md-6 " >
+                                    <div class="col-md-6 " style="margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Adult</label>
                                             <div class="col-sm-3">
@@ -397,7 +394,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="margin-top: -10px;">
                                         <div class="form-group">
                                         <label class="col-sm-3 control-label" style="width: 130px">Cost Currency</label>
                                             <div class="col-sm-4">                             
@@ -416,7 +413,7 @@
                                 </div>
                                             
                                 <div class="row">                                   
-                                    <div class="col-md-6 " >
+                                    <div class="col-md-6 " style="margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Child</label>
                                             <div class="col-sm-3">
@@ -430,7 +427,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" style="width: 130px">Price Currency</label>
                                             <div class="col-sm-4">                             
@@ -449,7 +446,7 @@
                                 </div>
                                 <div class="row">
                                  
-                                    <div class="col-md-6 " >
+                                    <div class="col-md-6 " style="margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Infant</label>
                                             <div class="col-sm-3">
@@ -469,7 +466,7 @@
                             </c:when>
                             <c:when test="${booktype == 'o'}">
                                 <div class="row">
-                                    <div class="col-sm-6" style="padding-left: 18px">
+                                    <div class="col-sm-6" style="padding-left: 18px; margin-top: -10px;">
                                         <label   class="col-sm-3 control-label" >Package</label>
                                         <div class="col-sm-3">  
                                             <div class="form-group">
@@ -486,7 +483,7 @@
                                             <input type="text" class="form-control" id="Product_name" readonly name="Product_name" value="${requestScope['Product_name']}">
                                         </div>
                                     </div>
-                                    <div class="col-md-6 ">
+                                    <div class="col-md-6 " style="margin-top: -10px;">
                                         <div class="form-group">                                           
                                             <label for="effectivefrom" class="col-sm-3 control-label"> Depart Date </label>
                                             <div class=' col-sm-4 input-group datepicker' id='effectivefromClass' style="padding-left: 15px">
@@ -500,25 +497,25 @@
                                         </div>
                                     </div>    
                                     
-                                    <div class="col-md-3 " >
+                                    <div class="col-md-3 " style="margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="col-sm-3 col-md-offset-7 control-label" for="nameProduct">Cost</label>
 
                                         </div>
                                     </div>
-                                    <div class="col-md-1 " style="padding-left: 30px" >
+                                    <div class="col-md-1 " style="padding-left: 30px; margin-top: -10px;" >
                                         <div class="form-group">
                                             <label class="col-sm-3  control-label"  for="nameProduct">Qty</label>
 
                                         </div>
                                     </div>
-                                    <div class="col-md-2 " style="padding-left: 45px">
+                                    <div class="col-md-2 " style="padding-left: 45px; margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="col-sm-1  control-label"  for="nameProduct">Price</label>
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 " >
+                                    <div class="col-md-6 " style="margin-top: -10px;">
                                         <div class="form-group">
                                             
                                             <label for="effectivefrom" class="col-sm-3 control-label" > Arrive Date </label>
@@ -533,7 +530,7 @@
                                 </div>
                                         
                                 <div class="row">
-                                    <div class="col-md-6 " >
+                                    <div class="col-md-6 " style="margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Adult</label>
                                             <div class="col-sm-3">
@@ -547,7 +544,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="margin-top: -10px;">
                                         <div class="form-group">
                                         <label class="col-sm-3 control-label" style="width: 130px">Cost Currency</label>
                                             <div class="col-sm-4">                             
@@ -566,7 +563,7 @@
                                 </div>
                                             
                                 <div class="row">
-                                    <div class="col-md-6 " >
+                                    <div class="col-md-6 " style="margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Child</label>
                                             <div class="col-sm-3">
@@ -580,7 +577,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" style="width: 130px">Price Currency</label>
                                             <div class="col-sm-4">                             
@@ -601,7 +598,7 @@
                                 </div>
                                             
                                 <div class="row">
-                                    <div class="col-md-6 " >
+                                    <div class="col-md-6 " style="margin-top: -10px;">
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="nameProduct">Infant</label>
                                             <div class="col-sm-3">
@@ -615,7 +612,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                              <div class="col-md-6 " > 
+                                    <div class="col-md-6 " style="margin-top: -10px;"> 
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label" for="remark">Remark</label>
                                             <div class="col-sm-7" >
@@ -632,16 +629,14 @@
                 </div>
 
                 <div class="row"> 
-                    <div class="col-md-6 " style="padding-right: 15px">
+                    <div class="col-md-6 " style="padding-right: 15px; margin-top: -10px;">
                         <h4><b>Itinerary</b> </h4>
                     </div>
                     <c:if test="${booktype == 'i'}">
-                    <div class="col-sm-6 text-right">
+                    <div class="col-sm-6 text-right" style="margin-top: -10px;">
                         <button type="button" id="reloadPack"  onclick="reloadPackage();" class="btn btn-primary "><span class="fa fa-long-arrow-down"></span> Reload</button>
                     </div>
-                    </c:if>
-
-                        
+                    </c:if>                       
                 </div>
                 
                 <style>

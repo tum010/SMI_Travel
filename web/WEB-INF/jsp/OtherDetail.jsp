@@ -130,13 +130,13 @@
                     </c:choose>                                                                       
                 </div>
             </div>
-            <hr/>
+
             <div class="panel panel-default">
                 <div class="panel-heading">Detail</div>
                 <div class="panel-body">
                     
                         <div class="row">
-                            <div class="col-sm-6" style="padding-left: 70px">
+                            <div class="col-sm-6" style="padding-left: 70px; margin-top: -5px;">
                                 <label  class="col-sm-2 control-label" >Product<font style="color: red">*</font></label>
                                 <div class="col-sm-3">  
                                     <div class="form-group">
@@ -155,7 +155,7 @@
                                     <input type="text" class="form-control" style="width: 250px" id="product_name" name="product_name" value="${requestScope['product_name']}" readonly="">
                                 </div>
                             </div>
-                            <div class="col-md-3 ">
+                            <div class="col-md-3 " style="margin-top: -5px;">
                                 <div class="form-group">
 
                                     <label for="effectivefrom" class="col-sm-3 control-label" > From </label>
@@ -169,7 +169,7 @@
                                         <input type='hidden' class="form-control"  id="checkdate" name="checkdate" data-date-format="YYYY-MM-DD" value="${requestScope['otherdate']}"/>                                                                              
                                 </div>
                             </div>
-                            <div class="col-md-3 ">
+                            <div class="col-md-3 " style="margin-top: -5px;">
                                 <div class="form-group">
                                     <a class="btn btn-primary" id="btnCheckStock" onclick="showStock()"><i class="glyphicon "></i> Check Stock</a>
                                 </div>
@@ -177,7 +177,7 @@
                         </div>
                                 
                         <div class="row">
-                             <div class="col-sm-6" style="padding-left: 70px">
+                             <div class="col-sm-6" style="padding-left: 70px; margin-top: -10px;">
                                 <label  class="col-sm-2 control-label" >Agent</label>
                                 <div class="col-sm-3">  
                                     <div class="form-group">
@@ -194,7 +194,7 @@
                                     <input type="text" class="form-control" style="width: 250px" id="agent_name" name="agent_name" value="${requestScope['agent_name']}" readonly="">
                                 </div>
                             </div>
-                            <div class="col-md-3 ">
+                            <div class="col-md-3 " style="margin-top: -10px;">
                                 <div class="form-group">
 
                                     <label for="effectivefrom" class="col-sm-3 control-label" > To </label>
@@ -209,13 +209,13 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-sm-3 col-xs-offset-1">
+                            <div class="col-sm-3 col-xs-offset-1" style="margin-top: -10px;">
                                 <label  class="col-sm-2 col-xs-offset-1 control-label text-right" style="width: 130px">Cost</label>
                             </div>
-                            <div class="col-sm-1">
+                            <div class="col-sm-1" style="margin-top: -10px;">
                                 <label  class="col-sm-2 control-label text-right" style="width: 130px">Qty</label>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-3" style="margin-top: -10px;">
                                 <label  class="col-sm-2  control-label text-right" style="width: 130px">Price</label>
                             </div>
                         </div>
@@ -270,7 +270,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-xs-offset-1">
+                            <div class="col-md-3 col-xs-offset-1" style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label class="col-sm-2   control-label" for="cost">Child</label>
                                     <div class="col-sm-10">
@@ -278,14 +278,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-1 ">
+                            <div class="col-md-1 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
                                         <input type="text" class="form-control money" id="ch_qty" name="ch_qty" value="${requestScope['ch_qty']}" >  
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 ">
+                            <div class="col-md-3 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control money" id="ch_price" name="ch_price" value="${requestScope['ch_price']}" >  
@@ -293,7 +293,7 @@
                                 </div>
                             </div>
                                     
-                           <div class="col-md-3" >
+                           <div class="col-md-3" style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label class="col-sm-3   control-label" for="cost" style="width: 130px">Price Currency</label>
                                     <input type="hidden" class="form-control" id="selectedCurrency" name="selectedCurrency" value="${requestScope['currency']}" >                                   
@@ -312,14 +312,11 @@
                                         <label class="control-label"><input onclick='calculateVatvalue();' type="checkbox" id="Vat" name="Vat" ${enableVat} ${checkVat}>  Vat</label>
                                     </div>
                                 </div>
-                            </div>         
-                                    
-                                    
-
+                            </div>                                                                               
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 col-xs-offset-1">
+                            <div class="col-md-3 col-xs-offset-1" style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label class="col-sm-2   control-label" for="cost">Infant</label>
                                     <div class="col-sm-10">
@@ -327,21 +324,21 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-1 ">
+                            <div class="col-md-1 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
                                         <input type="text" class="form-control money" id="in_qty" name="in_qty"  value="${requestScope['in_qty']}">  
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 ">
+                            <div class="col-md-3 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control money" id="in_price" name="in_price" value="${requestScope['in_price']}" >  
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3" >
+                            <div class="col-md-3" style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label class="col-sm-3   control-label" for="cost" >Time</label>
                                     <div class='col-sm-7 input-group times' style="padding-left: 20px;width: 157px" id="arrive-time">
@@ -351,23 +348,20 @@
                                         </span>
                                     </div>
                                 </div>
-                            </div>
-                                  
+                            </div>                                  
                         </div> 
 
                         <div class="row">
-
-                            <div class="col-md-6 ">
+                            <div class="col-md-6 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label text-right"  for="fromdes">Remark</label>
                                     <div class="col-sm-9">  
-
                                         <textarea class="form-control" maxlength="100" rows="3" id="remark" name="remark">${requestScope['remark']}</textarea>
                                     </div>   
                                 </div>
                             </div>   
-                            <div class="col-md-2 "></div>      
-                            <div class="col-md-3">
+                            <div class="col-md-2" ></div>      
+                            <div class="col-md-3" style="margin-top: -10px;">
                                 <div class="form-group">
                                     <label class="col-sm-3   control-label" for="cost">Cancel</label>
                                     <div class='col-sm-7 input-group date' style="padding-left: 20px;width: 157px" id="arrive-time">
