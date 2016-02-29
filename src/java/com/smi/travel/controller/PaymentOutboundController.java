@@ -232,15 +232,21 @@ public class PaymentOutboundController extends SMITravelController {
                 paymentOutboundDetail.setValue(!"".equalsIgnoreCase(value) && value != null ? new BigDecimal(value.replaceAll(",", "")) : null);
                 paymentOutboundDetail.setSaleCurrency(!"".equalsIgnoreCase(saleCurrency) && saleCurrency != null ? saleCurrency : "");
                 
-                Master master = paymentTourHotelService.getMasterFromRefno(refNo);
-                paymentOutboundDetail.setMaster(master != null ? master : null);
+                if(!"".equalsIgnoreCase(refNo) && refNo != null){
+                    Master master = paymentTourHotelService.getMasterFromRefno(refNo);
+                    paymentOutboundDetail.setMaster(master != null ? master : null);
+                }
                 
-                MPaytype mpayType = paymentTourHotelService.getMPayTypeFromPayTypeId(type);
-                paymentOutboundDetail.setMPaytype(mpayType != null ? mpayType : null);
-                paymentOutboundDetail.setAccCode(mpayType != null && !"".equalsIgnoreCase(mpayType.getAccCode()) ? mpayType.getAccCode() : "");
+                if(!"".equalsIgnoreCase(type) && type != null){
+                    MPaytype mpayType = paymentTourHotelService.getMPayTypeFromPayTypeId(type);
+                    paymentOutboundDetail.setMPaytype(mpayType != null ? mpayType : null);
+                    paymentOutboundDetail.setAccCode(mpayType != null && !"".equalsIgnoreCase(mpayType.getAccCode()) ? mpayType.getAccCode() : "");
+                }                
                 
-                PaymentStock paymentStock = paymentTourHotelService.getPaymentStockFromPayStockNo(payStock);
-                paymentOutboundDetail.setPaymentStock(paymentStock != null ? paymentStock : null);             
+                if(!"".equalsIgnoreCase(payStock) && payStock != null){
+                    PaymentStock paymentStock = paymentTourHotelService.getPaymentStockFromPayStockNo(payStock);
+                    paymentOutboundDetail.setPaymentStock(paymentStock != null ? paymentStock : null);             
+                }               
                 
                 paymentOutboundDetail.setPaymentOutbound(paymentOutbound);
                 paymentOutbound.getPaymentOutboundDetails().add(paymentOutboundDetail);
