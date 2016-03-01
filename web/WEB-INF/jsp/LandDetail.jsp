@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--test-->
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
 
 <c:set var="currencyList" value="${requestScope['CurrencyList']}" />
@@ -680,8 +681,8 @@
                                     <tr>
                                         <td class="hidden"> <input  type="hidden" id="cityId${Counter.count}" name="cityId${Counter.count}" value="${landCity.id}">  </td>
                                         <td class="text-center" id="cityNo${Counter.count}">${Counter.count}</td>
-                                        <td> 
-                                            <select class="form-control" name="city${Counter.count}" id="city${Counter.count}" onchange="addRowCityTableBySelect('${Counter.count}')">
+                                        <td class="row">
+                                            <select class="form-control selectize" name="city${Counter.count}" id="city${Counter.count}" onchange="addRowCityTableBySelect('${Counter.count}')">
                                                 <option  value="" >---------</option>
                                                 <c:forEach var="mCity" items="${mCity_list}" varStatus="status">                                       
                                                     <c:set var="select" value="" />
@@ -690,7 +691,7 @@
                                                     </c:if>
                                                     <option  value="${mCity.id}" ${select}>${mCity.name}</option>
                                                 </c:forEach>
-                                            </select>      
+                                            </select>
                                         </td>                                     
                                         <td class="text-center">
                                             <c:if test="${lockUnlockBooking == 0}">
@@ -840,7 +841,7 @@
     </div>
 </div>
 
-<select class="form-control hidden" name="cityTemp" id="cityTemp">
+<select class="form-control selectize hidden" name="cityTemp" id="cityTemp">
     <c:forEach var="mCity" items="${mCity_list}" varStatus="status">                                              
         <option  value="${mCity.id}">${mCity.name}</option>
     </c:forEach>
@@ -1055,9 +1056,37 @@
             '</center>' +
             '</td>' +
             '</tr>'
-        );
+        );      
         
         $("#cityTemp option").clone().appendTo("#city" + row);
+        Selectize.define('clear_selection', function(options) {
+            var self = this;
+            self.plugins.settings.dropdown_header = {
+                title: 'Clear Selection'
+            };
+            this.require('dropdown_header');
+            self.setup = (function() {
+                var original = self.setup;
+                return function() {
+                    original.apply(this, arguments);
+                    this.$dropdown.on('mousedown', '.selectize-dropdown-header', function(e) {
+                        self.setValue('');
+                        self.close();
+                        self.blur();
+                        return false;
+                    });
+                };
+            })();
+        });
+        $("#city" + row).selectize({
+            removeItem: '',
+            sortField: 'text',
+            create: false,
+            dropdownParent: 'body',
+            plugins: {
+                'clear_selection': {}
+            }
+        });
         $("#cityCount").val(row + 1);       
         
         var countNo = parseInt($("#cityCount").val());
@@ -1170,7 +1199,40 @@ $('#savereal').on("keyup keypress", function(e) {
         });
         
         <c:if test="${booktype == 'o'}">
-            //Add row table receive 
+            //Add row table receive
+            if(parseInt($("#cityCount").val()) > 0){
+                var countCity = parseInt($("#cityCount").val());
+                for(var i=1; i<=countCity; i++){
+                    Selectize.define('clear_selection', function(options) {
+                        var self = this;
+                        self.plugins.settings.dropdown_header = {
+                            title: 'Clear Selection'
+                        };
+                        this.require('dropdown_header');
+                        self.setup = (function() {
+                            var original = self.setup;
+                            return function() {
+                                original.apply(this, arguments);
+                                this.$dropdown.on('mousedown', '.selectize-dropdown-header', function(e) {
+                                    self.setValue('');
+                                    self.close();
+                                    self.blur();
+                                    return false;
+                                });
+                            };
+                        })();
+                    });
+                    $("#city" + i).selectize({
+                        removeItem: '',
+                        sortField: 'text',
+                        create: false,
+                        dropdownParent: 'body',
+                        plugins: {
+                            'clear_selection': {}
+                        }
+                    });
+                }
+            }
             var rowCityTable = $("#cityTable tr").length;
             addRowCityTable(rowCityTable);
             $("#cityTable").on("keyup", function() {
