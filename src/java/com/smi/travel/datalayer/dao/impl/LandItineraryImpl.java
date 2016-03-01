@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.LandItineraryDao;
+import com.smi.travel.datalayer.entity.LandCity;
 import com.smi.travel.datalayer.entity.LandItinerary;
 import java.util.List;
 import org.hibernate.Session;
@@ -82,7 +83,17 @@ public class LandItineraryImpl implements LandItineraryDao{
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-    
-    
-    
+
+    @Override
+    public List<LandCity> getListLandCity(String landID) {
+        String query = "from LandCity l where l.landBooking.id = :landID ";
+        Session session = this.sessionFactory.openSession();
+        List<LandCity> landCityList = session.createQuery(query).setParameter("landID", landID).list();
+        if (landCityList.isEmpty()) {
+            return null;
+        }
+        session.close();
+        return landCityList;
+    }
+            
 }

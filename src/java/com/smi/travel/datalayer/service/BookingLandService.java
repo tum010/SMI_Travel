@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.dao.LandBookingDao;
 import com.smi.travel.datalayer.dao.LandItineraryDao;
 import com.smi.travel.datalayer.dao.MListItemDao;
 import com.smi.travel.datalayer.entity.LandBooking;
+import com.smi.travel.datalayer.entity.LandCity;
 import com.smi.travel.datalayer.entity.LandItinerary;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.PackageTour;
@@ -48,11 +49,10 @@ public class BookingLandService {
         return landbookingdao.getListLandPackage();
     }
 
-    public int saveBookDetailLand(LandBooking land, String Itenarary, String DelItenarary, String BookType) {
+    public int saveBookDetailLand(LandBooking land, String Itenarary, String DelItenarary, String BookType, String delCity) {
         int result = 0;
         List<LandItinerary> data = MappingListLandItinerary(Itenarary, BookType);
        
-
         if (land.getId() == null) {
                MItemstatus status = new MItemstatus();
                land.setMItemstatus(status);
@@ -60,7 +60,7 @@ public class BookingLandService {
                land.setIsBill(0);
                result = landbookingdao.insertBookDetailLand(land,data);
         } else {
-               result = landbookingdao.updateBookDetailLand(land,data,DelItenarary);
+               result = landbookingdao.updateBookDetailLand(land,data,DelItenarary,delCity);
         }
 
         return result;
@@ -157,6 +157,10 @@ public class BookingLandService {
 
     public void setListItemdao(MListItemDao listItemdao) {
         this.listItemdao = listItemdao;
+    }
+
+    public List<LandCity> getListLandCity(String landID) {
+        return landItinerarydao.getListLandCity(landID);
     }
 
 }

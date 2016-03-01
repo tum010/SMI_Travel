@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--test-->
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
 
 <c:set var="currencyList" value="${requestScope['CurrencyList']}" />
@@ -13,13 +14,16 @@
 <c:set var="product_list" value="${requestScope['product_list']}" />
 <c:set var="agent_list" value="${requestScope['agent_list']}" />
 <c:set var="itinerary_list" value="${requestScope['itinerary_list']}" />
+<c:set var="landCity_list" value="${requestScope['landCity_list']}" />
 <c:set var="package_list" value="${requestScope['package_list']}" />
 <c:set var="itinerarycount" value="${requestScope['itinerarycount']}" />
+<c:set var="cityCount" value="${requestScope['cityCount']}" />
 <c:set var="master" value="${requestScope['Master']}" />
 <c:set var="refno1" value="${fn:substring(param.referenceNo, 0, 2)}" />
 <c:set var="refno2" value="${fn:substring(param.referenceNo, 2,7)}" />
 <c:set var="lockUnlockBooking" value="${requestScope['LockUnlockBooking']}" />
 <c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
+<c:set var="mCity_list" value="${requestScope['mCity_list']}" />
 <input type="hidden" value="${refno1}-${refno2}" id="getUrl">
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
@@ -197,6 +201,35 @@
 
             function deletelist(id) {
                 document.getElementById('DelItenarary').value += id + ',';
+            }
+            
+            function deleteCityTable(id,row) {
+                if(id !== ''){
+                    document.getElementById('delCity').value += id + ',';
+                }
+                $("#city" + row).parent().parent().remove();
+                var countNo = parseInt($("#cityCount").val());               
+                for(var i=1; i<countNo; i++){
+                    var cityNo = $("#cityNo"+i).val();
+                    if(cityNo !== undefined){
+                        $("#cityNo"+i).html('');
+                    }
+                }
+                var count = 1;
+                for(var i=1; i<countNo; i++){
+                    var cityNo = $("#cityNo"+i).val();
+                    if(cityNo !== undefined){
+                        $("#cityNo"+i).html(count);
+                        count++;
+                    }
+                }
+                
+                var cityCount = parseInt($("#cityCount").val());
+                $("#cityCount").val(cityCount+1);
+                var rowAll = $("#cityTable tr").length;
+                if (rowAll <= 1) {
+                    addRowCityTable(cityCount);
+                }
             }
 
             function readdata() {
@@ -625,8 +658,62 @@
                             </c:when>
                         </c:choose>
                     </div>           
-
                 </div>
+                                    
+                <c:if test="${booktype == 'o'}">
+                    <div class="row">
+                        <div class="col-md-6 " style="padding-right: 15px; margin-top: -10px;">
+                            <h4><b>City</b> </h4>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-left: 10px; padding-right: 0px;">
+                        <div class="col-sm-7" style="padding-left: 0px;">
+                        <table id="cityTable" class="display" cellspacing="0"  >
+                            <thead>
+                                <tr class="datatable-header">
+                                    <th style="width: 7%;">No</th>
+                                    <th style="width: 83%;">City</th>
+                                    <th style="width: 10%;">Action </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="landCity" items="${landCity_list}" varStatus="Counter">
+                                    <tr>
+                                        <td class="hidden"> <input  type="hidden" id="cityId${Counter.count}" name="cityId${Counter.count}" value="${landCity.id}">  </td>
+                                        <td class="text-center" id="cityNo${Counter.count}">${Counter.count}</td>
+                                        <td class="row">
+                                            <select class="form-control selectize" name="city${Counter.count}" id="city${Counter.count}" onchange="addRowCityTableBySelect('${Counter.count}')">
+                                                <option  value="" >---------</option>
+                                                <c:forEach var="mCity" items="${mCity_list}" varStatus="status">                                       
+                                                    <c:set var="select" value="" />
+                                                    <c:if test="${mCity.id == landCity.MCity.id}">
+                                                        <c:set var="select" value="selected" />
+                                                    </c:if>
+                                                    <option  value="${mCity.id}" ${select}>${mCity.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </td>                                     
+                                        <td class="text-center">
+                                            <c:if test="${lockUnlockBooking == 0}">
+                                                <c:if test="${isBillStatus == 0}">
+                                                    <a class="remCF"><span  onclick="deleteCityTable('${landCity.id}','${Counter.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                                </c:if>
+                                                <c:if test="${isBillStatus == 1}">
+                                                    <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                                </c:if>
+                                            </c:if>
+                                            <c:if test="${lockUnlockBooking == 1}">
+                                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
+                                            </c:if>
+                                        </td>
+                                    </tr>                       
+                                </c:forEach>     
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    <br>
+                </c:if>
 
                 <div class="row"> 
                     <div class="col-md-6 " style="padding-right: 15px; margin-top: -10px;">
@@ -718,6 +805,10 @@
                 <input type="hidden" class="form-control" id="itemid" name="landid" value="${requestScope['landid']}">
                 <input type="hidden" value="${param.referenceNo}" id="refno" name="referenceNo">
                 <input type="hidden" class="form-control" id="status" name="status" value="${requestScope['status']}">
+                <c:if test="${booktype == 'o'}">
+                    <input type="hidden"  id="cityCount" name="cityCount" value="${cityCount}" />
+                    <input type="hidden" class="form-control" name="delCity" id="delCity" value="">  
+                </c:if>
                 <div class="text-center" style="padding-top: 10px">
                     <c:choose>
                         <c:when test="${requestScope['status'] == 2}">
@@ -749,7 +840,12 @@
         </div>  
     </div>
 </div>
-                
+
+<select class="form-control selectize hidden" name="cityTemp" id="cityTemp">
+    <c:forEach var="mCity" items="${mCity_list}" varStatus="status">                                              
+        <option  value="${mCity.id}">${mCity.name}</option>
+    </c:forEach>
+</select>
 
 <div class="modal fade" id="ProductModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -943,6 +1039,80 @@
         $("#counter").val(tempCount);
     }
     
+    function addRowCityTable(row){
+        if (!row) {
+            row = 1;
+        }              
+        $("#cityTable tbody").append(
+            '<tr>' +           
+            '<td class="hidden"><input class="form-control" type="text" id="cityId' + row + '" name="cityId' + row + '" value=""></td>' +
+            '<td class="text-center" id="cityNo' + row + '"></td>' +
+            '<td><select class="form-control" name="city' + row + '" id="city' + row + '" onchange="addRowCityTableBySelect(\'' + row + '\')"><option  value="" ></option></select></td>' +
+            '<td>' +
+            '<center>' +
+            '<a class="remCF">' +
+            '<span class="glyphicon glyphicon-remove deleteicon" onclick="deleteCityTable(\'\',\'' + row + '\')"></span>' +
+            '</a>' +
+            '</center>' +
+            '</td>' +
+            '</tr>'
+        );      
+        
+        $("#cityTemp option").clone().appendTo("#city" + row);
+        Selectize.define('clear_selection', function(options) {
+            var self = this;
+            self.plugins.settings.dropdown_header = {
+                title: 'Clear Selection'
+            };
+            this.require('dropdown_header');
+            self.setup = (function() {
+                var original = self.setup;
+                return function() {
+                    original.apply(this, arguments);
+                    this.$dropdown.on('mousedown', '.selectize-dropdown-header', function(e) {
+                        self.setValue('');
+                        self.close();
+                        self.blur();
+                        return false;
+                    });
+                };
+            })();
+        });
+        $("#city" + row).selectize({
+            removeItem: '',
+            sortField: 'text',
+            create: false,
+            dropdownParent: 'body',
+            plugins: {
+                'clear_selection': {}
+            }
+        });
+        $("#cityCount").val(row + 1);       
+        
+        var countNo = parseInt($("#cityCount").val());
+        for(var i=1; i<countNo; i++){
+            var cityNo = $("#cityNo"+i).val();
+            if(cityNo !== undefined){
+                $("#cityNo"+i).html('');
+            }
+        }
+        var count = 1;
+        for(var i=1; i<countNo; i++){
+            var cityNo = $("#cityNo"+i).val();
+            if(cityNo !== undefined){
+                $("#cityNo"+i).html(count);
+                count++;
+            }
+        }
+    }
+    
+    function addRowCityTableBySelect(row){
+        var count =  parseInt($("#cityCount").val());
+        row = parseInt(row);
+        if(row === (count-1)){
+           addRowCityTable(count); 
+        }       
+    }
     
 var issubmit =0;
 $('#landForm').on("keyup keypress", function(e) {
@@ -1026,7 +1196,65 @@ $('#savereal').on("keyup keypress", function(e) {
                     }
                 }
             }
-        });  
+        });
+        
+        <c:if test="${booktype == 'o'}">
+            //Add row table receive
+            if(parseInt($("#cityCount").val()) > 0){
+                var countCity = parseInt($("#cityCount").val());
+                for(var i=1; i<=countCity; i++){
+                    Selectize.define('clear_selection', function(options) {
+                        var self = this;
+                        self.plugins.settings.dropdown_header = {
+                            title: 'Clear Selection'
+                        };
+                        this.require('dropdown_header');
+                        self.setup = (function() {
+                            var original = self.setup;
+                            return function() {
+                                original.apply(this, arguments);
+                                this.$dropdown.on('mousedown', '.selectize-dropdown-header', function(e) {
+                                    self.setValue('');
+                                    self.close();
+                                    self.blur();
+                                    return false;
+                                });
+                            };
+                        })();
+                    });
+                    $("#city" + i).selectize({
+                        removeItem: '',
+                        sortField: 'text',
+                        create: false,
+                        dropdownParent: 'body',
+                        plugins: {
+                            'clear_selection': {}
+                        }
+                    });
+                }
+            }
+            var rowCityTable = $("#cityTable tr").length;
+            addRowCityTable(rowCityTable);
+            $("#cityTable").on("keyup", function() {
+                var rowAll = $("#cityTable tr").length;
+                $("td").keyup(function() {
+                    if ($(this).find("input").val() !== '') {
+                        var colIndex = $(this).parent().children().index($(this));
+                        var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
+                        rowAll = $("#cityTable tr").length;
+                        if (rowIndex === rowAll) {
+                            console.log("rowAll : " + rowAll + " Row Index : " + rowIndex);
+                            addRowCityTable(parseInt($("#cityCount").val()));
+                        }
+                        if (rowAll < 2) {
+        //                    $("#tr_CreditTableAddRow").removeClass("hide");
+        //                    $("#tr_CreditTableAddRow").addClass("show");
+                        }
+                    }
+                });
+            });
+        </c:if>
+        
     });
 
 var maxint = 2147483647;

@@ -79,7 +79,14 @@
         console.log(name[2]);
         str = name[2].split(".");
         console.log(str[0]);
-        sub = str[0].substr(0, 4);
+        
+        if(str[0] !== 'LandDetail'){
+           sub = str[0].substr(0, 5); 
+        
+        }else{
+           sub = str[0].substr(0, 4); 
+        }
+        
         console.log(sub);
         var $select = $('a[href*="' + sub + '"]');
         $("#BookMenu").find($select).css('background-color', '#ccc');

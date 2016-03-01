@@ -83,6 +83,15 @@ public class LandBookingImpl implements LandBookingDao{
                 session.save(data);
             }
             
+            if(land.getLandCities() != null){
+                List<LandCity> landCityList = land.getLandCities();
+                for(int i=0; i<landCityList.size(); i++){
+                    LandCity data = landCityList.get(i);
+                    data.setLandBooking(land);
+                    session.save(data);
+                }
+            }
+            
             transaction.commit();
             session.close();
             this.sessionFactory.close();
@@ -95,7 +104,7 @@ public class LandBookingImpl implements LandBookingDao{
     }
 
     @Override
-    public int updateBookDetailLand(LandBooking land,List<LandItinerary> Itinerary,String DelItenarary) {
+    public int updateBookDetailLand(LandBooking land,List<LandItinerary> Itinerary,String DelItenarary,String delCity) {
         int result = 0;
          Session session = this.sessionFactory.openSession();
         try {
@@ -104,6 +113,7 @@ public class LandBookingImpl implements LandBookingDao{
             System.out.println("land ID :"+land.getMItemstatus().getId());
             System.out.println("land name : "+land.getMItemstatus().getName());
             session.update(land);
+            
             if(!"".equalsIgnoreCase(DelItenarary)){
                 DelItenarary = DelItenarary.substring(0, DelItenarary.length()-1);
                 String[] ListDelete = DelItenarary.split(",");
@@ -120,6 +130,23 @@ public class LandBookingImpl implements LandBookingDao{
                     session.delete(del);
                 }
             }
+            
+            if(!"".equalsIgnoreCase(delCity) && delCity != null){
+               delCity = delCity.substring(0, delCity.length()-1);
+               String[] ListDelete = delCity.split(",");
+               for(int i=0;i<ListDelete.length;i++){
+                    LandCity del = new LandCity();
+                    System.out.println("delete id : "+ListDelete[i]);
+                    if(!"".equalsIgnoreCase(ListDelete[i])){
+                        del.setId(ListDelete[i]);
+                        del.setLandBooking(land);
+                        System.out.println("delete it :"+del.getId());                        
+                    }
+
+                    session.delete(del);
+                }
+            }
+            
             for(int i=0;i<Itinerary.size();i++){
                 LandItinerary data = Itinerary.get(i);
                 data.setLandBooking(land);
@@ -129,6 +156,20 @@ public class LandBookingImpl implements LandBookingDao{
                     session.update(data);
                 }
             }
+            
+            if(land.getLandCities() != null){
+                List<LandCity> landCityList = land.getLandCities();
+                for(int i=0; i<landCityList.size(); i++){
+                    LandCity data = landCityList.get(i);
+                    data.setLandBooking(land);
+                    if(data.getId() == null || "".equalsIgnoreCase(data.getId())){
+                        session.save(data);
+                    }else{
+                        session.update(data);
+                    }                   
+                }
+            }
+            
             transaction.commit();
             
             result = 1;
