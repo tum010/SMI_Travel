@@ -25,7 +25,6 @@
         </div>
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function() {
-                
                 Selectize.define('clear_selection', function(options) {
                 var self = this;
                 self.plugins.settings.dropdown_header = {
@@ -34,27 +33,18 @@
                 this.require('dropdown_header');
                 self.setup = (function() {
                     var original = self.setup;
-                    var css = {
-                    width : 'auto',
-                    top : 'auto',
-                    right : 'inherit',
-                    bottom : 'inherit',
-                    left : 'inherit'
-                };
-
                     return function() {
                         original.apply(this, arguments);
                         this.$dropdown.on('mousedown', '.selectize-dropdown-header', function(e) {
                             self.setValue('');
                             self.close();
                             self.blur();
-                            
+
                             return false;
                         });
                     };
                 })();
             });
-
             var Country = "#SelectCountry";
             $(Country).selectize({
                 removeItem: '',
@@ -65,6 +55,7 @@
                     'clear_selection': {}
                 }
             });
+            $(".selectize").css('z-index', 3000);
                 
                 var table = $('#MasterCity').dataTable({bJQueryUI: true,
                     "sPaginationType": "full_numbers",
@@ -158,7 +149,7 @@
                                     <td><c:out value="${fn:toUpperCase(table.name)}" /></td>
                                     <td>
                                         <center> 
-                                            <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditCity('${table.id}', '${table.code}', '${table.name}')" data-toggle="modal" data-target="#CityModal" ></span>
+                                            <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditCity('${table.id}', '${table.code}', '${table.name}','${table.MCountry.id}')" data-toggle="modal" data-target="#CityModal" ></span>
                                             <span id="spanRemove${dataStatus.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteCity('${table.id}', '${table.code}')" data-toggle="modal" data-target="#delCityModal" >  </span>
                                         </center>
                                     </td>                 
@@ -175,7 +166,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="CityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="fade modal" id="CityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 500px">
         <form action="MCity.smi" method="post" id="Cityform" class="form-horizontal"  role="form">
         <div class="modal-content">
@@ -202,19 +193,15 @@
                         <div class="col-sm-8"> 
                             <select name="SelectCountry" id="SelectCountry"  class="form-control selectize">
                                 <option value=""  selected="selected">-- ALL --</option>
-                                <c:set var="select" value="" />
+                                <%--<c:set var="select" value="" />--%>
                                 <c:forEach var="country" items="${listCountry}" >
-                                    <c:if test="">
-                                        <c:set var="select" value="selected" />
-                                    </c:if>
-                                    <option value="${country.id}" ${select}>${country.name}</option>  
+                                    <option value="${country.id}">${country.name}</option>  
                                 </c:forEach>
                             </select>
                         </div>
                     </div>
                     <input type="hidden" id="CityID" name="CityID" >
                     <input type="hidden" id="actionIUP" name="action">
-                
             </div>
             <div class="modal-footer">
                 <button id="btnSave" type="submit"  class="btn btn-success"><span  class="fa fa-save"></span> Save</button>
@@ -257,3 +244,4 @@
         </script>
     </c:if>
 </c:if>
+<script type="text/javascript" src="js/jquery-ui.js"></script>

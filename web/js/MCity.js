@@ -24,11 +24,13 @@ function save(){
     }       
 }
 
-function EditCity(id,code,name){
+function EditCity(id,code,name,country){
     document.getElementById('CityCode').value=code;
     document.getElementById('CityName').value=name;
     document.getElementById('CityID').value=id;
     document.getElementById('actionIUP').value='update';
+    var $select = $('#SelectCountry').selectize();
+    $select[0].selectize.setValue(country);
     document.getElementById("CityCode").readOnly = true;
 }
 
@@ -50,10 +52,12 @@ function addaction(){
     document.getElementById('CityName').value = '';
     document.getElementById('CityID').value = '';
     document.getElementById('actionIUP').value='add';
+    var $select = $('#SelectCountry').selectize();
+    $select[0].selectize.setValue('');
 }
 
 $(document).ready(function () {
-
+    
     $('#Cityform').bootstrapValidator({
         container: 'tooltip',
         excluded: [':disabled'],
