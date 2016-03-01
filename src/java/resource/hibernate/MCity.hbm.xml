@@ -7,6 +7,9 @@
             <column name="id" />
             <generator class="identity" />
         </id>
+        <many-to-one name="MCountry" class="com.smi.travel.datalayer.entity.MCountry" fetch="select">
+            <column name="country" />
+        </many-to-one>
         <property name="code" type="string">
             <column name="code" length="3" not-null="true" />
         </property>

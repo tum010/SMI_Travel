@@ -377,6 +377,7 @@
 	</bean>
 	<bean id="MCityController" class="com.smi.travel.masterdata.controller.MCityController">
 		<property name="CityService" ref="MCityService" />
+                <property name="countryservice" ref="MCountryService" />
 	</bean>
 	<bean id="MCountryController" class="com.smi.travel.masterdata.controller.MCountryController">
 		<property name="CountryService" ref="MCountryService" />

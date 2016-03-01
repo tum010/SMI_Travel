@@ -318,10 +318,7 @@ public class LandDetailController extends SMITravelController {
                 request.setAttribute(DELETERESULT, "delete unsuccessful");
             }
         }
-        
-        
-        
-        
+
         if(isbill != null && !"".equalsIgnoreCase(isbill)){
             request.setAttribute(ISBILLSTATUS,Integer.parseInt(isbill));
         }

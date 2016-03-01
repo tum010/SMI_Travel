@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link href="css/jquery-ui.css" rel="stylesheet">
 <c:set var="dataList" value="${requestScope['City_List']}" />
+<c:set var="listCountry" value="${requestScope['Country_List']}" />
 <script type="text/javascript" src="js/MCity.js"></script> 
 <section class="content-header" >
     <h1>
@@ -24,6 +25,47 @@
         </div>
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function() {
+                
+                Selectize.define('clear_selection', function(options) {
+                var self = this;
+                self.plugins.settings.dropdown_header = {
+                    title: 'Clear Selection'
+                };
+                this.require('dropdown_header');
+                self.setup = (function() {
+                    var original = self.setup;
+                    var css = {
+                    width : 'auto',
+                    top : 'auto',
+                    right : 'inherit',
+                    bottom : 'inherit',
+                    left : 'inherit'
+                };
+
+                    return function() {
+                        original.apply(this, arguments);
+                        this.$dropdown.on('mousedown', '.selectize-dropdown-header', function(e) {
+                            self.setValue('');
+                            self.close();
+                            self.blur();
+                            
+                            return false;
+                        });
+                    };
+                })();
+            });
+
+            var Country = "#SelectCountry";
+            $(Country).selectize({
+                removeItem: '',
+                sortField: 'text',
+                create: false,
+                dropdownParent: 'body',
+                plugins: {
+                    'clear_selection': {}
+                }
+            });
+                
                 var table = $('#MasterCity').dataTable({bJQueryUI: true,
                     "sPaginationType": "full_numbers",
                     "bAutoWidth": false,
@@ -155,6 +197,21 @@
                             <input type="text" class="form-control" maxlength="50" id="CityName" style="text-transform:uppercase" name="CityName" >
                         </div>
                     </div> 
+                    <div class="form-group">
+                        <label for="SelectCountry" class="col-sm-3 control-label" >Country <font style="color: red">*</font></label>
+                        <div class="col-sm-8"> 
+                            <select name="SelectCountry" id="SelectCountry"  class="form-control selectize">
+                                <option value=""  selected="selected">-- ALL --</option>
+                                <c:set var="select" value="" />
+                                <c:forEach var="country" items="${listCountry}" >
+                                    <c:if test="">
+                                        <c:set var="select" value="selected" />
+                                    </c:if>
+                                    <option value="${country.id}" ${select}>${country.name}</option>  
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
                     <input type="hidden" id="CityID" name="CityID" >
                     <input type="hidden" id="actionIUP" name="action">
                 
