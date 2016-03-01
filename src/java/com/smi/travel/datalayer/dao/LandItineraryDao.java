@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.dao;
 
+import com.smi.travel.datalayer.entity.LandCity;
 import com.smi.travel.datalayer.entity.LandItinerary;
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface LandItineraryDao {
     public int InsertItinerary(LandItinerary land);
     public int UpdateItinerary(LandItinerary land);
     public int DeleteItinerary(LandItinerary land);
+    public List<LandCity> getListLandCity(String landID);
 }

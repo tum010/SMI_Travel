@@ -4,7 +4,9 @@ import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.LandBooking;
+import com.smi.travel.datalayer.entity.LandCity;
 import com.smi.travel.datalayer.entity.LandItinerary;
+import com.smi.travel.datalayer.entity.MCity;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.Master;
@@ -41,6 +43,7 @@ public class LandDetailController extends SMITravelController {
     private static final String PRODUCTLIST = "product_list";
     private static final String AGENTLIST = "agent_list";
     private static final String ITINERARYLIST = "itinerary_list";
+    private static final String LANDCITYLIST = "landCity_list";
     private static final String PACKAGELIST = "package_list";
     private static final String TransectionResult = "result";
     private static final String CurrencyList = "CurrencyList";
@@ -48,6 +51,7 @@ public class LandDetailController extends SMITravelController {
     private static final String ISBILLSTATUS = "IsBillStatus";
     private static final String EnableSave = "EnableSave";
     private static final String DELETERESULT = "deleteresult";
+    private static final String MCITYLIST = "mCity_list";
     private UtilityService utilservice;
     private AgentService agentservice;
     private ProductService productservice;
@@ -99,12 +103,17 @@ public class LandDetailController extends SMITravelController {
         String Itenarary = request.getParameter("Itenarary");
         String DelItenarary = request.getParameter("DelItenarary");
         String itinerarycount = request.getParameter("itinerarycount");
+        String cityCount = request.getParameter("cityCount");
+        String delCity = request.getParameter("delCity");
         
         request.setAttribute(ISBILLSTATUS,0);
         SystemUser user = (SystemUser) session.getAttribute("USER");
         util = new UtilityFunction();
         int[] booksize = utilservice.getCountItemFromBooking(refno);
         Master master = utilservice.getbookingFromRefno(refno);
+        List<MCity> mCityList = utilservice.getListMCity();
+        request.setAttribute(MCITYLIST, mCityList);
+        
         if ("add".equalsIgnoreCase(action)) {
             ADQty = String.valueOf(master.getAdult());
             CHQty = String.valueOf(master.getChild());
@@ -116,22 +125,22 @@ public class LandDetailController extends SMITravelController {
             inbINQty = String.valueOf(master.getInfant());
             
         }
-        
-
-        
+                
         request.setAttribute("Master", master);
         request.setAttribute(Booking_Size, booksize);
         request.setAttribute(PRODUCTLIST, landservice.getListLandPackage());
         request.setAttribute(AGENTLIST, agentservice.getListAgent(new Agent(), 1));
-        request.setAttribute(PACKAGELIST, landservice.getListMpackage());
+        request.setAttribute(PACKAGELIST, landservice.getListMpackage());       
         String BookType = master.getBookingType();
         request.setAttribute("itinerarycount", "0");
+        request.setAttribute("cityCount", "0");
+        
         if ("I".equalsIgnoreCase(BookType)) {
             request.setAttribute("BOOKING_TYPE", "i");
         } else {
             request.setAttribute("BOOKING_TYPE", "o");
         }
-        if("add".equalsIgnoreCase(action)){
+        if ("add".equalsIgnoreCase(action)) {
             request.setAttribute("isEdit", "0");
             request.setAttribute(EnableSave,0);
         }
@@ -195,14 +204,15 @@ public class LandDetailController extends SMITravelController {
                     land.setOutboundArrive(util.convertStringToDate(arriveDate));
                     land.setOutboundDepart(util.convertStringToDate(departDate));
                     land.setRemark(remark);
-                    
+                    setLandCity(land,Integer.parseInt(cityCount),request);
  
             }
             request.setAttribute(ISBILLSTATUS,land.getIsBill());
             if (!"".equalsIgnoreCase(landID)) {
                 land.setId(landID);
             }
-            int result = landservice.saveBookDetailLand(land, Itenarary, DelItenarary, BookType);
+            int result = landservice.saveBookDetailLand(land, Itenarary, DelItenarary, BookType, delCity);
+            
             if(land.getId() != null){
                 land.setMaster(master);
                 saveHistoryBooking(refno,user,land,"UPDATE");
@@ -243,6 +253,14 @@ public class LandDetailController extends SMITravelController {
                 request.setAttribute("itinerarycount", "0");
             } else {
                 request.setAttribute("itinerarycount", ItineraryList.size());
+            }
+            
+            List<LandCity> landCityList = landservice.getListLandCity(landID);
+            request.setAttribute(LANDCITYLIST, landCityList);
+            if (landCityList == null) {
+                request.setAttribute("cityCount", "0");
+            } else {
+                request.setAttribute("cityCount", landCityList.size());
             }
 
             if (land.getAgent() != null) {
@@ -487,5 +505,24 @@ public class LandDetailController extends SMITravelController {
         historyBooking.setMaster(land.getMaster());
         historyBooking.setStaff(user);
         int resultsave = utilservice.insertHistoryBooking(historyBooking);
+    }
+
+    private void setLandCity(LandBooking land, int count, HttpServletRequest request) {
+        if(land.getLandCities() == null){
+            land.setLandCities(new ArrayList<LandCity>());
+        }
+        for(int i=1; i<=count; i++){
+            String cityId = request.getParameter("cityId" + i);
+            String city = request.getParameter("city" + i);
+            if((!"".equalsIgnoreCase(cityId) && cityId != null) || (!"".equalsIgnoreCase(city) && city != null)){
+                LandCity landCity = new LandCity();
+                MCity mCity = new MCity();
+                mCity.setId(city);
+                landCity.setMCity(mCity);
+                landCity.setLandBooking(land);
+                landCity.setId(cityId);
+                land.getLandCities().add(landCity);
+            }
+        }
     }
 }

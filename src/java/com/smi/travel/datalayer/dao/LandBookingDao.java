@@ -22,7 +22,7 @@ public interface LandBookingDao {
     public List<Product> getListLandProduct();
     public List<PackageTour> getListLandPackage();
     public int insertBookDetailLand(LandBooking land,List<LandItinerary> Itinerary );
-    public int updateBookDetailLand(LandBooking land,List<LandItinerary> Itinerary,String DelItenarary);
+    public int updateBookDetailLand(LandBooking land,List<LandItinerary> Itinerary,String DelItenarary,String delCity);
     public int cancelBookDetailLand(String landID);
     public int enableBookDetailLand(String landID);
     public String DeleteLandCity(String landCityID);
