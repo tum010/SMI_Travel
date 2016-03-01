@@ -47,6 +47,7 @@ public class LandDetailController extends SMITravelController {
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String ISBILLSTATUS = "IsBillStatus";
     private static final String EnableSave = "EnableSave";
+    private static final String DELETERESULT = "deleteresult";
     private UtilityService utilservice;
     private AgentService agentservice;
     private ProductService productservice;
@@ -307,7 +308,20 @@ public class LandDetailController extends SMITravelController {
                 request.setAttribute(EnableSave,0);
             }
 
+        }else if("deleteBookingCity".equalsIgnoreCase(action)) {
+            String deleteBookingCityId = request.getParameter("deleteBookingCityId");
+            System.out.println("deleteBookingCityId ::: "+ deleteBookingCityId);
+            String result = landservice.DeleteLandCity(deleteBookingCityId);
+            if (result == "success"){
+                request.setAttribute(DELETERESULT, "delete successful");
+            } else {
+                request.setAttribute(DELETERESULT, "delete unsuccessful");
+            }
         }
+        
+        
+        
+        
         if(isbill != null && !"".equalsIgnoreCase(isbill)){
             request.setAttribute(ISBILLSTATUS,Integer.parseInt(isbill));
         }
