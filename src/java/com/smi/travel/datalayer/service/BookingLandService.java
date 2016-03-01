@@ -130,6 +130,10 @@ public class BookingLandService {
     public int UpdateItinerary(LandItinerary land) {
         return landItinerarydao.UpdateItinerary(land);
     }
+    
+    public String DeleteLandCity(String landCityID){
+        return landbookingdao.DeleteLandCity(landCityID);
+    }
 
     public LandBookingDao getLandbookingdao() {
         return landbookingdao;

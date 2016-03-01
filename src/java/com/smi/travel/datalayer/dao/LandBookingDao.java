@@ -25,4 +25,5 @@ public interface LandBookingDao {
     public int updateBookDetailLand(LandBooking land,List<LandItinerary> Itinerary,String DelItenarary);
     public int cancelBookDetailLand(String landID);
     public int enableBookDetailLand(String landID);
+    public String DeleteLandCity(String landCityID);
 }

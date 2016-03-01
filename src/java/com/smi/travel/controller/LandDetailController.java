@@ -1,4 +1,4 @@
-package com.smi.travel.controller;
+ package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.AirticketPnr;
@@ -308,7 +308,7 @@ public class LandDetailController extends SMITravelController {
             }
 
         }
-        if(isbill != null){
+        if(isbill != null && !"".equalsIgnoreCase(isbill)){
             request.setAttribute(ISBILLSTATUS,Integer.parseInt(isbill));
         }
         

@@ -1,6 +1,10 @@
 package com.smi.travel.datalayer.entity;
 // Generated Dec 4, 2014 5:36:02 PM by Hibernate Tools 3.6.0
 
+import java.util.LinkedList;
+import java.util.List;
+
+
 
 
 /**
@@ -12,7 +16,8 @@ public class MCity  {
      private String id;
      private String code;
      private String name;
-
+     private List landCities = new LinkedList<LandCity>();
+     
     public MCity() {
     }
 
@@ -44,6 +49,14 @@ public class MCity  {
     
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List getLandCities() {
+        return landCities;
+    }
+
+    public void setLandCities(List landCities) {
+        this.landCities = landCities;
     }
 
 

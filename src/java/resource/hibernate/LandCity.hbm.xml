@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 1, 2016 9:47:46 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.smi.travel.datalayer.entity.LandCity" table="land_city" catalog="smitravel" optimistic-lock="version">
+        <id name="id" type="string">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="landBooking" class="com.smi.travel.datalayer.entity.LandBooking" fetch="select">
+            <column name="land_booking_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="MCity" class="com.smi.travel.datalayer.entity.MCity" fetch="select">
+            <column name="city_id" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

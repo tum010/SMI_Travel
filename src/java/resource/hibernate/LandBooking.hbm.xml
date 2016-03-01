@@ -13,11 +13,11 @@
         <many-to-one name="MItemstatus" class="com.smi.travel.datalayer.entity.MItemstatus" fetch="select">
             <column name="status" />
         </many-to-one>
-        <many-to-one name="packageTour" class="com.smi.travel.datalayer.entity.PackageTour" fetch="select">
-            <column name="outbound_package_id" />
-        </many-to-one>
         <many-to-one name="master" class="com.smi.travel.datalayer.entity.Master" fetch="select">
             <column name="master_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="packageTour" class="com.smi.travel.datalayer.entity.PackageTour" fetch="select">
+            <column name="outbound_package_id" />
         </many-to-one>
         <property name="okBy" type="string">
             <column name="ok_by" length="100" />
@@ -26,10 +26,10 @@
             <column name="category" length="100" />
         </property>
         <property name="description" type="string">
-            <column name="description" length="255" />
+            <column name="description" />
         </property>
-        <property name="inboundQty" type="int">
-            <column name="inbound_qty"  />
+        <property name="inboundQty" type="java.lang.Integer">
+            <column name="inbound_qty" />
         </property>
         <property name="inboundCost" type="java.lang.Long">
             <column name="inbound_cost" precision="10" scale="0" />
@@ -37,11 +37,26 @@
         <property name="inboundPrice" type="java.lang.Long">
             <column name="inbound_price" precision="10" scale="0" />
         </property>
+        <property name="inboundChCost" type="java.lang.Long">
+            <column name="inbound_ch_cost" precision="10" scale="0" />
+        </property>
+        <property name="inboundChPrice" type="java.lang.Long">
+            <column name="inbound_ch_price" precision="10" scale="0" />
+        </property>
+        <property name="inboundChQty" type="java.lang.Integer">
+            <column name="inbound_ch_qty" />
+        </property>
+        <property name="inboundInCost" type="java.lang.Long">
+            <column name="inbound_in_cost" precision="10" scale="0" />
+        </property>
+        <property name="inboundInPrice" type="java.lang.Long">
+            <column name="inbound_in_price" precision="10" scale="0" />
+        </property>
+        <property name="inboundInQty" type="java.lang.Integer">
+            <column name="inbound_in_qty" />
+        </property>
         <property name="isBill" type="java.lang.Integer">
             <column name="is_bill" />
-        </property>
-        <property name="remark" type="string">
-            <column name="remark" />
         </property>
         <property name="createDate" type="date">
             <column name="create_date" length="10" />
@@ -73,41 +88,31 @@
         <property name="outboundInPrice" type="java.lang.Long">
             <column name="outbound_in_price" precision="10" scale="0" />
         </property>
-        <property name="inboundChQty" type="java.lang.Integer">
-            <column name="inbound_ch_qty" />
+        <property name="curCost" type="string">
+            <column name="cur_cost" length="3" />
         </property>
-        <property name="inboundChCost" type="java.lang.Long">
-            <column name="inbound_ch_cost" precision="10" scale="0" />
+        <property name="remark" type="string">
+            <column name="remark" length="100" />
         </property>
-        <property name="inboundChPrice" type="java.lang.Long">
-            <column name="inbound_ch_price" precision="10" scale="0" />
-        </property>
-        <property name="inboundInQty" type="java.lang.Integer">
-            <column name="inbound_in_qty" />
-        </property>
-        <property name="inboundInCost" type="java.lang.Long">
-            <column name="inbound_in_cost" precision="10" scale="0" />
-        </property>
-        <property name="inboundInPrice" type="java.lang.Long">
-            <column name="inbound_in_price" precision="10" scale="0" />
-        </property>
-        <property name="curAmount" type="string">
-            <column name="cur_amount" length="3"/>
-        </property>
-         <property name="curCost" type="string">
-            <column name="cur_cost" length="3"/>
-        </property>
-        <property name="outboundArrive" type="date">
-            <column name="outbound_depart" length="10" />
+        <property name="inboundHotel" type="string">
+            <column name="inbound_hotel" />
         </property>
         <property name="outboundDepart" type="date">
+            <column name="outbound_depart" length="10" />
+        </property>
+        <property name="outboundArrive" type="date">
             <column name="outbound_arrive" length="10" />
         </property>
-         <property name="inboundHotel" type="string">
-            <column name="inbound_hotel" length="255" />
+        <property name="curAmount" type="string">
+            <column name="cur_amount" length="3" />
         </property>
-        
-         <bag name="landItineraries" table="land_itinerary" inverse="true" lazy="true" fetch="select">
+        <bag name="landCities" table="land_city" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="land_booking_id" not-null="true" />
+            </key>
+            <one-to-many class="com.smi.travel.datalayer.entity.LandCity" />
+        </bag>
+        <bag name="landItineraries" table="land_itinerary" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="land_booking_id" not-null="true" />
             </key>

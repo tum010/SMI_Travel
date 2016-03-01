@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 
 import com.smi.travel.datalayer.dao.LandBookingDao;
 import com.smi.travel.datalayer.entity.LandBooking;
+import com.smi.travel.datalayer.entity.LandCity;
 import com.smi.travel.datalayer.entity.LandItinerary;
 import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackageTour;
@@ -285,7 +286,42 @@ public class LandBookingImpl implements LandBookingDao{
         this.sessionFactory.close();
         return PackageList;
     }
-    
-    
+
+    @Override
+    public String DeleteLandCity(String landCityID) {
+        String result = "";
+        System.out.println(" landCityID : " + landCityID);
+        String landBookingId = "";
+        Session session = this.sessionFactory.openSession();
+        List<LandCity> list = session.createQuery("from LandCity lc WHERE lc.id = :landCityID").setParameter("landCityID", landCityID).list();
+        if (!list.isEmpty()) {
+            LandCity landCity = list.get(0);
+            if(landCity.getLandBooking() != null){
+                String landbookid = landCity.getLandBooking().getId();
+                String landbooktemp[] = landbookid.split(",");
+                for(int i = 0 ; i < landbooktemp.length ; i++){
+                    landBookingId += ",'"+landbooktemp[i].trim()+"'";
+                }
+            }
+        } 
+        if(!"".equalsIgnoreCase(landBookingId)){
+            try {
+                transaction = session.beginTransaction();
+                Query query = session.createQuery("DELETE FROM LandItinerary li where li.landBooking.id in ("+landBookingId+")");
+                query.executeUpdate();
+                Query queryLB = session.createQuery("DELETE FROM LandBooking lb where lb.id in ("+landBookingId+")");
+                queryLB.executeUpdate();
+                transaction.commit();
+                session.close();
+                this.sessionFactory.close();
+                result = "success";
+            } catch (Exception ex) {
+                transaction.rollback();
+                ex.printStackTrace();
+                result = "fail";
+            }
+        }
+        return result;
+    }
     
 }
