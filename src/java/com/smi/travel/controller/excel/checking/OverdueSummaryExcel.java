@@ -758,21 +758,22 @@ public class OverdueSummaryExcel extends AbstractExcelView{
             celldata9.setCellValue(!"".equalsIgnoreCase(data.getProfit()) && data.getProfit() != null ? new BigDecimal(data.getProfit()).doubleValue() : 0);
             celldata9.setCellStyle(styleC25);
             
+            HSSFCell celldata10 = row.createCell(10);
+            celldata10.setCellValue(!"".equalsIgnoreCase(data.getStockno()) && data.getStockno() != null ? data.getStockno() : "");
+            celldata10.setCellStyle(styleC29);
+            
             if(!id.equalsIgnoreCase(idTemp) && !"".equalsIgnoreCase(id) && !"".equalsIgnoreCase(idTemp)){
                 if(countMerge > 1){
                     sheet.addMergedRegion(CellRangeAddress.valueOf("H" + (hMerge) + ":H" + (hMerge+(countMerge-1))));
                     sheet.addMergedRegion(CellRangeAddress.valueOf("I" + (hMerge) + ":I" + (hMerge+(countMerge-1))));
-                    sheet.addMergedRegion(CellRangeAddress.valueOf("J" + (hMerge) + ":J" + (hMerge+(countMerge-1))));             
+                    sheet.addMergedRegion(CellRangeAddress.valueOf("J" + (hMerge) + ":J" + (hMerge+(countMerge-1))));
+                    sheet.addMergedRegion(CellRangeAddress.valueOf("K" + (hMerge) + ":K" + (hMerge+(countMerge-1))));   
                 }
                     
                 hMerge = 7 + i +1;
                 countMerge = 0;                        
             }
-            
-            HSSFCell celldata10 = row.createCell(10);
-            celldata10.setCellValue(!"".equalsIgnoreCase(data.getStockno()) && data.getStockno() != null ? data.getStockno() : "");
-            celldata10.setCellStyle(styleC29);
-            
+                                  
 //            HSSFCell celldata11 = row.createCell(11);
 //            celldata11.setCellValue(!"".equalsIgnoreCase(data.getId()) && data.getId() != null ? data.getId() : "");
 //            celldata11.setCellStyle(styleC29);
