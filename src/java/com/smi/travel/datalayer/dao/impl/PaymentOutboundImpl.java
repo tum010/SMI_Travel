@@ -836,7 +836,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 if(invDate.length > 1 ){
                    for(int x= 0; x<invDate.length;x++){
                        if(invDate[x] != null && !"".equalsIgnoreCase(invDate[x].trim())){
-                            invdatemp += util.ConvertString(dateformatInvoice.format(util.convertStringToDate(String.valueOf(invDate[x]).trim())))+"\r\n";
+                            invdatemp += util.ConvertString(dateformatInvoice.format(util.convertStringToDate(String.valueOf(invDate[x]).trim())))+" ";
                             view.setInvdate(invdatemp);
                        }
                    }
