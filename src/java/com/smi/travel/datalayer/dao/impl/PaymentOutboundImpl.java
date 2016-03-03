@@ -1094,6 +1094,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 groupbytemp = " invto ";
             }else if("DEPARTURE DATE".equalsIgnoreCase(groupby)){
                 groupbytemp = " departdate ";
+            }else{
+                groupbytemp = " refno ";
             }                                           
             query += " group by " + groupbytemp + "  order by refno , sale desc ";
             groupheader = groupby;
@@ -1123,13 +1125,27 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 .addScalar("supcode", Hibernate.STRING)
                 .addScalar("typeid", Hibernate.STRING)
                 .list();
-        
-        String temprefno = "";    
-        
+        String groupbytemp = "";        
         for (Object[] B : QueryList) {            
             PaymentProfitLossView pplv = new PaymentProfitLossView();
+            
+//            if("OWNER".equalsIgnoreCase(groupby)){
+//                groupbytemp = (B[1] != null ? util.ConvertString(B[1]) : "") ;
+//            }else if("PRODUCT TYPE".equalsIgnoreCase(groupby)){
+//                groupbytemp = (B[7] != null ? util.ConvertString(B[7]) : "");
+//            }else if("CITY".equalsIgnoreCase(groupby)){
+//                groupbytemp = (B[4] != null ? util.ConvertString(B[4]) : "");
+//            }else if("CLIENT NAME".equalsIgnoreCase(groupby)){
+//                groupbytemp = (B[8] != null ? util.ConvertString(B[8]) : ""); 
+//            }else if("DEPARTURE DATE".equalsIgnoreCase(groupby)){
+//                groupbytemp = (B[3] != null ? util.ConvertString(df.format(util.convertStringToDate(util.ConvertString(B[3])))) : "");
+//            }   
+//            
+//            pplv.setGroupBy(groupby);
+//            pplv.setGroupData(groupbytemp);
+            
             if(searchprodcuct){
-                pplv.setHeaderproducttype(util.ConvertString(B[7]));
+               pplv.setHeaderproducttype(util.ConvertString(B[7]));
             }else{
                pplv.setHeaderproducttype(producttypeheader);
             }

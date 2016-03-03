@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentProfitLossSummary" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f4be861f-35d0-4c34-a4c6-eb1a10e7fc04">
+	<property name="ireport.zoom" value="1.1000000000000218"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="headerowner" class="java.lang.String"/>
+	<field name="headerinvsup" class="java.lang.String"/>
+	<field name="headercity" class="java.lang.String"/>
+	<field name="headergroup" class="java.lang.String"/>
+	<field name="headerproducttype" class="java.lang.String"/>
+	<field name="headerpaydate" class="java.lang.String"/>
+	<field name="headerdepartdate" class="java.lang.String"/>
+	<field name="headerinvdate" class="java.lang.String"/>
+	<field name="refno" class="java.lang.String"/>
+	<field name="invto" class="java.lang.String"/>
+	<field name="tourname" class="java.lang.String"/>
+	<field name="departdate" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<field name="pax" class="java.lang.String"/>
+	<field name="producttype" class="java.lang.String"/>
+	<field name="sale" class="java.lang.String"/>
+	<field name="cost" class="java.lang.String"/>
+	<field name="profit" class="java.lang.String"/>
+	<variable name="totalsale" class="java.math.BigDecimal" resetType="Group" resetGroup="GroupBy" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{sale})]]></variableExpression>
+	</variable>
+	<variable name="totalcost" class="java.math.BigDecimal" resetType="Group" resetGroup="GroupBy" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{cost})]]></variableExpression>
+	</variable>
+	<variable name="totalprofit" class="java.math.BigDecimal" resetType="Group" resetGroup="GroupBy" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{profit})]]></variableExpression>
+	</variable>
+	<variable name="totalpax" class="java.math.BigDecimal" resetType="Group" resetGroup="GroupBy" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{pax})]]></variableExpression>
+	</variable>
+	<group name="GroupBy" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{refno}]]></groupExpression>
+		<groupHeader>
+			<band height="44">
+				<textField isBlankWhenNull="true">
+					<reportElement x="73" y="0" width="241" height="20" uuid="6501b6da-eb5c-4643-86d9-1b2b96156454"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="8" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{refno}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="722" y="19" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="bb42abb8-3213-419d-9e01-6deeb1589ad6"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="172" y="19" width="76" height="25" uuid="48255ff4-6c20-418c-bb29-fb1fb84372ad"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[City]]></text>
+				</staticText>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="172" y="19" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="8e3a526e-04fa-46b9-a1ae-753d9d174d49"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="19" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="2da2fd26-4399-4cc2-8ba3-93bf22491853"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="564" y="19" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="79a33cdd-97fd-4836-bf34-f9a40b020f2f"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="643" y="19" width="80" height="25" uuid="5609d091-d045-4439-a494-a5710b471c92"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Price]]></text>
+				</staticText>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="247" y="19" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="336b61f6-cd86-451b-9b13-78485927bdb8"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement positionType="Float" x="0" y="43" width="802" height="1" isPrintWhenDetailOverflows="true" uuid="f53e8ec0-2c38-4455-8203-a5691e38f1eb"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="0" y="19" width="92" height="25" uuid="6dc6c153-60cc-4574-bb21-c025a4be17b4"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tour Name]]></text>
+				</staticText>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="643" y="19" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="eb72e4c3-3a57-4f7f-ae15-2a5542b8cb15"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="293" y="19" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="e7ee04c7-176a-4c5c-9bb8-445e98e15e45"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="91" y="19" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="6c961822-ebdb-46e2-8dda-947ebb6a1c5f"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="485" y="19" width="80" height="25" uuid="8db7a498-3d51-4689-ada4-f58879475455"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Product Type]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="247" y="19" width="47" height="25" uuid="2070269b-26c4-46b2-ad8d-fadcef1b6573"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Pax]]></text>
+				</staticText>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="485" y="19" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="fb00bc93-5265-42d5-ad12-b0f1ccc0b989"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement positionType="Float" x="0" y="19" width="802" height="1" isPrintWhenDetailOverflows="true" uuid="7e4de0b9-2f66-4895-98ab-5a5e513c4de3"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="293" y="19" width="193" height="25" uuid="0c2b15cf-bf24-4d7e-8d50-f7bfb4b002e0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Client Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="91" y="19" width="82" height="25" uuid="ce48568d-8372-4705-9636-3ab3c1e30478"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Departure Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="564" y="19" width="80" height="25" uuid="5081bd3e-2908-4a86-b4b8-df5b3e7ed0e9"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sale]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="722" y="19" width="80" height="25" uuid="0fa75312-2910-49eb-b6a0-398e109c10c2"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Profit]]></text>
+				</staticText>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="801" y="19" width="1" height="25" isPrintWhenDetailOverflows="true" uuid="4b4c53e3-6268-43cf-aefc-abd82837d4a7"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement x="3" y="0" width="76" height="20" uuid="58a6555f-4a36-45f2-a777-98a539d55dbb"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ref No.]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="21">
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="a895a155-d24a-4c04-9545-9b4f287c18dc"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="293" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="14c3a415-98f9-4804-9d9f-9d2ad9cef960"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="722" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="44fa4a83-402c-4f77-9375-bb299b948898"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement positionType="Float" x="0" y="20" width="802" height="1" isPrintWhenDetailOverflows="true" uuid="32174275-c278-4858-868f-db91bef3f01c"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="564" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="071cb11c-0f36-431c-9c5b-46a69393c22b"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="801" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="cdc13def-ae12-4204-9228-728f7d3142a4"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="91" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="b180fcbe-4000-4d41-a53b-662b7341ad6c"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="643" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="62541a0a-101e-4e08-964a-4373faa5e07a"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="247" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="6232df75-3550-4bce-8e02-e7ceaebcdd80"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField pattern="#,##0">
+					<reportElement x="247" y="5" width="47" height="13" uuid="9bd4488a-31b6-41c5-b8a5-85275b5e382a"/>
+					<textElement textAlignment="Center">
+						<font fontName="Tahoma" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalpax}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="722" y="5" width="75" height="13" uuid="22f31772-5eb4-4b85-9209-5fb7ecc02599"/>
+					<textElement textAlignment="Right">
+						<font fontName="Tahoma" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="564" y="5" width="75" height="13" uuid="ef17428e-ce0c-491c-bc8e-a395bc2092c6"/>
+					<textElement textAlignment="Right">
+						<font fontName="Tahoma" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalsale}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="643" y="5" width="75" height="13" uuid="f4c3d604-0488-4827-ada8-6497d9413292"/>
+					<textElement textAlignment="Right">
+						<font fontName="Tahoma" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalcost}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="2" width="92" height="15" uuid="50e9413d-7b5a-43d2-b65d-a20fc8987d37"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Tahoma" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="97" splitType="Stretch">
+			<staticText>
+				<reportElement x="506" y="41" width="32" height="13" uuid="ae966c73-e632-4635-b494-d5aedf443e1f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[City :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="544" y="67" width="125" height="12" uuid="c5ab4f12-7d9a-4d47-b1c9-83191342a245"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headerdepartdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="450" y="54" width="88" height="13" uuid="437ab8fa-0940-4ebb-9a6d-41649e153912"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Product Type :]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="766" y="85" width="36" height="12" uuid="2d3ba152-d4fd-4a4a-b4de-ab1932f12f1d"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="552" y="1" width="250" height="25" uuid="c6af40ba-063d-4494-9abb-58147601a00f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profit & Loss Summary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="679" y="41" width="34" height="13" uuid="82639644-f2d0-4006-a994-cf703d3404b7"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Group :]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="544" y="54" width="125" height="13" uuid="e9fc1138-2d2e-4bc6-9dba-20413b468d66"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headerproducttype}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="712" y="41" width="90" height="13" uuid="d1c21803-e99a-4ff4-9d23-c25210b75c97"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headergroup}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="544" y="29" width="125" height="13" uuid="3855067e-e839-4160-bde0-e4ac5c15e2ca"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headerowner}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="712" y="29" width="90" height="13" uuid="4612f22d-0b5d-4714-9021-0af60d126054"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headerinvsup}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="504" y="29" width="34" height="12" uuid="89a4dacf-1b52-4a47-aabc-7ffaa149466d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Owner :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="630" y="85" width="131" height="12" uuid="d8bf061f-9649-4df3-8620-9047df78655d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="544" y="41" width="125" height="13" uuid="cbb153df-7402-4e70-a1eb-685f54680a27"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headercity}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="655" y="29" width="58" height="12" uuid="93e6fc52-3140-4bf1-8593-76b554c04c13"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice Sup :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="67" width="88" height="12" uuid="6fc8a0a0-dca9-4516-8575-4d939610eb9e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departure Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="25" width="221" height="12" uuid="2b3e5a0a-4a5a-4030-8892-b47f82bde835"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
+			</staticText>
+			<image>
+				<reportElement x="3" y="3" width="65" height="48" uuid="061a7c78-653a-488b-a11a-434d95dc5bed"/>
+				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="73" y="3" width="149" height="13" uuid="c2ef99ac-3fbd-4dc8-8762-514dd6e980a9"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[S.M.I TRAVEL CO., LTD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="69" width="158" height="13" uuid="79bcee35-61a7-40d2-949d-9fdd38156fb1"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[e-mail: yoyaku@wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="45" width="221" height="12" uuid="49186e80-2ecb-47dc-9d83-6f1f537e3b4f"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[Tel: +66(0)-2162201 Fax: +66(0)-216-2202]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="57" width="158" height="15" uuid="5dd9d48e-cd6a-4062-8630-9c603e27e987"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[http://www.wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="15" width="221" height="22" uuid="06ced9b1-fba1-4e69-ade3-3288a46aff71"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[9th Floor, Siam at Siam Hotel Building 865 Rama 1 Rd.,]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="712" y="67" width="90" height="12" uuid="1809ec51-7c03-4781-ac42-1515fbbe21f1"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headerinvdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="655" y="67" width="58" height="12" uuid="78deea09-b33c-4356-8f98-d0e946517c09"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice Date :]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="712" y="54" width="90" height="13" uuid="71028eab-37e0-4581-a35b-ff5af4e9665d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headerpaydate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="669" y="54" width="44" height="13" uuid="91d6e705-9501-431c-a406-590ea8db2cd6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pay Date :]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="172" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="456e93ea-3a6f-4a22-9797-d36d40ca44d8"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="722" y="0" width="75" height="20" uuid="0f9373d1-a3b4-48ef-9f17-ea09cda58a8f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{profit} != null && !"null".equals($F{profit}) && $F{profit}.length() > 0) ? new BigDecimal($F{profit}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="176" y="0" width="72" height="20" uuid="1f84a36f-3942-4f8f-b7de-9722294994da"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{city}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="0df5b78e-4b78-4911-bed0-a47dc247e6e8"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="485" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="baead1a5-dc0e-4b4f-b9b4-683712ff3156"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="4" y="0" width="89" height="20" uuid="dd5ef446-d736-475c-b786-23a8d7237d24"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tourname}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="297" y="0" width="189" height="20" uuid="bd3dc924-7091-48ff-b6fc-bdb54c1485ea"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{invto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="247" y="0" width="47" height="20" uuid="f39d9d07-0845-42b4-8e5d-ad1ca26680c7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{pax} != null && !"null".equals($F{pax}) && $F{pax}.length() > 0) ? new BigDecimal($F{pax}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="Float" x="0" y="20" width="802" height="1" isPrintWhenDetailOverflows="true" uuid="f462fd90-a670-4247-9db8-3eea476f0214"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="91" y="0" width="82" height="20" uuid="cd17cbad-7773-4b43-a03b-ae69ababda85"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{departdate}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="643" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="3403c856-8750-4197-8427-c9fca568288c"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="489" y="0" width="76" height="20" uuid="e59ccec5-e079-4fd5-9d8f-28485d9322d1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{producttype}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="564" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="0fe38dd6-c947-41b9-bf41-dc16f30a5e8b"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="293" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="16971431-533b-4f48-9803-31044ae25c15"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="801" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="4688bc07-d16d-4bf4-93be-e3fee31721ed"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="722" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="e7d1dc19-70bd-462b-9d81-e6bbdbd54392"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="247" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="dfeb2a34-1df9-4e78-83e7-71f841986120"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="91" y="-1" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="afdcd337-8802-46a8-b443-3555f5269d28"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField pattern="#,##0.00">
+				<reportElement x="643" y="0" width="75" height="20" uuid="8927b02a-8948-4b5a-94fc-15b466b70f96"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{cost} != null && !"null".equals($F{cost}) && $F{cost}.length() > 0) ? new BigDecimal($F{cost}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="564" y="0" width="75" height="20" uuid="1c7c394c-ac92-49c9-ad6c-fa76654a5386"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="8" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{sale} != null && !"null".equals($F{sale}) && $F{sale}.length() > 0) ? new BigDecimal($F{sale}) : new BigDecimal("0")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="52" splitType="Stretch"/>
+	</columnFooter>
+</jasperReport>

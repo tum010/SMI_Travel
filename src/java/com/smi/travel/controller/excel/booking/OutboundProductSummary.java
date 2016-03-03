@@ -231,12 +231,6 @@ public class OutboundProductSummary extends AbstractExcelView  {
             cell54.setCellValue(dataheader.getHeaderinvdate());
             cell54.setCellStyle(styleC22);
         }
-
-//        errorOccured = true;
-// XSSFCellStyle style = workbook.createCellStyle();
-// style.setFillForegroundColor(IndexedColors.RED.getIndex());
-// style.setFillPattern(CellStyle.SOLID_FOREGROUND);
-// row.getCell(0).setCellStyle(style);
         // Header Table
         HSSFCellStyle styleC3 = wb.createCellStyle();
         styleC3.setFont(excelFunction.getHeaderTable(wb.createFont()));
@@ -402,6 +396,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 HSSFCell cell0082 = row008.createCell(1);
                 cell0082.setCellValue(groupbytemp);
                 cell0082.setCellStyle(styleGroupdata);
+                sheet.addMergedRegion(CellRangeAddress.valueOf("B"+(counts+1)+":D"+(counts+1)));
                 temp = groupbytemp;
                 
                 System.out.println(" Print Header Table countss ::  " + countss);

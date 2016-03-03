@@ -1,7 +1,6 @@
  package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.Agent;
-import com.smi.travel.datalayer.entity.AirticketPnr;
 import com.smi.travel.datalayer.entity.HistoryBooking;
 import com.smi.travel.datalayer.entity.LandBooking;
 import com.smi.travel.datalayer.entity.LandCity;
@@ -10,9 +9,7 @@ import com.smi.travel.datalayer.entity.MCity;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.Master;
-import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.PackageTour;
-import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.AgentService;
 import com.smi.travel.datalayer.service.BookingAirticketService;
@@ -26,7 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -192,6 +188,7 @@ public class LandDetailController extends SMITravelController {
                     land.setPackageTour(packagetour);
                   
                 }
+                
                     land.setOutboundAdCost(util.convertStringTolong(ADCost));
                     land.setOutboundAdPrice(util.convertStringTolong(ADPrice));
                     land.setOutboundAdQty(util.convertStringToInteger(ADQty));

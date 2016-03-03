@@ -43,6 +43,22 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
+                                <label class="col-md-5 control-label text-right" >Print Report Type</label>
+                                <div class="col-md-5">  
+                                    <div class="form-group">
+                                        <select name="SelectPrintReportType" id="SelectPrintReportType" class="form-control" onchange="selectPrintReport()">
+                                            <!--<option value=""  selected="selected">-- ALL --</option>-->
+                                            <option value="1" >PDF</option>
+                                            <option value="2" >EXCEL</option>
+                                        </select>
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
                                 <label class="col-md-5 control-label text-right">Departure Date From</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
@@ -217,10 +233,10 @@
                             </div>
                         </div>
                     </div>  
-                    <div class="row">
+                    <div class="row" id="pdfgroupby">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label class="col-md-5 control-label text-right" >Type</label>
+                                <label class="col-md-5 control-label text-right" >Group</label>
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <select name="selectGroup" id="selectGroup" class="form-control" >
@@ -351,6 +367,13 @@ $(document).ready(function() {
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
     });
+    
+    var type = $("#SelectPrintReportType").val();
+    if(type == 1){
+        $("#pdfgroupby").addClass('hidden');
+    }else{
+        $("#pdfgroupby").removeClass('hidden');
+    }
     
     $("#printbutton").addClass("disabled");
          
@@ -787,21 +810,14 @@ function printProfitLoss(){
     var invFromDate = document.getElementById("invFromDate").value;
     var invToDate = document.getElementById("invToDate").value;
     var invSupCode = document.getElementById("invSupCode").value;
-//    alert( " departFromDate " + departFromDate
-//        + " departToDate " + departToDate
-//        + " invFromDate " + invFromDate
-//        + " invToDate " + invToDate
-//        + " owner " + owner
-//        + " selectCity " + selectCity
-//        + " selectProduct " + selectProduct
-//        + " invSupCode " + invSupCode
-//        + " payFromDate " + payFromDate
-//        + " payToDate " + payToDate
-//        + " selectGroup " + selectGroup );
+    var type = $("#SelectPrintReportType").val();
+
     if(((departFromDate !== '') && (departToDate !== '')) 
         || ((payFromDate !== '') && (payToDate !== '')) 
         || ((invFromDate !== '') && (invToDate !== ''))) {
-        window.open("Excel.smi?name=PaymentProfitLossSummary&departFromDate=" + departFromDate + 
+    
+        if(type == 1){
+            window.open("report.smi?name=PaymentProfitLossSummary&departFromDate=" + departFromDate + 
             "&departToDate=" + departToDate + 
             "&invFromDate=" + invFromDate + 
             "&invToDate=" + invToDate+ 
@@ -813,6 +829,20 @@ function printProfitLoss(){
             "&payFromDate=" + payFromDate +
             "&payToDate=" + payToDate +
             "&groupby=" + selectGroup);
+        }else{
+            window.open("Excel.smi?name=PaymentProfitLossSummary&departFromDate=" + departFromDate + 
+            "&departToDate=" + departToDate + 
+            "&invFromDate=" + invFromDate + 
+            "&invToDate=" + invToDate+ 
+            "&invdatefrom=" + invFromDate +
+            "&ownercode=" + ownercode + 
+            "&city=" + selectCity + 
+            "&producttypeid=" + selectProduct + 
+            "&invsupcode=" + invSupCode+ 
+            "&payFromDate=" + payFromDate +
+            "&payToDate=" + payToDate +
+            "&groupby=" + selectGroup);
+        }
     } else {
         validateDate();  
     }
@@ -825,5 +855,14 @@ function setupInvSupValue(id, code, name, apcode) {
     document.getElementById('invSupName').value = name;
     document.getElementById('invSupApCode').value = apcode;
     document.getElementById('invSupCode').focus();
+}
+
+function selectPrintReport(){
+    var type = $("#SelectPrintReportType").val();
+    if(type == 1){
+        $("#pdfgroupby").addClass('hidden');
+    }else{
+        $("#pdfgroupby").removeClass('hidden');
+    }
 }
 </script>

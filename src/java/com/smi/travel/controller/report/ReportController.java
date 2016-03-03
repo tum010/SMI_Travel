@@ -111,6 +111,8 @@ public class ReportController extends SMITravelController {
     private static final String RefundAirticketReport = "RefundAirticketReport";
     private static final String Overdue = "OverdueSummaryReport";
     private static final String PaymentOutboundSummaryReport = "PaymentOutboundSummaryReport";
+    private static final String PaymentProfitLossSummary = "PaymentProfitLossSummary";
+    
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
     private ReportService reportservice;
@@ -401,6 +403,19 @@ public class ReportController extends SMITravelController {
             String invSupCodeP = request.getParameter("invSupCode");
             String refnoP = request.getParameter("refno");         
             data = reportservice.getPaymentOutboundSummaryReport(fromdate, todate,statusP,invSupCodeP, refnoP, user.getRole().getName());
+        }else if(PaymentProfitLossSummary.equals(name)){
+            String departFromDate = request.getParameter("departFromDate");
+            String departToDate = request.getParameter("departToDate");
+            String invFromDate = request.getParameter("invFromDate");
+            String invToDate = request.getParameter("invToDate");
+            String ownercode = request.getParameter("ownercode");
+            String city = request.getParameter("city");
+            String producttypeid = request.getParameter("producttypeid");
+            String invsupcode = request.getParameter("invsupcode");
+            String payFromDate = request.getParameter("payFromDate");
+            String payToDate = request.getParameter("payToDate");
+            String groupby = request.getParameter("groupby");
+            data = reportservice.getPaymentProfitLossReport(departFromDate, departToDate, invFromDate, invToDate, ownercode, city, producttypeid, invsupcode, payFromDate, payToDate, "REF NO");
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

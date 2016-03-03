@@ -428,5 +428,11 @@
         <bean id="PaymentOutboundSummaryReport"
 	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
 	   <property name="url" value="/WEB-INF/report/PaymentOutboundSummaryReport.jrxml"/>
-	</bean>                                                                                                                                                                                                                                                     
+	</bean> 
+         
+        <bean id="PaymentProfitLossSummary"
+	   class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView">
+	   <property name="url" value="/WEB-INF/report/PaymentProfitLossSummary.jrxml"/>
+	</bean> 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 </beans>

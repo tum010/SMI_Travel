@@ -41,6 +41,9 @@ public class PaymentProfitLossView {
     private String ownercode;
     private String supcode;
     private String typeid;
+    
+    private String groupBy;
+    private String groupData;
 
     public String getHeaderowner() {
         return headerowner;
@@ -280,6 +283,22 @@ public class PaymentProfitLossView {
 
     public void setTypeid(String typeid) {
         this.typeid = typeid;
+    }
+
+    public String getGroupBy() {
+        return groupBy;
+    }
+
+    public void setGroupBy(String groupBy) {
+        this.groupBy = groupBy;
+    }
+
+    public String getGroupData() {
+        return groupData;
+    }
+
+    public void setGroupData(String groupData) {
+        this.groupData = groupData;
     }
     
 
