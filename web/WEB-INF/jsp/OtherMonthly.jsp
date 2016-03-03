@@ -100,7 +100,7 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <div class="col-sm-7 text-right">
+                                <div class="col-sm-8 text-right">
                                     <button type="button"  id="printbutton" name="printbutton" onclick="printOtherMonthlyReport()" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
                                 </div>
 <!--                                <div class="col-sm-2 text-left">

@@ -153,7 +153,7 @@
                         <div class="col-md-7">
                             <div class="form-group">
                                 <label class="col-md-6 control-label text-right" for="rept"></label>
-                                <div class="col-md-6">  
+                                <div class="col-md-5 text-center">  
                                     <div class="form-group">
                                         <button type="button" id="printbutton"  name="printbutton"  onclick="printDebtorSummary();" class="btn btn-success"><span class="glyphicon glyphicon-print"></span> Print</button>
                                     </div>

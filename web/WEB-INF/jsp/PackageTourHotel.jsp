@@ -82,10 +82,10 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <div class="col-sm-7 text-right">
+                                <div class="col-sm-8 text-right">
                                     <button type="button"  class="btn btn-success" onclick="printHotelSummary();"><span class="glyphicon glyphicon-print" id="btnDownloadAP"></span> Print</button>
                                 </div>
-                                <div class="col-sm-2 text-left">
+                                <div class="col-sm-2 text-left hidden">
                                     <button type="button" onclick="" class="btn btn-warning"><span class="glyphicon glyphicon-print"></span> Cancel</button>
                                 </div>
                             </div>

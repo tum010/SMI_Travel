@@ -255,7 +255,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label class="col-md-5 control-label text-right"></label>
-                                <div class="col-md-5">  
+                                <div class="col-md-5 text-center">  
                                     <div class="form-group">
                                         <button type="button"  class="btn btn-success" id="printbutton"  name="printbutton" onclick="printProfitLoss();"><span class="glyphicon glyphicon-print" ></span> Print</button>
                                     </div>

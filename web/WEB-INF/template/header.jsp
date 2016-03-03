@@ -93,9 +93,9 @@
                                             
                             var reportMenu = [
                                             "<li><a id='menu-checkingairticket' href='TicketFareSummaryReport.smi'>Checking AirTicket</a></li>",
-                                            "<li><a id='menu-hotel' href='HotelSumReport.smi'> Hotel</a></li>",
-                                            "<li><a id='menu-land' href=''>Land</a></li>",
-                                            "<li><a id='menu-other' href=''>Others</a></li>",
+//                                            "<li><a id='menu-hotel' href='HotelSumReport.smi'> Hotel</a></li>",
+//                                            "<li><a id='menu-land' href=''>Land</a></li>",
+//                                            "<li><a id='menu-other' href=''>Others</a></li>",
                                             "<li><a id='menu-financeandaccount' href='InvoiceMonthly.smi'>Finance And Account</a></li>",
                                             "<li><a id='menu-outboundsummary' href='OutboundSummary.smi'>Outbound Summary</a></li>",
                                             "<li><a id='menu-bookingsummary' href='AirTicketMonthReport.smi'>Booking Summary</a></li>",
