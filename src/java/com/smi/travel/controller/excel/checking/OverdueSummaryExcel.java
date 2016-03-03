@@ -714,7 +714,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
             }
             
             HSSFRow row = sheet.createRow(count + i);
-            String id = data.getId();
+            String id = (data.getId() != null ? data.getId() : "");
             String idTemp = (dataTemp != null ? dataTemp.getId() : "");
             countMerge++;
             
@@ -758,7 +758,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
             celldata9.setCellValue(!"".equalsIgnoreCase(data.getProfit()) && data.getProfit() != null ? new BigDecimal(data.getProfit()).doubleValue() : 0);
             celldata9.setCellStyle(styleC25);
             
-            if(!id.equalsIgnoreCase(idTemp) && !"".equalsIgnoreCase(idTemp)){
+            if(!id.equalsIgnoreCase(idTemp) && !"".equalsIgnoreCase(id) && !"".equalsIgnoreCase(idTemp)){
                 if(countMerge > 1){
                     sheet.addMergedRegion(CellRangeAddress.valueOf("H" + (hMerge) + ":H" + (hMerge+(countMerge-1))));
                     sheet.addMergedRegion(CellRangeAddress.valueOf("I" + (hMerge) + ":I" + (hMerge+(countMerge-1))));
