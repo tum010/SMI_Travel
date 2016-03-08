@@ -42,5 +42,7 @@ public interface PaymentOutboundDao {
     
     public List getPaymentProfitLossReport(String departFromDate,String departToDate,String invFromDate,String invToDate,String ownercode,String city,String producttypeid,String invsupcode,
             String payFromDate,String payToDate,String groupby);
+
+    public List getPaymentProfitLossVolumnReport(String departFromDate, String departToDate, String invFromDate, String invToDate, String ownercode, String city, String producttypeid, String invsupcode, String payFromDate, String payToDate, String groupBy);
     
 }

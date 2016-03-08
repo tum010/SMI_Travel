@@ -112,6 +112,7 @@ public class ReportController extends SMITravelController {
     private static final String Overdue = "OverdueSummaryReport";
     private static final String PaymentOutboundSummaryReport = "PaymentOutboundSummaryReport";
     private static final String PaymentProfitLossSummary = "PaymentProfitLossSummary";
+    private static final String PaymentProfitLossVolumn = "PaymentProfitLossVolumn";
     
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -416,6 +417,19 @@ public class ReportController extends SMITravelController {
             String payToDate = request.getParameter("payToDate");
             String groupby = request.getParameter("groupby");
             data = reportservice.getPaymentProfitLossReport(departFromDate, departToDate, invFromDate, invToDate, ownercode, city, producttypeid, invsupcode, payFromDate, payToDate, "REF NO");
+        }else if(PaymentProfitLossVolumn.equals(name)){
+            String departFromDate = request.getParameter("departFromDate");
+            String departToDate = request.getParameter("departToDate");
+            String invFromDate = request.getParameter("invFromDate");
+            String invToDate = request.getParameter("invToDate");
+            String ownercode = request.getParameter("ownercode");
+            String city = request.getParameter("city");
+            String producttypeid = request.getParameter("producttypeid");
+            String invsupcode = request.getParameter("invsupcode");
+            String payFromDate = request.getParameter("payFromDate");
+            String payToDate = request.getParameter("payToDate");
+            String groupby = request.getParameter("groupby");
+            data = reportservice.getPaymentProfitLossVolumnReport(departFromDate, departToDate, invFromDate, invToDate, ownercode, city, producttypeid, invsupcode, payFromDate, payToDate, groupby);
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

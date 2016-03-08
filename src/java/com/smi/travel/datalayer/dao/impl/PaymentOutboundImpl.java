@@ -1197,4 +1197,188 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         return data;
     }
 
+    @Override
+    public List getPaymentProfitLossVolumnReport(String departFromDate, String departToDate, String invFromDate, String invToDate, String ownercode, String city, String producttypeid, String invsupcode, String payFromDate, String payToDate, String groupby) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd/MM/yyyy");
+        
+        List data = new ArrayList();
+        String query = "SELECT * , ";
+        if((groupby != null) && (!"".equalsIgnoreCase(groupby))){
+            if("OWNER".equalsIgnoreCase(groupby)){
+                query += " owner ";
+            }else if("PRODUCT TYPE".equalsIgnoreCase(groupby)){
+                query += " producttype ";
+            }else if("CITY".equalsIgnoreCase(groupby)){
+                query += " city ";
+            }else if("CLIENT NAME".equalsIgnoreCase(groupby)){
+                query += " invto ";
+            }else if("DEPARTURE DATE".equalsIgnoreCase(groupby)){
+                query += " departdate ";
+            }else{
+                query += " refno ";
+            }                                           
+        }
+        query += " as data , sum(sale) as sumsale , sum(cost) as sumcost , sum(profit) as sumprofit FROM `payment_profitloss` ";
+        
+        boolean haveCondition = false;  
+        
+        String departdateheader = "ALL";
+        String invdateheader = "ALL";
+        String paydateheader = "ALL";
+        
+        String producttypeheader = "ALL";
+        String groupheader= "ALL";
+        String cityheader = "ALL";
+        String ownerheader = "ALL";
+        String invsupheader = "ALL";
+        
+        boolean searchowner = false;
+        boolean searchinvsup = false;
+        boolean searchprodcuct = false;
+        
+        if ((departFromDate != null) && (!"".equalsIgnoreCase(departFromDate)) && (departToDate != null) && (!"".equalsIgnoreCase(departToDate))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " (departdate BETWEEN '" + departFromDate + "' AND '" + departToDate + "') ";
+            haveCondition = true;   
+            
+            departdateheader = util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(departFromDate)))) + " To " +
+                    util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(departToDate))));
+        } 
+        
+        if ((invFromDate != null) && (!"".equalsIgnoreCase(invFromDate)) && (invToDate != null) && (!"".equalsIgnoreCase(invToDate))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " (invdate BETWEEN '" + invFromDate + "' AND '" + invToDate + "') ";
+            haveCondition = true;      
+            invdateheader = util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(invFromDate)))) + " To " +
+                    util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(invToDate))));
+        } 
+        
+        if ((payFromDate != null) && (!"".equalsIgnoreCase(payFromDate)) && (payToDate != null) && (!"".equalsIgnoreCase(payToDate))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " (paydate BETWEEN '" + payFromDate + "' AND '" + payToDate + "') ";
+            haveCondition = true;            
+            paydateheader = util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(payFromDate)))) + " To " +
+                    util.ConvertString(dateformat.format(util.convertStringToDate(String.valueOf(payToDate))));
+        } 
+        
+        if ((ownercode != null) && (!"".equalsIgnoreCase(ownercode))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " ownercode = '" + ownercode + "' ";
+            haveCondition = true;       
+            searchowner = true;
+        }
+        
+        if ((city != null) && (!"".equalsIgnoreCase(city))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " city = '" + city + "' ";
+            haveCondition = true;
+            cityheader = city;
+        } 
+        
+        if ((invsupcode != null) && (!"".equalsIgnoreCase(invsupcode))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " supcode = '" + invsupcode + "' ";
+            haveCondition = true;   
+            searchinvsup = true;
+        }
+        
+        if((producttypeid != null) && (!"".equalsIgnoreCase(producttypeid))){
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " typeid = '" + producttypeid + "' ";
+            haveCondition = true;
+            searchprodcuct = true;
+        }
+        
+        if((groupby != null) && (!"".equalsIgnoreCase(groupby))){
+            String groupbytemp = "";
+            if("OWNER".equalsIgnoreCase(groupby)){
+                groupbytemp = " owner ";
+            }else if("PRODUCT TYPE".equalsIgnoreCase(groupby)){
+                groupbytemp = " producttype ";
+            }else if("CITY".equalsIgnoreCase(groupby)){
+                groupbytemp = " city ";
+            }else if("CLIENT NAME".equalsIgnoreCase(groupby)){
+                groupbytemp = " invto ";
+            }else if("DEPARTURE DATE".equalsIgnoreCase(groupby)){
+                groupbytemp = " departdate ";
+            }else{
+                groupbytemp = " refno ";
+            }                     
+            query += " group by " + groupbytemp + "  order by refno , sale desc ";
+            groupheader = groupby;
+        }
+        
+        List<Object[]> QueryList = session.createSQLQuery(query)
+                .addScalar("refno", Hibernate.STRING)
+                .addScalar("owner", Hibernate.STRING)
+                .addScalar("tourname", Hibernate.STRING)
+                .addScalar("departdate", Hibernate.STRING)
+                .addScalar("city", Hibernate.STRING)
+                .addScalar("pax", Hibernate.STRING)
+                .addScalar("description", Hibernate.STRING)
+                .addScalar("producttype", Hibernate.STRING)
+                .addScalar("invto", Hibernate.STRING)
+                .addScalar("invno", Hibernate.STRING)
+                .addScalar("invdate", Hibernate.STRING)
+                .addScalar("receipt", Hibernate.STRING)
+                .addScalar("taxinvoice", Hibernate.STRING)
+                .addScalar("payno", Hibernate.STRING)
+                .addScalar("supplier", Hibernate.STRING)
+                .addScalar("paydate", Hibernate.STRING)
+                .addScalar("sale", Hibernate.STRING)
+                .addScalar("cost", Hibernate.STRING)
+                .addScalar("profit", Hibernate.STRING)
+                .addScalar("ownercode", Hibernate.STRING)
+                .addScalar("supcode", Hibernate.STRING)
+                .addScalar("typeid", Hibernate.STRING)
+                .addScalar("data", Hibernate.STRING)
+                .addScalar("sumsale", Hibernate.STRING)
+                .addScalar("sumcost", Hibernate.STRING)
+                .addScalar("sumprofit", Hibernate.STRING)
+                .list();         
+        String groupbytemp = "";        
+        for (Object[] B : QueryList) {            
+            PaymentProfitLossView pplv = new PaymentProfitLossView();
+            
+            if(searchprodcuct){
+               pplv.setHeaderproducttype(util.ConvertString(B[7]));
+            }else{
+               pplv.setHeaderproducttype(producttypeheader);
+            }
+            
+            if(searchowner){
+                pplv.setHeaderowner(util.ConvertString(B[1]));
+            }else{
+                pplv.setHeaderowner(ownerheader);
+            }
+            
+            if(searchinvsup){
+                pplv.setHeaderinvsup(util.ConvertString(B[14]));
+            }else{
+                pplv.setHeaderinvsup(invsupheader);
+            }
+            
+            pplv.setHeadercity(cityheader);
+            pplv.setHeadergroup(groupheader);
+            pplv.setHeaderpaydate(paydateheader);
+            pplv.setHeaderdepartdate(departdateheader);
+            pplv.setHeaderinvdate(invdateheader);
+
+            pplv.setProducttype(B[22] != null ? util.ConvertString(B[22]) : "");         
+            pplv.setSale(B[23] != null ? util.ConvertString(B[23]) : "0.00");
+            pplv.setCost(B[24] != null ? util.ConvertString(B[24]) : "0.00");
+            pplv.setProfit(B[25] != null ? util.ConvertString(B[25]) : "0.00");          
+            data.add(pplv);            
+        }
+        session.close();
+        this.sessionFactory.close();
+        return data;
+    }
+
 }

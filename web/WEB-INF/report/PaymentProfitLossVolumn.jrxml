@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentProfitLossVolumn" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="8f187ea0-d485-4530-8f85-d5f036dcfbc2">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="304"/>
+	<field name="headerowner" class="java.lang.String"/>
+	<field name="headerinvsup" class="java.lang.String"/>
+	<field name="headercity" class="java.lang.String"/>
+	<field name="headergroup" class="java.lang.String"/>
+	<field name="headerproducttype" class="java.lang.String"/>
+	<field name="headerpaydate" class="java.lang.String"/>
+	<field name="headerdepartdate" class="java.lang.String"/>
+	<field name="headerinvdate" class="java.lang.String"/>
+	<field name="refno" class="java.lang.String"/>
+	<field name="invto" class="java.lang.String"/>
+	<field name="tourname" class="java.lang.String"/>
+	<field name="departdate" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<field name="pax" class="java.lang.String"/>
+	<field name="producttype" class="java.lang.String"/>
+	<field name="sale" class="java.lang.String"/>
+	<field name="cost" class="java.lang.String"/>
+	<field name="profit" class="java.lang.String"/>
+	<variable name="totalcost" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[new BigDecimal($F{cost})]]></variableExpression>
+	</variable>
+	<variable name="totalsale" class="java.lang.String">
+		<variableExpression><![CDATA[new BigDecimal($F{sale})]]></variableExpression>
+	</variable>
+	<variable name="totalprofit" class="java.math.BigDecimal">
+		<variableExpression><![CDATA[new BigDecimal($F{profit})]]></variableExpression>
+	</variable>
+	<pageHeader>
+		<band height="121" splitType="Stretch">
+			<staticText>
+				<reportElement x="306" y="42" width="32" height="13" uuid="4fa22fdf-01b5-42cb-935f-c784d093c7f0"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[City :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="344" y="68" width="81" height="12" uuid="9d54abdc-d738-4c74-ac74-c9c48bb12dae"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headerdepartdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="250" y="55" width="88" height="13" uuid="73eaaff3-f877-47c2-80cb-300069b9b500"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Product Type :]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="519" y="85" width="36" height="12" uuid="2f9a692d-1a75-468c-b315-504ee30f5785"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="448" y="41" width="34" height="13" uuid="84b631ca-75f0-472c-a8b4-362fae7f3305"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Group :]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="344" y="55" width="81" height="13" uuid="dfa97df2-440a-4c18-8d19-6cf934ed99ab"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headerproducttype}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="482" y="41" width="73" height="13" uuid="ae01be9e-e2ab-48c9-bcc8-d6a4fcc0c896"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headergroup}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="344" y="30" width="81" height="13" uuid="49c4a707-136e-43a4-8fb8-3ef425e40441"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headerowner}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="482" y="29" width="73" height="13" uuid="2b25963e-5648-46f6-8de9-f03cdae151a9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headerinvsup}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="304" y="30" width="34" height="12" uuid="5f213848-9212-41fb-b0e5-0f37cf362b34"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Owner :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="383" y="85" width="131" height="12" uuid="e3b75187-7044-42da-a9f3-34f774cec5f5"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="344" y="42" width="81" height="13" uuid="1b60e19f-26cb-4c8e-978d-5aace2300172"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headercity}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="424" y="29" width="58" height="12" uuid="6b29ab8a-9345-4ce8-be1d-01c3ab78c7a9"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice Sup :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="68" width="88" height="12" uuid="fe2619f1-1641-4101-a49e-92d082e931c0"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departure Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="25" width="221" height="12" uuid="58af98c7-6484-46e3-8980-d3e1ac8a6e1a"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[Wangmai, Phatumwan, Bangkok 10330]]></text>
+			</staticText>
+			<image>
+				<reportElement x="1" y="3" width="65" height="48" uuid="69a7b1ad-e07a-4f16-a0c6-7727ecab154c"/>
+				<imageExpression><![CDATA["resource/images/smi-logo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="71" y="3" width="149" height="13" uuid="46dbbd4c-101e-401e-ad77-c82092143a05"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[S.M.I TRAVEL CO., LTD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="69" width="158" height="13" uuid="37849796-1eda-45d1-95e2-081bb6d3d8c4"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[e-mail: yoyaku@wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="45" width="221" height="12" uuid="1c3bbf3f-b53d-4862-b72f-e8f766eba15d"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[Tel: +66(0)-2162201 Fax: +66(0)-216-2202]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="57" width="158" height="15" uuid="c513a7fd-001a-47b9-baeb-3e441bd136ec"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[http://www.wendytour.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="15" width="221" height="22" uuid="c2707f12-d2eb-4fa4-9d36-15ecdd8c4f65"/>
+				<textElement>
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<text><![CDATA[9th Floor, Siam at Siam Hotel Building 865 Rama 1 Rd.,]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="482" y="67" width="73" height="12" uuid="ef6a1c0f-9351-4c29-a849-1629654e00d1"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headerinvdate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="424" y="67" width="58" height="12" uuid="cc0c4c76-9c3b-4ac9-92c5-acbbafcab476"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Invoice Date :]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="482" y="54" width="73" height="13" uuid="b4127029-7d57-4138-8433-c044530522cd"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headerpaydate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="438" y="54" width="44" height="13" uuid="6c3d417b-046a-416c-b968-40c5822d1748"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pay Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="3" width="250" height="25" uuid="b5b8f8f9-19a3-40d3-a508-6302b9e4ffe6"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profit & Loss Volumn]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="1" y="106" width="169" height="13" backcolor="#CCCCCC" uuid="61c60973-72c9-4f53-b88e-11dc92076d69"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="10" y="109" width="5" height="6" backcolor="#000000" uuid="2e53d632-d8fa-410d-8ffe-f4ea2ff5472e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="153" y="109" width="5" height="6" backcolor="#000000" uuid="0917d030-820b-4123-9dfd-019d2c6e7235"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="99" y="109" width="5" height="6" backcolor="#000000" uuid="56016657-9f58-43cf-ab78-10e5dc3ac88d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="135" y="109" width="5" height="6" backcolor="#000000" uuid="8452c888-6ebf-4eba-b7aa-ba8a934d5b90"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="117" y="109" width="5" height="6" backcolor="#000000" uuid="e60f03e5-b7d4-4a97-a2f8-ce9db37176d5"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="82" y="109" width="5" height="6" backcolor="#000000" uuid="81e6daec-5ff7-4abb-aeed-d06495a50250"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="64" y="109" width="5" height="6" backcolor="#000000" uuid="391fea4c-ba4e-4fa0-b905-8b92fd6aac46"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="48" y="109" width="5" height="6" backcolor="#000000" uuid="19d8bb32-f3ad-4f86-87ac-dd52758e74e7"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="28" y="109" width="5" height="6" backcolor="#000000" uuid="8c79e870-62d2-4dc6-baae-770ad58729a2"/>
+			</rectangle>
+			<line>
+				<reportElement x="1" y="104" width="555" height="1" uuid="1491b957-6624-440e-b9f0-1b22f0c2c04f"/>
+				<graphicElement>
+					<pen lineWidth="3.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24">
+			<rectangle>
+				<reportElement x="1" y="10" width="554" height="13" backcolor="#E6E6E6" uuid="69a5bc77-e3fe-4650-b069-8ba95c784ee5"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineColor="#CCCCCC"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="293" y="10" width="131" height="13" uuid="cf5c651d-8d55-4c45-a1c0-01e2c56b2d7d"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sale]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="10" width="131" height="13" uuid="215d9b66-17c1-49af-b336-d67e816a1837"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cost]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="3" y="10" width="159" height="13" uuid="a82d8699-59c6-452c-a930-1280891a817a"/>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{headergroup}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="424" y="10" width="131" height="13" uuid="02fdba3a-6d6a-471c-9fc5-5f4f2656581a"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profit]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="162" height="14" uuid="8f5c68de-8c52-409b-a1da-73c420723e34"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{producttype}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="162" y="0" width="131" height="14" uuid="8851ce51-fa7b-4ce5-85f4-85eb3cd5688b"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[($F{cost} != null && !"null".equals($F{cost}) && $F{cost}.length() > 0) ? new BigDecimal($F{cost}) : new BigDecimal("0")
+]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="293" y="0" width="131" height="14" uuid="966feb11-bd40-4239-bb63-38ce078f7f35"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[($F{sale} != null && !"null".equals($F{sale}) && $F{sale}.length() > 0) ? new BigDecimal($F{sale}) : new BigDecimal("0")
+]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="424" y="0" width="131" height="14" uuid="fed198d5-3d62-44b1-85c7-f84ea9801d9a"/>
+				<box>
+					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<leftPen lineWidth="0.5" lineColor="#CCCCFF"/>
+					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[($F{profit} != null && !"null".equals($F{profit}) && $F{profit}.length() > 0) ? new BigDecimal($F{profit}) : new BigDecimal("0")
+]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="14" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="13" backcolor="#E6E6E6" uuid="1fffd497-9c4a-4d4b-8d3f-0d8f23069366"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineColor="#CCCCCC"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="3" y="0" width="54" height="13" uuid="df5467bf-0f7d-4b2a-bb56-87d9f3f9240f"/>
+				<text><![CDATA[Grand total]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="162" y="0" width="131" height="14" uuid="a17329b9-413d-4c61-b442-bfc45939e6d3"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalcost}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="293" y="0" width="131" height="14" uuid="9e5ccebd-719d-496d-b199-0b816b38df4b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalsale}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="425" y="0" width="130" height="14" uuid="4238cd38-3ea7-4064-a0b7-bcda98bb14e7"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{totalprofit}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="452" splitType="Stretch">
+			<pieChart>
+				<chart>
+					<reportElement x="2" y="157" width="553" height="140" uuid="0641d110-432b-427f-87eb-6ba177c94062"/>
+					<chartTitle>
+						<font size="14" isBold="true"/>
+						<titleExpression><![CDATA["Sale"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Right">
+						<font size="5"/>
+					</chartLegend>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{producttype}]]></keyExpression>
+					<valueExpression><![CDATA[new BigDecimal($F{sale})]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart>
+					<reportElement x="2" y="307" width="553" height="140" uuid="d41b12d7-745d-463b-b405-7b3963e18d86"/>
+					<chartTitle>
+						<font size="14" isBold="true"/>
+						<titleExpression><![CDATA["Profit"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Right">
+						<font size="5"/>
+					</chartLegend>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{producttype}]]></keyExpression>
+					<valueExpression><![CDATA[new BigDecimal($F{profit})]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart>
+					<reportElement x="2" y="7" width="553" height="140" uuid="b5974d35-2e7e-425a-bc74-89aea9c6f11c"/>
+					<chartTitle>
+						<font size="14" isBold="true"/>
+						<titleExpression><![CDATA["Cost"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Right">
+						<font size="5"/>
+					</chartLegend>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{producttype}]]></keyExpression>
+					<valueExpression><![CDATA[new BigDecimal($F{cost})]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</pageFooter>
+</jasperReport>

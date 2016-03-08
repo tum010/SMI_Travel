@@ -50,6 +50,7 @@
                                             <!--<option value=""  selected="selected">-- ALL --</option>-->
                                             <option value="1" >PDF</option>
                                             <option value="2" >EXCEL</option>
+                                            <option value="3" >SUMMARY</option>
                                         </select>
                                     </div>
                                 </div>   
@@ -829,8 +830,23 @@ function printProfitLoss(){
             "&payFromDate=" + payFromDate +
             "&payToDate=" + payToDate +
             "&groupby=" + selectGroup);
-        }else{
+    
+        }else if(type == 2){
             window.open("Excel.smi?name=PaymentProfitLossSummary&departFromDate=" + departFromDate + 
+            "&departToDate=" + departToDate + 
+            "&invFromDate=" + invFromDate + 
+            "&invToDate=" + invToDate+ 
+            "&invdatefrom=" + invFromDate +
+            "&ownercode=" + ownercode + 
+            "&city=" + selectCity + 
+            "&producttypeid=" + selectProduct + 
+            "&invsupcode=" + invSupCode+ 
+            "&payFromDate=" + payFromDate +
+            "&payToDate=" + payToDate +
+            "&groupby=" + selectGroup);
+        
+        }else if(type == 3){
+            window.open("report.smi?name=PaymentProfitLossVolumn&departFromDate=" + departFromDate + 
             "&departToDate=" + departToDate + 
             "&invFromDate=" + invFromDate + 
             "&invToDate=" + invToDate+ 

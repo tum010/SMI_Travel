@@ -845,4 +845,8 @@ public class ReportService {
     public List getStockNonInvoiceSummaryReport(String product, String invoiceSup, String effectiveDateFrom, String effectiveDateTo, String payDateFrom, String payDateTo, String addDate, String username) {
         return paymentOutboundDao.getStockNonInvoiceSummaryReport(product, invoiceSup, effectiveDateFrom, effectiveDateTo, payDateFrom, payDateTo, addDate, username);
     }
+
+    public List getPaymentProfitLossVolumnReport(String departFromDate, String departToDate, String invFromDate, String invToDate, String ownercode, String city, String producttypeid, String invsupcode, String payFromDate, String payToDate, String groupBy) {
+        return paymentOutboundDao.getPaymentProfitLossVolumnReport(departFromDate, departToDate, invFromDate, invToDate, ownercode, city, producttypeid, invsupcode, payFromDate, payToDate, groupBy);
+    }
 }
