@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentProfitLossVolumn" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="8f187ea0-d485-4530-8f85-d5f036dcfbc2">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="304"/>
+	<property name="ireport.y" value="60"/>
 	<field name="headerowner" class="java.lang.String"/>
 	<field name="headerinvsup" class="java.lang.String"/>
 	<field name="headercity" class="java.lang.String"/>
@@ -286,7 +286,7 @@
 			</staticText>
 			<textField isBlankWhenNull="true">
 				<reportElement x="3" y="10" width="159" height="13" uuid="a82d8699-59c6-452c-a930-1280891a817a"/>
-				<textElement textAlignment="Left">
+				<textElement textAlignment="Center">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{headergroup}]]></textFieldExpression>
@@ -381,11 +381,32 @@
 			</textField>
 		</band>
 	</columnFooter>
-	<pageFooter>
-		<band height="452" splitType="Stretch">
+	<lastPageFooter>
+		<band height="448">
 			<pieChart>
 				<chart>
-					<reportElement x="2" y="157" width="553" height="140" uuid="0641d110-432b-427f-87eb-6ba177c94062"/>
+					<reportElement x="1" y="5" width="553" height="140" uuid="f39f997e-5e86-49f6-90cd-6056a884195a"/>
+					<chartTitle>
+						<font size="14" isBold="true"/>
+						<titleExpression><![CDATA["Cost"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend position="Right">
+						<font size="5"/>
+					</chartLegend>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{producttype}]]></keyExpression>
+					<valueExpression><![CDATA[new BigDecimal($F{cost})]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="false">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart>
+					<reportElement x="1" y="155" width="553" height="140" uuid="f61123cd-6357-4eda-932f-f21dcdc003ee"/>
 					<chartTitle>
 						<font size="14" isBold="true"/>
 						<titleExpression><![CDATA["Sale"]]></titleExpression>
@@ -406,7 +427,7 @@
 			</pieChart>
 			<pieChart>
 				<chart>
-					<reportElement x="2" y="307" width="553" height="140" uuid="d41b12d7-745d-463b-b405-7b3963e18d86"/>
+					<reportElement x="1" y="305" width="553" height="140" uuid="5565ae58-e928-412d-b796-9ead6dd61584"/>
 					<chartTitle>
 						<font size="14" isBold="true"/>
 						<titleExpression><![CDATA["Profit"]]></titleExpression>
@@ -425,27 +446,6 @@
 					<itemLabel/>
 				</piePlot>
 			</pieChart>
-			<pieChart>
-				<chart>
-					<reportElement x="2" y="7" width="553" height="140" uuid="b5974d35-2e7e-425a-bc74-89aea9c6f11c"/>
-					<chartTitle>
-						<font size="14" isBold="true"/>
-						<titleExpression><![CDATA["Cost"]]></titleExpression>
-					</chartTitle>
-					<chartSubtitle/>
-					<chartLegend position="Right">
-						<font size="5"/>
-					</chartLegend>
-				</chart>
-				<pieDataset>
-					<keyExpression><![CDATA[$F{producttype}]]></keyExpression>
-					<valueExpression><![CDATA[new BigDecimal($F{cost})]]></valueExpression>
-				</pieDataset>
-				<piePlot isShowLabels="false">
-					<plot/>
-					<itemLabel/>
-				</piePlot>
-			</pieChart>
 		</band>
-	</pageFooter>
+	</lastPageFooter>
 </jasperReport>
