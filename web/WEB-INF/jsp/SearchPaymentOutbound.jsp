@@ -44,7 +44,7 @@
             </div>
         </div>
         <hr/>
-        <div class="row" style="padding-left: 0px">
+        <div class="row" style="padding-left: 0px;margin-top:-5px;">
             <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;">
                 <label class="control-label">From<font style="color: red;">*</font></lable>
             </div>
@@ -80,11 +80,11 @@
             </div>
             
         </div><!-- End Row 1-->
-        <div class="row" style="padding-left: 0px">
-            <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;">
+        <div class="row" style="padding-left: 0px;">
+            <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;margin-top:-10px;">
                 <label class="control-label">Invoice Sup</lable>
             </div>
-            <div class="col-md-2 form-group text-left" > 
+            <div class="col-md-2 form-group text-left" style="margin-top:-10px;"> 
                 <div class="input-group" id="gr" >
                     <input type="hidden" class="form-control" id="invSupId" name="invSupId" value="" />
                     <input type="text" class="form-control" id="invSupCode" name="invSupCode" value="${requestScope['invSupCode']}" />
@@ -93,29 +93,29 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-2 form-group text-left" style="width:310px;padding-right: 0px;padding-left: 0px;">
+            <div class="col-md-2 form-group text-left" style="width:310px;padding-right: 0px;padding-left: 0px;margin-top:-10px;">
                 <input name="invSupName" id="invSupName" type="text" class="form-control" value="${requestScope['invSupName']}" readonly=""/>
             </div>
-            <div class="col-xs-1 text-right" style="width:165px;padding-right: 0px;padding-left: 0px;">
+            <div class="col-xs-1 text-right" style="width:165px;padding-right: 0px;padding-left: 0px;margin-top:-10px;">
                 <label class="control-label">Ref No</lable>
             </div>
-            <div class="col-md-2 form-group text-left" >
+            <div class="col-md-2 form-group text-left" style="margin-top:-10px;">
                 <input name="refNo" id="refNo" type="text" class="form-control" value="${requestScope['refNo']}" />
             </div>
         </div>
-        <div class="row" style="padding-left: 775px">
-            <div class="col-xs-1 text-left" style="width: 100px;">
+        <div class="row" style="padding-left: 775px;margin-top:-10px;">
+            <div class="col-xs-1 text-left" style="width: 100px;margin-top:-10px;">
                 <button type="submit"  id="btnSearch"  name="btnSearch" onclick="" class="btn btn-primary btn-primary ">
                     <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                 </button>   
             </div>
-            <div class="col-xs-1 text-left" style="width: 100px;">
+            <div class="col-xs-1 text-left" style="width: 100px;margin-top:-10px;">
                 <a id="btnPrint" name="btnPrint" onclick="printPaymentOutbound()" class="btn btn-default">
                     <i class="glyphicon glyphicon-print"></i> Print
                 </a>
             </div>
         </div>
-        <div class="row" style="padding-left: 15px;width: 1040px;">
+        <div class="row" style="padding-left: 15px;width: 1040px;margin-top:-10px;">
             <table class="display" id="searchPaymentTable" style="table-layout: fixed;">
                 <thead class="datatable-header">
                     <tr>

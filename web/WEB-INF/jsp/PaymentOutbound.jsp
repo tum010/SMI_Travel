@@ -173,8 +173,8 @@
             <div class="panel-heading outboundheader">
                 <h4 class="panel-title">Payment Detail</h4>
             </div>
-            <div class="panel-body"  style="padding-right: 0px;">                                 
-                <div class="row" style="padding-left: 0px">
+            <div class="panel-body"  style="padding-right: 0px;" >                                 
+                <div class="row" style="padding-left: 0px;margin-top: -10px">
                     <div class="col-xs-1 text-right" style="width:100px;padding-right: 0px;padding-left: 0px;">
                         <label class="control-label">PV No</lable>
                     </div>
@@ -222,11 +222,11 @@
                         </div>
                     </div>
                 </div><!--End row 1-->
-                <div class="row" style="padding-left: 0px">
-                    <div class="col-xs-1 text-right" style="width:100px;padding-right: 0px;padding-left: 0px;">
+                <div class="row" style="padding-left: 0px;">
+                    <div class="col-xs-1 text-right" style="width:100px;padding-right: 0px;padding-left: 0px;margin-top: -10px">
                         <label class="control-label">Invoice Sup</lable>
                     </div>
-                    <div class="col-md-2 form-group text-left" style="width:150px;"> 
+                    <div class="col-md-2 form-group text-left" style="width:150px;margin-top: -10px"> 
                         <div class="input-group">
                             <input type="hidden" class="form-control" id="invSupId" name="invSupId" value="" />
                             <input type="text" class="form-control" id="invSupCode" name="invSupCode" value="${paymentOutbound.invoiceSup}" maxlength="30"/>
@@ -235,23 +235,23 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-md-2 form-group text-left" style="width:200px;padding-left: 0px;">
+                    <div class="col-md-2 form-group text-left" style="width:200px;padding-left: 0px;margin-top: -10px">
                         <input name="invSupName" id="invSupName" type="text" class="form-control" value="" readonly=""/>
                     </div>
-                    <div class="col-xs-1 text-right" style="width:85px;padding-right: 0px;">
+                    <div class="col-xs-1 text-right" style="width:85px;padding-right: 0px;margin-top: -10px">
                         <label class="control-label">A/P Code<font style="color: red">*</font></lable>
                     </div>
-                    <div class="col-md-1 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 180px;">
+                    <div class="col-md-1 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 180px;margin-top: -10px">
                         <div class="col-sm-12">
                             <div class="input-group" id="CodeValidate">
                                 <input name="invSupApCode" id="invSupApCode" type="text" class="form-control" value="${paymentOutbound.apCode}" maxlength="30"/>   
                             </div>    
                         </div> 
                     </div>
-                    <div class="col-xs-1 text-right" style="width:60px;padding-right: 0px;">
+                    <div class="col-xs-1 text-right" style="width:60px;padding-right: 0px;margin-top: -10px">
                         <label class="control-label">Status<font style="color: red">*</font></lable>
                     </div>
-                    <div class="col-md-1 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 180px;">
+                    <div class="col-md-1 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 180px;margin-top: -10px">
                         <div class="col-sm-12">
                             <select class="form-control" name="status" id="status">
                                 <option  value="" >---------</option>
@@ -267,15 +267,15 @@
                     </div>
                 </div><!--End row 2-->
                 <div class="col-xs-12 " style="padding-left: 0px;">
-                    <div class="col-xs-1 text-right" style="margin-top: -5px; width: 100px; ">
+                    <div class="col-xs-1 text-right" style="margin-top: -5px; width: 100px;margin-top: -17px">
                         <label class="control-label" for="">Search</lable>                           
                     </div>           
-                    <div class="col-md-1 text-left" style="width: 50px; padding-left: 0px;">
+                    <div class="col-md-1 text-left" style="width: 50px; padding-left: 0px;margin-top: -12px">
                         <a data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample" onclick="showSearchRefNo()">
                             <span id="spanEditRefNo">Ref</span>
                         </a>                           
                     </div>
-                    <div class="col-md-1 text-left" style="width: 50px;">
+                    <div class="col-md-1 text-left" style="width: 50px;margin-top: -12px">
                         <a data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample" onclick="showSearchStock()">
                             <span id="spanEditStock">Stock</span>
                         </a>                           
@@ -284,7 +284,7 @@
                         <div class="col-xs-1  text-right" style="padding: 5px 0px 0px 0px;"><i id="ajaxLoadSearch"  class="fa fa-spinner fa-spin hidden"></i></div>
                     </div>
                 </div>
-                <div class="col-xs-12 " id="searchRefNo1" style="padding-left: 0px;">
+                <div class="col-xs-12 " id="searchRefNo1" style="padding-left: 0px;margin-top: -1px">
                     <div class="col-xs-1 text-right" style="width: 100px;">
                         <label class="control-label">Ref No</label>
                     </div>
@@ -372,7 +372,7 @@
                 </div>               
                 <div class="row" style="padding-left: 15px;">             
                     <div class="row">
-                        <div class="col-xs-11" style="width: 1030px">
+                        <div class="col-xs-11" style="width: 1030px;margin-top: -26px">
                             <table class="display" id="PaymentDetailTable">
                                 <thead>
                                     <tr class="datatable-header">
@@ -541,50 +541,50 @@
         <!-- Payment Detail Panel -->
         <div class="panel panel-default outboundborder hidden" id="paymentDetailPanel">                    
             <div class="panel-body">
-                <div class="row" style="padding-left: 25px; margin-top: -10px;">
+                <div class="row" style="padding-left: 25px; margin-top: -10px;margin-top: -15px">
                     <div class="col-xs-2">
                         <label class="control-label">Payment Detail</lable>
                     </div>
                 </div>
-                <div class="row" style="padding-left: 25px; ">
-                    <div class="col-xs-1 text-right" style="width: 110px;">
+                <div class="row" style="padding-left: 25px;">
+                    <div class="col-xs-1 text-right" style="width: 110px;margin-top: -7px">
                         <label class="control-label">Real Rate</lable>
                     </div>
-                    <div class="col-xs-1 text-right" style="width: 200px;">
+                    <div class="col-xs-1 text-right" style="width: 200px;margin-top: -7px">
                         <input type="hidden" class="form-control text-right" id="rowDetail" name="rowDetail" value=""/>
                         <input type="text" class="form-control decimalexrate" id="realExRate" name="realExRate" value=""/>
                     </div>
-                    <div class="col-xs-1 text-left" style="width: 120px;">
+                    <div class="col-xs-1 text-left" style="width: 120px;margin-top: -7px">
                         <label class="control-label">Pay EX Rate</lable>
                     </div>
-                    <div class="col-xs-1 text-right" style="width: 200px;">
+                    <div class="col-xs-1 text-right" style="width: 200px;margin-top: -7px">
                         <input type="text" class="form-control decimalexrate" id="payExRate" name="payExRate" value=""/>
                     </div>
-                    <div class="col-xs-1 text-left" style="width: 70px;">
+                    <div class="col-xs-1 text-left" style="width: 70px;margin-top: -7px">
                         <label class="control-label">Detail</lable>
                     </div>
-                    <div class="col-xs-1 text-right" style="width: 300px;">
+                    <div class="col-xs-1 text-right" style="width: 300px;margin-top: -7px">
                         <textarea rows="3" cols="255" class="form-control" id="paymentDescription" name="paymentDescription" maxlength="255" data-bv-field="detail"></textarea>
                     </div>
                 </div>
-                <div class="row" style="padding-left: 25px; margin-top: -30px;">
-                    <div class="col-xs-1 text-right" style="width: 110px;">
+                <div class="row" style="padding-left: 25px; margin-top: -30px">
+                    <div class="col-xs-1 text-right" style="width: 110px;margin-top: -0px">
                         <label class="control-label">WHT</lable>
                     </div>
-                    <div class="col-xs-1 text-right" style="width: 50px; padding-top: 5px;">
+                    <div class="col-xs-1 text-right" style="width: 50px; margin-top: -0px">
                         <input type="checkbox" id="isWht" name="isWht" value="1"/>
                     </div>
-                    <div class="col-xs-1 text-right" style="width: 150px;">
+                    <div class="col-xs-1 text-right" style="width: 150px;margin-top: -0px">
                         <input type="text" class="form-control text-right" id="wht" name="wht" value="" readonly=""/>
                     </div>
-                    <div class="col-xs-1 text-left" style="width: 120px;">
+                    <div class="col-xs-1 text-left" style="width: 120px;margin-top: -0px">
                         <label class="control-label">WHT Amount</lable>
                     </div>
                     <div class="col-xs-1 text-right" style="width: 200px;">
                         <input type="text" class="form-control text-right" id="whtAmount" name="whtAmount" value="" readonly=""/>
                     </div>
                 </div>
-                <div class="row" style="padding-left: 25px; padding-top: 10px;">
+                <div class="row" style="padding-left: 25px; padding-top: 5px;">
                     <div class="col-xs-1 text-right" style="width: 110px;">
                         <label class="control-label">Com Vat</lable>
                     </div>
@@ -616,9 +616,9 @@
         </div><!--End Table Content -->
                             
         <div class="panel panel-default outboundborder">
-            <div class="panel-body"  style="padding-right: 0px;">                                               
+            <div class="panel-body"  style="padding-right: 0px;margin-top: -10px">                                               
                 <div class="row" >
-                    <div class="col-md-12 ">
+                    <div class="col-md-12 " style="padding-right: 0px;margin-top: 0px">
                         <div class="col-sm-6">
                             <div class="col-md-1 text-right" style="width:70px;padding-right: 0px;padding-left: 0px;">
                                 <label class="control-label">Detail</lable>
@@ -636,22 +636,22 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="col-md-5 text-right" style="width: 195px;padding-top: 15px">
+                            <div class="col-md-5 text-right" style="width: 195px;margin-top: 5px ">
                                 <label class="control-label">Vat Total</lable>
                             </div>
-                            <div class="col-md-3 text-right" style="width: 210px;padding-left:0px;padding-right: 0px;padding-top: 15px">
+                            <div class="col-md-3 text-right" style="width: 210px;padding-left:0px;padding-right: 0px;margin-top: 5px">
                                 <input name="vatTotal" id="vatTotal" type="text" class="form-control text-right" value="" readonly=""/>
                             </div>
                         </div>                       
                     </div>                     
                 </div><!--End row 5-->   
                 <div class="row" >
-                    <div class="col-md-12 form-group">
+                    <div class="col-md-12 form-group" style="margin-top:-10px;margin-bottom: -10px">
                         <div class="col-sm-12">
                             <div class="col-md-9 text-right" style="width: 703px;padding-top: 15px">
                                 <label class="control-label">Grand Total</lable>
                             </div>
-                            <div class="col-md-3 text-right" style="width: 210px;padding-left:0px;padding-right: 0px;padding-top: 15px">
+                            <div class="col-md-3 text-right" style="width: 218px;padding-left:7px;padding-right: 0px;padding-top: 15px">
                                 <input name="grandTotal" id="grandTotal" type="text" class="form-control text-right" value="" readonly=""/>
                             </div>
                         </div>

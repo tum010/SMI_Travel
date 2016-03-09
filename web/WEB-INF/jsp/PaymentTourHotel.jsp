@@ -66,7 +66,7 @@
         
         <!--Row 1 -->
         <div class="row" style="padding-left: 15px">
-            <div class="col-xs-12 ">
+            <div class="col-xs-12">
                 <div class="col-xs-1 text-right">
                     <label class="control-label">Pay No</lable>
                 </div>
@@ -134,7 +134,7 @@
             <c:set var="star" value="*" />
         </c:if>
         <div class="row" style="padding-left: 0px">
-            <div class="col-xs-12 ">
+            <div class="col-xs-12" style="margin-top: -16px">
                 <div class="col-xs-2 text-right" style="padding-left:0px;padding-right:0px;width:85px;">
                     <label class="control-label">Pay Date<font style="color: red">${star}</font></lable>
                 </div>               
@@ -214,62 +214,64 @@
         </div>
         <!--Row 3 -->
         <div class="row" >
-            <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:100px;">
-                    <label class="control-label">Invoice Sup<font style="color: red">*</font></lable>
-            </div>
-            <div class="col-md-2 form-group text-right" style="padding-left:30px;padding-right:0px;"> 
-                <div class="col-sm-12">
-                    <div class="input-group" id="CodeValidate">
-                        <input name="InputInvoiceSupId" id="InputInvoiceSupId" type="hidden" class="form-control" value="${requestScope['InputInvoiceSupId']}" />
-                        <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="${requestScope['InputInvoiceSupCode']}" onkeypress="getInvoiceSup()" style="text-transform:uppercase" ${readonly}/>                       
-                        <c:choose>
-                            <c:when test="${(idRole  == 22) || (idRole == 1)}">       
-                                <span class="input-group-addon" data-toggle="modal" data-target="#SearchInvoiceSup">
-                                    <span class="glyphicon-search glyphicon"></span>
-                                </span>
-                            </c:when>
-                            <c:when test="${(idRole  == 19)}">
-                                <span class="input-group-addon" data-toggle="modal">
-                                    <span class="glyphicon-search glyphicon"></span>
-                                </span>
-                            </c:when>
-                        </c:choose>
-                    </div>    
-                </div>   
-            </div>
-            <div class="col-md-4 form-group text-left" style="width:360px;">
-                <div class="col-sm-12">
-                    <input name="InputInvoiceSupName" id="InputInvoiceSupName" type="text" class="form-control" value="${requestScope['InputInvoiceSupName']}" readonly=""/>           
+            <!--<div class="col-xs-12" style="margin-top: -15px">-->
+                <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:100px;margin-top: -15px" >
+                        <label class="control-label">Invoice Sup<font style="color: red">*</font></lable>
                 </div>
-            </div>
-            <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:140px;">
-                <label class="control-label">A/P Code<font style="color: red">*</font></lable>
-            </div>
-            <div class="col-md-2 form-group text-left" style="padding-left:9px;width:190px;">
-                <div class="col-sm-12">
-                    <div class="input-group" id="CodeValidate">
-                        <input name="InputAPCode" id="InputAPCode" type="text" class="form-control" value="${requestScope['InputAPCode']}" readonly=""/>
-                        <span class="input-group-addon hidden" data-toggle="modal" data-target="#SearchAPCode">
-                            <span class="glyphicon-search glyphicon"></span>
-                        </span>    
-                    </div>    
-                </div>  
-            </div>
+                <div class="col-md-2 form-group text-right" style="padding-left:30px;padding-right:0px;margin-top: -15px"> 
+                    <div class="col-sm-12">
+                        <div class="input-group" id="CodeValidate">
+                            <input name="InputInvoiceSupId" id="InputInvoiceSupId" type="hidden" class="form-control" value="${requestScope['InputInvoiceSupId']}" />
+                            <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="${requestScope['InputInvoiceSupCode']}" onkeypress="getInvoiceSup()" style="text-transform:uppercase" ${readonly}/>                       
+                            <c:choose>
+                                <c:when test="${(idRole  == 22) || (idRole == 1)}">       
+                                    <span class="input-group-addon" data-toggle="modal" data-target="#SearchInvoiceSup">
+                                        <span class="glyphicon-search glyphicon"></span>
+                                    </span>
+                                </c:when>
+                                <c:when test="${(idRole  == 19)}">
+                                    <span class="input-group-addon" data-toggle="modal">
+                                        <span class="glyphicon-search glyphicon"></span>
+                                    </span>
+                                </c:when>
+                            </c:choose>
+                        </div>    
+                    </div>   
+                </div>
+                <div class="col-md-4 form-group text-left" style="width:360px;margin-top: -15px">
+                    <div class="col-sm-12">
+                        <input name="InputInvoiceSupName" id="InputInvoiceSupName" type="text" class="form-control" value="${requestScope['InputInvoiceSupName']}" readonly=""/>           
+                    </div>
+                </div>
+                <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:140px;margin-top: -15px">
+                    <label class="control-label">A/P Code<font style="color: red">*</font></lable>
+                </div>
+                <div class="col-md-2 form-group text-left" style="padding-left:9px;width:190px;margin-top: -10px">
+                    <div class="col-sm-12">
+                        <div class="input-group" id="CodeValidate">
+                            <input name="InputAPCode" id="InputAPCode" type="text" class="form-control" value="${requestScope['InputAPCode']}" readonly=""/>
+                            <span class="input-group-addon hidden" data-toggle="modal" data-target="#SearchAPCode">
+                                <span class="glyphicon-search glyphicon"></span>
+                            </span>    
+                        </div>    
+                    </div>  
+                </div>
+            <!--</div>-->
         </div>
         <!--Row 4 -->
         <div class="row" >
-            <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:100px;">
+            <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:100px;margin-top: -15px">
                     <label class="control-label">Detail</lable>
             </div>
-            <div class="col-md-6 text-left" style="padding-left:30px;padding-right:0px;width:520px;">
+            <div class="col-md-6 text-left" style="padding-left:30px;padding-right:0px;width:520px;margin-top: -15px">
                 <div class="col-sm-12">
                     <textarea rows="3" cols="255" class="form-control" id="Detail" name="Detail" maxlength="255" ${readonly}>${requestScope['Detail']}</textarea>
                 </div>   
             </div>
-            <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:155px;">
+            <div class="col-xs-2 text-right" style="padding-left:10px;padding-right:0px;width:155px;margin-top: -15px">
                 <label class="control-label">Payment</lable>
             </div>
-            <div class="col-md-2 form-group text-left" style="padding-left:9px;width:190px;">
+            <div class="col-md-2 form-group text-left" style="padding-left:9px;width:190px;margin-top: -10px">
                 <div class="col-sm-12">
                 <c:choose>
                     <c:when test="${(idRole  == 22) || (idRole == 1)}">    
@@ -309,10 +311,10 @@
                 </c:choose>    
                 </div>
             </div>
-            <div class="col-xs-1 text-right" style="padding-left:10px;padding-right:0px;width:155px;">
+            <div class="col-xs-1 text-right" style="padding-left:10px;padding-right:0px;width:155px;margin-top: -15px">
                 <label class="control-label">Currency</lable>
             </div>    
-            <div class="col-xs-1 form-group text-left" style="padding-left:25px;width:175px;">
+            <div class="col-xs-1 form-group text-left" style="padding-left:25px;width:175px;margin-top: -10px">
             <c:choose>
                 <c:when test="${(idRole  == 22) || (idRole == 1)}">
                 <select class="form-control" name="InputCurrency" id="InputCurrency">
@@ -358,7 +360,7 @@
             <c:when test="${(idRole  == 22) || (idRole == 1)}">        
             <!-- Table Role Checking-->
             <div class="row" >
-                <div class="col-12" style="width:1035px;padding-left:15px;">
+                <div class="col-12" style="width:1035px;padding-left:15px;margin-top: -10px">
                     <table class="display" id="PaymentHotelTable">
                         <thead class="datatable-header">
                             <tr>
@@ -465,7 +467,7 @@
             <input type="hidden" id="vatDefaultData" name="vatDefaultData" value="${requestScope['vatDefaultData']}">    
             <!-- Table Role Account-->
             <div class="row" >
-                <div class="col-12" style="width:1035px;padding-left:15px;">
+                <div class="col-12" style="width:1035px;padding-left:15px;margin-top: -10px">
                     <table class="display" id="PaymentHotelTable">
                         <thead class="datatable-header">
                             <tr>
@@ -642,7 +644,7 @@
         <div class="panel panel-default">                    
             <div class="panel-body">
                 <!--Row 1.1 -->
-                <div class="row" style="padding-left: 25px;">
+                <div class="row" style="padding-left: 25px;margin-top: -10px">
                     <div class="col-xs-1 text-right">
                         <label class="control-label">Remark</lable>
                     </div>
@@ -651,7 +653,7 @@
                     </div>
                     <c:choose>
                         <c:when test="${(idRole  == 22) || (idRole == 1)}">
-                            <div class="col-xs-2 text-right">
+                            <div class="col-xs-2 text-right" style="margin-top: -10px">
                                 <label class="control-label">Grand Total</lable>
                             </div>
                             <div class="col-md-2 form-group text-left">
@@ -659,7 +661,7 @@
                             </div>         
                         </c:when>
                         <c:when test="${idRole  == 19}">
-                            <div class="col-xs-2 text-right">
+                            <div class="col-xs-2 text-right" >
                                 <label class="control-label" >Gross Total</lable>
                             </div>
                             <div class="col-md-2 form-group text-left">

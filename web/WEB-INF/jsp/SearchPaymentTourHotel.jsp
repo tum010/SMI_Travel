@@ -56,101 +56,105 @@
         <hr/><br>
         <!--Input Search -->
         <form action="SearchPaymentTourHotel.smi" method="post" id="PaymentSearchForm" name="PaymentSearchForm" role="form">
-            <div class="col-xs-12" >
-                <div class="col-xs-1 text-left" style="width:120px;">
-                    <label class="control-label">From</lable>
-                </div>
-                <div class="col-xs-1 text-left form-group" style="width:170px;">
-                    <div class=" form-group">     
-                        <div class="input-group date" id="DateFrom">
-                            <input  id="InputFromDate" name="InputFromDate" type="text" 
-                                    data-date-format="YYYY-MM-DD" class="form-control datemask" 
-                                    placeholder="YYYY-MM-DD" value="${InputFromDate}">
-                            <span class="input-group-addon spandate">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div> 
-                    </div>         
-                </div>
-                <div class="col-xs-1 text-right" style="width:50px;">
-                    <label class="control-label">To</lable>
-                </div>
-                <div class="col-xs-1 form-group text-left" style="width:170px;">
-                    <div class=" form-group">     
-                        <div class="input-group date" id="DateTo">
-                            <input  id="InputToDate" name="InputToDate" type="text" 
-                                    data-date-format="YYYY-MM-DD" class="form-control datemask" 
-                                    placeholder="YYYY-MM-DD" value="${InputToDate}">
-                            <span class="input-group-addon spandate">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div> 
-                    </div>     
-                </div>
-                <div class="col-xs-1 text-right" style="width:90px;">
-                    <label class="control-label">PV Type</lable>
-                </div>
-                <div class="col-xs-1 form-group text-left" style="width:160px;">
-                    <div class="col-sm-12">
-                        <select name="selectPvType" id="SelectPvType" class="form-control" value="${requestScope['selectPvType']}">
-                            <option id="" value="">---type---</option>
-                            <c:forEach var="type" items="${PaymentTypeList}">
-                                <option value='${type.id}'  ${type.id == requestScope['selectPvType'] ? 'selected="selected"' : ''}> ${type.name}</option>
-                            </c:forEach>
-                        </select>
+            <div class="row">
+                <div class="col-xs-12" style="margin-top: -25px">
+                    <div class="col-xs-1 text-left" style="width:120px;">
+                        <label class="control-label">From</lable>
                     </div>
-                </div>
-                <div class="col-xs-1 text-right" style="width:70px;">
-                    <label class="control-label">Status</lable>
-                </div>
-                <div class="col-xs-1 form-group text-left" style="width:160px;">
-                    <div class="col-sm-12">
-                        <select name="selectStatus" id="SelectStatus" class="form-control" value="${requestScope['selectStatus']}">
-                            <option id="" value="">---status---</option>
-                            <c:forEach var="status" items="${status_list}">
-                                <option value='${status.id}'  ${status.id == requestScope['selectStatus'] ? 'selected="selected"' : ''}> ${status.name}</option>
-                            </c:forEach>
-                        </select>
+                    <div class="col-xs-1 text-left form-group" style="width:170px;">
+                        <div class=" form-group">     
+                            <div class="input-group date" id="DateFrom">
+                                <input  id="InputFromDate" name="InputFromDate" type="text" 
+                                        data-date-format="YYYY-MM-DD" class="form-control datemask" 
+                                        placeholder="YYYY-MM-DD" value="${InputFromDate}">
+                                <span class="input-group-addon spandate">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div> 
+                        </div>         
                     </div>
-                </div>
-            </div>
-            <div class="col-xs-12" >                
-                <div class="col-xs-1 text-left" style="width:120px;">
-                    <label class="control-label">Invoice Sup</lable>
-                </div>
-                <div class="col-xs-1 text-left" style="width:175px;"> 
-                        <div class="input-group" id="CodeValidate" style="width:140px;">
-                            <input name="InputInvoiceSupId" id="InputInvoiceSupId" type="hidden" class="form-control" value="${requestScope['InputInvoiceSupId']}" />
-                            <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="${requestScope['InputInvoiceSupCode']}" onkeypress="getInvoiceSup()" style="text-transform:uppercase"/>
-                            <span class="input-group-addon" data-toggle="modal" data-target="#SearchInvoiceSup">
-                                <span class="glyphicon-search glyphicon"></span>
-                            </span>    
+                    <div class="col-xs-1 text-right" style="width:50px;">
+                        <label class="control-label">To</lable>
+                    </div>
+                    <div class="col-xs-1 form-group text-left" style="width:170px;">
+                        <div class=" form-group">     
+                            <div class="input-group date" id="DateTo">
+                                <input  id="InputToDate" name="InputToDate" type="text" 
+                                        data-date-format="YYYY-MM-DD" class="form-control datemask" 
+                                        placeholder="YYYY-MM-DD" value="${InputToDate}">
+                                <span class="input-group-addon spandate">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div> 
                         </div>     
+                    </div>
+                    <div class="col-xs-1 text-right" style="width:90px;">
+                        <label class="control-label">PV Type</lable>
+                    </div>
+                    <div class="col-xs-1 form-group text-left" style="width:160px;">
+                        <div class="col-sm-12">
+                            <select name="selectPvType" id="SelectPvType" class="form-control" value="${requestScope['selectPvType']}">
+                                <option id="" value="">---type---</option>
+                                <c:forEach var="type" items="${PaymentTypeList}">
+                                    <option value='${type.id}'  ${type.id == requestScope['selectPvType'] ? 'selected="selected"' : ''}> ${type.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width:70px;">
+                        <label class="control-label">Status</lable>
+                    </div>
+                    <div class="col-xs-1 form-group text-left" style="width:160px;">
+                        <div class="col-sm-12">
+                            <select name="selectStatus" id="SelectStatus" class="form-control" value="${requestScope['selectStatus']}">
+                                <option id="" value="">---status---</option>
+                                <c:forEach var="status" items="${status_list}">
+                                    <option value='${status.id}'  ${status.id == requestScope['selectStatus'] ? 'selected="selected"' : ''}> ${status.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-xs-1 text-left" style="width:450px;">
-                    <input name="InputInvoiceSupName" id="InputInvoiceSupName" type="text" class="form-control" value="${requestScope['InputInvoiceSupName']}" readonly=""/>           
-                </div> 
-                <!--Button Print and Search -->            
-                <div class="col-xs-1 text-right" style="padding-left:0px;width:155px;">
-<!--                <a id="ButtonSearch" name="ButtonSearch" type="submit" class="btn btn-primary">
-                        <i class="fa fa-search"></i> Search
-                    </a>-->
-                    <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">Search</button>
-                    <input type="hidden" name="action" id="action" value="search">
-                    <input type="hidden" id="paymentID" name="paymentID" >
-                    <input type="hidden" id="InputPayNo" name="InputPayNo" >
-                </div>
-                <div class="col-xs-1 text-right" style="padding-left:0px;width:60px;">
-                    <button type="button" id="ButtonPrint" name="ButtonPrint" class="btn btn-default btn-sm" onclick="printPaymentSummaryReport()">
-                        <i class="fa fa-print"></i> Print             
-                    </button>
-                </div>                                       
-            </div>            
+            </div>      
+            <div class="row">
+                <div class="col-xs-12" style="margin-top: -25px" >                
+                    <div class="col-xs-1 text-left" style="width:120px;">
+                        <label class="control-label">Invoice Sup</lable>
+                    </div>
+                    <div class="col-xs-1 text-left" style="width:175px;"> 
+                            <div class="input-group" id="CodeValidate" style="width:140px;">
+                                <input name="InputInvoiceSupId" id="InputInvoiceSupId" type="hidden" class="form-control" value="${requestScope['InputInvoiceSupId']}" />
+                                <input name="InputInvoiceSupCode" id="InputInvoiceSupCode" type="text" class="form-control" value="${requestScope['InputInvoiceSupCode']}" onkeypress="getInvoiceSup()" style="text-transform:uppercase"/>
+                                <span class="input-group-addon" data-toggle="modal" data-target="#SearchInvoiceSup">
+                                    <span class="glyphicon-search glyphicon"></span>
+                                </span>    
+                            </div>     
+                    </div>
+                    <div class="col-xs-1 text-left" style="width:450px;">
+                        <input name="InputInvoiceSupName" id="InputInvoiceSupName" type="text" class="form-control" value="${requestScope['InputInvoiceSupName']}" readonly=""/>           
+                    </div> 
+                    <!--Button Print and Search -->            
+                    <div class="col-xs-1 text-right" style="padding-left:0px;width:155px;">
+    <!--                <a id="ButtonSearch" name="ButtonSearch" type="submit" class="btn btn-primary">
+                            <i class="fa fa-search"></i> Search
+                        </a>-->
+                        <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="" class="btn btn-primary btn-sm">Search</button>
+                        <input type="hidden" name="action" id="action" value="search">
+                        <input type="hidden" id="paymentID" name="paymentID" >
+                        <input type="hidden" id="InputPayNo" name="InputPayNo" >
+                    </div>
+                    <div class="col-xs-1 text-right" style="padding-left:0px;width:60px;">
+                        <button type="button" id="ButtonPrint" name="ButtonPrint" class="btn btn-default btn-sm" onclick="printPaymentSummaryReport()">
+                            <i class="fa fa-print"></i> Print             
+                        </button>
+                    </div>                                       
+                </div>       
+            </div>      
         </form><!--End Search -->
                 
-                <br>
+        <br>
         <!-- Table -->                  
-            <div class="row" style="padding-left: 15px;width: 1030px;">
+            <div class="row" style="padding-left: 15px;width: 1030px;margin-top: -25px">
                 <table class="display" id="SearchPaymentHotelTable">
                     <thead class="datatable-header">
                         <tr>
