@@ -34,11 +34,11 @@
         </div>
         <div class="col-sm-10">
             <div class="row" style="padding-left: 15px">  
-                <div class="col-sm-6 " style="padding-right: 15px">
+                <div class="col-sm-6 " style="padding-right: 15px; margin-top: -10px;">
                     <h4><b>Day Tours History Transfer Job</b></h4>
                 </div>
             </div>
-            <hr/>
+            <div class="row" style="margin-top: -10px;"><hr/></div>
             <form action="DaytourHistoryTransfer.smi" method="post" id="SearchHistoryTransfer" name="SearchHistoryTransfer" role="form">
                 <div class="col-xs-12 ">
                     <div class="col-xs-2 text-right">

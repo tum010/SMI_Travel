@@ -183,7 +183,7 @@
                         <input name="createBy" id="createBy" type="hidden" class="form-control" value="${paymentOutbound.createBy}" />
                         <input name="createDate" id="createDate" type="hidden" class="form-control" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.createDate}"/>" />
                         <input name="updateDate" id="updateDate" type="hidden" class="form-control" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd HH:mm:ss' value="${paymentOutbound.updateDate}"/>" />
-                        <input name="payNo" id="payNo" type="text" maxlength="6" class="form-control" style="text-transform:uppercase" value="${paymentOutbound.payNo}" />
+                        <input name="payNo" id="payNo" type="text" maxlength="10" class="form-control" style="text-transform:uppercase" value="${paymentOutbound.payNo}" />
                     </div>
                     <div class="col-xs-1 text-left"  style="width: 100px">
                         <button type="button"  id="btnSearchPayNo"  name="btnSearchPayNo" onclick="searchPvNo()" class="btn btn-primary btn-sm">
