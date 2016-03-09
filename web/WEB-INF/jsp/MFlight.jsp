@@ -159,7 +159,7 @@
                             <input type="text" class="form-control" maxlength="50" id="FlightName" style="text-transform:uppercase" name="FlightName" value="${dataFlight.name}">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group hidden">
                         <table id="MasterFlightService" class="display" cellspacing="0" style="width: 400px;">
                             <thead>
                                 <tr class="datatable-header">

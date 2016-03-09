@@ -39,7 +39,7 @@
                     </a>
                     <b class="arrow"></b>
                 </li>
-                <li class="">
+                <li class="hidden">
                     <a href="MProductCommission.smi" id="couponLink" name="couponLink">
                         <i class="menu-icon fa fa-user"></i>
                         <span class="menu-text">Coupon</span>
