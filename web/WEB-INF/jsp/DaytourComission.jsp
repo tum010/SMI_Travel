@@ -55,13 +55,12 @@
                     <strong>Save Not Success!</strong> 
             </div>
             <!--<div ng-include="'WebContent/Book/BookNavbar.html'"></div>-->
-            <div class="row" style="padding-left: 15px">  
+            <div class="row" style="padding-left: 15px; margin-top: -10px;">  
                 <div class="col-sm-6 " style="padding-right: 15px">
                     <h4><b>Day Tours (Agent & Guide Commission)</b></h4>
                 </div>
             </div>
-            <hr/>
-
+            <div class="row" style="padding-left: 15px; margin-top: -10px;"><hr/></div>
             <form action="DaytourCommission.smi" id="searchDaytourCommissionForm" name="searchDaytourCommissionForm" method="post" role="form" >
                 <div class="col-xs-12 ">
                     <input type="hidden" id="searchAction" name="action" value="search">
@@ -105,7 +104,7 @@
                         <button type="button" id="ButtonAdd" name="ButtonAdd" onclick="" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#AddGuideModal"><i class="fa fa-plus"></i> Add Guide</button>
                     </div>
                 </div>
-                <div class="col-xs-12 form-group">
+                <div class="col-xs-12 form-group" style="margin-top: -10px;">
                     <div class="col-xs-1 text-right">
                         <label class="control-label text-right">Agent</label>
                     </div>
@@ -123,7 +122,7 @@
                         </select>                    
                     </div>
                 </div>
-                <div class="col-xs-12 form-group">
+                <div class="col-xs-12 form-group" style="margin-top: -10px;">
                     <div class="col-xs-1 text-right">
                         <label class="control-label text-right">Guide</label>
                     </div>

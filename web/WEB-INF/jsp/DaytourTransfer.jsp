@@ -52,13 +52,12 @@
                 <input id="newAction" name="newAction" type="hidden" class="form-control" value="${newAction}">
 
                 <!--<div ng-include="'WebContent/Book/BookNavbar.html'"></div>-->
-                <div class="row" style="padding-left: 15px">  
+                <div class="row" style="padding-left: 15px; margin-top: -10px;">  
                     <div class="col-sm-6 " style="padding-right: 15px">
                         <h4><b>Day Tours Transfer</b></h4>
                     </div>
                 </div>
-                <hr/>
-
+                <div class="row" style="margin-top: -10px;"><hr/></div>
                 <div class="col-xs-12 ">
                     <div class="col-xs-2  text-right">
                         <label class="control-label">DocNo.</label>
@@ -81,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 form-group">
+                <div class="col-xs-12 form-group" style="margin-top: -10px;">
                     <div class="col-xs-2 text-right">
                         <label class="control-label text-right">Guide</label>
                     </div>
@@ -115,7 +114,7 @@
                     </div>
                 </div>
 
-                <div class="col-xs-12 form-group">
+                <div class="col-xs-12 form-group" style="margin-top: -10px;">
                     <div class="col-xs-2 text-right">
                         <label class="control-label text-right">Remark</label>
                     </div>
@@ -125,7 +124,7 @@
                 </div>
 
                 <!--Tour Table begin-->
-                <div class="col-xs-12 form-group">
+                <div class="col-xs-12 form-group" style="margin-top: -10px;">
                     <div class="col-sm-2 text-right">
                         <label class="control-label">Tour<font style="color: red">*</font></label>
                     </div>

@@ -86,9 +86,9 @@
             </div>
             <hr/>
 
-            <div class="col-xs-12 form-group"><h4>Tour Detail</h4></div>
+            <div class="col-xs-12 form-group" style="margin-top: -10px;"><h4>Tour Detail</h4></div>
             <form action="DaytourOperationDetail.smi" method="post" id="DaytourOperationForm" name="DaytourOperationForm" role="form">
-                <div class="col-xs-12 ">
+                <div class="col-xs-12 " style="margin-top: -10px;">
                     <div class="col-xs-1 text-right">
                         <label class="control-label" for="InputDetailTourCode">Tour&nbsp;Code<font style="color: red">*</font></lable>
                     </div>
@@ -141,7 +141,7 @@
                     </div>
                 </div>
 
-                <div class="col-xs-12 form-group">
+                <div class="col-xs-12 form-group" style="margin-top: -10px;">
                     <div class="col-xs-1 text-right">
                         <label class="control-label" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Confirm</lable>
                     </div>
@@ -166,9 +166,9 @@
                     </div>
                 </div>
             </form>
-            <div class="col-xs-12 form-group"><hr/></div>
+            <div class="col-xs-12 form-group" style="margin-top: -20px;"><hr/></div>
             <form action="DaytourOperationDetail.smi" method="post" id="AirticketForm">
-                <div role="tabpanel">
+                <div role="tabpanel" style="margin-top: -10px;">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Info</a></li>
@@ -182,7 +182,7 @@
                             <input type="hidden" name="mDepartmentName" id="mDepartmentName" value="${mDepartmentName}" class="form-group"/>
                             <c:choose>
                                 <c:when test="${fn:containsIgnoreCase(mDepartmentName , 'tour')}">    
-                                    <div class="col-xs-12 form-group">
+                                    <div class="col-xs-12 form-group" style="margin-top: -20px;">
                                         <div class="col-xs-1 text-right">
                                             <label class="control-label text-right">Guide</label>
                                         </div>
@@ -203,7 +203,7 @@
                                             <input id="InputGuideName1" name="InputGuideName1"   type="text" class="form-control" readonly="" value="${dayTourOperation.staffByGuide1.name}">
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 form-group">
+                                    <div class="col-xs-12 form-group" style="margin-top: -10px;">
                                         <div class="col-xs-1 text-right">
                                         </div>
                                         <div class="col-xs-3">
@@ -224,7 +224,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-xs-12 form-group text-right">
+                                        <div class="col-xs-12 form-group text-right" style="margin-top: -10px;">
                                             <div class="col-xs-1">
                                                 <label class="control-label">Meal</lable>
                                             </div>
@@ -244,7 +244,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-xs-12 form-group text-right">
+                                        <div class="col-xs-12 form-group text-right" style="margin-top: -10px;">
                                             <div class="col-xs-1">
                                                 <label class="control-label">Remark</lable>
                                             </div>
@@ -800,11 +800,11 @@
                             
                             <c:choose>
                                 <c:when test="${fn:containsIgnoreCase(mDepartmentName , 'tour')}">   
-                                    <div class="col-xs-12 form-group"><hr/></div>
-                                    <div class="col-sm-6">
+                                    <div class="col-xs-12 form-group" style="margin-top: -10px;"><hr/></div>
+                                    <div class="col-sm-6" style="margin-top: -10px;">
                                         <h4>Booking Expense</h4>
                                     </div>
-                                    <div class="col-sm-6 text-right">
+                                    <div class="col-sm-6 text-right" style="margin-top: -10px;">
                                         <a href="#" id="ButtonImportTourExpense" name="ButtonImportTourExpense" class="btn btn-success disabled" data-toggle="modal" >
                                             <i class="glyphicon glyphicon-plus"></i>&nbsp;Import
                                         </a>
@@ -897,13 +897,13 @@
 
                                         </div>
                                     </div>                               
-                                    <div class="col-xs-12 form-group">
-                                        <div class="col-sm-6">
+                                    <div class="col-xs-12 form-group" style="margin-top: -10px;">
+                                        <div class="col-sm-6" style="margin-top: -30px;">
                                             <h4>Guide Bill</h4>
                                         </div>
                                     </div>
                                     <div id="GuideBillForm">
-                                        <div class="col-xs-12 form-group">
+                                        <div class="col-xs-12 form-group" style="margin-top: -10px;">
                                             <div class="col-xs-1">
                                                 <label class="control-label">Payno</label>                                                                                  
                                             </div>
@@ -954,7 +954,7 @@
                                                 </script>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 form-group">
+                                        <div class="col-xs-12 form-group" style="margin-top: -10px;">
                                             <div class="col-xs-1">
                                                 <label class="control-label">Status</label>
                                             </div>
@@ -997,11 +997,11 @@
                                     </div>
                                 </c:when>
                                 <c:when test="${fn:containsIgnoreCase(mDepartmentName , 'checking wendy')}">
-                                    <div class="col-xs-12 form-group"><hr/></div>
-                                    <div class="col-sm-6">
+                                    <div class="col-xs-12 form-group" style="margin-top: -10px;"><hr/></div>
+                                    <div class="col-sm-6" style="margin-top: -10px;">
                                         <h4>Booking Expense</h4>
                                     </div>
-                                    <div class="col-sm-6 text-right">
+                                    <div class="col-sm-6 text-right" style="margin-top: -10px;">
                                         <a href="#" id="ButtonImportTourExpense" name="ButtonImportTourExpense" class="btn btn-success" data-toggle="modal" data-target="#ExpenseModal">
                                             <i class="glyphicon glyphicon-plus"></i>&nbsp;Import
                                         </a>
@@ -1092,7 +1092,7 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>                           
-                                    <div class="col-xs-12 form-group" style="padding-top: 10px">
+                                    <div class="col-xs-12 form-group" style="margin-top: -10px;">
                                         <div class="col-xs-1">
                                             <label class="control-label">Guide&nbsp;bill</label>
                                         </div>
@@ -1106,19 +1106,19 @@
                                             <input id="InputTotal" name="InputTotal" class="form-control money" readonly="" value="${total}">
                                         </div>
                                     </div>
-                                    <div class="col-xs-12 form-group"><hr/></div>
-                                    <div class="col-xs-12 form-group" style="padding-top: 10px">                               
+                                    <div class="col-xs-12 form-group" style="margin-top: -10px;"><hr/></div>
+                                    <div class="col-xs-12 form-group" style="margin-top: -10px;">                               
                                         <div id="textAlertDivGuideName" style="display:none; color: red">
 
                                         </div>
                                     </div>                               
-                                    <div class="col-xs-12 form-group">
-                                        <div class="col-sm-6">
+                                    <div class="col-xs-12 form-group" style="margin-top: -10px;">
+                                        <div class="col-sm-6" style="margin-top: -30px;">
                                             <h4>Guide Bill</h4>
                                         </div>
                                     </div>
                                     <div id="GuideBillForm">
-                                        <div class="col-xs-12 form-group">
+                                        <div class="col-xs-12 form-group" style="margin-top: -10px;">
                                             <div class="col-xs-1">
                                                 <label class="control-label">Payno</label>
                                             </div>                                   
@@ -1156,7 +1156,7 @@
                                                 </script>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 form-group">
+                                        <div class="col-xs-12 form-group" style="margin-top: -10px;">
                                             <div class="col-xs-1">
                                                 <label class="control-label">Status</label>
                                             </div>
