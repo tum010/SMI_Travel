@@ -97,7 +97,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         Session session = this.sessionFactory.openSession();
         try { 
             setTransaction(session.beginTransaction());
-            String payNo = gennaratePaymentOutboundNo("PO");
+            String payNo = gennaratePaymentOutboundNo(paymentOutbound.getPayDate(),"PO");
             paymentOutbound.setPayNo(payNo);            
             session.save(paymentOutbound);
             List<PaymentOutboundDetail> paymentOutboundDetail = paymentOutbound.getPaymentOutboundDetails();
@@ -120,29 +120,35 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         return result;
     }
     
-    private String gennaratePaymentOutboundNo(String type){
-        String hql = "from MRunningCode run where run.type = :type";
+    private String gennaratePaymentOutboundNo(Date payDate, String type){
+        String payNo = "";
         Session session = this.sessionFactory.openSession();
-        List<MRunningCode> list = session.createQuery(hql).setParameter("type", type).list();
+        List<String> list = new LinkedList<String>();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyMM");
+        String querysql = "";
+
+        querysql = "SELECT RIGHT(pay_no, 4) as paynum  FROM payment_outbound where pay_no Like :payno ORDER BY RIGHT(pay_no, 4) desc";
+        Query query = session.createSQLQuery(querysql);
+        query.setParameter("payno", "%"+ df.format(payDate) + "%");
+        query.setMaxResults(1);
+        list = query.list();
         if (list.isEmpty()) {
-            return null;
+                payNo = "PO"+df.format(payDate) + "-" + "0001";
+        } else {
+                payNo = String.valueOf(list.get(0));
+                if (!payNo.equalsIgnoreCase("")) {
+                        int running = Integer.parseInt(payNo) + 1;
+                        String temp = String.valueOf(running);
+                        for (int i = temp.length(); i < 4; i++) {
+                                temp = "0" + temp;
+                        }
+                        payNo = "PO"+df.format(payDate) + "-" + temp;
+                }
         }
-        
-        String code = String.valueOf(list.get(0).getRunning()+1);
-        for(int i=code.length();i<5;i++){
-            code = "0"+code;
-        }
-        code = "O"+code;
-        
-        Query query = session.createQuery("update MRunningCode run set run.running = :running" +
-    				" where run.type = :type");
-        query.setParameter("running", list.get(0).getRunning()+1);
-        query.setParameter("type", "PO");
-        int result = query.executeUpdate();
-        
         session.close();
         this.sessionFactory.close();
-        return code;
+        return payNo.replace("-","");
     }
 
     @Override
