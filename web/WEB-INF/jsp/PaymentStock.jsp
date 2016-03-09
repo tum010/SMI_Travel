@@ -58,12 +58,12 @@
     
     <!--Content -->
     <div class="col-sm-10">
-        <div class="row" style="padding-left: 0px">  
+        <div class="row" style="padding-left: 0px; margin-top: -10px;">  
             <div class="col-sm-6" style="padding-right: 15px">
                 <h4><b>Payment Stock</b></h4>
             </div>
         </div>
-        <hr/>
+        <div class="row" style="padding-left: 15px; margin-top: -10px;"><hr/></div>
         <form action="PaymentStock.smi" method="post" id="PaymentStockForm" name="PaymentStockForm" role="form">
             <input type="hidden" class="form-control" id="hideCollapseCheck" name="hideCollapseCheck" value="" />
             <input type="hidden" class="form-control" id="action" name="action" value="" />
@@ -78,7 +78,7 @@
                 <div class="panel-heading ">
                     <h4 class="panel-title">Payment Stock</h4>
                 </div>
-                <div class="panel-body"  style="padding-right: 0px;">                                                              
+                <div class="panel-body"  style="padding-right: 0px; margin-top: -5px; margin-bottom: -20px;" >                                                              
                     <div class="row" style="padding-left: 15px;">             
                         <div class="col-xs-1 text-right" style="width:60px;padding-right: 0px;padding-left: 0px;">
                             <label class="control-label">Pay No</lable>
@@ -97,11 +97,11 @@
                     </div>            
                 </div>
             </div>
-            <div class="panel panel-default ">
+            <div class="panel panel-default " style="margin-top: -10px;">
                 <div class="panel-heading ">
                     <h4 class="panel-title">Stock List</h4>
                 </div>
-                <div class="panel-body"  style="padding-right: 0px;">                                                 
+                <div class="panel-body"  style="padding-right: 0px; margin-top: -5px; margin-bottom: -10px;">                                                 
                     <div class="row hidden" style="padding-left: 0px">
                         <div class="col-xs-1 text-right" style="width:60px;padding-right: 0px;padding-left: 0px;">
                             <label class="control-label">Stock</lable>
@@ -150,7 +150,7 @@
                         </div>                   -->
                     </div>
                     <br>
-                    <div class="row" style="padding-left: 15px;">             
+                    <div class="row" style="padding-left: 15px; margin-top: -10px;">             
                         <div class="row">
                             <div class="col-xs-11" style="width: 1030px">
                                 <input type="hidden" id="noStockTableTemp" name="noStockTableTemp" value="${requestScope['noStockTable']}"/>
@@ -249,7 +249,7 @@
                 </div>
                 </div>
             </div>
-            <div class="collapse" id="payStockDetail">                    
+            <div class="collapse" id="payStockDetail" style="margin-top: -10px;">                    
                 <div class="panel panel-default ">
                     <div class="panel-heading ">
                         <h4 class="panel-title"><div id="detailName" name="detailName" style="display:none" ></div>
@@ -328,7 +328,7 @@
                             </div>
                         </div>            
                     </div>
-                    <div class="row" style="padding-top: 15px;padding-bottom:  15px; padding-left:  100px;">
+                    <div class="row" style="margin-top: -10px; padding-bottom:  15px; padding-left:  100px;">
                         <div class="col-xs-1 text-right" style="width: 130px">
                             <label class="control-label text-right">Total Cost</label>
                         </div>
@@ -349,7 +349,7 @@
             </div> 
             <br>
             <div class="row">
-                <div class="col-xs-12 text-center">
+                <div class="col-xs-12 text-center" style="margin-top: -30px;">
                     <input type="hidden" class="form-control" id="countRowStock" name="countRowStock" value="${requestScope['countRowStock']}" />
                     <input type="hidden" class="form-control" id="countRowDetail" name="countRowDetail" value="${requestScope['countRowDetail']}" />
                     <button type="button" id="btnSave" name="btnSave" class="btn btn-success" onclick="saveAction()">
