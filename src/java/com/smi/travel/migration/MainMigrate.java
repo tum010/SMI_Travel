@@ -42,13 +42,28 @@ public class MainMigrate {
     private static final String AgentReport = " SELECT * FROM \"TRAVOX3\".\"AGENT\" ";
     private static final String StaffReport = " SELECT * FROM \"TRAVOX3\".\"STAFF\" ";
     private static final String ExportFilePath = "C:\\Users\\Jittima\\Desktop\\ExcelFile\\";
+    private static final String ip = "192.168.99.48";
+    private static final String port = "1521";
+    private static final String schema   = "ORCL";
+    private static final String username = "travox3";
+    private static final String password = "oracle";
+    private static final String Filename = "C:\\Users\\Surachai\\Desktop\\TaxInvoiceReport.xls";
+    
+    
+    static{
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
     public static void main(String[] args) {
         String name = "TaxInvoiceReport";
         Connection connect = null;
         Statement s = null;  
         Statement stmt = null;
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
+        try {  
             connect = getConnection();
             s = connect.createStatement();
             if (connect != null) {
@@ -60,26 +75,25 @@ public class MainMigrate {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        // Close
-        try {
+        }finally {
            if (connect != null) {
-              connect.close();
+               try {
+                   connect.close();
+               } catch (SQLException ex) {
+                   Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+               }
            }
-        } catch (SQLException e) {
-           e.printStackTrace();
-        }
+        } 
     }
     
     public static Connection getConnection(){
         Connection connect = null;
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            connect = DriverManager.getConnection("jdbc:oracle:thin:@192.168.99.48:1521/ORCL","travox3","oracle");
+        
+        try {   
+            connect = DriverManager.getConnection("jdbc:oracle:thin:@"+ip+":"+port+"/"+schema+"",username,password);
             System.out.println("Database Connected.");
         } catch (SQLException ex) {
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         return connect;
     }
