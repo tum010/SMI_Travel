@@ -47,8 +47,6 @@ public class MainMigrate {
     private static final String schema   = "ORCL";
     private static final String username = "travox3";
     private static final String password = "oracle";
-    private static final String Filename = "C:\\Users\\Surachai\\Desktop\\TaxInvoiceReport.xls";
-    
     
     static{
         try {
@@ -59,7 +57,6 @@ public class MainMigrate {
     }
     
     public static void main(String[] args) {
-        String name = "TaxInvoiceReport";
         Connection connect = null;
         Statement s = null;  
         Statement stmt = null;
@@ -88,7 +85,6 @@ public class MainMigrate {
     
     public static Connection getConnection(){
         Connection connect = null;
-        
         try {   
             connect = DriverManager.getConnection("jdbc:oracle:thin:@"+ip+":"+port+"/"+schema+"",username,password);
             System.out.println("Database Connected.");
@@ -414,7 +410,7 @@ public class MainMigrate {
                 String position = rs.getString("POSITION");
                 String departmentid = rs.getString("DEPARTMENT_ID");
                 String tel = rs.getString("TEL");
-                String car = rs.getString("CAR");
+                String car = rs.getString("CAR") == null ? "" : new String(rs.getString("CAR").getBytes("ISO8859_1"),"TIS-620");
                 String status = rs.getString("STATUS");
                 String signature = rs.getString("SIGNATURE");                
                 ReportStaff reportStaff = new ReportStaff();
