@@ -7,6 +7,13 @@
 package com.smi.travel.migration;
 
 import com.smi.travel.controller.excel.master.UtilityExcelFunction;
+import com.smi.travel.datalayer.entity.MAirline;
+import com.smi.travel.datalayer.entity.MCity;
+import com.smi.travel.datalayer.entity.MCountry;
+import com.smi.travel.datalayer.entity.MCurrency;
+import com.smi.travel.datalayer.entity.MProductType;
+import com.smi.travel.datalayer.entity.PackageTour;
+import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.util.UtilityFunction;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -39,23 +46,37 @@ import org.apache.poi.hssf.util.CellRangeAddress;
 public class MainMigrate {
     
     private static final String TaxInvoiceReport = " SELECT SALE.*, agt.tax_no AS TAXNO, agt. BRANCH, agt.branch_no FROM ACCTSMI3.REPORT_TAX_INVOICE sale INNER JOIN \"TRAVOX3\".\"AC_TAX_INVOICE\" tax ON tax.\"ID\" = sale.TAX_ID LEFT JOIN TRAVOX3.AGENT AGT ON AGT.code = tax.TAX_INV_TO AND AGT.\"NAME\" = TAX.TAX_INV_NAME WHERE TO_CHAR (sale.TAX_DATE, 'mm') = '11' AND TO_CHAR (sale.TAX_DATE, 'yyyy') = '2014' ORDER BY sale.invoice_type, sale.TAX_NO, sale.TAX_DATE ";
-    private static final String AgentReport = " SELECT * FROM \"TRAVOX3\".\"AGENT\" ";
-    private static final String StaffReport = " SELECT * FROM \"TRAVOX3\".\"STAFF\" ";
-    private static final String ExportFilePath = "C:\\Users\\Surachai\\Desktop\\ExcelFile\\";
-
-   
+    private static final String AgentReport = " SELECT * FROM TRAVOX3.AGENT ";
+    private static final String StaffReport = " SELECT * FROM TRAVOX3.STAFF ";
+    private static final String ExportFilePath = "C:\\Users\\Jittima\\Desktop\\ExcelFile\\";
+    
+    private static final String sqlAirline = " SELECT * FROM TRAVOX3.AIRLINE ";
+    private static final String sqlProduct = " SELECT * FROM TRAVOX3.PRODUCT ";
+    private static final String sqlPackageTour = " SELECT * FROM TRAVOX3.PACKAGE_TOUR ";
+    private static final String sqlHotel = " SELECT * FROM TRAVOX3.HOTEL ";
+    private static final String sqlCurrency = " SELECT * FROM TRAVOX3.CURRENCY ";
+    private static final String sqlCountry = " SELECT * FROM TRAVOX3.COUNTRY ";
+    private static final String sqlCity = " SELECT * FROM TRAVOX3.CITY ";
+    private static final String sqlCustomer = " SELECT * FROM TRAVOX3.CUSTOMER ";
     
     public static void main(String[] args) {
         Connection connect = null;
         Statement s = null;  
         Statement stmt = null;
+        Statement sssss = null;
         try {  
             connect = OracleConnection.getConnection();
             s = connect.createStatement();
             if (connect != null) {
-                getTaxInvoice(s,stmt);
-                getAgentReport(s, stmt);
-                getStaffReport(s, stmt);
+//                getTaxInvoice(s,stmt);
+//                getAgentReport(s, stmt);
+//                getStaffReport(s, stmt);
+//                getCity(s, stmt);
+//                getCountry(s,stmt);
+//                getCurrency(s, stmt);
+//                getAirline(s, stmt);
+//                getPackageTour(s, stmt);
+//                getProduct(s, stmt);
             } else {
                 System.out.println("Database Connect Failed.");
             }
@@ -72,16 +93,386 @@ public class MainMigrate {
         } 
     }
     
-//    public static Connection getConnection(){
-//        Connection connect = null;
-//        try {   
-//            connect = DriverManager.getConnection("jdbc:oracle:thin:@"+ip+":"+port+"/"+schema+"",username,password);
-//            System.out.println("Database Connected.");
-//        } catch (SQLException ex) {
-//            
-//        }
-//        return connect;
-//    }
+    public static void getProduct(Statement s,Statement stmt){
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        UtilityFunction util = new UtilityFunction();
+        List<Product> list = new ArrayList<Product>();
+        try {
+            ResultSet rs = s.executeQuery(sqlProduct);
+            while (rs.next()) {
+                String code = rs.getString("CODE");
+                String name = rs.getString("NAME") == null ? "" : new String(rs.getString("NAME").getBytes("ISO8859_1"),"TIS-620");
+                String description = rs.getString("DESCRIPTION") == null ? "" : new String(rs.getString("DESCRIPTION").getBytes("ISO8859_1"),"TIS-620");
+                String listitemid = rs.getString("LIST_ITEM_ID") == null ? "" :rs.getString("LIST_ITEM_ID");
+                String cost = rs.getString("COST") == null ? "0.00" : rs.getString("COST");
+                String condition = rs.getString("CONDITION") == null ? "" :rs.getString("CONDITION");
+                String include = rs.getString("INCLUDE") == null ? "" :rs.getString("INCLUDE");
+                String instruction = rs.getString("INSTRUCTION") == null ? "" :rs.getString("INSTRUCTION");
+                String remarks = rs.getString("REMARKS") == null ? "" :rs.getString("REMARKS");
+                String update = rs.getString("UPDATE_Y_N") == null ? "" :rs.getString("UPDATE_Y_N");
+                String productype = rs.getString("PRODUCT_TYPE") == null ? "1" :rs.getString("PRODUCT_TYPE");
+
+                
+                Product product = new Product();
+                product.setCode(code);
+                product.setName(name);
+                product.setDescription(description);
+                product.setListItemId(listitemid);
+                product.setCost(new BigDecimal(cost));
+                product.setCondition(condition);
+                product.setInclude(include);
+                product.setInstruction(instruction);
+                product.setRemark(remarks);
+                product.setIsUpdate(update);
+                MProductType mProductType = new MProductType();
+                mProductType.setId(productype);
+                product.setMProductType(mProductType);
+                list.add(product);
+            }
+        } catch (SQLException e ) {
+            
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try { 
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        Connection connect = null;
+        Statement stm = null; 
+        if(list != null){
+            connect = MySqlConnection.getConnection();
+            try {
+                stm = connect.createStatement();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String sql = "";
+            System.out.println(" list.size() "+ list.size());
+            for(int i = 0 ; i< list.size() ; i ++){               
+//                if(!"COTE D'IVOIRE (IVORY COAST)".equalsIgnoreCase(mCountrys.get(i).getName())){
+                    sql = " INSERT INTO `product` (`code`,`name`,`description`,`list_item_id`,`cost`,`condition`,`include`,`instruction`,`remark`,`is_update`,`product_type`) "
+                            + "VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getDescription().replaceAll("'", " ")+"','"
+                            + list.get(i).getListItemId()+"','"+list.get(i).getCost()+"','"+list.get(i).getCondition().replaceAll("'", " ")+"','"+list.get(i).getInclude().replaceAll("'", " ")+"','"+list.get(i).getInstruction().replaceAll("'", " ")+"','"+list.get(i).getRemark().replaceAll("'", " ")+"','"+list.get(i).getIsUpdate()+"','"+Integer.parseInt(list.get(i).getMProductType().getId())+"') ";
+                    System.out.println(" sql "+ sql);
+                    try {
+                        stm.executeUpdate(sql);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+//                }
+            }
+        }
+    }
+    
+    public static void getPackageTour(Statement s,Statement stmt){
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        UtilityFunction util = new UtilityFunction();
+        List<PackageTour> list = new ArrayList<PackageTour>();
+        try {
+            ResultSet rs = s.executeQuery(sqlPackageTour);
+            while (rs.next()) {
+                String code = rs.getString("CODE");
+                String name = rs.getString("NAME") == null ? "" : new String(rs.getString("NAME").getBytes("ISO8859_1"),"TIS-620");
+                String serial = rs.getString("SERIAL") == null ? "" :rs.getString("SERIAL");
+                String guide = rs.getString("GUIDE_STAFF_ID") == null ? "" :rs.getString("GUIDE_STAFF_ID");
+                String paxmin = rs.getString("PAX_MIN") == null ? "0" :rs.getString("PAX_MIN");
+                String paxmax = rs.getString("PAX_MAX") == null ? "0" :rs.getString("PAX_MAX");
+                String remarks = rs.getString("REMARKS") == null ? "" :rs.getString("REMARKS");
+                String status = rs.getString("STATUS") == null ? "" :rs.getString("STATUS");
+                PackageTour packageTour = new PackageTour();
+                packageTour.setCode(code);
+                packageTour.setName(name);
+                packageTour.setSerial(serial);
+                packageTour.setGuideStaffId(guide);
+                packageTour.setPaxMax(Integer.parseInt(paxmax));
+                packageTour.setPaxMin(Integer.parseInt(paxmin));
+                packageTour.setStatus(status);
+                packageTour.setRemark(remarks);
+                list.add(packageTour);
+            }
+        } catch (SQLException e ) {
+            
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try { 
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        Connection connect = null;
+        Statement stm = null; 
+        if(list != null){
+            connect = MySqlConnection.getConnection();
+            try {
+                stm = connect.createStatement();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String sql = "";
+            System.out.println(" list.size() "+ list.size());
+            for(int i = 0 ; i< list.size() ; i ++){
+//                if(!"COTE D'IVOIRE (IVORY COAST)".equalsIgnoreCase(mCountrys.get(i).getName())){
+                    sql = " INSERT INTO `package_tour` (`code`,`name`,`serial`,`guide_staff_id`,`pax_min`,`pax_max`,`remark`,`status`) "
+                            + "VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getSerial()+"','"
+                            + list.get(i).getGuideStaffId()+"','"+list.get(i).getPaxMin()+"','"+list.get(i).getPaxMax()+"','"+list.get(i).getRemark()+"','"+list.get(i).getStatus()+"') ";
+                    System.out.println(" sql "+ sql);
+                    try {
+                        stm.executeUpdate(sql);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+//                }
+            }
+        }
+    }
+    
+    public static void getAirline(Statement s,Statement stmt){
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        UtilityFunction util = new UtilityFunction();
+        List<MAirline> list = new ArrayList<MAirline>();
+        try {
+            ResultSet rs = s.executeQuery(sqlAirline);
+            while (rs.next()) {
+                String code = rs.getString("CODE");
+                String description = rs.getString("DESCRIPTION") == null ? "" : new String(rs.getString("DESCRIPTION").getBytes("ISO8859_1"),"TIS-620");
+                String code3 = rs.getString("CODE_3") == null ? "" :rs.getString("CODE_3");
+                String arcode = rs.getString("AR_CODE") == null ? "" :rs.getString("AR_CODE");
+                MAirline mAirline = new MAirline();
+                mAirline.setCode(code);
+                mAirline.setName(description);
+                mAirline.setCode3Letter(code3);
+                mAirline.setArcode(arcode);
+                list.add(mAirline);
+            }
+        } catch (SQLException e ) {
+            
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try { 
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        Connection connect = null;
+        Statement stm = null; 
+        if(list != null){
+            connect = MySqlConnection.getConnection();
+            try {
+                stm = connect.createStatement();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String sql = "";
+            System.out.println(" list.size() "+ list.size());
+            for(int i = 0 ; i< list.size() ; i ++){
+//                if(!"COTE D'IVOIRE (IVORY COAST)".equalsIgnoreCase(mCountrys.get(i).getName())){
+                    if(list.get(i).getCode().length() > 5 ){
+                        sql = " INSERT INTO `m_airline` (`code`,`name`,`code_3_letter`,`ar_code`) VALUES ('"+list.get(i).getCode().substring(0,5)+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getCode3Letter().replaceAll("'", " ")+"','"+list.get(i).getArcode().replaceAll("'", " ")+"'); " ;
+                    }else{
+                        sql = " INSERT INTO `m_airline` (`code`,`name`,`code_3_letter`,`ar_code`) VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getCode3Letter().replaceAll("'", " ")+"','"+list.get(i).getArcode().replaceAll("'", " ")+"'); " ;
+                    }
+                    System.out.println(" sql "+ sql);
+                    try {
+                        stm.executeUpdate(sql);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+//                }
+            }
+        }
+    }
+    
+    public static void getCurrency(Statement s,Statement stmt){
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        UtilityFunction util = new UtilityFunction();
+        List<MCurrency> list = new ArrayList<MCurrency>();
+        try {
+            ResultSet rs = s.executeQuery(sqlCountry);
+            while (rs.next()) {
+                String code = rs.getString("CODE");
+                String description = new String(rs.getString("DESCRIPTION").getBytes("ISO8859_1"),"TIS-620");
+                MCurrency mCurrency = new MCurrency();
+                mCurrency.setCode(code);
+                mCurrency.setDescription(description);
+                list.add(mCurrency);
+            }
+        } catch (SQLException e ) {
+            
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try { 
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        Connection connect = null;
+        Statement stm = null; 
+        if(list != null){
+            connect = MySqlConnection.getConnection();
+            try {
+                stm = connect.createStatement();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String sql = "";
+            System.out.println(" list.size() "+ list.size());
+            for(int i = 0 ; i< list.size() ; i ++){
+//                if(!"COTE D'IVOIRE (IVORY COAST)".equalsIgnoreCase(mCountrys.get(i).getName())){
+                    if(list.get(i).getCode().length() > 3 ){
+                        sql = " INSERT INTO `m_currency` (`CODE`,`DESCRIPTION`) VALUES ('"+list.get(i).getCode().substring(0,3)+"','"+list.get(i).getDescription().replaceAll("'", " ")+"'); " ;
+                    }else{
+                        sql = " INSERT INTO `m_currency` (`CODE`,`DESCRIPTION`) VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getDescription().replaceAll("'", " ")+"'); " ;
+                    }
+                    System.out.println(" sql "+ sql);
+                    try {
+                        stm.executeUpdate(sql);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+//                }
+            }
+        }
+    }
+    
+    public static void getCountry(Statement s,Statement stmt){
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        UtilityFunction util = new UtilityFunction();
+        List<MCountry> mCountrys = new ArrayList<MCountry>();
+        try {
+            ResultSet rs = s.executeQuery(sqlCountry);
+            while (rs.next()) {
+                String code = rs.getString("CODE");
+                String description = new String(rs.getString("DESCRIPTION").getBytes("ISO8859_1"),"TIS-620");
+                MCountry mCountry = new MCountry();
+                mCountry.setCode(code);
+                mCountry.setName(description);
+                mCountrys.add(mCountry);
+            }
+        } catch (SQLException e ) {
+            
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try { 
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        Connection connect = null;
+        Statement stm = null; 
+        if(mCountrys != null){
+            connect = MySqlConnection.getConnection();
+            try {
+                stm = connect.createStatement();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String sql = "";
+            System.out.println(" mCitys.size() "+ mCountrys.size());
+            for(int i = 0 ; i< mCountrys.size() ; i ++){
+//                if(!"COTE D'IVOIRE (IVORY COAST)".equalsIgnoreCase(mCountrys.get(i).getName())){
+                    if(mCountrys.get(i).getCode().length() > 3 ){
+                        sql = " INSERT INTO `m_country` (`code`,`name`) VALUES ('"+mCountrys.get(i).getCode().substring(0,3)+"','"+mCountrys.get(i).getName().replaceAll("'", " ")+"'); " ;
+                    }else{
+                        sql = " INSERT INTO `m_country` (`code`,`name`) VALUES ('"+mCountrys.get(i).getCode()+"','"+mCountrys.get(i).getName().replaceAll("'", " ")+"'); " ;
+                    }
+                    System.out.println(" sql "+ sql);
+                    try {
+                        stm.executeUpdate(sql);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+//                }
+            }
+        }
+    }
+    
+    public static void getCity(Statement s,Statement stmt){
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        UtilityFunction util = new UtilityFunction();
+        List<MCity> mCitys = new ArrayList<MCity>();
+        try {
+            ResultSet rs = s.executeQuery(sqlCity);
+            while (rs.next()) {
+                String code = rs.getString("CODE");
+                String description = new String(rs.getString("DESCRIPTION").getBytes("ISO8859_1"),"TIS-620");
+                MCity mCity = new MCity();
+                mCity.setCode(code);
+                mCity.setName(description);
+                mCitys.add(mCity);
+            }
+        } catch (SQLException e ) {
+            
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try { 
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        Connection connect = null;
+        Statement stm = null; 
+        if(mCitys != null){
+            connect = MySqlConnection.getConnection();
+            try {
+                stm = connect.createStatement();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String sql = "";
+            System.out.println(" mCitys.size() "+ mCitys.size());
+            for(int i = 0 ; i< mCitys.size() ; i ++){
+//                if(!"Chicago (O'Hare)".equalsIgnoreCase(mCitys.get(i).getName())){
+                    if(mCitys.get(i).getCode().length() > 3 ){
+                        sql = " INSERT INTO `m_city` (`code`,`name`) VALUES ('"+mCitys.get(i).getCode().substring(0,3)+"','"+mCitys.get(i).getName().replaceAll("'", " ")+"'); " ;
+                    }else{
+                        sql = " INSERT INTO `m_city` (`code`,`name`) VALUES ('"+mCitys.get(i).getCode()+"','"+mCitys.get(i).getName().replaceAll("'", " ")+"'); " ;
+                    }
+                    try {
+                        stm.executeUpdate(sql);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+//                }
+            }
+        }
+    }
+    
     
     public static void getTaxInvoice(Statement s,Statement stmt){
         SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -295,16 +686,6 @@ public class MainMigrate {
         }
         sheet.setColumnWidth(5, 256*40);//27
         exportFileExcel("TaxInvoiceReport",wb);
-//        try {
-//            FileOutputStream out = new FileOutputStream(new File(ExportFilePath+"TaxInvoiceReport.xls"));
-//            wb.write(out);
-//            out.close();
-//            System.out.println("Excel TaxInvoiceReport written successfully..");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
     
     public static void getAgentReport(Statement s,Statement stmt){
@@ -337,8 +718,6 @@ public class MainMigrate {
                 String branch = rs.getString("BRANCH");
                 String branchno = rs.getString("BRANCH_NO");
                 String taxno = rs.getString("TAX_NO");
-
-                
                 ReportAgent reportAgent = new ReportAgent();
                 reportAgent.setId(id);
                 reportAgent.setSystemdate(systemdate);
@@ -377,7 +756,6 @@ public class MainMigrate {
                 }
             }
         }
-//        return reptax;
     }
     
     public static void getStaffReport(Statement s,Statement stmt){
@@ -432,7 +810,6 @@ public class MainMigrate {
                 }
             }
         }
-//        return reptax;
     }
     
     public static void ExportAgentReport(List repAgent){
@@ -638,18 +1015,7 @@ public class MainMigrate {
                 sheet.setColumnWidth(k, 256*20);//27
             }
         }
-        
         exportFileExcel("AgentReport",wb);
-//        try {
-//            FileOutputStream out = new FileOutputStream(new File(ExportFilePath+"AgentReport.xls"));
-//            wb.write(out);
-//            out.close();
-//            System.out.println("Excel AgentReport written successfully..");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
     
     public static void ExportStaffReport(List repStaff){
@@ -837,23 +1203,23 @@ class OracleConnection{
 
 class MySqlConnection{
     private static final String ip = "192.168.99.48";
-    private static final String port = "";
+    private static final String port = "3306";
     private static final String schema   = "smitravel_uat";
-    private static final String username = "";
-    private static final String password = "";
+    private static final String username = "root";
+    private static final String password = "P@ssw0rd";
     
      static{
         try {
-            Class.forName("");
+            Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }
      
-    public Connection getConnection(){
+    public static Connection getConnection(){
         Connection connect = null;
         try {   
-            connect = DriverManager.getConnection("",username,password);
+            connect = DriverManager.getConnection("jdbc:mysql://"+ip+":"+port+"/"+schema+"?characterEncoding=UTF-8&amp;useUnicode=yes",username,password);
             System.out.println("Database Connected.");
         } catch (SQLException ex) {
             

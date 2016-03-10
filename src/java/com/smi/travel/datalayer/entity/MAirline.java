@@ -13,7 +13,8 @@ public class MAirline {
      private String code;
      private String name;
      private String code3Letter;
-
+     private String arcode;
+     
     public MAirline() {
     }
 
@@ -57,6 +58,14 @@ public class MAirline {
     
     public void setCode3Letter(String code3Letter) {
         this.code3Letter = code3Letter;
+    }
+
+    public String getArcode() {
+        return arcode;
+    }
+
+    public void setArcode(String arcode) {
+        this.arcode = arcode;
     }
 
 

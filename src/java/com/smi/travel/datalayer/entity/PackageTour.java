@@ -21,6 +21,10 @@ public class PackageTour {
     private String remark;
     private String status;
     private String supplier;
+    private String serial;
+    private String guideStaffId;
+    private int paxMin;
+    private int paxMax;
     private List packageItineraries;
     private List packagePrices;
     private List packageCities;
@@ -124,7 +128,39 @@ public class PackageTour {
     public void setSupplier(String supplier) {
         this.supplier = supplier;
     }
-    
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
+
+    public String getGuideStaffId() {
+        return guideStaffId;
+    }
+
+    public void setGuideStaffId(String guideStaffId) {
+        this.guideStaffId = guideStaffId;
+    }
+
+    public int getPaxMin() {
+        return paxMin;
+    }
+
+    public void setPaxMin(int paxMin) {
+        this.paxMin = paxMin;
+    }
+
+    public int getPaxMax() {
+        return paxMax;
+    }
+
+    public void setPaxMax(int paxMax) {
+        this.paxMax = paxMax;
+    }
+
     
     
     

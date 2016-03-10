@@ -2,6 +2,7 @@ package com.smi.travel.datalayer.entity;
 // Generated Jan 9, 2015 5:42:39 PM by Hibernate Tools 3.6.0
 
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,7 +12,6 @@ import java.util.Set;
  */
 public class Product {
 
-
      private String id;
      private MProductType MProductType;
      private String code;
@@ -19,6 +19,12 @@ public class Product {
      private String description;
      private String remark;
      private Integer isStock;
+     private String listItemId;
+     private String condition;
+     private String include;
+     private String instruction;
+     private String isUpdate;
+     private BigDecimal cost;
      private Set productDetails = new HashSet(0);
      private List productComissions;
      
@@ -107,10 +113,53 @@ public class Product {
         this.isStock = isStock;
     }
 
+    public String getListItemId() {
+        return listItemId;
+    }
 
+    public void setListItemId(String listItemId) {
+        this.listItemId = listItemId;
+    }
 
+    public String getCondition() {
+        return condition;
+    }
 
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
 
+    public String getInclude() {
+        return include;
+    }
+
+    public void setInclude(String include) {
+        this.include = include;
+    }
+
+    public String getInstruction() {
+        return instruction;
+    }
+
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
+    }
+
+    public String getIsUpdate() {
+        return isUpdate;
+    }
+
+    public void setIsUpdate(String isUpdate) {
+        this.isUpdate = isUpdate;
+    }
+
+    public BigDecimal getCost() {
+        return cost;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
+    }
 }
 
 
