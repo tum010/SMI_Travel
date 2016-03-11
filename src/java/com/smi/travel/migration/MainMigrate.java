@@ -26,6 +26,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -75,7 +76,7 @@ public class MainMigrate {
 //                getPackageTour(s, stmt);
 //                getProduct(s, stmt);
 //                getHotel(s, stmt);
-                getCustomer(s, stmt);
+//                getCustomer(s, stmt);
             } else {
                 System.out.println("Database Connect Failed.");
             }
@@ -174,9 +175,9 @@ public class MainMigrate {
                 migrateModel.setPlaseBirth(plaseBirth);
                 migrateModel.setDateIssue("".equalsIgnoreCase(dateIssue) ? null :util.convertStringToDate(dateIssue));
                 migrateModel.setPassportType(passportType);
-//                MCountry mCountry = new MCountry();
-//                mCountry.setCode(countryCode);
-                migrateModel.setCountryCode(countryCode);
+                MCountry mCountry = new MCountry();
+                mCountry.setCode(countryCode);
+                migrateModel.setCountry(mCountry);
                 migrateModel.setPassportNo(passportNo);
                 migrateModel.setAdAccept(adAccept);
                 migrateModel.setWarning(warning);
@@ -222,7 +223,7 @@ public class MainMigrate {
                 if(list.get(i).getCountry() != null && !"".equalsIgnoreCase(list.get(i).getCountry().getCode())){
                     country = " (select id from m_country where `code` ='"+list.get(i).getCountry().getCode()+"') ";
                 }
-                sql = " INSERT INTO  `customer` ( `code`, `initial_name`, `first_name`, `last_name`, `nationality`, `birth_date`, `age`, `age_month`, `sex`, `formal_address`, `formal_tel`, `formal_fax`, `formal_email`, `address`, `tel`, `fax`, `email`, `id_no`, `height`, `plase_of_birth`, `date_of_issue`, `passport_type`, `country_code`, `passport_no`, `ad_accept`, `remark`, `status`, `customer_type`, `personal_id`, `postal_code`, `phone`, `web_member_no`, `wendy_web_no`, `first_name_japan`, `last_name_japan` )  "
+                sql = " INSERT INTO  `customer` ( `code`, `initial_name`, `first_name`, `last_name`, `nationality`, `birth_date`, `age`, `age_month`, `sex`, `formal_address`, `formal_tel`, `formal_fax`, `formal_email`, `address`, `tel`, `fax`, `email`, `id_no`, `height`, `plase_of_birth`, `date_of_issue`, `passport_type`, `country`, `passport_no`, `ad_accept`, `remark`, `status`, `customer_type`, `personal_id`, `postal_code`, `phone`, `web_member_no`, `wendy_web_no`, `first_name_japan`, `last_name_japan` )  "
                     + "VALUES ('"+list.get(i).getCode()+"','"
                     + list.get(i).getInitialname().getId() +"','"
                     + list.get(i).getFirstName()+"','"
@@ -244,8 +245,8 @@ public class MainMigrate {
                     + list.get(i).getHeight() +"','"
                     + list.get(i).getPlaseBirth() +"',"
                     + list.get(i).getDateIssue() +",'"
-                    + list.get(i).getPassportType() +"','"
-                    + list.get(i).getCountryCode() +"' ,'"
+                    + list.get(i).getPassportType() +"', ("
+                    + country +") ,'"
                     + list.get(i).getPassportNo() +"','"
                     + list.get(i).getAdAccept() +"','"
                     + list.get(i).getWarning() +"','"
