@@ -5,6 +5,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="bookingList" value="${requestScope['booking_list']}"/>
 <input type="hidden" id="searchType" name="searchType" value="${requestScope['search_type']}"/>
+<input type="hidden" id="page" name="page" value=""/>
+<input type="hidden" value="" id="currentPage" name="currentPage">
 <section class="content-header" >
     <h1>
         Booking - Information
