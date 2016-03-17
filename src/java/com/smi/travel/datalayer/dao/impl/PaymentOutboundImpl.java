@@ -949,7 +949,8 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 .addScalar("effectiveto", Hibernate.STRING)
                 .addScalar("adddate", Hibernate.STRING)
                 .addScalar("supcode", Hibernate.STRING)
-                .addScalar("owner", Hibernate.STRING)
+                .addScalar("ownercode", Hibernate.STRING)
+                .addScalar("paystockno", Hibernate.STRING)
                 .list();
             
         SimpleDateFormat dateformatNonInvoice = new SimpleDateFormat();
@@ -971,6 +972,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             view.setAdddate(B[12] != null ? util.ConvertString(B[12]) : "");
             view.setSupcode(B[13] != null ? util.ConvertString(B[13]) : "");
             view.setOwner(B[14] != null ? util.ConvertString(B[14]) : "");
+            view.setPaymentstockno(B[15] != null ? util.ConvertString(B[15]) : "");
             data.add(view);            
         }
         

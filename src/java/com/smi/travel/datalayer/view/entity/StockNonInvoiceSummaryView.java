@@ -30,6 +30,7 @@ public class StockNonInvoiceSummaryView {
     private String effectiveto;
     private String adddate;
     private String supcode;
+    private String paymentstockno;
 
     public String getProductHeader() {
         return productHeader;
@@ -181,5 +182,13 @@ public class StockNonInvoiceSummaryView {
 
     public void setSupcode(String supcode) {
         this.supcode = supcode;
+    }
+
+    public String getPaymentstockno() {
+        return paymentstockno;
+    }
+
+    public void setPaymentstockno(String paymentstockno) {
+        this.paymentstockno = paymentstockno;
     }
 }
