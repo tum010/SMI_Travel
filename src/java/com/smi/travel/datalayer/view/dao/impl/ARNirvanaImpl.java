@@ -636,17 +636,17 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss");
         UtilityFunction util = new UtilityFunction();
         List<ARNirvana> arDataList = this.SearchArNirvanaFromPaymentDetailId(ARList);
-        SsDataexch ssDataexch = new SsDataexch();
+        List<SsDataexch> ssDataexchList = new ArrayList<SsDataexch>();
         for(int i=0; i<arDataList.size(); i++){
             ARNirvana arNirvana = arDataList.get(i);
             SsDataexch ssDataexchTemp = new SsDataexch();
             ssDataexchTemp.setDataCd("160010");
-            String apNirvanaNo = gennarateARNirvanaNo("AR");
-            ssDataexchTemp.setDataNo(apNirvanaNo);
+            String arNirvanaNo = gennarateARNirvanaNo("AR");
+            ssDataexchTemp.setDataNo(arNirvanaNo);
             ssDataexchTemp.setEntSysCd("SMI");
             Date date = new Date();
             ssDataexchTemp.setEntSysDate(sdf.format(date));
-            ssDataexchTemp.setEntDataNo(apNirvanaNo);
+            ssDataexchTemp.setEntDataNo(arNirvanaNo);
             ssDataexchTemp.setEntComment("");
             ssDataexchTemp.setRcvSysCd("NIRVANA");
             ssDataexchTemp.setRcvSysCd("1");
@@ -768,6 +768,15 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             
             String service = (arNirvana.getService()!= null && !"".equalsIgnoreCase(arNirvana.getService()) ? arNirvana.getService(): "");
             dataArea += util.generateDataAreaNirvana(service,1);
+            
+            SsDataexchTr ssDataexchTr = setArNirvanaDetail(arNirvana,arNirvanaNo);
+            ssDataexchTemp.setSsDataexchTr(ssDataexchTr);
+            
+            ssDataexchList.add(ssDataexchTemp);
+            
+            if(i == ARList.size()-1){
+                result = "success";
+            }
         }
         
         return result;
@@ -797,7 +806,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         return code;
     }
 
-    public SsDataexchTr setApNirvanaDetail(ARNirvana ar,String datano){
+    public SsDataexchTr setArNirvanaDetail(ARNirvana ar,String datano){
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         String invId = String.valueOf(ar.getInvid());

@@ -28,7 +28,7 @@ public class SsDataexch {
     private String traStaCd;
     private String traSysDate;
     private String dataArea;
-    private List ssDataexchTr = new LinkedList<SsDataexchTr>();
+    private SsDataexchTr ssDataexchTr = new SsDataexchTr();
 
     public String getDataCd() {
         return dataCd;
@@ -142,11 +142,12 @@ public class SsDataexch {
         this.dataArea = dataArea;
     }
 
-    public List getSsDataexchTr() {
+    public SsDataexchTr getSsDataexchTr() {
         return ssDataexchTr;
     }
 
-    public void setSsDataexchTr(List ssDataexchTr) {
+    public void setSsDataexchTr(SsDataexchTr ssDataexchTr) {
         this.ssDataexchTr = ssDataexchTr;
     }
+
 }
