@@ -548,7 +548,7 @@ public class UtilityFunction {
     
     public String generateDataAreaNirvana(String data, int lengthFix) {
         String dataArea = "";
-        for(int i=data.length(); i<lengthFix-data.length(); i++){
+        for(int i=0; i<lengthFix-data.length(); i++){
             dataArea += " ";
         }                 
         return dataArea;
