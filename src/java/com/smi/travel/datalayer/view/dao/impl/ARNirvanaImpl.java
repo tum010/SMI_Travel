@@ -9,6 +9,7 @@ package com.smi.travel.datalayer.view.dao.impl;
 import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.entity.APNirvana;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
+import com.smi.travel.model.nirvana.SsDataexchTr;
 import com.smi.travel.util.UtilityFunction;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -624,4 +625,65 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         }
         return status;
     }
+    
+    public SsDataexchTr setApNirvanaDetail(ARNirvana ar,String datano){
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        String invId = String.valueOf(ar.getInvid());
+        String query = " SELECT * FROM `ar_nirvana_sale_detail` where id = '"+invId+"'" ;
+        String dataArea = "";
+        List<Object[]> ARNirvanaList = session.createSQLQuery(query)
+                .addScalar("id", Hibernate.STRING)
+                .addScalar("inv_no", Hibernate.STRING)
+                .addScalar("salesaccount", Hibernate.STRING)
+                .addScalar("salesdivision", Hibernate.STRING)
+                .addScalar("salesproject", Hibernate.STRING)
+                .addScalar("salesamt", Hibernate.BIG_DECIMAL)
+                .addScalar("saleshmamt", Hibernate.BIG_DECIMAL)
+                .addScalar("detail", Hibernate.STRING)
+                .addScalar("cur_amount", Hibernate.STRING)
+                .addScalar("is_vat", Hibernate.STRING)
+                .list();
+        
+        for (Object[] B : ARNirvanaList) {
+            String salesaccount = (B[2] != null && !"".equalsIgnoreCase(String.valueOf(B[2])) ? String.valueOf(B[2]) : "");
+            String salesdivision = (B[3] != null && !"".equalsIgnoreCase(String.valueOf(B[3])) ? String.valueOf(B[3]) : "");
+            String salesproject = (B[4] != null && !"".equalsIgnoreCase(String.valueOf(B[4])) ? String.valueOf(B[4]) : "");
+            String salesamt = (B[5] != null && !"".equalsIgnoreCase(String.valueOf(B[5])) ? String.valueOf((BigDecimal)B[5]) : "0.00");
+            String saleshmamt = (B[6] != null && !"".equalsIgnoreCase(String.valueOf(B[6])) ? String.valueOf((BigDecimal)B[6]) : "0.00");
+            String detail = (B[7] != null && !"".equalsIgnoreCase(String.valueOf(B[7])) ? String.valueOf(B[7]) : "");
+
+            dataArea += salesaccount + util.generateDataAreaARNirvana(salesaccount,21);
+            dataArea += salesdivision + util.generateDataAreaARNirvana(salesdivision,21);
+            dataArea += salesproject + util.generateDataAreaARNirvana(salesproject,21);
+            dataArea += salesamt + util.generateDataAreaARNirvana(salesamt,23);
+            dataArea += saleshmamt + util.generateDataAreaARNirvana(saleshmamt,23);
+            dataArea += detail + util.generateDataAreaARNirvana(detail,61);
+           
+        }
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss");
+        SsDataexchTr ssdtr = new SsDataexchTr();
+        ssdtr.setDataCd("240010");
+        ssdtr.setDataNo(datano);
+        ssdtr.setDataSeq(String.valueOf(ARNirvanaList.size()));
+        ssdtr.setEntSysCd("SMI");
+        ssdtr.setEntSysDate(sdf.format(new Date()));
+        ssdtr.setEntDataNo(datano);
+        ssdtr.setEntComment("");
+        ssdtr.setRcvSysCd("NIRVANA");
+        ssdtr.setRcvStaCd("1");
+        ssdtr.setCvSysDate("00000000.000000");
+        ssdtr.setRcvComment("");
+        ssdtr.setTraNesCd("1");
+        ssdtr.setTraStaCd("1");
+        ssdtr.setTraSysDate("00000000.000000");
+        ssdtr.setDataArea(dataArea);  
+
+        session.close();
+        this.sessionFactory.close();
+        return ssdtr;
+    }
+    
+    
 }
