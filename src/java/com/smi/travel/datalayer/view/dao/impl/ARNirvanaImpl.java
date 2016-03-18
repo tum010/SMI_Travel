@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.entity.APNirvana;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
 import com.smi.travel.model.nirvana.SsDataexch;
+import com.smi.travel.model.nirvana.SsDataexchTr;
 import com.smi.travel.util.UtilityFunction;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -823,12 +824,12 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             String saleshmamt = (B[6] != null && !"".equalsIgnoreCase(String.valueOf(B[6])) ? String.valueOf((BigDecimal)B[6]) : "0.00");
             String detail = (B[7] != null && !"".equalsIgnoreCase(String.valueOf(B[7])) ? String.valueOf(B[7]) : "");
 
-            dataArea += salesaccount + util.generateDataAreaARNirvana(salesaccount,21);
-            dataArea += salesdivision + util.generateDataAreaARNirvana(salesdivision,21);
-            dataArea += salesproject + util.generateDataAreaARNirvana(salesproject,21);
-            dataArea += salesamt + util.generateDataAreaARNirvana(salesamt,23);
-            dataArea += saleshmamt + util.generateDataAreaARNirvana(saleshmamt,23);
-            dataArea += detail + util.generateDataAreaARNirvana(detail,61);
+            dataArea += salesaccount + util.generateDataAreaNirvana(salesaccount,21);
+            dataArea += salesdivision + util.generateDataAreaNirvana(salesdivision,21);
+            dataArea += salesproject + util.generateDataAreaNirvana(salesproject,21);
+            dataArea += salesamt + util.generateDataAreaNirvana(salesamt,23);
+            dataArea += saleshmamt + util.generateDataAreaNirvana(saleshmamt,23);
+            dataArea += detail + util.generateDataAreaNirvana(detail,61);
            
         }
         

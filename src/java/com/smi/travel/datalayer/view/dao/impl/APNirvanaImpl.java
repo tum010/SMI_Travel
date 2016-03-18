@@ -7,6 +7,9 @@ package com.smi.travel.datalayer.view.dao.impl;
 
 import com.smi.travel.datalayer.view.dao.APNirvanaDao;
 import com.smi.travel.datalayer.view.entity.APNirvana;
+import com.smi.travel.datalayer.view.entity.ARNirvana;
+import com.smi.travel.model.nirvana.SsDataexch;
+import com.smi.travel.model.nirvana.SsDataexchTr;
 import com.smi.travel.util.UtilityFunction;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -70,371 +73,46 @@ public class APNirvanaImpl implements APNirvanaDao {
 
     @Override
     public String ExportAPFileInterface(List<APNirvana> APList, String pathFile) {
-        
         String status = "";
         List<APNirvana> apDataList = this.SearchApNirvanaFromPaymentDetailId(APList);
-        SimpleDateFormat folderName = new SimpleDateFormat("yyMMdd");
-        SimpleDateFormat fileName = new SimpleDateFormat("HHmmss");
-//        File folder = new File(pathFile);
-//        if (!folder.exists() && !folder.isDirectory()) {
-//            folder.mkdirs();
-//        }
-//        String fullFileName = folder.getAbsolutePath() + "\\AP" + fileName.format(Calendar.getInstance().getTime());
-
-//        FileWriter fileWriter = null;
-//        CSVPrinter csvFilePrinter = null;
-//        //Create the CSVFormat object with "\n" as a record delimiter
-//        CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
-//        
-//
-//        try {
-//            //initialize FileWriter object
-//            fileWriter = new FileWriter(fullFileName + ".csv");
-//
-//            //initialize CSVPrinter object 
-//            csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
-//
-//            //Create CSV file header
-//            csvFilePrinter.printRecord(FILE_HEADER);
-//
-//            for (Iterator<APNirvana> it = apDataList.iterator(); it.hasNext();) {
-//                APNirvana ap = it.next();
-//                List apRecord = new ArrayList();
-//                apRecord.add(ap.getRefinvoiceno());
-//                apRecord.add(ap.getIntreference());
-//                apRecord.add(ap.getVendorid());
-//                apRecord.add(ap.getVendorname());
-//                apRecord.add(ap.getDivisionid());
-//                apRecord.add(ap.getProjectid());
-//                apRecord.add(ap.getTranscode());
-//                apRecord.add(ap.getTransdate());
-//                apRecord.add(ap.getDuedate());
-//                apRecord.add(ap.getCurrencyid());
-//                apRecord.add(ap.getHomerate());
-//                apRecord.add(ap.getForeignrate());
-//                apRecord.add(ap.getBasevatamt());
-//                apRecord.add(ap.getBasevathmamt());
-//                apRecord.add(ap.getVatamt());
-//                apRecord.add(ap.getVathmamt());
-//                apRecord.add(ap.getTransamt());
-//                apRecord.add(ap.getTranshmamt());
-//                apRecord.add(ap.getVatflag());
-//                apRecord.add(ap.getVatid());
-//                apRecord.add(ap.getWhtflag());
-//                apRecord.add(ap.getWhtid());
-//                apRecord.add(ap.getBasewhtamt());
-//                apRecord.add(ap.getBasewhthmamt());
-//                apRecord.add(ap.getWhtamt());
-//                apRecord.add(ap.getWhthmamt());
-//                apRecord.add(ap.getYear());
-//                apRecord.add(ap.getPeriod());
-//                apRecord.add(ap.getNote());
-//                apRecord.add(ap.getPuraccount1());
-//                apRecord.add(ap.getPurdivision1());
-//                apRecord.add(ap.getPurproject1());
-//                apRecord.add(ap.getPuramt1());
-//                apRecord.add(ap.getPurhmamt1());
-//                apRecord.add(ap.getPuraccount2());
-//                apRecord.add(ap.getPurdivision2());
-//                apRecord.add(ap.getPurproject2());
-//                apRecord.add(ap.getPuramt2());
-//                apRecord.add(ap.getPurhmamt2());
-//                apRecord.add(ap.getPuraccount3());
-//                apRecord.add(ap.getPurdivision3());
-//                apRecord.add(ap.getPurproject3());
-//                apRecord.add(ap.getPuramt3());
-//                apRecord.add(ap.getPurhmamt3());
-//                apRecord.add(ap.getPuraccount4());
-//                apRecord.add(ap.getPurdivision4());
-//                apRecord.add(ap.getPurproject4());
-//                apRecord.add(ap.getPuramt4());
-//                apRecord.add(ap.getPurhmamt4());
-//                apRecord.add(ap.getPuraccount5());
-//                apRecord.add(ap.getPurdivision5());
-//                apRecord.add(ap.getPurproject5());
-//                apRecord.add(ap.getPuramt5());
-//                apRecord.add(ap.getPurhmamt5());
-//                apRecord.add(ap.getPuraccount6());
-//                apRecord.add(ap.getPurdivision6());
-//                apRecord.add(ap.getPurproject6());
-//                apRecord.add(ap.getPuramt6());
-//                apRecord.add(ap.getPurhmamt6());
-//                apRecord.add(ap.getPuraccount7());
-//                apRecord.add(ap.getPurdivision7());
-//                apRecord.add(ap.getPurproject7());
-//                apRecord.add(ap.getPuramt7());
-//                apRecord.add(ap.getPurhmamt7());
-//                apRecord.add(ap.getPuraccount8());
-//                apRecord.add(ap.getPurdivision8());
-//                apRecord.add(ap.getPurproject8());
-//                apRecord.add(ap.getPuramt8());
-//                apRecord.add(ap.getPurhmamt8());
-//                apRecord.add(ap.getPuraccount9());
-//                apRecord.add(ap.getPurdivision9());
-//                apRecord.add(ap.getPurproject9());
-//                apRecord.add(ap.getPuramt9());
-//                apRecord.add(ap.getPurhmamt9());
-//                apRecord.add(ap.getPuraccount10());
-//                apRecord.add(ap.getPurdivision10());
-//                apRecord.add(ap.getPurproject10());
-//                apRecord.add(ap.getPuramt10());
-//                apRecord.add(ap.getPurhmamt10());
-//                apRecord.add(ap.getService());
-//                apRecord.add(ap.getApaccount());
-//                apRecord.add(ap.getPrefix());
-//                apRecord.add(ap.getVoucherno());
-//                apRecord.add(ap.getTaxid());
-//                apRecord.add(ap.getVendor_branch());
-//                apRecord.add(ap.getCompany_branch());
-//                csvFilePrinter.printRecord(apRecord);
-//            }
-//
-//            System.out.println("CSV file was created successfully !!!");
-//
-//        } catch (Exception e) {
-//            System.out.println("Error in CsvFileWriter !!!");
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                fileWriter.flush();
-//                fileWriter.close();
-//                csvFilePrinter.close();
-//            } catch (IOException e) {
-//                System.out.println("Error while flushing/closing fileWriter/csvPrinter !!!");
-//                e.printStackTrace();
-//            }
-//        }
-            int accno = 1 ;
-            List<APNirvana> apNirvanaList = new ArrayList<APNirvana>();
-            String fullFileName = "";
-            for (int i=0 ; i< apDataList.size() ; i++) {
-                APNirvana ap = apDataList.get(i);
-                File folder = new File(pathFile+"\\accno"+accno+"\\ap\\" + folderName.format(Calendar.getInstance().getTime()));
-                if(accno == Integer.parseInt(ap.getAccno())){
-                    apNirvanaList.add(ap);
-                    accno = Integer.parseInt(ap.getAccno());
-                }else{
-                    folder = new File(pathFile+"\\accno"+accno+"\\ap\\" + folderName.format(Calendar.getInstance().getTime()));
-                    if (!folder.exists() && !folder.isDirectory()) {
-                        folder.mkdirs();
-                    }
-                    fullFileName = folder.getAbsolutePath() +"\\AP" + fileName.format(Calendar.getInstance().getTime());
-                    status = genReport(apNirvanaList,fullFileName,APList);
-                    System.out.println(" status " + status);
-                    
-                    apNirvanaList = new ArrayList<APNirvana>();
-                    apNirvanaList.add(ap);
-                    accno = Integer.parseInt(ap.getAccno());
-                }
-                if(i ==  (apDataList.size() - 1)){
-                    folder = new File(pathFile+"\\accno"+accno+"\\ap\\" + folderName.format(Calendar.getInstance().getTime()));
-                    if (!folder.exists() && !folder.isDirectory()) {
-                        folder.mkdirs();
-                    }
-                    fullFileName = folder.getAbsolutePath() +"\\AP" + fileName.format(Calendar.getInstance().getTime());
-                    status = genReport(apNirvanaList,fullFileName,APList);
-                    System.out.println(" status " + status);
-                }
-            }
-        
-//        try {
-//            HSSFWorkbook workbook = new HSSFWorkbook();
-//            HSSFSheet sheet = workbook.createSheet();
-//            int rownum = 0;
-//            int accno = 0 ;
-//            for (APNirvana ap : apDataList) {
-//                HSSFRow dataRow = sheet.createRow(rownum++);
-//                int cellnum = 0;
-//                HSSFCell cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getRefinvoiceno());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getIntreference());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getVendorid());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getVendorname());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getDivisionid());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getProjectid());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getTranscode());
-//                cell = dataRow.createCell(cellnum++);
-////                cell.setCellValue(ap.getTransdate());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getDuedate());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getCurrencyid());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getHomerate()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getForeignrate()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasevatamt()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasevathmamt()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getVatamt()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getVathmamt()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getTransamt()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getTranshmamt()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getVatflag());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getVatid());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getWhtflag());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getWhtid());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasewhtamt()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getBasewhthmamt()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getWhtamt()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getWhthmamt()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getYear());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPeriod());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getNote());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPuraccount1());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurdivision1());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurproject1());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt1()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt1()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPuraccount2());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurdivision2());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurproject2());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt2()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt2()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPuraccount3());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurdivision3());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurproject3());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt3()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt3()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPuraccount4());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurdivision4());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurproject4());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt4()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt4()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPuraccount5());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurdivision5());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurproject5());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt5()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt5()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPuraccount6());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurdivision6());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurproject6());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt6()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt6()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPuraccount7());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurdivision7());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurproject7());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt7()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt7()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPuraccount8());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurdivision8());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurproject8());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt8()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt8()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPuraccount9());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurdivision9());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurproject9());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt9()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt9()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPuraccount10());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurdivision10());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPurproject10());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPuramt10()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(UtilityFunction.getObjectString(ap.getPurhmamt10()));
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getService());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getApaccount());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getPrefix());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getVoucherno());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getTaxid());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getVendor_branch()== null? "0":ap.getVendor_branch().toString());
-//                cell = dataRow.createCell(cellnum++);
-//                cell.setCellValue(ap.getCompany_branch());
-//            }
-//
-//            FileOutputStream out = new FileOutputStream(new File(fullFileName + ".xls"));
-//            workbook.write(out);
-//            out.close();
-//            status = "success";
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            for (APNirvana ap : APList) {
-//                if(!"".equals(status)){
-//                    status += ", ";
-//                }
-//                status += ap.getPayment_detail_id();
-//            }
-//        }
+        for (int i=0 ; i< apDataList.size() ; i++) {
+            APNirvana ap = apDataList.get(i);
+            
+        }
         return status;
     }
+    
+    public SsDataexchTr setApNirvanaDetail(APNirvana ap,String datano){
+        UtilityFunction util = new UtilityFunction();
+        String dataArea = "";
+        dataArea += ap.getPuraccount1() + util.generateDataAreaNirvana(ap.getPuraccount1(),21);
+        dataArea += ap.getPurdivision1()+ util.generateDataAreaNirvana(ap.getPurdivision1(),21);
+        dataArea += ap.getPurproject1() + util.generateDataAreaNirvana(ap.getPurproject1(),21);
+        dataArea += ap.getPuramt1() + util.generateDataAreaNirvana(String.valueOf(ap.getPuramt1()),23);
+        dataArea += ap.getPurhmamt1()+ util.generateDataAreaNirvana(String.valueOf(ap.getPurhmamt1()),23);
+        dataArea += util.generateDataAreaNirvana("",61);
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss");
+        SsDataexchTr ssdtr = new SsDataexchTr();
+        ssdtr.setDataCd("240020");
+        ssdtr.setDataNo(datano);
+        ssdtr.setDataSeq("1");
+        ssdtr.setEntSysCd("SMI");
+        ssdtr.setEntSysDate(sdf.format(new Date()));
+        ssdtr.setEntDataNo(datano);
+        ssdtr.setEntComment("");
+        ssdtr.setRcvSysCd("NIRVANA");
+        ssdtr.setRcvStaCd("1");
+        ssdtr.setCvSysDate("00000000.000000");
+        ssdtr.setRcvComment("");
+        ssdtr.setTraNesCd("1");
+        ssdtr.setTraStaCd("1");
+        ssdtr.setTraSysDate("00000000.000000");
+        ssdtr.setDataArea(dataArea);  
 
+        return ssdtr;
+    }
+    
     @Override
     public String UpdateStatusAPInterface(List<APNirvana> APList) {
         int result = 0;
