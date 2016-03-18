@@ -50,6 +50,10 @@ public class APNirvanaService {
     public void setGenreport(GenerateReport genreport) {
         this.genreport = genreport;
     }
+
+    public String MappingAPNirvana(List<APNirvana> apNirvanaData) {
+        return apNirvanaDao.MappingAPNirvana(apNirvanaData);
+    }
     
     
    

@@ -70,8 +70,9 @@ public class ARMonitorController extends SMITravelController {
             }
            if(listAr != null){
                System.out.println("export : ");
-               String isExport = arMonitorService.ExportARFileInterface(listAr,arMonitorService.GetPartFileExport());
-               if("success".equals(isExport)){
+//               String isExport = arMonitorService.ExportARFileInterface(listAr,arMonitorService.GetPartFileExport());
+               String result = arMonitorService.MappingARNirvana(listAr);
+               if("success".equals(result)){
                    String isUpdate = arMonitorService.UpdateStatusARInterface(listAr);
                    System.out.println("Update ??? : " + isUpdate);
                    request.setAttribute("update", isUpdate);
