@@ -49,8 +49,9 @@ public class ARMonitorService {
     public void setGenreport(GenerateReport genreport) {
         this.genreport = genreport;
     }
-    
-    
-    
-    
+
+    public String MappingARNirvana(List<ARNirvana> arNirvanaData) {
+        return arNirvanaDao.MappingARNirvana(arNirvanaData);
+    }
+             
 }

@@ -545,5 +545,13 @@ public class UtilityFunction {
         }
         return decimalformatstring;
     }
+    
+    public String generateDataAreaNirvana(String data, int lengthFix) {
+        String dataArea = "";
+        for(int i=data.length(); i<lengthFix-data.length(); i++){
+            dataArea += " ";
+        }                 
+        return dataArea;
+    }
 
 }

@@ -6,14 +6,16 @@
 
 package com.smi.travel.datalayer.view.dao.impl;
 
+import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.entity.APNirvana;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
-import com.smi.travel.model.nirvana.SsDataexchTr;
+import com.smi.travel.model.nirvana.SsDataexch;
 import com.smi.travel.util.UtilityFunction;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -625,7 +627,175 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         }
         return status;
     }
-    
+
+    @Override
+    public String MappingARNirvana(List<ARNirvana> ARList) {
+        String result = "fail";
+        SimpleDateFormat sf = new SimpleDateFormat("DD/MM/YYYY");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss");
+        UtilityFunction util = new UtilityFunction();
+        List<ARNirvana> arDataList = this.SearchArNirvanaFromPaymentDetailId(ARList);
+        SsDataexch ssDataexch = new SsDataexch();
+        for(int i=0; i<arDataList.size(); i++){
+            ARNirvana arNirvana = arDataList.get(i);
+            SsDataexch ssDataexchTemp = new SsDataexch();
+            ssDataexchTemp.setDataCd("160010");
+            String apNirvanaNo = gennarateARNirvanaNo("AR");
+            ssDataexchTemp.setDataNo(apNirvanaNo);
+            ssDataexchTemp.setEntSysCd("SMI");
+            Date date = new Date();
+            ssDataexchTemp.setEntSysDate(sdf.format(date));
+            ssDataexchTemp.setEntDataNo(apNirvanaNo);
+            ssDataexchTemp.setEntComment("");
+            ssDataexchTemp.setRcvSysCd("NIRVANA");
+            ssDataexchTemp.setRcvSysCd("1");
+            ssDataexchTemp.setRcvSysDate("00000000.000000");
+            ssDataexchTemp.setRcvComment("");
+            ssDataexchTemp.setTraNesCd("1");
+            ssDataexchTemp.setTraStaCd("1");
+            ssDataexchTemp.setTraSysDate("00000000.000000");
+            
+            String dataArea = "";
+            String companyId = "";
+            dataArea += util.generateDataAreaNirvana(companyId,21);
+            
+//            String documentPrefix = (arNirvana.getPrefix() != null && !"".equalsIgnoreCase(arNirvana.getPrefix()) ? arNirvana.getPrefix() : "");
+//            dataArea += generateDataAreaARNirvana(documentPrefix.length(),6);
+            
+//            String documentNo = (arNirvana.getDocumentno() != null && !"".equalsIgnoreCase(arNirvana.getDocumentno()) ? arNirvana.getDocumentno() : "");
+            
+            String intreference = (arNirvana.getIntreference() != null && !"".equalsIgnoreCase(arNirvana.getIntreference()) ? arNirvana.getIntreference() : "");
+            dataArea += util.generateDataAreaNirvana(intreference,21);
+            
+            String customerId = (arNirvana.getCustomerid() != null && !"".equalsIgnoreCase(arNirvana.getCustomerid()) ? arNirvana.getCustomerid() : "");
+            dataArea += util.generateDataAreaNirvana(customerId,21);
+            
+            String customerName = (arNirvana.getCustomername() != null && !"".equalsIgnoreCase(arNirvana.getCustomername()) ? arNirvana.getCustomername() : "");
+            dataArea += util.generateDataAreaNirvana(customerName,100);
+            
+            String chargeCustomerId = "";
+            dataArea += util.generateDataAreaNirvana(intreference,21);
+            
+            String divisionId = (arNirvana.getDivisionid() != null && !"".equalsIgnoreCase(arNirvana.getDivisionid()) ? arNirvana.getDivisionid() : "");
+            dataArea += util.generateDataAreaNirvana(intreference,21);
+            
+            String projectId = "0";
+            dataArea += util.generateDataAreaNirvana(projectId,21);
+            
+            String transCode = (arNirvana.getTranscode() != null && !"".equalsIgnoreCase(arNirvana.getTranscode()) ? arNirvana.getTranscode() : "");
+            dataArea += util.generateDataAreaNirvana(transCode,2);
+            
+            String transDate = (arNirvana.getTransdate() != null ? sf.format(arNirvana.getTransdate()) : "");
+            
+            String dueDate = (arNirvana.getDuedate()!= null ? sf.format(arNirvana.getDuedate()) : "");
+            
+            String salesmanId = "00";
+            dataArea += util.generateDataAreaNirvana(intreference,6);
+            
+            String vatFlag = (arNirvana.getVatflag()!= null && !"".equalsIgnoreCase(arNirvana.getVatflag()) ? arNirvana.getVatflag() : "");
+            dataArea += util.generateDataAreaNirvana(vatFlag,1);
+            
+            String vatId = (arNirvana.getVatid()!= null && !"".equalsIgnoreCase(arNirvana.getVatid()) ? arNirvana.getVatid() : "");
+            dataArea += util.generateDataAreaNirvana(vatId,6);
+            
+            String salesAmt = (arNirvana.getSalesamt()!= null ? String.valueOf(arNirvana.getSalesamt()) : "");
+            dataArea += util.generateDataAreaNirvana(salesAmt,23);
+            
+            String salesHmAmt = (arNirvana.getSaleshmamt()!= null ? String.valueOf(arNirvana.getSaleshmamt()) : "");
+            dataArea += util.generateDataAreaNirvana(salesHmAmt,23);
+            
+            String totBaseVatAmt = "";
+            dataArea += util.generateDataAreaNirvana(totBaseVatAmt,23);
+            
+            String totBaseVatHmAmt = "";
+            dataArea += util.generateDataAreaNirvana(totBaseVatHmAmt,23);
+            
+            String totVatAmt = (arNirvana.getVatamt()!= null ? String.valueOf(arNirvana.getVatamt()) : "");
+            dataArea += util.generateDataAreaNirvana(totVatAmt,23);
+            
+            String totVatHmAmt = (arNirvana.getVathmamt()!= null ? String.valueOf(arNirvana.getVathmamt()) : "");
+            dataArea += util.generateDataAreaNirvana(totVatHmAmt,23);
+            
+            BigDecimal salesAmtTemp = (arNirvana.getSalesamt() != null ? arNirvana.getSalesamt() : new BigDecimal(BigInteger.ZERO));
+            BigDecimal vatAmtTemp = (arNirvana.getVatamt()!= null ? arNirvana.getVatamt(): new BigDecimal(BigInteger.ZERO));
+            String arAmt = String.valueOf(salesAmtTemp.add(vatAmtTemp));
+            dataArea += util.generateDataAreaNirvana(arAmt,23);
+            
+            BigDecimal salesHAmtTemp = (arNirvana.getSaleshmamt()!= null ? arNirvana.getSaleshmamt(): new BigDecimal(BigInteger.ZERO));
+            BigDecimal vatHAmtTemp = (arNirvana.getVathmamt()!= null ? arNirvana.getVathmamt(): new BigDecimal(BigInteger.ZERO));
+            String arHmAmt = String.valueOf(salesHAmtTemp.add(vatHAmtTemp));
+            dataArea += util.generateDataAreaNirvana(arHmAmt,23);
+            
+            String costAmt = "0.00";
+            dataArea += util.generateDataAreaNirvana(costAmt,23);
+            
+            String currencyId = (arNirvana.getCurrencyid()!= null && !"".equalsIgnoreCase(arNirvana.getCurrencyid()) ? arNirvana.getCurrencyid(): "");
+            dataArea += util.generateDataAreaNirvana(currencyId,6);
+            
+            String homeRate = (arNirvana.getHomerate() != null ? String.valueOf(arNirvana.getHomerate()) : "");
+            dataArea += util.generateDataAreaNirvana(homeRate,25);
+            
+            String foreignrate = (arNirvana.getForeignrate()!= null ? String.valueOf(arNirvana.getForeignrate()) : "");
+            dataArea += util.generateDataAreaNirvana(foreignrate,25);
+            
+            String cancelFlag = "Y";
+            dataArea += util.generateDataAreaNirvana(cancelFlag,1);
+            
+            String note = (arNirvana.getNote()!= null && !"".equalsIgnoreCase(arNirvana.getNote()) ? arNirvana.getNote(): "");
+            dataArea += util.generateDataAreaNirvana(note,61);
+            
+            String year = (arNirvana.getYear()!= null ? String.valueOf(arNirvana.getYear()) : "");
+            dataArea += util.generateDataAreaNirvana(year,4);
+            
+            String period = (arNirvana.getPeriod()!= null ? String.valueOf(arNirvana.getPeriod()) : "");
+            dataArea += util.generateDataAreaNirvana(period,2);
+            
+            String prepareBillingDate = "";
+            dataArea += util.generateDataAreaNirvana(prepareBillingDate,10);
+            
+            String exReference = "";
+            dataArea += util.generateDataAreaNirvana(exReference,21);
+            
+            String companyBranch = (arNirvana.getCompany_branch()!= null ? String.valueOf(arNirvana.getCompany_branch()) : "");
+            dataArea += util.generateDataAreaNirvana(companyBranch,6);
+            
+            String custTaxId = (arNirvana.getCust_taxid() != null && !"".equalsIgnoreCase(arNirvana.getCust_taxid()) ? arNirvana.getCust_taxid(): "");
+            dataArea += util.generateDataAreaNirvana(custTaxId,21);
+            
+            String cusBranch = (arNirvana.getCust_branch()!= null ? String.valueOf(arNirvana.getCust_branch()) : "");
+            dataArea += util.generateDataAreaNirvana(cusBranch,6);
+            
+            String service = (arNirvana.getService()!= null && !"".equalsIgnoreCase(arNirvana.getService()) ? arNirvana.getService(): "");
+            dataArea += util.generateDataAreaNirvana(service,1);
+        }
+        
+        return result;
+    }
+
+    private String gennarateARNirvanaNo(String type) {
+        String hql = "from MRunningCode run where run.type =  :type";
+        Session session = this.sessionFactory.openSession();
+        List<MRunningCode> list = session.createQuery(hql).setParameter("type", type).list();
+        if (list.isEmpty()) {
+            return null;
+        }
+        
+        String code = String.valueOf(list.get(0).getRunning()+1);
+        for(int i=code.length();i<6;i++){
+            code = "0"+code;
+        }
+        
+        Query query = session.createQuery("update MRunningCode run set run.running = :running" +
+    				" where run.type = :type");
+        query.setParameter("running", list.get(0).getRunning()+1);
+        query.setParameter("type", type);
+        int result = query.executeUpdate();
+        
+        session.close();
+        this.sessionFactory.close();
+        return code;
+    }
+
     public SsDataexchTr setApNirvanaDetail(ARNirvana ar,String datano){
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
@@ -684,6 +854,5 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         this.sessionFactory.close();
         return ssdtr;
     }
-    
     
 }
