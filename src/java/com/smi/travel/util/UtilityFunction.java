@@ -548,9 +548,10 @@ public class UtilityFunction {
     
     public String generateDataAreaNirvana(String data, int lengthFix) {
         String dataArea = "";
+        dataArea += data;
         for(int i=0; i<lengthFix-data.length(); i++){
             dataArea += " ";
-        }                 
+        }
         return dataArea;
     }
 
