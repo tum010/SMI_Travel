@@ -870,11 +870,11 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             String invoiceDateFromTemp = (!"".equalsIgnoreCase(invoiceDateFrom) && invoiceDateFrom != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(invoiceDateFrom))) : "");
             String invoiceDateToTemp = (!"".equalsIgnoreCase(invoiceDateTo) && invoiceDateTo != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(invoiceDateTo))) : "");
             String addDateTemp = (!"".equalsIgnoreCase(addDate) && addDate != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(addDate))) : "");
-            header.setProductHeader(product);
-            header.setInvtoHeader(invTo);           
-            header.setEffectivedateHeader(!"".equalsIgnoreCase(effectiveDateFromTemp) && !"".equalsIgnoreCase(effectiveDateToTemp) ? effectiveDateFromTemp+" - "+effectiveDateToTemp : "");
-            header.setInvoicedateHeader(!"".equalsIgnoreCase(invoiceDateFromTemp) && !"".equalsIgnoreCase(invoiceDateToTemp) ? invoiceDateFromTemp+" - "+invoiceDateToTemp : "");
-            header.setAdddateHeader(addDateTemp);
+            header.setProductHeader(!"".equalsIgnoreCase(product) && product != null ? product : "All");
+            header.setInvtoHeader(!"".equalsIgnoreCase(invTo) && invTo != null ? invTo : "All");           
+            header.setEffectivedateHeader(!"".equalsIgnoreCase(effectiveDateFromTemp) && !"".equalsIgnoreCase(effectiveDateToTemp) ? effectiveDateFromTemp+" - "+effectiveDateToTemp : "-");
+            header.setInvoicedateHeader(!"".equalsIgnoreCase(invoiceDateFromTemp) && !"".equalsIgnoreCase(invoiceDateToTemp) ? invoiceDateFromTemp+" - "+invoiceDateToTemp : "-");
+            header.setAdddateHeader(!"".equalsIgnoreCase(addDateTemp) ? addDateTemp : "-");
         
         }else{
             StockInvoiceSummaryView header = new StockInvoiceSummaryView();
@@ -883,11 +883,11 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             String invoiceDateFromTemp = (!"".equalsIgnoreCase(invoiceDateFrom) && invoiceDateFrom != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(invoiceDateFrom))) : "");
             String invoiceDateToTemp = (!"".equalsIgnoreCase(invoiceDateTo) && invoiceDateTo != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(invoiceDateTo))) : "");
             String addDateTemp = (!"".equalsIgnoreCase(addDate) && addDate != null ? util.ConvertString(dateformatInvoice.format(util.convertStringToDate(addDate))) : "");
-            header.setProductHeader(product);
-            header.setInvtoHeader(invTo);           
-            header.setEffectivedateHeader(!"".equalsIgnoreCase(effectiveDateFromTemp) && !"".equalsIgnoreCase(effectiveDateToTemp) ? effectiveDateFromTemp+" - "+effectiveDateToTemp : "");
-            header.setInvoicedateHeader(!"".equalsIgnoreCase(invoiceDateFromTemp) && !"".equalsIgnoreCase(invoiceDateToTemp) ? invoiceDateFromTemp+" - "+invoiceDateToTemp : "");
-            header.setAdddateHeader(!"".equalsIgnoreCase(addDateTemp) ? addDateTemp : "");
+            header.setProductHeader(!"".equalsIgnoreCase(product) && product != null ? product : "All");
+            header.setInvtoHeader(!"".equalsIgnoreCase(invTo) && invTo != null ? invTo : "All");           
+            header.setEffectivedateHeader(!"".equalsIgnoreCase(effectiveDateFromTemp) && !"".equalsIgnoreCase(effectiveDateToTemp) ? effectiveDateFromTemp+" - "+effectiveDateToTemp : "-");
+            header.setInvoicedateHeader(!"".equalsIgnoreCase(invoiceDateFromTemp) && !"".equalsIgnoreCase(invoiceDateToTemp) ? invoiceDateFromTemp+" - "+invoiceDateToTemp : "-");
+            header.setAdddateHeader(!"".equalsIgnoreCase(addDateTemp) ? addDateTemp : "-");
             data.add(header);
         }
         
@@ -932,7 +932,13 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             query += (haveCondition ? " AND " : " WHERE ");
             query += " (paydate BETWEEN '" + payDateFrom + "' AND '" + payDateTo + "') ";
             haveCondition = true;            
-        } 
+        }
+        
+        if((addDate != null) && (!"".equalsIgnoreCase(addDate))){
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " adddate = '" + addDate + "' ";
+            haveCondition = true;
+        }
         
         List<Object[]> queryStockNonInvoiceSummaryReport = session.createSQLQuery(query)
                 .addScalar("refno", Hibernate.STRING)
@@ -983,11 +989,11 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             String payDateFromTemp = (!"".equalsIgnoreCase(payDateFrom) && payDateFrom != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(payDateFrom))) : "");
             String payDateToTemp = (!"".equalsIgnoreCase(payDateTo) && payDateTo != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(payDateTo))) : "");
             String addDateTemp = (!"".equalsIgnoreCase(addDate) && addDate != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(addDate))) : "");
-            header.setProductHeader(product);
-            header.setInvoicesupHeader(invoiceSup);           
-            header.setEffectivedateHeader(!"".equalsIgnoreCase(effectiveDateFromTemp) && !"".equalsIgnoreCase(effectiveDateToTemp) ? effectiveDateFromTemp+" - "+effectiveDateToTemp : "");
-            header.setPaydateHeader(!"".equalsIgnoreCase(payDateFromTemp) && !"".equalsIgnoreCase(payDateToTemp) ? payDateFromTemp+" - "+payDateToTemp : "");
-            header.setAdddateHeader(!"".equalsIgnoreCase(addDateTemp) ? addDateTemp : "");
+            header.setProductHeader(!"".equalsIgnoreCase(product) && product != null ? product : "All");
+            header.setInvoicesupHeader(!"".equalsIgnoreCase(invoiceSup) && invoiceSup != null ? invoiceSup : "All");           
+            header.setEffectivedateHeader(!"".equalsIgnoreCase(effectiveDateFromTemp) && !"".equalsIgnoreCase(effectiveDateToTemp) ? effectiveDateFromTemp+" - "+effectiveDateToTemp : "-");
+            header.setPaydateHeader(!"".equalsIgnoreCase(payDateFromTemp) && !"".equalsIgnoreCase(payDateToTemp) ? payDateFromTemp+" - "+payDateToTemp : "-");
+            header.setAdddateHeader(!"".equalsIgnoreCase(addDateTemp) ? addDateTemp : "-");
         
         }else{
             StockNonInvoiceSummaryView header = new StockNonInvoiceSummaryView();
@@ -996,11 +1002,11 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             String payDateFromTemp = (!"".equalsIgnoreCase(payDateFrom) && payDateFrom != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(payDateFrom))) : "");
             String payDateToTemp = (!"".equalsIgnoreCase(payDateTo) && payDateTo != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(payDateTo))) : "");
             String addDateTemp = (!"".equalsIgnoreCase(addDate) && addDate != null ? util.ConvertString(dateformatNonInvoice.format(util.convertStringToDate(addDate))) : "");
-            header.setProductHeader(product);
-            header.setInvoicesupHeader(invoiceSup);           
-            header.setEffectivedateHeader(!"".equalsIgnoreCase(effectiveDateFromTemp) && !"".equalsIgnoreCase(effectiveDateToTemp) ? effectiveDateFromTemp+" - "+effectiveDateToTemp : "");
-            header.setPaydateHeader(!"".equalsIgnoreCase(payDateFromTemp) && !"".equalsIgnoreCase(payDateToTemp) ? payDateFromTemp+" - "+payDateToTemp : "");
-            header.setAdddateHeader(!"".equalsIgnoreCase(addDateTemp) ? addDateTemp : "");
+            header.setProductHeader(!"".equalsIgnoreCase(product) && product != null ? product : "All");
+            header.setInvoicesupHeader(!"".equalsIgnoreCase(invoiceSup) && invoiceSup != null ? invoiceSup : "All");           
+            header.setEffectivedateHeader(!"".equalsIgnoreCase(effectiveDateFromTemp) && !"".equalsIgnoreCase(effectiveDateToTemp) ? effectiveDateFromTemp+" - "+effectiveDateToTemp : "-");
+            header.setPaydateHeader(!"".equalsIgnoreCase(payDateFromTemp) && !"".equalsIgnoreCase(payDateToTemp) ? payDateFromTemp+" - "+payDateToTemp : "-");
+            header.setAdddateHeader(!"".equalsIgnoreCase(addDateTemp) ? addDateTemp : "-");
             data.add(header);      
         }
         
