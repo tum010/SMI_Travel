@@ -86,11 +86,17 @@ public class APNirvanaImpl implements APNirvanaDao {
     public SsDataexchTr setApNirvanaDetail(APNirvana ap,String datano){
         UtilityFunction util = new UtilityFunction();
         String dataArea = "";
-        dataArea += ap.getPuraccount1() + util.generateDataAreaNirvana(ap.getPuraccount1(),21);
-        dataArea += ap.getPurdivision1()+ util.generateDataAreaNirvana(ap.getPurdivision1(),21);
-        dataArea += ap.getPurproject1() + util.generateDataAreaNirvana(ap.getPurproject1(),21);
-        dataArea += ap.getPuramt1() + util.generateDataAreaNirvana(String.valueOf(ap.getPuramt1()),23);
-        dataArea += ap.getPurhmamt1()+ util.generateDataAreaNirvana(String.valueOf(ap.getPurhmamt1()),23);
+        String puraccount = (ap.getPuraccount1() != null && !"".equalsIgnoreCase(ap.getPuraccount1()) ? ap.getPuraccount1() : "");
+        String purdivision = (ap.getPurdivision1() != null && !"".equalsIgnoreCase(ap.getPurdivision1()) ? ap.getPurdivision1() : "");
+        String purproject = (ap.getPurproject1() != null && !"".equalsIgnoreCase(ap.getPurproject1()) ? ap.getPurproject1() : "");
+        String puramt = (ap.getPuramt1() != null ? String.valueOf(ap.getPuramt1()) : "0.00");
+        String purhmamt = (ap.getPurhmamt1() != null ? String.valueOf(ap.getPurhmamt1()) : "0.00");
+        
+        dataArea += util.generateDataAreaNirvana(puraccount,21);
+        dataArea += util.generateDataAreaNirvana(purdivision,21);
+        dataArea += util.generateDataAreaNirvana(purproject,21);
+        dataArea += util.generateDataAreaNirvana(puramt,23);
+        dataArea += util.generateDataAreaNirvana(purhmamt,23);
         dataArea += util.generateDataAreaNirvana("",61);
         
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss");
@@ -731,109 +737,109 @@ public class APNirvanaImpl implements APNirvanaDao {
             
             String dataArea = "";
             String companyId = "";
-            dataArea += companyId+util.generateDataAreaNirvana(companyId,21);
+            dataArea += util.generateDataAreaNirvana(companyId,21);
 
             String refInvoiceNo = (apNirvana.getRefinvoiceno()!= null && !"".equalsIgnoreCase(apNirvana.getRefinvoiceno()) ? apNirvana.getRefinvoiceno() : "");
-            dataArea += refInvoiceNo+util.generateDataAreaNirvana(refInvoiceNo,21);
+            dataArea += util.generateDataAreaNirvana(refInvoiceNo,21);
             
             String vendorId = (apNirvana.getVendorid()!= null && !"".equalsIgnoreCase(apNirvana.getVendorid()) ? apNirvana.getVendorid() : "");
-            dataArea += vendorId+util.generateDataAreaNirvana(vendorId,21);
+            dataArea += util.generateDataAreaNirvana(vendorId,21);
             
             String vendorName = (apNirvana.getVendorname()!= null && !"".equalsIgnoreCase(apNirvana.getVendorname()) ? apNirvana.getVendorname() : "");
-            dataArea += vendorName+util.generateDataAreaNirvana(vendorName,100);
+            dataArea += util.generateDataAreaNirvana(vendorName,100);
             
             String remitId = "";
-            dataArea += remitId+util.generateDataAreaNirvana(remitId,21);
+            dataArea += util.generateDataAreaNirvana(remitId,21);
             
             String divisionId = (apNirvana.getDivisionid() != null && !"".equalsIgnoreCase(apNirvana.getDivisionid()) ? apNirvana.getDivisionid() : "");
-            dataArea += divisionId+util.generateDataAreaNirvana(divisionId,21);
+            dataArea += util.generateDataAreaNirvana(divisionId,21);
             
             String projectId = "0";
-            dataArea += projectId+util.generateDataAreaNirvana(projectId,21);
+            dataArea += util.generateDataAreaNirvana(projectId,21);
             
             String transCode = (apNirvana.getTranscode() != null && !"".equalsIgnoreCase(apNirvana.getTranscode()) ? apNirvana.getTranscode() : "");
-            dataArea += transCode+util.generateDataAreaNirvana(transCode,2);
+            dataArea += util.generateDataAreaNirvana(transCode,2);
             
             String transDate = (apNirvana.getTransdate() != null ? sf.format(apNirvana.getTransdate()) : "");
             dataArea += transDate;
             
             String dueDate = (apNirvana.getDuedate() != null ? sf.format(apNirvana.getDuedate()) : "");
-            dataArea += dueDate+util;
+            dataArea += dueDate;
             
             String vatFlag = (apNirvana.getVatflag() != null && !"".equalsIgnoreCase(apNirvana.getVatflag()) ? apNirvana.getVatflag() : "");
-            dataArea += vatFlag+util.generateDataAreaNirvana(vatFlag,1);
+            dataArea += util.generateDataAreaNirvana(vatFlag,1);
             
             String vatId = (apNirvana.getVatid() != null && !"".equalsIgnoreCase(apNirvana.getVatid()) ? apNirvana.getVatid() : "");
-            dataArea += vatId+util.generateDataAreaNirvana(vatId,6);
+            dataArea += util.generateDataAreaNirvana(vatId,6);
             
-            String transAmt = (apNirvana.getTransamt() != null ? String.valueOf(apNirvana.getTransamt()) : "");
-            dataArea += transAmt+util.generateDataAreaNirvana(transAmt,23);
+            String transAmt = (apNirvana.getTransamt() != null ? String.valueOf(apNirvana.getTransamt()) : "0.00");
+            dataArea += util.generateDataAreaNirvana(transAmt,23);
             
-            String transHmamt = (apNirvana.getTranshmamt()!= null ? String.valueOf(apNirvana.getTranshmamt()) : "");
-            dataArea += transHmamt+util.generateDataAreaNirvana(transHmamt,23);
+            String transHmamt = (apNirvana.getTranshmamt()!= null ? String.valueOf(apNirvana.getTranshmamt()) : "0.00");
+            dataArea += util.generateDataAreaNirvana(transHmamt,23);
             
-            String totBaseVatAmt = ("Y".equalsIgnoreCase(vatFlag) ? transAmt : "0");
-            dataArea += totBaseVatAmt+util.generateDataAreaNirvana(totBaseVatAmt,23);
+            String totBaseVatAmt = ("Y".equalsIgnoreCase(vatFlag) ? transAmt : "0.00");
+            dataArea += util.generateDataAreaNirvana(totBaseVatAmt,23);
             
-            String totBaseVatHmAmt = ("Y".equalsIgnoreCase(vatFlag) ? transHmamt : "0");
-            dataArea += totBaseVatHmAmt+util.generateDataAreaNirvana(totBaseVatHmAmt,23);
+            String totBaseVatHmAmt = ("Y".equalsIgnoreCase(vatFlag) ? transHmamt : "0.00");
+            dataArea += util.generateDataAreaNirvana(totBaseVatHmAmt,23);
             
-            String totVatAmt = (apNirvana.getVatamt() != null ? String.valueOf(apNirvana.getVatamt()) : "");
-            dataArea += totVatAmt+util.generateDataAreaNirvana(totVatAmt,23);
+            String totVatAmt = (apNirvana.getVatamt() != null ? String.valueOf(apNirvana.getVatamt()) : "0.00");
+            dataArea += util.generateDataAreaNirvana(totVatAmt,23);
             
-            String totVatHmAmt = (apNirvana.getVathmamt() != null ? String.valueOf(apNirvana.getVathmamt()) : "");
-            dataArea += totVatHmAmt+util.generateDataAreaNirvana(totVatHmAmt,23);
+            String totVatHmAmt = (apNirvana.getVathmamt() != null ? String.valueOf(apNirvana.getVathmamt()) : "0.00");
+            dataArea += util.generateDataAreaNirvana(totVatHmAmt,23);
             
             String currencyId = (apNirvana.getCurrencyid() != null && !"".equalsIgnoreCase(apNirvana.getCurrencyid()) ? apNirvana.getCurrencyid() : "");
-            dataArea += currencyId+util.generateDataAreaNirvana(currencyId,6);
+            dataArea += util.generateDataAreaNirvana(currencyId,6);
             
-            String homeRate = (apNirvana.getHomerate()!= null ? String.valueOf(apNirvana.getHomerate()) : "");
-            dataArea += homeRate+util.generateDataAreaNirvana(homeRate,25);
+            String homeRate = (apNirvana.getHomerate()!= null ? String.valueOf(apNirvana.getHomerate()) : "0.000000");
+            dataArea += util.generateDataAreaNirvana(homeRate,25);
             
-            String foreignRate = (apNirvana.getForeignrate() != null ? String.valueOf(apNirvana.getForeignrate()) : "");
-            dataArea += foreignRate+util.generateDataAreaNirvana(foreignRate,25);
+            String foreignRate = (apNirvana.getForeignrate() != null ? String.valueOf(apNirvana.getForeignrate()) : "0.000000");
+            dataArea += util.generateDataAreaNirvana(foreignRate,25);
             
             String note = (apNirvana.getNote() != null && !"".equalsIgnoreCase(apNirvana.getNote()) ? apNirvana.getNote() : "");
-            dataArea += note+util.generateDataAreaNirvana(note,61);
+            dataArea += util.generateDataAreaNirvana(note,61);
             
             String year = (apNirvana.getYear() != null ? String.valueOf(apNirvana.getYear()) : "");
-            dataArea += year+util.generateDataAreaNirvana(year,4);
+            dataArea += util.generateDataAreaNirvana(year,4);
             
             String period = (apNirvana.getPeriod() != null ? String.valueOf(apNirvana.getPeriod()) : "");
-            dataArea += period+util.generateDataAreaNirvana(period,2);
+            dataArea += util.generateDataAreaNirvana(period,2);
             
             String service = (apNirvana.getService() != null && !"".equalsIgnoreCase(apNirvana.getService()) ? apNirvana.getService(): "");
-            dataArea += service+util.generateDataAreaNirvana(service,1);
+            dataArea += util.generateDataAreaNirvana(service,1);
             
             String apAccount = (apNirvana.getApaccount()!= null && !"".equalsIgnoreCase(apNirvana.getApaccount()) ? apNirvana.getApaccount(): "");
-            dataArea += apAccount+util.generateDataAreaNirvana(apAccount,21);
+            dataArea += util.generateDataAreaNirvana(apAccount,21);
             
-            String totBaseWithHoldTaxAmt = (apNirvana.getBasewhtamt()!= null ? String.valueOf(apNirvana.getBasewhtamt()) : "");
-            dataArea += totBaseWithHoldTaxAmt+util.generateDataAreaNirvana(totBaseWithHoldTaxAmt,20);
+            String totBaseWithHoldTaxAmt = (apNirvana.getBasewhtamt()!= null ? String.valueOf(apNirvana.getBasewhtamt()) : "0");
+            dataArea += util.generateDataAreaNirvana(totBaseWithHoldTaxAmt,20);
             
-            String totBaseWithHoldTaxHmAmt = (apNirvana.getBasewhthmamt()!= null ? String.valueOf(apNirvana.getBasewhthmamt()) : "");
-            dataArea += totBaseWithHoldTaxHmAmt+util.generateDataAreaNirvana(totBaseWithHoldTaxHmAmt,20);
+            String totBaseWithHoldTaxHmAmt = (apNirvana.getBasewhthmamt()!= null ? String.valueOf(apNirvana.getBasewhthmamt()) : "0");
+            dataArea += util.generateDataAreaNirvana(totBaseWithHoldTaxHmAmt,20);
             
-            String totWithHoldTaxAmt = (apNirvana.getWhtamt()!= null ? String.valueOf(apNirvana.getWhtamt()) : "");
-            dataArea += totWithHoldTaxAmt+util.generateDataAreaNirvana(totWithHoldTaxAmt,20);
+            String totWithHoldTaxAmt = (apNirvana.getWhtamt()!= null ? String.valueOf(apNirvana.getWhtamt()) : "0");
+            dataArea += util.generateDataAreaNirvana(totWithHoldTaxAmt,20);
             
-            String totWithHoldTaxHmAmt = (apNirvana.getWhthmamt()!= null ? String.valueOf(apNirvana.getWhthmamt()) : "");
-            dataArea += totWithHoldTaxHmAmt+util.generateDataAreaNirvana(totWithHoldTaxHmAmt,20);
+            String totWithHoldTaxHmAmt = (apNirvana.getWhthmamt()!= null ? String.valueOf(apNirvana.getWhthmamt()) : "0");
+            dataArea += util.generateDataAreaNirvana(totWithHoldTaxHmAmt,20);
             
             String withHoldTaxFlag = (apNirvana.getWhtflag()!= null && !"".equalsIgnoreCase(apNirvana.getWhtflag()) ? apNirvana.getWhtflag() : "");
-            dataArea += withHoldTaxFlag+util.generateDataAreaNirvana(withHoldTaxFlag,1);
+            dataArea += util.generateDataAreaNirvana(withHoldTaxFlag,1);
             
             String intReference = (apNirvana.getIntreference()!= null && !"".equalsIgnoreCase(apNirvana.getIntreference()) ? apNirvana.getIntreference() : "");
-            dataArea += intReference+util.generateDataAreaNirvana(intReference,21);
+            dataArea += util.generateDataAreaNirvana(intReference,21);
             
             String companyBranch = (apNirvana.getCompany_branch()!= null ? String.valueOf(apNirvana.getCompany_branch()) : "");
-            dataArea += companyBranch+util.generateDataAreaNirvana(companyBranch,6);
+            dataArea += util.generateDataAreaNirvana(companyBranch,6);
             
             String custTaxId = (apNirvana.getTaxid()!= null && !"".equalsIgnoreCase(apNirvana.getTaxid()) ? apNirvana.getTaxid() : "");
-            dataArea += custTaxId+util.generateDataAreaNirvana(custTaxId,21);
+            dataArea += util.generateDataAreaNirvana(custTaxId,21);
             
-            String custBranch = (apNirvana.getVendor_branch()!= null ? String.valueOf(apNirvana.getVendor_branch()) : "");
-            dataArea += custBranch+util.generateDataAreaNirvana(custBranch,6);
+            String custBranch = (apNirvana.getVendor_branch()!= null ? String.valueOf(apNirvana.getVendor_branch()) : "0");
+            dataArea += util.generateDataAreaNirvana(custBranch,6);
             
             SsDataexchTr ssDataexchTr = setApNirvanaDetail(apNirvana,apNirvanaNo);
             ssDataexchTemp.setSsDataexchTr(ssDataexchTr);
