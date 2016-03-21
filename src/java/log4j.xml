@@ -11,7 +11,8 @@
 	
 	<appender name="hibernate" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="DatePattern" value="'.'yyyy-MM-dd" />
-		<param name="File" value="C:/Users/icnb1402040/Desktop/logs/hibernate.log" />
+<!--		<param name="File" value="C:/Users/icnb1402040/Desktop/logs/hibernate.log" />-->
+		<param name="File" value="C:/Users/Jittima/Desktop/SMI Travel Pro/SMI_Travel/logs/hibernate.log" />
 		<param name="Append" value="true" />
 		<param name="Encoding" value="UTF-8" />
 		<param name="Threshold" value="debug" />
@@ -22,7 +23,8 @@
 	
 	<appender name="spring" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="DatePattern" value="'.'yyyy-MM-dd" />
-		<param name="File" value="C:/Users/icnb1402040/Desktop/logs/spring.log" />
+<!--		<param name="File" value="C:/Users/icnb1402040/Desktop/logs/spring.log" />-->
+                <param name="File" value="C:/Users/Jittima/Desktop/SMI Travel Pro/SMI_Travel/logs/spring.log" />
 		<param name="Append" value="true" />
 		<param name="Encoding" value="UTF-8" />
 		<param name="Threshold" value="debug" />
@@ -32,7 +34,8 @@
 	</appender>
 	<appender name="pratz" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="DatePattern" value="'.'yyyy-MM-dd" />
-		<param name="File" value="C:/Users/icnb1402040/Desktop/logs/pratz.log" />
+                <param name="File" value="C:/Users/Jittima/Desktop/SMI Travel Pro/SMI_Travel/logs/pratz.log" />
+		<!--<param name="File" value="C:/Users/icnb1402040/Desktop/logs/pratz.log" />-->
 		<param name="Append" value="true" />
 		<param name="Encoding" value="UTF-8" />
 		<param name="Threshold" value="debug" />

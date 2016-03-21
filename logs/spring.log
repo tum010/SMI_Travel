@@ -1,0 +1,8 @@
+DEBUG: - DispatcherServlet with name 'spring' processing POST request for [/SMITravel/ARMonitor.smi]
+DEBUG: - DispatcherServlet with name 'spring' processing POST request for [/SMITravel/ARMonitor.smi]
+DEBUG: - Mapping [/ARMonitor.smi] to HandlerExecutionChain with handler [com.smi.travel.controller.ARMonitorController@67d84a2d] and 1 interceptor
+DEBUG: - Mapping [/ARMonitor.smi] to HandlerExecutionChain with handler [com.smi.travel.controller.ARMonitorController@67d84a2d] and 1 interceptor
+DEBUG: - Rendering view [org.springframework.web.servlet.view.tiles3.TilesView: name 'ARMonitor'; URL [ARMonitor]] in DispatcherServlet with name 'spring'
+DEBUG: - Rendering view [org.springframework.web.servlet.view.tiles3.TilesView: name 'ARMonitor'; URL [ARMonitor]] in DispatcherServlet with name 'spring'
+DEBUG: - Successfully completed request
+DEBUG: - Successfully completed request
