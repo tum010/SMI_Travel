@@ -7,6 +7,8 @@ package com.smi.travel.util;
 
 import com.smi.travel.datalayer.entity.AirticketFlight;
 import com.smi.travel.datalayer.entity.Customer;
+import com.smi.travel.model.nirvana.SsDataexch;
+import com.smi.travel.model.nirvana.SsDataexchTr;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -15,13 +17,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author Surachai
  */
 public class UtilityFunction {
-
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
     private static final String[] tensNames = {
         "",
         " ten",
@@ -553,6 +557,44 @@ public class UtilityFunction {
             dataArea += " ";
         }
         return dataArea;
+    }
+    
+    public void logsNirvana(SsDataexch data , String rowid){
+        logger.info("===================  Header  ========================");
+        logger.info(" data_cd : " +  data.getDataCd());
+        logger.info(" data_no : " +  data.getDataNo());
+        logger.info(" ent_sys_cd : " +  data.getEntSysCd());
+        logger.info(" ent_sys_date : " +  data.getEntSysDate());
+        logger.info(" ent_date_no : " +  data.getEntDataNo());
+        logger.info(" ent_comment : " +  data.getEntComment());
+        logger.info(" rcv_sys_cd : " +  data.getRcvSysCd());
+        logger.info(" rcv_sta_cd : " +  data.getRcvStaCd());
+        logger.info(" rcv_sys_date : " +  data.getRcvSysDate());
+        logger.info(" rcv_comment : " +  data.getRcvComment());
+        logger.info(" tra_nes_cd : " +  data.getTraNesCd());
+        logger.info(" tra_sta_cd : " +  data.getTraStaCd());
+        logger.info(" tra_sys_date : " +  data.getTraSysDate());
+        logger.info("===============  Header Data Area  ==================");
+        logger.info(" rowid : " +  rowid);
+        logger.info(" data_area : " +  data.getDataArea());
+        logger.info("===================  Detail  ========================");
+        SsDataexchTr detail = data.getSsDataexchTr();
+        logger.info(" data_cd : " +  detail.getDataCd());
+        logger.info(" data_no : " +  detail.getDataNo());
+        logger.info(" data_seq : " +  detail.getDataSeq());
+        logger.info(" ent_sys_cd : " +  detail.getEntSysCd());
+        logger.info(" ent_sys_date : " +  detail.getEntSysDate());
+        logger.info(" ent_date_no : " +  detail.getEntDataNo());
+        logger.info(" ent_comment : " +  detail.getEntComment());
+        logger.info(" rcv_sys_cd : " +  detail.getRcvSysCd());
+        logger.info(" rcv_sta_cd : " +  detail.getRcvStaCd());
+        logger.info(" cv_sys_date : " +  detail.getCvSysDate());
+        logger.info(" rcv_comment : " +  detail.getRcvComment());
+        logger.info(" tra_nes_cd : " +  detail.getTraNesCd());
+        logger.info(" tra_sta_cd : " +  detail.getTraStaCd());
+        logger.info(" tra_sys_date : " +  detail.getTraSysDate());
+        logger.info("===============  Detail Data Area  ==================");
+        logger.info(" data_area : " +  detail.getDataArea());
     }
 
 }

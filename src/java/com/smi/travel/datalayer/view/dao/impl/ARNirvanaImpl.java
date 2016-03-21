@@ -28,10 +28,11 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import org.joda.time.format.DateTimeFormat;
 //import java.time.format.DateTimeFormatter;
 
@@ -637,10 +638,11 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
         UtilityFunction util = new UtilityFunction();
         List<ARNirvana> arDataList = this.SearchArNirvanaFromPaymentDetailId(ARList);
         List<SsDataexch> ssDataexchList = new ArrayList<SsDataexch>();
+        
         for(int i=0; i<arDataList.size(); i++){
             ARNirvana arNirvana = arDataList.get(i);
             SsDataexch ssDataexchTemp = new SsDataexch();
-            ssDataexchTemp.setDataCd("160010");
+            ssDataexchTemp.setDataCd("240010");
             String arNirvanaNo = gennarateARNirvanaNo("AR");
             ssDataexchTemp.setDataNo(arNirvanaNo);
             ssDataexchTemp.setEntSysCd("SMI");
@@ -649,7 +651,7 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             ssDataexchTemp.setEntDataNo(arNirvanaNo);
             ssDataexchTemp.setEntComment("");
             ssDataexchTemp.setRcvSysCd("NIRVANA");
-            ssDataexchTemp.setRcvSysCd("1");
+            ssDataexchTemp.setRcvStaCd("1");
             ssDataexchTemp.setRcvSysDate("00000000.000000");
             ssDataexchTemp.setRcvComment("");
             ssDataexchTemp.setTraNesCd("1");
@@ -771,11 +773,14 @@ public class ARNirvanaImpl implements  ARNirvanaDao{
             String service = (arNirvana.getService()!= null && !"".equalsIgnoreCase(arNirvana.getService()) ? arNirvana.getService(): "");
             dataArea += util.generateDataAreaNirvana(service,1);
             
+            ssDataexchTemp.setDataArea(dataArea);
             SsDataexchTr ssDataexchTr = setArNirvanaDetail(arNirvana,arNirvanaNo);
             ssDataexchTemp.setSsDataexchTr(ssDataexchTr);
             
-            ssDataexchList.add(ssDataexchTemp);
+            util.logsNirvana(ssDataexchTemp,arNirvana.getRowid());
             
+            ssDataexchList.add(ssDataexchTemp);
+
             if(i == ARList.size()-1){
                 result = "success";
             }

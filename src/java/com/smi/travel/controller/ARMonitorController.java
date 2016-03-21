@@ -39,7 +39,6 @@ public class ARMonitorController extends SMITravelController {
         if("searchAr".equals(action)){
            List<ARNirvana> listAr = new LinkedList<>();
            listAr = arMonitorService.SearchArNirvanaFromFilter(invoiceType, departmnt, type, from, to, status, accno);
-           logger.info(" SearchArNirvanaFromFilter ");
            if(listAr != null){
                request.setAttribute("listAr", listAr);
            }else{

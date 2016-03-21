@@ -719,16 +719,17 @@ public class APNirvanaImpl implements APNirvanaDao {
         for(int i=0; i<apDataList.size(); i++){
             APNirvana apNirvana = apDataList.get(i);
             SsDataexch ssDataexchTemp = new SsDataexch();
-            ssDataexchTemp.setDataCd("160010");
+            ssDataexchTemp.setDataCd("240020");
             String apNirvanaNo = gennarateAPNirvanaNo("AP");
             ssDataexchTemp.setDataNo(apNirvanaNo);
             ssDataexchTemp.setEntSysCd("SMI");
             Date date = new Date();
-            ssDataexchTemp.setEntSysDate(util.convertDateToString(date));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss");
+            ssDataexchTemp.setEntSysDate(sdf.format(date));
             ssDataexchTemp.setEntDataNo(apNirvanaNo);
             ssDataexchTemp.setEntComment("");
             ssDataexchTemp.setRcvSysCd("NIRVANA");
-            ssDataexchTemp.setRcvSysCd("1");
+            ssDataexchTemp.setRcvStaCd("1");
             ssDataexchTemp.setRcvSysDate("00000000.000000");
             ssDataexchTemp.setRcvComment("");
             ssDataexchTemp.setTraNesCd("1");
@@ -840,9 +841,11 @@ public class APNirvanaImpl implements APNirvanaDao {
             
             String custBranch = (apNirvana.getVendor_branch()!= null ? String.valueOf(apNirvana.getVendor_branch()) : "0");
             dataArea += util.generateDataAreaNirvana(custBranch,6);
-            
+            ssDataexchTemp.setDataArea(dataArea);
             SsDataexchTr ssDataexchTr = setApNirvanaDetail(apNirvana,apNirvanaNo);
             ssDataexchTemp.setSsDataexchTr(ssDataexchTr);
+            
+            util.logsNirvana(ssDataexchTemp,apNirvana.getRowid());
             
             ssDataexchList.add(ssDataexchTemp);
             
