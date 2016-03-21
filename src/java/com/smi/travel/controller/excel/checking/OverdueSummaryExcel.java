@@ -795,7 +795,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
         sheet.setColumnWidth(7, 256*15);
         sheet.setColumnWidth(8, 256*15);
         sheet.setColumnWidth(9, 256*15);
-//        sheet.setColumnWidth(10, 256*15);
+        sheet.setColumnWidth(10, 256*60);
 //        sheet.setColumnWidth(11, 256*15);
 //        sheet.setColumnWidth(12, 256*15);
 //        sheet.setColumnWidth(13, 256*15);

@@ -1236,6 +1236,10 @@ public class AJAXBean extends AbstractBean implements
             StockDetail stockDetail = new StockDetail();
             stockDetail = stockDetails.get(i);
             code = stockDetail.getCode();
+            type = "";
+            refno = "";
+            pickup = "";
+            pickdate = "";
             if(stockDetail.getTypeId() != null){
                 type = stockDetail.getTypeId().getName() ;
             }
@@ -1245,7 +1249,9 @@ public class AJAXBean extends AbstractBean implements
             if(stockDetail.getStaff() != null){
                 pickup = stockDetail.getStaff().getName();
             }
-            pickdate = utilty.convertDateToString(stockDetail.getPickupDate());
+            if(stockDetail.getPickupDate() != null){
+                pickdate = utilty.convertDateToString(stockDetail.getPickupDate());
+            }           
             stockDetailIdTable = stockDetail.getId();
             stockId = stockDetail.getStock().getId();
             String newrow = "";              
