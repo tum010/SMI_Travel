@@ -1145,12 +1145,14 @@ public class AirTicketDetailController extends SMITravelController {
             int infant = 0;
             Set<AirticketPassenger> passengers = airline.getAirticketPassengers();
             for (AirticketPassenger passenger : passengers) {
-                if ("ADT".equalsIgnoreCase(passenger.getMPricecategory().getCode())) {
-                    adult += 1;
-                } else if ("CHD".equalsIgnoreCase(passenger.getMPricecategory().getCode())) {
-                    child += 1;
-                } else if ("INF".equalsIgnoreCase(passenger.getMPricecategory().getCode())) {
-                    infant += 1;
+                if(passenger.getMPricecategory() != null){
+                    if ("ADT".equalsIgnoreCase(passenger.getMPricecategory().getCode())) {
+                        adult += 1;
+                    } else if ("CHD".equalsIgnoreCase(passenger.getMPricecategory().getCode())) {
+                        child += 1;
+                    } else if ("INF".equalsIgnoreCase(passenger.getMPricecategory().getCode())) {
+                        infant += 1;
+                    }
                 }
             }
             System.out.println("adult : "+adult);
