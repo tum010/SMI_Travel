@@ -188,7 +188,7 @@ public class BookingPnrImpl implements BookingPnrDao {
                 return flight;
             }
         }
-        return null;
+        return new BookingFlight();
     }
     
     private void updateFlightAdult(BookingFlight newFlight, BookingFlight currentFlight) {
