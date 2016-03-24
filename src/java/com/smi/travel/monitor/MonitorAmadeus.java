@@ -372,23 +372,29 @@ public class MonitorAmadeus extends MonitorScheduler {
             String[] splitName2 = splitName[1].split(" ");
             // Using nameSeparatorIndex to handle case of blank space in first name.
             int nameSeparatorIndex = splitName[1].lastIndexOf(" ");
-            String firstName = splitName[1].substring(0, nameSeparatorIndex);
-            
+            String firstName = "";
+            if(nameSeparatorIndex > 0){
+                firstName = splitName[1].substring(0, nameSeparatorIndex);
+            }else{
+                firstName = splitName[1];
+            }
 //            String firstName = splitName[1].substring(0, splitName[1].length() - 2);
 //            String initial = splitName[1].substring(splitName[1].length() - 2);
-            String initial;
-            String passengerType;
-            if (!splitName2[1].contains("(")) {
-                // plus 1 to exclude blankspace index.
-                initial = splitName[1].substring(nameSeparatorIndex+1);
-                passengerType = "ADT";
-            } else {
-                int indexLess = splitName2[1].indexOf("(");
-                int indexMore = splitName2[1].indexOf(")");
-                initial = splitName2[1].substring(0, indexLess);
-                passengerType = splitName2[1].substring(indexLess + 1, indexMore);
+            String initial = "";
+            String passengerType = "ADT";
+            if(splitName2.length > 1){
+                if (!splitName2[1].contains("(")) {
+                    // plus 1 to exclude blankspace index.
+                    initial = splitName[1].substring(nameSeparatorIndex+1);
+                    passengerType = "ADT";
+                } else {
+                    int indexLess = splitName2[1].indexOf("(");
+                    int indexMore = splitName2[1].indexOf(")");
+                    initial = splitName2[1].substring(0, indexLess);
+                    passengerType = splitName2[1].substring(indexLess + 1, indexMore);
+                }
             }
-
+            
             MAmadeus fareComAma = amadeusMap.get("fare commission");
             String fareSection = fareComAma.getSection();
             String fareLine = null;
