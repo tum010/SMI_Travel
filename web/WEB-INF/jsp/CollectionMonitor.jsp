@@ -33,7 +33,7 @@
             <input type="hidden" value="" id="page" name="page">
             <input type="hidden" value="" id="currentPage" name="currentPage">
             <input type="hidden" value="" id="row" name="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="margin-top: -17px">
                 <c:if test="${requestScope['update'] =='updatesuccess'}">                                            
                     <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -51,10 +51,10 @@
                    <strong>Please choose the collection monitor list.!</strong> 
                 </div>
                 
-                <div class="col-xs-1 text-right"  style="width: 100px;margin-top: -17px" >
+                <div class="col-xs-1 text-right"  style="width: 100px" >
                     <label class="control-label" for="">Department</lable>
                 </div>
-                <div class="col-xs-1" style="width: 200px;margin-top: -17px">
+                <div class="col-xs-1" style="width: 200px">
                     <select id="department" name="department" class="form-control selectize">
                         <option value="">-- ALL --</option> 
                         <c:choose>
@@ -79,10 +79,10 @@
                         <option value="Outbound" ${selectedOutbound}>Outbound</option>
                     </select>
                 </div>
-                <div class="col-xs-1 text-right"  style="width: 100px;margin-top: -17px">
+                <div class="col-xs-1 text-right"  style="width: 100px">
                     <label class="control-label" for="">Type</lable>
                 </div>
-                <div class="col-xs-1" style="width: 200px;margin-top: -17px">
+                <div class="col-xs-1" style="width: 200px">
                     <select id="type" name="type" class="form-control selectize">
                         <option value="">-- ALL --</option> 
                         <c:choose>
@@ -111,10 +111,10 @@
                         <option value="A" ${selectedTicket}>Ticket</option>
                     </select>
                 </div>
-                <div class="col-xs-1 text-right" style="width: 120px;margin-top: -17px">
+                <div class="col-xs-1 text-right" style="width: 120px">
                     <label class="control-label" for="">Status</lable>
                 </div>
-                <div class="col-xs-1" style="width: 200px;margin-top: -17px">
+                <div class="col-xs-1" style="width: 200px">
                    <select id="status" name="status" class="form-control selectize">
                         <option value="">-- ALL --</option> 
                         <c:choose>
