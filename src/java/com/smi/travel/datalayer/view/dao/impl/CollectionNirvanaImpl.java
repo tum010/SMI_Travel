@@ -275,5 +275,149 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
         return isUpdate;
     }
 
+    @Override
+    public String MappingCollectionNirvana(List<CollectionNirvana> cnData) {
+        String result = "fail";
+        SimpleDateFormat sf = new SimpleDateFormat("DD/MM/YYYY");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss");
+        UtilityFunction util = new UtilityFunction();
+        List<CollectionNirvana> cnDataList = this.SearchCollectionNirvanaFromRowId(cnData);
+//        List<SsDataexch> ssDataexchList = new ArrayList<SsDataexch>();
+        for(int i=0; i<cnDataList.size(); i++){
+            
+        }
+        return "";
+    }
+    
+    private List<CollectionNirvana> SearchCollectionNirvanaFromRowId(List<CollectionNirvana> cnList) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        List<CollectionNirvana> collectionNirvanaList = new ArrayList<CollectionNirvana>();
+        
+        
+        String rowId = "";
+        for(int i = 0;i<cnList.size();i++){
+            rowId = ",'"+cnList.get(i).getRowid()+"'";
+        }
+        String query = " SELECT * FROM `collection_nirvana` where rowid in "+rowId.substring(1)+")" ;
+        List<Object[]> QueryList = session.createSQLQuery(query)
+                .addScalar("invno",Hibernate.STRING)
+                .addScalar("invto",Hibernate.STRING)
+                .addScalar("arcode",Hibernate.STRING)
+                .addScalar("acccode",Hibernate.STRING)
+                .addScalar("suminvamount",Hibernate.BIG_DECIMAL)
+                .addScalar("recno",Hibernate.STRING)
+                .addScalar("sumrecamount",Hibernate.BIG_DECIMAL)
+                .addScalar("cur",Hibernate.STRING)
+                .addScalar("diff",Hibernate.BIG_DECIMAL)
+                .addScalar("collection_status",Hibernate.STRING)
+                .addScalar("department",Hibernate.STRING)
+                .addScalar("type",Hibernate.STRING)
+                .addScalar("invdate",Hibernate.DATE)
+                .addScalar("invamount",Hibernate.STRING)
+                .addScalar("wth",Hibernate.BIG_DECIMAL)
+                .addScalar("cash",Hibernate.BIG_DECIMAL)
+                .addScalar("chq",Hibernate.BIG_DECIMAL)
+                .addScalar("credit",Hibernate.BIG_DECIMAL)
+                .addScalar("banktransfer",Hibernate.BIG_DECIMAL)
+                .addScalar("wt",Hibernate.BIG_DECIMAL)
+                .addScalar("cashminus",Hibernate.BIG_DECIMAL)
+                .addScalar("pay_by",Hibernate.STRING)
+                .addScalar("itf_status",Hibernate.STRING)
+                .addScalar("rowid",Hibernate.STRING)
+                .list();
+        
+         List data = new ArrayList();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("dd-MM-yyyy");
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy hh:mm");
+        int count = 1;
+        BigDecimal cash = new BigDecimal(BigInteger.ZERO);
+        BigDecimal chq  = new BigDecimal(BigInteger.ZERO);
+        BigDecimal credit = new BigDecimal(BigInteger.ZERO);
+        BigDecimal banktransfer = new BigDecimal(BigInteger.ZERO);
+        BigDecimal wt = new BigDecimal(BigInteger.ZERO);
+        BigDecimal cashminus = new BigDecimal(BigInteger.ZERO);
+        
+        BigDecimal totalamount = new BigDecimal(BigInteger.ZERO);
+        BigDecimal totalamountwait  = new BigDecimal(BigInteger.ZERO);
+        BigDecimal totalamountvoid = new BigDecimal(BigInteger.ZERO);
+        BigDecimal totalamountinvoice = new BigDecimal(BigInteger.ZERO);
+        BigDecimal totalamountdiff = new BigDecimal(BigInteger.ZERO);
+        
+        for(Object[] CN : QueryList){
+            CollectionNirvana collectionNirvana = new CollectionNirvana();
+            collectionNirvana.setInvno(util.ConvertString(CN[0]));
+            collectionNirvana.setInvto(util.ConvertString(CN[1]));
+            collectionNirvana.setArcode(util.ConvertString(CN[2]));
+            collectionNirvana.setAcccode(util.ConvertString(CN[3]));
+            collectionNirvana.setInvamount((BigDecimal) CN[4]);
+            
+            String receipt = util.ConvertString(CN[5]);
+            String[] parts = receipt.split(",");
+            String recno = parts[0];
+            for(int i = 1; i < parts.length; i++) {
+                if(!(String.valueOf(parts[i])).equalsIgnoreCase(String.valueOf(parts[i-1])) ) {
+                    recno += "," +parts[i] ;
+                }
+            }
+            collectionNirvana.setRecno(recno);
+            collectionNirvana.setRecamount((BigDecimal) CN[6]);
+            collectionNirvana.setCur(util.ConvertString(CN[7]));
+            collectionNirvana.setDiff((BigDecimal) CN[8]);
+            collectionNirvana.setCollectionStatus(util.ConvertString(CN[9]));
+            collectionNirvana.setDepartment(util.ConvertString(CN[10]));
+            collectionNirvana.setType(util.ConvertString(CN[11]));
+            collectionNirvana.setInvdate(util.convertStringToDate(util.ConvertString(CN[12])));
+            collectionNirvana.setInvoiceamount(util.ConvertString(CN[13]));
+            collectionNirvana.setWithtax((BigDecimal) CN[14]);
+            
+            cash = cash.add((BigDecimal) CN[15]);
+            collectionNirvana.setCash(cash);
+            
+            chq = chq.add((BigDecimal) CN[16]);
+            collectionNirvana.setChq(chq);
+            
+            credit = credit.add((BigDecimal) CN[17]);
+            collectionNirvana.setCredit(credit);
+            
+            banktransfer = banktransfer.add((BigDecimal) CN[18]);
+            collectionNirvana.setBanktransfer(banktransfer);
+            
+            wt = wt.add((BigDecimal) CN[19]);
+            collectionNirvana.setWt(wt);
+            
+            cashminus = cashminus.add((BigDecimal) CN[20]);
+            collectionNirvana.setCashminus(cashminus);
+            
+            String paybuy = util.ConvertString(CN[21]);
+            collectionNirvana.setPayby(util.ConvertString(CN[21]));
+            if(!"Wait".equalsIgnoreCase(paybuy) && !"Void".equalsIgnoreCase(paybuy)){
+                totalamount = totalamount.add((BigDecimal) CN[6]);
+            }
+            if("Wait".equalsIgnoreCase(paybuy)){
+                totalamountwait = totalamountwait.add((BigDecimal) CN[6]);
+            }
+            if("Void".equalsIgnoreCase(paybuy)){
+                totalamountvoid = totalamountvoid.add((BigDecimal) CN[6]);
+            }
+            totalamountinvoice = totalamountinvoice.add((BigDecimal) CN[4]);
+            totalamountdiff = totalamountdiff.add((BigDecimal) CN[8]);
+            collectionNirvana.setTotalamount(totalamount);
+            collectionNirvana.setTotalamountwait(totalamountwait);
+            collectionNirvana.setTotalamountvoid(totalamountvoid);
+            collectionNirvana.setTotalamountinvoice(totalamountinvoice);
+            collectionNirvana.setTotalamountdiff(totalamountdiff);
+            collectionNirvana.setStatus(util.ConvertString(CN[22]));
+            collectionNirvana.setRowid(util.ConvertString(CN[23]));
+            collectionNirvanaList.add(collectionNirvana);
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return collectionNirvanaList;
+    }
+
 
 }
