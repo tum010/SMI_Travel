@@ -30,6 +30,9 @@
             <div class="col-xs-12 form-group"><hr/></div>
         </div>
         <form action="CollectionMonitor.smi" method="post" id="collectionMonitorForm" role="form" autocomplete="off">
+            <input type="hidden" value="" id="page" name="page">
+            <input type="hidden" value="" id="currentPage" name="currentPage">
+            <input type="hidden" value="" id="row" name="row">
             <div class="col-xs-12">
                 <c:if test="${requestScope['update'] =='updatesuccess'}">                                            
                     <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
