@@ -18,6 +18,7 @@ import com.smi.travel.datalayer.entity.MGalileo;
 import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.MAirticketService;
 import com.smi.travel.datalayer.service.MGalileoService;
+import com.smi.travel.util.UtilityFunction;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -217,7 +218,7 @@ public class MonitorGalileo extends MonitorScheduler {
 
     @Override
     BookingAirline buildBookingAirline() {
-
+        UtilityFunction util = new UtilityFunction();
         String airlineCode = null;
         String ticketDateS = null;
 
@@ -230,6 +231,9 @@ public class MonitorGalileo extends MonitorScheduler {
         MAirline mAir = new MAirline();
         mAir.setCode(airlineCode);
         List<MAirline> res = mAirticketService.searchAirline(mAir, 1);
+        if(res == null){
+            util.logsGalileo(mAir.getCode(), 1);
+        }
         MAirline mAirReturn = res.get(0);
         String airlineName = mAirReturn.getName();
 
@@ -516,6 +520,7 @@ public class MonitorGalileo extends MonitorScheduler {
 
     @Override
     int archiveDataFile(String file, int option) {
+        UtilityFunction util = new UtilityFunction();
         try {
             Path sourceFile = Paths.get(this.monitorDirectory + file);
             Path destFile = Paths.get(this.archivedDirectory + file);
@@ -526,6 +531,7 @@ public class MonitorGalileo extends MonitorScheduler {
                 Files.move(sourceFile, destFile, REPLACE_EXISTING);
             } else {
                 System.out.println("Archiving to error folder for file " + errFile);
+                util.logsGalileo(file, option);
                 Files.move(sourceFile, errFile, REPLACE_EXISTING);
             }
             return 1;

@@ -596,5 +596,16 @@ public class UtilityFunction {
         logger.info("===============  Detail Data Area  ==================");
         logger.info(" data_area : " +  detail.getDataArea());
     }
+    
+    public void logsGalileo(String data , int option){
+        if(option == 1){
+            logger.info("Cannot search airline code " + data);
+        
+        }else if(option == 2){
+            logger.info("Cannot import file " + data);
+            
+        }
+        
+    }
 
 }
