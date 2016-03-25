@@ -16,7 +16,7 @@
 </section>
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">
     <!-- side bar -->
-    <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
+    <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px;width: 150px">
         <div ng-include="'WebContent/Accounting/NirvanaInterfaceMenu.html'"></div>
     </div>
     <div class="col-sm-10">
@@ -176,7 +176,7 @@
                     </button>
                 </div>
                 <div class="col-xs-12"><br></div>
-                <div class="col-xs-12">
+                <div class="col-xs-12" style="margin-top: -20px">
                     <input type="hidden" id="apCount" name="apCount" value="${data_list.size()}"/>
                     <table id="apDataListTable" class="display paginated" cellspacing="0" width="100%">
                         <thead>

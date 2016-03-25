@@ -19,7 +19,7 @@
 </section>
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">
     <!-- side bar -->
-    <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
+    <div class="col-sm-1" style="border-right:  solid 1px #01C632;padding-top: 10px;width: 150px">
         <div ng-include="'WebContent/Accounting/NirvanaInterfaceMenu.html'"></div>
     </div>
     <div class="col-sm-10">
@@ -29,6 +29,7 @@
             </div>
             <div class="col-xs-12 form-group"><hr/></div>
         </div>
+        
         <form action="CollectionMonitor.smi" method="post" id="collectionMonitorForm" role="form" autocomplete="off">
             <input type="hidden" value="" id="page" name="page">
             <input type="hidden" value="" id="currentPage" name="currentPage">
@@ -178,26 +179,26 @@
                 </div>
                 <input type="hidden" name="action" id="action" value="">
                 <div class="col-xs-12"><br></div>  
-                <div class="col-xs-12">
+                <div class="col-xs-12" style="margin-top: -20px">
                     <input type="hidden" id="coCount" name="coCount" value="${CollectionList.size()}"/>
-                    <table id="collectionDataListTable" class="table display paginated" cellspacing="0" width="100%">
+                    <table id="collectionDataListTable" class="display paginated" cellspacing="0" width="100%" style="table-layout: fixed;">
                         <thead>
                             <tr class="datatable-header" >
                                 <th class="hidden">Id</th>
-                                <th style="width: 1%" onclick="selectAll()"><u>All</u></th>
-                                <th style="width: 1%" >No</th>
-                                <th style="width: 12%">Receipt</th>
+                                <th style="width: 5%" onclick="selectAll()"><u>All</u></th>
+                                <th style="width: 5%" >No</th>
+                                <th style="width: 10%">Receipt</th>
                                 <th style="width: 12%">Inv No.</th>
                                 <th style="width: 10%">AR Code</th>
-                                <th style="width: 12%">Inv To</th>
-                                <th style="width: 10%">Acc Code</th>
+                                <th style="width: 10%">Inv To</th>
+                                <th style="width: 9%">Acc Code</th>
                                 <th style="width: 10%">Inv Amount</th>
-                                <th style="width: 12%">Sum Inv</th>
-                                <th style="width: 12%">Diff</th>
-                                <th style="width: 12%">Sum Rec</th>
-                                <th style="width: 2%">Cur</th>
-                                <th style="width: 5%">Collection</th>
-                                <th style="width: 5%">Status</th>
+                                <th style="width: 10%">Sum Inv</th>
+                                <th style="width: 10%">Diff</th>
+                                <th style="width: 10%">Sum Rec</th>
+                                <th style="width: 5%">Cur</th>
+                                <th style="width: 10%">Collection</th>
+                                <th style="width: 8%">Status</th>
                             </tr>
                         </thead>
                         <tbody>               
@@ -220,11 +221,11 @@
                                     <td>${table.arcode}</td>
                                     <td>${table.invto}</td>
                                     <td>${table.acccode}</td>
-                                    <td>${table.invoiceamount}</td>
+                                    <td align="right">${table.invoiceamount}</td>
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.invamount}" /></td>
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.diff}" /></td>
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.recamount}" /></td>
-                                    <td align="center">${table.cur}</td>
+                                    <td align="left">${table.cur}</td>
                                     <td align="center">${table.collectionStatus}</td>
                                     <td align="center">${table.status}</td>
                                 </tr>
@@ -672,5 +673,76 @@ function validateDate(date,option){
     
     function hideDiv(){
         $('#textAlertDivNotChoose').hide();
+    }
+    
+    function changeColor(id,type,page){
+        var pageNo = parseInt($("#page").val())+1;
+        for(var i=0; i<pageNo; i++){
+            $("#no"+i).css("color", "#499DD5");
+            $("#noPrevious"+i).css("color", "#499DD5");
+            $("#noNext"+i).css("color", "#499DD5");
+            $("#noFirst").css("color", "#499DD5");                
+            $("#noLast").css("color", "#499DD5");
+            
+            $("#no"+i).addClass("hidden");
+            $("#noPrevious"+i).addClass("hidden");
+            $("#noNext"+i).addClass("hidden");
+        }
+        
+        var pageShow = parseInt(page);
+        if(pageShow > 2 && pageShow < pageNo - 2){
+            for(var i=pageShow; i >= pageShow-2; i--){
+               $("#no"+i).removeClass("hidden"); 
+            }
+            for(var i=pageShow; i <= pageShow+2; i++){
+               $("#no"+i).removeClass("hidden");  
+            }
+        
+        }else{
+            if(pageShow <= 2){
+                for(var i=0; i < 5; i++){
+                    $("#no"+i).removeClass("hidden");  
+                } 
+            
+            }else if(pageShow <= pageNo-1){
+                for(var i=pageNo-5; i < pageNo; i++){
+                    $("#no"+i).removeClass("hidden");  
+                } 
+            }
+            
+        }    
+        
+        var previous = ((parseInt(page) === 0 ? 0 : parseInt(page)-1));
+        $("#noPrevious"+(previous)).removeClass("hidden");
+
+        var next = ((parseInt(page) === pageNo-1 ? pageNo-1 : parseInt(page)+1));
+        $("#noNext"+(next)).removeClass("hidden");
+        
+        $("#no"+page).css("color", "#AFEEEE");
+        
+        if(parseInt(page) === 0){
+            $("#noFirst").css("color", "#AFEEEE");
+            $("#noPrevious"+(previous)).css("color", "#AFEEEE");
+        
+        }else if(parseInt(page) === pageNo-1){
+            $("#noLast").css("color", "#AFEEEE");
+            $("#noNext"+(next)).css("color", "#AFEEEE");
+        }
+        
+        if(pageNo-1 === 0){
+            $("#noFirst").css("color", "#499DD5");                
+            $("#noLast").css("color", "#499DD5");
+            
+            if(type === 'first'){
+                $("#noFirst").css("color", "#AFEEEE");
+                
+            }else if(type === 'last'){
+                $("#noLast").css("color", "#AFEEEE");
+                
+            }
+        }
+    
+        $("#currentPage").val(page);
+             
     }
 </script>
