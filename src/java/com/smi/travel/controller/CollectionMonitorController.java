@@ -3,6 +3,7 @@ import com.smi.travel.datalayer.service.CollectionNirvanaService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CollectionNirvana;
 import com.smi.travel.master.controller.SMITravelController;
+import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,6 +45,33 @@ public class CollectionMonitorController extends SMITravelController {
             if(collectionNirvanas != null){
                 request.setAttribute(CollectionList,collectionNirvanas);
             } 
+        }else if("export".equals(action)){
+            String coCount = request.getParameter("coCount");
+            List<CollectionNirvana> listCo = new LinkedList<>();
+            int count = Integer.parseInt(coCount);
+            for(int i=1;i<=count;i++){
+                String isSelect = request.getParameter("selectAll"+i);
+                if(isSelect != null){
+                    CollectionNirvana cn = new CollectionNirvana();
+                    String inputId = request.getParameter("inputId"+i);
+                    System.out.println(" inputId  :::" + inputId);
+                    cn.setRowid(inputId);
+                    listCo.add(cn);
+                }
+            }
+           if(listCo != null){
+//             String isExport = arMonitorService.ExportARFileInterface(listAr,arMonitorService.GetPartFileExport());
+               String result = "success";
+//             String result = arMonitorService.MappingARNirvana(listAr);
+               if("success".equals(result)){
+                   String isUpdate = collectionNirvanaService.UpdateStatusCollection(listCo);
+                   request.setAttribute("update", isUpdate);
+               }               
+               listCo = collectionNirvanaService.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, "");
+               request.setAttribute(CollectionList, listCo);
+           }else{
+               request.setAttribute(CollectionList, null);
+           }
         }
 //        System.out.println(" action " + action);
 //        System.out.println(" collectionDepartment " + collectionDepartment);
@@ -52,8 +80,7 @@ public class CollectionMonitorController extends SMITravelController {
 //        System.out.println(" collectionFromDate " + inputFromDate);
 //        System.out.println(" collectionToDate " + inputToDate);
 //        System.out.println(" collectionInvNo " + collectionInvNo);
-        
-        
+
         return CollectionMonitor;
     }
 

@@ -31,10 +31,27 @@
         </div>
         <form action="CollectionMonitor.smi" method="post" id="collectionMonitorForm" role="form" autocomplete="off">
             <div class="col-xs-12">
-                <div class="col-xs-1 text-right"  style="width: 100px">
+                <c:if test="${requestScope['update'] =='updatesuccess'}">                                            
+                    <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Update Status Success!</strong> 
+                    </div>
+                </c:if>
+                <c:if test="${requestScope['update'] =='updatefail'}">
+                <div id="textAlertDivSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                   <strong>Update Status Unsuccess!</strong> 
+                </div>
+                </c:if>
+                <div id="textAlertDivNotChoose"  style="display: none" class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" aria-label="Close" onclick="hideDiv()"><span aria-hidden="true">&times;</span></button>
+                   <strong>Please choose the collection monitor list.!</strong> 
+                </div>
+                
+                <div class="col-xs-1 text-right"  style="width: 100px;margin-top: -17px" >
                     <label class="control-label" for="">Department</lable>
                 </div>
-                <div class="col-xs-1" style="width: 200px">
+                <div class="col-xs-1" style="width: 200px;margin-top: -17px">
                     <select id="department" name="department" class="form-control selectize">
                         <option value="">-- ALL --</option> 
                         <c:choose>
@@ -59,10 +76,10 @@
                         <option value="Outbound" ${selectedOutbound}>Outbound</option>
                     </select>
                 </div>
-                <div class="col-xs-1 text-right"  style="width: 100px">
+                <div class="col-xs-1 text-right"  style="width: 100px;margin-top: -17px">
                     <label class="control-label" for="">Type</lable>
                 </div>
-                <div class="col-xs-1" style="width: 200px">
+                <div class="col-xs-1" style="width: 200px;margin-top: -17px">
                     <select id="type" name="type" class="form-control selectize">
                         <option value="">-- ALL --</option> 
                         <c:choose>
@@ -91,10 +108,10 @@
                         <option value="A" ${selectedTicket}>Ticket</option>
                     </select>
                 </div>
-                <div class="col-xs-1 text-right" style="width: 120px">
+                <div class="col-xs-1 text-right" style="width: 120px;margin-top: -17px">
                     <label class="control-label" for="">Status</lable>
                 </div>
-                <div class="col-xs-1" style="width: 200px">
+                <div class="col-xs-1" style="width: 200px;margin-top: -17px">
                    <select id="status" name="status" class="form-control selectize">
                         <option value="">-- ALL --</option> 
                         <c:choose>
@@ -114,10 +131,10 @@
             </div>
             <div class="col-xs-12"><br></div>
             <div class="col-xs-12">
-                <div class="col-xs-1 text-right" style="width: 100px">
+                <div class="col-xs-1 text-right" style="width: 100px;margin-top: -13px">
                     <label class="control-label" for="">From<font style="color: red">*</font></lable>
                 </div>
-                <div class="col-xs-1"  style="width: 200px">
+                <div class="col-xs-1"  style="width: 200px;margin-top: -13px">
                     <div class=" form-group"> 
                         <div class='input-group date fromdate' id="DateFrom">
                             <input id="inputFromDate" name="inputFromDate"  type="text" 
@@ -127,10 +144,10 @@
                     </div>            
                 </div>
                 <!--<div class="col-xs-1" style="width: 120px"></div>-->
-                <div class="col-xs-1 text-right" style="width: 100px">
+                <div class="col-xs-1 text-right" style="width: 100px;margin-top: -13px">
                     <label class="control-label">To<font style="color: red">*</font></lable>
                 </div>
-                <div class="col-xs-1" style="width: 200px">
+                <div class="col-xs-1" style="width: 200px;margin-top: -13px">
                     <div class=" form-group"> 
                         <div class='input-group date todate' id="DateTo">
                             <input id="inputToDate" name="inputToDate"  type="text" 
@@ -139,10 +156,10 @@
                         </div>
                     </div>                  
                 </div>
-                <div class="col-xs-1 text-right" style="width: 120px">
+                <div class="col-xs-1 text-right" style="width: 120px;margin-top: -13px">
                     <label class="control-label" for="">Invoice No</lable>
                 </div>
-                <div class="col-xs-1" style="width: 200px">
+                <div class="col-xs-1" style="width: 200px;margin-top: -13px">
                     <input id="invno" name="invno"  type="text" class="form-control " value="${requestScope['invno']}">
                 </div>
             </div>
@@ -150,11 +167,8 @@
             <div class="col-xs-12">
                 <div class="col-xs-1" style="width: 720px"></div>
                 <div class="col-xs-1 " style="width: 80px">
-                    <button type="button" id="ButtonPrint" name="ButtonPrint" onclick="printCollectionReport()"class="btn btn-default" data-dismiss="modal">
-                        <span id="btnPrintCollection" class="glyphicon glyphicon-print" ></span> Print
-                    </button>
                 </div>          
-                <div class="col-xs-1">
+                <div class="col-xs-1" style="margin-top: -29px">
                     <button type="submit" id="ButtonSearch"  name="ButtonSearch" onclick="searchAction()" class="btn btn-primary btn-primary">
                         <span id="SpanSearch" class="glyphicon glyphicon-print fa fa-search"></span> Search
                     </button>
@@ -162,10 +176,12 @@
                 <input type="hidden" name="action" id="action" value="">
                 <div class="col-xs-12"><br></div>  
                 <div class="col-xs-12">
-                    <table id="collectionDataListTable" class="display" cellspacing="0" width="100%">
+                    <input type="hidden" id="coCount" name="coCount" value="${CollectionList.size()}"/>
+                    <table id="collectionDataListTable" class="table display paginated" cellspacing="0" width="100%">
                         <thead>
-                            <tr class="datatable-header">
-                                <!--<th class="hidden">Id</th>-->
+                            <tr class="datatable-header" >
+                                <th class="hidden">Id</th>
+                                <th style="width: 1%" onclick="selectAll()"><u>All</u></th>
                                 <th style="width: 1%" >No</th>
                                 <th style="width: 12%">Receipt</th>
                                 <th style="width: 12%">Inv No.</th>
@@ -177,12 +193,24 @@
                                 <th style="width: 12%">Diff</th>
                                 <th style="width: 12%">Sum Rec</th>
                                 <th style="width: 2%">Cur</th>
-                                <th style="width: 15%">Status</th>
+                                <th style="width: 5%">Collection</th>
+                                <th style="width: 5%">Status</th>
                             </tr>
                         </thead>
                         <tbody>               
                             <c:forEach var="table" items="${CollectionList}" varStatus="dataStatus">
                                 <tr>
+                                    <td class="hidden"><input class="form-control" type="text" id="inputId${dataStatus.count}" name="inputId${dataStatus.count}" value="${table.rowid}"></td>
+                                    <td align="center">
+                                        <c:choose>
+                                            <c:when test="${table.status == 'New'}">
+                                                <input type="checkbox" class="form-control" id="selectAll${dataStatus.count}" name="selectAll${dataStatus.count}" value="${dataStatus.count}"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <input type="checkbox" class="form-control" id="selectAll" name="selectAll" value="" disabled=""/>
+                                            </c:otherwise>
+                                        </c:choose>                                  
+                                    </td>
                                     <td align="center">${dataStatus.count}</td>
                                     <td>${table.recno}</td>
                                     <td>${table.invno}</td>
@@ -195,24 +223,70 @@
                                     <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.recamount}" /></td>
                                     <td align="center">${table.cur}</td>
                                     <td align="center">${table.collectionStatus}</td>
+                                    <td align="center">${table.status}</td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>    
                 </div>
-            </div>         
+            </div>
+            <div class="col-xs-12"><br></div>
+            <div class="col-xs-12">
+                <div class="col-xs-1 text-right" style="width: 665px"></div>
+                <div class="col-xs-1 text-right" style="width: 210px">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="printCollectionReport()">
+                        <span id="btnDownloadAP" class="glyphicon glyphicon-print" ></span> Print Collection Report
+                    </button>
+                </div>
+                <div class="col-xs-1 text-right" style="">
+                    <button type="button" class="btn btn-success btn-default" onclick="exportCollection()"  data-dismiss="modal">
+                        <span id="btnExportAP" class="glyphicon glyphicon-export" ></span> Export
+                    </button>
+                </div>    
+            </div>
+            <div class="col-xs-12"><br></div>
         </form>
     </div>
 </div>
-
+<!--Export AR Modal-->
+<div class="modal fade" id="collectionExportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Export Collection</h4>
+            </div>
+            <div class="modal-body" id="copyReceiptModal" >
+                <label class="text-right">Are you sure to export collection to nirvana ?</label>
+                <input type="hidden" id="chooseCollection" name="chooseCollection" value=""/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="confirmExport()">
+                    <span id="btnConfirmExport" class="glyphicon" ></span> Ok
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script language="javascript">
     $(document).ready(function () {
         
+//        var table = $('#collectionDataListTable').dataTable({bJQueryUI: true,
+//            "sPaginationType": "full_numbers",
+//            "bAutoWidth": false,
+//            "bFilter": false,
+//            "iDisplayLength": 50
+//        });
         var table = $('#collectionDataListTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": false,
-            "iDisplayLength": 50
+            "bInfo": false,
+            "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+            "iDisplayLength": 50,
+            "bSort": false,
+            "bPaginate": false
         });
  
 
@@ -299,7 +373,91 @@
         });
         $('.todate').datetimepicker().change(function(){                          
             checkToDateField();
-        });        
+        });   
+        
+        $('table.paginated').each(function() {
+            var currentPage = 0;
+            var numPerPage = 50;
+            var $table = $(this);
+            $table.bind('repaginate', function() {
+                $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+            });
+            $table.trigger('repaginate');
+            var numRows = $table.find('tbody tr').length;
+            var numPages = Math.ceil(numRows / numPerPage);
+            var $pager = $('<div class="col-xs-12 text-right" id="pageNo"><font style="color: #499DD5"></font>&nbsp;</div>');
+            var $br = $('<div class="col-xs-12"><br></div>');
+            
+            for (var page = 0; page < numPages; page++) {
+                var isShowPage = (page < 5 ? "" : "hidden");
+                if(page === 0){
+                    $('<font style="color: #499DD5" id="noFirst" onclick="changeColor(\'noFirst\',\'first\',\''+page+'\')"><span class="page-number glyphicon"></span></font>').text(" " + "First" + "  ").bind('click', {
+                    newPage: page
+                    }, function(event) {
+                        currentPage = event.data['newPage'];
+                        $table.trigger('repaginate');
+                        $(this).addClass('active').siblings().removeClass('active');
+                        $(this).css("color", "#AFEEEE");
+                    }).appendTo($pager).addClass('clickable');                                      
+                    
+                    if(numPages > 1){
+                        for(var i=0; i<numPages; i++){
+                            var isHidden = (i === 0 ? "" : "hidden");
+                            $('<font style="color: #499DD5" id="noPrevious'+i+'" onclick="changeColor(\'noPrevious'+i+'\',\'previous\',\''+i+'\')" class="'+isHidden+'"><span class="page-number glyphicon"></span></font>').text(" " + "Previous" + "  ").bind('click', {
+                            newPage: i
+                            }, function(event) {
+                                currentPage = event.data['newPage'];
+                                $table.trigger('repaginate');
+                                $(this).addClass('active').siblings().removeClass('active');
+        //                        $(this).css("color", "#AFEEEE");
+                            }).appendTo($pager).addClass('clickable');
+                        }
+                    }    
+                }
+                
+                $('<font style="color: #499DD5" id="no' + page + '" onclick="changeColor(\'no'+page+'\',\'no\',\''+page+'\')" class="'+isShowPage+'"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + "  ").bind('click', {
+                    newPage: page
+                }, function(event) {                  
+                    currentPage = event.data['newPage'];
+                    $table.trigger('repaginate');
+                    $(this).addClass('active').siblings().removeClass('active');
+                    $(this).css("color", "#AFEEEE");
+                }).appendTo($pager).addClass('clickable');
+                
+                if(page === (numPages - 1)){
+                    if(numPages > 1){
+                        for(var i=0; i<numPages; i++){
+                            var isHidden = (i === 1 ? "" : "hidden");
+                            $('<font style="color: #499DD5" id="noNext'+i+'" onclick="changeColor(\'noNext'+i+'\',\'next\',\''+i+'\')" class="'+isHidden+'"><span class="page-number glyphicon"></span></font>').text(" " + "Next" + "  ").bind('click', {
+                            newPage: i
+                            }, function(event) {
+                                currentPage = event.data['newPage'];
+                                $table.trigger('repaginate');
+                                $(this).addClass('active').siblings().removeClass('active');
+        //                        $(this).css("color", "#AFEEEE");
+                            }).appendTo($pager).addClass('clickable');
+                        }
+                    }    
+                                       
+                    $('<font style="color: #499DD5" id="noLast" onclick="changeColor(\'noLast\',\'last\',\''+page+'\')"><span class="page-number glyphicon"></span></font>').text(" " + "Last" + "  ").bind('click', {
+                    newPage: page
+                    }, function(event) {
+                        currentPage = event.data['newPage'];
+                        $table.trigger('repaginate');
+                        $(this).addClass('active').siblings().removeClass('active');
+                        $(this).css("color", "#AFEEEE");
+                    }).appendTo($pager).addClass('clickable');                                     
+                }
+            }
+            $br.insertAfter($table).addClass('active');
+            $pager.insertAfter($table).find('span.page-number:first').addClass('active');
+            document.getElementById("pageNo").style.cursor="pointer";
+            document.getElementById("page").value = numPages-1;
+            document.getElementById("currentPage").value = 0;
+            $("#noFirst").css("color", "#AFEEEE");
+            $("#no0").css("color", "#AFEEEE");
+            $("#noPrevious0").css("color", "#AFEEEE");
+        });
     });
     
     function searchAction(){
@@ -398,4 +556,118 @@ function validateDate(date,option){
     }
 
 }
+
+    function selectAll(){
+        var row = $('#collectionDataListTable tr').length;     
+        var check = 0;
+        var unCheck = 0;
+        for(var i=1;i<row;i++){          
+            var selectAll = document.getElementById("selectAll"+i);
+            if(selectAll !== null && selectAll !== ''){
+                if(document.getElementById("selectAll"+i).checked){
+                    check++;
+                } else {
+                    unCheck++;
+                }
+            }   
+        }
+//        alert("Check : " + check + "  Un : " + unCheck + " Row : " + row);
+        if(check > unCheck){
+//            alert("1");
+            for(var i=1;i<row;i++){
+                var selectAll = document.getElementById("selectAll"+i);
+                if(selectAll !== null && selectAll !== ''){
+                    if(document.getElementById("selectAll"+i).checked){
+
+                    } else { 
+                        document.getElementById("selectAll"+i).checked = true;                   
+                    }    
+                }   
+            }
+        }
+
+        if(check < unCheck){
+//            alert("2");
+            for(var i=1;i<row;i++){
+                var selectAll = document.getElementById("selectAll"+i);
+                if(selectAll !== null && selectAll !== ''){
+                    document.getElementById("selectAll"+i).checked = false;
+                }   
+            }
+        }
+
+        if(check === 0 && unCheck !== 0){
+//            alert("3");
+            for(var i=1;i<row;i++){
+                var selectAll = document.getElementById("selectAll"+i);
+                if(selectAll !== null && selectAll !== ''){
+                    if(document.getElementById("selectAll"+i).checked){
+
+                    } else { 
+                        document.getElementById("selectAll"+i).checked = true;
+
+                    }
+                }    
+            }    
+        }
+
+        if(check !== 0 && unCheck === 0){
+//            alert("4");
+            for(var i=1;i<row;i++){
+                var selectAll = document.getElementById("selectAll"+i);
+                if(selectAll !== null && selectAll !== ''){
+                    document.getElementById("selectAll"+i).checked = false;
+                }   
+            }
+        }
+
+        if(check === unCheck){
+            for(var i=1;i<row;i++){
+                var selectAll = document.getElementById("selectAll"+i);
+                if(selectAll !== null && selectAll !== ''){
+                    if(document.getElementById("selectAll"+i).checked){
+
+                    } else { 
+                        document.getElementById("selectAll"+i).checked = true;                        
+                    }    
+                }             
+            }            
+        }
+    }
+    
+    function exportCollection(){
+        var row = $('#collectionDataListTable tr').length;     
+        var check = 0;
+        for(var i=1;i<=row;i++){          
+            var selectAll = document.getElementById("selectAll"+i);
+            if(selectAll !== null && selectAll !== ''){
+                if(document.getElementById("selectAll"+i).checked){
+                    check++;
+                }    
+            }   
+        }
+        if(check === 0){
+            document.getElementById("chooseCollection").value = "false";
+        } else {
+            document.getElementById("chooseCollection").value = "true";
+        }
+        $("#textAlertDivSave").hide();
+        $('#textAlertDivNotChoose').hide();
+        $("#collectionExportModal").modal("show");
+    }
+    
+    function confirmExport(){
+        $("#collectionExportModal").modal("hide");
+        var chooseCollection = document.getElementById("chooseCollection").value;
+        if(chooseCollection === 'true'){
+            $('#action').val('export');
+            document.getElementById('collectionMonitorForm').submit();
+        } else {
+            $('#textAlertDivNotChoose').show();
+        }    
+    }
+    
+    function hideDiv(){
+        $('#textAlertDivNotChoose').hide();
+    }
 </script>

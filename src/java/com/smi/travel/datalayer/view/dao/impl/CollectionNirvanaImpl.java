@@ -12,9 +12,11 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -99,6 +101,8 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                                 .addScalar("wt",Hibernate.BIG_DECIMAL)
                                 .addScalar("cashminus",Hibernate.BIG_DECIMAL)
                                 .addScalar("pay_by",Hibernate.STRING)
+                                .addScalar("itf_status",Hibernate.STRING)
+                                .addScalar("rowid",Hibernate.STRING)
                                 .list();
 
         List data = new ArrayList();
@@ -197,6 +201,9 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
                 collectionNirvana.setTo("");
             }
             collectionNirvana.setHeaderdepartment(department);
+            
+            collectionNirvana.setStatus(util.ConvertString(CN[22]));
+            collectionNirvana.setRowid(util.ConvertString(CN[23]));
             collectionNirvanaList.add(collectionNirvana);
         }
         
@@ -228,6 +235,44 @@ public class CollectionNirvanaImpl implements CollectionNirvanaDao{
 
     public void setUtilityFunction(UtilityFunction utilityFunction) {
         this.utilityFunction = utilityFunction;
+    }
+
+    @Override
+    public String UpdateStatusCollection(List<CollectionNirvana> cnList) {
+        UtilityFunction utilty =  new UtilityFunction();
+        String isUpdate ="";
+        try {
+            Session session = this.sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            for (int i = 0; i < cnList.size(); i++) {
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String strDate = sdf.format(cal.getTime());
+                Date date = new Date();
+                
+                String hql = "";
+                String id = "";
+                if(cnList.get(i).getRowid() != null && !"".equalsIgnoreCase(cnList.get(i).getRowid())){
+                    id = cnList.get(i).getRowid();
+                    hql = "update Receipt rec set rec.isExport = 1 , rec.exportDate = :date where rec.id = :recid";
+                }
+                Query query = session.createQuery(hql);
+                query.setParameter("recid", String.valueOf(id));
+                query.setParameter("date", date);
+                int result = query.executeUpdate();
+                System.out.println("Query Update : " + result + ":" + query);
+            }
+
+            transaction.commit();
+            session.close();
+            this.sessionFactory.close();
+            isUpdate = "updatesuccess";
+        } catch (Exception ex) {
+            transaction.rollback();
+            ex.printStackTrace();
+            isUpdate = "updatefail";
+        }
+        return isUpdate;
     }
 
 

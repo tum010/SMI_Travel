@@ -27,7 +27,7 @@
             <div class="col-xs-12 form-group"><hr/></div>
         </div>
         <form action="APMonitor.smi" method="post" id="apMonitorForm" role="form" autocomplete="off">
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="margin-top: -17px">
                 <c:if test="${requestScope['update'] =='1'}">                                            
                     <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -113,7 +113,7 @@
                 </div>
             </div>
             <div class="col-xs-12"><br></div>
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="margin-top: -13px">
                 <div class="col-xs-1 text-left">
                     <label class="control-label" for="">From<font style="color: red">*</font></lable>
                 </div>
@@ -168,7 +168,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="margin-top: -7px">
                 <div class="col-xs-1" style="width: 870px"></div>
                 <div class="col-xs-1">
                     <button type="submit"  id="btnSearchAP"  name="btnSearchAP" class="btn btn-primary btn-primary">

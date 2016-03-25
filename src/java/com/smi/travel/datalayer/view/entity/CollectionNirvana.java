@@ -29,6 +29,8 @@ public class CollectionNirvana {
     private Date invdate;
     private BigDecimal withtax;
     private String payby;
+    private String status;
+    private String rowid;
     
     private String systemdate;
     private String user;
@@ -312,6 +314,22 @@ public class CollectionNirvana {
 
     public void setPayby(String payby) {
         this.payby = payby;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getRowid() {
+        return rowid;
+    }
+
+    public void setRowid(String rowid) {
+        this.rowid = rowid;
     }
     
     

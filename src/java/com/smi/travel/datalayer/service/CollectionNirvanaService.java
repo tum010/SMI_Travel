@@ -19,7 +19,9 @@ public class CollectionNirvanaService {
     public List<CollectionNirvana> getCollectionNirvanaFromFilter(String department,String type,String status,String from,String to,String invno,String printby){
         return collectionNirvanaDao.getCollectionNirvanaFromFilter(department, type, status, from, to, invno, printby);
     }
-
+    public String UpdateStatusCollection(List<CollectionNirvana> collectionNirvanaList){
+        return collectionNirvanaDao.UpdateStatusCollection(collectionNirvanaList);
+    }
     public CollectionNirvanaDao getCollectionNirvanaDao() {
         return collectionNirvanaDao;
     }

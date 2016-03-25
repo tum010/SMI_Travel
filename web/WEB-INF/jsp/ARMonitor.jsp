@@ -38,7 +38,7 @@
             <input type="hidden" value="" id="page" name="page">
             <input type="hidden" value="" id="currentPage" name="currentPage">
             <input type="hidden" value="" id="row" name="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="margin-top: -17px">
                 <c:if test="${requestScope['update'] =='updatesuccess'}">                                            
                     <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -130,7 +130,7 @@
                 </div>
             </div><br><br>
             <div class="col-xs-12"></div>
-            <div class="col-xs-12"> <!--Row 2 -->
+            <div class="col-xs-12" style="margin-top: -20px"> <!--Row 2 -->
                 <div class="col-xs-1 text-left" style="width: 120px">
                     <label class="control-label" for="">From<font style="color: red">*</font></lable>
                 </div>
@@ -191,7 +191,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-xs-12"> 
+            <div class="col-xs-12" style="margin-top: -7px"> 
                 <div class="col-xs-1 text-left" style="width: 120px">
                     <label class="control-label" for="">Acc</lable>
                 </div>
@@ -302,7 +302,7 @@
                 <h4 class="modal-title"  id="Titlemodel">Export AR</h4>
             </div>
             <div class="modal-body" id="copyReceiptModal" >
-                <label class="text-right">Are you sure to ar to nirvana ?</label>
+                <label class="text-right">Are you sure to export ar to nirvana ?</label>
                 <input type="hidden" id="chooseAR" name="chooseAR" value=""/>
             </div>
             <div class="modal-footer">
