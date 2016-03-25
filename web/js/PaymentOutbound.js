@@ -50,6 +50,10 @@ $(document).ready(function() {
         "bLengthChange": false,
         "iDisplayLength": 3
     });
+    
+    $(".daydatepicker").datetimepicker({
+        pickTime: false
+    });
 
     $('#collapseExample').on('shown.bs.collapse', function() {
         $(".arrowReservstion").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
@@ -200,6 +204,10 @@ $(document).ready(function() {
     });
 
     $("#isComVat").click(function() {
+        calculateVatRecComAmount();
+    });
+    
+    $("#comm").focusout(function() {
         calculateVatRecComAmount();
     });
 
@@ -512,6 +520,7 @@ function addRowPaymentDetailTable(row) {
             '<input type="text" name="vatRecComAmount' + row + '" id="vatRecComAmount' + row + '" class="form-control" value=""/>' +
             '<input type="text" name="value' + row + '" id="value' + row + '" class="form-control" value=""/>' +
             '<input type="text" name="payStockId' + row + '" id="payStockId' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="comm' + row + '" id="comm' + row + '" class="form-control" value=""/>' +
             '</td>' +
             '<td>' +
             '<select class="form-control" name="type' + row + '" id="type' + row + '" onchange="addRow(\'' + row + '\')">' +
@@ -523,6 +532,12 @@ function addRowPaymentDetailTable(row) {
             '</td>' +
             '<td>' +
             '<input type="text" name="invoice' + row + '" id="invoice' + row + '" class="form-control" value="" maxlength="255"/>' +
+            '</td>' +
+            '<td>' +
+                '<div class="input-group daydatepicker" id="daydatepicker' + row + '">' +
+                '<input type="text" name="invDate' + row + '" id="invDate' + row + '" class="form-control datemask" data-date-format="YYYY-MM-DD" />' +
+                '<span class="input-group-addon spandate" style="padding : 1px 10px;" onclick="addRow(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
+                '</div>' +            
             '</td>' +
             '<td>' +
             '<input type="text" name="cost' + row + '" id="cost' + row + '" class="form-control decimal" value=""/>' +
@@ -539,9 +554,6 @@ function addRowPaymentDetailTable(row) {
             '</td>' +
             '<td>' +
             '<input type="text" name="amount' + row + '" id="amount' + row + '" class="form-control decimal" onfocusout="setFormatNumber(\'amount\',\'' + row + '\'); calculateWhtAmount(\'\');" value=""/>' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" name="comm' + row + '" id="comm' + row + '" class="form-control decimal" onfocusout="calculateVatRecComAmount(\'\');" value=""/>' +
             '</td>' +
             '<td>' +
             '<select class="form-control" name="cur' + row + '" id="cur' + row + '" onchange="addRow(\'' + row + '\')">' +
@@ -600,6 +612,21 @@ function addRowPaymentDetailTable(row) {
 //    document.getElementById('vatShow' + row).innerHTML = parseFloat($("#mVat").val());
     document.getElementById('vat' + row).value = parseFloat($("#mVat").val());
     $("#countPaymentDetail").val(row + 1);
+    reloadDatePicker();
+}
+
+function reloadDatePicker() {
+    try {
+        $(".daydatepicker").datetimepicker({
+            pickTime: false
+        });
+        $('span').click(function() {
+            var position = $(this).offset();
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+        });
+    } catch (e) {
+
+    }
 }
 
 function insertCommas(nField) {
@@ -1183,6 +1210,7 @@ function editPaymentDetail(row) {
         $("#value").val(($("#value" + row).val() !== '' ? formatNumber(parseFloat(($("#value" + row).val()).replace(/,/g, ""))) : ''));
         $("#wht").val(($("#wht" + row).val() !== '' ? (parseFloat(($("#wht" + row).val()).replace(/,/g, ""))) : ''));
         $("#vatRecCom").val(($("#vatRecCom" + row).val() !== '' ? (parseFloat(($("#vatRecCom" + row).val()).replace(/,/g, ""))) : ''));
+        $("#comm").val(($("#comm" + row).val() !== '' ? (parseFloat(($("#comm" + row).val()).replace(/,/g, ""))) : ''));
 
         $('#isWht').prop('checked', ($("#isWht" + row).val() === '1' ? true : false));
         $('#isComVat').prop('checked', ($("#isComVat" + row).val() === '1' ? true : false));
@@ -1200,6 +1228,7 @@ function editPaymentDetail(row) {
         $("#value").val('');
         $("#wht").val('');
         $("#vatRecCom").val('');
+        $("#comm").val('');
         $('#isWht').prop('checked', false);
         $('#isComVat').prop('checked', false);
         $("#paymentDescription").val('');
@@ -1220,6 +1249,7 @@ function savePaymentDetail() {
     $("#isWht" + row).val(($("#isWht").is(':checked') ? '1' : '0'));
     $("#isComVat" + row).val(($("#isComVat").is(':checked') ? '1' : '0'));
     $("#description" + row).val(($("#paymentDescription").val()).replace(/\n/g, "<br>"));
+    $("#comm" + row).val($("#comm").val());
 
     $("#rowDetail").val('');
     $("#realExRate").val('');
@@ -1232,6 +1262,7 @@ function savePaymentDetail() {
     $('#isWht').prop('checked', false);
     $('#isComVat').prop('checked', false);
     $("#paymentDescription").val('');
+    $("#comm").val('');
     $("#paymentDetailPanel").addClass("hidden");
 }
 
@@ -1258,7 +1289,7 @@ function calculateVatRecComAmount() {
     if ($("#isComVat").is(':checked')) {
         var row = $("#rowDetail").val();
         var vatRecCom = ($("#vatRecCom" + row).val() === '' ? parseFloat($("#mVat").val()) : parseFloat($("#vatRecCom" + row).val()));
-        var comm = ($("#comm" + row).val() !== '' ? parseFloat(($("#comm" + row).val()).replace(/,/g, "")) : 0.00);
+        var comm = ($("#comm").val() !== '' ? parseFloat(($("#comm").val()).replace(/,/g, "")) : 0.00);
         var vatRecComAmount = comm * (vatRecCom / 100);
         $("#vatRecComAmount").val(formatNumber(vatRecComAmount));
         $("#vatRecCom").val(vatRecCom);

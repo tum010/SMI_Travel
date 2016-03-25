@@ -45,4 +45,7 @@ public interface PaymentOutboundDao {
 
     public List getPaymentProfitLossVolumnReport(String departFromDate, String departToDate, String invFromDate, String invToDate, String ownercode, String city, String producttypeid, String invsupcode, String payFromDate, String payToDate, String groupBy);
     
+    //AP Nirvana
+    public PaymentOutboundDetail getAPNirvanaData(String detailId);
+    
 }

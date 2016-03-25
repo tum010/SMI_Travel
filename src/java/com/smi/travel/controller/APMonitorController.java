@@ -45,6 +45,7 @@ public class APMonitorController extends SMITravelController {
                     String paymentDetailId = request.getParameter("paymentDetailId"+i);
                     String paymentType = request.getParameter("paymentType"+i);
                     String rowid = request.getParameter("rowid"+i);
+                    System.out.println(" paymentDetailId " + paymentDetailId);
                     System.out.println(" rowid " + rowid);
                     apNirvana.setPayment_detail_id(paymentDetailId);
                     apNirvana.setPaymenttype(paymentType);

@@ -377,16 +377,16 @@
                                 <thead>
                                     <tr class="datatable-header">
                                         <th style="width: 10%">Type</th>                                   
-                                        <th style="width: 7%">Ref No</th>
-                                        <th style="width: 9%">Invoice</th>
-                                        <th style="width: 9%">Cost</th>
-                                        <th style="width: 9%">Gross</th>
-                                        <th style="width: 4%" onclick="checkVatAll()"><u>Is Vat</u></th>                                                                      
-                                        <th style="width: 2%">Vat</th>
-                                        <th style="width: 9%">Amount</th>
-                                        <th style="width: 9%">Comm</th>
-                                        <th style="width: 7%">Cur</th>
-                                        <th style="width: 1%" >Action</th>
+                                        <th style="width: 6%">Ref No</th>
+                                        <th style="width: 8%">Invoice</th>
+                                        <th style="width: 11%">Inv Date</th>
+                                        <th style="width: 8%">Cost</th>
+                                        <th style="width: 8%">Gross</th>                                                                      
+                                        <th style="width: 4%" onclick="checkVatAll()"><u>Is Vat</u></th>
+                                        <th style="width: 1%">Vat</th>
+                                        <th style="width: 8%">Amount</th>
+                                        <th style="width: 6%">Cur</th>
+                                        <th style="width: 5%">Act</th>
                                     </tr>
 <!--                                    <tr class="datatable-header" >
                                         <th colspan="6">Description</th>
@@ -419,7 +419,8 @@
                                             <input type="text" name="vatRecComAmount${i.count}" id="vatRecComAmount${i.count}" class="form-control" value="${detail.vatRecComAmount}"/>
                                             <input type="text" name="value${i.count}" id="value${i.count}" class="form-control" value="${detail.value}"/>
                                             <input type="text" name="payStockId${i.count}" id="payStockId${i.count}" class="form-control" value="${detail.payStockId}"/>
-                                            <textarea rows="3" cols="255" class="form-control" id="descriptionTemp${i.count}" name="descriptionTemp${i.count}" maxlength="255" data-bv-field="detail">${detail.description}</textarea>
+                                            <input type="text" name="comm${i.count}" id="comm${i.count}" class="form-control" value="${detail.comm}"/>
+                                            <textarea rows="3" cols="255" class="form-control" id="descriptionTemp${i.count}" name="descriptionTemp${i.count}" maxlength="255" data-bv-field="detail">${detail.description}</textarea>                                        
                                         </td>
                                         <td>
                                             <select class="form-control" name="type${i.count}" id="type${i.count}" onchange="addRow('${i.count}')">
@@ -438,7 +439,13 @@
                                         </td>
                                         <td>
                                             <input type="text" name="invoice${i.count}" id="invoice${i.count}" class="form-control" value="${detail.invoice}" maxlength="255"/>
-                                        </td>                                                                   
+                                        </td>
+                                        <td>
+                                            <div class="input-group daydatepicker" id="daydatepicker${i.count}">
+                                                <input type="text" name="invDate${i.count}" id="invDate${i.count}" class="form-control datemask" data-date-format="YYYY-MM-DD" value="${detail.invoiceDate}"/>
+                                                <span class="input-group-addon spandate" style="padding : 1px 10px;" onclick="addRow('${i.count}')"><span class="glyphicon-calendar glyphicon"></span></span>
+                                            </div>
+                                        </td>
                                         <td>
                                            <input type="text" name="cost${i.count}" id="cost${i.count}" class="form-control decimal" value="${detail.cost}"/> 
                                         </td>
@@ -467,9 +474,6 @@
                                         </td>
                                         <td>
                                             <input type="text" name="amount${i.count}" id="amount${i.count}" class="form-control decimal" onfocusout="setFormatNumber('amount','${i.count}'); calculateWhtAmount('');" value="${detail.amount}"/>
-                                        </td>
-                                        <td>
-                                            <input type="text" name="comm${i.count}" id="comm${i.count}" class="form-control decimal" onfocusout="setFormatNumber('comm','${i.count}'); calculateVatRecComAmount();" value="${detail.comm}"/>
                                         </td>
                                         <td>
                                             <select class="form-control" name="cur${i.count}" id="cur${i.count}" onchange="addRow('${i.count}')">
@@ -567,7 +571,7 @@
                         <textarea rows="3" cols="255" class="form-control" id="paymentDescription" name="paymentDescription" maxlength="255" data-bv-field="detail"></textarea>
                     </div>
                 </div>
-                <div class="row" style="padding-left: 25px; margin-top: -30px">
+                <div class="row" style="padding-left: 25px; margin-top: 5px">
                     <div class="col-xs-1 text-right" style="width: 110px;margin-top: -0px">
                         <label class="control-label">WHT</lable>
                     </div>
@@ -583,6 +587,12 @@
                     <div class="col-xs-1 text-right" style="width: 200px;">
                         <input type="text" class="form-control text-right" id="whtAmount" name="whtAmount" value="" readonly=""/>
                     </div>
+                    <div class="col-xs-1 text-left" style="width: 70px;">
+                        <label class="control-label">Value</lable>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width: 200px;">
+                        <input type="text" class="form-control decimal" id="value" name="value" value=""/>
+                    </div>   
                 </div>
                 <div class="row" style="padding-left: 25px; padding-top: 5px;">
                     <div class="col-xs-1 text-right" style="width: 110px;">
@@ -601,10 +611,10 @@
                         <input type="text" class="form-control text-right" id="vatRecComAmount" name="vatRecComAmount" value="" readonly=""/>
                     </div>
                     <div class="col-xs-1 text-left" style="width: 70px;">
-                        <label class="control-label">Value</lable>
+                        <label class="control-label">Comm</lable>
                     </div>
                     <div class="col-xs-1 text-right" style="width: 200px;">
-                        <input type="text" class="form-control decimal" id="value" name="value" value=""/>
+                        <input type="text" class="form-control decimal" id="comm" name="comm" value=""/>
                     </div>                       
                 </div>
                 <div class="row" style="padding-left: 25px; padding-top: 10px;">

@@ -3,6 +3,7 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.dao.PaymentOutboundDao;
 import com.smi.travel.datalayer.entity.PaymentOutbound;
+import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundView;
 import java.util.List;
@@ -62,5 +63,9 @@ public class PaymentOutboundService {
 
     public PaymentOutbound getPaymentOutbound(String payId) {
         return paymentOutboundDao.getPaymentOutbound(payId);
+    }
+
+    public PaymentOutboundDetail getAPNirvanaData(String detailId) {
+        return paymentOutboundDao.getAPNirvanaData(detailId);
     }
 }

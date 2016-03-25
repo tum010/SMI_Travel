@@ -158,6 +158,19 @@ public class APNirvanaImpl implements APNirvanaDao {
                         ex.printStackTrace();
                         result = 0;
                     }
+                } else if ("O".equalsIgnoreCase(paymentType)) {
+                    String hql = "update PaymentOutboundDetail pod set pod.isExport = 1 , pod.exportDate = :date where pod.id = :paymentDetailId";
+                    try {
+                        Query query = session.createQuery(hql);
+                        query.setParameter("paymentDetailId", paymentDetailId);
+                        query.setParameter("date", date);
+                        System.out.println(" query " + query);
+                        result = query.executeUpdate();
+                        System.out.println("Rows affected: " + result);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        result = 0;
+                    }
                 }
             }
             getTransaction().commit();
@@ -219,6 +232,7 @@ public class APNirvanaImpl implements APNirvanaDao {
         }
         
         query.append(" Order by `ap_nirvana`.payno desc");
+        System.out.println("Query ap_nirvana : "+query);
         
         List<Object[]> QueryList = session.createSQLQuery(query.toString())
                 .addScalar("refinvoiceno", Hibernate.STRING)

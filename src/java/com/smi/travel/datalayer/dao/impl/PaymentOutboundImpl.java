@@ -196,6 +196,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             paymentOutboundDetailView.setWhtAmount(paymentOutboundDetail.getWhtAmount()!= null ? paymentOutboundDetail.getWhtAmount(): null);
             paymentOutboundDetailView.setIsWht(paymentOutboundDetail.getIsWht()!= null ? paymentOutboundDetail.getIsWht() : null);
             paymentOutboundDetailView.setSaleCurrency(!"".equalsIgnoreCase(paymentOutboundDetail.getSaleCurrency()) ? paymentOutboundDetail.getSaleCurrency() : "");
+            paymentOutboundDetailView.setInvoiceDate(paymentOutboundDetail.getInvoiceDate() != null ? paymentOutboundDetail.getInvoiceDate() : null);
             paymentOutboundDetailViewList.add(paymentOutboundDetailView);
         }
         session.close();
@@ -1393,6 +1394,22 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         session.close();
         this.sessionFactory.close();
         return data;
+    }
+
+    @Override
+    public PaymentOutboundDetail getAPNirvanaData(String id) {
+        Session session = this.sessionFactory.openSession();
+        StringBuffer query = new StringBuffer(" FROM PaymentOutboundDetail pod WHERE pod.id = :id ");
+        
+        List<PaymentOutboundDetail> paymentOutboundDetailList = session.createQuery(query.toString())
+        .setParameter("id", id)
+        .setMaxResults(1)
+        .list();
+
+        session.close();
+        this.sessionFactory.close();
+                                  
+        return paymentOutboundDetailList.get(0);
     }
 
 }
