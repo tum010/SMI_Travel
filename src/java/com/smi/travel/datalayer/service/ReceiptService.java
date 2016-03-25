@@ -115,5 +115,9 @@ public class ReceiptService {
     public void setBillableDao(BillableDao billableDao) {
         this.billableDao = billableDao;
     }
+
+    public Receipt getSaleVatData(String id) {
+        return receiptDao.getSaleVatData(id);
+    }
     
 }

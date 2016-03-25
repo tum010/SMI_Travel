@@ -500,8 +500,12 @@ public class ReceiptController extends SMITravelController {
             receipt.setCreateDate(new Date());
             receipt.setCreateBy(user.getUsername());
             if(receipt.getId() == ""){
+                receipt.setIsExport(0);
                 result = receiptService.insertReceipt(receipt);
             }else{
+                Receipt receiptTemp = receiptService.getSaleVatData(receipt.getId());
+                receipt.setExportDate(receiptTemp.getExportDate() != null ? receiptTemp.getExportDate() : null);
+                receipt.setIsExport(receiptTemp.getIsExport() != null ? receiptTemp.getIsExport() : 0);
                 result = receiptService.updateReceipt(receipt);
             }
             

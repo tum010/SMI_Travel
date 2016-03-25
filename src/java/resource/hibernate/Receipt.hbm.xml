@@ -98,6 +98,15 @@
         <property name="isRef" type="java.lang.Integer">
             <column name="is_ref" />
         </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="20"/>
+        </property>
+        <property name="exportDate" type="timestamp">
+            <column name="export_date" length="20"/>
+        </property>
+        <property name="isExport" type="java.lang.Integer">
+            <column name="is_export" />
+        </property>     
         <bag name="receiptDetails" table="receipt_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="rec_id" />

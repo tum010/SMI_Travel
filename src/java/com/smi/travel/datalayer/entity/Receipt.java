@@ -44,13 +44,16 @@ public class Receipt {
      private Date createDate;
      private String createBy;
      private Integer isRef;
+     private Date updateDate;
+     private Date exportDate;
+     private Integer isExport;
      private List receiptDetails = new LinkedList<ReceiptDetail>();
      private List receiptCredits = new LinkedList<ReceiptCredit>();
 
     public Receipt() {
     }
 
-    public Receipt(MFinanceItemstatus MFinanceItemstatus, String recNo, String recFrom, String recName, String recAddress, String arCode, Date recDate, Integer payType, String remark, BigDecimal withTax, BigDecimal cashAmount, BigDecimal cashMinusAmount, BigDecimal bankTransfer, String chqBank1, String chqBank2, Date chqDate1, Date chqDate2, BigDecimal chqAmount1, BigDecimal chqAmount2, List receiptDetails, List receiptCredits,String chqNo1,String chqNo2,MItemstatus MItemStatus,String recType,String department,Date createDate,String createBy,MAccpay MAccpay,Date receiveDate, Integer isRef) {
+    public Receipt(MFinanceItemstatus MFinanceItemstatus, String recNo, String recFrom, String recName, String recAddress, String arCode, Date recDate, Integer payType, String remark, BigDecimal withTax, BigDecimal cashAmount, BigDecimal cashMinusAmount, BigDecimal bankTransfer, String chqBank1, String chqBank2, Date chqDate1, Date chqDate2, BigDecimal chqAmount1, BigDecimal chqAmount2, List receiptDetails, List receiptCredits,String chqNo1,String chqNo2,MItemstatus MItemStatus,String recType,String department,Date createDate,String createBy,MAccpay MAccpay,Date receiveDate, Integer isRef, Date updateDate, Date exportDate, Integer isExport) {
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.MItemStatus =  MItemStatus;
        this.recNo = recNo;
@@ -82,6 +85,9 @@ public class Receipt {
        this.createBy = createBy;
        this.MAccpay = MAccpay;
        this.isRef = isRef;
+       this.updateDate = updateDate;
+       this.exportDate = exportDate;
+       this.isExport = isExport;
     }
    
     public String getId() {
@@ -323,6 +329,30 @@ public class Receipt {
 
     public void setIsRef(Integer isRef) {
         this.isRef = isRef;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public Date getExportDate() {
+        return exportDate;
+    }
+
+    public void setExportDate(Date exportDate) {
+        this.exportDate = exportDate;
+    }
+
+    public Integer getIsExport() {
+        return isExport;
+    }
+
+    public void setIsExport(Integer isExport) {
+        this.isExport = isExport;
     }
 
 

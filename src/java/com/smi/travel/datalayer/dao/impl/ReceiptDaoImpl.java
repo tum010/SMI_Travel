@@ -190,6 +190,7 @@ import org.hibernate.Transaction;
     @Override
     public String updateReceipt(Receipt receipt) {
         String result = "";
+        receipt.setUpdateDate(new Date());
         try {
             Session session = this.sessionFactory.openSession();
             transaction = session.beginTransaction();
@@ -805,6 +806,22 @@ import org.hibernate.Transaction;
         this.sessionFactory.close();
         return result;
     
+    }
+
+    @Override
+    public Receipt getSaleVatData(String id) {
+        Session session = this.sessionFactory.openSession();
+        StringBuffer query = new StringBuffer(" FROM Receipt receipt WHERE receipt.id = :id ");
+
+        List<Receipt> receiptList = session.createQuery(query.toString())
+            .setParameter("id", id)
+            .setMaxResults(1)
+            .list();
+      
+        session.close();
+        this.sessionFactory.close();
+                                      
+        return receiptList.get(0);
     }
     
 }

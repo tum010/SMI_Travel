@@ -44,4 +44,6 @@ public interface ReceiptDao {
     public String getRefitemidFromBillableDescId(String billabledescId);
     
     public String checkAmountReceiptDetailFromInvDetailId(String invDetailId,String receiptDetailId,String recAmount);
+
+    public Receipt getSaleVatData(String id);
 }
