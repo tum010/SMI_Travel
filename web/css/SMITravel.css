@@ -41,6 +41,18 @@ body{
     min-height: 150px;
 }
 
+#collectionDataListTable_wrapper{
+    min-height: 150px;
+}
+
+#apDataListTable_wrapper{
+    min-height: 150px;
+}
+
+#arDataListTable_wrapper{
+    min-height: 150px;
+}
+
 #StockSummary_wrapper{
     min-height: 60px;
 }
@@ -505,6 +517,13 @@ td div .selectize-input{
     margin-top: -10px;
 }
 
+.selectize-input {
+
+    z-index: 5000;
+}
+.modal-body {
+     position: static; 
+}
 /*input:not([type]), input[type="text"]
 {
     text-transform: uppercase;
