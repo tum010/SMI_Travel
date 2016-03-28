@@ -70,7 +70,12 @@
         <property name="isExport" type="java.lang.Integer">
             <column name="is_export" />
         </property>
-        
+        <property name="operationDate" type="timestamp">
+            <column name="operation_date" length="20" />
+        </property>
+        <property name="operationUser" type="string">
+            <column name="operation_user" length="20" />
+        </property>
         <bag name="invoiceDetails" table="invoice_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="invoice_id" not-null="true" />
