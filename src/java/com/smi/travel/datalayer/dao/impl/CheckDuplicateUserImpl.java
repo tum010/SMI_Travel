@@ -97,8 +97,8 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
         String hql = "update "+checkDuplicateUser.getOperationTable()+" t set t.operationDate = :operationDate , t.operationUser = :operationUser where t.id = :id";
         try {
             Query queryupdate = session.createQuery(hql);
-            queryupdate.setParameter("operationDate", checkDuplicateUser.getOperationDate());
-            queryupdate.setParameter("operationUser", checkDuplicateUser.getOperationUser());
+            queryupdate.setParameter("operationDate", null);
+            queryupdate.setParameter("operationUser", null);
             queryupdate.setParameter("id", checkDuplicateUser.getTableId());
             System.out.println(" query : " + queryupdate);
             result = queryupdate.executeUpdate();
