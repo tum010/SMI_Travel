@@ -151,8 +151,18 @@ public class InvoiceController extends SMITravelController {
             request.setAttribute("vat", vat);
         }else{
             request.setAttribute("vat", null);
-        } 
-//        CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(null, 1);
+        }
+        
+        //Duplicate User
+        CheckDuplicateUser chuSession = new CheckDuplicateUser();
+        chuSession.setOperationTable("Invoice");
+        chuSession.setTableId(invoiceId);
+        chuSession.setOperationDate(new Date());
+        chuSession.setOperationUser(user.getUsername());
+        session.setAttribute("checkDuplicateUser", chuSession);
+        CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, 1);
+        request.setAttribute("lockDuplicateUser", cdu);
+               
         // Save Invoice And Update
         if("save".equals(action)){
 //            invoice = new Invoice();

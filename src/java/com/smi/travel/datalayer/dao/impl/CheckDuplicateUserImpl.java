@@ -32,7 +32,7 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
         CheckDuplicateUser cdu = new CheckDuplicateUser();
         UtilityFunction util = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
-        String query = "select * from "+checkDuplicateUser.getOperationTable()+" t where t.id = '"+checkDuplicateUser.getTableId()+"' ";
+        String query = "select * from "+checkDuplicateUser.getOperationTable().toLowerCase()+" t where t.id = '"+checkDuplicateUser.getTableId()+"' ";
         List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("operation_date",Hibernate.DATE)
                 .addScalar("operation_user",Hibernate.STRING)
@@ -55,6 +55,7 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
                         cdu.setOperationUser(checkDuplicateUser.getOperationUser());
                         int result = 0;
                         String hql = "update "+checkDuplicateUser.getOperationTable()+" t set t.operationDate = :operationDate , t.operationUser = :operationUser where t.id = :id";
+                        System.out.println(" hql : " + hql);
                         try {
                             Query queryupdate = session.createQuery(hql);
                             queryupdate.setParameter("operationDate", checkDuplicateUser.getOperationDate());
