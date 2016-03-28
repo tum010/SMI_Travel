@@ -127,7 +127,7 @@
         <!--Row 2 -->
         <c:set var="readonly" value="" />
         <c:set var="disabled" value="" />
-        <c:set var="star" value="" />
+        <c:set var="star" value="*" />
         <c:if test="${idRole  == 19}">
             <c:set var="readonly" value="readonly=\"\"" />
             <c:set var="disabled" value="disabled=\"\"" />
@@ -1166,8 +1166,8 @@
                                 message: 'Account is required.'
                             }
                         }
-                    }
-                    ,InputPayDate: {
+                    },
+                    InputPayDate: {
                         validators: {
                             notEmpty: {
                                 message: 'Pay Date is required.'
@@ -1211,6 +1211,13 @@
                         validators: {
                             notEmpty: {
                                 message: 'Account is required.'
+                            }
+                        }
+                    },
+                    InputPayDate: {
+                        validators: {
+                            notEmpty: {
+                                message: 'Pay Date is required.'
                             }
                         }
                     }
@@ -1827,6 +1834,7 @@
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputInvoiceSupCode');
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputAPCode');
                 $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'itemStatus');
+                $('#PaymentTourHotelForm').bootstrapValidator('revalidateField', 'InputPayDate');
                 return;
             }
             
