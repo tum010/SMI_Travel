@@ -49,7 +49,7 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
                         if((checkDuplicateUser.getOperationUser()).equalsIgnoreCase(util.ConvertString(B[1]))){
                             cdu.setIsDuplicateUser(0);
                             cdu.setOperationDate(new Date());
-                            int result = updateDateAndUser(checkDuplicateUser.getOperationTable().toLowerCase(),checkDuplicateUser.getTableId(),checkDuplicateUser.getOperationUser(),new Date());
+                            int result = updateDateAndUser(checkDuplicateUser.getOperationTable(),checkDuplicateUser.getTableId(),checkDuplicateUser.getOperationUser(),new Date());
                         }else{
                             cdu.setIsDuplicateUser(1);
                             cdu.setOperationDate(util.convertStringToDateTime(String.valueOf(B[0])));
@@ -59,7 +59,7 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
                         cdu.setIsDuplicateUser(0);
                         cdu.setOperationDate(checkDuplicateUser.getOperationDate());
                         cdu.setOperationUser(checkDuplicateUser.getOperationUser());
-                        int result = updateDateAndUser(checkDuplicateUser.getOperationTable().toLowerCase(),checkDuplicateUser.getTableId(),checkDuplicateUser.getOperationUser(),checkDuplicateUser.getOperationDate());
+                        int result = updateDateAndUser(checkDuplicateUser.getOperationTable(),checkDuplicateUser.getTableId(),checkDuplicateUser.getOperationUser(),checkDuplicateUser.getOperationDate());
                     }
                 }
             }else if(step == 2){
