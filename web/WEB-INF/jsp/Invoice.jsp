@@ -30,7 +30,7 @@
 <c:set var="invoiceType" value="${requestScope['invoiceType']}" />
 <c:set var="vat" value="${requestScope['vat']}" />
 <c:set var="duedate" value="${requestScope['duedate']}" />
-<c:set var="lockDuplicateUser" value="${requestScope['lockDuplicateUser']}" />
+<c:set var="checkDuplicateUser" value="${requestScope['checkDuplicateUser']}" />
 <section class="content-header" >
     <h1>
         <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
@@ -298,11 +298,11 @@
                         <input type="hidden"  class="form-control" id="InvoiceId" name="InvoiceId"  value="${invoice.id}" >
                         <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                         <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
-                        <input type="text" class="form-control" id="operationTime" name="operationTime"  value="${lockDuplicateUser.operationDate}" >
-                        <input type="text" class="form-control" id="operationUser" name="operationUser"  value="${lockDuplicateUser.operationUser}" >
-                        <input type="text" class="form-control" id="operationTable" name="operationTable"  value="${lockDuplicateUser.tableId}" >
-                        <input type="text" class="form-control" id="isDuplicate" name="isDuplicate"  value="${lockDuplicateUser.isDuplicateUser}" >
-                        <input type="text" class="form-control" id="isSave" name="isSave"  value="${lockDuplicateUser.isSave}" >
+                        <input type="text" class="form-control" id="operationDate" name="operationDate"  value="${checkDuplicateUser.operationDate}" >
+                        <input type="text" class="form-control" id="operationUser" name="operationUser"  value="${checkDuplicateUser.operationUser}" >
+                        <input type="text" class="form-control" id="operationTable" name="operationTable"  value="${checkDuplicateUser.tableId}" >
+                        <input type="text" class="form-control" id="isDuplicate" name="isDuplicate"  value="${checkDuplicateUser.isDuplicateUser}" >
+                        <input type="text" class="form-control" id="isSave" name="isSave"  value="${checkDuplicateUser.isSave}" >
                         <div class="col-xs-12 " style="margin-top: -10px">
                             <div class="col-xs-1 text-right">
                                 <label class="control-label" for="">INV no</lable>
