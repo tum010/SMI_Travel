@@ -85,6 +85,10 @@ public class PaymentAirTicketService {
         return paymentairticketdao.DeletePaymentAirDebit(paymentAirId,paymentDebitId);
     }
     
+    public PaymentAirticket getPaymentAirTicketByWildCardSearch(String paymentId, String paymentNo, String wildCardSearch, String keyCode){
+        return paymentairticketdao.getPaymentAirTicketByWildCardSearch(paymentId, paymentNo, wildCardSearch, keyCode);
+    }
+    
     public PaymentAirTicketDao getPaymentairticketdao() {
         return paymentairticketdao;
     }

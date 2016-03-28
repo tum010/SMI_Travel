@@ -92,7 +92,8 @@
                 <input type="hidden" class="form-control" id="countRowDebit" name="countRowDebit" value="${requestScope['debitRowCount']}" />
                 <input type="hidden" name="debitIdDelete" id="debitIdDelete" value="">
                 <input type="hidden" name="debitRowDelete" id="debitRowDelete" value="">
-                
+                <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
+                <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                 <div class="panel panel-default">
                     <div class="panel-body"  style="padding-right: 0px;" style="width: 100%" >
                         <div class="col-xs-12" style="margin-top: -10px">
@@ -1070,7 +1071,7 @@ for(var i = 0; i < rad.length; i++) {
             value=value.replace(/\.[0-9]+\./g, '.');
             $(this).val(value)
         });
-        
+       
        
         
         $("#InvoiceSupTable tr").on('click', function () {
@@ -1143,10 +1144,38 @@ for(var i = 0; i < rad.length; i++) {
             $('#PaymentAirlineForm').bootstrapValidator('revalidateField', 'apCode');
             validateSaveButton();
         });
-        
+        var wildCardSearch = ($("#wildCardSearch").val()).indexOf("%");
         $("#paymentNo").keyup(function (event) {
             if(event.keyCode === 13){
                searchPaymentNo();
+            } else if (event.keyCode === 38) {
+                if ((parseInt(wildCardSearch) >= 0) || ($("#paymentId").val() !== '')) {
+                    $("#keyCode").val(event.keyCode);
+                    var action = document.getElementById('action');
+                    action.value = 'wildCardSearch';
+                    document.getElementById('PaymentAirlineForm').submit();
+                }
+
+            } else if (event.keyCode === 40) {
+                if ((parseInt(wildCardSearch) >= 0) || ($("#paymentId").val() !== '')) {
+                    $("#keyCode").val(event.keyCode);
+                    var action = document.getElementById('action');
+                    action.value = 'wildCardSearch';
+                    document.getElementById('PaymentAirlineForm').submit();
+                }
+
+            } else if (event.keyCode === 118) {
+                $("#keyCode").val(event.keyCode);
+                var action = document.getElementById('action');
+                action.value = 'new';
+                document.getElementById('PaymentAirlineForm').submit();
+
+            } else if (event.keyCode === 119) {
+                $("#keyCode").val(event.keyCode);
+                var action = document.getElementById('action');
+                action.value = 'wildCardSearch';
+                document.getElementById('PaymentAirlineForm').submit();
+
             }
         });
 

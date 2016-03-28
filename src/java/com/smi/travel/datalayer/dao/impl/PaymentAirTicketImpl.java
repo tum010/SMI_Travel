@@ -27,6 +27,7 @@ import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.hibernate.Hibernate;
@@ -435,30 +436,60 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         this.sessionFactory.close();
         return listView; 
     }
-
-    public String gennaratePaymentRunning(){
-        String hql = "from MRunningCode run where run.type =  :type";
+    
+    public String gennaratePaymentRunning() {
+        String payNo = "";
         Session session = this.sessionFactory.openSession();
-        List<MRunningCode> list = session.createQuery(hql).setParameter("type", "PA").list();
+        List<PaymentAirticket> list = new LinkedList<PaymentAirticket>();
+        Date thisdate = new Date();
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyMM");
+        Query query = session.createQuery("from PaymentAirticket pay where pay.payNo Like :payNo Order by pay.payNo desc");
+        query.setParameter("payNo", "%"+ df.format(thisdate) + "%");
+        query.setMaxResults(1);
+        list = query.list();
         if (list.isEmpty()) {
-            return null;
+            payNo = "PA"+ df.format(thisdate) + "-" + "0001";
+        } else {
+            payNo = String.valueOf(list.get(0).getPayNo());
+            if (!payNo.equalsIgnoreCase("")) {
+                System.out.println("PayNo.substring(6,10) " + payNo.substring(6,10) + "/////");
+                int running = Integer.parseInt(payNo.substring(6,10)) + 1;
+                String temp = String.valueOf(running);
+                for (int i = temp.length(); i < 4; i++) {
+                    temp = "0" + temp;
+                }
+                payNo = "PA"+ df.format(thisdate) + "-" + temp;
+            }
         }
-        
-        String code = String.valueOf(list.get(0).getRunning()+1);
-        for(int i=code.length();i<6;i++){
-            code = "0"+code;
-        }
-        
-        Query query = session.createQuery("update MRunningCode run set run.running = :running" +
-    				" where run.type = :type");
-        query.setParameter("running", list.get(0).getRunning()+1);
-        query.setParameter("type", "PA");
-        int result = query.executeUpdate();
-        
         session.close();
         this.sessionFactory.close();
-        return "A"+code;
+        return payNo.replace("-","");
     }
+    
+//    public String gennaratePaymentRunning(){
+//        String hql = "from MRunningCode run where run.type =  :type";
+//        Session session = this.sessionFactory.openSession();
+//        List<MRunningCode> list = session.createQuery(hql).setParameter("type", "PA").list();
+//        if (list.isEmpty()) {
+//            return null;
+//        }
+//        
+//        String code = String.valueOf(list.get(0).getRunning()+1);
+//        for(int i=code.length();i<6;i++){
+//            code = "0"+code;
+//        }
+//        
+//        Query query = session.createQuery("update MRunningCode run set run.running = :running" +
+//    				" where run.type = :type");
+//        query.setParameter("running", list.get(0).getRunning()+1);
+//        query.setParameter("type", "PA");
+//        int result = query.executeUpdate();
+//        
+//        session.close();
+//        this.sessionFactory.close();
+//        return "A"+code;
+//    }
     
     private boolean IsExistPaymentAirticketFare(String paymentAirId) {
         boolean result;
@@ -1205,5 +1236,66 @@ public class PaymentAirTicketImpl implements PaymentAirTicketDao {
         session.close();
         this.sessionFactory.close();
         return result;
+    }
+
+    @Override
+    public PaymentAirticket getPaymentAirTicketByWildCardSearch(String paymentId, String paymentNo, String wildCardSearch, String keyCode) {
+        StringBuffer query = new StringBuffer(" from PaymentAirticket pay ");
+
+        //Up
+        if ("38".equalsIgnoreCase(keyCode)) {
+            if("".equalsIgnoreCase(wildCardSearch)){
+                query.append(" where ");
+                query.append(" pay.id > '" + paymentId + "' ORDER BY pay.id asc ");
+            }else{
+                query.append(" where ");
+                query.append(" pay.id > '" + paymentId + "' and pay.payNo like '" + wildCardSearch + "' ORDER BY pay.id asc ");
+            }    
+        }
+        //Down
+        if ("40".equalsIgnoreCase(keyCode)) {
+            if("".equalsIgnoreCase(wildCardSearch)){               
+                query.append(" where ");
+                query.append(" pay.id < '" + paymentId + "' ORDER BY pay.id desc ");
+            }else{
+                query.append(" where ");
+                query.append(" pay.id < '" + paymentId + "' and pay.payNo like '" + wildCardSearch + "' ORDER BY pay.id desc ");
+            }           
+        }
+        //Lastest
+        if ("119".equalsIgnoreCase(keyCode)) {
+//            query.append(" where ");
+            query.append(" ORDER BY pay.id desc ");
+        }
+        
+        
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query.toString());
+        System.out.println(HqlQuery.toString());
+        HqlQuery.setMaxResults(1);
+        List<PaymentAirticket> pas = HqlQuery.list();
+        if (pas.isEmpty()) {
+            StringBuffer queryTemp = new StringBuffer(" from PaymentAirticket pay ");
+            queryTemp.append(" where ");
+            queryTemp.append(" pay.id = '" + paymentId + "' ");
+            HqlQuery = session.createQuery(queryTemp.toString());
+            HqlQuery.setMaxResults(1);
+            List<PaymentAirticket> pasTemp = HqlQuery.list();
+            return pasTemp.get(0);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return pas.get(0);
+        
+//        Session session = this.sessionFactory.openSession();
+//        List<PaymentAirticket> paymentAirticketList = session.createQuery(query).setParameter("payNo", payNo).list();
+//        session.close();
+//        if (paymentAirticketList.isEmpty()) {
+//            return null;
+//        }else{
+//            paymentAirticket =  paymentAirticketList.get(0);
+//        }
+//        return paymentAirticket;   
     }
 }

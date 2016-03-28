@@ -52,4 +52,6 @@ public interface PaymentAirTicketDao {
 //    public List getPaymentAirline(String payno,String printby);
     public List getPaymentAirlineList(String payno,String printby);
 //    public List getPaymentAirlineRefund(String payno,String printby) ;
+    
+    public PaymentAirticket getPaymentAirTicketByWildCardSearch(String paymentId, String paymentNo, String wildCardSearch, String keyCode);
 }

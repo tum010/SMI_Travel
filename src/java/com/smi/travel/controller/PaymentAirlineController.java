@@ -26,9 +26,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import net.sourceforge.jtds.jdbc.DateTime;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 public class PaymentAirlineController extends SMITravelController {
@@ -109,6 +107,10 @@ public class PaymentAirlineController extends SMITravelController {
         
         String exportDate = request.getParameter("exportDate");
         String isExport = request.getParameter("isExport");
+        
+        String wildCardSearch = request.getParameter("wildCardSearch");
+        String keyCode = request.getParameter("keyCode");
+        
         System.out.println("  exportDate " + exportDate);
         System.out.println("  isExport " + isExport);
         request.setAttribute(CREDITROWCOUNT, "1");
@@ -716,6 +718,79 @@ public class PaymentAirlineController extends SMITravelController {
                 request.setAttribute(DELETERESULT, "delete successful");
             } else {
                 request.setAttribute(DELETERESULT, "delete unsuccessful");
+            }
+        }else if("wildCardSearch".equalsIgnoreCase(action)){
+            paymentAirticket = paymentAirTicketService.getPaymentAirTicketByWildCardSearch(paymentId,paymentNo,wildCardSearch,keyCode);
+            if(paymentAirticket != null){
+                if (StringUtils.isNotEmpty(paymentAirticket.getInvoiceSup())){
+                    invoiceSupplier = utilityService.getDataInvoiceSuppiler(paymentAirticket.getInvoiceSup());
+                    request.setAttribute(SELECTEDINVOICE, invoiceSupplier);
+                }
+                if(paymentAirticket.getMAccpay() != null){
+                    mAccpay.setId(paymentAirticket.getMAccpay().getId());
+                    paymentAirticket.setMAccpay(mAccpay);
+                }
+                request.setAttribute(PAYDATE, paymentAirticket.getPayDate());
+                request.setAttribute(DUEDATE, paymentAirticket.getDueDate());
+                request.setAttribute(PAYMENTAIRTICKET,paymentAirticket);
+                request.setAttribute(EXPORTDATE, paymentAirticket.getExportDate());
+
+                ticketFareViews = paymentAirTicketService.getTicketFareViewsByPaymentAirId(paymentAirticket.getId());
+                if(ticketFareViews != null){
+                    request.setAttribute(FLAGSEARCG,"1");
+                    request.setAttribute(TICKETFARELIST,ticketFareViews);
+                    request.setAttribute(SETCALCULATETICKET,1);
+                }
+                refundAirticketDetailViews = paymentAirTicketService.getRefundDetailByPaymentAirId(paymentAirticket.getId());
+                if(refundAirticketDetailViews != null){
+                    request.setAttribute(SETCALCULATEREFUND,1);
+                }
+                request.setAttribute(ADDREFUNDLIST,refundAirticketDetailViews);
+
+                // Credit
+                List<PaymentAirCredit> payPaymentAirCredits = paymentAirTicketService.getPaymentAirCreditByPaymentAirId(paymentAirticket.getId());
+                if(payPaymentAirCredits != null){
+                    request.setAttribute(SETCALCULATECREDIT,1);
+                    request.setAttribute(CREDITROWCOUNT,payPaymentAirCredits.size()+1);
+                }  
+                request.setAttribute(CREDITLIST,payPaymentAirCredits);
+
+                /// Debit
+                List<PaymentAirDebit> payPaymentAirDebits = paymentAirTicketService.getPaymentAirDebitByPaymentAirId(paymentAirticket.getId());
+                if(payPaymentAirDebits != null){
+                    request.setAttribute(SETCALCULATEDEBIT,1);
+                    request.setAttribute(DEBITROWCOUNT,payPaymentAirDebits.size()+1);
+                }  
+                request.setAttribute(DEBITLIST,payPaymentAirDebits);
+
+                request.setAttribute(SEARCHPAYMENTNOFLAG,"notdummy");
+            }else{
+                request.setAttribute(SEARCHPAYMENTNOFLAG,"dummy");
+            }
+            request.setAttribute(PAYNO,paymentAirticket.getPayNo());
+            
+                       
+        }
+        
+        if((!"".equalsIgnoreCase(paymentNo)) && (paymentNo != null)){
+            if("search".equalsIgnoreCase(action)){
+                if((paymentNo.indexOf("%") >= 0)){
+                    request.setAttribute("wildCardSearch", paymentNo);
+                }else{
+                    request.setAttribute("wildCardSearch", ""); 
+                }
+            }else if("118".equalsIgnoreCase(keyCode)){
+                request.setAttribute("wildCardSearch", ""); 
+            }else if("119".equalsIgnoreCase(keyCode)){
+                request.setAttribute("wildCardSearch", ""); 
+            }else{
+                if((paymentNo.indexOf("%") == 0)){
+                    request.setAttribute("wildCardSearch", paymentNo);
+                }else if((!"".equalsIgnoreCase(wildCardSearch)) && (wildCardSearch.indexOf("%") == 0)){
+                    request.setAttribute("wildCardSearch", wildCardSearch);
+                }else{
+                    request.setAttribute("wildCardSearch", ""); 
+                }
             }
         }
         
