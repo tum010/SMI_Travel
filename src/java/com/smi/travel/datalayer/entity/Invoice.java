@@ -30,13 +30,14 @@ public class Invoice {
      private Date updateDate;
      private Date exportDate;
      private Integer isExport;
-
+     private Date operationDate;
+     private String operationUser;
      private List invoiceDetails = new LinkedList<InvoiceDetail>();
 
     public Invoice() {
     }
 
-    public Invoice(MAccterm MAccTerm, MFinanceItemstatus MFinanceItemstatus, SystemUser staff, String invNo, String invTo, String invName, String invAddress, Date dueDate, String deparement, String arcode, String remark, String invType, Integer isGroup, Integer isLock, String createBy, Date createDate, String subDepartment,Date invDate,Date updateDate,Date exportDate,Integer isExport, List invoiceDetails) {
+    public Invoice(MAccterm MAccTerm, MFinanceItemstatus MFinanceItemstatus, SystemUser staff, String invNo, String invTo, String invName, String invAddress, Date dueDate, String deparement, String arcode, String remark, String invType, Integer isGroup, Integer isLock, String createBy, Date createDate, String subDepartment,Date invDate,Date updateDate,Date exportDate,Integer isExport, List invoiceDetails,Date operationDate,String operationUser) {
        this.MAccTerm = MAccTerm;
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.staff = staff;
@@ -57,7 +58,8 @@ public class Invoice {
        this.subDepartment = subDepartment;
        this.invoiceDetails = invoiceDetails;
        this.updateDate = updateDate;
-
+       this.operationDate = operationDate;
+       this.operationUser = operationUser;
     }
 
     public Date getExportDate() {
@@ -239,6 +241,22 @@ public class Invoice {
     
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public Date getOperationDate() {
+        return operationDate;
+    }
+
+    public void setOperationDate(Date operationDate) {
+        this.operationDate = operationDate;
+    }
+
+    public String getOperationUser() {
+        return operationUser;
+    }
+
+    public void setOperationUser(String operationUser) {
+        this.operationUser = operationUser;
     }
 }
 

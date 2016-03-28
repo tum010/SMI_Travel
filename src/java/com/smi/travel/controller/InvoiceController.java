@@ -8,8 +8,10 @@ import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MDefaultData;
 import com.smi.travel.datalayer.entity.MFinanceItemstatus;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.service.CheckDuplicateUserService;
 import com.smi.travel.datalayer.service.InvoiceService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.CheckDuplicateUser;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
@@ -32,6 +34,7 @@ public class InvoiceController extends SMITravelController {
     private static final ModelAndView Invoice_REFRESH = new ModelAndView(new RedirectView("Invoice.smi", true));
     private UtilityService utilityService;
     private InvoiceService invoiceService;
+    private CheckDuplicateUserService checkDuplicateUserService;
     Invoice invoice = null;
     List<InvoiceDetail> listInvoiceDetail = new LinkedList<InvoiceDetail>();
     SystemUser staff = new SystemUser();
@@ -149,7 +152,7 @@ public class InvoiceController extends SMITravelController {
         }else{
             request.setAttribute("vat", null);
         } 
-        
+//        CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(null, 1);
         // Save Invoice And Update
         if("save".equals(action)){
 //            invoice = new Invoice();
@@ -772,6 +775,14 @@ public class InvoiceController extends SMITravelController {
 
     public InvoiceService getInvoiceService() {
         return invoiceService;
+    }
+
+    public CheckDuplicateUserService getCheckDuplicateUserService() {
+        return checkDuplicateUserService;
+    }
+
+    public void setCheckDuplicateUserService(CheckDuplicateUserService checkDuplicateUserService) {
+        this.checkDuplicateUserService = checkDuplicateUserService;
     }
     
 }

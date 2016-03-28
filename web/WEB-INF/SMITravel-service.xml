@@ -377,5 +377,9 @@
     <bean id="PaymentStockService" class="com.smi.travel.datalayer.service.PaymentStockService">
         <property name="paymentStockDao" ref="PaymentStockDao" />
     </bean>
+    
+    <bean id="CheckDuplicateUserService" class="com.smi.travel.datalayer.service.CheckDuplicateUserService">
+        <property name="checkDuplicateUserDao" ref="CheckDuplicateUserDao" />
+    </bean>
     <!--<add data>-->
 </beans>
