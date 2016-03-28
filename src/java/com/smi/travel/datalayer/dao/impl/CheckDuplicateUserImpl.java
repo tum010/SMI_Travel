@@ -46,29 +46,20 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
                     cdu.setTableId(checkDuplicateUser.getTableId());
                     cdu.setOperationTable(checkDuplicateUser.getOperationTable());
                     if(B[1] != null && B[0] != null){
-                        cdu.setIsDuplicateUser(1);
-                        cdu.setOperationDate(util.convertStringToDateTime(String.valueOf(B[0])));
+                        if((checkDuplicateUser.getOperationUser()).equalsIgnoreCase(util.ConvertString(B[1]))){
+                            cdu.setIsDuplicateUser(0);
+                            cdu.setOperationDate(new Date());
+                            int result = updateDateAndUser(checkDuplicateUser.getOperationTable().toLowerCase(),checkDuplicateUser.getTableId(),checkDuplicateUser.getOperationUser(),new Date());
+                        }else{
+                            cdu.setIsDuplicateUser(1);
+                            cdu.setOperationDate(util.convertStringToDateTime(String.valueOf(B[0])));
+                        }
                         cdu.setOperationUser(util.ConvertString(B[1]));
                     }else{
                         cdu.setIsDuplicateUser(0);
                         cdu.setOperationDate(checkDuplicateUser.getOperationDate());
                         cdu.setOperationUser(checkDuplicateUser.getOperationUser());
-                        int result = 0;
-                        String hql = "update "+checkDuplicateUser.getOperationTable()+" t set t.operationDate = :operationDate , t.operationUser = :operationUser where t.id = :id";
-                        System.out.println(" hql : " + hql);
-                        try {
-                            Query queryupdate = session.createQuery(hql);
-                            queryupdate.setParameter("operationDate", checkDuplicateUser.getOperationDate());
-                            queryupdate.setParameter("operationUser", checkDuplicateUser.getOperationUser());
-                            queryupdate.setParameter("id", checkDuplicateUser.getTableId());
-                            System.out.println(" queryupdate : " + queryupdate);
-                            result = queryupdate.executeUpdate();
-                            System.out.println("Rows affected: " + result);
-
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                            result = 0;
-                        }
+                        int result = updateDateAndUser(checkDuplicateUser.getOperationTable().toLowerCase(),checkDuplicateUser.getTableId(),checkDuplicateUser.getOperationUser(),checkDuplicateUser.getOperationDate());
                     }
                 }
             }else if(step == 2){
@@ -104,6 +95,30 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
             System.out.println(" query : " + queryupdate);
             result = queryupdate.executeUpdate();
             System.out.println("Rows affected: " + result);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            result = 0;
+        }
+        session.close();
+        this.sessionFactory.close();
+        return result;
+    }
+    
+    
+    public int updateDateAndUser(String table,String tableid,String username , Date date){
+        Session session = this.sessionFactory.openSession();
+        int result = 0;
+        String hql = "update "+table+" t set t.operationDate = :operationDate , t.operationUser = :operationUser where t.id = :id";
+        System.out.println(" hql : " + hql);
+        try {
+            Query queryupdate = session.createQuery(hql);
+            queryupdate.setParameter("operationDate", date);
+            queryupdate.setParameter("operationUser", username);
+            queryupdate.setParameter("id", tableid);
+            System.out.println(" queryupdate : " + queryupdate);
+            result = queryupdate.executeUpdate();
+            System.out.println("Rows affected: " + result);
+
         } catch (Exception ex) {
             ex.printStackTrace();
             result = 0;
