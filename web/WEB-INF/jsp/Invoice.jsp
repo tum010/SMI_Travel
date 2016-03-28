@@ -30,6 +30,7 @@
 <c:set var="invoiceType" value="${requestScope['invoiceType']}" />
 <c:set var="vat" value="${requestScope['vat']}" />
 <c:set var="duedate" value="${requestScope['duedate']}" />
+<c:set var="lockDuplicateUser" value="${requestScope['lockDuplicateUser']}" />
 <section class="content-header" >
     <h1>
         <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
@@ -297,6 +298,11 @@
                         <input type="hidden"  class="form-control" id="InvoiceId" name="InvoiceId"  value="${invoice.id}" >
                         <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                         <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
+                        <input type="hidden" class="form-control" id="operationTime" name="operationTime"  value="${lockDuplicateUser.operationTime}" >
+                        <input type="hidden" class="form-control" id="operationUser" name="operationUser"  value="${lockDuplicateUser.operationUser}" >
+                        <input type="hidden" class="form-control" id="operationTable" name="operationTable"  value="${lockDuplicateUser.operationTable}" >
+                        <input type="hidden" class="form-control" id="isDuplicate" name="isDuplicate"  value="${lockDuplicateUser.isDuplicate}" >
+                        <input type="hidden" class="form-control" id="isSave" name="isSave"  value="${lockDuplicateUser.isSave}" >
                         <div class="col-xs-12 " style="margin-top: -10px">
                             <div class="col-xs-1 text-right">
                                 <label class="control-label" for="">INV no</lable>
@@ -1183,7 +1189,27 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div>                                                
+</div>
+
+<!--Operation Duplicate Modal-->
+<div class="modal fade" id="operationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Invoice</h4>
+            </div>
+            <div class="modal-body" id="operationMessage">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick='enableOperationDuplicate()'>OK</button>               
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick='disableOperationDuplicate()'>Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->      
+
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {

@@ -261,6 +261,13 @@ $(document).ready(function() {
             searchAction();         
         }
     });
+    
+    //Operation Duplicate
+    if($("#isDuplicate").val() === '1'){
+        var username = $("#operationUser").val();
+        $("#operationMessage").text("User " + username + " is using information. Do you want to continue ?");
+        $("#operationModal").modal("show");
+    }
 
 });
 
@@ -1749,4 +1756,18 @@ function calculateAmountLocal(row, option) {
             }
         });
     }
+}
+
+//Operation Duplicate
+function enableOperationDuplicate(){
+    var action = document.getElementById("action");
+    action.value = "operationUpdate";
+    document.getElementById("InvoiceForm").submit;
+}
+
+function disableOperationDuplicate(){   
+    $("#saveInvoice").attr("disabled", true);
+    $("#enableVoidButton").attr("disabled", true);
+    $("#disableVoidButton").attr("disabled", true); 
+    $("#DelDetailBill").addClass("hidden");
 }
