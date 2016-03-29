@@ -498,6 +498,7 @@
                 <ref local="PaymentOutboundDao" />
                 <ref local="DefineVarDao" />
                 <ref local="PaymentStockDao" />
+                <ref local="CheckDuplicateUserDao" />
             </list>
         </constructor-arg>
     </bean>
@@ -528,6 +529,7 @@
     <bean id="ReceiveTableServlet" class="com.smi.travel.servlet.ReceiveTableServlet" />
     <bean id="PaymentOutboundServlet" class="com.smi.travel.servlet.PaymentOutboundServlet" />
     <bean id="PaymentStockServlet" class="com.smi.travel.servlet.PaymentStockServlet" />
+    <bean id="CheckDuplicateUserServlet" class="com.smi.travel.servlet.CheckDuplicateUserServlet" />
 	<!--<add data>-->
 	
 </beans>

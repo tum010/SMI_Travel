@@ -74,6 +74,8 @@ public class InvoiceController extends SMITravelController {
         String wildCardSearch = request.getParameter("wildCardSearch");
         String keyCode = request.getParameter("keyCode");
         String checkDuplicateUser = "";
+        String clearDuplicateUser = "";
+        System.out.println("Action : "+action);
 
         if(callPageFrom != null){
            //String[] type = callPageFrom.split("\\?");
@@ -156,14 +158,10 @@ public class InvoiceController extends SMITravelController {
         }
         
         //Duplicate User
-//        CheckDuplicateUser chuSession = new CheckDuplicateUser();
-//        chuSession.setOperationTable("Invoice");
-//        chuSession.setTableId(invoiceId);
-//        chuSession.setOperationDate(new Date());
-//        chuSession.setOperationUser(user.getUsername());
-//        session.setAttribute("checkDuplicateUser", chuSession);
-//        CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, 1);
-//        request.setAttribute("lockDuplicateUser", cdu);
+        if("operationUpdate".equalsIgnoreCase(action)){
+            checkDuplicateUser = checkDuplicateUser(request,response,session,invoiceId,1);
+            action = "searchInvoice";
+        }
                
         // Save Invoice And Update
         if("save".equals(action)){         
@@ -243,6 +241,10 @@ public class InvoiceController extends SMITravelController {
                     System.out.println(invoice.getInvNo());
                     request.setAttribute("invoice", invoice);
                     //result = "success";
+                    
+                    //Duplicate User
+                    checkDuplicateUser = checkDuplicateUser(request,response,session,invoice.getId(),1);
+                    
                 }else{
                     System.out.println("3");
                     request.setAttribute("invoice", null);
@@ -261,17 +263,7 @@ public class InvoiceController extends SMITravelController {
                 System.out.println("result : "+result);
                 request.setAttribute("result", result);
             }
-            request.setAttribute("thisdate", invoice.getInvDate());
-            
-            //Duplicate User
-            CheckDuplicateUser chuSession = new CheckDuplicateUser();
-            chuSession.setOperationTable("Invoice");
-            chuSession.setTableId(invoice.getId());
-            chuSession.setOperationDate(new Date());
-            chuSession.setOperationUser(user.getUsername());
-            session.setAttribute("checkDuplicateUser", chuSession);
-            CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, 1);
-            request.setAttribute(CHECKDUPLICATEUSER, cdu);
+            request.setAttribute("thisdate", invoice.getInvDate());                     
             
         }else if("disableVoid".equals(action)){
             //checck Tax invoice
@@ -312,14 +304,7 @@ public class InvoiceController extends SMITravelController {
             }
             
             //Duplicate User
-            CheckDuplicateUser chuSession = new CheckDuplicateUser();
-            chuSession.setOperationTable("Invoice");
-            chuSession.setTableId(invoice.getId());
-            chuSession.setOperationDate(new Date());
-            chuSession.setOperationUser(user.getUsername());
-            session.setAttribute("checkDuplicateUser", chuSession);
-            CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, 1);
-            request.setAttribute(CHECKDUPLICATEUSER, cdu);
+            checkDuplicateUser = checkDuplicateUser(request,response,session,invoice.getId(),1);
                      
         }else if("enableVoid".equals(action)){      
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
@@ -333,14 +318,7 @@ public class InvoiceController extends SMITravelController {
             }
             
             //Duplicate User
-            CheckDuplicateUser chuSession = new CheckDuplicateUser();
-            chuSession.setOperationTable("Invoice");
-            chuSession.setTableId(invoice.getId());
-            chuSession.setOperationDate(new Date());
-            chuSession.setOperationUser(user.getUsername());
-            session.setAttribute("checkDuplicateUser", chuSession);
-            CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, 1);
-            request.setAttribute(CHECKDUPLICATEUSER, cdu);
+            checkDuplicateUser = checkDuplicateUser(request,response,session,invoice.getId(),1);
             
         }else if("edit".equals(action)){// Edit Invoice From Search invoice page
             String invoiceIdSearch = request.getParameter("idInvoice"); // invoice id from search invoice page
@@ -350,6 +328,7 @@ public class InvoiceController extends SMITravelController {
             listInvoiceDetail = invoice.getInvoiceDetails();
             if(invoice != null){
                 request.setAttribute("invoice", invoice);
+                                
                 if(listInvoiceDetail != null){
                     request.setAttribute("listInvoiceDetail", listInvoiceDetail);
                     // Check Flag Booking
@@ -359,6 +338,7 @@ public class InvoiceController extends SMITravelController {
 //                    //Set Booking Status
 //                    String setBookingStatus = invoiceService.setBookingStatus(invoice);
 //                    System.out.println("Set Booking Status : " + setBookingStatus);
+                                       
                 }else{
                     request.setAttribute("listInvoiceDetail", null);
                 }
@@ -366,16 +346,10 @@ public class InvoiceController extends SMITravelController {
                 request.setAttribute("invoice",null);
             }
             request.setAttribute("thisdate", (InputInvDate != null && !"".equalsIgnoreCase(InputInvDate) ? InputInvDate : utilty.convertDateToString(new Date())));
-            
-            //Duplicate User
-            CheckDuplicateUser chuSession = new CheckDuplicateUser();
-            chuSession.setOperationTable("Invoice");
-            chuSession.setTableId(invoice.getId());
-            chuSession.setOperationDate(new Date());
-            chuSession.setOperationUser(user.getUsername());
-            session.setAttribute("checkDuplicateUser", chuSession);
-            CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, 1);
-            request.setAttribute(CHECKDUPLICATEUSER, cdu);
+            if(!"".equalsIgnoreCase(invoiceIdSearch) && invoiceIdSearch != null){
+                //Duplicate User
+                checkDuplicateUser = checkDuplicateUser(request,response,session,invoice.getId(),1);
+            }
             
         }else if("delete".equals(action)){// Delete Invoice From Search invoice page
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
@@ -400,14 +374,7 @@ public class InvoiceController extends SMITravelController {
             }
             
             //Duplicate User
-            CheckDuplicateUser chuSession = new CheckDuplicateUser();
-            chuSession.setOperationTable("Invoice");
-            chuSession.setTableId(invoice.getId());
-            chuSession.setOperationDate(new Date());
-            chuSession.setOperationUser(user.getUsername());
-            session.setAttribute("checkDuplicateUser", chuSession);
-            CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, 1);
-            request.setAttribute(CHECKDUPLICATEUSER, cdu);
+            checkDuplicateUser = checkDuplicateUser(request,response,session,invoiceId,1);
             
         }else if("copyInvoice".equals(action)){
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
@@ -418,22 +385,13 @@ public class InvoiceController extends SMITravelController {
             request.setAttribute("thisdate", InputInvDate);
         }else if("new".equals(action)){
 //            invoice = setValueInvoice(action, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, request,null);
+            clearDuplicateUser = clearDuplicateUser(request,response,session,invoiceId);
             invoice.setInvoiceDetails(null);
             request.setAttribute("invoice",null);
             request.setAttribute("listInvoiceDetail", null);
             result = "NEW";
             request.setAttribute("result", result);
-            request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
-            
-            //Duplicate User
-            CheckDuplicateUser chuSession = new CheckDuplicateUser();
-            chuSession.setOperationTable("Invoice");
-            chuSession.setTableId(invoice.getId());
-            chuSession.setOperationDate(new Date());
-            chuSession.setOperationUser(user.getUsername());
-            session.setAttribute("checkDuplicateUser", chuSession);
-            CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, 1);
-            request.setAttribute(CHECKDUPLICATEUSER, cdu);
+            request.setAttribute("thisdate", utilty.convertDateToString(new Date()));                     
             
         }else if("wildCardSearch".equalsIgnoreCase(action)){
             Invoice invoice = new Invoice();
@@ -451,14 +409,7 @@ public class InvoiceController extends SMITravelController {
             request.setAttribute("thisdate", invoice.getInvDate());
             
             //Duplicate User
-            CheckDuplicateUser chuSession = new CheckDuplicateUser();
-            chuSession.setOperationTable("Invoice");
-            chuSession.setTableId(invoice.getId());
-            chuSession.setOperationDate(new Date());
-            chuSession.setOperationUser(user.getUsername());
-            session.setAttribute("checkDuplicateUser", chuSession);
-            CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, 1);
-            request.setAttribute(CHECKDUPLICATEUSER, cdu);
+            checkDuplicateUser = checkDuplicateUser(request,response,session,invoice.getId(),1);
             
         }else{
             request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
@@ -899,9 +850,26 @@ public class InvoiceController extends SMITravelController {
         chuSession.setOperationDate(new Date());
         chuSession.setOperationUser(user.getUsername());
         session.setAttribute("checkDuplicateUser", chuSession);
-        CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, 2);
+        CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, step);
         request.setAttribute(CHECKDUPLICATEUSER, cdu);
         if(cdu.getIsSave() == 1){
+            result = "success";
+        }
+        return result;
+    }
+    
+    private String clearDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String invoiceId){
+        String result = "fail";
+        SystemUser  user = (SystemUser) session.getAttribute("USER");
+        CheckDuplicateUser chuSession = new CheckDuplicateUser();
+        session.setAttribute("checkDuplicateUser", chuSession);
+        CheckDuplicateUser chu = new CheckDuplicateUser();
+        chu.setOperationTable("Invoice");
+        chu.setTableId(invoiceId);
+        chu.setOperationDate(new Date());
+        chu.setOperationUser(user.getUsername());     
+        int update = checkDuplicateUserService.updateOperationNull(chuSession);
+        if(update == 1){
             result = "success";
         }
         return result;
