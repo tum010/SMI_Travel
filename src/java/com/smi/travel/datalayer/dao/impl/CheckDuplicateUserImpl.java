@@ -106,13 +106,12 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
                 for (Object[] B : QueryList) {
                     cdu.setTableId(checkDuplicateUser.getTableId());
                     cdu.setOperationTable(checkDuplicateUser.getOperationTable());
-                    logger.info("=================== Date ======================== "+df.format(util.convertStringToDateTime(String.valueOf(B[0]))));
-                    cdu.setOperationDate(String.valueOf(df.format(util.convertStringToDate(String.valueOf(B[0])))));
+                    cdu.setOperationDate(checkDuplicateUser.getOperationDate());
                     cdu.setOperationUser(util.ConvertString(B[1]));
                     System.out.println("data 1 : "+checkDuplicateUser.getOperationDate());
                     System.out.println("data 2 : "+cdu.getOperationDate());
                     if((checkDuplicateUser.getOperationUser()).equalsIgnoreCase(cdu.getOperationUser()) 
-                        && (checkDuplicateUser.getOperationDate().equalsIgnoreCase(cdu.getOperationDate()))){
+                        ){
                         logger.info(" Not duplicate ");
                         cdu.setIsSave(0);
                         cdu.setIsDuplicateUser(0);

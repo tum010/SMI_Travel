@@ -849,7 +849,7 @@ public class InvoiceController extends SMITravelController {
             String operationUser = request.getParameter("operationUser");
             System.out.println("operationDate : "+operationDate);
             System.out.println("new Date : "+new Date());
-//            chuSession.setOperationDate(util.convertStringToDateTime(sf.format(util.convertStringToDateTime(operationDate))));
+            chuSession.setOperationDate((df.format(util.convertStringToDateTime(operationDate))));
             chuSession.setOperationUser(operationUser);
             System.out.println("chuSession.getOperationDate() : "+chuSession.getOperationDate());
         }else if(step == 3){
