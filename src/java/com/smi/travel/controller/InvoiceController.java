@@ -159,6 +159,7 @@ public class InvoiceController extends SMITravelController {
         
         //Duplicate User
         if("operationUpdate".equalsIgnoreCase(action)){
+            System.out.println("InvoiceId : "+invoiceId);
             checkDuplicateUser = checkDuplicateUser(request,response,session,invoiceId,1);
             action = "searchInvoice";
         }
@@ -413,16 +414,6 @@ public class InvoiceController extends SMITravelController {
             
         }else{
             request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
-            
-            //Duplicate User
-            CheckDuplicateUser chuSession = new CheckDuplicateUser();
-            chuSession.setOperationTable("Invoice");
-            chuSession.setTableId(invoice.getId());
-            chuSession.setOperationDate(new Date());
-            chuSession.setOperationUser(user.getUsername());
-            session.setAttribute("checkDuplicateUser", chuSession);
-            CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, 1);
-            request.setAttribute(CHECKDUPLICATEUSER, cdu);            
         }
         
         if((!"".equalsIgnoreCase(invoiceNo)) && (invoiceNo != null)){
@@ -842,17 +833,30 @@ public class InvoiceController extends SMITravelController {
     }
 
     private String checkDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String invoiceId, int step) {
+        UtilityFunction util = new UtilityFunction();
+        SimpleDateFormat sf = new SimpleDateFormat();
+        sf.applyPattern("yyyy-MM-dd hh:mm:ss");
         String result = "fail";
-        SystemUser  user = (SystemUser) session.getAttribute("USER");
+        SystemUser user = (SystemUser) session.getAttribute("USER");
         CheckDuplicateUser chuSession = new CheckDuplicateUser();
         chuSession.setOperationTable("Invoice");
         chuSession.setTableId(invoiceId);
-        chuSession.setOperationDate(new Date());
-        chuSession.setOperationUser(user.getUsername());
+        if(step == 1){
+            chuSession.setOperationDate(new Date());
+            chuSession.setOperationUser(user.getUsername());
+        }else if(step == 2){
+            String operationDate = request.getParameter("operationDate");
+            String operationUser = request.getParameter("operationUser");
+            System.out.println("operationDate : "+operationDate);
+            System.out.println("new Date : "+new Date());
+//            chuSession.setOperationDate(util.convertStringToDateTime(sf.format(util.convertStringToDateTime(operationDate))));
+            chuSession.setOperationUser(operationUser);
+            System.out.println("chuSession.getOperationDate() : "+chuSession.getOperationDate());
+        }       
         session.setAttribute("checkDuplicateUser", chuSession);
         CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, step);
         request.setAttribute(CHECKDUPLICATEUSER, cdu);
-        if(cdu.getIsSave() == 1){
+        if(cdu.getIsDuplicateUser() == 0){
             result = "success";
         }
         return result;

@@ -1773,21 +1773,24 @@ function disableOperationDuplicate(){
 }
 
 $(window).on("beforeunload", function() {
+    var operationAction = $("#action").val();
+    console.log("action : "+operationAction);
     var operationTable = $("#operationTable").val();
     var operationTableId = $("#operationTableId").val();
     console.log("operationTable : "+operationTable);
     console.log("operationTableId : "+operationTable);
-    clearDuplicateUser(operationTable,operationTableId);
+    clearDuplicateUser(operationTable,operationTableId,operationAction);  
 });
     
-function clearDuplicateUser(operationTable,operationTableId) {
+function clearDuplicateUser(operationTable,operationTableId,operationAction) {
     var servletName = 'CheckDuplicateUserServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
             '&servletName=' + servletName +
             '&servicesName=' + servicesName +
             '&operationTable=' + operationTable +
-            '&operationTableId=' + operationTableId;
+            '&operationTableId=' + operationTableId +
+            '&operationAction=' + operationAction;
     callAjaxClearDuplicateUser(param);
 }
 

@@ -86,22 +86,24 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
                 }
             }else if(step == 2){
                 logger.info("=================== Save ========================");
-                for (Object[] B : QueryList) {
-                    cdu.setTableId(checkDuplicateUser.getTableId());
-                    cdu.setOperationTable(checkDuplicateUser.getOperationTable());
-                    cdu.setOperationDate(util.convertStringToDateTime(String.valueOf(B[0])));
-                    cdu.setOperationUser(util.ConvertString(B[1]));
-                    if((checkDuplicateUser.getOperationUser()).equalsIgnoreCase(util.ConvertString(B[1])) 
-                        && (String.valueOf(checkDuplicateUser.getOperationDate())).equalsIgnoreCase(util.ConvertString(B[0]))){
-                        logger.info(" Not duplicate ");
-                        cdu.setIsSave(0);
-                        cdu.setIsDuplicateUser(0);
-                    }else{
-                        logger.info(" Duplicate : User " + util.ConvertString(B[1]) + " is using this information ");
-                        cdu.setIsSave(1); // not save
-                        cdu.setIsDuplicateUser(1);
-                    }
-                }
+//                for (Object[] B : QueryList) {
+//                    cdu.setTableId(checkDuplicateUser.getTableId());
+//                    cdu.setOperationTable(checkDuplicateUser.getOperationTable());
+//                    cdu.setOperationDate(util.convertStringToDateTime(String.valueOf(B[0])));
+//                    cdu.setOperationUser(util.ConvertString(B[1]));
+//                    System.out.println("data 1 : "+(checkDuplicateUser.getOperationDate()));
+//                    System.out.println("data 2 : "+util.ConvertString(B[0]));
+//                    if((checkDuplicateUser.getOperationUser()).equalsIgnoreCase(util.ConvertString(B[1])) 
+//                        ){
+//                        logger.info(" Not duplicate ");
+//                        cdu.setIsSave(0);
+//                        cdu.setIsDuplicateUser(0);
+//                    }else{
+//                        logger.info(" Duplicate : User " + util.ConvertString(B[1]) + " is using this information ");
+//                        cdu.setIsSave(1); // not save
+//                        cdu.setIsDuplicateUser(1);
+//                    }
+//                }
             }
         }
         session.close();
