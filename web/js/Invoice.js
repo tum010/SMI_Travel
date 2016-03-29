@@ -401,6 +401,7 @@ function validFromInvoice(){
     if(!currencyNotMatch && currencyNotEmpty === 0){
         $("#textAlertCurrencyAmountNotEmpty").hide();
         $("#textAlertCurrency").hide();
+        $("#action").val('save');
         document.getElementById('InvoiceForm').submit();
     }
 
