@@ -74,14 +74,25 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
                             logger.info(" Not duplicate ");
                             cdu.setIsDuplicateUser(0);
                             cdu.setOperationDate(String.valueOf(df.format(new Date())));
+                            cdu.setOperationUser(util.ConvertString(B[1]));
                             int result = updateDateAndUser(checkDuplicateUser.getOperationTable(),checkDuplicateUser.getTableId(),checkDuplicateUser.getOperationUser(),String.valueOf(df.format(new Date())));
                         }else{
-                            logger.info(" Duplicate : User " + util.ConvertString(B[1]) + " is using this information ");
-                            cdu.setIsDuplicateUser(1);
-                            cdu.setOperationDate(String.valueOf(B[0]));
-                            System.out.println(" cdu.getOperationDate() " + cdu.getOperationDate());
+                            int timenew = Integer.parseInt(String.valueOf(new Date().getTime()/1000/60));
+                            int timeold = Integer.parseInt(String.valueOf(util.convertStringToDateTime(String.valueOf(B[0])).getTime()/1000/60));
+                            if(timenew - timeold > Integer.parseInt(ExpireTime)){
+                                logger.info("=================== Time Out ====================");
+                                cdu.setIsDuplicateUser(0);
+                                cdu.setOperationDate(String.valueOf(df.format(new Date())));
+                                cdu.setOperationUser(checkDuplicateUser.getOperationUser());
+                                int result = updateDateAndUser(checkDuplicateUser.getOperationTable(),checkDuplicateUser.getTableId(),checkDuplicateUser.getOperationUser(),String.valueOf(df.format(new Date())));
+                            }else{
+                                logger.info(" Duplicate : User " + util.ConvertString(B[1]) + " is using this information ");
+                                cdu.setIsDuplicateUser(1);
+                                cdu.setOperationDate(String.valueOf(B[0]));
+                                cdu.setOperationUser(util.ConvertString(B[1]));
+                                System.out.println(" cdu.getOperationDate() " + cdu.getOperationDate());
+                            }
                         }
-                        cdu.setOperationUser(util.ConvertString(B[1]));
                     }else{
                         logger.info(" Not duplicate ");
                         cdu.setIsDuplicateUser(0);
