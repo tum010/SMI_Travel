@@ -11,6 +11,7 @@ import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -44,8 +45,7 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
     @Override
     public CheckDuplicateUser CheckAndUpdateOperationDetail(CheckDuplicateUser checkDuplicateUser,int step) {
         logger.info("============= Check Duplicate User ==============");
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss aaa", Locale.US);
         CheckDuplicateUser cdu = new CheckDuplicateUser();
         UtilityFunction util = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
@@ -103,24 +103,26 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
                 }
             }else if(step == 2){
                 logger.info("=================== Save ========================");
-//                for (Object[] B : QueryList) {
-//                    cdu.setTableId(checkDuplicateUser.getTableId());
-//                    cdu.setOperationTable(checkDuplicateUser.getOperationTable());
-//                    cdu.setOperationDate(util.convertStringToDateTime(String.valueOf(B[0])));
-//                    cdu.setOperationUser(util.ConvertString(B[1]));
-//                    System.out.println("data 1 : "+(checkDuplicateUser.getOperationDate()));
-//                    System.out.println("data 2 : "+util.ConvertString(B[0]));
-//                    if((checkDuplicateUser.getOperationUser()).equalsIgnoreCase(util.ConvertString(B[1])) 
-//                        ){
-//                        logger.info(" Not duplicate ");
-//                        cdu.setIsSave(0);
-//                        cdu.setIsDuplicateUser(0);
-//                    }else{
-//                        logger.info(" Duplicate : User " + util.ConvertString(B[1]) + " is using this information ");
-//                        cdu.setIsSave(1); // not save
-//                        cdu.setIsDuplicateUser(1);
-//                    }
-//                }
+                for (Object[] B : QueryList) {
+                    cdu.setTableId(checkDuplicateUser.getTableId());
+                    cdu.setOperationTable(checkDuplicateUser.getOperationTable());
+                    logger.info("=================== Date ======================== "+df.format(util.convertStringToDateTime(String.valueOf(B[0]))));
+                    cdu.setOperationDate(String.valueOf(df.format(util.convertStringToDate(String.valueOf(B[0])))));
+                    cdu.setOperationUser(util.ConvertString(B[1]));
+                    System.out.println("data 1 : "+checkDuplicateUser.getOperationDate());
+                    System.out.println("data 2 : "+cdu.getOperationDate());
+                    if((checkDuplicateUser.getOperationUser()).equalsIgnoreCase(cdu.getOperationUser()) 
+                        && (checkDuplicateUser.getOperationDate().equalsIgnoreCase(cdu.getOperationDate()))){
+                        logger.info(" Not duplicate ");
+                        cdu.setIsSave(0);
+                        cdu.setIsDuplicateUser(0);
+                    }else{
+                        logger.info(" Duplicate : User " + util.ConvertString(B[1]) + " is using this information ");
+                        cdu.setIsSave(1); // not save
+                        cdu.setIsDuplicateUser(1);
+                    }
+                }
+                
             }else if (step == 3) { // update new user when click ok
                 logger.info("================ Update New User =================");
                 int result = updateDateAndUser(checkDuplicateUser.getOperationTable(),checkDuplicateUser.getTableId(),checkDuplicateUser.getOperationUser(),String.valueOf(df.format(new Date())));

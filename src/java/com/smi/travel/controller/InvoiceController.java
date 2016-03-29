@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -834,8 +835,7 @@ public class InvoiceController extends SMITravelController {
 
     private String checkDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String invoiceId, int step) {
         UtilityFunction util = new UtilityFunction();
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss aaa", Locale.US);
         String result = "fail";
         SystemUser user = (SystemUser) session.getAttribute("USER");
         CheckDuplicateUser chuSession = new CheckDuplicateUser();
