@@ -160,7 +160,7 @@ public class InvoiceController extends SMITravelController {
         //Duplicate User
         if("operationUpdate".equalsIgnoreCase(action)){
             System.out.println("InvoiceId : "+invoiceId);
-            checkDuplicateUser = checkDuplicateUser(request,response,session,invoiceId,1);
+            checkDuplicateUser = checkDuplicateUser(request,response,session,invoiceId,3);
             action = "searchInvoice";
         }
                
@@ -835,7 +835,7 @@ public class InvoiceController extends SMITravelController {
     private String checkDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String invoiceId, int step) {
         UtilityFunction util = new UtilityFunction();
         SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("yyyy-MM-dd hh:mm:ss");
+        df.applyPattern("yyyy-MM-dd HH:mm:ss");
         String result = "fail";
         SystemUser user = (SystemUser) session.getAttribute("USER");
         CheckDuplicateUser chuSession = new CheckDuplicateUser();
@@ -852,7 +852,10 @@ public class InvoiceController extends SMITravelController {
 //            chuSession.setOperationDate(util.convertStringToDateTime(sf.format(util.convertStringToDateTime(operationDate))));
             chuSession.setOperationUser(operationUser);
             System.out.println("chuSession.getOperationDate() : "+chuSession.getOperationDate());
-        }       
+        }else if(step == 3){
+            chuSession.setOperationDate(String.valueOf(df.format(new Date())));
+            chuSession.setOperationUser(user.getUsername());
+        }    
         session.setAttribute("checkDuplicateUser", chuSession);
         CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, step);
         request.setAttribute(CHECKDUPLICATEUSER, cdu);
@@ -865,7 +868,7 @@ public class InvoiceController extends SMITravelController {
     private String clearDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String invoiceId){
         String result = "fail";
         SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("yyyy-MM-dd hh:mm:ss");
+        df.applyPattern("yyyy-MM-dd HH:mm:ss");
         SystemUser  user = (SystemUser) session.getAttribute("USER");
         CheckDuplicateUser chuSession = new CheckDuplicateUser();
         session.setAttribute("checkDuplicateUser", chuSession);

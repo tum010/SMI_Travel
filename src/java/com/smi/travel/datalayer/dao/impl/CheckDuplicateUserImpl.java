@@ -45,8 +45,7 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
     public CheckDuplicateUser CheckAndUpdateOperationDetail(CheckDuplicateUser checkDuplicateUser,int step) {
         logger.info("============= Check Duplicate User ==============");
         SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("yyyy-MM-dd hh:mm:ss");
-        
+        df.applyPattern("yyyy-MM-dd HH:mm:ss");
         CheckDuplicateUser cdu = new CheckDuplicateUser();
         UtilityFunction util = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
@@ -68,6 +67,8 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
                     logger.info("Operation Table :: "+checkDuplicateUser.getOperationTable());
                     logger.info("Operation User :: "+checkDuplicateUser.getOperationUser());
                     logger.info("Operation Time :: "+checkDuplicateUser.getOperationDate());
+                    System.out.println(" B[0] " + B[0]);
+                    System.out.println(" B[1] " + B[1]);
                     if(B[1] != null && B[0] != null){
                         if((checkDuplicateUser.getOperationUser()).equalsIgnoreCase(util.ConvertString(B[1]))){
                             logger.info(" Not duplicate ");
@@ -77,7 +78,8 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
                         }else{
                             logger.info(" Duplicate : User " + util.ConvertString(B[1]) + " is using this information ");
                             cdu.setIsDuplicateUser(1);
-                            cdu.setOperationDate(String.valueOf(df.format(util.convertStringToDate(String.valueOf(B[0])))));
+                            cdu.setOperationDate(String.valueOf(B[0]));
+                            System.out.println(" cdu.getOperationDate() " + cdu.getOperationDate());
                         }
                         cdu.setOperationUser(util.ConvertString(B[1]));
                     }else{
@@ -108,6 +110,9 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
 //                        cdu.setIsDuplicateUser(1);
 //                    }
 //                }
+            }else if (step == 3) { // update new user when click ok
+                logger.info("================ Update New User =================");
+                int result = updateDateAndUser(checkDuplicateUser.getOperationTable(),checkDuplicateUser.getTableId(),checkDuplicateUser.getOperationUser(),String.valueOf(df.format(new Date())));
             }
         }
         session.close();
