@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.dao.impl;
 import com.smi.travel.datalayer.dao.CheckDuplicateUserDao;
 import com.smi.travel.datalayer.view.entity.CheckDuplicateUser;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -43,12 +44,15 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
     @Override
     public CheckDuplicateUser CheckAndUpdateOperationDetail(CheckDuplicateUser checkDuplicateUser,int step) {
         logger.info("============= Check Duplicate User ==============");
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyyy-MM-dd hh:mm:ss");
+        
         CheckDuplicateUser cdu = new CheckDuplicateUser();
         UtilityFunction util = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
         String query = "select * from "+checkDuplicateUser.getOperationTable().toLowerCase()+" t where t.id = '"+checkDuplicateUser.getTableId()+"' ";
         List<Object[]> QueryList =  session.createSQLQuery(query)
-                .addScalar("operation_date",Hibernate.DATE)
+                .addScalar("operation_date",Hibernate.STRING)
                 .addScalar("operation_user",Hibernate.STRING)
                 .list();
         
@@ -68,12 +72,12 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
                         if((checkDuplicateUser.getOperationUser()).equalsIgnoreCase(util.ConvertString(B[1]))){
                             logger.info(" Not duplicate ");
                             cdu.setIsDuplicateUser(0);
-                            cdu.setOperationDate(new Date());
-                            int result = updateDateAndUser(checkDuplicateUser.getOperationTable(),checkDuplicateUser.getTableId(),checkDuplicateUser.getOperationUser(),new Date());
+                            cdu.setOperationDate(String.valueOf(df.format(new Date())));
+                            int result = updateDateAndUser(checkDuplicateUser.getOperationTable(),checkDuplicateUser.getTableId(),checkDuplicateUser.getOperationUser(),String.valueOf(df.format(new Date())));
                         }else{
                             logger.info(" Duplicate : User " + util.ConvertString(B[1]) + " is using this information ");
                             cdu.setIsDuplicateUser(1);
-                            cdu.setOperationDate(util.convertStringToDateTime(String.valueOf(B[0])));
+                            cdu.setOperationDate(String.valueOf(df.format(util.convertStringToDate(String.valueOf(B[0])))));
                         }
                         cdu.setOperationUser(util.ConvertString(B[1]));
                     }else{
@@ -137,7 +141,7 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
     }
     
     
-    public int updateDateAndUser(String table,String tableid,String username , Date date){
+    public int updateDateAndUser(String table,String tableid,String username , String date){
         logger.info("================= Update User ===================");
         Session session = this.sessionFactory.openSession();
         int result = 0;

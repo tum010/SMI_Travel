@@ -13,18 +13,18 @@ import java.util.Date;
  */
 public class CheckDuplicateUser {
     
-    private Date operationDate;
+    private String operationDate;
     private String operationUser;
     private String operationTable;
     private int isDuplicateUser; // 0 is not duplicate
     private String tableId;
     private int isSave; // 0 is can save
-    
-    public Date getOperationDate() {
+
+    public String getOperationDate() {
         return operationDate;
     }
 
-    public void setOperationDate(Date operationDate) {
+    public void setOperationDate(String operationDate) {
         this.operationDate = operationDate;
     }
 
@@ -67,7 +67,5 @@ public class CheckDuplicateUser {
     public void setIsSave(int isSave) {
         this.isSave = isSave;
     }
-
-
     
 }

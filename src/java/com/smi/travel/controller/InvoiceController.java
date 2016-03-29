@@ -834,15 +834,15 @@ public class InvoiceController extends SMITravelController {
 
     private String checkDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String invoiceId, int step) {
         UtilityFunction util = new UtilityFunction();
-        SimpleDateFormat sf = new SimpleDateFormat();
-        sf.applyPattern("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyyy-MM-dd hh:mm:ss");
         String result = "fail";
         SystemUser user = (SystemUser) session.getAttribute("USER");
         CheckDuplicateUser chuSession = new CheckDuplicateUser();
         chuSession.setOperationTable("Invoice");
         chuSession.setTableId(invoiceId);
         if(step == 1){
-            chuSession.setOperationDate(new Date());
+            chuSession.setOperationDate(String.valueOf(df.format(new Date())));
             chuSession.setOperationUser(user.getUsername());
         }else if(step == 2){
             String operationDate = request.getParameter("operationDate");
@@ -864,13 +864,15 @@ public class InvoiceController extends SMITravelController {
     
     private String clearDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String invoiceId){
         String result = "fail";
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyyy-MM-dd hh:mm:ss");
         SystemUser  user = (SystemUser) session.getAttribute("USER");
         CheckDuplicateUser chuSession = new CheckDuplicateUser();
         session.setAttribute("checkDuplicateUser", chuSession);
         CheckDuplicateUser chu = new CheckDuplicateUser();
         chu.setOperationTable("Invoice");
         chu.setTableId(invoiceId);
-        chu.setOperationDate(new Date());
+        chu.setOperationDate(String.valueOf(df.format(new Date())));
         chu.setOperationUser(user.getUsername());     
         int update = checkDuplicateUserService.updateOperationNull(chuSession);
         if(update == 1){
