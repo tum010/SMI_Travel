@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.bean.master;
 import com.smi.travel.common.bean.AbstractBean;
 import com.smi.travel.datalayer.ajax.service.AbstractAJAXServices;
 import com.smi.travel.datalayer.dao.BillableDao;
+import com.smi.travel.datalayer.dao.CheckDuplicateUserDao;
 import com.smi.travel.datalayer.dao.CreditNoteDao;
 import com.smi.travel.datalayer.dao.CustomerDao;
 import com.smi.travel.datalayer.dao.DaytourBookingDao;
@@ -67,6 +68,7 @@ import com.smi.travel.datalayer.view.dao.TicketAircommissionViewDao;
 import com.smi.travel.datalayer.view.entity.AdvanceReceivePeriodView;
 import com.smi.travel.datalayer.view.entity.BookSummary;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
+import com.smi.travel.datalayer.view.entity.CheckDuplicateUser;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.OtherBookingView;
 import com.smi.travel.datalayer.view.entity.PaymentTourCommissionView;
@@ -125,7 +127,8 @@ public class AJAXBean extends AbstractBean implements
     private static final String PAYMENTTOURHOTEL = "PaymentTourHotelServlet";
     private static final String RECEIVETABLE = "ReceiveTableServlet";
     private static final String PAYMENTOUTBOUND = "PaymentOutboundServlet"; 
-    private static final String PAYMENTSTOCK = "PaymentStockServlet"; 
+    private static final String PAYMENTSTOCK = "PaymentStockServlet";
+    private static final String CHECKDUPLICATEUSER = "CheckDuplicateUserServlet"; 
     private CustomerDao customerdao;
     private ProductDetailDao productDetailDao;
     private BookingSummaryDao bookingsummarydao;
@@ -154,6 +157,7 @@ public class AJAXBean extends AbstractBean implements
     private PaymentOutboundDao paymentOutboundDao;
     private DefineVarDao defineVardao;
     private PaymentStockDao paymentStockDao;
+    private CheckDuplicateUserDao checkDuplicateUserDao;
     
     public AJAXBean(List queryList) {
         super(queryList);
@@ -217,6 +221,8 @@ public class AJAXBean extends AbstractBean implements
                     defineVardao = (DefineVarDao) obj;
                 } else if (obj instanceof PaymentStockDao) {
                     paymentStockDao = (PaymentStockDao) obj;
+                } else if (obj instanceof CheckDuplicateUserDao) {
+                    checkDuplicateUserDao = (CheckDuplicateUserDao) obj;
                 }
             }
         }
@@ -1179,6 +1185,17 @@ public class AJAXBean extends AbstractBean implements
                     result = "null";
                 }
             } 
+        }else if(CHECKDUPLICATEUSER.equalsIgnoreCase(servletName)){
+            String operationTable = map.get("operationTable").toString();
+            String operationTableId = map.get("operationTableId").toString();
+            System.out.println("operatonTable : "+operationTable);
+            System.out.println("operatonTableId : "+operationTableId);
+            CheckDuplicateUser cdu = new CheckDuplicateUser();
+            cdu.setOperationTable(operationTable);
+            cdu.setTableId(operationTableId);
+            int clearDuplicateUser = checkDuplicateUserDao.updateOperationNull(cdu);
+            result = (clearDuplicateUser == 1 ? "success" : "fail");
+            System.out.println("clearDuplicateUser : "+clearDuplicateUser);
         }
         return result;
     }

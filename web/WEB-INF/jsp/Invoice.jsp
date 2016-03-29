@@ -298,11 +298,12 @@
                         <input type="hidden"  class="form-control" id="InvoiceId" name="InvoiceId"  value="${invoice.id}" >
                         <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                         <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
-                        <input type="text" class="form-control" id="operationDate" name="operationDate"  value="${checkDuplicateUser.operationDate}" >
-                        <input type="text" class="form-control" id="operationUser" name="operationUser"  value="${checkDuplicateUser.operationUser}" >
-                        <input type="text" class="form-control" id="operationTable" name="operationTable"  value="${checkDuplicateUser.tableId}" >
-                        <input type="text" class="form-control" id="isDuplicate" name="isDuplicate"  value="${checkDuplicateUser.isDuplicateUser}" >
-                        <input type="text" class="form-control" id="isSave" name="isSave"  value="${checkDuplicateUser.isSave}" >
+                        <input type="hidden" class="form-control" id="operationDate" name="operationDate"  value="${checkDuplicateUser.operationDate}" >
+                        <input type="hidden" class="form-control" id="operationUser" name="operationUser"  value="${checkDuplicateUser.operationUser}" >
+                        <input type="hidden" class="form-control" id="operationTable" name="operationTable"  value="${checkDuplicateUser.operationTable}" >
+                        <input type="hidden" class="form-control" id="operationTableId" name="operationTableId"  value="${checkDuplicateUser.tableId}" >
+                        <input type="hidden" class="form-control" id="isDuplicate" name="isDuplicate"  value="${checkDuplicateUser.isDuplicateUser}" >
+                        <input type="hidden" class="form-control" id="isSave" name="isSave"  value="${checkDuplicateUser.isSave}" >
                         <div class="col-xs-12 " style="margin-top: -10px">
                             <div class="col-xs-1 text-right">
                                 <label class="control-label" for="">INV no</lable>

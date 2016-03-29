@@ -1762,7 +1762,7 @@ function calculateAmountLocal(row, option) {
 function enableOperationDuplicate(){
     var action = document.getElementById("action");
     action.value = "operationUpdate";
-    document.getElementById("InvoiceForm").submit;
+    document.getElementById("InvoiceForm").submit();
 }
 
 function disableOperationDuplicate(){   
@@ -1770,4 +1770,44 @@ function disableOperationDuplicate(){
     $("#enableVoidButton").attr("disabled", true);
     $("#disableVoidButton").attr("disabled", true); 
     $("#DelDetailBill").addClass("hidden");
+}
+
+$(window).on("beforeunload", function() {
+    var operationTable = $("#operationTable").val();
+    var operationTableId = $("#operationTableId").val();
+    console.log("operationTable : "+operationTable);
+    console.log("operationTableId : "+operationTable);
+    clearDuplicateUser(operationTable,operationTableId);
+});
+    
+function clearDuplicateUser(operationTable,operationTableId) {
+    var servletName = 'CheckDuplicateUserServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&operationTable=' + operationTable +
+            '&operationTableId=' + operationTableId;
+    callAjaxClearDuplicateUser(param);
+}
+
+function callAjaxClearDuplicateUser(param) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                console.log('update duplicate user success');
+             // window.location = 'APMonitor.smi';
+            }, error: function(msg) {
+                console.log('update duplicate user fail');
+            }
+        });
+    } catch (e) {
+        alert(e);
+        console.log('update duplicate user fail');
+    }
 }
