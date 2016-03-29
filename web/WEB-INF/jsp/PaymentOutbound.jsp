@@ -372,7 +372,7 @@
                 </div>               
                 <div class="row" style="padding-left: 15px;">             
                     <div class="row">
-                        <div class="col-xs-11" style="width: 1030px;margin-top: -26px">
+                        <div class="col-xs-11" style="width: 1030px;margin-top: 0px">
                             <table class="display" id="PaymentDetailTable">
                                 <thead>
                                     <tr class="datatable-header">
