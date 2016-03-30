@@ -76,6 +76,8 @@ public class InvoiceController extends SMITravelController {
         String keyCode = request.getParameter("keyCode");
         String invNoForCheckUser = request.getParameter("invNoForCheckUser");
         String operationTableId = request.getParameter("operationTableId");
+        String operationUser = request.getParameter("operationUser");
+        
         String checkDuplicateUser = "";
         String clearDuplicateUser = "";
         System.out.println("Action : "+action);
@@ -207,10 +209,10 @@ public class InvoiceController extends SMITravelController {
         }else if("searchInvoice".equals(action)){ // search invoice when input invoice no
             if(invNoForCheckUser != null){
                 if(!"".equalsIgnoreCase(invNoForCheckUser) && !invNoForCheckUser.equalsIgnoreCase(invoiceNo)){
-                    System.out.println(" invNoForCheckUser " + invNoForCheckUser);
                     CheckDuplicateUser cdu = new CheckDuplicateUser();
                     cdu.setOperationTable("Invoice");
                     cdu.setTableId(operationTableId);
+                    cdu.setOperationUser(user.getUsername());
                     checkDuplicateUserService.updateOperationNull(cdu);
                 }
             }
@@ -421,16 +423,13 @@ public class InvoiceController extends SMITravelController {
             invoice = invoiceService.getInvoiceByWildCardSearch(invoiceId,invoiceNo,wildCardSearch,keyCode,department,invoiceType);            
             saveAction(invoice.getInvNo(), invoiceNo, invoice, "wildCardSearch", request);
             request.setAttribute("thisdate", invoice.getInvDate());
-            System.out.println(" invNoForCheckUser ============== " + invNoForCheckUser);
-            System.out.println(" wildCardSearch " + wildCardSearch);
-            System.out.println(" invoiceNo " + invoiceNo);
-            System.out.println(" keyCode " + keyCode);
             if(invNoForCheckUser != null){
                 if(!"".equalsIgnoreCase(invNoForCheckUser) && !"".equalsIgnoreCase(keyCode)){
                     System.out.println(" invNoForCheckUser " + invNoForCheckUser);
                     CheckDuplicateUser cdu = new CheckDuplicateUser();
                     cdu.setOperationTable("Invoice");
                     cdu.setTableId(operationTableId);
+                    cdu.setOperationUser(user.getUsername());
                     checkDuplicateUserService.updateOperationNull(cdu);
                 }
             }
