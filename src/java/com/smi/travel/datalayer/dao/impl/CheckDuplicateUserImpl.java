@@ -45,7 +45,7 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
     @Override
     public CheckDuplicateUser CheckAndUpdateOperationDetail(CheckDuplicateUser checkDuplicateUser,int step) {
         logger.info("============= Check Duplicate User ==============");
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss aaa", Locale.US);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
         CheckDuplicateUser cdu = new CheckDuplicateUser();
         UtilityFunction util = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
@@ -88,7 +88,9 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
                             }else{
                                 logger.info(" Duplicate : User " + util.ConvertString(B[1]) + " is using this information ");
                                 cdu.setIsDuplicateUser(1);
-                                cdu.setOperationDate(String.valueOf(B[0]));
+                                String date = util.ConvertString(B[0]);
+                                int indexDate = date.indexOf(".");
+                                cdu.setOperationDate(date.substring(0, indexDate));
                                 cdu.setOperationUser(util.ConvertString(B[1]));
                                 System.out.println(" cdu.getOperationDate() " + cdu.getOperationDate());
                             }
@@ -106,7 +108,9 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
                 for (Object[] B : QueryList) {
                     cdu.setTableId(checkDuplicateUser.getTableId());
                     cdu.setOperationTable(checkDuplicateUser.getOperationTable());
-                    cdu.setOperationDate(checkDuplicateUser.getOperationDate());
+                    String date = util.ConvertString(B[0]);
+                    int indexDate = date.indexOf(".");
+                    cdu.setOperationDate(date.substring(0, indexDate));
                     cdu.setOperationUser(util.ConvertString(B[1]));
                     System.out.println("data 1 : "+checkDuplicateUser.getOperationDate());
                     System.out.println("data 2 : "+cdu.getOperationDate());
