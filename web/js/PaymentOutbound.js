@@ -202,6 +202,10 @@ $(document).ready(function() {
     $("#isWht").click(function() {
         calculateWhtAmount();
     });
+    
+    $("#wht").focusout(function() {
+        calculateWhtAmountWithNewWht();
+    });
 
     $("#isComVat").click(function() {
         calculateVatRecComAmount();
@@ -546,7 +550,7 @@ function addRowPaymentDetailTable(row) {
             '<input type="text" name="gross' + row + '" id="gross' + row + '" style="text-align:right;" class="form-control numerical" onkeyup="insertCommas(this)" value="" readonly=""/>' +
             '</td>' +
             '<td align="center">' +
-            '<input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" onclick="calculateGross(\'' + row + '\')" value="1">' +
+            '<input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" onclick="calculateGross(\'' + row + '\'); calculateWhtAmount(\'\');" value="1">' +
             '</td>' +
             '<td align="right" id="vatShow' + row + '"></td>' +
             '<td class="hidden">' +
@@ -1269,7 +1273,32 @@ function savePaymentDetail() {
 function calculateWhtAmount() {
     if ($("#isWht").is(':checked')) {
         var row = $("#rowDetail").val();
+        var isVat = ($("#isVat" + row).is(':checked') ? true : false);
         var wht = ($("#whtTemp" + row).val() === '' ? parseFloat($("#mWht").val()) : parseFloat($("#whtTemp" + row).val()));
+        var money = 0.00;
+        if(isVat){
+            money = ($("#gross" + row).val() !== '' ? parseFloat(($("#gross" + row).val()).replace(/,/g, "")) : 0.00);
+        }else{
+            money = ($("#amount" + row).val() !== '' ? parseFloat(($("#amount" + row).val()).replace(/,/g, "")) : 0.00);
+        }
+        var whtAmount = money * (wht / 100);
+        $("#whtAmount").val(formatNumber(whtAmount));
+        $("#wht").val(wht);
+        if ($("#whtTemp" + row).val() === '') {
+            $("#whtTemp" + row).val(parseFloat($("#mWht").val()));
+        } else {
+            $("#whtTemp" + row).val(parseFloat($("#mWht").val()));
+        }
+    } else {
+        $("#wht").val('');
+        $("#whtAmount").val('');
+    }
+}
+
+function calculateWhtAmountWithNewWht() {
+    if ($("#isWht").is(':checked')) {
+        var row = $("#rowDetail").val();
+        var wht = ($("#wht").val() === '' ? parseFloat($("#mWht").val()) : parseFloat($("#wht").val()));
         var gross = ($("#gross" + row).val() !== '' ? parseFloat(($("#gross" + row).val()).replace(/,/g, "")) : 0.00);
         var whtAmount = gross * (wht / 100);
         $("#whtAmount").val(formatNumber(whtAmount));

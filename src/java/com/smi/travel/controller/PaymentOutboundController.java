@@ -40,6 +40,7 @@ public class PaymentOutboundController extends SMITravelController {
     private static final String PAYMENTOUTBOUNDDETAIL = "paymentOutboundDetail";
     private static final String RESULT = "result";
     private static final String PAYDATE = "payDate";
+    private static final String DUEPAYMENTDATE = "duePaymentDate";
     private UtilityService utilservice;
     private PaymentTourHotelService paymentTourHotelService;
     private PaymentOutboundService paymentOutboundService;        
@@ -74,6 +75,7 @@ public class PaymentOutboundController extends SMITravelController {
         String createBy = request.getParameter("createBy");
         String createDate = request.getParameter("createDate");
         String status = request.getParameter("status");
+        String duePaymentDate = request.getParameter("duePaymentDate");
         String updateDate = request.getParameter("updateDate");
         String countPaymentDetail = request.getParameter("countPaymentDetail");
         String resultRedirect = request.getParameter("resultRedirect");
@@ -103,6 +105,7 @@ public class PaymentOutboundController extends SMITravelController {
             paymentOutbound.setId(payId);
             paymentOutbound.setPayNo(!"".equalsIgnoreCase(payId) ? paymentOutboundTemp.getPayNo() : "");
             paymentOutbound.setPayDate(utilfunction.convertStringToDate(payDate));
+            paymentOutbound.setDuePaymentDate((!"".equalsIgnoreCase(duePaymentDate) ? utilfunction.convertStringToDate(duePaymentDate) : null));
             paymentOutbound.setAccount(Integer.parseInt(account));
             paymentOutbound.setInvoiceSup(invSupCode);
             paymentOutbound.setApCode(invSupApCode);
@@ -122,6 +125,7 @@ public class PaymentOutboundController extends SMITravelController {
             request.setAttribute(PAYMENTOUTBOUND, paymentOutbound);
             request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);
             request.setAttribute(PAYDATE, utilfunction.convertDateToString(paymentOutbound.getPayDate()));
+            request.setAttribute(DUEPAYMENTDATE, (paymentOutbound.getDuePaymentDate() != null ? utilfunction.convertDateToString(paymentOutbound.getPayDate()) : ""));
             request.setAttribute(RESULT, result);
             if("success".equalsIgnoreCase(result)){
                 return new ModelAndView(new RedirectView("PaymentOutbound.smi?action=search&payNo="+paymentOutbound.getPayNo()+"&resultRedirect="+result, true));
@@ -136,6 +140,7 @@ public class PaymentOutboundController extends SMITravelController {
                 request.setAttribute(PAYMENTOUTBOUND, paymentOutbound);
                 request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);
                 request.setAttribute(PAYDATE, utilfunction.convertDateToString(paymentOutbound.getPayDate()));
+                request.setAttribute(DUEPAYMENTDATE, (paymentOutbound.getDuePaymentDate() != null ? utilfunction.convertDateToString(paymentOutbound.getPayDate()) : ""));
             }else{
                 request.setAttribute(RESULT, "not found");
             }
@@ -153,6 +158,7 @@ public class PaymentOutboundController extends SMITravelController {
                 request.setAttribute(PAYMENTOUTBOUND, paymentOutbound);
                 request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);
                 request.setAttribute(PAYDATE, utilfunction.convertDateToString(paymentOutbound.getPayDate()));
+                request.setAttribute(DUEPAYMENTDATE, (paymentOutbound.getDuePaymentDate() != null ? utilfunction.convertDateToString(paymentOutbound.getPayDate()) : ""));
             }
         }
                 
