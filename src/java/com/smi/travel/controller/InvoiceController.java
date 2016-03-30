@@ -172,12 +172,15 @@ public class InvoiceController extends SMITravelController {
         // Save Invoice And Update
         if("save".equals(action)){         
             //Duplicate User
-            checkDuplicateUser = checkDuplicateUser(request,response,session,invoiceId,2);
-            if("fail".equalsIgnoreCase(checkDuplicateUser)){
-                request.setAttribute("page", callPageFrom);
-                return new ModelAndView(new RedirectView("Invoice"+callPageFrom+".smi?action=searchInvoice&InvNo="+invoiceNo, true));
-//                return new ModelAndView(LINKNAME+callPageFrom);
+            if(!"".equalsIgnoreCase(invoiceId) && invoiceId != null){
+                checkDuplicateUser = checkDuplicateUser(request,response,session,invoiceId,2);
+                if("fail".equalsIgnoreCase(checkDuplicateUser)){
+                    request.setAttribute("page", callPageFrom);
+                    return new ModelAndView(new RedirectView("Invoice"+callPageFrom+".smi?action=searchInvoice&InvNo="+invoiceNo, true));
+    //                return new ModelAndView(LINKNAME+callPageFrom);
+                }
             }
+                
 //            invoice = new Invoice();
             invoice.setId(invoiceId);
             if(invoiceId != null && !"".equals(invoiceId)){
@@ -207,6 +210,14 @@ public class InvoiceController extends SMITravelController {
             }
             request.setAttribute("thisdate", InputInvDate);
             System.out.println("invoiceService checkOverflowValueOfInvoice:"+invoiceService.checkOverflowValueOfInvoice(invoice.getInvoiceDetails()));
+            
+            if(!"fail".equalsIgnoreCase(result) && !"update fail".equalsIgnoreCase(result)){
+                //Duplicate User
+                    checkDuplicateUser = checkDuplicateUser(request,response,session,invoice.getId(),1);
+//                request.setAttribute("page", callPageFrom);
+//                return new ModelAndView(new RedirectView("Invoice"+callPageFrom+".smi?action=searchInvoice&InvNo="+invoice.getInvNo(), true));
+            }    
+            
         }else if("searchInvoice".equals(action)){ // search invoice when input invoice no
             if(invNoForCheckUser != null){
                 if(!"".equalsIgnoreCase(invNoForCheckUser) && !invNoForCheckUser.equalsIgnoreCase(invoiceNo)){
@@ -282,6 +293,15 @@ public class InvoiceController extends SMITravelController {
             request.setAttribute("thisdate", invoice.getInvDate());                     
             
         }else if("disableVoid".equals(action)){
+            //Duplicate User
+            if(!"".equalsIgnoreCase(invoiceId) && invoiceId != null){
+                checkDuplicateUser = checkDuplicateUser(request,response,session,invoiceId,2);
+                if("fail".equalsIgnoreCase(checkDuplicateUser)){
+                    request.setAttribute("page", callPageFrom);
+                    return new ModelAndView(new RedirectView("Invoice"+callPageFrom+".smi?action=searchInvoice&InvNo="+invoiceNo, true));
+                }
+            }
+            
             //checck Tax invoice
             int checkReciptAndTaxInvoice = 0;
             if("yesTaxinvoice".equals(invoiceService.checkTaxInvoice(invoiceNo))){
@@ -322,7 +342,16 @@ public class InvoiceController extends SMITravelController {
             //Duplicate User
             checkDuplicateUser = checkDuplicateUser(request,response,session,invoice.getId(),1);
                      
-        }else if("enableVoid".equals(action)){      
+        }else if("enableVoid".equals(action)){
+            //Duplicate User
+            if(!"".equalsIgnoreCase(invoiceId) && invoiceId != null){
+                checkDuplicateUser = checkDuplicateUser(request,response,session,invoiceId,2);
+                if("fail".equalsIgnoreCase(checkDuplicateUser)){
+                    request.setAttribute("page", callPageFrom);
+                    return new ModelAndView(new RedirectView("Invoice"+callPageFrom+".smi?action=searchInvoice&InvNo="+invoiceNo, true));
+                }
+            }
+            
             invoice = setValueInvoice(action, user.getUsername(), invoiceType, invoiceId, invoiceTo, invoiceName, invoiceAddress, isGroup, termPay, dueDate, department, staffCode, staffName, staffId, arCode, remark, invoiceNo, InputInvDate, request,subDepartment);
             result = invoiceService.saveInvoice(invoice);
             if(result.equals("update success")){

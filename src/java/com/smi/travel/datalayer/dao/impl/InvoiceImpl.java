@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -95,8 +96,7 @@ public class InvoiceImpl implements InvoiceDao{
         Session session = this.sessionFactory.openSession();
         List<String> list = new LinkedList<String>();
         Date thisdate = new Date();
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("yyMM");
+        SimpleDateFormat df = new SimpleDateFormat("yyMM",Locale.US);
         Query query = session.createSQLQuery("SELECT RIGHT(inv_no, 4) as invnum  FROM invoice where department = :department and inv_type = :invoiceType and inv_no Like :invno  ORDER BY RIGHT(inv_no, 4) desc");
         query.setParameter("invno", "%"+ df.format(thisdate) + "%");
         query.setParameter("department", department);
