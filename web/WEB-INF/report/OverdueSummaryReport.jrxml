@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OverdueSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9918ccf4-38e8-43e9-9556-9aa27a1349a1">
-	<property name="ireport.zoom" value="1.2100000000000315"/>
-	<property name="ireport.x" value="194"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="3.1384283767210985"/>
+	<property name="ireport.x" value="621"/>
+	<property name="ireport.y" value="360"/>
 	<field name="clientname_page" class="java.lang.String"/>
 	<field name="depart_page" class="java.lang.String"/>
 	<field name="from_page" class="java.lang.String"/>
@@ -27,6 +27,18 @@
 	<field name="overduesstatus" class="java.lang.String"/>
 	<field name="group" class="java.lang.String"/>
 	<field name="signname" class="java.lang.String"/>
+	<variable name="totalthb" class="java.math.BigDecimal" resetType="Group" resetGroup="AgentOrOwner" calculation="Sum">
+		<variableExpression><![CDATA[($F{bath} != null && !"null".equals($F{bath}) && $F{bath}.length() > 0) ? new BigDecimal($F{bath}) : new BigDecimal("0")]]></variableExpression>
+	</variable>
+	<variable name="totaljpy" class="java.math.BigDecimal" resetType="Group" resetGroup="AgentOrOwner" calculation="Sum">
+		<variableExpression><![CDATA[($F{jpy} != null && !"null".equals($F{jpy}) && $F{jpy}.length() > 0) ? new BigDecimal($F{jpy}) : new BigDecimal("0")]]></variableExpression>
+	</variable>
+	<variable name="totalusd" class="java.math.BigDecimal" resetType="Group" resetGroup="AgentOrOwner" calculation="Sum">
+		<variableExpression><![CDATA[($F{usd} != null && !"null".equals($F{usd}) && $F{usd}.length() > 0) ? new BigDecimal($F{usd}) : new BigDecimal("0")]]></variableExpression>
+	</variable>
+	<variable name="totalrecamt" class="java.math.BigDecimal" resetType="Group" resetGroup="AgentOrOwner" calculation="Sum">
+		<variableExpression><![CDATA[($F{recamt} != null && !"null".equals($F{recamt}) && $F{recamt}.length() > 0) ? new BigDecimal($F{recamt}) : new BigDecimal("0")]]></variableExpression>
+	</variable>
 	<group name="AgentOrOwner">
 		<groupExpression><![CDATA[$F{groupBy}]]></groupExpression>
 		<groupHeader>
@@ -58,6 +70,99 @@
 				</line>
 			</band>
 		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="204" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="4b0f422c-d8eb-41ba-8144-c9f323394349"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="363" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="be7adcbf-9a03-4c39-a0fa-a465cf150f10"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="254" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="eaf5598b-4f91-45a5-88f8-9a8375eb4aff"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="801" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="ca3e2012-a5fc-4d3f-97be-f29b1049861c"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="468" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="b013e1a0-4c1a-479c-9fc0-ded8d5ee3a8f"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="415" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="1cc690c9-fbdc-4cc2-92d5-173a89b52fc7"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement positionType="Float" x="0" y="19" width="802" height="1" isPrintWhenDetailOverflows="true" uuid="2cbc2916-65e8-44da-ac9b-ad305eb29f1e"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="313" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="978c0618-0b30-4d74-a74b-72f77de5abf5"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement stretchType="RelativeToBandHeight" x="0" y="-2" width="1" height="21" isPrintWhenDetailOverflows="true" uuid="ca9584a5-74ab-47ae-b62f-fc841564f53a"/>
+					<graphicElement>
+						<pen lineWidth="0.25"/>
+					</graphicElement>
+				</line>
+				<textField pattern="#,##0.00">
+					<reportElement x="254" y="4" width="56" height="15" uuid="be3f351e-b829-477d-9a19-d18dbed6bbd2"/>
+					<textElement textAlignment="Right">
+						<font fontName="Tahoma" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totaljpy}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement x="204" y="4" width="47" height="15" uuid="600c02a9-ae0d-42e1-989a-5d17d9ef6c18"/>
+					<textElement textAlignment="Right">
+						<font fontName="Tahoma" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalthb}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="4" width="182" height="15" uuid="d256a0d3-28c7-405a-93d0-c1baafd2f1ec"/>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="Tahoma" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<textField pattern="#,##0.00">
+					<reportElement x="313" y="4" width="47" height="15" uuid="ff7555cf-e425-4a2f-a91b-43d74e358a25"/>
+					<textElement textAlignment="Right">
+						<font fontName="Tahoma" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalusd}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00">
+					<reportElement x="415" y="4" width="50" height="14" uuid="44e96acf-d7b9-440a-8b64-ffbcfb9b5035"/>
+					<textElement textAlignment="Right">
+						<font fontName="Tahoma" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalrecamt}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
@@ -596,7 +701,7 @@
 	<pageFooter>
 		<band height="48" splitType="Stretch">
 			<textField>
-				<reportElement x="536" y="17" width="128" height="14" uuid="70c0c944-2e77-4256-85f9-ee18e38f0bcd"/>
+				<reportElement x="536" y="16" width="128" height="14" uuid="70c0c944-2e77-4256-85f9-ee18e38f0bcd"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
