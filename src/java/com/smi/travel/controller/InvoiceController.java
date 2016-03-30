@@ -74,10 +74,23 @@ public class InvoiceController extends SMITravelController {
         String subDepartment = request.getParameter("Department");
         String wildCardSearch = request.getParameter("wildCardSearch");
         String keyCode = request.getParameter("keyCode");
+        String invNoForCheckUser = request.getParameter("invNoForCheckUser");
+        String operationTableId = request.getParameter("operationTableId");
         String checkDuplicateUser = "";
         String clearDuplicateUser = "";
         System.out.println("Action : "+action);
-
+        
+        if(invNoForCheckUser != null){
+            if(!"".equalsIgnoreCase(invNoForCheckUser) && !invNoForCheckUser.equalsIgnoreCase(invoiceNo)){
+                System.out.println(" invNoForCheckUser " + invNoForCheckUser);
+                CheckDuplicateUser cdu = new CheckDuplicateUser();
+                cdu.setOperationTable("Invoice");
+                cdu.setTableId(operationTableId);
+                checkDuplicateUserService.updateOperationNull(cdu);
+            }
+        }
+        
+        
         if(callPageFrom != null){
            //String[] type = callPageFrom.split("\\?");
            request.setAttribute("typeInvoice", callPageFrom.substring(1));  
@@ -835,7 +848,7 @@ public class InvoiceController extends SMITravelController {
 
     private String checkDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String invoiceId, int step) {
         UtilityFunction util = new UtilityFunction();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss aaa", Locale.US);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
         String result = "fail";
         SystemUser user = (SystemUser) session.getAttribute("USER");
         CheckDuplicateUser chuSession = new CheckDuplicateUser();

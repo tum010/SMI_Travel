@@ -304,6 +304,7 @@
                         <input type="text" class="form-control" id="operationTableId" name="operationTableId"  value="${checkDuplicateUser.tableId}" >
                         <input type="text" class="form-control" id="isDuplicate" name="isDuplicate"  value="${checkDuplicateUser.isDuplicateUser}" >
                         <input type="text" class="form-control" id="isSave" name="isSave"  value="${checkDuplicateUser.isSave}" >
+                        <input type="text" class="form-control" id="invNoForCheckUser" name="invNoForCheckUser"  value="${invoice.invNo}" >
                         <div class="col-xs-12 " style="margin-top: -10px">
                             <div class="col-xs-1 text-right">
                                 <label class="control-label" for="">INV no</lable>
