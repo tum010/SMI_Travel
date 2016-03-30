@@ -1192,7 +1192,7 @@ public class AJAXBean extends AbstractBean implements
             System.out.println("operatonTable : "+operationTable);
             System.out.println("operatonTableId : "+operationTableId);
             System.out.println("action : "+operationAction);
-            if(!"save".equalsIgnoreCase(operationAction)){
+            if("".equalsIgnoreCase(operationAction) && !"".equalsIgnoreCase(operationTable) && !"".equalsIgnoreCase(operationTableId)){
                 CheckDuplicateUser cdu = new CheckDuplicateUser();
                 cdu.setOperationTable(operationTable);
                 cdu.setTableId(operationTableId);
