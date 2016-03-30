@@ -164,8 +164,8 @@ public class InvoiceController extends SMITravelController {
         
         //Duplicate User
         if("operationUpdate".equalsIgnoreCase(action)){
-            System.out.println("InvoiceId : "+invoiceId);
-            checkDuplicateUser = checkDuplicateUser(request,response,session,invoiceId,3);
+            System.out.println("operationTableId : "+operationTableId);
+            checkDuplicateUser = checkDuplicateUser(request,response,session,operationTableId,3);
             action = "searchInvoice";
         }
                
