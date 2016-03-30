@@ -124,8 +124,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         String payNo = "";
         Session session = this.sessionFactory.openSession();
         List<String> list = new LinkedList<String>();
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("yyMM");
+        SimpleDateFormat df = new SimpleDateFormat("yyMM", Locale.US);
         String querysql = "";
 
         querysql = "SELECT RIGHT(pay_no, 4) as paynum  FROM payment_outbound where pay_no Like :payno ORDER BY RIGHT(pay_no, 4) desc";

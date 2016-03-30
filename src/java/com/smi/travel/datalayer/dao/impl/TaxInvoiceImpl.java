@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -79,8 +80,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         String taxNo = "";
         Session session = this.sessionFactory.openSession();
         List<String> list = new LinkedList<String>();
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("yyMM");
+        SimpleDateFormat df = new SimpleDateFormat("yyMM", Locale.US);
         String querysql = "";
         if("Wendy".equalsIgnoreCase(department) ||  "Outbound".equalsIgnoreCase(department)){
             querysql = "SELECT RIGHT(tax_no, 4) as taxnum  FROM tax_invoice where department in ('Wendy','Outbound') and tax_no Like :taxno ORDER BY RIGHT(tax_no, 4) desc";

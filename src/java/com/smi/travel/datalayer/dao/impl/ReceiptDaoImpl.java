@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -149,8 +150,7 @@ import org.hibernate.Transaction;
         Session session = this.sessionFactory.openSession();
         List<String> list = new LinkedList<String>();
 //        Date thisdate = new Date();
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("yyMM");
+        SimpleDateFormat df = new SimpleDateFormat("yyMM", Locale.US);
         String querysql = "";
         System.out.println(" department " + department);
         if("Wendy".equalsIgnoreCase(department) ||  "Outbound".equalsIgnoreCase(department)){
