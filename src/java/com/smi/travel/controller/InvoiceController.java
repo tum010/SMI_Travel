@@ -175,7 +175,8 @@ public class InvoiceController extends SMITravelController {
             checkDuplicateUser = checkDuplicateUser(request,response,session,invoiceId,2);
             if("fail".equalsIgnoreCase(checkDuplicateUser)){
                 request.setAttribute("page", callPageFrom);
-                return new ModelAndView(LINKNAME+callPageFrom);
+                return new ModelAndView(new RedirectView("Invoice"+callPageFrom+".smi?action=searchInvoice&InvNo="+invoiceNo, true));
+//                return new ModelAndView(LINKNAME+callPageFrom);
             }
 //            invoice = new Invoice();
             invoice.setId(invoiceId);
