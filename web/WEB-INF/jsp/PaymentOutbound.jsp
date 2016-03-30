@@ -431,6 +431,7 @@
                                             <input type="text" name="value${i.count}" id="value${i.count}" class="form-control" value="${detail.value}"/>
                                             <input type="text" name="payStockId${i.count}" id="payStockId${i.count}" class="form-control" value="${detail.payStockId}"/>
                                             <input type="text" name="comm${i.count}" id="comm${i.count}" class="form-control" value="${detail.comm}"/>
+                                            <input type="text" name="isNewWht${i.count}" id="isNewWht${i.count}" class="form-control" value="0"/>
                                             <textarea rows="3" cols="255" class="form-control" id="descriptionTemp${i.count}" name="descriptionTemp${i.count}" maxlength="255" data-bv-field="detail">${detail.description}</textarea>                                        
                                         </td>
                                         <td>

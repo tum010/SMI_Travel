@@ -204,7 +204,7 @@ $(document).ready(function() {
     });
     
     $("#wht").focusout(function() {
-        calculateWhtAmountWithNewWht();
+        calculateWhtAmount(this.value);
     });
 
     $("#isComVat").click(function() {
@@ -525,6 +525,7 @@ function addRowPaymentDetailTable(row) {
             '<input type="text" name="value' + row + '" id="value' + row + '" class="form-control" value=""/>' +
             '<input type="text" name="payStockId' + row + '" id="payStockId' + row + '" class="form-control" value=""/>' +
             '<input type="text" name="comm' + row + '" id="comm' + row + '" class="form-control" value=""/>' +
+            '<input type="text" name="isNewWht' + row + '" id="isNewWht' + row + '" class="form-control" value="0"/>' +
             '</td>' +
             '<td>' +
             '<select class="form-control" name="type' + row + '" id="type' + row + '" onchange="addRow(\'' + row + '\')">' +
@@ -1270,11 +1271,20 @@ function savePaymentDetail() {
     $("#paymentDetailPanel").addClass("hidden");
 }
 
-function calculateWhtAmount() {
-    if ($("#isWht").is(':checked')) {
-        var row = $("#rowDetail").val();
+function calculateWhtAmount(newWht) {
+    var row = $("#rowDetail").val();
+    if ($("#isWht").is(':checked')) {       
         var isVat = ($("#isVat" + row).is(':checked') ? true : false);
-        var wht = ($("#whtTemp" + row).val() === '' ? parseFloat($("#mWht").val()) : parseFloat($("#whtTemp" + row).val()));
+        var isNewWht = $("#isNewWht" + row).val();
+        
+        var wht = 0.00;
+        if(newWht === '' && isNewWht !== '1'){
+            wht = ($("#whtTemp" + row).val() === '' ? parseFloat($("#mWht").val()) : parseFloat($("#whtTemp" + row).val()));           
+        }else{
+            wht = ($("#wht").val() === '' ? parseFloat($("#mWht").val()) : parseFloat($("#wht").val()));
+            $("#isNewWht" + row).val('1');
+        }
+        
         var money = 0.00;
         if(isVat){
             money = ($("#gross" + row).val() !== '' ? parseFloat(($("#gross" + row).val()).replace(/,/g, "")) : 0.00);
@@ -1292,25 +1302,7 @@ function calculateWhtAmount() {
     } else {
         $("#wht").val('');
         $("#whtAmount").val('');
-    }
-}
-
-function calculateWhtAmountWithNewWht() {
-    if ($("#isWht").is(':checked')) {
-        var row = $("#rowDetail").val();
-        var wht = ($("#wht").val() === '' ? parseFloat($("#mWht").val()) : parseFloat($("#wht").val()));
-        var gross = ($("#gross" + row).val() !== '' ? parseFloat(($("#gross" + row).val()).replace(/,/g, "")) : 0.00);
-        var whtAmount = gross * (wht / 100);
-        $("#whtAmount").val(formatNumber(whtAmount));
-        $("#wht").val(wht);
-        if ($("#whtTemp" + row).val() === '') {
-            $("#whtTemp" + row).val(parseFloat($("#mWht").val()));
-        } else {
-            $("#whtTemp" + row).val(parseFloat($("#mWht").val()));
-        }
-    } else {
-        $("#wht").val('');
-        $("#whtAmount").val('');
+        $("#isNewWht" + row).val('0');
     }
 }
 
