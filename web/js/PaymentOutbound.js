@@ -295,26 +295,28 @@ function stockValidate() {
 }
 
 function searchRefNo() {
-    var refNo = $("#refNo").val();
-    if (refNo === "") {
-        if (!$('#refnopanel').hasClass('has-feedback')) {
-            $('#refnopanel').addClass('has-feedback');
+    if($("#ajaxLoadSearch").hasClass("hidden")){
+        var refNo = $("#refNo").val();
+        if (refNo === "") {
+            if (!$('#refnopanel').hasClass('has-feedback')) {
+                $('#refnopanel').addClass('has-feedback');
+            }
+            $('#refnopanel').removeClass('has-success');
+            $('#refnopanel').addClass('has-error');
+            $('#RefNoTable > tbody  > tr').each(function() {
+                $(this).remove();
+            });
+            $('#searchRefNo2').addClass('hidden');
+        } else {
+            var servletName = 'PaymentOutboundServlet';
+            var servicesName = 'AJAXBean';
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&refNo=' + refNo +
+                    '&type=' + 'searchRefNo';
+            CallAjaxSearchRef(param);
         }
-        $('#refnopanel').removeClass('has-success');
-        $('#refnopanel').addClass('has-error');
-        $('#RefNoTable > tbody  > tr').each(function() {
-            $(this).remove();
-        });
-        $('#searchRefNo2').addClass('hidden');
-    } else {
-        var servletName = 'PaymentOutboundServlet';
-        var servicesName = 'AJAXBean';
-        var param = 'action=' + 'text' +
-                '&servletName=' + servletName +
-                '&servicesName=' + servicesName +
-                '&refNo=' + refNo +
-                '&type=' + 'searchRefNo';
-        CallAjaxSearchRef(param);
     }
 }
 
