@@ -1775,15 +1775,17 @@ function disableOperationDuplicate(){
 
 $(window).on("beforeunload", function() {
     var operationAction = $("#action").val();
-    console.log("action : "+operationAction);
     var operationTable = $("#operationTable").val();
     var operationTableId = $("#operationTableId").val();
+    var operationUser = $("#operationUser").val();
+    console.log("action : "+operationAction);
     console.log("operationTable : "+operationTable);
     console.log("operationTableId : "+operationTable);
-    clearDuplicateUser(operationTable,operationTableId,operationAction);  
+    console.log("operationUser : "+operationUser);
+    clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser);  
 });
     
-function clearDuplicateUser(operationTable,operationTableId,operationAction) {
+function clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser) {
     var servletName = 'CheckDuplicateUserServlet';
     var servicesName = 'AJAXBean';
     var param = 'action=' + 'text' +
@@ -1791,7 +1793,8 @@ function clearDuplicateUser(operationTable,operationTableId,operationAction) {
             '&servicesName=' + servicesName +
             '&operationTable=' + operationTable +
             '&operationTableId=' + operationTableId +
-            '&operationAction=' + operationAction;
+            '&operationAction=' + operationAction +
+            '&operationUser=' + operationUser;
     callAjaxClearDuplicateUser(param);
 }
 
