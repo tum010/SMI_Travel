@@ -13,6 +13,9 @@ import com.smi.travel.datalayer.entity.PaymentOutbound;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
 import com.smi.travel.datalayer.entity.PaymentStock;
+import com.smi.travel.datalayer.entity.PaymentStockDetail;
+import com.smi.travel.datalayer.entity.Product;
+import com.smi.travel.datalayer.entity.Stock;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundAllDetail;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundSummary;
@@ -1428,6 +1431,43 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         this.sessionFactory.close();
                                   
         return paymentOutboundDetailList.get(0);
+    }
+
+    @Override
+    public List<String> getProductByStock(String paymentStockId) {
+        UtilityFunction util = new UtilityFunction();
+        System.out.println("========paymentStockId======== "+paymentStockId);
+        String query = "from PaymentStock ps where ps.id = :paymentStockId ";       
+        Session session = this.sessionFactory.openSession();
+        Query HqlQuery = session.createQuery(query);
+        HqlQuery.setParameter("paymentStockId", paymentStockId);
+        HqlQuery.setMaxResults(1);
+        List<PaymentStock> paymentStockList = HqlQuery.list();
+        
+        if (paymentStockList.isEmpty()) {
+            this.sessionFactory.close();
+            session.close();
+            return null;
+        }
+
+        List<PaymentStockDetail> paymentStockDetailList = paymentStockList.get(0).getPaymentStockDetails();
+        List<String> detailList = new ArrayList<String>();
+        for(int i=0; i<paymentStockDetailList.size(); i++){
+            PaymentStockDetail paymentStockDetail = paymentStockDetailList.get(i);
+            Stock stock = paymentStockDetail.getStock();
+            Product product = stock.getProduct();
+            String productName = product.getName();
+            String effectiveFrom = (stock.getEffectiveFrom() != null ? util.convertDateToString(stock.getEffectiveFrom()) : "");
+            String effectiveTo = (stock.getEffectiveTo() != null ? util.convertDateToString(stock.getEffectiveTo()) : "");
+            String detail = productName+" : ";
+            detail += (!"".equalsIgnoreCase(effectiveFrom) && !"".equalsIgnoreCase(effectiveTo) ? effectiveFrom+" - "+effectiveTo : "");
+            System.out.println("===========detail============ "+detail);
+            detailList.add(detail);
+        }
+        
+        this.sessionFactory.close();
+        session.close();
+        return detailList;
     }
 
 }

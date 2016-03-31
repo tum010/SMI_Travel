@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.entity.PaymentOutbound;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
 import com.smi.travel.datalayer.entity.PaymentStock;
+import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundView;
 import java.util.List;
@@ -33,6 +34,7 @@ public interface PaymentOutboundDao {
     public List getPaymentOutboundSummaryReport(String fromDate,String toDate,String status,String invSupCode,String refNo,String username);
     public PaymentOutbound getPaymentOutbound(String payId);
     public List<PaymentOutboundDetail> checkDuplicatePaymentStock(String payStockNo);
+    public List<String> getProductByStock(String paymentStockId);
     
     //Payment Summry Report
     public List getPaymentSummaryReport(String fromDate,String toDate,String saleby,String invSupCode,String refNo,String username);
@@ -47,5 +49,6 @@ public interface PaymentOutboundDao {
     
     //AP Nirvana
     public PaymentOutboundDetail getAPNirvanaData(String detailId);
+    
     
 }
