@@ -201,10 +201,10 @@
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
-                    <div class="col-xs-1 text-right" style="width:80px;padding-left:10px;padding-right:0px;">
+                    <div class="col-xs-1 text-right" style="width:75px;padding-left:0px;padding-right:0px;">
                         <label class="control-label">Due Date<font style="color: red"></font></lable>
                     </div>
-                    <div class="col-md-3 form-group text-left" style="padding-left:10px;padding-right: 0px;width: 150px;">
+                    <div class="col-md-3 form-group text-left" style="padding-left:20px;padding-right: 0px;width: 170px;">
                         <div class='input-group date' id="">
                             <fmt:formatDate var="duePaymentDateTemp" type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.duePaymentDate}"/>
                             <input name="duePaymentDate" id="duePaymentDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${duePaymentDate}" />
@@ -238,46 +238,7 @@
                             </div>    
                         </div> 
                     </div>
-                    <div class="col-xs-1 text-right" style="width:80px;padding-left:10px;padding-right:0px;">
-                        <label class="control-label">Account<font style="color: red">*</font></lable>
-                    </div>
-                    <div class="col-md-3 text-left" style="padding-top : 5px;padding-left:0px;padding-right:0px;">
-                        <c:set var="account1" value=""/>
-                        <c:set var="account2" value=""/>
-                        <c:choose>
-                            <c:when test="${paymentOutbound.account == 1}">
-                                <c:set var="account1" value="checked"/>
-                            </c:when>
-                            <c:when test="${paymentOutbound.account == 2}">
-                                <c:set var="account2" value="checked"/>
-                            </c:when>
-                        </c:choose>
-                        <div class="col-sm-6 text-left " >
-                            <input type="radio" id="account1" name="account" value="1" ${account1}/>&nbsp;account(1)
-                        </div>
-                        <div class="col-sm-6 text-left" >
-                            <input type="radio" id="account2" name="account" value="2" ${account2}/>&nbsp;temp
-                        </div>
-                    </div>                  
-                </div><!--End row 2-->
-                <div class="col-xs-12 " style="padding-left: 0px;">
-                    <div class="col-xs-1 text-right" style="margin-top: -5px; width: 100px;margin-top: -17px">
-                        <label class="control-label" for="">Search</lable>                           
-                    </div>           
-                    <div class="col-md-1 text-left" style="width: 50px; padding-left: 0px;margin-top: -12px">
-                        <a data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample" onclick="showSearchRefNo()">
-                            <span id="spanEditRefNo">Ref</span>
-                        </a>                           
-                    </div>
-                    <div class="col-md-1 text-left" style="width: 50px;margin-top: -12px">
-                        <a data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample" onclick="showSearchStock()">
-                            <span id="spanEditStock">Stock</span>
-                        </a>                           
-                    </div>
-                    <div class="col-md-1 text-left">
-                        <div class="col-xs-1  text-right" style="padding: 5px 0px 0px 0px;"><i id="ajaxLoadSearch"  class="fa fa-spinner fa-spin hidden"></i></div>
-                    </div>
-                    <div class="col-xs-1 text-right" style="width:60px;padding-right: 0px;margin-top: -10px">
+                    <div class="col-xs-1 text-right" style="width:65px;padding-right: 0px;margin-top: -10px">
                         <label class="control-label">Status<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-1 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 180px;margin-top: -10px">
@@ -293,6 +254,45 @@
                                 </c:forEach>
                             </select>   
                         </div> 
+                    </div>                                     
+                </div><!--End row 2-->
+                <div class="col-xs-12 " style="padding-left: 0px;">
+                    <div class="col-xs-1 text-right" style="margin-top: -10px; width: 100px;">
+                        <label class="control-label" for="">Search</lable>                           
+                    </div>           
+                    <div class="col-md-1 text-left" style="margin-top: -5px; width: 50px; padding-left: 0px;">
+                        <a data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample" onclick="showSearchRefNo()">
+                            <span id="spanEditRefNo">Ref</span>
+                        </a>                           
+                    </div>
+                    <div class="col-md-1 text-left" style="margin-top: -5px; width: 50px;">
+                        <a data-toggle="collapse" href="#" aria-expanded="false" aria-controls="collapseExample" onclick="showSearchStock()">
+                            <span id="spanEditStock">Stock</span>
+                        </a>                           
+                    </div>
+                    <div class="col-md-1 text-left">
+                        <div class="col-xs-1  text-right" style="padding: 5px 0px 0px 0px;"><i id="ajaxLoadSearch"  class="fa fa-spinner fa-spin hidden"></i></div>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width:480px;padding-left:0px;padding-right:0px;margin-top: -10px;">
+                        <label class="control-label">Account<font style="color: red">*</font></lable>
+                    </div>
+                    <div class="col-md-2 text-left" style="width: 200px; padding-top : 5px;padding-left:0px;padding-right:0px;margin-top: -10px;">
+                        <c:set var="account1" value=""/>
+                        <c:set var="account2" value=""/>
+                        <c:choose>
+                            <c:when test="${paymentOutbound.account == 1}">
+                                <c:set var="account1" value="checked"/>
+                            </c:when>
+                            <c:when test="${paymentOutbound.account == 2}">
+                                <c:set var="account2" value="checked"/>
+                            </c:when>
+                        </c:choose>
+                        <div class="col-sm-6 text-left " style="padding-left: 0px; padding-right: 0px;">
+                            &nbsp;&nbsp;&nbsp;<input type="radio" id="account1" name="account" value="1" ${account1}/>&nbsp;account(1)
+                        </div>
+                        <div class="col-sm-6 text-left" style="padding-left: 0px; padding-right: 0px;">
+                            &nbsp;<input type="radio" id="account2" name="account" value="2" ${account2}/>&nbsp;temp
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-12 " id="searchRefNo1" style="padding-left: 0px;margin-top: -1px">
