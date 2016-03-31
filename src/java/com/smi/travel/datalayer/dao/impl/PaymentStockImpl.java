@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -135,8 +136,7 @@ public class PaymentStockImpl implements PaymentStockDao {
         Session session = this.sessionFactory.openSession();
         List<String> list = new LinkedList<String>();
         Date thisdate = new Date();
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("yyMM");
+        SimpleDateFormat df = new SimpleDateFormat("yyMM", Locale.US);
         Query query = session.createSQLQuery("SELECT RIGHT(pay_stock_no, 4) as payno  FROM payment_stock where pay_stock_no like :payno ORDER BY RIGHT(pay_stock_no, 4) desc");
         query.setParameter("payno", "%"+ df.format(thisdate) + "%");
 
