@@ -387,49 +387,52 @@ function CallAjaxSearchRef(param) {
 
 function searchStock() {
     hideTextAlertDiv();
-    var payStockNo = $("#payStockNo").val();
-    if (payStockNo === "") {
-        if (!$('#stockpanel').hasClass('has-feedback')) {
-            $('#stockpanel').addClass('has-feedback');
+    if($("#ajaxLoadSearch").hasClass("hidden")){
+        var payStockNo = $("#payStockNo").val();
+        if (payStockNo === "") {
+            if (!$('#stockpanel').hasClass('has-feedback')) {
+                $('#stockpanel').addClass('has-feedback');
+            }
+            $('#stockpanel').removeClass('has-success');
+            $('#stockpanel').addClass('has-error');
+            $('#StockTable > tbody  > tr').each(function() {
+                $(this).remove();
+            });
+            $('#searchStock2').addClass('hidden');
+        } else {
+            var countPaymentDetail = parseInt($("#countPaymentDetail").val());
+            var isNotDuplicate = true;
+            for(var i=1; i<=countPaymentDetail; i++){
+                var countTemp = document.getElementById("count" + i);       
+                if (countTemp !== null) {
+                    var payStock = $("#payStock"+i).val();
+                    if(payStock === payStockNo){
+                        isNotDuplicate = false;
+                        i = countPaymentDetail+1;
+                    }
+                }  
+            }
+
+            if(isNotDuplicate){
+                var servletName = 'PaymentOutboundServlet';
+                var servicesName = 'AJAXBean';
+                var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&payStockNo=' + payStockNo +
+                        '&type=' + 'searchStock';
+                CallAjaxSearchStock(param);
+
+            }else{
+    //            $("#textAlertSearchDuplicateStock").show();
+            }    
         }
-        $('#stockpanel').removeClass('has-success');
-        $('#stockpanel').addClass('has-error');
-        $('#StockTable > tbody  > tr').each(function() {
-            $(this).remove();
-        });
-        $('#searchStock2').addClass('hidden');
-    } else {
-        var countPaymentDetail = parseInt($("#countPaymentDetail").val());
-        var isNotDuplicate = true;
-        for(var i=1; i<=countPaymentDetail; i++){
-            var countTemp = document.getElementById("count" + i);       
-            if (countTemp !== null) {
-                var payStock = $("#payStock"+i).val();
-                if(payStock === payStockNo){
-                    isNotDuplicate = false;
-                    i = countPaymentDetail+1;
-                }
-            }  
-        }
-        
-        if(isNotDuplicate){
-            var servletName = 'PaymentOutboundServlet';
-            var servicesName = 'AJAXBean';
-            var param = 'action=' + 'text' +
-                    '&servletName=' + servletName +
-                    '&servicesName=' + servicesName +
-                    '&payStockNo=' + payStockNo +
-                    '&type=' + 'searchStock';
-            CallAjaxSearchStock(param);
-        
-        }else{
-//            $("#textAlertSearchDuplicateStock").show();
-        }    
-    }
+    }    
 }
 
 function CallAjaxSearchStock(param) {
     var url = 'AJAXServlet';
+    $("#ajaxLoadSearch").removeClass("hidden");
     hideTextAlertDiv();
     $(".clickable").remove();
     $(".pageno").remove();
