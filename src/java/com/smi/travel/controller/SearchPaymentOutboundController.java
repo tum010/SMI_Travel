@@ -37,16 +37,19 @@ public class SearchPaymentOutboundController extends SMITravelController {
         String invSupCode = request.getParameter("invSupCode");
         String invSupName = request.getParameter("invSupName");
         String refNo = request.getParameter("refNo");
+        String dueDateFrom = request.getParameter("dueDateFrom");
+        String dueDateTo = request.getParameter("dueDateTo");
+        String payNo = request.getParameter("payNo");
         
         if("search".equalsIgnoreCase(action)){
-            List<PaymentOutboundView> paymentOutboundViewList = paymentOutboundService.searchPaymentOutboundByFilter(fromDate,toDate,status,invSupCode,invSupName,refNo);
+            List<PaymentOutboundView> paymentOutboundViewList = paymentOutboundService.searchPaymentOutboundByFilter(fromDate,toDate,status,invSupCode,invSupName,refNo,dueDateFrom,dueDateTo,payNo);
             request.setAttribute(PAYMENTOUTBOUNDVIEWLIST, paymentOutboundViewList);
         
         }else if("deletePaymentOutbound".equalsIgnoreCase(action)){
             String paymentId = request.getParameter("paymentId");
             String result = paymentOutboundService.deletePaymentOutbound(paymentId);
             request.setAttribute(RESULT, result);
-            List<PaymentOutboundView> paymentOutboundViewList = paymentOutboundService.searchPaymentOutboundByFilter(fromDate,toDate,status,invSupCode,invSupName,refNo);
+            List<PaymentOutboundView> paymentOutboundViewList = paymentOutboundService.searchPaymentOutboundByFilter(fromDate,toDate,status,invSupCode,invSupName,refNo,dueDateFrom,dueDateTo,payNo);
             request.setAttribute(PAYMENTOUTBOUNDVIEWLIST, paymentOutboundViewList);
         }
         
@@ -56,6 +59,9 @@ public class SearchPaymentOutboundController extends SMITravelController {
         request.setAttribute("invSupCode", invSupCode);
         request.setAttribute("invSupName", invSupName);
         request.setAttribute("refNo", refNo);
+        request.setAttribute("dueDateFrom", dueDateFrom);
+        request.setAttribute("dueDateTo", dueDateTo);
+        request.setAttribute("payNo", payNo);
         
         return SearchPaymentOutbound;
     }

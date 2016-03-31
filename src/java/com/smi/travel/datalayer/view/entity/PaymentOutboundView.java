@@ -25,6 +25,8 @@ public class PaymentOutboundView {
     private String diff;
     private String curamount;
     private String cursale;
+    private String paystockno;
+    private String paystockid;
 
     public String getPaymentid() {
         return paymentid;
@@ -136,5 +138,21 @@ public class PaymentOutboundView {
 
     public void setCursale(String cursale) {
         this.cursale = cursale;
+    }
+
+    public String getPaystockno() {
+        return paystockno;
+    }
+
+    public void setPaystockno(String paystockno) {
+        this.paystockno = paystockno;
+    }
+
+    public String getPaystockid() {
+        return paystockid;
+    }
+
+    public void setPaystockid(String paystockid) {
+        this.paystockid = paystockid;
     }
 }

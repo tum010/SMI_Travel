@@ -290,10 +290,10 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
 
     @Override
     public List<PaymentStock> getPaymentStock(String payStockNo) {
-        String query = "from PaymentStock p where p.payStockNo = :payStockNo ";       
+        String query = "from PaymentStock p where p.payStockNo like :payStockNo ";       
         Session session = this.sessionFactory.openSession();
         Query HqlQuery = session.createQuery(query);
-        HqlQuery.setParameter("payStockNo", payStockNo);
+        HqlQuery.setParameter("payStockNo", "%"+payStockNo+"%");
 //        HqlQuery.setMaxResults(MAX_ROW);
         List<PaymentStock> paymentStockList = HqlQuery.list();
         if (paymentStockList.isEmpty()) {
@@ -307,7 +307,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
     }
 
     @Override
-    public List<PaymentOutboundView> searchPaymentOutboundByFilter(String fromDate, String toDate, String status, String invSupCode, String invSupName, String refNo) {
+    public List<PaymentOutboundView> searchPaymentOutboundByFilter(String fromDate, String toDate, String status, String invSupCode, String invSupName, String refNo, String dueDateFrom, String dueDateTo, String payNo) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List<PaymentOutboundView> paymentOutboundViewList = new ArrayList<PaymentOutboundView>();
@@ -333,6 +333,21 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             query += " p.refno LIKE '%" + refNo + "%' ";
             haveCondition = true;
         }
+        if(!"".equalsIgnoreCase(dueDateFrom) && dueDateFrom != null){
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " p.duepaymentdate >= '" + dueDateFrom + "' ";
+            haveCondition = true;
+        }
+        if(!"".equalsIgnoreCase(dueDateTo) && dueDateTo != null){
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " p.duepaymentdate <= '" + dueDateTo + "' ";
+            haveCondition = true;
+        }
+        if(!"".equalsIgnoreCase(payNo) && payNo != null){
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " p.payno LIKE '%" + payNo + "%' ";
+            haveCondition = true;
+        }
         
         List<Object[]> QueryList =  session.createSQLQuery(query)
                 .addScalar("paymentid",Hibernate.STRING)
@@ -348,7 +363,9 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 .addScalar("status",Hibernate.STRING)
                 .addScalar("diff",Hibernate.STRING)
                 .addScalar("curamount",Hibernate.STRING) 
-                .addScalar("cursale",Hibernate.STRING) 
+                .addScalar("cursale",Hibernate.STRING)
+                .addScalar("paystockno", Hibernate.STRING)
+                .addScalar("paystockid", Hibernate.STRING)
                 .list();
 
         for (Object[] B : QueryList) {
@@ -366,7 +383,9 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             paymentOutboundView.setStatus(B[10] != null ? util.ConvertString(B[10]) : "");
             paymentOutboundView.setDiff(B[11] != null ? util.ConvertString(B[11]) : "");
             paymentOutboundView.setCuramount(B[12] != null ? util.ConvertString(B[12]) : ""); 
-            paymentOutboundView.setCursale(B[13] != null ? util.ConvertString(B[13]) : ""); 
+            paymentOutboundView.setCursale(B[13] != null ? util.ConvertString(B[13]) : "");
+            paymentOutboundView.setPaystockno(B[14] != null ? util.ConvertString(B[14]) : "");
+            paymentOutboundView.setPaystockid(B[15] != null ? util.ConvertString(B[15]) : ""); 
             paymentOutboundViewList.add(paymentOutboundView);
         }
         return paymentOutboundViewList;

@@ -53,8 +53,8 @@ public class PaymentOutboundService {
         return paymentOutboundDao.deletePaymentOutboundDetail(paymentOutboundDetailId);
     }
 
-    public List<PaymentOutboundView> searchPaymentOutboundByFilter(String fromDate, String toDate, String status, String invSupCode, String invSupName, String refNo) {
-        return paymentOutboundDao.searchPaymentOutboundByFilter(fromDate, toDate, status, invSupCode, invSupName, refNo);
+    public List<PaymentOutboundView> searchPaymentOutboundByFilter(String fromDate, String toDate, String status, String invSupCode, String invSupName, String refNo, String dueDateFrom, String dueDateTo, String payNo) {
+        return paymentOutboundDao.searchPaymentOutboundByFilter(fromDate, toDate, status, invSupCode, invSupName, refNo, dueDateFrom, dueDateTo, payNo);
     }
 
     public String deletePaymentOutbound(String paymentId) {

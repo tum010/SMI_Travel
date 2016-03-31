@@ -44,9 +44,9 @@
             </div>
         </div>
         <hr/>
-        <div class="row" style="padding-left: 0px;margin-top:-5px;">
+        <div class="row" style="padding-left: 0px;">
             <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;">
-                <label class="control-label">From<font style="color: red;">*</font></lable>
+                <label class="control-label">Pay Date From<font style="color: red;">*</font></lable>
             </div>
             <div class="col-md-2 form-group text-left" >
                 <div class='input-group date fromDate' id="fromDateDiv">
@@ -64,9 +64,35 @@
                 </div>
             </div>
             <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;">
-                <label class="control-label">Status</lable>
+                <label class="control-label">Pay No</lable>
             </div>
             <div class="col-md-2 form-group text-left" >
+                <input name="payNo" id="payNo" type="text" class="form-control" value="${requestScope['payNo']}" style="text-transform: uppercase;"/>
+            </div>            
+        </div><!-- End Row 1-->
+        <div class="row" style="padding-left: 0px;">
+            <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;margin-top:-10px;">
+                <label class="control-label">Due Date From<font style="color: red;"></font></lable>
+            </div>
+            <div class="col-md-2 form-group text-left" style="margin-top:-10px;">
+                <div class='input-group date duedatefrom' id="dueDateFromDiv">
+                    <input name="dueDateFrom" id="dueDateFrom" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dueDateFrom']}" />
+                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+            <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;margin-top:-10px;">
+                <label class="control-label">To<font style="color: red;"></font></lable>
+            </div>
+            <div class="col-md-2 form-group text-left" style="margin-top:-10px;">
+                <div class='input-group date duedateto' id="dueDateToDiv">
+                    <input name="dueDateTo" id="dueDateTo" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dueDateTo']}" />
+                    <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                </div>
+            </div>
+            <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;margin-top:-10px;">
+                <label class="control-label">Status</lable>
+            </div>
+            <div class="col-md-2 form-group text-left" style="margin-top:-10px;">
                 <select class="form-control" name="status" id="status">
                     <option  value="" >---------</option>
                     <c:forEach var="status" items="${statusList}">                                       
@@ -77,9 +103,8 @@
                         <option  value="${status.id}" ${select}>${status.name}</option>
                     </c:forEach>
                 </select>   
-            </div>
-            
-        </div><!-- End Row 1-->
+            </div>            
+        </div><!-- End Row 2-->
         <div class="row" style="padding-left: 0px;">
             <div class="col-xs-1 text-right" style="width:150px;padding-right: 0px;padding-left: 0px;margin-top:-10px;">
                 <label class="control-label">Invoice Sup</lable>
@@ -102,7 +127,7 @@
             <div class="col-md-2 form-group text-left" style="margin-top:-10px;">
                 <input name="refNo" id="refNo" type="text" class="form-control" value="${requestScope['refNo']}" />
             </div>
-        </div>
+        </div><!-- End Row 3-->
         <div class="row" style="padding-left: 775px;margin-top:-10px;">
             <div class="col-xs-1 text-left" style="width: 100px;margin-top:-10px;">
                 <button type="submit"  id="btnSearch"  name="btnSearch" onclick="" class="btn btn-primary btn-primary ">
@@ -119,17 +144,17 @@
             <table class="display" id="searchPaymentTable" style="table-layout: fixed;">
                 <thead class="datatable-header">
                     <tr>
-                        <th style="width: 8%">Pay No.</th>
+                        <th style="width: 9%">Pay No.</th>
                         <th style="width: 9%">Pay Date</th>
                         <th style="width: 8%">Ref No.</th>
                         <th style="width: 17%">Invoice Sup</th>
                         <th style="width: 10%">Invoice No.</th>
                         <th style="width: 11%">Amount</th>
-                        <th style="width: 6%">Cur</th>
+                        <th style="width: 5%">Cur</th>
                         <th style="width: 11%">Sale</th>
-                        <th style="width: 6%">Cur</th>
+                        <th style="width: 5%">Cur</th>
                         <th style="width: 7%">Status</th>
-                        <th style="width: 7%">Action</th>
+                        <th style="width: 8%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -156,11 +181,23 @@
                             ${statusName}
                         </td>
                         <td class="text-center">
+                            <c:choose>
+                                <c:when test="${paymentOutboundView.paystockno != ''}">
+                                    <a href="#" onclick="editPaymentStock('${paymentOutboundView.paystockno}','${paymentOutboundView.paystockid}');"  data-toggle="modal" data-target="" id="linkPayment" name="linkPayment">
+                                        <span class="glyphicon glyphicon-th-list " ></span>
+                                    </a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="#" data-toggle="modal" data-target="" id="linkPayment" name="linkPayment">
+                                        <span class="glyphicon glyphicon-th-list " style="color: gray;"></span>
+                                    </a>
+                                </c:otherwise>
+                            </c:choose>                           
                             <a href="#" onclick="editPaymentOutbound('${paymentOutboundView.paymentid}','${paymentOutboundView.payno}')"  data-toggle="modal" data-target="" id="editPayment" name="editPayment">
-                                <span  class="glyphicon glyphicon-edit editicon" onclick=""></span>
+                                <span class="glyphicon glyphicon-edit editicon"></span>
                             </a>    
                             <a href="#" onclick="deletePaymentOutbound('${paymentOutboundView.paymentid}','${paymentOutboundView.payno}')"  data-toggle="modal" data-target="" id="deletePayment" name="deletePayment">
-                                <span id="" class="glyphicon glyphicon-remove deleteicon"  onclick="" data-toggle="modal"></span>
+                                <span class="glyphicon glyphicon-remove deleteicon" ></span>
                             </a>
                         </td>
                     </tr>
@@ -232,6 +269,33 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
+<!--Payment Stock Modal-->
+<div class="modal fade " id="paymentStockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Pay Stock</h4>
+            </div>
+            <div class="modal-body">
+                <table class="display" id="paymentStockTable" style="table-layout: fixed;">
+                    <thead class="datatable-header">                      
+                        <tr>
+                            <th style="width: 70%;">Pay Stock </th>
+                            <th style="width: 30%;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+    
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">              
+                <button type="button" class="btn btn-default" data-dismiss="modal" >Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->      
 <script type="text/javascript">
 $(document).ready(function () {
     $('.date').datetimepicker();
@@ -499,5 +563,37 @@ $(document).ready(function () {
         $("#action").val("deletePaymentOutbound");
         document.getElementById("searchPaymentOutboundForm").submit();
         
+    }
+    
+    function editPaymentStock(payStockNo,payStockId){
+        $('#paymentStockTable > tbody  > tr').each(function() {
+            $(this).remove();
+        });
+        var payStockNoList = payStockNo.split(",");
+        var payStockIdList = payStockId.split(",");
+        var table = '';
+//        alert("pay no : "+payStockNoList[0]+" , "+payStockNoList[1]);
+//        alert("pay id : "+payStockIdList[0]+" , "+payStockIdList[1]);
+        if(payStockNoList.length > 1){         
+            for(var i=0; i<payStockNoList.length; i++){
+                var payNo = payStockNoList[i];
+                if(payNo !== ''){
+                    table += '<tr >' +
+                                '<td>'+payNo+'</td>' +          
+                                '<td class="text-center">' +
+                                    '<a href="PaymentStock.smi?action=searchPayNo&payNo=' + payNo + '" target="_blank">' +
+                                        '<span class="glyphicon glyphicon-th-list " ></span>' +
+                                    '</a>' +
+                                '</td>' +
+                            '</tr>';
+                }            
+            }
+
+            $("#paymentStockTable tbody").append(table);
+            $("#paymentStockModal").modal("show");
+        
+        }else{
+            window.open('PaymentStock.smi?action=searchPayNo&payNo='+payStockNoList[0]);
+        }
     }
 </script>
