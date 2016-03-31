@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PaymentOutboundSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="50a6b64f-0918-4925-9fda-7e1fdc5afe86">
-	<property name="ireport.zoom" value="0.909090909090928"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.6105100000000363"/>
+	<property name="ireport.x" value="533"/>
 	<property name="ireport.y" value="0"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
@@ -20,6 +20,26 @@
 	<field name="export" class="java.lang.String"/>
 	<field name="amountcur" class="java.lang.String"/>
 	<field name="salecur" class="java.lang.String"/>
+	<variable name="totalamtjpy" class="java.math.BigDecimal" resetType="Group" resetGroup="InvoiceSup" calculation="Sum">
+		<variableExpression><![CDATA[(($F{amount}) && $F{amount}.length() > 0 && "JPY".equals($F{amountcur})) ? new BigDecimal($F{amount}) : new BigDecimal("0")
+]]></variableExpression>
+	</variable>
+	<variable name="totalamtthb" class="java.math.BigDecimal" resetType="Group" resetGroup="InvoiceSup" calculation="Sum">
+		<variableExpression><![CDATA[(($F{amount}) && $F{amount}.length() > 0 && "THB".equals($F{amountcur})) ?  new BigDecimal($F{amount}) : new BigDecimal("0") ]]></variableExpression>
+	</variable>
+	<variable name="totalamtother" class="java.math.BigDecimal" resetType="Group" resetGroup="InvoiceSup" calculation="Sum">
+		<variableExpression><![CDATA[(($F{amount}) && $F{amount}.length() > 0 && !"JPY".equals($F{amountcur}) && !"THB".equals($F{amountcur})) ? new BigDecimal($F{amount}) : new BigDecimal("0")]]></variableExpression>
+	</variable>
+	<variable name="totalsalejpy" class="java.math.BigDecimal" resetType="Group" resetGroup="InvoiceSup" calculation="Sum">
+		<variableExpression><![CDATA[(($F{sale}) && $F{sale}.length() > 0 && "JPY".equals($F{salecur})) ? new BigDecimal($F{sale}) : new BigDecimal("0")]]></variableExpression>
+	</variable>
+	<variable name="totalsalethb" class="java.math.BigDecimal" resetType="Group" resetGroup="InvoiceSup" calculation="Sum">
+		<variableExpression><![CDATA[(($F{sale}) && $F{sale}.length() > 0 && "THB".equals($F{salecur})) ? new BigDecimal($F{sale}) : new BigDecimal("0")
+]]></variableExpression>
+	</variable>
+	<variable name="totalsaleother" class="java.math.BigDecimal" resetType="Group" resetGroup="InvoiceSup" calculation="Sum">
+		<variableExpression><![CDATA[(($F{sale}) && $F{sale}.length() > 0 && !"JPY".equals($F{salecur}) && !"THB".equals($F{salecur})) ? new BigDecimal($F{sale}) : new BigDecimal("0")]]></variableExpression>
+	</variable>
 	<group name="InvoiceSup" isReprintHeaderOnEachPage="true">
 		<groupExpression><![CDATA[$F{invoicesup}]]></groupExpression>
 		<groupHeader>
@@ -227,6 +247,108 @@
 				</staticText>
 			</band>
 		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<staticText>
+					<reportElement x="299" y="4" width="60" height="15" uuid="c985fe57-bbbc-43e8-b53e-ec393ad36d24"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Amount : ]]></text>
+				</staticText>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement x="396" y="4" width="90" height="15" uuid="4fc83530-ad0c-426e-b328-8ddeb015f469"/>
+					<textElement textAlignment="Right">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalamtjpy}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="299" y="19" width="60" height="15" uuid="bd8a7623-e686-4fca-b1e2-0ba0ba7ef050"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Total Sale : ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="374" y="4" width="23" height="15" uuid="b25ab76f-d76c-4022-81ac-d92fb2201ee9"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[JPY]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="374" y="19" width="23" height="15" uuid="01ffcbf7-79d9-4de9-b136-8361772b2ac5"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[JPY]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="507" y="19" width="23" height="15" uuid="23ec010a-3383-4597-9b0a-42bdc13c05ca"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[THB]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="507" y="4" width="23" height="15" uuid="097ac312-8e05-4a6a-bd46-9150e5faf88c"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[THB]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="639" y="19" width="30" height="15" uuid="f440b069-1a49-483d-961b-e5c1f674c9ce"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[OTHER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="639" y="4" width="30" height="15" uuid="711f9628-26d2-4e2c-a2b8-20d44f0900d3"/>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[OTHER]]></text>
+				</staticText>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement x="396" y="19" width="90" height="15" uuid="86cfa188-4340-431f-9b97-2c6f1e906933"/>
+					<textElement textAlignment="Right">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalsalejpy}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement x="529" y="4" width="90" height="15" uuid="530056e5-3cb1-4954-8d0f-eb9b5e96610a"/>
+					<textElement textAlignment="Right">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalamtthb}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement x="529" y="19" width="90" height="15" uuid="d0cb5957-0790-4ac3-b9a1-3af256e947c0"/>
+					<textElement textAlignment="Right">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalsalethb}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement x="668" y="19" width="90" height="15" uuid="9cd8fdac-695e-4798-a87f-bdb4233154d6"/>
+					<textElement textAlignment="Right">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalsaleother}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00" isBlankWhenNull="false">
+					<reportElement x="668" y="4" width="90" height="15" uuid="91dd0b17-c17a-445f-a725-1aa0156d7a6c"/>
+					<textElement textAlignment="Right">
+						<font fontName="TH SarabunPSK" size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{totalamtother}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
 	</group>
 	<background>
 		<band splitType="Stretch"/>
