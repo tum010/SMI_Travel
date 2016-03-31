@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OverdueSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9918ccf4-38e8-43e9-9556-9aa27a1349a1">
-	<property name="ireport.zoom" value="3.1384283767210985"/>
-	<property name="ireport.x" value="621"/>
-	<property name="ireport.y" value="360"/>
+	<property name="ireport.zoom" value="1.9487171000000636"/>
+	<property name="ireport.x" value="32"/>
+	<property name="ireport.y" value="66"/>
 	<field name="clientname_page" class="java.lang.String"/>
 	<field name="depart_page" class="java.lang.String"/>
 	<field name="from_page" class="java.lang.String"/>
@@ -37,6 +37,18 @@
 		<variableExpression><![CDATA[($F{usd} != null && !"null".equals($F{usd}) && $F{usd}.length() > 0) ? new BigDecimal($F{usd}) : new BigDecimal("0")]]></variableExpression>
 	</variable>
 	<variable name="totalrecamt" class="java.math.BigDecimal" resetType="Group" resetGroup="AgentOrOwner" calculation="Sum">
+		<variableExpression><![CDATA[($F{recamt} != null && !"null".equals($F{recamt}) && $F{recamt}.length() > 0) ? new BigDecimal($F{recamt}) : new BigDecimal("0")]]></variableExpression>
+	</variable>
+	<variable name="totalallthb" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{bath} != null && !"null".equals($F{bath}) && $F{bath}.length() > 0) ? new BigDecimal($F{bath}) : new BigDecimal("0")]]></variableExpression>
+	</variable>
+	<variable name="totalalljpy" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{jpy} != null && !"null".equals($F{jpy}) && $F{jpy}.length() > 0) ? new BigDecimal($F{jpy}) : new BigDecimal("0")]]></variableExpression>
+	</variable>
+	<variable name="totalallusd" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{usd} != null && !"null".equals($F{usd}) && $F{usd}.length() > 0) ? new BigDecimal($F{usd}) : new BigDecimal("0")]]></variableExpression>
+	</variable>
+	<variable name="totalallrecamt" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[($F{recamt} != null && !"null".equals($F{recamt}) && $F{recamt}.length() > 0) ? new BigDecimal($F{recamt}) : new BigDecimal("0")]]></variableExpression>
 	</variable>
 	<group name="AgentOrOwner">
@@ -140,13 +152,6 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{totalthb}]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement x="0" y="4" width="182" height="15" uuid="d256a0d3-28c7-405a-93d0-c1baafd2f1ec"/>
-					<textElement textAlignment="Right" verticalAlignment="Top">
-						<font fontName="Tahoma" size="8" isBold="true"/>
-					</textElement>
-					<text><![CDATA[Total]]></text>
-				</staticText>
 				<textField pattern="#,##0.00">
 					<reportElement x="313" y="4" width="47" height="15" uuid="ff7555cf-e425-4a2f-a91b-43d74e358a25"/>
 					<textElement textAlignment="Right">
@@ -698,41 +703,97 @@
 			</line>
 		</band>
 	</detail>
-	<pageFooter>
-		<band height="48" splitType="Stretch">
+	<lastPageFooter>
+		<band height="64">
 			<textField>
-				<reportElement x="536" y="16" width="128" height="14" uuid="70c0c944-2e77-4256-85f9-ee18e38f0bcd"/>
+				<reportElement x="536" y="22" width="128" height="14" uuid="70c0c944-2e77-4256-85f9-ee18e38f0bcd"/>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{signname}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="677" y="30" width="125" height="1" uuid="dfa277a8-0815-40a5-9034-b4358fcc8326"/>
+				<reportElement x="677" y="36" width="125" height="1" uuid="dfa277a8-0815-40a5-9034-b4358fcc8326"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="533" y="30" width="131" height="1" uuid="fa9c75f8-e45a-48eb-850d-56f593905acb"/>
+				<reportElement x="533" y="36" width="131" height="1" uuid="fa9c75f8-e45a-48eb-850d-56f593905acb"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="533" y="29" width="131" height="19" uuid="8763fe72-a3d9-4e57-8e75-08cbe89c8d99"/>
+				<reportElement x="533" y="35" width="131" height="19" uuid="8763fe72-a3d9-4e57-8e75-08cbe89c8d99"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="10" isBold="true" isItalic="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Authorized Signature]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="677" y="29" width="123" height="19" uuid="ef1ed1f2-17b4-4a26-8639-69882f9b7362"/>
+				<reportElement x="677" y="35" width="123" height="19" uuid="ef1ed1f2-17b4-4a26-8639-69882f9b7362"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Tahoma" size="10" isBold="true" isItalic="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Owner Signature]]></text>
 			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement x="143" y="4" width="108" height="15" uuid="45701860-23e4-41e8-b0d1-6250b475f0d7"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalallthb}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement x="143" y="19" width="108" height="15" uuid="a6c941fc-c0b9-4379-8be5-98adcd5d1a61"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalalljpy}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement x="143" y="34" width="108" height="15" uuid="b2dc2219-ddd0-474d-aaa9-3f7c78603c0c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalallusd}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="4" width="139" height="15" uuid="ea21aae5-bb82-48e3-ae2e-79a8bfa23ceb"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total THB]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="false">
+				<reportElement x="143" y="49" width="108" height="15" uuid="8b7c6d23-4821-48bc-8088-d1faa86dbbb7"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalallrecamt}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="19" width="139" height="15" uuid="57c45f4e-6cb1-4dd2-8335-332a61a01d35"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total JPY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="34" width="139" height="15" uuid="6a864e2a-7ece-4eac-9c94-c2af8f723f8b"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total USD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="49" width="139" height="15" uuid="e7f13392-e263-42cd-bd73-a221f9fd6ade"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font fontName="Tahoma" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Rec Amt]]></text>
+			</staticText>
 		</band>
-	</pageFooter>
+	</lastPageFooter>
 </jasperReport>

@@ -108,6 +108,14 @@ public class OverdueSummaryExcel extends AbstractExcelView{
                 styleAlignRightBorderAllDetailTable.setBorderBottom(styleAlignRightBorderAllDetailTable.BORDER_THIN);
                 styleAlignRightBorderAllDetailTable.setBorderRight(styleAlignRightBorderAllDetailTable.BORDER_THIN);
                 styleAlignRightBorderAllDetailTable.setBorderLeft(styleAlignRightBorderAllDetailTable.BORDER_THIN);        
+                        
+        HSSFCellStyle total = wb.createCellStyle();
+                total.setFont(excelFunction.getHeadDetailBoldFont(wb.createFont()));
+                total.setAlignment(total.ALIGN_CENTER);
+                total.setBorderTop(total.BORDER_THIN);
+                total.setBorderBottom(total.BORDER_THIN);
+                total.setBorderRight(total.BORDER_THIN);
+                total.setBorderLeft(total.BORDER_THIN);
                 
         // set Header Report (Row 1)
         HSSFCellStyle styleC11 = wb.createCellStyle();
@@ -207,7 +215,7 @@ public class OverdueSummaryExcel extends AbstractExcelView{
             sheet1.autoSizeColumn(2);
             cell63.setCellStyle(styleAlignRightBorderAllHeaderTable);
         HSSFCell cell64 = row6.createCell(3);
-            cell64.setCellValue("Bath");
+            cell64.setCellValue("Baht");
             cell64.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(3);
         HSSFCell cell65 = row6.createCell(4);
@@ -246,209 +254,306 @@ public class OverdueSummaryExcel extends AbstractExcelView{
             cell73.setCellValue("Overdue Status");
             cell73.setCellStyle(styleAlignRightBorderAllHeaderTable);
             sheet1.autoSizeColumn(12);
-            
-
-        
-        int count = 9 ;
-                //Detail of Table
-        if(listOver != null){
-            for (int r = 0 ; r < listOver.size(); r++) {
-//                System.out.println("Size " + (r)+" : " + listOver.get(r).getStaffname_page() );
-                
-                count = 9 + listOver.size();
-            }
-        }
         
         int start = 11;
         int end = 0;
         int num = 0;
+        int count = 9 ;
+        String temp = "";
+        String sumThbAll = "";
+        String sumJpyAll = "";
+        String sumUsdAll = "";
+        String sumRecAmtAll = "";
         if(listOver != null && listOver.size() != 0){
-            for (int r = 9 ; r < count; r++) {          
-                if(num <= (listOver.size()-1)){
-//                    if("Owner".equals(listOver.get(num-1).getGroup())){
-                        if(num != 0){ // Check not row first
-                            if("Owner".equals(listOver.get(num-1).getGroup())){
-                                String temp = listOver.get(num-1).getOwnername();
-                                if(temp.equals(listOver.get(num).getOwnername())){ // equal type	
-                                    if(num  != (listOver.size()-1)){ // check not last row
-                                        HSSFRow row = sheet1.createRow(r);
-                                        createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
-                                        sheet1.autoSizeColumn(13);
-                                        num++; 
-                                    }else{ // last row
-                                        end = r+1;					
-                                        HSSFRow row = sheet1.createRow(r);
-                                        createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
-                                        sheet1.autoSizeColumn(13);
-                                        num++;
-                                    }
-                                }else{ // not equal type
-                                    if(num  == (listOver.size()-1)){ // check  last row
-                                        end = r+1;					
-                                        HSSFRow row = sheet1.createRow(r);
-                                        createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
-                                        sheet1.autoSizeColumn(13);
-                                        num++;                           
-                                    }else{                                                                       
-                                        // Start New Row (Group)
-                                        HSSFRow row0 = sheet1.createRow(r);
-                                        HSSFCell cell = row0.createCell(0);
-                                            cell.setCellValue(listOver.get(num).getOwnername());
-                                            cell.setCellStyle(styleAlignRightBorderAllDetailTable);
-                                        
-                                        String add = "A"+(r+1)+":M"+(r+1)+"";
-                                        sheet1.addMergedRegion(CellRangeAddress.valueOf(add));
-                                        row0.createCell(12).setCellStyle(styleAlignRightBorderAllColor);
-                                        HSSFRow row122 = sheet1.createRow(r+1);
-                                        createCell(row122,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
-                                        sheet1.autoSizeColumn(13);
-                                        num++;				 
-                                        count = count + 1;
-                                        r = r + 1;
-                                    }
-                                }
-                            }else if("Agent".equals(listOver.get(num-1).getGroup())){
-                                String temp = listOver.get(num-1).getInvto();
-                                if(temp.equals(listOver.get(num).getInvto())){ // equal type	
-                                    if(num  != (listOver.size()-1)){ // check not last row
-                                        HSSFRow row = sheet1.createRow(r);
-                                        createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
-                                        sheet1.autoSizeColumn(13);
-                                        num++; 
-                                    }else{ // last row
-                                        end = r+1;					
-                                        HSSFRow row = sheet1.createRow(r);
-                                        createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
-                                        sheet1.autoSizeColumn(13);
-                                        num++;
-                                    }
-                                }else{ // not equal type
-                                    if(num  == (listOver.size()-1)){ // check  last row
-                                        end = r+1;					
-//                                        System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
-//                                        System.out.println("Start : " + start +  " End  : " + end);
-//                                        System.out.println("Last");
-                                        HSSFRow row = sheet1.createRow(r);
-                                        createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
-                                        sheet1.autoSizeColumn(13);
-                                        num++;                           
-                                    }else{                                                                       
-                                        // Start New Row (Group)
-                                        HSSFRow row0 = sheet1.createRow(r);
-                                        HSSFCell cell = row0.createCell(0);
-                                        cell.setCellValue(listOver.get(num).getInvto());
-                                        cell.setCellStyle(styleAlignRightBorderAllDetailTable);
-                                        String add = "A"+(r+1)+":M"+(r+1)+"";
-//                                        System.out.println("Add : " + add);
-                                        sheet1.addMergedRegion(CellRangeAddress.valueOf(add));
-                                        row0.createCell(12).setCellStyle(styleAlignRightBorderAllColor);
-                                        HSSFRow row122 = sheet1.createRow(r+1);
-                                        createCell(row122,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
-                                        sheet1.autoSizeColumn(13);
-                                        num++;				 
-                                        count = count + 1;
-                                        r = r + 1;
-                                    }
-                                }
+            for (int r = 0 ; r < listOver.size() ; r++) {
+                if(r != 0){
+                    if("Agent".equals(listOver.get(r).getGroup())){
+                        if(temp.equals(listOver.get(r).getInvto())){ // equal type	
+                            if(r  != (listOver.size()-1)){ // check not last row
+                                HSSFRow row = sheet1.createRow(r+count);
+                                createCell(row,listOver,r,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
+                                sheet1.autoSizeColumn(13);
+                            }else{
+                                HSSFRow row = sheet1.createRow(r+count);
+                                createCell(row,listOver,r,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
+                                sheet1.autoSizeColumn(13);
                             }
-                        }else{ // row first
-//                            System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
-                            HSSFRow row0 = sheet1.createRow(r);
-                            if("Owner".equals(listOver.get(num).getGroup())){  
+                        }else{ // not equal type
+                                // Start New Row (Group)
+                                String totalthb = "SUM(D" + start+":D"+(r+count)+")";
+                                String totaljpy = "SUM(E" + start+":E"+(r+count)+")";
+                                String totalusd = "SUM(F" + start+":F"+(r+count)+")";
+                                String totalrecamt = "SUM(H" + start+":H"+(r+count)+")";
+                                sumThbAll += ",D"+(count+r+1);
+                                sumJpyAll += ",E"+(count+r+1);
+                                sumUsdAll += ",F"+(count+r+1);
+                                sumRecAmtAll += ",H"+(count+r+1);
+                                start = count+r+3;
+                                HSSFRow row00 = sheet1.createRow(r+count);
+                                HSSFCell cell00 = row00.createCell(0);
+                                cell00.setCellValue("");
+                                cell00.setCellStyle(styleAlignRightBorderAllDetailTable);
+                                HSSFCell cell001 = row00.createCell(1);
+                                cell001.setCellStyle(styleAlignRightBorderAllDetailTable);
+                                HSSFCell cell002 = row00.createCell(2);
+                                cell002.setCellStyle(styleAlignRightBorderAllDetailTable);
+                                sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count+r+1)+":C"+(count+r+1)+""));
+                                HSSFCell cell003 = row00.createCell(3);
+                                cell003.setCellFormula(totalthb);
+                                cell003.setCellStyle(styleAlignRightBorderAllNumber);
+                                HSSFCell cell004 = row00.createCell(4);
+                                cell004.setCellFormula(totaljpy);
+                                cell004.setCellStyle(styleAlignRightBorderAllNumber);
+                                HSSFCell cell005 = row00.createCell(5);
+                                cell005.setCellFormula(totalusd);
+                                cell005.setCellStyle(styleAlignRightBorderAllNumber);
+                                HSSFCell cell006 = row00.createCell(6);
+                                cell006.setCellStyle(styleAlignRightBorderAllNumber);
+                                HSSFCell cell007 = row00.createCell(7);
+                                cell007.setCellFormula(totalrecamt);
+                                cell007.setCellStyle(styleAlignRightBorderAllNumber);
+                                for(int k = 8 ; k < 13 ;k++){
+                                    HSSFCell cell008 = row00.createCell(k);
+                                    cell008.setCellStyle(styleAlignRightBorderAllNumber);
+                                }
+                                sheet1.addMergedRegion(CellRangeAddress.valueOf("I"+(count+r+1)+":M"+(count+r+1)+""));
+                                HSSFRow row0 = sheet1.createRow(r+count+1);
                                 HSSFCell cell = row0.createCell(0);
-                                cell.setCellValue(listOver.get(num).getOwnername());  
+                                cell.setCellValue(listOver.get(r).getInvto());
                                 cell.setCellStyle(styleAlignRightBorderAllDetailTable);
-                            }else if("Agent".equals(listOver.get(num).getGroup())){
-                                HSSFCell cell = row0.createCell(0);
-                                cell.setCellValue(listOver.get(num).getInvto());
-                                cell.setCellStyle(styleAlignRightBorderAllDetailTable);
+                                String add = "A"+(r+count+2)+":M"+(r+count+2)+"";
+                                sheet1.addMergedRegion(CellRangeAddress.valueOf(add));
+                                row0.createCell(12).setCellStyle(styleAlignRightBorderAllColor);
+                                HSSFRow row122 = sheet1.createRow(r+count+2);
+                                createCell(row122,listOver,r,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
+                                sheet1.autoSizeColumn(13);
+                                count = count + 2;
+                        }
+                        temp = listOver.get(r).getInvto();
+                        if(r == (listOver.size()-1)){
+                            String totalthb = "SUM(D" + start+":D"+(count+r+1)+")";
+                            String totaljpy = "SUM(E" + start+":E"+(count+r+1)+")";
+                            String totalusd = "SUM(F" + start+":F"+(count+r+1)+")";
+                            String totalrecamt = "SUM(H" + start+":H"+(count+r+1)+")";
+                            sumThbAll += ",D"+(count+r+2);
+                            sumJpyAll += ",E"+(count+r+2);
+                            sumUsdAll += ",F"+(count+r+2);
+                            sumRecAmtAll += ",H"+(count+r+2);
+                            HSSFRow row00 = sheet1.createRow(count+r+1);
+                            HSSFCell cell00 = row00.createCell(0);
+                            cell00.setCellValue("");
+                            cell00.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            HSSFCell cell001 = row00.createCell(1);
+                            cell001.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            HSSFCell cell002 = row00.createCell(2);
+                            cell002.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count+r+2)+":C"+(count+r+2)+""));
+                            HSSFCell cell003 = row00.createCell(3);
+                            cell003.setCellFormula(totalthb);
+                            cell003.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cell004 = row00.createCell(4);
+                            cell004.setCellFormula(totaljpy);
+                            cell004.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cell005 = row00.createCell(5);
+                            cell005.setCellFormula(totalusd);
+                            cell005.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cell006 = row00.createCell(6);
+                            cell006.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cell007 = row00.createCell(7);
+                            cell007.setCellFormula(totalrecamt);
+                            cell007.setCellStyle(styleAlignRightBorderAllNumber);
+                            for(int k = 8 ; k < 13 ;k++){
+                                HSSFCell cell008 = row00.createCell(k);
+                                cell008.setCellStyle(styleAlignRightBorderAllNumber);
                             }
-                            
-                            String add = "A"+(r+1)+":M"+(r+1)+"";
-//                            System.out.println("Add : " + add);
+                            sheet1.addMergedRegion(CellRangeAddress.valueOf("I"+(count+r+2)+":M"+(count+r+2)+""));
+
+                            HSSFRow rowTotalAll = sheet1.createRow(count+r+2);
+                            HSSFCell cellTotal00 = rowTotalAll.createCell(0);
+                            cellTotal00.setCellValue("Total");
+                            cellTotal00.setCellStyle(total);
+                            HSSFCell cellTotal001 = rowTotalAll.createCell(1);
+                            cellTotal001.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            HSSFCell cellTotal002 = rowTotalAll.createCell(2);
+                            cellTotal002.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count+r+3)+":C"+(count+r+3)+""));
+                            HSSFCell cellTotal003 = rowTotalAll.createCell(3);
+                            cellTotal003.setCellFormula(" SUM("+sumThbAll.substring(1)+")");
+                            cellTotal003.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cellTotal004 = rowTotalAll.createCell(4);
+                            cellTotal004.setCellFormula(" SUM("+sumJpyAll.substring(1)+")");
+                            cellTotal004.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cellTotal005 = rowTotalAll.createCell(5);
+                            cellTotal005.setCellFormula(" SUM("+sumUsdAll.substring(1)+")");
+                            cellTotal005.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cellTotal006 = rowTotalAll.createCell(6);
+                            cellTotal006.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cellTotal007 = rowTotalAll.createCell(7);
+                            cellTotal007.setCellFormula(" SUM("+sumRecAmtAll.substring(1)+")");
+                            cellTotal007.setCellStyle(styleAlignRightBorderAllNumber);
+                            for(int k = 8 ; k < 13 ;k++){
+                                HSSFCell cellTotal008 = rowTotalAll.createCell(k);
+                                cellTotal008.setCellStyle(styleAlignRightBorderAllNumber);
+                            }
+                            sheet1.addMergedRegion(CellRangeAddress.valueOf("I"+(count+r+3)+":M"+(count+r+3)+""));
+                        }
+                    }else if("Owner".equals(listOver.get(r).getGroup())){
+                        if(temp.equals(listOver.get(r).getOwnername())){ // equal type	
+                            if(r  != (listOver.size()-1)){ // check not last row
+                                HSSFRow row = sheet1.createRow(r+count);
+                                createCell(row,listOver,r,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
+                                sheet1.autoSizeColumn(13);
+                            }else{
+                                HSSFRow row = sheet1.createRow(r+count);
+                                createCell(row,listOver,r,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
+                                sheet1.autoSizeColumn(13);
+                            }
+                        }else{ // not equal type
+                            // Start New Row (Group)
+                            String totalthb = "SUM(D" + start+":D"+(r+count)+")";
+                            String totaljpy = "SUM(E" + start+":E"+(r+count)+")";
+                            String totalusd = "SUM(F" + start+":F"+(r+count)+")";
+                            String totalrecamt = "SUM(H" + start+":H"+(r+count)+")";
+                            sumThbAll += ",D"+(count+r+1);
+                            sumJpyAll += ",E"+(count+r+1);
+                            sumUsdAll += ",F"+(count+r+1);
+                            sumRecAmtAll += ",H"+(count+r+1);
+                            start = count+r+3;
+                            HSSFRow row00 = sheet1.createRow(r+count);
+                            HSSFCell cell00 = row00.createCell(0);
+                            cell00.setCellValue("");
+                            cell00.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            HSSFCell cell001 = row00.createCell(1);
+                            cell001.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            HSSFCell cell002 = row00.createCell(2);
+                            cell002.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count+r+1)+":C"+(count+r+1)+""));
+                            HSSFCell cell003 = row00.createCell(3);
+                            cell003.setCellFormula(totalthb);
+                            cell003.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cell004 = row00.createCell(4);
+                            cell004.setCellFormula(totaljpy);
+                            cell004.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cell005 = row00.createCell(5);
+                            cell005.setCellFormula(totalusd);
+                            cell005.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cell006 = row00.createCell(6);
+                            cell006.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cell007 = row00.createCell(7);
+                            cell007.setCellFormula(totalrecamt);
+                            cell007.setCellStyle(styleAlignRightBorderAllNumber);
+                            for(int k = 8 ; k < 13 ;k++){
+                                HSSFCell cell008 = row00.createCell(k);
+                                cell008.setCellStyle(styleAlignRightBorderAllNumber);
+                            }
+                            sheet1.addMergedRegion(CellRangeAddress.valueOf("I"+(count+r+1)+":M"+(count+r+1)+""));
+                            HSSFRow row0 = sheet1.createRow(r+count+1);
+                            HSSFCell cell = row0.createCell(0);
+                            cell.setCellValue(listOver.get(r).getOwnername());
+                            cell.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            String add = "A"+(r+count+2)+":M"+(r+count+2)+"";
                             sheet1.addMergedRegion(CellRangeAddress.valueOf(add));
                             row0.createCell(12).setCellStyle(styleAlignRightBorderAllColor);
-                            HSSFRow row = sheet1.createRow(r+1);
-                            createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                        
+                            HSSFRow row122 = sheet1.createRow(r+count+2);
+                            createCell(row122,listOver,r,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
                             sheet1.autoSizeColumn(13);
-                            num = num + 1;
-                            count = count + 1;
-                            r = r + 1;
+                            count = count + 2;
                         }
-//                    }// Owner
-//                    else if ("Agent".equals(listOver.get(num-1).getInvto())){
-//                        if(num != 0){ // Check not row first
-//                            String temp = listOver.get(num-1).getInvto();
-//                            if(temp.equals(listOver.get(num).getInvto())){ // equal type	
-//                                System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
-//                                if(num  != (listOver.size()-1)){ // check not last row
-//                                    HSSFRow row = sheet1.createRow(r);
-//                                    createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
-//                                    sheet1.autoSizeColumn(13);
-//                                    num++; 
-//                                }else{ // last row
-//                                    end = r+1;					
-//                                    System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
-//                                    System.out.println("Start : " + start +  " End  : " + end);
-//                                    System.out.println("Last");
-//                                    HSSFRow row = sheet1.createRow(r);
-//                                    createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
-//                                    sheet1.autoSizeColumn(13);
-//                                    num++;
-//                                }
-//                            }else{ // not equal type
-//                                if(num  == (listOver.size()-1)){ // check  last row
-//                                    end = r+1;					
-//                                    System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
-//                                    System.out.println("Start : " + start +  " End  : " + end);
-//                                    System.out.println("Last");
-//                                    HSSFRow row = sheet1.createRow(r);
-//                                    createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                                                    
-//                                    sheet1.autoSizeColumn(13);
-//                                    num++;                           
-//                                }else{                                                                       
-//                                    // Start New Row (Group)
-//                                    HSSFRow row0 = sheet1.createRow(r);
-//                                    HSSFCell cell = row0.createCell(0);
-//                                        cell.setCellValue(listOver.get(num).getInvto());
-//                                    row0.createCell(12).setCellStyle(styleAlignRightBorderAll);
-//                                    String add = "A"+(r+1)+":M"+(r+1)+"";
-//                                    System.out.println("Add : " + add);
-//                                    sheet1.addMergedRegion(CellRangeAddress.valueOf(add));
-//                                    HSSFRow row122 = sheet1.createRow(r+1);
-//                                    createCell(row122,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);
-//                                    sheet1.autoSizeColumn(13);
-//                                    num++;				 
-//                                    count = count + 1;
-//                                    r = r + 1;
-//                                }
-//                            }
-//                        }else{ // row first
-//                            System.out.println("Num : " + num + " Last Row : " + (listOver.size()-1));
-//
-//                            HSSFRow row0 = sheet1.createRow(r);
-//                            HSSFCell cell = row0.createCell(0);
-//                                cell.setCellValue(listOver.get(num).getInvto());
-//                            row0.createCell(12).setCellStyle(styleAlignRightBorderAll);
-//                            String add = "A"+(r+1)+":M"+(r+1)+"";
-//                            System.out.println("Add : " + add);
-//                            sheet1.addMergedRegion(CellRangeAddress.valueOf(add));
-//
-//                            HSSFRow row = sheet1.createRow(r+1);
-//                            createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                        
-//                            sheet1.autoSizeColumn(13);
-//                            num = num + 1;
-//                            count = count + 1;
-//                            r = r + 1;
-//                        }
-//                    }                
+                        temp = listOver.get(r).getOwnername();
+                        if(r == (listOver.size()-1)){
+                            String totalthb = "SUM(D" + start+":D"+(count+r+1)+")";
+                            String totaljpy = "SUM(E" + start+":E"+(count+r+1)+")";
+                            String totalusd = "SUM(F" + start+":F"+(count+r+1)+")";
+                            String totalrecamt = "SUM(H" + start+":H"+(count+r+1)+")";
+                            sumThbAll += ",D"+(count+r+2);
+                            sumJpyAll += ",E"+(count+r+2);
+                            sumUsdAll += ",F"+(count+r+2);
+                            sumRecAmtAll += ",H"+(count+r+2);
+                            HSSFRow row00 = sheet1.createRow(count+r+1);
+                            HSSFCell cell00 = row00.createCell(0);
+                            cell00.setCellValue("");
+                            cell00.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            HSSFCell cell001 = row00.createCell(1);
+                            cell001.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            HSSFCell cell002 = row00.createCell(2);
+                            cell002.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count+r+2)+":C"+(count+r+2)+""));
+                            HSSFCell cell003 = row00.createCell(3);
+                            cell003.setCellFormula(totalthb);
+                            cell003.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cell004 = row00.createCell(4);
+                            cell004.setCellFormula(totaljpy);
+                            cell004.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cell005 = row00.createCell(5);
+                            cell005.setCellFormula(totalusd);
+                            cell005.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cell006 = row00.createCell(6);
+                            cell006.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cell007 = row00.createCell(7);
+                            cell007.setCellFormula(totalrecamt);
+                            cell007.setCellStyle(styleAlignRightBorderAllNumber);
+                            for(int k = 8 ; k < 13 ;k++){
+                                HSSFCell cell008 = row00.createCell(k);
+                                cell008.setCellStyle(styleAlignRightBorderAllNumber);
+                            }
+                            sheet1.addMergedRegion(CellRangeAddress.valueOf("I"+(count+r+2)+":M"+(count+r+2)+""));
+
+                            HSSFRow rowTotalAll = sheet1.createRow(count+r+2);
+                            HSSFCell cellTotal00 = rowTotalAll.createCell(0);
+                            cellTotal00.setCellValue("Total");
+                            cellTotal00.setCellStyle(total);
+                            HSSFCell cellTotal001 = rowTotalAll.createCell(1);
+                            cellTotal001.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            HSSFCell cellTotal002 = rowTotalAll.createCell(2);
+                            cellTotal002.setCellStyle(styleAlignRightBorderAllDetailTable);
+                            sheet1.addMergedRegion(CellRangeAddress.valueOf("A"+(count+r+3)+":C"+(count+r+3)+""));
+                            HSSFCell cellTotal003 = rowTotalAll.createCell(3);
+                            cellTotal003.setCellFormula(" SUM("+sumThbAll.substring(1)+")");
+                            cellTotal003.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cellTotal004 = rowTotalAll.createCell(4);
+                            cellTotal004.setCellFormula(" SUM("+sumJpyAll.substring(1)+")");
+                            cellTotal004.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cellTotal005 = rowTotalAll.createCell(5);
+                            cellTotal005.setCellFormula(" SUM("+sumUsdAll.substring(1)+")");
+                            cellTotal005.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cellTotal006 = rowTotalAll.createCell(6);
+                            cellTotal006.setCellStyle(styleAlignRightBorderAllNumber);
+                            HSSFCell cellTotal007 = rowTotalAll.createCell(7);
+                            cellTotal007.setCellFormula(" SUM("+sumRecAmtAll.substring(1)+")");
+                            cellTotal007.setCellStyle(styleAlignRightBorderAllNumber);
+                            for(int k = 8 ; k < 13 ;k++){
+                                HSSFCell cellTotal008 = rowTotalAll.createCell(k);
+                                cellTotal008.setCellStyle(styleAlignRightBorderAllNumber);
+                            }
+                            sheet1.addMergedRegion(CellRangeAddress.valueOf("I"+(count+r+3)+":M"+(count+r+3)+""));
+                        }
+                    }
+                }else{
+                    HSSFRow row0 = sheet1.createRow(count+r);
+                    if("Owner".equals(listOver.get(r).getGroup())){  
+                        HSSFCell cell = row0.createCell(0);
+                        cell.setCellValue(listOver.get(r).getOwnername());  
+                        cell.setCellStyle(styleAlignRightBorderAllDetailTable);
+                    }else if("Agent".equals(listOver.get(r).getGroup())){
+                        HSSFCell cell = row0.createCell(0);
+                        cell.setCellValue(listOver.get(r).getInvto());
+                        cell.setCellStyle(styleAlignRightBorderAllDetailTable);
+                    }
+                    String add = "A"+(count+r+1)+":M"+(count+r+1)+"";
+                    sheet1.addMergedRegion(CellRangeAddress.valueOf(add));
+                    row0.createCell(12).setCellStyle(styleAlignRightBorderAllColor);
+                    HSSFRow row = sheet1.createRow(count+r+1);
+                    createCell(row,listOver,num,styleAlignRightBorderAllNumber,styleAlignRightBorderAll);                        
+                    sheet1.autoSizeColumn(13);
+                    count = count + 1;
                 }
-                for(int i = 0 ; i < 30 ; i++){
-                    sheet1.autoSizeColumn(i);
-                }
+            }
+            for(int i = 0 ; i < 30 ; i++){
+                sheet1.autoSizeColumn(i);
             }
         }
     }
+    
     
     private void createCell(HSSFRow row,List<OverdueSummartExcel> listAgent,int num,HSSFCellStyle styleNumber,HSSFCellStyle styleDetail){
         UtilityExcelFunction excelFunction = new UtilityExcelFunction();
