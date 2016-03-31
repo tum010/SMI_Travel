@@ -1189,13 +1189,16 @@ public class AJAXBean extends AbstractBean implements
             String operationTable = map.get("operationTable").toString();
             String operationTableId = map.get("operationTableId").toString();
             String operationAction = map.get("operationAction").toString();
+            String operationUser = map.get("operationUser").toString();
             System.out.println("operatonTable : "+operationTable);
             System.out.println("operatonTableId : "+operationTableId);
-            System.out.println("action : "+operationAction);
+            System.out.println("operationAction : "+operationAction);
+            System.out.println("operationUser : "+operationUser);
             if("".equalsIgnoreCase(operationAction) && !"".equalsIgnoreCase(operationTable) && !"".equalsIgnoreCase(operationTableId)){
                 CheckDuplicateUser cdu = new CheckDuplicateUser();
                 cdu.setOperationTable(operationTable);
                 cdu.setTableId(operationTableId);
+                cdu.setOperationUser(operationUser);
                 int clearDuplicateUser = checkDuplicateUserDao.updateOperationNull(cdu);
                 result = (clearDuplicateUser == 1 ? "success" : "fail");
                 System.out.println("clearDuplicateUser : "+clearDuplicateUser);
