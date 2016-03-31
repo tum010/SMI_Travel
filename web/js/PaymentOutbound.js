@@ -431,7 +431,8 @@ function searchStock() {
 function CallAjaxSearchStock(param) {
     var url = 'AJAXServlet';
     hideTextAlertDiv();
-    $("#ajaxLoadSearch").removeClass("hidden");
+    $(".clickable").remove();
+    $(".pageno").remove();
     try {
         $.ajax({
             type: "POST",
@@ -468,6 +469,91 @@ function CallAjaxSearchStock(param) {
                                 }
                             }
                         }
+                        
+                        $('table.paginated').each(function() {
+                            var currentPage = 0;
+                            var numPerPage = 5;
+                            var $table = $(this);
+                            $table.bind('repaginate', function() {
+                                $table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+                            });
+                            $table.trigger('repaginate');
+                            var numRows = $table.find('tbody tr').length;
+                            var numPages = Math.ceil(numRows / numPerPage);
+                            var $pager = $('<div class="col-xs-12 text-right pageno" id="pageNo"><font style="color: #499DD5"></font>&nbsp;</div>');
+                            var $br = $('<div class="col-xs-12 pageno"><br></div>');
+
+                            for (var page = 0; page < numPages; page++) {
+                                var isShowPage = (page < 5 ? "" : "hidden");
+                                if(page === 0){
+                                    $('<font style="color: #499DD5" id="noFirst" onclick="changeColor(\'noFirst\',\'first\',\''+page+'\')"><span class="page-number glyphicon"></span></font>').text(" " + "First" + "  ").bind('click', {
+                                    newPage: page
+                                    }, function(event) {
+                                        currentPage = event.data['newPage'];
+                                        $table.trigger('repaginate');
+                                        $(this).addClass('active').siblings().removeClass('active');
+                                        $(this).css("color", "#AFEEEE");
+                                    }).appendTo($pager).addClass('clickable');                                      
+
+                                    if(numPages > 1){
+                                        for(var i=0; i<numPages; i++){
+                                            var isHidden = (i === 0 ? "" : "hidden");
+                                            $('<font style="color: #499DD5" id="noPrevious'+i+'" onclick="changeColor(\'noPrevious'+i+'\',\'previous\',\''+i+'\')" class="'+isHidden+'"><span class="page-number glyphicon"></span></font>').text(" " + "Previous" + "  ").bind('click', {
+                                            newPage: i
+                                            }, function(event) {
+                                                currentPage = event.data['newPage'];
+                                                $table.trigger('repaginate');
+                                                $(this).addClass('active').siblings().removeClass('active');
+                        //                        $(this).css("color", "#AFEEEE");
+                                            }).appendTo($pager).addClass('clickable');
+                                        }
+                                    }    
+                                }
+
+                                $('<font style="color: #499DD5" id="no' + page + '" onclick="changeColor(\'no'+page+'\',\'no\',\''+page+'\')" class="'+isShowPage+'"><span class="page-number glyphicon"></span></font>').text(" " + (page + 1) + "  ").bind('click', {
+                                    newPage: page
+                                }, function(event) {                  
+                                    currentPage = event.data['newPage'];
+                                    $table.trigger('repaginate');
+                                    $(this).addClass('active').siblings().removeClass('active');
+                                    $(this).css("color", "#AFEEEE");
+                                }).appendTo($pager).addClass('clickable');
+
+                                if(page === (numPages - 1)){
+                                    if(numPages > 1){
+                                        for(var i=0; i<numPages; i++){
+                                            var isHidden = (i === 1 ? "" : "hidden");
+                                            $('<font style="color: #499DD5" id="noNext'+i+'" onclick="changeColor(\'noNext'+i+'\',\'next\',\''+i+'\')" class="'+isHidden+'"><span class="page-number glyphicon"></span></font>').text(" " + "Next" + "  ").bind('click', {
+                                            newPage: i
+                                            }, function(event) {
+                                                currentPage = event.data['newPage'];
+                                                $table.trigger('repaginate');
+                                                $(this).addClass('active').siblings().removeClass('active');
+                        //                        $(this).css("color", "#AFEEEE");
+                                            }).appendTo($pager).addClass('clickable');
+                                        }
+                                    }    
+
+                                    $('<font style="color: #499DD5" id="noLast" onclick="changeColor(\'noLast\',\'last\',\''+page+'\')"><span class="page-number glyphicon"></span></font>').text(" " + "Last" + "  ").bind('click', {
+                                    newPage: page
+                                    }, function(event) {
+                                        currentPage = event.data['newPage'];
+                                        $table.trigger('repaginate');
+                                        $(this).addClass('active').siblings().removeClass('active');
+                                        $(this).css("color", "#AFEEEE");
+                                    }).appendTo($pager).addClass('clickable');                                     
+                                }
+                            }
+                            $br.insertAfter($table).addClass('active');
+                            $pager.insertAfter($table).find('span.page-number:first').addClass('active');
+                            document.getElementById("pageNo").style.cursor="pointer";
+                            document.getElementById("page").value = numPages-1;
+                            document.getElementById("currentPage").value = 0;
+                            $("#noFirst").css("color", "#AFEEEE");
+                            $("#no0").css("color", "#AFEEEE");
+                            $("#noPrevious0").css("color", "#AFEEEE");
+                        });
+                        
                         $('#searchStock2').removeClass('hidden');
 
                     }
@@ -494,6 +580,77 @@ function CallAjaxSearchStock(param) {
         });
         $('#searchStock2').addClass('hidden');
     }
+}
+
+function changeColor(id,type,page){
+    var pageNo = parseInt($("#page").val())+1;
+    for(var i=0; i<pageNo; i++){
+        $("#no"+i).css("color", "#499DD5");
+        $("#noPrevious"+i).css("color", "#499DD5");
+        $("#noNext"+i).css("color", "#499DD5");
+        $("#noFirst").css("color", "#499DD5");                
+        $("#noLast").css("color", "#499DD5");
+
+        $("#no"+i).addClass("hidden");
+        $("#noPrevious"+i).addClass("hidden");
+        $("#noNext"+i).addClass("hidden");
+    }
+
+    var pageShow = parseInt(page);
+    if(pageShow > 2 && pageShow < pageNo - 2){
+        for(var i=pageShow; i >= pageShow-2; i--){
+           $("#no"+i).removeClass("hidden"); 
+        }
+        for(var i=pageShow; i <= pageShow+2; i++){
+           $("#no"+i).removeClass("hidden");  
+        }
+
+    }else{
+        if(pageShow <= 2){
+            for(var i=0; i < 5; i++){
+                $("#no"+i).removeClass("hidden");  
+            } 
+
+        }else if(pageShow <= pageNo-1){
+            for(var i=pageNo-5; i < pageNo; i++){
+                $("#no"+i).removeClass("hidden");  
+            } 
+        }
+
+    }    
+
+    var previous = ((parseInt(page) === 0 ? 0 : parseInt(page)-1));
+    $("#noPrevious"+(previous)).removeClass("hidden");
+
+    var next = ((parseInt(page) === pageNo-1 ? pageNo-1 : parseInt(page)+1));
+    $("#noNext"+(next)).removeClass("hidden");
+
+    $("#no"+page).css("color", "#AFEEEE");
+
+    if(parseInt(page) === 0){
+        $("#noFirst").css("color", "#AFEEEE");
+        $("#noPrevious"+(previous)).css("color", "#AFEEEE");
+
+    }else if(parseInt(page) === pageNo-1){
+        $("#noLast").css("color", "#AFEEEE");
+        $("#noNext"+(next)).css("color", "#AFEEEE");
+    }
+
+    if(pageNo-1 === 0){
+        $("#noFirst").css("color", "#499DD5");                
+        $("#noLast").css("color", "#499DD5");
+
+        if(type === 'first'){
+            $("#noFirst").css("color", "#AFEEEE");
+
+        }else if(type === 'last'){
+            $("#noLast").css("color", "#AFEEEE");
+
+        }
+    }
+
+    $("#currentPage").val(page);
+
 }
 
 function addRowPaymentDetailTable(row) {
@@ -585,7 +742,7 @@ function addRowPaymentDetailTable(row) {
             '<b>Pay Stock</b>' +
             '</td>' +
             '<td colspan="3">' +
-            '<input type="text" name="payStock' + row + '" id="payStock' + row + '" class="form-control" value="" onfocusout="checkPayStock(\'' + row + '\')" maxlength="10"/>' +
+            '<input type="text" name="payStock' + row + '" id="payStock' + row + '" class="form-control" value="" onfocusout="checkPayStock(\'' + row + '\')" maxlength="10" disabled=""/>' +
             '</td>' +
             '<td colspan="1" align="right" bgcolor="#E8EAFF">' +
             '<b>Sale</b>' +
@@ -971,7 +1128,7 @@ function addRowPaymentDetailTableByRefNo(refNo, type, description, billType, cos
     addRowPaymentDetailTable(row);
 }
 
-function addStock(stockId, payStockNo, costAmount, saleAmount, curCost, curSale) {
+function addStock(stockId, payStockNo, costAmount, saleAmount, curCost, curSale, detail) {
     var countPaymentDetail = parseInt($("#countPaymentDetail").val());
     var count = 0;
     var checkAddDuplicate = false;
@@ -1035,11 +1192,11 @@ function addStock(stockId, payStockNo, costAmount, saleAmount, curCost, curSale)
     if(checkAddDuplicate){
         $('#textAlertDuplicateStock').show();
     }else{
-        addRowPaymentDetailTableByStock(stockId, payStockNo, parseFloat(costAmount), curCost, parseFloat(saleAmount), curSale, 'Others', count);
+        addRowPaymentDetailTableByStock(stockId, payStockNo, parseFloat(costAmount), curCost, parseFloat(saleAmount), curSale, 'Others', count, detail);
     }
 }
 
-function addRowPaymentDetailTableByStock(stockId, payStockNo, costAmount, curCost, saleAmount, curSale, type, row) {
+function addRowPaymentDetailTableByStock(stockId, payStockNo, costAmount, curCost, saleAmount, curSale, type, row, detail) {
     var color = (row % 2 === 0 ? "#F2F2F2" : "");
     if (!row) {
         row = 1;
@@ -1061,6 +1218,7 @@ function addRowPaymentDetailTableByStock(stockId, payStockNo, costAmount, curCos
     }).prop('selected', true);
     $("#payStockId" + row).val(stockId);
     $("#payStock" + row).val(payStockNo);
+    $("#description" + row).val(detail);   
 
     row = row + 1;
     addRowPaymentDetailTable(row);

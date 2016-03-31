@@ -57,6 +57,7 @@ import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
 import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.entity.PaymentStockItem;
 import com.smi.travel.datalayer.entity.Place;
+import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.ProductDetail;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.StockDetail;
@@ -3063,15 +3064,15 @@ public class AJAXBean extends AbstractBean implements
 
     private String buildPaymentStockHTML(List<PaymentStock> paymentStockList) {
         StringBuffer html = new StringBuffer();      
-        int no = 1;
-        String stockId = "";
-        String payStockNo = "";
-        BigDecimal costAmount = new BigDecimal(0);
-        BigDecimal saleAmount = new BigDecimal(0);
-        String curCost = "";       
-        String curSale = "";
+        int no = 1;       
                 
         for (int i = 0; i < paymentStockList.size(); i++) {
+            String stockId = "";
+            String payStockNo = "";
+            BigDecimal costAmount = new BigDecimal(0);
+            BigDecimal saleAmount = new BigDecimal(0);
+            String curCost = "";       
+            String curSale = "";           
             PaymentStock paymentStock = new PaymentStock();
             paymentStock = paymentStockList.get(i);
             stockId = paymentStock.getId();
@@ -3080,6 +3081,11 @@ public class AJAXBean extends AbstractBean implements
             saleAmount = (paymentStock.getSaleAmount() != null ? paymentStock.getSaleAmount() : new BigDecimal(0));
             curCost = paymentStock.getCurCost();
             curSale = paymentStock.getCurSale();
+            List<String> detailList = paymentOutboundDao.getProductByStock(paymentStock.getId());
+            String detail = "";
+            for(int j=0; j<detailList.size(); j++){
+                detail += (!"".equalsIgnoreCase(detail) ? "<br>" + detailList.get(j) : detailList.get(j));
+            }
                        
             String newrow = "";              
             newrow += "<tr>"
@@ -3089,7 +3095,7 @@ public class AJAXBean extends AbstractBean implements
                     + "<td class='text-center'>" + curCost + "</td>"
                     + "<td id='mSaleAmount" + no + "' class='text-right'>" + saleAmount + "</td>"
                     + "<td class='text-center'>" + curSale + "</td>"
-                    + "<td><center><a href=\"#/ref\"><span onclick=\"addStock('" + stockId + "','" + payStockNo + "','" + costAmount + "','" + saleAmount + "','" + curCost + "','" + curSale + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
+                    + "<td><center><a href=\"#/ref\"><span onclick=\"addStock('" + stockId + "','" + payStockNo + "','" + costAmount + "','" + saleAmount + "','" + curCost + "','" + curSale + "','" + detail + "')\" class=\"glyphicon glyphicon-plus\"></span></a></center></td>"
                     + "</tr>";
             html.append(newrow);
             no++;

@@ -345,7 +345,9 @@
                     </div>
                 </div> 
                 <div class="col-xs-12 hidden" id="searchStock2" style="padding: 0px 15px 0px 0px;">
-                    <table id="StockTable" class="display" cellspacing="0" width="100px">
+                    <input type="hidden" class="form-control" id="page" name="page" value="" />
+                    <input type="hidden" value="" id="currentPage" name="currentPage">
+                    <table id="StockTable" class="display paginated" cellspacing="0" width="100px">
                         <thead>
                             <tr class="datatable-header">
                                 <th style="width: 5%" >No</th>
@@ -519,7 +521,7 @@
                                             <b>Pay Stock</b>
                                         </td>
                                         <td colspan="3">
-                                            <input type="text" name="payStock${i.count}" id="payStock${i.count}" class="form-control" value="${detail.payStock}" onfocusout="checkPayStock('${i.count}')" maxlength="10"/>
+                                            <input type="text" name="payStock${i.count}" id="payStock${i.count}" class="form-control" value="${detail.payStock}" onfocusout="checkPayStock('${i.count}')" maxlength="10" disabled=""/>
                                         </td>
                                         <td colspan="1" align="right" bgcolor="#E8EAFF">
                                             <b>Sale</b>
