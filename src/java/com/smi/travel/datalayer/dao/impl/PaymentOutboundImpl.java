@@ -1524,11 +1524,11 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             por.setOrderno(String.valueOf(orderno));           
             orderno += 1;
             
-            if("1".equalsIgnoreCase(optionReport)){
+            if("2".equalsIgnoreCase(optionReport)){
                 por.setDescription(B[4] != null ? util.ConvertString(B[4]) : "");
                 data.add(por);    
                 
-            }else if("2".equalsIgnoreCase(optionReport) && option){
+            }else if("1".equalsIgnoreCase(optionReport) && option){
                 por.setDescription(B[12] != null ? util.ConvertString(B[12]) : "");
                 option = false;
                 data.add(por);    
