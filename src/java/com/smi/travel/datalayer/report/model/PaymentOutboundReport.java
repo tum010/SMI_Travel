@@ -128,4 +128,5 @@ public class PaymentOutboundReport {
     public void setSumpayment(String sumpayment) {
         this.sumpayment = sumpayment;
     }
+    
 }

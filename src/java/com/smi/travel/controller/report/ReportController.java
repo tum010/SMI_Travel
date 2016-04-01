@@ -433,7 +433,8 @@ public class ReportController extends SMITravelController {
             data = reportservice.getPaymentProfitLossVolumnReport(departFromDate, departToDate, invFromDate, invToDate, ownercode, city, producttypeid, invsupcode, payFromDate, payToDate, groupby);
         }else if(PaymentOutboundReport.equals(name)){
             String paymentOutboundId = request.getParameter("paymentOutboundId");
-            data = reportservice.getPaymentOutboundReport(paymentOutboundId);
+            String optionReport = request.getParameter("optionReport");
+            data = reportservice.getPaymentOutboundReport(paymentOutboundId,optionReport);
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);

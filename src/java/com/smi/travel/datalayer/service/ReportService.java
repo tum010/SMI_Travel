@@ -850,7 +850,7 @@ public class ReportService {
         return paymentOutboundDao.getPaymentProfitLossVolumnReport(departFromDate, departToDate, invFromDate, invToDate, ownercode, city, producttypeid, invsupcode, payFromDate, payToDate, groupBy);
     }
 
-    public List getPaymentOutboundReport(String paymentOutboundId) {
-        return paymentOutboundDao.getPaymentOutboundReport(paymentOutboundId);
+    public List getPaymentOutboundReport(String paymentOutboundId, String optionReport) {
+        return paymentOutboundDao.getPaymentOutboundReport(paymentOutboundId,optionReport);
     }
 }
