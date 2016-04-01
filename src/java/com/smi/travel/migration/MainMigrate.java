@@ -76,7 +76,7 @@ public class MainMigrate {
 //                getPackageTour(s, stmt);
 //                getProduct(s, stmt);
 //                getHotel(s, stmt);
-//                getCustomer(s, stmt);
+                getCustomer(s, stmt);
             } else {
                 System.out.println("Database Connect Failed.");
             }
@@ -98,7 +98,7 @@ public class MainMigrate {
         UtilityFunction util = new UtilityFunction();
         try {
             ResultSet rs = s.executeQuery(sqlCustomer);
-          
+            System.out.println(" Customer ");
             while (rs.next()) {       
                 String code = rs.getString("CODE") == null ? "" : rs.getString("CODE");
                 String initialname = rs.getString("INITIAL_NAME") == null ? "" : new String(rs.getString("INITIAL_NAME").getBytes("ISO8859_1"),"TIS-620");
@@ -106,39 +106,20 @@ public class MainMigrate {
                 String lastName = rs.getString("LAST_NAME") == null ? "" : new String(rs.getString("LAST_NAME").getBytes("ISO8859_1"),"TIS-620");
                 String nationality = rs.getString("NATIONALITY") == null ? "" : new String(rs.getString("NATIONALITY").getBytes("ISO8859_1"),"TIS-620");
                 String birthDate = rs.getString("BIRTH") == null ? "" : rs.getString("BIRTH");
-                String age = rs.getString("AGE") == null ? null : rs.getString("AGE");
-                String agemonth = rs.getString("AGE_MONTH") == null ? null : rs.getString("AGE_MONTH");
                 String sex = rs.getString("SEX") == null ? "" : new String(rs.getString("SEX").getBytes("ISO8859_1"),"TIS-620");
-                String formalAddress = rs.getString("FORMAL_ADDRESS") == null ? "" : new String(rs.getString("FORMAL_ADDRESS").getBytes("ISO8859_1"),"TIS-620");
-                String formalTel = rs.getString("FORMAL_TEL") == null ? "" : new String(rs.getString("FORMAL_TEL").getBytes("ISO8859_1"),"TIS-620");
-                String formalFax = rs.getString("FORMAL_FAX") == null ? "" : rs.getString("FORMAL_FAX");
-                String formalEmail = rs.getString("FORMAL_EMAIL") == null ? "" : rs.getString("FORMAL_EMAIL");
                 String postalAddress = rs.getString("POSTAL_ADDRESS") == null ? "" : new String(rs.getString("POSTAL_ADDRESS").getBytes("ISO8859_1"),"TIS-620");
                 String postalTel = rs.getString("POSTAL_TEL") == null ? "" : new String(rs.getString("POSTAL_TEL").getBytes("ISO8859_1"),"TIS-620");
-                String postalFax = rs.getString("POSTAL_FAX") == null ? "" : rs.getString("POSTAL_FAX");
                 String postalEmail = rs.getString("POSTAL_EMAIL") == null ? "" : rs.getString("POSTAL_EMAIL");
-                String idno = rs.getString("ID_NO") == null ? "" : rs.getString("ID_NO");
-                String height = rs.getString("HEIGHT") == null ? "" : rs.getString("HEIGHT");
-                String plaseBirth = rs.getString("PLASE_OF_BIRTH") == null ? "" : rs.getString("PLASE_OF_BIRTH");
-                String dateIssue = rs.getString("DATE_OF_ISSUE") == null ? "" : rs.getString("DATE_OF_ISSUE");
-                String passportType = rs.getString("PASSPORT_TYPE") == null ? "" : rs.getString("PASSPORT_TYPE");
-                String countryCode = rs.getString("COUNTRY_CODE") == null ? "" : rs.getString("COUNTRY_CODE");
                 String passportNo = rs.getString("PASSPORT_NO") == null ? "" : rs.getString("PASSPORT_NO");
-                String adAccept = rs.getString("AD_ACCEPT") == null ? "" : rs.getString("AD_ACCEPT");
                 String warning = rs.getString("WARNING") == null ? "" : rs.getString("WARNING");
-                String status = rs.getString("STATUS") == null ? "" : rs.getString("STATUS");
-                String customerType = rs.getString("CUSTOMER_TYPE") == null ? "" : rs.getString("CUSTOMER_TYPE");
                 String citizenNo = rs.getString("CITIZEN_NO") == null ? "" : rs.getString("CITIZEN_NO");
-                String postalCode = rs.getString("POSTAL_CODE") == null ? "" : rs.getString("POSTAL_CODE");
                 String mobileNo = rs.getString("MOBILE_NO") == null ? "" : rs.getString("MOBILE_NO");
-                String webmemberNo = rs.getString("WEBMEMBER_NO") == null ? "" : rs.getString("WEBMEMBER_NO");
-                String wendywebNo = rs.getString("WENDYWEB_NO") == null ? "" : rs.getString("WENDYWEB_NO");
                 String firstNameJapan = rs.getString("FIRST_NAME_JAPAN") == null ? "" : new String(rs.getString("FIRST_NAME_JAPAN").getBytes("ISO8859_1"),"TIS-620");
                 String lastNameJapan= rs.getString("LAST_NAME_JAPAN") == null ? "" : new String(rs.getString("LAST_NAME_JAPAN").getBytes("ISO8859_1"),"TIS-620");
 
                 MainMigrateModel migrateModel = new MainMigrateModel();
                 migrateModel.setCode(code);
-                String initial = "";
+                String initial = null;
                 if("-43".equalsIgnoreCase(initialname)){
                     initial = "1";
                 }else if("-44".equalsIgnoreCase(initialname)){
@@ -159,35 +140,14 @@ public class MainMigrate {
                 migrateModel.setLastName(lastName);
                 migrateModel.setNationality(nationality);
                 migrateModel.setBirthDate("".equalsIgnoreCase(birthDate) ? null : util.convertStringToDate(birthDate));
-                migrateModel.setAge(age);
-                migrateModel.setAgemonth(agemonth);
                 migrateModel.setSex(sex);
-                migrateModel.setFormalAddress(formalAddress);
-                migrateModel.setFormalTel(formalTel);
-                migrateModel.setFormalFax(formalFax);
-                migrateModel.setFormalEmail(formalEmail);
                 migrateModel.setPostalAddress(postalAddress);
                 migrateModel.setPostalTel(postalTel);
-                migrateModel.setPostalFax(postalFax);
                 migrateModel.setPostalEmail(postalEmail);
-                migrateModel.setIdno(idno);
-                migrateModel.setHeight(height);
-                migrateModel.setPlaseBirth(plaseBirth);
-                migrateModel.setDateIssue("".equalsIgnoreCase(dateIssue) ? null :util.convertStringToDate(dateIssue));
-                migrateModel.setPassportType(passportType);
-                MCountry mCountry = new MCountry();
-                mCountry.setCode(countryCode);
-                migrateModel.setCountry(mCountry);
                 migrateModel.setPassportNo(passportNo);
-                migrateModel.setAdAccept(adAccept);
                 migrateModel.setWarning(warning);
-                migrateModel.setStatus(status);
-                migrateModel.setCustomerType(customerType);
                 migrateModel.setCitizenNo(citizenNo);
-                migrateModel.setPostalCode(postalCode);
                 migrateModel.setMobileNo(mobileNo);
-                migrateModel.setWebmemberNo(webmemberNo);
-                migrateModel.setWendywebNo(wendywebNo);
                 migrateModel.setFirstNameJapan(firstNameJapan);
                 migrateModel.setLastNameJapan(lastNameJapan);
                 list.add(migrateModel);
@@ -217,49 +177,26 @@ public class MainMigrate {
             }
             String sql = "";
             
-            System.out.println(" list.size() "+ list.size());
+            System.out.println(" customer size :: "+ list.size());
             for(int i = 0 ; i< list.size(); i ++){ 
-                String country = null;
-                if(list.get(i).getCountry() != null && !"".equalsIgnoreCase(list.get(i).getCountry().getCode())){
-                    country = " (select id from m_country where `code` ='"+list.get(i).getCountry().getCode()+"') ";
-                }
-                sql = " INSERT INTO  `customer` ( `code`, `initial_name`, `first_name`, `last_name`, `nationality`, `birth_date`, `age`, `age_month`, `sex`, `formal_address`, `formal_tel`, `formal_fax`, `formal_email`, `address`, `tel`, `fax`, `email`, `id_no`, `height`, `plase_of_birth`, `date_of_issue`, `passport_type`, `country`, `passport_no`, `ad_accept`, `remark`, `status`, `customer_type`, `personal_id`, `postal_code`, `phone`, `web_member_no`, `wendy_web_no`, `first_name_japan`, `last_name_japan` )  "
-                    + "VALUES ('"+list.get(i).getCode()+"','"
-                    + list.get(i).getInitialname().getId() +"','"
-                    + list.get(i).getFirstName()+"','"
-                    + list.get(i).getLastName()+"','"
-                    + list.get(i).getNationality() +"',"
-                    + list.get(i).getBirthDate() +","
-                    + list.get(i).getAge() +","
-                    + list.get(i).getAgemonth() +",'"
-                    + list.get(i).getSex() +"','"
-                    + list.get(i).getFormalAddress() +"','"
-                    + list.get(i).getFormalTel() +"','"
-                    + list.get(i).getFormalFax() +"','"
-                    + list.get(i).getFormalEmail() +"','"
-                    + list.get(i).getPostalAddress() +"','"
-                    + list.get(i).getPostalTel() +"','"
-                    + list.get(i).getPostalFax() +"','"
-                    + list.get(i).getPostalEmail() +"','"
-                    + list.get(i).getIdno() +"','"
-                    + list.get(i).getHeight() +"','"
-                    + list.get(i).getPlaseBirth() +"',"
-                    + list.get(i).getDateIssue() +",'"
-                    + list.get(i).getPassportType() +"', ("
-                    + country +") ,'"
-                    + list.get(i).getPassportNo() +"','"
-                    + list.get(i).getAdAccept() +"','"
-                    + list.get(i).getWarning() +"','"
-                    + list.get(i).getStatus() +"','"
-                    + list.get(i).getCustomerType() +"','"
-                    + list.get(i).getCitizenNo() +"','"
-                    + list.get(i).getPostalCode() +"','"
-                    + list.get(i).getMobileNo() +"','"
-                    + list.get(i).getWebmemberNo() +"','"
-                    + list.get(i).getWendywebNo() +"','"
-                    + list.get(i).getFirstNameJapan() +"','"
-                    + list.get(i).getLastNameJapan()+"' ) ";
-                System.out.println(" sql "+ sql);
+                sql = " INSERT INTO `customer` ( `code`, `initial_name`, `first_name`, `last_name`, `nationality`, `birth_date`, `sex`, `address`, `tel`, `email`, `passport_no`, `remark`, `personal_id`, `phone`, `first_name_japan`, `last_name_japan` ) "
+                    + "VALUES ('"+list.get(i).getCode().replaceAll("'", " ")+"',"
+                    + list.get(i).getInitialname().getId() +",'"
+                    + list.get(i).getFirstName().replaceAll("'", " ")+"','"
+                    + list.get(i).getLastName().replaceAll("'", " ")+"','"
+                    + list.get(i).getNationality().replaceAll("'", " ") +"',"
+                    + list.get(i).getBirthDate()+",'"
+                    + list.get(i).getSex().replaceAll("'", " ") +"','"
+                    + list.get(i).getPostalAddress().replaceAll("'", " ") +"','"
+                    + list.get(i).getPostalTel().replaceAll("'", " ") +"','"
+                    + list.get(i).getPostalEmail().replaceAll("'", " ") +"','"
+                    + list.get(i).getPassportNo().replaceAll("'", " ") +"','"
+                    + list.get(i).getWarning().replaceAll("'", " ") +"','"
+                    + list.get(i).getCitizenNo().replaceAll("'", " ") +"','"
+                    + list.get(i).getMobileNo().replaceAll("'", " ") +"','"
+                    + list.get(i).getFirstNameJapan().replaceAll("'", " ") +"','"
+                    + list.get(i).getLastNameJapan().replaceAll("'", " ")+"' ) ";
+//                System.out.println(" sql :: " + sql);
                 try {
                     stm.executeUpdate(sql);
                 } catch (SQLException ex) {
@@ -284,8 +221,6 @@ public class MainMigrate {
                 String web = rs.getString("WEB") == null ? "" :rs.getString("WEB");
                 String countrycode = rs.getString("COUNTRY_CODE") == null ? "" :rs.getString("COUNTRY_CODE");
                 String citycode = rs.getString("CITY_CODE") == null ? "" :rs.getString("CITY_CODE");
-                String updatehotel = rs.getString("UPDATE_HOTEL") == null ? "" :rs.getString("UPDATE_HOTEL");
-                String refid = rs.getString("REF_ID") == null ? "" :rs.getString("REF_ID");
                 
                 MainMigrateModel hotel = new MainMigrateModel();
                 hotel.setCode(code);
@@ -302,8 +237,6 @@ public class MainMigrate {
                 MCity mCity = new MCity();
                 mCity.setCode(citycode);
                 hotel.setCity(mCity);
-                hotel.setUpdateHotel(updatehotel);
-                hotel.setRefId(refid);
                 list.add(hotel);
             }
         } catch (SQLException e ) {
@@ -331,21 +264,21 @@ public class MainMigrate {
             }
             String sql = "";
             
-            System.out.println(" list.size() "+ list.size());
+            System.out.println(" hotel size :: "+ list.size());
             for(int i = 0 ; i< list.size() ; i ++){ 
                 String city = null;
                 String country = null;
                 if(list.get(i).getCountry() != null && !"".equalsIgnoreCase(list.get(i).getCountry().getCode())){
-                    country = " (select id from m_country where `code` ='"+list.get(i).getCountry().getCode()+"') ";
+                    country = " (select MAX(id) from m_country where `code` ='"+list.get(i).getCountry().getCode()+"') ";
                 }
                 if(list.get(i).getCity() != null && !"".equalsIgnoreCase(list.get(i).getCity().getCode())){
-                    city = " (select id from m_city where `code`='"+list.get(i).getCity().getCode()+"') ";
+                    city = " (select MAX(id) from m_city where `code`='"+list.get(i).getCity().getCode()+"') ";
                 }
-                sql = " INSERT INTO  `hotel` (`code`,`name`,`remark`,`address`,`tel_no`,`fax`,`email`,`web`,`country`,`city`,`update_hotel`,`ref_id`)  "
+                sql = " INSERT INTO  `hotel` (`code`,`name`,`remark`,`address`,`tel_no`,`fax`,`email`,`web`,`country`,`city`)  "
                     + "VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getRemark().replaceAll("'", " ")+"','"
                     + list.get(i).getAddress().replaceAll("'", " ")+"','"+list.get(i).getTelNo()+"','"+list.get(i).getFax()+"','"+list.get(i).getEmail()+"','"
-                    + list.get(i).getWeb()+"',"+country+" , " +city+ " ,'"+list.get(i).getUpdateHotel()+"','"+list.get(i).getRefId()+"' ) ";
-                System.out.println(" sql "+ sql);
+                    + list.get(i).getWeb()+"',"+country+" , " +city+ "  ) ";
+//                System.out.println(" sql ::" +sql );
                 try {
                     stm.executeUpdate(sql);
                 } catch (SQLException ex) {
@@ -363,26 +296,14 @@ public class MainMigrate {
                 String code = rs.getString("CODE") == null ? "" : rs.getString("CODE");
                 String name = rs.getString("NAME") == null ? "" : new String(rs.getString("NAME").getBytes("ISO8859_1"),"TIS-620");
                 String description = rs.getString("DESCRIPTION") == null ? "" : new String(rs.getString("DESCRIPTION").getBytes("ISO8859_1"),"TIS-620");
-                String listitemid = rs.getString("LIST_ITEM_ID") == null ? "" :rs.getString("LIST_ITEM_ID");
-                String cost = rs.getString("COST") == null ? "0.00" : rs.getString("COST");
-                String condition = rs.getString("CONDITION") == null ? "" :rs.getString("CONDITION");
-                String include = rs.getString("INCLUDE") == null ? "" :rs.getString("INCLUDE");
-                String instruction = rs.getString("INSTRUCTION") == null ? "" :rs.getString("INSTRUCTION");
                 String remarks = rs.getString("REMARKS") == null ? "" :rs.getString("REMARKS");
-                String update = rs.getString("UPDATE_Y_N") == null ? "" :rs.getString("UPDATE_Y_N");
                 String productype = rs.getString("PRODUCT_TYPE") == null ? null :rs.getString("PRODUCT_TYPE");
 
                 MainMigrateModel product = new MainMigrateModel();
                 product.setCode(code);
                 product.setName(name);
                 product.setDescription(description);
-                product.setListItemId(listitemid);
-                product.setCost(new BigDecimal(cost));
-                product.setCondition(condition);
-                product.setInclude(include);
-                product.setInstruction(instruction);
                 product.setRemark(remarks);
-                product.setIsUpdate(update);
                 MProductType mProductType = new MProductType();
                 mProductType.setId(productype);
                 product.setProductType(mProductType);
@@ -412,12 +333,11 @@ public class MainMigrate {
                 Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
             }
             String sql = "";
-            System.out.println(" list.size() "+ list.size());
+            System.out.println(" product size :: "+ list.size());
             for(int i = 0 ; i< list.size() ; i ++){               
-                sql = " INSERT INTO `product` (`code`,`name`,`description`,`list_item_id`,`cost`,`condition`,`include`,`instruction`,`remark`,`is_update`,`product_type`) "
+                sql = " INSERT INTO `product` (`code`,`name`,`description`,`remark`,`product_type`) "
                         + "VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getDescription().replaceAll("'", " ")+"','"
-                        + list.get(i).getListItemId()+"','"+list.get(i).getCost()+"','"+list.get(i).getCondition().replaceAll("'", " ")+"','"+list.get(i).getInclude().replaceAll("'", " ")+"','"+list.get(i).getInstruction().replaceAll("'", " ")+"','"+list.get(i).getRemark().replaceAll("'", " ")+"','"+list.get(i).getIsUpdate()+"',"+list.get(i).getProductType().getId()+") ";
-                System.out.println(" sql "+ sql);
+                        + list.get(i).getRemark().replaceAll("'", " ")+"',"+list.get(i).getProductType().getId()+") ";
                 try {
                     stm.executeUpdate(sql);
                 } catch (SQLException ex) {
@@ -437,19 +357,11 @@ public class MainMigrate {
             while (rs.next()) {
                 String code = rs.getString("CODE") == null ? "" : rs.getString("CODE");
                 String name = rs.getString("NAME") == null ? "" : new String(rs.getString("NAME").getBytes("ISO8859_1"),"TIS-620");
-                String serial = rs.getString("SERIAL") == null ? "" :rs.getString("SERIAL");
-                String guide = rs.getString("GUIDE_STAFF_ID") == null ? "" :rs.getString("GUIDE_STAFF_ID");
-                String paxmin = rs.getString("PAX_MIN") == null ? "0" :rs.getString("PAX_MIN");
-                String paxmax = rs.getString("PAX_MAX") == null ? "0" :rs.getString("PAX_MAX");
                 String remarks = rs.getString("REMARKS") == null ? "" :rs.getString("REMARKS");
                 String status = rs.getString("STATUS") == null ? "" :rs.getString("STATUS");
                 MainMigrateModel packageTour = new MainMigrateModel();
                 packageTour.setCode(code);
                 packageTour.setName(name);
-                packageTour.setSerial(serial);
-                packageTour.setGuideStaffId(guide);
-                packageTour.setPaxMax(Integer.parseInt(paxmax));
-                packageTour.setPaxMin(Integer.parseInt(paxmin));
                 packageTour.setStatus(status);
                 packageTour.setRemark(remarks);
                 list.add(packageTour);
@@ -478,12 +390,11 @@ public class MainMigrate {
                 Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
             }
             String sql = "";
-            System.out.println(" list.size() "+ list.size());
+            System.out.println(" package_tour size :: "+ list.size());
             for(int i = 0 ; i< list.size() ; i ++){
-                sql = " INSERT INTO `package_tour` (`code`,`name`,`serial`,`guide_staff_id`,`pax_min`,`pax_max`,`remark`,`status`) "
-                        + "VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getSerial()+"','"
-                        + list.get(i).getGuideStaffId()+"','"+list.get(i).getPaxMin()+"','"+list.get(i).getPaxMax()+"','"+list.get(i).getRemark()+"','"+list.get(i).getStatus()+"') ";
-                System.out.println(" sql "+ sql);
+                sql = " INSERT INTO `package_tour` (`code`,`name`,`remark`,`status`) "
+                        + "VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", " ")+"','"
+                        + list.get(i).getRemark()+"','"+list.get(i).getStatus()+"') ";
                 try {
                     stm.executeUpdate(sql);
                 } catch (SQLException ex) {
@@ -501,12 +412,10 @@ public class MainMigrate {
                 String code = rs.getString("CODE") == null ? "" : rs.getString("CODE");
                 String description = rs.getString("DESCRIPTION") == null ? "" : new String(rs.getString("DESCRIPTION").getBytes("ISO8859_1"),"TIS-620");
                 String code3 = rs.getString("CODE_3") == null ? "" :rs.getString("CODE_3");
-                String arcode = rs.getString("AR_CODE") == null ? "" :rs.getString("AR_CODE");
                 MainMigrateModel mAirline = new MainMigrateModel();
                 mAirline.setCode(code);
                 mAirline.setName(description);
                 mAirline.setCode3Letter(code3);
-                mAirline.setArcode(arcode);
                 list.add(mAirline);
             }
         } catch (SQLException e ) {
@@ -533,14 +442,13 @@ public class MainMigrate {
                 Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
             }
             String sql = "";
-            System.out.println(" list.size() "+ list.size());
+            System.out.println(" m_airline size :: "+ list.size());
             for(int i = 0 ; i< list.size() ; i ++){
                 if(list.get(i).getCode().length() > 5 ){
-                    sql = " INSERT INTO `m_airline` (`code`,`name`,`code_3_letter`,`ar_code`) VALUES ('"+list.get(i).getCode().substring(0,5)+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getCode3Letter().replaceAll("'", " ")+"','"+list.get(i).getArcode().replaceAll("'", " ")+"'); " ;
+                    sql = " INSERT INTO `m_airline` (`code`,`name`,`code_3_letter` ) VALUES ('"+list.get(i).getCode().substring(0,5)+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getCode3Letter().replaceAll("'", " ")+"'); " ;
                 }else{
-                    sql = " INSERT INTO `m_airline` (`code`,`name`,`code_3_letter`,`ar_code`) VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getCode3Letter().replaceAll("'", " ")+"','"+list.get(i).getArcode().replaceAll("'", " ")+"'); " ;
+                    sql = " INSERT INTO `m_airline` (`code`,`name`,`code_3_letter` ) VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getCode3Letter().replaceAll("'", " ")+"'); " ;
                 }
-                System.out.println(" sql "+ sql);
                 try {
                     stm.executeUpdate(sql);
                 } catch (SQLException ex) {
@@ -589,14 +497,13 @@ public class MainMigrate {
                 Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
             }
             String sql = "";
-            System.out.println(" list.size() "+ list.size());
+            System.out.println(" m_currency size :: "+ list.size());
             for(int i = 0 ; i< list.size() ; i ++){
                 if(list.get(i).getCode().length() > 3 ){
                     sql = " INSERT INTO `m_currency` (`CODE`,`DESCRIPTION`) VALUES ('"+list.get(i).getCode().substring(0,3)+"','"+list.get(i).getDescription().replaceAll("'", " ")+"'); " ;
                 }else{
                     sql = " INSERT INTO `m_currency` (`CODE`,`DESCRIPTION`) VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getDescription().replaceAll("'", " ")+"'); " ;
                 }
-                System.out.println(" sql "+ sql);
                 try {
                     stm.executeUpdate(sql);
                 } catch (SQLException ex) {
@@ -645,14 +552,13 @@ public class MainMigrate {
                 Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
             }
             String sql = "";
-            System.out.println(" mCitys.size() "+ mCountrys.size());
+            System.out.println(" m_country size :: "+ mCountrys.size());
             for(int i = 0 ; i< mCountrys.size() ; i ++){
                 if(mCountrys.get(i).getCode().length() > 3 ){
                     sql = " INSERT INTO `m_country` (`code`,`name`) VALUES ('"+mCountrys.get(i).getCode().substring(0,3)+"','"+mCountrys.get(i).getName().replaceAll("'", " ")+"'); " ;
                 }else{
                     sql = " INSERT INTO `m_country` (`code`,`name`) VALUES ('"+mCountrys.get(i).getCode()+"','"+mCountrys.get(i).getName().replaceAll("'", " ")+"'); " ;
                 }
-                System.out.println(" sql "+ sql);
                 try {
                     stm.executeUpdate(sql);
                 } catch (SQLException ex) {
@@ -700,7 +606,7 @@ public class MainMigrate {
                 Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
             }
             String sql = "";
-            System.out.println(" mCitys.size() "+ mCitys.size());
+            System.out.println(" City size :: "+ mCitys.size());
             for(int i = 0 ; i< mCitys.size() ; i ++){
                 if(mCitys.get(i).getCode().length() > 3 ){
                     sql = " INSERT INTO `m_city` (`code`,`name`) VALUES ('"+mCitys.get(i).getCode().substring(0,3)+"','"+mCitys.get(i).getName().replaceAll("'", " ")+"'); " ;
@@ -942,7 +848,7 @@ public class MainMigrate {
                 String id = rs.getString("ID");
                 String systemdate = rs.getString("SYSTEM_DATE") == null ? "" : String.valueOf(rs.getString("SYSTEM_DATE"));
                 String systemstaff = rs.getString("SYSTEM_STAFF");
-                String code = rs.getString("CODE");
+                String code = rs.getString("CODE") == null ? "" :  new String(rs.getString("CODE").getBytes("ISO8859_1"),"TIS-620");	
                 String name = rs.getString("NAME") == null ? "" :  new String(rs.getString("NAME").getBytes("ISO8859_1"),"TIS-620");	
                 String address = rs.getString("ADDRESS") == null ? "" :  new String(rs.getString("ADDRESS").getBytes("ISO8859_1"),"TIS-620");
                 String tel = rs.getString("TEL") == null ? "" : new String(rs.getString("TEL").getBytes("ISO8859_1"),"TIS-620");
@@ -1445,7 +1351,7 @@ class OracleConnection{
 class MySqlConnection{
     private static final String ip = "192.168.99.48";
     private static final String port = "3306";
-    private static final String schema   = "smitravel_uat";
+    private static final String schema   = "test";
     private static final String username = "root";
     private static final String password = "P@ssw0rd";
     
