@@ -683,13 +683,22 @@
                 </div>    
             </div>
         </div>
-        <div class="row text-center" >
-            <div class="col-xs-6 text-right">
+        <div class="row text-center" >          
+            <div class="col-xs-1 text-right" style="padding-right: 0px; width: 450px;">
                 <button type="button" id="btnSave" name="btnSave" class="btn btn-success" onclick="validatePaymentOutbound('save')">
                     <i class="fa fa-save"></i> Save             
                 </button>
             </div>
-            <div class="col-xs-6 text-left">
+            <div class="col-xs-1 text-center">
+                <c:set var="print" value="" />
+                <c:if test="${(paymentOutbound.id == '') || (paymentOutbound.id == null) }">        
+                    <c:set var="print" value="disabled='true'" />
+                </c:if>
+                <button type="button" onclick="printPaymentOutboundReport()" class="btn btn-default" ${print}>
+                    <span id="printPaymentOutboundReport" class="glyphicon glyphicon-print"></span> Print
+                </button>
+            </div>
+            <div class="col-xs-4 text-left">
                 <a id="btnNew" name="btnNew" onclick="reloadPage()" class="btn btn-primary">
                     <i class="glyphicon glyphicon-plus"></i> New
                 </a>

@@ -849,4 +849,8 @@ public class ReportService {
     public List getPaymentProfitLossVolumnReport(String departFromDate, String departToDate, String invFromDate, String invToDate, String ownercode, String city, String producttypeid, String invsupcode, String payFromDate, String payToDate, String groupBy) {
         return paymentOutboundDao.getPaymentProfitLossVolumnReport(departFromDate, departToDate, invFromDate, invToDate, ownercode, city, producttypeid, invsupcode, payFromDate, payToDate, groupBy);
     }
+
+    public List getPaymentOutboundReport(String paymentOutboundId) {
+        return paymentOutboundDao.getPaymentOutboundReport(paymentOutboundId);
+    }
 }

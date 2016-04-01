@@ -16,6 +16,7 @@ import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.entity.PaymentStockDetail;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.entity.Stock;
+import com.smi.travel.datalayer.report.model.PaymentOutboundReport;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundAllDetail;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundSummary;
@@ -1468,6 +1469,62 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
         this.sessionFactory.close();
         session.close();
         return detailList;
+    }
+
+    @Override
+    public List getPaymentOutboundReport(String paymentOutboundId) {
+        Session session = this.sessionFactory.openSession();
+        UtilityFunction util = new UtilityFunction();
+        
+        SimpleDateFormat dateformat = new SimpleDateFormat();
+        dateformat.applyPattern("dd-MM-yyyy");
+        
+        List data = new ArrayList();
+        String query = "SELECT * FROM `payment_outbound_cover` ";
+        boolean haveCondition = false;
+              
+        if ((paymentOutboundId != null) && (!"".equalsIgnoreCase(paymentOutboundId))) {
+            query += (haveCondition ? " AND " : " WHERE ");
+            query += " paymentid = '" + paymentOutboundId + "' ";
+            haveCondition = true;
+        }               
+        
+        List<Object[]> queryList = session.createSQLQuery(query)
+                .addScalar("payno", Hibernate.STRING)
+                .addScalar("paydate", Hibernate.STRING)
+                .addScalar("department", Hibernate.STRING)
+                .addScalar("invoicesup", Hibernate.STRING)
+                .addScalar("description", Hibernate.STRING)
+                .addScalar("amount", Hibernate.STRING)
+                .addScalar("product", Hibernate.STRING)
+                .addScalar("gross", Hibernate.STRING)
+                .addScalar("vat", Hibernate.STRING)
+                .addScalar("sumamount", Hibernate.STRING)
+                .addScalar("wht", Hibernate.STRING)
+                .addScalar("sumpayment", Hibernate.STRING)              
+                .list();  
+        
+        for (Object[] B : queryList) {            
+            PaymentOutboundReport por = new PaymentOutboundReport();
+            por.setPayno(B[0] != null ? util.ConvertString(B[0]) : "");
+            por.setPaydate(B[1] != null ? util.ConvertString(B[1]) : "");
+            por.setDepartment(B[2] != null ? util.ConvertString(B[2]) : "");
+            por.setInvoicesup(B[3] != null ? util.ConvertString(B[3]) : "");
+            por.setDescription(B[4] != null ? util.ConvertString(B[4]) : "");
+            por.setAmount(B[5] != null ? util.ConvertString(B[5]) : "");
+            por.setProduct(B[6] != null ? util.ConvertString(B[6]) : "");
+            por.setGross(B[7] != null ? util.ConvertString(B[7]) : "");
+            por.setVat(B[8] != null ? util.ConvertString(B[8]) : "");
+            por.setSumamount(B[9] != null ? util.ConvertString(B[9]) : "");
+            por.setWht(B[10] != null ? util.ConvertString(B[10]) : "");
+            por.setSumpayment(B[11] != null ? util.ConvertString(B[11]) : "");
+            data.add(por);
+                                   
+        }
+        
+        session.close();
+        this.sessionFactory.close();
+        return data;
     }
 
 }

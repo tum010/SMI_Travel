@@ -113,6 +113,7 @@ public class ReportController extends SMITravelController {
     private static final String PaymentOutboundSummaryReport = "PaymentOutboundSummaryReport";
     private static final String PaymentProfitLossSummary = "PaymentProfitLossSummary";
     private static final String PaymentProfitLossVolumn = "PaymentProfitLossVolumn";
+    private static final String PaymentOutboundReport = "PaymentOutboundReport";
     
     private DataSource datasource;
     private static final Logger LOG = Logger.getLogger(ReportController.class.getName());
@@ -430,6 +431,9 @@ public class ReportController extends SMITravelController {
             String payToDate = request.getParameter("payToDate");
             String groupby = request.getParameter("groupby");
             data = reportservice.getPaymentProfitLossVolumnReport(departFromDate, departToDate, invFromDate, invToDate, ownercode, city, producttypeid, invsupcode, payFromDate, payToDate, groupby);
+        }else if(PaymentOutboundReport.equals(name)){
+            String paymentOutboundId = request.getParameter("paymentOutboundId");
+            data = reportservice.getPaymentOutboundReport(paymentOutboundId);
         }
 
         JRDataSource dataSource = new JRBeanCollectionDataSource(data);
