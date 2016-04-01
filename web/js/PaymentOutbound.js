@@ -1812,5 +1812,5 @@ function editDescription(row){
 
 function printPaymentOutboundReport(){
     var paymentOutboundId = $("#payId").val();
-    window.open("report.smi?name=PaymentOutboundReport&paymentOutboundId=" + paymentOutboundId);
+    window.open("report.smi?name=PaymentOutboundReport&paymentOutboundId=" + paymentOutboundId +"&optionReport=1");
 }

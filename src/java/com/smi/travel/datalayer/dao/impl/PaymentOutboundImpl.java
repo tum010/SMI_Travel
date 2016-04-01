@@ -1472,7 +1472,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
     }
 
     @Override
-    public List getPaymentOutboundReport(String paymentOutboundId) {
+    public List getPaymentOutboundReport(String paymentOutboundId, String optionReport) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         
@@ -1501,16 +1501,18 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 .addScalar("vat", Hibernate.STRING)
                 .addScalar("sumamount", Hibernate.STRING)
                 .addScalar("wht", Hibernate.STRING)
-                .addScalar("sumpayment", Hibernate.STRING)              
+                .addScalar("sumpayment", Hibernate.STRING)
+                .addScalar("detail", Hibernate.STRING)   
                 .list();  
         
+        int orderno = 1;
+        boolean option = true;
         for (Object[] B : queryList) {            
-            PaymentOutboundReport por = new PaymentOutboundReport();
+            PaymentOutboundReport por = new PaymentOutboundReport();            
             por.setPayno(B[0] != null ? util.ConvertString(B[0]) : "");
             por.setPaydate(B[1] != null ? util.ConvertString(B[1]) : "");
             por.setDepartment(B[2] != null ? util.ConvertString(B[2]) : "");
-            por.setInvoicesup(B[3] != null ? util.ConvertString(B[3]) : "");
-            por.setDescription(B[4] != null ? util.ConvertString(B[4]) : "");
+            por.setInvoicesup(B[3] != null ? util.ConvertString(B[3]) : "");           
             por.setAmount(B[5] != null ? util.ConvertString(B[5]) : "");
             por.setProduct(B[6] != null ? util.ConvertString(B[6]) : "");
             por.setGross(B[7] != null ? util.ConvertString(B[7]) : "");
@@ -1518,8 +1520,19 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             por.setSumamount(B[9] != null ? util.ConvertString(B[9]) : "");
             por.setWht(B[10] != null ? util.ConvertString(B[10]) : "");
             por.setSumpayment(B[11] != null ? util.ConvertString(B[11]) : "");
-            data.add(por);
-                                   
+            por.setOrderno(String.valueOf(orderno));           
+            orderno += 1;
+            
+            if("1".equalsIgnoreCase(optionReport)){
+                por.setDescription(B[4] != null ? util.ConvertString(B[4]) : "");
+                data.add(por);    
+                
+            }else if("2".equalsIgnoreCase(optionReport) && option){
+                por.setDescription(B[12] != null ? util.ConvertString(B[12]) : "");
+                option = false;
+                data.add(por);    
+            }
+                                  
         }
         
         session.close();
