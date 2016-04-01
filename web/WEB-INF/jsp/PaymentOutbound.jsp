@@ -641,7 +641,7 @@
             </div>
         </div><!--End Table Content -->
                             
-        <div class="panel panel-default outboundborder">
+        <div class="panel panel-default outboundborder" style="margin-top: -12px">
             <div class="panel-body"  style="padding-right: 0px;margin-top: -10px">                                               
                 <div class="row" >
                     <div class="col-md-12 " style="padding-right: 0px;margin-top: 0px">
@@ -721,21 +721,26 @@
             </div>
         </div>                     
         <div class="row text-center" >          
-            <div class="col-xs-1 text-right" style="padding-right: 0px; width: 450px;">
+            <c:set var="print" value="" />
+            <c:if test="${(paymentOutbound.id == '') || (paymentOutbound.id == null) }">        
+                <c:set var="print" value="disabled='true'" />
+            </c:if>
+            <div class="col-xs-1 text-right" style="padding-right: 0px; width: 420px;">               
+                <button type="button" onclick="printPaymentOutboundReport('1')" class="btn btn-default" ${print}>
+                    <span id="printPaymentOutboundReport" class="glyphicon glyphicon-print"></span> Print 
+                </button>   
+            </div>
+            <div class="col-xs-1 text-center" style="width: 100px; padding-left: 0px; padding-right: 0px; margin-right: -5px;">               
+                <button type="button" onclick="printPaymentOutboundReport('2')" class="btn btn-default" ${print}>
+                    <span id="printPaymentOutboundReportAll" class="glyphicon glyphicon-print"></span> Print All
+                </button>    
+            </div>
+            <div class="col-xs-1 text-center" style="padding-left: 0px; padding-right: 0px; margin-right: -10px;">
                 <button type="button" id="btnSave" name="btnSave" class="btn btn-success" onclick="validatePaymentOutbound('save')">
                     <i class="fa fa-save"></i> Save             
                 </button>
             </div>
-            <div class="col-xs-1 text-center">
-                <c:set var="print" value="" />
-                <c:if test="${(paymentOutbound.id == '') || (paymentOutbound.id == null) }">        
-                    <c:set var="print" value="disabled='true'" />
-                </c:if>
-                <button type="button" onclick="printPaymentOutboundReport()" class="btn btn-default" ${print}>
-                    <span id="printPaymentOutboundReport" class="glyphicon glyphicon-print"></span> Print
-                </button>
-            </div>
-            <div class="col-xs-4 text-left">
+            <div class="col-xs-1 text-center" style="padding-left: 0px; padding-right: 0px; ">
                 <a id="btnNew" name="btnNew" onclick="reloadPage()" class="btn btn-primary">
                     <i class="glyphicon glyphicon-plus"></i> New
                 </a>

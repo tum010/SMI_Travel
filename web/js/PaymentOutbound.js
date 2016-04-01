@@ -1863,7 +1863,7 @@ function editDescription(row){
     }   
 }
 
-function printPaymentOutboundReport(){
+function printPaymentOutboundReport(optionReport){
     var paymentOutboundId = $("#payId").val();
-    window.open("report.smi?name=PaymentOutboundReport&paymentOutboundId=" + paymentOutboundId +"&optionReport=1");
+    window.open("report.smi?name=PaymentOutboundReport&paymentOutboundId=" + paymentOutboundId +"&optionReport="+optionReport);
 }
