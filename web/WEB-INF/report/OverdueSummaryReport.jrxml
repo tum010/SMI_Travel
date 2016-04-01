@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="OverdueSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9918ccf4-38e8-43e9-9556-9aa27a1349a1">
 	<property name="ireport.zoom" value="1.9487171000000636"/>
 	<property name="ireport.x" value="32"/>
-	<property name="ireport.y" value="66"/>
+	<property name="ireport.y" value="162"/>
 	<field name="clientname_page" class="java.lang.String"/>
 	<field name="depart_page" class="java.lang.String"/>
 	<field name="from_page" class="java.lang.String"/>
@@ -51,7 +51,7 @@
 	<variable name="totalallrecamt" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[($F{recamt} != null && !"null".equals($F{recamt}) && $F{recamt}.length() > 0) ? new BigDecimal($F{recamt}) : new BigDecimal("0")]]></variableExpression>
 	</variable>
-	<group name="AgentOrOwner">
+	<group name="AgentOrOwner" keepTogether="true">
 		<groupExpression><![CDATA[$F{groupBy}]]></groupExpression>
 		<groupHeader>
 			<band height="20">
