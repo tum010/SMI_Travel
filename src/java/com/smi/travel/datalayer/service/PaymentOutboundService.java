@@ -5,6 +5,7 @@ import com.smi.travel.datalayer.dao.PaymentOutboundDao;
 import com.smi.travel.datalayer.entity.PaymentOutbound;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
+import com.smi.travel.datalayer.view.entity.PaymentOutboundInvSummaryView;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundView;
 import java.util.List;
 
@@ -39,6 +40,10 @@ public class PaymentOutboundService {
 
     public List<PaymentOutboundDetailView> getPaymentOutboundDetail(String paymentOutboundId) {
         return paymentOutboundDao.getPaymentOutboundDetail(paymentOutboundId); 
+    }
+    
+    public List<PaymentOutboundInvSummaryView> getPaymentOutboundInvSummary(List<PaymentOutboundDetailView> paymentOutboundDetailView){
+         return paymentOutboundDao.getPaymentOutboundInvSummary(paymentOutboundDetailView); 
     }
 
     public PaymentOutbound searchPaymentOutbound(String payNo) {

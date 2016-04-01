@@ -21,6 +21,7 @@
 <input type="hidden" id="mWht" name="mWht" value="${mWht}"/>
 <input type="hidden" id="refNoList" name="refNoList" value="${refNoList}"/>
 <input type="hidden" id="result" name="result" value="${result}"/>
+<c:set var="invoiceDetailList" value="${requestScope['invoiceDetailList']}" />
 
 <section class="content-header" >
     <h1>
@@ -167,6 +168,7 @@
         
         <!--Hidden Value-->
         <input type="hidden" id="countPaymentDetail" name="countPaymentDetail" value="${paymentOutboundDetail.size()+1}"/>
+        <input type="hidden" id="countPaymentInvDetail" name="countPaymentInvDetail" value="${invoiceDetailList.size()+1}"/>
         <input type="hidden" id="action" name="action" value="save"/>
                                        
         <!--Row 1 -->
@@ -413,7 +415,7 @@
                                             <input type="text" name="count${i.count}" id="count${i.count}" class="form-control" value="${i.count}"/>
                                             <input type="text" name="detailId${i.count}" id="detailId${i.count}" class="form-control" value="${detail.detailId}"/>
                                             <input type="text" name="payId${i.count}" id="payId${i.count}" class="form-control" value="${detail.payId}"/>
-                                            <input type="text" name="bookDetailId${i.count}" id="payId${i.count}" class="form-control" value="${detail.bookDetailId}"/>
+                                            <input type="text" name="bookDetailId${i.count}" id="bookDetailId${i.count}" class="form-control" value="${detail.bookDetailId}"/>
                                             <input type="text" name="bookDetailType${i.count}" id="bookDetailType${i.count}" class="form-control" value="${detail.bookDetailType}"/>
                                             <input type="text" name="accCode${i.count}" id="accCode${i.count}" class="form-control" value="${detail.accCode}"/>
                                             <input type="text" name="exportDate${i.count}" id="exportDate${i.count}" class="form-control" value="<fmt:formatDate type="date" pattern='yyyy-MM-dd HH:mm:ss' value="${detail.exportDate}"/>"/>
@@ -683,6 +685,41 @@
                 </div>    
             </div>
         </div>
+                            
+        <div class="panel panel-default outboundborder" style="margin-top: -12px">
+            <div class="panel-heading">
+                <h4 class="panel-title">Invoice Detail</h4>
+            </div> 
+            <div class="panel-body" style="margin-top: -10px;margin-bottom: -10px">
+                <table class="display" id="InvoiceDeailTable">
+                    <thead class="datatable-header">
+                        <tr>
+                            <th style="width:10%;">Inv No</th>
+                            <th style="width:10%;">Inv Date</th>
+                            <th style="width:20%;">Detail</th>
+                            <th style="width:10%;">Total</th>
+                            <th style="width:10%;">Vat</th>
+                            <th style="width:10%;">Grand Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       <c:forEach var="table" items="${invoiceDetailList}" varStatus="dataStatus">
+                            <tr>
+                                <input type="hidden" name="refitemid${dataStatus.count}" id="refitemid${dataStatus.count}" value="${table.refitemid}"> 
+                                <input type="hidden" name="billdescid${dataStatus.count}" id="billdescid${dataStatus.count}" value="${table.billdescid}">
+                                <input type="hidden" name="billtypeid${dataStatus.count}" id="billtypeid${dataStatus.count}" value="${table.billtypeid}">
+                                <td align="center">${table.invno}</td>
+                                <td align="center">${table.invdate}</td>
+                                <td align="center">${table.detail}</td>
+                                <td class="money">${table.gross}</td>
+                                <td class="money">${table.vat}</td>
+                                <td class="money">${table.amount}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>                     
         <div class="row text-center" >          
             <div class="col-xs-1 text-right" style="padding-right: 0px; width: 450px;">
                 <button type="button" id="btnSave" name="btnSave" class="btn btn-success" onclick="validatePaymentOutbound('save')">

@@ -12,6 +12,7 @@ import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
 import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.view.entity.BookingOutboundView;
+import com.smi.travel.datalayer.view.entity.PaymentOutboundInvSummaryView;
 import com.smi.travel.datalayer.view.entity.PaymentOutboundView;
 import java.util.List;
 
@@ -50,5 +51,5 @@ public interface PaymentOutboundDao {
     //AP Nirvana
     public PaymentOutboundDetail getAPNirvanaData(String detailId);
     
-    
+    public List<PaymentOutboundInvSummaryView> getPaymentOutboundInvSummary(List<PaymentOutboundDetailView> paymentOutboundDetailView);   
 }

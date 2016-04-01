@@ -25,13 +25,19 @@ public class PaymentOutboundServlet implements AbstractAJAXServlet{
         String refNo = request.getParameter("refNo");        
         String type = request.getParameter("type");
         String payStockNo = request.getParameter("payStockNo");
+        String bookdetailid = request.getParameter("bookdetailid");
+        String billtype = request.getParameter("billtype");
+        String rowCount = request.getParameter("rowCount");
+        
         Map result = new HashMap();
         
         result.put("refNo", refNo);
         result.put("servletName", servletName);
         result.put("type", type);
         result.put("payStockNo", payStockNo);
-                 
+        result.put("bookdetailid", bookdetailid);
+        result.put("billtype", billtype);
+        result.put("rowCount", rowCount);
         return result;   
     }
     

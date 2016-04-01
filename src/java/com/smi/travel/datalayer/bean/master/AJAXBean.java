@@ -54,6 +54,7 @@ import com.smi.travel.datalayer.entity.PackageItinerary;
 import com.smi.travel.datalayer.entity.PackagePrice;
 import com.smi.travel.datalayer.entity.PackageTour;
 import com.smi.travel.datalayer.entity.PaymentOutboundDetail;
+import com.smi.travel.datalayer.entity.PaymentOutboundDetailView;
 import com.smi.travel.datalayer.entity.PaymentStock;
 import com.smi.travel.datalayer.entity.PaymentStockItem;
 import com.smi.travel.datalayer.entity.Place;
@@ -72,6 +73,7 @@ import com.smi.travel.datalayer.view.entity.BookingOutboundView;
 import com.smi.travel.datalayer.view.entity.CheckDuplicateUser;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.OtherBookingView;
+import com.smi.travel.datalayer.view.entity.PaymentOutboundInvSummaryView;
 import com.smi.travel.datalayer.view.entity.PaymentTourCommissionView;
 import com.smi.travel.datalayer.view.entity.TicketAircommissionView;
 import com.smi.travel.util.Mail;
@@ -1152,6 +1154,21 @@ public class AJAXBean extends AbstractBean implements
                 } else {
                     result = "fail";
                 }
+            }else if("addInvoiceDetail".equalsIgnoreCase(type)){
+                String bookdetailid = map.get("bookdetailid").toString();
+                String billtype = map.get("billtype").toString();
+                String rowCount = map.get("rowCount").toString();
+                List<PaymentOutboundDetailView> podvList = new ArrayList<PaymentOutboundDetailView>();
+                PaymentOutboundDetailView podv = new PaymentOutboundDetailView();
+                podv.setBookDetailId(Integer.parseInt(bookdetailid));
+                podv.setBookDetailType(billtype);
+                podvList.add(podv);
+                List<PaymentOutboundInvSummaryView> poisvList = paymentOutboundDao.getPaymentOutboundInvSummary(podvList);   
+                if (poisvList == null) {
+                    result = "null";
+                } else {
+                    result = buildPaymentOutboundSummaryHTML(poisvList,rowCount);
+                }                
             }          
         }else if(PAYMENTSTOCK.equalsIgnoreCase(servletName)){
             if("getStockDetail".equalsIgnoreCase(type)){
@@ -3137,4 +3154,70 @@ public class AJAXBean extends AbstractBean implements
         }
         return result;
     }
+    
+    
+    public String buildPaymentOutboundSummaryHTML(List<PaymentOutboundInvSummaryView> poisvList ,String rowCount) {
+        StringBuffer html = new StringBuffer();
+        List<StringBuffer> htmlList = new ArrayList<StringBuffer>();
+        String billdesc = "" ;
+        String refitem = "";
+        String billtype = "";
+        String invno = "";
+        String invdate = "";
+        String gross = "";
+        String amount = "";
+        String vat = "";
+        String detail = "";
+        if (poisvList == null || poisvList.size() == 0) {
+            return html.toString();
+        }
+        
+        for(int i = 0 ; i < poisvList.size() ; i++ ){
+            billdesc = poisvList.get(i).getBilldescid();
+            refitem = poisvList.get(i).getRefitemid();
+            billtype = poisvList.get(i).getBilltypeid();
+            invno = poisvList.get(i).getInvno();
+            invdate = poisvList.get(i).getInvdate();
+            gross = poisvList.get(i).getGross();
+            amount = poisvList.get(i).getAmount();
+            vat = poisvList.get(i).getVat();
+            detail = poisvList.get(i).getDetail();
+            
+            if(poisvList.size() > 1){
+                int countrow = Integer.parseInt(rowCount)+i; 
+                String newrow 
+                        = "<tr>"
+                        + "<input type='hidden' name='refitemid"+countrow+"' id='refitemid"+countrow+"' value='"+refitem+"'>"
+                        + "<input type='hidden' name='billdescid"+countrow+"' id='billdescid"+countrow+"' value='"+billdesc+"'>"
+                        + "<input type='hidden' name='billtypeid"+countrow+"' id='billtypeid"+countrow+"' value='"+billtype+"'>"
+                        + "<td align='center'>"+ ("null".equalsIgnoreCase(invno) ? "" : invno)+ "</td>"
+                        + "<td align='center'>"+ ("null".equalsIgnoreCase(invdate) ? "" : invdate)+ "</td>"
+                        + "<td align='center'>"+ ("null".equalsIgnoreCase(detail) ? "" : detail)+ "</td>"
+                        + "<td class='money'>"+ ("null".equalsIgnoreCase(gross) ? "" : gross )+ "</td>"
+                        + "<td class='money'>"+ ("null".equalsIgnoreCase(vat) ? "" : vat )+ "</td>"
+                        + "<td class='money'>"+ ("null".equalsIgnoreCase(amount) ? "" : amount )+ "</td>"
+                        + "</tr>";
+                html.append(newrow);
+            }else{
+                String newrow
+                        = "<tr>"
+                        + "<input type='hidden' name='refitemid"+rowCount+"' id='refitemid"+rowCount+"' value='"+refitem+"'>"
+                        + "<input type='hidden' name='billdescid"+rowCount+"' id='billdescid"+rowCount+"' value='"+billdesc+"'>"
+                        + "<input type='hidden' name='billtypeid"+rowCount+"' id='billtypeid"+rowCount+"' value='"+billtype+"'>"
+                        + "<td align='center'>"+ ("null".equalsIgnoreCase(invno) ? "" : invno)+ "</td>"
+                        + "<td align='center'>"+ ("null".equalsIgnoreCase(invdate) ? "" : invdate)+ "</td>"
+                        + "<td align='center'>"+ ("null".equalsIgnoreCase(detail) ? "" : detail)+ "</td>"
+                        + "<td class='money'>"+ ("null".equalsIgnoreCase(gross) ? "" : gross )+ "</td>"
+                        + "<td class='money'>"+ ("null".equalsIgnoreCase(vat) ? "" : vat )+ "</td>"
+                        + "<td class='money'>"+ ("null".equalsIgnoreCase(amount) ? "" : amount )+ "</td>"
+                        + "</tr>";
+                html.append(newrow);
+            }
+        }
+        htmlList.add(html);
+        if(htmlList.size() == 0){
+            return "null";
+        }
+        return htmlList.toString();
+    }    
 }

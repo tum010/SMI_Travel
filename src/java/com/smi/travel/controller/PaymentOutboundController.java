@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.service.PaymentOutboundService;
 import com.smi.travel.datalayer.service.PaymentTourHotelService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
+import com.smi.travel.datalayer.view.entity.PaymentOutboundInvSummaryView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
@@ -41,6 +42,7 @@ public class PaymentOutboundController extends SMITravelController {
     private static final String RESULT = "result";
     private static final String PAYDATE = "payDate";
     private static final String DUEPAYMENTDATE = "duePaymentDate";
+    private static final String INVOICEDETAILLIST = "invoiceDetailList";
     private UtilityService utilservice;
     private PaymentTourHotelService paymentTourHotelService;
     private PaymentOutboundService paymentOutboundService;        
@@ -137,6 +139,10 @@ public class PaymentOutboundController extends SMITravelController {
             if(paymentOutbound != null){                         
                 List<PaymentOutboundDetailView> paymentOutboundDetailView = new ArrayList<PaymentOutboundDetailView>();
                 paymentOutboundDetailView = paymentOutboundService.getPaymentOutboundDetail(paymentOutbound.getId());
+
+                List<PaymentOutboundInvSummaryView> poisvs = paymentOutboundService.getPaymentOutboundInvSummary(paymentOutboundDetailView);
+                request.setAttribute(INVOICEDETAILLIST, poisvs);
+        
                 request.setAttribute(PAYMENTOUTBOUND, paymentOutbound);
                 request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);
                 request.setAttribute(PAYDATE, utilfunction.convertDateToString(paymentOutbound.getPayDate()));
@@ -155,6 +161,8 @@ public class PaymentOutboundController extends SMITravelController {
             if(paymentOutbound != null){                         
                 List<PaymentOutboundDetailView> paymentOutboundDetailView = new ArrayList<PaymentOutboundDetailView>();
                 paymentOutboundDetailView = paymentOutboundService.getPaymentOutboundDetail(paymentOutbound.getId());
+                List<PaymentOutboundInvSummaryView> poisvs = paymentOutboundService.getPaymentOutboundInvSummary(paymentOutboundDetailView);
+                request.setAttribute(INVOICEDETAILLIST, poisvs);
                 request.setAttribute(PAYMENTOUTBOUND, paymentOutbound);
                 request.setAttribute(PAYMENTOUTBOUNDDETAIL, paymentOutboundDetailView);
                 request.setAttribute(PAYDATE, utilfunction.convertDateToString(paymentOutbound.getPayDate()));

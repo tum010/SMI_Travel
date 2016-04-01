@@ -843,8 +843,9 @@ function confirmDeletePaymentDetailList() {
     var row = document.getElementById('delPaymentDetailRow').value;
     var id = document.getElementById('delPaymentDetailId').value;
     var count = parseInt($("#countPaymentDetail").val());
-
+    var countPayInv = parseInt($("#countPaymentInvDetail").val());
     if (id === '') {
+        $("#refitemid" + row).parent().remove();
         $("#type" + row).parent().parent().remove();
         $("#description" + row).parent().parent().remove();
         var rowAll = $("#PaymentDetailTable tr").length;
@@ -860,6 +861,15 @@ function confirmDeletePaymentDetailList() {
             type: 'get',
             data: {paymentOutboundDetailId: id},
             success: function() {
+                var bookid = $("#bookDetailId" + row).val();
+                var booktype = $("#bookDetailType" + row).val();
+                for(var i = 1 ; i < countPayInv ; i++){
+                    var refitem = $("#refitemid" + i).val();
+                    var billtypeid = $("#billtypeid" + i).val();
+                    if(bookid == refitem && booktype == billtypeid){
+                        $("#refitemid" + i).parent().remove();
+                    }
+                }
                 $("#type" + row).parent().parent().remove();
                 $("#description" + row).parent().parent().remove();
                 var rowAll = $("#PaymentDetailTable tr").length;
@@ -1110,7 +1120,7 @@ function addRowPaymentDetailTableByRefNo(refNo, type, description, billType, cos
     if (!row) {
         row = 1;
     }
-
+    addInvoiceDetail(bookId,billType,row);
     $("#count" + row).val(row);
     $("#bookDetailId" + row).val(bookId);
     $("#bookDetailType" + row).val(billType);
@@ -1133,6 +1143,49 @@ function addRowPaymentDetailTableByRefNo(refNo, type, description, billType, cos
     addRowPaymentDetailTable(row);
 }
 
+function addInvoiceDetail(bookid,billtype,row){
+//    var count = parseInt($("#countPaymentInvDetail").val());
+    var servletName = 'PaymentOutboundServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+        '&servletName=' + servletName +
+        '&servicesName=' + servicesName +
+        '&bookdetailid=' + bookid +
+        '&billtype=' + billtype +
+        '&rowCount=' + row +
+        '&type=' + 'addInvoiceDetail';
+    CallAjaxAdd(param);
+}
+
+function CallAjaxAdd(param) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function (msg) {
+                try {
+                    if(msg == "null"){
+                        
+                    }else{
+                        $("#InvoiceDeailTable tbody").append(msg);
+//                        var count = parseInt($("#countPaymentInvDetail").val())+1;
+//                        $("#countPaymentInvDetail").val(count);
+                    }
+                } catch (e) {
+                    alert(e);
+                }
+            }, error: function (msg) {
+                 $("#ajaxload").addClass("hidden");
+            }
+
+        });
+    } catch (e) {
+        alert(e);
+    }
+}     
 function addStock(stockId, payStockNo, costAmount, saleAmount, curCost, curSale, detail) {
     var countPaymentDetail = parseInt($("#countPaymentDetail").val());
     var count = 0;
