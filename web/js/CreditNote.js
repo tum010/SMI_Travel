@@ -1,7 +1,7 @@
 var rowIndex;
 var taxNoShow = "";
 $(document).ready(function() {
-    $('.datemask').mask('0000-00-00');
+    $('.datemask').mask('00-00-0000');
     var inputDate = $("#inputDate").val();
     if (inputDate === "") {
         var today = new Date();
@@ -398,7 +398,7 @@ function getTaxInv(input) {
                             $("#apCode").val(tax.taxTo);
                             $("#name").val(tax.taxName);
                             $("#address").val(tax.taxAddress);
-                            taxDate.val(tax.taxDate);
+                            taxDate.val(convertFormatDate(tax.taxDate));
                             amount.val(parseFloat((tax.taxAmount).toFixed(2)));
                             amountId.val(parseFloat((tax.taxAmount).toFixed(2)));
                             amountReal.val(tax.taxAmount);
