@@ -34,6 +34,7 @@ public class BookController extends SMITravelController {
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         String action =request.getParameter("action");
         String refno = request.getParameter("refno");
         String PassFirst = request.getParameter("PassFirst");
@@ -48,12 +49,17 @@ public class BookController extends SMITravelController {
         String transferDateTo = request.getParameter("transferDateTo");
         String refNoEdit = request.getParameter("refNoEdit");
         String bankTransfer = "";
+        
+        //Set Date dormat
+        Bookdate = (!"".equalsIgnoreCase(Bookdate) && Bookdate != null ? util.convertDateToString(util.convertStringToDate(Bookdate)) : "");
+        transferDateFrom = (!"".equalsIgnoreCase(transferDateFrom) && transferDateFrom != null ? util.convertDateToString(util.convertStringToDate(transferDateFrom)) : "");
+        transferDateTo = (!"".equalsIgnoreCase(transferDateTo) && transferDateTo != null ? util.convertDateToString(util.convertStringToDate(transferDateTo)) : "");       
+        
         if("4".equalsIgnoreCase(payBy)){
             bankTransfer = request.getParameter("bankTransfer");
         }
         SystemUser user = (SystemUser) session.getAttribute("USER");
         List<BookingView> bookinglist = new LinkedList<BookingView>();
-        UtilityFunction util = new UtilityFunction();
         Date thisDate = new Date();
         String username ="";
         String departmentid="";

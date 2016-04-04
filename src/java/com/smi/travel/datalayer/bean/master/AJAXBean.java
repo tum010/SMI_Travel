@@ -469,10 +469,10 @@ public class AJAXBean extends AbstractBean implements
                             }
 
                             result += "<tr>"
-                                    + "<td class='tdcenter'>" + bookDetail.getBookdate() + "</td>"
+                                    + "<td class='dateformat tdcenter'>" + bookDetail.getBookdate() + "</td>"
                                     + "<td class='tdcenter'>" + bookDetail.getType() + "</td>"
                                     + "<td>" + bookDetail.getDescription() + "</td>"
-                                    + "<td class='tdcenter'>" + tourdate + "</td>"
+                                    + "<td class='datetourformat tdcenter'>" + tourdate + "</td>"
                                     + "<td class='moneyformat tdright'>" + bookDetail.getPrice() + "</td>"
                                     + "</tr>";
                         }

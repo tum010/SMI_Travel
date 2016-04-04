@@ -84,7 +84,7 @@
                         <label for="Bookdate">Booking Date</label>
                         <div class=' col-sm-12 input-group date' id='effectivefromClass'>
                             <input type='text' class="form-control"  id="Bookdate" name="Bookdate" 
-                                   data-date-format="YYYY-MM-DD" value="${Bookdate}" />
+                                   data-date-format="DD-MM-YYYY" value="${Bookdate}" />
                             <span class="input-group-addon spandate">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -176,7 +176,7 @@
                                 <label for="transferFrom">Transfer Date From</label>
                                 <div class=' col-sm-12 input-group date' id='effectivefromClass'>
                                     <input type='text' class="form-control"  id="transferDateFrom" name="transferDateFrom" 
-                                           data-date-format="YYYY-MM-DD" value="${requestScope['transferDateFrom']}" />
+                                           data-date-format="DD-MM-YYYY" value="${requestScope['transferDateFrom']}" />
                                     <span class="input-group-addon spandate">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -188,7 +188,7 @@
                                 <label for="transferTo">Transfer Date To</label>
                                 <div class=' col-sm-12 input-group date' id='effectivefromClass'>
                                     <input type='text' class="form-control"  id="transferDateTo" name="transferDateTo" 
-                                           data-date-format="YYYY-MM-DD" value="${requestScope['transferDateTo']}" />
+                                           data-date-format="DD-MM-YYYY" value="${requestScope['transferDateTo']}" />
                                     <span class="input-group-addon spandate">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -245,7 +245,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="table" items="${dataList}">
+                    <c:forEach var="table" items="${dataList}" varStatus="i">
                         <c:set var="refno1" value="${fn:substring(table.refno, 0, 2)}" />
                         <c:set var="refno2" value="${fn:substring(table.refno, 2,7)}" />
                         <c:set var="colourStatus" value="" />
@@ -262,21 +262,56 @@
                     <c:choose>
                         <c:when test="${userdepartment == 1}">
                             <td><center><c:out value="${table.pnr}" /></center></td>
-                            <td><center><c:out value="${table.firstDepartDate}" /></center></td>  
+                            <script>
+                                $(document).ready(function () {
+                                    if("${table.firstDepartDate}" !== ''){
+                                        $("#firstDepartDate${i.count}").text(convertFormatDate("${table.firstDepartDate}"));
+                                    }
+                                });
+                            </script>
+                            <td class="text-center" id="firstDepartDate${i.count}"><center><c:out value="${table.firstDepartDate}" /></center></td>  
                             </c:when>
                             <c:when test="${userdepartment  == 4}">
-                            <td><c:out value="${table.hotelName}" /></td>  
-                            <td><center><c:out value="${table.firstCheckinDate}" /></center></td>  
+                            <td><c:out value="${table.hotelName}" /></td>
+                            <script>
+                                $(document).ready(function () {
+                                    if("${table.firstCheckinDate}" !== ''){
+                                        $("#firstCheckinDate${i.count}").text(convertFormatDate("${table.firstCheckinDate}"));
+                                    }
+                                });
+                            </script>
+                            <td class="text-center" id="firstCheckinDate${i.count}"><center><c:out value="${table.firstCheckinDate}" /></center></td>  
                             </c:when> 
                             <c:otherwise>
                             <td><center><c:out value="${table.pnr}" /></center></td>
-                            <td><center><c:out value="${table.firstDepartDate}" /></center></td>  
-                            <td><c:out value="${table.hotelName}" /></td>  
-                            <td><center><c:out value="${table.firstCheckinDate}" /></center></td>  
+                            <script>
+                                $(document).ready(function () {
+                                    if("${table.firstDepartDate}" !== ''){
+                                        $("#firstDepartDate${i.count}").text(convertFormatDate("${table.firstDepartDate}"));
+                                    }
+                                });
+                            </script>
+                            <td class="text-center" id="firstDepartDate${i.count}"><center><c:out value="${table.firstDepartDate}" /></center></td>  
+                            <td><c:out value="${table.hotelName}" /></td>
+                            <script>
+                                $(document).ready(function () {
+                                    if("${table.firstCheckinDate}" !== ''){
+                                        $("#firstCheckinDate${i.count}").text(convertFormatDate("${table.firstCheckinDate}"));
+                                    }
+                                });
+                            </script>
+                            <td class="text-center" id="firstCheckinDate${i.count}"><center><c:out value="${table.firstCheckinDate}" /></center></td>  
                             </c:otherwise>
                         </c:choose>
-
-                    <td><center><c:out value="${table.createDate}" /></center></td>  
+                    
+                    <script>
+                        $(document).ready(function () {
+                            if("${table.createDate}" !== ''){
+                                $("#createDate${i.count}").text(convertFormatDate("${table.createDate}"));
+                            }
+                        });
+                    </script>
+                    <td class="text-center" id="createDate${i.count}"><center><c:out value="${table.createDate}" /></center></td>  
                     <td><center><c:out value="${table.createBy}" /></center></td> 
                   
                     <td>
@@ -703,6 +738,19 @@
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
+        if($("#Bookdate").val() !== ''){
+            var date = $("#Bookdate").val();
+            $("#Bookdate").val(convertFormatDate(date));
+        }
+        if($("#transferDateFrom").val() !== ''){
+            var date = $("#transferDateFrom").val();
+            $("#transferDateFrom").val(convertFormatDate(date));
+        }
+        if($("#transferDateTo").val() !== ''){
+            var date = $("#transferDateTo").val();
+            $("#transferDateTo").val(convertFormatDate(date));
+        }
+        
         var table = $('#BookList').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
@@ -746,12 +794,27 @@
     });
     
     function setformat() {
-                $('#TableBookSummary tr td.moneyformat').each(function() {
-                    var innerHTML = $(this).html();
-
-                    $(this).html(numberWithCommas($(this).html()));
-                });
-            }
+        $('#TableBookSummary tr td.moneyformat').each(function() {
+            var innerHTML = $(this).html();
+            if($(this).html() !== ''){
+               $(this).html(numberWithCommas($(this).html())); 
+            }         
+        });
+        
+        $('#TableBookSummary tr td.dateformat').each(function() {
+            var innerHTML = $(this).html();
+            if($(this).html() !== ''){
+               $(this).html(convertFormatDate(($(this).html()))); 
+            }            
+        });
+        
+        $('#TableBookSummary tr td.datetourformat').each(function() {
+            var innerHTML = $(this).html();
+            if($(this).html() !== ''){
+                $(this).html(convertFormatDate(($(this).html())));
+            }           
+        });
+    }
             
     function getSummaryTel(tel,remark,email){
         document.getElementById('telNo').value=tel;
