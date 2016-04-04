@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -63,7 +64,8 @@ public class ReceiveTableController extends SMITravelController {
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String username = user.getUsername();
         
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         Calendar cal = Calendar.getInstance();
         Date date = new Date();
         
@@ -106,9 +108,11 @@ public class ReceiveTableController extends SMITravelController {
         request.setAttribute(ADVANCERECEIVEPERIODLIST, advanceReceivePeriodList);
         
         if("search".equalsIgnoreCase(action)){
+            inputDate = (!"".equalsIgnoreCase(inputDate) && inputDate != null ? sdf.format(utilty.convertStringToDate(inputDate)) : "");
             List<AdvanceReceive> advanceReceiveList = receiveTableService.searchAdvanceReceive(inputDate,selectStatus,department,"search");
             request.setAttribute(ADVANCERECEIVELIST, advanceReceiveList);
-            request.setAttribute("inputDate", inputDate);
+            sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+            request.setAttribute("inputDate", (!"".equalsIgnoreCase(inputDate) && inputDate != null ? sdf.format(utilty.convertStringToDate(inputDate)) : ""));
             request.setAttribute("selectStatus", selectStatus);
             String resultRedirect = request.getParameter("resultRedirect");
             request.setAttribute(RESULT, resultRedirect);

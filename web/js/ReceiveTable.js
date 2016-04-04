@@ -13,7 +13,7 @@ $(document).ready(function() {
     $(".daydatepicker").datetimepicker({
         pickTime: false
     });
-    $('.datemask').mask('0000-00-00');
+    $('.datemask').mask('00-00-0000');
     $('.spandate').click(function() {
         var position = $(this).offset();
         console.log("positon :" + position.top);
@@ -525,7 +525,7 @@ function AddRowCreditTable(row) {
             '<td><input class="form-control" type="text" id="creditNo' + row + '" name="creditNo' + row + '" value="" maxlength="20"></td>' +
             '<td>' +
             '<div class="input-group daydatepicker" id="daydatepicker' + row + '">' +
-            '<input type="text" name="creditExpire' + row + '" id="creditExpire' + row + '" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="" />' +
+            '<input type="text" name="creditExpire' + row + '" id="creditExpire' + row + '" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="" />' +
             '<span class="input-group-addon spandate" id="spandate' + row + '" style="padding : 1px 10px;" onclick="AddrowBySelect(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
             '</div>' +
             '</td>' +
@@ -805,8 +805,8 @@ function saveReceivePeriod() {
     var periodId = $("#periodId").val();
     var receiveFrom = $("#receiveFrom").val();
     var receiveTo = $("#receiveTo").val();
-    var fromDate = $("#fromDate").val();
-    var toDate = $("#toDate").val();
+    var fromDate = convertFormatDate($("#fromDate").val());
+    var toDate = convertFormatDate($("#toDate").val());
     var periodDetail = $("#periodDetail").val();
     var vatType = $("#periodVatType").val();
     var department = $("#department").val();
@@ -1046,8 +1046,8 @@ function editAdvanceReceivePeriod(id, receiveFrom, receiveTo, detail, vatType, d
     $("#receiveCreditCard").val(creditAmount);
     $("#receiveDetail").val(detail);
 
-    $("#fromDate").val(receiveFrom);
-    $("#toDate").val(receiveTo);
+    $("#fromDate").val(convertFormatDate(receiveFrom));
+    $("#toDate").val(convertFormatDate(receiveTo));
     $("#periodVatType").val(vatType);
     $("#periodCashAmount").val(cashAmount !== '' ? formatNumber(parseFloat(cashAmount.replace(/,/g, ""))) : '');
     $("#periodCash").val(cashMinusAmount !== '' ? formatNumber(parseFloat(cashMinusAmount.replace(/,/g, ""))) : '');
