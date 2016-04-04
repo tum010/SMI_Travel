@@ -69,7 +69,8 @@
                     <div class="col-xs-2">
                         <div class=" form-group">     
                             <div class="input-group date fromDate" id="DateFrom">
-                                <input  id="InputDateFrom" name="InputDateFrom" type="text" data-date-format="YYYY-MM-DD" class="form-control datemask" placeholder="YYYY-MM-DD" value="${dateFrom}">
+                                <input  id="InputDateFrom" name="InputDateFrom" type="text" data-date-format="DD-MM-YYYY" class="form-control datemask
+                                        " placeholder="DD-MM-YYYY" value="${dateFrom}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
@@ -82,7 +83,7 @@
                     </div>
                     <div class="col-xs-2 form-group">
                         <div class="input-group date toDate" id="DateTo">
-                            <input id="InputDateTo" name="InputDateTo" type="text" data-date-format="YYYY-MM-DD" class="form-control datemask" placeholder="YYYY-MM-DD" value="${dateTo}">
+                            <input id="InputDateTo" name="InputDateTo" type="text" data-date-format="DD-MM-YYYY" class="form-control datemask" placeholder="DD-MM-YYYY" value="${dateTo}">
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
@@ -174,6 +175,13 @@
 
                     <tbody>
                         <c:forEach var="item" items="${bookingList}" varStatus="status" >
+                            <script>
+                                $(document).ready(function () {
+                                    if("${item.otherDate}" !== ''){
+                                        $("#otherDate-${item.id}").text(convertFormatDate("${item.otherDate}"));
+                                    }
+                                });
+                            </script>
                             <tr>
                                 <input type="hidden" id="adPrice-${status.count}" name="adPrice-" value="${item.adPrice}">
                                 <input type="hidden" id="adQty-${status.count}" name="adQty-" value="${item.adQty}">
@@ -184,7 +192,7 @@
                                 <td class="hide"><input type="hidden" id="daytourBookingId-${status.count}" name="daytourBookingId-" value="${item.id}"></td>
                                 <td>${item.product.code}</td>
                                 <td>${item.product.name}</td>
-                                <td>
+                                <td id="otherDate-${item.id}">
                                     <input type="hidden" class="form-control" id="otherDate-${status.count}" name="otherDate-" 
                                            value="${item.otherDate}" maxlength="14">
                                     ${item.otherDate}
@@ -285,7 +293,7 @@
                         <div class="col-xs-2">From</div>
                         <div class="col-xs-5">
                             <div class="input-group date form_datetime">
-                                <input  name="guidePrintFrom" id="guidePrintFrom" type="text" data-date-format="YYYY-MM-DD" class="form-control" placeholder="YYYY-MM-DD">
+                                <input  name="guidePrintFrom" id="guidePrintFrom" type="text" data-date-format="DD-MM-YYYY" class="form-control" placeholder="DD-MM-YYYY">
                                 <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
                                 </span>
                             </div>
@@ -295,7 +303,7 @@
                         <div class="col-xs-2">To</div>
                         <div class="col-xs-5">
                             <div class="input-group date form_datetime">
-                                <input  name="guidetPrintTo" id="guidePrintTo" type="text" data-date-format="YYYY-MM-DD" class="form-control" placeholder="YYYY-MM-DD">
+                                <input  name="guidetPrintTo" id="guidePrintTo" type="text" data-date-format="DD-MM-YYYY" class="form-control" placeholder="DD-MM-YYYY">
                                 <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
                                 </span>
                             </div>
@@ -336,7 +344,7 @@
                         <div class="col-xs-2">From</div>
                         <div class="col-xs-5">
                             <div class="input-group date form_datetime" >
-                                <input  name="agentPrintFrom" id="agentPrintFrom" type="text" data-date-format="YYYY-MM-DD" class="form-control" placeholder="YYYY-MM-DD">
+                                <input  name="agentPrintFrom" id="agentPrintFrom" type="text" data-date-format="DD-MM-YYYY" class="form-control" placeholder="DD-MM-YYYY">
                                 <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
                                 </span>
                             </div>
@@ -346,7 +354,7 @@
                         <div class="col-xs-2">To</div>
                         <div class="col-xs-5">
                             <div class="input-group date">
-                                <input  name="agentPrintTo" id="agentPrintTo" type="text" data-date-format="YYYY-MM-DD" class="form-control" placeholder="YYYY-MM-DD">
+                                <input  name="agentPrintTo" id="agentPrintTo" type="text" data-date-format="DD-MM-YYYY" class="form-control" placeholder="DD-MM-YYYY">
                                 <span class="input-group-addon"><span class="glyphicon-calendar glyphicon"></span>
                                 </span>
                             </div>
@@ -413,6 +421,18 @@
 <script type="text/javascript" charset="uts-8">
     $(document).ready(function () { 
         jQuery.curCSS = jQuery.css;
+        
+        var fromdates = $('#InputDateFrom').val();
+        if(fromdates !== ''){
+            $('#InputDateFrom').val((fromdates));
+        }
+        
+        var todates = $('#InputDateTo').val();
+        if(todates !== ''){
+            $('#InputDateTo').val((todates));
+        }
+                        
+                        
         $('#CommissionTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
@@ -422,7 +442,7 @@
             "iDisplayLength":10
         });
         
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
         
         $('.spandate').click(function() {
@@ -503,7 +523,7 @@
                             message: 'The Date From is required'
                         },
                         date: {
-                            format: 'YYYY-MM-DD',
+                            format: 'DD-MM-YYYY',
                             max: 'InputDateTo',
                             message: 'The Date From is not a valid'
                         }
@@ -516,7 +536,7 @@
                             message: 'The Date To is required'
                         },
                         date: {
-                            format: 'YYYY-MM-DD',
+                            format: 'DD-MM-YYYY',
                             min: 'InputDateFrom',
                             message: 'The Date To is not a valid'
                         }

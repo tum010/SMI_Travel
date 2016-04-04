@@ -8,14 +8,6 @@ var controlGuide;
 var controlAgent;
 
 $(document).ready(function() {
-    var InputDateFrom = $('#InputDateFrom').val();
-    if(InputDateFrom !== ''){
-        $('#InputDateFrom').val(InputDateFrom);
-    }
-    var InputDateTo = $('#InputDateTo').val();
-    if(InputDateTo !== ''){
-        $('#InputDateTo').val(InputDateTo);
-    }
     
     $(".number").mask('000000000000000000', {reverse: true});
     Selectize.define('clear_selection', function(options) {
@@ -39,7 +31,7 @@ $(document).ready(function() {
     });
 
 //Number
-    $(".datemask").mask('00-00-0000', {reverse: true});
+    
     $(".money").mask('000,000,000', {reverse: true});
 
     var $selectAgent = $('#SelectAgent').selectize({

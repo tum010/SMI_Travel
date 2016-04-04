@@ -72,7 +72,7 @@
                        <div class=" form-group">     
                             <div class="input-group date fromDate" id="DateFrom">
                                 <input  id="InputDateFrom" name="InputDateFrom" type="text" 
-                                        data-date-format="DD-MM-YYYY" class="form-control datemask" 
+                                         class="form-control datemask" data-date-format="DD-MM-YYYY"
                                         placeholder="DD-MM-YYYY" value="${dateFrom}">
                                 <span class="input-group-addon spandate">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -89,7 +89,7 @@
                     <div class="col-xs-2 form-group">
                         <div class="input-group date todate" id="DateTo">
                             <input id="InputDateTo" name="InputDateTo" type="text"
-                                   data-date-format="DD-MM-YYYY" class="form-control datemask"
+                                    class="form-control datemask" data-date-format="DD-MM-YYYY"
                                    placeholder="DD-MM-YYYY" value="${dateTo}">
                             <span class="input-group-addon spandate">
                                     <span class="glyphicon glyphicon-calendar"></span>
@@ -425,6 +425,16 @@
 <script type="text/javascript" charset="uts-8">
     $(document).ready(function () { 
         jQuery.curCSS = jQuery.css;
+        var InputDateFrom = $('#InputDateFrom').val();
+        if(InputDateFrom !== ''){
+            $('#InputDateFrom').val(InputDateFrom);
+        }
+        var InputDateTo = $('#InputDateTo').val();
+        if(InputDateTo !== ''){
+            $('#InputDateTo').val(InputDateTo);
+        }
+        $('.datemask').mask('00-00-0000');
+    
         $('#CommissionTable').dataTable({
             bJQueryUI: true,
             "sPaginationType": "full_numbers",

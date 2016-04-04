@@ -37,7 +37,9 @@ public class GuideJobImpl implements GuideJobDao{
         DecimalFormat decimalFormat = new DecimalFormat(pattern);
         UtilityFunction util = new UtilityFunction();
         int no = 0;
-        List<Object[]> QueryGuideJobList = session.createSQLQuery("SELECT * FROM `guide_job_info` where tourdate = '"+tourdate+"' and code='"+tourID+"'")
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyyy-MM-dd"); 
+        List<Object[]> QueryGuideJobList = session.createSQLQuery("SELECT * FROM `guide_job_info` where tourdate = '"+ String.valueOf(df.format(util.convertStringToDate(tourdate)))+"' and code='"+tourID+"'")
                 .addScalar("guide", Hibernate.STRING)
                 .addScalar("driver", Hibernate.STRING)
                 .addScalar("car_no", Hibernate.STRING)
@@ -143,7 +145,9 @@ public class GuideJobImpl implements GuideJobDao{
         Session session = this.sessionFactory.openSession();
         String remark = "";
         UtilityFunction util = new UtilityFunction();
-        String query = "SELECT remark,guide2,operation_remark FROM `guide_job_remark` gr where  gr.tour_date ='"+tourdate+"' and gr.tour_id = '"+tourid+"'";
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyyy-MM-dd"); 
+        String query = "SELECT remark,guide2,operation_remark FROM `guide_job_remark` gr where  gr.tour_date ='"+String.valueOf(df.format(util.convertStringToDate(tourdate)))+"' and gr.tour_id = '"+tourid+"'";
         System.out.println("query : "+query);
         List<Object[]> QueryRemarkList = session.createSQLQuery(query)
                 .addScalar("remark", Hibernate.STRING)

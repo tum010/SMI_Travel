@@ -25,9 +25,11 @@ import com.smi.travel.datalayer.view.entity.ConfirmSlipHeaderReport;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -249,13 +251,17 @@ public class ReportController extends SMITravelController {
             // set path for loading sub-report file
             ((GuideCommissionInfo) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         } else if (AgentCommissionSummary.equalsIgnoreCase(name)) {
-            data = reportservice.getAgentCommissionReportSummary(startdate, enddate, user.getName(), agentid);
+            String datefromtemp = !"".equalsIgnoreCase(startdate) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(startdate)) : "" ;
+            String datetotemp = !"".equalsIgnoreCase(enddate) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(enddate)) : "" ;
+            data = reportservice.getAgentCommissionReportSummary(datefromtemp, datetotemp, user.getName(), agentid);
         } else if (AgentCommission.equalsIgnoreCase(name)) {
             data = reportservice.getAgentCommissionReport(startdate, enddate, user.getName(), agentid);
             // set path for loading sub-report file
             ((AgentCommission) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         } else if (AgentCommissionInfo.equalsIgnoreCase(name)) {
-            data = reportservice.getAgentCommissionReportInfo(startdate, enddate, user.getName(), agentid);
+            String datefromtemp = !"".equalsIgnoreCase(startdate) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(startdate)) : "" ;
+            String datetotemp = !"".equalsIgnoreCase(enddate) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(enddate)) : "" ;
+            data = reportservice.getAgentCommissionReportInfo(datefromtemp, datetotemp, user.getName(), agentid);
         } else if (DaytourOther.equalsIgnoreCase(name)) {
             String otherId = request.getParameter("otherId");
             String passengerId = request.getParameter("passengerId");
@@ -348,11 +354,15 @@ public class ReportController extends SMITravelController {
             data = reportservice.getBookingSummaryReport(refno);
             ((BookingHeaderSummaryView) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }else if (OtherGuideCommission.equalsIgnoreCase(name)) {
-            data = reportservice.getOtherGuideCommissionInfoReport(startdate, enddate, user.getName(), guideID);
+            String datefromtemp = !"".equalsIgnoreCase(startdate) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(startdate)) : "" ;
+            String datetotemp = !"".equalsIgnoreCase(enddate) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(enddate)) : "" ;
+            data = reportservice.getOtherGuideCommissionInfoReport(datefromtemp, datetotemp, user.getName(), guideID);
             // set path for loading sub-report file
             ((OtherGuideCommissionInfo) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }else if (OtherAgentCommission.equalsIgnoreCase(name)) {
-            data = reportservice.getOtherAgentCommissionReport(startdate, enddate, user.getName(), agentid);
+            String datefromtemp = !"".equalsIgnoreCase(startdate) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(startdate)) : "" ;
+            String datetotemp = !"".equalsIgnoreCase(enddate) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(enddate)) : "" ;
+            data = reportservice.getOtherAgentCommissionReport(datefromtemp, datetotemp, user.getName(), agentid);
             // set path for loading sub-report file
             ((OtherAgentCommission) data.get(0)).setSubReportDir(getServletContext().getRealPath("/WEB-INF/report/"));
         }else if(ConfirmSlipReport.equalsIgnoreCase(name)){

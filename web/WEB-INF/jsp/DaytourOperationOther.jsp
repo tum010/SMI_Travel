@@ -108,6 +108,13 @@
                                 <c:if test="${listOtherBooking != null}"> 
                                     
                                     <c:forEach var="table" items="${listOtherBooking}" varStatus="status">
+                                    <script>
+                                        $(document).ready(function () {
+                                            if("${table.otherDate}" !== ''){
+                                                $("#otherDate-${table.id}").text(convertFormatDate("${table.otherDate}"));
+                                            }
+                                        });
+                                    </script>
                                     <c:set var="counter" value="${status.count}"></c:set>               
                                     <tr>
                                         <td>
@@ -118,7 +125,7 @@
                                         </td>
                                         <td><center><c:out value="${table.product.code}" /></center></td>
                                         <td><center><c:out value="${table.product.name}" /></center></td>
-                                        <td><center><c:out value="${table.otherDate}" /></center></td>
+                                        <td id="otherDate-${table.id}"><center><c:out value="${table.otherDate}" /></center></td>
                                         <td><center><c:out value="${table.otherTime}" /></center></td>
                                         <td><center><c:out value="${table.remark}" /></center></td>
                                         <td class="text-center">
@@ -291,6 +298,13 @@
                     </thead>
                     <tbody>
                         <c:forEach var="table1" items="${ListBookingAllView}" varStatus="dayStatus">
+                            <script>
+                                $(document).ready(function () {
+                                    if("${table1.otherdate}" !== ''){
+                                        $("#otherdate-${table1.refno}").text(convertFormatDate("${table1.otherdate}"));
+                                    }
+                                });
+                            </script>
                             <tr>
 <!--                                <td class="pack-date"><div style="width: 31px" >${table1.refno}</div></td>
                                 <td class="text-center"><div style="width: 65px" >${table1.otherdate}</div></td>
@@ -311,7 +325,7 @@
                                         </c:when>
                                     </c:choose>                                   
                                 </td>
-                                <td class="text-center">${table1.otherdate}</td>
+                                <td class="text-center" id="otherdate-${table1.refno}">${table1.otherdate}</td>
                                 <td class="text-left"> ${table1.leader}</td>
                                 <td class="text-left">${table1.product}</td>
                                 <td class="text-center">${table1.status}</td>
