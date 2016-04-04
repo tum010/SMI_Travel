@@ -4,7 +4,10 @@ import com.smi.travel.datalayer.service.ReceiptService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.ReceiptSearchView;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,16 +30,18 @@ public class SearchReceiptController extends SMITravelController {
     private UtilityService utilservice;
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         List<MFinanceItemstatus> mFinanceItemstatusList = getUtilservice().getListMFinanceItemstatus();
         request.setAttribute(MFinanceItemstatusList, mFinanceItemstatusList);
         String action = request.getParameter("action");
         String recType = request.getParameter("recType");
         String department = request.getParameter("department");
-        String inputFromDate = request.getParameter("inputFromDate");
-        String inputToDate = request.getParameter("inputToDate");
+        String inputFromDate = (!"".equalsIgnoreCase(request.getParameter("inputFromDate")) && request.getParameter("inputFromDate")!=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(request.getParameter("inputFromDate"))) : "" ;
+        String inputToDate = (!"".equalsIgnoreCase(request.getParameter("inputToDate")) && request.getParameter("inputToDate")!=null )? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(request.getParameter("inputToDate"))) : "" ;
         String status = request.getParameter("status");
         String hiddenMenu = request.getParameter("hiddenMenu");
         String departtemp = "";
+        
         if ("search".equalsIgnoreCase(action)) {
             List<ReceiptSearchView>  receiptSearchViews = receiptService.getReceiptViewFromFilter(inputFromDate, inputToDate, department, recType, status);
             if(receiptSearchViews != null){

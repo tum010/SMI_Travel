@@ -42,7 +42,7 @@
                         <div class=" form-group"> 
                             <div class='input-group date fromdate' id="DateFrom">
                                 <input id="inputFromDate" name="inputFromDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputFromDate']}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['inputFromDate']}">
                                 <span class="input-group-addon spandate" id="InputFromDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputFromDateSpan2"></span></span>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                         <div class=" form-group"> 
                             <div class='input-group date todate' id="DateTo">
                                 <input id="inputToDate" name="inputToDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputToDate']}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['inputToDate']}">
                                 <span class="input-group-addon spandate" id="InputToDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputToDateSpan2"></span></span>
                             </div>
                         </div>        
@@ -158,9 +158,16 @@
                         </thead>
                         <tbody>
                             <c:forEach var="table" items="${receiptSearchList}" varStatus="dataStatus">
+                                <script>
+                                    $(document).ready(function () {
+                                        if("${table.recDate}" !== ''){
+                                            $("#recDate-${dataStatus.count}").text(convertFormatDate("${table.recDate}"));
+                                        }
+                                    });
+                                </script>
                                 <tr>
                                     <td align="center">${table.recNo}</td>
-                                    <td align="center">${table.recDate}</td>
+                                    <td align="center" id="recDate-${dataStatus.count}">${table.recDate}</td>
                                     <td>${table.recTo}</td>
                                     <td>${table.recName}</td>
                                     <td>${table.invoiceNo}</td>
@@ -202,14 +209,23 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $("#ReceiptListTable").removeClass('hidden');
-        $('.datemask').mask('0000-00-00');
+        
         var table = $('#ReceiptListTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
             "bFilter": false,
             "aaSorting": [[ 0, "desc" ]]
         });
-            
+        
+        var fromdates = $('#inputFromDate').val();
+        if(fromdates !== ''){
+            $('#inputFromDate').val(convertFormatDate(fromdates));
+        }   
+        var todates = $('#inputToDate').val();
+        if(todates !== ''){
+            $('#inputToDate').val(convertFormatDate(todates));
+        }   
+        $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
         $('.spandate').click(function() {
             var position = $(this).offset();
@@ -270,7 +286,7 @@
                                     message: 'The Date From is required'
                                 },
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     max: 'inputToDate',
                                     message: 'The Date From is not a valid'
                                 }
@@ -283,7 +299,7 @@
                                     message: 'The Date To is required'
                                 },
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     min: 'inputFromDate',
                                     message: 'The Date To is not a valid'
                                 }

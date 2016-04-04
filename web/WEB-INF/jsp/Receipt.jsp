@@ -319,7 +319,7 @@
                                 <div class="col-xs-1 form-group" style="width: 155px; margin-top: -10px">
                                     <div class='input-group date' id="ReceiveDate">
                                         <input id="receiveFromDate" name="receiveFromDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['receiveFromDate']}">
+                                               class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['receiveFromDate']}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>  
                                 </div>
@@ -358,7 +358,7 @@
                                 <div class="col-xs-1 form-group" style="width: 200px; margin-top: -10px">
                                     <div class='input-group date'>
                                         <input id="receiveDate" name="receiveDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['receiveDate']}">
+                                               class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['receiveDate']}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>  
                                 </div>
@@ -794,7 +794,7 @@
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
                                             <input id="chqDate1" name="chqDate1"  type="text" 
-                                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['chqDate1']}">
+                                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${receipt.chqDate1}">
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -829,7 +829,7 @@
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
                                             <input id="chqDate2" name="chqDate2"  type="text" 
-                                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['chqDate2']}">
+                                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${receipt.chqDate2}">
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -860,6 +860,13 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach var="table" items="${receiptCreditList}" varStatus="i">
+                                        <script>
+                                            $(document).ready(function () {
+                                                if("${table.creditExpire}" !== ''){
+                                                    $("#creditExpired${i.count}").val(convertFormatDate("${table.creditExpire}"));
+                                                }
+                                            });
+                                        </script>
                                             <tr>
                                         <input type="hidden" name="countCredit${i.count}" id="countCredit${i.count}" value="${i.count}">
                                         <input type="hidden" name="tableCreditId${i.count}" id="tableCreditId${i.count}" value="${table.id}">
@@ -876,8 +883,8 @@
                                             </select>                                                                  
                                         </td>
                                         <td><input maxlength="20" id="creditNo${i.count}" name="creditNo${i.count}" type="text" class="form-control" value="${table.creditNo}"></td>
-                                        <td><div class="input-group date">
-                                                <input id="creditExpired${i.count}" name="creditExpired${i.count}"  type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${table.creditExpire}">
+                                        <td  id="exdate-${i.count}" ><div class="input-group date">
+                                                <input id="creditExpired${i.count}" name="creditExpired${i.count}"  type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${table.creditExpire}">
                                                 <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                         </td>
@@ -1566,7 +1573,32 @@
 
     $(document).ready(function() {        
         $("#inv,#ref,#com").removeClass('hidden');
-        $('.datemask').mask('0000-00-00');
+        
+//        CreditDetailTable
+        
+        var receiveFromDate = $('#receiveFromDate').val();
+        if(receiveFromDate !== ''){
+            $('#receiveFromDate').val(convertFormatDate(receiveFromDate));
+        }   
+        
+        var receiveDate = $('#receiveDate').val();
+        if(receiveDate !== ''){
+            $('#receiveDate').val(convertFormatDate(receiveDate));
+        }   
+        
+        var chqDate1 = $('#chqDate1').val();
+        if(chqDate1 !== ''){
+            $('#chqDate1').val(convertFormatDate(chqDate1));
+        }   
+        
+        var chqDate2 = $('#chqDate2').val();
+        if(chqDate2 !== ''){
+            $('#chqDate2').val(convertFormatDate(chqDate2));
+        }   
+        
+        
+        
+        $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
         $(".money").mask('000,000,000.00', {reverse: true});
 
@@ -2405,7 +2437,7 @@
                 '<select class="form-control" name="creditBank' + row + '" id="creditBank' + row + '" ><option value="">---------</option></select>' +
                 '</td>' +
                 '<td><input maxlength="20" id="creditNo' + row + '" name="creditNo' + row + '" type="text" class="form-control" ></td>' +
-                '<td><div class="input-group date"><input id="creditExpired' + row + '" name="creditExpired' + row + '"  type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value=""><span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
+                '<td><div class="input-group date"><input id="creditExpired' + row + '" name="creditExpired' + row + '"  type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value=""><span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
                 '<td><input id="creditAmount' + row + '" name="creditAmount' + row + '" type="text" class="form-control decimal"></td>' +
                 '<td class="text-center">' +
                 '<a class="remCF" onclick="deleteCreditList(\'\', \'' + row + '\')">  ' +
