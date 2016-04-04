@@ -284,7 +284,7 @@
                                     <label  class="col-sm-3 control-label text-right"  id="tranDateText" >Transfer Date</label>
                                     <div class="col-sm-4" style="width: 194px">
                                         <div class='input-group date' name="tranDateDiv" id="tranDateDiv">
-                                            <input type='text' class="form-control"   data-date-format="YYYY-MM-DD" name="transferD" id="transferD" value="${billable.transferDate}"  />
+                                            <input type='text' class="form-control datemask"   data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" name="transferD" id="transferD" value="${billable.transferDate}"  />
                                             <span id="SpanGlyphiconCalendar" name="SpanGlyphiconCalendar" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -356,8 +356,8 @@
                                
                                 <div class="input-group  datetime" id="billDescId-${Counter.count}" name="billDescId-${Counter.count}">
                                     <input type="text" class="form-control text-center datemask"  
-                                       data-date-format="YYYY-MM-DD" name="billDate-${Counter.count}" id="billDate-${Counter.count}"
-                                       placeholder="YYYY-MM-DD" value="${b.billDate}" />
+                                       data-date-format="DD-MM-YYYY" name="billDate-${Counter.count}" id="billDate-${Counter.count}"
+                                       placeholder="DD-MM-YYYY" value="${b.billDate}" />
                                     <span id="SpanGroupAddon" class="input-group-addon spandate">
                                             <span id="SpanGlyphiconCalendar" class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -434,10 +434,17 @@
                     </thead>
                     <tbody>
                         <c:forEach var="table" items="${ReceiptDetailList}" varStatus="Counter">
+                        <script>
+                            $(document).ready(function () {
+                                if("${table.receiptDate}" !== ''){
+                                    $("#recdate-${table.id}").text(convertFormatDate("${table.receiptDate}"));
+                                }
+                            });
+                        </script>
                         <tr>
                             <td>${table.billDescription}</td>
                             <td>${table.receiptNo}</td>
-                            <td align="center">${table.receiptDate}</td>
+                            <td align="center" id="recdate-${table.id}">${table.receiptDate}</td>
                             <td>${table.receiptName}</td>
                             <td align="center">${table.receiptType}</td>
                             <td>${table.payment}</td>
@@ -813,6 +820,20 @@
 <!--Script-->                                
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
+        
+        var rowall = $("#billableTable tr").length;
+        for(var i = 1 ; i < rowall ;i++){
+            var date = $('#billDate-'+i).val();
+            if(date !=='' ){
+                $('#billDate-'+i).val(convertFormatDate(date));
+            }
+        }
+        var trandate = $('#transferD').val();
+        if(trandate !== ''){
+            $('#transferD').val(convertFormatDate(trandate));
+        }
+        
+        $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
         $(".datetime").datetimepicker({
                 pickTime: false   
@@ -826,18 +847,23 @@
             value=value.replace(/\.[0-9]+\./g, '.');
             $(this).val(value)
         });
-        $('.datemask').mask('0000-00-00');
+        
         $('.spandate').click(function () {
             var position = $(this).offset();
             console.log("positon :" + position.top);
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
 
         });
-
+        
         $("#MInitialname").val($("#Initialname").val());
         //setformat();
         //$(".moneyformat").mask('000,000,000,000,000,000', {reverse: true});
         setformat();
+        
+        
+        
+
+        
         
     });
     

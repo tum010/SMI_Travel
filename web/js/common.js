@@ -195,3 +195,10 @@ function setValueMonth() {
     var year = date.getFullYear();
     return monthNames[monthIndex] + "|" + year ;
 }
+
+
+function convertFormatDate(date){
+    var newDate = date.split("-");
+    var result = new Date(newDate[2], newDate[1] , newDate[0]);
+    return newDate[2] + "-" + newDate[1] + "-" + newDate[0];
+}

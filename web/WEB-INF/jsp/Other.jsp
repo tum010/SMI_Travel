@@ -161,9 +161,17 @@
                                 <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                                 <c:set var="statusicon" value="glyphicon-remove deleteicon" />
                              </c:if>
+                             
+                            <script>
+                                $(document).ready(function () {
+                                    if("${table.otherDate}" !== ''){
+                                        $("#otherdate-${table.id}").text(convertFormatDate("${table.otherDate}"));
+                                    }
+                                });
+                            </script>
                             <tr data-toggle="tooltip"  data-placement="left" title="<p align='left'>  Remark :${table.remark} <br> Remark Stock :${table.remarkTicket} </p>" ${colourStatus} ${colourStatus}>
                                 <td class="hidden tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}"> </td> 
-                                <td class="tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}"> ${table.otherDate} </td>
+                                <td class="tdcenter ${colourStatus}" id="otherdate-${table.id}" style="width:75px;${colourStatusFirstrow}"> ${table.otherDate} </td>
                                 <td> ${table.product.name}</td>
                                 
                                 <td class="tdright moneyformat"> ${table.adCost}</td>

@@ -29,6 +29,9 @@
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
+
+<input type="hidden" value="${booktype}" id="booktypetemp">
+
 <c:set var="DescriptionSize" value="670px" />
 <c:if test="${booktype == 'i'}">
     <c:set var="DescriptionSize" value="670px" />
@@ -520,9 +523,9 @@
                                         <div class="form-group">                                           
                                             <label for="effectivefrom" class="col-sm-3 control-label"> Depart Date </label>
                                             <div class=' col-sm-4 input-group datepicker' id='effectivefromClass' style="padding-left: 15px">
-                                                <input type='text' class="form-control"  id="departdate" name="departdate" data-date-format="YYYY-MM-DD" value="${requestScope['departdate']}" />
-                                                <input type='hidden' class="form-control"  id="todaydate" name="todaydate" data-date-format="YYYY-MM-DD" value=""/>
-                                                <input type='hidden' class="form-control"  id="checkdate" name="checkdate" data-date-format="YYYY-MM-DD" value="${requestScope['departdate']}"/>                                  
+                                                <input type='text' class="form-control datemask"  id="departdate" name="departdate" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" value="${requestScope['departdate']}" />
+                                                <input type='hidden' class="form-control datemask"  id="todaydate" name="todaydate" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" value=""/>
+                                                <input type='hidden' class="form-control datemask"  id="checkdate" name="checkdate" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" value="${requestScope['departdate']}"/>                                  
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -553,7 +556,7 @@
                                             
                                             <label for="effectivefrom" class="col-sm-3 control-label" > Arrive Date </label>
                                             <div class=' col-sm-4 input-group datepicker' id='effectivefromClass' style="padding-left: 15px">
-                                                <input type='text' class="form-control"  id="arrivedate" name="arrivedate" data-date-format="YYYY-MM-DD" value="${requestScope['arrivedate']}" />
+                                                <input type='text' class="form-control datemask"  id="arrivedate" name="arrivedate" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" value="${requestScope['arrivedate']}" />
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -751,7 +754,7 @@
                                     <td> <input style="width: 20px" id="row-${Counter.count}-no" name="row-${Counter.count}-no" type="text"  class="form-control number" value="${table.orderNo}">  </td>
                                     <td> 
                                         <div class='input-group daydatepicker' id='daydatepicker-${Counter.count}' style="padding-left: 15px">
-                                            <input style="width: 100px" type='text' class="form-control"  id="dayDate-${Counter.count}" name="dayDate-${Counter.count}" data-date-format="YYYY-MM-DD" value="${table.dayDate}" />
+                                            <input style="width: 100px" type='text' class="form-control datemask"  id="dayDate-${Counter.count}" name="dayDate-${Counter.count}" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" value="${table.dayDate}" />
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -976,7 +979,7 @@
                 '<td class="hidden"> <input id="row-' + row + '-id" name="row-' + row + '-id"  type="hidden" >  </td>' +
                 '<td><input style="width: 20px" id="row-' + row + '-no" name="row-' + row + '-no"   type="text" class="form-control number"  ></td>' +
                 '<td><div class="input-group daydatepicker" id="daydatepicker-' + row + '" style="padding-left: 15px">'+
-                '<input style="width: 100px" type="text" class="form-control"  id="dayDate-' + row + '" name="dayDate-' + row + '" data-date-format="YYYY-MM-DD" />'+
+                '<input style="width: 100px" type="text" class="form-control datemask"  id="dayDate-' + row + '" name="dayDate-' + row + '" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" />'+
                 '<span class="input-group-addon">' +                                               
                 '<i class="glyphicon glyphicon-calendar"></i></span></div></td>' +
                 '<td><input style="width: 80px" type="text" id="row-' + row + '-hour" name="row-' + row + '-hour" class="form-control time" placeholder="HH:MM" ></td>' +
@@ -991,14 +994,14 @@
         
     }
     
-        function AddRowFromValue(no,hour,description) {
-            row = parseInt($("#counter").val());
+    function AddRowFromValue(no,hour,description) {
+        var row = parseInt($("#counter").val());
         $("#LandItinerary tbody").append(
                 '<tr style="higth 100px">' +
                 '<td class="hidden"> <input id="row-' + row + '-id" name="row-' + row + '-id"  type="hidden" value="" >  </td>' +
                 '<td><input style="width: 20px" id="row-' + row + '-no" name="row-' + row + '-no"   type="text" class="form-control number" value="'+no+'" ></td>' +
                 '<td><div class="input-group daydatepicker" id="daydatepicker-' + row + '" style="padding-left: 15px">'+
-                '<input style="width: 100px" type="text" class="form-control"  id="row-' + row + '-date" name="row-' + row + '-date" data-date-format="YYYY-MM-DD" />'+
+                '<input style="width: 100px" type="text" class="form-control datemask"  id="row-' + row + '-date" name="row-' + row + '-date" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" />'+
                 '<span class="input-group-addon">' +                                               
                 '<i class="glyphicon glyphicon-calendar"></i></span></div></td>' +
                 '<td><input style="width: 80px" type="text" id="row-' + row + '-hour" name="row-' + row + '-hour" class="form-control time" placeholder="HH:MM" value="'+hour+'" ></td>' +
@@ -1162,6 +1165,27 @@ $('#savereal').on("keyup keypress", function(e) {
 
 
     $(document).ready(function() {
+        
+        var rowland = $("#LandItinerary tr").length;
+        for(var i = 1 ; i < rowland-1 ;i++){
+            var daydate = $('#dayDate-'+i).val();
+            if(daydate !=='' ){
+                $('#dayDate-'+i).val(convertFormatDate(daydate));
+            }
+        }
+        var booktypetemp = $('#booktypetemp').val();
+        if(booktypetemp === 'o'){
+            var dpdate = $('#departdate').val();
+            if(dpdate!==''){
+                $('#departdate').val(convertFormatDate(dpdate));
+            }
+
+            var ardate = $('#arrivedate').val();
+            if(ardate !=='' ){
+                $('#arrivedate').val(convertFormatDate(ardate));
+            }
+        }
+        
         $('.datepicker').datetimepicker().change(function(){                          
             setupdepartdatevalue('departdate');
         });
@@ -1372,3 +1396,8 @@ function replaceAll(find, replace, str) {
         $('#textAlertDivNotSave').show();
     </script>
 </c:if>
+<script>
+    $(document).ready(function () {
+            $('.datemask').mask('00-00-0000');
+        });
+</script>

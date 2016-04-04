@@ -99,9 +99,17 @@
                         <c:if test="${item.MItemstatus.id == 2}">
                             <c:set var="colourStatus" value="style='background-color: #FFD3D3'" />
                         </c:if>
+                        
+                        <script>
+                            $(document).ready(function () {
+                                if("${item.tourDate}" !== ''){
+                                    $("#date-${item.id}").text(convertFormatDate("${item.tourDate}"));
+                                }
+                            });
+                        </script>
                         <tr ${colourStatus} >
                             <td>${item.daytour.code}</td>
-                            <td class="text-center">${item.tourDate}</td>
+                            <td class="text-center" id="date-${item.id}">${item.tourDate}</td>
                             <c:choose>
                                 <c:when test="${item.place.place == 'OTHERS'}">
                                     <td>${item.pickupDetail}</td>
@@ -211,8 +219,16 @@
                             <c:set var="colourStatusFirstrow" value="background-color: #FFD3D3" />
                             <c:set var="statusicon" value="glyphicon-remove deleteicon" />
                         </c:if>
+                        
+                        <script>
+                            $(document).ready(function () {
+                                if("${table.otherDate}" !== ''){
+                                    $("#dateother-${table.id}").text(convertFormatDate("${table.otherDate}"));
+                                }
+                            });
+                        </script>
                         <tr data-toggle="tooltip"  data-placement="left" title="<p align='left'>  Remark :${table.remark} <br> Remark Stock :${table.remarkTicket} </p>" ${colourStatus} ${colourStatus}>
-                            <td class="tdcenter ${colourStatus}" style="width:75px;${colourStatusFirstrow}"> ${table.otherDate} </td>
+                            <td class="tdcenter ${colourStatus}" id="dateother-${table.id}" style="width:75px;${colourStatusFirstrow}"> ${table.otherDate} </td>
                             <td>${table.product.name}</td>
                             <td class="tdright moneyformat"> ${table.adCost}</td>
                             <td class="tdcenter moneyformat"> ${table.adQty}</td>

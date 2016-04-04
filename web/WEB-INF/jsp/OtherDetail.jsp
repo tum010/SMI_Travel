@@ -160,13 +160,13 @@
 
                                     <label for="effectivefrom" class="col-sm-3 control-label" > From </label>
                                     <div class=' col-sm-6 input-group date' id='effectivefromClass' style="width: 140px">
-                                        <input type='text' class="form-control"  id="otherdate" name="otherdate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['otherdate']}"/>                                     
+                                        <input type='text' class="form-control datemask"  id="otherdate" name="otherdate" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['otherdate']}"/>                                     
                                         <span class="input-group-addon spandate">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
-                                        <input type='hidden' class="form-control"  id="todaydate" name="todaydate" data-date-format="YYYY-MM-DD" value=""/>
-                                        <input type='hidden' class="form-control"  id="checkdate" name="checkdate" data-date-format="YYYY-MM-DD" value="${requestScope['otherdate']}"/>                                                                              
+                                        <input type='hidden' class="form-control datemask"  id="todaydate" name="todaydate" data-date-format="DD-MM-YYYY" value=""/>
+                                        <input type='hidden' class="form-control datemask"  id="checkdate" name="checkdate" data-date-format="DD-MM-YYYY" value="${requestScope['otherdate']}"/>                                                                              
                                 </div>
                             </div>
                             <div class="col-md-3 " style="margin-top: -5px;">
@@ -199,7 +199,7 @@
 
                                     <label for="effectivefrom" class="col-sm-3 control-label" > To </label>
                                     <div class=' col-sm-6 input-group date' id='effectivefromClass' style="width: 140px">
-                                        <input type='text' class="form-control"  id="otherdateTo" name="otherdateTo" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['otherdateTo']}"/>                                     
+                                        <input type='text' class="form-control datemask"  id="otherdateTo" name="otherdateTo" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['otherdateTo']}"/>                                     
                                         <span class="input-group-addon spandate">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -462,7 +462,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="table" items="${ticketList}" varStatus="i">                                   
+                                <c:forEach var="table" items="${ticketList}" varStatus="i">        
+                                    <script>
+                                        $(document).ready(function () {
+                                            if("${table.addDate}" !== ''){
+                                                $("#addDate-${table.id}").text(convertFormatDate("${table.addDate}"));
+                                            }
+                                        });
+                                    </script>
                                     <tr>
                                         <td class="hidden">
                                             <input type="hidden" class="form-control" id="stockticketid${i.count}" name="stockticketid${i.count}" value="${table.id}">
@@ -471,7 +478,7 @@
                                             <input type="checkbox" class="form-control" id="selectAll${i.count}" name="selectAll${i.count}" value="1" onclick="removeAlertCheckbox()">
                                         </td>
                                         <td align="center">${i.count}</td>
-                                        <td align="center">${table.addDate}</td>
+                                        <td align="center" id="addDate-${table.id}">${table.addDate}</td>
                                         <td>${table.ticketCode}</td>
                                         <td align="center">${table.typeName}</td>
                                         <th align="center">
@@ -596,7 +603,20 @@
                             "bLengthChange": false,
                             "iDisplayLength": 10
                         });
-
+                        
+                        var otdate = $('#otherdate').val();
+                        if(otdate !== ''){
+                            $('#otherdate').val(convertFormatDate(otdate));
+                        }
+                        var otdateto = $('#otherdateTo').val();
+                        if(otdateto !== ''){
+                            $('#otherdateTo').val(convertFormatDate(otdateto));
+                        }
+                        var ccdate = $('#cancelDate').val();
+                        if(ccdate !== ''){
+                            $('#cancelDate').val(convertFormatDate(ccdate));
+                        }
+                        
                         $('#ProductTable tbody').on('click', 'tr', function() {
                             if ($(this).hasClass('row_selected')) {
                                 $(this).removeClass('row_selected');
@@ -620,7 +640,7 @@
                         var now = new Date();
                         var day = ("0" + now.getDate()).slice(-2);
                         var month = ("0" + (now.getMonth() + 1)).slice(-2);
-                        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+                        var today = (day)+"-"+(month)+"-"+now.getFullYear() ;
                         $('#todaydate').val(today);
                                                                                               
                         $('.spandate').click(function() {
@@ -804,6 +824,13 @@
 
 <c:if test="${! empty requestScope['result']}">
     <script language="javascript">
+        
         alert('<c:out value="${requestScope['result']}" />');
     </script>
 </c:if>
+    
+<script>
+    $(document).ready(function () {
+            $('.datemask').mask('00-00-0000');
+        });
+</script>
