@@ -150,15 +150,15 @@ public class HotelDetailController extends SMITravelController {
             }
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-            try {
-                Date dateCheckIn = formatter.parse(checkin);
-                Date dateCheckOut = formatter.parse(checkout);
+//            try {
+                Date dateCheckIn = util.convertStringToDate(checkin);
+                Date dateCheckOut = util.convertStringToDate(checkout);
                 System.out.println(formatter.format(dateCheckIn));
                 hotelBooking.setCheckin(dateCheckIn);
                 hotelBooking.setCheckout(dateCheckOut);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
             System.out.println("hotelRequestRows : "+hotelRequestRows);
             setHotelRoom(request, hotelRoomRows, hotelBooking);
             setHotelRequest(request, hotelRequestRows, hotelBooking);

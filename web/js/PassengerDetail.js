@@ -2,6 +2,10 @@
 var showflag = 1;
 $(document).ready(function () {
     // DATATIMEPICKER
+    if($("#birthDate").val() !== ''){
+        var date = $("#birthDate").val();
+        $("#birthDate").val(convertFormatDate(date));
+    }
     $('.date').datetimepicker();
     $('.spandate').click(function () {
         var position = $(this).offset();
@@ -9,7 +13,7 @@ $(document).ready(function () {
     });
     $('body').on('click mousemove', function () {
         //getDate();
-        var birthDate = new Date($('#birthDate').val());
+        var birthDate = new Date(convertFormatDate($('#birthDate').val()));
         var age = _calculateAge(birthDate);
         if($("#birthDate").val() === ""){
             $("#age").val(0);
@@ -120,7 +124,7 @@ $(document).ready(function () {
             }
         
     });
-    
+      
 //Autocomplete Ajax end  
 });
 

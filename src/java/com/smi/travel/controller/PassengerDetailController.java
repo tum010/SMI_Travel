@@ -69,7 +69,7 @@ public class PassengerDetailController extends SMITravelController {
         String birth = request.getParameter("birthDate");
         Date birthdate = null;
         if (StringUtils.isNotEmpty(birth)) {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             birthdate = util.convertStringToDate(birth);       
 //            try {
 //                birthdate = formatter.parse(String.valueOf(birth));

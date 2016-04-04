@@ -107,7 +107,7 @@
                             <div class="padding5">
                                 <div class="form-group" style="margin-top: 0px;">
                                     <input type="hidden" id="existCode" value="${EXISTCODE}" placeholder="code_Exist" />
-                                    <input type="text" class="form-control" id="customerId" placeholder="id" name="customerId" value="${passenger.getCustomer().getId()}" />
+                                    <input type="hidden" class="form-control" id="customerId" placeholder="id" name="customerId" value="${passenger.getCustomer().getId()}" />
                                     <label for="Order" class="col-sm-2 text-right">Order</label>
                                     <div class="col-sm-3">
                                         <input  value="${passenger.orderNo}" type="text" class="form-control" id="Order" placeholder="Order" name="orderNo" readonly="" />

@@ -1,5 +1,17 @@
 // ### SET DEFAULT PAEG ### //
 $(document).ready(function () {
+    if($("#checkin").val() !== ''){
+        var date = $("#checkin").val();
+        $("#checkin").val(convertFormatDate(date));
+    }
+    if($("#checkout").val() !== ''){
+        var date = $("#checkout").val();
+        $("#checkout").val(convertFormatDate(date));
+    }
+    if($("#deadline").val() !== ''){
+        var date = $("#deadline").val();
+        $("#deadline").val(convertFormatDate(date));
+    }
     $('.date').datetimepicker();
     $('.spandate').click(function () {
         var position = $(this).offset();
@@ -56,7 +68,7 @@ $(document).ready(function () {
                         message: 'The Chick In is required'
                     },
                     date: {
-                        format: 'YYYY-MM-DD',
+                        format: 'DD-MM-YYYY',
                         message: 'The value is not a valid date'
                     }
                 }
@@ -67,7 +79,7 @@ $(document).ready(function () {
                         message: 'The Chick out is required'
                     },
                     date: {
-                        format: 'YYYY-MM-DD',
+                        format: 'DD-MM-YYYY',
                         message: 'The value is not a valid date'
                     }
                 }
@@ -75,7 +87,7 @@ $(document).ready(function () {
             deadline: {
                 validators: {
                     date: {
-                        format: 'YYYY-MM-DD',
+                        format: 'DD-MM-YYYY',
                         message: 'The value is not a valid date'
                     }
                 }
@@ -177,10 +189,11 @@ $(document).ready(function () {
 
 });
 function getDate() {
-    var start = new Date($('#checkin').val());
-    var end = new Date($('#checkout').val());
+    var start = new Date(convertFormatDate($('#checkin').val()));
+    var end = new Date(convertFormatDate($('#checkout').val()));
     var diff = new Date(end - start);
-    var days = diff / 1000 / 60 / 60 / 24;
+    var days = diff / 24 / 60 / 60 / 1000;
+//    var days = diff / 1000 / 60 / 60 / 24;
     if (days) {
         $("#day").val(days);
 //        console.log('checkin : ' + start);

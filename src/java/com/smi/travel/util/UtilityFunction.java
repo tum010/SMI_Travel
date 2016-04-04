@@ -71,10 +71,10 @@ public class UtilityFunction {
         try {
             if ((day != null) && (!"".equalsIgnoreCase(day))) {
                 if(isValidFormat(format1,day)){
-                    SimpleDateFormat sdf = new SimpleDateFormat(format1);
-                    resultDate = sdf.parse(day);    
+                    SimpleDateFormat sdf = new SimpleDateFormat(format1, Locale.US);
+                    resultDate = sdf.parse(day);
                 }else if(isValidFormat(format2,day)){
-                    SimpleDateFormat sdf = new SimpleDateFormat(format2);
+                    SimpleDateFormat sdf = new SimpleDateFormat(format2, Locale.US);
                     resultDate = sdf.parse(day);
                 }
                 
@@ -85,7 +85,6 @@ public class UtilityFunction {
             ex.printStackTrace();
             return null;
         }
-
         return resultDate;
     }
     //another condition string to date

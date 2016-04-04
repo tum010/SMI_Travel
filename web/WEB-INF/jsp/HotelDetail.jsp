@@ -135,7 +135,7 @@
                                 <label class="col-sm-5 control-label text-right">Check In <strong style="color: red">*</strong></label>
                                 <div class="col-sm-6">
                                     <div class='input-group date'>
-                                        <input id="checkin" name="checkin" type='text' class="form-control"  data-date-format="YYYY-MM-DD" value="${hotelBooking.checkin}" placeholder="YYYY-MM-DD"/>
+                                        <input id="checkin" name="checkin" type='text' class="form-control"  data-date-format="DD-MM-YYYY" value="${hotelBooking.checkin}" placeholder="DD-MM-YYYY"/>
                                         <span id="SpanCheckin" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
@@ -145,7 +145,7 @@
                                 <label class="col-sm-5 control-label text-right">Check Out <strong style="color: red">*</strong></label>
                                 <div class="col-sm-6">
                                     <div class='input-group date'>
-                                        <input id="checkout" name="checkout" type='text'  data-date-format="YYYY-MM-DD" class="form-control" value="${hotelBooking.checkout}" placeholder="YYYY-MM-DD"/>
+                                        <input id="checkout" name="checkout" type='text'  data-date-format="DD-MM-YYYY" class="form-control" value="${hotelBooking.checkout}" placeholder="DD-MM-YYYY"/>
                                         <span id="SpanCheckout" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
@@ -174,7 +174,7 @@
                                 <label class="col-sm-5 control-label text-right">Deadline</label>
                                 <div class="col-sm-6">
                                     <div class="input-group date">
-                                        <input name="deadline" id="deadline" type="text"  data-date-format="YYYY-MM-DD" maxlength="10" class="form-control" value="${hotelBooking.deadline}" placeholder="YYYY-MM-DD"/>
+                                        <input name="deadline" id="deadline" type="text"  data-date-format="DD-MM-YYYY" maxlength="10" class="form-control" value="${hotelBooking.deadline}" placeholder="DD-MM-YYYY"/>
                                         <span id="SpanDeadline" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>

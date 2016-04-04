@@ -163,7 +163,7 @@
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker3'>
                                                 <input type='text' class="form-control" name="get_deadline" id="deadline" 
-                                                       data-date-format="YYYY-MM-DD" value="${booking.deadline}"  placeholder="YYYY-MM-DD"/>
+                                                       data-date-format="DD-MM-YYYY" value="${booking.deadline}"  placeholder="DD-MM-YYYY"/>
                                                 <span id="SpanGroupAddon" class="input-group-addon spandate">
                                                     <span id="SpanGlyphiconCalendar" class="glyphicon glyphicon-calendar"></span>
                                                 </span>

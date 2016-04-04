@@ -81,6 +81,7 @@ public class AirTicketController extends SMITravelController {
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         int result = 0;
+        UtilityFunction util = new UtilityFunction();
         String action = request.getParameter("action");
         String refNo = request.getParameter("referenceNo");
         String airBookingId = request.getParameter("airBookingId");
@@ -171,11 +172,12 @@ public class AirTicketController extends SMITravelController {
             
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date deadlineDate = null;
-            try {
-                deadlineDate = formatter.parse(deadline);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            deadlineDate = util.convertStringToDate(deadline);
+//            try {
+//                deadlineDate = formatter.parse(deadline);
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
             System.out.println("[ownerName=" + ownerName + "], [issueName=" + issueName + "], [deadline=" + deadline + "]");
             AirticketBooking airBook = bookingAirticketService.getBookDetailAir(refNo);
 
