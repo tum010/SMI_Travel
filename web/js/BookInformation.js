@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 $(document).ready(function() {
-    $('.datemask').mask('0000-00-00');
+//    setDateFormat();
+    $('.datemask').mask('00-00-0000');
     $('.date').datetimepicker();
     $('.spandate').click(function() {
         var position = $(this).offset();
@@ -267,5 +268,28 @@ function changeColor(id,type,page){
 
     $("#currentPage").val(page);
 
+}
+
+function setDateFormat(){
+    if($("#bookDate").val() !== ''){
+        var date = $("#bookDate").val();
+        $("#bookDate").val(convertFormatDate(date));
+    }
+    if($("#hotelCheckIn").val() !== ''){
+        var date = $("#hotelCheckIn").val();
+        $("#hotelCheckIn").val(convertFormatDate(date));
+    }
+    if($("#hotelCheckOut").val() !== ''){
+        var date = $("#hotelCheckOut").val();
+        $("#hotelCheckOut").val(convertFormatDate(date));
+    }
+    if($("#tourDate").val() !== ''){
+        var date = $("#tourDate").val();
+        $("#tourDate").val(convertFormatDate(date));
+    }
+    if($("#otherDate").val() !== ''){
+        var date = $("#otherDate").val();
+        $("#otherDate").val(convertFormatDate(date));
+    }
 }
 

@@ -10,9 +10,11 @@ import com.smi.travel.datalayer.service.WorkSpaceService;
 import com.smi.travel.datalayer.view.entity.BookingView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -51,9 +53,10 @@ public class BookController extends SMITravelController {
         String bankTransfer = "";
         
         //Set Date dormat
-        Bookdate = (!"".equalsIgnoreCase(Bookdate) && Bookdate != null ? util.convertDateToString(util.convertStringToDate(Bookdate)) : "");
-        transferDateFrom = (!"".equalsIgnoreCase(transferDateFrom) && transferDateFrom != null ? util.convertDateToString(util.convertStringToDate(transferDateFrom)) : "");
-        transferDateTo = (!"".equalsIgnoreCase(transferDateTo) && transferDateTo != null ? util.convertDateToString(util.convertStringToDate(transferDateTo)) : "");       
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        Bookdate = (!"".equalsIgnoreCase(Bookdate) && Bookdate != null ? sdf.format(util.convertStringToDate(Bookdate)) : "");
+        transferDateFrom = (!"".equalsIgnoreCase(transferDateFrom) && transferDateFrom != null ? sdf.format(util.convertStringToDate(transferDateFrom)) : "");
+        transferDateTo = (!"".equalsIgnoreCase(transferDateTo) && transferDateTo != null ? sdf.format(util.convertStringToDate(transferDateTo)) : "");       
         
         if("4".equalsIgnoreCase(payBy)){
             bankTransfer = request.getParameter("bankTransfer");

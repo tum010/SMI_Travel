@@ -8,8 +8,11 @@ import com.smi.travel.datalayer.view.entity.BookingLandSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingOtherSummaryView;
 import com.smi.travel.datalayer.view.entity.BookingPackageSummaryView;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,6 +28,7 @@ public class BookInformationController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         String action = request.getParameter("action");
         String bookRefNo = request.getParameter("bookRefNo");
         String bookLeader = request.getParameter("bookLeader");
@@ -50,7 +54,16 @@ public class BookInformationController extends SMITravelController {
         String landOkBy = request.getParameter("landOkBy");
         String landCategory = request.getParameter("landCategory");
         String landAgent = request.getParameter("landAgent");
-               
+        
+        //Set Date dormat
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+//        bookDate = (!"".equalsIgnoreCase(bookDate) && bookDate != null ? sdf.format(util.convertStringToDate(bookDate)) : "");
+//        airDeptDate = (!"".equalsIgnoreCase(airDeptDate) && airDeptDate != null ? sdf.format(util.convertStringToDate(airDeptDate)) : "");
+//        hotelCheckIn = (!"".equalsIgnoreCase(hotelCheckIn) && hotelCheckIn != null ? sdf.format(util.convertStringToDate(hotelCheckIn)) : "");
+//        hotelCheckOut = (!"".equalsIgnoreCase(hotelCheckOut) && hotelCheckOut != null ? sdf.format(util.convertStringToDate(hotelCheckOut)) : "");
+//        tourDate = (!"".equalsIgnoreCase(tourDate) && tourDate != null ? sdf.format(util.convertStringToDate(tourDate)) : "");   
+//        otherDate = (!"".equalsIgnoreCase(otherDate) && otherDate != null ? sdf.format(util.convertStringToDate(otherDate)) : "");
+        
         if("search".equalsIgnoreCase(action)){
             if("1".equalsIgnoreCase(bookType)){//Air
                 List<BookingAirSummaryView> bookingAirSummaryViewList = new LinkedList<BookingAirSummaryView>();
