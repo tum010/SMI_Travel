@@ -6,13 +6,14 @@
 package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.Customer;
+import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.Passenger;
-import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.service.BookingAirticketService;
-import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.service.PassengerService;
+import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,8 +49,9 @@ public class PassengerDetailController extends SMITravelController {
     private static final String ISBILLSTATUS = "IsBillStatus";
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-
+        
         System.out.println("PassengerDetailController");
+        UtilityFunction util = new UtilityFunction();
         
         String refNo = request.getParameter("referenceNo");
         String action = request.getParameter("action");
@@ -68,12 +70,12 @@ public class PassengerDetailController extends SMITravelController {
         Date birthdate = null;
         if (StringUtils.isNotEmpty(birth)) {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
-            try {
-                birthdate = formatter.parse(birth);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            birthdate = util.convertStringToDate(birth);       
+//            try {
+//                birthdate = formatter.parse(String.valueOf(birth));
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
         }
         String sex = request.getParameter("sex");
         String address = request.getParameter("address");

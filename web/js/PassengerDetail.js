@@ -53,7 +53,7 @@ $(document).ready(function () {
                     birthDate: {
                         validators: {
                             date: {
-                                format: 'YYYY-MM-DD',
+                                format: 'DD-MM-YYYY',
                                 message: 'The value is not a valid date'
                             }
                         }
