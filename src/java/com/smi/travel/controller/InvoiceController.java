@@ -47,6 +47,7 @@ public class InvoiceController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         System.out.println("request.getRequestURI() :"+request.getRequestURI());
         String callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");//request.getParameter("type");
         String buttonVoid = request.getParameter("buttonVoid");
@@ -56,12 +57,12 @@ public class InvoiceController extends SMITravelController {
        
         String invoiceType = request.getParameter("InputInvoiceType");
         String invoiceId = request.getParameter("InvoiceId");
-        String InputInvDate = request.getParameter("InputInvDate");
+        String InputInvDate = (!"".equalsIgnoreCase(request.getParameter("InputInvDate")) && request.getParameter("InputInvDate")!=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(request.getParameter("InputInvDate"))) : "" ; 
         String invoiceNo = request.getParameter("InvNo");
         String invoiceTo = request.getParameter("InvTo");
         String invoiceName = request.getParameter("InvToName");
         String invoiceAddress = request.getParameter("InvToAddress");
-        String dueDate = request.getParameter("InputDueDate");
+        String dueDate = (!"".equalsIgnoreCase(request.getParameter("InputDueDate")) && request.getParameter("InputDueDate")!=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(request.getParameter("InputDueDate"))) : "" ; 
         String termPay = request.getParameter("TermPay");
         String department = request.getParameter("Department");
         String staffId =  request.getParameter("SaleStaffId");

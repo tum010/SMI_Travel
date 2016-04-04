@@ -6,9 +6,11 @@ import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.datalayer.view.entity.InvoiceView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,9 +26,10 @@ public class SearchInvoiceController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         String callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");//request.getParameter("type");
-        String fromdate = request.getParameter("FromDate");
-        String todate = request.getParameter("ToDate");
+        String fromdate = (!"".equalsIgnoreCase(request.getParameter("FromDate")) && request.getParameter("FromDate")!=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(request.getParameter("FromDate"))) : "" ; 
+        String todate = (!"".equalsIgnoreCase(request.getParameter("ToDate")) && request.getParameter("ToDate")!=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(request.getParameter("ToDate"))) : "" ; 
         String department = request.getParameter("Department");
         String type = request.getParameter("Type");
         String action = request.getParameter("action");

@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -39,6 +40,7 @@ public class InvoiceInboundController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         System.out.println("request.getRequestURI() :"+request.getRequestURI());
         String callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");//request.getParameter("type");
         //Attribute Invoice
@@ -50,7 +52,7 @@ public class InvoiceInboundController extends SMITravelController {
         String invoiceTo = request.getParameter("InvTo");
         String invoiceName = request.getParameter("InvToName");
         String invoiceAddress = request.getParameter("InvToAddress");
-        String InputInvDate = request.getParameter("InputInvDate");
+        String InputInvDate = (!"".equalsIgnoreCase(request.getParameter("InputInvDate")) && request.getParameter("InputInvDate")!=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(request.getParameter("InputInvDate"))) : "" ; 
         System.out.println("Date Invoice : " + InputInvDate);
         String arCode = request.getParameter("ARCode");
         

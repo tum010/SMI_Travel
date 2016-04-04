@@ -324,7 +324,7 @@
                                 <div class='input-group date' id='InputDatePicker'>    
                                     <div class='input-group date' id='InputDatePicker'>    
                                         <input id="InputInvDate" name="InputInvDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${create}">
+                                           class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${create}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                              
                                     </div>
                                 </div>
@@ -336,12 +336,12 @@
                                 <div class='input-group date' id='InputDatePicker'>
                                     <c:if test='${invoice.dueDate != null}'>
                                         <input id="InputDueDate" name="InputDueDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${duedate}">
+                                               class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${invoice.dueDate}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                         
                                         </c:if>
                                         <c:if test='${invoice.dueDate == null}'>
                                         <input id="InputDueDate" name="InputDueDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
+                                               class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['']}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                              
                                         </c:if>                             
                                 </div>
@@ -1215,8 +1215,19 @@
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
+        
+        var InputInvDate = $('#InputInvDate').val();
+        if(InputInvDate !== ''){
+            $('#InputInvDate').val(convertFormatDate(InputInvDate));
+        } 
+        var InputDueDate = $('#InputDueDate').val();
+        if(InputDueDate !== ''){
+            $('#InputDueDate').val(convertFormatDate(InputDueDate));
+        }  
+        
+        
         $('.date').datetimepicker();
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);

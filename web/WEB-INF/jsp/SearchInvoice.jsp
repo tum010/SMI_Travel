@@ -51,13 +51,13 @@
                         <div class='input-group date fromdate' id="DateFrom">
                             <c:if test='${fromdate != null}'>
                                 <input id="FromDate" name="FromDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${fromdate}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${fromdate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
                             <c:if test='${fromdate == null}'>
                                 <input id="FromDate" name="FromDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>                             
@@ -70,13 +70,13 @@
                         <div class='input-group date todate' id="DateTo">
                             <c:if test='${todate != null}'>
                                 <input id="ToDate" name="ToDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${todate}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${todate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
                             <c:if test='${todate == null}'>
                                 <input id="ToDate" name="ToDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['']}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>                             
@@ -243,10 +243,17 @@
                         </thead>
                         <tbody> 
                             <c:forEach var="inv" items="${listInvoice}" varStatus="taxdesc">
+                                <script>
+                                    $(document).ready(function () {
+                                        if("${inv.invoiceDate}" !== ''){
+                                            $("#invoiceDate-${taxdesc.count}").text(convertFormatDate("${inv.invoiceDate}"));
+                                        }
+                                    });
+                                </script>
                                 <tr>
                                     <td class="hidden"><input type="text"  id="inputInvoiceId${taxdesc.count}" name="inputInvoiceId" value="${inv.invoiceId}"></td>
                                     <td align="center">${inv.invoiceNo}</td>
-                                    <td >${inv.invoiceDate}</td>
+                                    <td id="invoiceDate-${taxdesc.count}">${inv.invoiceDate}</td>
                                     <td >${inv.name}</td>
                                     <td >${inv.address}</td>
 <!--                                    <td align="right" class="money"><fmt:formatNumber type="number" maxFractionDigits="3" value="${inv.totalPrice}"/> </td>-->
@@ -374,7 +381,17 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
         var typetemp = '${requestScope['type']}' ;
-        $('.datemask').mask('0000-00-00');
+         var fromdates = $('#FromDate').val();
+        if(fromdates !== ''){
+            $('#FromDate').val(convertFormatDate(fromdates));
+        }   
+        
+        var todates = $('#ToDate').val();
+        if(todates !== ''){
+            $('#ToDate').val(convertFormatDate(todates));
+        }   
+        
+        $('.datemask').mask('00-00-0000');
         if(typetemp === 'T'){
             $('#Type')
                 .find('option')
@@ -420,7 +437,7 @@
                         trigger: 'focus keyup change',
                             validators: {
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     max: 'ToDate',
                                     message: 'The Date From is not a valid'
                                 },notEmpty: {
@@ -432,7 +449,7 @@
                         trigger: 'focus keyup change',
                             validators: {
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     min: 'FromDate',
                                     message: 'The Date To is not a valid'
                                 },notEmpty: {
