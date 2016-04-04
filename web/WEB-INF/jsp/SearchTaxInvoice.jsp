@@ -36,20 +36,22 @@
                 <div class="col-xs-1 text-right">
                     <label class="control-label" for="">From<font style="color: red">*</font>&nbsp;</lable>
                 </div>
-                <div class="col-md-2 form-group"> 
+                <div class="col-md-2 form-group">
+                    <%--<fmt:parseDate value="${requestScope['inputFromDate']}" var="fromDate" pattern="dd-MM-yyyy" />--%>
                     <div class='input-group date fromdate' id="FromDate">
                         <input id="InputFromDate" name="InputFromDate"  type="text" onfocusout="checkDate()"
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputFromDate']}">
+                            class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['inputFromDate']}">
                         <span class="input-group-addon spandate" id="InputFromDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputFromDateSpan2"></span></span>                                                         
                     </div>
                 </div>
                 <div class="col-xs-1 text-right">
                     <label class="control-label" for="">To<font style="color: red">*</font>&nbsp;</lable>
                 </div>
-                <div class="col-md-2 form-group"> 
+                <div class="col-md-2 form-group">
+                    <%--<fmt:parseDate value="${requestScope['inputToDate']}" var="toDate" pattern="dd-MM-yyyy" />--%>
                     <div class='input-group date todate' id='ToDate'>                    
                         <input id="InputToDate" name="InputToDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputToDate']}">
+                            class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['inputToDate']}">
                         <span class="input-group-addon spandate" id="InputToDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputToDateSpan2"></span></span>                                                       
                     </div>
                 </div>
@@ -176,9 +178,17 @@
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
+        if($("#InputFromDate").val() !== ''){
+            var date = $("#InputFromDate").val();
+            $("#InputFromDate").val(convertFormatDate(date));
+        }
+        if($("#InputToDate").val() !== ''){
+            var date = $("#InputToDate").val();
+            $("#InputToDate").val(convertFormatDate(date));
+        }
         $(".money").mask('000,000,000,000.00', {reverse: true});
         $('.date').datetimepicker();
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('.spandate').click(function () {
             var position = $(this).offset();
             console.log("positon :" + position.top);
@@ -229,7 +239,7 @@
                                     message: 'The Date From is required'
                                 },
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     max: 'InputToDate',
                                     message: 'The Date From is not a valid'
                                 }
@@ -242,7 +252,7 @@
                                     message: 'The Date From is required'
                                 },
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     min: 'InputFromDate',
                                     message: 'The Date To is not a valid'
                                 }
@@ -328,11 +338,11 @@
         if((inputFromDate.value !== '') && (InputToDate.value !== '')){
             var fromDate = (inputFromDate.value).split('-');
             var toDate = (InputToDate.value).split('-');
-            if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+            if((parseInt(fromDate[2])) > (parseInt(toDate[2]))){
                 validateDate(date,"over");
-            }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+            }else if(((parseInt(fromDate[2])) >= (parseInt(toDate[2]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
                 validateDate(date,"over");
-            }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+            }else if(((parseInt(fromDate[2])) >= (parseInt(toDate[2]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[0])) > (parseInt(toDate[0]))){
                 validateDate(date,"over");
             }else{
                 $('#TaxInvoiceSearchForm').bootstrapValidator('revalidateField', 'InputFromDate');
