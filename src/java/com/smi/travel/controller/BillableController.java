@@ -84,7 +84,7 @@ public class BillableController extends SMITravelController {
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         int result = 0;
-        UtilityFunction Util = new UtilityFunction();
+        UtilityFunction util = new UtilityFunction();
         String refNo = request.getParameter("referenceNo");
         String action = request.getParameter("action");
 
@@ -101,11 +101,11 @@ public class BillableController extends SMITravelController {
         MAccterm accterm = this.getAcctermById(acctermS);
 //        Date billDate = convertStringToDate(billdate);
         String transferD = request.getParameter("transferD");
-        Date transferDate = convertStringToDate(transferD);
+        Date transferDate = util.convertStringToDate(transferD);
         String accIdS = request.getParameter("accId");
         MBank accId = this.getBankAccountById(accIdS);
         String deleteresult = request.getParameter("deleteresult");
-        request.setAttribute("thisdate", Util.convertDateToString(new Date()));
+        request.setAttribute("thisdate", util.convertDateToString(new Date()));
         Integer checkedPayable = null;
         if ("on".equalsIgnoreCase(payable)) {
             checkedPayable = new Integer(0);
@@ -161,7 +161,7 @@ public class BillableController extends SMITravelController {
                         System.out.println("+++ insert exratetemp ++++ " + exratetemp);
                         exrate = new BigDecimal(exratetemp);
                     }
-                    Date billDate = convertStringToDate(billdate);
+                    Date billDate = util.convertStringToDate(billdate);
                     System.out.println("remark insert: "+ i + remark);
                     System.out.println("billDate insert: " + i + billDate);
                     System.out.println("exrate insert: " + i + exrate);
@@ -267,7 +267,7 @@ public class BillableController extends SMITravelController {
                     String remark = request.getParameter("remark-" + i);
                     String billdate = request.getParameter("billDate-"+ i);
                     String exratetemp = request.getParameter("exrate-"+ i);
-                    Date billDate = convertStringToDate(billdate);
+                    Date billDate = util.convertStringToDate(billdate);
                     BigDecimal exrate = null;
                     if(!"".equalsIgnoreCase(exratetemp)){
                         System.out.println("+++ exratetemp ++++ " + exratetemp);
@@ -453,7 +453,7 @@ public class BillableController extends SMITravelController {
     }
 
     private void getBillDescListForm(HttpServletRequest request, Billable billable, int index) {
-
+        UtilityFunction util = new UtilityFunction();
         String billtypeS = request.getParameter("billtype-" + index).trim();
         MBilltype billtype = utilservice.getMBilltypeFromName(billtypeS);
         AirticketAirline airB = null;
@@ -468,7 +468,7 @@ public class BillableController extends SMITravelController {
         String exratetemp = request.getParameter("exrate-"+index);
         String refId = request.getParameter("billRefId-"+index);
         
-        Date billDate =    convertStringToDate(billdate);
+        Date billDate = util.convertStringToDate(billdate);
         System.out.println("remark[" + index + "] : " + remark);
         int price = Integer.parseInt(priceS);
         BillableDesc bd = new BillableDesc();
