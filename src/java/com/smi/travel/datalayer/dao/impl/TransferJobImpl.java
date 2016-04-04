@@ -106,7 +106,12 @@ public class TransferJobImpl implements TransferJobDao {
     public List<TransferJob> searchTransferJob(String StartDate, String EndDate,String Hotel) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
-        String query = "from TransferJob tr where tr.transferDate >= '"+StartDate+"' and tr.transferDate <= '"+EndDate+"'";
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyyy-MM-dd");   
+        
+        String start = String.valueOf(df.format(util.convertStringToDate(StartDate)));
+        String end = String.valueOf(df.format(util.convertStringToDate(EndDate)));
+        String query = "from TransferJob tr where tr.transferDate >= '"+start+"' and tr.transferDate <= '"+end+"'";
         
         if(!"".equalsIgnoreCase(Hotel)&&(Hotel != null)){
             query += " and tr.place like '%"+Hotel+"%'";

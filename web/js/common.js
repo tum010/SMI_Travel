@@ -202,3 +202,11 @@ function convertFormatDate(date){
     var result = new Date(newDate[2], newDate[1] , newDate[0]);
     return newDate[2] + "-" + newDate[1] + "-" + newDate[0];
 }
+
+function convertFormatDateAndTime(date){
+    var dateandtime = date.split(" ");
+    var date = dateandtime[0].split("-");
+    var time = dateandtime[1];
+    
+    return date[2] + "-" + date[1] + "-" + date[0] + " " + time;
+}

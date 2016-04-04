@@ -117,14 +117,14 @@
                         <div class='input-group date' id='InputDatePicker'>
                             <c:if test='${dayTourOperation.tourDate != null}'>
                                 <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${dayTourOperation.tourDate}">
-                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['tourDates']}">
+                                <span class="input-group-addon "><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
                             <c:if test='${dayTourOperation.tourDate == null}'>
                                 <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['tourDate']}">
-                                <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['tourDate']}">
+                                <span class="input-group-addon "><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>   
                             
@@ -1393,10 +1393,17 @@
                     </thead>
                     <tbody>
                         <c:forEach var="table" items="${dayTourList}" varStatus="dayStatus">
+                            <script>
+                                $(document).ready(function () {
+                                    if("${table.tourDate}" !== ''){
+                                        $("#tourdate-${table.id}").text(convertFormatDate("${table.tourDate}"));
+                                    }
+                                });
+                            </script>
                             <tr class="packet">
-                                <td class="pack-date">${table.tourDate}</td>
+                                <td class="pack-date" id="tourdate-${table.id}">${table.tourDate}</td>
                                 <td>${table.daytour.code}</td>
-                                <td class="text-center">
+                                <td class="text-center" >
                                     <a href="DaytourOperationDetail.smi?action=edit&tourID=${table.daytour.id}&tourDate=${table.tourDate}">
                                         <span class="glyphicon glyphicon-check"></span>
                                     </a>
@@ -1503,7 +1510,7 @@
                     }
 
                     $('.date').datetimepicker();
-                    $('.datemask').mask('0000-00-00');
+                    $('.datemask').mask('00-00-0000');
                     $("#tourTable tr").on('click', function () {//winit
                         $("#TourModal").modal('hide');
                         var tour_id = $(this).find(".tour-id").html();

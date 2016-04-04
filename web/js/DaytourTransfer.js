@@ -2,7 +2,7 @@
 $(document).ready(function () {
     //Number
     $(".money").mask('000,000,000', {reverse: true});
-    $(".datemask").mask('0000-00-00', {reverse: true});
+    
     $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);

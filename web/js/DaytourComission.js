@@ -8,6 +8,15 @@ var controlGuide;
 var controlAgent;
 
 $(document).ready(function() {
+    var InputDateFrom = $('#InputDateFrom').val();
+    if(InputDateFrom !== ''){
+        $('#InputDateFrom').val(InputDateFrom);
+    }
+    var InputDateTo = $('#InputDateTo').val();
+    if(InputDateTo !== ''){
+        $('#InputDateTo').val(InputDateTo);
+    }
+    
     $(".number").mask('000000000000000000', {reverse: true});
     Selectize.define('clear_selection', function(options) {
         var self = this;
@@ -30,7 +39,7 @@ $(document).ready(function() {
     });
 
 //Number
-    $(".datemask").mask('0000-00-00', {reverse: true});
+    $(".datemask").mask('00-00-0000', {reverse: true});
     $(".money").mask('000,000,000', {reverse: true});
 
     var $selectAgent = $('#SelectAgent').selectize({
@@ -105,7 +114,7 @@ $(document).ready(function() {
                                 message: 'The Date From is required'
                             },
                             date: {
-                                format: 'YYYY-MM-DD',
+                                format: 'DD-MM-YYYY',
                                 max: 'InputDateTo',
                                 message: 'The Date From is not a valid'
                             }
@@ -118,7 +127,7 @@ $(document).ready(function() {
                                 message: 'The Date To is required'
                             },
                             date: {
-                                format: 'YYYY-MM-DD',
+                                format: 'DD-MM-YYYY',
                                 min: 'InputDateFrom',
                                 message: 'The Date To is not a valid'
                             }

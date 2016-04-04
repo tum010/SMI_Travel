@@ -72,8 +72,8 @@
                     <div class="col-xs-3 form-group" >
                         <div class="input-group date" >
                             <input id="InputDate" name="InputDate" type="text" 
-                                   data-date-format="YYYY-MM-DD" class="form-control datemask" 
-                                   placeholder="YYYY-MM-DD" value="${tourdate}" />
+                                   data-date-format="DD-MM-YYYY" class="form-control datemask" 
+                                   placeholder="DD-MM-YYYY" value="${tourdate}" />
                             <span class="input-group-addon spandate">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -413,6 +413,12 @@
 </c:if> 
 <script>
     $(document).ready(function () {
+        
+        var InputDate = $('#InputDate').val();
+        if(InputDate !== ''){
+            $('#InputDate').val(convertFormatDate(InputDate));
+        }
+        
         $("#ButtonImportTour").attr("disabled", "disabled");
         $("#ButtonImportHotel").attr("disabled", "disabled");
         $("#ButtonImportOther").attr("disabled", "disabled");
@@ -462,7 +468,7 @@
             getTourFromDate(inputTourDate);
         }
         //datetime
-
+        
         $('.date').datetimepicker().change(function () {
             var newDate = $("#InputDate").val();
             $("#ButtonImportHotel").attr("disabled", "disabled");
@@ -479,7 +485,7 @@
                 $("#ButtonImportHotel").attr("disabled", "disabled");
             }
         });
-
+        $('.datemask').mask('00-00-0000');
         checkChangeDate();
 
 
@@ -821,7 +827,7 @@
         var param = 'action=' + 'text' +
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
-                '&date=' + inputDate +
+                '&date=' + convertFormatDate(inputDate) +
                 '&tourid=' + tourId +
                 '&type=' + 'filterOther';
         console.log("AjaxOther param [" + param + "]");
@@ -834,7 +840,7 @@
         var param = 'action=' + 'text' +
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
-                '&date=' + inputDate +
+                '&date=' + convertFormatDate(inputDate) +
                 '&tourid=' + tourId +
                 '&type=' + 'filterPlace';
         console.log("Ajax param [" + param + "]");
@@ -847,7 +853,7 @@
         var param = 'action=' + 'text' +
                 '&servletName=' + servletName +
                 '&servicesName=' + servicesName +
-                '&date=' + inputDate +
+                '&date=' + convertFormatDate(inputDate) +
                 '&type=' + 'filterTour';
         console.log("Ajax param [" + param + "]");
         CallAjaxTour(param);
