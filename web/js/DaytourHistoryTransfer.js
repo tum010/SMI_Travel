@@ -5,7 +5,7 @@
  */
 $(document).ready(function () {
 //    $('.date').datetimepicker();
-      $(".datemask").mask('0000-00-00', {reverse: true});
+//      $(".datemask").mask('0000-00-00', {reverse: true});
  
     
     $('#DateFrom').datetimepicker({
@@ -36,7 +36,7 @@ $("#SearchHistoryTransfer")
                             message: 'The Date From is required'
                         },
                         date: {
-                            format: 'YYYY-MM-DD',
+                            format: 'DD-MM-YYYY',
                             max: 'InputDateTo',
                             message: 'The Date From is not a valid'
                         }
@@ -48,7 +48,7 @@ $("#SearchHistoryTransfer")
                             message: 'The Date To is required'
                         },
                         date: {
-                            format: 'YYYY-MM-DD',
+                            format: 'DD-MM-YYYY',
                             min: 'InputDateFrom',
                             message: 'The Date To is not a valid'
                         }

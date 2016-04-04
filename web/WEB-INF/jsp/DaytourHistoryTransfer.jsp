@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-xs-2 form-group">
                         <div class="input-group date" id="DateFrom">
-                            <input id="InputDateFrom" name="InputDateFrom" type="text" data-date-format="YYYY-MM-DD" class="form-control datemask" placeholder="YYYY-MM-DD" value="${dateFrom}">
+                            <input id="InputDateFrom" name="InputDateFrom" type="text" data-date-format="DD-MM-YYYY" class="form-control datemask" placeholder="DD-MM-YYYY" value="${dateFrom}">
                             <span class="input-group-addon spandate"><span class="glyphicon-calendar glyphicon"></span>
                             </span>
                         </div>
@@ -56,8 +56,8 @@
                     </div>
                     <div class="col-xs-2 form-group">
                         <div class="input-group date" id="DateTo">
-                            <input id="InputDateTo" name="InputDateTo" type="text" data-date-format="YYYY-MM-DD" 
-                                   class="form-control datemask" placeholder="YYYY-MM-DD">
+                            <input id="InputDateTo" name="InputDateTo" type="text" data-date-format="DD-MM-YYYY" 
+                                   class="form-control datemask" placeholder="DD-MM-YYYY">
                             <span class="input-group-addon spandate">
                                 <span class="glyphicon-calendar glyphicon"></span>
                             </span>
@@ -94,14 +94,25 @@
                 </thead>
                 <tbody>
                     <c:forEach var="item" items="${transferJobs}" varStatus="i">
+                        <script>
+                            $(document).ready(function () {
+                                if("${item.transferDate}" !== ''){
+                                    $("#transferDate-${item.id}").text(convertFormatDate("${item.transferDate}"));
+                                }
+                                
+                                if("${item.transferTime}" !== ''){
+                                    $("#transferTime-${item.id}").text(convertFormatDateAndTime("${item.transferTime}"));
+                                }
+                            });
+                        </script>
                         <tr>
                             <td>${item.documentNo}</td>
-                            <td>${item.transferDate}</td>                        
+                            <td id="transferDate-${item.id}">${item.transferDate}</td>                        
                             <td>${item.staffByGuildeId.name}</td>
                             <td>${item.staffByDriverId.name}</td>
                             <td>${item.tour}</td>
                             <td>${item.place}</td>
-                            <td>${item.transferTime}</td>
+                            <td id="transferTime-${item.id}">${item.transferTime}</td>
                             <td class="text-center">
                                 <a id="RowButtonPrint${i.count}" name="ButtonPrint${i.count}" >
                                     <span id="RowSpanPrint${i.count}" onclick="printTransferJob('${item.documentNo}')" name="RowSpanPrint${i.count}" class="glyphicon glyphicon-print"></span>
@@ -155,7 +166,17 @@
 <script>
     var JobDetailTable;
     $(document).ready(function () {
-
+        var InputDateFrom = $('#InputDateFrom').val();
+        if(InputDateFrom !== ''){
+            $('#InputDateFrom').val(convertFormatDate(convertFormatDate(InputDateFrom)));
+        }
+        
+        var InputDateTo = $('#InputDateTo').val();
+        if(InputDateTo !== ''){
+            $('#InputDateTo').val(convertFormatDate(convertFormatDate(InputDateTo)));
+        }
+        
+        $('.datemask').mask('00-00-0000');
         $('#HistoryTransferTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,

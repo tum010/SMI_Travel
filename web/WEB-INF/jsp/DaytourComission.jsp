@@ -72,8 +72,8 @@
                        <div class=" form-group">     
                             <div class="input-group date fromDate" id="DateFrom">
                                 <input  id="InputDateFrom" name="InputDateFrom" type="text" 
-                                        data-date-format="YYYY-MM-DD" class="form-control datemask" 
-                                        placeholder="YYYY-MM-DD" value="${dateFrom}">
+                                        data-date-format="DD-MM-YYYY" class="form-control datemask" 
+                                        placeholder="DD-MM-YYYY" value="${dateFrom}">
                                 <span class="input-group-addon spandate">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -89,8 +89,8 @@
                     <div class="col-xs-2 form-group">
                         <div class="input-group date todate" id="DateTo">
                             <input id="InputDateTo" name="InputDateTo" type="text"
-                                   data-date-format="YYYY-MM-DD" class="form-control datemask"
-                                   placeholder="YYYY-MM-DD" value="${dateTo}">
+                                   data-date-format="DD-MM-YYYY" class="form-control datemask"
+                                   placeholder="DD-MM-YYYY" value="${dateTo}">
                             <span class="input-group-addon spandate">
                                     <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -182,9 +182,16 @@
 
                     <tbody>
                         <c:forEach var="item" items="${bookingList}" varStatus="status" >
+                            <script>
+                                $(document).ready(function () {
+                                    if("${item.tourDate}" !== ''){
+                                        $("#tourdate-${item.id}").text(convertFormatDate("${item.tourDate}"));
+                                    }
+                                });
+                            </script>
                             <tr>
                                 <td class="hide"><input type="hidden" id="daytourBookingId-${status.count}" name="daytourBookingId-" value="${item.id}"></td>
-                                <td>${item.tourDate}</td>
+                                <td id="tourdate-${item.id}">${item.tourDate}</td>
                                 <td>${item.daytour.code}</td>
                                 <c:set var="refno1" value="${fn:substring(item.master.referenceNo,0,2)}" />
                                 <c:set var="refno2" value="${fn:substring(item.master.referenceNo,2,7)}" />        
@@ -279,8 +286,8 @@
                         <div class="col-xs-5">
                             <div class="input-group date guideFromDate" id="guideFromDatePanel">
                                 <input  name="guidePrintFrom" id="guidePrintFrom" type="text"
-                                        data-date-format="YYYY-MM-DD" class="form-control" 
-                                        placeholder="YYYY-MM-DD" />
+                                        data-date-format="DD-MM-YYYY" class="form-control" 
+                                        placeholder="DD-MM-YYYY" />
                                 <span class="input-group-addon spandate2">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -292,8 +299,8 @@
                         <div class="col-xs-5">
                             <div class="input-group date guideToDate" id="guideToDatePanel">
                                 <input  name="guidetPrintTo" id="guidePrintTo" type="text" 
-                                        data-date-format="YYYY-MM-DD" class="form-control" 
-                                        placeholder="YYYY-MM-DD" />
+                                        data-date-format="DD-MM-YYYY" class="form-control" 
+                                        placeholder="DD-MM-YYYY" />
                                <span class="input-group-addon spandate2">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -336,8 +343,8 @@
                         <div class="col-xs-5 ">
                             <div class="input-group date agentFromDate" id="agentFromDatePanel">
                                 <input  name="agentPrintFrom" id="agentPrintFrom" type="text" 
-                                        data-date-format="YYYY-MM-DD" class="form-control"
-                                        placeholder="YYYY-MM-DD" />
+                                        data-date-format="DD-MM-YYYY" class="form-control"
+                                        placeholder="DD-MM-YYYY" />
                                     <span class="input-group-addon spandate2">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -350,8 +357,8 @@
                             <div class="form-group">
                                  <div class="input-group date agentToDate" id="agentToDatePanel">
                                     <input  name="agentPrintTo" id="agentPrintTo" type="text"
-                                            data-date-format="YYYY-MM-DD" class="form-control" 
-                                            placeholder="YYYY-MM-DD" />
+                                            data-date-format="DD-MM-YYYY" class="form-control" 
+                                            placeholder="DD-MM-YYYY" />
                                     <span class="input-group-addon spandate2">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
