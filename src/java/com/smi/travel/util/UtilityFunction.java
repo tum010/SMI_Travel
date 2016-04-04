@@ -66,15 +66,23 @@ public class UtilityFunction {
 
     public Date convertStringToDate(String day) {
         Date resultDate = new Date();
+        String format1 = "yyyy-MM-dd";
+        String format2 = "dd-MM-yyyy";
         try {
             if ((day != null) && (!"".equalsIgnoreCase(day))) {
-                resultDate.setYear(Integer.parseInt(day.split("-")[0]) - 1900);
-                resultDate.setMonth(Integer.parseInt(day.split("-")[1]) - 1);
-                resultDate.setDate(Integer.parseInt(day.split("-")[2]));
+                if(isValidFormat(format1,day)){
+                    SimpleDateFormat sdf = new SimpleDateFormat(format1);
+                    resultDate = sdf.parse(day);    
+                }else if(isValidFormat(format2,day)){
+                    SimpleDateFormat sdf = new SimpleDateFormat(format2);
+                    resultDate = sdf.parse(day);
+                }
+                
             } else {
                 return null;
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             return null;
         }
 
@@ -107,11 +115,8 @@ public class UtilityFunction {
                 day = day.replaceAll(":", "-");
 //                day = day.replaceAll(".", "-");
                 resultDate.setYear(Integer.parseInt(day.split("-")[0]) - 1900);
-                System.out.println("Integer.parseInt(day.split(\"-\")[0]) - 1900 : "+(Integer.parseInt(day.split("-")[0]) - 1900));
                 resultDate.setMonth(Integer.parseInt(day.split("-")[1]) - 1);
-                System.out.println("Integer.parseInt(day.split(\"-\")[1]) - 1 : "+(Integer.parseInt(day.split("-")[1]) - 1));
                 resultDate.setDate(Integer.parseInt(day.split("-")[2]));
-                System.out.println("Integer.parseInt(day.split(\"-\")[2]) : "+(Integer.parseInt(day.split("-")[2])));
                 resultDate.setHours(Integer.parseInt(day.split("-")[3]));
                 resultDate.setMinutes(Integer.parseInt(day.split("-")[4]));
 //                resultDate.setSeconds(Integer.parseInt(day.split("-")[5]));
@@ -280,16 +285,19 @@ public class UtilityFunction {
 
     public static void main(String[] args) throws ParseException {
         UtilityFunction util = new UtilityFunction();
-        String data = "'te'";
-        System.out.println(data.replaceAll("'", "\'"));
-        Date date = new Date();
-        System.out.println("No format :" + date);
-        java.text.SimpleDateFormat df = new java.text.SimpleDateFormat();
-        System.out.println("No pattern format :" + df.format(date));
-        df.applyPattern("yyyyMM");
-        System.out.println("yyyyMM format :" + df.format(date));
-        df.applyPattern("dd/mm/yyyy HH:mm:ss");
-        System.out.println("dd/mm/yyyy HH:mm:ss format :" + df.format(date));
+        String data = "2016-06-01";
+        System.out.println(util.convertStringToDate(data));
+        String data2 = "05-06-2018";
+        System.out.println(util.convertStringToDate(data2));
+//        System.out.println(data.replaceAll("'", "\'"));
+//        Date date = new Date();
+//        System.out.println("No format :" + date);
+//        java.text.SimpleDateFormat df = new java.text.SimpleDateFormat();
+//        System.out.println("No pattern format :" + df.format(date));
+//        df.applyPattern("yyyyMM");
+//        System.out.println("yyyyMM format :" + df.format(date));
+//        df.applyPattern("dd/mm/yyyy HH:mm:ss");
+//        System.out.println("dd/mm/yyyy HH:mm:ss format :" + df.format(date));
     }
 
     public int getDateDiff(Date date1, Date date2) {
@@ -606,6 +614,21 @@ public class UtilityFunction {
             
         }
         
+    }
+    
+
+    public boolean isValidFormat(String format, String value) {
+        Date date = null;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            date = sdf.parse(value);
+            if (!value.equals(sdf.format(date))) {
+                date = null;
+            }
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        return date != null;
     }
 
 }
