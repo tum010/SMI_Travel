@@ -293,11 +293,12 @@ public class CreditNoteImpl implements CreditNoteDao {
     private CreditNoteView mappingCreditNoteView(CreditNote notedetail){
         CreditNoteView noteview = new CreditNoteView();
         UtilityFunction util = new UtilityFunction();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         noteview.setId(notedetail.getId());
         noteview.setApCode(notedetail.getApCode());
         noteview.setCnno(notedetail.getCnNo());
         noteview.setCnname(notedetail.getCnName());
-        noteview.setCndate(util.convertDateToString(notedetail.getCnDate()));
+        noteview.setCndate(sdf.format(notedetail.getCnDate()));
         noteview.setDepartment(notedetail.getDepartment());
         noteview.setStatus(notedetail.getMFinanceItemstatus().getName());
         List<CreditNoteDetail> detaillist =  notedetail.getCreditNoteDetails();

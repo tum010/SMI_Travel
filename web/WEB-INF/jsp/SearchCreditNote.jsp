@@ -37,7 +37,7 @@
                             <div class="col-xs-1"  style="width: 170px">
                                 <div class='input-group date fromdate' id="dateFrom">
                                     <input id="iDateFrom" name="iDateFrom"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['iDateFrom']}">
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['iDateFrom']}">
                                     <span class="input-group-addon spandate" id="InputFromDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputFromDateSpan2"></span></span>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                             <div class="col-xs-1"  style="width: 170px">
                                 <div class='input-group date todate' id="dateTo" >
                                     <input id="iDateTo" name="iDateTo"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['iDateTo']}">
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['iDateTo']}">
                                     <span class="input-group-addon spandate" id="InputToDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputToDateSpan2"></span></span>
                                 </div>
                             </div>
@@ -222,7 +222,7 @@
                                 message: 'The Date From is required'
                             },
                             date: {
-                                format: 'YYYY-MM-DD',
+                                format: 'DD-MM-YYYY',
                                 max: 'iDateTo',
                                 message: 'The Date From is more than  date to'
                             }
@@ -235,7 +235,7 @@
                                 message: 'The Date To is required'
                             },
                             date: {
-                                format: 'YYYY-MM-DD',
+                                format: 'DD-MM-YYYY',
                                 min: 'iDateFrom',
                                 message: 'The Date To is less than date from'
                             }
@@ -319,11 +319,11 @@ function checkDateValue(date){
     if((inputFromDate.value !== '') && (InputToDate.value !== '')){
         var fromDate = (inputFromDate.value).split('-');
         var toDate = (InputToDate.value).split('-');      
-        if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+        if((parseInt(fromDate[2])) > (parseInt(toDate[2]))){
             validateDate(date,"over");
-        }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+        }else if(((parseInt(fromDate[2])) >= (parseInt(toDate[2]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
             validateDate(date,"over");
-        }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+        }else if(((parseInt(fromDate[2])) >= (parseInt(toDate[2]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[0])) > (parseInt(toDate[0]))){
             validateDate(date,"over");
         }else{
             $('#SearchCreditNoteForm').bootstrapValidator('revalidateField', 'iDateFrom');
