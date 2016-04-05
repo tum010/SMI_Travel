@@ -3011,6 +3011,7 @@ public class AJAXBean extends AbstractBean implements
 
     private String buildAdvanceReceivePeriodListTaxHTML(List<AdvanceReceivePeriod> advanceReceivePeriodList, AdvanceReceivePeriod period, String option) {
         UtilityFunction util = new UtilityFunction();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         StringBuffer html = new StringBuffer();
         int row = 1;
         String id = "";
@@ -3084,8 +3085,8 @@ public class AJAXBean extends AbstractBean implements
                         +       "<input type=\"hidden\" id=\"periodRow" + row + "\" name=\"periodRow" + row + "\" value=\"" + row + "\"/>"
                         +       "<input type=\"hidden\" id=\"periodId" + row + "\" name=\"periodId" + row + "\" value=\"" + id + "\"/>"
                         + "</td>" 
-                        + "<td class=\"text-center\">" + receiveFrom + "</td>"
-                        + "<td class=\"text-center\">" + receiveTo + "</td>"
+                        + "<td class=\"text-center\">" + sdf.format(advanceReceivePeriod.getReceiveFrom()) + "</td>"
+                        + "<td class=\"text-center\">" + sdf.format(advanceReceivePeriod.getReceiveTo()) + "</td>"
                         + "<td class=\"text-center\">" + ("V".equalsIgnoreCase(vatType) ? "Vat" : "Temp") + "</td>"
                         + "<td class=\"text-center\">"
                         +       "<span class=\"glyphicon glyphicon-edit editicon\" onclick=\"editAdvanceReceivePeriod('" + id + "','" + receiveFrom + "','" + receiveTo + "','" + detail + "','" + vatType + "','" + department + "','" + cashAmount + "','" + cashMinusAmount + "','" + bankTransfer + "','" + chqAmount + "','" + creditAmount + "');\"></span>"                                                                                                                                     

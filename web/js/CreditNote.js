@@ -1,7 +1,7 @@
 var rowIndex;
 var taxNoShow = "";
 $(document).ready(function() {
-    $('.datemask').mask('0000-00-00');
+    $('.datemask').mask('00-00-0000');
     var inputDate = $("#inputDate").val();
     if (inputDate === "") {
         var today = new Date();
@@ -14,7 +14,7 @@ $(document).ready(function() {
         if (mm < 10) {
             mm = '0' + mm
         }
-        today = yyyy + "-" + mm + "-" + dd;
+        today = dd + "-" + mm + "-" + yyyy;
         $("#inputDate").val(today);
     }
 
@@ -176,6 +176,17 @@ function addRow() {
     $("#addRow").addClass("hide");
     var clone = $('#tempTable tbody tr:lt(2)').clone();
     $('#ItemCreditTable tbody').append(clone);
+    try {
+        $(".date").datetimepicker({
+            pickTime: false
+        });
+        $('span').click(function() {
+            var position = $(this).offset();
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+        });
+    } catch (e) {
+
+    }
     $("input[name='taxNo']").each(function() {
         $(this).off();
         $(this).on("keyup", function(event) {
@@ -398,7 +409,7 @@ function getTaxInv(input) {
                             $("#apCode").val(tax.taxTo);
                             $("#name").val(tax.taxName);
                             $("#address").val(tax.taxAddress);
-                            taxDate.val(tax.taxDate);
+                            taxDate.val(convertFormatDate(tax.taxDate));
                             amount.val(parseFloat((tax.taxAmount).toFixed(2)));
                             amountId.val(parseFloat((tax.taxAmount).toFixed(2)));
                             amountReal.val(tax.taxAmount);

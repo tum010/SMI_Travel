@@ -298,13 +298,13 @@
                             <div class='input-group date' id='InputDatePicker'>
                             <c:if test='${taxInvoice.taxInvDate != null}'>
                                 <input id="InvToDate" name="InvToDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['invToDate']}">
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['invToDate']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
 
                             </c:if>
                             <c:if test='${taxInvoice.taxInvDate == null}'>
                                 <input id="InvToDate" name="InvToDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['defaultInvToDate']}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['defaultInvToDate']}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
 
                             </c:if>                             
@@ -1054,6 +1054,10 @@
 <script language="javascript">
     var showflag = 1;
     $(document).ready(function () {
+        if($("#InvToDate").val() !== ''){
+            var date = $("#InvToDate").val();
+            $("#InvToDate").val(convertFormatDate(date));
+        }
         if($("#disabledFieldSearch").val() === '1'){
             $("#invoiceNo").val(''); 
             $("#invoiceNo").attr("disabled", "disabled"); 
@@ -1064,7 +1068,7 @@
         }
         $("#inv,#ref").removeClass('hidden');
         $('.date').datetimepicker();
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $(".money").mask('000,000,000.00', {reverse: true});
         $(".money2").mask('#,##0.00;-#,##0.00', {reverse: true});
         $(".money3").mask('000,000,000.0000', {reverse: true});
@@ -1166,7 +1170,7 @@
         });
         
         $('#InputDatePicker').datetimepicker().on('dp.change', function (e) {
-                $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'InvToDate');
+            $('#TaxInvoiceForm').bootstrapValidator('revalidateField', 'InvToDate');
         });
         
         $('#TaxInvoiceForm').bootstrapValidator({

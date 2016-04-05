@@ -127,7 +127,7 @@
                         <div class="col-md-2 form-group text-left" style="padding-left:5px">
                             <div class="col-sm-12">
                                 <div class='input-group datesearch' style="width:140px;">
-                                    <input name="InputDate" id="InputDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['inputDate']}" />
+                                    <input name="InputDate" id="InputDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['inputDate']}" />
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -193,8 +193,9 @@
                         </thead>
                         <tbody>
                             <c:forEach var="advanceReceive" items="${advanceReceiveList}" varStatus="i">
-                            <tr>
-                                <td align="center">${advanceReceive.recDate}</td>
+                            <tr>                               
+                                <fmt:formatDate value="${advanceReceive.recDate}" var="recDate" pattern="dd-MM-yyyy" />
+                                <td align="center">${recDate}</td>
                                 <td align="center">${advanceReceive.arCode}</td>
                                 <td>${advanceReceive.recName}</td>
                                 <td>${advanceReceive.description}</td>
@@ -224,8 +225,9 @@
                                     <label class="control-label text-left">Receive Date<font style="color: red">*</font></lable>        
                                 </div>
                                 <div class="col-xs-1 form-group" style="width: 170px">
+                                    <fmt:formatDate value="${advanceReceive.recDate}" var="recDate" pattern="dd-MM-yyyy" />
                                     <div class='input-group date' id='InputDatePicker'>
-                                        <input name="receiveDate" id="receiveDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${advanceReceive.recDate}" />
+                                        <input name="receiveDate" id="receiveDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${recDate}" />
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>
@@ -357,8 +359,9 @@
                                     <label class="control-label text-left">Chq Date</lable>        
                                 </div>
                                 <div class="col-xs-1" style="width: 200px">
+                                    <fmt:formatDate value="${advanceReceive.chqDate}" var="chqDate" pattern="dd-MM-yyyy" />
                                     <div class='input-group date'>
-                                        <input name="chqDate" id="chqDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${advanceReceive.chqDate}" />
+                                        <input name="chqDate" id="chqDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${chqDate}" />
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>
@@ -403,8 +406,9 @@
                                         </td>
                                         <td><input class="form-control" type="text" id="creditNo${i.count}" name="creditNo${i.count}" value="${adReCre.creditNo}" maxlength="20"></td>
                                         <td>
+                                            <fmt:formatDate value="${adReCre.creditExpire}" var="creditExpire" pattern="dd-MM-yyyy" />
                                             <div class="input-group daydatepicker" id="daydatepicker${i.count}">
-                                                <input type="text" name="creditExpire${i.count}" id="creditExpire${i.count}" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${adReCre.creditExpire}" />
+                                                <input type="text" name="creditExpire${i.count}" id="creditExpire${i.count}" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${creditExpire}" />
                                                 <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
                                             </div>
                                         </td>
@@ -490,8 +494,9 @@
                                     <label class="control-label">From</lable>
                                 </div>  
                                 <div class="col-xs-1 form-group" style="width: 180px">
+                                    <fmt:formatDate value="${advanceReceivePeriod.receiveFrom}" var="fromDate" pattern="dd-MM-yyyy" />
                                     <div class='input-group date fromdate' id="fromdatepanel">
-                                        <input name="fromDate" id="fromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${advanceReceivePeriod.receiveFrom}" onclick="hideTextAlertDivSavePeriod(); hideTextAlertDivNotSavePeriod();">
+                                        <input name="fromDate" id="fromDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${fromDate}" onclick="hideTextAlertDivSavePeriod(); hideTextAlertDivNotSavePeriod();">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>
@@ -500,8 +505,9 @@
                                     <label class="control-label">To</lable>
                                 </div>  
                                 <div class="col-xs-1 form-group" style="width: 180px">
+                                    <fmt:formatDate value="${advanceReceivePeriod.receiveTo}" var="toDate" pattern="dd-MM-yyyy" />
                                     <div class='input-group date todate' id="todatepanel">
-                                        <input name="toDate" id="toDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${advanceReceivePeriod.receiveTo}" onclick="hideTextAlertDivSavePeriod(); hideTextAlertDivNotSavePeriod();"/>
+                                        <input name="toDate" id="toDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${toDate}" onclick="hideTextAlertDivSavePeriod(); hideTextAlertDivNotSavePeriod();"/>
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>
@@ -720,8 +726,10 @@
                                     <input type="hidden" id="periodRow${i.count}" name="periodRow${i.count}" value="${i.count}"/>
                                     <input type="hidden" id="periodId${i.count}" name="periodId${i.count}" value="${advanceReceivePeriodList.id}"/>
                                 </td>
-                                <td class="text-center">${advanceReceivePeriodList.receiveFrom}</td>
-                                <td class="text-center">${advanceReceivePeriodList.receiveTo}</td>
+                                <fmt:formatDate value="${advanceReceivePeriodList.receiveFrom}" var="receiveFrom" pattern="dd-MM-yyyy" />
+                                <td class="text-center">${receiveFrom}</td>
+                                <fmt:formatDate value="${advanceReceivePeriodList.receiveTo}" var="receiveTo" pattern="dd-MM-yyyy" />
+                                <td class="text-center">${receiveTo}</td>
                                 <td class="text-center">
                                     <c:set var="vatType" value=""/>
                                     <c:choose>

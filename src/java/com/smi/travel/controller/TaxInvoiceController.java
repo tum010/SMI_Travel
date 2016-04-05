@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -90,7 +91,7 @@ public class TaxInvoiceController extends SMITravelController {
         List<String> RefNoList =  paymentTourHotelService.getMasterAll();       
         request.setAttribute(REFNOLIST, RefNoList);
         
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         Calendar cal = Calendar.getInstance();
         Date date = new Date();
         System.out.println(dateFormat.format(cal.getTime()));

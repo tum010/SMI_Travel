@@ -5,8 +5,11 @@ import com.smi.travel.datalayer.service.TaxInvoiceService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,6 +24,7 @@ public class SearchTaxInvoiceController extends SMITravelController {
     private UtilityService utilservice;
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         List<MFinanceItemstatus> mFinanceItemstatusList = getUtilservice().getListMFinanceItemstatus();
         request.setAttribute(MFinanceItemstatusList, mFinanceItemstatusList);
         String action = request.getParameter("action");
@@ -36,6 +40,10 @@ public class SearchTaxInvoiceController extends SMITravelController {
         String roleName = user.getRole().getName();
         request.setAttribute("user", username+" - "+roleName);
         
+        //Set Date Format
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        inputFromDate = (!"".equalsIgnoreCase(inputFromDate) && inputFromDate != null ? sdf.format(util.convertStringToDate(inputFromDate)) : "");
+        inputToDate = (!"".equalsIgnoreCase(inputToDate) && inputToDate != null ? sdf.format(util.convertStringToDate(inputToDate)) : "");
         List<TaxInvoiceView> taxInvoiceViewList = new ArrayList<TaxInvoiceView>();
         if("search".equalsIgnoreCase(action)){
             taxInvoiceViewList = taxInvoiceService.SearchTaxInvoiceFromFilter(inputFromDate, inputToDate, department, status);

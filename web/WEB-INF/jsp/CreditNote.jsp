@@ -99,8 +99,9 @@
                                 </div>
                                 <div class="col-xs-1"  style="width: 200px">
                                     <div class='input-group date'>
+                                        <fmt:formatDate value="${creditNote.cnDate}" var="cnDate" pattern="dd-MM-yyyy" />
                                         <input id="inputDate" name="inputDate"  type="text" 
-                                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${creditNote.cnDate}">
+                                               class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${cnDate}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>
@@ -174,7 +175,8 @@
                                                     <input id="taxNo" name="taxNo" type="text" class="form-control" value="${creditNoteDetail.taxInvoice.taxNo}" /></td>
                                                 <td style="text-align:center">
                                                     <div class="input-group date" >
-                                                        <input type="text" name="taxDate" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD"   value="${creditNoteDetail.taxInvoice.taxInvDate}" />
+                                                        <fmt:formatDate value="${creditNoteDetail.taxInvoice.taxInvDate}" var="taxInvDate" pattern="dd-MM-yyyy" />
+                                                        <input type="text" name="taxDate" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${taxInvDate}" />
                                                         <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
                                                     </div>
                                                 </td>
@@ -357,7 +359,7 @@
                     <input id="taxNo" name="taxNo" type="text" class="form-control"  /></td>
                 <td style="text-align:center">
                     <div class="input-group date" >
-                        <input type="text" name="taxDate" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD"  />
+                        <input type="text" name="taxDate" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY"  />
                         <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
                     </div>
                 </td>

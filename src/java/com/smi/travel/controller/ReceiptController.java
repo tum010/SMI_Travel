@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -126,8 +127,7 @@ public class ReceiptController extends SMITravelController {
         request.setAttribute(CREDITROWCOUNT, "1");
         request.setAttribute(SEARCHRECEIPT,"notdummy");
         
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("yyyy-MM-dd");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         request.setAttribute(RECEIPTDATE,String.valueOf(df.format(new Date())));
         request.setAttribute(RECEIVEDATE,String.valueOf(df.format(new Date())));
         //Role User

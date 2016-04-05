@@ -260,6 +260,8 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
     }
     
     public List<TaxInvoiceView> mappingTaxInvoice(List<TaxInvoice> taxInvoiceList){
+        UtilityFunction util = new UtilityFunction();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         List<TaxInvoiceView> taxInvoiceViewList = new ArrayList<TaxInvoiceView>();
         
         for(int i=0;i<taxInvoiceList.size();i++){
@@ -271,7 +273,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
             taxInvoiceView.setDepartment(taxInvoice.getDepartment());
             taxInvoiceView.setDetail(taxInvoice.getRemark());
             taxInvoiceView.setName(taxInvoice.getTaxInvName());
-            taxInvoiceView.setTaxDate(String.valueOf(taxInvoice.getTaxInvDate()));
+            taxInvoiceView.setTaxDate(sdf.format(taxInvoice.getTaxInvDate()));
             taxInvoiceView.setTaxId(taxInvoice.getId());
             taxInvoiceView.setTaxNo(taxInvoice.getTaxNo());
             taxInvoiceView.setTaxTo(taxInvoice.getTaxInvTo());
@@ -282,7 +284,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
                 taxInvoiceView.setStatus("Void");
             }
             
-            if(taxInvoice.getIsProfit() == 1){
+            if(taxInvoice.getIsProfit() != null && taxInvoice.getIsProfit() == 1){
                 taxInvoiceView.setIsProfit("Y");
             } else {
                 taxInvoiceView.setIsProfit("N");
