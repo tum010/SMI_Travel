@@ -523,7 +523,10 @@
                                         <div class="form-group">                                           
                                             <label for="effectivefrom" class="col-sm-3 control-label"> Depart Date </label>
                                             <div class=' col-sm-4 input-group datepicker' id='effectivefromClass' style="padding-left: 15px">
-                                                <input type='text' class="form-control datemask"  id="departdate" name="departdate" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" value="${requestScope['departdate']}" />
+                                                <c:set var="departdate" value="${requestScope['departdate']}" />
+                                                <fmt:parseDate value="${departdate}" var="departdate" pattern="yyyy-MM-dd" />
+                                                <fmt:formatDate value="${departdate}" var="departdate" pattern="dd-MM-yyyy" />
+                                                <input type='text' class="form-control datemask"  id="departdate" name="departdate" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" value="${departdate}" />
                                                 <input type='hidden' class="form-control datemask"  id="todaydate" name="todaydate" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" value=""/>
                                                 <input type='hidden' class="form-control datemask"  id="checkdate" name="checkdate" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" value="${requestScope['departdate']}"/>                                  
                                                 <span class="input-group-addon">
@@ -556,7 +559,10 @@
                                             
                                             <label for="effectivefrom" class="col-sm-3 control-label" > Arrive Date </label>
                                             <div class=' col-sm-4 input-group datepicker' id='effectivefromClass' style="padding-left: 15px">
-                                                <input type='text' class="form-control datemask"  id="arrivedate" name="arrivedate" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" value="${requestScope['arrivedate']}" />
+                                                <c:set var="arrivedate" value="${requestScope['arrivedate']}" />
+                                                <fmt:parseDate value="${arrivedate}" var="arrivedate" pattern="yyyy-MM-dd" />
+                                                <fmt:formatDate value="${arrivedate}" var="arrivedate" pattern="dd-MM-yyyy" />
+                                                <input type='text' class="form-control datemask"  id="arrivedate" name="arrivedate" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" value="${arrivedate}" />
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -754,7 +760,8 @@
                                     <td> <input style="width: 20px" id="row-${Counter.count}-no" name="row-${Counter.count}-no" type="text"  class="form-control number" value="${table.orderNo}">  </td>
                                     <td> 
                                         <div class='input-group daydatepicker' id='daydatepicker-${Counter.count}' style="padding-left: 15px">
-                                            <input style="width: 100px" type='text' class="form-control datemask"  id="dayDate-${Counter.count}" name="dayDate-${Counter.count}" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" value="${table.dayDate}" />
+                                            <fmt:formatDate value="${table.dayDate}" var="dayDate" pattern="dd-MM-yyyy" />
+                                            <input style="width: 100px" type='text' class="form-control datemask"  id="dayDate-${Counter.count}" name="dayDate-${Counter.count}" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" value="${dayDate}" />
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
                                             </span>
@@ -1166,24 +1173,24 @@ $('#savereal').on("keyup keypress", function(e) {
 
     $(document).ready(function() {
         
-        var rowland = $("#LandItinerary tr").length;
-        for(var i = 1 ; i < rowland-1 ;i++){
-            var daydate = $('#dayDate-'+i).val();
-            if(daydate !=='' ){
-                $('#dayDate-'+i).val(convertFormatDate(daydate));
-            }
-        }
+//        var rowland = $("#LandItinerary tr").length;
+//        for(var i = 1 ; i < rowland-1 ;i++){
+//            var daydate = $('#dayDate-'+i).val();
+//            if(daydate !=='' ){
+//                $('#dayDate-'+i).val(convertFormatDate(daydate));
+//            }
+//        }
         var booktypetemp = $('#booktypetemp').val();
         if(booktypetemp === 'o'){
-            var dpdate = $('#departdate').val();
-            if(dpdate!==''){
-                $('#departdate').val(convertFormatDate(dpdate));
-            }
-
-            var ardate = $('#arrivedate').val();
-            if(ardate !=='' ){
-                $('#arrivedate').val(convertFormatDate(ardate));
-            }
+//            var dpdate = $('#departdate').val();
+//            if(dpdate!==''){
+//                $('#departdate').val(convertFormatDate(dpdate));
+//            }
+//
+//            var ardate = $('#arrivedate').val();
+//            if(ardate !=='' ){
+//                $('#arrivedate').val(convertFormatDate(ardate));
+//            }
         }
         
         $('.datepicker').datetimepicker().change(function(){                          
