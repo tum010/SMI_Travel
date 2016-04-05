@@ -71,9 +71,12 @@
                     <div class="col-xs-2">
                        <div class=" form-group">     
                             <div class="input-group date fromDate" id="DateFrom">
+                                <c:set var="InputDateFrom" value="${dateFrom}" />
+                                <fmt:parseDate value="${InputDateFrom}" var="InputDateFrom" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${InputDateFrom}" var="InputDateFrom" pattern="dd-MM-yyyy" />
                                 <input  id="InputDateFrom" name="InputDateFrom" type="text" 
                                          class="form-control datemask" data-date-format="DD-MM-YYYY"
-                                        placeholder="DD-MM-YYYY" value="${dateFrom}">
+                                        placeholder="DD-MM-YYYY" value="${InputDateFrom}">
                                 <span class="input-group-addon spandate">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -88,9 +91,12 @@
                     </div>
                     <div class="col-xs-2 form-group">
                         <div class="input-group date todate" id="DateTo">
+                            <c:set var="InputDateTo" value="${dateTo}" />
+                            <fmt:parseDate value="${InputDateTo}" var="InputDateTo" pattern="yyyy-MM-dd" />
+                            <fmt:formatDate value="${InputDateTo}" var="InputDateTo" pattern="dd-MM-yyyy" />
                             <input id="InputDateTo" name="InputDateTo" type="text"
                                     class="form-control datemask" data-date-format="DD-MM-YYYY"
-                                   placeholder="DD-MM-YYYY" value="${dateTo}">
+                                   placeholder="DD-MM-YYYY" value="${InputDateTo}">
                             <span class="input-group-addon spandate">
                                     <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -182,16 +188,9 @@
 
                     <tbody>
                         <c:forEach var="item" items="${bookingList}" varStatus="status" >
-                            <script>
-                                $(document).ready(function () {
-                                    if("${item.tourDate}" !== ''){
-                                        $("#tourdate-${item.id}").text(convertFormatDate("${item.tourDate}"));
-                                    }
-                                });
-                            </script>
                             <tr>
                                 <td class="hide"><input type="hidden" id="daytourBookingId-${status.count}" name="daytourBookingId-" value="${item.id}"></td>
-                                <td id="tourdate-${item.id}">${item.tourDate}</td>
+                                <td><fmt:formatDate value="${item.tourDate}" var="tourDate" pattern="dd-MM-yyyy" />${tourDate}</td>
                                 <td>${item.daytour.code}</td>
                                 <c:set var="refno1" value="${fn:substring(item.master.referenceNo,0,2)}" />
                                 <c:set var="refno2" value="${fn:substring(item.master.referenceNo,2,7)}" />        

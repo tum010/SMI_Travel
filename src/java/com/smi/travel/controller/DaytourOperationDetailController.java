@@ -83,12 +83,11 @@ public class DaytourOperationDetailController extends SMITravelController {
         String refNo = request.getParameter("referenceNo");
         String tourCode = request.getParameter("InputDetailTourCode");
         String tourID = request.getParameter("tourID");
-        String tourDate = request.getParameter("tourDate");
+        String tourDate = util.covertStringDateToFormatYMD(request.getParameter("tourDate"));
         String PayNoGuideBill = request.getParameter("PayNoGuideBill");
         String mDepartmentName = request.getParameter("mDepartmentName");
         String result = "";
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("dd-MM-yyyy");        
+    
         SystemUser user = (SystemUser) session.getAttribute("USER");
         String mDepartmentNameTemp = "";
         if(user.getMDepartment() != null){
@@ -143,7 +142,7 @@ public class DaytourOperationDetailController extends SMITravelController {
                             request.setAttribute(PAYMENTWENDYDETAILLIST, paymentWendyDetail.get(0));
                         }            
                     }
-                    request.setAttribute("tourDates", String.valueOf(df.format(util.convertStringToDate(tourDate))));
+                    request.setAttribute("tourDates", tourDate);
                     request.setAttribute(DayTourOperation, daytourOperation);
                     request.setAttribute(MasterPrice, daytourPrice);
                     request.setAttribute(MasterExpen, daytourExpenses);
@@ -169,7 +168,7 @@ public class DaytourOperationDetailController extends SMITravelController {
             result = daytourOperationService.deleteBookExpen(expenId);
         } 
         if(tourDate != null && !"".equalsIgnoreCase(tourDate) ){
-            request.setAttribute("tourDate", String.valueOf(df.format(util.convertStringToDate(tourDate))));
+            request.setAttribute("tourDate", tourDate);
         }else{
             request.setAttribute("tourDate", tourDate);
         }

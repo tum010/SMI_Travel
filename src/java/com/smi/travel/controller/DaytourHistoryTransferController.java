@@ -7,6 +7,7 @@ import com.smi.travel.datalayer.service.BookingHotelService;
 import com.smi.travel.datalayer.service.DaytourTransferJobService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,9 +33,10 @@ public class DaytourHistoryTransferController extends SMITravelController {
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         String action = request.getParameter("action");
-        String dateFrom = request.getParameter("InputDateFrom");
-        String dateTo = request.getParameter("InputDateTo");
+        String dateFrom = util.covertStringDateToFormatYMD(request.getParameter("InputDateFrom"));
+        String dateTo = util.covertStringDateToFormatYMD(request.getParameter("InputDateTo"));
         String hotel = request.getParameter("hotel");
         log.info("action = " + action + ", dateFrom = " + dateFrom + ", dateTo = " + dateTo);
         if ("search".equalsIgnoreCase(action)) {

@@ -39,10 +39,11 @@ public class DaytourTransferController extends SMITravelController {
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         String action = request.getParameter("action");
         String transferJobId = request.getParameter("transferJobId");
         String documentNo = request.getParameter("InputDocument");
-        String tourDateS = request.getParameter("InputDate");
+        String tourDateS = util.covertStringDateToFormatYMD(request.getParameter("InputDate"));
         String guide = request.getParameter("InputGuide");
         String driver = request.getParameter("InputDriver");
         String remark = request.getParameter("InputRemark");

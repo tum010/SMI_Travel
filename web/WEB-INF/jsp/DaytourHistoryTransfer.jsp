@@ -46,7 +46,10 @@
                     </div>
                     <div class="col-xs-2 form-group">
                         <div class="input-group date" id="DateFrom">
-                            <input id="InputDateFrom" name="InputDateFrom" type="text" data-date-format="DD-MM-YYYY" class="form-control datemask" placeholder="DD-MM-YYYY" value="${dateFrom}">
+                            <c:set var="InputDateFrom" value="${dateFrom}" />
+                            <fmt:parseDate value="${InputDateFrom}" var="InputDateFrom" pattern="yyyy-MM-dd" />
+                            <fmt:formatDate value="${InputDateFrom}" var="InputDateFrom" pattern="dd-MM-yyyy" />
+                            <input id="InputDateFrom" name="InputDateFrom" type="text" data-date-format="DD-MM-YYYY" class="form-control datemask" placeholder="DD-MM-YYYY" value="${InputDateFrom}">
                             <span class="input-group-addon spandate"><span class="glyphicon-calendar glyphicon"></span>
                             </span>
                         </div>
@@ -56,8 +59,11 @@
                     </div>
                     <div class="col-xs-2 form-group">
                         <div class="input-group date" id="DateTo">
+                            <c:set var="InputDateTo" value="${dateTo}" />
+                            <fmt:parseDate value="${InputDateTo}" var="InputDateTo" pattern="yyyy-MM-dd" />
+                            <fmt:formatDate value="${InputDateTo}" var="InputDateTo" pattern="dd-MM-yyyy" />
                             <input id="InputDateTo" name="InputDateTo" type="text" data-date-format="DD-MM-YYYY" 
-                                   class="form-control datemask" placeholder="DD-MM-YYYY">
+                                   class="form-control datemask" placeholder="DD-MM-YYYY" value="${InputDateTo}">
                             <span class="input-group-addon spandate">
                                 <span class="glyphicon-calendar glyphicon"></span>
                             </span>
@@ -94,25 +100,14 @@
                 </thead>
                 <tbody>
                     <c:forEach var="item" items="${transferJobs}" varStatus="i">
-                        <script>
-                            $(document).ready(function () {
-                                if("${item.transferDate}" !== ''){
-                                    $("#transferDate-${item.id}").text(convertFormatDate("${item.transferDate}"));
-                                }
-                                
-                                if("${item.transferTime}" !== ''){
-                                    $("#transferTime-${item.id}").text(convertFormatDateAndTime("${item.transferTime}"));
-                                }
-                            });
-                        </script>
                         <tr>
                             <td>${item.documentNo}</td>
-                            <td id="transferDate-${item.id}">${item.transferDate}</td>                        
+                            <td ><fmt:formatDate value="${item.transferDate}" var="transferDate" pattern="dd-MM-yyyy" />${transferDate}</td>                        
                             <td>${item.staffByGuildeId.name}</td>
                             <td>${item.staffByDriverId.name}</td>
                             <td>${item.tour}</td>
                             <td>${item.place}</td>
-                            <td id="transferTime-${item.id}">${item.transferTime}</td>
+                            <td><fmt:formatDate value="${item.transferTime}" var="transferTime" pattern="dd-MM-yyyy HH:mm:ss" />${transferTime}</td>
                             <td class="text-center">
                                 <a id="RowButtonPrint${i.count}" name="ButtonPrint${i.count}" >
                                     <span id="RowSpanPrint${i.count}" onclick="printTransferJob('${item.documentNo}')" name="RowSpanPrint${i.count}" class="glyphicon glyphicon-print"></span>
@@ -166,15 +161,6 @@
 <script>
     var JobDetailTable;
     $(document).ready(function () {
-        var InputDateFrom = $('#InputDateFrom').val();
-        if(InputDateFrom !== ''){
-            $('#InputDateFrom').val(convertFormatDate(convertFormatDate(InputDateFrom)));
-        }
-        
-        var InputDateTo = $('#InputDateTo').val();
-        if(InputDateTo !== ''){
-            $('#InputDateTo').val(convertFormatDate(convertFormatDate(InputDateTo)));
-        }
         
         $('.datemask').mask('00-00-0000');
         $('#HistoryTransferTable').dataTable({bJQueryUI: true,
@@ -205,8 +191,8 @@
             ]
         });
         // Set value back to search box.
-        $("#InputDateFrom").val("<c:out value="${dateFrom}" />");
-        $("#InputDateTo").val("<c:out value="${dateTo}" />");
+//        $("#InputDateFrom").val("<c:out value="${dateFrom}" />");
+//        $("#InputDateTo").val("<c:out value="${dateTo}" />");
     });
 //    function searchAction() {
 //        $("#SearchHistoryTransfer").submit();

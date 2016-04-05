@@ -116,14 +116,20 @@
                     <div class="col-md-2 form-group"> 
                         <div class='input-group date' id='InputDatePicker'>
                             <c:if test='${dayTourOperation.tourDate != null}'>
+                                <c:set var="tourDates" value="${requestScope['tourDates']}" />
+                                <fmt:parseDate value="${tourDates}" var="tourDates" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${tourDates}" var="tourDates" pattern="dd-MM-yyyy" />
                                 <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
-                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['tourDates']}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${tourDates}">
                                 <span class="input-group-addon "><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
                             <c:if test='${dayTourOperation.tourDate == null}'>
+                                <c:set var="tourDate" value="${requestScope['tourDate']}" />
+                                <fmt:parseDate value="${tourDate}" var="tourDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${tourDate}" var="tourDate" pattern="dd-MM-yyyy" />
                                 <input id="InputTourDetailTourDate" name="InputTourDetailTourDate"  type="text" 
-                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['tourDate']}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${tourDate}">
                                 <span class="input-group-addon "><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>   
@@ -1393,15 +1399,8 @@
                     </thead>
                     <tbody>
                         <c:forEach var="table" items="${dayTourList}" varStatus="dayStatus">
-                            <script>
-                                $(document).ready(function () {
-                                    if("${table.tourDate}" !== ''){
-                                        $("#tourdate-${table.id}").text(convertFormatDate("${table.tourDate}"));
-                                    }
-                                });
-                            </script>
                             <tr class="packet">
-                                <td class="pack-date" id="tourdate-${table.id}">${table.tourDate}</td>
+                                <td class="pack-date"><fmt:formatDate value="${table.tourDate}" var="tourDate" pattern="dd-MM-yyyy" />${tourDate}</td>
                                 <td>${table.daytour.code}</td>
                                 <td class="text-center" >
                                     <a href="DaytourOperationDetail.smi?action=edit&tourID=${table.daytour.id}&tourDate=${table.tourDate}">
