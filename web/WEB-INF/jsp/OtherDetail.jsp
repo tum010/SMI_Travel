@@ -4,7 +4,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
-
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <link href="css/jquery-ui.css" rel="stylesheet">
 <c:set var="master" value="${requestScope['Master']}" />
 
@@ -225,21 +227,21 @@
                                 <div class="form-group">
                                     <label class="col-sm-2   control-label" for="cost">Adult</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control money" id="ad_cost" name="ad_cost" value="${requestScope['ad_cost']}">  
+                                        <input type="text" class="form-control decimal" id="ad_cost" name="ad_cost" value="${requestScope['ad_cost']}">  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-1 ">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
-                                        <input type="text" class="form-control money" id="ad_qty" name="ad_qty" value="${requestScope['ad_qty']}">  
+                                        <input type="text" class="form-control decimal" id="ad_qty" name="ad_qty" value="${requestScope['ad_qty']}">  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3 ">
                                 <div class="form-group">
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control money" id="ad_price" name="ad_price" value="${requestScope['ad_price']}" >  
+                                        <input type="text" class="form-control decimal" id="ad_price" name="ad_price" value="${requestScope['ad_price']}" >  
                                     </div>
                                 </div>
                             </div>
@@ -274,21 +276,21 @@
                                 <div class="form-group">
                                     <label class="col-sm-2   control-label" for="cost">Child</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control money" id="ch_cost" name="ch_cost" value="${requestScope['ch_cost']}">  
+                                        <input type="text" class="form-control decimal" id="ch_cost" name="ch_cost" value="${requestScope['ch_cost']}">  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-1 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
-                                        <input type="text" class="form-control money" id="ch_qty" name="ch_qty" value="${requestScope['ch_qty']}" >  
+                                        <input type="text" class="form-control decimal" id="ch_qty" name="ch_qty" value="${requestScope['ch_qty']}" >  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control money" id="ch_price" name="ch_price" value="${requestScope['ch_price']}" >  
+                                        <input type="text" class="form-control decimal" id="ch_price" name="ch_price" value="${requestScope['ch_price']}" >  
                                     </div>
                                 </div>
                             </div>
@@ -320,21 +322,21 @@
                                 <div class="form-group">
                                     <label class="col-sm-2   control-label" for="cost">Infant</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control money" id="in_cost" name="in_cost"  value="${requestScope['in_cost']}">  
+                                        <input type="text" class="form-control decimal" id="in_cost" name="in_cost"  value="${requestScope['in_cost']}">  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-1 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
-                                        <input type="text" class="form-control money" id="in_qty" name="in_qty"  value="${requestScope['in_qty']}">  
+                                        <input type="text" class="form-control decimal" id="in_qty" name="in_qty"  value="${requestScope['in_qty']}">  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control money" id="in_price" name="in_price" value="${requestScope['in_price']}" >  
+                                        <input type="text" class="form-control decimal" id="in_price" name="in_price" value="${requestScope['in_price']}" >  
                                     </div>
                                 </div>
                             </div>
@@ -420,19 +422,19 @@
                     <div class="form-group col-md-1" style="width: 200px">
                         <label class="col-sm-3 control-label">Adult</label>
                         <div class="col-sm-1" style="width: 100px">
-                            <input type="text" class="form-control money" id="adTicket" name="adTicket" value="0">  
+                            <input type="text" class="form-control decimal" id="adTicket" name="adTicket" value="0">  
                         </div>
                     </div>
                     <div class="form-group col-md-1" style="width: 200px">
                         <label class="col-sm-3 control-label">Child</label>
                         <div class="col-sm-1" style="width: 100px">
-                            <input type="text" class="form-control money" id="chTicket" name="chTicket" value="0">  
+                            <input type="text" class="form-control decimal" id="chTicket" name="chTicket" value="0">  
                         </div>
                     </div>    
                     <div class="form-group col-md-1" style="width: 200px">
                         <label class="col-sm-3 control-label">Infant</label>
                         <div class="col-sm-1" style="width: 100px">
-                            <input type="text" class="form-control money" id="infTicket" name="infTicket" value="0">  
+                            <input type="text" class="form-control decimal" id="infTicket" name="infTicket" value="0">  
                         </div>
                     </div>
                     <div class="form-group col-md-1" style="width: 200px">
@@ -711,6 +713,17 @@
                 <!--Script Airline List Table-->
                 <script type="text/javascript" charset="utf-8">
                     $(document).ready(function() {
+                        $(".decimal").inputmask({
+                            alias: "decimal",
+                            integerDigits: 8,
+                            groupSeparator: ',',
+                            autoGroup: true,
+                            digits: 0,
+                            allowMinus: false,
+                            digitsOptional: false,
+                            placeholder: "0"
+                        });
+                        
                         var table = $('#AgentTable').dataTable({bJQueryUI: true,
                             "sPaginationType": "full_numbers",
                             "bAutoWidth": false,
@@ -720,7 +733,7 @@
                             "bLengthChange": false,
                             "iDisplayLength": 10
                         });
-
+                       
                         $('#AgentTable tbody').on('click', 'tr', function() {
                             if ($(this).hasClass('row_selected')) {
                                 $(this).removeClass('row_selected');

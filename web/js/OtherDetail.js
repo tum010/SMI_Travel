@@ -378,22 +378,22 @@ function CallAjax(param, booktype) {
                 var IN_CostRP = IN_Cost.replace(',', '');
                 var IN_PriceRP = IN_Price.replace(',', '');
 
-                if (AD_CostRP === '') {
+                if (AD_CostRP === '' || AD_CostRP === 'null') {
                     AD_CostRP = '0';
                 }
-                if (AD_PriceRP === '') {
+                if (AD_PriceRP === '' || AD_PriceRP === 'null') {
                     AD_PriceRP = '0';
                 }
-                if (CH_CostRP === '') {
+                if (CH_CostRP === '' || CH_CostRP === 'null') {
                     CH_CostRP = '0';
                 }
-                if (CH_PriceRP === '') {
+                if (CH_PriceRP === '' || CH_PriceRP === 'null') {
                     CH_PriceRP = '0';
                 }
-                if (IN_CostRP === '') {
+                if (IN_CostRP === '' || IN_CostRP === 'null') {
                     IN_CostRP = '0';
                 }
-                if (IN_PriceRP === '') {
+                if (IN_PriceRP === '' || IN_PriceRP === 'null') {
                     IN_PriceRP = '0';
                 }
 

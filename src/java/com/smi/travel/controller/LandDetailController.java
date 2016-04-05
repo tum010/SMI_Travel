@@ -269,6 +269,7 @@ public class LandDetailController extends SMITravelController {
             Category = land.getCategory();
             okby = land.getOkBy();
             Description = land.getDescription();
+            hotel = land.getInboundHotel();
             isbill = String.valueOf(land.getIsBill());
             currency = String.valueOf(land.getCurAmount());
             currencycost = String.valueOf(land.getCurCost());
@@ -348,7 +349,7 @@ public class LandDetailController extends SMITravelController {
         request.setAttribute("Description", Description);
         request.setAttribute("currency", currency);
         request.setAttribute("currencycost", currencycost);
-        
+        request.setAttribute("hotel", hotel);
         request.setAttribute("status", status);
         List<MCurrency> mCurrency = utilservice.getListMCurrency();
         request.setAttribute(CurrencyList, mCurrency);

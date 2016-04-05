@@ -321,11 +321,12 @@ public class AJAXBean extends AbstractBean implements
                 result = buildCustomerListJSON(customerdao.FiterCustomer(customer, filter));
             }
         } else if (BOOKOTHER.equalsIgnoreCase(servletName)) {
+            UtilityFunction util = new UtilityFunction();
             //result = customerdao.isExistCustomer(initialID, first, last);
             System.out.println("ajax : " + BOOKOTHER);
             if ("getvalueProduct".equalsIgnoreCase(type)) {
                 String productID = map.get("productid").toString();
-                String otherdate = map.get("otherdate").toString();
+                String otherdate = (!"".equalsIgnoreCase(map.get("otherdate").toString()) && map.get("otherdate").toString() !=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(map.get("otherdate").toString())) : "" ;
                 if ("".equalsIgnoreCase(productID) || "".equalsIgnoreCase(otherdate)) {
                     result = "0,0,0,0,0,0";
                 } else {
@@ -333,6 +334,24 @@ public class AJAXBean extends AbstractBean implements
                     if (product == null) {
                         result = "0,0,0,0,0,0";
                     } else {
+                        if(product.getAdCost() == null){
+                            product.setAdCost(0);
+                        }
+                        if(product.getChCost() == null){
+                            product.setChCost(0);
+                        }
+                        if(product.getInCost() == null){
+                            product.setInCost(0);
+                        }
+                        if(product.getAdPrice() == null){
+                            product.setAdPrice(0);
+                        }
+                        if(product.getChPrice() == null){
+                            product.setChPrice(0);
+                        }
+                        if(product.getInPrice() == null){
+                            product.setInPrice(0);
+                        }
                         result = product.getAdCost() + "," + product.getChCost() + "," + product.getInCost() + ","
                                 + product.getAdPrice() + "," + product.getChPrice() + "," + product.getInPrice();
                     }
@@ -391,7 +410,7 @@ public class AJAXBean extends AbstractBean implements
             }
             if ("getStock".equalsIgnoreCase(type)){
                 String productID = map.get("productid").toString();
-                String otherdate = map.get("otherdate").toString();
+                String otherdate = (!"".equalsIgnoreCase(map.get("otherdate").toString()) && map.get("otherdate").toString() !=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(map.get("otherdate").toString())) : "" ;
                 if ("".equalsIgnoreCase(productID) || "".equalsIgnoreCase(otherdate)) {
                     result = "notStock";
                 } else {
