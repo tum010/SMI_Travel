@@ -83,8 +83,11 @@
                     <div class="form-group">
                         <label for="Bookdate">Booking Date</label>
                         <div class=' col-sm-12 input-group date' id='effectivefromClass'>
+                            <c:set var="bookDate" value="${Bookdate}" />
+                            <fmt:parseDate value="${bookDate}" var="bookDate" pattern="yyyy-MM-dd" />
+                            <fmt:formatDate value="${bookDate}" var="bookDate" pattern="dd-MM-yyyy" />
                             <input type='text' class="form-control"  id="Bookdate" name="Bookdate" 
-                                   data-date-format="DD-MM-YYYY" value="${Bookdate}" />
+                                   data-date-format="DD-MM-YYYY" value="${bookDate}" />
                             <span class="input-group-addon spandate">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -175,8 +178,11 @@
                             <div class="form-group">
                                 <label for="transferFrom">Transfer Date From</label>
                                 <div class=' col-sm-12 input-group date' id='effectivefromClass'>
+                                    <c:set var="transferDateFrom" value="${requestScope['transferDateFrom']}" />
+                                    <fmt:parseDate value="${transferDateFrom}" var="transferDateFrom" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${transferDateFrom}" var="transferDateFrom" pattern="dd-MM-yyyy" />
                                     <input type='text' class="form-control"  id="transferDateFrom" name="transferDateFrom" 
-                                           data-date-format="DD-MM-YYYY" value="${requestScope['transferDateFrom']}" />
+                                           data-date-format="DD-MM-YYYY" value="${transferDateFrom}" />
                                     <span class="input-group-addon spandate">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -187,8 +193,11 @@
                             <div class="form-group">
                                 <label for="transferTo">Transfer Date To</label>
                                 <div class=' col-sm-12 input-group date' id='effectivefromClass'>
+                                    <c:set var="transferDateTo" value="${requestScope['transferDateTo']}" />
+                                    <fmt:parseDate value="${transferDateTo}" var="transferDateTo" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${transferDateTo}" var="transferDateTo" pattern="dd-MM-yyyy" />
                                     <input type='text' class="form-control"  id="transferDateTo" name="transferDateTo" 
-                                           data-date-format="DD-MM-YYYY" value="${requestScope['transferDateTo']}" />
+                                           data-date-format="DD-MM-YYYY" value="${transferDateTo}" />
                                     <span class="input-group-addon spandate">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -262,56 +271,25 @@
                     <c:choose>
                         <c:when test="${userdepartment == 1}">
                             <td><center><c:out value="${table.pnr}" /></center></td>
-                            <script>
-                                $(document).ready(function () {
-                                    if("${table.firstDepartDate}" !== ''){
-                                        $("#firstDepartDate${i.count}").text(convertFormatDate("${table.firstDepartDate}"));
-                                    }
-                                });
-                            </script>
-                            <td class="text-center" id="firstDepartDate${i.count}"><center><c:out value="${table.firstDepartDate}" /></center></td>  
-                            </c:when>
-                            <c:when test="${userdepartment  == 4}">
+                            <fmt:formatDate value="${table.firstDepartDate}" var="firstDepartDate" pattern="dd-MM-yyyy" />
+                            <td class="text-center" ><center><c:out value="${firstDepartDate}" /></center></td>  
+                        </c:when>
+                        <c:when test="${userdepartment  == 4}">
                             <td><c:out value="${table.hotelName}" /></td>
-                            <script>
-                                $(document).ready(function () {
-                                    if("${table.firstCheckinDate}" !== ''){
-                                        $("#firstCheckinDate${i.count}").text(convertFormatDate("${table.firstCheckinDate}"));
-                                    }
-                                });
-                            </script>
-                            <td class="text-center" id="firstCheckinDate${i.count}"><center><c:out value="${table.firstCheckinDate}" /></center></td>  
-                            </c:when> 
-                            <c:otherwise>
+                            <fmt:formatDate value="${table.firstCheckinDate}" var="firstCheckinDate" pattern="dd-MM-yyyy" />
+                            <td class="text-center"><center><c:out value="${firstCheckinDate}" /></center></td>  
+                        </c:when> 
+                        <c:otherwise>
                             <td><center><c:out value="${table.pnr}" /></center></td>
-                            <script>
-                                $(document).ready(function () {
-                                    if("${table.firstDepartDate}" !== ''){
-                                        $("#firstDepartDate${i.count}").text(convertFormatDate("${table.firstDepartDate}"));
-                                    }
-                                });
-                            </script>
-                            <td class="text-center" id="firstDepartDate${i.count}"><center><c:out value="${table.firstDepartDate}" /></center></td>  
+                            <fmt:formatDate value="${table.firstDepartDate}" var="firstDepartDate" pattern="dd-MM-yyyy" />
+                            <td class="text-center" ><center><c:out value="${firstDepartDate}" /></center></td>  
                             <td><c:out value="${table.hotelName}" /></td>
-                            <script>
-                                $(document).ready(function () {
-                                    if("${table.firstCheckinDate}" !== ''){
-                                        $("#firstCheckinDate${i.count}").text(convertFormatDate("${table.firstCheckinDate}"));
-                                    }
-                                });
-                            </script>
-                            <td class="text-center" id="firstCheckinDate${i.count}"><center><c:out value="${table.firstCheckinDate}" /></center></td>  
-                            </c:otherwise>
-                        </c:choose>
-                    
-                    <script>
-                        $(document).ready(function () {
-                            if("${table.createDate}" !== ''){
-                                $("#createDate${i.count}").text(convertFormatDate("${table.createDate}"));
-                            }
-                        });
-                    </script>
-                    <td class="text-center" id="createDate${i.count}"><center><c:out value="${table.createDate}" /></center></td>  
+                            <fmt:formatDate value="${table.firstCheckinDate}" var="firstCheckinDate" pattern="dd-MM-yyyy" />
+                            <td class="text-center" ><center><c:out value="${firstCheckinDate}" /></center></td>  
+                        </c:otherwise>
+                    </c:choose>                   
+                    <fmt:formatDate value="${table.createDate}" var="createDate" pattern="dd-MM-yyyy" />
+                    <td class="text-center" ><center><c:out value="${createDate}" /></center></td>  
                     <td><center><c:out value="${table.createBy}" /></center></td> 
                   
                     <td>
@@ -738,18 +716,18 @@
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-        if($("#Bookdate").val() !== ''){
-            var date = $("#Bookdate").val();
-            $("#Bookdate").val(convertFormatDate(date));
-        }
-        if($("#transferDateFrom").val() !== ''){
-            var date = $("#transferDateFrom").val();
-            $("#transferDateFrom").val(convertFormatDate(date));
-        }
-        if($("#transferDateTo").val() !== ''){
-            var date = $("#transferDateTo").val();
-            $("#transferDateTo").val(convertFormatDate(date));
-        }
+//        if($("#Bookdate").val() !== ''){
+//            var date = $("#Bookdate").val();
+//            $("#Bookdate").val(convertFormatDate(date));
+//        }
+//        if($("#transferDateFrom").val() !== ''){
+//            var date = $("#transferDateFrom").val();
+//            $("#transferDateFrom").val(convertFormatDate(date));
+//        }
+//        if($("#transferDateTo").val() !== ''){
+//            var date = $("#transferDateTo").val();
+//            $("#transferDateTo").val(convertFormatDate(date));
+//        }
         
         var table = $('#BookList').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
