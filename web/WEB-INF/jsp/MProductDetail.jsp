@@ -4,6 +4,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
+
 <c:set var="producttypeList" value="${requestScope['producttype_list']}" />
 <c:set var="productPriceList" value="${requestScope['productPrice_list']}" />
 <c:set var="displayAddprice" value="" />
@@ -202,8 +206,8 @@
                                 <tbody>
                                     <c:forEach var="table" items="${productPriceList}" varStatus="dataStatus">
                                         <tr>
-                                            <td><c:out value="${table.effectiveFrom}" /> </td>
-                                            <td><c:out value="${table.effectiveTo}" /> </td>
+                                            <td><fmt:formatDate value="${table.effectiveFrom}" var="effectiveFrom" pattern="dd-MM-yyyy" /><c:out value="${effectiveFrom}" /> </td>
+                                            <td><fmt:formatDate value="${table.effectiveTo}" var="effectiveTo" pattern="dd-MM-yyyy" /><c:out value="${effectiveTo}" /> </td>
                                             <td class="tdcenter moneyformat"><c:out value="${table.adCost}" /> </td>
                                             <td class="tdcenter moneyformat"><c:out value="${table.chCost}" /> </td>
                                             <td class="tdcenter moneyformat"><c:out value="${table.inCost}" /> </td>
@@ -213,7 +217,7 @@
                                             <td class="tdcenter"><c:out value="${table.updateBy}" /> </td>
                                             <td>
                                             <center> 
-                                                <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon" data-toggle="modal" data-target="#ProductModal" onclick="EditProductPrice('${table.id}', '${table.effectiveFrom}', '${table.effectiveTo}', '${table.adCost}', '${table.adPrice}', '${table.chCost}', '${table.chPrice}', '${table.inCost}', '${table.inPrice}')"></span>
+                                                <span id="spanEdit${dataStatus.count}" class="glyphicon glyphicon-edit editicon" data-toggle="modal" data-target="#ProductModal" onclick="EditProductPrice('${table.id}', '${effectiveFrom}', '${effectiveTo}', '${table.adCost}', '${table.adPrice}', '${table.chCost}', '${table.chPrice}', '${table.inCost}', '${table.inPrice}')"></span>
                                                 <span id="spanRemove${dataStatus.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteProductPrice(${table.id})" data-toggle="modal" data-target="#delProductPriceModal" >  </span>
                                             </center>
                                             </td>    
@@ -258,7 +262,7 @@
                     <div class ="col-md-6" style="padding-right:  68px">
                         <label for="effectivefrom" class="col-sm-5 control-label" >Effective from <font style="color: red">*</font></label>
                         <div class=' col-sm-6 input-group date' id='effectivefromClass'>
-                            <input type='text' class="form-control"  id="effectivefrom" name="effectivefrom" data-date-format="YYYY-MM-DD" value="" />
+                            <input type='text' class="form-control datemask"  id="effectivefrom" name="effectivefrom" data-date-format="DD-MM-YYYY"  placeholder="DD-MM-YYYY" value="" />
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
@@ -266,7 +270,7 @@
                     <div class ="col-md-6" style="padding-left: 37px;">
                         <label for="effectiveto" class="col-sm-4 control-label" >Effective to <font style="color: red">*</font></label>
                         <div class=' col-sm-6 input-group date' id='effectivetoClass'>
-                            <input type='text' class="form-control"  id="effectiveto" name="effectiveto" data-date-format="YYYY-MM-DD" value="" />
+                            <input type='text' class="form-control datemask"  id="effectiveto" name="effectiveto" data-date-format="DD-MM-YYYY"  placeholder="DD-MM-YYYY" value="" />
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
@@ -289,13 +293,13 @@
                             <div class ="col-md-6">
                                 <label for="AD_cost" class="col-sm-4 control-label" >Adult</label>
                                 <div class="col-sm-6"> 
-                                    <input type="text" class="form-control money" id="ADcost" name="ADcost" value="0" >
+                                    <input type="text" class="form-control decimal" id="ADcost" name="ADcost" value="0" >
                                 </div>
                             </div>
                             <div class ="col-md-6">
                                 <label for="effectiveto" class="col-sm-4 control-label" >Adult</label>
                                 <div class="col-sm-6">   
-                                    <input type="text" class="form-control money"  id="ADprice" name="ADprice" value="0" > 
+                                    <input type="text" class="form-control decimal"  id="ADprice" name="ADprice" value="0" > 
                                 </div>
                             </div>
                         </div>
@@ -306,13 +310,13 @@
                             <div class ="col-md-6">
                                 <label for="AD_cost" class="col-sm-4 control-label" >Child</label>
                                 <div class="col-sm-6"> 
-                                    <input type="text" class="form-control money" id="CHcost" name="CHcost" value="0" >
+                                    <input type="text" class="form-control decimal" id="CHcost" name="CHcost" value="0" >
                                 </div>
                             </div>
                             <div class ="col-md-6">
                                 <label for="effectiveto" class="col-sm-4 control-label" >Child</label>
                                 <div class="col-sm-6">   
-                                    <input type="text" class="form-control money"  id="CHprice" name="CHprice" value="0" > 
+                                    <input type="text" class="form-control decimal"  id="CHprice" name="CHprice" value="0" > 
                                 </div>
                             </div>
                         </div>
@@ -323,13 +327,13 @@
                             <div class ="col-md-6">
                                 <label for="AD_cost" class="col-sm-4 control-label" >Infant</label>
                                 <div class="col-sm-6"> 
-                                    <input type="text" class="form-control money" id="INcost" name="INcost" value="0" >
+                                    <input type="text" class="form-control decimal" id="INcost" name="INcost" value="0" >
                                 </div>
                             </div>
                             <div class ="col-md-6">
                                 <label for="effectiveto" class="col-sm-4 control-label" >Infant</label>
                                 <div class="col-sm-6">   
-                                    <input type="text" class="form-control money"  id="INprice" name="INprice" value="0" > 
+                                    <input type="text" class="form-control decimal"  id="INprice" name="INprice" value="0" > 
                                 </div>
                             </div>
                         </div>
@@ -399,3 +403,23 @@
         </script>
     </c:if>
 </c:if>
+<script type="text/javascript" charset="utf-8">
+
+
+    $(document).ready(function() {    
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 0,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0"
+        });
+        $('.datemask').mask('00-00-0000');
+    
+    });
+        
+        
+</script>

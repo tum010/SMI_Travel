@@ -145,8 +145,8 @@
                                 <tr>
                                     <td><c:out value="${fn:toUpperCase(table.code)}" /></td>
                                     <td><c:out value="${fn:toUpperCase(table.name)}" /></td>
-                                    <td><c:out value="${table.effectiveFrom}" /> </td>
-                                    <td><c:out value="${table.effectiveTo}" /> </td>
+                                    <td><fmt:formatDate value="${table.effectiveFrom}" var="effectiveFrom" pattern="dd-MM-yyyy" /><c:out value="${effectiveFrom}" /> </td>
+                                    <td><fmt:formatDate value="${table.effectiveTo}" var="effectiveTo" pattern="dd-MM-yyyy" /><c:out value="${effectiveTo}" /> </td>
                                     <td class='tdcenter moneyformat' ><c:out value="${table.adCost}" /> </td>
                                     <td class='tdcenter moneyformat' ><c:out value="${table.chCost}" /> </td>
                                     <td class='tdcenter moneyformat' ><c:out value="${table.inCost}" /> </td>

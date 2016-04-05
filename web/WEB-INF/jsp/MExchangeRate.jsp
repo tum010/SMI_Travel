@@ -70,8 +70,11 @@
                         <div class="form-group">
                             <label>From</label>
                             <div class='input-group date fromdate' id='fromdatepanel'> 
+                                <c:set var="FromDate" value="${fromdate}" />
+                                <fmt:parseDate value="${FromDate}" var="FromDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${FromDate}" var="FromDate" pattern="dd-MM-yyyy" />
                                 <input id="FromDate" name="FromDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${fromdate}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${FromDate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                                          
                             </div>
                         </div>
@@ -81,8 +84,11 @@
                         <div class="form-group">
                             <label>To</label>
                             <div class='input-group date todate' id='todatepanel'> 
+                                <c:set var="ToDate" value="${todate}" />
+                                <fmt:parseDate value="${ToDate}" var="ToDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${ToDate}" var="ToDate" pattern="dd-MM-yyyy" />
                                 <input id="ToDate" name="ToDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${todate}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${ToDate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                        
                             </div>
                         </div>
@@ -141,12 +147,12 @@
                         <c:forEach var="table" items="${ExchangeList}" varStatus="dataStatus">
                             <tr>
                                 <td class="hidden" ><c:out value="${table.id}" /></td>
-                                <td class="text-center"><c:out value="${fn:toUpperCase(table.exdate)}"  /></td>
+                                <td class="text-center"><fmt:formatDate value="${table.exdate}" var="exdate" pattern="dd-MM-yyyy" /><c:out value="${exdate}"  /></td>
                                 <td class="text-center"><c:out value="${fn:toUpperCase(table.currency)}"/></td>
                                 <td class="text-right"><fmt:formatNumber type="currency" pattern="#,##0.0000" value="${fn:toUpperCase(table.exrate)}" /></td>
                                 <td>
                                 <center> 
-                                    <span id="editSpan${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditExchange('${table.id}', '${table.exdate}', '${table.currency}', '${table.exrate}', '${table.createby}', '${table.createdate}')" data-toggle="modal" data-target="#ExchangeRateModal" ></span>
+                                    <span id="editSpan${dataStatus.count}" class="glyphicon glyphicon-edit editicon"      onclick="EditExchange('${table.id}', '${exdate}', '${table.currency}', '${table.exrate}', '${table.createby}', '${table.createdate}')" data-toggle="modal" data-target="#ExchangeRateModal" ></span>
                                     <span id="removeSpan${dataStatus.count}" class="glyphicon glyphicon-remove deleteicon"  onclick="DeleteExchange('${table.id}', '${table.exdate}', '${table.currency}')" data-toggle="modal" data-target="#DeleteExchangeModal"></span>
                                 </center>
                                 </td>                 
@@ -180,7 +186,7 @@
                         <div class="col-sm-7 " > 
                             <div class='input-group date ' id="DateExchange">
                                 <input id="ExchangeDate" name="ExchangeDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                                          
                             </div>
                         </div>
@@ -274,7 +280,7 @@
   <script type="text/javascript" charset="utf-8">      
 $(document).ready(function() {
     $('.date').datetimepicker();
-    $('.datemask').mask('0000-00-00');
+    $('.datemask').mask('00-00-0000');
     $('.spandate').click(function() {
         var position = $(this).offset();
         console.log("positon :" + position.top);

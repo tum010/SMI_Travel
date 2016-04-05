@@ -106,8 +106,11 @@
                         </div>
                         <div class="col-md-3 form-group text-left" style="width: 170px;padding-left: 3px;" >
                             <div class='input-group date' id="DateFrom">
-                                <!--<input name="InputEffectiveFromDate0" id="InputEffectiveFromDate0" type="text" class="form-control " data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${from}" />-->
-                                <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${from}" />
+                                <!--<input name="InputEffectiveFromDate0" id="InputEffectiveFromDate0" type="text" class="form-control " data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${from}" />-->
+                                <c:set var="InputEffectiveFromDate" value="${from}" />
+                                <fmt:parseDate value="${InputEffectiveFromDate}" var="InputEffectiveFromDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${InputEffectiveFromDate}" var="InputEffectiveFromDate" pattern="dd-MM-yyyy" />
+                                <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${InputEffectiveFromDate}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -116,7 +119,10 @@
                         </div>
                         <div class="col-md-3 form-group text-left" style="padding-left: 6px;width: 170px;" >
                             <div class='input-group date' id="DateTo">
-                                <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${to}" />
+                                <c:set var="InputInputEffectiveToDate" value="${to}" />
+                                <fmt:parseDate value="${InputInputEffectiveToDate}" var="InputInputEffectiveToDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${InputInputEffectiveToDate}" var="InputInputEffectiveToDate" pattern="dd-MM-yyyy" />
+                                <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${InputInputEffectiveToDate}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -135,7 +141,10 @@
                         </div>
                         <div class="col-md-3 form-group text-left" style="padding-left: 0px;width: 165px;">
                             <div class='input-group date' >
-                                <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${create}" />
+                                <c:set var="InputStockDate" value="${create}" />
+                                <fmt:parseDate value="${InputStockDate}" var="InputStockDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${InputStockDate}" var="InputStockDate" pattern="dd-MM-yyyy" />
+                                <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${InputStockDate}" />
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -424,7 +433,7 @@
     });
     var select = "";
     $(document).ready(function () {
-        
+        $('.datemask').mask('00-00-0000');
         var cout = document.getElementById('counterTable');
         var type  = document.getElementById('Selecttype');
         <c:forEach var="type" items="${getType}">

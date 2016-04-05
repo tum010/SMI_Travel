@@ -72,7 +72,7 @@
             <column name="create_by" length="20" />
         </property>
         <property name="remark" type="string">
-            <column name="remark" length="100" />
+            <column name="remark" length="65535" />
         </property>
         <property name="remarkGuideCommission" type="string">
             <column name="remark_guide_commission" length="255" />

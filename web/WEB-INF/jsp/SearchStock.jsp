@@ -139,7 +139,10 @@
             </div>
             <div class="col-md-3 form-group text-left" style="width: 170px;" >
                 <div class='input-group date' >
-                    <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${setProductAdd}" />
+                    <c:set var="InputStockDate" value="${setProductAdd}" />
+                    <fmt:parseDate value="${InputStockDate}" var="InputStockDate" pattern="yyyy-MM-dd" />
+                    <fmt:formatDate value="${InputStockDate}" var="InputStockDate" pattern="dd-MM-yyyy" />
+                    <input name="InputStockDate" id="InputStockDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${InputStockDate}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
@@ -148,7 +151,10 @@
             </div>
             <div class="col-md-2 form-group text-left" style="padding-left: 8px;"> 
                 <div class='input-group date' id="DateFrom">
-                    <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${setFrom}" />
+                    <c:set var="InputEffectiveFromDate" value="${setFrom}" />
+                    <fmt:parseDate value="${InputEffectiveFromDate}" var="InputEffectiveFromDate" pattern="yyyy-MM-dd" />
+                    <fmt:formatDate value="${InputEffectiveFromDate}" var="InputEffectiveFromDate" pattern="dd-MM-yyyy" />
+                    <input name="InputEffectiveFromDate" id="InputEffectiveFromDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${InputEffectiveFromDate}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
@@ -157,7 +163,10 @@
             </div>
             <div class="col-md-2 form-group text-left" style="padding-left: 6px;"> 
                 <div class='input-group date' id="DateTo">
-                    <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${setTo}" />
+                    <c:set var="InputInputEffectiveToDate" value="${setTo}" />
+                    <fmt:parseDate value="${InputInputEffectiveToDate}" var="InputInputEffectiveToDate" pattern="yyyy-MM-dd" />
+                    <fmt:formatDate value="${InputInputEffectiveToDate}" var="InputInputEffectiveToDate" pattern="dd-MM-yyyy" />
+                    <input name="InputInputEffectiveToDate" id="InputInputEffectiveToDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${InputInputEffectiveToDate}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
@@ -220,9 +229,9 @@
                             <td class="hidden">${stock.id}</td>
                             <td>${stock.product.code}</td>
                             <td>${stock.staff.name}</td>
-                            <td>${stock.createDate}</td>                                
-                            <td>${stock.effectiveFrom}</td>
-                            <td>${stock.effectiveTo}</td> 
+                            <td><fmt:formatDate value="${stock.createDate}" var="createDate" pattern="dd-MM-yyyy" />${createDate}</td>                                
+                            <td><fmt:formatDate value="${stock.effectiveFrom}" var="effectiveFrom" pattern="dd-MM-yyyy" />${effectiveFrom}</td>
+                            <td><fmt:formatDate value="${stock.effectiveTo}" var="effectiveTo" pattern="dd-MM-yyyy" />${effectiveTo}</td> 
                             <td class="text-center">
                                 <a href="Stock.smi?InputStockId=${stock.id}&action=edit">
                                     <span id="RefStockTableButtonEdit" name="RefStockTableButtonEdit" class="glyphicon glyphicon-edit editicon"></span>
@@ -282,7 +291,7 @@
                             <td>${stockDetail.typeName}</td>
                             <td>${stockDetail.refNo}</td>                                
                             <td>${stockDetail.pickup}</td>
-                            <td>${stockDetail.pickupDate}</td>
+                            <td><fmt:formatDate value="${stockDetail.pickupDate}" var="pickupDate" pattern="dd-MM-yyyy" />${pickupDate}</td>
                             <td>
                                 <c:set var="pay" value="" />
                                 <c:if test="${stockDetail.payStatusName == 0}">
@@ -466,7 +475,7 @@
  $(document).ready(function () {
 //    	$(".loader").fadeOut("slow");
     $('.date').datetimepicker();
-    $('.datemask').mask('0000-00-00', {reverse: true});
+    $('.datemask').mask('00-00-0000');
      $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
@@ -532,7 +541,7 @@
                         trigger: 'focus keyup change',
                             validators: {
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     max: 'InputInputEffectiveToDate',
                                     message: 'The Date From is not a valid'
                                 }
@@ -542,7 +551,7 @@
                         trigger: 'focus keyup change',
                             validators: {
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     min: 'InputEffectiveFromDate',
                                     message: 'The Date To is not a valid'
                                 }

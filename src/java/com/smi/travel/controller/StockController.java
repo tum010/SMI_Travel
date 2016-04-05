@@ -57,9 +57,9 @@ public class StockController extends SMITravelController {
             String staffId = request.getParameter("InputStaffId");
             String staffCode = request.getParameter("InputStaff");
             String staffName = request.getParameter("InputStaffName");
-            String  effectiveFrom = request.getParameter("InputEffectiveFromDate");
-            String  effectiveTo = request.getParameter("InputInputEffectiveToDate");
-            String  createDate = request.getParameter("InputStockDate");
+            String  effectiveFrom = utility.covertStringDateToFormatYMD(request.getParameter("InputEffectiveFromDate"));
+            String  effectiveTo = utility.covertStringDateToFormatYMD(request.getParameter("InputInputEffectiveToDate"));
+            String  createDate = utility.covertStringDateToFormatYMD(request.getParameter("InputStockDate"));
             String description = request.getParameter("descriptionStock");
                 if(!stockId.equals("")){
                     stock.setId(stockId);

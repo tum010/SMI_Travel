@@ -364,7 +364,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label text-right"  for="fromdes">Remark</label>
                                     <div class="col-sm-9">  
-                                        <textarea class="form-control" maxlength="100" rows="3" id="remark" name="remark">${requestScope['remark']}</textarea>
+                                        <textarea class="form-control" maxlength="500" rows="3" id="remark" name="remark">${requestScope['remark']}</textarea>
                                     </div>   
                                 </div>
                             </div>   

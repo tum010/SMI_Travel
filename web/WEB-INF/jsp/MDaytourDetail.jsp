@@ -130,7 +130,7 @@
                                     </td>
 
                                     <td><input type="text" id="priceInputDetail-" name="priceInputDetail-" class="form-control" maxlength="255"></td>
-                                    <td><input type="text" id="priceInputPrice-" name="priceInputPrice-" class="form-control text-right money" maxlength="11"></td>
+                                    <td><input type="text" id="priceInputPrice-" name="priceInputPrice-" class="form-control text-right decimal" maxlength="11"></td>
                                     <td>
                                         <select class="form-control" id="priceRowSelectCur-" name="priceRowSelectCur-">
                                             <option value="0" selected="selected"></option>
@@ -167,7 +167,7 @@
                                     </td>
 
                                     <td><input type="text"  class="form-control" name="priceInputDetail-${loopCounter.count}" id="priceInputDetail-${loopCounter.count}" value="<c:out value="${daytourPrice.detail}"/>"></td>
-                                    <td><input type="text" class="form-control text-right money" name="priceInputPrice-${loopCounter.count}" id="priceInputPrice-${loopCounter.count}" 
+                                    <td><input type="text" class="form-control text-right decimal" name="priceInputPrice-${loopCounter.count}" id="priceInputPrice-${loopCounter.count}" 
                                                value="<c:out value="${daytourPrice.price}"/>" maxlength="11"></td>
                                     <td>
                                         <select id="priceRowSelectCur-${loopCounter.count}" name="priceRowSelectCur-${loopCounter.count}" class="form-control">
@@ -220,7 +220,7 @@
                                     <tr class="hide">
                                         <td class="hidden"><input type="text" id="expenseInputId-" name="expenseInputId-" class="hidden" /></td>
                                         <td><input type="text" name="expenseInputDescription-" id="expenseInputDescription-" class="form-control" maxlength="255"></td>
-                                        <td><input type="text" class="form-control text-right money" name="expenseInputAmount-" id="expenseInputAmount-"  maxlength="11" ></td>
+                                        <td><input type="text" class="form-control text-right decimal" name="expenseInputAmount-" id="expenseInputAmount-"  maxlength="11" ></td>
                                         <td>
                                             <select id="ExpenseRowCur-" name="ExpenseRowCur-" class="form-control">
                                                 <option value="0" selected="selected"></option>
@@ -248,7 +248,7 @@
                                     <tr>
                                         <td class="hidden"><input type="text" class="hidden" id="expenseInputId-${loopCounter.count}" name="expenseInputId-${loopCounter.count}" value="${daytourExpense.id}" /></td>
                                         <td><input type="text" name="expenseInputDescription-${loopCounter.count}" id="expenseInputDescription-${loopCounter.count}" class="form-control" value="${daytourExpense.description}" maxlength="255"></td>
-                                        <td><input type="text" class="form-control text-right money" name="expenseInputAmount-${loopCounter.count}" id="expenseInputAmount-${loopCounter.count}"   value="${daytourExpense.amount}" maxlength="11" ></td>
+                                        <td><input type="text" class="form-control text-right decimal" name="expenseInputAmount-${loopCounter.count}" id="expenseInputAmount-${loopCounter.count}"   value="${daytourExpense.amount}" maxlength="11" ></td>
                                         <td>
                                             <select id="ExpenseRowCur-${loopCounter.count}" name="ExpenseRowCur-${loopCounter.count}" class="form-control">
                                                 <option value="0" selected="selected"></option>
@@ -461,3 +461,23 @@
         </script>
     </c:if>
 </c:if>
+        
+<script type="text/javascript" charset="utf-8">
+
+    $(document).ready(function() {    
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 0,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0"
+        });
+        $('.datemask').mask('00-00-0000');
+    
+    });
+        
+        
+</script>

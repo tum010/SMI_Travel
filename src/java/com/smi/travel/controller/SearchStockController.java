@@ -30,9 +30,9 @@ public class SearchStockController extends SMITravelController {
         String productId = request.getParameter("InputId");
         String productCode = request.getParameter("InputProductId");
         String productName = request.getParameter("InputProductName");
-        String createDate = request.getParameter("InputStockDate");
-        String EffecttiveFrom = request.getParameter("InputEffectiveFromDate");
-        String EffectiveTo = request.getParameter("InputInputEffectiveToDate");
+        String createDate = utility.covertStringDateToFormatYMD(request.getParameter("InputStockDate"));
+        String EffecttiveFrom = utility.covertStringDateToFormatYMD(request.getParameter("InputEffectiveFromDate"));
+        String EffectiveTo = utility.covertStringDateToFormatYMD(request.getParameter("InputInputEffectiveToDate"));
         String expire = request.getParameter("SelectExpire");
         Date create = utility.convertStringToDate(createDate);
         Date from = utility.convertStringToDate(EffecttiveFrom);

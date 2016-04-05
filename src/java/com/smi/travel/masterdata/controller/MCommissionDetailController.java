@@ -212,6 +212,8 @@ public class MCommissionDetailController extends SMITravelController {
             if(StringUtils.isNotEmpty(commission)){
                 commissionDouble = Double.parseDouble(commission);
                 System.out.println("commissionDouble = "+commissionDouble);
+            }else{
+                commissionDouble = Double.parseDouble("0");
             }
             
             Date dateFrom = util.convertStringToDateS(from);

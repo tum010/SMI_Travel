@@ -1,10 +1,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script type="text/javascript" src="js/MpackageDetail.js"></script>
 <script type="text/javascript" src="js/selectize.js"></script>
+<script type="text/javascript" src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <c:set var="itinerarylist" value="${requestScope['itinerary_List']}" />
 <c:set var="pricelist" value="${requestScope['price_list']}" />
@@ -203,12 +207,12 @@
                                                     </span>
                                                 </div>
                                             </td>
-                                            <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-adcost" name="row-${priceStatus.count-1}-adcost" value="${table1.adCost}"></td>
-                                            <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-chcost" name="row-${priceStatus.count-1}-chcost" value="${table1.chCost}"></td>
-                                            <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-incost" name="row-${priceStatus.count-1}-incost" value="${table1.inCost}"></td>
-                                            <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-adprice" name="row-${priceStatus.count-1}-adprice" value="${table1.adPrice}"></td>
-                                            <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-chprice" name="row-${priceStatus.count-1}-chprice" value="${table1.chPrice}"></td>
-                                            <td><input class="form-control money"  style="width:50px" id="row-${priceStatus.count-1}-inprice" name="row-${priceStatus.count-1}-inprice" value="${table1.inPrice}"></td>
+                                            <td><input class="form-control decimal"  style="width:50px" id="row-${priceStatus.count-1}-adcost" name="row-${priceStatus.count-1}-adcost" value="${table1.adCost}"></td>
+                                            <td><input class="form-control decimal"  style="width:50px" id="row-${priceStatus.count-1}-chcost" name="row-${priceStatus.count-1}-chcost" value="${table1.chCost}"></td>
+                                            <td><input class="form-control decimal"  style="width:50px" id="row-${priceStatus.count-1}-incost" name="row-${priceStatus.count-1}-incost" value="${table1.inCost}"></td>
+                                            <td><input class="form-control decimal"  style="width:50px" id="row-${priceStatus.count-1}-adprice" name="row-${priceStatus.count-1}-adprice" value="${table1.adPrice}"></td>
+                                            <td><input class="form-control decimal"  style="width:50px" id="row-${priceStatus.count-1}-chprice" name="row-${priceStatus.count-1}-chprice" value="${table1.chPrice}"></td>
+                                            <td><input class="form-control decimal"  style="width:50px" id="row-${priceStatus.count-1}-inprice" name="row-${priceStatus.count-1}-inprice" value="${table1.inPrice}"></td>
                                             <td class="text-center">
                                                 <a class="remCF" onclick="ConfirmDelete('2', '${table1.id}', '${priceStatus.count-1}')">  
                                                     <span  id="SpanRemove${priceStatus.count-1}"  class="glyphicon glyphicon-remove deleteicon"></span>
@@ -372,7 +376,16 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         // ******************* start Itinerary script *******************
-        
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 0,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0"
+        });
          $("#dateFrom-").datepicker({ dateFormat: "yy-mm-dd" }).val()
         
         $("#Itinerary").on("keyup", function() {
@@ -468,12 +481,12 @@
                     '<td class="hidden orderrow">'+getrowcountPrice()+'</td>'+
                     '<td><div class="input-group daydatepicker" id="daydatepicker-'+row+'" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="row-'+row+'-datefrom" name="row-'+row+'-datefrom" data-date-format="YYYY-MM-DD"/><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
                     '<td><div class="input-group daydatepicker" id="daydatepicker-'+row+'" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="row-'+row+'-dateto" name="row-'+row+'-dateto" data-date-format="YYYY-MM-DD" /><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
-                    '<td><input class="form-control money" maxlength=10  style="width:50px" id="row-'+row+'-adcost" name="row-'+row+'-adcost" ></td>' +
-                    '<td><input class="form-control money" maxlength=10 style="width:50px" id="row-'+row+'-chcost" name="row-'+row+'-chcost" ></td>' +
-                    '<td><input class="form-control money" maxlength=10 style="width:50px" id="row-'+row+'-incost" name="row-'+row+'-incost" ></td>' +
-                    '<td><input class="form-control money" maxlength=10 style="width:50px" id="row-'+row+'-adprice" name="row-'+row+'-adprice" ></td>' +
-                    '<td><input class="form-control money" maxlength=10 style="width:50px" id="row-'+row+'-chprice" name="row-'+row+'-chprice" ></td>' +
-                    '<td><input class="form-control money" maxlength=10 style="width:50px" id="row-'+row+'-inprice" name="row-'+row+'-inprice" ></td>'+
+                    '<td><input class="form-control decimal" maxlength=10  style="width:50px" id="row-'+row+'-adcost" name="row-'+row+'-adcost" ></td>' +
+                    '<td><input class="form-control decimal" maxlength=10 style="width:50px" id="row-'+row+'-chcost" name="row-'+row+'-chcost" ></td>' +
+                    '<td><input class="form-control decimal" maxlength=10 style="width:50px" id="row-'+row+'-incost" name="row-'+row+'-incost" ></td>' +
+                    '<td><input class="form-control decimal" maxlength=10 style="width:50px" id="row-'+row+'-adprice" name="row-'+row+'-adprice" ></td>' +
+                    '<td><input class="form-control decimal" maxlength=10 style="width:50px" id="row-'+row+'-chprice" name="row-'+row+'-chprice" ></td>' +
+                    '<td><input class="form-control decimal" maxlength=10 style="width:50px" id="row-'+row+'-inprice" name="row-'+row+'-inprice" ></td>'+
                     '<td class="text-center">'+
                     '<a class="remCF" onclick="ConfirmDelete(\'2\', \'\', \''+row+'\')">  '+
                     '<span  id="SpanRemove'+row+'"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+                   

@@ -30,6 +30,7 @@ public class MProductDetailController extends SMITravelController {
 
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         String action = request.getParameter("action");
         String code = request.getParameter("code");
         String tempcode = request.getParameter("tempcode");
@@ -39,7 +40,6 @@ public class MProductDetailController extends SMITravelController {
         String remark = request.getParameter("remark");
         String ProductID = request.getParameter("ProductID");
         String isStock = request.getParameter("isStock");
-        UtilityFunction util = new UtilityFunction();
         String operation = "";
         String stock = request.getParameter("stock");
         

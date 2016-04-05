@@ -68,7 +68,7 @@ function saveMExchangeRate(){
 
 $(document).ready(function() {
     $('.date').datetimepicker();
-    $('.datemask').mask('0000-00-00');
+    $('.datemask').mask('00-00-0000');
     $('.spandate').click(function() {
         var position = $(this).offset();
         console.log("positon :" + position.top);

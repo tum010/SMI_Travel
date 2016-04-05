@@ -5,7 +5,7 @@ $(document).ready(function () {
     count.value = rows;
     console.log(" Row is Now : " + count.value );
     $('.date').datetimepicker();
-    $(".datemask").mask('0000-00-00', {reverse: true});
+//    $('.datemask').mask('00-00-0000');
     $(".money").mask('000,000,000,000,000,000', {reverse: true});
     
     $(".number").mask('000000000000000000', {reverse: true});
@@ -189,7 +189,7 @@ $(document).ready(function () {
                         trigger: 'focus keyup change',
                         validators: {
                             date: {
-                                format: 'YYYY-MM-DD',
+                                format: 'DD-MM-YYYY',
                                 max: 'InputInputEffectiveToDate',
                                 message: 'The Date From is not a valid'
                             }
@@ -199,7 +199,7 @@ $(document).ready(function () {
                         trigger: 'focus keyup change',
                         validators: {
                             date: {
-                                format: 'YYYY-MM-DD',
+                                format: 'DD-MM-YYYY',
                                 min: 'InputEffectiveFromDate',
                                 message: 'The Date To is not a valid'
                             }
@@ -219,7 +219,7 @@ $(document).ready(function () {
                                 message: 'The Date To is required'
                             },
                             date: {
-                                format: 'YYYY-MM-DD',
+                                format: 'DD-MM-YYYY',
                                 min: 'InputStockDate',
                                 message: 'The Date To is not a valid'
                             }

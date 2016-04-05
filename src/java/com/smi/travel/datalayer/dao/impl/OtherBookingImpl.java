@@ -672,7 +672,7 @@ public class OtherBookingImpl implements OtherBookingDao{
         List<OtherBookingView> data = new LinkedList<OtherBookingView>();
         String query = "SELECT * FROM `other_operation_view` ";
         if(!"".equalsIgnoreCase(name) && name != null){
-            query += " WHERE refno LIKE '%" + name + "%' OR leader LIKE '%" + name + "%' OR product_code LIKE '%" + name + "%' OR "
+            query += " WHERE bookingtype = 'I' and refno LIKE '%" + name + "%' OR leader LIKE '%" + name + "%' OR product_code LIKE '%" + name + "%' OR "
                     + "product LIKE '%" + name + "%' OR other_date LIKE '%" + name + "%'";
         }
         query += " ORDER BY create_date DESC , refno ASC";

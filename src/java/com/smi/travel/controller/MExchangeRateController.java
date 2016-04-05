@@ -36,6 +36,7 @@ public class MExchangeRateController  extends SMITravelController{
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        
          //List Currency
         List<MCurrency> listCurrency = new ArrayList<MCurrency>();
         listCurrency = utilityService.getListMCurrency();
@@ -51,7 +52,7 @@ public class MExchangeRateController  extends SMITravelController{
             action = actionSearch;
         }
         String ExchangeId = request.getParameter("ExchangeID");
-        String EdxchangeDate = request.getParameter("ExchangeDate");
+        String EdxchangeDate = utilty.covertStringDateToFormatYMD(request.getParameter("ExchangeDate"));
         String EdxchangeRate = request.getParameter("ExchangeRate");
         String Currency = request.getParameter("Currency");
         
@@ -86,8 +87,8 @@ public class MExchangeRateController  extends SMITravelController{
         
         // Search
         String Currency_Search = request.getParameter("CurrencyS");
-        String FromDate = request.getParameter("FromDate");
-        String ToDate = request.getParameter("ToDate");
+        String FromDate = utilty.covertStringDateToFormatYMD(request.getParameter("FromDate"));
+        String ToDate = utilty.covertStringDateToFormatYMD(request.getParameter("ToDate"));
         
         if ("search".equalsIgnoreCase(action)) {
             List<MExchangeRate> listMExchange = mExchangeRateService.searchExchangeRate(FromDate, ToDate, Currency_Search);

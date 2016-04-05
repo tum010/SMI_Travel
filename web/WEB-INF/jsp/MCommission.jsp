@@ -163,8 +163,8 @@
                                     <td><c:out value="${item.agentComission.agent.name}" /></td>
                                     <td><c:out value="${item.daytour.code}" /></td>
                                     <td><c:out value="${item.daytour.name}" /></td>
-                                    <td class="text-center"><c:out value="${item.from}" /></td>
-                                    <td class="text-center"><c:out value="${item.to}" /></td>
+                                    <td class="text-center"><fmt:formatDate value="${item.from}" var="from" pattern="dd-MM-yyyy" /><c:out value="${from}" /></td>
+                                    <td class="text-center"><fmt:formatDate value="${item.to}" var="to" pattern="dd-MM-yyyy" /><c:out value="${to}" /></td>
                                     <td class="text-right" id="compoint-${loop.count}"><c:out value="${item.comission}" /></td>
                                     <td class="text-center">
                                         <a id="ButtonEdit-${loop.count}" name="ButtonEdit-${loop.count}" href="MCommissionDetail.smi?action=edit&agentCommissionId=${item.agentComission.agent.id}&AgentComID=${item.agentComission.id}&InputTourId=${item.daytour.id}">

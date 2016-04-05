@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 $(document).ready(function() {
-
+    
     $('#ProductDetailForm').bootstrapValidator({
         container: 'tooltip',
         excluded: [':disabled'],
@@ -60,8 +60,8 @@ $(document).ready(function() {
                         message: 'The effectivefrom  is required'
                     },
                     date: {
-                        format: 'YYYY-MM-DD',
-                        message: 'The format is YYYY-MM-DD'
+                        format: 'DD-MM-YYYY',
+                        message: 'The format is DD-MM-YYYY'
                     }
                 }
             },
@@ -71,8 +71,8 @@ $(document).ready(function() {
                         message: 'The effectiveto is required'
                     },
                     date: {
-                        format: 'YYYY-MM-DD',
-                        message: 'The format is YYYY-MM-DD'
+                        format: 'DD-MM-YYYY',
+                        message: 'The format is DD-MM-YYYY'
                     }
                 }
             }
