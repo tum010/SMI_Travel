@@ -2,10 +2,10 @@
 var showflag = 1;
 $(document).ready(function () {
     // DATATIMEPICKER
-    if($("#birthDate").val() !== ''){
-        var date = $("#birthDate").val();
-        $("#birthDate").val(convertFormatDate(date));
-    }
+//    if($("#birthDate").val() !== ''){
+//        var date = $("#birthDate").val();
+//        $("#birthDate").val(convertFormatDate(date));
+//    }
     $('.date').datetimepicker();
     $('.spandate').click(function () {
         var position = $(this).offset();

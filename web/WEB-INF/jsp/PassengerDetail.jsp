@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
 <c:set var="master" value="${requestScope['Master']}" />
 <c:set var="passenger" value="${requestScope['PassengerList']}" />
@@ -190,8 +191,9 @@
                                     <label for="" class="col-sm-2 text-right">Birth</label>
                                     <div class="col-sm-4">
                                         <div class="">
-                                            <div class='input-group date'>
-                                                <input id="birthDate" name="birthDate"  value="${passenger.getCustomer().getBirthDate()}" type='text' class="form-control" data-date-format="DD-MM-YYYY"  placeholder="DD-MM-YYYY"/>
+                                            <fmt:formatDate value="${passenger.getCustomer().getBirthDate()}" var="birthDate" pattern="dd-MM-yyyy" />
+                                            <div class='input-group date'>                                          
+                                                <input id="birthDate" name="birthDate"  value="${birthDate}" type='text' class="form-control" data-date-format="DD-MM-YYYY"  placeholder="DD-MM-YYYY"/>
                                                 <span id="SpanGroupCalendar" class="input-group-addon spandate">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
