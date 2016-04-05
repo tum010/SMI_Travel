@@ -135,7 +135,8 @@
                                 <label class="col-sm-5 control-label text-right">Check In <strong style="color: red">*</strong></label>
                                 <div class="col-sm-6">
                                     <div class='input-group date'>
-                                        <input id="checkin" name="checkin" type='text' class="form-control"  data-date-format="DD-MM-YYYY" value="${hotelBooking.checkin}" placeholder="DD-MM-YYYY"/>
+                                        <fmt:formatDate value="${hotelBooking.checkin}" var="checkIn" pattern="dd-MM-yyyy" />
+                                        <input id="checkin" name="checkin" type='text' class="form-control"  data-date-format="DD-MM-YYYY" value="${checkIn}" placeholder="DD-MM-YYYY"/>
                                         <span id="SpanCheckin" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
@@ -145,7 +146,8 @@
                                 <label class="col-sm-5 control-label text-right">Check Out <strong style="color: red">*</strong></label>
                                 <div class="col-sm-6">
                                     <div class='input-group date'>
-                                        <input id="checkout" name="checkout" type='text'  data-date-format="DD-MM-YYYY" class="form-control" value="${hotelBooking.checkout}" placeholder="DD-MM-YYYY"/>
+                                        <fmt:formatDate value="${hotelBooking.checkout}" var="checkOut" pattern="dd-MM-yyyy" />
+                                        <input id="checkout" name="checkout" type='text'  data-date-format="DD-MM-YYYY" class="form-control" value="${checkOut}" placeholder="DD-MM-YYYY"/>
                                         <span id="SpanCheckout" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
@@ -174,7 +176,8 @@
                                 <label class="col-sm-5 control-label text-right">Deadline</label>
                                 <div class="col-sm-6">
                                     <div class="input-group date">
-                                        <input name="deadline" id="deadline" type="text"  data-date-format="DD-MM-YYYY" maxlength="10" class="form-control" value="${hotelBooking.deadline}" placeholder="DD-MM-YYYY"/>
+                                        <fmt:formatDate value="${hotelBooking.deadline}" var="deadLine" pattern="dd-MM-yyyy" />
+                                        <input name="deadline" id="deadline" type="text"  data-date-format="DD-MM-YYYY" maxlength="10" class="form-control" value="${deadLine}" placeholder="DD-MM-YYYY"/>
                                         <span id="SpanDeadline" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>

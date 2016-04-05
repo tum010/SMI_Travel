@@ -1,17 +1,17 @@
 // ### SET DEFAULT PAEG ### //
 $(document).ready(function () {
-    if($("#checkin").val() !== ''){
-        var date = $("#checkin").val();
-        $("#checkin").val(convertFormatDate(date));
-    }
-    if($("#checkout").val() !== ''){
-        var date = $("#checkout").val();
-        $("#checkout").val(convertFormatDate(date));
-    }
-    if($("#deadline").val() !== ''){
-        var date = $("#deadline").val();
-        $("#deadline").val(convertFormatDate(date));
-    }
+//    if($("#checkin").val() !== ''){
+//        var date = $("#checkin").val();
+//        $("#checkin").val(convertFormatDate(date));
+//    }
+//    if($("#checkout").val() !== ''){
+//        var date = $("#checkout").val();
+//        $("#checkout").val(convertFormatDate(date));
+//    }
+//    if($("#deadline").val() !== ''){
+//        var date = $("#deadline").val();
+//        $("#deadline").val(convertFormatDate(date));
+//    }
     $('.date').datetimepicker();
     $('.spandate').click(function () {
         var position = $(this).offset();

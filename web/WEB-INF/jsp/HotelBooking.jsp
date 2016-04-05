@@ -158,22 +158,10 @@
                         <tr ${colourStatus} id="${b.id}">   
                             <td class="text-center" ${colourStatus}>${loopCounter.count}</td>
                             <td>${b.hotel.getName()}</td>
-                    <script>
-                        $(document).ready(function () {
-                            if("${b.checkin}" !== ''){
-                                $("#checkin-${b.id}").text(convertFormatDate("${b.checkin}"));
-                            }
-                        });
-                    </script>
-                            <td id="checkin-${b.id}">${b.checkin}</td>
-                    <script>
-                        $(document).ready(function () {
-                            if("${b.checkout}" !== ''){
-                                $("#checkout-${b.id}").text(convertFormatDate("${b.checkout}"));
-                            }
-                        });
-                    </script>
-                            <td id="checkout-${b.id}">${b.checkout}</td>
+                            <fmt:formatDate value="${b.checkin}" var="checkIn" pattern="dd-MM-yyyy" />
+                            <td>${checkIn}</td>
+                            <fmt:formatDate value="${b.checkout}" var="checkOut" pattern="dd-MM-yyyy" />
+                            <td>${checkOut}</td>
                     <script>
                         $(document).ready(function () {
                             getDate();
