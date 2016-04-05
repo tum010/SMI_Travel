@@ -162,8 +162,9 @@
                                     <div class="col-sm-4">                                      
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker3'>
+                                                <fmt:formatDate value="${booking.deadline}" var="deadLine" pattern="dd-MM-yyyy" />
                                                 <input type='text' class="form-control" name="get_deadline" id="deadline" 
-                                                       data-date-format="DD-MM-YYYY" value="${booking.deadline}"  placeholder="DD-MM-YYYY"/>
+                                                       data-date-format="DD-MM-YYYY" value="${deadLine}"  placeholder="DD-MM-YYYY"/>
                                                 <span id="SpanGroupAddon" class="input-group-addon spandate">
                                                     <span id="SpanGlyphiconCalendar" class="glyphicon glyphicon-calendar"></span>
                                                 </span>

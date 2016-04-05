@@ -200,7 +200,15 @@
                                     <td>${flight.flightNo}</td>
                                     <td>${flight.sourceCode}</td>
                                     <td>${flight.desCode}</td>
-                                    <td>${flight.departDate}</td>
+<!--                                    <script>
+                                        $(document).ready(function () {
+                                            if("${flight.departDate}" !== ''){
+                                                $("#departDate-${flight.id}").text(convertFormatDate("${flight.departDate}"));
+                                            }
+                                        });
+                                    </script>-->
+                                    <fmt:formatDate value="${flight.departDate}" var="departDate" pattern="dd-MM-yyyy" />
+                                    <td>${departDate}</td>
                                     <td>
                                         <c:set var="departTimeTemp1" value="${fn:substring(flight.departTime, 0, 2)}" />
                                         <c:set var="departTimeTemp2" value="${fn:substring(flight.departTime, 2, 4)}" />
@@ -283,6 +291,7 @@
                 <script>
                     flight = [];
                 </script>
+                <input type="hidden" id="flightSize" name="flightSize" value="${flights.size()}"/>
                 <c:forEach var="flight" items="${flights}" varStatus="fStatus">
                     <div class="collapse" id="flight${fStatus.count}">
                         <!--Order Panel-->
@@ -357,10 +366,11 @@
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <div class="input-group date" id="DepartureDate">
-                                                <input type="text" class="form-control" value="${flight.departDate}" 
+                                                <fmt:formatDate value="${flight.departDate}" var="departDate" pattern="dd-MM-yyyy" />
+                                                <input type="text" class="form-control" value="${departDate}" 
                                                        name="flight-${fStatus.count}-departDate" id="flight-${fStatus.count}-departDate" 
-                                                       data-date-format="YYYY-MM-DD" maxlength="10"  
-                                                       data-bv-notempty data-bv-notempty-message="The Date is required"/>
+                                                       data-date-format="DD-MM-YYYY" maxlength="10"  
+                                                       data-bv-notempty />
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
                                             </div>
@@ -410,10 +420,11 @@
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <div class="input-group date" id="ArrivalDate">
+                                                <fmt:formatDate value="${flight.arriveDate}" var="arriveDate" pattern="dd-MM-yyyy" />
                                                 <input name="flight-${fStatus.count}-arriveDate" id="flight-${fStatus.count}-arriveDate"  
-                                                       type="text" class="form-control" value="${flight.arriveDate}" 
-                                                       data-date-format="YYYY-MM-DD" maxlength="10"
-                                                       data-bv-notempty data-bv-notempty-message="The date is required"/>
+                                                       type="text" class="form-control" value="${arriveDate}" 
+                                                       data-date-format="DD-MM-YYYY" maxlength="10"
+                                                       data-bv-notempty />
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
                                             </div>
@@ -594,6 +605,19 @@
                         var showflagDep = 1;
                         var showflagArr = 1;
                         $(document).ready(function () {
+//                            var flightSize = parseInt($("#flightSize").val());
+//                            if(flightSize > 0){
+//                                for(var i=1; i<=flightSize; i++){
+//                                    if($("#flight-" + i + "-departDate").val() !== ''){
+//                                        var departDate = convertFormatDate($("#flight-" + i + "-departDate").val());
+//                                       $("#flight-" + i + "-departDate").val(departDate); 
+//                                    }  
+//                                    if($("#flight-" + i + "-arriveDate").val() !== ''){
+//                                        var arriveDate = convertFormatDate($("#flight-" + i + "-arriveDate").val());
+//                                       $("#flight-" + i + "-arriveDate").val(arriveDate); 
+//                                    }
+//                                }          
+//                            }
                         //Begin Departure Table Load
                             $("#departure-${fStatus.count}-codeVal").keyup(function (event) {
                                 var position = $(this).offset();
@@ -979,17 +1003,18 @@
                             // SET FIX DATE START AND STOP
                             $('#flight-${fStatus.count}-departDate,#flight-${fStatus.count}-arriveDate').on('focusout', function () {
                                 console.log('on input');
-                                var start = new Date($("#flight-${fStatus.count}-departDate").val());
-                                var stop = new Date($("#flight-${fStatus.count}-arriveDate").val());
+////                                alert($("#flight-1-departDate").val());
+                                var start = new Date(convertFormatDate($("#flight-${fStatus.count}-departDate").val()));
+                                var stop = new Date(convertFormatDate($("#flight-${fStatus.count}-arriveDate").val()));
                                 var check = getDate(start, stop);
                                 if (!check) {
                                     alert('Arrival date must over Departure date');
-                                }
+//                                }
                             });
                             $("body").not('.date').on('click', function () {
                                 console.log('on input');
-                                var start = new Date($("#flight-${fStatus.count}-departDate").val());
-                                var stop = new Date($("#flight-${fStatus.count}-arriveDate").val());
+                                var start = new Date(convertFormatDate($("#flight-${fStatus.count}-departDate").val()));
+                                var stop = new Date(convertFormatDate($("#flight-${fStatus.count}-arriveDate").val()));
                                 var check = getDate(start, stop);
                                 if (!check) {
                                     alert('Arrival date must over Departure date');
@@ -1816,7 +1841,7 @@
                         p_name = name;
                         p_Id = id;
                     }
-                    $(document).ready(function () {
+                    $(document).ready(function () {                       
                         // AirlineTable Table
                         var OwnerTable = $('#AirlineTable').dataTable({bJQueryUI: true,
                             "sPaginationType": "full_numbers",
@@ -2024,7 +2049,7 @@
 </style>
 <script type="text/javascript">
     var tabindex = 1; //start tabindex || 150 is last tabindex
-    $(document).keypress(function(event) {
+    $(document).keypress(function(event) {     
         $('.time').mask('00:00');
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if(keycode == '13') { //onEnter

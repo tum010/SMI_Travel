@@ -255,7 +255,7 @@ function addFight(rowId) {
             + '<div class="col-sm-2">'
             + '<div class="form-group">'
             + '<div class="input-group date" id="DepartureDate">'
-            + '<input type="text" class="form-control"  name="flight-' + rowId + '-departDate" id="flight-' + rowId + '-departDate" data-date-format="YYYY-MM-DD" maxlength="10" />'
+            + '<input type="text" class="form-control"  name="flight-' + rowId + '-departDate" id="flight-' + rowId + '-departDate" data-date-format="DD-MM-YYYY" maxlength="10" />'
             + '<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>'
             + '</span>'
             + '</div>'
@@ -292,7 +292,7 @@ function addFight(rowId) {
             + '<div class="col-sm-2">'
             + '<div class="form-group">'
             + '<div class="input-group date" id="ArrivalDate">'
-            + '<input name="flight-' + rowId + '-arriveDate" id="flight-' + rowId + '-arriveDate"  type="text" class="form-control" data-date-format="YYYY-MM-DD" maxlength="10" />'
+            + '<input name="flight-' + rowId + '-arriveDate" id="flight-' + rowId + '-arriveDate"  type="text" class="form-control" data-date-format="DD-MM-YYYY" maxlength="10" />'
             + '<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>'
             + '</span>'
             + '</div>'
@@ -1140,7 +1140,6 @@ function addRowPassengerTable() {
     ]);
     $("div").find($('.collapse')).collapse('hide');
     $("#btnConfirmAddPassenger" + counter).prop('class', 'hidden');
-
-            document.getElementById("ButtonSave").disabled = false;
+    document.getElementById("ButtonSave").disabled = false;
 }
 

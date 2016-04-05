@@ -6,11 +6,11 @@ $(document).ready(function () {
         
     // MONEY FORMAT 
     $(".money").mask('000,000,000,000,000,000', {reverse: true});
-    // SET DATATIMEPICKER
-    if($("#deadline").val() !== ''){
-        var date = $("#deadline").val();
-        $("#deadline").val(convertFormatDate(date));
-    }
+//    // SET DATATIMEPICKER
+//    if($("#deadline").val() !== ''){
+//        var date = $("#deadline").val();
+//        $("#deadline").val(convertFormatDate(date));
+//    }
     $('#datetimepicker3').datetimepicker({
         pickTime: false
     });

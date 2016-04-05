@@ -677,17 +677,22 @@ public class AirTicketDetailController extends SMITravelController {
         airFlight.setFlightNo(flightNo);
         airFlight.setSourceCode(departureId);
         airFlight.setDesCode(inCost);
+        
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date departDate = null;
         Date arriveDate = null;
-        try {
-            departDate = formatter.parse(departDateS);
-            airFlight.setDepartDate(departDate);
-            arriveDate = formatter.parse(arrivalDateS);
-            airFlight.setArriveDate(arriveDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        departDate = util.convertStringToDate(departDateS);
+        arriveDate = util.convertStringToDate(arrivalDateS);
+        airFlight.setDepartDate(departDate);
+        airFlight.setArriveDate(arriveDate);       
+//        try {
+//            departDate = formatter.parse(departDateS);
+//            airFlight.setDepartDate(departDate);
+//            arriveDate = formatter.parse(arrivalDateS);
+//            airFlight.setArriveDate(arriveDate);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
         airFlight.setDepartDate(departDate);
         airFlight.setArriveDate(arriveDate);
         airFlight.setDepartTime(departTime);
