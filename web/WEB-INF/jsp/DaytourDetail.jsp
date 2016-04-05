@@ -115,8 +115,9 @@
                         </div>
                         <div class="col-md-2 form-group"> 
                             <div class='input-group date' id='InputDatePicker'>
+                                <fmt:formatDate value="${daytourBooking.tourDate}" var="tourDate" pattern="dd-MM-yyyy" />
                                 <input id="InputTourDate" name="InputTourDate" type="text" data-date-format="DD-MM-YYYY" 
-                                       class="form-control datemask" placeholder="DD-MM-YYYY" value="${daytourBooking.tourDate}">
+                                       class="form-control datemask" placeholder="DD-MM-YYYY" value="${tourDate}">
                                 <span class="input-group-addon spandate">
                                     <span class="glyphicon-calendar glyphicon"></span>
                                 </span>
@@ -380,13 +381,13 @@
 
                             <tbody>
                                 <c:forEach var="item" items="${Coupons}" varStatus="status">
-                                    <script>
+<!--                                    <script>
                                         $(document).ready(function () {
                                             if("${item.otherDate}" !== ''){
                                                 $("#otherdate-${item.id}").text(convertFormatDate("${item.otherDate}"));
                                             }
                                         });
-                                    </script>
+                                    </script>-->
                                     <c:set var="checkedCoupon" value="" />
                                     <c:set var="CouponId" value="" />
                                     <c:forEach var="coupon" items="${daytourBooking.coupons}">
@@ -400,8 +401,9 @@
                                         <tr id="${status.count}" >
                                             <td class="hide"><input type="text" id="row-${status.count}-bookingotherid" name="row-${status.count}-bookingotherid" value="${item.id}">${item.id}</td>
                                             <td class="hide"><input type="text" id="row-${status.count}-couponid" name="row-${status.count}-couponid" value="${CouponId}"></td>
-                                            <td>${status.count}</td>  
-                                            <td class="text-center" id="otherdate-${item.id}">${item.otherDate}</td>
+                                            <td>${status.count}</td>
+                                            <fmt:formatDate value="${item.otherDate}" var="otherDate" pattern="dd-MM-yyyy" />
+                                            <td class="text-center" id="otherdate-${item.id}">${otherDate}</td>
                                             <td class="text-center">${item.otherTime}</td>
                                             <td class="text-center money">${item.adQty + item.chQty + item.inQty }</td>
                                             <td><input type="hidden" id="row-${status.count}-couponname" name="row-${status.count}-couponname" value="${item.product.name}">${item.product.name}</td>
@@ -494,8 +496,8 @@
             <script>
 
                 $(document).ready(function () {
-                    var tourDate = $('#InputTourDate').val();
-                    $('#InputTourDate').val(convertFormatDate(tourDate));
+//                    var tourDate = $('#InputTourDate').val();
+//                    $('#InputTourDate').val(convertFormatDate(tourDate));
                     
                     $("#tourTable tr").on('click', function () {//winit
                         $("#TourModal").modal('hide');
