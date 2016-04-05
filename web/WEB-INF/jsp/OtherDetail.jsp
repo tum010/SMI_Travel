@@ -162,6 +162,9 @@
 
                                     <label for="effectivefrom" class="col-sm-3 control-label" > From </label>
                                     <div class=' col-sm-6 input-group date' id='effectivefromClass' style="width: 140px">
+                                        <%--<c:set var="otherDate" value="${requestScope['otherdate']}" />--%>
+                                        <%--<fmt:parseDate value="${otherDate}" var="otherDate" pattern="yyyy-MM-dd" />--%>
+                                        <%--<fmt:formatDate value="${otherDate}" var="otherDate" pattern="dd-MM-yyyy" />--%>
                                         <input type='text' class="form-control datemask"  id="otherdate" name="otherdate" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['otherdate']}"/>                                     
                                         <span class="input-group-addon spandate">
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -201,6 +204,9 @@
 
                                     <label for="effectivefrom" class="col-sm-3 control-label" > To </label>
                                     <div class=' col-sm-6 input-group date' id='effectivefromClass' style="width: 140px">
+                                        <%--<c:set var="otherdateTo" value="${requestScope['otherdateTo']}" />--%>
+                                        <%--<fmt:parseDate value="${otherdateTo}" var="otherdateTo" pattern="yyyy-MM-dd" />--%>
+                                        <%--<fmt:formatDate value="${otherdateTo}" var="otherdateTo" pattern="dd-MM-yyyy" />--%>
                                         <input type='text' class="form-control datemask"  id="otherdateTo" name="otherdateTo" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['otherdateTo']}"/>                                     
                                         <span class="input-group-addon spandate">
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -227,21 +233,21 @@
                                 <div class="form-group">
                                     <label class="col-sm-2   control-label" for="cost">Adult</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control decimal" id="ad_cost" name="ad_cost" value="${requestScope['ad_cost']}">  
+                                        <input type="text" class="form-control decimal text-right" id="ad_cost" name="ad_cost" value="${requestScope['ad_cost']}">  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-1 ">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
-                                        <input type="text" class="form-control decimal" id="ad_qty" name="ad_qty" value="${requestScope['ad_qty']}">  
+                                        <input type="text" class="form-control decimal text-right" id="ad_qty" name="ad_qty" value="${requestScope['ad_qty']}">  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3 ">
                                 <div class="form-group">
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control decimal" id="ad_price" name="ad_price" value="${requestScope['ad_price']}" >  
+                                        <input type="text" class="form-control decimal text-right" id="ad_price" name="ad_price" value="${requestScope['ad_price']}" >  
                                     </div>
                                 </div>
                             </div>
@@ -276,21 +282,21 @@
                                 <div class="form-group">
                                     <label class="col-sm-2   control-label" for="cost">Child</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control decimal" id="ch_cost" name="ch_cost" value="${requestScope['ch_cost']}">  
+                                        <input type="text" class="form-control decimal text-right" id="ch_cost" name="ch_cost" value="${requestScope['ch_cost']}">  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-1 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
-                                        <input type="text" class="form-control decimal" id="ch_qty" name="ch_qty" value="${requestScope['ch_qty']}" >  
+                                        <input type="text" class="form-control decimal text-right" id="ch_qty" name="ch_qty" value="${requestScope['ch_qty']}" >  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control decimal" id="ch_price" name="ch_price" value="${requestScope['ch_price']}" >  
+                                        <input type="text" class="form-control decimal text-right" id="ch_price" name="ch_price" value="${requestScope['ch_price']}" >  
                                     </div>
                                 </div>
                             </div>
@@ -322,21 +328,21 @@
                                 <div class="form-group">
                                     <label class="col-sm-2   control-label" for="cost">Infant</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control decimal" id="in_cost" name="in_cost"  value="${requestScope['in_cost']}">  
+                                        <input type="text" class="form-control decimal text-right" id="in_cost" name="in_cost"  value="${requestScope['in_cost']}">  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-1 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
-                                        <input type="text" class="form-control decimal" id="in_qty" name="in_qty"  value="${requestScope['in_qty']}">  
+                                        <input type="text" class="form-control decimal text-right" id="in_qty" name="in_qty"  value="${requestScope['in_qty']}">  
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-3 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control decimal" id="in_price" name="in_price" value="${requestScope['in_price']}" >  
+                                        <input type="text" class="form-control decimal text-right" id="in_price" name="in_price" value="${requestScope['in_price']}" >  
                                     </div>
                                 </div>
                             </div>
@@ -367,6 +373,9 @@
                                 <div class="form-group">
                                     <label class="col-sm-3   control-label" for="cost">Cancel</label>
                                     <div class='col-sm-7 input-group date' style="padding-left: 20px;width: 157px" id="arrive-time">
+                                        <%--<c:set var="cancelDate" value="${requestScope['cancelDate']}" />--%>
+                                        <%--<fmt:parseDate value="${cancelDate}" var="cancelDate" pattern="yyyy-MM-dd" />--%>
+                                        <%--<fmt:formatDate value="${cancelDate}" var="cancelDate" pattern="dd-MM-yyyy" />--%>
                                         <input type='text' disabled class="form-control" id="cancelDate" name="cancelDate" value="${requestScope['cancelDate']}"  />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -422,19 +431,19 @@
                     <div class="form-group col-md-1" style="width: 200px">
                         <label class="col-sm-3 control-label">Adult</label>
                         <div class="col-sm-1" style="width: 100px">
-                            <input type="text" class="form-control decimal" id="adTicket" name="adTicket" value="0">  
+                            <input type="text" class="form-control decimal text-right" id="adTicket" name="adTicket" value="0">  
                         </div>
                     </div>
                     <div class="form-group col-md-1" style="width: 200px">
                         <label class="col-sm-3 control-label">Child</label>
                         <div class="col-sm-1" style="width: 100px">
-                            <input type="text" class="form-control decimal" id="chTicket" name="chTicket" value="0">  
+                            <input type="text" class="form-control decimal text-right" id="chTicket" name="chTicket" value="0">  
                         </div>
                     </div>    
                     <div class="form-group col-md-1" style="width: 200px">
                         <label class="col-sm-3 control-label">Infant</label>
                         <div class="col-sm-1" style="width: 100px">
-                            <input type="text" class="form-control decimal" id="infTicket" name="infTicket" value="0">  
+                            <input type="text" class="form-control decimal text-right" id="infTicket" name="infTicket" value="0">  
                         </div>
                     </div>
                     <div class="form-group col-md-1" style="width: 200px">
@@ -465,13 +474,6 @@
                             </thead>
                             <tbody>
                                 <c:forEach var="table" items="${ticketList}" varStatus="i">        
-                                    <script>
-                                        $(document).ready(function () {
-                                            if("${table.addDate}" !== ''){
-                                                $("#addDate-${table.id}").text(convertFormatDate("${table.addDate}"));
-                                            }
-                                        });
-                                    </script>
                                     <tr>
                                         <td class="hidden">
                                             <input type="hidden" class="form-control" id="stockticketid${i.count}" name="stockticketid${i.count}" value="${table.id}">
@@ -480,7 +482,8 @@
                                             <input type="checkbox" class="form-control" id="selectAll${i.count}" name="selectAll${i.count}" value="1" onclick="removeAlertCheckbox()">
                                         </td>
                                         <td align="center">${i.count}</td>
-                                        <td align="center" id="addDate-${table.id}">${table.addDate}</td>
+                                        <fmt:formatDate value="${table.addDate}" var="addDate" pattern="dd-MM-yyyy" />
+                                        <td align="center" >${addDate}</td>
                                         <td>${table.ticketCode}</td>
                                         <td align="center">${table.typeName}</td>
                                         <th align="center">
@@ -606,18 +609,18 @@
                             "iDisplayLength": 10
                         });
                         
-                        var otdate = $('#otherdate').val();
-                        if(otdate !== ''){
-                            $('#otherdate').val(convertFormatDate(otdate));
-                        }
-                        var otdateto = $('#otherdateTo').val();
-                        if(otdateto !== ''){
-                            $('#otherdateTo').val(convertFormatDate(otdateto));
-                        }
-                        var ccdate = $('#cancelDate').val();
-                        if(ccdate !== ''){
-                            $('#cancelDate').val(convertFormatDate(ccdate));
-                        }
+//                        var otdate = $('#otherdate').val();
+//                        if(otdate !== ''){
+//                            $('#otherdate').val(convertFormatDate(otdate));
+//                        }
+//                        var otdateto = $('#otherdateTo').val();
+//                        if(otdateto !== ''){
+//                            $('#otherdateTo').val(convertFormatDate(otdateto));
+//                        }
+//                        var ccdate = $('#cancelDate').val();
+//                        if(ccdate !== ''){
+//                            $('#cancelDate').val(convertFormatDate(ccdate));
+//                        }
                         
                         $('#ProductTable tbody').on('click', 'tr', function() {
                             if ($(this).hasClass('row_selected')) {
