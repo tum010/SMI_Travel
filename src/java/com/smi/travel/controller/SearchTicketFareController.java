@@ -9,6 +9,7 @@ import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -35,13 +36,14 @@ public class SearchTicketFareController extends SMITravelController {
     UtilityFunction util;
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         String action = request.getParameter("action");
         String ticketNo = request.getParameter("ticketNo");
         String ticketType = request.getParameter("ticketType");
         String ticketRouting = request.getParameter("ticketRouting");
         String ticketAirline = request.getParameter("ticketAirline");
-        String issueDateFrom = request.getParameter("issueDateFrom");
-        String issueDateTo = request.getParameter("issueDateTo");
+        String issueDateFrom =  util.covertStringDateToFormatYMD(request.getParameter("issueDateFrom"));
+        String issueDateTo = util.covertStringDateToFormatYMD(request.getParameter("issueDateTo"));
         String invoiceNo = request.getParameter("invoiceNo");
         String department = request.getParameter("department");
         String ticketId = request.getParameter("ticketId");

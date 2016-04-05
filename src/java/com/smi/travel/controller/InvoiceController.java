@@ -57,12 +57,12 @@ public class InvoiceController extends SMITravelController {
        
         String invoiceType = request.getParameter("InputInvoiceType");
         String invoiceId = request.getParameter("InvoiceId");
-        String InputInvDate = (!"".equalsIgnoreCase(request.getParameter("InputInvDate")) && request.getParameter("InputInvDate")!=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(request.getParameter("InputInvDate"))) : "" ; 
+        String InputInvDate = util.covertStringDateToFormatYMD(request.getParameter("InputInvDate"));
         String invoiceNo = request.getParameter("InvNo");
         String invoiceTo = request.getParameter("InvTo");
         String invoiceName = request.getParameter("InvToName");
         String invoiceAddress = request.getParameter("InvToAddress");
-        String dueDate = (!"".equalsIgnoreCase(request.getParameter("InputDueDate")) && request.getParameter("InputDueDate")!=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(request.getParameter("InputDueDate"))) : "" ; 
+        String dueDate = util.covertStringDateToFormatYMD(request.getParameter("InputDueDate"));
         String termPay = request.getParameter("TermPay");
         String department = request.getParameter("Department");
         String staffId =  request.getParameter("SaleStaffId");

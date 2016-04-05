@@ -75,8 +75,11 @@
                         </div>
                         <div class="col-xs-1"  style="width: 200px">
                             <div class='input-group date'>
+                                <c:set var="refundDate" value="${refundAirline.refundDate}" />
+                                <fmt:parseDate value="${refundDate}" var="refundDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${refundDate}" var="refundDate" pattern="dd-MM-yyyy" />
                                 <input id="inputRefundDate" name="refundDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${refundAirline.refundDate}">
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${refundDate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -144,8 +147,11 @@
                         </div>
                         <div class="col-xs-1"  style="width: 200px">
                             <div class='input-group date'>
+                                <c:set var="receiveDate" value="${refundAirline.receiveDate}" />
+                                <fmt:parseDate value="${receiveDate}" var="receiveDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${receiveDate}" var="receiveDate" pattern="dd-MM-yyyy" />
                                 <input id="inputReceiveDate" name="receiveDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${refundAirline.receiveDate}">
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${receiveDate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -216,7 +222,10 @@
                                 <td style="text-align:center"> <input id="AgentCom${index}" name="agentCom${index}" colName="agentCom" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.agentComission}"></td>
                                 <td> 
                                     <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
-                                        <input style="width: 100%" type="text" class="form-control" id="paydate${index}" name="paydate${index}" colName="paydate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${detail.expenseDate}">
+                                        <c:set var="expenseDate" value="${detail.expenseDate}" />
+                                        <fmt:parseDate value="${expenseDate}" var="expenseDate" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${expenseDate}" var="expenseDate" pattern="dd-MM-yyyy" />
+                                        <input style="width: 100%" type="text" class="form-control" id="paydate${index}" name="paydate${index}" colName="paydate" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${expenseDate}">
                                         <span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
                                     </div>
                                 </td>       
@@ -237,7 +246,10 @@
                                     <td style="text-align:center"> <input id="clientCharge${index}" name="clientCharge${index}" colName="clientCharge" type="text" class="form-control text-right decimal" style="text-align: right" value="${detail.clientCharge}"></td>
                                     <td> 
                                         <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
-                                            <input style="width: 100%" type="text" class="form-control" id="receivedate${index}" name="receivedate${index}"  colName="receivedate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${detail.receiveDate}">
+                                            <c:set var="receiveDate" value="${detail.receiveDate}" />
+                                            <fmt:parseDate value="${receiveDate}" var="receiveDate" pattern="yyyy-MM-dd" />
+                                            <fmt:formatDate value="${receiveDate}" var="receiveDate" pattern="dd-MM-yyyy" />
+                                            <input style="width: 100%" type="text" class="form-control" id="receivedate${index}" name="receivedate${index}"  colName="receivedate" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${receiveDate}">
                                             <span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
                                         </div>
                                     </td>     
@@ -459,7 +471,7 @@
         <td style="text-align:center"> <input id="agentCom" name="agentCom" colName="agentCom" type="text" class="form-control text-right decimal"></td>
         <td> 
             <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
-                <input style="width: 100%" type="text" class="form-control" id="paydate" name="paydate" colName="paydate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD">
+                <input style="width: 100%" type="text" class="form-control" id="paydate" name="paydate" colName="paydate" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY">
                 <span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
             </div>
         </td>
@@ -478,7 +490,7 @@
             <td style="text-align:center"> <input id="clientCharge" name="clientCharge" colName="clientCharge"  type="text" class="form-control text-right decimal"></td>
             <td> 
                 <div class="input-group daydatepicker" id="daydatepicker-0" style="padding-left: 0px">
-                    <input style="width: 100%" type="text" class="form-control" id="receivedate" name="receivedate" colName="receivedate" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD">
+                    <input style="width: 100%" type="text" class="form-control" id="receivedate" name="receivedate" colName="receivedate" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY">
                     <span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
                 </div>
             </td>                              
@@ -489,7 +501,7 @@
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
-        
+        $('.datemask').mask('00-00-0000');
         var statusrefund = $("#status").val();
         var ticNoTemp = $("#ticketNo1").val();
         var ticNo = ticNoTemp.substring(0, 3);
@@ -878,7 +890,7 @@
                 '<td class="hidden"><input id="refundCount' + row + '" name="refundCount"  type="text" value="' + row + '">' +
                 '<td><input id="checkCharge-' + row + '" name="checkCharge-' + row + '" type="text" class="form-control" value="' + row + '"  onclick="checkboxCharge(this)" ></td>' +
                 '<td><input id="ticketNo-' + row + '" name="ticketNo-' + row + '"  type="text" class="form-control" maxlength="20"></td>' +
-                '<td><div class="input-group daydatepicker" id="daydatepicker-' + row + '" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="ticketDate-' + row + '" name="ticketDate-' + row + '" data-date-format="YYYY-MM-DD"/><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
+                '<td><div class="input-group daydatepicker" id="daydatepicker-' + row + '" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="ticketDate-' + row + '" name="ticketDate-' + row + '" data-date-format="DD-MM-YYYY"/><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
                 '<td><input id="dept-' + row + '" name="dept-' + row + '"  type="text" class="form-control" maxlength="20"></td>' +
                 '<td><input id="passenger-' + row + '" name="passenger-' + row + '"  type="text" class="form-control"></td>' +
                 '<td><input id="sectorIssue-' + row + '" name="sectorIssue-' + row + '"  type="text" class="form-control"></td>' +
@@ -888,7 +900,7 @@
                 '<td><input id="pay-' + row + '" name="pay-' + row + '"  onfocusout="calculateProfit(this)" type="text" class="form-control"></td>' +
                 '<td><input id="profit-' + row + '" name="profit-' + row + '"  type="text" class="form-control"></td>' +
                 '<td><input id="com-' + row + '" name="com-' + row + '"  type="text" class="form-control"></td>' +
-                '<td><div class="input-group daydatepicker" id="daydatepicker-' + row + '" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="inputDate-' + row + '" name="inputDate-' + row + '" data-date-format="YYYY-MM-DD"/><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
+                '<td><div class="input-group daydatepicker" id="daydatepicker-' + row + '" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="inputDate-' + row + '" name="inputDate-' + row + '" data-date-format="DD-MM-YYYY"/><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
                 '<td class="text-center">' +
                 '<a class="remCF" onclick="ConfirmDelete(\'1\', \'\', \'' + row + '\')">  ' +
                 '<span  id="SpanRemove' + row + '"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +

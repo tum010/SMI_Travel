@@ -23,9 +23,11 @@ import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -84,6 +86,7 @@ public class AddTicketFareController extends SMITravelController {
     UtilityFunction util;
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         String action = request.getParameter("action");
         String ticketNo = request.getParameter("ticketNo");
         String ticketType = request.getParameter("ticketType");
@@ -91,7 +94,6 @@ public class AddTicketFareController extends SMITravelController {
         String ticketRouting = request.getParameter("ticketRouting");
         String ticketAirline = request.getParameter("ticketAirline");
         String passenger = request.getParameter("passenger");
-        String issueDate = request.getParameter("issueDate");
 //        String ticketDate = request.getParameter("ticketDate");
         String ticketFare = request.getParameter("ticketFare");
         String ticketTax = request.getParameter("ticketTax");
@@ -108,12 +110,6 @@ public class AddTicketFareController extends SMITravelController {
         String addPay = request.getParameter("addPay");
         String agentComPay = request.getParameter("agentComPay");
         String agentComReceive = request.getParameter("agentComReceive");
-        String overDate = request.getParameter("overDate");
-        String litterDate = request.getParameter("litterDate");
-        String decPayDate = request.getParameter("decPayDate");
-        String addPayDate = request.getParameter("addPayDate");
-        String agentPayDate = request.getParameter("agentPayDate");
-        String agentReceiveDate = request.getParameter("agentReceiveDate");
         String ticketId = request.getParameter("ticketId");
         String department = request.getParameter("department");
         String pvType = request.getParameter("pvType");
@@ -125,10 +121,7 @@ public class AddTicketFareController extends SMITravelController {
         String airlineCharge = request.getParameter("airlineCharge");
         String owner = request.getParameter("owner");
         String routing = request.getParameter("routing");
-        String dueDate = request.getParameter("dueDate");
         String countRowInvoice = request.getParameter("countRow");
-        String agentCommDate = request.getParameter("agentCommDate");
-        String ticketCommDate = request.getParameter("ticketCommDate");
         String invno = request.getParameter("invno");
         String airlinecode = request.getParameter("airlinecode");
         String isWaitPay = request.getParameter("isWaitPay");
@@ -139,6 +132,18 @@ public class AddTicketFareController extends SMITravelController {
         String invoiceDetailTableId = request.getParameter("invoiceDetailTableId");
         String ticketAirlineOther = request.getParameter("ticketAirlineOther");
         String invNoFilter = request.getParameter("invNoFilter");
+        
+        String issueDate = util.covertStringDateToFormatYMD(request.getParameter("issueDate"));
+        String dueDate = util.covertStringDateToFormatYMD(request.getParameter("dueDate"));
+        String agentCommDate = util.covertStringDateToFormatYMD(request.getParameter("agentCommDate"));
+        String ticketCommDate = util.covertStringDateToFormatYMD(request.getParameter("ticketCommDate"));
+        String overDate = util.covertStringDateToFormatYMD(request.getParameter("overDate"));
+        String litterDate = util.covertStringDateToFormatYMD(request.getParameter("litterDate"));
+        String decPayDate = util.covertStringDateToFormatYMD(request.getParameter("decPayDate"));
+        String addPayDate = util.covertStringDateToFormatYMD(request.getParameter("addPayDate"));
+        String agentPayDate = util.covertStringDateToFormatYMD(request.getParameter("agentPayDate"));
+        String agentReceiveDate = util.covertStringDateToFormatYMD(request.getParameter("agentReceiveDate"));
+        
         request.setAttribute(INVOICENOFILTER, invNoFilter);
         String result = "";
         setResponseAttribute(request,refno,invno);

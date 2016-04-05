@@ -28,8 +28,8 @@ public class SearchInvoiceController extends SMITravelController {
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         UtilityFunction util = new UtilityFunction();
         String callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");//request.getParameter("type");
-        String fromdate = (!"".equalsIgnoreCase(request.getParameter("FromDate")) && request.getParameter("FromDate")!=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(request.getParameter("FromDate"))) : "" ; 
-        String todate = (!"".equalsIgnoreCase(request.getParameter("ToDate")) && request.getParameter("ToDate")!=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(request.getParameter("ToDate"))) : "" ; 
+        String fromdate = util.covertStringDateToFormatYMD(request.getParameter("FromDate"));
+        String todate = util.covertStringDateToFormatYMD(request.getParameter("ToDate"));
         String department = request.getParameter("Department");
         String type = request.getParameter("Type");
         String action = request.getParameter("action");

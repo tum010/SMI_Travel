@@ -115,14 +115,14 @@ public class RefundAirlineController extends SMITravelController {
         try {
             String refundId = request.getParameter("refundId");
             String refundNo = request.getParameter("refundNo");
-            String refundDate = request.getParameter("refundDate");
+            String refundDate = uf.covertStringDateToFormatYMD(request.getParameter("refundDate"));
             String agentId = request.getParameter("agentId");
             String agentCode = request.getParameter("agentCode");
             String agenName = request.getParameter("agentName");
             String remark = request.getParameter("remark");
             String refundBy = request.getParameter("refundBy");
             String receiveBy = request.getParameter("receiveBy");
-            String receiveDate = request.getParameter("receiveDate");
+            String receiveDate = uf.covertStringDateToFormatYMD(request.getParameter("receiveDate"));
             String status = request.getParameter("status");
             String ownerby = request.getParameter("ownerby");
             String refundtype = request.getParameter("refundtype");
@@ -165,8 +165,8 @@ public class RefundAirlineController extends SMITravelController {
                     String profit = request.getParameter("profit" + i);
                     String airCom = request.getParameter("airCom" + i);
                     String agentCom = request.getParameter("agentCom" + i);
-                    String paydate = request.getParameter("paydate" + i);
-                    String receivedate = request.getParameter("receivedate" + i);
+                    String paydate = uf.covertStringDateToFormatYMD(request.getParameter("paydate" + i));
+                    String receivedate = uf.covertStringDateToFormatYMD(request.getParameter("receivedate" + i));
                     String checkCharge = request.getParameter("checkCharge" + i);
                     String ticketNo = request.getParameter("ticketNo" + i);
                     String clientCharge = request.getParameter("clientCharge" + i);

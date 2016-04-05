@@ -148,8 +148,11 @@
                             </div>
                             <div class="col-xs-1 form-group"  style="width: 200px">
                                 <div class='input-group date fromdate' id='fromdatepanel'>
+                                    <c:set var="issueDateFrom" value="${requestScope['issueDateFrom']}" />
+                                    <fmt:parseDate value="${issueDateFrom}" var="issueDateFrom" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${issueDateFrom}" var="issueDateFrom" pattern="dd-MM-yyyy" />
                                     <input id="issueDateFrom" name="issueDateFrom"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['issueDateFrom']}">
+                                           class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${issueDateFrom}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -158,8 +161,11 @@
                             </div>
                             <div class="col-xs-1 form-group"  style="width: 180px">
                                 <div class='input-group date todate' id='todatepanel'>
+                                    <c:set var="issueDateTo" value="${requestScope['issueDateTo']}" />
+                                        <fmt:parseDate value="${issueDateTo}" var="issueDateTo" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${issueDateTo}" var="issueDateTo" pattern="dd-MM-yyyy" />
                                     <input id="issueDateTo" name="issueDateTo"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['issueDateTo']}">
+                                       class="form-control datemask"  data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${issueDateTo}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -247,7 +253,7 @@
                                         <td align="center">${table.buy}</td>
                                         <td align="center">${table.airline}</td>
                                         <td align="center">${table.ticketNo}</td>
-                                        <td align="center">${table.issueDate}</td>
+                                        <td align="center"><fmt:formatDate value="${table.issueDate}" var="issueDate" pattern="dd-MM-yyyy" />${issueDate}</td>
                                         <td align="center">${table.invoiceNo}</td>
                                         <td align="center">${table.department}</td>
                                         <td class="money">${table.fare}</td>
@@ -335,7 +341,7 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $('.date').datetimepicker();
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $(".money").mask('000,000,000.00', {reverse: true});
         
         var table = $('#TicketFareList').dataTable({bJQueryUI: true,

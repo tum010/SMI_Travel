@@ -32,7 +32,6 @@
                 </div>-->
             <!--</div>-->
             <!--<hr/>-->
-            
             <form action="SearchReceipt.smi" method="post" id="SearchReceiptForm" name="SearchReceiptForm" role="form">
                 <div class="sm_row col-xs-12" style="padding-top: 25px">
                     <div class="col-xs-1 text-right"  style="width: 80px">
@@ -41,8 +40,11 @@
                     <div class="col-xs-1"  style="width: 170px">
                         <div class=" form-group"> 
                             <div class='input-group date fromdate' id="DateFrom">
+                                <c:set var="inputFromDate" value="${requestScope['inputFromDate']}" />
+                                <fmt:parseDate value="${inputFromDate}" var="inputFromDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${inputFromDate}" var="inputFromDate" pattern="dd-MM-yyyy" />
                                 <input id="inputFromDate" name="inputFromDate"  type="text" 
-                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['inputFromDate']}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${inputFromDate}">
                                 <span class="input-group-addon spandate" id="InputFromDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputFromDateSpan2"></span></span>
                             </div>
                         </div>
@@ -53,8 +55,11 @@
                     <div class="col-xs-1"  style="width: 170px">
                         <div class=" form-group"> 
                             <div class='input-group date todate' id="DateTo">
+                                <c:set var="inputToDate" value="${requestScope['inputToDate']}" />
+                                <fmt:parseDate value="${inputToDate}" var="inputToDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${inputToDate}" var="inputToDate" pattern="dd-MM-yyyy" />
                                 <input id="inputToDate" name="inputToDate"  type="text" 
-                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['inputToDate']}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${inputToDate}">
                                 <span class="input-group-addon spandate" id="InputToDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputToDateSpan2"></span></span>
                             </div>
                         </div>        
@@ -158,16 +163,9 @@
                         </thead>
                         <tbody>
                             <c:forEach var="table" items="${receiptSearchList}" varStatus="dataStatus">
-                                <script>
-                                    $(document).ready(function () {
-                                        if("${table.recDate}" !== ''){
-                                            $("#recDate-${dataStatus.count}").text(convertFormatDate("${table.recDate}"));
-                                        }
-                                    });
-                                </script>
                                 <tr>
                                     <td align="center">${table.recNo}</td>
-                                    <td align="center" id="recDate-${dataStatus.count}">${table.recDate}</td>
+                                    <td align="center" ><fmt:formatDate value="${table.recDate}" var="recDate" pattern="dd-MM-yyyy" />${recDate}</td>
                                     <td>${table.recTo}</td>
                                     <td>${table.recName}</td>
                                     <td>${table.invoiceNo}</td>
@@ -216,15 +214,7 @@
             "bFilter": false,
             "aaSorting": [[ 0, "desc" ]]
         });
-        
-        var fromdates = $('#inputFromDate').val();
-        if(fromdates !== ''){
-            $('#inputFromDate').val(convertFormatDate(fromdates));
-        }   
-        var todates = $('#inputToDate').val();
-        if(todates !== ''){
-            $('#inputToDate').val(convertFormatDate(todates));
-        }   
+
         $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
         $('.spandate').click(function() {

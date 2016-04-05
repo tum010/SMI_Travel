@@ -69,8 +69,11 @@
                     <div class="col-xs-2">
                         <div class=" form-group">     
                             <div class="input-group date fromDate" id="DateFrom">
+                                <c:set var="dateFromTemp" value="${dateFrom}" />
+                                <fmt:parseDate value="${dateFromTemp}" var="dateFromTemp" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${dateFromTemp}" var="dateFromTemp" pattern="dd-MM-yyyy" />
                                 <input  id="InputDateFrom" name="InputDateFrom" type="text" data-date-format="DD-MM-YYYY" class="form-control datemask
-                                        " placeholder="DD-MM-YYYY" value="${dateFrom}">
+                                        " placeholder="DD-MM-YYYY" value="${dateFromTemp}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
@@ -83,7 +86,10 @@
                     </div>
                     <div class="col-xs-2 form-group">
                         <div class="input-group date toDate" id="DateTo">
-                            <input id="InputDateTo" name="InputDateTo" type="text" data-date-format="DD-MM-YYYY" class="form-control datemask" placeholder="DD-MM-YYYY" value="${dateTo}">
+                            <c:set var="dateToTemp" value="${dateTo}" />
+                            <fmt:parseDate value="${dateToTemp}" var="dateToTemp" pattern="yyyy-MM-dd" />
+                            <fmt:formatDate value="${dateToTemp}" var="dateToTemp" pattern="dd-MM-yyyy" />
+                            <input id="InputDateTo" name="InputDateTo" type="text" data-date-format="DD-MM-YYYY" class="form-control datemask" placeholder="DD-MM-YYYY" value="${dateToTemp}">
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                             </span>
                         </div>
@@ -175,13 +181,6 @@
 
                     <tbody>
                         <c:forEach var="item" items="${bookingList}" varStatus="status" >
-                            <script>
-                                $(document).ready(function () {
-                                    if("${item.otherDate}" !== ''){
-                                        $("#otherDate-${item.id}").text(convertFormatDate("${item.otherDate}"));
-                                    }
-                                });
-                            </script>
                             <tr>
                                 <input type="hidden" id="adPrice-${status.count}" name="adPrice-" value="${item.adPrice}">
                                 <input type="hidden" id="adQty-${status.count}" name="adQty-" value="${item.adQty}">
@@ -192,10 +191,13 @@
                                 <td class="hide"><input type="hidden" id="daytourBookingId-${status.count}" name="daytourBookingId-" value="${item.id}"></td>
                                 <td>${item.product.code}</td>
                                 <td>${item.product.name}</td>
-                                <td id="otherDate-${item.id}">
+                                <td>
+                                    <c:set var="otherDate" value="${item.otherDate}" />
+                                    <fmt:parseDate value="${otherDate}" var="otherDate" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${otherDate}" var="otherDate" pattern="dd-MM-yyyy" />
                                     <input type="hidden" class="form-control" id="otherDate-${status.count}" name="otherDate-" 
-                                           value="${item.otherDate}" maxlength="14">
-                                    ${item.otherDate}
+                                           value="${otherDate}" maxlength="14">
+                                    ${otherDate}
                                 </td>
                                 <c:set var="refno1" value="${fn:substring(item.master.referenceNo,0,2)}" />
                                 <c:set var="refno2" value="${fn:substring(item.master.referenceNo,2,7)}" />   

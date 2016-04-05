@@ -36,8 +36,8 @@ public class SearchReceiptController extends SMITravelController {
         String action = request.getParameter("action");
         String recType = request.getParameter("recType");
         String department = request.getParameter("department");
-        String inputFromDate = (!"".equalsIgnoreCase(request.getParameter("inputFromDate")) && request.getParameter("inputFromDate")!=null ) ? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(request.getParameter("inputFromDate"))) : "" ;
-        String inputToDate = (!"".equalsIgnoreCase(request.getParameter("inputToDate")) && request.getParameter("inputToDate")!=null )? new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(util.convertStringToDate(request.getParameter("inputToDate"))) : "" ;
+        String inputFromDate = util.covertStringDateToFormatYMD(request.getParameter("inputFromDate")); 
+        String inputToDate = util.covertStringDateToFormatYMD(request.getParameter("inputToDate"));
         String status = request.getParameter("status");
         String hiddenMenu = request.getParameter("hiddenMenu");
         String departtemp = "";

@@ -117,8 +117,11 @@
                             </div>
                             <div class="form-group col-xs-1" style="width: 170px">
                                 <div class='input-group date' id="PaymentDate">
+                                    <c:set var="payDate" value="${requestScope['payDate']}" />
+                                    <fmt:parseDate value="${payDate}" var="payDate" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${payDate}" var="payDate" pattern="dd-MM-yyyy" />
                                     <input id="paymentDate" name="paymentDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['payDate']}">
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${payDate}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -127,8 +130,11 @@
                             </div>
                             <div class="col-xs-1" style="width: 170px">
                                 <div class='input-group date'>
+                                    <c:set var="dueDate" value="${requestScope['dueDate']}" />
+                                    <fmt:parseDate value="${dueDate}" var="dueDate" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${dueDate}" var="dueDate" pattern="dd-MM-yyyy" />
                                     <input id="duePaymentDate" name="duePaymentDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dueDate']}">
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${dueDate}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -295,8 +301,11 @@
                             </div>
                             <div class="col-xs-1 form-group text-left" style="width: 200px" id="datefrompanel">
                                 <div class='input-group date' id="inputDateFrom">
+                                    <c:set var="dateFrom" value="${requestScope['dateFrom']}" />
+                                    <fmt:parseDate value="${dateFrom}" var="dateFrom" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${dateFrom}" var="dateFrom" pattern="dd-MM-yyyy" />
                                     <input id="dateFrom" name="dateFrom"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dateFrom']}">
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${dateFrom}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -307,8 +316,11 @@
                             </div>
                             <div class="col-xs-1 form-group text-left" style="width: 200px" id="datetopanel">
                                 <div class='input-group date' id="inputDateTo">
+                                    <c:set var="dateTo" value="${requestScope['dateTo']}" />
+                                    <fmt:parseDate value="${dateTo}" var="dateTo" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${dateTo}" var="dateTo" pattern="dd-MM-yyyy" />
                                     <input id="dateTo" name="dateTo"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dateTo']}">
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${dateTo}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -955,7 +967,7 @@ for(var i = 0; i < rad.length; i++) {
 <!--Script-->       
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
         $(".moneyformat").mask('000,000,000', {reverse: true});
         $(".money").mask('000,000,000.00', {reverse: true});
@@ -1027,7 +1039,7 @@ for(var i = 0; i < rad.length; i++) {
                     trigger: 'focus keyup change',
                     validators: {
                         date: {
-                            format: 'YYYY-MM-DD',
+                            format: 'DD-MM-YYYY',
                             max: 'dateTo',
                             message: 'The Date From is not a valid'
                         }
@@ -1037,7 +1049,7 @@ for(var i = 0; i < rad.length; i++) {
                     trigger: 'focus keyup change',
                     validators: {
                         date: {
-                            format: 'YYYY-MM-DD',
+                            format: 'DD-MM-YYYY',
                             min: 'dateFrom',
                             message: 'The Date To is not a valid'
                         }

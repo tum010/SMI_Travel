@@ -868,14 +868,7 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach var="table" items="${receiptCreditList}" varStatus="i">
-<!--                                        <script>
-                                            $(document).ready(function () {
-                                                if("${table.creditExpire}" !== ''){
-                                                    $("#creditExpired${i.count}").val(convertFormatDate("${table.creditExpire}"));
-                                                }
-                                            });
-                                        </script>-->
-                                            <tr>
+                                        <tr>
                                         <input type="hidden" name="countCredit${i.count}" id="countCredit${i.count}" value="${i.count}">
                                         <input type="hidden" name="tableCreditId${i.count}" id="tableCreditId${i.count}" value="${table.id}">
                                         <td>                                   
@@ -1582,23 +1575,6 @@
 
     $(document).ready(function() {        
         $("#inv,#ref,#com").removeClass('hidden');
-        
-//        CreditDetailTable
-        
-//        var receiveFromDate = $('#receiveFromDate').val();
-//        if(receiveFromDate !== ''){
-//            $('#receiveFromDate').val(convertFormatDate(receiveFromDate));
-//        }   
-        
-//        var receiveDate = $('#receiveDate').val();
-//        if(receiveDate !== ''){
-//            $('#receiveDate').val(convertFormatDate(receiveDate));
-//        }   
-        
-//        s
-        
-        
-        
         $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
         $(".money").mask('000,000,000.00', {reverse: true});

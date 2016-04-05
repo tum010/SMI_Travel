@@ -140,9 +140,12 @@
                                 <label class="control-label" for="">Invoice date<font style="color: red">*</font></lable>
                             </div>
                             <div class="col-md-2 form-group">
-                                <div class='input-group date' id='InputDatePicker'>    
+                                <div class='input-group date' id='InputDatePicker'>
+                                    <c:set var="creates" value="${create}" />
+                                    <fmt:parseDate value="${creates}" var="creates" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${creates}" var="creates" pattern="dd-MM-yyyy" />
                                     <input id="InputInvDate" name="InputInvDate"  type="text" 
-                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${create}">
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${creates}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                              
                                 </div>
                             </div>                  
@@ -659,11 +662,7 @@
             select += "<option value='${cur.code}' ><c:out value='${cur.code}' /></option>";
         </c:forEach>
             
-            var InputInvDate = $('#InputInvDate').val();
-        if(InputInvDate !== ''){
-            $('#InputInvDate').val(convertFormatDate(InputInvDate));
-        } 
-        $('.date').datetimepicker();
+       $('.date').datetimepicker();
        $('.datemask').mask('00-00-0000');
        $('.spandate').click(function() {
             var position = $(this).offset();

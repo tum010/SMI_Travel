@@ -33,6 +33,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -365,7 +366,7 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
             int ticketfare = 0;
             int tickettax = 0;
             for(int j=0;j<airlines.size();j++){
-                departDate = String.valueOf(airlines.get(j).getDepartDate());
+                departDate = (!"".equalsIgnoreCase(String.valueOf(airlines.get(j).getDepartDate())) && airlines.get(j).getDepartDate()!=null ) ? new SimpleDateFormat("dd-MM-yyyy", new Locale("us", "us")).format(airlines.get(j).getDepartDate()) : "" ; 
                 if(airlines.get(j).getMFlight() != null){
                     ticketClass = airlines.get(j).getMFlight().getName();
                 }
@@ -862,7 +863,8 @@ public class TicketFareAirlineImpl implements TicketFareAirlineDao{
         System.out.println("price : "+price);
         result.put("Id",ticketFare.getId()); 
         result.put("TicketNo",TicketNo); 
-        result.put("TicketDate", ticketFare.getAirticketAirline().getTicketDate());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        result.put("TicketDate", sdf.format(ticketFare.getAirticketAirline().getTicketDate()));
         result.put("Dept", BookingType.equalsIgnoreCase("O")? "Outbound":"Wendy");
         result.put("Passenger", Initialname+" " + ticketFare.getLastName() +" "+ticketFare.getFirstName());
         result.put("Total", price+ticketFare.getTicketTax());

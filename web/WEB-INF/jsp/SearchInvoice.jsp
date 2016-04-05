@@ -50,14 +50,20 @@
                     <div class="col-md-2 form-group"> 
                         <div class='input-group date fromdate' id="DateFrom">
                             <c:if test='${fromdate != null}'>
+                                <c:set var="FromDate" value="${fromdate}" />
+                                <fmt:parseDate value="${FromDate}" var="FromDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${FromDate}" var="FromDate" pattern="dd-MM-yyyy" />
                                 <input id="FromDate" name="FromDate"  type="text" 
-                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${fromdate}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${FromDate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
                             <c:if test='${fromdate == null}'>
+                                <c:set var="FromDate" value="${requestScope['']}" />
+                                <fmt:parseDate value="${FromDate}" var="FromDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${FromDate}" var="FromDate" pattern="dd-MM-yyyy" />
                                 <input id="FromDate" name="FromDate"  type="text" 
-                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['']}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="FromDate">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>                             
@@ -69,14 +75,20 @@
                     <div class="col-md-2 form-group" style="padding: 0px 0px 0px 20px; width: 160px"> 
                         <div class='input-group date todate' id="DateTo">
                             <c:if test='${todate != null}'>
+                                <c:set var="ToDate" value="${todate}" />
+                                <fmt:parseDate value="${ToDate}" var="ToDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${ToDate}" var="ToDate" pattern="dd-MM-yyyy" />
                                 <input id="ToDate" name="ToDate"  type="text" 
-                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${todate}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${ToDate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>
                             <c:if test='${todate == null}'>
+                                <c:set var="ToDate" value="${requestScope['']}" />
+                                <fmt:parseDate value="${ToDate}" var="ToDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${ToDate}" var="ToDate" pattern="dd-MM-yyyy" />
                                 <input id="ToDate" name="ToDate"  type="text" 
-                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['']}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${ToDate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 
                             </c:if>                             
@@ -243,17 +255,15 @@
                         </thead>
                         <tbody> 
                             <c:forEach var="inv" items="${listInvoice}" varStatus="taxdesc">
-                                <script>
-                                    $(document).ready(function () {
-                                        if("${inv.invoiceDate}" !== ''){
-                                            $("#invoiceDate-${taxdesc.count}").text(convertFormatDate("${inv.invoiceDate}"));
-                                        }
-                                    });
-                                </script>
                                 <tr>
                                     <td class="hidden"><input type="text"  id="inputInvoiceId${taxdesc.count}" name="inputInvoiceId" value="${inv.invoiceId}"></td>
                                     <td align="center">${inv.invoiceNo}</td>
-                                    <td id="invoiceDate-${taxdesc.count}">${inv.invoiceDate}</td>
+                                    <td>
+                                        <c:set var="invoiceDate" value="${inv.invoiceDate}" />
+                                        <fmt:parseDate value="${invoiceDate}" var="invoiceDate" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${invoiceDate}" var="invoiceDate" pattern="dd-MM-yyyy" />
+                                        ${invoiceDate}
+                                    </td>
                                     <td >${inv.name}</td>
                                     <td >${inv.address}</td>
 <!--                                    <td align="right" class="money"><fmt:formatNumber type="number" maxFractionDigits="3" value="${inv.totalPrice}"/> </td>-->
@@ -381,16 +391,6 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
         var typetemp = '${requestScope['type']}' ;
-         var fromdates = $('#FromDate').val();
-        if(fromdates !== ''){
-            $('#FromDate').val(convertFormatDate(fromdates));
-        }   
-        
-        var todates = $('#ToDate').val();
-        if(todates !== ''){
-            $('#ToDate').val(convertFormatDate(todates));
-        }   
-        
         $('.datemask').mask('00-00-0000');
         if(typetemp === 'T'){
             $('#Type')

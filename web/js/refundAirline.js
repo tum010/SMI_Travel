@@ -1,7 +1,7 @@
 var deleteRowNo = 0;
 $(document).ready(function () {
 
-    $('.datemask').mask('0000-00-00');
+    
     addRowRefundAirlineList();
     $(".decimal").inputmask({
         alias: "decimal",

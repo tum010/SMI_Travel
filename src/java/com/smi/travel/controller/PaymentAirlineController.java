@@ -71,11 +71,10 @@ public class PaymentAirlineController extends SMITravelController {
     UtilityFunction util;
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         String action = request.getParameter("action");
         String paymentId = request.getParameter("paymentId");
         String paymentNo = request.getParameter("paymentNo");
-        String paymentDate = request.getParameter("paymentDate"); 
-        String duePaymentDate = request.getParameter("duePaymentDate");
         String invoiceSupCode = request.getParameter("invoiceSupCode");
         String apCode = request.getParameter("apCode");
         String detail = request.getParameter("detail");
@@ -93,8 +92,6 @@ public class PaymentAirlineController extends SMITravelController {
 //        String debitAmount = request.getParameter("debitAmount");
         String ticketFrom = request.getParameter("ticketFrom");
         String typeAirline = request.getParameter("typeAirline");
-        String dateFrom = request.getParameter("dateFrom");
-        String dateTo = request.getParameter("dateTo");
         String totalCommissionTicketFare = request.getParameter("totalCommissionTicketFare");
         String totalAmountTicketFare = request.getParameter("totalAmountTicketFare");
         String totalAmountRefund = request.getParameter("totalAmountRefund");
@@ -104,12 +101,16 @@ public class PaymentAirlineController extends SMITravelController {
         String payto = request.getParameter("payto");
         String typeAirlineOther = request.getParameter("typeAirlineOther");
         String ticketType = request.getParameter("ticketType");
-        
-        String exportDate = request.getParameter("exportDate");
         String isExport = request.getParameter("isExport");
-        
         String wildCardSearch = request.getParameter("wildCardSearch");
         String keyCode = request.getParameter("keyCode");
+
+        String dateFrom = util.covertStringDateToFormatYMD(request.getParameter("dateFrom"));
+        String dateTo = util.covertStringDateToFormatYMD(request.getParameter("dateTo"));
+        String paymentDate = util.covertStringDateToFormatYMD(request.getParameter("paymentDate")); 
+        String duePaymentDate = util.covertStringDateToFormatYMD(request.getParameter("duePaymentDate"));
+        String exportDate = util.covertStringDateToFormatYMD(request.getParameter("exportDate"));
+        
         
         System.out.println("  exportDate " + exportDate);
         System.out.println("  isExport " + isExport);

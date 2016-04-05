@@ -278,8 +278,11 @@
                         </div>
                         <div class="col-xs-1"  style="width: 200px">
                             <div class='input-group date' id='InputDueDate'>
+                                <c:set var="dueDate" value="${requestScope['dueDate']}" />
+                                <fmt:parseDate value="${dueDate}" var="dueDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${dueDate}" var="dueDate" pattern="dd-MM-yyyy" />
                                 <input id="dueDate" name="dueDate"  type="text" 
-                                   class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dueDate']}">
+                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${dueDate}">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -298,8 +301,11 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date' id='InputDatePicker'>
+                                    <c:set var="issueDate" value="${requestScope['issueDate']}" />
+                                    <fmt:parseDate value="${issueDate}" var="issueDate" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${issueDate}" var="issueDate" pattern="dd-MM-yyyy" />
                                     <input id="issueDate" name="issueDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['issueDate']}">
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${issueDate}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -379,8 +385,11 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date' >
+                                    <c:set var="ticketCommDate" value="${requestScope['ticketCommDate']}" />
+                                    <fmt:parseDate value="${ticketCommDate}" var="ticketCommDate" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${ticketCommDate}" var="ticketCommDate" pattern="dd-MM-yyyy" />
                                     <input id="ticketCommDate" name="ticketCommDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['ticketCommDate']}">
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${ticketCommDate}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -389,8 +398,11 @@
                             </div>
                             <div class="col-xs-1"  style="width: 200px">
                                 <div class='input-group date'>
+                                    <c:set var="agentCommDate" value="${requestScope['agentCommDate']}" />
+                                    <fmt:parseDate value="${agentCommDate}" var="agentCommDate" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${agentCommDate}" var="agentCommDate" pattern="dd-MM-yyyy" />
                                     <input id="agentCommDate" name="agentCommDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['agentCommDate']}">
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${agentCommDate}">
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -510,8 +522,11 @@
                                 <label class="col-lg-4 control-label text-right">Date </label>
                                     <div class="col-sm-6">
                                     <div class='input-group date'>
+                                        <c:set var="overDate" value="${requestScope['overDate']}" />
+                                        <fmt:parseDate value="${overDate}" var="overDate" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${overDate}" var="overDate" pattern="dd-MM-yyyy" />
                                         <input id="overDate" name="overDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['overDate']}" tabindex="2"/>
+                                           class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${overDate}" tabindex="2"/>
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>
@@ -528,8 +543,11 @@
                                 <label class="col-lg-4 control-label text-right">Date </label>
                                 <div class="col-sm-6">                             
                                     <div class='input-group date'>
+                                        <c:set var="litterDate" value="${requestScope['litterDate']}" />
+                                        <fmt:parseDate value="${litterDate}" var="litterDate" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${litterDate}" var="litterDate" pattern="dd-MM-yyyy" />
                                         <input id="litterDate" name="litterDate"  type="text" 
-                                           class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['litterDate']}" tabindex="4"/>
+                                           class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${litterDate}" tabindex="4"/>
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>                            
@@ -548,8 +566,11 @@
                                 <label class="col-lg-4 control-label text-right">Date </label>
                                 <div class="col-sm-6"> 
                                 <div class='input-group date'>
+                                    <c:set var="addPayDate" value="${requestScope['addPayDate']}" />
+                                    <fmt:parseDate value="${addPayDate}" var="addPayDate" pattern="yyyy-MM-dd" />
+                                    <fmt:formatDate value="${addPayDate}" var="addPayDate" pattern="dd-MM-yyyy" />
                                     <input id="addPayDate" name="addPayDate"  type="text" 
-                                       class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['addPayDate']}" tabindex="6"/>
+                                       class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${addPayDate}" tabindex="6"/>
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                                 </div>
@@ -598,7 +619,7 @@
                                         <td align="center">${dataStatus.count}</td>
                                         <td >${table.refundAirticket.refundNo}</td>
                                         <td class="money">${table.receiveAirline}</td>
-                                        <td align="center">${table.refundAirticket.receiveDate}</td>
+                                        <td align="center"><fmt:formatDate value="${table.refundAirticket.receiveDate}" var="receiveDate" pattern="dd-MM-yyyy" />${receiveDate}</td>
                                         <td class="money">${table.airComission}</td>
                                         <td align="center">${table.receiveDate}</td>
                                         <td class="money">${table.agentComission}</td>
@@ -643,9 +664,9 @@
                                         </td>
                                         <td align="center">${dataStatus.count}</td>
                                         <td align="center">${table.invNo}</td>
-                                        <td align="center">${table.invDate}</td>
+                                        <td align="center"><fmt:formatDate value="${table.invDate}" var="invDate" pattern="dd-MM-yyyy" />${invDate}</td>
                                         <td align="center">${table.department}</td>
-                                        <td align="center">${table.dueDate}</td>
+                                        <td align="center"><fmt:formatDate value="${table.dueDate}" var="dueDate" pattern="dd-MM-yyyy" />${dueDate}</td>
                                         <td align="center">${table.staffName}</td>
                                         <td class="money">${table.amountInvoice}</td>
                                 </c:forEach>
@@ -675,9 +696,9 @@
                                     <tr>
                                         <td align="center">${dataStatus.count}</td>
                                         <td align="center">${table.receiptNo}</td>
-                                        <td align="center">${table.receiptDate}</td>
+                                        <td align="center"><fmt:formatDate value="${table.receiptDate}" var="receiptDate" pattern="dd-MM-yyyy" />${receiptDate}</td>
                                         <td align="center">${table.invoiceNo}</td>
-                                        <td align="center">${table.receiveDate}</td>
+                                        <td align="center"><fmt:formatDate value="${table.receiveDate}" var="receiveDate" pattern="dd-MM-yyyy" />${receiveDate}</td>
                                         <td align="center">${table.mbillTypeStatus}</td>
                                     </tr>
                                 </c:forEach>
@@ -713,8 +734,8 @@
                                         <td align="center"> <c:out value="${table.flightClass}" /></td>
                                         <td align="center"> <c:out value="${table.sourceCode}" /></td>
                                         <td align="center"> <c:out value="${table.desCode}" /></td>
-                                        <td align="center"> <c:out value="${table.departureDate}" /></td>
-                                        <td align="center"> <c:out value="${table.arrivalDate}" /></td>
+                                        <td align="center"> <fmt:formatDate value="${table.departureDate}" var="departureDate" pattern="dd-MM-yyyy" />${departureDate}</td>
+                                        <td align="center"> <fmt:formatDate value="${table.arrivalDate}" var="arrivalDate" pattern="dd-MM-yyyy" />${arrivalDate}</td>
                                 </c:forEach>
                                 <c:forEach var="table" items="${flightDetailFromAirticket}" varStatus="dataStatus">
                                     <tr>
@@ -724,8 +745,8 @@
                                         <td align="center"> <c:out value="${table.flightClass}" /></td>
                                         <td align="center"> <c:out value="${table.sourceCode}" /></td>
                                         <td align="center"> <c:out value="${table.desCode}" /></td>
-                                        <td align="center"> <c:out value="${table.departDate}" /></td>
-                                        <td align="center"> <c:out value="${table.arriveDate}" /></td>
+                                        <td align="center"> <fmt:formatDate value="${table.departDate}" var="departDate" pattern="dd-MM-yyyy" />${departDate}</td>
+                                        <td align="center"> <fmt:formatDate value="${table.arriveDate}" var="arriveDate" pattern="dd-MM-yyyy" />${arriveDate}</td>
                                 </c:forEach>        
                             </tbody>
                         </table>
@@ -926,7 +947,7 @@
     setTicketDetailByInvTemp = [];
     setSelectTicketNoTemp = [];
     $(document).ready(function () {
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $("#flightPanel").addClass('hidden');
         if($('#flightDetailFlag').val() == "notdummy"){
             $("#flightPanel").removeClass('hidden');  

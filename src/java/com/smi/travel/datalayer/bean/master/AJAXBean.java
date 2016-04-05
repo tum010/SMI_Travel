@@ -846,7 +846,7 @@ public class AJAXBean extends AbstractBean implements
                 String ticketNo = map.get("ticketNo").toString();
                 HashMap<String, Object> ticketFare = ticketFareAirlineDao.getDetailTicketFareAirline(ticketNo);
                 if (ticketFare != null) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                     DecimalFormat df = new DecimalFormat("###,##0.00");
                     ticketFare.put("TicketDate", sdf.format(ticketFare.get("TicketDate")));
                     String total = ticketFare.get("Total").toString();
@@ -862,7 +862,7 @@ public class AJAXBean extends AbstractBean implements
                 System.out.println("ticketNo : "+ticketNo +" , AirBooking : "+AirBooking);
                 HashMap<String, Object> ticketFare = ticketFareAirlineDao.getDetailTicketFareAirline(ticketNo,AirBooking);
                 if (ticketFare != null) {
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                     DecimalFormat df = new DecimalFormat("###,##0.00");
                     ticketFare.put("TicketDate", sdf.format(ticketFare.get("TicketDate")));
                     String total = ticketFare.get("Total").toString();

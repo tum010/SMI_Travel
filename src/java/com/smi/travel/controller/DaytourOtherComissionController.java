@@ -51,13 +51,13 @@ public class DaytourOtherComissionController extends SMITravelController {
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         String action = request.getParameter("action");
         String actionAddGuide = request.getParameter("addGuideAction");
-        
+        UtilityFunction util = new UtilityFunction();
         if("addGuide".equalsIgnoreCase(actionAddGuide)){
             action = actionAddGuide;
         }
         
-        String dateFromS = request.getParameter("InputDateFrom");
-        String dateToS = request.getParameter("InputDateTo");
+        String dateFromS = util.covertStringDateToFormatYMD(request.getParameter("InputDateFrom"));
+        String dateToS = util.covertStringDateToFormatYMD(request.getParameter("InputDateTo"));
         String selectGuideId = request.getParameter("SelectGuide");
         String selectAgentId = request.getParameter("SelectAgent");
         String dayCommRows = request.getParameter("dayCommRows");

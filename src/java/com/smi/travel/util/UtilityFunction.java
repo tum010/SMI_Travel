@@ -629,5 +629,14 @@ public class UtilityFunction {
         }
         return date != null;
     }
+    
+    public String covertStringDateToFormatYMD(String date){
+        String dateformat = "";
+        if(!"".equalsIgnoreCase(date) && date != null ) {
+            dateformat = new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(convertStringToDate(date));
+        }
+        return dateformat;
+    } 
+    
 
 }
