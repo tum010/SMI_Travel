@@ -162,10 +162,10 @@
 
                                     <label for="effectivefrom" class="col-sm-3 control-label" > From </label>
                                     <div class=' col-sm-6 input-group date' id='effectivefromClass' style="width: 140px">
-                                        <%--<c:set var="otherDate" value="${requestScope['otherdate']}" />--%>
-                                        <%--<fmt:parseDate value="${otherDate}" var="otherDate" pattern="yyyy-MM-dd" />--%>
-                                        <%--<fmt:formatDate value="${otherDate}" var="otherDate" pattern="dd-MM-yyyy" />--%>
-                                        <input type='text' class="form-control datemask"  id="otherdate" name="otherdate" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['otherdate']}"/>                                     
+                                        <c:set var="otherDate" value="${requestScope['otherdate']}" />
+                                        <fmt:parseDate value="${otherDate}" var="otherDate" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${otherDate}" var="otherDate" pattern="dd-MM-yyyy" />
+                                        <input type='text' class="form-control datemask"  id="otherdate" name="otherdate" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${otherDate}"/>                                     
                                         <span class="input-group-addon spandate">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -204,10 +204,10 @@
 
                                     <label for="effectivefrom" class="col-sm-3 control-label" > To </label>
                                     <div class=' col-sm-6 input-group date' id='effectivefromClass' style="width: 140px">
-                                        <%--<c:set var="otherdateTo" value="${requestScope['otherdateTo']}" />--%>
-                                        <%--<fmt:parseDate value="${otherdateTo}" var="otherdateTo" pattern="yyyy-MM-dd" />--%>
-                                        <%--<fmt:formatDate value="${otherdateTo}" var="otherdateTo" pattern="dd-MM-yyyy" />--%>
-                                        <input type='text' class="form-control datemask"  id="otherdateTo" name="otherdateTo" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['otherdateTo']}"/>                                     
+                                        <c:set var="otherdateTo" value="${requestScope['otherdateTo']}" />
+                                        <fmt:parseDate value="${otherdateTo}" var="otherdateTo" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${otherdateTo}" var="otherdateTo" pattern="dd-MM-yyyy" />
+                                        <input type='text' class="form-control datemask"  id="otherdateTo" name="otherdateTo" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${otherdateTo}"/>                                     
                                         <span class="input-group-addon spandate">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
