@@ -290,6 +290,7 @@
                                                     'clear_selection': {}
                                                 }
                                             });
+                                            $(".selectize").css('z-index', 0);
                                         });
                                     </script>
                             </div>
