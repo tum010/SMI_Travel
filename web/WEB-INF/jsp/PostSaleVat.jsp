@@ -81,13 +81,16 @@
                 <div class="col-xs-1 form-group" style="width: 170px">
                     <div class='input-group date' id='InputFromDate'>
                     <c:if test='${From != null}'>
+                        <c:set var="postFromDate" value="${From}" />
+                        <fmt:parseDate value="${postFromDate}" var="postFromDate" pattern="yyyy-MM-dd" />
+                        <fmt:formatDate value="${postFromDate}" var="postFromDate" pattern="dd-MM-yyyy" />
                         <input id="postFromDate" name="postFromDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${From}">
+                            class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${postFromDate}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
                     </c:if>
                     <c:if test='${From == null}'>
                         <input id="postFromDate" name="postFromDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
                     </c:if>                             
                     </div>  
@@ -98,13 +101,16 @@
                 <div class="col-xs-1 form-group" style="width: 170px">
                     <div class='input-group date' id='InputToDate'>
                     <c:if test='${To != null}'>
+                        <c:set var="postToDate" value="${To}" />
+                        <fmt:parseDate value="${postToDate}" var="postToDate" pattern="yyyy-MM-dd" />
+                        <fmt:formatDate value="${postToDate}" var="postToDate" pattern="dd-MM-yyyy" />
                         <input id="postToDate" name="postToDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${To}">
+                            class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${postToDate}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
                     </c:if>
                     <c:if test='${To == null}'>
                         <input id="postToDate" name="postToDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
                     </c:if>                             
                     </div>   
@@ -261,7 +267,7 @@
 <script language="javascript">
     $(document).ready(function () {
         $('.date').datetimepicker();
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
@@ -316,7 +322,7 @@
                                     message: 'The Date From is required'
                                 },
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     max: 'postToDate',
                                     message: 'The Date From is not a valid'
                                 }
@@ -329,7 +335,7 @@
                                     message: 'The Date To is required'
                                 },
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     min: 'postFromDate',
                                     message: 'The Date To is not a valid'
                                 }

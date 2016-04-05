@@ -4,6 +4,7 @@ import com.smi.travel.datalayer.service.ARMonitorService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -18,12 +19,13 @@ public class ARMonitorController extends SMITravelController {
     private ARMonitorService arMonitorService;
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         String action = request.getParameter("action");
         String invoiceType = request.getParameter("invoiceType");
         String departmnt = request.getParameter("department");
         String type = request.getParameter("arType");
-        String from = request.getParameter("arFromDate");
-        String to = request.getParameter("arToDate");
+        String from = util.covertStringDateToFormatYMD(request.getParameter("arFromDate"));
+        String to = util.covertStringDateToFormatYMD(request.getParameter("arToDate"));
         String status = request.getParameter("arStatus");
         String accno = request.getParameter("accno");
         //List Type

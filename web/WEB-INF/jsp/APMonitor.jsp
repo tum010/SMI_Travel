@@ -121,12 +121,15 @@
                     <div class='input-group date fromdate' id='InputFromDate'>
                     <c:if test='${taxInvoice.taxInvDate != null}'>
                         <input id="apFromDate" name="apFromDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
                     </c:if>
                     <c:if test='${taxInvoice.taxInvDate == null}'>
+                        <c:set var="apFromDate" value="${requestScope['apFromDate']}" />
+                        <fmt:parseDate value="${apFromDate}" var="apFromDate" pattern="yyyy-MM-dd" />
+                        <fmt:formatDate value="${apFromDate}" var="apFromDate" pattern="dd-MM-yyyy" />
                         <input id="apFromDate" name="apFromDate"  type="text" 
-                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['apFromDate']}">
+                               class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${apFromDate}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
                     </c:if>                             
                     </div>               
@@ -139,12 +142,15 @@
                     <div class='input-group date todate' id='InputToDate'>
                     <c:if test='${taxInvoice.taxInvDate != null}'>
                         <input id="apToDate" name="apToDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
                     </c:if>
                     <c:if test='${taxInvoice.taxInvDate == null}'>
+                        <c:set var="apToDate" value="${requestScope['apToDate']}" />
+                        <fmt:parseDate value="${apToDate}" var="apToDate" pattern="yyyy-MM-dd" />
+                        <fmt:formatDate value="${apToDate}" var="apToDate" pattern="dd-MM-yyyy" />
                         <input id="apToDate" name="apToDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['apToDate']}">
+                            class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${apToDate}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
                     </c:if>                             
                     </div>               
@@ -273,7 +279,7 @@
 <script language="javascript">
     $(document).ready(function () {
         $('.date').datetimepicker();
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
@@ -327,7 +333,7 @@
                                     message: 'The Date From is required'
                                 },
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     max: 'apToDate',
                                     message: 'The Date From is not a valid'
                                 }
@@ -340,7 +346,7 @@
                                     message: 'The Date From is required'
                                 },
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     min: 'apFromDate',
                                     message: 'The Date To is not a valid'
                                 }

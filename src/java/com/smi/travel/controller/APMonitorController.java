@@ -4,6 +4,7 @@ import com.smi.travel.datalayer.service.APNirvanaService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.APNirvana;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ public class APMonitorController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         List<MPaytype> mPayTypeList = utilservice.getListMPayType();
         request.setAttribute(MPAYTYPELIST, mPayTypeList);
         
@@ -28,8 +30,8 @@ public class APMonitorController extends SMITravelController {
         String apPayment = request.getParameter("apPayment");
         String apType = request.getParameter("apType");
         String apStatus = request.getParameter("apStatus");
-        String apFromDate = request.getParameter("apFromDate");
-        String apToDate = request.getParameter("apToDate");
+        String apFromDate = util.covertStringDateToFormatYMD(request.getParameter("apFromDate"));
+        String apToDate = util.covertStringDateToFormatYMD(request.getParameter("apToDate"));
         String apCount = request.getParameter("apCount");
         String apAccno = request.getParameter("apAccno");
         if("search".equalsIgnoreCase(action)){

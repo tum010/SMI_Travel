@@ -3,6 +3,7 @@ import com.smi.travel.datalayer.service.CollectionNirvanaService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CollectionNirvana;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -25,12 +26,13 @@ public class CollectionMonitorController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         String action = request.getParameter("action");
         String department = request.getParameter("department");
         String type = request.getParameter("type");
         String status = request.getParameter("status");
-        String from = request.getParameter("inputFromDate");
-        String to = request.getParameter("inputToDate");
+        String from = util.covertStringDateToFormatYMD(request.getParameter("inputFromDate"));
+        String to = util.covertStringDateToFormatYMD(request.getParameter("inputToDate"));
         String invno = request.getParameter("invno");
         
         request.setAttribute(DEPARTMENT,department);

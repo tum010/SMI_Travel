@@ -137,13 +137,16 @@
                 <div class="col-xs-1 form-group" style="width: 200px">
                     <div class='input-group date' id='InputFromDate'>
                     <c:if test='${from != null}'>
+                        <c:set var="arFromDate" value="${from}" />
+                        <fmt:parseDate value="${arFromDate}" var="arFromDate" pattern="yyyy-MM-dd" />
+                        <fmt:formatDate value="${arFromDate}" var="arFromDate" pattern="dd-MM-yyyy" />
                         <input id="arFromDate" name="arFromDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${from}">
+                            class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${arFromDate}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
                     </c:if>
                     <c:if test='${from == null}'>
                         <input id="arFromDate" name="arFromDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
                     </c:if>                             
                     </div>  
@@ -155,13 +158,16 @@
                 <div class="col-xs-1 form-group" style="width: 200px">
                     <div class='input-group date' id='InputToDate'>
                     <c:if test='${to != null}'>
+                        <c:set var="arToDate" value="${to}" />
+                        <fmt:parseDate value="${arToDate}" var="arToDate" pattern="yyyy-MM-dd" />
+                        <fmt:formatDate value="${arToDate}" var="arToDate" pattern="dd-MM-yyyy" />
                         <input id="arToDate" name="arToDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${to}">
+                            class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${arToDate}">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>        
                     </c:if>
                     <c:if test='${to == null}'>
                         <input id="arToDate" name="arToDate"  type="text" 
-                            class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                            class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="">
                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                
                     </c:if>                             
                     </div>   
@@ -318,7 +324,7 @@
 <script language="javascript">
     $(document).ready(function () {
         $('.date').datetimepicker();
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
@@ -373,7 +379,7 @@
                                     message: 'The Date From is required'
                                 },
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     max: 'arToDate',
                                     message: 'The Date From is not a valid'
                                 }
@@ -386,7 +392,7 @@
                                     message: 'The Date From is required'
                                 },
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     min: 'arFromDate',
                                     message: 'The Date To is not a valid'
                                 }

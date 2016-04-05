@@ -141,8 +141,11 @@
                 <div class="col-xs-1"  style="width: 200px;margin-top: -13px">
                     <div class=" form-group"> 
                         <div class='input-group date fromdate' id="DateFrom">
+                            <c:set var="inputFromDate" value="${requestScope['collectionFromDate']}" />
+                            <fmt:parseDate value="${inputFromDate}" var="inputFromDate" pattern="yyyy-MM-dd" />
+                            <fmt:formatDate value="${inputFromDate}" var="inputFromDate" pattern="dd-MM-yyyy" />
                             <input id="inputFromDate" name="inputFromDate"  type="text" 
-                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['collectionFromDate']}">
+                               class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${inputFromDate}">
                             <span class="input-group-addon spandate" id="InputFromDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputFromDateSpan2"></span></span>
                         </div>
                     </div>            
@@ -154,8 +157,11 @@
                 <div class="col-xs-1" style="width: 200px;margin-top: -13px">
                     <div class=" form-group"> 
                         <div class='input-group date todate' id="DateTo">
+                            <c:set var="inputToDate" value="${requestScope['collectionToDate']}" />
+                            <fmt:parseDate value="${inputToDate}" var="inputToDate" pattern="yyyy-MM-dd" />
+                            <fmt:formatDate value="${inputToDate}" var="inputToDate" pattern="dd-MM-yyyy" />
                             <input id="inputToDate" name="inputToDate"  type="text" 
-                               class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['collectionToDate']}">
+                               class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${inputToDate}">
                             <span class="input-group-addon spandate" id="InputToDateSpan1"><span class="glyphicon glyphicon-calendar" id="InputToDateSpan2"></span></span>
                         </div>
                     </div>                  
@@ -308,7 +314,7 @@
         
         
         $('.date').datetimepicker();
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
@@ -342,7 +348,7 @@
                                     message: 'The Date From is required'
                                 },
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     max: 'inputToDate',
                                     message: 'The Date From is not a valid'
                                 }
@@ -355,7 +361,7 @@
                                     message: 'The Date To is required'
                                 },
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     min: 'inputFromDate',
                                     message: 'The Date To is not a valid'
                                 }

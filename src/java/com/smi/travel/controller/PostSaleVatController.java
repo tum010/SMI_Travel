@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.service.PostSaleVatService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.OutputTaxView;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -30,10 +31,11 @@ public class PostSaleVatController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         String action = request.getParameter("action");
         String department = request.getParameter("department");
-        String from = request.getParameter("postFromDate");
-        String to = request.getParameter("postToDate");
+        String from = util.covertStringDateToFormatYMD(request.getParameter("postFromDate"));
+        String to = util.covertStringDateToFormatYMD(request.getParameter("postToDate"));
         String status = request.getParameter("postStatus");
         String type = request.getParameter("postType");
         //Search
