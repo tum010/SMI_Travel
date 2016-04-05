@@ -176,6 +176,17 @@ function addRow() {
     $("#addRow").addClass("hide");
     var clone = $('#tempTable tbody tr:lt(2)').clone();
     $('#ItemCreditTable tbody').append(clone);
+    try {
+        $(".date").datetimepicker({
+            pickTime: false
+        });
+        $('span').click(function() {
+            var position = $(this).offset();
+            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
+        });
+    } catch (e) {
+
+    }
     $("input[name='taxNo']").each(function() {
         $(this).off();
         $(this).on("keyup", function(event) {
