@@ -318,8 +318,11 @@
                                 </div>
                                 <div class="col-xs-1 form-group" style="width: 155px; margin-top: -10px">
                                     <div class='input-group date' id="ReceiveDate">
+                                        <c:set var="recDate" value="${requestScope['receiveFromDate']}" />
+                                        <fmt:parseDate value="${recDate}" var="recDate" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${recDate}" var="recDate" pattern="dd-MM-yyyy" />
                                         <input id="receiveFromDate" name="receiveFromDate"  type="text" 
-                                               class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['receiveFromDate']}">
+                                               class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${recDate}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>  
                                 </div>
@@ -357,8 +360,11 @@
                                 </div>
                                 <div class="col-xs-1 form-group" style="width: 200px; margin-top: -10px">
                                     <div class='input-group date'>
+                                        <c:set var="receiveDateTemp" value="${requestScope['receiveDate']}" />
+                                        <fmt:parseDate value="${receiveDateTemp}" var="receiveDateTemp" pattern="yyyy-MM-dd" />
+                                        <fmt:formatDate value="${receiveDateTemp}" var="receiveDate" pattern="dd-MM-yyyy" />
                                         <input id="receiveDate" name="receiveDate"  type="text" 
-                                               class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['receiveDate']}">
+                                               class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${receiveDate}">
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>  
                                 </div>
@@ -793,8 +799,9 @@
                                     </div>
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
+                                            <fmt:formatDate value="${receipt.chqDate1}" var="chqDate1" pattern="dd-MM-yyyy" />
                                             <input id="chqDate1" name="chqDate1"  type="text" 
-                                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${receipt.chqDate1}">
+                                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${chqDate1}">
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -828,8 +835,9 @@
                                     </div>
                                     <div class="col-xs-1" style="width: 170px">
                                         <div class='input-group date'>
+                                            <fmt:formatDate value="${receipt.chqDate2}" var="chqDate2" pattern="dd-MM-yyyy" />
                                             <input id="chqDate2" name="chqDate2"  type="text" 
-                                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${receipt.chqDate2}">
+                                                   class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${chqDate2}">
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
@@ -860,13 +868,13 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach var="table" items="${receiptCreditList}" varStatus="i">
-                                        <script>
+<!--                                        <script>
                                             $(document).ready(function () {
                                                 if("${table.creditExpire}" !== ''){
                                                     $("#creditExpired${i.count}").val(convertFormatDate("${table.creditExpire}"));
                                                 }
                                             });
-                                        </script>
+                                        </script>-->
                                             <tr>
                                         <input type="hidden" name="countCredit${i.count}" id="countCredit${i.count}" value="${i.count}">
                                         <input type="hidden" name="tableCreditId${i.count}" id="tableCreditId${i.count}" value="${table.id}">
@@ -884,7 +892,8 @@
                                         </td>
                                         <td><input maxlength="20" id="creditNo${i.count}" name="creditNo${i.count}" type="text" class="form-control" value="${table.creditNo}"></td>
                                         <td  id="exdate-${i.count}" ><div class="input-group date">
-                                                <input id="creditExpired${i.count}" name="creditExpired${i.count}"  type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${table.creditExpire}">
+                                                <fmt:formatDate value="${table.creditExpire}" var="creditExpire" pattern="dd-MM-yyyy" />
+                                                <input id="creditExpired${i.count}" name="creditExpired${i.count}"  type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${creditExpire}">
                                                 <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
                                         </td>
@@ -1576,25 +1585,17 @@
         
 //        CreditDetailTable
         
-        var receiveFromDate = $('#receiveFromDate').val();
-        if(receiveFromDate !== ''){
-            $('#receiveFromDate').val(convertFormatDate(receiveFromDate));
-        }   
+//        var receiveFromDate = $('#receiveFromDate').val();
+//        if(receiveFromDate !== ''){
+//            $('#receiveFromDate').val(convertFormatDate(receiveFromDate));
+//        }   
         
-        var receiveDate = $('#receiveDate').val();
-        if(receiveDate !== ''){
-            $('#receiveDate').val(convertFormatDate(receiveDate));
-        }   
+//        var receiveDate = $('#receiveDate').val();
+//        if(receiveDate !== ''){
+//            $('#receiveDate').val(convertFormatDate(receiveDate));
+//        }   
         
-        var chqDate1 = $('#chqDate1').val();
-        if(chqDate1 !== ''){
-            $('#chqDate1').val(convertFormatDate(chqDate1));
-        }   
-        
-        var chqDate2 = $('#chqDate2').val();
-        if(chqDate2 !== ''){
-            $('#chqDate2').val(convertFormatDate(chqDate2));
-        }   
+//        s
         
         
         
