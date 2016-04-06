@@ -123,7 +123,8 @@
                                             <fmt:formatDate value="${otherDate}" var="otherDate" pattern="dd-MM-yyyy" />
                                             <c:out value="${otherDate}" />
                                         </center></td>
-                                        <td><center><c:out value="${table.otherTime}" /></center></td>
+                                        <fmt:formatDate var="otherTime" type="time" pattern="HH:mm" value="${table.otherTime}" />
+                                        <td><center><c:out value="${otherTime}" /></center></td>
                                         <td><center><c:out value="${table.remark}" /></center></td>
                                         <td class="text-center">
                                             <span id="RefBookTableButtonEdit" name="RefBookTableButtonEdit" class="glyphicon glyphicon-edit editicon" onclick="window.open('/SMITravel/OtherDetail.smi?referenceNo=${RefNo}&itemid=${table.id}&action=edit');"></span>

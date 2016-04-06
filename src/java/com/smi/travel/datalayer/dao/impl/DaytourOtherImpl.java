@@ -172,13 +172,13 @@ public class DaytourOtherImpl implements DaytourOtherDao{
             // String parseDate = util.parseDate(util.ConvertString(B[1]));
              daytourother.setCreatedate(DateToStr.toUpperCase());
              //System.out.println("Date : "+ parseDate);
-             SimpleDateFormat dateformat = new SimpleDateFormat();
-             dateformat.applyPattern("dd-MM-yyyy");         
+             SimpleDateFormat dateformat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
+//             dateformat.applyPattern("dd-MM-yyyy");         
              daytourother.setLeadername(util.ConvertString(B[2]));
              daytourother.setCode(util.ConvertString(B[3]));
              daytourother.setDescription(util.ConvertString(B[4]));
-             daytourother.setDate((B[5] == null || "".equalsIgnoreCase(util.ConvertString(B[5])))? "" : String.valueOf(dateformat.format(util.convertStringToDate(String.valueOf(B[5])))));
-             daytourother.setTime(util.ConvertString(B[6]));
+             daytourother.setDate((B[5] == null || "".equalsIgnoreCase(util.ConvertString(B[5])))? "" : String.valueOf(format.format(util.convertStringToDate(String.valueOf(B[5])))));
+             daytourother.setTime((B[6] == null || "".equalsIgnoreCase(util.ConvertString(B[6]))) ? "" : dateformat.format(util.convertStringToTime(util.ConvertString(B[6]))));
              daytourother.setAdult(util.ConvertInt(B[7]));
              daytourother.setChild(util.ConvertInt(B[8]));
              daytourother.setInfant(util.ConvertInt(B[9]));             

@@ -266,12 +266,14 @@ public class ReportController extends SMITravelController {
             String otherId = request.getParameter("otherId");
             String passengerId = request.getParameter("passengerId");
             String refNo = request.getParameter("refNo");
-            data = reportservice.getDaytourOperationOtherReport(otherId, passengerId, refNo, status, user.getUsername()+"-"+user.getRole().getName());
+            String nameSurname = (!"".equalsIgnoreCase(user.getName()) && user.getName() != null ? user.getName() : "");
+            data = reportservice.getDaytourOperationOtherReport(otherId, passengerId, refNo, status, nameSurname);
         } else if (OtherVouncherEmail.equalsIgnoreCase(name)) {
             String otherId = request.getParameter("otherId");
             String passengerId = request.getParameter("passengerId");
             String refNo = request.getParameter("refNo");
-            data = reportservice.getDaytourOperationOtherReport(otherId, passengerId, refNo, status, user.getUsername()+"-"+user.getRole().getName());
+            String nameSurname = (!"".equalsIgnoreCase(user.getName()) && user.getName() != null ? user.getName() : "");
+            data = reportservice.getDaytourOperationOtherReport(otherId, passengerId, refNo, status, nameSurname);
         } else if (ReceiptEmail.equalsIgnoreCase(name)) {
             data = reportservice.getReceiptEmail(receiveId,option);
         } else if (ReceiptReport.equalsIgnoreCase(name)) {
