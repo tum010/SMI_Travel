@@ -200,14 +200,22 @@ $(document).ready(function() {
     });
 });
 
+function convertFormatDates(date){
+    if(date === ''){
+        return '';
+    }
+    var newDate = date.toString().split("-");
+    var result = new Date(newDate[2], newDate[1] , newDate[0]);
+    return newDate[2] + "-" + newDate[1] + "-" + newDate[0];
+}
 function printBillAirAgent(){
     var agentCode = document.getElementById("agentId").value;       
-    var invoiceFrom = document.getElementById("invoiceFromDate").value;
-    var invoiceTo = document.getElementById("InvoiceToDate").value;
-    var issueFrom = document.getElementById("issueFrom").value;
-    var issueTo = document.getElementById("issueTo").value;
-    var refundFrom = document.getElementById("refundFrom").value;
-    var refundTo = document.getElementById("refundTo").value;
+    var invoiceFrom = convertFormatDates(document.getElementById("invoiceFromDate").value);
+    var invoiceTo = convertFormatDates(document.getElementById("InvoiceToDate").value);
+    var issueFrom = convertFormatDates(document.getElementById("issueFrom").value);
+    var issueTo = convertFormatDates(document.getElementById("issueTo").value);
+    var refundFrom = convertFormatDates(document.getElementById("refundFrom").value);
+    var refundTo = convertFormatDates(document.getElementById("refundTo").value);
     var departments = document.getElementById("department").value;
     var salebyUsers = document.getElementById("salebyUser").value;
     var termPays = document.getElementById("termPay").value;
@@ -422,8 +430,8 @@ function checkDateValue(date){
             InputToDate = document.getElementById("refundTo");
         }
     if((inputFromDate.value !== '') && (InputToDate.value !== '')){
-        var fromDate = (inputFromDate.value).split('-');
-        var toDate = (InputToDate.value).split('-');
+        var fromDate = (convertFormatDates(inputFromDate.value)).split('-');
+        var toDate = (convertFormatDates(InputToDate.value)).split('-');
         if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
             validateDate(date,"over");
         }

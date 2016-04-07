@@ -54,7 +54,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date fromdate' id='DateFrom'>
-                                            <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -70,7 +70,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date todate' id='DateTo'>
-                                            <input type='text' id="invoiceToDate" name="invoiceToDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="invoiceToDate" name="invoiceToDate" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -86,7 +86,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date issuefromdate' id='DateFromIssue'>
-                                            <input type='text' id="issueFrom" name="issueFrom" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="issueFrom" name="issueFrom" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -102,7 +102,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date issuetodate' id='DateToIssue'>
-                                            <input type='text' id="issueTo" name="issueTo" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="issueTo" name="issueTo" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -247,7 +247,7 @@
 
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
-         $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker({
             
         });
@@ -270,7 +270,7 @@
 //                    trigger: 'focus keyup change',
 //                    validators: {
 //                        date: {
-//                            format: 'YYYY-MM-DD',
+//                            format: 'DD-MM-YYYY',
 //                            max: 'invoiceToDate',
 //                            message: 'The Date From is not a valid'
 //                        },
@@ -283,7 +283,7 @@
 //                    trigger: 'focus keyup change',
 //                    validators: {
 //                        date: {
-//                            format: 'YYYY-MM-DD',
+//                            format: 'DD-MM-YYYY',
 //                            min: 'invoiceFromDate',
 //                            message: 'The Date To is not a valid'
 //                        },
@@ -296,7 +296,7 @@
 //                    trigger: 'focus keyup change',
 //                    validators: {
 //                        date: {
-//                            format: 'YYYY-MM-DD',
+//                            format: 'DD-MM-YYYY',
 //                            max: 'issueTo',
 //                            message: 'The Date To is not a valid'
 //                        },
@@ -309,7 +309,7 @@
 //                    trigger: 'focus keyup change',
 //                    validators: {
 //                        date: {
-//                            format: 'YYYY-MM-DD',
+//                            format: 'DD-MM-YYYY',
 //                            min: 'issueFrom',
 //                            message: 'The Date To is not a valid'
 //                        },
@@ -426,10 +426,10 @@
     });
     
     function printTicketSummaryCostIncome(){
-        var invoiceFromDate = document.getElementById('invoiceFromDate').value;
-        var invoiceToDate = document.getElementById('invoiceToDate').value;
-        var issueFrom = document.getElementById('issueFrom').value;
-        var issueTo = document.getElementById('issueTo').value;
+        var invoiceFromDate = convertFormatDate(document.getElementById('invoiceFromDate').value);
+        var invoiceToDate = convertFormatDate(document.getElementById('invoiceToDate').value);
+        var issueFrom = convertFormatDate(document.getElementById('issueFrom').value);
+        var issueTo = convertFormatDate(document.getElementById('issueTo').value);
         var reportType = document.getElementById('reportType').value;
         var paymentType = document.getElementById('paymentType').value;
         var departmentt = document.getElementById('department').value;
@@ -596,8 +596,8 @@
         }
         
         if((inputFromDate.value !== '') && (InputToDate.value !== '')){
-            var fromDate = (inputFromDate.value).split('-');
-            var toDate = (InputToDate.value).split('-');
+            var fromDate = (convertFormatDate(inputFromDate.value)).split('-');
+            var toDate = (convertFormatDate(InputToDate.value)).split('-');
             if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
                 validateDate(date,"over");
             }

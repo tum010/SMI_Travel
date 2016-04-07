@@ -63,7 +63,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date invfromdate' id='invDateFrom'>
-                                            <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -79,7 +79,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date invtodate' id='invDateTo'>
-                                            <input type='text' id="InvoiceToDate" name="InvoiceToDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="InvoiceToDate" name="InvoiceToDate" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" />
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -95,7 +95,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date issuefromdate' id='DateFromIssue'>
-                                            <input type='text' id="issueFrom" name="issueFrom" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="issueFrom" name="issueFrom" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -111,7 +111,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date issuetodate' id='DateToIssue'>
-                                            <input type='text' id="issueTo" name="issueTo" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="issueTo" name="issueTo" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" />
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -146,7 +146,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date refundfromdate' id='DateFromRefund'>
-                                            <input type='text' id="refundFrom" name="refundFrom" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="refundFrom" name="refundFrom" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -162,7 +162,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date refundtodate' id='DateToRefund'>
-                                            <input type='text' id="refundTo" name="refundTo"  class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="refundTo" name="refundTo"  class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" />
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -329,7 +329,7 @@
 </div>          
 <script type="text/javascript">
     $(document).ready(function() {
-    $('.datemask').mask('0000-00-00');
+    $('.datemask').mask('00-00-0000');
 
     $("#BillAirAgent").bootstrapValidator({
         framework: 'bootstrap',
@@ -362,7 +362,7 @@
                         message: 'Refund Date From is required'
                     },
                     date: {
-                        format: 'YYYY-MM-DD',
+                        format: 'DD-MM-YYYY',
                         max: 'refundTo:',
                         message: 'Refund Date From is not a valid'
                     }
@@ -375,7 +375,7 @@
                         message: 'Refund Date To is required'
                     },
                     date: {
-                        format: 'YYYY-MM-DD',
+                        format: 'DD-MM-YYYY',
                         min: 'refundFrom',
                         message: 'Refund Date To is not a valid'
                     }

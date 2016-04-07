@@ -115,6 +115,9 @@ function setupproductvalue(id, code, name) {
     document.getElementById('product_code').focus();
 }
 function convertFormatDates(date){
+    if(date === ''){
+        return '';
+    }
     var newDate = date.toString().split("-");
     var result = new Date(newDate[2], newDate[1] , newDate[0]);
     return newDate[2] + "-" + newDate[1] + "-" + newDate[0];

@@ -198,12 +198,18 @@ function setValueMonth() {
 
 
 function convertFormatDate(date){
+    if(date === ''){
+        return '';
+    }
     var newDate = date.toString().split("-");
     var result = new Date(newDate[2], newDate[1] , newDate[0]);
     return newDate[2] + "-" + newDate[1] + "-" + newDate[0];
 }
 
 function convertFormatDateAndTime(date){
+    if(date === ''){
+        return '';
+    }
     var dateandtime = date.split(" ");
     var date = dateandtime[0].split("-");
     var time = dateandtime[1];

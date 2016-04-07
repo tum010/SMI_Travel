@@ -41,7 +41,7 @@
                         <div class="col-xs-1 form-group" style="width: 300px"> 
                             <div class='input-group date fromdate' id='fromdatepanel'>                    
                                 <input id="invoiceDateFrom" name="invoiceDateFrom"  type="text" 
-                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                    class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                       
                             </div>
                         </div>
@@ -53,7 +53,7 @@
                         <div class="col-xs-1 form-group" style="width: 300px"> 
                             <div class='input-group date todate' id='todatepanel'>                    
                                 <input id="invoiceDateTo" name="invoiceDateTo"  type="text" 
-                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                    class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                       
                             </div>
                         </div>
@@ -74,7 +74,7 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         $('.date').datetimepicker();       
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('.spandate').click(function () {
             var position = $(this).offset();
             console.log("positon :" + position.top);
@@ -143,8 +143,8 @@
         var inputFromDate = document.getElementById("invoiceDateFrom");
         var InputToDate = document.getElementById("invoiceDateTo");
         if((inputFromDate.value !== '') && (InputToDate.value !== '')){
-            var fromDate = (inputFromDate.value).split('-');
-            var toDate = (InputToDate.value).split('-');
+            var fromDate = (convertFormatDate(inputFromDate.value)).split('-');
+            var toDate = (convertFormatDate(InputToDate.value)).split('-');
             if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
                 validateDate(date,"over");
             }
@@ -174,8 +174,8 @@
     }
     
     function printTicketProfitLost(){
-        var inputFromDate = document.getElementById("invoiceDateFrom").value;
-        var InputToDate = document.getElementById("invoiceDateTo").value;
+        var inputFromDate = convertFormatDate(document.getElementById("invoiceDateFrom").value);
+        var InputToDate = convertFormatDate(document.getElementById("invoiceDateTo").value);
         if((inputFromDate !== '') && (InputToDate !== '')){
             window.open("Excel.smi?name=TicketProfitLoss"+ 
                     "&invoiceFromDate=" + inputFromDate + 

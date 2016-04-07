@@ -58,7 +58,7 @@
                                 <div class="col-md-6">  
                                     <div class="form-group">
                                         <div class='input-group date issuefromdate' id='DateFromIssue'>
-                                            <input type='text' id="issueFrom" name="issueFrom" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="issueFrom" name="issueFrom" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -74,7 +74,7 @@
                                 <div class="col-md-6">  
                                     <div class="form-group">
                                         <div class='input-group date issuetodate' id='DateToIssue'>
-                                            <input type='text' id="issueTo" name="issueTo"  class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="issueTo" name="issueTo"  class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -90,7 +90,7 @@
                                 <div class="col-md-6">  
                                     <div class="form-group">
                                         <div class='input-group date fromdate' id='DateFrom'>
-                                            <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -106,7 +106,7 @@
                                 <div class="col-md-6">  
                                     <div class="form-group">
                                         <div class='input-group date todate' id='DateTo'>
-                                            <input type='text' id="invoiceToDate" name="invoiceToDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="invoiceToDate" name="invoiceToDate" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -354,8 +354,7 @@
 <script type="text/javascript" charset="utf-8">
     
 $(document).ready(function() {
-    $('.datemask').mask('0000-00-00');
-    
+    $('.datemask').mask('00-00-0000');    
     $('.date').datetimepicker({
     });
 
@@ -508,7 +507,7 @@ $(document).ready(function() {
 //                                   message: 'The Issue Date From is required'
 //                        },
 //                        date: {
-//                            format: 'YYYY-MM-DD',
+//                            format: 'DD-MM-YYYY',
 //                            max: 'enddate',
 //                            message: 'The Issue Date From is not a valid'
 //                        }
@@ -521,7 +520,7 @@ $(document).ready(function() {
 //                            message: 'The Issue Date To is required'
 //                        },
 //                        date: {
-//                            format: 'YYYY-MM-DD',
+//                            format: 'DD-MM-YYYY',
 //                            min: 'startdate',
 //                            message: 'The Issue Date To is not a valid'
 //                        }
@@ -668,8 +667,8 @@ function checkDateValue(date){
             InputToDate = document.getElementById("issueTo");
         }
     if((inputFromDate.value !== '') && (InputToDate.value !== '')){
-        var fromDate = (inputFromDate.value).split('-');
-        var toDate = (InputToDate.value).split('-');
+        var fromDate = (convertFormatDate(inputFromDate.value)).split('-');
+        var toDate = (convertFormatDate(InputToDate.value)).split('-');
         if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
             validateDate(date,"over");
         }
@@ -716,10 +715,10 @@ function validateDate(date,option){
 
 function printTicketSummaryAirline(){
     var reportType = document.getElementById("reportType").value;
-    var issuefrom = document.getElementById("issueFrom").value;
-    var issueto = document.getElementById("issueTo").value;
-    var invFrom = document.getElementById("invoiceFromDate").value;
-    var invTo = document.getElementById("invoiceToDate").value;
+    var issuefrom = convertFormatDate(document.getElementById("issueFrom").value);
+    var issueto = convertFormatDate(document.getElementById("issueTo").value);
+    var invFrom = convertFormatDate(document.getElementById("invoiceFromDate").value);
+    var invTo = convertFormatDate(document.getElementById("invoiceToDate").value);
     var typeRouting = document.getElementById("typeRouting").value;
     var routingDetail = document.getElementById("routingDetail").value;
     var airlineCode = document.getElementById("airlineCode").value;
