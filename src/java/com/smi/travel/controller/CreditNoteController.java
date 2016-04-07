@@ -5,14 +5,19 @@ import com.smi.travel.datalayer.entity.CreditNoteDetail;
 import com.smi.travel.datalayer.entity.MPaytype;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.entity.TaxInvoice;
+import com.smi.travel.datalayer.service.CheckDuplicateUserService;
 import com.smi.travel.datalayer.service.CreditNoteService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.CheckDuplicateUser;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,7 +32,12 @@ public class CreditNoteController extends SMITravelController {
     private static final String LINKNAME = "CreditNote";
     private static final ModelAndView CreditNote_REFRESH = new ModelAndView(new RedirectView("CreditNote.smi", true));
     private static final HashMap<String,String> type = new HashMap();
-
+    private static final String CHECKDUPLICATEUSER = "checkDuplicateUser";
+    private static String checkDuplicate = "";
+    private static String callPageFrom = "";
+    private static String department = "";
+    private CheckDuplicateUserService checkDuplicateUserService;
+    
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         type.put("W", "Wendy");
@@ -37,8 +47,8 @@ public class CreditNoteController extends SMITravelController {
         request.setAttribute("enableVoid", true);
         request.setAttribute("disableVoid", true);
         System.out.println("request.getRequestURI() :" + request.getRequestURI());
-        String callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");//request.getParameter("type");
-        String department = "";
+        callPageFrom = utilty.getAddressUrl(request.getRequestURI()).replaceAll(LINKNAME, "");//request.getParameter("type");
+        department = "";
 //        if (callPageFrom != null) {
 //            department = callPageFrom;
 //        }
@@ -55,10 +65,33 @@ public class CreditNoteController extends SMITravelController {
         String creditNo = request.getParameter("cnNo");
         String creditId = request.getParameter("cnId");
         SystemUser user = (SystemUser) session.getAttribute("USER");
+        request.setAttribute("username", user.getUsername());
         String wildCardSearch = request.getParameter("wildCardSearch");
         String keyCode = request.getParameter("keyCode");
+        
+        String cnNoForCheckUser = request.getParameter("cnNoForCheckUser");
+        String operationTableId = request.getParameter("operationTableId");
+        String operationUser = request.getParameter("operationUser");
+        String operationDate = request.getParameter("operationDate");
+        String checkDuplicateUser = "";
+        String clearDuplicateUser = "";
+        
+        //Duplicate User
+        if("operationUpdate".equalsIgnoreCase(action)){
+            checkDuplicateUser = checkDuplicateUser(request,response,session,operationTableId,3);
+            action = "search";
+        }
 
         if ("search".equalsIgnoreCase(action)) {
+            if(cnNoForCheckUser != null){
+                if(!"".equalsIgnoreCase(cnNoForCheckUser) && !cnNoForCheckUser.equalsIgnoreCase(creditNo)){
+                    CheckDuplicateUser cdu = new CheckDuplicateUser();
+                    cdu.setOperationTable("Credit_Note");
+                    cdu.setTableId(operationTableId);
+                    cdu.setOperationUser(user.getUsername());
+                    checkDuplicateUserService.updateOperationNull(cdu);
+                }
+            }            
             CreditNote creditNote = new CreditNote();
 //            creditNote = creditNoteService.getCreditNote(creditNo, type.get(department));
             creditNote = creditNoteService.getCreditNote(creditNo, department);
@@ -68,9 +101,14 @@ public class CreditNoteController extends SMITravelController {
             } else {
                 request.setAttribute("creditNote", creditNote);
                 request.setAttribute("enableVoid", true);
+                //Duplicate User
+                checkDuplicateUser = checkDuplicateUser(request,response,session,creditNote.getId(),1);
             }
         } else if ("save".equalsIgnoreCase(action)) {
-            CreditNote cn = mapCreditNoteRequest(request);
+            CreditNote cn = mapCreditNoteRequest(request,response,session);
+            if("fail".equalsIgnoreCase(cn.getId())){
+                return new ModelAndView(new RedirectView("CreditNote"+callPageFrom+".smi?action=search&cnNo="+cn.getCnNo()+"&department="+department, true));
+            }
             String result = "fail";
             if (null != cn) {
                 if (null == cn.getId() || "".equals(cn.getId())) {
@@ -98,11 +136,19 @@ public class CreditNoteController extends SMITravelController {
                 request.setAttribute("failMessage", "Save fail!");
             }
 
-        } else if ("void".equalsIgnoreCase(action)) {
+        } else if ("void".equalsIgnoreCase(action)) {          
             String status = request.getParameter("status");
             String cnId = request.getParameter("cnId");
             String cnNo = request.getParameter("cnNo");
             String method = "2".equals(status) ? "Void" : "Cancel Void";
+            //Duplicate User
+            if(!"".equalsIgnoreCase(cnId) && cnId != null){
+                checkDuplicateUser = checkDuplicateUser(request,response,session,cnId,2);
+                if("fail".equalsIgnoreCase(checkDuplicateUser)){
+                    request.setAttribute("page", callPageFrom);
+                    return new ModelAndView(new RedirectView("CreditNote"+callPageFrom+".smi?action=search&cnNo="+creditNo+"&department="+department, true));            
+                }
+            } 
             String result = creditNoteService.UpdateFinanceStatusCreditNote(cnId, status);
             if ("success".equals(result)) {
                 request.setAttribute("successStatus", true);
@@ -114,6 +160,11 @@ public class CreditNoteController extends SMITravelController {
 //            CreditNote creditNote = creditNoteService.getCreditNote(cnNo, type.get(department));
             CreditNote creditNote = creditNoteService.getCreditNote(cnNo, department);
             request.setAttribute("creditNote", creditNote);
+            //Duplicate User
+            checkDuplicateUser = checkDuplicateUser(request,response,session,cnId,1);
+        }else if("new".equalsIgnoreCase(action)){
+            clearDuplicateUser = clearDuplicateUser(request,response,session,creditId);
+        
         }else if("wildCardSearch".equalsIgnoreCase(action)){
             String cnId = request.getParameter("cnId");
             String cnNo = request.getParameter("cnNo");
@@ -125,6 +176,19 @@ public class CreditNoteController extends SMITravelController {
             } else {
                 request.setAttribute("creditNote", creditNote);
                 request.setAttribute("enableVoid", true);
+                if(cnNoForCheckUser != null){
+                    if(!"".equalsIgnoreCase(cnNoForCheckUser) && !"".equalsIgnoreCase(keyCode)){
+                        CheckDuplicateUser cdu = new CheckDuplicateUser();
+                        cdu.setOperationTable("Credit_Note");
+                        cdu.setTableId(operationTableId);
+                        cdu.setOperationUser(user.getUsername());
+                        checkDuplicateUserService.updateOperationNull(cdu);
+                    }
+                }
+                //Duplicate User
+                if(creditNote != null){
+                    checkDuplicateUser = checkDuplicateUser(request,response,session,creditNote.getId(),1);
+                }
             }
                        
         }
@@ -195,7 +259,7 @@ public class CreditNoteController extends SMITravelController {
         this.utilityService = utilityService;
     }
 
-    private CreditNote mapCreditNoteRequest(HttpServletRequest request) {
+    private CreditNote mapCreditNoteRequest(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         UtilityFunction uf = new UtilityFunction();
         CreditNote cn = null;
         try {
@@ -206,7 +270,26 @@ public class CreditNoteController extends SMITravelController {
             String name = request.getParameter("name");
             String address = request.getParameter("address");
             String remark = request.getParameter("remark");
-            String apCode = request.getParameter("apCode");           
+            String apCode = request.getParameter("apCode");
+            
+            String operationUser = request.getParameter("operationUser");
+            String operationDate = request.getParameter("operationDate");
+            
+            //Duplicate User
+            if(!"".equalsIgnoreCase(cnId) && cnId != null){
+                checkDuplicate = checkDuplicateUser(request,response,session,cnId,2);
+                if("fail".equalsIgnoreCase(checkDuplicate)){
+                    request.setAttribute("page", callPageFrom);
+                    cn.setId(checkDuplicate);
+                    cn.setCnNo(cnNo);
+                    return cn;
+                
+                }else if("success".equalsIgnoreCase(checkDuplicate)){
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+                    cn.setOperationDate(uf.convertStringToDateTime(operationDate));
+                    cn.setOperationUser(operationUser);
+                }
+            }
 
             cn.setId(cnId);
             cn.setCnNo(cnNo);
@@ -269,5 +352,64 @@ public class CreditNoteController extends SMITravelController {
         }
 
         return cn;
+    }
+    
+    private String checkDuplicateUser(HttpServletRequest request, HttpServletResponse response, HttpSession session, String cnId, int step) {
+        UtilityFunction util = new UtilityFunction();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+        String result = "fail";
+        SystemUser user = (SystemUser) session.getAttribute("USER");
+        CheckDuplicateUser chuSession = new CheckDuplicateUser();
+        chuSession.setOperationTable("Credit_Note");
+        chuSession.setTableId(cnId);
+        if(step == 1){
+            chuSession.setOperationDate(String.valueOf(df.format(new Date())));
+            chuSession.setOperationUser(user.getUsername());
+        }else if(step == 2){
+            String operationDate = request.getParameter("operationDate");
+            String operationUser = request.getParameter("operationUser");
+            System.out.println("operationDate : "+operationDate);
+            System.out.println("new Date : "+new Date());
+            chuSession.setOperationDate((df.format(util.convertStringToDateTime(operationDate))));
+            chuSession.setOperationUser(operationUser);
+            System.out.println("chuSession.getOperationDate() : "+chuSession.getOperationDate());
+        }else if(step == 3){
+            chuSession.setOperationDate(String.valueOf(df.format(new Date())));
+            chuSession.setOperationUser(user.getUsername());
+        }    
+        session.setAttribute("checkDuplicateUser", chuSession);
+        CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, step);
+        request.setAttribute(CHECKDUPLICATEUSER, cdu);
+        if(cdu.getIsDuplicateUser() == 0){
+            result = "success";          
+        }
+        return result;
+    }
+    
+    private String clearDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String taxInvId){
+        String result = "fail";
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyyy-MM-dd HH:mm:ss");
+        SystemUser  user = (SystemUser) session.getAttribute("USER");
+        CheckDuplicateUser chuSession = new CheckDuplicateUser();
+        session.setAttribute("checkDuplicateUser", chuSession);
+        CheckDuplicateUser chu = new CheckDuplicateUser();
+        chu.setOperationTable("Credit_Note");
+        chu.setTableId(taxInvId);
+        chu.setOperationDate(String.valueOf(df.format(new Date())));
+        chu.setOperationUser(user.getUsername());     
+        int update = checkDuplicateUserService.updateOperationNull(chu);
+        if(update == 1){
+            result = "success";
+        }
+        return result;
+    }
+
+    public CheckDuplicateUserService getCheckDuplicateUserService() {
+        return checkDuplicateUserService;
+    }
+
+    public void setCheckDuplicateUserService(CheckDuplicateUserService checkDuplicateUserService) {
+        this.checkDuplicateUserService = checkDuplicateUserService;
     }
 }

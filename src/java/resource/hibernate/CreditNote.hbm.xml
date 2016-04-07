@@ -49,6 +49,12 @@
         <property name="updateDate" type="timestamp">
             <column name="update_date" length="19" />
         </property>
+        <property name="operationDate" type="timestamp">
+            <column name="operation_date" length="20" />
+        </property>
+        <property name="operationUser" type="string">
+            <column name="operation_user" length="20" />
+        </property>
         <bag name="creditNoteDetails" table="credit_note_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="credit_note_id" />

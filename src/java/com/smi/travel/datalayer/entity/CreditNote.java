@@ -29,12 +29,14 @@ public class CreditNote  {
      private Integer outputTaxStatus;
      private Date postDate;
      private Date updateDate;
+     private Date operationDate;
+     private String operationUser;
      private List creditNoteDetails = new LinkedList<CreditNoteDetail>();
 
     public CreditNote() {
     }
 
-    public CreditNote(String createBy, Date createDate, String cnNo, Date cnDate, String cnName, String cnAddress, String cnRemark, String apCode, String invoiceType, List creditNoteDetails,String department,MFinanceItemstatus MFinanceItemstatus, Integer outputTaxStatus, Date postDate, Date updateDate) {
+    public CreditNote(String createBy, Date createDate, String cnNo, Date cnDate, String cnName, String cnAddress, String cnRemark, String apCode, String invoiceType, List creditNoteDetails,String department,MFinanceItemstatus MFinanceItemstatus, Integer outputTaxStatus, Date postDate, Date updateDate, Date operationDate, String operationUser) {
        this.createBy = createBy;
        this.createDate = createDate;
        this.cnNo = cnNo;
@@ -50,6 +52,8 @@ public class CreditNote  {
        this.outputTaxStatus = outputTaxStatus;
        this.postDate = postDate;
        this.updateDate = updateDate;
+       this.operationDate = operationDate;
+       this.operationUser = operationUser;
     }
    
     public String getId() {
@@ -168,6 +172,22 @@ public class CreditNote  {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public Date getOperationDate() {
+        return operationDate;
+    }
+
+    public void setOperationDate(Date operationDate) {
+        this.operationDate = operationDate;
+    }
+
+    public String getOperationUser() {
+        return operationUser;
+    }
+
+    public void setOperationUser(String operationUser) {
+        this.operationUser = operationUser;
     }
 
 

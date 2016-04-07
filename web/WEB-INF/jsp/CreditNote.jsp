@@ -18,6 +18,8 @@
     table tr:nth-child(2n) {background: #F5F5F5}
 
 </style>
+<c:set var="checkDuplicateUser" value="${requestScope['checkDuplicateUser']}" />
+<c:set var="username" value="${requestScope['username']}" />
 <c:set var="page" value="${requestScope['page']}" />
 <c:set var="department" value="" />
 <section class="content-header" >
@@ -69,11 +71,19 @@
                         <button type="button" class="close" aria-label="Close" onclick="hideAlert()"><span aria-hidden="true">&times;</span></button>
                         <strong id="alertTextFail">${failMessage}</strong> 
                 </div>
-                <input type="hidden" name="action" id="action" value="search">
+                <input type="hidden" name="action" id="action" value="">
                 <input type="hidden" name="cnId" id="cnId" value="${creditNote.id}"/>
                 <input type="hidden" name="createDate" id="createDate" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${creditNote.createDate}" />"/>
                 <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                 <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
+                <input type="hidden" class="form-control" id="operationDate" name="operationDate"  value="${checkDuplicateUser.operationDate}" >
+                <input type="hidden" name="username" id="username" value="${username}"/>
+                <input type="hidden" class="form-control" id="operationUser" name="operationUser"  value="${checkDuplicateUser.operationUser}" >
+                <input type="hidden" class="form-control" id="operationTable" name="operationTable"  value="${checkDuplicateUser.operationTable}" >
+                <input type="hidden" class="form-control" id="operationTableId" name="operationTableId"  value="${checkDuplicateUser.tableId}" >
+                <input type="hidden" class="form-control" id="isDuplicate" name="isDuplicate"  value="${checkDuplicateUser.isDuplicateUser}" >
+                <input type="hidden" class="form-control" id="isSave" name="isSave"  value="${checkDuplicateUser.isSave}" >
+                <input type="hidden" class="form-control" id="cnNoForCheckUser" name="cnNoForCheckUser"  value="${creditNote.cnNo}" >
                 <div class="panel panel-default ${panelborder}">
                     <div class="panel-heading ${panelheader}">
                         <h4 class="panel-title"><font style="color: white">Credit Note Detail</font></h4>
@@ -284,12 +294,12 @@
                                         <div class="col-md-3 text-right "></div>
 
                                         <div class="col-md-2 text-right ">
-                                            <button type="button" class="btn btn-danger ${creditNote.MFinanceItemstatus.id == '1' ? '' : 'hidden'}" 
+                                            <button type="button" id="enableVoidButton" class="btn btn-danger ${creditNote.MFinanceItemstatus.id == '1' ? '' : 'hidden'}" 
                                                     onclick="enableVoid();" data-toggle="modal" data-target="#voidModal"
                                                     ${enableVoid ? '' : 'disabled'}>
                                                 <span id="SpanEnableVoid" class="glyphicon glyphicon-remove" ></span> Void
                                             </button>
-                                            <button type="button" class="btn btn-danger ${creditNote.MFinanceItemstatus.id == '2' ? '' : 'hidden'}" 
+                                            <button type="button" id="disableVoidButton" class="btn btn-danger ${creditNote.MFinanceItemstatus.id == '2' ? '' : 'hidden'}" 
                                                     onclick="disableVoid();" data-toggle="modal" data-target="#voidModal" 
                                                     ${disableVoid ? '' : 'disabled'}>
                                                 <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Cancel Void
@@ -348,6 +358,25 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /Delete Hotel modal -->
+
+<!--Operation Duplicate Modal-->
+<div class="modal fade" id="operationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Credit Note</h4>
+            </div>
+            <div class="modal-body" id="operationMessage">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick='enableOperationDuplicate()'>OK</button>               
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick='disableOperationDuplicate()'>Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->  
 
 <div class="hide">
     <table id="tempTable">

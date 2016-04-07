@@ -260,7 +260,7 @@ public class TaxInvoiceController extends SMITravelController {
             if(taxNoForCheckUser != null){
                 if(!"".equalsIgnoreCase(taxNoForCheckUser) && !taxNoForCheckUser.equalsIgnoreCase(taxInvNo)){
                     CheckDuplicateUser cdu = new CheckDuplicateUser();
-                    cdu.setOperationTable("TaxInvoice");
+                    cdu.setOperationTable("Tax_Invoice");
                     cdu.setTableId(operationTableId);
                     cdu.setOperationUser(user.getUsername());
                     checkDuplicateUserService.updateOperationNull(cdu);
@@ -493,7 +493,7 @@ public class TaxInvoiceController extends SMITravelController {
                 if(!"".equalsIgnoreCase(taxNoForCheckUser) && !"".equalsIgnoreCase(keyCode)){
                     System.out.println(" taxNoForCheckUser " + taxNoForCheckUser);
                     CheckDuplicateUser cdu = new CheckDuplicateUser();
-                    cdu.setOperationTable("TaxInvoice");
+                    cdu.setOperationTable("Tax_Invoice");
                     cdu.setTableId(operationTableId);
                     cdu.setOperationUser(user.getUsername());
                     checkDuplicateUserService.updateOperationNull(cdu);

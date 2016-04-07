@@ -168,6 +168,13 @@ $(document).ready(function() {
 
     addRow();
     validFrom();
+    
+    //Operation Duplicate
+    if($("#isDuplicate").val() === '1'){
+        var username = $("#operationUser").val();
+        $("#operationMessage").text("User " + username + " is using information. Do you want to continue ?");
+        $("#operationModal").modal("show");
+    }
 
 });
 
@@ -642,4 +649,64 @@ function validFrom() {
 function hideAlert(){
     $("#alertSuccess").hide();
     $("#alertFail").hide(); 
+}
+
+$(window).on("beforeunload", function() {
+    var operationAction = $("#action").val();
+    var operationTable = $("#operationTable").val();
+    var operationTableId = $("#operationTableId").val();
+    var operationUser = $("#username").val();
+    console.log("action : "+operationAction);
+    console.log("operationTable : "+operationTable);
+    console.log("operationTableId : "+operationTable);
+    console.log("operationUser : "+operationUser);
+    clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser);  
+});
+
+function clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser) {
+    var servletName = 'CheckDuplicateUserServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&operationTable=' + operationTable +
+            '&operationTableId=' + operationTableId +
+            '&operationAction=' + operationAction +
+            '&operationUser=' + operationUser;
+    callAjaxClearDuplicateUser(param);
+}
+
+function callAjaxClearDuplicateUser(param) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                console.log('update duplicate user success');
+             // window.location = 'APMonitor.smi';
+            }, error: function(msg) {
+                console.log('update duplicate user fail');
+            }
+        });
+    } catch (e) {
+        alert(e);
+        console.log('update duplicate user fail');
+    }
+}
+
+//Operation Duplicate
+function enableOperationDuplicate(){
+    var action = document.getElementById("action");
+    action.value = "operationUpdate";
+    document.getElementById("CreditNoteForm").submit();
+}
+
+function disableOperationDuplicate(){   
+    $("#buttonSave").attr("disabled", true);
+    $("#enableVoidButton").attr("disabled", true);
+    $("#disableVoidButton").attr("disabled", true); 
+    $("#DeleteDetail").addClass("hidden");
 }
