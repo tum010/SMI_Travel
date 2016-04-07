@@ -6,7 +6,6 @@
 $(document).ready(function() {
 
     $('.date').datetimepicker();
-    $('.datemask').mask('0000-00-00');
     $('.spandate').click(function() {
         var position = $(this).offset();
         console.log("positon :" + position.top);
@@ -44,7 +43,7 @@ $(document).ready(function() {
                 trigger: 'focus keyup change',
                 validators: {
                     date: {
-                        format: 'YYYY-MM-DD',
+                        format: 'DD-MM-YYYY',
                         max: 'InputToDate',
                         message: 'The Date From is not a valid'
                     }
@@ -54,7 +53,7 @@ $(document).ready(function() {
                 trigger: 'focus keyup change',
                 validators: {
                     date: {
-                        format: 'YYYY-MM-DD',
+                        format: 'DD-MM-YYYY',
                         min: 'InputFromDate',
                         message: 'The Date To is not a valid'
                     }
@@ -92,10 +91,18 @@ function Delete() {
     action.value = 'delete';
     document.getElementById('PaymentSearchForm').submit();
 }
+function convertFormatDates(date){
+    if(date === ''){
+        return '';
+    }
+    var newDate = date.toString().split("-");
+    var result = new Date(newDate[2], newDate[1] , newDate[0]);
+    return newDate[2] + "-" + newDate[1] + "-" + newDate[0];
+}
 
 function printPaymentSummaryReport() {
-    var paydatefrom = document.getElementById("InputFromDate").value;
-    var paydateto = document.getElementById("InputToDate").value;
+    var paydatefrom = convertFormatDates(document.getElementById("InputFromDate").value);
+    var paydateto = convertFormatDates(document.getElementById("InputToDate").value);
     var pvtype = document.getElementById("SelectPvType").value;
     var status = document.getElementById("SelectStatus").value;
     var invSupCode = document.getElementById("InputInvoiceSupCode").value;

@@ -7,6 +7,7 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.InvoiceSupplier;
 import com.smi.travel.datalayer.view.entity.PaymentWendytourView;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -27,14 +28,15 @@ public class SearchPaymentTourHotelController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         List<InvoiceSupplier> invoiceSupplierList = paymentTourHotelService.getListInvoiceSuppiler();
         request.setAttribute(INVOICESUPLIST, invoiceSupplierList);
         List<MItemstatus> mItemstatusList = utilityService.getListMItemstatus();
         request.setAttribute(STATUS, mItemstatusList);
         
         String action = request.getParameter("action");
-        String InputFromDate = request.getParameter("InputFromDate");
-        String InputToDate = request.getParameter("InputToDate");
+        String InputFromDate = util.covertStringDateToFormatYMD(request.getParameter("InputFromDate"));
+        String InputToDate = util.covertStringDateToFormatYMD(request.getParameter("InputToDate"));
         String selectPvType = request.getParameter("selectPvType");
         String selectStatus = request.getParameter("selectStatus");
         String paymentID = request.getParameter("paymentID");

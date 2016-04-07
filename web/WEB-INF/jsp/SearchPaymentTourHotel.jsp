@@ -64,9 +64,11 @@
                     <div class="col-xs-1 text-left form-group" style="width:170px;">
                         <div class=" form-group">     
                             <div class="input-group date" id="DateFrom">
-                                <input  id="InputFromDate" name="InputFromDate" type="text" 
-                                        data-date-format="YYYY-MM-DD" class="form-control datemask" 
-                                        placeholder="YYYY-MM-DD" value="${InputFromDate}">
+                                <c:set var="InputFromDates" value="${InputFromDate}" />
+                                <fmt:parseDate value="${InputFromDates}" var="InputFromDates" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${InputFromDates}" var="InputFromDates" pattern="dd-MM-yyyy" />
+                                <input id="InputFromDate" name="InputFromDate" type="text" data-date-format="DD-MM-YYYY" class="form-control datemask" 
+                                        placeholder="DD-MM-YYYY" value="${InputFromDates}">
                                 <span class="input-group-addon spandate">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -79,9 +81,12 @@
                     <div class="col-xs-1 form-group text-left" style="width:170px;">
                         <div class=" form-group">     
                             <div class="input-group date" id="DateTo">
+                                <c:set var="InputToDates" value="${InputToDate}" />
+                                <fmt:parseDate value="${InputToDates}" var="InputToDates" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${InputToDates}" var="InputToDates" pattern="dd-MM-yyyy" />
                                 <input  id="InputToDate" name="InputToDate" type="text" 
-                                        data-date-format="YYYY-MM-DD" class="form-control datemask" 
-                                        placeholder="YYYY-MM-DD" value="${InputToDate}">
+                                        data-date-format="DD-MM-YYYY" class="form-control datemask" 
+                                        placeholder="DD-MM-YYYY" value="${InputToDates}">
                                 <span class="input-group-addon spandate">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -191,7 +196,7 @@
                         <tr>
                             <td class="hidden" align="center">${payment.id}</td>
                             <td align="center">${payment.payNo}</td>
-                            <td align="center">${payment.payDate}</td>
+                            <td align="center"><fmt:formatDate value="${payment.payDate}" var="payDate" pattern="dd-MM-yyyy" />${payDate}</td>
                             <td align="center">${payment.payType}</td>
                             <td>${payment.invoiceSup}</td>
                             <td align="center">${payment.accNo}</td>
@@ -274,6 +279,7 @@
 </div><!-- /.modal -->
 <script type="text/javascript">
     $(document).ready(function () {
+        $('.datemask').mask('00-00-0000');
         $(".money").mask('000,000,000,000.00', {reverse: true});
         $('#SearchInvoicSupTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",

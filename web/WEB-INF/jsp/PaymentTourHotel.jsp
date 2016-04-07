@@ -141,7 +141,10 @@
                 <div class="col-md-2 form-group text-left" style="padding-left:28px">
                     <div class="col-sm-12">
                         <div class='input-group date' style="width:140px;">
-                            <input name="InputPayDate" id="InputPayDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['InputPayDate']}"/>
+                            <c:set var="InputPayDate" value="${requestScope['InputPayDate']}" />
+                            <fmt:parseDate value="${InputPayDate}" var="InputPayDate" pattern="yyyy-MM-dd" />
+                            <fmt:formatDate value="${InputPayDate}" var="InputPayDate" pattern="dd-MM-yyyy" />
+                            <input name="InputPayDate" id="InputPayDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${InputPayDate}"/>
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
@@ -402,7 +405,8 @@
                                     <td> <input style="width: ${InvNo}" id="invNo${i.count}" name="invNo${i.count}" maxlength ="15"  type="text" class="form-control" value="${pl.invoiceCreditor}" onfocus="onfocusTour('${i.count}')">  </td>
                                     <td>
                                         <div class="input-group daydatepicker" id="daydatepicker${i.count}">
-                                            <input type="text" name="invDate${i.count}" id="invDate${i.count}" class="form-control datemask" data-date-format="YYYY-MM-DD" value="${pl.invDate}" onfocus="onfocusTour('${i.count}')"/>
+                                            <fmt:formatDate value="${pl.invDate}" var="invDate" pattern="dd-MM-yyyy" />
+                                            <input type="text" name="invDate${i.count}" id="invDate${i.count}" class="form-control datemask" data-date-format="DD-MM-YYYY" value="${invDate}" onfocus="onfocusTour('${i.count}')"/>
                                             <span class="input-group-addon spandate" style="padding : 1px 10px;"><span class="glyphicon-calendar glyphicon"></span></span>
                                         </div>
                                     </td>
@@ -615,7 +619,7 @@
                     </div>
                     <div class="col-xs-1 form-group" style="width: 170px">
                         <div class='input-group date' id="datepanel">
-                            <input name="tourDate" id="tourDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value=""/>
+                            <input name="tourDate" id="tourDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value=""/>
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>                           
                     </div>
@@ -971,7 +975,7 @@
                     </div>
                     <div class="col-xs-1 form-group" style="width: 170px">
                         <div class='input-group date' id="datepanel">
-                            <input name="tourDate" id="tourDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value=""/>
+                            <input name="tourDate" id="tourDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value=""/>
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>  
@@ -1053,7 +1057,7 @@
 //        });        
         
         $('.date').datetimepicker();
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
@@ -1434,7 +1438,7 @@
                 '<td><input maxlength ="15" id="invNo' + row + '" name="invNo' + row + '"   type="text" class="form-control " onfocus="onfocusTour(\''+row+'\')"></td>' +
                 '<td>' +
                     '<div class="input-group daydatepicker" id="daydatepicker' + row + '">' +
-                    '<input type="text" name="invDate' + row + '" id="invDate' + row + '" class="form-control datemask" data-date-format="YYYY-MM-DD" onfocus="onfocusTour(\''+row+'\')"/>' +
+                    '<input type="text" name="invDate' + row + '" id="invDate' + row + '" class="form-control datemask" data-date-format="DD-MM-YYYY" onfocus="onfocusTour(\''+row+'\')"/>' +
                     '<span class="input-group-addon spandate" style="padding : 1px 10px;" onclick="AddrowBySelect(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
                     '</div>' +            
                 '</td>' +

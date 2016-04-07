@@ -59,7 +59,7 @@ public class PaymentTourHotelController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-    
+        UtilityFunction util = new UtilityFunction();   
         List<MItemstatus> mItemstatusList = utilservice.getListMItemstatus();
         request.setAttribute(STATUS, mItemstatusList);
         List<MPaymentDoctype> mPaymentList = utilservice.getListMpaymentDocType("tourhotel");
@@ -80,7 +80,7 @@ public class PaymentTourHotelController extends SMITravelController {
         String action = request.getParameter("action");
         String InputPayNo = request.getParameter("InputPayNo");
         String account = request.getParameter("account");
-        String InputPayDate = request.getParameter("InputPayDate");
+        String InputPayDate = util.covertStringDateToFormatYMD(request.getParameter("InputPayDate"));
         String itemPvType = request.getParameter("itemPvType");
         String itemStatus = request.getParameter("itemStatus");
         String InputInvoiceSupId = request.getParameter("InputInvoiceSupId");      
@@ -95,7 +95,7 @@ public class PaymentTourHotelController extends SMITravelController {
         String InputChqNo = "";
         String InputChqAmount = "";
         String counter = request.getParameter("counter");
-        String crateDate = request.getParameter("crateDate");
+        String crateDate = util.covertStringDateToFormatYMD(request.getParameter("crateDate"));
         String paymentId = request.getParameter("paymentId");
         String tourDescId = request.getParameter("tourDescId");
         String isExport = request.getParameter("isExport");
