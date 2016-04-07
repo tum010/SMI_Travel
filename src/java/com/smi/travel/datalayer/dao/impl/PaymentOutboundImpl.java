@@ -315,10 +315,13 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
     public List<PaymentOutboundView> searchPaymentOutboundByFilter(String fromDate, String toDate, String status, String invSupCode, String invSupName, String refNo, String dueDateFrom, String dueDateTo, String payNo) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         List<PaymentOutboundView> paymentOutboundViewList = new ArrayList<PaymentOutboundView>();
         String query = " SELECT * FROM `payment_outbound_view` p ";
         boolean haveCondition = false;
         if(!"".equalsIgnoreCase(fromDate) && fromDate != null && !"".equalsIgnoreCase(toDate) && toDate != null){
+            fromDate = sdf.format(util.convertStringToDate(fromDate));
+            toDate = sdf.format(util.convertStringToDate(toDate));
             query += (haveCondition ? " AND " : " WHERE ");
             query += " (p.paydate BETWEEN '" + fromDate + "' AND '" + toDate + "') ";
             haveCondition = true;
@@ -339,11 +342,13 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             haveCondition = true;
         }
         if(!"".equalsIgnoreCase(dueDateFrom) && dueDateFrom != null){
+            dueDateFrom = sdf.format(util.convertStringToDate(dueDateFrom));
             query += (haveCondition ? " AND " : " WHERE ");
             query += " p.duepaymentdate >= '" + dueDateFrom + "' ";
             haveCondition = true;
         }
         if(!"".equalsIgnoreCase(dueDateTo) && dueDateTo != null){
+            dueDateTo = sdf.format(util.convertStringToDate(dueDateTo));
             query += (haveCondition ? " AND " : " WHERE ");
             query += " p.duepaymentdate <= '" + dueDateTo + "' ";
             haveCondition = true;

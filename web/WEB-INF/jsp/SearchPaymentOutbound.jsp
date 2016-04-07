@@ -50,7 +50,10 @@
             </div>
             <div class="col-md-2 form-group text-left" >
                 <div class='input-group date fromDate' id="fromDateDiv">
-                    <input name="fromDate" id="fromDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['fromDate']}" />
+                    <c:set var="fromDate" value="${requestScope['fromDate']}" />
+                    <%--<fmt:parseDate value="${fromDate}" var="fromDate" pattern="yyyy-MM-dd" />--%>
+                    <%--<fmt:formatDate value="${fromDate}" var="fromDate" pattern="dd-MM-yyyy" />--%>
+                    <input name="fromDate" id="fromDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${fromDate}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
@@ -59,7 +62,10 @@
             </div>
             <div class="col-md-2 form-group text-left" >
                 <div class='input-group date todate' id="toDateDiv">
-                    <input name="toDate" id="toDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['toDate']}" />
+                    <c:set var="toDate" value="${requestScope['toDate']}" />
+                    <%--<fmt:parseDate value="${toDate}" var="toDate" pattern="yyyy-MM-dd" />--%>
+                    <%--<fmt:formatDate value="${toDate}" var="toDate" pattern="dd-MM-yyyy" />--%>
+                    <input name="toDate" id="toDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${toDate}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
@@ -76,7 +82,10 @@
             </div>
             <div class="col-md-2 form-group text-left" style="margin-top:-10px;">
                 <div class='input-group date duedatefrom' id="dueDateFromDiv">
-                    <input name="dueDateFrom" id="dueDateFrom" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dueDateFrom']}" />
+                    <c:set var="dueDateFrom" value="${requestScope['dueDateFrom']}" />
+                    <%--<fmt:parseDate value="${dueDateFrom}" var="dueDateFrom" pattern="yyyy-MM-dd" />--%>
+                    <%--<fmt:formatDate value="${dueDateFrom}" var="dueDateFrom" pattern="dd-MM-yyyy" />--%>
+                    <input name="dueDateFrom" id="dueDateFrom" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${dueDateFrom}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
@@ -85,7 +94,10 @@
             </div>
             <div class="col-md-2 form-group text-left" style="margin-top:-10px;">
                 <div class='input-group date duedateto' id="dueDateToDiv">
-                    <input name="dueDateTo" id="dueDateTo" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${requestScope['dueDateTo']}" />
+                    <c:set var="dueDateTo" value="${requestScope['dueDateTo']}" />
+                    <%--<fmt:parseDate value="${dueDateTo}" var="dueDateTo" pattern="yyyy-MM-dd" />--%>
+                    <%--<fmt:formatDate value="${dueDateTo}" var="dueDateTo" pattern="dd-MM-yyyy" />--%>
+                    <input name="dueDateTo" id="dueDateTo" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${dueDateTo}" />
                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                 </div>
             </div>
@@ -161,7 +173,10 @@
                     <c:forEach var="paymentOutboundView" items="${paymentOutboundViewList}" varStatus="i">
                     <tr>
                         <td align="center">${paymentOutboundView.payno}</td>
-                        <td align="center">${paymentOutboundView.paydate}</td>
+                        <c:set var="paydate" value="${paymentOutboundView.paydate}" />
+                        <fmt:parseDate value="${paydate}" var="paydate" pattern="yyyy-MM-dd" />
+                        <fmt:formatDate value="${paydate}" var="paydate" pattern="dd-MM-yyyy" />
+                        <td align="center">${paydate}</td>
                         <td align="center">${paymentOutboundView.refno}</td>
                         <td>${paymentOutboundView.invoicesup}</td>
                         <td align="center">${paymentOutboundView.invoiceno}</td>
@@ -299,7 +314,7 @@
 <script type="text/javascript">
 $(document).ready(function () {
     $('.date').datetimepicker();
-    $('.datemask').mask('0000-00-00');
+    $('.datemask').mask('00-00-0000');
     $('.spandate').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
@@ -420,7 +435,7 @@ $(document).ready(function () {
                         message: 'The Date From is required'
                     },
                     date: {
-                        format: 'YYYY-MM-DD',
+                        format: 'DD-MM-YYYY',
                         max: 'toDate',
                         message: 'The Date From is not a valid'
                     }
@@ -433,7 +448,7 @@ $(document).ready(function () {
                         message: 'The Date From is required'
                     },
                     date: {
-                        format: 'YYYY-MM-DD',
+                        format: 'DD-MM-YYYY',
                         min: 'fromDate',
                         message: 'The Date To is not a valid'
                     }
@@ -517,11 +532,11 @@ $(document).ready(function () {
         if((inputFromDate.value !== '') && (InputToDate.value !== '')){
             var fromDate = (inputFromDate.value).split('-');
             var toDate = (InputToDate.value).split('-');
-            if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+            if((parseInt(fromDate[2])) > (parseInt(toDate[2]))){
                 validateDate(date,"over");
-            }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+            }else if(((parseInt(fromDate[2])) >= (parseInt(toDate[2]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
                 validateDate(date,"over");
-            }else if(((parseInt(fromDate[0])) >= (parseInt(toDate[0]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+            }else if(((parseInt(fromDate[2])) >= (parseInt(toDate[2]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[0])) > (parseInt(toDate[0]))){
                 validateDate(date,"over");
             }else{
                 $('#searchPaymentOutboundForm').bootstrapValidator('revalidateField', 'fromDate');

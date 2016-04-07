@@ -181,9 +181,12 @@
                                                 <td align="center"><div id="runningNo${i.count}" value="${i.count}"></div></td>
                                                 <td align="left">${table.stock.product.name}</td>
                                                 <td align="left">${table.stock.staff.username}</td>
-                                                <td align="center">${table.stock.createDate}</td>
-                                                <td align="center">${table.stock.effectiveFrom}</td>
-                                                <td align="center">${table.stock.effectiveTo}</td>
+                                                <fmt:formatDate value="${table.stock.createDate}" var="createDate" pattern="dd-MM-yyyy" />
+                                                <td align="center">${createDate}</td>
+                                                <fmt:formatDate value="${table.stock.effectiveFrom}" var="effectiveFrom" pattern="dd-MM-yyyy" />
+                                                <td align="center">${effectiveFrom}</td>
+                                                <fmt:formatDate value="${table.stock.effectiveTo}" var="effectiveTo" pattern="dd-MM-yyyy" />
+                                                <td align="center">${effectiveTo}</td>
                                                 <td align="right"><input type="text" id="totalcostamount${i.count}" name="totalcostamount${i.count}" class="form-control money" value="${table.cost}" readonly=""></td>
                                                 <td align="right"><input type="text" id="totalsaleamount${i.count}" name="totalsaleamount${i.count}" class="form-control money" value="${table.sale}" readonly=""></td>
                                                 <td class="text-center ">
@@ -391,9 +394,12 @@
                                 <td align="center">${i.count}</td>
                                 <td align="left">${table.product.name}</td>
                                 <td align="left">${table.staff.username}</td>
-                                <td align="center">${table.createDate}</td>
-                                <td align="center">${table.effectiveFrom}</td>
-                                <td align="center">${table.effectiveTo}</td>
+                                <fmt:formatDate value="${table.createDate}" var="createDate" pattern="dd-MM-yyyy" />
+                                <td align="center">${createDate}</td>
+                                <fmt:formatDate value="${table.effectiveFrom}" var="effectiveFrom" pattern="dd-MM-yyyy" />
+                                <td align="center">${effectiveFrom}</td>
+                                <fmt:formatDate value="${table.effectiveTo}" var="effectiveTo" pattern="dd-MM-yyyy" />
+                                <td align="center">${effectiveTo}</td>
                                 <td class="text-center ">
                                     <a id="" href="#">
                                         <span id="SpanGlyphiconEdit1" class="glyphicon glyphicon-plus" onclick="createStockDetails('${table.id}','${table.product.name}','${table.staff.username}','${table.createDate}','${table.effectiveFrom}','${table.effectiveTo}');"></span>

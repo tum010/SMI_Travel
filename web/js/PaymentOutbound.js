@@ -26,7 +26,7 @@ $(document).ready(function() {
         placeholder: "0.0000",
     });
     $('.date').datetimepicker();
-    $(".datemask").mask('0000-00-00');
+    $(".datemask").mask('00-00-0000');
     $('.spandate').click(function() {
         var position = $(this).offset();
         console.log("positon :" + position.top);
@@ -702,7 +702,7 @@ function addRowPaymentDetailTable(row) {
             '</td>' +
             '<td>' +
                 '<div class="input-group daydatepicker" id="daydatepicker' + row + '">' +
-                '<input type="text" name="invDate' + row + '" id="invDate' + row + '" class="form-control datemask" data-date-format="YYYY-MM-DD" />' +
+                '<input type="text" name="invDate' + row + '" id="invDate' + row + '" class="form-control datemask" data-date-format="DD-MM-YYYY" />' +
                 '<span class="input-group-addon spandate" style="padding : 1px 10px;" onclick="addRow(\'' + row + '\')"><span class="glyphicon-calendar glyphicon"></span></span>' +
                 '</div>' +            
             '</td>' +

@@ -198,8 +198,8 @@
                     </div>
                     <div class="col-md-3 form-group text-left" style="padding-left:0px;padding-right: 0px;width: 150px;">
                         <div class='input-group date payDate' id="payDateCheck">
-                            <fmt:formatDate var="payDateTemp" type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.payDate}"/>
-                            <input name="payDate" id="payDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${payDate}" />
+                            <fmt:formatDate value="${paymentOutbound.payDate}" var="payDateTemp" pattern="dd-MM-yyyy" />
+                            <input name="payDate" id="payDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${payDateTemp}" />
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
@@ -208,8 +208,8 @@
                     </div>
                     <div class="col-md-3 form-group text-left" style="padding-left:20px;padding-right: 0px;width: 170px;">
                         <div class='input-group date' id="">
-                            <fmt:formatDate var="duePaymentDateTemp" type="date" pattern='yyyy-MM-dd' value="${paymentOutbound.duePaymentDate}"/>
-                            <input name="duePaymentDate" id="duePaymentDate" type="text" class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="${duePaymentDate}" />
+                            <fmt:formatDate value="${paymentOutbound.duePaymentDate}" var="duePaymentDateTemp" pattern="dd-MM-yyyy" />
+                            <input name="duePaymentDate" id="duePaymentDate" type="text" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${duePaymentDateTemp}" />
                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
@@ -458,7 +458,8 @@
                                         </td>
                                         <td>
                                             <div class="input-group daydatepicker" id="daydatepicker${i.count}">
-                                                <input type="text" name="invDate${i.count}" id="invDate${i.count}" class="form-control datemask" data-date-format="YYYY-MM-DD" value="${detail.invoiceDate}"/>
+                                                <fmt:formatDate value="${detail.invoiceDate}" var="invoiceDate" pattern="dd-MM-yyyy" />
+                                                <input type="text" name="invDate${i.count}" id="invDate${i.count}" class="form-control datemask" data-date-format="DD-MM-YYYY" value="${invoiceDate}"/>
                                                 <span class="input-group-addon spandate" style="padding : 1px 10px;" onclick="addRow('${i.count}')"><span class="glyphicon-calendar glyphicon"></span></span>
                                             </div>
                                         </td>
@@ -709,7 +710,10 @@
                                 <input type="hidden" name="billdescid${dataStatus.count}" id="billdescid${dataStatus.count}" value="${table.billdescid}">
                                 <input type="hidden" name="billtypeid${dataStatus.count}" id="billtypeid${dataStatus.count}" value="${table.billtypeid}">
                                 <td align="center">${table.invno}</td>
-                                <td align="center">${table.invdate}</td>
+                                <c:set var="invdate" value="${table.invdate}" />
+                                <fmt:parseDate value="${invdate}" var="invdate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${invdate}" var="invdate" pattern="dd-MM-yyyy" />
+                                <td align="center">${invdate}</td>
                                 <td align="center">${table.detail}</td>
                                 <td class="money">${table.gross}</td>
                                 <td class="money">${table.vat}</td>

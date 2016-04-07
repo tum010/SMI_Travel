@@ -1281,6 +1281,7 @@ public class AJAXBean extends AbstractBean implements
     private String buildPaymentStockDetailHTML(List<StockDetail> stockDetails,String row,String noStockTable) {
         StringBuffer html = new StringBuffer();     
         UtilityFunction utilty = new UtilityFunction();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         int no = Integer.parseInt(row);
         String code = "" ;
         String type = "" ;
@@ -1311,7 +1312,7 @@ public class AJAXBean extends AbstractBean implements
                 pickup = stockDetail.getStaff().getName();
             }
             if(stockDetail.getPickupDate() != null){
-                pickdate = utilty.convertDateToString(stockDetail.getPickupDate());
+                pickdate = sdf.format(stockDetail.getPickupDate());
             }           
             stockDetailIdTable = stockDetail.getId();
             stockId = stockDetail.getStock().getId();
