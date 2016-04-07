@@ -85,6 +85,11 @@ body{
     min-height: 0px;
 }
 
+#HotelTable_wrapper{
+    min-height: 150px;
+}
+
+
 table.display , table.display th , table.display th tr, table.display  tr td{
     border: solid 1px #AAA; 
 }
