@@ -16,6 +16,8 @@
 <c:set var="taxInvoiceDetail" value="${requestScope['taxInvoiceDetail_list']}" />
 <c:set var="roleName" value="${requestScope['roleName']}" />
 <c:set var="disabledFieldSearch" value="${taxInvoice.isProfit}" />
+<c:set var="checkDuplicateUser" value="${requestScope['checkDuplicateUser']}" />
+<c:set var="username" value="${requestScope['username']}" />
 <input type="hidden" id="Type" name="Type" value="${param.Department}">
 
 <section class="content-header" >
@@ -284,6 +286,14 @@
                             <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                             <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                             <input type="hidden" id="disabledFieldSearch" name="disabledFieldSearch" value="${taxInvoice.isProfit}">
+                            <input type="hidden" class="form-control" id="operationDate" name="operationDate"  value="${checkDuplicateUser.operationDate}" >
+                            <input type="hidden" name="username" id="username" value="${username}"/>
+                            <input type="hidden" class="form-control" id="operationUser" name="operationUser"  value="${checkDuplicateUser.operationUser}" >
+                            <input type="hidden" class="form-control" id="operationTable" name="operationTable"  value="${checkDuplicateUser.operationTable}" >
+                            <input type="hidden" class="form-control" id="operationTableId" name="operationTableId"  value="${checkDuplicateUser.tableId}" >
+                            <input type="hidden" class="form-control" id="isDuplicate" name="isDuplicate"  value="${checkDuplicateUser.isDuplicateUser}" >
+                            <input type="hidden" class="form-control" id="isSave" name="isSave"  value="${checkDuplicateUser.isSave}" >
+                            <input type="hidden" class="form-control" id="taxNoForCheckUser" name="taxNoForCheckUser"  value="${taxInvoice.taxNo}" >
                             <input type="text" style="text-transform:uppercase" class="form-control" id="TaxInvNo" name="TaxInvNo" value="${taxInvoice.taxNo}" >
                         </div>
                         <div class="col-md-1" >
@@ -738,7 +748,7 @@
                                             </button>
                                         </div>
                                         <div class="col-md-1 text-left ">
-                                            <button type="button" onclick="validateForm()" class="btn btn-success" ${isSaveVoid}>
+                                            <button type="button" id="btnSave" onclick="validateForm()" class="btn btn-success" ${isSaveVoid}>
                                                 <span id="SpanSave" class="fa fa-save"></span> Save 
                                             </button>
                                         </div>
@@ -753,7 +763,7 @@
                         </div>
                     </div>
                 </div> 
-            <input type="hidden" id="action" name="action" value="save">
+            <input type="hidden" id="action" name="action" value="">
             </form>
     </div>
 </div>                                                
@@ -1038,6 +1048,25 @@
         </div>
     </div>
 </div>
+
+<!--Operation Duplicate Modal-->
+<div class="modal fade" id="operationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Invoice</h4>
+            </div>
+            <div class="modal-body" id="operationMessage">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick='enableOperationDuplicate()'>OK</button>               
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick='disableOperationDuplicate()'>Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->  
 
 <select class="form-control hidden" name="select_product_list" id="select_product_list">
     <c:forEach var="product" items="${product_list}" varStatus="status">                                              
@@ -1329,6 +1358,13 @@
 //                }               
             }
         });
+        
+        //Operation Duplicate
+        if($("#isDuplicate").val() === '1'){
+            var username = $("#operationUser").val();
+            $("#operationMessage").text("User " + username + " is using information. Do you want to continue ?");
+            $("#operationModal").modal("show");
+        }
         
     });
     
@@ -2541,6 +2577,8 @@
         if(!refNoNotMatch && !currencyNotMatch && currencyNotEmpty === 0){
             $("#textAlertCurrencyAmountNotEmpty").hide();
             $("#textAlertCurrencyAmountNotMatch").hide();
+            var action = document.getElementById("action");
+            action.value = "save";
             document.getElementById('TaxInvoiceForm').submit();
         }
         
@@ -2567,6 +2605,10 @@
     }
     
     function deleteTaxInvoiceDetailList(){
+        var taxInvId = document.getElementById('TaxInvId').value;
+        var taxInvNo = document.getElementById('TaxInvNo').value;
+        var operationDate = document.getElementById('operationDate').value;
+        var operationUser = document.getElementById('operationUser').value;
         var id = document.getElementById('delTaxDetailId').value;
         var row = document.getElementById('delTaxDetailRow').value;
         var count = parseInt(document.getElementById('countTaxInvoice').value);
@@ -2586,7 +2628,8 @@
             $.ajax({
                 url: 'TaxInvoice'+'${page}'+'.smi?action=deleteTaxInvoiceDetail',
                 type: 'get',
-                data: {taxInvoiceDetailId: id},
+                data: {taxInvoiceDetailId: id, TaxInvId: taxInvId, TaxInvNo: taxInvNo, operationDate: operationDate, operationUser: operationUser},
+                dataType: 'text',
                 success: function () {
                     $("#product" + row).parent().parent().remove();
 //                    AddRowTaxInvoiceTable(count++);
@@ -2830,5 +2873,65 @@
         $("#textAlertCurrencyAmountNotMatch").hide();
         $("#textAlertDivRefNo").hide();
         $("#textAlertDivInvoice").hide();
+    }
+    
+    $(window).on("beforeunload", function() {
+        var operationAction = $("#action").val();
+        var operationTable = $("#operationTable").val();
+        var operationTableId = $("#operationTableId").val();
+        var operationUser = $("#username").val();
+        console.log("action : "+operationAction);
+        console.log("operationTable : "+operationTable);
+        console.log("operationTableId : "+operationTable);
+        console.log("operationUser : "+operationUser);
+        clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser);  
+    });
+
+    function clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser) {
+        var servletName = 'CheckDuplicateUserServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&operationTable=' + operationTable +
+                '&operationTableId=' + operationTableId +
+                '&operationAction=' + operationAction +
+                '&operationUser=' + operationUser;
+        callAjaxClearDuplicateUser(param);
+    }
+
+    function callAjaxClearDuplicateUser(param) {
+        var url = 'AJAXServlet';
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function(msg) {
+                    console.log('update duplicate user success');
+                 // window.location = 'APMonitor.smi';
+                }, error: function(msg) {
+                    console.log('update duplicate user fail');
+                }
+            });
+        } catch (e) {
+            alert(e);
+            console.log('update duplicate user fail');
+        }
+    }
+    
+    //Operation Duplicate
+    function enableOperationDuplicate(){
+        var action = document.getElementById("action");
+        action.value = "operationUpdate";
+        document.getElementById("TaxInvoiceForm").submit();
+    }
+
+    function disableOperationDuplicate(){   
+        $("#btnSave").attr("disabled", true);
+        $("#enableVoidButton").attr("disabled", true);
+        $("#disableVoidButton").attr("disabled", true); 
+        $("#delTaxInvoiceDetailModal").addClass("hidden");
     }
 </script>

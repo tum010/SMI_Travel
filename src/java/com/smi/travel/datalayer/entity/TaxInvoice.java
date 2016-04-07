@@ -34,13 +34,15 @@ public class TaxInvoice   {
      private Date postDate;
      private Integer outputTaxStatus;
      private Integer isProfit;
+     private Date operationDate;
+     private String operationUser;
      private List creditNoteDetails = new LinkedList<CreditNoteDetail>();
      private List taxInvoiceDetails = new LinkedList<TaxInvoiceDetail>();
 
     public TaxInvoice() {
     }
 
-    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, String taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, String remark, String department, List creditNoteDetails, List taxInvoiceDetails, Date updateDate , Date postDate , Integer outputTaxStatus, Integer isProfit) {
+    public TaxInvoice(MFinanceItemstatus MFinanceItemstatus, Passenger passenger, String taxNo, Date taxInvDate, String taxInvTo, String taxInvName, String taxInvAddr, String arCode, String invoiceType, String createBy, Date createDate, String remark, String department, List creditNoteDetails, List taxInvoiceDetails, Date updateDate , Date postDate , Integer outputTaxStatus, Integer isProfit, Date operationDate, String operationUser) {
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.passenger = passenger;
        this.taxNo = taxNo;
@@ -60,6 +62,8 @@ public class TaxInvoice   {
        this.postDate = postDate;
        this.outputTaxStatus = outputTaxStatus;
        this.isProfit = isProfit;
+       this.operationDate = operationDate;
+       this.operationUser = operationUser;
     }
    
     public String getId() {
@@ -239,6 +243,22 @@ public class TaxInvoice   {
 
     public void setIsProfit(Integer isProfit) {
         this.isProfit = isProfit;
+    }
+
+    public Date getOperationDate() {
+        return operationDate;
+    }
+
+    public void setOperationDate(Date operationDate) {
+        this.operationDate = operationDate;
+    }
+
+    public String getOperationUser() {
+        return operationUser;
+    }
+
+    public void setOperationUser(String operationUser) {
+        this.operationUser = operationUser;
     }
 
 }

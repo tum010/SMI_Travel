@@ -57,6 +57,12 @@
         </property>
         <property name="isProfit" type="java.lang.Integer">
             <column name="is_profit" />
+        </property>
+        <property name="operationDate" type="timestamp">
+            <column name="operation_date" length="20" />
+        </property>
+        <property name="operationUser" type="string">
+            <column name="operation_user" length="20" />
         </property>       
         <bag name="creditNoteDetails" table="credit_note_detail" inverse="true" lazy="true" fetch="select">
             <key>

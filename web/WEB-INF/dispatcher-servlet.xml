@@ -575,6 +575,7 @@
             <property name="utilservice" ref="UtilityService" />
             <property name="paymentTourHotelService" ref="PaymentTourHotelService" />
             <property name="taxInvoiceService" ref="TaxInvoiceService" />
+            <property name="checkDuplicateUserService" ref="CheckDuplicateUserService" />
 	</bean>
 	<bean id="SearchTaxInvoiceController" class="com.smi.travel.controller.SearchTaxInvoiceController">
             <property name="utilservice" ref="UtilityService" />

@@ -11,9 +11,11 @@ import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.entity.TaxInvoice;
 import com.smi.travel.datalayer.entity.TaxInvoiceDetail;
+import com.smi.travel.datalayer.service.CheckDuplicateUserService;
 import com.smi.travel.datalayer.service.PaymentTourHotelService;
 import com.smi.travel.datalayer.service.TaxInvoiceService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.CheckDuplicateUser;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
@@ -49,9 +51,11 @@ public class TaxInvoiceController extends SMITravelController {
     private static final String RESULTTEXT ="result_text";
     private static final String REFNO ="refNo";
     private static final String INVOICENO ="invoiceNo";
+    private static final String CHECKDUPLICATEUSER = "checkDuplicateUser";
 //    private static final String DISABLEDFIELDSEARCH ="disabledFieldSearch";
     private PaymentTourHotelService paymentTourHotelService;
     private TaxInvoiceService taxInvoiceService;
+    private CheckDuplicateUserService checkDuplicateUserService;
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -80,6 +84,7 @@ public class TaxInvoiceController extends SMITravelController {
         String username = user.getUsername();
         request.setAttribute("idRole", idRole);
         String roleName = user.getRole().getName();
+        request.setAttribute("username", user.getUsername());
         if("Finance Manager".equalsIgnoreCase(roleName)){
             roleName = "YES";
             request.setAttribute("roleName", roleName);
@@ -125,6 +130,14 @@ public class TaxInvoiceController extends SMITravelController {
         String creditNoteUse = "";
         String refNo = request.getParameter("refNo");
         String invoiceNo = request.getParameter("invoiceNo");
+        
+        String taxNoForCheckUser = request.getParameter("taxNoForCheckUser");
+        String operationTableId = request.getParameter("operationTableId");
+        String operationUser = request.getParameter("operationUser");
+        String operationDate = request.getParameter("operationDate");
+        String checkDuplicateUser = "";
+        String clearDuplicateUser = "";
+        
         if("W".equalsIgnoreCase(callPageFrom)){
             page = "Wendy";
         } else if("O".equalsIgnoreCase(callPageFrom)){
@@ -145,8 +158,29 @@ public class TaxInvoiceController extends SMITravelController {
             }           
         }
         
+        //Duplicate User
+        if("operationUpdate".equalsIgnoreCase(action)){
+            checkDuplicateUser = checkDuplicateUser(request,response,session,operationTableId,3);
+            action = "search";
+        }
+        
         if("save".equalsIgnoreCase(action)){
             TaxInvoice taxInvoice = new TaxInvoice();
+            //Duplicate User
+            if(!"".equalsIgnoreCase(taxInvId) && taxInvId != null){
+                checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvId,2);
+                if("fail".equalsIgnoreCase(checkDuplicateUser)){
+                    request.setAttribute("page", callPageFrom);
+                    return new ModelAndView(new RedirectView("TaxInvoice"+callPageFrom+".smi?action=search&TaxInvNo="+taxInvNo+"&page="+page, true));
+                
+                }else if("success".equalsIgnoreCase(checkDuplicateUser)){
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+                    System.out.println("=====operationDate===== :"+operationDate);
+                    taxInvoice.setOperationDate(utilty.convertStringToDateTime(operationDate));
+                    taxInvoice.setOperationUser(operationUser);
+                }
+            }
+                       
             taxInvoice.setId(taxInvId);
             taxInvoice.setTaxInvTo(taxInvTo);
             taxInvoice.setTaxInvName(invToName);
@@ -223,6 +257,15 @@ public class TaxInvoiceController extends SMITravelController {
             
         } else if("search".equalsIgnoreCase(action)){
             TaxInvoice taxInvoice = new TaxInvoice();
+            if(taxNoForCheckUser != null){
+                if(!"".equalsIgnoreCase(taxNoForCheckUser) && !taxNoForCheckUser.equalsIgnoreCase(taxInvNo)){
+                    CheckDuplicateUser cdu = new CheckDuplicateUser();
+                    cdu.setOperationTable("TaxInvoice");
+                    cdu.setTableId(operationTableId);
+                    cdu.setOperationUser(user.getUsername());
+                    checkDuplicateUserService.updateOperationNull(cdu);
+                }
+            }
             taxInvoice = taxInvoiceService.getTaxInvoiceFromTaxInvNo(taxInvNo,page);
             if(taxInvoice==null){
                 request.setAttribute(RESULTTEXT, "not found");
@@ -237,16 +280,41 @@ public class TaxInvoiceController extends SMITravelController {
             request.setAttribute("createDate", taxInvoice.getCreateDate());
             request.setAttribute("postDate", taxInvoice.getPostDate());
             request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
+            
+            //Duplicate User
+            checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvoice.getId(),1);
                        
         } else if("deleteTaxInvoiceDetail".equalsIgnoreCase(action)){
             String taxInvoiceDetailId = request.getParameter("taxInvoiceDetailId");
+            //Duplicate User
+            if(!"".equalsIgnoreCase(taxInvId) && taxInvId != null){
+                checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvId,2);
+                System.out.println("=====checkDuplicateUser===== :"+checkDuplicateUser);
+                if("fail".equalsIgnoreCase(checkDuplicateUser)){
+                    request.setAttribute("page", callPageFrom);
+                    return new ModelAndView(new RedirectView("TaxInvoice"+callPageFrom+".smi?action=search&TaxInvNo="+taxInvNo+"&page="+page, true));
+                
+                }
+            }          
             TaxInvoiceDetail taxInvoiceDetail = new TaxInvoiceDetail();
             taxInvoiceDetail.setId(taxInvoiceDetailId);
             result = taxInvoiceService.DeleteTaxInvoiceInvoiceDetail(taxInvoiceDetail);
             System.out.println(result);
             
+            //Duplicate User
+            checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvId,1);
+            
         } else if("enableVoid".equalsIgnoreCase(action)){
             TaxInvoice taxInvoice = new TaxInvoice();
+            //Duplicate User
+            if(!"".equalsIgnoreCase(taxInvId) && taxInvId != null){
+                checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvId,2);
+                if("fail".equalsIgnoreCase(checkDuplicateUser)){
+                    request.setAttribute("page", callPageFrom);
+                    return new ModelAndView(new RedirectView("TaxInvoice"+callPageFrom+".smi?action=search&TaxInvNo="+taxInvNo+"&page="+page, true));
+                
+                }
+            }   
             taxInvoice.setId(taxInvId);
             taxInvoice.setTaxInvTo(taxInvTo);
             taxInvoice.setTaxInvName(invToName);
@@ -298,8 +366,20 @@ public class TaxInvoiceController extends SMITravelController {
             request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
             request.setAttribute(RESULTTEXT, result);
             
+            //Duplicate User
+            checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvId,1);
+            
         } else if("disableVoid".equalsIgnoreCase(action)){
             TaxInvoice taxInvoice = new TaxInvoice();
+            //Duplicate User
+            if(!"".equalsIgnoreCase(taxInvId) && taxInvId != null){
+                checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvId,2);
+                if("fail".equalsIgnoreCase(checkDuplicateUser)){
+                    request.setAttribute("page", callPageFrom);
+                    return new ModelAndView(new RedirectView("TaxInvoice"+callPageFrom+".smi?action=search&TaxInvNo="+taxInvNo+"&page="+page, true));
+                
+                }
+            }  
             taxInvoice.setId(taxInvId);
             taxInvoice.setTaxInvTo(taxInvTo);
             taxInvoice.setTaxInvName(invToName);
@@ -365,10 +445,23 @@ public class TaxInvoiceController extends SMITravelController {
                 request.setAttribute(RESULTTEXT, "disableVoid unsuccess");
                 request.setAttribute("cnNoList", creditNoteUse);
             }
+            //Duplicate User
+            checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvId,1);
                        
         } else if("edit".equalsIgnoreCase(action)){
             if((!"".equalsIgnoreCase(taxInvId)) && (taxInvId != null)){
                 TaxInvoice taxInvoice = new TaxInvoice();
+                
+                //Duplicate User
+                if(!"".equalsIgnoreCase(taxInvId) && taxInvId != null){
+                    checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvId,2);
+                    if("fail".equalsIgnoreCase(checkDuplicateUser)){
+                        request.setAttribute("page", callPageFrom);
+                        return new ModelAndView(new RedirectView("TaxInvoice"+callPageFrom+".smi?action=search&TaxInvNo="+taxInvNo+"&page="+page, true));
+
+                    }
+                }  
+                
                 taxInvoice = taxInvoiceService.getTaxInvoiceFromTaxInvNo(taxInvNo,department);            
                 List<TaxInvoiceDetail> taxInvoiceList = new ArrayList<TaxInvoiceDetail>();
                 taxInvoiceList = taxInvoice.getTaxInvoiceDetails();
@@ -379,6 +472,9 @@ public class TaxInvoiceController extends SMITravelController {
                 request.setAttribute("createDate", taxInvoice.getCreateDate());
                 request.setAttribute("postDate", taxInvoice.getPostDate());
                 request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
+                
+                //Duplicate User
+                checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvId,1);
             }  
             
         } else if("wildCardSearch".equalsIgnoreCase(action)){
@@ -393,7 +489,23 @@ public class TaxInvoiceController extends SMITravelController {
             request.setAttribute("createDate", taxInvoice.getCreateDate());
             request.setAttribute("postDate", taxInvoice.getPostDate());
             request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
-                       
+            if(taxNoForCheckUser != null){
+                if(!"".equalsIgnoreCase(taxNoForCheckUser) && !"".equalsIgnoreCase(keyCode)){
+                    System.out.println(" taxNoForCheckUser " + taxNoForCheckUser);
+                    CheckDuplicateUser cdu = new CheckDuplicateUser();
+                    cdu.setOperationTable("TaxInvoice");
+                    cdu.setTableId(operationTableId);
+                    cdu.setOperationUser(user.getUsername());
+                    checkDuplicateUserService.updateOperationNull(cdu);
+                }
+            }
+            //Duplicate User
+            if(taxInvoice != null){
+                checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvoice.getId(),1);
+            }
+                                  
+        } else if("new".equalsIgnoreCase(action)){
+            clearDuplicateUser = clearDuplicateUser(request,response,session,taxInvId);
         }
         
         if((!"".equalsIgnoreCase(taxInvNo)) && (taxInvNo != null)){
@@ -763,6 +875,57 @@ public class TaxInvoiceController extends SMITravelController {
         }
         return result;
     }
+    
+    private String checkDuplicateUser(HttpServletRequest request, HttpServletResponse response, HttpSession session, String taxInvId, int step) {
+        UtilityFunction util = new UtilityFunction();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+        String result = "fail";
+        SystemUser user = (SystemUser) session.getAttribute("USER");
+        CheckDuplicateUser chuSession = new CheckDuplicateUser();
+        chuSession.setOperationTable("Tax_Invoice");
+        chuSession.setTableId(taxInvId);
+        if(step == 1){
+            chuSession.setOperationDate(String.valueOf(df.format(new Date())));
+            chuSession.setOperationUser(user.getUsername());
+        }else if(step == 2){
+            String operationDate = request.getParameter("operationDate");
+            String operationUser = request.getParameter("operationUser");
+            System.out.println("operationDate : "+operationDate);
+            System.out.println("new Date : "+new Date());
+            chuSession.setOperationDate((df.format(util.convertStringToDateTime(operationDate))));
+            chuSession.setOperationUser(operationUser);
+            System.out.println("chuSession.getOperationDate() : "+chuSession.getOperationDate());
+        }else if(step == 3){
+            chuSession.setOperationDate(String.valueOf(df.format(new Date())));
+            chuSession.setOperationUser(user.getUsername());
+        }    
+        session.setAttribute("checkDuplicateUser", chuSession);
+        CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, step);
+        request.setAttribute(CHECKDUPLICATEUSER, cdu);
+        if(cdu.getIsDuplicateUser() == 0){
+            result = "success";          
+        }
+        return result;
+    }
+    
+    private String clearDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String taxInvId){
+        String result = "fail";
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyyy-MM-dd HH:mm:ss");
+        SystemUser  user = (SystemUser) session.getAttribute("USER");
+        CheckDuplicateUser chuSession = new CheckDuplicateUser();
+        session.setAttribute("checkDuplicateUser", chuSession);
+        CheckDuplicateUser chu = new CheckDuplicateUser();
+        chu.setOperationTable("Tax_Invoice");
+        chu.setTableId(taxInvId);
+        chu.setOperationDate(String.valueOf(df.format(new Date())));
+        chu.setOperationUser(user.getUsername());     
+        int update = checkDuplicateUserService.updateOperationNull(chu);
+        if(update == 1){
+            result = "success";
+        }
+        return result;
+    }
 
     public UtilityService getUtilservice() {
         return utilservice;
@@ -786,5 +949,13 @@ public class TaxInvoiceController extends SMITravelController {
 
     public void setTaxInvoiceService(TaxInvoiceService taxInvoiceService) {
         this.taxInvoiceService = taxInvoiceService;
-    }       
+    }         
+
+    public CheckDuplicateUserService getCheckDuplicateUserService() {
+        return checkDuplicateUserService;
+    }
+
+    public void setCheckDuplicateUserService(CheckDuplicateUserService checkDuplicateUserService) {
+        this.checkDuplicateUserService = checkDuplicateUserService;
+    }
 }
