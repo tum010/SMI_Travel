@@ -139,9 +139,10 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
         logger.info("================= Update Null User ===================");
         Session session = this.sessionFactory.openSession();
         int result = 0;
-        String hql = "update "+checkDuplicateUser.getOperationTable()+" t set t.operationDate = :operationDate , t.operationUser = :operationUser where t.id = :id and t.operationUser = :opUser";
+        String table = (checkDuplicateUser.getOperationTable().indexOf("_") > 0 ? checkDuplicateUser.getOperationTable().replace("_", "") : checkDuplicateUser.getOperationTable());
+        String hql = "update "+table+" t set t.operationDate = :operationDate , t.operationUser = :operationUser where t.id = :id and t.operationUser = :opUser";
         try {
-            logger.info(" Table :: " + checkDuplicateUser.getOperationTable());
+            logger.info(" Table :: " + table);
             logger.info(" Table id :: " + checkDuplicateUser.getTableId());
             Query queryupdate = session.createQuery(hql);
             queryupdate.setParameter("operationDate", null);
@@ -166,6 +167,7 @@ public class CheckDuplicateUserImpl implements CheckDuplicateUserDao {
         UtilityFunction util = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
         int result = 0;
+        table = (table.indexOf("_") > 0 ? table.replace("_", "") : table);
         String hql = "update "+table+" t set t.operationDate = :operationDate , t.operationUser = :operationUser where t.id = :id";
         System.out.println(" hql : " + hql);
         try {
