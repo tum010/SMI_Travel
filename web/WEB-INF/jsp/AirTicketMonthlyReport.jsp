@@ -81,7 +81,7 @@
                         <div class="col-md-6">  
                             <div class="form-group" id="DateFrom">
                                 <div class='input-group date fromdate' id="fromdatepanel">
-                                    <input type='text' id="fromdate" name="fromdate" class="form-control" data-date-format="YYYY-MM-DD" />
+                                    <input type='text' id="fromdate" name="fromdate" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY"/>
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
@@ -97,7 +97,7 @@
                         <div class="col-md-6">  
                             <div class="form-group">
                                 <div class='input-group date todate' id="todatepanel">
-                                    <input   type='text' id="todate" name="todate" class="form-control" data-date-format="YYYY-MM-DD"  />
+                                    <input   type='text' id="todate" name="todate" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" />
                                     <span class="input-group-addon"><span  class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
@@ -161,26 +161,6 @@
       
 
     </div>
-
-
-
-
-
-
-<script type="text/javascript" charset="utf-8">
-    $(document).ready(function () {
-        $('.date').datetimepicker();
-        $('span').click(function () {
-            var position = $(this).offset();
-            console.log("positon :"+position.top);
-            $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-            
-        });
-
-
-
-    });
-</script>
 
 <div class="modal fade" id="BillToModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -313,12 +293,13 @@
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () { 
+        $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
         $('span').click(function () {
             var position = $(this).offset();
             console.log("positon :"+position.top);
             $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
-
+            
         });
         
 //        var from = setValueFromDate();
@@ -404,8 +385,8 @@
         var inputFromDate = document.getElementById("fromdate");
         var InputToDate = document.getElementById("todate");
         if((inputFromDate.value !== '') && (InputToDate.value !== '')){
-            var fromDate = (inputFromDate.value).split('-');
-            var toDate = (InputToDate.value).split('-');
+            var fromDate = (convertFormatDate(inputFromDate.value)).split('-');
+            var toDate = (convertFormatDate(InputToDate.value)).split('-');
             if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
                 validateDate(date,"over");
             }
@@ -421,8 +402,8 @@
     function printTicketSummary() {
         var ticketfrom = document.getElementById("ticketFrom").value;
         var tickettype = document.getElementById("ticketType").value;
-        var startdate = document.getElementById("fromdate").value;
-        var enddate = document.getElementById("todate").value;
+        var startdate = convertFormatDate(document.getElementById("fromdate").value);
+        var enddate = convertFormatDate(document.getElementById("todate").value);
         var billto = document.getElementById("billto").value;
         var fromdatepanel = document.getElementById("fromdatepanel");
         

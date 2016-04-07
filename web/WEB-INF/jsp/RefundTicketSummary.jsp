@@ -69,7 +69,7 @@
                         <div class="col-md-6">  
                             <div class="form-group">
                                 <div class='input-group date Fromdate' id='fromdatepanel'>
-                                    <input type='text' id="fromdate" name="fromdate" class="form-control datemask" data-date-format="YYYY-MM-DD"/>
+                                    <input type='text' id="fromdate" name="fromdate" class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY"/>
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
@@ -85,7 +85,7 @@
                         <div class="col-md-6">  
                             <div class="form-group">
                                 <div class='input-group date Todate' id='todatepanel'>
-                                    <input type='text' id="todate" name="todate"  class="form-control datemask" data-date-format="YYYY-MM-DD" />
+                                    <input type='text' id="todate" name="todate"  class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY"/>
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
@@ -102,7 +102,7 @@
                         <div class="col-md-6">  
                             <div class="form-group">
                                 <div class='input-group date' id='RefundDateFrom'>
-                                    <input type='text' id="refundFrom" name="refundFrom" class="form-control datemask" data-date-format="YYYY-MM-DD"/>
+                                    <input type='text' id="refundFrom" name="refundFrom" class="form-control datemask" data-date-format="DD-MM-YYYY"/>
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
@@ -118,7 +118,7 @@
                         <div class="col-md-6">  
                             <div class="form-group">
                                 <div class='input-group date' id='RefundDateTo'>
-                                    <input type='text' id="refundTo" name="refundTo"  class="form-control datemask" data-date-format="YYYY-MM-DD" />
+                                    <input type='text' id="refundTo" name="refundTo"  class="form-control datemask" data-date-format="DD-MM-YYYY" />
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
@@ -190,7 +190,7 @@
     $(document).ready(function () {
         $('.date').datetimepicker({
         });
-        $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         
         $('span').click(function () {
             var position = $(this).offset();
@@ -264,7 +264,7 @@
                         trigger: 'focus keyup change',
                             validators: {
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     max: 'refundTo',
                                     message: 'The Refund From is not a valid'
                                 },notEmpty: {
@@ -276,7 +276,7 @@
                         trigger: 'focus keyup change',
                             validators: {
                                 date: {
-                                    format: 'YYYY-MM-DD',
+                                    format: 'DD-MM-YYYY',
                                     min: 'refundFrom',
                                     message: 'The Refund To is not a valid'
                                 },notEmpty: {
@@ -299,8 +299,8 @@
             $('#RefundDateFrom').datetimepicker().on('dp.change', function (e) {
                 $('#RefundTicketSummaryForm').bootstrapValidator('revalidateField', 'refundFrom');
                 $('#RefundTicketSummaryForm').bootstrapValidator('revalidateField', 'refundTo');
-                var fromdate = document.getElementById("refundFrom").value;
-                var todate = document.getElementById("refundTo").value;
+                var fromdate = convertFormatDate(document.getElementById("refundFrom").value);
+                var todate = convertFormatDate(document.getElementById("refundTo").value);
                 if(((fromdate !== '') && (todate !== '')) && fromdate < todate){
                     $("#printbutton").removeClass("disabled");
                 }else if((((fromdate !== '') && (todate !== '')) && fromdate === todate)) {
@@ -313,8 +313,8 @@
             $('#RefundDateTo').datetimepicker().on('dp.change', function (e) {
                 $('#RefundTicketSummaryForm').bootstrapValidator('revalidateField', 'refundFrom');
                 $('#RefundTicketSummaryForm').bootstrapValidator('revalidateField', 'refundTo');
-                var fromdate = document.getElementById("refundFrom").value;
-                var todate = document.getElementById("refundTo").value;
+                var fromdate = convertFormatDate(document.getElementById("refundFrom").value);
+                var todate = convertFormatDate(document.getElementById("refundTo").value);
                 if(((fromdate !== '') && (todate !== '')) && fromdate < todate){
                     $("#printbutton").removeClass("disabled");
                 }else if((((fromdate !== '') && (todate !== '')) && fromdate === todate)) {
@@ -384,8 +384,8 @@
         var inputFromDate = document.getElementById("fromdate");
         var InputToDate = document.getElementById("todate");
         if((inputFromDate.value !== '') && (InputToDate.value !== '')){
-            var fromDate = (inputFromDate.value).split('-');
-            var toDate = (InputToDate.value).split('-');
+            var fromDate = (convertFormatDate(inputFromDate.value)).split('-');
+            var toDate = (convertFormatDate(InputToDate.value)).split('-');
             if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
                 validateDate(date,"over");
             }
@@ -415,10 +415,10 @@
     }
     
     function printRefundSummary(){
-        var fromdate = document.getElementById("fromdate").value;
-        var todate = document.getElementById("todate").value;
-        var refundFrom = document.getElementById("refundFrom").value;
-        var refundTo = document.getElementById("refundTo").value;
+        var fromdate = convertFormatDate(document.getElementById("fromdate").value);
+        var todate = convertFormatDate(document.getElementById("todate").value);
+        var refundFrom = convertFormatDate(document.getElementById("refundFrom").value);
+        var refundTo = convertFormatDate(document.getElementById("refundTo").value);
         var refundBy = document.getElementById("refundBy").value;
         $('#RefundTicketSummaryForm').bootstrapValidator('revalidateField', 'refundTo');
         $('#RefundTicketSummaryForm').bootstrapValidator('revalidateField', 'refundFrom');

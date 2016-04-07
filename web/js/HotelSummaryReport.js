@@ -3,9 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+function convertFormatDates(date){
+    if(date === ''){
+        return '';
+    }
+    var newDate = date.toString().split("-");
+    var result = new Date(newDate[2], newDate[1] , newDate[0]);
+    return newDate[2] + "-" + newDate[1] + "-" + newDate[0];
+}
 function printHotelSummary(){
-    var from  = $("#fromdate").val();
-    var to  = $("#todate").val();
+    var from  = convertFormatDates($("#fromdate").val());
+    var to  = convertFormatDates($("#todate").val());
     var department = $('#department').val();
     if((from === '') || (to === '')){
         validateDate();
