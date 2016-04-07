@@ -8,8 +8,8 @@ function printInvoiceMonthly(){
     var ClientTo = $("#clientCode").val();
     var ClientName = $("#clientName").val();   
     var vattype  = $("#vatType").val();
-    var from  = $("#fromdate").val();
-    var to  = $("#todate").val();
+    var from  = convertFormatDate($("#fromdate").val());
+    var to  = convertFormatDate($("#todate").val());
     var departmentInvoice = $('#departmentInvoice').val();
     
     var billingAttn = $("#billingAttn").val();
@@ -17,7 +17,7 @@ function printInvoiceMonthly(){
     var billingTel = $("#billingTel").val();
     var billingFax = $("#billingFax").val();
     var billingMail = $("#billingMail").val();
-    var billingDate = $("#billingDate").val();
+    var billingDate = convertFormatDate($("#billingDate").val());
     var remittanceTo  = $("#remittanceTo").val();      
     
     if((from === '') || (to === '')){

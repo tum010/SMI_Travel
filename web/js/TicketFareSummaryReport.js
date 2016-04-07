@@ -3,7 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+function convertFormatDates(date){
+    if(date === ''){
+        return '';
+    }
+    var newDate = date.toString().split("-");
+    var result = new Date(newDate[2], newDate[1] , newDate[0]);
+    return newDate[2] + "-" + newDate[1] + "-" + newDate[0];
+}
 function printTicketFareSummary(){
     var reportType = document.getElementById("reportType").value;
     var ticketType = document.getElementById("ticketType").value;
@@ -15,10 +22,10 @@ function printTicketFareSummary(){
     var department = document.getElementById("department").value;
     var salebyUser = document.getElementById("salebyUser").value;
     var termPay = document.getElementById("termPay").value;
-    var issuefrom = document.getElementById("issueFrom").value;
-    var issueto = document.getElementById("issueTo").value;
-    var invFrom = document.getElementById("invoiceFromDate").value;
-    var invTo = document.getElementById("invoiceToDate").value;
+    var issuefrom = convertFormatDates(document.getElementById("issueFrom").value);
+    var issueto = convertFormatDates(document.getElementById("issueTo").value);
+    var invFrom = convertFormatDates(document.getElementById("invoiceFromDate").value);
+    var invTo = convertFormatDates(document.getElementById("invoiceToDate").value);
     var salebyName = document.getElementById("salebyName").value;
     
     if((invFrom !== '') && (invTo !== '')){

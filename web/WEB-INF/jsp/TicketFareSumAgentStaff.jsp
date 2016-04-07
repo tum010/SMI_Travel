@@ -126,7 +126,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date fromDate' id='fromdate'>
-                                            <input type='text' id="startdate" name="startdate" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="startdate" name="startdate" class="form-control" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -142,7 +142,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date toDate' id='todate'>
-                                            <input type='text' id="enddate" name="enddate"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="enddate" name="enddate"  class="form-control" data-date-format="DD-MM-YYYY" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -158,7 +158,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date fromInvDate' id='frominvdate'>
-                                            <input type='text' id="startinvdate" name="startinvdate" class="form-control" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="startinvdate" name="startinvdate" class="form-control" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -174,7 +174,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date toInvDate' id='toinvdate'>
-                                            <input type='text' id="endinvdate" name="endinvdate"  class="form-control" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="endinvdate" name="endinvdate"  class="form-control" data-date-format="DD-MM-YYYY" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -190,7 +190,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date issuefromdate' id='DateFromIssue'>
-                                            <input type='text' id="issueFrom" name="issueFrom" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="issueFrom" name="issueFrom" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -206,7 +206,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date issuetodate' id='DateToIssue'>
-                                            <input type='text' id="issueTo" name="issueTo"  class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="issueTo" name="issueTo"  class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -222,7 +222,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date fromdate' id='DateFrom'>
-                                            <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="invoiceFromDate" name="invoiceFromDate" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -238,7 +238,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date todate' id='DateTo'>
-                                            <input type='text' id="invoiceToDate" name="invoiceToDate"  class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="invoiceToDate" name="invoiceToDate"  class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -366,7 +366,7 @@
     $(document).ready(function() {
         $('.date').datetimepicker({
         });
-         $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('span').click(function() {
             var position = $(this).offset();
             console.log("positon :" + position.top);
@@ -390,7 +390,7 @@
 //                                   message: 'The Issue Date From is required'
 //                        },
 //                        date: {
-//                            format: 'YYYY-MM-DD',
+//                            format: 'DD-MM-YYYY',
 //                            max: 'enddate',
 //                            message: 'The Issue Date From is not a valid'
 //                        }
@@ -403,7 +403,7 @@
 //                            message: 'The Issue Date To is required'
 //                        },
 //                        date: {
-//                            format: 'YYYY-MM-DD',
+//                            format: 'DD-MM-YYYY',
 //                            min: 'startdate',
 //                            message: 'The Issue Date To is not a valid'
 //                        }
@@ -413,7 +413,7 @@
 //                    trigger: 'focus keyup change',
 //                    validators: {
 //                        date: {
-//                            format: 'YYYY-MM-DD',
+//                            format: 'DD-MM-YYYY',
 //                            max: 'endinvdate',
 //                            message: 'The Invoice Date From is not a valid'
 //                        }
@@ -423,7 +423,7 @@
 //                    trigger: 'focus keyup change',
 //                    validators: {
 //                        date: {
-//                            format: 'YYYY-MM-DD',
+//                            format: 'DD-MM-YYYY',
 //                            min: 'startinvdate',
 //                            message: 'The Invoice Date To is not a valid'
 //                        }
@@ -532,10 +532,10 @@
         var ticketBuy = document.getElementById("ticketBuy").value;
         var airline = document.getElementById("airline").value;
         var airlineCode = document.getElementById("airlineCode").value;
-        var issuefrom = document.getElementById("issueFrom").value;
-        var issueto = document.getElementById("issueTo").value;
-        var invfrom = document.getElementById("invoiceFromDate").value;
-        var invto = document.getElementById("invoiceToDate").value;
+        var issuefrom = convertFormatDate(document.getElementById("issueFrom").value);
+        var issueto = convertFormatDate(document.getElementById("issueTo").value);
+        var invfrom = convertFormatDate(document.getElementById("invoiceFromDate").value);
+        var invto = convertFormatDate(document.getElementById("invoiceToDate").value);
         var department = document.getElementById("department").value;
         var salebyUser = document.getElementById("salebyUser").value;
         var termPay = document.getElementById("termPay").value;
@@ -682,8 +682,8 @@ function checkDateValue(date){
             InputToDate = document.getElementById("issueTo");
         }
     if((inputFromDate.value !== '') && (InputToDate.value !== '')){
-        var fromDate = (inputFromDate.value).split('-');
-        var toDate = (InputToDate.value).split('-');
+        var fromDate = (convertFormatDate(inputFromDate.value)).split('-');
+        var toDate = (convertFormatDate(InputToDate.value)).split('-');
         if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
             validateDate(date,"over");
         }

@@ -107,7 +107,7 @@
                                 <div class="col-md-1" style="width: 170px">  
                                     <div class="form-group" id="receivefromdatepanel">
                                         <div class='input-group date receivefromdate' id='receiveDateFrom'>
-                                            <input type='text' id="receiveFromDate" name="receiveFromDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="receiveFromDate" name="receiveFromDate" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -117,7 +117,7 @@
                                 <div class="col-md-1" style="width: 170px">
                                     <div class="form-group" id="receivetodatepanel">
                                         <div class='input-group date receivetodate' id='receiveDateTo'>
-                                            <input type='text' id="receiveToDate" name="receiveToDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="receiveToDate" name="receiveToDate" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -133,7 +133,7 @@
                                 <div class="col-md-1" style="width: 170px">  
                                     <div class="form-group" id="paidfromdatepanel">
                                         <div class='input-group date paidfromdate' id='paidDateFrom'>
-                                            <input type='text' id="paidFromDate" name="paidFromDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="paidFromDate" name="paidFromDate" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -143,7 +143,7 @@
                                 <div class="col-md-1" style="width: 170px">
                                     <div class="form-group" id="paidtodatepanel">
                                         <div class='input-group date paidtodate' id='paidDateTo'>
-                                            <input type='text' id="paidToDate" name="paidToDate" class="form-control datemask" placeholder="YYYY-MM-DD" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="paidToDate" name="paidToDate" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -333,7 +333,7 @@
 
     });
     $(document).ready(function () {
-         $('.datemask').mask('0000-00-00');
+        $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
         $('.spandate').click(function() {
             var position = $(this).offset();
@@ -412,10 +412,10 @@ function printTicketRefundSummary(){
     var refundByName = document.getElementById("refundByName").value;
     var refundBy = document.getElementById("refundBy").value;
     var passenger = document.getElementById("passenger").value;
-    var receiveFromDate = document.getElementById("receiveFromDate").value;
-    var receiveToDate = document.getElementById("receiveToDate").value;
-    var paidFromDate = document.getElementById("paidFromDate").value;
-    var paidToDate = document.getElementById("paidToDate").value;
+    var receiveFromDate = convertFormatDate(document.getElementById("receiveFromDate").value);
+    var receiveToDate = convertFormatDate(document.getElementById("receiveToDate").value);
+    var paidFromDate = convertFormatDate(document.getElementById("paidFromDate").value);
+    var paidToDate = convertFormatDate(document.getElementById("paidToDate").value);
     var sectortoberef = document.getElementById("sectortoberef").value;
 //    var typePrint = document.getElementById("typePrint").value;
     
@@ -592,8 +592,8 @@ function checkDateValue(date){
             InputToDate = document.getElementById("paidToDate");
         }
     if((inputFromDate.value !== '') && (InputToDate.value !== '')){
-        var fromDate = (inputFromDate.value).split('-');
-        var toDate = (InputToDate.value).split('-');
+        var fromDate = (convertFormatDate(inputFromDate.value)).split('-');
+        var toDate = (convertFormatDate(InputToDate.value)).split('-');
         if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
             validateDate(date,"over");
         }

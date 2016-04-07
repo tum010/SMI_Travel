@@ -11,7 +11,6 @@ import com.smi.travel.datalayer.report.model.TicketSummaryAirline;
 import com.smi.travel.datalayer.report.model.TicketSummaryList;
 import com.smi.travel.datalayer.view.dao.TicketSummaryDao;
 import com.smi.travel.util.UtilityFunction;
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.text.SimpleDateFormat;

@@ -6,7 +6,6 @@
 package com.smi.travel.servlet;
 
 import com.smi.travel.datalayer.ajax.service.AbstractAJAXServlet;
-import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
