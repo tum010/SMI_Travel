@@ -1777,7 +1777,7 @@ $(window).on("beforeunload", function() {
     var operationAction = $("#action").val();
     var operationTable = $("#operationTable").val();
     var operationTableId = $("#operationTableId").val();
-    var operationUser = $("#operationUser").val();
+    var operationUser = $("#username").val();
     console.log("action : "+operationAction);
     console.log("operationTable : "+operationTable);
     console.log("operationTableId : "+operationTable);

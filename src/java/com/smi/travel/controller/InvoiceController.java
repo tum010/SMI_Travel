@@ -96,6 +96,7 @@ public class InvoiceController extends SMITravelController {
         //Role User
         SystemUser  user = (SystemUser) session.getAttribute("USER");
         String roleName = user.getRole().getName();
+        request.setAttribute("username", user.getUsername());
         if("Finance Manager".equals(roleName)){
             roleName = "YES";
             request.setAttribute("roleName", roleName);

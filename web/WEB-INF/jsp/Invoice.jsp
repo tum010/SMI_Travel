@@ -31,6 +31,8 @@
 <c:set var="vat" value="${requestScope['vat']}" />
 <c:set var="duedate" value="${requestScope['duedate']}" />
 <c:set var="checkDuplicateUser" value="${requestScope['checkDuplicateUser']}" />
+<c:set var="username" value="${requestScope['username']}" />
+
 <section class="content-header" >
     <h1>
         <c:if test="${invoice.MFinanceItemstatus.id == '2'}">        
@@ -299,6 +301,7 @@
                         <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                         <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                         <input type="hidden" class="form-control" id="operationDate" name="operationDate"  value="${checkDuplicateUser.operationDate}" >
+                        <input type="hidden" name="username" id="username" value="${username}"/>
                         <input type="hidden" class="form-control" id="operationUser" name="operationUser"  value="${checkDuplicateUser.operationUser}" >
                         <input type="hidden" class="form-control" id="operationTable" name="operationTable"  value="${checkDuplicateUser.operationTable}" >
                         <input type="hidden" class="form-control" id="operationTableId" name="operationTableId"  value="${checkDuplicateUser.tableId}" >
