@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelVoucher" language="groovy" pageWidth="575" pageHeight="392" columnWidth="574" leftMargin="1" rightMargin="0" topMargin="0" bottomMargin="0" uuid="053f4d0e-4534-4ae9-bd3a-d9c39367ad2d">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="61"/>
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="349"/>
+	<property name="ireport.y" value="109"/>
 	<queryString>
 		<![CDATA[SELECT
      *,
@@ -317,14 +317,14 @@ FROM
 				<textFieldExpression><![CDATA[$F{child}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="404" y="169" width="19" height="20" uuid="99b9bcaa-c1ec-47ac-b315-0e261506c2f3"/>
+				<reportElement x="404" y="170" width="19" height="19" uuid="99b9bcaa-c1ec-47ac-b315-0e261506c2f3"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{infant}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="459" y="169" width="20" height="20" uuid="3cd2f3f2-de50-4a47-9363-247f51b497be"/>
+				<reportElement x="459" y="170" width="20" height="19" uuid="3cd2f3f2-de50-4a47-9363-247f51b497be"/>
 				<textElement textAlignment="Right">
 					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
