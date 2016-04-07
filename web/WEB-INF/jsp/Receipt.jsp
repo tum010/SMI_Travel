@@ -25,6 +25,8 @@
 <c:set var="receiptCreditList" value="${requestScope['receiptCreditList']}" />
 <c:set var="invoiceIdList" value="${requestScope['invoiceIdList']}" />
 <c:set var="roleName" value="${requestScope['roleName']}" />
+<c:set var="checkDuplicateUser" value="${requestScope['checkDuplicateUser']}" />
+<c:set var="username" value="${requestScope['username']}" />
 <c:set var="typeBooking" value="" />
 
 
@@ -306,6 +308,15 @@
                                     <input type="hidden" class="form-control" id="isref" name="isref"  value="${receipt.isRef}" >        
                                     <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                                     <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
+                                    <input type="hidden" class="form-control" id="operationDate" name="operationDate"  value="${checkDuplicateUser.operationDate}" >
+                                    <input type="hidden" name="username" id="username" value="${username}"/>
+                                    <input type="hidden" class="form-control" id="operationUser" name="operationUser"  value="${checkDuplicateUser.operationUser}" >
+                                    <input type="hidden" class="form-control" id="operationTable" name="operationTable"  value="${checkDuplicateUser.operationTable}" >
+                                    <input type="hidden" class="form-control" id="operationTableId" name="operationTableId"  value="${checkDuplicateUser.tableId}" >
+                                    <input type="hidden" class="form-control" id="isDuplicate" name="isDuplicate"  value="${checkDuplicateUser.isDuplicateUser}" >
+                                    <input type="hidden" class="form-control" id="isSave" name="isSave"  value="${checkDuplicateUser.isSave}" >
+                                    <input type="hidden" class="form-control" id="recNoForCheckUser" name="recNoForCheckUser"  value="${receipt.recNo}" >
+                       
                                     <input id="receiveId" name="receiveId" type="hidden" class="form-control" maxlength="11" value="${receipt.id}">
                                     <input id="receiveNo" name="receiveNo" type="text" style="width: 80px" class="form-control" maxlength="20" value="${receipt.recNo}">
                                 </div>
@@ -997,6 +1008,25 @@
     </div>      
 </div>
 <hr/>
+
+<!--Operation Duplicate Modal-->
+<div class="modal fade" id="operationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Receipt</h4>
+            </div>
+            <div class="modal-body" id="operationMessage">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick='enableOperationDuplicate()'>OK</button>               
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick='disableOperationDuplicate()'>Cancel</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->  
 
 <!--List Receive From Modal-->
 <div class="modal fade" id="ReceiveFromModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1943,6 +1973,13 @@
             digitsOptional: false,
             placeholder: "0.0000",
         });
+        
+        //Operation Duplicate
+        if($("#isDuplicate").val() === '1'){
+            var username = $("#operationUser").val();
+            $("#operationMessage").text("User " + username + " is using information. Do you want to continue ?");
+            $("#operationModal").modal("show");
+        }
     });
 
 //    function setFormatCurrencyDetail(){
@@ -3924,4 +3961,64 @@
             }
         }
     }
+    
+//Operation Duplicate
+function enableOperationDuplicate(){
+    var action = document.getElementById("action");
+    action.value = "operationUpdate";
+    document.getElementById('ReceiptForm').submit();
+}
+
+function disableOperationDuplicate(){   
+    $("#ButtonSave").attr("disabled", true);
+    $("#enableVoidButton").attr("disabled", true);
+    $("#disableVoidButton").attr("disabled", true); 
+    $("#DeleteProduct").addClass("hidden");
+}
+
+$(window).on("beforeunload", function() {
+    var operationAction = $("#action").val();
+    var operationTable = $("#operationTable").val();
+    var operationTableId = $("#operationTableId").val();
+    var operationUser = $("#username").val();
+    console.log("action : "+operationAction);
+    console.log("operationTable : "+operationTable);
+    console.log("operationTableId : "+operationTable);
+    console.log("operationUser : "+operationUser);
+    clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser);  
+});
+    
+function clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser) {
+    var servletName = 'CheckDuplicateUserServlet';
+    var servicesName = 'AJAXBean';
+    var param = 'action=' + 'text' +
+            '&servletName=' + servletName +
+            '&servicesName=' + servicesName +
+            '&operationTable=' + operationTable +
+            '&operationTableId=' + operationTableId +
+            '&operationAction=' + operationAction +
+            '&operationUser=' + operationUser;
+    callAjaxClearDuplicateUser(param);
+}
+
+function callAjaxClearDuplicateUser(param) {
+    var url = 'AJAXServlet';
+    try {
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: param,
+            success: function(msg) {
+                console.log('update duplicate user success');
+             // window.location = 'APMonitor.smi';
+            }, error: function(msg) {
+                console.log('update duplicate user fail');
+            }
+        });
+    } catch (e) {
+        alert(e);
+        console.log('update duplicate user fail');
+    }
+}
 </script>

@@ -565,6 +565,7 @@
             <property name="utilityService" ref="UtilityService" />
             <property name="receiptService" ref="ReceiptService" />
             <property name="invoiceService" ref="InvoiceService" />
+            <property name="checkDuplicateUserService" ref="CheckDuplicateUserService" />
 	</bean>
 	<bean id="SearchReceiptController" class="com.smi.travel.controller.SearchReceiptController">
             <property name="utilservice" ref="UtilityService" />

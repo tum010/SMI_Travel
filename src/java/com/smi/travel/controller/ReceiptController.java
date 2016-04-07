@@ -15,9 +15,11 @@ import com.smi.travel.datalayer.entity.Receipt;
 import com.smi.travel.datalayer.entity.ReceiptCredit;
 import com.smi.travel.datalayer.entity.ReceiptDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
+import com.smi.travel.datalayer.service.CheckDuplicateUserService;
 import com.smi.travel.datalayer.service.InvoiceService;
 import com.smi.travel.datalayer.service.ReceiptService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.CheckDuplicateUser;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
@@ -59,10 +61,14 @@ public class ReceiptController extends SMITravelController {
     private static final String SEARCHRECEIPT = "searchReceipt";
     private static final String RECEIVEDATE = "receiveDate";
     private static final String INVIDLIST = "invoiceIdList";
+    private static final String CHECKDUPLICATEUSER = "checkDuplicateUser";
     private UtilityService utilityService;
     private ReceiptService receiptService;
     private InvoiceService invoiceService;
+    private CheckDuplicateUserService checkDuplicateUserService;
     UtilityFunction util; 
+    Date opDate;
+    String opUser;
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         UtilityFunction utilty = new UtilityFunction();
@@ -104,6 +110,22 @@ public class ReceiptController extends SMITravelController {
         String invoiceTableNo = request.getParameter("invoiceTableNo1");
         String invoiceTableId = request.getParameter("invoiceTableId1");
         String isref = request.getParameter("isref");
+        
+        //** For Duplicate User
+        String recNoForCheckUser = request.getParameter("recNoForCheckUser");
+        String operationTableId = request.getParameter("operationTableId");
+        String operationUser = request.getParameter("operationUser");
+        String checkDuplicateUser = "";
+        String clearDuplicateUser = "";
+        request.setAttribute("username", user.getUsername());
+        
+        //Duplicate User
+        if("operationUpdate".equalsIgnoreCase(action)){
+            System.out.println("operationTableId : "+operationTableId);
+            checkDuplicateUser = checkDuplicateUser(request,response,session,operationTableId,3);
+            action = "searchReceiveNo";
+        }
+        //**
         
         System.out.println(" callPageFrom " + callPageFrom);
         if(!"".equals(callPageFrom)){
@@ -147,16 +169,29 @@ public class ReceiptController extends SMITravelController {
         }
         
         if("new".equalsIgnoreCase(action)){
+            clearDuplicateUser = clearDuplicateUser(request,response,session,receiveId);
             System.out.println(" CLEAR DATA ");
         }else if ("edit".equalsIgnoreCase(action)){
             System.out.println(" ==================== edit =======================");
         }else if ("searchReceiveNo".equalsIgnoreCase(action)) {
+            //Duplicate User
+            if(recNoForCheckUser != null){
+                if(!"".equalsIgnoreCase(recNoForCheckUser) && !recNoForCheckUser.equalsIgnoreCase(receiveNo)){
+                    CheckDuplicateUser cdu = new CheckDuplicateUser();
+                    cdu.setOperationTable("Receipt");
+                    cdu.setTableId(operationTableId);
+                    cdu.setOperationUser(user.getUsername());
+                    checkDuplicateUserService.updateOperationNull(cdu);
+                }
+            }
+            
             Receipt receipt = new Receipt();
             request.setAttribute(SEARCHRECEIPT,"dummy");
             if(!"".equals(receiveNo)){
                 receipt = receiptService.getReceiptfromReceiptNo(receiveNo,InputDepartment,InputReceiptType);
                 if(receipt != null) {
                     if(!receipt.getId().isEmpty()){
+                        checkDuplicateUser = checkDuplicateUser(request,response,session,receipt.getId(),1);
                         List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
                         List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
                         request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
@@ -217,7 +252,19 @@ public class ReceiptController extends SMITravelController {
                 }
             }
         }else if ("saveReceipt".equalsIgnoreCase(action)) {
+             //Duplicate User
+            if(!"".equalsIgnoreCase(receiveId) && receiveId != null){
+                checkDuplicateUser = checkDuplicateUser(request,response,session,receiveId,2);
+                if("fail".equalsIgnoreCase(checkDuplicateUser)){
+                    request.setAttribute("page", callPageFrom);
+                    return new ModelAndView(new RedirectView("Receipt"+callPageFrom+".smi?action=searchReceiveNo&receiveNo="+receiveNo+"&InputDepartment="+InputDepartment+"&InputReceiptType="+InputReceiptType, true));
+                }
+            }
+            
             Receipt receipt = new Receipt();
+            
+            receipt.setOperationDate(opDate);
+            receipt.setOperationUser(opUser);
             receipt.setId(receiveId);
             String counter = request.getParameter("counter");
             String countRowCredit = request.getParameter("countRowCredit");
@@ -509,6 +556,12 @@ public class ReceiptController extends SMITravelController {
             }
             
             System.out.print("result :" + result + " =================== ");
+            
+            if(!"fail".equalsIgnoreCase(result)){
+                //Duplicate User
+                checkDuplicateUser = checkDuplicateUser(request,response,session,receipt.getId(),1);
+            }    
+            
             if (result == "fail") {
                 request.setAttribute(SAVERESULT, "save unsuccessful");
             } else if (result == "success"){
@@ -600,6 +653,14 @@ public class ReceiptController extends SMITravelController {
                 request.setAttribute(DELETERESULT, "delete unsuccessful");
             }
         }else if("disableVoid".equals(action)){
+            //Duplicate User
+            if(!"".equalsIgnoreCase(receiveId) && receiveId != null){
+                checkDuplicateUser = checkDuplicateUser(request,response,session,receiveId,2);
+                if("fail".equalsIgnoreCase(checkDuplicateUser)){
+                    request.setAttribute("page", callPageFrom);
+                    return new ModelAndView(new RedirectView("Receipt"+callPageFrom+".smi?action=searchReceiveNo&receiveNo="+receiveNo+"&InputDepartment="+InputDepartment+"&InputReceiptType="+InputReceiptType, true));
+                }
+            }
             result = receiptService.UpdateFinanceStatusReceipt(receiveId, 2);
             if (result == "success"){
                 request.setAttribute("result", "void");
@@ -609,6 +670,9 @@ public class ReceiptController extends SMITravelController {
                 receipt = receiptService.getReceiptfromReceiptNo(receiveNo,InputDepartment,InputReceiptType);
                 if(receipt != null) {
                     if(!receipt.getId().isEmpty()){
+                        //Duplicate User
+                        checkDuplicateUser = checkDuplicateUser(request,response,session,receipt.getId(),1);
+                        
                         List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
                         List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
                         request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
@@ -628,6 +692,14 @@ public class ReceiptController extends SMITravelController {
             }
             
         }else if("enableVoid".equals(action)){
+            //Duplicate User
+            if(!"".equalsIgnoreCase(receiveId) && receiveId != null){
+                checkDuplicateUser = checkDuplicateUser(request,response,session,receiveId,2);
+                if("fail".equalsIgnoreCase(checkDuplicateUser)){
+                    request.setAttribute("page", callPageFrom);
+                    return new ModelAndView(new RedirectView("Receipt"+callPageFrom+".smi?action=searchReceiveNo&receiveNo="+receiveNo+"&InputDepartment="+InputDepartment+"&InputReceiptType="+InputReceiptType, true));
+                }
+            }
             result = receiptService.UpdateFinanceStatusReceipt(receiveId, 1);
             if (result == "success"){
                 request.setAttribute("result", "cancelvoid");
@@ -637,6 +709,8 @@ public class ReceiptController extends SMITravelController {
                 receipt = receiptService.getReceiptfromReceiptNo(receiveNo,InputDepartment,InputReceiptType);
                 if(receipt != null) {
                     if(!receipt.getId().isEmpty()){
+                        //Duplicate User
+                        checkDuplicateUser = checkDuplicateUser(request,response,session,receipt.getId(),1);
                         List<ReceiptDetail> receiptDetailList = receiptService.getReceiptDetailFromReceiptId(receipt.getId());
                         List<ReceiptCredit> receiptCreditList = receiptService.getReceiptCreditFromReceiptId(receipt.getId());
                         request.setAttribute(RECEIPTDETAILLIST,receiptDetailList);
@@ -688,7 +762,20 @@ public class ReceiptController extends SMITravelController {
                 request.setAttribute(RECEIPTDATE,receipt.getRecDate());
                 request.setAttribute(RECEIVEDATE,receipt.getReceiveDate());
             }
-                       
+            
+            //Duplicate User
+            if(recNoForCheckUser != null){
+                if(!"".equalsIgnoreCase(recNoForCheckUser) && !"".equalsIgnoreCase(keyCode)){
+                    System.out.println(" recNoForCheckUser " + recNoForCheckUser);
+                    CheckDuplicateUser cdu = new CheckDuplicateUser();
+                    cdu.setOperationTable("Receipt");
+                    cdu.setTableId(operationTableId);
+                    cdu.setOperationUser(user.getUsername());
+                    checkDuplicateUserService.updateOperationNull(cdu);
+                }
+            }
+            checkDuplicateUser = checkDuplicateUser(request,response,session,receipt.getId(),1);         
+            
         }else if (!"".equalsIgnoreCase(searchId)) {
             System.out.println(" Id ::: "+ searchId);
             Receipt receipt = new Receipt();
@@ -815,4 +902,69 @@ public class ReceiptController extends SMITravelController {
     public void setInvoiceService(InvoiceService invoiceService) {
         this.invoiceService = invoiceService;
     }
+    
+    
+    private String checkDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String receiptId, int step) {
+        UtilityFunction util = new UtilityFunction();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+        String result = "fail";
+        SystemUser user = (SystemUser) session.getAttribute("USER");
+        CheckDuplicateUser chuSession = new CheckDuplicateUser();
+        chuSession.setOperationTable("Receipt");
+        chuSession.setTableId(receiptId);
+        if(step == 1){
+            chuSession.setOperationDate(String.valueOf(df.format(new Date())));
+            chuSession.setOperationUser(user.getUsername());
+        }else if(step == 2){
+            String operationDate = request.getParameter("operationDate");
+            String operationUser = request.getParameter("operationUser");
+            System.out.println("operationDate : "+operationDate);
+            System.out.println("new Date : "+new Date());
+            chuSession.setOperationDate((df.format(util.convertStringToDateTime(operationDate))));
+            chuSession.setOperationUser(operationUser);
+            System.out.println("chuSession.getOperationDate() : "+chuSession.getOperationDate());
+        }else if(step == 3){
+            chuSession.setOperationDate(String.valueOf(df.format(new Date())));
+            chuSession.setOperationUser(user.getUsername());
+        }    
+        session.setAttribute(CHECKDUPLICATEUSER, chuSession);
+        CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, step);
+        request.setAttribute(CHECKDUPLICATEUSER, cdu);
+        if(cdu.getIsDuplicateUser() == 0){
+            result = "success";
+            opDate = util.convertStringToDateTime(cdu.getOperationDate());
+            opUser = cdu.getOperationUser();
+//            invoice.setOperationDate(util.convertStringToDateTime(cdu.getOperationDate()));
+//            invoice.setOperationUser(cdu.getOperationUser());
+        }
+        return result;
+    }
+    
+    private String clearDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String invoiceId){
+        String result = "fail";
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyyy-MM-dd HH:mm:ss");
+        SystemUser  user = (SystemUser) session.getAttribute("USER");
+        CheckDuplicateUser chuSession = new CheckDuplicateUser();
+        session.setAttribute(CHECKDUPLICATEUSER, chuSession);
+        CheckDuplicateUser chu = new CheckDuplicateUser();
+        chu.setOperationTable("Receipt");
+        chu.setTableId(invoiceId);
+        chu.setOperationDate(String.valueOf(df.format(new Date())));
+        chu.setOperationUser(user.getUsername());     
+        int update = checkDuplicateUserService.updateOperationNull(chu);
+        if(update == 1){
+            result = "success";
+        }
+        return result;
+    }
+
+    public CheckDuplicateUserService getCheckDuplicateUserService() {
+        return checkDuplicateUserService;
+    }
+
+    public void setCheckDuplicateUserService(CheckDuplicateUserService checkDuplicateUserService) {
+        this.checkDuplicateUserService = checkDuplicateUserService;
+    }
+    
 }
