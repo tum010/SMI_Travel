@@ -152,7 +152,7 @@ function setValueFromDate() {
     var day = date.getDate();
     var monthIndex = date.getMonth();
     var year = date.getFullYear();
-    return year+'-'+ monthNames[monthIndex] +'-01';
+    return '01'+'-'+ monthNames[monthIndex] +'-'+year;
 }
 
 function setValueToDate() {
@@ -179,7 +179,7 @@ function setValueToDate() {
             break;
         lastDay++
     }
-    return year+'-'+ monthNames[monthIndex] +'-'+lastDay;
+    return lastDay+'-'+ monthNames[monthIndex] +'-'+year;
 }
 
 function setValueMonth() {
@@ -198,7 +198,7 @@ function setValueMonth() {
 
 
 function convertFormatDate(date){
-    var newDate = date.split("-");
+    var newDate = date.toString().split("-");
     var result = new Date(newDate[2], newDate[1] , newDate[0]);
     return newDate[2] + "-" + newDate[1] + "-" + newDate[0];
 }

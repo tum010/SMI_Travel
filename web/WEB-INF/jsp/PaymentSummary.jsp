@@ -42,7 +42,7 @@
                                     <div class="form-group">
                                         <div class='input-group date fromdate' id='fromdatepanel'>                    
                                             <input id="FromDate" name="FromDate"  type="text" 
-                                                class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                                class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="">
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                       
                                         </div>
                                     </div>
@@ -58,7 +58,7 @@
                                     <div class="form-group">
                                         <div class='input-group date todate' id='todatepanel'>                    
                                             <input id="ToDate" name="ToDate"  type="text" 
-                                                class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                                class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="">
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                       
                                         </div>
                                     </div>
@@ -224,7 +224,7 @@
 $(document).ready(function() {
     
     $('.date').datetimepicker();
-    $('.datemask').mask('0000-00-00', {reverse: true});
+    $('.datemask').mask('00-00-0000');
     $('.spandate').click(function() {
         var position = $(this).offset();
         console.log("positon :" + position.top);
@@ -420,8 +420,8 @@ function checkDateValue(date){
     var inputFromDate = document.getElementById("FromDate");
     var InputToDate = document.getElementById("ToDate");
     if((inputFromDate.value !== '') && (InputToDate.value !== '')){
-        var fromDate = (inputFromDate.value).split('-');
-        var toDate = (InputToDate.value).split('-');
+        var fromDate = (convertFormatDate(inputFromDate.value)).split('-');
+        var toDate = (convertFormatDate(InputToDate.value)).split('-');
         if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
             validateDate(date,"over");
         }
@@ -451,8 +451,8 @@ function validateDate(date,option){
 }
 
 function printPaymentSummary(){  
-    var from = $('#FromDate').val();
-    var to = $('#ToDate').val();
+    var from = convertFormatDate($('#FromDate').val());
+    var to = convertFormatDate($('#ToDate').val());
     var invSupCode = $('#invSupCode').val();
     var salebyUser = $('#salebyUser').val();
     var refno = $('#refno').val();

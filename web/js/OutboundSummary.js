@@ -107,10 +107,14 @@ $(document).ready(function() {
     });
 
 });
-
+function convertFormatDates(date){
+    var newDate = date.toString().split("-");
+    var result = new Date(newDate[2], newDate[1] , newDate[0]);
+    return newDate[2] + "-" + newDate[1] + "-" + newDate[0];
+}
 function printOutboundHotelSummary(){
-    var from  = $("#FromDate").val();
-    var to  = $("#ToDate").val();
+    var from  = convertFormatDates($("#FromDate").val());
+    var to  = convertFormatDates($("#ToDate").val());
     var hotelid  = $("#InputId").val();
     var saleby  = $("#salebyId").val();
     var payby  = $("#SelectPayby").val();  
@@ -131,11 +135,7 @@ function printOutboundHotelSummary(){
         $('#HotelSummaryReportFrom').bootstrapValidator('revalidateField', 'ToDate');
         $("#printbutton").addClass("disabled");
     }
-    
-//    if((from === '') || (to === '')){
-//        validateDate();
-//    } else {
-//    }
+
 }
 
 function validateDate(date,option){

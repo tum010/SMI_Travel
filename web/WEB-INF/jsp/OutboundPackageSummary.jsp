@@ -87,7 +87,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date' id='DateFrom'>
-                                            <input type='text' id="fromdate" name="fromdate" class="form-control datemask" data-date-format="YYYY-MM-DD"/>
+                                            <input type='text' id="fromdate" name="fromdate" class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY"/>
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -103,7 +103,7 @@
                                 <div class="col-md-5">  
                                     <div class="form-group">
                                         <div class='input-group date' id='DateTo'>
-                                            <input type='text' id="todate" name="todate"  class="form-control datemask" data-date-format="YYYY-MM-DD" />
+                                            <input type='text' id="todate" name="todate"  class="form-control datemask" placeholder="DD-MM-YYYY" data-date-format="DD-MM-YYYY" />
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
                                             </span>
                                         </div>
@@ -368,7 +368,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('.date').datetimepicker();
-    $('.datemask').mask('0000-00-00', {reverse: true});
+    $('.datemask').mask('00-00-0000');
     $('.spandate').click(function() {
            var position = $(this).offset();
            console.log("positon :" + position.top);
@@ -501,7 +501,7 @@ $(document).ready(function() {
                     trigger: 'focus keyup change',
                         validators: {
                             date: {
-                                format: 'YYYY-MM-DD',
+                                format: 'DD-MM-YYYY',
                                 max: 'todate',
                                 message: 'The Date From is not a valid'
                             },notEmpty: {
@@ -513,7 +513,7 @@ $(document).ready(function() {
                     trigger: 'focus keyup change',
                         validators: {
                             date: {
-                                format: 'YYYY-MM-DD',
+                                format: 'DD-MM-YYYY',
                                 min: 'fromdate',
                                 message: 'The Date To is not a valid'
                             },notEmpty: {
@@ -534,8 +534,8 @@ $(document).ready(function() {
     $('#DateFrom').datetimepicker().on('dp.change', function (e) {
         $('#PackageSummaryForm').bootstrapValidator('revalidateField', 'fromdate');
         $('#PackageSummaryForm').bootstrapValidator('revalidateField', 'todate');
-        var fromdate = document.getElementById("fromdate").value;
-        var todate = document.getElementById("todate").value;
+        var fromdate = convertFormatDate(document.getElementById("fromdate").value);
+        var todate = convertFormatDate(document.getElementById("todate").value);
         if(((fromdate !== '') && (todate !== '')) && fromdate < todate){
             $("#printbutton").removeClass("disabled");
         }else if((((fromdate !== '') && (todate !== '')) && fromdate === todate)) {
@@ -547,8 +547,8 @@ $(document).ready(function() {
     $('#DateTo').datetimepicker().on('dp.change', function (e) {
         $('#PackageSummaryForm').bootstrapValidator('revalidateField', 'fromdate');
         $('#PackageSummaryForm').bootstrapValidator('revalidateField', 'todate');
-        var fromdate = document.getElementById("fromdate").value;
-        var todate = document.getElementById("todate").value;
+        var fromdate = convertFormatDate(document.getElementById("fromdate").value);
+        var todate = convertFormatDate(document.getElementById("todate").value);
         if(((fromdate !== '') && (todate !== '')) && fromdate < todate){
             $("#printbutton").removeClass("disabled");
         }else if((((fromdate !== '') && (todate !== '')) && fromdate === todate)) {
@@ -561,8 +561,8 @@ $(document).ready(function() {
 
 
 function printPackageSummary(){
-        var form = $("#fromdate").val();
-        var to = $("#todate").val();
+        var form = convertFormatDate($("#fromdate").val());
+        var to = convertFormatDate($("#todate").val());
         var saleby = $("#salebyId").val();
         var payby = $("#SelectPayby").val();
         var banktran = $("#SelectBank").val();
@@ -603,5 +603,3 @@ function printPackageSummary(){
     }
 </script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
-    </div>
-</div>

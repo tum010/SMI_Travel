@@ -46,7 +46,7 @@
                         <div class="col-xs-1 form-group" style="width: 290px"> 
                             <div class='input-group date fromdate' id='fromdatepanel'>                    
                                 <input id="FromDate" name="FromDate"  type="text" 
-                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                    class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                       
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                         <div class="col-xs-1 form-group" style="width: 290px"> 
                             <div class='input-group date todate' id='todatepanel'>                    
                                 <input id="ToDate" name="ToDate"  type="text" 
-                                    class="form-control datemask" data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" value="">
+                                    class="form-control datemask" data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="">
                                 <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>                                                       
                             </div>
                         </div>
@@ -211,8 +211,8 @@
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
         $('.date').datetimepicker();       
-        $('.datemask').mask('0000-00-00');
-        
+        $('.datemask').mask('00-00-0000');
+         
         var ReceiveFromTable = $('#AgentTable').dataTable({bJQueryUI: true,
             "sPaginationType": "full_numbers",
             "bAutoWidth": false,
@@ -414,8 +414,8 @@ function checkDateValue(date){
     var inputFromDate = document.getElementById("FromDate");
     var InputToDate = document.getElementById("ToDate");
     if((inputFromDate.value !== '') && (InputToDate.value !== '')){
-        var fromDate = (inputFromDate.value).split('-');
-        var toDate = (InputToDate.value).split('-');
+        var fromDate = (convertFormatDate(inputFromDate.value)).split('-');
+        var toDate = (convertFormatDate(InputToDate.value)).split('-');
         if((parseInt(fromDate[0])) > (parseInt(toDate[0]))){
             validateDate(date,"over");
         }
@@ -459,8 +459,8 @@ function printDebtorSummary(){
 //    var status = document.getElementById("status").value;
 //    var airTicketWendy = document.getElementById("airTicketWendy").value;
     
-    var from = $('#FromDate').val();
-    var to = $('#ToDate').val();
+    var from = convertFormatDate($('#FromDate').val());
+    var to = convertFormatDate($('#ToDate').val());
     var department = $('#department').val();
     var type = $('#type').val();
     var agent = $('#InvTo').val();
