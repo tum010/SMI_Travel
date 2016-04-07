@@ -32,6 +32,7 @@
         
     </head>
     <body>
+        <fmt:setLocale value="en_US" scope="session"/>
         <!--Header-->         
         <div class="page-section-header">          
             <tiles:insertAttribute name="header" />

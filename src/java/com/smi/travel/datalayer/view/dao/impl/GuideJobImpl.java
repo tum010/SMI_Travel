@@ -37,8 +37,8 @@ public class GuideJobImpl implements GuideJobDao{
         DecimalFormat decimalFormat = new DecimalFormat(pattern);
         UtilityFunction util = new UtilityFunction();
         int no = 0;
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("yyyy-MM-dd"); 
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        System.out.println("=====query===== :"+"SELECT * FROM `guide_job_info` where tourdate = '"+ String.valueOf(df.format(util.convertStringToDate(tourdate)))+"' and code='"+tourID+"'");
         List<Object[]> QueryGuideJobList = session.createSQLQuery("SELECT * FROM `guide_job_info` where tourdate = '"+ String.valueOf(df.format(util.convertStringToDate(tourdate)))+"' and code='"+tourID+"'")
                 .addScalar("guide", Hibernate.STRING)
                 .addScalar("driver", Hibernate.STRING)

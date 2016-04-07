@@ -404,7 +404,8 @@
                                             <td>${status.count}</td>
                                             <fmt:formatDate value="${item.otherDate}" var="otherDate" pattern="dd-MM-yyyy" />
                                             <td class="text-center" id="otherdate-${item.id}">${otherDate}</td>
-                                            <td class="text-center">${item.otherTime}</td>
+                                            <fmt:formatDate var="otherTime" type="time" pattern="HH:mm" value="${item.otherTime}" />
+                                            <td class="text-center">${otherTime}</td>
                                             <td class="text-center money">${item.adQty + item.chQty + item.inQty }</td>
                                             <td><input type="hidden" id="row-${status.count}-couponname" name="row-${status.count}-couponname" value="${item.product.name}">${item.product.name}</td>
                                             <td class="text-center"><input  type="checkbox"   id="row-${status.count}-couponcheck" name="row-${status.count}-couponcheck"  ${checkedCoupon}></td>
