@@ -19,6 +19,7 @@ import com.smi.travel.util.UtilityFunction;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -380,6 +381,11 @@ public class OtherDetailController extends SMITravelController {
         }else{
             request.setAttribute(ISBILLSTATUS,0);   
         }
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        otherdate = (otherdate != null && !"".equalsIgnoreCase(otherdate) ? sdf.format(util.convertStringToDate(otherdate)) : "");
+        otherdateTo = (otherdateTo != null && !"".equalsIgnoreCase(otherdateTo) ? sdf.format(util.convertStringToDate(otherdateTo)) : "");
+        canceldate = (canceldate != null && !"".equalsIgnoreCase(canceldate) ? sdf.format(util.convertStringToDate(canceldate)) : "");
             
         request.setAttribute("isbill", isbill);
         request.setAttribute("status", status);
