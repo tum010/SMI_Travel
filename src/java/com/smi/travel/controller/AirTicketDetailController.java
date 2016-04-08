@@ -703,14 +703,13 @@ public class AirTicketDetailController extends SMITravelController {
         System.out.println("subFlightClass " + subFlightClass);
         MFlight mFlight = new MFlight();
         mFlight.setId(flightClass);
-        if(flightClass != null){
+        if(flightClass != null && !"".equalsIgnoreCase(flightClass)){
             airFlight.setMFlight(mFlight);
+        }else{
+            airFlight.setMFlight(null);
         }
         if (StringUtils.isNotEmpty(subFlightClass)) {
             airFlight.setSubFlightClass(subFlightClass);
-        }
-        if("".equalsIgnoreCase(flightClass)){
-            airFlight.setMFlight(null);
         }
         
         MTicketType mTicketType = new MTicketType();

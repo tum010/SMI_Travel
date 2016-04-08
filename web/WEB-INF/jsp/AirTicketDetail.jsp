@@ -1009,7 +1009,7 @@
                                 var check = getDate(start, stop);
                                 if (!check) {
                                     alert('Arrival date must over Departure date');
-//                                }
+                                }
                             });
                             $("body").not('.date').on('click', function () {
                                 console.log('on input');
