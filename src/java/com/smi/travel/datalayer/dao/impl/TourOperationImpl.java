@@ -32,7 +32,7 @@ public class TourOperationImpl implements TourOperationDao {
     private Transaction transaction;
     private static final int MAX_JOB = 100;
     private static final String TOURJOB_QUERY = "from DaytourBooking DB Where DB.tourDate >= :thisdate and DB.master.MBookingstatus.id = '1' or DB.master.MBookingstatus.id = '2' Group By DB.daytour.code , DB.tourDate order by DB.tourDate";
-    private static final String TOURDETAIL_QUERY = "from DaytourBooking DB where DB.daytour.id = :tourid and DB.tourDate = :date and DB.master.MBookingstatus.id = '1' or DB.master.MBookingstatus.id = '2' ";
+    private static final String TOURDETAIL_QUERY = "from DaytourBooking DB where DB.daytour.id = :tourid and DB.tourDate = :date and ( DB.master.MBookingstatus.id = '1' or DB.master.MBookingstatus.id = '2' )";
     private static final String TOUROPERATIONDETAIL_QUERY = "from TourOperationDesc T where T.daytour.id = :tourid and T.tourDate = :date";
     private static final String UPDATE_PICKUP_ORDER = "UPDATE DaytourBooking DB set DB.pickupOrder = :order Where DB.id = :bookid";
     private static final String DELETE_BOOKDRIVERQUERY = "DELETE FROM TourOperationDriver bp WHERE bp.id = :bookpriceid";
