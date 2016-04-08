@@ -453,7 +453,7 @@ public class LandDetailController extends SMITravelController {
         for (int i = 0; i < Dataindex.size(); i++) {
             for (int j = 0; j < data.size(); j++) {
                 if (Dataindex.get(i).equals(data.get(j).getOrderNo())) {
-                    System.out.println("order no : " + data.get(j).getOrderNo()+","+data.get(j).getId());
+//                    System.out.println("order no : " + data.get(j).getOrderNo()+","+data.get(j).getId());
                     if(!CheckDupilate(sortItinerary,data.get(j))){
                         sortItinerary.add(data.get(j));
                     }

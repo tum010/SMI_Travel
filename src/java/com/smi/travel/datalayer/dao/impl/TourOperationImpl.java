@@ -31,7 +31,7 @@ public class TourOperationImpl implements TourOperationDao {
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private static final int MAX_JOB = 100;
-    private static final String TOURJOB_QUERY = "from DaytourBooking DB Where DB.tourDate >= :thisdate and DB.master.MBookingstatus.id = '1' or DB.master.MBookingstatus.id = '2' Group By DB.daytour.code , DB.tourDate order by DB.tourDate";
+    private static final String TOURJOB_QUERY = "from DaytourBooking DB Where DB.tourDate >= :thisdate and (DB.master.MBookingstatus.id = '1' or DB.master.MBookingstatus.id = '2' ) Group By DB.daytour.code , DB.tourDate order by DB.tourDate";
     private static final String TOURDETAIL_QUERY = "from DaytourBooking DB where DB.daytour.id = :tourid and DB.tourDate = :date and ( DB.master.MBookingstatus.id = '1' or DB.master.MBookingstatus.id = '2' )";
     private static final String TOUROPERATIONDETAIL_QUERY = "from TourOperationDesc T where T.daytour.id = :tourid and T.tourDate = :date";
     private static final String UPDATE_PICKUP_ORDER = "UPDATE DaytourBooking DB set DB.pickupOrder = :order Where DB.id = :bookid";
@@ -45,6 +45,7 @@ public class TourOperationImpl implements TourOperationDao {
         Query q = session.createQuery(TOURJOB_QUERY).setParameter("thisdate", thisdate);
         q.setMaxResults(MAX_JOB);
         List<DaytourBooking> list = q.list();
+        System.out.println(" list ================ " + list.size());
         if (list.isEmpty()) {
             return null;
         } else {
@@ -264,7 +265,7 @@ public class TourOperationImpl implements TourOperationDao {
             for (int j = 0; j < data.size(); j++) {
                 int order = data.get(j).getPickupOrder() == null ? 0:data.get(j).getPickupOrder();
                 if (Dataindex.get(i).equals(order)) {
-                    System.out.println("order no : " + data.get(j).getPickupOrder());
+//                    System.out.println("order no : " + data.get(j).getPickupOrder());
                    if(!CheckDupilate(sortBooking,data.get(j))){
                         sortBooking.add(data.get(j));
                    }
@@ -297,7 +298,7 @@ public class TourOperationImpl implements TourOperationDao {
         for (int i = 0; i < Dataindex.size(); i++) {
             for (int j = 0; j < data.size(); j++) {
                 if (Dataindex.get(i).equals(Integer.parseInt(data.get(j).getId()))) {
-                    System.out.println("order no : " + data.get(j).getId());
+//                    System.out.println("order no : " + data.get(j).getId());
                     sortDriver.add(data.get(j));  
                 }
             }
@@ -335,7 +336,7 @@ public class TourOperationImpl implements TourOperationDao {
             for (int j = 0; j < data.size(); j++) {
                 System.out.println("compare : "+Dataindex.get(i)+" , "+data.get(j).getDescription());
                 if (Dataindex.get(i).equals(data.get(j).getDescription())) {
-                    System.out.println("order no : " + data.get(j).getId());
+//                    System.out.println("order no : " + data.get(j).getId());
                     sortDriver.add(data.get(j));  
                 }
             }
@@ -377,7 +378,7 @@ public class TourOperationImpl implements TourOperationDao {
         for(int i=0;i<data.size();i++){
             DaytourBooking compare = data.get(i);
             if(compare.getId().equalsIgnoreCase(newdata.getId())){
-                System.out.println("id : "+compare.getId() +" is dup");
+//                System.out.println("id : "+compare.getId() +" is dup");
                 return true;
             } 
         }

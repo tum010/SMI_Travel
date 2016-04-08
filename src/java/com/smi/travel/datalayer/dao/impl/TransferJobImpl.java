@@ -261,9 +261,9 @@ public class TransferJobImpl implements TransferJobDao {
         
         List Dataindex = new ArrayList();
         for (int i = 0; i < daytourList.size(); i++) {
-            System.out.println("data id : " + daytourList.get(i).getId());
+//            System.out.println("data id : " + daytourList.get(i).getId());
             if (daytourList.get(i).getId() == null) {
-                System.out.println("data id : null ");
+//                System.out.println("data id : null ");
                 return daytourList;
             }
         }
@@ -275,7 +275,7 @@ public class TransferJobImpl implements TransferJobDao {
         for (int i = 0; i < Dataindex.size(); i++) {
             for (int j = 0; j < daytourList.size(); j++) {
                 if (Dataindex.get(i).equals(daytourList.get(j).getId())) {
-                    System.out.println("order no : " + daytourList.get(j).getId());
+//                    System.out.println("order no : " + daytourList.get(j).getId());
                     sortDaytour.add(daytourList.get(j));
                 }
             }
