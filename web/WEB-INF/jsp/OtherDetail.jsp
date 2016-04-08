@@ -161,7 +161,7 @@
                                 <div class="form-group">
 
                                     <label for="effectivefrom" class="col-sm-3 control-label" > From </label>
-                                    <div class=' col-sm-6 input-group date' id='effectivefromClass' style="width: 140px">
+                                    <div class=' col-sm-6 input-group date' id='effectivetoClass' style="width: 140px">
                                         <c:set var="otherDate" value="${requestScope['otherdate']}" />
                                         <fmt:parseDate value="${otherDate}" var="otherDate" pattern="yyyy-MM-dd" />
                                         <fmt:formatDate value="${otherDate}" var="otherDate" pattern="dd-MM-yyyy" />
@@ -203,7 +203,7 @@
                                 <div class="form-group">
 
                                     <label for="effectivefrom" class="col-sm-3 control-label" > To </label>
-                                    <div class=' col-sm-6 input-group date' id='effectivefromClass' style="width: 140px">
+                                    <div class=' col-sm-6 input-group dateto' id='effectivefromClass' style="width: 140px">
                                         <c:set var="otherdateTo" value="${requestScope['otherdateTo']}" />
                                         <fmt:parseDate value="${otherdateTo}" var="otherdateTo" pattern="yyyy-MM-dd" />
                                         <fmt:formatDate value="${otherdateTo}" var="otherdateTo" pattern="dd-MM-yyyy" />
@@ -402,12 +402,12 @@
                                 <c:otherwise>
                                     <c:if test="${lockUnlockBooking == 0}">
                                         <c:if test="${isBillStatus == 0}">
-                                            <button type="submit"  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                            <button type="button" class="btn btn-success" onclick="saveOther()"><span class="fa fa-save"></span> Save</button>
                                         </c:if>
                                         <c:if test="${isBillStatus == 1}">
                                             <c:choose>
                                                 <c:when test="${enableSave == 0}">
-                                                    <button type="submit"  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                                    <button type="button" class="btn btn-success" onclick="saveOther()"><span class="fa fa-save"></span> Save</button>
                                                 </c:when>
                                                 <c:when test="${enableSave == 1}">
                                                     <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
@@ -634,8 +634,15 @@
                             }
                         });
                            
-                        $('.date').datetimepicker().change(function(){                          
+                        $('.date').datetimepicker().change(function(){
+                            $("#effectivefromClass").removeClass("has-error");
+                            $("#effectivetoClass").removeClass("has-error");
                             setupotherdatevalue('${booktype}');
+                        });
+                        
+                        $('.dateto').datetimepicker().change(function(){
+                            $("#effectivefromClass").removeClass("has-error");
+                            $("#effectivetoClass").removeClass("has-error");
                         });
                         
 //                        $("#otherdate").focusout(function() {
@@ -750,6 +757,7 @@
                         });
 
                         $("div").find('.date').datetimepicker();
+                        $("div").find('.dateto').datetimepicker();
                         $("div").find('.times').datetimepicker({
                             pickDate: false,
                             pickTime: true,

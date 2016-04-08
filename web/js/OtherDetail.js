@@ -48,13 +48,11 @@ function setupotherdatevalue(booktype) {
     var todaydate = document.getElementById('todaydate').value;
     var checkdate = document.getElementById('checkdate').value;
     if ((product_code !== '') && (otherdate !== '')) {
-        if (checkdate !== '') {
-            if (checkdate !== otherdate) {
+//        if (checkdate !== '') {
+//            if (checkdate !== otherdate) {
                 getvalueProduct('date', booktype);
-            }
-        } else if (otherdate !== todaydate) {
-            getvalueProduct('date', booktype);
-        }
+//            }
+//        } 
     }else if((product_code !== '') && (otherdate === '')){ 
         getvalueProduct('date', booktype);
     }else {
@@ -104,6 +102,10 @@ $(document).ready(function() {
                 $("#product_id").val(value.id);
                 code = $("#product_code").val().toUpperCase();
 
+            }
+            if(code === ''){
+                $("#product_code").val('');
+                $("#product_name").val('');
             }
         });
 
@@ -177,6 +179,10 @@ $(document).ready(function() {
                 code = $("#agent_code").val().toUpperCase();
 
             }
+            if(code === ''){
+                $("#agent_code").val('');
+                $("#agent_name").val('');
+            }
         });
     });
 
@@ -244,7 +250,7 @@ function getvalueProduct(order, booktype) {
                         '&type=' + 'getvalueProduct';
                 CallAjax(param, booktype);
             }
-        } else if (otherdate !== todaydate) {
+        } else {
             var servletName = 'BookOtherServlet';
             var servicesName = 'AJAXBean';
             var productid = document.getElementById('product_id').value;
@@ -407,6 +413,8 @@ function CallAjax(param, booktype) {
                         setformatNumber('in_price', path[5]);
                     } else if ((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2]) && (AD_PriceRP === path[3]) && (CH_PriceRP === path[4]) && (IN_PriceRP === path[5])) {
 
+                    } else if ((path[0] === '0') && (path[1] === '0') && (path[2] === '0') && (path[3] === '0') && (path[4] === '0') && (path[5] === '0')){
+                        
                     } else {
                         document.getElementById('path0').value = path[0];
                         document.getElementById('path1').value = path[1];
@@ -428,6 +436,8 @@ function CallAjax(param, booktype) {
                         setformatNumber('in_price', path[5]);
                     } else if ((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2]) && (AD_PriceRP === path[3]) && (CH_PriceRP === path[4]) && (IN_PriceRP === path[5])) {
 
+                    } else if ((path[0] === '0') && (path[1] === '0') && (path[2] === '0') && (path[3] === '0') && (path[4] === '0') && (path[5] === '0')){
+                        
                     } else {
                         document.getElementById('path0').value = path[0];
                         document.getElementById('path1').value = path[1];
@@ -648,6 +658,41 @@ function selectAll() {
 
 function removeAlertCheckbox() {
     document.getElementById('alertCheckbox').innerHTML = '';
+}
+
+function saveOther(){
+    var isSave = true;
+    var productCode = $("#product_code").val();
+    var otherDate = $("#otherdate").val();
+    var otherDateTo = $("#otherdateTo").val();
+    if(productCode === ''){
+        $('#otherForm').bootstrapValidator('revalidateField', 'product_code');
+        isSave = false;
+    }
+    if(otherDate !== '' && otherDateTo !== ''){
+        isSave = checkDateValue(otherDate,otherDateTo);
+    }
+    if(isSave){
+        document.getElementById("otherForm").submit();
+    }
+}
+
+function checkDateValue(inputFromDate,InputToDate){
+    var isSave = true;
+    var fromDate = (inputFromDate).split('-');
+    var toDate = (InputToDate).split('-');
+    if((parseInt(fromDate[2])) > (parseInt(toDate[2]))){
+        isSave = false;
+    }else if(((parseInt(fromDate[2])) >= (parseInt(toDate[2]))) && ((parseInt(fromDate[1])) > (parseInt(toDate[1])))){
+        isSave = false;
+    }else if(((parseInt(fromDate[2])) >= (parseInt(toDate[2]))) && ((parseInt(fromDate[1])) >= (parseInt(toDate[1]))) && (parseInt(fromDate[0])) > (parseInt(toDate[0]))){
+        isSave = false;
+    }
+    if(!isSave){
+        $("#effectivefromClass").addClass("has-error");
+        $("#effectivetoClass").addClass("has-error");
+    }
+    return isSave;
 }
 
 

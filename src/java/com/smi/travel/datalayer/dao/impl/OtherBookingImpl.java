@@ -113,6 +113,13 @@ public class OtherBookingImpl implements OtherBookingDao{
     public String saveStockDetailOther(OtherBooking otherbook, SystemUser user, String addticket, String adTicket, String chTicket, String infTicket, String itemid) {
         util = new UtilityFunction();
         String result = "";
+        adTicket = (!"".equalsIgnoreCase(adTicket) ? adTicket : "0");
+        chTicket = (!"".equalsIgnoreCase(chTicket) ? chTicket : "0");
+        infTicket = (!"".equalsIgnoreCase(infTicket) ? infTicket : "0");
+        System.out.println("=====adTicket===== :"+adTicket);
+        System.out.println("=====chTicket===== :"+chTicket);
+        System.out.println("=====infTicket===== :"+infTicket);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         try {       
             Session session = this.sessionFactory.openSession();
 //            transaction = session.beginTransaction();
