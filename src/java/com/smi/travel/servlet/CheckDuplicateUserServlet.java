@@ -27,6 +27,8 @@ public class CheckDuplicateUserServlet implements AbstractAJAXServlet{
         String operationTableId = request.getParameter("operationTableId");
         String operationAction = request.getParameter("operationAction");
         String operationUser = request.getParameter("operationUser");
+        String operationDate = request.getParameter("operationDate");
+        String type = request.getParameter("type");
         Map result = new HashMap();
         
         result.put("servletName", servletName);
@@ -34,6 +36,8 @@ public class CheckDuplicateUserServlet implements AbstractAJAXServlet{
         result.put("operationTableId", operationTableId);
         result.put("operationAction", operationAction);
         result.put("operationUser", operationUser);
+        result.put("operationDate", operationDate);
+        result.put("type", type);
                  
         return result; 
     }

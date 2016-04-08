@@ -1223,23 +1223,47 @@ public class AJAXBean extends AbstractBean implements
                 }
             } 
         }else if(CHECKDUPLICATEUSER.equalsIgnoreCase(servletName)){
-            String operationTable = map.get("operationTable").toString();
-            String operationTableId = map.get("operationTableId").toString();
-            String operationAction = map.get("operationAction").toString();
-            String operationUser = map.get("operationUser").toString();
-            System.out.println("operatonTable : "+operationTable);
-            System.out.println("operatonTableId : "+operationTableId);
-            System.out.println("operationAction : "+operationAction);
-            System.out.println("operationUser : "+operationUser);
-            if("".equalsIgnoreCase(operationAction) && !"".equalsIgnoreCase(operationTable) && !"".equalsIgnoreCase(operationTableId)){
-                CheckDuplicateUser cdu = new CheckDuplicateUser();
-                cdu.setOperationTable(operationTable);
-                cdu.setTableId(operationTableId);
-                cdu.setOperationUser(operationUser);
-                int clearDuplicateUser = checkDuplicateUserDao.updateOperationNull(cdu);
-                result = (clearDuplicateUser == 1 ? "success" : "fail");
-                System.out.println("clearDuplicateUser : "+clearDuplicateUser);
-            }    
+            if("updateOperationNull".equalsIgnoreCase(type)){
+                String operationTable = map.get("operationTable").toString();
+                String operationTableId = map.get("operationTableId").toString();
+                String operationAction = map.get("operationAction").toString();
+                String operationUser = map.get("operationUser").toString();
+                System.out.println("operatonTable : "+operationTable);
+                System.out.println("operatonTableId : "+operationTableId);
+                System.out.println("operationAction : "+operationAction);
+                System.out.println("operationUser : "+operationUser);
+                if("".equalsIgnoreCase(operationAction) && !"".equalsIgnoreCase(operationTable) && !"".equalsIgnoreCase(operationTableId)){
+                    CheckDuplicateUser cdu = new CheckDuplicateUser();
+                    cdu.setOperationTable(operationTable);
+                    cdu.setTableId(operationTableId);
+                    cdu.setOperationUser(operationUser);
+                    int clearDuplicateUser = checkDuplicateUserDao.updateOperationNull(cdu);
+                    result = (clearDuplicateUser == 1 ? "success" : "fail");
+                    System.out.println("clearDuplicateUser : "+clearDuplicateUser);
+                }  
+            
+            } else if("checkOperationUser".equalsIgnoreCase(type)){
+                String operationTable = map.get("operationTable").toString();
+                String operationTableId = map.get("operationTableId").toString();
+                String operationDate = map.get("operationDate").toString();
+                String operationUser = map.get("operationUser").toString();
+                
+                UtilityFunction util = new UtilityFunction();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+                result = "fail";
+                CheckDuplicateUser chuSession = new CheckDuplicateUser();
+                chuSession.setOperationTable(operationTable);
+                chuSession.setTableId(operationTableId);
+                               
+                chuSession.setOperationDate((df.format(util.convertStringToDateTime(operationDate))));
+                chuSession.setOperationUser(operationUser);               
+                
+                CheckDuplicateUser cdu = checkDuplicateUserDao.CheckAndUpdateOperationDetail(chuSession, 2);
+                if(cdu.getIsDuplicateUser() == 0){
+                    result = "success";          
+                }              
+            }
+              
         }
         return result;
     }
