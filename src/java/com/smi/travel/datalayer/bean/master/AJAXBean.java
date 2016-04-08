@@ -578,6 +578,7 @@ public class AJAXBean extends AbstractBean implements
                 result = buildTourPriceListHTML(pricelist);
             }
         } else if (TRANSFERJOB.equalsIgnoreCase(servletName)) {
+            UtilityFunction util = new UtilityFunction();
             String TourID = null;
             String TourCode = null;
             String TourDate = null;
@@ -585,24 +586,24 @@ public class AJAXBean extends AbstractBean implements
             String Other = null;
             if ("filterTour".equalsIgnoreCase(type)) {
                 TourDate = map.get("date").toString();
-                List<DaytourBooking> ListBook = transferJobdao.filterTourFromDate(TourDate);
+                List<DaytourBooking> ListBook = transferJobdao.filterTourFromDate(util.covertStringDateToFormatYMD(TourDate));
                 result = buildTourListHTML(ListBook);
             } else if ("filterPlace".equalsIgnoreCase(type)) {
                 TourID = map.get("tourid").toString();
                 TourDate = map.get("date").toString();
-                List<Place> ListPlace = transferJobdao.filterPlaceFromDateAndTour(TourDate, TourID);
+                List<Place> ListPlace = transferJobdao.filterPlaceFromDateAndTour(util.covertStringDateToFormatYMD(TourDate), TourID);
                 result = buildTourPlaceListHTML(ListPlace);
             } else if ("filterOther".equalsIgnoreCase(type)) {
                 TourID = map.get("tourid").toString();
                 TourDate = map.get("date").toString();
-                List<String> ListOther = transferJobdao.filterPlaceOtherFromDateAndTour(TourDate, TourID);
+                List<String> ListOther = transferJobdao.filterPlaceOtherFromDateAndTour(util.covertStringDateToFormatYMD(TourDate), TourID);
                 result = buildTourPlaceOtherListHTML(ListOther);
             } else if ("getjobDetail".equalsIgnoreCase(type)) {
                 TourCode = map.get("tourcode").toString();
                 TourDate = map.get("date").toString();
                 Place = map.get("place").toString();
                 Other = map.get("other").toString();
-                List<DaytourBooking> Booklist = transferJobdao.getTransferjobData(TourCode, TourDate, Place, Other);
+                List<DaytourBooking> Booklist = transferJobdao.getTransferjobData(TourCode, util.covertStringDateToFormatYMD(TourDate), Place, Other);
                 result = buildJobDetailHTML(Booklist);
             }
         } else if (DAYTOURCOMM.equalsIgnoreCase(servletName)) {
@@ -1261,6 +1262,8 @@ public class AJAXBean extends AbstractBean implements
                 CheckDuplicateUser cdu = checkDuplicateUserDao.CheckAndUpdateOperationDetail(chuSession, 2);
                 if(cdu.getIsDuplicateUser() == 0){
                     result = "success";          
+                }else{
+                    result = cdu.getOperationUser();        
                 }              
             }
               

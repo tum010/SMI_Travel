@@ -863,13 +863,59 @@ function changeFormatExRateNumber(id) {
 
 function DeleteDetailBill(rowID, code) {
     $("#idDeleteDetailBillable").val(rowID);
-    if (code !== "") {
-        $("#DeleteDetailBillable").text('Are you sure to delete detail billable : ' + code + '..?');
-    } else {
-        $("#DeleteDetailBillable").text('Are you sure to delete detail billable ?');
-    }
-}
+    var operationAction = $("#action").val();
+    var operationTable = $("#operationTable").val();
+    var operationTableId = $("#operationTableId").val();
+    var operationUser = $("#username").val();
+    var operationDate = $("#operationDate").val();
+    checkDuplicateUserActionDelete(operationTable, operationTableId, operationAction, operationUser,operationDate,code);
 
+}   
+    function checkDuplicateUserActionDelete(operationTable, operationTableId, operationAction, operationUser ,operationDate,code) {
+        var servletName = 'CheckDuplicateUserServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&operationTable=' + operationTable +
+                '&operationTableId=' + operationTableId +
+                '&operationAction=' + operationAction +
+                '&operationUser=' + operationUser +
+                '&operationDate=' + operationDate + 
+                '&type=' + 'checkOperationUser';
+        callAjaxCheckDuplicateUserActionDelete(param,code);
+    }
+
+    function callAjaxCheckDuplicateUserActionDelete(param,code) {
+        var url = 'AJAXServlet';
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function (msg) {
+                    if(msg === 'success'){
+                        if (code !== "") {
+                            $("#DeleteDetailBillable").text('Are you sure to delete detail billable : ' + code + '..?');
+                        } else {
+                            $("#DeleteDetailBillable").text('Are you sure to delete detail billable ?');
+                        }
+                    }else{
+                        var username = msg;
+                        $("#operationMessage").text("User " + username + " is using information. Do you want to continue ?");
+                        $("#operationModal").modal("show");
+                    }
+                }, error: function (msg) {
+                    console.log('update duplicate user fail');
+                }
+            });
+        } catch (e) {
+            alert(e);
+            console.log('update duplicate user fail');
+        }
+    }
+    
 function DisableVoidInvoice() {
     var InvNo = document.getElementById('InvNo');
     document.getElementById('disableVoidModal').innerHTML = "Are you sure to delete booking other : " + InvNo.value + " ?";

@@ -4075,7 +4075,7 @@
                             $('#DeleteReceiptCredit').modal('show');
                         }
                     }else{
-                        var username = $("#operationUser").val();
+                        var username = msg;
                         $("#operationMessage").text("User " + username + " is using information. Do you want to continue ?");
                         $("#operationModal").modal("show");
                     }
