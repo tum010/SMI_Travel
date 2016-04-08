@@ -291,7 +291,11 @@
                             <td>${stockDetail.typeName}</td>
                             <td>${stockDetail.refNo}</td>                                
                             <td>${stockDetail.pickup}</td>
-                            <td><fmt:formatDate value="${stockDetail.pickupDate}" var="pickupDate" pattern="dd-MM-yyyy" />${pickupDate}</td>
+                            <td>
+                                <c:set var="pickupDate" value="${stockDetail.pickupDate}" />
+                                <fmt:parseDate value="${pickupDate}" var="pickupDate" pattern="yyyy-MM-dd" />
+                                <fmt:formatDate value="${pickupDate}" var="pickupDate" pattern="dd-MM-yyyy" />
+                                ${pickupDate}</td>
                             <td>
                                 <c:set var="pay" value="" />
                                 <c:if test="${stockDetail.payStatusName == 0}">
