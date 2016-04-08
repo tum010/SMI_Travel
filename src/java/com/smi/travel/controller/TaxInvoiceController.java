@@ -285,24 +285,11 @@ public class TaxInvoiceController extends SMITravelController {
             checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvoice.getId(),1);
                        
         } else if("deleteTaxInvoiceDetail".equalsIgnoreCase(action)){
-            String taxInvoiceDetailId = request.getParameter("taxInvoiceDetailId");
-            //Duplicate User
-            if(!"".equalsIgnoreCase(taxInvId) && taxInvId != null){
-                checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvId,2);
-                System.out.println("=====checkDuplicateUser===== :"+checkDuplicateUser);
-                if("fail".equalsIgnoreCase(checkDuplicateUser)){
-                    request.setAttribute("page", callPageFrom);
-                    return new ModelAndView(new RedirectView("TaxInvoice"+callPageFrom+".smi?action=search&TaxInvNo="+taxInvNo+"&page="+page, true));
-                
-                }
-            }          
+            String taxInvoiceDetailId = request.getParameter("taxInvoiceDetailId");         
             TaxInvoiceDetail taxInvoiceDetail = new TaxInvoiceDetail();
             taxInvoiceDetail.setId(taxInvoiceDetailId);
             result = taxInvoiceService.DeleteTaxInvoiceInvoiceDetail(taxInvoiceDetail);
             System.out.println(result);
-            
-            //Duplicate User
-            checkDuplicateUser = checkDuplicateUser(request,response,session,taxInvId,1);
             
         } else if("enableVoid".equalsIgnoreCase(action)){
             TaxInvoice taxInvoice = new TaxInvoice();
