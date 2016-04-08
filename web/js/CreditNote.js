@@ -472,50 +472,88 @@ function setDeletRow(btn) {
 }
 
 function deleteCreditNotedetail() {
-    var row = $('#ItemCreditTable tbody tr:nth-child(' + (rowIndex + 1) + ')')
-    var id = row.find("[name='id']").val();
     var url = 'AJAXServlet';
-    var servletName = 'CreditNoteServlet';
+    var servletName = 'CheckDuplicateUserServlet';
     var servicesName = 'AJAXBean';
+    
+    var operationDate = document.getElementById('operationDate').value;
+    var operationUser = document.getElementById('operationUser').value;
+    var operationTable = document.getElementById('operationTable').value;
+    var operationTableId = document.getElementById('operationTableId').value;
+    
     var param = 'action=' + 'text' +
             '&servletName=' + servletName +
             '&servicesName=' + servicesName +
-            '&type=delete' +
-            '&cnDetailId=' + id;
-    try {
-        $.ajax({
+            '&operationTable=' + operationTable +
+            '&operationTableId=' + operationTableId +
+            '&operationDate=' + operationDate +
+            '&operationUser=' + operationUser +
+            '&type=checkOperationUser';
+    
+   try {
+	$.ajax({
             type: "POST",
             url: url,
             cache: false,
             data: param,
-            beforeSend: function() {
-            },
             success: function(msg) {
-                var result = JSON.parse(msg);
-                if (result) {
-                    row.remove();
-                    $("#alertTextSuccess").html("Delete success.");
-                    $("#alertSuccess").show();
-                    $("#alertFail").hide();
-                    $('#DeleteDetail').modal('hide');
-                    if ($('#ItemCreditTable tbody tr').length < 1) {
-                        $("#addRow").removeClass("hide");
-                        $("#addRow").addClass("show");
-                    }
-                } else {
-                    $("#alertTextFail").html("Delete Fail.");
-                    $("#alertFail").show();
-                    $("#alertSuccess").hide();
-                    $('#DeleteDetail').modal('hide');
-                }
+                if(msg === 'success'){
+                    var row = $('#ItemCreditTable tbody tr:nth-child(' + (rowIndex + 1) + ')')
+                    var id = row.find("[name='id']").val(); 
+                    servletName = 'CreditNoteServlet';
+                    param = 'action=' + 'text' +
+                            '&servletName=' + servletName +
+                            '&servicesName=' + servicesName +
+                            '&type=delete' +
+                            '&cnDetailId=' + id;     
+                    try {      
+                        $.ajax({
+                            type: "POST",
+                            url: url,
+                            cache: false,
+                            data: param,
+                            beforeSend: function() {
+                            },
+                            success: function(msg) {
+                                var result = JSON.parse(msg);
+                                if (result) {
+                                    row.remove();
+                                    $("#alertTextSuccess").html("Delete success.");
+                                    $("#alertSuccess").show();
+                                    $("#alertFail").hide();
+                                    $('#DeleteDetail').modal('hide');
+                                    if ($('#ItemCreditTable tbody tr').length < 1) {
+                                        $("#addRow").removeClass("hide");
+                                        $("#addRow").addClass("show");
+                                    }
+                                } else {
+                                    $("#alertTextFail").html("Delete Fail.");
+                                    $("#alertFail").show();
+                                    $("#alertSuccess").hide();
+                                    $('#DeleteDetail').modal('hide');
+                                }
 
+                            }, error: function(msg) {
+                                console.log('auto ERROR');
+                            }
+                        });
+                    } catch (e) {
+                        alert(e);
+                    }
+                }else{
+                    var username = msg;
+                    $("#operationMessage").text("User " + username + " is using information. Do you want to continue ?");
+                    $("#operationModal").modal("show");
+                }
             }, error: function(msg) {
-                console.log('auto ERROR');
+                    console.log('update duplicate user fail');
             }
         });
     } catch (e) {
-        alert(e);
+            alert(e);
+            console.log('update duplicate user fail');
     }
+    
 }
 
 function enableVoid() {
@@ -672,7 +710,8 @@ function clearDuplicateUser(operationTable,operationTableId,operationAction,oper
             '&operationTable=' + operationTable +
             '&operationTableId=' + operationTableId +
             '&operationAction=' + operationAction +
-            '&operationUser=' + operationUser;
+            '&operationUser=' + operationUser +
+            '&type=updateOperationNull';
     callAjaxClearDuplicateUser(param);
 }
 

@@ -2605,10 +2605,10 @@
     }
     
     function deleteTaxInvoiceDetailList(){
-        var taxInvId = document.getElementById('TaxInvId').value;
-        var taxInvNo = document.getElementById('TaxInvNo').value;
         var operationDate = document.getElementById('operationDate').value;
         var operationUser = document.getElementById('operationUser').value;
+        var operationTable = document.getElementById('operationTable').value;
+        var operationTableId = document.getElementById('operationTableId').value;
         var id = document.getElementById('delTaxDetailId').value;
         var row = document.getElementById('delTaxDetailRow').value;
         var count = parseInt(document.getElementById('countTaxInvoice').value);
@@ -2625,29 +2625,62 @@
             disbledFieldSearch();
 //            $("#countTaxInvoice").val(count+1);
         } else {
-            $.ajax({
-                url: 'TaxInvoice'+'${page}'+'.smi?action=deleteTaxInvoiceDetail',
-                type: 'get',
-                data: {taxInvoiceDetailId: id, TaxInvId: taxInvId, TaxInvNo: taxInvNo, operationDate: operationDate, operationUser: operationUser},
-                dataType: 'text',
-                success: function () {
-                    $("#product" + row).parent().parent().remove();
-//                    AddRowTaxInvoiceTable(count++);
-                    var rowAll = $("#TaxInvoiceTable tr").length;
-                    if (rowAll <= 1) {
-                        $("#tr_TaxInvoiceDetailAddRow").removeClass("hide");
-                        $("#tr_TaxInvoiceDetailAddRow").addClass("show");
+            var url = 'AJAXServlet';
+            var servletName = 'CheckDuplicateUserServlet';
+            var servicesName = 'AJAXBean';
+            var param = 'action=' + 'text' +
+                    '&servletName=' + servletName +
+                    '&servicesName=' + servicesName +
+                    '&operationTable=' + operationTable +
+                    '&operationTableId=' + operationTableId +
+                    '&operationDate=' + operationDate +
+                    '&operationUser=' + operationUser +
+                    '&type=checkOperationUser';
+            try {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    cache: false,
+                    data: param,
+                    success: function(msg) {
+                        if(msg === 'success'){
+                            $.ajax({
+                                url: 'TaxInvoice'+'${page}'+'.smi?action=deleteTaxInvoiceDetail',
+                                type: 'get',
+                                data: {taxInvoiceDetailId: id},
+                                dataType: 'text',
+                                success: function () {
+                                    $("#product" + row).parent().parent().remove();
+                //                    AddRowTaxInvoiceTable(count++);
+                                    var rowAll = $("#TaxInvoiceTable tr").length;
+                                    if (rowAll <= 1) {
+                                        $("#tr_TaxInvoiceDetailAddRow").removeClass("hide");
+                                        $("#tr_TaxInvoiceDetailAddRow").addClass("show");
+                                    }
+                                    $('#TaxInvoiceTable tr input:last').removeClass('lastrow');
+                                    $('#TaxInvoiceTable input:last').addClass('lastrow');
+                                    disbledFieldSearch();
+                //                    $("#countTaxInvoice").val(count+1);
+                                },
+                                error: function () {
+                                    console.log("error");
+                                    result =0;
+                                }
+                            });
+                        }else{
+                            var username = msg;
+                            $("#operationMessage").text("User " + username + " is using information. Do you want to continue ?");
+                            $("#operationModal").modal("show");
+                        }
+                    }, error: function(msg) {
+                        console.log('update duplicate user fail');
                     }
-                    $('#TaxInvoiceTable tr input:last').removeClass('lastrow');
-                    $('#TaxInvoiceTable input:last').addClass('lastrow');
-                    disbledFieldSearch();
-//                    $("#countTaxInvoice").val(count+1);
-                },
-                error: function () {
-                    console.log("error");
-                    result =0;
-                }
-            }); 
+                });
+            } catch (e) {
+                alert(e);
+                console.log('update duplicate user fail');
+            }
+                        
         }    
         $('#delTaxInvoiceDetailModal').modal('hide');
         CalculateAmountTotal();
@@ -2896,7 +2929,8 @@
                 '&operationTable=' + operationTable +
                 '&operationTableId=' + operationTableId +
                 '&operationAction=' + operationAction +
-                '&operationUser=' + operationUser;
+                '&operationUser=' + operationUser +
+                '&type=updateOperationNull'
         callAjaxClearDuplicateUser(param);
     }
 
