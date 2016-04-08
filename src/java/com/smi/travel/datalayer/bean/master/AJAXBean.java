@@ -271,16 +271,26 @@ public class AJAXBean extends AbstractBean implements
             } else if ("saveCustomer".equalsIgnoreCase(type)) {
                 Customer customer = new Customer();
                 String initialID = map.get("initialID").toString();
-                customer.setFirstName((map.get("first").toString()).toUpperCase());
-                customer.setLastName((map.get("last").toString()).toUpperCase());
-                customer.setAddress((map.get("address").toString()).toUpperCase());
-                if (map.get("initialID") != null) {
-                    MInitialname initialname = new MInitialname();
-                    initialname.setId(initialID);
-                    customer.setMInitialname(initialname);
+                String firstName = map.get("first").toString();
+                String lastName = map.get("last").toString();
+                String address = map.get("address").toString();
+                String tel = map.get("address").toString();
+                if(!"".equalsIgnoreCase(firstName) && !"".equalsIgnoreCase(lastName)){
+                   customer.setFirstName((map.get("first").toString()).toUpperCase());
+                    customer.setLastName((map.get("last").toString()).toUpperCase());
+                    customer.setAddress((map.get("address").toString()).toUpperCase());
+                    if (map.get("initialID") != null) {
+                        MInitialname initialname = new MInitialname();
+                        initialname.setId(initialID);
+                        customer.setMInitialname(initialname);
+                    }
+                    customer.setTel(map.get("tel").toString());
+                    result = customerdao.insertCustomerAjax(customer); 
+                
+                }else{
+                    result = "fail";
                 }
-                customer.setTel(map.get("tel").toString());
-                result = customerdao.insertCustomerAjax(customer);
+                
                 //result = 1;
             } else if ("getCustomerList".equalsIgnoreCase(type)) {
                 Customer customer = new Customer();
