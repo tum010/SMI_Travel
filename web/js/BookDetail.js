@@ -593,45 +593,58 @@ function saveCustomer() {
 
 function CallAjax(param) {
     var url = 'AJAXServlet';
+    var firstName = $("#input-first-name").val();
+    var lastName = $("#input-last-name").val();
+    $("#input-first-name").css("borderColor","")
+    $("#input-last-name").css("borderColor","")
+    if(firstName !== '' && lastName !== ''){
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function (msg) {
+                    console.log(msg);
+                    if(msg !== 'fail'){
+                        var str = msg.split("|");
+                        var id = str[0];
+                        var code = str[1];
+        //                alert(code);
+                        var initia = str[2];
+                        var fname = str[3];
+                        var lname = str[4];
+                        var address = str[5];
+                        var tel = str[6];
+                        $("#leaderId").val(id);
+                        $("#FamilyLeaderCodeVal").val(code);
+                        $("#initialname").val(initia);
+                        $("#firstname").val(fname);
+                        $("#lastname").val(lname);
+                        $("#address").val(address);
+                        $("#tel").val(tel);
+                        alert("Save OK");
+
+                        $("#FamilyLeaderModal").modal('hide');
+                        add();
+
+                    }else{
+                        add();
+                    }    
+
+                    //$("#FamilyLeaderAjaxTable tbody").empty().append(msg);
+                    //$("#FamilyLeaderAjaxModal").modal();
+                }, error: function (msg) {
+                    alert('error');
+                }
+            });
+        } catch (e) {
+            alert(e);
+        }
     
-    try {
-        $.ajax({
-            type: "POST",
-            url: url,
-            cache: false,
-            data: param,
-            success: function (msg) {
-                console.log(msg);
-                var str = msg.split("|");
-                var id = str[0];
-                var code = str[1];
-//                alert(code);
-                var initia = str[2];
-                var fname = str[3];
-                var lname = str[4];
-                var address = str[5];
-                var tel = str[6];
-                $("#leaderId").val(id);
-                $("#FamilyLeaderCodeVal").val(code);
-                $("#initialname").val(initia);
-                $("#firstname").val(fname);
-                $("#lastname").val(lname);
-                $("#address").val(address);
-                $("#tel").val(tel);
-                alert("Save OK");
-                
-                $("#FamilyLeaderModal").modal('hide');
-                add();
-
-                //$("#FamilyLeaderAjaxTable tbody").empty().append(msg);
-                //$("#FamilyLeaderAjaxModal").modal();
-            }, error: function (msg) {
-                alert('error');
-            }
-        });
-    } catch (e) {
-        alert(e);
+    }else{
+        $("#input-first-name").css("borderColor","red")
+        $("#input-last-name").css("borderColor","red")
     }
-
 
 }
