@@ -43,50 +43,50 @@
                 <c:set var="typeDepartment" value="Wendy" />
                 <c:set var="typeBooking" value="I" />
                 <h4><b>Finance & Cashier - Receipt Temp Wendy   <font style="color: red">${receiptVoid}</font></b></h4>
-                <c:set var="panelheader" value="wendyheader"/>
-                <c:set var="panelborder" value="wendyborder"/>
-            </c:when>
-            <c:when test="${fn:contains(page , 'WV')}">
-                <c:set var="typeReceipt" value="V" />
-                <c:set var="typeDepartment" value="Wendy" />
-                <c:set var="typeBooking" value="I" />
+                        <c:set var="panelheader" value="wendyheader"/>
+                        <c:set var="panelborder" value="wendyborder"/>
+                    </c:when>
+                    <c:when test="${fn:contains(page , 'WV')}">
+                        <c:set var="typeReceipt" value="V" />
+                        <c:set var="typeDepartment" value="Wendy" />
+                        <c:set var="typeBooking" value="I" />
                 <h4><b>Finance & Cashier - Receipt Vat Wendy   <font style="color: red">${receiptVoid}</font></b></h4>
-                <c:set var="panelheader" value="wendyheader"/>
-                <c:set var="panelborder" value="wendyborder"/>
-            </c:when>    
-            <c:when test="${fn:contains(page , 'OT')}">
-                <c:set var="typeReceipt" value="T" />
-                <c:set var="typeDepartment" value="Outbound" />
-                <c:set var="typeBooking" value="O" />
+                        <c:set var="panelheader" value="wendyheader"/>
+                        <c:set var="panelborder" value="wendyborder"/>
+                    </c:when>    
+                    <c:when test="${fn:contains(page , 'OT')}">
+                        <c:set var="typeReceipt" value="T" />
+                        <c:set var="typeDepartment" value="Outbound" />
+                        <c:set var="typeBooking" value="O" />
                 <h4><b>Finance & Cashier - Receipt Temp Outbound   <font style="color: red">${receiptVoid}</font></b></h4>
-                <c:set var="panelheader" value="outboundheader"/>
-                <c:set var="panelborder" value="outboundborder"/>
-            </c:when>    
-            <c:when test="${fn:contains(page , 'OV')}">
-                <c:set var="typeReceipt" value="V" />
-                <c:set var="typeDepartment" value="Outbound" />
-                <c:set var="typeBooking" value="O" />
+                        <c:set var="panelheader" value="outboundheader"/>
+                        <c:set var="panelborder" value="outboundborder"/>
+                    </c:when>    
+                    <c:when test="${fn:contains(page , 'OV')}">
+                        <c:set var="typeReceipt" value="V" />
+                        <c:set var="typeDepartment" value="Outbound" />
+                        <c:set var="typeBooking" value="O" />
                 <h4><b>Finance & Cashier - Receipt Vat Outbound   <font style="color: red">${receiptVoid}</font></b></h4>
-                <c:set var="panelheader" value="outboundheader"/>
-                <c:set var="panelborder" value="outboundborder"/>
-            </c:when>    
-            <c:when test="${fn:contains(page , 'IT')}">
-                <c:set var="typeReceipt" value="T" />
-                <c:set var="typeDepartment" value="Inbound" />
-                <c:set var="typeBooking" value="I" />
+                        <c:set var="panelheader" value="outboundheader"/>
+                        <c:set var="panelborder" value="outboundborder"/>
+                    </c:when>    
+                    <c:when test="${fn:contains(page , 'IT')}">
+                        <c:set var="typeReceipt" value="T" />
+                        <c:set var="typeDepartment" value="Inbound" />
+                        <c:set var="typeBooking" value="I" />
                 <h4><b>Finance & Cashier - Receipt Temp Inbound   <font style="color: red">${receiptVoid}</font></b></h4>
-                <c:set var="panelheader" value="inboundborderheader"/>
-                <c:set var="panelborder" value="inboundborder"/>
-            </c:when>   
-            <c:when test="${fn:contains(page , 'IV')}">
-                <c:set var="typeReceipt" value="V" />
-                <c:set var="typeDepartment" value="Inbound" />
-                <c:set var="typeBooking" value="I" />
+                        <c:set var="panelheader" value="inboundborderheader"/>
+                        <c:set var="panelborder" value="inboundborder"/>
+                    </c:when>   
+                    <c:when test="${fn:contains(page , 'IV')}">
+                        <c:set var="typeReceipt" value="V" />
+                        <c:set var="typeDepartment" value="Inbound" />
+                        <c:set var="typeBooking" value="I" />
                 <h4><b>Finance & Cashier - Receipt Vat Inbound   <font style="color: red">${receiptVoid}</font></b></h4>
-                <c:set var="panelheader" value="inboundborderheader"/>
-                <c:set var="panelborder" value="inboundborder"/>
-            </c:when>    
-        </c:choose>
+                        <c:set var="panelheader" value="inboundborderheader"/>
+                        <c:set var="panelborder" value="inboundborder"/>
+                    </c:when>    
+                </c:choose>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-book"></i>Finance & Cashier</a></li>          
@@ -153,148 +153,148 @@
                 <div role="tabpanel">
                     <!-- Nav tabs -->
 
-<!--                    <ul class="nav nav-tabs " role="tablist">
-                        <li role="presentation" class="active "><a href="#inv" aria-controls="inv" role="tab" data-toggle="tab">INV</a></li>
-                        <li role="presentation" class=""><a href="#ref" aria-controls="ref" role="tab" data-toggle="tab">REF</a></li>
-                        <li role="presentation" class=""><a href="#com" aria-controls="com" role="tab" data-toggle="tab">COM</a></li>
-                        <h4><a class="col-xs-9 text-right" data-toggle="collapse" href="#collapseTab" aria-expanded="false" aria-controls="collapseTab">
-                                <span id="arrowReceipt" class="arrowReceipt glyphicon glyphicon-chevron-up"></span>
-                            </a></h4>
-                    </ul>-->
+                    <!--                    <ul class="nav nav-tabs " role="tablist">
+                                            <li role="presentation" class="active "><a href="#inv" aria-controls="inv" role="tab" data-toggle="tab">INV</a></li>
+                                            <li role="presentation" class=""><a href="#ref" aria-controls="ref" role="tab" data-toggle="tab">REF</a></li>
+                                            <li role="presentation" class=""><a href="#com" aria-controls="com" role="tab" data-toggle="tab">COM</a></li>
+                                            <h4><a class="col-xs-9 text-right" data-toggle="collapse" href="#collapseTab" aria-expanded="false" aria-controls="collapseTab">
+                                                    <span id="arrowReceipt" class="arrowReceipt glyphicon glyphicon-chevron-up"></span>
+                                                </a></h4>
+                                        </ul>-->
 
-<!--                     Tab BL 
-                    <div class="panel panel-default ${panelborder}">
-                        <div class="panel-body">
-                            <div class="tab-content collapse in" id="collapseTab" aria-expanded="false">
-                                <div role="tabpanel" class="tab-pane hidden active" id="inv">
-                                    <div class="col-xs-12" style="padding-top: 20px; padding-left: 50px;padding-right: 50px">
-                                        <div class="col-xs-1 text-right" style="width: 120px">
-                                            <label class="control-label text-right">Invoice No </label>
-                                        </div>
-                                        <div class="col-xs-1 form-group" style="width: 200px" id="invoicenopanel">
-                                            <div class="input-group">
-                                                <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" value="" onkeydown="invoicenoValidate()">
+                    <!--                     Tab BL 
+                                        <div class="panel panel-default ${panelborder}">
+                                            <div class="panel-body">
+                                                <div class="tab-content collapse in" id="collapseTab" aria-expanded="false">
+                                                    <div role="tabpanel" class="tab-pane hidden active" id="inv">
+                                                        <div class="col-xs-12" style="padding-top: 20px; padding-left: 50px;padding-right: 50px">
+                                                            <div class="col-xs-1 text-right" style="width: 120px">
+                                                                <label class="control-label text-right">Invoice No </label>
+                                                            </div>
+                                                            <div class="col-xs-1 form-group" style="width: 200px" id="invoicenopanel">
+                                                                <div class="input-group">
+                                                                    <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" value="" onkeydown="invoicenoValidate()">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload1"  class="fa fa-spinner fa-spin hidden"></i></div>
+                                                            <div class="col-xs-1 text-left"  style="width: 100px">
+                                                                <button style="height:30px" type="button"  id="ButtonSearchInvoice"  name="ButtonSearchInvoice" onclick="searchInvoice();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
+                                                            </div>
+                                                            Invoice Table
+                                                            <div class="row" style="padding-left: 10px;padding-right: 10px">
+                                                                <table id="InvoiceListTable" class="display" cellspacing="0" width="100%">
+                                                                    <thead>
+                                                                        <tr class="datatable-header" >
+                                                                            <th style="width:10%;">No</th>
+                                                                            <th style="width:30%;">Description</th>
+                                                                            <th style="width:20%;">Amount</th>
+                                                                            <th style="width:20%;">Amount Local</th>
+                                                                            <th style="width:20%;">Currency</th>
+                                                                            <th style="width:5%;">Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                    
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                     Tab REF 
+                                                    <div role="tabpanel" class="tab-pane hidden" id="ref">
+                                                        <div class="col-xs-12" style="padding-top: 20px; padding-left: 50px;padding-right: 50px">
+                                                            <div class="col-xs-1 text-right" style="width: 120px">
+                                                                <label class="control-label text-right">Ref No </label>
+                                                            </div>
+                                                            <div class="col-xs-1 form-group" style="width: 200px" id="refnopanel">
+                                                                <div class="input-group">
+                                                                    <input id="refNo" name="refNo" type="text" class="form-control" value="" onkeydown="refnoValidate()">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload2"  class="fa fa-spinner fa-spin hidden"></i></div>
+                                                            <div class="col-xs-1 text-left"  style="width: 100px">
+                                                                <button style="height:30px" type="button"  id="ButtonSearchRefNo"  name="ButtonSearchRefNo" onclick="searchRefNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
+                                                            </div>
+                                                            RefNo Table
+                                                            <div class="row" style="padding-left: 10px;padding-right: 10px">
+                                                                <table id="RefNoListTable" class="display" cellspacing="0" width="100%">
+                                                                    <thead>
+                                                                        <tr class="datatable-header" >
+                                                                            <th style="width:10%;">No</th>
+                                                                            <th style="width:40%;">Description</th>
+                                                                            <th style="width:20%;">Amount</th>
+                                                                            <th style="width:20%;">Currency</th>
+                                                                            <th style="width:10%;">Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                    
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                     Tab COM 
+                                                    <div role="tabpanel" class="tab-pane hidden" id="com">
+                                                        <div class="col-xs-6" style="padding-top: 20px; border-right:solid 1px #D9D9D9">
+                                                            <div class="col-xs-1 text-left" style="width: 200px">
+                                                                <label class="control-label text-right">Air Commission </label>
+                                                            </div>
+                                                            <div class="col-xs-1 text-right" style="width: 120px">
+                                                                <label class="control-label text-right">Search</label>
+                                                            </div>
+                                                            <div class="col-xs-1 form-group" style="width: 155px" >
+                                                                <input style="width: 150px" id="searchPaymentNoAir" name="searchPaymentNoAir" type="text" class="form-control" value="">
+                                                            </div>
+                                                            <div class="col-xs-1  text-left" style="padding-top: 6px;width: 4px"><i id="ajaxload3"  class="fa fa-spinner fa-spin hidden"></i></div>
+                                                            Invoice Table
+                                                            <div class="row" style="padding-left: 10px;padding-right: 10px">
+                                                                <table id="AircommissionTable" class="display" width="100%">
+                                                                    <thead>
+                                                                        <tr class="datatable-header" >
+                                                                            <th style="width:10%;">No</th>
+                                                                            <th style="width:10%;">Airline</th>
+                                                                            <th style="width:10%;">Commission</th>
+                                                                            <th style="width:10%;">Is Use</th>
+                                                                            <th style="width:10%;">Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-6" style="padding-top: 20px;">
+                                                            <div class="col-xs-1 text-left" style="width: 200px">
+                                                                <label class="control-label text-right">Tour Commission </label>
+                                                            </div>
+                                                            <div class="col-xs-1 text-right" style="width: 135px">
+                                                                <label class="control-label text-right">Search</label>
+                                                            </div>
+                                                            <div class="col-xs-1 form-group" style="width: 155px" >
+                                                                <input style="width: 150px" id="searchPaymentNoTour" name="searchPaymentNoTour" type="text" class="form-control" value="">
+                                                            </div>
+                                                            <div class="col-xs-1  text-left" style="padding-top: 6px;width: 4px"><i id="ajaxload4"  class="fa fa-spinner fa-spin hidden"></i></div>
+                    
+                                                            <div class="row" style="padding-left: 10px;padding-right: 10px">
+                                                                <table id="TourcommissionTable" class="display" cellspacing="0" width="100%">
+                                                                    <thead>
+                                                                        <tr class="datatable-header" >
+                                                                            <th style="width:10%;">No</th>
+                                                                            <th style="width:15%;">Commission</th>
+                                                                            <th style="width:15%;">Is Use</th>
+                                                                            <th style="width:10%;">Action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload1"  class="fa fa-spinner fa-spin hidden"></i></div>
-                                        <div class="col-xs-1 text-left"  style="width: 100px">
-                                            <button style="height:30px" type="button"  id="ButtonSearchInvoice"  name="ButtonSearchInvoice" onclick="searchInvoice();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
-                                        </div>
-                                        Invoice Table
-                                        <div class="row" style="padding-left: 10px;padding-right: 10px">
-                                            <table id="InvoiceListTable" class="display" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr class="datatable-header" >
-                                                        <th style="width:10%;">No</th>
-                                                        <th style="width:30%;">Description</th>
-                                                        <th style="width:20%;">Amount</th>
-                                                        <th style="width:20%;">Amount Local</th>
-                                                        <th style="width:20%;">Currency</th>
-                                                        <th style="width:5%;">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                 Tab REF 
-                                <div role="tabpanel" class="tab-pane hidden" id="ref">
-                                    <div class="col-xs-12" style="padding-top: 20px; padding-left: 50px;padding-right: 50px">
-                                        <div class="col-xs-1 text-right" style="width: 120px">
-                                            <label class="control-label text-right">Ref No </label>
-                                        </div>
-                                        <div class="col-xs-1 form-group" style="width: 200px" id="refnopanel">
-                                            <div class="input-group">
-                                                <input id="refNo" name="refNo" type="text" class="form-control" value="" onkeydown="refnoValidate()">
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload2"  class="fa fa-spinner fa-spin hidden"></i></div>
-                                        <div class="col-xs-1 text-left"  style="width: 100px">
-                                            <button style="height:30px" type="button"  id="ButtonSearchRefNo"  name="ButtonSearchRefNo" onclick="searchRefNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
-                                        </div>
-                                        RefNo Table
-                                        <div class="row" style="padding-left: 10px;padding-right: 10px">
-                                            <table id="RefNoListTable" class="display" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr class="datatable-header" >
-                                                        <th style="width:10%;">No</th>
-                                                        <th style="width:40%;">Description</th>
-                                                        <th style="width:20%;">Amount</th>
-                                                        <th style="width:20%;">Currency</th>
-                                                        <th style="width:10%;">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                 Tab COM 
-                                <div role="tabpanel" class="tab-pane hidden" id="com">
-                                    <div class="col-xs-6" style="padding-top: 20px; border-right:solid 1px #D9D9D9">
-                                        <div class="col-xs-1 text-left" style="width: 200px">
-                                            <label class="control-label text-right">Air Commission </label>
-                                        </div>
-                                        <div class="col-xs-1 text-right" style="width: 120px">
-                                            <label class="control-label text-right">Search</label>
-                                        </div>
-                                        <div class="col-xs-1 form-group" style="width: 155px" >
-                                            <input style="width: 150px" id="searchPaymentNoAir" name="searchPaymentNoAir" type="text" class="form-control" value="">
-                                        </div>
-                                        <div class="col-xs-1  text-left" style="padding-top: 6px;width: 4px"><i id="ajaxload3"  class="fa fa-spinner fa-spin hidden"></i></div>
-                                        Invoice Table
-                                        <div class="row" style="padding-left: 10px;padding-right: 10px">
-                                            <table id="AircommissionTable" class="display" width="100%">
-                                                <thead>
-                                                    <tr class="datatable-header" >
-                                                        <th style="width:10%;">No</th>
-                                                        <th style="width:10%;">Airline</th>
-                                                        <th style="width:10%;">Commission</th>
-                                                        <th style="width:10%;">Is Use</th>
-                                                        <th style="width:10%;">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-6" style="padding-top: 20px;">
-                                        <div class="col-xs-1 text-left" style="width: 200px">
-                                            <label class="control-label text-right">Tour Commission </label>
-                                        </div>
-                                        <div class="col-xs-1 text-right" style="width: 135px">
-                                            <label class="control-label text-right">Search</label>
-                                        </div>
-                                        <div class="col-xs-1 form-group" style="width: 155px" >
-                                            <input style="width: 150px" id="searchPaymentNoTour" name="searchPaymentNoTour" type="text" class="form-control" value="">
-                                        </div>
-                                        <div class="col-xs-1  text-left" style="padding-top: 6px;width: 4px"><i id="ajaxload4"  class="fa fa-spinner fa-spin hidden"></i></div>
-
-                                        <div class="row" style="padding-left: 10px;padding-right: 10px">
-                                            <table id="TourcommissionTable" class="display" cellspacing="0" width="100%">
-                                                <thead>
-                                                    <tr class="datatable-header" >
-                                                        <th style="width:10%;">No</th>
-                                                        <th style="width:15%;">Commission</th>
-                                                        <th style="width:15%;">Is Use</th>
-                                                        <th style="width:10%;">Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
+                                        </div>-->
                     <div class="panel panel-default ${panelborder}">
                         <div class="panel-heading ${panelheader}">
                             <h4 class="panel-title">Receipt Detail</h4>
@@ -316,7 +316,7 @@
                                     <input type="hidden" class="form-control" id="isDuplicate" name="isDuplicate"  value="${checkDuplicateUser.isDuplicateUser}" >
                                     <input type="hidden" class="form-control" id="isSave" name="isSave"  value="${checkDuplicateUser.isSave}" >
                                     <input type="hidden" class="form-control" id="recNoForCheckUser" name="recNoForCheckUser"  value="${receipt.recNo}" >
-                       
+
                                     <input id="receiveId" name="receiveId" type="hidden" class="form-control" maxlength="11" value="${receipt.id}">
                                     <input id="receiveNo" name="receiveNo" type="text" style="width: 80px" class="form-control" maxlength="20" value="${receipt.recNo}">
                                 </div>
@@ -363,7 +363,7 @@
                                         <textarea rows="3" class="form-control" id="receiveFromAddress" name="receiveFromAddress" style="width: 271%" value="${receipt.recAddress}">${receipt.recAddress}</textarea>  
                                     </div>                               
                                 </div>
-                                
+
                             </div>
                             <div class="col-xs-5" style="padding-top: 0px;">
                                 <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
@@ -411,9 +411,9 @@
                                         <textarea rows="3" class="form-control" id="remark" name="remark" style="width: 105%" value="${receipt.remark}">${receipt.remark}</textarea>  
                                     </div>                               
                                 </div>    
-<!--                                <div class="form-group col-xs-1 text-right" style="width: 170px; margin-top: -10px">
-                                    <input type="text" class="form-control" id="remark" name="remark" value="${receipt.remark}">                           
-                                </div>-->
+                                <!--                                <div class="form-group col-xs-1 text-right" style="width: 170px; margin-top: -10px">
+                                                                    <input type="text" class="form-control" id="remark" name="remark" value="${receipt.remark}">                           
+                                                                </div>-->
                             </div>
                         </div>
                         <div class="col-xs-12" style="margin-top: -25px">
@@ -447,18 +447,18 @@
                         </div>            
 
                         <div class="col-xs-12" id="searchinvtext">
-                           <div class="col-xs-1 text-right" style="width: 160px">
-                               <label class="control-label text-right">Invoice No </label>
-                           </div>
-                           <div class="col-xs-1 form-group" style="width: 200px" id="invoicenopanel">
-                               <div class="input-group">
-                                   <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" value="" onkeydown="invoicenoValidate()">
-                               </div>
-                           </div>
-                           <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload1"  class="fa fa-spinner fa-spin hidden"></i></div>
-                           <div class="col-xs-1 text-left"  style="width: 100px">
-                               <button style="height:30px" type="button"  id="ButtonSearchInvoice"  name="ButtonSearchInvoice" onclick="searchInvoice();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
-                           </div>
+                            <div class="col-xs-1 text-right" style="width: 160px">
+                                <label class="control-label text-right">Invoice No </label>
+                            </div>
+                            <div class="col-xs-1 form-group" style="width: 200px" id="invoicenopanel">
+                                <div class="input-group">
+                                    <input id="invoiceNo" name="invoiceNo" type="text" class="form-control" value="" onkeydown="invoicenoValidate()">
+                                </div>
+                            </div>
+                            <div class="col-xs-1  text-right" style="width: 8px"><i id="ajaxload1"  class="fa fa-spinner fa-spin hidden"></i></div>
+                            <div class="col-xs-1 text-left"  style="width: 100px">
+                                <button style="height:30px" type="button"  id="ButtonSearchInvoice"  name="ButtonSearchInvoice" onclick="searchInvoice();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
+                            </div>
                         </div>
                         <div class="col-xs-12 hidden" style="margin-bottom: 10px" id="searchinvtable">
                             <div class="row" style="padding-left: 10px;padding-right: 10px">
@@ -479,7 +479,7 @@
                                 </table>
                             </div>
                         </div>
-          
+
                         <div class="col-xs-12 hidden" id="searchreftext">
                             <div class="col-xs-1 text-right" style="width: 160px">
                                 <label class="control-label text-right">Ref No </label>
@@ -593,13 +593,13 @@
                                             <th style="width:10%;">Cost</th>
                                             <th style="width:7%;">Cur</th>
                                             <th style="width:4%;"><u>Is Vat</u></th>
-                                            <th style="width:2%;">Vat</th>
-                                            <!--<th style="width:10%;">Gross</th>-->
-                                            <th style="width:10%;">Amount</th>
-                                            <th style="width:7%;">Cur</th>
-                                            <th style="width:7%;">Ex Rate</th>
-                                            <th style="width:3%;">Action</th>
-                                        </tr>
+                                    <th style="width:2%;">Vat</th>
+                                    <!--<th style="width:10%;">Gross</th>-->
+                                    <th style="width:10%;">Amount</th>
+                                    <th style="width:7%;">Cur</th>
+                                    <th style="width:7%;">Ex Rate</th>
+                                    <th style="width:3%;">Action</th>
+                                    </tr>
                                     </thead>
                                     <tbody> 
                                         <c:forEach var="table" items="${receiptDetailList}" varStatus="i">
@@ -825,7 +825,7 @@
                                     <div class="col-xs-1" style="width: 50px;">
                                         <h4><a class="col-xs-1">
                                                 <span class="glyphicon glyphicon-plus-sign" id="addChqButton"></span>
-                                        </a></h4>                                        
+                                            </a></h4>                                        
                                     </div>
                                 </div>
                                 <div class="row hidden active" id="addChq" style="padding-top: 8px ">
@@ -860,8 +860,8 @@
                                     </div>
                                     <div class="col-xs-1" style="width: 50px ;">
                                         <h4><a class="col-xs-1">
-                                            <span class="glyphicon glyphicon-remove deleteicon" id="deleteChqButton"></span>
-                                        </a></h4>                                        
+                                                <span class="glyphicon glyphicon-remove deleteicon" id="deleteChqButton"></span>
+                                            </a></h4>                                        
                                     </div>
                                 </div>
                                 <hr/>
@@ -879,7 +879,7 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach var="table" items="${receiptCreditList}" varStatus="i">
-                                        <tr>
+                                            <tr>
                                         <input type="hidden" name="countCredit${i.count}" id="countCredit${i.count}" value="${i.count}">
                                         <input type="hidden" name="tableCreditId${i.count}" id="tableCreditId${i.count}" value="${table.id}">
                                         <td>                                   
@@ -1018,7 +1018,7 @@
                 <h4 class="modal-title"  id="Titlemodel">Finance & Cashier - Receipt</h4>
             </div>
             <div class="modal-body" id="operationMessage">
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal" onclick='enableOperationDuplicate()'>OK</button>               
@@ -1062,7 +1062,7 @@
                 <!--Script Receive From List Table-->
                 <script>
                     var showflag = 1;
-                    $(document).ready(function() {
+                    $(document).ready(function () {
                         // Receive From Table
                         var ReceiveFromTable = $('#ReceiveFromTable').dataTable({bJQueryUI: true,
                             "sPaginationType": "full_numbers",
@@ -1074,7 +1074,7 @@
                             "iDisplayLength": 10
                         });
 
-                        $('#ReceiveFromTable tbody').on('click', 'tr', function() {
+                        $('#ReceiveFromTable tbody').on('click', 'tr', function () {
                             $('.collapse').collapse('show');
                             if ($(this).hasClass('row_selected')) {
                                 $(this).removeClass('row_selected');
@@ -1085,7 +1085,7 @@
                             }
                         });
 
-                        $("#searchReceiveFrom").keyup(function(event) {
+                        $("#searchReceiveFrom").keyup(function (event) {
                             if (event.keyCode === 13) {
                                 if ($("#searchReceiveFrom").val() == "") {
                                     // alert('please input data');
@@ -1095,7 +1095,7 @@
                         });
 
 //                        autocomplete
-                        $("#receiveFromCode").keyup(function(event) {
+                        $("#receiveFromCode").keyup(function (event) {
                             var position = $(this).offset();
                             $(".ui-widget").css("top", position.top + 30);
                             $(".ui-widget").css("left", position.left);
@@ -1104,14 +1104,14 @@
                                 $("#receiveFromAddress").val("");
                                 $("#arCode").val("");
                             } else {
-                                if(event.keyCode === 13){
+                                if (event.keyCode === 13) {
                                     searchCustomerAutoList(this.value);
                                 }
                             }
                             $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
                             $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
                         });
-                        $("#receiveFromCode").keydown(function() {
+                        $("#receiveFromCode").keydown(function () {
                             var position = $(this).offset();
                             $(".ui-widget").css("top", position.top + 30);
                             $(".ui-widget").css("left", position.left);
@@ -1158,7 +1158,7 @@
                                 url: url,
                                 cache: false,
                                 data: param,
-                                success: function(msg) {
+                                success: function (msg) {
                                     $('#ReceiveFromTable').dataTable().fnClearTable();
                                     $('#ReceiveFromTable').dataTable().fnDestroy();
                                     $("#ReceiveFromTable tbody").empty().append(msg);
@@ -1174,7 +1174,7 @@
                                     });
                                     $("#ajaxload").addClass("hidden");
 
-                                }, error: function(msg) {
+                                }, error: function (msg) {
                                     $("#ajaxload").addClass("hidden");
                                     alert('error');
                                 }
@@ -1209,10 +1209,10 @@
                                 url: url,
                                 cache: false,
                                 data: param,
-                                beforeSend: function() {
+                                beforeSend: function () {
                                     $("#dataload").removeClass("hidden");
                                 },
-                                success: function(msg) {
+                                success: function (msg) {
                                     var billJson = JSON.parse(msg);
                                     for (var i in billJson) {
                                         if (billJson.hasOwnProperty(i)) {
@@ -1236,7 +1236,7 @@
 
                                     $("#receiveFromCode").autocomplete({
                                         source: billArray,
-                                        close: function() {
+                                        close: function () {
                                             $("#receiveFromCode").trigger("keyup");
                                             var billselect = $("#receiveFromCode").val();
                                             for (var i = 0; i < billListId.length; i++) {
@@ -1273,7 +1273,7 @@
                                     event.keyCode = 40;
                                     $("#receiveFromCode").trigger(event);
 
-                                }, error: function(msg) {
+                                }, error: function (msg) {
                                     console.log('auto ERROR');
                                     $("#dataload").addClass("hidden");
                                 }
@@ -1603,7 +1603,7 @@
 
     var setinvoice = 0;
 
-    $(document).ready(function() {        
+    $(document).ready(function () {
         $("#inv,#ref,#com").removeClass('hidden');
         $('.datemask').mask('00-00-0000');
         $('.date').datetimepicker();
@@ -1616,9 +1616,9 @@
 
         var wildCardSearch = ($("#wildCardSearch").val()).indexOf("%");
 //        if ($("#receiveId").val() !== '') {
-            $("#receiveNo").focus();
+        $("#receiveNo").focus();
 //        }
-        $("#receiveNo").keyup(function(event) {
+        $("#receiveNo").keyup(function (event) {
             if (event.keyCode === 13) {
                 searchReceiveNo();
             } else if (event.keyCode === 38) {
@@ -1651,17 +1651,17 @@
 
             }
         });
-        $("#invoiceNo").keyup(function(event) {
+        $("#invoiceNo").keyup(function (event) {
             if (event.keyCode === 13) {
                 searchInvoice();
             }
         });
-        $("#refNo").keyup(function(event) {
+        $("#refNo").keyup(function (event) {
             if (event.keyCode === 13) {
-                searchRefNo(); 
+                searchRefNo();
             }
         });
-        $("#searchPaymentNoAir").keyup(function(event) {
+        $("#searchPaymentNoAir").keyup(function (event) {
             if (event.keyCode === 13) {
                 searchPaymentNoAir();
             }
@@ -1669,44 +1669,44 @@
         $("#ButtonSearchPaymentNoTour").on('click', function () {
             searchPaymentNoTour();
         });
-        
+
         $("#ButtonSearchPaymentNoAir").on('click', function () {
             searchPaymentNoAir();
         });
 
-        $("#searchPaymentNoTour").keyup(function(event) {
+        $("#searchPaymentNoTour").keyup(function (event) {
             if (event.keyCode === 13) {
                 searchPaymentNoTour();
             }
         });
 
-        $('#ReceiveDate').datetimepicker().on('dp.change', function(e) {
+        $('#ReceiveDate').datetimepicker().on('dp.change', function (e) {
             $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
         });
-        
+
         var isref = $("#isref").val();
-        if(isref === '0'){
+        if (isref === '0') {
             $("#ButtonSearchRefNo").attr("disabled", "disabled");
             $("#searchPaymentNoAir").attr("disabled", "disabled");
             $("#searchPaymentNoTour").attr("disabled", "disabled");
             $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
             $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
             $("#refNo").attr("disabled", "disabled");
-        }else if(isref === '1'){
+        } else if (isref === '1') {
             $("#invoiceNo").attr("disabled", "disabled");
             $("#ButtonSearchInvoice").attr("disabled", "disabled");
             $("#searchPaymentNoAir").attr("disabled", "disabled");
             $("#searchPaymentNoTour").attr("disabled", "disabled");
             $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
             $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
-        }else if(isref === '2'){
+        } else if (isref === '2') {
             $("#invoiceNo").attr("disabled", "disabled");
             $("#refNo").attr("disabled", "disabled");
             $("#ButtonSearchRefNo").attr("disabled", "disabled");
             $("#ButtonSearchInvoice").attr("disabled", "disabled");
             $("#searchPaymentNoTour").attr("disabled", "disabled");
             $("#ButtonSearchPaymentNoTour").attr("disabled", "disabled");
-        }else if(isref === '3'){
+        } else if (isref === '3') {
             $("#invoiceNo").attr("disabled", "disabled");
             $("#refNo").attr("disabled", "disabled");
             $("#ButtonSearchRefNo").attr("disabled", "disabled");
@@ -1714,7 +1714,7 @@
             $("#searchPaymentNoAir").attr("disabled", "disabled");
             $("#ButtonSearchPaymentNoAir").attr("disabled", "disabled");
         }
-        
+
         $('#ReceiptForm').bootstrapValidator({
             container: 'tooltip',
             excluded: [':disabled'],
@@ -1754,24 +1754,24 @@
                 }
             }
         });
-        
+
         var chqBank2 = $('#chqBank2').val();
         var chqNo2 = $('#chqNo2').val();
         var chqAmount2 = $('#chqAmount2').val();
-        
+
         if (chqBank2 != "" || chqNo2 != "" || chqAmount2 != "") {
             $("#addChq").removeClass('hidden');
-        } 
-        
-        $('#addChqButton').on('click', function() {
+        }
+
+        $('#addChqButton').on('click', function () {
             $("#addChq").removeClass('hidden');
         });
 
-        $('#deleteChqButton').on('click', function() {
+        $('#deleteChqButton').on('click', function () {
             $("#addChq").addClass('hidden');
         });
 
-        $('#addCreditButton').on('click', function() {
+        $('#addCreditButton').on('click', function () {
             $("#addCredit").removeClass('hidden');
             $("#addCreditDetail").removeClass('hidden');
         });
@@ -1784,16 +1784,16 @@
 //            }
 //        });
 
-        $('#deleteCreditButton').on('click', function() {
+        $('#deleteCreditButton').on('click', function () {
             $("#addCredit").addClass('hidden');
             $("#addCreditDetail").addClass('hidden');
         });
 
-        $('#collapseTab').on('shown.bs.collapse', function() {
+        $('#collapseTab').on('shown.bs.collapse', function () {
             $(".arrowReceipt").removeClass("glyphicon glyphicon-chevron-down").addClass("glyphicon glyphicon-chevron-up");
         });
 
-        $('#collapseTab').on('hidden.bs.collapse', function() {
+        $('#collapseTab').on('hidden.bs.collapse', function () {
             $(".arrowReceipt").removeClass("glyphicon glyphicon-chevron-up").addClass("glyphicon glyphicon-chevron-down");
         });
 
@@ -1820,13 +1820,13 @@
         // +++++++++++++++++++++ Product Table +++++++++++++++++++++ //
         AddRowProduct(parseInt($("#counter").val()));
 
-        $('#ReceiptListTable tbody tr:last td .input-group-addon').click(function() {
+        $('#ReceiptListTable tbody tr:last td .input-group-addon').click(function () {
             AddRowProduct(parseInt($("#counter").val()));
         });
 
-        $("#ReceiptListTable").on("keyup", function() {
+        $("#ReceiptListTable").on("keyup", function () {
             var rowAll = $("#ReceiptListTable tr").length;
-            $("td").keyup(function() {
+            $("td").keyup(function () {
                 if ($(this).find("input").val() != '') {
                     var colIndex = $(this).parent().children().index($(this));
                     var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
@@ -1842,11 +1842,11 @@
                 }
             });
         });
-        $("#ReceiptListTable").on("change", "select:last", function() {
+        $("#ReceiptListTable").on("change", "select:last", function () {
             var row = parseInt($("#counter").val());
             AddRowProduct(row);
         });
-        $("#ReceiptListTable").on('click', '.newRemCF', function() {
+        $("#ReceiptListTable").on('click', '.newRemCF', function () {
             $(this).parent().parent().remove();
             var rowAll = $("#ReceiptListTable tr").length;
             if (rowAll < 2) {
@@ -1854,7 +1854,7 @@
                 $("#tr_ProductDetailAddRow").addClass("show");
             }
         });
-        $("#tr_ProductDetailAddRow a").click(function() {
+        $("#tr_ProductDetailAddRow a").click(function () {
             $(this).parent().removeClass("show");
             $(this).parent().addClass("hide");
         });
@@ -1864,9 +1864,9 @@
 //        $('#CreditDetailTable tbody tr:last td .input-group-addon').click(function() {  
 //            AddRowCredit(parseInt($("#countRowCredit").val()));
 //        });
-        $("#CreditDetailTable").on("keyup", function() {
+        $("#CreditDetailTable").on("keyup", function () {
             var rowAll = $("#CreditDetailTable tr").length;
-            $("td").keyup(function() {
+            $("td").keyup(function () {
                 if ($(this).find("input").val() != '') {
                     var colIndex = $(this).parent().children().index($(this));
                     var rowIndex = $(this).parent().parent().children().index($(this).parent()) + 2;
@@ -1883,12 +1883,12 @@
             });
         });
 
-        $("#CreditDetailTable").on("change", "select:last", function() {
+        $("#CreditDetailTable").on("change", "select:last", function () {
             var row = parseInt($("#countRowCredit").val());
             AddRowCredit(row);
         });
 
-        $("#CreditDetailTable").on('click', '.newRemCF', function() {
+        $("#CreditDetailTable").on('click', '.newRemCF', function () {
             $(this).parent().parent().remove();
             var rowAll = $("#CreditDetailTable tr").length;
             if (rowAll < 2) {
@@ -1897,29 +1897,29 @@
             }
         });
 
-        $("#tr_CreditDetailAddRow a").click(function() {
+        $("#tr_CreditDetailAddRow a").click(function () {
             $(this).parent().removeClass("show");
             $(this).parent().addClass("hide");
         });
 
 
         //set format money
-        $("#withTax").focusout(function() {
+        $("#withTax").focusout(function () {
             setFormatCurrencyReceipt();
         });
-        $("#cashAmount").focusout(function() {
+        $("#cashAmount").focusout(function () {
             setFormatCurrencyReceipt();
         });
-        $("#cashMinusAmount").focusout(function() {
+        $("#cashMinusAmount").focusout(function () {
             setFormatCurrencyReceipt();
         });
-        $("#bankTransfer").focusout(function() {
+        $("#bankTransfer").focusout(function () {
             setFormatCurrencyReceipt();
         });
-        $("#chqAmount1").focusout(function() {
+        $("#chqAmount1").focusout(function () {
             setFormatCurrencyReceipt();
         });
-        $("#chqAmount2").focusout(function() {
+        $("#chqAmount2").focusout(function () {
             setFormatCurrencyReceipt();
         });
 
@@ -1941,9 +1941,9 @@
             }
         }
         calculateGrandTotal();
-        
+
         var creditDetailTableLength = $("#CreditDetailTable tr").length;
-        
+
         if (creditDetailTableLength > 1) {
             for (var i = 1; i < creditDetailTableLength; i++) {
                 if ($('#creditAmount' + i).val() != "") {
@@ -1952,7 +1952,7 @@
 
             }
         }
-        
+
         $(".decimal").inputmask({
             alias: "decimal",
             integerDigits: 8,
@@ -1973,9 +1973,9 @@
             digitsOptional: false,
             placeholder: "0.0000",
         });
-        
+
         //Operation Duplicate
-        if($("#isDuplicate").val() === '1'){
+        if ($("#isDuplicate").val() === '1') {
             var username = $("#operationUser").val();
             $("#operationMessage").text("User " + username + " is using information. Do you want to continue ?");
             $("#operationModal").modal("show");
@@ -2125,60 +2125,60 @@
         var sign = document.getElementById('SelectSign').value;
         var leader = document.getElementById('selectLeader').value;
         var department = "${typeDepartment}";
-        
+
         if (printtype == 3) {
             if (invoice === '') {
             } else {
-                if(department !== 'Inbound'){
+                if (department !== 'Inbound') {
                     if (invType === 'T') {
                         window.open("report.smi?name=InvoiceTemp&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
                     } else {
                         window.open("report.smi?name=InvoiceReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
                     }
-                
-                }else{
+
+                } else {
                     if (invType === "T") {
                         window.open("report.smi?name=InvoiceInboundPerformaReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     } else {
                         window.open("report.smi?name=InvoiceInboundRevenueReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     }
-                }    
+                }
             }
         } else if (printtype == 4) {
             if (invoice === '') {
             } else {
-                if(department !== 'Inbound'){
+                if (department !== 'Inbound') {
                     if (invType === 'T') {
                         window.open("report.smi?name=InvoiceTempEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
                     } else {
                         window.open("report.smi?name=InvoiceEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + sale + "&showleader=" + leader + "&sign=" + sign);
                     }
-                
-                }else{
+
+                } else {
                     if (invType === "T") {
                         window.open("report.smi?name=InvoiceInboundPerformaReport&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     } else {
                         window.open("report.smi?name=InvoiceInboundRevenueEmail&invoiceid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     }
-                }  
+                }
             }
         } else if (printtype == 5) {
             if (invoice === '') {
             } else {
-                if(department !== 'Inbound'){
+                if (department !== 'Inbound') {
                     if (invType === 'T') {
                         window.open("SendMail.smi?reportname=InvoiceTempEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
                     } else {
                         window.open("SendMail.smi?reportname=Invoice&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '' + "&showleader=" + leader + "&sign=" + sign);
                     }
-                
-                }else{
+
+                } else {
                     if (invType === "T") {
                         window.open("SendMail.smi?reportname=InvoiceTempEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     } else {
                         window.open("SendMail.smi?reportname=InvoiceInboundRevenueEmail&reportid=" + invoiceId + "&bankid=" + payment + "&showstaff=" + '0' + "&showleader=" + '0' + "&sign=" + sign);
                     }
-                }  
+                }
             }
         }
     }
@@ -2198,9 +2198,9 @@
     }
 
     function AddRowProduct(row) {
-        
+
         var typeRec = "${typeReceipt}";
-        if(typeRec === "V"){
+        if (typeRec === "V") {
             $("#ReceiptListTable tbody").append(
                     '<tr style="higth 100px">' +
                     '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
@@ -2241,7 +2241,7 @@
                     '</td>' +
                     '</tr>'
                     );
-        }else {
+        } else {
             $("#ReceiptListTable tbody").append(
                     '<tr style="higth 100px">' +
                     '<input id="tableId' + row + '" name="tableId' + row + '"  type="hidden" >' +
@@ -2282,15 +2282,15 @@
         $("#currencyList option").clone().appendTo("#receiveCurCost" + row);
         $("#currencyList option").clone().appendTo("#receiveCurCostTemp" + row);
         $('#receiveCurCostTemp' + row).attr("disabled", true);
-        $("#receiveAmount" + row).focusout(function() {
+        $("#receiveAmount" + row).focusout(function () {
 //              calculatGross(row);
             setFormatCurrency(row);
             calculateGrandTotal();
         });
-        $("#receiveCost" + row).focusout(function() {
+        $("#receiveCost" + row).focusout(function () {
             setFormatCurrency(row);
         });
-        $("#receiveExRate" + row).focusout(function() {
+        $("#receiveExRate" + row).focusout(function () {
             setFormatExRate(row);
         });
         $(".decimal").inputmask({
@@ -2316,7 +2316,7 @@
 //            var tempCount = parseInt($("#counter").val()) + 1;
         $("#counter").val(row + 1);
 //        }
-        if(typeRec === "V"){
+        if (typeRec === "V") {
             $('#receiveIsVat' + row).prop('checked', true);
             document.getElementById('receiveVat' + row).style.display = 'block';
             document.getElementById('receiveVat' + row).innerHTML = $("#vatValue").val();
@@ -2362,11 +2362,11 @@
     function formatNumber(num) {
         return num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     }
-    
+
     function formatExRateNumber(num) {
         return  num.toFixed(4).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
     }
-    
+
     function insertCommas(nField) {
         if (/^0/.test(nField.value)) {
             nField.value = nField.value.substring(0, 1);
@@ -2385,8 +2385,8 @@
             nField.value = nField.value.replace(/[^\d\,\.]/g, "").replace(/ /, "");
         }
     }
-    
-    function setFormatExRate(row){
+
+    function setFormatExRate(row) {
         var receiveExRate = replaceAll(",", "", $('#receiveExRate' + row).val());
         if (receiveExRate == "") {
             receiveExRate = 0;
@@ -2419,8 +2419,8 @@
         }
         calculateGrandTotal();
     }
-    
-    function setFormatCreditAmount(row){
+
+    function setFormatCreditAmount(row) {
         var creditAmount = replaceAll(",", "", $('#creditAmount' + row).val());
         if (creditAmount == "") {
             creditAmount = 0;
@@ -2428,7 +2428,7 @@
         creditAmount = parseFloat(creditAmount);
         document.getElementById("creditAmount" + row).value = formatNumber(creditAmount);
         sumTotalCreditAmount();
-        $("#creditAmount" + row).focusout(function() {
+        $("#creditAmount" + row).focusout(function () {
             var creditAmount = replaceAll(",", "", $('#creditAmount' + row).val());
             if (creditAmount == "") {
                 creditAmount = 0;
@@ -2460,7 +2460,7 @@
                 );
         $("#creditBankList option").clone().appendTo("#creditBank" + row);
 
-        $("#creditAmount" + row).focusout(function() {
+        $("#creditAmount" + row).focusout(function () {
             var creditAmount = replaceAll(",", "", $('#creditAmount' + row).val());
             if (creditAmount == "") {
                 creditAmount = 0;
@@ -2473,7 +2473,7 @@
             }
             sumTotalCreditAmount();
         });
-        
+
         $(".decimal").inputmask({
             alias: "decimal",
             integerDigits: 8,
@@ -2505,7 +2505,7 @@
             $(".date").datetimepicker({
                 pickTime: false
             });
-            $('span').click(function() {
+            $('span').click(function () {
                 var position = $(this).offset();
                 $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
             });
@@ -2521,7 +2521,7 @@
     }
 
     function searchInvoice() {
-        if($("#ajaxload1").hasClass("hidden")){
+        if ($("#ajaxload1").hasClass("hidden")) {
             var invoiceNo = $("#invoiceNo").val();
             var department = "${typeDepartment}";
             var invType = "${typeReceipt}";
@@ -2545,7 +2545,7 @@
                         '&type=' + 'searchInvoiceNo';
                 CallAjaxSearchInvoice(param);
             }
-        }    
+        }
     }
 
     function CallAjaxSearchInvoice(param) {
@@ -2557,14 +2557,14 @@
                 url: url,
                 cache: false,
                 data: param,
-                success: function(msg) {
-                    try {                        
+                success: function (msg) {
+                    try {
                         $("#searchreftable").addClass("hidden");
                         $("#searchaircomtable").addClass("hidden");
                         $("#searchtourcomtable").addClass("hidden");
-                        if (msg == "null") {   
+                        if (msg == "null") {
                             $("#searchinvtable").addClass("hidden");
-                            $('#InvoiceListTable > tbody  > tr').each(function() {
+                            $('#InvoiceListTable > tbody  > tr').each(function () {
                                 $(this).remove();
                             });
 
@@ -2574,7 +2574,7 @@
                             document.getElementById("arCode").value = '';
                         } else {
                             var result = msg.split("//");
-                            $('#InvoiceListTable > tbody  > tr').each(function() {
+                            $('#InvoiceListTable > tbody  > tr').each(function () {
                                 $(this).remove();
                             });
                             $("#InvoiceListTable tbody").empty().append(result[0]);
@@ -2583,21 +2583,21 @@
                             document.getElementById("receiveFromName").value = $("#receiveNameInvoice").val();
                             document.getElementById("receiveFromAddress").value = $("#receiveAddressInvoice").val();
                             document.getElementById("arCode").value = $("#arcodeInvoice").val();
-                            if(result[1] !== ''){
+                            if (result[1] !== '') {
                                 $("#InvoiceListTable tbody").empty().append(result[1]);
                                 $("#searchinvtable").removeClass("hidden");
-                            
-                            }else{
+
+                            } else {
                                 $("#searchinvtable").addClass("hidden");
                             }
-                            
+
 //                            var rowAll = $("#InvoiceListTable tr").length;
 //                            if(rowAll === 1){
 //                                $("#searchinvtable").addClass("hidden");
 //                            }else{
 //                                $("#searchinvtable").removeClass("hidden");
 //                            }
-                            
+
                         }
                         $("#ajaxload1").addClass("hidden");
 
@@ -2605,7 +2605,7 @@
                         alert(e);
                     }
 
-                }, error: function(msg) {
+                }, error: function (msg) {
                     $("#ajaxload1").addClass("hidden");
                 }
             });
@@ -2619,9 +2619,9 @@
         $('#invoicenopanel').addClass('has-success');
         $('#invoicenopanel').removeClass('has-error');
     }
-    
-    function addProduct(product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, checkadd, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress,invTableId,invTableNo) {
-        var receiveAddressTemp = replaceAll("<br>", "\n" , receiveAddress.toString());
+
+    function addProduct(product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, checkadd, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress, invTableId, invTableNo) {
+        var receiveAddressTemp = replaceAll("<br>", "\n", receiveAddress.toString());
         $('#textAlertDivSave').hide();
         $('#textAlertDivNotSave').hide();
         $('#textAlertDivDelete').hide();
@@ -2696,12 +2696,12 @@
 
         }
         if (!checkAddDuplicate) {
-            AddDataRowProduct(tempCount, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddressTemp,invTableId,invTableNo);
+            AddDataRowProduct(tempCount, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddressTemp, invTableId, invTableNo);
         } else {
             $('#textAlertDuplicateProduct').show();
         }
     }
-    function AddDataRowProduct(row, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress,invTableId,invTableNo) {
+    function AddDataRowProduct(row, product, description, cost, cur, isVat, vat, amount, currency, invId, billDescId, paymentId, airlineCode, disdescription, number, paymentTourId, receiveFrom, receiveName, receiveAddress, invTableId, invTableNo) {
         var grossinv = 0;
         if (vat !== '' && isVat !== '0') {
             var x = parseFloat(amount);
@@ -2735,7 +2735,7 @@
             }
         }
         var typeRec = "${typeReceipt}";
-        if(typeRec === "V"){
+        if (typeRec === "V") {
             $("#ReceiptListTable tbody").append(
                     '<tr style="higth 100px">' +
                     '<input id="invoiceTableNo' + row + '"  name="invoiceTableNo' + row + '"   type="hidden" value="' + invTableNo + '" >' +
@@ -2777,7 +2777,7 @@
                     '<span id="SpanRemove' + row + '"class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
                     '</tr>'
                     );
-        }else{
+        } else {
             $("#ReceiptListTable tbody").append(
                     '<tr style="higth 100px">' +
                     '<input id="invoiceTableNo' + row + '"  name="invoiceTableNo' + row + '"   type="hidden" value="' + invTableNo + '" >' +
@@ -2836,40 +2836,40 @@
         {
             $('#receiveVat' + row).val("");
         }
-        
-        
-        if(typeRec === "V" && billDescId != ""){
+
+
+        if (typeRec === "V" && billDescId != "") {
             $('#receiveIsVat' + row).prop('checked', true);
             document.getElementById('receiveVat' + row).style.display = 'block';
             document.getElementById('receiveVat' + row).innerHTML = $("#vatValue").val();
             $('#receiveIsVat' + row).val('1');
         }
-        
-        $('[name=receiveProduct' + row + '] option').filter(function() {
+
+        $('[name=receiveProduct' + row + '] option').filter(function () {
             return ($(this).val() === product);
         }).prop('selected', true);
 
-        $('[name=receiveCurCost' + row + '] option').filter(function() {
+        $('[name=receiveCurCost' + row + '] option').filter(function () {
             return ($(this).val() === cur);
         }).prop('selected', true);
 
-        $('[name=receiveCurCostTemp' + row + '] option').filter(function() {
+        $('[name=receiveCurCostTemp' + row + '] option').filter(function () {
             return ($(this).val() === cur);
         }).prop('selected', true);
 
-        $('[name=receiveCurrency' + row + '] option').filter(function() {
+        $('[name=receiveCurrency' + row + '] option').filter(function () {
             return ($(this).val() === currency);
         }).prop('selected', true);
 
-        $("#receiveAmount" + row).focusout(function() {
+        $("#receiveAmount" + row).focusout(function () {
 //        calculatGross(row);
             setFormatCurrency(row);
             calculateGrandTotal();
         });
-        $("#receiveCost" + row).focusout(function() {
+        $("#receiveCost" + row).focusout(function () {
             setFormatCurrency(row);
         });
-        $("#receiveExRate" + row).focusout(function() {
+        $("#receiveExRate" + row).focusout(function () {
             setFormatExRate(row);
         });
         setFormatCurrency(row);
@@ -2935,78 +2935,78 @@
         var arCode = document.getElementById('arCode').value;
         var receiveFromDate = document.getElementById('receiveFromDate').value;
         var inputStatus = document.getElementById('inputStatus').value;
-        
+
         //Check Currency
         var countRec = counter.value;
         var currencyNotMatch = false;
         var currencyNotEmpty = 0;
-        for(var i=1; i<=countRec; i++){
-            var currency1 = document.getElementById('receiveCurrency'+i);
-            var product1 = document.getElementById('receiveProduct'+i);
-            var description1 = document.getElementById('receiveDes'+i);
-            var amount1 = document.getElementById('receiveAmount'+i);
-            var exrate1 = document.getElementById('receiveExRate'+i);
-            if(currency1 !== null){
-                if(product1.value !== '' || description1.value !== '' || amount1.value !== '' || amount1.value !== '' || exrate1.value !== ''){
+        for (var i = 1; i <= countRec; i++) {
+            var currency1 = document.getElementById('receiveCurrency' + i);
+            var product1 = document.getElementById('receiveProduct' + i);
+            var description1 = document.getElementById('receiveDes' + i);
+            var amount1 = document.getElementById('receiveAmount' + i);
+            var exrate1 = document.getElementById('receiveExRate' + i);
+            if (currency1 !== null) {
+                if (product1.value !== '' || description1.value !== '' || amount1.value !== '' || amount1.value !== '' || exrate1.value !== '') {
                     var currencyTemp1 = currency1.value;
-                    for(var j=i+1; j<=countRec; j++){
-                        var currency2 = document.getElementById('receiveCurrency'+j);
-                        var product2 = document.getElementById('receiveProduct'+j);
-                        var description2 = document.getElementById('receiveDes'+j);
-                        var amount2 = document.getElementById('receiveAmount'+j);
-                        var exrate2 = document.getElementById('receiveExRate'+j);
-                        if(currency2 !== null){
+                    for (var j = i + 1; j <= countRec; j++) {
+                        var currency2 = document.getElementById('receiveCurrency' + j);
+                        var product2 = document.getElementById('receiveProduct' + j);
+                        var description2 = document.getElementById('receiveDes' + j);
+                        var amount2 = document.getElementById('receiveAmount' + j);
+                        var exrate2 = document.getElementById('receiveExRate' + j);
+                        if (currency2 !== null) {
                             var currencyTemp2 = currency2.value;
-                            if(product2.value !== '' || description2.value !== '' || amount2.value !== '' || amount2.value !== '' || exrate2.value !== ''){                               
-                                if((currencyTemp1 !== currencyTemp2)){
+                            if (product2.value !== '' || description2.value !== '' || amount2.value !== '' || amount2.value !== '' || exrate2.value !== '') {
+                                if ((currencyTemp1 !== currencyTemp2)) {
                                     currencyNotMatch = true;
-                                    i = countRec+1;
-                                    j = countRec+1;
-                                }                              
+                                    i = countRec + 1;
+                                    j = countRec + 1;
+                                }
                             }
-                            if(currencyTemp1 === '' && currencyTemp2 === ''){
+                            if (currencyTemp1 === '' && currencyTemp2 === '') {
                                 currencyNotEmpty++;
                             }
                         }
                     }
-                }    
-            }    
+                }
+            }
         }
-        if(currencyNotEmpty > 0){
+        if (currencyNotEmpty > 0) {
             $("#textAlertCurrencyAmountNotEmpty").hide();
             $("#textAlertCurrencyAmountNotMatch").hide();
-            for(var i=1; i<=countRec; i++){
-                var currency = document.getElementById('receiveCurrency'+i);
-                var product = document.getElementById('receiveProduct'+i);
-                var description = document.getElementById('receiveDes'+i);
-                var amount = document.getElementById('receiveAmount'+i);
-                var exrate = document.getElementById('receiveExRate'+i);
-                if(currency !== null){
-                    if(product.value !== '' || description.value !== '' || amount.value !== '' || exrate.value !== ''){  
+            for (var i = 1; i <= countRec; i++) {
+                var currency = document.getElementById('receiveCurrency' + i);
+                var product = document.getElementById('receiveProduct' + i);
+                var description = document.getElementById('receiveDes' + i);
+                var amount = document.getElementById('receiveAmount' + i);
+                var exrate = document.getElementById('receiveExRate' + i);
+                if (currency !== null) {
+                    if (product.value !== '' || description.value !== '' || amount.value !== '' || exrate.value !== '') {
                         currency.style.borderColor = 'red';
-                    }    
-                }    
+                    }
+                }
             }
             $("#textAlertCurrencyAmountNotEmpty").show();
             return;
         }
-        if(currencyNotMatch){
+        if (currencyNotMatch) {
             $("#textAlertCurrencyAmountNotEmpty").hide();
             $("#textAlertCurrencyAmountNotMatch").hide();
-            for(var i=1; i<=countRec; i++){
-                 var currency = document.getElementById('receiveCurrency'+i);
-                 var product = document.getElementById('receiveProduct'+i);
-                 var description = document.getElementById('receiveDes'+i);
-                 var amount = document.getElementById('receiveAmount'+i);
-                 var exrate = document.getElementById('receiveExRate'+i);
-                 if(currency !== null){
-                     if(product.value !== '' || description.value !== '' || amount.value !== '' || exrate.value !== ''){  
-                         currency.style.borderColor = 'red';
-                     }    
-                 }    
-             }
-             $("#textAlertCurrencyAmountNotMatch").show();
-             return;
+            for (var i = 1; i <= countRec; i++) {
+                var currency = document.getElementById('receiveCurrency' + i);
+                var product = document.getElementById('receiveProduct' + i);
+                var description = document.getElementById('receiveDes' + i);
+                var amount = document.getElementById('receiveAmount' + i);
+                var exrate = document.getElementById('receiveExRate' + i);
+                if (currency !== null) {
+                    if (product.value !== '' || description.value !== '' || amount.value !== '' || exrate.value !== '') {
+                        currency.style.borderColor = 'red';
+                    }
+                }
+            }
+            $("#textAlertCurrencyAmountNotMatch").show();
+            return;
         }
         $("#textAlertCurrencyAmountNotEmpty").hide();
         $("#textAlertCurrencyAmountNotMatch").hide();
@@ -3015,24 +3015,24 @@
                 var testchek = "";
                 var amountTemp = document.getElementById('receiveAmountTemp' + i).value;
                 var amount = document.getElementById('receiveAmount' + i).value;
-                var currency = document.getElementById('receiveCurrency'+i);
+                var currency = document.getElementById('receiveCurrency' + i);
 //                
-                var receiptDetailId = document.getElementById('tableId'+i).value;
-                var paymentTourId = document.getElementById('paymentTourId'+i).value;
-                var invdId = document.getElementById('invId'+i).value;
-                var billDescId = document.getElementById('billDescId'+i).value;
+                var receiptDetailId = document.getElementById('tableId' + i).value;
+                var paymentTourId = document.getElementById('paymentTourId' + i).value;
+                var invdId = document.getElementById('invId' + i).value;
+                var billDescId = document.getElementById('billDescId' + i).value;
 //                var billDescId = $("#billDescId"+i).val();
 //                var receiptDetailId = $("#tableId"+i).val();
 //                var paymentTourId = $("#paymentTourId"+i).val();
 //                var invdId = $("#invId"+i).val();
                 currency.style.borderColor = 'green';
                 amount = replaceAll(",", "", amount.toString());
-                var isref =  $("#isref").val();
-                if(isref === "0"){
-                    checkAmountBeforeSaveInvoiceId(invdId,receiptDetailId,amount,checksave);
-                }else if(isref === "1"){
-                    checkAmountBeforeSaveRefNo(billDescId,receiptDetailId,amount,checksave);
-                }else if(isref === "2" || isref === "" ){
+                var isref = $("#isref").val();
+                if (isref === "0") {
+                    checkAmountBeforeSaveInvoiceId(invdId, receiptDetailId, amount, checksave);
+                } else if (isref === "1") {
+                    checkAmountBeforeSaveRefNo(billDescId, receiptDetailId, amount, checksave);
+                } else if (isref === "2" || isref === "") {
                     if (parseFloat(amount) > parseFloat(amountTemp)) {
                         //         $('#textAlertReceiveAmount').show();
                         $('#textAlertAmountOver').show();
@@ -3074,11 +3074,11 @@
                             }
                         }
                     }
-                }else if(isref === "3"){
-                    checkAmountBeforeSavePaymentTour(paymentTourId,amount,checksave);
+                } else if (isref === "3") {
+                    checkAmountBeforeSavePaymentTour(paymentTourId, amount, checksave);
                 }
             }
-        } else if(counter.value == 2) {
+        } else if (counter.value == 2) {
             if (inputStatus !== '7') {
                 var sumAmountBeforeSave = document.getElementById('sumAmountBeforeSave').value;
                 var grandTotal = document.getElementById('grandTotal').value;
@@ -3113,7 +3113,7 @@
                     $('#textAlertReceiveAmount').hide();
                 }
             }
-        }else {
+        } else {
             $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromCode');
             $('#ReceiptForm').bootstrapValidator('revalidateField', 'arCode');
             $('#ReceiptForm').bootstrapValidator('revalidateField', 'receiveFromDate');
@@ -3125,7 +3125,7 @@
     }
 
     function searchRefNo() {
-        if($("#ajaxload1").hasClass("hidden")){
+        if ($("#ajaxload1").hasClass("hidden")) {
             var refNo = $("#refNo").val();
             if (refNo == "") {
                 if (!$('#refnopanel').hasClass('has-feedback')) {
@@ -3144,7 +3144,7 @@
                         '&type=' + 'searchRefNo';
                 CallAjaxSearchRef(param);
             }
-        }    
+        }
     }
 
     function CallAjaxSearchRef(param) {
@@ -3157,26 +3157,26 @@
                 url: url,
                 cache: false,
                 data: param,
-                success: function(msg) {
+                success: function (msg) {
                     try {
                         $("#searchinvtable").addClass("hidden");
                         $("#searchaircomtable").addClass("hidden");
                         $("#searchtourcomtable").addClass("hidden");
-                        
-                        if (msg == "null") {                           
-                            $("#searchreftable").addClass("hidden");                          
+
+                        if (msg == "null") {
+                            $("#searchreftable").addClass("hidden");
 //                        $('#RefNoListTable').dataTable().fnClearTable();
 //                        $('#RefNoListTable').dataTable().fnDestroy();
-                            $('#RefNoListTable > tbody  > tr').each(function() {
+                            $('#RefNoListTable > tbody  > tr').each(function () {
                                 $(this).remove();
                             });
 
                         } else {
-                            $('#RefNoListTable > tbody  > tr').each(function() {
+                            $('#RefNoListTable > tbody  > tr').each(function () {
                                 $(this).remove();
                             });
                             var result = msg.split("//");
-                            $("#RefNoListTable tbody").empty().append(result[0]);                                                                                  
+                            $("#RefNoListTable tbody").empty().append(result[0]);
 //                            var rowAll = $("#RefNoListTable tr").length;
 //                            if(rowAll === 1){
 //                                $("#searchreftable").addClass("hidden");
@@ -3188,7 +3188,7 @@
 //                                $('#RefNoListTable > tbody  > tr').each(function() {
 //                                    $(this).remove();
 //                                });
-                              
+
                                 $('#AlertBookingRefno').hide();
                                 try {
                                     $("#RefNoListTable tbody").empty().append(result[0]);
@@ -3197,22 +3197,22 @@
                                     document.getElementById("receiveFromAddress").value = $("#receiveAddressBillable").val();
                                     document.getElementById("arCode").value = $("#arcodeBillable").val();
                                     document.getElementById("inputStatus").value = $("#mAccPayBillable").val();
-                                    if(result[1] !== ''){
+                                    if (result[1] !== '') {
                                         $("#RefNoListTable tbody").empty().append(result[1]);
-                                        $("#searchreftable").removeClass("hidden");    
+                                        $("#searchreftable").removeClass("hidden");
 
-                                    }else{
-                                       $("#searchreftable").addClass("hidden");    
+                                    } else {
+                                        $("#searchreftable").addClass("hidden");
                                     }
                                 } catch (e) {
                                     alert(e);
                                 }
                             } else {
-                                $('#RefNoListTable > tbody  > tr').each(function() {
+                                $('#RefNoListTable > tbody  > tr').each(function () {
                                     $(this).remove();
                                 });
                                 $('#AlertBookingRefno').show();
-                                $("#searchreftable").addClass("hidden");   
+                                $("#searchreftable").addClass("hidden");
                             }
 
                         }
@@ -3222,7 +3222,7 @@
                         alert(e);
                     }
 
-                }, error: function(msg) {
+                }, error: function (msg) {
                     $("#ajaxload2").addClass("hidden");
                 }
             });
@@ -3238,7 +3238,7 @@
     }
 
     function searchPaymentNoAir() {
-        if($("#ajaxload1").hasClass("hidden")){
+        if ($("#ajaxload1").hasClass("hidden")) {
             var paymentNoAir = $("#searchPaymentNoAir").val();
             var servletName = 'ReceiptServlet';
             var servicesName = 'AJAXBean';
@@ -3248,7 +3248,7 @@
                     '&paymentNo=' + paymentNoAir +
                     '&type=' + 'searchPaymentNoAir';
             CallAjaxSearchPaymentNoAir(param);
-        }    
+        }
     }
 
     function CallAjaxSearchPaymentNoAir(param) {
@@ -3260,30 +3260,30 @@
                 url: url,
                 cache: false,
                 data: param,
-                success: function(msg) {
+                success: function (msg) {
                     try {
                         if (msg == "null") {
                             $("#searchinvtable").addClass("hidden");
                             $("#searchreftable").addClass("hidden");
                             $("#searchaircomtable").addClass("hidden");
                             $("#searchtourcomtable").addClass("hidden");
-                            
-                            $('#AircommissionTable > tbody  > tr').each(function() {
+
+                            $('#AircommissionTable > tbody  > tr').each(function () {
                                 $(this).remove();
                             });
-                            
+
                             $("#AircommissionTable_wrapper").css("min-height", 100);
                         } else {
 //                            $("#searchaircomtable").removeClass("hidden");
-                            $('#AircommissionTable > tbody  > tr').each(function() {
+                            $('#AircommissionTable > tbody  > tr').each(function () {
                                 $(this).remove();
                             });
                             $("#AircommissionTable tbody").empty().append(msg);
-                            
+
                             var rowAll = $("#AircommissionTable tr").length;
-                            if(rowAll === 1){
+                            if (rowAll === 1) {
                                 $("#searchaircomtable").addClass("hidden");
-                            }else{
+                            } else {
                                 $("#searchaircomtable").removeClass("hidden");
                             }
 
@@ -3300,7 +3300,7 @@
                         alert(e);
                     }
 
-                }, error: function(msg) {
+                }, error: function (msg) {
                     $("#ajaxload3").addClass("hidden");
                 }
             });
@@ -3309,7 +3309,7 @@
         }
     }
     function searchPaymentNoTour() {
-        if($("#ajaxload1").hasClass("hidden")){
+        if ($("#ajaxload1").hasClass("hidden")) {
             var paymentNoTour = $("#searchPaymentNoTour").val();
             var servletName = 'ReceiptServlet';
             var servicesName = 'AJAXBean';
@@ -3319,7 +3319,7 @@
                     '&paymentNo=' + paymentNoTour +
                     '&type=' + 'searchPaymentNoTour';
             CallAjaxSearchPaymentNoTour(param);
-        }    
+        }
     }
 
     function CallAjaxSearchPaymentNoTour(param) {
@@ -3331,31 +3331,31 @@
                 url: url,
                 cache: false,
                 data: param,
-                success: function(msg) {
+                success: function (msg) {
                     try {
                         if (msg == "null") {
                             $("#searchinvtable").addClass("hidden");
                             $("#searchreftable").addClass("hidden");
                             $("#searchaircomtable").addClass("hidden");
                             $("#searchtourcomtable").addClass("hidden");
-                            
-                            $('#TourcommissionTable > tbody  > tr').each(function() {
+
+                            $('#TourcommissionTable > tbody  > tr').each(function () {
                                 $(this).remove();
                             });
-                            
+
                             $("#TourcommissionTable_wrapper").css("min-height", 100);
                         } else {
 //                            $("#searchtourcomtable").removeClass("hidden");
-                            $('#TourcommissionTable > tbody  > tr').each(function() {
+                            $('#TourcommissionTable > tbody  > tr').each(function () {
                                 $(this).remove();
                             });
                             $("#TourcommissionTable tbody").empty().append(msg);
-                            
-                            
+
+
                             var rowAll = $("#TourcommissionTable tr").length;
-                            if(rowAll === 1){
+                            if (rowAll === 1) {
                                 $("#searchtourcomtable").addClass("hidden");
-                            }else{
+                            } else {
                                 $("#searchtourcomtable").removeClass("hidden");
                             }
                             $("#TourcommissionTable_wrapper").css("min-height", 100);
@@ -3366,7 +3366,7 @@
                         alert(e);
                     }
 
-                }, error: function(msg) {
+                }, error: function (msg) {
                     $("#ajaxload4").addClass("hidden");
                 }
             });
@@ -3378,8 +3378,18 @@
     function deleteReceiptList(id, Ccount) {
         document.getElementById('receiptDetailIdDelete').value = id;
         document.getElementById('receiptRowDelete').value = Ccount;
-        $("#delProduct").text('Are you sure delete this product ?');
-        $('#DeleteProduct').modal('show');
+        var operationAction = $("#action").val();
+        var operationTable = $("#operationTable").val();
+        var operationTableId = $("#operationTableId").val();
+        var operationUser = $("#username").val();
+        var operationDate = $("#operationDate").val();
+//        console.log("action : " + operationAction);
+//        console.log("operationTable : " + operationTable);
+//        console.log("operationTableId : " + operationTable);
+//        console.log("operationUser : " + operationUser);
+        checkDuplicateUserActionDelete(operationTable, operationTableId, operationAction, operationUser,operationDate,'product');
+
+
     }
 
     function DeleteRowProduct() {
@@ -3393,9 +3403,9 @@
                 $("#tr_ProductDetailAddRow").removeClass("hide");
                 $("#tr_ProductDetailAddRow").addClass("show");
             }
-            
+
             var tempcount = parseInt($("#ReceiptListTable tr").length);
-            if(tempcount == 1){
+            if (tempcount == 1) {
                 $("#invoiceNo").removeAttr("disabled");
                 $("#refNo").removeAttr("disabled");
                 $("#ButtonSearchRefNo").removeAttr("disabled");
@@ -3405,14 +3415,14 @@
                 $("#ButtonSearchPaymentNoAir").removeAttr("disabled");
                 $("#ButtonSearchPaymentNoTour").removeAttr("disabled");
 
-            }else if(tempcount == 2){
+            } else if (tempcount == 2) {
                 var count = $("#counter").val();
-                count = count-1;
+                count = count - 1;
                 $("#receiveProduct" + count).parent().parent().remove();
                 $("#counter").val(1);
                 AddRowProduct(1);
                 var amount = document.getElementById('receiveAmount1').value;
-                if(amount === ""){
+                if (amount === "") {
                     $("#invoiceNo").removeAttr("disabled");
                     $("#refNo").removeAttr("disabled");
                     $("#ButtonSearchRefNo").removeAttr("disabled");
@@ -3429,7 +3439,7 @@
                 url: '${callPage}?action=deleteReceiptDetail',
                 type: 'get',
                 data: {receiptDetailIdDelete: id},
-                success: function() {
+                success: function () {
                     $("#receiveProduct" + cCount).parent().parent().remove();
                     var rowAll = $("#ReceiptListTable tr").length;
                     if (rowAll <= 1) {
@@ -3437,9 +3447,9 @@
                         $("#tr_ProductDetailAddRow").addClass("show");
                     }
                     calculateGrandTotal();
-                    
+
                     var tempcount = parseInt($("#ReceiptListTable tr").length);
-                    if(tempcount == 1){
+                    if (tempcount == 1) {
                         $("#invoiceNo").removeAttr("disabled");
                         $("#refNo").removeAttr("disabled");
                         $("#ButtonSearchRefNo").removeAttr("disabled");
@@ -3449,14 +3459,14 @@
                         $("#ButtonSearchPaymentNoAir").removeAttr("disabled");
                         $("#ButtonSearchPaymentNoTour").removeAttr("disabled");
 
-                    }else if(tempcount == 2){
+                    } else if (tempcount == 2) {
                         var count = $("#counter").val();
-                        count = count-1;
+                        count = count - 1;
                         $("#receiveProduct" + count).parent().parent().remove();
                         $("#counter").val(1);
                         AddRowProduct(1);
                         var amount = document.getElementById('receiveAmount1').value;
-                        if(amount === ""){
+                        if (amount === "") {
                             $("#invoiceNo").removeAttr("disabled");
                             $("#refNo").removeAttr("disabled");
                             $("#ButtonSearchRefNo").removeAttr("disabled");
@@ -3469,7 +3479,7 @@
                     }
 //                AddRowProduct();
                 },
-                error: function() {
+                error: function () {
                     console.log("error");
                     result = 0;
                 }
@@ -3477,15 +3487,24 @@
         }
         $('#DeleteProduct').modal('hide');
 
-    
+
         calculateGrandTotal();
     }
 
     function deleteCreditList(id, Ccount) {
         document.getElementById('receiptCreditIdDelete').value = id;
         document.getElementById('receiptCreditRowDelete').value = Ccount;
-        $("#delCredit").text('Are you sure delete this credit ?');
-        $('#DeleteReceiptCredit').modal('show');
+        var operationAction = $("#action").val();
+        var operationTable = $("#operationTable").val();
+        var operationTableId = $("#operationTableId").val();
+        var operationUser = $("#username").val();
+        var operationDate = $("#operationDate").val();
+//        console.log("action : " + operationAction);
+//        console.log("operationTable : " + operationTable);
+//        console.log("operationTableId : " + operationTable);
+//        console.log("operationUser : " + operationUser);
+        checkDuplicateUserActionDelete(operationTable, operationTableId, operationAction, operationUser,operationDate,'credit');
+
     }
 
     function DeleteRowCredit() {
@@ -3499,11 +3518,11 @@
                 $("#tr_CreditDetailAddRow").addClass("show");
             }
             var tempcount = parseInt($("#CreditDetailTable tr").length);
-            if(tempcount == 1){
+            if (tempcount == 1) {
 
-            }else if(tempcount == 2){
+            } else if (tempcount == 2) {
                 var count = $("#countRowCredit").val();
-                count = count-1;
+                count = count - 1;
                 $("#creditBank" + count).parent().parent().remove();
                 $("#countRowCredit").val(1);
                 AddRowCredit(1);
@@ -3514,33 +3533,33 @@
                 url: '${callPage}?action=deleteReceiptCredit',
                 type: 'get',
                 data: {receiptCreditIdDelete: id},
-                success: function() {
+                success: function () {
                     $("#creditBank" + cCount).parent().parent().remove();
                     var rowAll = $("#CreditDetailTable tr").length;
                     if (rowAll <= 1) {
                         $("#tr_CreditDetailAddRow").removeClass("hide");
                         $("#tr_CreditDetailAddRow").addClass("show");
                     }
-                    
-                    var tempcount = parseInt($("#CreditDetailTable tr").length);
-                    if(tempcount == 1){
 
-                    }else if(tempcount == 2){
+                    var tempcount = parseInt($("#CreditDetailTable tr").length);
+                    if (tempcount == 1) {
+
+                    } else if (tempcount == 2) {
                         var count = $("#countRowCredit").val();
-                        count = count-1;
+                        count = count - 1;
                         $("#creditBank" + count).parent().parent().remove();
                         $("#countRowCredit").val(1);
                         AddRowCredit(1);
-                    }   
+                    }
                 },
-                error: function() {
+                error: function () {
                     console.log("error");
                     result = 0;
                 }
             });
         }
         $('#DeleteReceiptCredit').modal('hide');
-        
+
 
     }
 
@@ -3657,20 +3676,20 @@
 
 
     function setFormatCurrencyOnFocusOut(row) {
-        $('#receiveAmount' + row).focusout(function() {
+        $('#receiveAmount' + row).focusout(function () {
             setFormatCurrency(row);
             calculateGrandTotal();
         });
 
-        $('#receiveCost' + row).focusout(function() {
+        $('#receiveCost' + row).focusout(function () {
             setFormatCurrency(row);
             calculateGrandTotal()
         });
 
     }
-    
+
     function setFormatExRateOnFocusOut(row) {
-        $('#receiveExRate' + row).focusout(function() {
+        $('#receiveExRate' + row).focusout(function () {
             setFormatExRate(row);
         });
     }
@@ -3743,14 +3762,14 @@
         }
         document.getElementById("sumCreditAmountTemp").value = formatNumber(amount);
     }
-    
-    function showSearchInvno(){
-        if($("#searchinvtext").hasClass("hidden")){
+
+    function showSearchInvno() {
+        if ($("#searchinvtext").hasClass("hidden")) {
             $("#searchreftext").addClass("hidden");
             $("#searchaircomtext").addClass("hidden");
             $("#searchtourcomtext").addClass("hidden");
             $("#searchinvtext").removeClass("hidden");
-        }else{
+        } else {
             $("#searchinvtext").addClass("hidden");
         }
         $("#searchtourcomtable").addClass("hidden");
@@ -3758,15 +3777,15 @@
         $("#searchreftable").addClass("hidden");
         $("#searchinvtable").addClass("hidden");
     }
-    
-    function showSearchRefno(){
-        if($("#searchreftext").hasClass("hidden")){
+
+    function showSearchRefno() {
+        if ($("#searchreftext").hasClass("hidden")) {
             $("#searchinvtext").addClass("hidden");
             $("#searchaircomtext").addClass("hidden");
             $("#searchtourcomtext").addClass("hidden");
-            
+
             $("#searchreftext").removeClass("hidden");
-        }else{
+        } else {
             $("#searchreftext").addClass("hidden");
         }
         $("#searchtourcomtable").addClass("hidden");
@@ -3774,15 +3793,15 @@
         $("#searchreftable").addClass("hidden");
         $("#searchinvtable").addClass("hidden");
     }
-    
-    function showSearchAirCom(){
-        if($("#searchaircomtext").hasClass("hidden")){
+
+    function showSearchAirCom() {
+        if ($("#searchaircomtext").hasClass("hidden")) {
             $("#searchinvtext").addClass("hidden");
             $("#searchreftext").addClass("hidden");
             $("#searchtourcomtext").addClass("hidden");
-            
+
             $("#searchaircomtext").removeClass("hidden");
-        }else{
+        } else {
             $("#searchaircomtext").addClass("hidden");
         }
         $("#searchtourcomtable").addClass("hidden");
@@ -3790,15 +3809,15 @@
         $("#searchreftable").addClass("hidden");
         $("#searchinvtable").addClass("hidden");
     }
-    
-    function showSearchTourCom(){
-        if($("#searchtourcomtext").hasClass("hidden")){
+
+    function showSearchTourCom() {
+        if ($("#searchtourcomtext").hasClass("hidden")) {
             $("#searchinvtext").addClass("hidden");
             $("#searchreftext").addClass("hidden");
             $("#searchaircomtext").addClass("hidden");
-            
+
             $("#searchtourcomtext").removeClass("hidden");
-        }else{
+        } else {
             $("#searchtourcomtext").addClass("hidden");
         }
         $("#searchtourcomtable").addClass("hidden");
@@ -3806,9 +3825,9 @@
         $("#searchreftable").addClass("hidden");
         $("#searchinvtable").addClass("hidden");
     }
-    
-    
-    function checkAmountBeforeSaveRefNo(billDescId,receiptDetailId,recAmount,checksave) {
+
+
+    function checkAmountBeforeSaveRefNo(billDescId, receiptDetailId, recAmount, checksave) {
         var servletName = 'ReceiptServlet';
         var servicesName = 'AJAXBean';
         var param = 'action=' + 'text' +
@@ -3818,10 +3837,10 @@
                 '&receiptDetailId=' + receiptDetailId +
                 '&recAmount=' + recAmount +
                 '&type=' + 'searchAmountByBillDescId';
-        CallAjaxcheckAmountBeforeSaveRefNo(param,checksave);
+        CallAjaxcheckAmountBeforeSaveRefNo(param, checksave);
     }
 
-    function CallAjaxcheckAmountBeforeSaveRefNo(param,checksave) {
+    function CallAjaxcheckAmountBeforeSaveRefNo(param, checksave) {
         var url = 'AJAXServlet';
         $("#ajaxload4").removeClass("hidden");
         try {
@@ -3830,13 +3849,13 @@
                 url: url,
                 cache: false,
                 data: param,
-                success: function(msg) {
+                success: function (msg) {
                     try {
-                        validateSaveReceiptAfterAjax(msg,checksave);
+                        validateSaveReceiptAfterAjax(msg, checksave);
                     } catch (e) {
                         alert(e);
                     }
-                }, error: function(msg) {
+                }, error: function (msg) {
                 }
             });
         } catch (e) {
@@ -3844,7 +3863,7 @@
         }
     }
 
-    function checkAmountBeforeSavePaymentTour(paymentTourId,recAmount,checksave) {
+    function checkAmountBeforeSavePaymentTour(paymentTourId, recAmount, checksave) {
         var servletName = 'ReceiptServlet';
         var servicesName = 'AJAXBean';
         var param = 'action=' + 'text' +
@@ -3853,10 +3872,10 @@
                 '&paymentTourId=' + paymentTourId +
                 '&recAmount=' + recAmount +
                 '&type=' + 'searchAmountByPaymentId';
-        CallAjaxcheckAmountBeforeSavePaymentTour(param,checksave);
+        CallAjaxcheckAmountBeforeSavePaymentTour(param, checksave);
     }
 
-    function CallAjaxcheckAmountBeforeSavePaymentTour(param,checksave) {
+    function CallAjaxcheckAmountBeforeSavePaymentTour(param, checksave) {
         var url = 'AJAXServlet';
         $("#ajaxload4").removeClass("hidden");
         try {
@@ -3865,21 +3884,21 @@
                 url: url,
                 cache: false,
                 data: param,
-                success: function(msg) {
+                success: function (msg) {
                     try {
-                        validateSaveReceiptAfterAjax(msg,checksave);
+                        validateSaveReceiptAfterAjax(msg, checksave);
                     } catch (e) {
                         alert(e);
                     }
-                }, error: function(msg) {
+                }, error: function (msg) {
                 }
             });
         } catch (e) {
             alert(e);
         }
     }
-    
-    function checkAmountBeforeSaveInvoiceId(invDetailId,receiptDetailId,recAmount,checksave) {
+
+    function checkAmountBeforeSaveInvoiceId(invDetailId, receiptDetailId, recAmount, checksave) {
         var servletName = 'ReceiptServlet';
         var servicesName = 'AJAXBean';
         var param = 'action=' + 'text' +
@@ -3889,10 +3908,10 @@
                 '&receiptDetailId=' + receiptDetailId +
                 '&recAmount=' + recAmount +
                 '&type=' + 'searchAmountByInvDetailId';
-        CallAjaxcheckAmountBeforeSaveInvoiceId(param,checksave);
+        CallAjaxcheckAmountBeforeSaveInvoiceId(param, checksave);
     }
 
-    function CallAjaxcheckAmountBeforeSaveInvoiceId(param,checksave) {
+    function CallAjaxcheckAmountBeforeSaveInvoiceId(param, checksave) {
         var url = 'AJAXServlet';
         try {
             $.ajax({
@@ -3900,27 +3919,27 @@
                 url: url,
                 cache: false,
                 data: param,
-                success: function(msg) {
+                success: function (msg) {
                     try {
-                        validateSaveReceiptAfterAjax(msg,checksave);
+                        validateSaveReceiptAfterAjax(msg, checksave);
                     } catch (e) {
                         alert(e);
                     }
-                }, error: function(msg) {
+                }, error: function (msg) {
                 }
             });
         } catch (e) {
             alert(e);
         }
     }
-    
-    function validateSaveReceiptAfterAjax(msg,checksave){
+
+    function validateSaveReceiptAfterAjax(msg, checksave) {
         var inputStatus = document.getElementById('inputStatus').value;
         var receiveFromCode = document.getElementById('receiveFromCode').value;
         var arCode = document.getElementById('arCode').value;
         var receiveFromDate = document.getElementById('receiveFromDate').value;
         var inputStatus = document.getElementById('inputStatus').value;
-        
+
         if (msg === "fail") {
             $('#textAlertAmountOver').show();
             checksave = 2;
@@ -3961,64 +3980,112 @@
             }
         }
     }
-    
-//Operation Duplicate
-function enableOperationDuplicate(){
-    var action = document.getElementById("action");
-    action.value = "operationUpdate";
-    document.getElementById('ReceiptForm').submit();
-}
 
-function disableOperationDuplicate(){   
-    $("#ButtonSave").attr("disabled", true);
-    $("#enableVoidButton").attr("disabled", true);
-    $("#disableVoidButton").attr("disabled", true); 
-    $("#DeleteProduct").addClass("hidden");
-}
-
-$(window).on("beforeunload", function() {
-    var operationAction = $("#action").val();
-    var operationTable = $("#operationTable").val();
-    var operationTableId = $("#operationTableId").val();
-    var operationUser = $("#username").val();
-    console.log("action : "+operationAction);
-    console.log("operationTable : "+operationTable);
-    console.log("operationTableId : "+operationTable);
-    console.log("operationUser : "+operationUser);
-    clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser);  
-});
-    
-function clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser) {
-    var servletName = 'CheckDuplicateUserServlet';
-    var servicesName = 'AJAXBean';
-    var param = 'action=' + 'text' +
-            '&servletName=' + servletName +
-            '&servicesName=' + servicesName +
-            '&operationTable=' + operationTable +
-            '&operationTableId=' + operationTableId +
-            '&operationAction=' + operationAction +
-            '&operationUser=' + operationUser;
-    callAjaxClearDuplicateUser(param);
-}
-
-function callAjaxClearDuplicateUser(param) {
-    var url = 'AJAXServlet';
-    try {
-        $.ajax({
-            type: "POST",
-            url: url,
-            cache: false,
-            data: param,
-            success: function(msg) {
-                console.log('update duplicate user success');
-             // window.location = 'APMonitor.smi';
-            }, error: function(msg) {
-                console.log('update duplicate user fail');
-            }
-        });
-    } catch (e) {
-        alert(e);
-        console.log('update duplicate user fail');
+    //Operation Duplicate
+    function enableOperationDuplicate() {
+        var action = document.getElementById("action");
+        action.value = "operationUpdate";
+        document.getElementById('ReceiptForm').submit();
     }
-}
+
+    function disableOperationDuplicate() {
+        $("#ButtonSave").attr("disabled", true);
+        $("#enableVoidButton").attr("disabled", true);
+        $("#disableVoidButton").attr("disabled", true);
+        $("#DeleteProduct").addClass("hidden");
+    }
+
+    $(window).on("beforeunload", function () {
+        var operationAction = $("#action").val();
+        var operationTable = $("#operationTable").val();
+        var operationTableId = $("#operationTableId").val();
+        var operationUser = $("#username").val();
+        console.log("action : " + operationAction);
+        console.log("operationTable : " + operationTable);
+        console.log("operationTableId : " + operationTable);
+        console.log("operationUser : " + operationUser);
+        clearDuplicateUser(operationTable, operationTableId, operationAction, operationUser);
+    });
+
+    function clearDuplicateUser(operationTable, operationTableId, operationAction, operationUser) {
+        var servletName = 'CheckDuplicateUserServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&operationTable=' + operationTable +
+                '&operationTableId=' + operationTableId +
+                '&operationAction=' + operationAction +
+                '&operationUser=' + operationUser + 
+                '&type=' + 'updateOperationNull';
+        callAjaxClearDuplicateUser(param);
+    }
+
+    function callAjaxClearDuplicateUser(param) {
+        var url = 'AJAXServlet';
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function (msg) {
+                    console.log('update duplicate user success');
+                    // window.location = 'APMonitor.smi';
+                }, error: function (msg) {
+                    console.log('update duplicate user fail');
+                }
+            });
+        } catch (e) {
+            alert(e);
+            console.log('update duplicate user fail');
+        }
+    }
+    
+    function checkDuplicateUserActionDelete(operationTable, operationTableId, operationAction, operationUser ,operationDate , typedelete) {
+        var servletName = 'CheckDuplicateUserServlet';
+        var servicesName = 'AJAXBean';
+        var param = 'action=' + 'text' +
+                '&servletName=' + servletName +
+                '&servicesName=' + servicesName +
+                '&operationTable=' + operationTable +
+                '&operationTableId=' + operationTableId +
+                '&operationAction=' + operationAction +
+                '&operationUser=' + operationUser +
+                '&operationDate=' + operationDate + 
+                '&type=' + 'checkOperationUser';
+        callAjaxCheckDuplicateUserActionDelete(param,typedelete);
+    }
+
+    function callAjaxCheckDuplicateUserActionDelete(param,typedelete) {
+        var url = 'AJAXServlet';
+        try {
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                data: param,
+                success: function (msg) {
+                    if(msg === 'success'){
+                        if(typedelete === 'product'){
+                            $("#delProduct").text('Are you sure delete this product ?');
+                            $('#DeleteProduct').modal('show');
+                        }else if(typedelete === 'credit'){
+                            $("#delCredit").text('Are you sure delete this credit ?');
+                            $('#DeleteReceiptCredit').modal('show');
+                        }
+                    }else{
+                        var username = $("#operationUser").val();
+                        $("#operationMessage").text("User " + username + " is using information. Do you want to continue ?");
+                        $("#operationModal").modal("show");
+                    }
+                }, error: function (msg) {
+                    console.log('update duplicate user fail');
+                }
+            });
+        } catch (e) {
+            alert(e);
+            console.log('update duplicate user fail');
+        }
+    }
 </script>
