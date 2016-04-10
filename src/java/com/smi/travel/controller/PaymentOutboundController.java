@@ -79,6 +79,7 @@ public class PaymentOutboundController extends SMITravelController {
         String status = request.getParameter("status");
         String duePaymentDate = request.getParameter("duePaymentDate");
         String updateDate = request.getParameter("updateDate");
+        String isPayCom = request.getParameter("isPayCom");
         String countPaymentDetail = request.getParameter("countPaymentDetail");
         String resultRedirect = request.getParameter("resultRedirect");
         if(!"".equalsIgnoreCase(resultRedirect) && resultRedirect != null){
@@ -112,6 +113,7 @@ public class PaymentOutboundController extends SMITravelController {
             paymentOutbound.setInvoiceSup(invSupCode);
             paymentOutbound.setApCode(invSupApCode);
             paymentOutbound.setDetail(detail);
+            paymentOutbound.setIsPayCom("1".equalsIgnoreCase(isPayCom) ? 1 : 0);
             
             MItemstatus mItemstatus = new MItemstatus();
             mItemstatus.setId(status);

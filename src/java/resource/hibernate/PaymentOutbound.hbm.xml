@@ -40,6 +40,9 @@
         <property name="duePaymentDate" type="date">
             <column name="due_payment_date" length="10" />
         </property>
+        <property name="isPayCom" type="java.lang.Integer">
+            <column name="is_pay_com"/>
+        </property>
         <bag name="paymentOutboundDetails" table="payment_outbound_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="payment_id" />

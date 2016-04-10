@@ -275,7 +275,17 @@
                     <div class="col-md-1 text-left">
                         <div class="col-xs-1  text-right" style="padding: 0px 0px 0px 0px;"><i id="ajaxLoadSearch"  class="fa fa-spinner fa-spin hidden"></i></div>
                     </div>
-                    <div class="col-xs-1 text-right" style="width:480px;padding-left:0px;padding-right:0px;margin-top: -10px;">
+                    <div class="col-xs-1 text-right" style="width:230px;padding-left:0px;padding-right:0px;margin-top: -10px;">
+                        <label class="control-label">Is Pay Com</lable>
+                    </div>
+                    <div class="col-md-2 text-right" style="width: 40px; padding-top : 5px;padding-left:0px;padding-right:0px;margin-top: -10px;">
+                        <c:set var="isPayCom" value=""/>
+                        <c:if test="${paymentOutbound.isPayCom == 1}">
+                            <c:set var="isPayCom" value="checked"/>
+                        </c:if>
+                        <input type="checkbox" id="isPayCom" name="isPayCom" value="1" ${isPayCom}/>
+                    </div>
+                    <div class="col-xs-1 text-right" style="width:220px;padding-left:0px;padding-right:0px;margin-top: -10px;">
                         <label class="control-label">Account<font style="color: red">*</font></lable>
                     </div>
                     <div class="col-md-2 text-left" style="width: 200px; padding-top : 5px;padding-left:0px;padding-right:0px;margin-top: -10px;">

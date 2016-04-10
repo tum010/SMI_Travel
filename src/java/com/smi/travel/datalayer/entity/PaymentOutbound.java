@@ -24,12 +24,13 @@ public class PaymentOutbound {
      private Date createDate;
      private Date updateDate;
      private Date duePaymentDate;
+     private Integer isPayCom;
      private List paymentOutboundDetails = new LinkedList<PaymentOutboundDetail>();
 
     public PaymentOutbound() {
     }
 
-    public PaymentOutbound(String id, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String createBy, Date createDate, Date updateDate) {
+    public PaymentOutbound(String id, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String createBy, Date createDate, Date updateDate, Integer isPayCom) {
        this.id = id;
        this.MItemstatus = MItemstatus;
        this.payNo = payNo;
@@ -41,6 +42,7 @@ public class PaymentOutbound {
        this.createBy = createBy;
        this.createDate = createDate;
        this.updateDate = updateDate;
+       this.isPayCom = isPayCom;
     }
    
     public MItemstatus getMItemstatus() {
@@ -137,6 +139,14 @@ public class PaymentOutbound {
 
     public void setDuePaymentDate(Date duePaymentDate) {
         this.duePaymentDate = duePaymentDate;
+    }
+
+    public Integer getIsPayCom() {
+        return isPayCom;
+    }
+
+    public void setIsPayCom(Integer isPayCom) {
+        this.isPayCom = isPayCom;
     }
 
 }
