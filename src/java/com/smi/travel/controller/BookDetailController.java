@@ -17,12 +17,15 @@ import com.smi.travel.datalayer.entity.Passenger;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.BookingDetailService;
+import com.smi.travel.datalayer.service.CheckDuplicateUserService;
 import com.smi.travel.datalayer.service.UtilityService;
+import com.smi.travel.datalayer.view.entity.CheckDuplicateUser;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
-import static groovy.sql.Sql.CHAR;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -58,9 +61,14 @@ public class BookDetailController extends SMITravelController {
     private static final String[] resultText = {"Save unsuccessful", "Save successful"};
     private static final String LockUnlockBooking = "LockUnlockBooking";
     private static final String ISBILLSTATUS = "IsBillStatus";
+    private static final String CHECKDUPLICATEUSER = "checkDuplicateUser";
     private UtilityService utilservice;
     private MInitialname mInitialname;
-    UtilityFunction util; 
+    private CheckDuplicateUserService checkDuplicateUserService;
+    UtilityFunction util;
+    Date opDate;
+    String opUser;
+    
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         UtilityFunction utilty = new UtilityFunction();
@@ -79,6 +87,21 @@ public class BookDetailController extends SMITravelController {
         SystemUser user = (SystemUser) session.getAttribute("USER");
         List<Agent> agent = bookingDetailService.getListAgentForBookingDetail();
         request.setAttribute(Agent, agent);
+        
+        String operationTableId = request.getParameter("operationTableId");
+        String operationUser = request.getParameter("operationUser");
+        String checkDuplicateUser = "";
+        String clearDuplicateUser = "";
+        
+        //Duplicate User
+        if("operationUpdate".equalsIgnoreCase(action)){
+            System.out.println("operationTableId : "+operationTableId);
+            checkDuplicateUser = checkDuplicateUser(request,response,session,operationTableId,3);
+            action = "edit";
+        }
+        //**
+        
+        
 //        for(int i=0;i<agent.size();i++){
 //            Agent agentRe = new Agent();
 //            agentRe = agent.get(i);
@@ -113,6 +136,20 @@ public class BookDetailController extends SMITravelController {
             String resultS = request.getParameter("result");
 
             Master master = bookingDetailService.getBookingDetailFromRefno(refNo);
+            
+            
+            //Duplicate User
+//            if(master.getId() != null){
+//                if(!"".equalsIgnoreCase(master.getId())){
+//                    CheckDuplicateUser cdu = new CheckDuplicateUser();
+//                    cdu.setOperationTable("Master");
+//                    cdu.setTableId(master.getId());
+//                    cdu.setOperationUser(user.getUsername());
+//                    checkDuplicateUserService.updateOperationNull(cdu);
+//                }
+//            }
+            checkDuplicateUser = checkDuplicateUser(request,response,session,master.getId(),1);
+            
             Agent selectedAgent = null;
 //            if(master != null){
                 selectedAgent = master.getAgent();
@@ -135,6 +172,9 @@ public class BookDetailController extends SMITravelController {
             int resultsave = bookingDetailService.insertHistoryBooking(historyBooking);
             System.out.println(" resultsave " + resultsave);
         } else if ("update".equalsIgnoreCase(action)) {
+            
+            
+            
             //Get data from form
             String agentId = request.getParameter("agent_id");
             String agentName = request.getParameter("agent_user");
@@ -145,6 +185,16 @@ public class BookDetailController extends SMITravelController {
             System.out.println();
 
             Master dbMaster = bookingDetailService.getBookingDetailFromRefno(refNo);
+            
+            
+             //Duplicate User
+            if(!"".equalsIgnoreCase(dbMaster.getId()) && dbMaster.getId() != null){
+                checkDuplicateUser = checkDuplicateUser(request,response,session,dbMaster.getId(),2);
+                if("fail".equalsIgnoreCase(checkDuplicateUser)){
+                    return new ModelAndView("redirect:BookDetail.smi?referenceNo=" + dbMaster.getReferenceNo() + "&action=edit");
+                }
+            }
+            
             dbMaster.setAgentRef(agentRef);
             Agent selectedAgent = null;
             selectedAgent = bookingDetailService.getAgentdao().getAgentFromID(agentId);
@@ -207,6 +257,12 @@ public class BookDetailController extends SMITravelController {
                 e.printStackTrace();
                 request.setAttribute(TransactionResult, "BookingDetail cannot be saved! Please see log.");
             }
+            
+            if(!"1".equalsIgnoreCase(String.valueOf(result))){
+                //Duplicate User
+                checkDuplicateUser = checkDuplicateUser(request,response,session,dbMaster.getId(),1);
+            }
+            
             request.setAttribute(Detail, dbMaster);
             request.setAttribute(ACTION, "update");
             request.setAttribute(SelectedAgent, selectedAgent);
@@ -402,4 +458,66 @@ public class BookDetailController extends SMITravelController {
         this.mInitialname = mInitialname;
     }
 
+    public CheckDuplicateUserService getCheckDuplicateUserService() {
+        return checkDuplicateUserService;
+    }
+
+    public void setCheckDuplicateUserService(CheckDuplicateUserService checkDuplicateUserService) {
+        this.checkDuplicateUserService = checkDuplicateUserService;
+    }
+
+   private String checkDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String matetId, int step) {
+        UtilityFunction util = new UtilityFunction();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+        String result = "fail";
+        SystemUser user = (SystemUser) session.getAttribute("USER");
+        CheckDuplicateUser chuSession = new CheckDuplicateUser();
+        chuSession.setOperationTable("Master");
+        chuSession.setTableId(matetId);
+        if(step == 1){
+            chuSession.setOperationDate(String.valueOf(df.format(new Date())));
+            chuSession.setOperationUser(user.getUsername());
+        }else if(step == 2){
+            String operationDate = request.getParameter("operationDate");
+            String operationUser = request.getParameter("operationUser");
+            System.out.println("operationDate : "+operationDate);
+            System.out.println("new Date : "+new Date());
+            chuSession.setOperationDate((df.format(util.convertStringToDateTime(operationDate))));
+            chuSession.setOperationUser(operationUser);
+            System.out.println("chuSession.getOperationDate() : "+chuSession.getOperationDate());
+        }else if(step == 3){
+            chuSession.setOperationDate(String.valueOf(df.format(new Date())));
+            chuSession.setOperationUser(user.getUsername());
+        }    
+        session.setAttribute(CHECKDUPLICATEUSER, chuSession);
+        CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, step);
+        request.setAttribute(CHECKDUPLICATEUSER, cdu);
+        if(cdu.getIsDuplicateUser() == 0){
+            result = "success";
+            opDate = util.convertStringToDateTime(cdu.getOperationDate());
+            opUser = cdu.getOperationUser();
+//            invoice.setOperationDate(util.convertStringToDateTime(cdu.getOperationDate()));
+//            invoice.setOperationUser(cdu.getOperationUser());
+        }
+        return result;
+    }
+    
+    private String clearDuplicateUser(HttpServletRequest request, HttpServletResponse response,HttpSession session, String matetId){
+        String result = "fail";
+        SimpleDateFormat df = new SimpleDateFormat();
+        df.applyPattern("yyyy-MM-dd HH:mm:ss");
+        SystemUser  user = (SystemUser) session.getAttribute("USER");
+        CheckDuplicateUser chuSession = new CheckDuplicateUser();
+        session.setAttribute(CHECKDUPLICATEUSER, chuSession);
+        CheckDuplicateUser chu = new CheckDuplicateUser();
+        chu.setOperationTable("Master");
+        chu.setTableId(matetId);
+        chu.setOperationDate(String.valueOf(df.format(new Date())));
+        chu.setOperationUser(user.getUsername());     
+        int update = checkDuplicateUserService.updateOperationNull(chu);
+        if(update == 1){
+            result = "success";
+        }
+        return result;
+    }
 }

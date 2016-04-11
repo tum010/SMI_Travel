@@ -35,6 +35,8 @@ public class Master  {
      private String currency;
      private Date createDate;
      private String departmentNo;
+     private Date operationDate;
+     private String operationUser;
      private Set hotelBookings = new HashSet(0);
      private Set otherBookings = new HashSet(0);
      private Set billables = new HashSet(0);
@@ -53,7 +55,7 @@ public class Master  {
        this.agent = agent;
        this.referenceNo = referenceNo;
     }
-    public Master(MBookingstatus MBookingstatus,PackageTour packageTour, Customer customer, SystemUser staff, Agent agent, String referenceNo, Integer adult, Integer child, Integer infant, Integer isPackage,String agentRef, Integer flagAir, Integer flagHotel, Integer flagDaytour, Integer flagOther, Integer flagLand, String revisedBy, Date revisedDate, String bookingType, String createBy,String currency, Date createDate, Set hotelBookings, Set otherBookings, Set billables, Set airticketBookings, Set passengers, Set landBookings,Set daytourBookings, Set historyBookings) {
+    public Master(MBookingstatus MBookingstatus,PackageTour packageTour, Customer customer, SystemUser staff, Agent agent, String referenceNo, Integer adult, Integer child, Integer infant, Integer isPackage,String agentRef, Integer flagAir, Integer flagHotel, Integer flagDaytour, Integer flagOther, Integer flagLand, String revisedBy, Date revisedDate, String bookingType, String createBy,String currency, Date createDate, Set hotelBookings, Set otherBookings, Set billables, Set airticketBookings, Set passengers, Set landBookings,Set daytourBookings, Set historyBookings,Date operationDate,String operationUser) {
        this.MBookingstatus = MBookingstatus;
        this.packageTour = packageTour;
        this.customer = customer;
@@ -82,6 +84,8 @@ public class Master  {
        this.airticketBookings = airticketBookings;
        this.passengers = passengers;
        this.landBookings = landBookings;
+       this.operationDate = operationDate;
+       this.operationUser = operationUser;
        this.daytourBookings = daytourBookings;
        this.historyBookings = historyBookings;
     }
@@ -320,6 +324,22 @@ public class Master  {
 
     public void setDepartmentNo(String departmentNo) {
         this.departmentNo = departmentNo;
+    }
+
+    public Date getOperationDate() {
+        return operationDate;
+    }
+
+    public void setOperationDate(Date operationDate) {
+        this.operationDate = operationDate;
+    }
+
+    public String getOperationUser() {
+        return operationUser;
+    }
+
+    public void setOperationUser(String operationUser) {
+        this.operationUser = operationUser;
     }
 
 

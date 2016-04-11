@@ -279,6 +279,7 @@
 		<property name="bookingAirticketService" ref="BookingAirticket" />
 		<property name="bookingDetailService" ref="BookingDetailService" />
 		<property name="utilservice" ref="UtilityService" />
+                <property name="checkDuplicateUserService" ref="CheckDuplicateUserService" />
 	</bean>
 
 	<bean id="AirTicketController" class="com.smi.travel.controller.AirTicketController">

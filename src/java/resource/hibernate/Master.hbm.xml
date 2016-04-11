@@ -76,6 +76,12 @@
         <property name="departmentNo" type="string">
             <column name="DepartmentNo" length="20" />
         </property>
+        <property name="operationDate" type="timestamp">
+            <column name="operation_date" length="20" />
+        </property>
+        <property name="operationUser" type="string">
+            <column name="operation_user" length="20" />
+        </property>
         <set name="hotelBookings" table="hotel_booking" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="master_id" not-null="true" />
