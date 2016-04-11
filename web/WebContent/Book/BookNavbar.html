@@ -144,14 +144,20 @@
     function enableOperationDuplicate(){
         var action = document.getElementById("action");
         action.value = "operationUpdate";
-        document.getElementById("BookDetail").submit();
+        var operationTableIdBooking = $("#operationTableIdBooking").val();
+        var refNo = ($("#nav-RefNo").val()).replace("-","");
+//        document.getElementById("BookDetail").submit();
+        window.location.href = "BookDetail.smi?action=operationUpdate&operationTableIdBooking="+operationTableIdBooking+"&referenceNo="+refNo;
     }
 
-    function disableOperationDuplicate(){   
-        $("#btnSave").attr("disabled", true);
-        $("#enableVoidButton").attr("disabled", true);
-        $("#disableVoidButton").attr("disabled", true); 
-        $("#delTaxInvoiceDetailModal").addClass("hidden");
+    function disableOperationDuplicate(){
+        $(".duplicate").addClass("disabled");
+        $(".duplicatemodal").addClass("hidden");
+//        
+//        $("#btnSave").attr("disabled", true);
+//        $("#enableVoidButton").attr("disabled", true);
+//        $("#disableVoidButton").attr("disabled", true); 
+//        $("#delTaxInvoiceDetailModal").addClass("hidden");
     }
 
 </script>

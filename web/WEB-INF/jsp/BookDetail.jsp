@@ -301,7 +301,7 @@
                 <!--Save-->
                 <div class="text-center" style="margin-top: 10px">
                     <c:if test="${lockUnlockBooking == 0}">
-                        <button id="BookDetailButtonSave" type="submit" class="btn btn-success" >
+                        <button id="BookDetailButtonSave" type="submit" class="btn btn-success duplicate" >
                             <span id="BookDetailSpanSave" class="fa fa-save"></span> Save
                         </button>                           
                     </c:if>

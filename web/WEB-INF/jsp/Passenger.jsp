@@ -83,7 +83,7 @@
                 <div class="col-md-6 text-right">
                     <c:if test="${lockUnlockBooking == 0}">
                         <a id="ButtonAdd" href="" class="btn btn-success">
-                            <span id="SpanAdd" class="glyphicon glyphicon-plus"></span> Add
+                            <span id="SpanAdd" class="glyphicon glyphicon-plus duplicate"></span> Add
                         </a>
                     </c:if>
                     <c:if test="${lockUnlockBooking == 1}">
@@ -175,7 +175,7 @@
 </form> 
 
 
-<div class="modal fade" id="DeletePassenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="DeletePassenger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

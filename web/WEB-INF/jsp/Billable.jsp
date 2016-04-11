@@ -475,7 +475,7 @@
                         <span id="SpanPrintTicketOrder" class="glyphicon glyphicon-print"></span> Ticket Order
                     </button>
                     <c:if test="${lockUnlockBooking == 0}">
-                        <button id="ButtonSave" name="ButtonSave" type="submit" onclick class="btn btn-success" ><span id="SpanButtonSave" class="fa fa-save"></span> Save</button>
+                        <button id="ButtonSave" name="ButtonSave" type="submit" onclick class="btn btn-success duplicate" ><span id="SpanButtonSave" class="fa fa-save"></span> Save</button>
                     </c:if>
                     <c:if test="${lockUnlockBooking == 1}">
                         <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>

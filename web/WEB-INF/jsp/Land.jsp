@@ -77,7 +77,7 @@
 
                     <div class="form-actions pull-right" style="padding-right: 20px">
                         <c:if test="${lockUnlockBooking == 0}">
-                                <a href="LandDetail.smi?referenceNo=${param.referenceNo}&action=add"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>   
+                                <a href="LandDetail.smi?referenceNo=${param.referenceNo}&action=add"><button type="button" id="acs" onclick=""  class="btn btn-success duplicate"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>   
                         </c:if>
                         <c:if test="${lockUnlockBooking == 1}">
                             <a class="btn btn-success disabled">
@@ -269,7 +269,7 @@
 
 </div>
 
-<div class="modal fade" id="DelLand" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="DelLand" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -287,7 +287,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->      
 
-<div class="modal fade" id="EnableLand" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="EnableLand" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

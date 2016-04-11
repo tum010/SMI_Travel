@@ -827,12 +827,12 @@
                         <c:otherwise>
                             <c:if test="${lockUnlockBooking == 0}">
                                 <c:if test="${isBillStatus == 0}">
-                                    <button type="submit" id="savereal" onfocus="readdata()"  onmouseover="readdata()"  class="btn btn-success "><span class="fa fa-save"></span> Save</button>
+                                    <button type="submit" id="savereal" onfocus="readdata()"  onmouseover="readdata()"  class="btn btn-success duplicate"><span class="fa fa-save"></span> Save</button>
                                 </c:if>
                                 <c:if test="${isBillStatus == 1}">
                                     <c:choose>
                                         <c:when test="${enableSave == 0}">
-                                            <button type="submit" id="savereal" onfocus="readdata()"  onmouseover="readdata()"  class="btn btn-success "><span class="fa fa-save"></span> Save</button>
+                                            <button type="submit" id="savereal" onfocus="readdata()"  onmouseover="readdata()"  class="btn btn-success duplicate"><span class="fa fa-save"></span> Save</button>
                                         </c:when>
                                         <c:when test="${enableSave == 1}">
                                             <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>

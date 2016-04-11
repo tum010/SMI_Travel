@@ -402,7 +402,7 @@
                                 <c:otherwise>
                                     <c:if test="${lockUnlockBooking == 0}">
                                         <c:if test="${isBillStatus == 0}">
-                                            <button type="button" class="btn btn-success" onclick="saveOther()"><span class="fa fa-save"></span> Save</button>
+                                            <button type="button" class="btn btn-success duplicate" onclick="saveOther()"><span class="fa fa-save"></span> Save</button>
                                         </c:if>
                                         <c:if test="${isBillStatus == 1}">
                                             <c:choose>
@@ -447,12 +447,12 @@
                         </div>
                     </div>
                     <div class="form-group col-md-1" style="width: 200px">
-                        <button type="button"  class="btn btn-success" onclick="addStockTicket()" id="addTicketButton" name="addTicketButton">
+                        <button type="button"  class="btn btn-success duplicate" onclick="addStockTicket()" id="addTicketButton" name="addTicketButton">
                             <span class="glyphicon glyphicon-plus"></span> Add
                         </button>
                     </div>
                     <div class="form-group col-md-1 text-right" style="padding-left: 190px">
-                        <button type="button" class="btn btn-danger" onclick="setStockTicket()" id="changeStatusButton" name="changeStatusButton">
+                        <button type="button" class="btn btn-danger duplicate" onclick="setStockTicket()" id="changeStatusButton" name="changeStatusButton">
                             <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Change Status
                         </button>
                     </div> 

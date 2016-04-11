@@ -292,7 +292,7 @@
                                 <input name="master" value="${passenger.getMaster().getId()}"type="hidden">
                                 <input name="referenceNo" value="${param.referenceNo}"type="hidden">
                                 <c:if test="${lockUnlockBooking == 0}">
-                                    <button id="ButtonSave" class="btn btn-success" type="submit"><span class="fa fa-save"></span> Save</button>
+                                    <button id="ButtonSave" class="btn btn-success duplicate" type="submit"><span class="fa fa-save"></span> Save</button>
                                 </c:if>
                                 <c:if test="${lockUnlockBooking == 1}">
                                     <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>

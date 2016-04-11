@@ -80,7 +80,7 @@
 
                     <div class="form-actions pull-right" style="padding-right: 20px">
                     <c:if test="${lockUnlockBooking == 0}">
-                        <a id="ButtonAdd" href="HotelDetail.smi?referenceNo=${param.referenceNo}&Order=${hotelBookingList.size()+1}&action=new" class="btn btn-success">
+                        <a id="ButtonAdd" href="HotelDetail.smi?referenceNo=${param.referenceNo}&Order=${hotelBookingList.size()+1}&action=new" class="btn btn-success duplicate">
                             <span id="SpanAdd" class="glyphicon glyphicon-plus"></span>Add
                         </a>                    
                     </c:if>
@@ -311,7 +311,7 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-<div class="modal fade" id="DeleteHotel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="DeleteHotel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -329,7 +329,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /Delete Hotel modal -->      
 
-<div class="modal fade" id="EnableHotel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="EnableHotel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

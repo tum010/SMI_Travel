@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-sm-2 col-sm-offset-4 text-right" style="padding-left: 26px">
                     <c:if test="${lockUnlockBooking == 0}">
-                        <a id="Add" name="Add" href="DaytourDetail.smi?action=new&referenceNo=${param.referenceNo}" class="btn btn-success">
+                        <a id="Add" name="Add" href="DaytourDetail.smi?action=new&referenceNo=${param.referenceNo}" class="btn btn-success duplicate">
                             <span id="SpanAdd" name="SpanAdd" class="glyphicon glyphicon-plus"></span>Add
                         </a>
                     </c:if>
@@ -161,7 +161,7 @@
 
             <div class="form-actions pull-right" style="padding-right: 0px">
                 <c:if test="${lockUnlockBookingOther == 0}">
-                    <a id="acs"  href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromDayTour" class="btn btn-success">
+                    <a id="acs"  href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromDayTour" class="btn btn-success duplicate">
                         <span class="glyphicon glyphicon-plus"></span>Add</button>
                     </a>         
                 </c:if>
@@ -277,7 +277,7 @@
     </div><!--row3-->
 </div>
 
-<div class="modal fade" id="DaytourModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="DaytourModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form action="Daytour.smi" method="post" id="DaytourForm" class="form-horizontal"  role="form">            
@@ -301,7 +301,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" id="DelOther" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="DelOther" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -320,7 +320,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->      
 
-<div class="modal fade" id="EnableOther" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="EnableOther" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

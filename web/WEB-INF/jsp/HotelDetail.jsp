@@ -514,12 +514,12 @@
                     <input name="referenceNo" value="${param.referenceNo}"type="hidden">
                     <c:if test="${lockUnlockBooking == 0}">
                         <c:if test="${isBillStatus == 0}">
-                            <button id="hotelSave" name="hotelSave" type="submit" class="btn btn-success" ><span class="fa fa-save"></span> Save</button>
+                            <button id="hotelSave" name="hotelSave" type="submit" class="btn btn-success duplicate" ><span class="fa fa-save"></span> Save</button>
                         </c:if>
                         <c:if test="${isBillStatus == 1}">
                             <c:choose>
                                 <c:when test="${enableSave == 0}">
-                                    <button id="hotelSave" name="hotelSave" type="submit" class="btn btn-success" ><span class="fa fa-save"></span> Save</button>
+                                    <button id="hotelSave" name="hotelSave" type="submit" class="btn btn-success duplicate" ><span class="fa fa-save"></span> Save</button>
                                 </c:when>
                                 <c:when test="${enableSave == 1}">
                                     <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
@@ -555,7 +555,7 @@
 </c:if>
 
 <!--HOTEL MODAL-->
-<div class="modal fade" id="HotelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="HotelModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -600,7 +600,7 @@
     </div><!-- /.modal-dialog -->
 </div>
 <!--DELETE MODAL-->
-<div class="modal fade" id="DeleteHotel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="DeleteHotel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

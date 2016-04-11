@@ -501,6 +501,7 @@ public class BookDetailController extends SMITravelController {
         }    
 //        session.setAttribute(CHECKDUPLICATEUSER, chuSession);
         CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, step);
+        System.out.println("=====cdu===== :"+cdu.getOperationUser());
         request.setAttribute(CHECKDUPLICATEUSER, cdu);
         if(cdu.getIsDuplicateUser() == 0){
             result = "success";

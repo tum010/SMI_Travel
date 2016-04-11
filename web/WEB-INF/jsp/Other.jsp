@@ -108,7 +108,7 @@
                 <div class="row-fluid">
                     <div class="form-actions pull-right" style="padding-right: 20px">
                         <c:if test="${lockUnlockBooking == 0}">
-                            <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromOther"><button type="button" id="acs" onclick=""  class="btn btn-success"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
+                            <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&action=new&callPageFrom=FromOther"><button type="button" id="acs" onclick=""  class="btn btn-success duplicate"><span class="glyphicon glyphicon-plus"></span>Add</button>  </a>  
                         </c:if>
                         <c:if test="${lockUnlockBooking == 1}">
                             <a class="btn btn-success disabled">
@@ -281,7 +281,7 @@
 
 </div>
                                     
-<div class="modal fade" id="DelOther" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="DelOther" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -299,7 +299,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->      
 
-<div class="modal fade" id="EnableOther" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="EnableOther" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

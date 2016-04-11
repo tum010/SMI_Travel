@@ -212,7 +212,7 @@
                     </div>
                     <div class="col-md-1 text-right" style="margin-top: -10px;">
                         <c:if test="${lockUnlockBooking == 0}">
-                            <a id="ButtonAdd"  href="AirTicketDetail.smi?referenceNo=${param.referenceNo}&action=add" class="btn btn-success ${add_button}">
+                            <a id="ButtonAdd"  href="AirTicketDetail.smi?referenceNo=${param.referenceNo}&action=add" class="btn btn-success duplicate ${add_button}">
                                 <span id="SpanAdd" class="glyphicon glyphicon-plus"></span> Add
                             </a>
                         </c:if>
@@ -490,7 +490,7 @@
 </div>
 
 <!--Booking Air Unlock Modal-->
-<div class="modal fade" id="AirUnlockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="AirUnlockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -514,7 +514,7 @@
     <input type="hidden" class="form-control" id="referenceNo"   name="referenceNo"  value="${param.referenceNo}" >     
 </form>
 
-<div class="modal fade" id="DisablePnr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="DisablePnr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -548,7 +548,7 @@
     </c:forEach>
 </select>
 
-<div class="modal fade" id="EnablePnr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade duplicatemodal" id="EnablePnr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

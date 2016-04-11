@@ -113,7 +113,7 @@
                     </div>
                     <div class="col-md-1 text-right">
                          <a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=add">
-                            <button type="button"  class="btn btn-primary" id="buttonAddRefundDetail" name="buttonAddRefundDetail" >
+                            <button type="button"  class="btn btn-primary duplicate" id="buttonAddRefundDetail" name="buttonAddRefundDetail" >
                                 <span class="glyphicon glyphicon-plus"></span> Add
                             </button>
                         </a>  
@@ -469,7 +469,7 @@
                                         <c:otherwise>
                                             <!--<a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=saveRefund">-->
                                             <a  id="SpanAdd" href="#">
-                                                <button type="button" class="btn btn-success"  id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
+                                                <button type="button" class="btn btn-success duplicate"  id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
                                             </a>
                                         </c:otherwise>
                                     </c:choose> 
@@ -709,7 +709,7 @@
                                         <c:otherwise>
                                            <!--<a  id="SpanAdd" href="Refund.smi?referenceNo=${param.referenceNo}&airbookingid=${airbookingid}&action=addRefund">-->
                                             <a  id="SpanAdd" href="#">   
-                                               <button type="button" class="btn btn-success" id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
+                                               <button type="button" class="btn btn-success duplicate" id="buttonSaveRefund" name="buttonSaveRefund" onclick="saveRefund();"><span class="fa fa-save"></span> Save</button>
                                             </a>
                                         </c:otherwise>
                                     </c:choose>  
