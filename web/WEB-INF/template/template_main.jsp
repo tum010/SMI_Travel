@@ -3,8 +3,13 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="checkDuplicateUserBooking" value="${sessionScope.checkDuplicateUser}"/>
 <html>
     <head>
+        <input type="hidden" id="operationUserBooking" name="operationUserBooking" value="${checkDuplicateUserBooking.operationUser}"/>
+        <input type="hidden" id="operationDateBooking" name="operationDateBooking" value="${checkDuplicateUserBooking.operationDate}"/> 
+        <input type="hidden" id="operationTableBooking" name="operationTableBooking" value="${checkDuplicateUserBooking.operationTable}"/>
+        <input type="hidden" id="operationTableIdBooking" name="operationTableIdBooking" value="${checkDuplicateUserBooking.tableId}"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><tiles:insertAttribute name="title" ignore="true" /></title>
 		

@@ -88,10 +88,18 @@ public class BookDetailController extends SMITravelController {
         List<Agent> agent = bookingDetailService.getListAgentForBookingDetail();
         request.setAttribute(Agent, agent);
         
-        String operationTableId = request.getParameter("operationTableId");
-        String operationUser = request.getParameter("operationUser");
+        String operationTableId = request.getParameter("operationTableIdBooking");
+        String operationUser = request.getParameter("operationUserBooking");
         String checkDuplicateUser = "";
         String clearDuplicateUser = "";
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+        CheckDuplicateUser checkDuplicateUserSession = (CheckDuplicateUser) session.getAttribute("checkDuplicateUser");
+        if(checkDuplicateUserSession != null){
+            operationTableId = checkDuplicateUserSession.getTableId();
+            operationUser = checkDuplicateUserSession.getOperationUser();
+            
+        }                  
         
         //Duplicate User
         if("operationUpdate".equalsIgnoreCase(action)){
@@ -478,8 +486,10 @@ public class BookDetailController extends SMITravelController {
             chuSession.setOperationDate(String.valueOf(df.format(new Date())));
             chuSession.setOperationUser(user.getUsername());
         }else if(step == 2){
-            String operationDate = request.getParameter("operationDate");
-            String operationUser = request.getParameter("operationUser");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+            CheckDuplicateUser checkDuplicateUserSession = (CheckDuplicateUser) session.getAttribute("checkDuplicateUser"); 
+            String operationDate = checkDuplicateUserSession.getOperationDate();
+            String operationUser = checkDuplicateUserSession.getOperationUser();
             System.out.println("operationDate : "+operationDate);
             System.out.println("new Date : "+new Date());
             chuSession.setOperationDate((df.format(util.convertStringToDateTime(operationDate))));
@@ -489,7 +499,7 @@ public class BookDetailController extends SMITravelController {
             chuSession.setOperationDate(String.valueOf(df.format(new Date())));
             chuSession.setOperationUser(user.getUsername());
         }    
-        session.setAttribute(CHECKDUPLICATEUSER, chuSession);
+//        session.setAttribute(CHECKDUPLICATEUSER, chuSession);
         CheckDuplicateUser cdu = checkDuplicateUserService.CheckAndUpdateOperationDetail(chuSession, step);
         request.setAttribute(CHECKDUPLICATEUSER, cdu);
         if(cdu.getIsDuplicateUser() == 0){
@@ -499,6 +509,13 @@ public class BookDetailController extends SMITravelController {
 //            invoice.setOperationDate(util.convertStringToDateTime(cdu.getOperationDate()));
 //            invoice.setOperationUser(cdu.getOperationUser());
         }
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+//        CheckDuplicateUser checkDuplicateUser = new CheckDuplicateUser();
+//        checkDuplicateUser.setOperationUser("PJ");
+//        checkDuplicateUser.setOperationTable("Master");
+//        checkDuplicateUser.setTableId("1080");
+//        checkDuplicateUser.setOperationDate(String.valueOf(sdf.format(new Date())));
+        session.setAttribute("checkDuplicateUser", chuSession);
         return result;
     }
     
