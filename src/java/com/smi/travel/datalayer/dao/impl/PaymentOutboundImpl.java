@@ -744,7 +744,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             }
             sum.setPaycompvno(util.ConvertString(B[35]));
             sum.setPaycomstaff(util.ConvertString(B[36]));
-            sum.setPaycommission(!"null".equalsIgnoreCase(String.valueOf(B[37])) ? util.ConvertString(B[37]) : "0.00");
+            sum.setPaycommission(!"null".equalsIgnoreCase(String.valueOf(B[37])) ? (util.ConvertString(B[37])).replaceAll(",", "") : "0.00");
             sum.setBalanceprofit(!"null".equalsIgnoreCase(String.valueOf(B[38])) ? util.ConvertString(B[38]) : "0.00");
             sum.setReceiptno(util.ConvertString(B[39]));
             if((!"null".equalsIgnoreCase(String.valueOf(B[40])) && B[40] != null) && !"".equalsIgnoreCase(String.valueOf(B[40]))){
