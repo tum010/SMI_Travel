@@ -71,6 +71,21 @@
         <script src="js/datatable/js/jquery.dataTables.editable.js" type="text/javascript"></script>
         <script src="js/datatable/js/jquery.jeditable.time.js" type="text/javascript"></script>
         <script src="js/datatable/js/jquery.jeditable.datepicker.js" type="text/javascript"></script>
-        <script src="js/datatable/js/jquery.jeditable.checkbox.js" type="text/javascript"></script>     
+        <script src="js/datatable/js/jquery.jeditable.checkbox.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var masterCreateBy = document.getElementById("master-createBy");
+                if(masterCreateBy === null){alert('aa');
+                    localStorage.setItem("duplicateUserCancel", null);
+                }
+                
+                var path = location.pathname;
+                var name = path.split("/");
+                var str = name[2].split(".");
+                if(str[0] === 'BookDetail'){
+                    localStorage.setItem("duplicateUserCancel", "no");
+                }
+            });
+        </script>
     </body>
 </html>

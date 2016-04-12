@@ -51,7 +51,7 @@
         <!--Content-->
         <div class="col-sm-10">
             <!--Nav-->
-            <div ng-include="'WebContent/Book/BookNavbar.html'"></div>
+            <div id="bookNavbar" ng-include="'WebContent/Book/BookNavbar.html'"></div>
             <input id="now-status" type="hidden" value="${master.getMBookingstatus().getName()}"/>
 <!--Alert Save -->
 <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
@@ -82,8 +82,8 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <c:if test="${lockUnlockBooking == 0}">
-                        <a id="ButtonAdd" href="" class="btn btn-success">
-                            <span id="SpanAdd" class="glyphicon glyphicon-plus duplicate"></span> Add
+                        <a id="ButtonAdd" href="" class="btn btn-success duplicate">
+                            <span id="SpanAdd" class="glyphicon glyphicon-plus"></span> Add
                         </a>
                     </c:if>
                     <c:if test="${lockUnlockBooking == 1}">

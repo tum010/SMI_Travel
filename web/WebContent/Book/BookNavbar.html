@@ -95,11 +95,14 @@
         //  Create Date , By
         $("#createDate").text(convertFormatDate($("#master-createDate").val()));
         $("#createBy").text($("#master-createBy").val());
-        
+             
         checkDuplicateUser();
     });
     
     function checkDuplicateUser(){
+        if(localStorage.getItem("duplicateUserCancel") === "null"){
+            localStorage.setItem("duplicateUserCancel", "no");
+        }
 //        alert($("#operationUserBooking").val()+" : "+$("#operationDateBooking").val());
         var operationDate = document.getElementById('operationDateBooking').value;
         var operationUser = document.getElementById('operationUserBooking').value;
@@ -126,9 +129,15 @@
                     if(msg === 'success'){
 
                     }else{
-                        var username = msg;
-                        $("#operationMessage").text("User " + username + " is using information. Do you want to continue ?");
-                        $("#operationModal").modal("show");
+                        var duplicateUserCancel = localStorage.getItem("duplicateUserCancel");
+                        if(duplicateUserCancel === 'no'){
+                            var username = msg;
+                            $("#operationMessage").text("User " + username + " is using information. Do you want to continue ?");
+                            $("#operationModal").modal("show");                    
+                        
+                        }else if(duplicateUserCancel === 'yes'){
+                            disableOperationDuplicate();
+                        }                                          
                     }
                 }, error: function(msg) {
                     console.log('update duplicate user fail');
@@ -142,17 +151,18 @@
     
     //Operation Duplicate
     function enableOperationDuplicate(){
-        var action = document.getElementById("action");
-        action.value = "operationUpdate";
         var operationTableIdBooking = $("#operationTableIdBooking").val();
         var refNo = ($("#nav-RefNo").val()).replace("-","");
-//        document.getElementById("BookDetail").submit();
         window.location.href = "BookDetail.smi?action=operationUpdate&operationTableIdBooking="+operationTableIdBooking+"&referenceNo="+refNo;
     }
 
     function disableOperationDuplicate(){
         $(".duplicate").addClass("disabled");
         $(".duplicatemodal").addClass("hidden");
+        var duplicateUserCancel = localStorage.getItem("duplicateUserCancel");
+//        if(duplicateUserCancel === 'no'){
+            localStorage.setItem("duplicateUserCancel", "yes");                        
+//        }
 //        
 //        $("#btnSave").attr("disabled", true);
 //        $("#enableVoidButton").attr("disabled", true);
