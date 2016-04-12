@@ -75,7 +75,7 @@
         <script type="text/javascript">
             $(document).ready(function(){
                 var masterCreateBy = document.getElementById("master-createBy");
-                if(masterCreateBy === null){alert('aa');
+                if(masterCreateBy === null){
                     localStorage.setItem("duplicateUserCancel", null);
                 }
                 
