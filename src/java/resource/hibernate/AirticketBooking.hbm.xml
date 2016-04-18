@@ -28,6 +28,12 @@
         <property name="groupPax" type="integer">
             <column name="group_pax" />
         </property>
+        <property name="issuedate" type="date">
+            <column name="issue_date" length="10" />
+        </property>
+        <property name="isPickup" type="integer">
+            <column name="is_pickup" />
+        </property>
         <bag name="airticketDescs" table="airticket_desc" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="booking_id" not-null="true" />

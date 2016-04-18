@@ -22,6 +22,8 @@ public class AirticketBooking {
      private String reConfirm;
      private String remark;
      private Integer groupPax;
+     private Date issuedate;
+     private Integer isPickup;
      private List airticketDescs = new LinkedList<AirticketDesc>();
      private List airticketPnrs = new LinkedList<AirticketPnr>();
 
@@ -115,6 +117,22 @@ public class AirticketBooking {
 
     public void setGroupPax(Integer groupPax) {
         this.groupPax = groupPax;
+    }
+
+    public Date getIssuedate() {
+        return issuedate;
+    }
+
+    public void setIssuedate(Date issuedate) {
+        this.issuedate = issuedate;
+    }
+
+    public Integer getIsPickup() {
+        return isPickup;
+    }
+
+    public void setIsPickup(Integer isPickup) {
+        this.isPickup = isPickup;
     }
 
 

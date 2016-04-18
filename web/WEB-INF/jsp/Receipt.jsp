@@ -1394,18 +1394,33 @@
                 <h4 class="modal-title"  id="Titlemodel">Print Receipt</h4>
             </div>
             <div class="modal-body" id="printReceiptModal" >
-                <div class="col-xs-1" style="width: 280px">
-                    <label class="text-right">select option for print receipt<font style="color: red">*</font></label>                                    
+                <div class="row">
+                    <div class="col-xs-1" style="width: 280px">
+                        <label class="text-right">select option for print receipt<font style="color: red">*</font></label>                                    
+                    </div>
+                    <div class="col-xs-1" style="width: 200px" >
+                        <select name="optionPrint" id="optionPrint" class="form-control" style="height:34px">
+                            <option value="1" >Not Show Description</option>
+                            <option value="2" >Show Description</option>
+                            <option value="3" >Print Format Package Tour</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-xs-1" style="width: 200px" >
-                    <select name="optionPrint" id="optionPrint" class="form-control" style="height:34px">
-                        <option value="1" >Not Show Description</option>
-                        <option value="2" >Show Description</option>
-                        <option value="3" >Print Format Package Tour</option>
-                    </select>
+                <div class="row" style="margin-top: 5px">
+                    <div class="col-xs-1" style="width: 280px">
+                        <label class="text-right">Sign<font style="color: red"></font></label>                                    
+                    </div>
+                    <div class="col-xs-1" style="width: 200px" >
+                        <select name="SelectSign" id="SelectSign" class="form-control" style="height:34px">
+                            <option value="">--Sign--</option>
+                            <option value="benjaporn">Benjaporn</option>
+                            <option value="pawina">Pawina</option>
+                            <option value="supavadee">Supavadee</option>
+                        </select>
+                    </div>
+                    </br>
+                    </br>
                 </div>
-                </br>
-                </br>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" onclick="confirmPrintReceipt()"  data-dismiss="modal">
@@ -2102,14 +2117,15 @@
         var receiveId = document.getElementById('receiveId').value;
         var receiveNo = document.getElementById('receiveNo').value;
         var optionPrint = document.getElementById('optionPrint').value;
+        var SelectSign =  document.getElementById('SelectSign').value;
         if (receiveId == "") {
             alert("please save before print");
         } else if (printtype == 0) {
             alert('please select option print');
         } else if (printtype == 1) {
-            window.open("report.smi?name=ReceiptReport&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint);
+            window.open("report.smi?name=ReceiptReport&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint + "&sign=" + SelectSign);
         } else if (printtype == 2) {
-            window.open("report.smi?name=ReceiptEmail&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint);
+            window.open("report.smi?name=ReceiptEmail&receiveId=" + receiveId + "&receiveNo=" + receiveNo + "&optionPrint=" + optionPrint + "&sign=" + SelectSign);
         }
     }
 
@@ -2210,9 +2226,9 @@
                     '<input id="billDescId' + row + '"  name="billDescId' + row + '"   type="hidden" value="" >' +
                     '<input id="invId' + row + '"  name="invId' + row + '"   type="hidden" value="" >' +
                     '<td>' +
-                    '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" ><option value="">---------</option></select>' +
+                    '<select class="form-control" name="receiveProduct' + row + '" id="receiveProduct' + row + '" onchange="addProductManual(' + row + ')"><option value="">---------</option></select>' +
                     '</td>' +
-                    '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" ></td>' +
+                    '<td><input maxlength="255" id="receiveDes' + row + '" name="receiveDes' + row + '" type="text" class="form-control" onchange="addProductManual(' + row + ')" ></td>' +
                     '<td><input id="receiveCost' + row + '" name="receiveCost' + row + '" type="text" class="form-control decimal" readonly="" ></td>' +
                     '<td>' +
                     '<select class="form-control" name="receiveCurCostTemp' + row + '" id="receiveCurCostTemp' + row + '"><option value="">---------</option></select>' +
@@ -4087,5 +4103,9 @@
             alert(e);
             console.log('update duplicate user fail');
         }
+    }
+    
+    function addProductManual(row){
+       document.getElementById('receiveCurrency' + row).value = 'THB';
     }
 </script>

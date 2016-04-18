@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketOrder_InfoSubreport" language="groovy" pageWidth="147" pageHeight="842" columnWidth="147" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a85f3ef3-c07b-4461-b356-71d5e1347b45">
-	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="49"/>
+	<property name="ireport.zoom" value="9.18994597271445"/>
+	<property name="ireport.x" value="67"/>
+	<property name="ireport.y" value="229"/>
 	<field name="issuedate" class="java.lang.String"/>
 	<field name="companyname" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -14,8 +14,18 @@
 	<field name="costtax" class="java.lang.String"/>
 	<field name="termpay" class="java.lang.String"/>
 	<field name="remark" class="java.lang.String"/>
+	<field name="ispickup" class="java.lang.String"/>
 	<detail>
 		<band height="263" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="144" height="42" uuid="42b23f72-56fe-4217-80f0-425c2760788e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
 			<rectangle>
 				<reportElement positionType="Float" x="0" y="229" width="144" height="33" uuid="e3576d01-355c-42b1-a25d-c9eafbe0c593">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -52,16 +62,6 @@
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
-			<staticText>
-				<reportElement x="27" y="31" width="41" height="11" uuid="3e3b89d6-5d59-4e84-9e64-ae0e19311621">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitheight" value="pixel"/>
-				</reportElement>
-				<textElement>
-					<font size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[PICK UP]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="7" y="130" width="32" height="11" uuid="d87e9383-2af6-4ab1-a3f6-e8feb4a67b84">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -127,15 +127,6 @@
 			</rectangle>
 			<rectangle>
 				<reportElement x="0" y="111" width="144" height="16" uuid="26338a5e-883f-48b8-9df1-3b9dff70859b">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitheight" value="pixel"/>
-				</reportElement>
-				<graphicElement>
-					<pen lineWidth="0.25"/>
-				</graphicElement>
-			</rectangle>
-			<rectangle>
-				<reportElement x="0" y="0" width="144" height="42" uuid="42b23f72-56fe-4217-80f0-425c2760788e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitheight" value="pixel"/>
 				</reportElement>
@@ -434,6 +425,24 @@
 				</textElement>
 				<text><![CDATA[ :]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="27" y="31" width="41" height="14" uuid="3e3b89d6-5d59-4e84-9e64-ae0e19311621">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PICK UP]]></text>
+			</staticText>
+			<image>
+				<reportElement x="12" y="33" width="10" height="6" uuid="aec5ec33-8ae0-40b4-afc1-2dc8455507f9"/>
+				<imageExpression><![CDATA[("1".equals(String.valueOf($F{ispickup}))) ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="80" y="33" width="10" height="6" uuid="78792c37-e3a2-400f-925b-b2d551026c25"/>
+				<imageExpression><![CDATA[("0".equals(String.valueOf($F{ispickup}))) ? "resource/images/checkmark.png" : "resource/images/uncheck.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 </jasperReport>

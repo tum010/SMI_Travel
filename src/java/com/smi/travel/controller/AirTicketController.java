@@ -169,10 +169,11 @@ public class AirTicketController extends SMITravelController {
             String issue_name = request.getParameter("issue_name");
             String staff_name = request.getParameter("staff_name");
             String group_pax = request.getParameter("group-pax");
-            
+            String issuedate = request.getParameter("issuedate");
+            String isPickup = request.getParameter("isPickup");
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date deadlineDate = null;
-            deadlineDate = util.convertStringToDate(deadline);
+            deadlineDate = util.convertStringToDate(deadline); 
 //            try {
 //                deadlineDate = formatter.parse(deadline);
 //            } catch (ParseException e) {
@@ -183,18 +184,27 @@ public class AirTicketController extends SMITravelController {
 
             if (airBook == null) {
                 airBook = new AirticketBooking();
-
+                
                 owner = getUpdateSystemUserByName(ownerName, airBook.getStaffByOwnerBy());
                 System.out.println("owner " + owner);
                 airBook.setStaffByOwnerBy(owner);
 //                System.out.println("OwnerName " + ownerName + " Owner name" + owner.getName() + ", [OwnerId=" + owner.getId() + "]");
-
                 issue = getUpdateSystemUserByName(issueName, airBook.getStaffByIssueBy());
                 airBook.setStaffByIssueBy(issue);
                 airBook.setReConfirm(reconfirm);
                 airBook.setRemark(remark);
                 airBook.setGroupPax("on".equalsIgnoreCase(group_pax) ? 1 : 0);
                 airBook.setDeadline(deadlineDate);
+                
+                System.out.println(" deadlineDate ::: " + deadlineDate);
+                System.out.println(" issuedate ::: " + util.convertStringToDate(issuedate));
+                System.out.println(" isPickup :::  " + isPickup);
+                
+                
+                airBook.setIssuedate(util.convertStringToDate(issuedate));
+                if(isPickup != null && !"".equalsIgnoreCase(isPickup)){
+                    airBook.setIsPickup(Integer.parseInt(isPickup));
+                }
                 Master master = utilservice.getMasterdao().getBookingFromRefno(refNo);
                 master.setFlagAir(new Integer("1"));
                 airBook.setMaster(master);
@@ -225,6 +235,13 @@ public class AirTicketController extends SMITravelController {
                 airBook.setStaffByOwnerBy(owner);
                 airBook.setReConfirm(reconfirm);
                 airBook.setDeadline(deadlineDate);
+                                System.out.println(" deadlineDate ::: " + deadlineDate);
+                System.out.println(" issuedate ::: " + util.convertStringToDate(issuedate));
+                System.out.println(" isPickup :::  " + isPickup);
+                airBook.setIssuedate(util.convertStringToDate(issuedate));
+                if(isPickup != null && !"".equalsIgnoreCase(isPickup)){
+                    airBook.setIsPickup(Integer.parseInt(isPickup));
+                }
                 airBook.setRemark(remark);
                 airBook.setGroupPax("on".equalsIgnoreCase(group_pax) ? 1 : 0);
                 setAirticketDescRows(request, airDescRows, airBook);

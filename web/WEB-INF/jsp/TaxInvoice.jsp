@@ -972,18 +972,33 @@
                 <h4 class="modal-title"  id="Titlemodel">Print Tax Invoice</h4>
             </div>
             <div class="modal-body" id="printReceiptModal" >
-                <div class="col-xs-1" style="width: 280px">
-                    <label class="text-right">Select option for print tax invoice<font style="color: red">*</font></label>                                    
+                <div class="row">
+                    <div class="col-xs-1" style="width: 280px">
+                        <label class="text-right">Select option for print tax invoice<font style="color: red">*</font></label>                                    
+                    </div>
+                    <div class="col-xs-1" style="width: 200px" >
+                        <select name="optionPrint" id="optionPrint" class="form-control" style="height:34px">
+                            <option value="1" >Not Show Description</option>
+                            <option value="2" >Show Description</option>
+                            <option value="3" >Print Format Package Tour</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-xs-1" style="width: 200px" >
-                    <select name="optionPrint" id="optionPrint" class="form-control" style="height:34px">
-                        <option value="1" >Not Show Description</option>
-                        <option value="2" >Show Description</option>
-                        <option value="3" >Print Format Package Tour</option>
-                    </select>
+                <div class="row" style="margin-top: 5px">
+                    <div class="col-xs-1" style="width: 280px">
+                        <label class="text-right">Sign<font style="color: red"></font></label>                                    
+                    </div>
+                    <div class="col-xs-1" style="width: 200px" >
+                        <select name="SelectSign" id="SelectSign" class="form-control" style="height:34px">
+                            <option value="">--Sign--</option>
+                            <option value="benjaporn">Benjaporn</option>
+                            <option value="pawina">Pawina</option>
+                            <option value="supavadee">Supavadee</option>
+                        </select>
+                    </div>
+                    </br>
+                    </br>
                 </div>
-                </br>
-                </br>
             </div>
             <div class="modal-footer">
                 <input type="hidden" id="printType" name="printType" value=""/>
@@ -1396,6 +1411,7 @@
         var printType = document.getElementById('printType').value;
         var taxInvId = document.getElementById('TaxInvId').value;
         var optionPrint =  document.getElementById('optionPrint').value;
+        var SelectSign =  document.getElementById('SelectSign').value;
         var department = '${page}';
 
         if("W" === department){
@@ -1409,9 +1425,9 @@
         if(printType === ""){
             alert("Please choose print type.");
         }else if(printType === "taxInvoice"){
-            window.open("report.smi?name=TaxInvoiceReport&taxInvId="+taxInvId+"&department="+department+"&optionPrint="+optionPrint);
+            window.open("report.smi?name=TaxInvoiceReport&taxInvId="+taxInvId+"&department="+department+"&optionPrint="+optionPrint+"&sign="+SelectSign);
         }else if(printType === "taxInvoiceEmail"){
-            window.open("report.smi?name=TaxInvoiceEmailReport&taxInvId="+taxInvId+"&department="+department+"&optionPrint="+optionPrint);
+            window.open("report.smi?name=TaxInvoiceEmailReport&taxInvId="+taxInvId+"&department="+department+"&optionPrint="+optionPrint+"&sign="+SelectSign);
         }
     }
     
@@ -1919,9 +1935,9 @@
             '<td class="hidden"><input class="form-control" type="text" id="isExport' + row + '" name="isExport' + row + '" value=""></td>' +
             '<td class="hidden"><input class="form-control" type="text" id="exportDate' + row + '" name="exportDate' + row + '" value=""></td>' +
             '<td class="hidden"><input class="form-control" type="text" id="isProfit' + row + '" name="isProfit' + row + '" value=""></td>' +
-            '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
-            '<td><input class="form-control" maxlength="6" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\')"></td>' +
-            '<td><input class="form-control" type="text" maxlength="255" id="description' + row + '" name="description' + row + '" value=""></td>' +
+            '<td><select class="form-control" name="product' + row + '" id="product' + row + '" onchange="AddrowBySelect(\'' + row + '\');addManual(' + row + ');"><option  value="" >---------</option></select></td>' +
+            '<td><input class="form-control" maxlength="6" type="text" id="refNo' + row + '" name="refNo' + row + '" value="" onfocusout="checkRefNo(\'' + row + '\');addManual(' + row + ')"></td>' +
+            '<td><input class="form-control" type="text" maxlength="255" id="description' + row + '" name="description' + row + '" value="" onchange="addManual(' + row + ')"></td>' +
             '<td><input class="form-control decimal" style="text-align:right;" type="text" id="cost' + row + '" name="cost' + row +'" value="" onfocusout="CalculateAmountTotal()"></td>' +
             '<td><select class="form-control" name="currencyCost' + row + '" id="currencyCost' + row + '" onchange="AddrowBySelect(\'' + row + '\')"><option  value="" >---------</option></select></td>' +
             '<td align="center"><input type="checkbox" id="isVat' + row + '" name="isVat' + row + '" value="1" onclick="CalculateGross(\'' + row + '\')" checked></td>' +
@@ -2967,5 +2983,10 @@
         $("#enableVoidButton").attr("disabled", true);
         $("#disableVoidButton").attr("disabled", true); 
         $("#delTaxInvoiceDetailModal").addClass("hidden");
+    }
+    
+     function addManual(row){
+       document.getElementById('currencyAmount' + row).value = 'THB';
+       document.getElementById('currencyCost' + row).value = 'THB';
     }
 </script>

@@ -24,6 +24,8 @@ public class TicketOrderInfo {
     private String costtax;
     private String termpay;
     private String remark;
+    private String ispickup;
+    
 
     public String getIssuedate() {
         return issuedate;
@@ -111,6 +113,14 @@ public class TicketOrderInfo {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getIspickup() {
+        return ispickup;
+    }
+
+    public void setIspickup(String ispickup) {
+        this.ispickup = ispickup;
     }
 
 }

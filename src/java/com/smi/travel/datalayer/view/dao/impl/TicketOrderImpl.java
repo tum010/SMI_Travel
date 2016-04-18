@@ -62,7 +62,8 @@ public class TicketOrderImpl implements TicketOrderDao{
                 .addScalar("term_of_payment", Hibernate.STRING)
                 .addScalar("remark", Hibernate.STRING)
                 .addScalar("prepare_by", Hibernate.STRING) 
-                .addScalar("issue_by", Hibernate.STRING)     
+                .addScalar("issue_by", Hibernate.STRING)  
+                .addScalar("pickup", Hibernate.STRING)
                 .list();
          int check =1;
          List info = new ArrayList();
@@ -84,6 +85,7 @@ public class TicketOrderImpl implements TicketOrderDao{
                 }else{
                     ticketOrderInfo.setIssuedate("");
                 }
+                
                 ticketOrderInfo.setCompanyname(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[3]))) ? util.ConvertString(B[3]) : "");
                 ticketOrderInfo.setTel(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[4]))) ? util.ConvertString(B[4]) : "");
                 ticketOrderInfo.setPnr(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[5]))) ? util.ConvertString(B[5]) : "");
@@ -94,6 +96,7 @@ public class TicketOrderImpl implements TicketOrderDao{
                 ticketOrderInfo.setPricetax(util.ConvertString(priceTax));
                 ticketOrderInfo.setCost(util.ConvertString(cost));
                 ticketOrderInfo.setCosttax(util.ConvertString(costtax));
+                ticketOrderInfo.setIspickup(!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[15]))) ? util.ConvertString(B[15]) : "");
                 info.add(ticketOrderInfo);
             }
             check++;                        
@@ -156,7 +159,12 @@ public class TicketOrderImpl implements TicketOrderDao{
             TicketOrderFlight f = new TicketOrderFlight();
             f.setFlightNo(util.ConvertString(flightInfo[0]));
             f.setFlightClass(util.ConvertString(flightInfo[1]));
-            f.setDepartdate(util.ConvertString(flightInfo[2]));
+            if(flightInfo[2] != null){
+                System.out.println(" flightInfo[2] " + flightInfo[2] );
+                f.setDepartdate(new SimpleDateFormat("dd MMM yyyy", new Locale("us", "us")).format((util.convertStringToDate(String.valueOf(flightInfo[2])))));
+            }else{
+                f.setDepartdate("");
+            }
             f.setFrom(util.ConvertString(flightInfo[3]));
             f.setTo(util.ConvertString(flightInfo[4]));
             f.setDepttime(util.ConvertString(flightInfo[5]));

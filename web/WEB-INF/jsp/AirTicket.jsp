@@ -192,9 +192,38 @@
                                         <input type="text" class="form-control" id="reconfirm" name="reconfirm" value="${booking.reConfirm}" maxlength="255"/>
                                     </div>
                                 </div>
-
                             </div>  
-
+                            <div class="row" >
+                                <div class="col-sm-6" style="margin-top: -10px;">
+                                    <label class="col-sm-3 control-label text-right">Issue Date</label>
+                                    <div class="col-sm-4">                                      
+                                        <div class="form-group">
+                                            <div class='input-group date' id='datetimepicker4'>
+                                                <fmt:formatDate value="${booking.issuedate}" var="issDate" pattern="dd-MM-yyyy" />
+                                                <input type='text' class="form-control" name="issuedate" id="issuedate" 
+                                                       data-date-format="DD-MM-YYYY" value="${issDate}"  placeholder="DD-MM-YYYY"/>
+                                                <span id="SpanGroupAddon" class="input-group-addon spandate">
+                                                    <span id="SpanGlyphiconCalendar" class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="col-xs-1" style="width: 220px;padding-top:6px;margin-left: -15px " >
+                                            <c:set var="checkP" value="" />
+                                            <c:if test="${booking.isPickup == 1}">
+                                                <c:set var="checkP" value="checked" />
+                                            </c:if>
+                                            <input type="radio" name="isPickup"  id="isPickupP" value="1" ${checkP}/>&nbsp;Pick Up&nbsp;&nbsp;&nbsp;
+                                            <c:set var="checkD" value="" />
+                                            <c:if test="${booking.isPickup == 0}">
+                                                <c:set var="checkD" value="checked" />
+                                            </c:if>  
+                                            <input type="radio" name="isPickup"  id="isPickupD" value="0" ${checkD}/>&nbsp;Delivery&nbsp;
+                                        </div>   
+                                    </div>
+                                </div>
+                            </div>        
                         </div>
                     </div>
                 </div>

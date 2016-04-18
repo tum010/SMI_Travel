@@ -14,6 +14,9 @@ $(document).ready(function () {
     $('#datetimepicker3').datetimepicker({
         pickTime: false
     });
+    $('#datetimepicker4').datetimepicker({
+        pickTime: false
+    });
     $('.spandate').click(function () {
         var position = $(this).offset();
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
