@@ -151,7 +151,7 @@ function searchCustomerAgentList(name) {
     var param = 'action=' + 'text' +
             '&servletName=' + servletName +
             '&servicesName=' + servicesName +
-            '&name=' + name +
+            '&name=' + (name.indexOf('&') >= 0 ? name.replace(/&/g , "%26") : name) +
             '&type=' + 'getListBillto';
     CallAjax(param);
 }
