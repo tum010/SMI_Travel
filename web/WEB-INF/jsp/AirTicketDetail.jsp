@@ -1154,12 +1154,12 @@
                                         </a>
                                         <c:if test="${flight.MItemstatus.id != 2}">
                                             <c:if test="${lockUnlockBooking == 0}">
-                                                <c:if test="${flight.isBill == 0}">
+                                                <c:if test="${isBillStatus == 0}">
                                                     <a id="passenger_tableButtonRemove${pStatus.count}" href="#" class="confirm-delete" data-id="${passenger.id}">
                                                         <span id="passenger_tableSpanRemove${pStatus.count}" class="glyphicon glyphicon-remove deleteicon"></span>
                                                     </a> 
                                                 </c:if>
-                                                <c:if test="${flight.isBill == 1}">
+                                                <c:if test="${isBillStatus == 1}">
                                                     <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                                 </c:if>
                                             </c:if>
