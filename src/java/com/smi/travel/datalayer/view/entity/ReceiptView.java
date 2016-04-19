@@ -45,6 +45,8 @@ public class ReceiptView {
     private String chqdate2;
     private String chqvalue2;
     private String chqbankflag2;
+    private String sign;
+    private String signname;
     
     //Receipt Summary
     private String systemdate;
@@ -496,6 +498,23 @@ public class ReceiptView {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
+    public String getSignname() {
+        return signname;
+    }
+
+    public void setSignname(String signname) {
+        this.signname = signname;
+    }
+
 
    
 

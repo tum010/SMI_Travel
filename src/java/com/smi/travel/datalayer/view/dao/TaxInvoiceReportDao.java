@@ -13,5 +13,5 @@ import java.util.List;
  * @author chonnasith
  */
 public interface TaxInvoiceReportDao {
-    public List getTaxInvoice(String taxInvId,int option);
+    public List getTaxInvoice(String taxInvId,int option,String sign,String printby);
 }

@@ -106,7 +106,7 @@ public class SendEmailController extends SMITravelController {
                 }
             }
             if (ReceiptEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getReceiptEmail(reportid,option);
+                data = reportservice.getReceiptEmail(reportid,option,sign,user.getName());
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "ReceiptEmail.jasper";
                 pdfFileName = "receipt.pdf";
@@ -117,7 +117,7 @@ public class SendEmailController extends SMITravelController {
                 }
             }
             if (TaxInvoiceEmail.equalsIgnoreCase(name)) {
-                data = reportservice.getTaxInvoiceEmail(reportid,option);
+                data = reportservice.getTaxInvoiceEmail(reportid,option,sign,user.getName());
                 JRDataSource dataSource = new JRBeanCollectionDataSource(data);
                 jasperFileName = "TaxInvoiceEmailReport.jasper";
                 pdfFileName = "taxinvoice.pdf";

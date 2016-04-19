@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao.impl;
 
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.view.dao.ReceiptDao;
 import com.smi.travel.datalayer.view.entity.ReceiptView;
 import com.smi.travel.util.UtilityFunction;
@@ -26,7 +27,7 @@ public class ReceiptImpl implements ReceiptDao{
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getReceipt(String receiptId,int option) {
+    public List getReceipt(String receiptId,int option,String sign,String printby) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `receipt_view` where `receipt_view`.id =  "+receiptId)
@@ -102,6 +103,20 @@ public class ReceiptImpl implements ReceiptDao{
             receiptView.setChqdate2((("null".equals(String.valueOf(T[28])) ? "" : String.valueOf(sf.format(util.convertStringToDate(String.valueOf(T[28])))))));
             receiptView.setChqvalue2((("0.00".equals(String.valueOf(T[29])) ? "" : String.valueOf(T[29]))));
             receiptView.setChqbankflag2((("0.00".equals(String.valueOf(T[30]))? "" : String.valueOf(T[30]))));
+            if(sign != null){
+                if("".equals(sign)){
+                    receiptView.setSign("nosign");
+                    receiptView.setSignname(printby);
+                }else{
+                    receiptView.setSign(sign);
+                    String querySystemUser = "from SystemUser s where s.name like '%"+sign+"%'";
+                    List<SystemUser> systemUser = session.createQuery(querySystemUser).list();
+                    if(!systemUser.isEmpty()) {
+                        receiptView.setSignname(systemUser.get(0).getName());
+                    }        
+                    
+                }
+            }
             String curtemp = "null".equals(String.valueOf(T[31])) ? "" : String.valueOf(T[31]);
             System.err.println("receiptView cash " +receiptView.getCash());
 //            String total = (receiptView.getTotalamount()).replaceAll("\\.", ",");

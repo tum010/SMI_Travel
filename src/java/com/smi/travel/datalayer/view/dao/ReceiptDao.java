@@ -13,6 +13,6 @@ import java.util.List;
  * @author chonnasith
  */
 public interface ReceiptDao {
-    public List getReceipt(String receiptId,int option);
+    public List getReceipt(String receiptId,int option,String sign,String printby);
     public List getReceiptSummary(String dateFrom,String dateTo,String departmentRec,String recType,String status,String username);
 }

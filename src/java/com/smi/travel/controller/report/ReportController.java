@@ -275,9 +275,9 @@ public class ReportController extends SMITravelController {
             String nameSurname = (!"".equalsIgnoreCase(user.getName()) && user.getName() != null ? user.getName() : "");
             data = reportservice.getDaytourOperationOtherReport(otherId, passengerId, refNo, status, nameSurname);
         } else if (ReceiptEmail.equalsIgnoreCase(name)) {
-            data = reportservice.getReceiptEmail(receiveId,option);
+            data = reportservice.getReceiptEmail(receiveId,option,sign,user.getRole().getName());
         } else if (ReceiptReport.equalsIgnoreCase(name)) {
-            data = reportservice.getReceipt(receiveId,option);
+            data = reportservice.getReceipt(receiveId,option,sign,user.getRole().getName());
         } else if (ReceiptSummaryReport.equalsIgnoreCase(name)) {
             data = reportservice.getReceiptSummary(dateFrom,dateTo,departmentRec,recType,status,user.getUsername()+"-"+user.getRole().getName());
         } else if (ReceiveList.equalsIgnoreCase(name)) {
@@ -293,9 +293,9 @@ public class ReportController extends SMITravelController {
         } else if (InvoiceTempReport.equalsIgnoreCase(name)) {
             data = reportservice.getInvoice(invoiceid,bankid,showStaff,showLeader,sign,user.getRole().getName());
         } else if (TaxInvoiceReport.equalsIgnoreCase(name)) {
-            data = reportservice.getTaxInvoice(taxInvId, option);
+            data = reportservice.getTaxInvoice(taxInvId, option,sign,user.getRole().getName());
         } else if (TaxInvoiceEmailReport.equalsIgnoreCase(name)) {
-            data = reportservice.getTaxInvoiceEmail(taxInvId, option);
+            data = reportservice.getTaxInvoiceEmail(taxInvId, option,sign,user.getRole().getName());
         }else if(CreditNoteReport.equalsIgnoreCase(name)){
             data = reportservice.getCreditNoteReport(cnid);
         }else if(InvoiceMonthly.equalsIgnoreCase(name)){

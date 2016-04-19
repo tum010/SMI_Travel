@@ -29,6 +29,8 @@ public class TaxInvoiceReport {
     private String user;
     private String textamount;
     private String curamount;
+    private String sign;
+    private String signname;
 
     public String getCustomer() {
         return customer;
@@ -172,5 +174,21 @@ public class TaxInvoiceReport {
 
     public void setCuramount(String curamount) {
         this.curamount = curamount;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
+    public String getSignname() {
+        return signname;
+    }
+
+    public void setSignname(String signname) {
+        this.signname = signname;
     }
 }

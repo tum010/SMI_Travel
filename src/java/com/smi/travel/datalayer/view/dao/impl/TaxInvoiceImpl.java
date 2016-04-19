@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.view.dao.impl;
 
+import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.report.model.TaxInvoiceReport;
 import com.smi.travel.datalayer.view.entity.TaxInvoiceView;
 import com.smi.travel.datalayer.view.dao.TaxInvoiceReportDao;
@@ -29,7 +30,7 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
     private UtilityFunction utilityFunction;
     
     @Override
-    public List getTaxInvoice(String taxInvId,int option) {
+    public List getTaxInvoice(String taxInvId,int option,String sign,String printby) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList();
@@ -92,6 +93,21 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             }                        
             if(B[11] != null){
                 taxInvoiceView.setAmount(!"0.00".equalsIgnoreCase(util.ConvertString(B[11])) ? df.format(B[11]) : "0.00");
+            }
+           
+            if(sign != null){
+                if("".equals(sign)){
+                    taxInvoiceView.setSign("nosign");
+                    taxInvoiceView.setSignname(printby);
+                }else{
+                    taxInvoiceView.setSign(sign);
+                    String querySystemUser = "from SystemUser s where s.name like '%"+sign+"%'";
+                    List<SystemUser> systemUser = session.createQuery(querySystemUser).list();
+                    if(!systemUser.isEmpty()) {
+                        taxInvoiceView.setSignname(systemUser.get(0).getName());
+                    }        
+                    
+                }
             }
 //            String total = taxInvoiceView.getGrandtotal().replaceAll(",", "");
 //            total = total.replaceAll("\\.", ",");
