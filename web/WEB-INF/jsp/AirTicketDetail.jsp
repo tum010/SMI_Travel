@@ -263,7 +263,7 @@
                                             <span id="SpanEdit${i.count}" class="glyphicon glyphicon-edit editicon"></span>
                                         </a>
                                         <c:if test="${flight.MItemstatus.id != 3}">
-                                            <c:if test="${lockUnlockBooking == 0}">
+                                            <c:if test="${lockUnlockBooking == 0}"> 
                                                 <c:if test="${flight.isBill == 0}">
                                                     <span id="SpanRemove${i.count}" class="glyphicon glyphicon-remove deleteicon" onclick="setDisableFlight('${flight.id}', '${flight.flightNo}');" data-toggle="modal" data-target="#DisableFlight" ></span>
                                                 </c:if>
@@ -744,7 +744,7 @@
                                            $("#datadep_load-"+count).addClass("hidden"); 
                                        }
                                        $("#departure-" + count + "-id").val(depid);
-                                       $("#departure-" + count + "-code").val(depcode);
+//                                       $("#departure-" + count + "-code").val(depcode);
                                        $("#departure-" + count + "-name").val(depname);
                                        $("#departure-" + count + "-codeVal").autocomplete({
                                            source: depArray,
@@ -823,7 +823,7 @@
                                        $("#dataarri_load-"+count).addClass("hidden"); 
                                    }
                                    $("#arrival-"+count+"-id").val(arrid);
-                                   $("#arrival-"+count+"-code").val(arrcode);
+//                                   $("#arrival-"+count+"-code").val(arrcode);
                                    $("#arrival-"+count+"-name").val(arrname);
 
                                    $("#arrival-"+count+"-codeVal").autocomplete({
@@ -1152,7 +1152,7 @@
                                         <a id="passenger_tableButtonEdit${pStatus.count}" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#passenger${pStatus.count}" aria-expanded="true" aria-controls="collapseExample">
                                             <span id="passenger_tableSpanEdit${pStatus.count}" class="glyphicon glyphicon-edit editicon"></span>
                                         </a>
-                                        <c:if test="${flight.MItemstatus.id != 2}">
+                                        <%--<c:if test="${flight.MItemstatus.id != 2}">--%>
                                             <c:if test="${lockUnlockBooking == 0}">
                                                 <c:if test="${isBillStatus == 0}">
                                                     <a id="passenger_tableButtonRemove${pStatus.count}" href="#" class="confirm-delete" data-id="${passenger.id}">
@@ -1166,11 +1166,9 @@
                                             <c:if test="${lockUnlockBooking == 1}">
                                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                             </c:if>                                                
-                                       </c:if>
-
+                                       <%--</c:if>--%>
                                     </td>
                                 </tr>
-
                             </c:forEach>
                             </tbody>
                         </table>
