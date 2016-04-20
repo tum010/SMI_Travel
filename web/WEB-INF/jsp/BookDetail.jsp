@@ -85,6 +85,7 @@
                 <input type="hidden" class="form-control"  id="action" name="action" value="${action}" />
                 <input type="hidden" value="${detail.createDate}" id="master-createDate">
                 <input type="hidden" value="${detail.createBy}" id="master-createBy">
+                <input type="hidden" value="${detail.id}" id="master-id">
                 <c:choose>
                     <c:when test="${not empty detail.MBookingstatus.name}">
                         <input type="hidden" id="status" name="status" value="${detail.MBookingstatus.name}">

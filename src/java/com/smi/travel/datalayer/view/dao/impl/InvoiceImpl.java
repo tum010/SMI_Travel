@@ -63,14 +63,14 @@ public class InvoiceImpl implements InvoiceReportDao{
         int i = 0;
         for (Object[] B : QueryBankList) {
             if(i == 0){
-                Bank1 = util.ConvertString(B[1]);
-                Branch1 = util.ConvertString(B[2]);
-                Accno1 = util.ConvertString(B[3]);
+                Bank1 = (util.ConvertString(B[1])).toUpperCase();
+                Branch1 = (util.ConvertString(B[2])).toUpperCase();
+                Accno1 = (util.ConvertString(B[3])).toUpperCase();
                 i++;
             }else{
-                Bank2 = util.ConvertString(B[1]);
-                Branch2 = util.ConvertString(B[2]);
-                Accno2 = util.ConvertString(B[3]); 
+                Bank2 = (util.ConvertString(B[1])).toUpperCase();
+                Branch2 = (util.ConvertString(B[2])).toUpperCase();
+                Accno2 = (util.ConvertString(B[3])).toUpperCase(); 
             }
         }
         List<Object[]> QueryInvoiceList = session.createSQLQuery(" SELECT * FROM `invoice_view` where id =  " + InvoiceId)      

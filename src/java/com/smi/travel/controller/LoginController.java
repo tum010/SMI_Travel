@@ -7,11 +7,15 @@ import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingDaytourService;
 import com.smi.travel.datalayer.service.LoginService;
 import com.smi.travel.datalayer.service.MTourCommissionService;
+import com.smi.travel.datalayer.view.entity.CheckDuplicateUser;
 import com.smi.travel.master.controller.SMITravelController;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -105,6 +109,14 @@ public class LoginController extends SMITravelController {
                         session.setAttribute("reportmenu", reportMenu);
                         session.setAttribute("accountmenu", accountmenu);
                         session.setAttribute("checkingMenu", checkingMenu);
+                        
+                        CheckDuplicateUser checkDuplicateUser = new CheckDuplicateUser();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+                        checkDuplicateUser.setOperationUser(username);
+                        checkDuplicateUser.setOperationDate(String.valueOf(sdf.format(new Date())));
+                        checkDuplicateUser.setOperationTable("Master");
+                        session.setAttribute("checkDuplicateUser", checkDuplicateUser);
+                        
                     } else {
                         request.setAttribute("ResultLogin", "User have not role.Please contact admin to assign role.");
                         log.info("Login fail!!");
@@ -119,6 +131,12 @@ public class LoginController extends SMITravelController {
             }
         }
         if (session.getAttribute("USER") != null) {
+            CheckDuplicateUser checkDuplicateUser = new CheckDuplicateUser();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+            checkDuplicateUser.setOperationUser(username);
+            checkDuplicateUser.setOperationDate(String.valueOf(sdf.format(new Date())));
+            checkDuplicateUser.setOperationTable("Master");
+            session.setAttribute("checkDuplicateUser", checkDuplicateUser);
             return MAIN;
         } else {
             return LOG_IN;

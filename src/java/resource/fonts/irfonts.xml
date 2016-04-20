@@ -43,6 +43,70 @@
                <locale><![CDATA[th]]></locale>
        </locales>
    </fontFamily>
+   <fontFamily name="BrowalliaUPC">
+       <normal><![CDATA[browau.ttf]]></normal>
+       <bold><![CDATA[browaub.ttf]]></bold>
+       <italic><![CDATA[browaui.ttf]]></italic>
+       <boldItalic><![CDATA[browauz.ttf]]></boldItalic>
+       <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+       <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+       <locales>
+               <locale><![CDATA[th]]></locale>
+       </locales>
+   </fontFamily>
+   <fontFamily name="AngsanaUPC">
+       <normal><![CDATA[angsau.ttf]]></normal>
+       <bold><![CDATA[angsaub.ttf]]></bold>
+       <italic><![CDATA[angsaui.ttf]]></italic>
+       <boldItalic><![CDATA[angsauz.ttf]]></boldItalic>
+       <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+       <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+       <locales>
+               <locale><![CDATA[th]]></locale>
+       </locales>
+   </fontFamily>
+   <fontFamily name="CordiaUPC">
+       <normal><![CDATA[cordiau.ttf]]></normal>
+       <bold><![CDATA[cordiaub.ttf]]></bold>
+       <italic><![CDATA[cordiaui.ttf]]></italic>
+       <boldItalic><![CDATA[cordiauz.ttf]]></boldItalic>
+       <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+       <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+       <locales>
+               <locale><![CDATA[th]]></locale>
+       </locales>
+   </fontFamily>
+   <fontFamily name="EucrosiaUPC">
+       <normal><![CDATA[upcel.ttf]]></normal>
+       <bold><![CDATA[upceb.ttf]]></bold>
+       <italic><![CDATA[upcei.ttf]]></italic>
+       <boldItalic><![CDATA[upcebi.ttf]]></boldItalic>
+       <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+       <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+       <locales>
+               <locale><![CDATA[th]]></locale>
+       </locales>
+   </fontFamily>
+   <fontFamily name="Leelawadee">
+       <normal><![CDATA[leelawad.ttf]]></normal>
+       <bold><![CDATA[leelawdb.ttf]]></bold>
+       <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+       <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+       <locales>
+               <locale><![CDATA[th]]></locale>
+       </locales>
+   </fontFamily>
+   <fontFamily name="FreesiaUPC">
+       <normal><![CDATA[upcfl.ttf]]></normal>
+       <bold><![CDATA[upcfb.ttf]]></bold>
+       <italic><![CDATA[upcfi.ttf]]></italic>
+       <boldItalic><![CDATA[upcfbi.ttf]]></boldItalic>
+       <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+       <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+       <locales>
+               <locale><![CDATA[th]]></locale>
+       </locales>
+   </fontFamily>
 
 </fontFamilies>
 

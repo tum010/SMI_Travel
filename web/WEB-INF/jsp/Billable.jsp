@@ -31,6 +31,7 @@
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <c:set var="ReceiptDetailList" value="${requestScope['ReceiptDetailList']}" />
+<input type="hidden" value="${master.id}" id="master-id">
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <input type="hidden" value="${requestScope['result']}" id="resultText">
 <input type="hidden" value="${master.bookingType}" id="master-bookingType">
@@ -61,7 +62,7 @@
             <input hidden="" value="${booking_size[5]}" id="input-billable_size">
             <input hidden="" value="${booking_size[6]}" id="input-daytour_size">  
         </div>
-
+        
         <div class="col-sm-10">
             <form action="Billable.smi" method="post" id="Billable" role="form">
                 <input id="referenceNo" name="referenceNo" type="hidden" value="${master.referenceNo}"/>

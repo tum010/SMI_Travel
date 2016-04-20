@@ -32,6 +32,7 @@
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
+<input type="hidden" value="${master.id}" id="master-id">
 <c:set var="isBillStatus" value="${requestScope['IsBillStatus']}" />
 
 <c:choose>

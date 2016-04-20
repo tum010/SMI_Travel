@@ -107,7 +107,10 @@
         var operationDate = document.getElementById('operationDateBooking').value;
         var operationUser = document.getElementById('operationUserBooking').value;
         var operationTable = document.getElementById('operationTableBooking').value;
-        var operationTableId = document.getElementById('operationTableIdBooking').value;
+//        var operationTableId = document.getElementById('operationTableIdBooking').value;alert(operationTableId);
+//        if(operationTableId === ''){
+         var operationTableId = document.getElementById('master-id').value;
+//        }alert(operationTableId);
         var url = 'AJAXServlet';
         var servletName = 'CheckDuplicateUserServlet';
         var servicesName = 'AJAXBean';

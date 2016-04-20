@@ -35,6 +35,7 @@
 <input type="hidden" value="${param.referenceNo}" id="getRealformatUrl">
 <input type="hidden" value="${master.createDate}" id="master-createDate">
 <input type="hidden" value="${master.createBy}" id="master-createBy">
+<input type="hidden" value="${master.id}" id="master-id">
 <input type="hidden" value="${master.departmentNo}" id="departmentNo">
 <input type="hidden" value="1" id="statusBar">
 <c:set var="enableSave" value="${requestScope['EnableSave']}" />
