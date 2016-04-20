@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="595" pageHeight="842" columnWidth="540" leftMargin="35" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="30"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/Users/taninsammanee/Projects/ICONEXT/icoweb/trunk/SMITravel/web/WEB-INF/report/"]]></defaultValueExpression>
@@ -24,59 +24,71 @@
 			<staticText>
 				<reportElement x="1" y="13" width="283" height="20" uuid="9d2d185a-081e-487f-85e6-1a937cfb33be"/>
 				<textElement>
-					<font size="13"/>
+					<font fontName="Tahoma" size="13"/>
 				</textElement>
 				<text><![CDATA[Report Days Tour Agent Commission Service]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="71" y="37" width="18" height="19" uuid="1bc5ae63-b011-4cf1-b255-f99722416a85"/>
 				<textElement>
-					<font size="11"/>
+					<font fontName="Tahoma" size="11"/>
 				</textElement>
 				<text><![CDATA[to]]></text>
 			</staticText>
 			<textField pattern="">
 				<reportElement x="2" y="38" width="69" height="19" uuid="6d753604-badd-4df5-a753-6f3997e3db8b"/>
 				<textElement>
-					<font size="10"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{datefrom}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
 				<reportElement x="89" y="38" width="90" height="19" uuid="e6318956-fdd2-4fdf-8bf3-354beabacd5f"/>
 				<textElement>
-					<font size="10"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{dateto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="469" y="29" width="87" height="19" uuid="e072b8ad-2e5d-4e97-9957-d1e704229234"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="452" y="29" width="87" height="19" uuid="e072b8ad-2e5d-4e97-9957-d1e704229234"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="409" y="29" width="60" height="19" uuid="f31fd96b-dddc-42e9-95c7-9faf585544f1"/>
+				<reportElement x="392" y="29" width="60" height="19" uuid="f31fd96b-dddc-42e9-95c7-9faf585544f1"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
 				<text><![CDATA[Print By : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="409" y="14" width="60" height="19" uuid="3cb442fd-dc23-49eb-82e5-859ebde7a483"/>
+				<reportElement x="392" y="14" width="60" height="19" uuid="3cb442fd-dc23-49eb-82e5-859ebde7a483"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
 				<text><![CDATA[Print Date : ]]></text>
 			</staticText>
 			<textField pattern="">
-				<reportElement x="469" y="14" width="87" height="19" uuid="ae950198-e2ca-48b9-b734-0e7c221b270a"/>
+				<reportElement x="452" y="14" width="87" height="19" uuid="ae950198-e2ca-48b9-b734-0e7c221b270a"/>
 				<textElement textAlignment="Right">
-					<font size="10"/>
+					<font fontName="Tahoma" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{systemdate}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="527" y="48" width="17" height="15" uuid="865fe6d9-842e-47e1-b6a0-a138f629a029"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="510" y="48" width="17" height="15" uuid="865fe6d9-842e-47e1-b6a0-a138f629a029"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="364" y="48" width="163" height="15" uuid="67e5c646-b01a-4d1f-ad6f-269622af5f73"/>
-				<textElement textAlignment="Right"/>
+				<reportElement x="347" y="48" width="163" height="15" uuid="67e5c646-b01a-4d1f-ad6f-269622af5f73"/>
+				<textElement textAlignment="Right">
+					<font fontName="Tahoma"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Page : "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 		</band>
@@ -87,12 +99,12 @@
 	<detail>
 		<band height="163" splitType="Stretch">
 			<subreport>
-				<reportElement x="0" y="0" width="555" height="76" uuid="f5a2d743-df7f-4603-a199-5d6afe6a43c8"/>
+				<reportElement x="0" y="0" width="540" height="76" uuid="f5a2d743-df7f-4603-a199-5d6afe6a43c8"/>
 				<dataSourceExpression><![CDATA[$F{agentCommissionSummaryDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/AgentCommissionSummary.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="87" width="555" height="76" uuid="5854e35a-b88b-4e00-8c03-31c8d4ebf8a2"/>
+				<reportElement positionType="Float" x="0" y="87" width="540" height="76" uuid="5854e35a-b88b-4e00-8c03-31c8d4ebf8a2"/>
 				<dataSourceExpression><![CDATA[$F{agentCommissionInfoDataSource}]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$F{subReportDir} + "/AgentCommissionInfo.jasper"]]></subreportExpression>
 			</subreport>

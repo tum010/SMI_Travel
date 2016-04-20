@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="2.6573415000000113"/>
+	<property name="ireport.x" value="468"/>
 	<property name="ireport.y" value="0"/>
 	<queryString>
 		<![CDATA[]]>
@@ -26,7 +26,7 @@
 	<columnHeader>
 		<band height="23" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="5" width="555" height="18" backcolor="#E6E6E6" uuid="ad6573ea-8127-4be8-940a-3a4d819f0ee2"/>
+				<reportElement x="0" y="5" width="539" height="18" backcolor="#E6E6E6" uuid="ad6573ea-8127-4be8-940a-3a4d819f0ee2"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineColor="#CCCCCC"/>
 				</graphicElement>
@@ -40,26 +40,26 @@
 					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
 				</box>
-				<textElement textAlignment="Center">
-					<font isBold="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Agent]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="76" y="5" width="297" height="18" uuid="8d1446dc-26ab-4bc8-8577-83e239890a57"/>
+				<reportElement x="76" y="5" width="281" height="18" uuid="8d1446dc-26ab-4bc8-8577-83e239890a57"/>
 				<box>
 					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
 					<leftPen lineWidth="0.25" lineColor="#CCCCFF"/>
 					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
 					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
 				</box>
-				<textElement textAlignment="Center">
-					<font isBold="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Com Service]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="373" y="5" width="86" height="18" uuid="e483f3ca-4b44-422a-bc8d-de10314058ce"/>
+				<reportElement x="357" y="5" width="86" height="18" uuid="e483f3ca-4b44-422a-bc8d-de10314058ce"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.5" lineColor="#CCCCFF"/>
@@ -67,13 +67,13 @@
 					<bottomPen lineWidth="0.5" lineColor="#CCCCFF"/>
 					<rightPen lineWidth="0.5" lineColor="#CCCCFF"/>
 				</box>
-				<textElement textAlignment="Center">
-					<font isBold="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Count Book in]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="459" y="5" width="96" height="18" uuid="2c511a20-3573-420b-8c32-d6395dc30413"/>
+				<reportElement x="443" y="5" width="96" height="18" uuid="2c511a20-3573-420b-8c32-d6395dc30413"/>
 				<box>
 					<pen lineColor="#CCCCFF"/>
 					<topPen lineWidth="0.25" lineColor="#CCCCFF"/>
@@ -81,8 +81,8 @@
 					<bottomPen lineWidth="0.25" lineColor="#CCCCFF"/>
 					<rightPen lineWidth="0.25" lineColor="#CCCCFF"/>
 				</box>
-				<textElement textAlignment="Center">
-					<font isBold="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Commision]]></text>
 			</staticText>
@@ -97,48 +97,48 @@
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="0" y="2" width="76" height="15" uuid="46f0834d-b1c6-4cb2-8b2f-e0c87ffe44f6"/>
+				<reportElement x="0" y="4" width="76" height="15" uuid="46f0834d-b1c6-4cb2-8b2f-e0c87ffe44f6"/>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font fontName="Tahoma" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{code}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="76" y="0" width="297" height="20" forecolor="#CCCCCC" uuid="8fc5b682-02db-4d75-a94f-8f81b77629e4"/>
+				<reportElement mode="Transparent" x="76" y="0" width="281" height="20" forecolor="#CCCCCC" uuid="8fc5b682-02db-4d75-a94f-8f81b77629e4"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="78" y="0" width="295" height="15" uuid="2e4d4b2f-2287-4064-9c48-bfd5a71934cc"/>
+				<reportElement x="78" y="4" width="279" height="15" uuid="2e4d4b2f-2287-4064-9c48-bfd5a71934cc"/>
 				<textElement>
-					<font fontName="TH SarabunPSK" size="13" isBold="true" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="9" isBold="false" pdfFontName="resource/fonts/THSarabun.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="373" y="0" width="86" height="20" forecolor="#CCCCCC" uuid="36cf4edc-4de0-4df7-821c-f18a5cbca648"/>
+				<reportElement mode="Transparent" x="357" y="0" width="86" height="20" forecolor="#CCCCCC" uuid="36cf4edc-4de0-4df7-821c-f18a5cbca648"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="373" y="2" width="86" height="15" uuid="cb5565c0-7352-45c0-a366-10a1e68a7517"/>
+				<reportElement x="357" y="5" width="86" height="15" uuid="cb5565c0-7352-45c0-a366-10a1e68a7517"/>
 				<textElement textAlignment="Center">
-					<font size="8"/>
+					<font fontName="Tahoma" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{countbook}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement mode="Transparent" x="459" y="0" width="96" height="20" forecolor="#CCCCCC" uuid="b9802031-80fd-48b9-8621-50fed02a35d4"/>
+				<reportElement mode="Transparent" x="443" y="0" width="96" height="20" forecolor="#CCCCCC" uuid="b9802031-80fd-48b9-8621-50fed02a35d4"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<textField pattern="#,##0">
-				<reportElement x="458" y="3" width="96" height="15" uuid="d93d87d5-e5da-4dd5-bdc2-761a3caf5837"/>
+				<reportElement x="443" y="5" width="92" height="15" uuid="d93d87d5-e5da-4dd5-bdc2-761a3caf5837"/>
 				<textElement textAlignment="Right">
-					<font size="8"/>
+					<font fontName="Tahoma" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{commission}]]></textFieldExpression>
 			</textField>
@@ -147,39 +147,39 @@
 	<columnFooter>
 		<band height="18" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="1" width="555" height="13" backcolor="#E6E6E6" uuid="5be008c0-30f3-466c-9248-f7aaa0ddcea5"/>
+				<reportElement x="0" y="0" width="539" height="13" backcolor="#E6E6E6" uuid="5be008c0-30f3-466c-9248-f7aaa0ddcea5"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineColor="#CCCCCC"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="24" y="0" width="38" height="14" uuid="7ab870d5-432b-439c-9e7e-6381d70a46a6"/>
+				<reportElement x="24" y="-1" width="38" height="14" uuid="7ab870d5-432b-439c-9e7e-6381d70a46a6"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total :]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement mode="Transparent" x="373" y="1" width="86" height="13" forecolor="#CCCCCC" uuid="ce35cebd-3f32-4785-be11-ca5ca4dadecd"/>
+				<reportElement mode="Transparent" x="357" y="0" width="86" height="13" forecolor="#CCCCCC" uuid="ce35cebd-3f32-4785-be11-ca5ca4dadecd"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<rectangle>
-				<reportElement mode="Transparent" x="459" y="1" width="96" height="13" forecolor="#CCCCCC" uuid="57b93faf-560b-44e8-9a31-2cdad401c875"/>
+				<reportElement mode="Transparent" x="443" y="0" width="96" height="13" forecolor="#CCCCCC" uuid="57b93faf-560b-44e8-9a31-2cdad401c875"/>
 				<graphicElement>
 					<pen lineWidth="0.25"/>
 				</graphicElement>
 			</rectangle>
 			<textField pattern="#,##0">
-				<reportElement x="459" y="1" width="96" height="13" uuid="a998d3cc-5fab-45c8-8e0f-87b02911c195"/>
+				<reportElement x="443" y="1" width="92" height="13" uuid="a998d3cc-5fab-45c8-8e0f-87b02911c195"/>
 				<textElement textAlignment="Right">
 					<font size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalcommission}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="374" y="2" width="85" height="14" uuid="4c169337-b0a8-4672-b818-ab62644d6311"/>
+				<reportElement x="358" y="1" width="85" height="14" uuid="4c169337-b0a8-4672-b818-ab62644d6311"/>
 				<textElement textAlignment="Center">
 					<font size="8"/>
 				</textElement>
