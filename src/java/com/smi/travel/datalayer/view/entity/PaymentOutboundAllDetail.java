@@ -60,6 +60,13 @@ public class PaymentOutboundAllDetail {
     private String balanceprofit;
     private String receiptno;
     private String receiptdate;
+    private String noticket;
+    private String description;
+    private String periodin;
+    private String periodout;
+    private String qtyroom;
+    private String qtynight;
+    private String qtyttl;
 
     public String getSystemdate() {
         return systemdate;
@@ -451,6 +458,62 @@ public class PaymentOutboundAllDetail {
 
     public void setReceiptdate(String receiptdate) {
         this.receiptdate = receiptdate;
+    }
+
+    public String getNoticket() {
+        return noticket;
+    }
+
+    public void setNoticket(String noticket) {
+        this.noticket = noticket;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPeriodin() {
+        return periodin;
+    }
+
+    public void setPeriodin(String periodin) {
+        this.periodin = periodin;
+    }
+
+    public String getPeriodout() {
+        return periodout;
+    }
+
+    public void setPeriodout(String periodout) {
+        this.periodout = periodout;
+    }
+
+    public String getQtyroom() {
+        return qtyroom;
+    }
+
+    public void setQtyroom(String qtyroom) {
+        this.qtyroom = qtyroom;
+    }
+
+    public String getQtynight() {
+        return qtynight;
+    }
+
+    public void setQtynight(String qtynight) {
+        this.qtynight = qtynight;
+    }
+
+    public String getQtyttl() {
+        return qtyttl;
+    }
+
+    public void setQtyttl(String qtyttl) {
+        this.qtyttl = qtyttl;
     }
     
   

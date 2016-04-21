@@ -622,6 +622,13 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
                 .addScalar("balanceprofit", Hibernate.STRING)
                 .addScalar("receiptno", Hibernate.STRING)
                 .addScalar("receiptdate", Hibernate.STRING)
+                .addScalar("noticket", Hibernate.STRING)
+                .addScalar("description", Hibernate.STRING)
+                .addScalar("periodin", Hibernate.STRING)
+                .addScalar("periodout", Hibernate.STRING)
+                .addScalar("qtyroom", Hibernate.STRING)
+                .addScalar("qtynight", Hibernate.STRING)
+                .addScalar("qtyttl", Hibernate.STRING)
                 .list();
             
             SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -649,24 +656,7 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             }
             sum.setTourcode(util.ConvertString(B[2]));
             sum.setInvno(util.ConvertString(B[3]));
-            
-            if((!"null".equalsIgnoreCase(String.valueOf(B[4])) && B[4] != null) && !"".equalsIgnoreCase(String.valueOf(B[4]))){
-                String invdatemp="";
-                String invDate[] = String.valueOf(B[4]).split("\r\n");
-                if(invDate.length > 1 ){
-                   for(int x= 0; x<invDate.length;x++){
-                       if(invDate[x] != null && !"".equalsIgnoreCase(invDate[x].trim())){
-                            invdatemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(invDate[x]).trim())))+"\r\n";
-                            sum.setInvdate(invdatemp);
-                       }
-                   }
-                }else{
-                  sum.setInvdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[4]).trim()))));
-                }
-            }else{
-                sum.setInvdate("");
-            }
-            
+            sum.setInvdate(util.convertStringToDateFormat(String.valueOf(B[4])));
             sum.setDepartment(util.ConvertString(B[5]));
             sum.setStaff(util.ConvertString(B[6]));
             sum.setTerm(util.ConvertString(B[7]));
@@ -677,42 +667,12 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             sum.setCountry(util.ConvertString(B[12]));
             sum.setCity(util.ConvertString(B[13]));
             sum.setProducttype(util.ConvertString(B[14]));
-            if((!"null".equalsIgnoreCase(String.valueOf(B[15])) && B[15] != null) && !"".equalsIgnoreCase(String.valueOf(B[15]))){
-                String datetemp="";
-                String date[] = String.valueOf(B[15]).split("\r\n");
-                if(date.length > 1 ){
-                   for(int x= 0; x<date.length;x++){
-                       if(date[x] != null && !"".equalsIgnoreCase(date[x].trim())){
-                            datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]).trim())))+"\r\n";
-                            sum.setDepartdate(datetemp);
-                       }
-                   }
-                }else{
-                  sum.setDepartdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[15]).trim()))));
-                }
-            }else{
-                sum.setDepartdate("");
-            }
+            sum.setDepartdate(util.convertStringToDateFormat(String.valueOf(B[15])));
             sum.setPrice(!"null".equalsIgnoreCase(String.valueOf(B[16])) ? util.ConvertString(B[16]) : "0.00");
             sum.setCurprice(util.ConvertString(B[17]));
             sum.setAcc(util.ConvertString(B[18]));
             sum.setPvno(util.ConvertString(B[19]));
-            if((!"null".equalsIgnoreCase(String.valueOf(B[20])) && B[20] != null) && !"".equalsIgnoreCase(String.valueOf(B[20]))){
-                String datetemp="";
-                String date[] = String.valueOf(B[20]).split("\r\n");
-                if(date.length > 1 ){
-                   for(int x= 0; x<date.length;x++){
-                       if(date[x] != null && !"".equalsIgnoreCase(date[x].trim())){
-                       datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]).trim())))+"\r\n";
-                       sum.setPaydate(datetemp);
-                       }
-                   }
-                }else{
-                  sum.setPaydate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[20]).trim()))));
-                }
-            }else{
-                sum.setPaydate("");
-            }
+            sum.setPaydate(util.convertStringToDateFormat(String.valueOf(B[20])));
             sum.setInvsup(util.ConvertString(B[21]));
             sum.setInvsupcode(util.ConvertString(B[22]));
             sum.setPayinvno(util.ConvertString(B[23]));
@@ -726,44 +686,21 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             sum.setWht(!"null".equalsIgnoreCase(String.valueOf(B[31])) ? util.ConvertString(B[31]) : "0.00");
             sum.setGrosspay(!"null".equalsIgnoreCase(String.valueOf(B[32])) ? util.ConvertString(B[32]) : "0.00");
             sum.setGrossreal(!"null".equalsIgnoreCase(String.valueOf(B[33])) ? util.ConvertString(B[33]) : "0.00");
-            if((!"null".equalsIgnoreCase(String.valueOf(B[34])) && B[34] != null) && !"".equalsIgnoreCase(String.valueOf(B[34]))){
-                String datetemp="";
-                String date[] = String.valueOf(B[34]).split("\r\n");
-                if(date.length > 1 ){
-                   for(int x= 0; x<date.length;x++){
-                       if(date[x] != null && !"".equalsIgnoreCase(date[x].trim())){
-                            datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]).trim())))+"\r\n";
-                            sum.setPaycomdate(datetemp);
-                       }
-                   }
-                }else{
-                  sum.setPaycomdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[34]).trim()))));
-                }
-            }else{
-                sum.setPaycomdate("");
-            }
+            sum.setPaycomdate(util.convertStringToDateFormat(String.valueOf(B[34])));
             sum.setPaycompvno(util.ConvertString(B[35]));
             sum.setPaycomstaff(util.ConvertString(B[36]));
-            sum.setPaycommission(!"null".equalsIgnoreCase(String.valueOf(B[37])) ? (util.ConvertString(B[37])).replaceAll(",", "") : "0.00");
+            sum.setPaycommission(!"null".equalsIgnoreCase(String.valueOf(B[37])) ? (util.ConvertString(B[37])) : "0.00");
             sum.setBalanceprofit(!"null".equalsIgnoreCase(String.valueOf(B[38])) ? util.ConvertString(B[38]) : "0.00");
             sum.setReceiptno(util.ConvertString(B[39]));
-            if((!"null".equalsIgnoreCase(String.valueOf(B[40])) && B[40] != null) && !"".equalsIgnoreCase(String.valueOf(B[40]))){
-                String datetemp="";
-                String date[] = String.valueOf(B[40]).split("\r\n");
-                if(date.length > 1 ){
-                   for(int x= 0; x<date.length;x++){
-                       if(date[x] != null && !"".equalsIgnoreCase(date[x].trim())){
-                            datetemp += util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(date[x]).trim())))+"\r\n";
-                            sum.setReceiptdate(datetemp);
-                       }
-                   }
-                }else{
-                    sum.setReceiptdate(util.ConvertString(dateformat1.format(util.convertStringToDate(String.valueOf(B[40]).trim()))));
-                }
-            }else{
-                sum.setReceiptdate("");
-            }
-           
+            sum.setReceiptdate(util.convertStringToDateFormat(String.valueOf(B[40])));
+            sum.setNoticket(util.ConvertString(B[41]));
+            sum.setDescription(util.ConvertString(B[42]));
+            sum.setPeriodin(util.convertStringToDateFormat(String.valueOf(B[43])));
+            sum.setPeriodout(util.convertStringToDateFormat(String.valueOf(B[44])));
+            sum.setQtyroom(!"null".equalsIgnoreCase(String.valueOf(B[45])) ? util.ConvertString(B[38]) : "0");
+            sum.setQtynight(!"null".equalsIgnoreCase(String.valueOf(B[46])) ? util.ConvertString(B[38]) : "0");
+            sum.setQtyttl(!"null".equalsIgnoreCase(String.valueOf(B[47])) ? util.ConvertString(B[38]) : "0");
+
             if ((invSupCode != null) && (!"".equalsIgnoreCase(invSupCode)) && (util.ConvertString(B[21]) != null) && (!"".equalsIgnoreCase(util.ConvertString(B[21])))) {
                 sum.setHeaderinvoicesupcode(util.ConvertString(B[21]));
             }
