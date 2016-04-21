@@ -107,6 +107,39 @@
                <locale><![CDATA[th]]></locale>
        </locales>
    </fontFamily>
+   <fontFamily name="DilleniaUPC">
+       <normal><![CDATA[upcdl.ttf]]></normal>
+       <bold><![CDATA[upcdb.ttf]]></bold>
+       <italic><![CDATA[upcdi.ttf]]></italic>
+       <boldItalic><![CDATA[upcdbi.ttf]]></boldItalic>
+       <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+       <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+       <locales>
+               <locale><![CDATA[th]]></locale>
+       </locales>
+   </fontFamily>
+   <fontFamily name="JasmineUPC">
+       <normal><![CDATA[upcjl.ttf]]></normal>
+       <bold><![CDATA[upcjb.ttf]]></bold>
+       <italic><![CDATA[upcji.ttf]]></italic>
+       <boldItalic><![CDATA[upcjbi.ttf]]></boldItalic>
+       <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+       <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+       <locales>
+               <locale><![CDATA[th]]></locale>
+       </locales>
+   </fontFamily>
+   <fontFamily name="LilyUPC">
+       <normal><![CDATA[upcll.ttf]]></normal>
+       <bold><![CDATA[upclb.ttf]]></bold>
+       <italic><![CDATA[upcli.ttf]]></italic>
+       <boldItalic><![CDATA[upclbi.ttf]]></boldItalic>
+       <pdfEncoding><![CDATA[Identity-H]]></pdfEncoding>
+       <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+       <locales>
+               <locale><![CDATA[th]]></locale>
+       </locales>
+   </fontFamily>
 
 </fontFamilies>
 
