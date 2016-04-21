@@ -697,9 +697,9 @@ public class PaymentOutboundImpl implements PaymentOutboundDao{
             sum.setDescription(util.ConvertString(B[42]));
             sum.setPeriodin(util.convertStringToDateFormat(String.valueOf(B[43])));
             sum.setPeriodout(util.convertStringToDateFormat(String.valueOf(B[44])));
-            sum.setQtyroom(!"null".equalsIgnoreCase(String.valueOf(B[45])) ? util.ConvertString(B[38]) : "0");
-            sum.setQtynight(!"null".equalsIgnoreCase(String.valueOf(B[46])) ? util.ConvertString(B[38]) : "0");
-            sum.setQtyttl(!"null".equalsIgnoreCase(String.valueOf(B[47])) ? util.ConvertString(B[38]) : "0");
+            sum.setQtyroom(!"null".equalsIgnoreCase(String.valueOf(B[45])) ? util.ConvertString(B[45]) : "");
+            sum.setQtynight(!"null".equalsIgnoreCase(String.valueOf(B[46])) ? util.ConvertString(B[46]) : "");
+            sum.setQtyttl(!"null".equalsIgnoreCase(String.valueOf(B[47])) ? util.ConvertString(B[47]) : "");
 
             if ((invSupCode != null) && (!"".equalsIgnoreCase(invSupCode)) && (util.ConvertString(B[21]) != null) && (!"".equalsIgnoreCase(util.ConvertString(B[21])))) {
                 sum.setHeaderinvoicesupcode(util.ConvertString(B[21]));

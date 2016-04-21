@@ -76,7 +76,10 @@
             $(document).ready(function(){
                 var masterCreateBy = document.getElementById("master-createBy");
                 if(masterCreateBy === null){
-                    localStorage.setItem("duplicateUserCancel", null);
+                    localStorage.setItem("duplicateUserCancel", null);                  
+                
+                }else{
+                    localStorage.setItem("master-id", $("#master-id").val()); 
                 }
                 
                 var path = location.pathname;
@@ -85,7 +88,50 @@
                 if(str[0] === 'BookDetail'){
                     localStorage.setItem("duplicateUserCancel", "no");
                 }
+                if($("#master-id").val() === undefined){
+                    var operationAction = '';
+                    var operationTable = $("#operationTableBooking").val();
+                    var operationTableId = localStorage.getItem("master-id");
+                    var operationUser = $("#operationUserBooking").val();        
+                    clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser);  
+                }
             });
+            
+            function clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser) {
+                var servletName = 'CheckDuplicateUserServlet';
+                var servicesName = 'AJAXBean';
+                var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&operationTable=' + operationTable +
+                        '&operationTableId=' + operationTableId +
+                        '&operationAction=' + operationAction +
+                        '&operationUser=' + operationUser +
+                        '&type=updateOperationNull'
+                callAjaxClearDuplicateUser(param);
+            }
+
+            function callAjaxClearDuplicateUser(param) {
+                var url = 'AJAXServlet';
+                try {
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        cache: false,
+                        data: param,
+                        success: function(msg) {
+                            console.log('update duplicate user success');
+                            localStorage.setItem("master-id", null);
+                         // window.location = 'APMonitor.smi';
+                        }, error: function(msg) {
+                            console.log('update duplicate user fail');
+                        }
+                    });
+                } catch (e) {
+                    alert(e);
+                    console.log('update duplicate user fail');
+                }
+            }
         </script>
     </body>
 </html>
