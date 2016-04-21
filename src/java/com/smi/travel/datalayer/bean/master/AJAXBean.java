@@ -1275,6 +1275,27 @@ public class AJAXBean extends AbstractBean implements
                 }else{
                     result = cdu.getOperationUser();        
                 }              
+            } else if("editOperationUser".equalsIgnoreCase(type)){
+                String operationTable = map.get("operationTable").toString();
+                String operationTableId = map.get("operationTableId").toString();
+                String operationUser = map.get("operationUser").toString();
+                
+                UtilityFunction util = new UtilityFunction();
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+                result = "fail";
+                CheckDuplicateUser chuSession = new CheckDuplicateUser();
+                chuSession.setOperationTable(operationTable);
+                chuSession.setTableId(operationTableId);
+                               
+                chuSession.setOperationDate((df.format(new Date())));
+                chuSession.setOperationUser(operationUser);               
+                
+                CheckDuplicateUser cdu = checkDuplicateUserDao.CheckAndUpdateOperationDetail(chuSession, 1);
+                if(cdu.getIsDuplicateUser() == 0){
+                    result = "success";          
+                }else{
+                    result = cdu.getOperationUser();        
+                }              
             }
               
         }

@@ -74,30 +74,46 @@
         <script src="js/datatable/js/jquery.jeditable.checkbox.js" type="text/javascript"></script>
         <script type="text/javascript">
             $(document).ready(function(){
-                var masterCreateBy = document.getElementById("master-createBy");
-                if(masterCreateBy === null){
-                    localStorage.setItem("duplicateUserCancel", null);                  
-                
-                }else{
-                    localStorage.setItem("master-id", $("#master-id").val()); 
-                }
-                
                 var path = location.pathname;
                 var name = path.split("/");
-                var str = name[2].split(".");
+                var str = name[2].split(".");        
+                
+                //url booking
+                var isBooking = false;
+                var urlBooking = ['BookDetail','Passenger','PassengerDetail','AirTicket','AirTicketDetail','HotelBooking','HotelDetail',
+                    'Daytour','DaytourDetail','Other','OtherDetail','Land','LandDetail','Billable'];                                    
+                
                 if(str[0] === 'BookDetail'){
                     localStorage.setItem("duplicateUserCancel", "no");
                 }
-                if($("#master-id").val() === undefined){
-                    var operationAction = '';
-                    var operationTable = $("#operationTableBooking").val();
-                    var operationTableId = localStorage.getItem("master-id");
-                    var operationUser = $("#operationUserBooking").val();        
-                    clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser);  
+                for(var i=0; i<urlBooking.length; i++){                  
+                    if(str[0] === urlBooking[i]){
+                        var duplicateUser = [{operationTable : "Master" , operationTableId : $("#master-id").val()}];
+                        localStorage.setItem("duplicateUser", JSON.stringify(duplicateUser));
+                        editOperationUser();
+                        isBooking = true;
+                        i = urlBooking.length;
+                    }
                 }
+
+                //Check current page to set null          
+                if(!isBooking){
+                    //for modal book
+                    localStorage.setItem("duplicateUserCancel", null);                                     
+                    updateOperationNull();  
+                
+                }
+                                                             
             });
             
-            function clearDuplicateUser(operationTable,operationTableId,operationAction,operationUser) {
+            function updateOperationNull() {
+                var duplicateUser = localStorage.getItem("duplicateUser");
+                duplicateUser = JSON.parse(duplicateUser);    
+                
+                var operationAction = '';
+                var operationTable = duplicateUser[0].operationTable;
+                var operationTableId = duplicateUser[0].operationTableId;
+                var operationUser = $("#operationUserBooking").val(); 
                 var servletName = 'CheckDuplicateUserServlet';
                 var servicesName = 'AJAXBean';
                 var param = 'action=' + 'text' +
@@ -121,7 +137,50 @@
                         data: param,
                         success: function(msg) {
                             console.log('update duplicate user success');
-                            localStorage.setItem("master-id", null);
+                            localStorage.setItem("duplicateUser", null);
+                         // window.location = 'APMonitor.smi';
+                        }, error: function(msg) {
+                            console.log('update duplicate user fail');
+                        }
+                    });
+                } catch (e) {
+                    alert(e);
+                    console.log('update duplicate user fail');
+                }
+            }
+            
+            function editOperationUser() {
+                var duplicateUser = localStorage.getItem("duplicateUser");
+                duplicateUser = JSON.parse(duplicateUser);    
+                
+                var operationAction = '';
+                var operationTable = duplicateUser[0].operationTable;
+                var operationTableId = duplicateUser[0].operationTableId;
+                var operationUser = $("#operationUserBooking").val(); 
+                var servletName = 'CheckDuplicateUserServlet';
+                var servicesName = 'AJAXBean';
+                var param = 'action=' + 'text' +
+                        '&servletName=' + servletName +
+                        '&servicesName=' + servicesName +
+                        '&operationTable=' + operationTable +
+                        '&operationTableId=' + operationTableId +
+                        '&operationAction=' + operationAction +
+                        '&operationUser=' + operationUser +
+                        '&type=editOperationUser'
+                callAjaxEditDuplicateUser(param);
+            }
+            
+            function callAjaxEditDuplicateUser(param) {
+                var url = 'AJAXServlet';
+                try {
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        cache: false,
+                        data: param,
+                        success: function(msg) {
+//                            console.log('update duplicate user success');
+//                            localStorage.setItem("duplicateUser", null);
                          // window.location = 'APMonitor.smi';
                         }, error: function(msg) {
                             console.log('update duplicate user fail');
