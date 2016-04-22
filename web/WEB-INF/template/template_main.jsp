@@ -76,7 +76,8 @@
             $(document).ready(function(){
                 var path = location.pathname;
                 var name = path.split("/");
-                var str = name[2].split(".");        
+                var str = name[2].split(".");
+                var haveDuplicateUserData = (localStorage.getItem("duplicateUser") != "null" ? true : false);
                 
                 //url booking
                 var isBooking = false;
@@ -95,9 +96,9 @@
                         i = urlBooking.length;
                     }
                 }
-
+               
                 //Check current page to set null          
-                if(!isBooking){
+                if((!isBooking) && haveDuplicateUserData){
                     //for modal book
                     localStorage.setItem("duplicateUserCancel", null);                                     
                     updateOperationNull();  
