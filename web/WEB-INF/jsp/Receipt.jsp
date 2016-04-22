@@ -94,9 +94,9 @@
     </ol>
 </section>
 
-<div style="padding-top: 15px;padding-right: 0px "ng-app=""> 
+<div class="container" style="padding-top: 15px;" ng-app=""> 
     <div class="row">
-        <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
+        <div class="col-sm-2" style="border-right: solid 1px #01C632; padding-top: 10px; width: 180px;">
             <div ng-include="'WebContent/FinanceAndCashier/ReceiptMenu.html'"></div>
         </div>
         <div class="col-sm-10">
@@ -300,7 +300,7 @@
                             <h4 class="panel-title">Receipt Detail</h4>
                         </div>
                         <div class="panel-body"  style="padding-right: 0px;">
-                            <div class="col-xs-7" style="padding-top: 0px;">
+                            <div class="col-xs-7" style="padding-top: 0px; width: 660px;">
                                 <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px" >
                                     <label class="control-label text-right">Receive No </label>                                    
                                 </div> 
@@ -321,13 +321,13 @@
                                     <input id="receiveNo" name="receiveNo" type="text" style="width: 80px" class="form-control" maxlength="20" value="${receipt.recNo}">
                                 </div>
                                 <div class="col-xs-1 text-right" style="width: 8px;"></div>
-                                <div class="col-xs-1 text-right" style="width: 80px; margin-top: -10px">
-                                    <button style="height:34px" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchReceiveNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
+                                <div class="col-xs-1 text-right" style="width: 80px; margin-top: -10px; padding-left: 0px;">
+                                    <button style="height:34px; width: 80px;" type="button"  id="ButtonSearch"  name="ButtonSearch" onclick="searchReceiveNo();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 125px; margin-top: -10px">
+                                <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
                                     <label class="control-label text-right">Receipt Date<font style="color: red">*</font></label>
                                 </div>
-                                <div class="col-xs-1 form-group" style="width: 155px; margin-top: -10px">
+                                <div class="col-xs-1 form-group" style="width: 170px; margin-top: -10px">
                                     <div class='input-group date' id="ReceiveDate">
                                         <c:set var="recDate" value="${requestScope['receiveFromDate']}" />
                                         <fmt:parseDate value="${recDate}" var="recDate" pattern="yyyy-MM-dd" />
@@ -340,7 +340,7 @@
                                 <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px">
                                     <label class="control-label text-right" for="codeBillto">Receive From <font style="color: red">*</font></label> 
                                 </div>
-                                <div class="form-group col-xs-1 text-right" style="width: 470px; margin-top: -10px">
+                                <div class="form-group col-xs-1 text-right" style="width: 490px; margin-top: -10px">
                                     <div class="input-group">
                                         <input type="hidden" class="form-control" id="receiveFromId" name="receiveFromId" value=""/>
                                         <input type="text" class="form-control" id="receiveFromCode" name="receiveFromCode" maxlength="11" value="${receipt.recFrom}" style="text-transform:uppercase"/>
@@ -352,24 +352,24 @@
                                 <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px">
                                     <label class="control-label text-right">Name </label> 
                                 </div>
-                                <div class="form-group col-xs-1 text-right" style="width: 470px; margin-top: -10px">
+                                <div class="form-group col-xs-1 text-right" style="width: 490px; margin-top: -10px">
                                     <input type="text" class="form-control" id="receiveFromName" name="receiveFromName" value="${receipt.recName}">                           
                                 </div>
                                 <div class="col-xs-1 text-right" style="width: 135px; margin-top: -10px">
                                     <label class="control-label text-right">Address </label>  
                                 </div>
-                                <div class="form-group col-xs-1 text-right" style="width: 470px; margin-top: -10px">
+                                <div class="form-group col-xs-1 text-right" style="width: 490px; margin-top: -10px">
                                     <div class="input-group">                                    
                                         <textarea rows="3" class="form-control" id="receiveFromAddress" name="receiveFromAddress" style="width: 271%" value="${receipt.recAddress}">${receipt.recAddress}</textarea>  
                                     </div>                               
                                 </div>
 
                             </div>
-                            <div class="col-xs-5" style="padding-top: 0px;">
-                                <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
+                            <div class="col-xs-4" style="padding-top: 0px; width: 350px;">
+                                <div class="col-xs-1 text-right" style="width: 120px; margin-top: -10px">
                                     <label class="control-label text-right">Receive Date</label>
                                 </div>
-                                <div class="col-xs-1 form-group" style="width: 200px; margin-top: -10px">
+                                <div class="col-xs-1 form-group" style="width: 170px; margin-top: -10px">
                                     <div class='input-group date'>
                                         <c:set var="receiveDateTemp" value="${requestScope['receiveDate']}" />
                                         <fmt:parseDate value="${receiveDateTemp}" var="receiveDateTemp" pattern="yyyy-MM-dd" />
@@ -379,10 +379,10 @@
                                         <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>  
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
+                                <div class="col-xs-1 text-right" style="width: 120px; margin-top: -10px">
                                     <label class="control-label text-right">Payment <font style="color: red">*</font></label>
                                 </div>
-                                <div class="form-group col-xs-1" style="width: 200px; margin-top: -10px">
+                                <div class="form-group col-xs-1" style="width: 170px; margin-top: -10px">
                                     <select name="inputStatus" id="inputStatus" class="form-control">
                                         <option value="">--- Status ---</option> 
                                         <c:forEach var="table" items="${statusList}" >
@@ -395,15 +395,15 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
+                                <div class="col-xs-1 text-right" style="width: 120px; margin-top: -10px">
                                     <label class="control-label text-right">A/R Code <font style="color: red">*</font></label>                                    
                                 </div>
-                                <div class="form-group col-xs-1" style="width: 200px; margin-top: -10px">
+                                <div class="form-group col-xs-1" style="width: 170px; margin-top: -10px">
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="arCode" name="arCode" maxlength="11" value="${receipt.arCode}" readonly="" />
                                     </div>
                                 </div>
-                                <div class="col-xs-1 text-right" style="width: 130px; margin-top: -10px">
+                                <div class="col-xs-1 text-right" style="width: 120px; margin-top: -10px">
                                     <label class="control-label text-right">Remark </label> 
                                 </div>
                                 <div class="form-group col-xs-1 text-right" style="width: 200px; margin-top: -10px">
@@ -770,40 +770,40 @@
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">W/T </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="withTax" name="withTax" type="text" class="form-control decimal" value="${receipt.withTax}">
+                                    <div class="col-xs-1" style="width: 110px">
+                                        <input style="width: 110px" id="withTax" name="withTax" type="text" class="form-control decimal" value="${receipt.withTax}">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Cash </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="cashAmount" name="cashAmount" type="text" class="form-control decimal" value="${receipt.cashAmount}" >
+                                    <div class="col-xs-1" style="width: 110px">
+                                        <input style="width: 110px" id="cashAmount" name="cashAmount" type="text" class="form-control decimal" value="${receipt.cashAmount}" >
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Cash(-) </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 170px">
-                                        <input id="cashMinusAmount" name="cashMinusAmount" type="text" class="form-control decimal" value="${receipt.cashMinusAmount}" >
+                                    <div class="col-xs-1" style="width: 110px">
+                                        <input style="width: 110px" id="cashMinusAmount" name="cashMinusAmount" type="text" class="form-control decimal" value="${receipt.cashMinusAmount}" >
                                     </div>
-                                    <div class="col-xs-1 text-left" style="width: 130px">
+                                    <div class="col-xs-1 text-right" style="width: 170px">
                                         <label class="control-label text-right">Bank Transfer </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="bankTransfer" name="bankTransfer" type="text" class="form-control decimal" value="${receipt.bankTransfer}" >
+                                    <div class="col-xs-1" style="width: 110px">
+                                        <input style="width: 110px" id="bankTransfer" name="bankTransfer" type="text" class="form-control decimal" value="${receipt.bankTransfer}" >
                                     </div>
                                 </div><hr/>
                                 <div class="row">
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Chq Bank </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="chqBank1" name="chqBank1" type="text" class="form-control" value="${receipt.chqBank1}" maxlength="100">
+                                    <div class="col-xs-1" style="width: 110px">
+                                        <input style="width: 110px" id="chqBank1" name="chqBank1" type="text" class="form-control" value="${receipt.chqBank1}" maxlength="100">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Chq No </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="chqNo1" name="chqNo1" type="text" class="form-control" value="${receipt.chqNo1}" maxlength="100">
+                                    <div class="col-xs-1" style="width: 110px">
+                                        <input style="width: 110px" id="chqNo1" name="chqNo1" type="text" class="form-control" value="${receipt.chqNo1}" maxlength="100">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Date </label>                                    
@@ -816,11 +816,11 @@
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-1 text-right" style="width: 130px">
+                                    <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Amount </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="chqAmount1" name="chqAmount1" type="text" class="form-control decimal" value="${receipt.chqAmount1}">
+                                    <div class="col-xs-1" style="width: 110px">
+                                        <input style="width: 110px" id="chqAmount1" name="chqAmount1" type="text" class="form-control decimal" value="${receipt.chqAmount1}">
                                     </div>
                                     <div class="col-xs-1" style="width: 50px;">
                                         <h4><a class="col-xs-1">
@@ -832,14 +832,14 @@
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Chq Bank </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px" id="chqBank2" name="chqBank2" type="text" class="form-control" value="${receipt.chqBank2}" maxlength="100">
+                                    <div class="col-xs-1" style="width: 110px">
+                                        <input style="width: 110px" id="chqBank2" name="chqBank2" type="text" class="form-control" value="${receipt.chqBank2}" maxlength="100">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Chq No </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 130px">
-                                        <input  style="width: 130px" id="chqNo2" name="chqNo2" type="text" class="form-control" value="${receipt.chqNo2}"  maxlength="100">
+                                    <div class="col-xs-1" style="width: 110px">
+                                        <input  style="width: 110px" id="chqNo2" name="chqNo2" type="text" class="form-control" value="${receipt.chqNo2}"  maxlength="100">
                                     </div>
                                     <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Date </label>                                    
@@ -852,11 +852,11 @@
                                             <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-1 text-right" style="width: 130px">
+                                    <div class="col-xs-1 text-right" style="width: 110px">
                                         <label class="control-label text-right">Amount </label>                                    
                                     </div>
-                                    <div class="col-xs-1" style="width: 130px">
-                                        <input style="width: 130px"  id="chqAmount2" name="chqAmount2" type="text" class="form-control decimal" value="${receipt.chqAmount2}">
+                                    <div class="col-xs-1" style="width: 110px">
+                                        <input style="width: 110px"  id="chqAmount2" name="chqAmount2" type="text" class="form-control decimal" value="${receipt.chqAmount2}">
                                     </div>
                                     <div class="col-xs-1" style="width: 50px ;">
                                         <h4><a class="col-xs-1">
@@ -918,46 +918,44 @@
                         </div>
                     </div>
                     <div class="panel panel-default ${panelborder}">
-                        <div class="panel-body"  style="padding-right: 0px;">
+                        <div class="panel-body"  style="padding-left: 0px; padding-right: 0px;">
                             <div class="col-xs-12">
 
-                                <div class="col-md-1 text-left " style="width: 99px">
+                                <div class="col-md-1 text-left " style="width: 93px">
                                     <button type="button" class="btn btn-default" onclick="printReceipt(1)">
                                         <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Receipt
                                     </button>
                                 </div>
-                                <div class="col-md-1 text-left " style="width: 138px">
+                                <div class="col-md-1 text-left " style="width: 133px">
                                     <button type="button" class="btn btn-default" onclick="printReceipt(2)">
                                         <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Receipt Email
                                     </button>
                                 </div>
-                                <div class="col-md-1 text-left " style="width: 96px">
+                                <div class="col-md-1 text-left " style="width: 90px">
                                     <button type="button" class="btn btn-default" onclick="printReceipt(3)">
                                         <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Invoice
                                     </button>
                                 </div>
-                                <div class="col-md-1 text-left " style="width: 136px">
+                                <div class="col-md-1 text-left " style="width: 130px">
                                     <button type="button" class="btn btn-default" onclick="printReceipt(4)">
                                         <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Invoice Email
                                     </button>
                                 </div>
 
-                                <div class="col-md-1 text-left " style="width: 136px">
+                                <div class="col-md-1 text-left " style="width: 130px">
                                     <button type="button" class="btn btn-default" onclick="sendEmailReceipt()">
                                         <span id="buttonEmailRec" class="glyphicon glyphicon-send" ></span> Send Receipt
                                     </button>
                                 </div>
 
-                                <div class="col-md-1 text-left " style="width: 140px">
+                                <div class="col-md-1 text-left " style="width: 130px">
                                     <button type="button" class="btn btn-default" onclick="printReceipt(5)">
                                         <span id="buttonEmailInv" class="glyphicon glyphicon-send" ></span> Send Invoice
                                     </button>
                                 </div>
 
-                                <div class="col-md-2 text-right"> 
-                                </div>
-                                <div class="col-md-1 text-right">                                    
-                                    <button type="button" class="btn btn-default hidden" onclick="copyReceipt()">
+                                <div class="col-md-1 text-right hidden">                                    
+                                    <button type="button" class="btn btn-default " onclick="copyReceipt()">
                                         <span id="ButtonCopy" class="glyphicon glyphicon-copyright-mark" ></span> Copy 
                                     </button>
                                 </div>
