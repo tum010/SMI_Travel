@@ -55,7 +55,7 @@
         <li class="active"><a href="#">Credit Note</a></li>
     </ol>
 </section>
-<div style="padding-top: 15px;padding-right: 0px "ng-app="">
+<div class="container" style="padding-top: 15px;padding-right: 0px "ng-app="">
     <div class="row">
         <!-- side bar -->
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
@@ -166,7 +166,7 @@
                                 <table id="ItemCreditTable" class="display" cellspacing="0" width="100%">
                                     <thead>
                                         <tr class="datatable-header" >
-                                            <th style="width:10%;">Tax Invoice No</th>
+                                            <th style="width:10%;">Tax Inv No</th>
                                             <th style="width:15%;">Date</th>
                                             <th style="width:10%;">Product Type</th>
                                             <th style="width:12%;">Amount</th>

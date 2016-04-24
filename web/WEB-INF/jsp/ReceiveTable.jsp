@@ -82,23 +82,22 @@
         <li class="active"><a href="#">Receive Table</a></li>
     </ol>
 </section>
-<form action="ReceiveTable${department}.smi" method="post" id="receiveForm" role="form" autocomplete="off">
-<div class="col-xs-12" style="margin: 5px 0px 5px 0px;">
-    <div class="col-xs-1"></div>
-    <div class="col-xs-1" style="width: 160px;">
-        ${underLineWO1}<a href="ReceiveTableWO.smi" id="menu-wendyoutbound" ><b style="color: #FFC07B;">Wendy</b>+<b style="color: #FF8003;">Outbound</b></a>${underLineWO2}       
-    </div>
-    <div class="col-xs-1" style="width: 80px;">        
-        ${underLineW1}<a href="ReceiveTableW.smi" id="menu-wendyoutbound" style="color: #FFC07B;"><b>Wendy</b></a>${underLineW2}
-    </div>
-    <div class="col-xs-1" style="width: 100px;">
-        ${underLineO1}<a href="ReceiveTableO.smi" id="menu-wendyoutbound" style="color: #FF8003;"><b>Outbound</b></a>${underLineO1}        
-    </div>
-    <div class="col-xs-1" style="width: 80px;">
-        ${underLineI1}<a href="ReceiveTableI.smi" id="menu-wendyoutbound" style="color: #11BF00;"><b>Inbound</b></a>${underLineI1}       
-    </div>   
-</div>    
+<form action="ReceiveTable${department}.smi" method="post" id="receiveForm" role="form" autocomplete="off">  
 <div class ="container"  style="padding-top: 15px;padding-left: 5px;" ng-app="">  
+    <div class="col-xs-12" style="margin: 5px 0px 5px 0px;">
+        <div class="col-xs-1 text-right" style="width: 170px;">
+            ${underLineWO1}<a href="ReceiveTableWO.smi" id="menu-wendyoutbound" ><b style="color: #FFC07B;">Wendy</b>+<b style="color: #FF8003;">Outbound</b></a>${underLineWO2}       
+        </div>
+        <div class="col-xs-1" style="width: 80px;">        
+            ${underLineW1}<a href="ReceiveTableW.smi" id="menu-wendyoutbound" style="color: #FFC07B;"><b>Wendy</b></a>${underLineW2}
+        </div>
+        <div class="col-xs-1" style="width: 100px;">
+            ${underLineO1}<a href="ReceiveTableO.smi" id="menu-wendyoutbound" style="color: #FF8003;"><b>Outbound</b></a>${underLineO1}        
+        </div>
+        <div class="col-xs-1" style="width: 80px;">
+            ${underLineI1}<a href="ReceiveTableI.smi" id="menu-wendyoutbound" style="color: #11BF00;"><b>Inbound</b></a>${underLineI1}       
+        </div>   
+    </div>  
     <div class="col-sm-12" style="padding-left: 50px;padding-right: 50px;">
         <!--Alert Save -->
         <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">

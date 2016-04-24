@@ -18,10 +18,10 @@
     </ol>
 </section>
 
-<div style="padding-top: 15px;padding-right: 0px "ng-app=""> 
+<div class="container" style="padding-top: 15px;padding-right: 0px "ng-app=""> 
     <div class="row">
        
-        <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
+        <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px; width: 180px;">
             <div ng-include="'WebContent/FinanceAndCashier/ReceiptMenu.html'"></div>
         </div>
         
@@ -49,7 +49,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-1 text-right"  style="width: 80px">
+                    <div class="col-xs-1 text-right"  style="width: 50px">
                         <label class="control-label text-right">To<font style="color: red">*</font></label>
                     </div>
                     <div class="col-xs-1"  style="width: 170px">
@@ -109,7 +109,7 @@
                             <option value="T" ${selectedTemp}>Temp</option>
                         </select>
                     </div>
-                    <div class="col-xs-1 text-right" style="width: 50px">
+                    <div class="col-xs-1 text-right" style="width: 65px">
                         <label class="control-label text-right">Payment </label>
                     </div>          
                     <div class="col-md-1 form-group" style="padding: 0px 0px 0px 30px;width: 120px">
@@ -132,7 +132,7 @@
                 </div>
                 <div class="sm_row col-xs-12 form-group"></div>  
                 <div class="sm_row col-xs-12">
-                    <div class="col-xs-1" style="width: 854px"></div>
+                    <div class="col-xs-1" style="width: 845px"></div>
                     <div class="col-xs-1 text-left" >
                         <button type="submit" id="ButtonSearch" name="ButtonSearch" onclick="searchAction()" style="height:34px" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search </button>
                     </div>
@@ -149,16 +149,16 @@
                     <table id="ReceiptListTable" class="display hidden active" cellspacing="0" width="100%" style="table-layout: fixed">
                         <thead> 
                             <tr class="datatable-header" >
-                                <th style="width:7%;">Receive No</th>
-                                <th style="width:7%;">Date</th>
+                                <th style="width:9%;">Receive No</th>
+                                <th style="width:8%;">Date</th>
                                 <th style="width:7%;">Code</th>
-                                <th style="width:20%;">Name</th>
-                                <th style="width:8%;">Invoice No</th>
+                                <th style="width:18%;">Name</th>
+                                <th style="width:9%;">Invoice No</th>
                                 <th style="width:10%;">Amount</th>
                                 <th style="width:7%;">Status</th>
-                                <th style="width:7%;">Department</th>
+                                <th style="width:8%;">Department</th>
                                 <th style="width:7%;">Status</th>
-                                <th style="width:7%;">Action</th>
+                                <th style="width:4%;">Act</th>
                             </tr>
                         </thead>
                         <tbody>
