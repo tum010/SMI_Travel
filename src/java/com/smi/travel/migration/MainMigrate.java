@@ -37,6 +37,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.CellRangeAddress;
+import org.apache.poi.hssf.util.HSSFColor;
 
 /**
  *
@@ -57,6 +58,8 @@ public class MainMigrate {
     private static final String sqlCountry = " SELECT * FROM TRAVOX3.COUNTRY ";
     private static final String sqlCity = " SELECT * FROM TRAVOX3.CITY ";
     private static final String sqlCustomer = " SELECT * FROM TRAVOX3.CUSTOMER ";
+    private static final String sqlAR = " SELECT CASE WHEN (agt.code IS NULL) THEN 'DUMMY' ELSE agt.code END AS CODE, inv.inv_name, INV.INV_NO, TO_CHAR (inv.inv_date, 'DD-MM-YYYY') AS inv_date FROM \"TRAVOX3\".\"AC_INVOICE\" inv INNER JOIN \"TRAVOX3\".AC_INVOICE_DETAIL invd ON INVD.AC_INVOICE_ID = INV.\"ID\" LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv.INV_NAME WHERE TO_CHAR (inv.inv_date, 'MMYYYY') IN ('012016', '022016', '032016') ORDER BY inv.inv_no " ;
+    private static final String sqlAP = " SELECT payd. ID AS payid, (pay.PAY_NO) AS PAY_NO, (PAY.INVOICE_SUP) AS AP_CODE, ap. NAME AS NAME, TO_CHAR (pay.pay_DATE, 'DD-MM-YYYY') AS pay_date, (PAY.REF_DEPARTMENT) AS DEPARTMENT FROM travox3.AC_PAYMENT pay INNER JOIN travox3.AC_PAYMENT_DETAIL payd ON payd.AC_PAYMENT_ID = pay. ID INNER JOIN ACCTSMI3.AP_CODE ap ON ap.code = pay.INVOICE_SUP WHERE TO_CHAR (pay.pay_DATE, 'MMYYYY') IN ('012016', '022016', '032016') ";
     
     public static void main(String[] args) {
         Connection connect = null;
@@ -76,7 +79,9 @@ public class MainMigrate {
 //                getPackageTour(s, stmt);
 //                getProduct(s, stmt);
 //                getHotel(s, stmt);
-                getCustomer(s, stmt);
+//                getCustomer(s, stmt);
+                getARData(s,stmt);
+                getAPData(s,stmt);
             } else {
                 System.out.println("Database Connect Failed.");
             }
@@ -92,6 +97,396 @@ public class MainMigrate {
            }
         } 
     }
+        public static void getAPData(Statement s,Statement stmt){
+        List<MainMigrateModel> list = new ArrayList<MainMigrateModel>();
+        List<MainMigrateModel> listAP = new ArrayList<MainMigrateModel>();
+        UtilityFunction util = new UtilityFunction();
+        try {
+            ResultSet rs = s.executeQuery(sqlAP);
+            while (rs.next()){       
+                String payid = rs.getString("PAYID") == null ? "" : new String(rs.getString("PAYID").getBytes("ISO8859_1"),"TIS-620");
+                String payno = rs.getString("PAY_NO") == null ? "" : new String(rs.getString("PAY_NO").getBytes("ISO8859_1"),"TIS-620");
+                String apcode = rs.getString("AP_CODE") == null ? "" : new String(rs.getString("AP_CODE").getBytes("ISO8859_1"),"TIS-620");
+                String name = rs.getString("NAME") == null ? "" : new String(rs.getString("NAME").getBytes("ISO8859_1"),"TIS-620");            
+                String paydate = rs.getString("PAY_DATE") == null ? "" : new String(rs.getString("PAY_DATE").getBytes("ISO8859_1"),"TIS-620");    
+                String department = rs.getString("DEPARTMENT") == null ? "" : new String(rs.getString("DEPARTMENT").getBytes("ISO8859_1"),"TIS-620"); 
+                
+                MainMigrateModel migrateModel = new MainMigrateModel();
+                migrateModel.setPayid(payid);
+                migrateModel.setPayno(payno);
+                migrateModel.setApCode(apcode);
+                migrateModel.setApname(name);
+                migrateModel.setPaydate(paydate);
+                migrateModel.setDepartment(department);
+                list.add(migrateModel);
+            }
+            
+        } catch (SQLException e ) {
+            
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try { 
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        Connection connect = null;
+        Statement stm = null; 
+        if(list != null){
+            connect = MySqlConnection.getConnection();
+            try {
+                stm = connect.createStatement();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String sql = "";
+            for(int i = 0 ; i < list.size() ; i ++){ 
+                sql = " SELECT tax_no , branch , branch_no  FROM `agent` where `code` = '" +list.get(i).getApCode()+ "' " ;
+                try {
+                    ResultSet rs = stm.executeQuery(sql);
+                    while (rs.next()){       
+                        String taxno = rs.getString("tax_no") == null ? "" : new String(rs.getString("tax_no"));
+                        String branch = rs.getString("branch") == null ? "" : new String(rs.getString("branch"));
+                        String branchno = rs.getString("branch_no") == null ? "" : new String(rs.getString("branch_no"));
+                        MainMigrateModel migrateModel = new MainMigrateModel();
+                        migrateModel.setPayid(list.get(i).getPayid());
+                        migrateModel.setPayno(list.get(i).getPayno());
+                        migrateModel.setApCode(list.get(i).getApCode());
+                        migrateModel.setApname(list.get(i).getApname());
+                        migrateModel.setPaydate(list.get(i).getPaydate());
+                        migrateModel.setDepartment(list.get(i).getDepartment());
+                        migrateModel.setTaxno(taxno);
+                        migrateModel.setBranch(branch);
+                        migrateModel.setBranchno(branchno);
+                        listAP.add(migrateModel);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            System.out.println(" listAP.size() " + listAP.size());
+            ExportAPReport(listAP);
+        }
+    }
+
+    public static void ExportAPReport(List listAR){
+        UtilityExcelFunction excelFunction = new UtilityExcelFunction();
+        HSSFWorkbook wb = new HSSFWorkbook();
+        HSSFSheet sheet = wb.createSheet("APReport");
+
+        HSSFCellStyle styleC1 = wb.createCellStyle();
+        // Set align Text
+        HSSFCellStyle styleC21 = wb.createCellStyle();
+        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
+        HSSFCellStyle styleC22 = wb.createCellStyle();
+        styleC22.setAlignment(styleC22.ALIGN_LEFT);
+
+//        HSSFRow row1 = sheet.createRow(0);
+//        HSSFCell cellStart = row1.createCell(0);
+//        cellStart.setCellValue("AR Report");
+//        styleC1.setFont(excelFunction.getHeaderFont(wb.createFont()));
+//        cellStart.setCellStyle(styleC1);
+//        sheet.addMergedRegion(CellRangeAddress.valueOf("A1:F1"));
+
+        // Header Table
+        HSSFCellStyle styleC3Center = wb.createCellStyle();
+        styleC3Center.setFont(excelFunction.getHeaderTable(wb.createFont()));
+        styleC3Center.setAlignment(styleC3Center.ALIGN_CENTER);
+//        styleC3Center.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//        styleC3Center.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        styleC3Center.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//        styleC3Center.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC3Center.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        styleC3Center.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+
+        HSSFRow row2 = sheet.createRow(0);
+        HSSFCell cell20 = row2.createCell(0);
+        cell20.setCellValue("PAYID");
+        cell20.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(0);
+        HSSFCell cell21 = row2.createCell(1);
+        cell21.setCellValue("PAY NO");
+        cell21.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(1);
+        HSSFCell cell22 = row2.createCell(2);
+        cell22.setCellValue("AP CODE");
+        cell22.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(2);
+        HSSFCell cell23 = row2.createCell(3);
+        cell23.setCellValue("NAME");
+        cell23.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(3);
+        HSSFCell cell24 = row2.createCell(4);
+        cell24.setCellValue("PAY DATE");
+        cell24.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(4);
+        HSSFCell cell25 = row2.createCell(5);
+        cell25.setCellValue("DEPARTMENT");
+        cell25.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(5);
+        HSSFCell cell26 = row2.createCell(6);
+        cell26.setCellValue("TAX NO");
+        cell26.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(6);
+        HSSFCell cell27 = row2.createCell(7);
+        cell27.setCellValue("BRANCH");
+        cell27.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(7);
+        HSSFCell cell28 = row2.createCell(8);
+        cell28.setCellValue("BRANCH NO");
+        cell28.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(8);
+
+        int count = 1 ;
+
+        HSSFDataFormat currency = wb.createDataFormat();
+        HSSFCellStyle styleC23 = wb.createCellStyle();
+        styleC23.setAlignment(styleC23.ALIGN_CENTER);
+        styleC23.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC23.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        HSSFCellStyle styleC24 = wb.createCellStyle();
+        styleC24.setAlignment(styleC24.ALIGN_LEFT);
+//        styleC24.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        styleC24.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        HSSFCellStyle styleC25 = wb.createCellStyle();
+        styleC25.setAlignment(styleC25.ALIGN_RIGHT);
+        styleC25.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC25.setDataFormat(currency.getFormat("#,##0.00"));
+
+        for(int i=0;i<listAR.size();i++){
+            MainMigrateModel data = (MainMigrateModel)listAR.get(i);
+            HSSFRow row = sheet.createRow(count + i);
+            HSSFCell cell0 = row.createCell(0);
+            cell0.setCellValue(data.getPayid());
+            cell0.setCellStyle(styleC24);
+         HSSFCell cell1 = row.createCell(1);
+            cell1.setCellValue(data.getPayno());
+            cell1.setCellStyle(styleC24);
+         HSSFCell cell13 = row.createCell(2);
+            cell13.setCellValue(data.getApCode());
+            cell13.setCellStyle(styleC24);  
+         HSSFCell cell2 = row.createCell(3);
+            cell2.setCellValue(String.valueOf(data.getApname()));
+            cell2.setCellStyle(styleC24);   
+         HSSFCell cell3= row.createCell(4);
+            cell3.setCellValue(String.valueOf(data.getPaydate()));
+            cell3.setCellStyle(styleC24);
+         HSSFCell cell4 = row.createCell(5);
+            cell4.setCellValue(data.getDepartment());
+            cell4.setCellStyle(styleC24);   
+         HSSFCell cell5 = row.createCell(6);
+            cell5.setCellValue(data.getTaxno());
+            cell5.setCellStyle(styleC24);
+        HSSFCell cell6 = row.createCell(7);
+            cell6.setCellValue(data.getBranch());
+            cell6.setCellStyle(styleC24);
+        HSSFCell cell7 = row.createCell(8);
+            cell7.setCellValue(data.getBranchno());
+            cell7.setCellStyle(styleC24);
+        }
+        
+        sheet.setColumnWidth(0, 256*15);
+        sheet.setColumnWidth(1, 256*15);
+        sheet.setColumnWidth(2, 256*15);
+        sheet.setColumnWidth(3, 256*25);
+        sheet.setColumnWidth(4, 256*15);
+        sheet.setColumnWidth(5, 256*15);
+        sheet.setColumnWidth(6, 256*15);
+        sheet.setColumnWidth(7, 256*15);
+        sheet.setColumnWidth(8, 256*15);
+        exportFileExcel("APReport",wb);
+    }
+    
+    public static void getARData(Statement s,Statement stmt){
+        List<MainMigrateModel> list = new ArrayList<MainMigrateModel>();
+        List<MainMigrateModel> listAR = new ArrayList<MainMigrateModel>();
+        UtilityFunction util = new UtilityFunction();
+        try {
+            ResultSet rs = s.executeQuery(sqlAR);
+            while (rs.next()){       
+                String code = rs.getString("CODE") == null ? "" : new String(rs.getString("CODE").getBytes("ISO8859_1"),"TIS-620");
+                String invname = rs.getString("INV_NAME") == null ? "" : new String(rs.getString("INV_NAME").getBytes("ISO8859_1"),"TIS-620");
+                String invno = rs.getString("INV_NO") == null ? "" : new String(rs.getString("INV_NO").getBytes("ISO8859_1"),"TIS-620");
+                String invdate = rs.getString("INV_DATE") == null ? "" : new String(rs.getString("INV_DATE").getBytes("ISO8859_1"),"TIS-620");            
+                
+                MainMigrateModel migrateModel = new MainMigrateModel();
+                migrateModel.setCode(code);
+                migrateModel.setInvname(invname);
+                migrateModel.setInvno(invno);
+                migrateModel.setInvdate(invdate);
+                list.add(migrateModel);
+            }
+            
+        } catch (SQLException e ) {
+            
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try { 
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        Connection connect = null;
+        Statement stm = null; 
+        if(list != null){
+            connect = MySqlConnection.getConnection();
+            try {
+                stm = connect.createStatement();
+            } catch (SQLException ex) {
+                Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            String sql = "";
+            for(int i = 0 ; i < list.size() ; i ++){ 
+                sql = " SELECT tax_no , branch , branch_no  FROM `agent` where `code` = '" +list.get(i).getCode()+ "' " ;
+                try {
+                    ResultSet rs = stm.executeQuery(sql);
+                    while (rs.next()){       
+                        String taxno = rs.getString("tax_no") == null ? "" : new String(rs.getString("tax_no"));
+                        String branch = rs.getString("branch") == null ? "" : new String(rs.getString("branch"));
+                        String branchno = rs.getString("branch_no") == null ? "" : new String(rs.getString("branch_no"));
+                        MainMigrateModel migrateModel = new MainMigrateModel();
+                        migrateModel.setCode(list.get(i).getCode());
+                        migrateModel.setInvname(list.get(i).getInvname());
+                        migrateModel.setInvno(list.get(i).getInvno());
+                        migrateModel.setInvdate(list.get(i).getInvdate());
+                        migrateModel.setTaxno(taxno);
+                        migrateModel.setBranch(branch);
+                        migrateModel.setBranchno(branchno);
+                        listAR.add(migrateModel);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            System.out.println(" listAR.size() " + listAR.size());
+            ExportARReport(listAR);
+        }
+    }
+
+    public static void ExportARReport(List listAR){
+        UtilityExcelFunction excelFunction = new UtilityExcelFunction();
+        HSSFWorkbook wb = new HSSFWorkbook();
+        HSSFSheet sheet = wb.createSheet("ARReport");
+
+        HSSFCellStyle styleC1 = wb.createCellStyle();
+        // Set align Text
+        HSSFCellStyle styleC21 = wb.createCellStyle();
+        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
+        HSSFCellStyle styleC22 = wb.createCellStyle();
+        styleC22.setAlignment(styleC22.ALIGN_LEFT);
+
+//        HSSFRow row1 = sheet.createRow(0);
+//        HSSFCell cellStart = row1.createCell(0);
+//        cellStart.setCellValue("AR Report");
+//        styleC1.setFont(excelFunction.getHeaderFont(wb.createFont()));
+//        cellStart.setCellStyle(styleC1);
+//        sheet.addMergedRegion(CellRangeAddress.valueOf("A1:F1"));
+
+        // Header Table
+        HSSFCellStyle styleC3Center = wb.createCellStyle();
+        styleC3Center.setFont(excelFunction.getHeaderTable(wb.createFont()));
+        styleC3Center.setAlignment(styleC3Center.ALIGN_CENTER);
+//        styleC3Center.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+//        styleC3Center.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        styleC3Center.setBorderRight(HSSFCellStyle.BORDER_THIN);
+//        styleC3Center.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        styleC3Center.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        styleC3Center.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+        
+        HSSFRow row2 = sheet.createRow(0);
+        HSSFCell cell20 = row2.createCell(0);
+        cell20.setCellValue("CODE");
+        cell20.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(0);
+        HSSFCell cell21 = row2.createCell(1);
+        cell21.setCellValue("INV NAME");
+        cell21.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(1);
+        HSSFCell cell22 = row2.createCell(2);
+        cell22.setCellValue("INV NO");
+        cell22.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(2);
+        HSSFCell cell23 = row2.createCell(3);
+        cell23.setCellValue("INV DATE");
+        cell23.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(3);
+        HSSFCell cell24 = row2.createCell(4);
+        cell24.setCellValue("TAX NO");
+        cell24.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(4);
+        HSSFCell cell25 = row2.createCell(5);
+        cell25.setCellValue("BRANCH");
+        cell25.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(5);
+        HSSFCell cell26 = row2.createCell(6);
+        cell26.setCellValue("BRANCH NO");
+        cell26.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(6);
+
+        int count = 1 ;
+
+        HSSFDataFormat currency = wb.createDataFormat();
+        HSSFCellStyle styleC23 = wb.createCellStyle();
+        styleC23.setAlignment(styleC23.ALIGN_CENTER);
+        styleC23.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC23.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        HSSFCellStyle styleC24 = wb.createCellStyle();
+        styleC24.setAlignment(styleC24.ALIGN_LEFT);
+//        styleC24.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+//        styleC24.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        HSSFCellStyle styleC25 = wb.createCellStyle();
+        styleC25.setAlignment(styleC25.ALIGN_RIGHT);
+        styleC25.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        styleC25.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        styleC25.setDataFormat(currency.getFormat("#,##0.00"));
+
+        for(int i=0;i<listAR.size();i++){
+            MainMigrateModel data = (MainMigrateModel)listAR.get(i);
+            HSSFRow row = sheet.createRow(count + i);
+            HSSFCell cell0 = row.createCell(0);
+            cell0.setCellValue(data.getCode());
+            cell0.setCellStyle(styleC24);
+         HSSFCell cell1 = row.createCell(1);
+            cell1.setCellValue(data.getInvname());
+            cell1.setCellStyle(styleC24);
+         HSSFCell cell13 = row.createCell(2);
+            cell13.setCellValue(data.getInvno());
+            cell13.setCellStyle(styleC24);  
+         HSSFCell cell2 = row.createCell(3);
+            cell2.setCellValue(String.valueOf(data.getInvdate()));
+            cell2.setCellStyle(styleC24);   
+         HSSFCell cell3= row.createCell(4);
+            cell3.setCellValue(data.getTaxno());
+            cell3.setCellStyle(styleC24);
+         HSSFCell cell4 = row.createCell(5);
+            cell4.setCellValue(data.getBranch());
+            cell4.setCellStyle(styleC24);   
+         HSSFCell cell5 = row.createCell(6);
+            cell5.setCellValue(data.getBranchno());
+            cell5.setCellStyle(styleC24);
+        }
+        
+        sheet.setColumnWidth(0, 256*15);
+        sheet.setColumnWidth(1, 256*25);
+        sheet.setColumnWidth(2, 256*15);
+        sheet.setColumnWidth(3, 256*15);
+        sheet.setColumnWidth(4, 256*15);
+        sheet.setColumnWidth(5, 256*15);
+        sheet.setColumnWidth(6, 256*15);
+        exportFileExcel("ARReport",wb);
+    }
+    
     
     public static void getCustomer(Statement s,Statement stmt){
         List<MainMigrateModel> list = new ArrayList<MainMigrateModel>();

@@ -92,6 +92,23 @@ public class MainMigrateModel {
     private String updateHotel;
     private String refId;
 
+    
+    //AR
+    private String invname;
+    private String invno;
+    private String invdate;
+    private String taxno;
+    private String branch;
+    private String branchno;
+    
+    //AP
+    private String payid;
+    private String payno;
+    private String apcode;
+    private String paydate;
+    private String apname;
+    private String department;
+    
     public String getCode() {
         return code;
     }
@@ -610,6 +627,102 @@ public class MainMigrateModel {
 
     public void setProductType(MProductType productType) {
         this.productType = productType;
+    }
+
+    public String getInvname() {
+        return invname;
+    }
+
+    public void setInvname(String invname) {
+        this.invname = invname;
+    }
+
+    public String getInvno() {
+        return invno;
+    }
+
+    public void setInvno(String invno) {
+        this.invno = invno;
+    }
+
+    public String getInvdate() {
+        return invdate;
+    }
+
+    public void setInvdate(String invdate) {
+        this.invdate = invdate;
+    }
+
+    public String getTaxno() {
+        return taxno;
+    }
+
+    public void setTaxno(String taxno) {
+        this.taxno = taxno;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public String getBranchno() {
+        return branchno;
+    }
+
+    public void setBranchno(String branchno) {
+        this.branchno = branchno;
+    }
+
+    public String getPayid() {
+        return payid;
+    }
+
+    public void setPayid(String payid) {
+        this.payid = payid;
+    }
+
+    public String getPayno() {
+        return payno;
+    }
+
+    public void setPayno(String payno) {
+        this.payno = payno;
+    }
+
+    public String getApcode() {
+        return apcode;
+    }
+
+    public void setApcode(String apcode) {
+        this.apcode = apcode;
+    }
+
+    public String getPaydate() {
+        return paydate;
+    }
+
+    public void setPaydate(String paydate) {
+        this.paydate = paydate;
+    }
+
+    public String getApname() {
+        return apname;
+    }
+
+    public void setApname(String apname) {
+        this.apname = apname;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 
     
