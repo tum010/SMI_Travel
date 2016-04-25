@@ -322,7 +322,8 @@ public class BookingViewImpl implements BookingViewDao{
             query += (condition ? " and " : " where ");
             query += " flight = '" + airFlight + "' " ;
             condition = true;
-        }
+        }       
+        query += " ORDER BY refno DESC ";
 
         List<Object[]> QueryAir = session.createSQLQuery(query)
                 .addScalar("refno", Hibernate.STRING)
@@ -397,6 +398,7 @@ public class BookingViewImpl implements BookingViewDao{
             condition = true;
         }
         query += " GROUP BY b.refno ";
+        query += " ORDER BY b.refno DESC ";
 
         List<Object[]> QueryPackage = session.createSQLQuery(query)
                 .addScalar("refno", Hibernate.STRING)
@@ -477,6 +479,7 @@ public class BookingViewImpl implements BookingViewDao{
             query += " agent LIKE '%" + tourAgent + "%' " ;
             condition = true;
         }
+        query += " ORDER BY refno DESC ";
 
         List<Object[]> QueryDayTour = session.createSQLQuery(query)
                 .addScalar("refno", Hibernate.STRING)
@@ -570,6 +573,7 @@ public class BookingViewImpl implements BookingViewDao{
             query += " agent LIKE '%" + otherAgent + "%' " ;
             condition = true;
         }
+        query += " ORDER BY refno DESC ";
 
         List<Object[]> QueryOther = session.createSQLQuery(query)
                 .addScalar("refno", Hibernate.STRING)
@@ -644,6 +648,7 @@ public class BookingViewImpl implements BookingViewDao{
             query += " category = '" + landCategory + "' " ;
             condition = true;
         }
+        query += " ORDER BY refno DESC ";
 
         List<Object[]> QueryLand = session.createSQLQuery(query)
                 .addScalar("refno", Hibernate.STRING)
