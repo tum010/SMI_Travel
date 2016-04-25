@@ -59,7 +59,7 @@ public class MainMigrate {
     private static final String sqlCity = " SELECT * FROM TRAVOX3.CITY ";
     private static final String sqlCustomer = " SELECT * FROM TRAVOX3.CUSTOMER ";
     private static final String sqlAR = " SELECT CASE WHEN (agt.code IS NULL) THEN 'DUMMY' ELSE agt.code END AS CODE, inv.inv_name, INV.INV_NO, TO_CHAR (inv.inv_date, 'DD-MM-YYYY') AS inv_date FROM \"TRAVOX3\".\"AC_INVOICE\" inv INNER JOIN \"TRAVOX3\".AC_INVOICE_DETAIL invd ON INVD.AC_INVOICE_ID = INV.\"ID\" LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv.INV_NAME WHERE TO_CHAR (inv.inv_date, 'MMYYYY') IN ('012016', '022016', '032016') ORDER BY inv.inv_no " ;
-    private static final String sqlAP = " SELECT payd. ID AS payid, (pay.PAY_NO) AS PAY_NO, (PAY.INVOICE_SUP) AS AP_CODE, ap. NAME AS NAME, TO_CHAR (pay.pay_DATE, 'DD-MM-YYYY') AS pay_date, (PAY.REF_DEPARTMENT) AS DEPARTMENT FROM travox3.AC_PAYMENT pay INNER JOIN travox3.AC_PAYMENT_DETAIL payd ON payd.AC_PAYMENT_ID = pay. ID INNER JOIN ACCTSMI3.AP_CODE ap ON ap.code = pay.INVOICE_SUP WHERE TO_CHAR (pay.pay_DATE, 'MMYYYY') IN ('012016', '022016', '032016') ";
+    private static final String sqlAP = " SELECT payd. ID AS payid, (pay.PAY_NO) AS PAY_NO, (PAY.INVOICE_SUP) AS AP_CODE, ap. NAME AS NAME, TO_CHAR (pay.pay_DATE, 'DD-MM-YYYY') AS pay_date, (PAY.REF_DEPARTMENT) AS DEPARTMENT, CASE WHEN pay.VAT_TYPE = 'X' THEN 'TEMP' WHEN pay.VAT_TYPE = 'V' THEN 'VAT' ELSE 'NO VAT' END AS vattype FROM travox3.AC_PAYMENT pay INNER JOIN travox3.AC_PAYMENT_DETAIL payd ON payd.AC_PAYMENT_ID = pay. ID INNER JOIN ACCTSMI3.AP_CODE ap ON ap.code = pay.INVOICE_SUP WHERE TO_CHAR (pay.pay_DATE, 'MMYYYY') IN ('012016', '022016', '032016') ";
     
     public static void main(String[] args) {
         Connection connect = null;
@@ -110,6 +110,7 @@ public class MainMigrate {
                 String name = rs.getString("NAME") == null ? "" : new String(rs.getString("NAME").getBytes("ISO8859_1"),"TIS-620");            
                 String paydate = rs.getString("PAY_DATE") == null ? "" : new String(rs.getString("PAY_DATE").getBytes("ISO8859_1"),"TIS-620");    
                 String department = rs.getString("DEPARTMENT") == null ? "" : new String(rs.getString("DEPARTMENT").getBytes("ISO8859_1"),"TIS-620"); 
+                String vattype = rs.getString("VATTYPE") == null ? "" : new String(rs.getString("VATTYPE").getBytes("ISO8859_1"),"TIS-620"); 
                 
                 MainMigrateModel migrateModel = new MainMigrateModel();
                 migrateModel.setPayid(payid);
@@ -118,9 +119,10 @@ public class MainMigrate {
                 migrateModel.setApname(name);
                 migrateModel.setPaydate(paydate);
                 migrateModel.setDepartment(department);
+                migrateModel.setVattype(vattype);
                 list.add(migrateModel);
             }
-            
+            System.out.println(" list.size() ::: " + list.size());
         } catch (SQLException e ) {
             
         } catch (UnsupportedEncodingException ex) {
@@ -147,27 +149,32 @@ public class MainMigrate {
             String sql = "";
             for(int i = 0 ; i < list.size() ; i ++){ 
                 sql = " SELECT tax_no , branch , branch_no  FROM `agent` where `code` = '" +list.get(i).getApCode()+ "' " ;
+                MainMigrateModel migrateModel = new MainMigrateModel();
+                migrateModel.setPayid(list.get(i).getPayid());
+                migrateModel.setPayno(list.get(i).getPayno());
+                migrateModel.setApCode(list.get(i).getApCode());
+                migrateModel.setApname(list.get(i).getApname());
+                migrateModel.setPaydate(list.get(i).getPaydate());
+                migrateModel.setDepartment(list.get(i).getDepartment());
+                migrateModel.setVattype(list.get(i).getVattype());
                 try {
-                    ResultSet rs = stm.executeQuery(sql);
-                    while (rs.next()){       
-                        String taxno = rs.getString("tax_no") == null ? "" : new String(rs.getString("tax_no"));
-                        String branch = rs.getString("branch") == null ? "" : new String(rs.getString("branch"));
-                        String branchno = rs.getString("branch_no") == null ? "" : new String(rs.getString("branch_no"));
-                        MainMigrateModel migrateModel = new MainMigrateModel();
-                        migrateModel.setPayid(list.get(i).getPayid());
-                        migrateModel.setPayno(list.get(i).getPayno());
-                        migrateModel.setApCode(list.get(i).getApCode());
-                        migrateModel.setApname(list.get(i).getApname());
-                        migrateModel.setPaydate(list.get(i).getPaydate());
-                        migrateModel.setDepartment(list.get(i).getDepartment());
-                        migrateModel.setTaxno(taxno);
-                        migrateModel.setBranch(branch);
-                        migrateModel.setBranchno(branchno);
-                        listAP.add(migrateModel);
+                    if(!"DUMMMY".equalsIgnoreCase(list.get(i).getApCode())){
+                        ResultSet rs = stm.executeQuery(sql);
+                        while (rs.next()){       
+                            String taxno = rs.getString("tax_no") == null ? "" : new String(rs.getString("tax_no"));
+                            String branch = rs.getString("branch") == null ? "" : new String(rs.getString("branch"));
+                            String branchno = rs.getString("branch_no") == null ? "" : new String(rs.getString("branch_no"));
+
+                            migrateModel.setTaxno(taxno);
+                            migrateModel.setBranch(branch);
+                            migrateModel.setBranchno(branchno);
+
+                        }
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                listAP.add(migrateModel);
             }
             System.out.println(" listAP.size() " + listAP.size());
             ExportAPReport(listAP);
@@ -230,18 +237,21 @@ public class MainMigrate {
         cell25.setCellStyle(styleC3Center);
         sheet.autoSizeColumn(5);
         HSSFCell cell26 = row2.createCell(6);
-        cell26.setCellValue("TAX NO");
+        cell26.setCellValue("VAT TYPE");
         cell26.setCellStyle(styleC3Center);
         sheet.autoSizeColumn(6);
         HSSFCell cell27 = row2.createCell(7);
-        cell27.setCellValue("BRANCH");
+        cell27.setCellValue("TAX NO");
         cell27.setCellStyle(styleC3Center);
         sheet.autoSizeColumn(7);
         HSSFCell cell28 = row2.createCell(8);
-        cell28.setCellValue("BRANCH NO");
+        cell28.setCellValue("BRANCH");
         cell28.setCellStyle(styleC3Center);
         sheet.autoSizeColumn(8);
-
+        HSSFCell cell29 = row2.createCell(9);
+        cell29.setCellValue("BRANCH NO");
+        cell29.setCellStyle(styleC3Center);
+        sheet.autoSizeColumn(9);
         int count = 1 ;
 
         HSSFDataFormat currency = wb.createDataFormat();
@@ -281,14 +291,17 @@ public class MainMigrate {
             cell4.setCellValue(data.getDepartment());
             cell4.setCellStyle(styleC24);   
          HSSFCell cell5 = row.createCell(6);
-            cell5.setCellValue(data.getTaxno());
+            cell5.setCellValue(data.getVattype());
             cell5.setCellStyle(styleC24);
         HSSFCell cell6 = row.createCell(7);
-            cell6.setCellValue(data.getBranch());
+            cell6.setCellValue(data.getTaxno());
             cell6.setCellStyle(styleC24);
         HSSFCell cell7 = row.createCell(8);
-            cell7.setCellValue(data.getBranchno());
+            cell7.setCellValue(data.getBranch());
             cell7.setCellStyle(styleC24);
+        HSSFCell cell8 = row.createCell(9);
+            cell8.setCellValue(data.getBranchno());
+            cell8.setCellStyle(styleC24);
         }
         
         sheet.setColumnWidth(0, 256*15);
@@ -300,6 +313,7 @@ public class MainMigrate {
         sheet.setColumnWidth(6, 256*15);
         sheet.setColumnWidth(7, 256*15);
         sheet.setColumnWidth(8, 256*15);
+        sheet.setColumnWidth(9, 256*15);
         exportFileExcel("APReport",wb);
     }
     
@@ -349,25 +363,27 @@ public class MainMigrate {
             String sql = "";
             for(int i = 0 ; i < list.size() ; i ++){ 
                 sql = " SELECT tax_no , branch , branch_no  FROM `agent` where `code` = '" +list.get(i).getCode()+ "' " ;
+                MainMigrateModel migrateModel = new MainMigrateModel();
+                migrateModel.setCode(list.get(i).getCode());
+                migrateModel.setInvname(list.get(i).getInvname());
+                migrateModel.setInvno(list.get(i).getInvno());
+                migrateModel.setInvdate(list.get(i).getInvdate());
                 try {
-                    ResultSet rs = stm.executeQuery(sql);
-                    while (rs.next()){       
-                        String taxno = rs.getString("tax_no") == null ? "" : new String(rs.getString("tax_no"));
-                        String branch = rs.getString("branch") == null ? "" : new String(rs.getString("branch"));
-                        String branchno = rs.getString("branch_no") == null ? "" : new String(rs.getString("branch_no"));
-                        MainMigrateModel migrateModel = new MainMigrateModel();
-                        migrateModel.setCode(list.get(i).getCode());
-                        migrateModel.setInvname(list.get(i).getInvname());
-                        migrateModel.setInvno(list.get(i).getInvno());
-                        migrateModel.setInvdate(list.get(i).getInvdate());
-                        migrateModel.setTaxno(taxno);
-                        migrateModel.setBranch(branch);
-                        migrateModel.setBranchno(branchno);
-                        listAR.add(migrateModel);
+                    if(!"DUMMMY".equalsIgnoreCase(list.get(i).getCode())){
+                        ResultSet rs = stm.executeQuery(sql);
+                        while (rs.next()){       
+                            String taxno = rs.getString("tax_no") == null ? "" : new String(rs.getString("tax_no"));
+                            String branch = rs.getString("branch") == null ? "" : new String(rs.getString("branch"));
+                            String branchno = rs.getString("branch_no") == null ? "" : new String(rs.getString("branch_no"));
+                            migrateModel.setTaxno(taxno);
+                            migrateModel.setBranch(branch);
+                            migrateModel.setBranchno(branchno);
+                        }
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                listAR.add(migrateModel);
             }
             System.out.println(" listAR.size() " + listAR.size());
             ExportARReport(listAR);

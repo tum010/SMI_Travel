@@ -108,6 +108,7 @@ public class MainMigrateModel {
     private String paydate;
     private String apname;
     private String department;
+    private String vattype;
     
     public String getCode() {
         return code;
@@ -723,6 +724,14 @@ public class MainMigrateModel {
 
     public void setDepartment(String department) {
         this.department = department;
+    }
+
+    public String getVattype() {
+        return vattype;
+    }
+
+    public void setVattype(String vattype) {
+        this.vattype = vattype;
     }
 
     
