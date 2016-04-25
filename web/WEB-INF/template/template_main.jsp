@@ -112,20 +112,22 @@
                 duplicateUser = JSON.parse(duplicateUser);    
                 
                 var operationAction = '';
-                var operationTable = duplicateUser[0].operationTable;
-                var operationTableId = duplicateUser[0].operationTableId;
-                var operationUser = $("#operationUserBooking").val(); 
-                var servletName = 'CheckDuplicateUserServlet';
-                var servicesName = 'AJAXBean';
-                var param = 'action=' + 'text' +
-                        '&servletName=' + servletName +
-                        '&servicesName=' + servicesName +
-                        '&operationTable=' + operationTable +
-                        '&operationTableId=' + operationTableId +
-                        '&operationAction=' + operationAction +
-                        '&operationUser=' + operationUser +
-                        '&type=updateOperationNull'
-                callAjaxClearDuplicateUser(param);
+                if(duplicateUser !== null){
+                    var operationTable = duplicateUser[0].operationTable;
+                    var operationTableId = duplicateUser[0].operationTableId;
+                    var operationUser = $("#operationUserBooking").val(); 
+                    var servletName = 'CheckDuplicateUserServlet';
+                    var servicesName = 'AJAXBean';
+                    var param = 'action=' + 'text' +
+                            '&servletName=' + servletName +
+                            '&servicesName=' + servicesName +
+                            '&operationTable=' + operationTable +
+                            '&operationTableId=' + operationTableId +
+                            '&operationAction=' + operationAction +
+                            '&operationUser=' + operationUser +
+                            '&type=updateOperationNull'
+                    callAjaxClearDuplicateUser(param);
+                }
             }
 
             function callAjaxClearDuplicateUser(param) {
@@ -155,20 +157,22 @@
                 duplicateUser = JSON.parse(duplicateUser);    
                 
                 var operationAction = '';
-                var operationTable = duplicateUser[0].operationTable;
-                var operationTableId = duplicateUser[0].operationTableId;
-                var operationUser = $("#operationUserBooking").val(); 
-                var servletName = 'CheckDuplicateUserServlet';
-                var servicesName = 'AJAXBean';
-                var param = 'action=' + 'text' +
-                        '&servletName=' + servletName +
-                        '&servicesName=' + servicesName +
-                        '&operationTable=' + operationTable +
-                        '&operationTableId=' + operationTableId +
-                        '&operationAction=' + operationAction +
-                        '&operationUser=' + operationUser +
-                        '&type=editOperationUser'
-                callAjaxEditDuplicateUser(param);
+                if(duplicateUser !== null){
+                    var operationTable = duplicateUser[0].operationTable;
+                    var operationTableId = duplicateUser[0].operationTableId;
+                    var operationUser = $("#operationUserBooking").val(); 
+                    var servletName = 'CheckDuplicateUserServlet';
+                    var servicesName = 'AJAXBean';
+                    var param = 'action=' + 'text' +
+                            '&servletName=' + servletName +
+                            '&servicesName=' + servicesName +
+                            '&operationTable=' + operationTable +
+                            '&operationTableId=' + operationTableId +
+                            '&operationAction=' + operationAction +
+                            '&operationUser=' + operationUser +
+                            '&type=editOperationUser'
+                    callAjaxEditDuplicateUser(param);
+                }
             }
             
             function callAjaxEditDuplicateUser(param) {
