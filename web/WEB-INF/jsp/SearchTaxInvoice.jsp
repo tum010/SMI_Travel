@@ -178,14 +178,14 @@
 <!--Script-->
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
-        if($("#InputFromDate").val() !== ''){
-            var date = $("#InputFromDate").val();
-            $("#InputFromDate").val(convertFormatDate(date));
-        }
-        if($("#InputToDate").val() !== ''){
-            var date = $("#InputToDate").val();
-            $("#InputToDate").val(convertFormatDate(date));
-        }
+//        if($("#InputFromDate").val() !== ''){
+//            var date = $("#InputFromDate").val();
+//            $("#InputFromDate").val(convertFormatDate(date));
+//        }
+//        if($("#InputToDate").val() !== ''){
+//            var date = $("#InputToDate").val();
+//            $("#InputToDate").val(convertFormatDate(date));
+//        }
         $(".money").mask('000,000,000,000.00', {reverse: true});
         $('.date').datetimepicker();
         $('.datemask').mask('00-00-0000');
