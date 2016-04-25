@@ -41,9 +41,9 @@ public class SearchTaxInvoiceController extends SMITravelController {
         request.setAttribute("user", username+" - "+roleName);
         
         //Set Date Format
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        inputFromDate = (!"".equalsIgnoreCase(inputFromDate) && inputFromDate != null ? sdf.format(util.convertStringToDate(inputFromDate)) : "");
-        inputToDate = (!"".equalsIgnoreCase(inputToDate) && inputToDate != null ? sdf.format(util.convertStringToDate(inputToDate)) : "");
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+//        inputFromDate = (!"".equalsIgnoreCase(inputFromDate) && inputFromDate != null ? sdf.format(util.convertStringToDate(inputFromDate)) : "");
+//        inputToDate = (!"".equalsIgnoreCase(inputToDate) && inputToDate != null ? sdf.format(util.convertStringToDate(inputToDate)) : "");
         List<TaxInvoiceView> taxInvoiceViewList = new ArrayList<TaxInvoiceView>();
         if("search".equalsIgnoreCase(action)){
             taxInvoiceViewList = taxInvoiceService.SearchTaxInvoiceFromFilter(inputFromDate, inputToDate, department, status);
