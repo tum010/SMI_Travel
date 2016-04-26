@@ -114,7 +114,8 @@ public class MainMigrate {
                 MainMigrateModel migrateModel = new MainMigrateModel();
                 migrateModel.setInvoiceno(String.valueOf(data[8]));
                 migrateModel.setInvoicedate(String.valueOf(data[9]));
-                migrateModel.setInvoicename(String.valueOf(data[10]));
+//                migrateModel.setInvoicename(new String((data[10]).getBytes("ISO8859_1"),"TIS-620")); 
+//                migrateModel.setInvoicename(String.valueOf(data[10]));
                 migrateModel.setInvoicedetail(String.valueOf(data[11]));
                 migrateModel.setInvoiceamount(String.valueOf(data[12]));
                 migrateModel.setReceiveno(String.valueOf(data[13]));
@@ -134,11 +135,11 @@ public class MainMigrate {
         if(list != null){
             String sql = "";
             for(int i = 0 ; i < list.size() ; i ++){ 
-                sql = " SELECT INV.inv_no, CASE WHEN (agt.code IS NULL) THEN 'DUMMY' ELSE agt.code END AS CODE, INV.REF_DEPARTMENT AS department, ( SELECT ROUND ( SUM ( CASE WHEN INVD1.VAT IS NOT NULL THEN INVD1.AMOUNT - INVD1.AMOUNT * 100 / (100 + INVD1.VAT) ELSE 0 END ), 2 ) FROM \"TRAVOX3\".AC_INVOICE_DETAIL invd1 WHERE invd1.AC_INVOICE_ID = INV.\"ID\" ) AS grand_total_vatamt FROM \"TRAVOX3\".\"AC_INVOICE\" inv INNER JOIN \"TRAVOX3\".AC_INVOICE_DETAIL invd ON INVD.AC_INVOICE_ID = INV.\"ID\" LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv.INV_NAME WHERE inv.inv_no = '" +list.get(i).getInvoiceno()+ "' " ;
+                sql = " SELECT INV.inv_no, INV.inv_name , CASE WHEN (agt.code IS NULL) THEN 'DUMMY' ELSE agt.code END AS CODE, INV.REF_DEPARTMENT AS department, ( SELECT ROUND ( SUM ( CASE WHEN INVD1.VAT IS NOT NULL THEN INVD1.AMOUNT - INVD1.AMOUNT * 100 / (100 + INVD1.VAT) ELSE 0 END ), 2 ) FROM \"TRAVOX3\".AC_INVOICE_DETAIL invd1 WHERE invd1.AC_INVOICE_ID = INV.\"ID\" ) AS grand_total_vatamt FROM \"TRAVOX3\".\"AC_INVOICE\" inv INNER JOIN \"TRAVOX3\".AC_INVOICE_DETAIL invd ON INVD.AC_INVOICE_ID = INV.\"ID\" LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv.INV_NAME WHERE inv.inv_no = '" +list.get(i).getInvoiceno()+ "' " ;
                 MainMigrateModel migrateModel = new MainMigrateModel();
                 migrateModel.setInvoiceno(list.get(i).getInvoiceno());
                 migrateModel.setInvoicedate(list.get(i).getInvoicedate());
-                migrateModel.setInvoicename(list.get(i).getInvoicename());
+//                migrateModel.setInvoicename(list.get(i).getInvoicename());
                 migrateModel.setInvoicedetail(list.get(i).getInvoicedetail());
                 migrateModel.setInvoiceamount(list.get(i).getInvoiceamount());
                 migrateModel.setReceiveno(list.get(i).getReceiveno());
@@ -150,13 +151,18 @@ public class MainMigrate {
                         String code = rs.getString("CODE") == null ? "" : new String(rs.getString("CODE"));
                         String department = rs.getString("DEPARTMENT") == null ? "" : new String(rs.getString("DEPARTMENT"));
                         String grandtotal = rs.getString("GRAND_TOTAL_VATAMT") == null ? "" : new String(rs.getString("GRAND_TOTAL_VATAMT"));
+                        String invname = rs.getString("INV_NAME") == null ? "" : new String(rs.getString("INV_NAME").getBytes("ISO8859_1"),"TIS-620");
+                         
                         migrateModel.setCode(code);
                         migrateModel.setDepartment(department);
                         migrateModel.setGrandtotal(grandtotal);
+                        migrateModel.setInvoicename(invname);
                     }
                     listInv.add(migrateModel);
                 } catch (SQLException e ) {
             
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
                 } finally {
                     if (stmt != null) {
                         try { 
