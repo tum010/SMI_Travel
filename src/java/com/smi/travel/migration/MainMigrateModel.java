@@ -110,6 +110,16 @@ public class MainMigrateModel {
     private String department;
     private String vattype;
     
+    private String invoiceno;
+    private String invoicedate;
+    private String invoicename;
+    private String invoicedetail;
+    private String invoiceamount;
+    private String receiveno;
+    private String receiveamount;
+    private String remainamount;
+    private String grandtotal;
+    
     public String getCode() {
         return code;
     }
@@ -732,6 +742,78 @@ public class MainMigrateModel {
 
     public void setVattype(String vattype) {
         this.vattype = vattype;
+    }
+
+    public String getInvoiceno() {
+        return invoiceno;
+    }
+
+    public void setInvoiceno(String invoiceno) {
+        this.invoiceno = invoiceno;
+    }
+
+    public String getInvoicedate() {
+        return invoicedate;
+    }
+
+    public void setInvoicedate(String invoicedate) {
+        this.invoicedate = invoicedate;
+    }
+
+    public String getInvoicename() {
+        return invoicename;
+    }
+
+    public void setInvoicename(String invoicename) {
+        this.invoicename = invoicename;
+    }
+
+    public String getInvoicedetail() {
+        return invoicedetail;
+    }
+
+    public void setInvoicedetail(String invoicedetail) {
+        this.invoicedetail = invoicedetail;
+    }
+
+    public String getInvoiceamount() {
+        return invoiceamount;
+    }
+
+    public void setInvoiceamount(String invoiceamount) {
+        this.invoiceamount = invoiceamount;
+    }
+
+    public String getReceiveno() {
+        return receiveno;
+    }
+
+    public void setReceiveno(String receiveno) {
+        this.receiveno = receiveno;
+    }
+
+    public String getReceiveamount() {
+        return receiveamount;
+    }
+
+    public void setReceiveamount(String receiveamount) {
+        this.receiveamount = receiveamount;
+    }
+
+    public String getRemainamount() {
+        return remainamount;
+    }
+
+    public void setRemainamount(String remainamount) {
+        this.remainamount = remainamount;
+    }
+
+    public String getGrandtotal() {
+        return grandtotal;
+    }
+
+    public void setGrandtotal(String grandtotal) {
+        this.grandtotal = grandtotal;
     }
 
     

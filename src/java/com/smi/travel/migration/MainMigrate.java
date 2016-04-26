@@ -13,9 +13,11 @@ import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.MProductType;
 import com.smi.travel.util.UtilityFunction;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -26,7 +28,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,8 +81,9 @@ public class MainMigrate {
 //                getProduct(s, stmt);
 //                getHotel(s, stmt);
 //                getCustomer(s, stmt);
-                getARData(s,stmt);
-                getAPData(s,stmt);
+//                getARData(s,stmt);
+//                getAPData(s,stmt);
+                  getDeptorInvoiceData(s, stmt);
             } else {
                 System.out.println("Database Connect Failed.");
             }
@@ -97,6 +99,189 @@ public class MainMigrate {
            }
         } 
     }
+    
+    public static void getDeptorInvoiceData(Statement s,Statement stmt){
+        List<MainMigrateModel> list = new ArrayList<MainMigrateModel>();
+        List<MainMigrateModel> listInv = new ArrayList<MainMigrateModel>();
+        UtilityFunction util = new UtilityFunction();
+        
+        BufferedReader br = null;
+        try {
+            String sCurrentLine;
+            br = new BufferedReader(new FileReader("C:\\Users\\Jittima\\Desktop\\deptor_invoice_all.txt"));
+            while((sCurrentLine = br.readLine()) != null) {
+                String data[] = sCurrentLine.split("\\t");
+                MainMigrateModel migrateModel = new MainMigrateModel();
+                migrateModel.setInvoiceno(String.valueOf(data[8]));
+                migrateModel.setInvoicedate(String.valueOf(data[9]));
+                migrateModel.setInvoicename(String.valueOf(data[10]));
+                migrateModel.setInvoicedetail(String.valueOf(data[11]));
+                migrateModel.setInvoiceamount(String.valueOf(data[12]));
+                migrateModel.setReceiveno(String.valueOf(data[13]));
+                migrateModel.setReceiveamount(String.valueOf(data[14]));
+                migrateModel.setRemainamount(String.valueOf(data[15]));
+                list.add(migrateModel);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null)br.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        if(list != null){
+            String sql = "";
+            for(int i = 0 ; i < list.size() ; i ++){ 
+                sql = " SELECT INV.inv_no, CASE WHEN (agt.code IS NULL) THEN 'DUMMY' ELSE agt.code END AS CODE, INV.REF_DEPARTMENT AS department, ( SELECT ROUND ( SUM ( CASE WHEN INVD1.VAT IS NOT NULL THEN INVD1.AMOUNT - INVD1.AMOUNT * 100 / (100 + INVD1.VAT) ELSE 0 END ), 2 ) FROM \"TRAVOX3\".AC_INVOICE_DETAIL invd1 WHERE invd1.AC_INVOICE_ID = INV.\"ID\" ) AS grand_total_vatamt FROM \"TRAVOX3\".\"AC_INVOICE\" inv INNER JOIN \"TRAVOX3\".AC_INVOICE_DETAIL invd ON INVD.AC_INVOICE_ID = INV.\"ID\" LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv.INV_NAME WHERE inv.inv_no = '" +list.get(i).getInvoiceno()+ "' " ;
+                MainMigrateModel migrateModel = new MainMigrateModel();
+                migrateModel.setInvoiceno(list.get(i).getInvoiceno());
+                migrateModel.setInvoicedate(list.get(i).getInvoicedate());
+                migrateModel.setInvoicename(list.get(i).getInvoicename());
+                migrateModel.setInvoicedetail(list.get(i).getInvoicedetail());
+                migrateModel.setInvoiceamount(list.get(i).getInvoiceamount());
+                migrateModel.setReceiveno(list.get(i).getReceiveno());
+                migrateModel.setReceiveamount(list.get(i).getReceiveamount());
+                migrateModel.setRemainamount(list.get(i).getRemainamount());
+                try {
+                    ResultSet rs = s.executeQuery(sql);
+                    while (rs.next()){       
+                        String code = rs.getString("CODE") == null ? "" : new String(rs.getString("CODE"));
+                        String department = rs.getString("DEPARTMENT") == null ? "" : new String(rs.getString("DEPARTMENT"));
+                        String grandtotal = rs.getString("GRAND_TOTAL_VATAMT") == null ? "" : new String(rs.getString("GRAND_TOTAL_VATAMT"));
+                        migrateModel.setCode(code);
+                        migrateModel.setDepartment(department);
+                        migrateModel.setGrandtotal(grandtotal);
+                    }
+                    listInv.add(migrateModel);
+                } catch (SQLException e ) {
+            
+                } finally {
+                    if (stmt != null) {
+                        try { 
+                            stmt.close();
+                        } catch (SQLException ex) {
+                            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }
+            System.out.println(" listInv.size():: " + listInv.size());
+            ExportDeptorInvoiceReport(listInv);
+        }
+    }
+    
+    public static void ExportDeptorInvoiceReport(List<MainMigrateModel> listInv){
+        UtilityExcelFunction excelFunction = new UtilityExcelFunction();
+        HSSFWorkbook wb = new HSSFWorkbook();
+        HSSFCellStyle styleC1 = wb.createCellStyle();
+        // Set align Text
+        HSSFCellStyle styleC21 = wb.createCellStyle();
+        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
+        HSSFCellStyle styleC22 = wb.createCellStyle();
+        styleC22.setAlignment(styleC22.ALIGN_LEFT);
+
+        // Header Table
+        HSSFCellStyle styleC3Center = wb.createCellStyle();
+        styleC3Center.setFont(excelFunction.getHeaderTable(wb.createFont()));
+        styleC3Center.setAlignment(styleC3Center.ALIGN_CENTER);
+        styleC3Center.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        styleC3Center.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+        
+        HSSFDataFormat currency = wb.createDataFormat();
+        HSSFCellStyle styleC23 = wb.createCellStyle();
+        styleC23.setAlignment(styleC23.ALIGN_CENTER);
+        HSSFCellStyle styleC24 = wb.createCellStyle();
+        styleC24.setAlignment(styleC24.ALIGN_LEFT);
+        HSSFCellStyle styleC25 = wb.createCellStyle();
+        styleC25.setAlignment(styleC25.ALIGN_RIGHT);
+//        styleC25.setDataFormat(currency.getFormat("#,##0.00"));
+        
+        HSSFSheet sheet = wb.createSheet("DeptorInvoice");
+        
+        HSSFRow row2 = sheet.createRow(0);
+        HSSFCell cell20 = row2.createCell(0);
+        cell20.setCellValue("INV NO");
+        cell20.setCellStyle(styleC3Center);
+        HSSFCell cell21 = row2.createCell(1);
+        cell21.setCellValue("DATE");
+        cell21.setCellStyle(styleC3Center);
+        HSSFCell cell22 = row2.createCell(2);
+        cell22.setCellValue("NAME");
+        cell22.setCellStyle(styleC3Center);
+        HSSFCell cell23 = row2.createCell(3);
+        cell23.setCellValue("DETAIL");
+        cell23.setCellStyle(styleC3Center);
+        HSSFCell cell24 = row2.createCell(4);
+        cell24.setCellValue("INV AMOUNT");
+        cell24.setCellStyle(styleC3Center);
+        HSSFCell cell25 = row2.createCell(5);
+        cell25.setCellValue("RECEIVE NO");
+        cell25.setCellStyle(styleC3Center);
+        HSSFCell cell26 = row2.createCell(6);
+        cell26.setCellValue("RECEIVE AMOUNT");
+        cell26.setCellStyle(styleC3Center);
+        HSSFCell cell27 = row2.createCell(7);
+        cell27.setCellValue("REMAIN AMOUNT");
+        cell27.setCellStyle(styleC3Center);
+        HSSFCell cell28 = row2.createCell(8);
+        cell28.setCellValue("CODE");
+        cell28.setCellStyle(styleC3Center);
+        HSSFCell cell29 = row2.createCell(9);
+        cell29.setCellValue("DEPARTMENT");
+        cell29.setCellStyle(styleC3Center);
+        HSSFCell cell30 = row2.createCell(10);
+        cell30.setCellValue("GRAND TOTAL VATAMT");
+        cell30.setCellStyle(styleC3Center);
+        
+        if(listInv != null){
+            int count = 1 ;
+            for(int i=0;i<listInv.size();i++){
+                MainMigrateModel data = (MainMigrateModel)listInv.get(i);
+                HSSFRow row = sheet.createRow(count + i);
+                HSSFCell cell0 = row.createCell(0);
+                cell0.setCellValue(data.getInvoiceno());
+                cell0.setCellStyle(styleC24);
+             HSSFCell cell1 = row.createCell(1);
+                cell1.setCellValue(data.getInvoicedate());
+                cell1.setCellStyle(styleC24);
+             HSSFCell cell13 = row.createCell(2);
+                cell13.setCellValue(data.getInvoicename());
+                cell13.setCellStyle(styleC24);  
+             HSSFCell cell2 = row.createCell(3);
+                cell2.setCellValue(data.getInvoicedetail());
+                cell2.setCellStyle(styleC24);   
+             HSSFCell cell3= row.createCell(4);
+                cell3.setCellValue(data.getInvoiceamount());
+                cell3.setCellStyle(styleC25);
+             HSSFCell cell4 = row.createCell(5);
+                cell4.setCellValue(data.getReceiveno());
+                cell4.setCellStyle(styleC24);   
+             HSSFCell cell5 = row.createCell(6);
+                cell5.setCellValue(data.getReceiveamount());
+                cell5.setCellStyle(styleC25);
+            HSSFCell cell6 = row.createCell(7);
+                cell6.setCellValue(data.getRemainamount());
+                cell6.setCellStyle(styleC25);
+            HSSFCell cell7 = row.createCell(8);
+                cell7.setCellValue(data.getCode());
+                cell7.setCellStyle(styleC24);
+            HSSFCell cell8 = row.createCell(9);
+                cell8.setCellValue(data.getDepartment());
+                cell8.setCellStyle(styleC24);
+            HSSFCell cell9 = row.createCell(10);
+                cell9.setCellValue(data.getGrandtotal());
+                cell9.setCellStyle(styleC25);    
+            }
+        }
+        for(int x=0;x<11;x++){
+            sheet.autoSizeColumn(x);
+        }
+        sheet.setColumnWidth(2, 256*30);
+        exportFileExcel("DeptorInvoice",wb);
+    }
+    
     
     public static void getAPData(Statement s,Statement stmt){
         List<MainMigrateModel> list = new ArrayList<MainMigrateModel>();
