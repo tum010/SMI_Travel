@@ -120,6 +120,17 @@ public class MainMigrateModel {
     private String remainamount;
     private String grandtotal;
     
+//    private String id;
+//    private String invno;
+//    private String name;
+//    private String invdate;
+//    private String grandtotal;
+    private String grandtotalgross;
+    private String grandtotalvat;
+    private String cur;
+//    private String department;
+    private String accno;
+    
     public String getCode() {
         return code;
     }
@@ -814,6 +825,38 @@ public class MainMigrateModel {
 
     public void setGrandtotal(String grandtotal) {
         this.grandtotal = grandtotal;
+    }
+
+    public String getGrandtotalgross() {
+        return grandtotalgross;
+    }
+
+    public void setGrandtotalgross(String grandtotalgross) {
+        this.grandtotalgross = grandtotalgross;
+    }
+
+    public String getGrandtotalvat() {
+        return grandtotalvat;
+    }
+
+    public void setGrandtotalvat(String grandtotalvat) {
+        this.grandtotalvat = grandtotalvat;
+    }
+
+    public String getCur() {
+        return cur;
+    }
+
+    public void setCur(String cur) {
+        this.cur = cur;
+    }
+
+    public String getAccno() {
+        return accno;
+    }
+
+    public void setAccno(String accno) {
+        this.accno = accno;
     }
 
     
