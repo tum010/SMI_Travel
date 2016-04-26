@@ -135,7 +135,7 @@ public class MainMigrate {
         if(list != null){
             String sql = "";
             for(int i = 0 ; i < list.size() ; i ++){ 
-                sql = " SELECT INV.inv_no, INV.inv_name , CASE WHEN (agt.code IS NULL) THEN 'DUMMY' ELSE agt.code END AS CODE, INV.REF_DEPARTMENT AS department, ( SELECT ROUND ( SUM ( CASE WHEN INVD1.VAT IS NOT NULL THEN INVD1.AMOUNT - INVD1.AMOUNT * 100 / (100 + INVD1.VAT) ELSE 0 END ), 2 ) FROM \"TRAVOX3\".AC_INVOICE_DETAIL invd1 WHERE invd1.AC_INVOICE_ID = INV.\"ID\" ) AS grand_total_vatamt FROM \"TRAVOX3\".\"AC_INVOICE\" inv INNER JOIN \"TRAVOX3\".AC_INVOICE_DETAIL invd ON INVD.AC_INVOICE_ID = INV.\"ID\" LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv.INV_NAME WHERE inv.inv_no = '" +list.get(i).getInvoiceno()+ "' " ;
+                sql = " SELECT INV.inv_no, inv.INV_NAME , CASE WHEN (agt.code IS NULL) THEN 'DUMMY' ELSE agt.code END AS CODE, INV.REF_DEPARTMENT AS department, ( SELECT SUM ( ROUND ( CASE WHEN INVD1.VAT IS NOT NULL THEN INVD1.AMOUNT - INVD1.AMOUNT * 100 / (100 + INVD1.VAT) ELSE 0 END, 2 )) FROM \"TRAVOX3\".AC_INVOICE_DETAIL invd1 WHERE invd1.AC_INVOICE_ID = INV.\"ID\" ) AS grand_total_vatamt FROM \"TRAVOX3\".\"AC_INVOICE\" inv INNER JOIN \"TRAVOX3\".AC_INVOICE_DETAIL invd ON INVD.AC_INVOICE_ID = INV.\"ID\" LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv.INV_NAME WHERE inv.inv_no = '" +list.get(i).getInvoiceno()+ "' " ;
                 MainMigrateModel migrateModel = new MainMigrateModel();
                 migrateModel.setInvoiceno(list.get(i).getInvoiceno());
                 migrateModel.setInvoicedate(list.get(i).getInvoicedate());
