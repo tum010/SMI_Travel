@@ -61,8 +61,8 @@ public class MainMigrate {
     private static final String sqlCustomer = " SELECT * FROM TRAVOX3.CUSTOMER ";
     private static final String sqlAR = " SELECT CASE WHEN (agt.code IS NULL) THEN 'DUMMY' ELSE agt.code END AS CODE, inv.inv_name, INV.INV_NO, TO_CHAR (inv.inv_date, 'DD-MM-YYYY') AS inv_date FROM \"TRAVOX3\".\"AC_INVOICE\" inv INNER JOIN \"TRAVOX3\".AC_INVOICE_DETAIL invd ON INVD.AC_INVOICE_ID = INV.\"ID\" LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv.INV_NAME WHERE TO_CHAR (inv.inv_date, 'MMYYYY') IN ('112015','122015','012016', '022016', '032016') ORDER BY  inv.inv_date , inv.inv_no " ;
     private static final String sqlAP = " SELECT payd. ID AS payid, (pay.PAY_NO) AS PAY_NO, (PAY.INVOICE_SUP) AS AP_CODE, ap. NAME AS NAME, TO_CHAR (pay.pay_DATE, 'DD-MM-YYYY') AS pay_date, (PAY.REF_DEPARTMENT) AS DEPARTMENT, CASE WHEN pay.VAT_TYPE = 'X' THEN 'TEMP' WHEN pay.VAT_TYPE = 'V' THEN 'VAT' ELSE 'NO VAT' END AS vattype FROM travox3.AC_PAYMENT pay INNER JOIN travox3.AC_PAYMENT_DETAIL payd ON payd.AC_PAYMENT_ID = pay. ID INNER JOIN ACCSMI3.AP_CODE ap ON ap.code = pay.INVOICE_SUP WHERE TO_CHAR (pay.pay_DATE, 'MMYYYY') IN ( '112015','122015','012016', '022016', '032016') ORDER BY pay.pay_DATE , PAY.PAY_NO ";
-    private static final String sqlInv1 = " SELECT inv3. ID AS ID, INV3.inv_no AS invno, INV3.\"NAME\" AS NAME, TO_CHAR (INV3.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd3.price) AS grand_total, SUM (invd3.price) - SUM ( ROUND ( INVD3.price - INVD3.price * 100 / (100 + INV3.vat), 2 )) AS grand_total_gross, SUM ( ROUND ( INVD3.price - INVD3.price * 100 / (100 + INV3.vat), 2 )) AS grand_total_vat, MIN (INVD3.CUR) AS cur, 'INBOUND' AS department, '1' AS acc_no FROM \"INBOUND\".\"INVOICE3\" inv3 INNER JOIN INBOUND.INVOICE3_DETAIL invd3 ON inv3. ID = invd3.INVOICE3_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv3. NAME WHERE \"TO_CHAR\" (inv3.INV_DATE, 'MMYYYY') IN ( '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv3. ID, INV3.inv_no, INV3.\"NAME\", INV3.INV_DATE ORDER BY INV3. ID  ";
-    private static final String sqlInv2 = " SELECT inv2. ID AS ID, INV2.inv_no AS invno, INV2.\"NAME\" AS NAME, TO_CHAR (INV2.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd2.price) AS grand_total, SUM (invd2.price) AS grand_total_gross, 0 AS grand_total_vat, MIN (INVD2.CUR) AS cur, 'INBOUND' AS department, '2' AS acc_no FROM \"INBOUND\".\"INVOICE2\" inv2 INNER JOIN INBOUND.INVOICE2_DETAIL invd2 ON inv2. ID = invd2.INVOICE2_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv2. NAME WHERE \"TO_CHAR\" (inv2.INV_DATE, 'MMYYYY') IN ( '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv2. ID, INV2.inv_no, INV2.\"NAME\", INV2.INV_DATE ORDER BY INV2. ID ";
+    private static final String sqlInv1 = " SELECT inv3. ID AS ID, INV3.inv_no AS invno, INV3.\"NAME\" AS NAME, TO_CHAR (INV3.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd3.price) AS grand_total, SUM (invd3.price) - SUM ( ROUND ( INVD3.price - INVD3.price * 100 / (100 + INV3.vat), 2 )) AS grand_total_gross, SUM ( ROUND ( INVD3.price - INVD3.price * 100 / (100 + INV3.vat), 2 )) AS grand_total_vat, MIN (INVD3.CUR) AS cur, 'INBOUND' AS department, '1' AS acc_no FROM \"INBOUND\".\"INVOICE3\" inv3 INNER JOIN INBOUND.INVOICE3_DETAIL invd3 ON inv3. ID = invd3.INVOICE3_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv3. NAME WHERE \"TO_CHAR\" (inv3.INV_DATE, 'MMYYYY') IN ('102015', '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv3. ID, INV3.inv_no, INV3.\"NAME\", INV3.INV_DATE ORDER BY INV3. ID  ";
+    private static final String sqlInv2 = " SELECT inv2. ID AS ID, INV2.inv_no AS invno, INV2.\"NAME\" AS NAME, TO_CHAR (INV2.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd2.price) AS grand_total, SUM (invd2.price) AS grand_total_gross, 0 AS grand_total_vat, MIN (INVD2.CUR) AS cur, 'INBOUND' AS department, '2' AS acc_no FROM \"INBOUND\".\"INVOICE2\" inv2 INNER JOIN INBOUND.INVOICE2_DETAIL invd2 ON inv2. ID = invd2.INVOICE2_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv2. NAME WHERE \"TO_CHAR\" (inv2.INV_DATE, 'MMYYYY') IN ('102015', '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv2. ID, INV2.inv_no, INV2.\"NAME\", INV2.INV_DATE ORDER BY INV2. ID ";
     
     public static void main(String[] args) {
         Connection connect = null;
@@ -204,6 +204,7 @@ public class MainMigrate {
         styleC24.setAlignment(styleC24.ALIGN_LEFT);
         HSSFCellStyle styleC25 = wb.createCellStyle();
         styleC25.setAlignment(styleC25.ALIGN_RIGHT);
+        styleC25.setDataFormat(currency.getFormat("#,##0.00"));
         
         HSSFSheet sheet = wb.createSheet("Invoice");
 
@@ -257,14 +258,15 @@ public class MainMigrate {
                 cell2.setCellValue(data.getInvdate());
                 cell2.setCellStyle(styleC24);   
              HSSFCell cell3= row.createCell(4);
-                cell3.setCellValue(data.getGrandtotal());
+//                cell3.setCellValue(data.getGrandtotal());
+                cell3.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getGrandtotal())) ? (new BigDecimal(data.getGrandtotal())).doubleValue() : 0);
                 cell3.setCellStyle(styleC25);
              HSSFCell cell4 = row.createCell(5);
-                cell4.setCellValue(data.getGrandtotalgross());
+                cell4.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getGrandtotalgross())) ? (new BigDecimal(data.getGrandtotalgross())).doubleValue() : 0);
                 cell4.setCellStyle(styleC25);   
              HSSFCell cell5 = row.createCell(6);
-                cell5.setCellValue(data.getGrandtotalvat());
-                cell5.setCellStyle(styleC25);
+                cell5.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getGrandtotalvat())) ? (new BigDecimal(data.getGrandtotalvat())).doubleValue() : 0);
+                cell5.setCellStyle(styleC25);  
             HSSFCell cell6 = row.createCell(7);
                 cell6.setCellValue(data.getCur());
                 cell6.setCellStyle(styleC23);
