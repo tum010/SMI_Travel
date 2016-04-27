@@ -169,16 +169,16 @@ public class LandDetailController extends SMITravelController {
                 land.setIsBill(Integer.parseInt(isbill));
             }
             if ("I".equalsIgnoreCase(BookType)) {
-                land.setInboundCost(util.convertStringTolong(inb_Cost));
-                land.setInboundPrice(util.convertStringTolong(inb_Price));
+                land.setInboundCost(util.convertStringToBigDecimal(inb_Cost));
+                land.setInboundPrice(util.convertStringToBigDecimal(inb_Price));
                 land.setInboundQty(util.convertStringToInteger(inb_QTY));
                 
-                land.setInboundChCost(util.convertStringTolong(inbCHCost));
-                land.setInboundChPrice(util.convertStringTolong(inbCHPrice));
+                land.setInboundChCost(util.convertStringToBigDecimal(inbCHCost));
+                land.setInboundChPrice(util.convertStringToBigDecimal(inbCHPrice));
                 land.setInboundChQty(util.convertStringToInteger(inbCHQty));
                 
-                land.setInboundInCost(util.convertStringTolong(inbINCost));
-                land.setInboundInPrice(util.convertStringTolong(inbINPrice));
+                land.setInboundInCost(util.convertStringToBigDecimal(inbINCost));
+                land.setInboundInPrice(util.convertStringToBigDecimal(inbINPrice));
                 land.setInboundInQty(util.convertStringToInteger(inbINQty));
                 land.setInboundHotel(hotel);
             } else {
@@ -189,14 +189,14 @@ public class LandDetailController extends SMITravelController {
                   
                 }
                 
-                    land.setOutboundAdCost(util.convertStringTolong(ADCost));
-                    land.setOutboundAdPrice(util.convertStringTolong(ADPrice));
+                    land.setOutboundAdCost(util.convertStringToBigDecimal(ADCost));
+                    land.setOutboundAdPrice(util.convertStringToBigDecimal(ADPrice));
                     land.setOutboundAdQty(util.convertStringToInteger(ADQty));
-                    land.setOutboundChCost(util.convertStringTolong(CHCost));
-                    land.setOutboundChPrice(util.convertStringTolong(CHPrice));
+                    land.setOutboundChCost(util.convertStringToBigDecimal(CHCost));
+                    land.setOutboundChPrice(util.convertStringToBigDecimal(CHPrice));
                     land.setOutboundChQty(util.convertStringToInteger(CHQty));
-                    land.setOutboundInCost(util.convertStringTolong(INCost));
-                    land.setOutboundInPrice(util.convertStringTolong(INPrice));
+                    land.setOutboundInCost(util.convertStringToBigDecimal(INCost));
+                    land.setOutboundInPrice(util.convertStringToBigDecimal(INPrice));
                     land.setOutboundInQty(util.convertStringToInteger(INQty));
                     land.setOutboundArrive(util.convertStringToDate(arriveDate));
                     land.setOutboundDepart(util.convertStringToDate(departDate));

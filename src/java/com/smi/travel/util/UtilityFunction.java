@@ -11,6 +11,7 @@ import com.smi.travel.model.nirvana.SsDataexch;
 import com.smi.travel.model.nirvana.SsDataexchTr;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -226,6 +227,15 @@ public class UtilityFunction {
         } else {
             input = input.replaceAll(",", "");
             return Long.parseLong(input);
+        }
+    }
+    
+    public BigDecimal convertStringToBigDecimal(String input) {
+        if (("".equalsIgnoreCase(input)) || (input == null)) {
+            return new BigDecimal(BigInteger.ZERO);
+        } else {
+            input = input.replaceAll(",", "");
+            return new BigDecimal(input);
         }
     }
 

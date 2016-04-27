@@ -13,6 +13,7 @@ import com.smi.travel.datalayer.service.DaytourCommissionService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -234,11 +235,11 @@ public class DaytourOtherComissionController extends SMITravelController {
                 booking.setGuide(guide);
             }
 
-            Long guideCommission = null;
+//            BigDecimal guideCommission = null;
              
             if (StringUtils.isNotEmpty(guideComm)) {
-                guideCommission = utilFunc.convertStringTolong(guideComm);
-                booking.setGuideCommission(guideCommission);
+//                guideCommission = 
+                booking.setGuideCommission(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(guideComm) ? guideComm.replaceAll(",","") : 0)));
             }
             booking.setRemarkGuideCommission(guideRemark);
 
@@ -249,9 +250,9 @@ public class DaytourOtherComissionController extends SMITravelController {
             }
 
             if (StringUtils.isNotEmpty(agentComm)) {
-                Long agentCommission = null;
-                agentCommission = utilFunc.convertStringTolong(agentComm);
-                booking.setAgentCommission(agentCommission);
+//                Long agentCommission = null;
+//                agentCommission = utilFunc.convertStringTolong(agentComm);
+                booking.setAgentCommission(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(agentComm) ? agentComm.replaceAll(",","") : 0)));
             }
             booking.setRemarkAgentCommission(agentRemark);
 

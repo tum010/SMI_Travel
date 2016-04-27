@@ -241,7 +241,7 @@
                             <div class="col-md-1 ">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
-                                        <input type="text" class="form-control decimal text-right" id="ad_qty" name="ad_qty" value="${requestScope['ad_qty']}">  
+                                        <input type="text" class="form-control money text-right" id="ad_qty" name="ad_qty" value="${requestScope['ad_qty']}">  
                                     </div>
                                 </div>
                             </div>
@@ -290,7 +290,7 @@
                             <div class="col-md-1 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
-                                        <input type="text" class="form-control decimal text-right" id="ch_qty" name="ch_qty" value="${requestScope['ch_qty']}" >  
+                                        <input type="text" class="form-control money text-right" id="ch_qty" name="ch_qty" value="${requestScope['ch_qty']}" >  
                                     </div>
                                 </div>
                             </div>
@@ -336,7 +336,7 @@
                             <div class="col-md-1 " style="margin-top: -10px;">
                                 <div class="form-group">
                                     <div class="col-sm-12" >
-                                        <input type="text" class="form-control decimal text-right" id="in_qty" name="in_qty"  value="${requestScope['in_qty']}">  
+                                        <input type="text" class="form-control money text-right" id="in_qty" name="in_qty"  value="${requestScope['in_qty']}">  
                                     </div>
                                 </div>
                             </div>
@@ -729,7 +729,7 @@
                             integerDigits: 8,
                             groupSeparator: ',',
                             autoGroup: true,
-                            digits: 0,
+                            digits: 2,
                             allowMinus: false,
                             digitsOptional: false,
                             placeholder: "0"

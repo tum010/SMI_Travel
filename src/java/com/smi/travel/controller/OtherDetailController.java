@@ -2,13 +2,11 @@ package com.smi.travel.controller;
 
 import com.smi.travel.datalayer.entity.Agent;
 import com.smi.travel.datalayer.entity.HistoryBooking;
-import com.smi.travel.datalayer.entity.HotelBooking;
 import com.smi.travel.datalayer.entity.MCurrency;
 import com.smi.travel.datalayer.entity.MItemstatus;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.OtherBooking;
 import com.smi.travel.datalayer.entity.Product;
-import com.smi.travel.datalayer.entity.StockDetail;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingOtherService;
 import com.smi.travel.datalayer.service.UtilityService;
@@ -16,6 +14,7 @@ import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.datalayer.view.entity.OtherTicketView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +22,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -154,14 +154,14 @@ public class OtherDetailController extends SMITravelController {
                 Mstatus.setId(status);
                 Other.setStatus(Mstatus);
             }
-            Other.setAdCost(util.convertStringTolong(adCost));
-            Other.setAdPrice(util.convertStringTolong(adPrice));
+            Other.setAdCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(adCost) ? adCost.replaceAll(",","") : 0)));
+            Other.setAdPrice(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(adPrice) ? adPrice.replaceAll(",","") : 0)));
             Other.setAdQty(util.convertStringToInteger(adQty));
-            Other.setChCost(util.convertStringTolong(chCost));
-            Other.setChPrice(util.convertStringTolong(chPrice));
+            Other.setChCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(chCost) ? chCost.replaceAll(",","") : 0)));
+            Other.setChPrice(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(chPrice) ? chPrice.replaceAll(",","") : 0)));
             Other.setChQty(util.convertStringToInteger(chQty));
-            Other.setInCost(util.convertStringTolong(inCost));
-            Other.setInPrice(util.convertStringTolong(inPrice));
+            Other.setInCost(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(inCost) ? inCost.replaceAll(",","") : 0)));
+            Other.setInPrice(new BigDecimal(String.valueOf(StringUtils.isNotEmpty(inPrice) ? inPrice.replaceAll(",","") : 0)));
             Other.setInQty(util.convertStringToInteger(inQty));
             Other.setCreateDate(util.convertStringToDate(createdate));
             if(!("").equalsIgnoreCase(isbill)){

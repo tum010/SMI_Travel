@@ -6,11 +6,10 @@
 
 package com.smi.travel.datalayer.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
@@ -20,37 +19,37 @@ public class LandBooking {
      private String id;
      private Agent agent;
      private MItemstatus MItemstatus;
-     private PackageTour packageTour;
      private Master master;
+     private PackageTour packageTour;
      private String okBy;
      private String category;
      private String description;
-     private int inboundQty;
-     private Long inboundCost;
-     private Long inboundPrice;
+     private Integer inboundQty;
+     private BigDecimal inboundCost;
+     private BigDecimal inboundPrice;
+     private BigDecimal inboundChCost;
+     private BigDecimal inboundChPrice;
+     private Integer inboundChQty;
+     private BigDecimal inboundInCost;
+     private BigDecimal inboundInPrice;
+     private Integer inboundInQty;
      private Integer isBill;
      private Date createDate;
      private Integer outboundAdQty;
-     private Long outboundAdCost;
-     private Long outboundAdPrice;
+     private BigDecimal outboundAdCost;
+     private BigDecimal outboundAdPrice;
      private Integer outboundChQty;
-     private Long outboundChCost;
-     private Long outboundChPrice;
+     private BigDecimal outboundChCost;
+     private BigDecimal outboundChPrice;
      private Integer outboundInQty;
-     private Long outboundInCost;
-     private Long outboundInPrice;
-     private String remark;
-     private Integer inboundChQty;
-     private Long inboundChCost;
-     private Long inboundChPrice;
-     private Integer inboundInQty;
-     private Long inboundInCost;
-     private Long inboundInPrice;
-     private String curAmount;
+     private BigDecimal outboundInCost;
+     private BigDecimal outboundInPrice;
      private String curCost;
+     private String remark;
+     private String inboundHotel;
      private Date outboundDepart;
      private Date outboundArrive;
-     private String inboundHotel;
+     private String curAmount;
      private List landItineraries = new LinkedList<LandItinerary>();
      private List landCities = new LinkedList<LandCity>();
 
@@ -64,7 +63,7 @@ public class LandBooking {
         this.okBy = okBy;
         this.inboundQty = inboundQty;
     }
-    public LandBooking(Agent agent, MItemstatus MItemstatus, PackageTour packageTour, Master master, String okBy, String category, String description, int inboundQty, Long inboundCost, Long inboundPrice, Integer isBill, Date createDate, Integer outboundAdQty, Long outboundAdCost, Long outboundAdPrice, Integer outboundChQty, Long outboundChCost, Long outboundChPrice, Integer outboundInQty, Long outboundInCost, Long outboundInPrice,String remark,Integer inboundChQty, Long inboundChCost, Long inboundChPrice, Integer inboundInQty, Long inboundInCost, Long inboundInPrice, String currency,List landItineraries,Date outboundDepart,Date outboundArrive,String inboundHotel,String curAmount,String curCost,List landCities) {
+    public LandBooking(Agent agent, MItemstatus MItemstatus, PackageTour packageTour, Master master, String okBy, String category, String description, int inboundQty, BigDecimal inboundCost, BigDecimal inboundPrice, Integer isBill, Date createDate, Integer outboundAdQty, BigDecimal outboundAdCost, BigDecimal outboundAdPrice, Integer outboundChQty, BigDecimal outboundChCost, BigDecimal outboundChPrice, Integer outboundInQty, BigDecimal outboundInCost, BigDecimal outboundInPrice,String remark,Integer inboundChQty, BigDecimal inboundChCost, BigDecimal inboundChPrice, Integer inboundInQty, BigDecimal inboundInCost, BigDecimal inboundInPrice, String currency,List landItineraries,Date outboundDepart,Date outboundArrive,String inboundHotel,String curAmount,String curCost,List landCities) {
        this.agent = agent;
        this.MItemstatus = MItemstatus;
        this.packageTour = packageTour;
@@ -92,7 +91,7 @@ public class LandBooking {
        this.inboundInQty = inboundInQty;
        this.inboundInCost = inboundInCost;
        this.inboundInPrice = inboundInPrice;
-      this.curAmount = curAmount;
+       this.curAmount = curAmount;
        this.curCost = curCost;
        this.landItineraries = landItineraries;
        this.outboundDepart = outboundDepart;
@@ -101,19 +100,19 @@ public class LandBooking {
        this.inboundHotel = inboundHotel;
        this.landCities = landCities;
     }
-   
+
     public String getId() {
-        return this.id;
+        return id;
     }
-    
+
     public void setId(String id) {
         this.id = id;
     }
-    
+
     public Agent getAgent() {
-        return this.agent;
+        return agent;
     }
-    
+
     public void setAgent(Agent agent) {
         this.agent = agent;
     }
@@ -126,6 +125,14 @@ public class LandBooking {
         this.MItemstatus = MItemstatus;
     }
 
+    public Master getMaster() {
+        return master;
+    }
+
+    public void setMaster(Master master) {
+        this.master = master;
+    }
+
     public PackageTour getPackageTour() {
         return packageTour;
     }
@@ -133,148 +140,69 @@ public class LandBooking {
     public void setPackageTour(PackageTour packageTour) {
         this.packageTour = packageTour;
     }
-    
-    public Master getMaster() {
-        return this.master;
-    }
-    
-    public void setMaster(Master master) {
-        this.master = master;
-    }
+
     public String getOkBy() {
-        return this.okBy;
+        return okBy;
     }
-    
+
     public void setOkBy(String okBy) {
         this.okBy = okBy;
     }
+
     public String getCategory() {
-        return this.category;
+        return category;
     }
-    
+
     public void setCategory(String category) {
         this.category = category;
     }
+
     public String getDescription() {
-        return this.description;
+        return description;
     }
-    
+
     public void setDescription(String description) {
         this.description = description;
     }
-    public int getInboundQty() {
-        return this.inboundQty;
+
+    public Integer getInboundQty() {
+        return inboundQty;
     }
-    
-    public void setInboundQty(int inboundQty) {
+
+    public void setInboundQty(Integer inboundQty) {
         this.inboundQty = inboundQty;
     }
-    public Long getInboundCost() {
-        return this.inboundCost;
+
+    public BigDecimal getInboundCost() {
+        return inboundCost;
     }
-    
-    public void setInboundCost(Long inboundCost) {
+
+    public void setInboundCost(BigDecimal inboundCost) {
         this.inboundCost = inboundCost;
     }
-    public Long getInboundPrice() {
-        return this.inboundPrice;
+
+    public BigDecimal getInboundPrice() {
+        return inboundPrice;
     }
-    
-    public void setInboundPrice(Long inboundPrice) {
+
+    public void setInboundPrice(BigDecimal inboundPrice) {
         this.inboundPrice = inboundPrice;
     }
-    public Integer getIsBill() {
-        return this.isBill;
-    }
-    
-    public void setIsBill(Integer isBill) {
-        this.isBill = isBill;
-    }
-    public Date getCreateDate() {
-        return this.createDate;
-    }
-    
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-    public Integer getOutboundAdQty() {
-        return this.outboundAdQty;
-    }
-    
-    public void setOutboundAdQty(Integer outboundAdQty) {
-        this.outboundAdQty = outboundAdQty;
-    }
-    public Long getOutboundAdCost() {
-        return this.outboundAdCost;
-    }
-    
-    public void setOutboundAdCost(Long outboundAdCost) {
-        this.outboundAdCost = outboundAdCost;
-    }
-    public Long getOutboundAdPrice() {
-        return this.outboundAdPrice;
-    }
-    
-    public void setOutboundAdPrice(Long outboundAdPrice) {
-        this.outboundAdPrice = outboundAdPrice;
-    }
-    public Integer getOutboundChQty() {
-        return this.outboundChQty;
-    }
-    
-    public void setOutboundChQty(Integer outboundChQty) {
-        this.outboundChQty = outboundChQty;
-    }
-    public Long getOutboundChCost() {
-        return this.outboundChCost;
-    }
-    
-    public void setOutboundChCost(Long outboundChCost) {
-        this.outboundChCost = outboundChCost;
-    }
-    public Long getOutboundChPrice() {
-        return this.outboundChPrice;
-    }
-    
-    public void setOutboundChPrice(Long outboundChPrice) {
-        this.outboundChPrice = outboundChPrice;
-    }
-    public Integer getOutboundInQty() {
-        return this.outboundInQty;
-    }
-    
-    public void setOutboundInQty(Integer outboundInQty) {
-        this.outboundInQty = outboundInQty;
-    }
-    public Long getOutboundInCost() {
-        return this.outboundInCost;
-    }
-    
-    public void setOutboundInCost(Long outboundInCost) {
-        this.outboundInCost = outboundInCost;
-    }
-    public Long getOutboundInPrice() {
-        return this.outboundInPrice;
-    }
-    
-    public void setOutboundInPrice(Long outboundInPrice) {
-        this.outboundInPrice = outboundInPrice;
+
+    public BigDecimal getInboundChCost() {
+        return inboundChCost;
     }
 
-    public List getLandItineraries() {
-        return landItineraries;
+    public void setInboundChCost(BigDecimal inboundChCost) {
+        this.inboundChCost = inboundChCost;
     }
 
-    public void setLandItineraries(List landItineraries) {
-        this.landItineraries = landItineraries;
+    public BigDecimal getInboundChPrice() {
+        return inboundChPrice;
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setInboundChPrice(BigDecimal inboundChPrice) {
+        this.inboundChPrice = inboundChPrice;
     }
 
     public Integer getInboundChQty() {
@@ -285,20 +213,20 @@ public class LandBooking {
         this.inboundChQty = inboundChQty;
     }
 
-    public Long getInboundChCost() {
-        return inboundChCost;
+    public BigDecimal getInboundInCost() {
+        return inboundInCost;
     }
 
-    public void setInboundChCost(Long inboundChCost) {
-        this.inboundChCost = inboundChCost;
+    public void setInboundInCost(BigDecimal inboundInCost) {
+        this.inboundInCost = inboundInCost;
     }
 
-    public Long getInboundChPrice() {
-        return inboundChPrice;
+    public BigDecimal getInboundInPrice() {
+        return inboundInPrice;
     }
 
-    public void setInboundChPrice(Long inboundChPrice) {
-        this.inboundChPrice = inboundChPrice;
+    public void setInboundInPrice(BigDecimal inboundInPrice) {
+        this.inboundInPrice = inboundInPrice;
     }
 
     public Integer getInboundInQty() {
@@ -309,28 +237,92 @@ public class LandBooking {
         this.inboundInQty = inboundInQty;
     }
 
-    public Long getInboundInCost() {
-        return inboundInCost;
+    public Integer getIsBill() {
+        return isBill;
     }
 
-    public void setInboundInCost(Long inboundInCost) {
-        this.inboundInCost = inboundInCost;
+    public void setIsBill(Integer isBill) {
+        this.isBill = isBill;
     }
 
-    public Long getInboundInPrice() {
-        return inboundInPrice;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setInboundInPrice(Long inboundInPrice) {
-        this.inboundInPrice = inboundInPrice;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
-    public String getCurAmount() {
-        return curAmount;
+    public Integer getOutboundAdQty() {
+        return outboundAdQty;
     }
 
-    public void setCurAmount(String curAmount) {
-        this.curAmount = curAmount;
+    public void setOutboundAdQty(Integer outboundAdQty) {
+        this.outboundAdQty = outboundAdQty;
+    }
+
+    public BigDecimal getOutboundAdCost() {
+        return outboundAdCost;
+    }
+
+    public void setOutboundAdCost(BigDecimal outboundAdCost) {
+        this.outboundAdCost = outboundAdCost;
+    }
+
+    public BigDecimal getOutboundAdPrice() {
+        return outboundAdPrice;
+    }
+
+    public void setOutboundAdPrice(BigDecimal outboundAdPrice) {
+        this.outboundAdPrice = outboundAdPrice;
+    }
+
+    public Integer getOutboundChQty() {
+        return outboundChQty;
+    }
+
+    public void setOutboundChQty(Integer outboundChQty) {
+        this.outboundChQty = outboundChQty;
+    }
+
+    public BigDecimal getOutboundChCost() {
+        return outboundChCost;
+    }
+
+    public void setOutboundChCost(BigDecimal outboundChCost) {
+        this.outboundChCost = outboundChCost;
+    }
+
+    public BigDecimal getOutboundChPrice() {
+        return outboundChPrice;
+    }
+
+    public void setOutboundChPrice(BigDecimal outboundChPrice) {
+        this.outboundChPrice = outboundChPrice;
+    }
+
+    public Integer getOutboundInQty() {
+        return outboundInQty;
+    }
+
+    public void setOutboundInQty(Integer outboundInQty) {
+        this.outboundInQty = outboundInQty;
+    }
+
+    public BigDecimal getOutboundInCost() {
+        return outboundInCost;
+    }
+
+    public void setOutboundInCost(BigDecimal outboundInCost) {
+        this.outboundInCost = outboundInCost;
+    }
+
+    public BigDecimal getOutboundInPrice() {
+        return outboundInPrice;
+    }
+
+    public void setOutboundInPrice(BigDecimal outboundInPrice) {
+        this.outboundInPrice = outboundInPrice;
     }
 
     public String getCurCost() {
@@ -341,7 +333,21 @@ public class LandBooking {
         this.curCost = curCost;
     }
 
-    
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getInboundHotel() {
+        return inboundHotel;
+    }
+
+    public void setInboundHotel(String inboundHotel) {
+        this.inboundHotel = inboundHotel;
+    }
 
     public Date getOutboundDepart() {
         return outboundDepart;
@@ -359,12 +365,20 @@ public class LandBooking {
         this.outboundArrive = outboundArrive;
     }
 
-    public String getInboundHotel() {
-        return inboundHotel;
+    public String getCurAmount() {
+        return curAmount;
     }
 
-    public void setInboundHotel(String inboundHotel) {
-        this.inboundHotel = inboundHotel;
+    public void setCurAmount(String curAmount) {
+        this.curAmount = curAmount;
+    }
+
+    public List getLandItineraries() {
+        return landItineraries;
+    }
+
+    public void setLandItineraries(List landItineraries) {
+        this.landItineraries = landItineraries;
     }
 
     public List getLandCities() {
@@ -374,8 +388,5 @@ public class LandBooking {
     public void setLandCities(List landCities) {
         this.landCities = landCities;
     }
-
-    
-    
     
 }

@@ -31,26 +31,26 @@
         <property name="inboundQty" type="java.lang.Integer">
             <column name="inbound_qty" />
         </property>
-        <property name="inboundCost" type="java.lang.Long">
-            <column name="inbound_cost" precision="10" scale="0" />
+        <property name="inboundCost" type="big_decimal">
+            <column name="inbound_cost" precision="10" />
         </property>
-        <property name="inboundPrice" type="java.lang.Long">
-            <column name="inbound_price" precision="10" scale="0" />
+        <property name="inboundPrice" type="big_decimal">
+            <column name="inbound_price" precision="10" />
         </property>
-        <property name="inboundChCost" type="java.lang.Long">
-            <column name="inbound_ch_cost" precision="10" scale="0" />
+        <property name="inboundChCost" type="big_decimal">
+            <column name="inbound_ch_cost" precision="10" />
         </property>
-        <property name="inboundChPrice" type="java.lang.Long">
-            <column name="inbound_ch_price" precision="10" scale="0" />
+        <property name="inboundChPrice" type="big_decimal">
+            <column name="inbound_ch_price" precision="10" />
         </property>
         <property name="inboundChQty" type="java.lang.Integer">
             <column name="inbound_ch_qty" />
         </property>
-        <property name="inboundInCost" type="java.lang.Long">
-            <column name="inbound_in_cost" precision="10" scale="0" />
+        <property name="inboundInCost" type="big_decimal">
+            <column name="inbound_in_cost" precision="10" />
         </property>
-        <property name="inboundInPrice" type="java.lang.Long">
-            <column name="inbound_in_price" precision="10" scale="0" />
+        <property name="inboundInPrice" type="big_decimal">
+            <column name="inbound_in_price" precision="10" />
         </property>
         <property name="inboundInQty" type="java.lang.Integer">
             <column name="inbound_in_qty" />
@@ -64,29 +64,29 @@
         <property name="outboundAdQty" type="java.lang.Integer">
             <column name="outbound_ad_qty" />
         </property>
-        <property name="outboundAdCost" type="java.lang.Long">
-            <column name="outbound_ad_cost" precision="10" scale="0" />
+        <property name="outboundAdCost" type="big_decimal">
+            <column name="outbound_ad_cost" precision="10" />
         </property>
-        <property name="outboundAdPrice" type="java.lang.Long">
-            <column name="outbound_ad_price" precision="10" scale="0" />
+        <property name="outboundAdPrice" type="big_decimal">
+            <column name="outbound_ad_price" precision="10" />
         </property>
         <property name="outboundChQty" type="java.lang.Integer">
             <column name="outbound_ch_qty" />
         </property>
-        <property name="outboundChCost" type="java.lang.Long">
-            <column name="outbound_ch_cost" precision="10" scale="0" />
+        <property name="outboundChCost" type="big_decimal">
+            <column name="outbound_ch_cost" precision="10" />
         </property>
-        <property name="outboundChPrice" type="java.lang.Long">
-            <column name="outbound_ch_price" precision="10" scale="0" />
+        <property name="outboundChPrice" type="big_decimal">
+            <column name="outbound_ch_price" precision="10" />
         </property>
         <property name="outboundInQty" type="java.lang.Integer">
             <column name="outbound_in_qty" />
         </property>
-        <property name="outboundInCost" type="java.lang.Long">
-            <column name="outbound_in_cost" precision="10" scale="0" />
+        <property name="outboundInCost" type="big_decimal">
+            <column name="outbound_in_cost" precision="10" />
         </property>
-        <property name="outboundInPrice" type="java.lang.Long">
-            <column name="outbound_in_price" precision="10" scale="0" />
+        <property name="outboundInPrice" type="big_decimal">
+            <column name="outbound_in_price" precision="10" />
         </property>
         <property name="curCost" type="string">
             <column name="cur_cost" length="3" />

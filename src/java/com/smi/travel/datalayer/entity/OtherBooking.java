@@ -2,6 +2,7 @@ package com.smi.travel.datalayer.entity;
 // Generated Jan 14, 2015 11:52:54 AM by Hibernate Tools 3.6.0
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,14 +17,14 @@ public class OtherBooking  {
      private Master master;
      private Agent agent;
      private SystemUser guide;
-     private Long adCost;
-     private Long adPrice;
+     private BigDecimal adCost;
+     private BigDecimal adPrice;
      private Integer adQty;
-     private Long chCost;
-     private Long chPrice;
+     private BigDecimal chCost;
+     private BigDecimal chPrice;
      private Integer chQty;
-     private Long inCost;
-     private Long inPrice;
+     private BigDecimal inCost;
+     private BigDecimal inPrice;
      private Integer inQty;
      private Integer isBill;
      private MItemstatus status;
@@ -37,8 +38,8 @@ public class OtherBooking  {
      private String remark;
      private String curAmount;
      private String curCost;
-     private Long agentCommission;
-     private Long guideCommission;
+     private BigDecimal agentCommission;
+     private BigDecimal guideCommission;
      private String remarkTicket;
      private String remarkGuideCommission;
      private String remarkAgentCommission;
@@ -54,7 +55,7 @@ public class OtherBooking  {
         this.master = master;
         this.status = status;
     }
-    public OtherBooking(Product product,SystemUser guide, Master master,Agent agent, Long adCost, Long adPrice, Integer adQty, Long chCost, Long chPrice, Integer chQty, Long inCost, Long inPrice, Integer inQty,Integer isBill, MItemstatus status, Date otherDate, Date otherTime, Date createDate, String updateBy, Date updateDate, String createBy, String remark,String currency,Date cancelDate, Long agentCommission,Long guideCommission,String remarkGuideCommission,String remarkAgentCommission,String remarkTicket,Set coupons,String curAmount,String curCost) {
+    public OtherBooking(Product product,SystemUser guide, Master master,Agent agent, BigDecimal adCost, BigDecimal adPrice, Integer adQty, BigDecimal chCost, BigDecimal chPrice, Integer chQty, BigDecimal inCost, BigDecimal inPrice, Integer inQty,Integer isBill, MItemstatus status, Date otherDate, Date otherTime, Date createDate, String updateBy, Date updateDate, String createBy, String remark,String currency,Date cancelDate, BigDecimal agentCommission,BigDecimal guideCommission,String remarkGuideCommission,String remarkAgentCommission,String remarkTicket,Set coupons,String curAmount,String curCost) {
        this.product = product;
        this.master = master;
        this.agent = agent;
@@ -108,20 +109,7 @@ public class OtherBooking  {
     public void setMaster(Master master) {
         this.master = master;
     }
-    public Long getAdCost() {
-        return this.adCost;
-    }
-    
-    public void setAdCost(Long adCost) {
-        this.adCost = adCost;
-    }
-    public Long getAdPrice() {
-        return this.adPrice;
-    }
-    
-    public void setAdPrice(Long adPrice) {
-        this.adPrice = adPrice;
-    }
+
     public Integer getAdQty() {
         return this.adQty;
     }
@@ -129,20 +117,7 @@ public class OtherBooking  {
     public void setAdQty(Integer adQty) {
         this.adQty = adQty;
     }
-    public Long getChCost() {
-        return this.chCost;
-    }
-    
-    public void setChCost(Long chCost) {
-        this.chCost = chCost;
-    }
-    public Long getChPrice() {
-        return this.chPrice;
-    }
-    
-    public void setChPrice(Long chPrice) {
-        this.chPrice = chPrice;
-    }
+
     public Integer getChQty() {
         return this.chQty;
     }
@@ -150,20 +125,7 @@ public class OtherBooking  {
     public void setChQty(Integer chQty) {
         this.chQty = chQty;
     }
-    public Long getInCost() {
-        return this.inCost;
-    }
-    
-    public void setInCost(Long inCost) {
-        this.inCost = inCost;
-    }
-    public Long getInPrice() {
-        return this.inPrice;
-    }
-    
-    public void setInPrice(Long inPrice) {
-        this.inPrice = inPrice;
-    }
+
     public Integer getInQty() {
         return this.inQty;
     }
@@ -288,22 +250,6 @@ public class OtherBooking  {
         this.guide = guide;
     }
 
-    public Long getAgentCommission() {
-        return agentCommission;
-    }
-
-    public void setAgentCommission(Long agentCommission) {
-        this.agentCommission = agentCommission;
-    }
-
-    public Long getGuideCommission() {
-        return guideCommission;
-    }
-
-    public void setGuideCommission(Long guideCommission) {
-        this.guideCommission = guideCommission;
-    }
-
     public String getRemarkGuideCommission() {
         return remarkGuideCommission;
     }
@@ -342,6 +288,70 @@ public class OtherBooking  {
 
     public void setOtherDateTo(Date otherDateTo) {
         this.otherDateTo = otherDateTo;
+    }
+
+    public BigDecimal getAdCost() {
+        return adCost;
+    }
+
+    public void setAdCost(BigDecimal adCost) {
+        this.adCost = adCost;
+    }
+
+    public BigDecimal getAdPrice() {
+        return adPrice;
+    }
+
+    public void setAdPrice(BigDecimal adPrice) {
+        this.adPrice = adPrice;
+    }
+
+    public BigDecimal getChCost() {
+        return chCost;
+    }
+
+    public void setChCost(BigDecimal chCost) {
+        this.chCost = chCost;
+    }
+
+    public BigDecimal getChPrice() {
+        return chPrice;
+    }
+
+    public void setChPrice(BigDecimal chPrice) {
+        this.chPrice = chPrice;
+    }
+
+    public BigDecimal getInCost() {
+        return inCost;
+    }
+
+    public void setInCost(BigDecimal inCost) {
+        this.inCost = inCost;
+    }
+
+    public BigDecimal getInPrice() {
+        return inPrice;
+    }
+
+    public void setInPrice(BigDecimal inPrice) {
+        this.inPrice = inPrice;
+    }
+
+    public BigDecimal getAgentCommission() {
+        return agentCommission;
+    }
+
+    public void setAgentCommission(BigDecimal agentCommission) {
+        this.agentCommission = agentCommission;
+    }
+
+    public BigDecimal getGuideCommission() {
+        return guideCommission;
+    }
+
+    public void setGuideCommission(BigDecimal guideCommission) {
+        this.guideCommission = guideCommission;
     }
 
    

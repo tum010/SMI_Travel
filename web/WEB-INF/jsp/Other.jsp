@@ -77,7 +77,7 @@
                 setformat();
             });
 
-              $(".money").mask('000,000,000,000,000,000', {reverse: true});
+              $(".money").mask('000,000,000,000,000,000.00', {reverse: true});
               $(".percent").mask('000,000,000,000,000.00%', {reverse: true});
               
               function setformat(){
@@ -176,18 +176,18 @@
                                 <td class="tdcenter ${colourStatus}" id="otherdate-${table.id}" style="width:75px;${colourStatusFirstrow}">${otherDate}</td>
                                 <td> ${table.product.name}</td>
                                 
-                                <td class="tdright moneyformat"> ${table.adCost}</td>
-                                <td class="tdcenter moneyformat"> ${table.adQty}</td>
-                                <td class="tdright moneyformat"> ${table.adPrice}</td>
-                                <td class="tdright moneyformat"> ${table.chCost}</td>
-                                <td class="tdcenter moneyformat"> ${table.chQty}</td>
-                                <td class="tdright moneyformat"> ${table.chPrice}</td>
-                                <td class="tdright moneyformat"> ${table.inCost}</td>
-                                <td class="tdcenter moneyformat"> ${table.inQty}</td>
-                                <td class="tdright moneyformat"> ${table.inPrice }</td>
-                                <td class="tdright moneyformat"> ${(table.adCost * table.adQty) + (table.chCost * table.chQty) + (table.inCost * table.inQty)}</td>
+                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.adCost}" /></td>
+                                <td class="tdcenter moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.adQty}" /></td>
+                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.adPrice}" /></td>
+                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.chCost}" /></td>
+                                <td class="tdcenter moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.chQty}" /></td>
+                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.chPrice}" /></td>
+                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.inCost}" /></td>
+                                <td class="tdcenter moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.inQty}" /></td>
+                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.inPrice}" /></td>
+                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${(table.adCost * table.adQty) + (table.chCost * table.chQty) + (table.inCost * table.inQty)}" /></td>
                                 <td class="tdcenter"> ${table.curCost}</td>
-                                <td class="tdright moneyformat"> ${(table.adPrice * table.adQty) + (table.chPrice * table.chQty) + (table.inPrice * table.inQty)}</td>
+                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${(table.adPrice * table.adQty) + (table.chPrice * table.chQty) + (table.inPrice * table.inQty)}" /></td>
                                 <td class="tdcenter"> ${table.curAmount}</td>
                                 <td> 
                                     <center> 

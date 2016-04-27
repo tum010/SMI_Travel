@@ -22,34 +22,33 @@
         <many-to-one name="guide" class="com.smi.travel.datalayer.entity.SystemUser" fetch="select">
             <column name="guide_id"  />
         </many-to-one> 
-        <property name="adCost" type="java.lang.Long">
-            <column name="ad_cost" precision="10" scale="0" />
+        <property name="adCost" type="big_decimal">
+            <column name="ad_cost" precision="10" />
         </property>
-        <property name="adPrice" type="java.lang.Long">
-            <column name="ad_price" precision="10" scale="0" />
+        <property name="adPrice" type="big_decimal">
+            <column name="ad_price" precision="10" />
         </property>
         <property name="adQty" type="java.lang.Integer">
             <column name="ad_qty" />
         </property>
-        <property name="chCost" type="java.lang.Long">
-            <column name="ch_cost" precision="10" scale="0" />
+        <property name="chCost" type="big_decimal">
+            <column name="ch_cost" precision="10" />
         </property>
-        <property name="chPrice" type="java.lang.Long">
-            <column name="ch_price" precision="10" scale="0" />
+        <property name="chPrice" type="big_decimal">
+            <column name="ch_price" precision="10" />
         </property>
         <property name="chQty" type="java.lang.Integer">
             <column name="ch_qty" />
         </property>
-        <property name="inCost" type="java.lang.Long">
-            <column name="in_cost" precision="10" scale="0" />
+        <property name="inCost" type="big_decimal">
+            <column name="in_cost" precision="10" />
         </property>
-        <property name="inPrice" type="java.lang.Long">
-            <column name="in_price" precision="10" scale="0" />
+        <property name="inPrice" type="big_decimal">
+            <column name="in_price" precision="10" />
         </property>
         <property name="inQty" type="java.lang.Integer">
             <column name="in_qty" />
         </property>
-
         <property name="otherDate" type="date">
             <column name="other_date" length="10" />
         </property>
@@ -83,11 +82,11 @@
         <property name="remarkTicket" type="string">
             <column name="remark_ticket"  />
         </property>
-        <property name="agentCommission" type="java.lang.Long">
-            <column name="agent_commission" length="10" />
+        <property name="agentCommission" type="big_decimal">
+            <column name="agent_commission" precision="10" />
         </property>
-        <property name="guideCommission" type="java.lang.Long">
-            <column name="guide_commission" length="10" />
+        <property name="guideCommission" type="big_decimal">
+            <column name="guide_commission" precision="10" />
         </property>
         <property name="isBill" type="java.lang.Integer">
             <column name="is_bill" />

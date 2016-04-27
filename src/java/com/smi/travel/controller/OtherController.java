@@ -1,27 +1,24 @@
 package com.smi.travel.controller;
 
-import com.smi.travel.datalayer.entity.AirticketPnr;
-import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.HistoryBooking;
-import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.OtherBooking;
-import com.smi.travel.datalayer.entity.Passenger;
 import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.BookingOtherService;
-import com.smi.travel.datalayer.service.PassengerService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 public class OtherController extends SMITravelController {
 
@@ -47,15 +44,22 @@ public class OtherController extends SMITravelController {
         String action = request.getParameter("action");
         String OtherID = request.getParameter("OtherID");
         String callPageFrom = request.getParameter("callPageFrom");
-        String pattern = "###,###.##";
+        String pattern = "###,##0.##";
         DecimalFormat dF = new DecimalFormat(pattern);
         SystemUser user = (SystemUser) session.getAttribute("USER");
-        long TotalCost = 0;
-        long TotalPrice = 0;
-        long Amount = 0;
-        double Markup = 0;
-        float totalCostTemp = 0;
-        float totalPriceTemp = 0;
+//        long TotalCost = 0;
+//        long TotalPrice = 0;
+//        long Amount = 0;
+//        double Markup = 0;
+//        float totalCostTemp = 0;
+//        float totalPriceTemp = 0;
+        
+        BigDecimal TotalCost = new BigDecimal(0);
+        BigDecimal TotalPrice = new BigDecimal(0);
+        BigDecimal Amount = new BigDecimal(0);
+        BigDecimal Markup = new BigDecimal(0);
+        BigDecimal totalCostTemp = new BigDecimal(0);
+        BigDecimal totalPriceTemp = new BigDecimal(0);
         
         if ("delete".equalsIgnoreCase(action)) {
             System.out.println("delete booking other");
@@ -73,12 +77,15 @@ public class OtherController extends SMITravelController {
         if (OtherList != null) {
             for (int i = 0; i < OtherList.size(); i++) {
                 OtherBooking other = OtherList.get(i);
-                TotalCost += (other.getAdCost() * other.getAdQty()) + (other.getChCost() * other.getChQty()) + (other.getInCost() * other.getInQty());
-                TotalPrice += (other.getAdPrice() * other.getAdQty()) + (other.getChPrice() * other.getChQty()) + (other.getInPrice() * other.getInQty());
-                totalCostTemp += (other.getAdCost() * other.getAdQty()) + (other.getChCost() * other.getChQty()) + (other.getInCost() * other.getInQty());
-                totalPriceTemp += (other.getAdPrice() * other.getAdQty()) + (other.getChPrice() * other.getChQty()) + (other.getInPrice() * other.getInQty());        
-                Amount = TotalPrice - TotalCost;
-                Markup = 130.65;
+                TotalCost = TotalCost.add(((other.getAdCost().multiply(new BigDecimal(other.getAdQty()))).add(other.getChCost().multiply(new BigDecimal(other.getChQty())))).add(other.getInCost().multiply(new BigDecimal(other.getInQty()))));
+                TotalPrice = TotalPrice.add(((other.getAdPrice().multiply(new BigDecimal(other.getAdQty()))).add(other.getChPrice().multiply(new BigDecimal(other.getChQty())))).add(other.getInPrice().multiply(new BigDecimal(other.getInQty()))));
+                totalCostTemp = totalCostTemp.add(((other.getAdCost().multiply(new BigDecimal(other.getAdQty()))).add(other.getChCost().multiply(new BigDecimal(other.getChQty())))).add(other.getInCost().multiply(new BigDecimal(other.getInQty()))));
+                totalPriceTemp = totalPriceTemp.add(((other.getAdPrice().multiply(new BigDecimal(other.getAdQty()))).add(other.getChPrice().multiply(new BigDecimal(other.getChQty())))).add(other.getInPrice().multiply(new BigDecimal(other.getInQty()))));
+//                TotalPrice += (other.getAdPrice() * other.getAdQty()) + (other.getChPrice() * other.getChQty()) + (other.getInPrice() * other.getInQty());
+//                totalCostTemp += (other.getAdCost() * other.getAdQty()) + (other.getChCost() * other.getChQty()) + (other.getInCost() * other.getInQty());
+//                totalPriceTemp += (other.getAdPrice() * other.getAdQty()) + (other.getChPrice() * other.getChQty()) + (other.getInPrice() * other.getInQty());        
+                Amount = TotalPrice.subtract(TotalCost);
+                Markup = new BigDecimal(130.65);
             }
         }
         System.out.println("refno :"+refno);
@@ -96,7 +103,11 @@ public class OtherController extends SMITravelController {
         request.setAttribute(TOTALCOST, dF.format(TotalCost));
         request.setAttribute(TOTALPRICE, dF.format(TotalPrice));
         request.setAttribute(AMOUNT, dF.format(Amount));
-        request.setAttribute(MARKUP, (totalCostTemp > 0 && totalPriceTemp > 0 ? dF.format((((totalPriceTemp/totalCostTemp)-1)*100)) : "0"));
+        BigDecimal temp = new BigDecimal(BigInteger.ZERO);
+        request.setAttribute(MARKUP, ((new BigDecimal(BigInteger.ZERO).compareTo(totalCostTemp) < 0 ) && (new BigDecimal(BigInteger.ZERO).compareTo(totalPriceTemp) < 0 ) ?  (((totalPriceTemp.divide(totalCostTemp,2, RoundingMode.HALF_UP))).subtract(BigDecimal.ONE)).multiply(new BigDecimal(100)) : "0"));
+        
+
+//        request.setAttribute(MARKUP, (totalCostTemp > 0 && totalPriceTemp > 0 ? dF.format((((totalPriceTemp/totalCostTemp)-1)*100)) : "0"));
         System.out.println("OtherController");
         if (request.getParameter(TransectionResult) != null) {
             if (request.getParameter(TransectionResult).equalsIgnoreCase("1")) {
