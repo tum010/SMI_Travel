@@ -920,36 +920,39 @@
                     <div class="panel panel-default ${panelborder}">
                         <div class="panel-body"  style="padding-left: 0px; padding-right: 0px;">
                             <div class="col-xs-12">
-
+                                <c:set var="disabled" value="disabled"/>
+                                <c:if test="${receipt.id != null}">
+                                    <c:set var="disabled" value=""/>
+                                </c:if>
                                 <div class="col-md-1 text-left " style="width: 93px">
-                                    <button type="button" class="btn btn-default" onclick="printReceipt(1)">
+                                    <button type="button" class="btn btn-default" onclick="printReceipt(1)" ${disabled}>
                                         <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Receipt
                                     </button>
                                 </div>
                                 <div class="col-md-1 text-left " style="width: 133px">
-                                    <button type="button" class="btn btn-default" onclick="printReceipt(2)">
+                                    <button type="button" class="btn btn-default" onclick="printReceipt(2)" ${disabled}>
                                         <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Receipt Email
                                     </button>
                                 </div>
                                 <div class="col-md-1 text-left " style="width: 90px">
-                                    <button type="button" class="btn btn-default" onclick="printReceipt(3)">
+                                    <button type="button" class="btn btn-default" onclick="printReceipt(3)" ${disabled}>
                                         <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Invoice
                                     </button>
                                 </div>
                                 <div class="col-md-1 text-left " style="width: 130px">
-                                    <button type="button" class="btn btn-default" onclick="printReceipt(4)">
+                                    <button type="button" class="btn btn-default" onclick="printReceipt(4)" ${disabled}>
                                         <span id="buttonPrint" class="glyphicon glyphicon-print" ></span> Invoice Email
                                     </button>
                                 </div>
 
                                 <div class="col-md-1 text-left " style="width: 130px">
-                                    <button type="button" class="btn btn-default" onclick="sendEmailReceipt()">
+                                    <button type="button" class="btn btn-default" onclick="sendEmailReceipt()" ${disabled}>
                                         <span id="buttonEmailRec" class="glyphicon glyphicon-send" ></span> Send Receipt
                                     </button>
                                 </div>
 
                                 <div class="col-md-1 text-left " style="width: 130px">
-                                    <button type="button" class="btn btn-default" onclick="printReceipt(5)">
+                                    <button type="button" class="btn btn-default" onclick="printReceipt(5)" ${disabled}>
                                         <span id="buttonEmailInv" class="glyphicon glyphicon-send" ></span> Send Invoice
                                     </button>
                                 </div>

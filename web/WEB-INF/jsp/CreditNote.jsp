@@ -281,13 +281,17 @@
                             <div class="panel panel-default ${panelborder}">                              
                                 <div class="panel-body">
                                     <div class="col-xs-12 ">
+                                        <c:set var="disabled" value="disabled"/>
+                                        <c:if test="${creditNote.id != null}">
+                                            <c:set var="disabled" value=""/>
+                                        </c:if>
                                         <div class="col-md-2 text-right ">
-                                            <button type="button" onclick="openReport()" class="btn btn-default">
+                                            <button type="button" onclick="openReport()" class="btn btn-default" ${disabled}>
                                                 <span id="SpanPrintPackage" class="glyphicon glyphicon-print"></span> Print
                                             </button>
                                         </div>
                                         <div class="col-md-2 text-left " style="padding-left: 0px">
-                                            <button type="button" onclick="sendMail()" class="btn btn-default">
+                                            <button type="button" onclick="sendMail()" class="btn btn-default" ${disabled}>
                                                 <span id="SpanPrintInvoiceNew" class="glyphicon glyphicon-envelope"></span> Send Mail
                                             </button>
                                         </div>
