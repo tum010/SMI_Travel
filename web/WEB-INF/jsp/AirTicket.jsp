@@ -166,7 +166,7 @@
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker3'>
                                                 <fmt:formatDate value="${booking.deadline}" var="deadLine" pattern="dd-MM-yyyy" />
-                                                <input type='text' class="form-control" name="get_deadline" id="deadline" 
+                                                <input type='text' class="form-control datemask" name="get_deadline" id="deadline" 
                                                        data-date-format="DD-MM-YYYY" value="${deadLine}"  placeholder="DD-MM-YYYY"/>
                                                 <span id="SpanGroupAddon" class="input-group-addon spandate">
                                                     <span id="SpanGlyphiconCalendar" class="glyphicon glyphicon-calendar"></span>
@@ -203,7 +203,7 @@
                                         <div class="form-group">
                                             <div class='input-group date' id='datetimepicker4'>
                                                 <fmt:formatDate value="${booking.issuedate}" var="issDate" pattern="dd-MM-yyyy" />
-                                                <input type='text' class="form-control" name="issuedate" id="issuedate" 
+                                                <input type='text' class="form-control datemask" name="issuedate" id="issuedate" 
                                                        data-date-format="DD-MM-YYYY" value="${issDate}"  placeholder="DD-MM-YYYY"/>
                                                 <span id="SpanGroupAddon" class="input-group-addon spandate">
                                                     <span id="SpanGlyphiconCalendar" class="glyphicon glyphicon-calendar"></span>
@@ -624,6 +624,7 @@
 
 <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
+        $('.datemask').mask('00-00-0000');
         $(".decimal").inputmask({
             alias: "decimal",
             integerDigits: 8,

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -353,6 +354,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
     public ConfirmSlipHeaderReport getConfirmSlipHeaderReport(String refno,String user) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         ConfirmSlipHeaderReport confirmSlip = new ConfirmSlipHeaderReport();
         
         SimpleDateFormat dateformat = new SimpleDateFormat();
@@ -385,7 +387,8 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             confirmSlip.setTelfax(B[4]== null ? "" :util.ConvertString(B[4]));
             confirmSlip.setBookstatus(B[5]== null ? "" :util.ConvertString(B[5]));
             confirmSlip.setIncharge(B[6]== null ? "" :util.ConvertString(B[6]));
-            confirmSlip.setFirstdept(B[7]== null ? "" :util.ConvertString(B[7]));
+            Date firstDept = (B[7]== null ? new Date() : util.convertStringToDate(util.ConvertString(B[7])));
+            confirmSlip.setFirstdept(B[7]== null ? "" : sdf.format(firstDept));
             confirmSlip.setPackages(B[8]== null ? "" :util.ConvertString(B[8]));
         }
         
