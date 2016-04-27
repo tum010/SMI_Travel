@@ -19,7 +19,7 @@ $(document).ready(function () {
         if($("#birthDate").val() === ""){
             $("#age").val(0);
         }else{
-            $("#age").val(age);
+            $("#age").val(isNaN(age) ? 0 : age);
         }
         
     });
