@@ -7,6 +7,7 @@ $(document).ready(function () {
 //        $("#birthDate").val(convertFormatDate(date));
 //    }
     $('.date').datetimepicker();
+    $('.datemask').mask('00-00-0000');
     $('.spandate').click(function () {
         var position = $(this).offset();
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 32);
@@ -18,7 +19,7 @@ $(document).ready(function () {
         if($("#birthDate").val() === ""){
             $("#age").val(0);
         }else{
-            $("#age").val(age);
+            $("#age").val(isNaN(age) ? 0 : age);
         }
         
     });

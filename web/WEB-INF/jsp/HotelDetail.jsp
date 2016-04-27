@@ -9,6 +9,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="js/HotelDetail.js"></script> 
 <script src="js/select2.js"></script>
@@ -137,7 +139,7 @@
                                 <div class="col-sm-6">
                                     <div class='input-group date'>
                                         <fmt:formatDate value="${hotelBooking.checkin}" var="checkIn" pattern="dd-MM-yyyy" />
-                                        <input id="checkin" name="checkin" type='text' class="form-control"  data-date-format="DD-MM-YYYY" value="${checkIn}" placeholder="DD-MM-YYYY"/>
+                                        <input id="checkin" name="checkin" type='text' class="form-control datemask"  data-date-format="DD-MM-YYYY" value="${checkIn}" placeholder="DD-MM-YYYY"/>
                                         <span id="SpanCheckin" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
@@ -148,7 +150,7 @@
                                 <div class="col-sm-6">
                                     <div class='input-group date'>
                                         <fmt:formatDate value="${hotelBooking.checkout}" var="checkOut" pattern="dd-MM-yyyy" />
-                                        <input id="checkout" name="checkout" type='text'  data-date-format="DD-MM-YYYY" class="form-control" value="${checkOut}" placeholder="DD-MM-YYYY"/>
+                                        <input id="checkout" name="checkout" type='text'  data-date-format="DD-MM-YYYY" class="form-control datemask" value="${checkOut}" placeholder="DD-MM-YYYY"/>
                                         <span id="SpanCheckout" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
@@ -178,7 +180,7 @@
                                 <div class="col-sm-6">
                                     <div class="input-group date">
                                         <fmt:formatDate value="${hotelBooking.deadline}" var="deadLine" pattern="dd-MM-yyyy" />
-                                        <input name="deadline" id="deadline" type="text"  data-date-format="DD-MM-YYYY" maxlength="10" class="form-control" value="${deadLine}" placeholder="DD-MM-YYYY"/>
+                                        <input name="deadline" id="deadline" type="text"  data-date-format="DD-MM-YYYY" maxlength="10" class="form-control datemask" value="${deadLine}" placeholder="DD-MM-YYYY"/>
                                         <span id="SpanDeadline" class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
@@ -331,8 +333,8 @@
                                     <td><input id="row-room-${formula.count}-qty" name="row-room-${formula.count}-qty" class="form-control text-right money" value="${re.qty}" maxlength="3"></td>
                                     <td><input id="row-room-${formula.count}-room" name="row-room-${formula.count}-room" class="form-control" value="${re.room}" maxlength="50"></td>
                                     <td><input id="row-room-${formula.count}-category" name="row-room-${formula.count}-category" class="form-control" value="${re.category}" maxlength="50"></td>
-                                    <td><input id="row-room-${formula.count}-cost" name="row-room-${formula.count}-cost" class="form-control text-right money" value="${re.cost}" maxlength="11"></td>
-                                    <td><input id="row-room-${formula.count}-price" name="row-room-${formula.count}-price" class="form-control text-right money" value="${re.price}" maxlength="11"></td>
+                                    <td><input id="row-room-${formula.count}-cost" name="row-room-${formula.count}-cost" class="form-control text-right decimal" value="${re.cost}" maxlength="11"></td>
+                                    <td><input id="row-room-${formula.count}-price" name="row-room-${formula.count}-price" class="form-control text-right decimal" value="${re.price}" maxlength="11"></td>
                                     <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
                                             <c:if test="${re.hotelBooking.isBill == 0}">
@@ -390,8 +392,8 @@
                                     <td class="hidden"><input id="row-request-${additional.count}-id" name="row-request-${additional.count}-id" class="form-control" value="${re.id}"></td>
                                     <td><input id="row-request-${additional.count}-category" name="row-request-${additional.count}-category" class="form-control" value="${re.category}" maxlength="100"></td>
                                     <td><input id="row-request-${additional.count}-description" name="row-request-${additional.count}-description" class="form-control text-right " value="${re.description}" maxlength="100"></td>
-                                    <td><input id="row-request-${additional.count}-cost" name="row-request-${additional.count}-cost" class="form-control text-right money" value="${re.cost}" maxlength="11"></td>
-                                    <td><input id="row-request-${additional.count}-price" name="row-request-${additional.count}-price" class="form-control text-right money" value="${re.price}" maxlength="11"></td>
+                                    <td><input id="row-request-${additional.count}-cost" name="row-request-${additional.count}-cost" class="form-control text-right decimal" value="${re.cost}" maxlength="11"></td>
+                                    <td><input id="row-request-${additional.count}-price" name="row-request-${additional.count}-price" class="form-control text-right decimal" value="${re.price}" maxlength="11"></td>
                                     <td class="text-center">
                                         <c:if test="${lockUnlockBooking == 0}">
                                             <c:if test="${re.hotelBooking.isBill == 0}">

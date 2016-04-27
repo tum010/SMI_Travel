@@ -12,6 +12,8 @@ import com.smi.travel.datalayer.entity.MBilltype;
 import com.smi.travel.datalayer.view.dao.BillableViewDao;
 import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import java.util.Date;
 import java.util.LinkedList;
@@ -34,8 +36,8 @@ private SessionFactory sessionFactory;
         List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `billable_view` where `billable_view`.ref_no =  "+refno)
                 .addScalar("bill_type_id",Hibernate.INTEGER)
                 .addScalar("bill_type",Hibernate.STRING)
-                .addScalar("cost",Hibernate.BIG_INTEGER)
-                .addScalar("price",Hibernate.BIG_INTEGER)
+                .addScalar("cost",Hibernate.STRING)
+                .addScalar("price",Hibernate.STRING)
                 .addScalar("ref_no",Hibernate.STRING)
                 .addScalar("detail",Hibernate.STRING)
                 .addScalar("cur_amount",Hibernate.STRING)
@@ -49,8 +51,8 @@ private SessionFactory sessionFactory;
             BillableView bill = new BillableView();
             bill.setBillID((B[0].toString()));
             bill.setBilltype(B[1].toString());
-            bill.setCost(util.convertObjectToInteger(B[2]));
-            bill.setPrice(util.convertObjectToInteger(B[3]));
+            bill.setCost(B[2] != null ? util.ConvertString(B[2]) : "0.00");
+            bill.setPrice(B[3] != null ? util.ConvertString(B[3]) : "0.00");
             bill.setRefno(B[4].toString());
             bill.setDetail(B[5].toString());
             bill.setCurAmount(String.valueOf(B[6]));  
@@ -85,8 +87,8 @@ private SessionFactory sessionFactory;
             billtype.setName(B.getBilltype());
             billtype.setId(B.getBillID());
             Billdata.setMBilltype(billtype);
-            Billdata.setCost(B.getCost());
-            Billdata.setPrice(B.getPrice());
+            Billdata.setCost(new BigDecimal(B.getCost()));
+            Billdata.setPrice(new BigDecimal(B.getPrice()));
             Billdata.setDetail(B.getDetail());
             Billdata.setCurrency(B.getCurAmount());
             Billdata.setCurCost(B.getCurCost());

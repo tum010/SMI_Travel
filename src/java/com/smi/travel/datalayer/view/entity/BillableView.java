@@ -13,8 +13,8 @@ package com.smi.travel.datalayer.view.entity;
 public class BillableView {
     private String billID;
     private String billtype;
-    private int cost;
-    private int price;
+    private String cost;
+    private String price;
     private String refno;
     private String detail;
     private String curCost;
@@ -36,22 +36,6 @@ public class BillableView {
 
     public void setBilltype(String billtype) {
         this.billtype = billtype;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public String getCurCost() {
@@ -103,6 +87,20 @@ public class BillableView {
         this.refItemId = refItemId;
     }
 
-   
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
     
 }

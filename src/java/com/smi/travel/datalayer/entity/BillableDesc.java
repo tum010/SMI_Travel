@@ -17,8 +17,8 @@ public class BillableDesc  {
      private Billable billable;
      private MBilltype MBilltype;
      private AirticketAirline airticketAirline;
-     private int cost;
-     private int price;
+     private BigDecimal cost;
+     private BigDecimal price;
      private int isBill;
      private String remark;
      private String detail;
@@ -33,13 +33,13 @@ public class BillableDesc  {
     }
 
 	
-    public BillableDesc(Billable billable, int cost, int price, int isBill) {
+    public BillableDesc(Billable billable, BigDecimal cost, BigDecimal price, int isBill) {
         this.billable = billable;
         this.cost = cost;
         this.price = price;
         this.isBill = isBill;
     }
-    public BillableDesc(Billable billable, MBilltype MBilltype, AirticketAirline airticketAirline, int cost, int price, int isBill, String remark,String detail,String currency,Date billDate,String refItemId,String curCost,BigDecimal exRate) {
+    public BillableDesc(Billable billable, MBilltype MBilltype, AirticketAirline airticketAirline, BigDecimal cost, BigDecimal price, int isBill, String remark,String detail,String currency,Date billDate,String refItemId,String curCost,BigDecimal exRate) {
        this.billable = billable;
        this.MBilltype = MBilltype;
        this.airticketAirline = airticketAirline;
@@ -83,20 +83,7 @@ public class BillableDesc  {
     public void setAirticketAirline(AirticketAirline airticketAirline) {
         this.airticketAirline = airticketAirline;
     }
-    public int getCost() {
-        return this.cost;
-    }
     
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-    public int getPrice() {
-        return this.price;
-    }
-    
-    public void setPrice(int price) {
-        this.price = price;
-    }
     public int getIsBill() {
         return this.isBill;
     }
@@ -158,6 +145,22 @@ public class BillableDesc  {
 
     public void setExRate(BigDecimal exRate) {
         this.exRate = exRate;
+    }
+
+    public BigDecimal getCost() {
+        return cost;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
 

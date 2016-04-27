@@ -16,6 +16,7 @@ import com.smi.travel.datalayer.view.entity.InvoiceView;
 import com.smi.travel.model.NonBillableView;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -721,8 +722,8 @@ public class InvoiceImpl implements InvoiceDao{
                 List<BillableDesc> Billdesc = session.createQuery(GET_BILL_AMOUNT)
                     .setParameter("descid", detail.getBillableDesc().getId())
                     .list();
-                cost = new BigDecimal(Billdesc.get(0).getCost());
-                price = new BigDecimal(Billdesc.get(0).getPrice());
+                cost = (Billdesc.get(0).getCost() != null ? Billdesc.get(0).getCost() : new BigDecimal(BigInteger.ZERO));
+                price = (Billdesc.get(0).getPrice() != null ? Billdesc.get(0).getPrice() : new BigDecimal(BigInteger.ZERO));
                 System.out.println("cost : "+cost +"price : "+price);
                 List<InvoiceDetail> invoiceList;
                 if(detail.getId() != null){

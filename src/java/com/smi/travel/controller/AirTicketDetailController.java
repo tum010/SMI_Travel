@@ -209,8 +209,8 @@ public class AirTicketDetailController extends SMITravelController {
                                     System.out.println(" refItemIdTempParts[k] " + refItemIdTempParts[k]);
                                     System.out.println(" billableViews.get(x).getRefItemId() " + billableViews.get(x).getRefItemId());
                                     if(String.valueOf(refItemIdTempParts[k]).equalsIgnoreCase(billableViews.get(x).getRefItemId())){
-                                        cost = cost + billableViews.get(x).getCost();
-                                        price = price + billableViews.get(x).getPrice();
+//                                        cost = cost + billableViews.get(x).getCost();
+//                                        price = price + billableViews.get(x).getPrice();
                                         curcost =  billableViews.get(x).getCurCost();
                                         curamout =  billableViews.get(x).getCurAmount();
                                         
@@ -227,8 +227,8 @@ public class AirTicketDetailController extends SMITravelController {
                             System.out.println(" curcost " + curcost);
                             System.out.println(" curamout " + curamout);
                             BillableView billableView = new BillableView();
-                            billableView.setCost(cost);
-                            billableView.setPrice(price);
+//                            billableView.setCost(cost);
+//                            billableView.setPrice(price);
                             billableView.setCurCost(curcost);
                             billableView.setCurAmount(curamout);
                             int resultupdate = utilservice.updateBillableDesc(billableView,billableDescList.get(j).getId()); //billdescId

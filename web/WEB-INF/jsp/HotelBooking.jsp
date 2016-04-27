@@ -182,11 +182,11 @@
                     </script>
                     <td class="text-center" id="day-${b.id}"></td>
                     <td>${b.remark}</td>
-                    <td class="moneyformat text-right">${b.adult}</td>
-                    <td class="moneyformat text-right">${b.child}</td>
-                    <td class="moneyformat text-right">${b.totalcost}</td>
+                    <td class="money text-right">${b.sumRoom}</td>
+                    <td class="money text-right">${b.sumRequest}</td>
+                    <td class="money text-right">${b.sumTotalCost}</td>
                     <td class="tdcenter">${b.curCost}</td>
-                    <td class="moneyformat text-right">${b.adult + b.child}</td>
+                    <td class="money text-right">${b.sumRoom + b.sumRequest}</td>
                     <td class="tdcenter">${b.curAmount}</td>
                     <td class="text-center">
                         

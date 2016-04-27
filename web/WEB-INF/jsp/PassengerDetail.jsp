@@ -193,8 +193,8 @@
                                     <div class="col-sm-4">
                                         <div class="">
                                             <fmt:formatDate value="${passenger.getCustomer().getBirthDate()}" var="birthDate" pattern="dd-MM-yyyy" />
-                                            <div class='input-group date'>                                          
-                                                <input id="birthDate" name="birthDate"  value="${birthDate}" type='text' class="form-control" data-date-format="DD-MM-YYYY"  placeholder="DD-MM-YYYY"/>
+                                            <div class='input-group date '>                                          
+                                                <input id="birthDate" name="birthDate"  value="${birthDate}" type='text' class="form-control datemask" data-date-format="DD-MM-YYYY"  placeholder="DD-MM-YYYY"/>
                                                 <span id="SpanGroupCalendar" class="input-group-addon spandate">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>

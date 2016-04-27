@@ -25,6 +25,8 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -280,19 +282,23 @@ public class HotelDetailController extends SMITravelController {
             String cost = request.getParameter("row-room-" + i + "-cost");
             String price = request.getParameter("row-room-" + i + "-price");
             Integer qtyInt = 0;
-            Integer costInt = 0;
-            Integer priceInt = 0;
+//            Integer costInt = 0;
+//            Integer priceInt = 0;
+            BigDecimal costDecimal = new BigDecimal(BigInteger.ZERO);
+            BigDecimal priceDecimal = new BigDecimal(BigInteger.ZERO);
 
             if (StringUtils.isNotEmpty(qty)) {
                 qtyInt = util.convertStringToInteger(qty);
             }
 
             if (StringUtils.isNotEmpty(cost)) {
-                costInt = util.convertStringToInteger(cost);
+                costDecimal = new BigDecimal(cost.replaceAll(",",""));
+//                costInt = util.convertStringToInteger(cost);
             }
 
             if (StringUtils.isNotEmpty(price)) {
-                priceInt = util.convertStringToInteger(price);
+                priceDecimal = new BigDecimal(price.replaceAll(",",""));
+//                priceInt = util.convertStringToInteger(price);
             }
             HotelRoom hotelRoom = getHotelRoom(id, hotelBooking);
             if (hotelRoom == null) {
@@ -302,8 +308,8 @@ public class HotelDetailController extends SMITravelController {
             hotelRoom.setQty(qtyInt);
             hotelRoom.setRoom(room);
             hotelRoom.setCategory(catagory);
-            hotelRoom.setCost(costInt);
-            hotelRoom.setPrice(priceInt);
+            hotelRoom.setCost(costDecimal);
+            hotelRoom.setPrice(priceDecimal);
             if (StringUtils.isNotEmpty(hotelRoom.getRoom())) {
                 System.out.println("## hotelRoom.getId() = " + hotelRoom.getId());
                 if (hotelRoom.getId() == null) {
@@ -353,15 +359,19 @@ public class HotelDetailController extends SMITravelController {
             String description = request.getParameter("row-request-" + i + "-description");
             String cost = request.getParameter("row-request-" + i + "-cost");
             String price = request.getParameter("row-request-" + i + "-price");
-            Integer costInt = 0;
-            Integer priceInt = 0;
+//            Integer costInt = 0;
+//            Integer priceInt = 0;
+            BigDecimal costDecimal = new BigDecimal(BigInteger.ZERO);
+            BigDecimal priceDecimal = new BigDecimal(BigInteger.ZERO);
 
             if (StringUtils.isNotEmpty(cost)) {
-                costInt = util.convertStringToInteger(cost);
+//                costInt = util.convertStringToInteger(cost);
+                costDecimal = new BigDecimal(cost.replaceAll(",",""));
             }
 
             if (StringUtils.isNotEmpty(price)) {
-                priceInt = util.convertStringToInteger(price);
+//                priceInt = util.convertStringToInteger(price);
+                priceDecimal = new BigDecimal(price.replaceAll(",",""));
             }
 
             System.out.println("hotelRequest Id=" + id);
@@ -371,8 +381,8 @@ public class HotelDetailController extends SMITravelController {
             }
             hotelRequest.setCategory(catagory);
             hotelRequest.setDescription(description);
-            hotelRequest.setCost(costInt);
-            hotelRequest.setPrice(priceInt);
+            hotelRequest.setCost(costDecimal);
+            hotelRequest.setPrice(priceDecimal);
 
             if (StringUtils.isNotEmpty(hotelRequest.getCategory())) {
                 if (hotelRequest.getId() == null) {
