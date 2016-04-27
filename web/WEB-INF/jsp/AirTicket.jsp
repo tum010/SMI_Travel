@@ -11,6 +11,8 @@
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="js/Airticket.js"></script> 
 <link href="css/jquery-ui.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 
 <c:set var="pnr" value="${requestScope['AirTicketPnr']}" />
 <c:set var="booking" value="${requestScope['AirticketBooking']}" />
@@ -336,7 +338,7 @@
                                     <td class="hidden"><input type="text" class="hidden" id="row-${airdesc.count}-id" name="row-${airdesc.count}-id" value="${detail.id}" /></td>
                                     <td><input  type="text" class="form-control" id="row-${airdesc.count}-detail" name="row-${airdesc.count}-detail" value="${detail.detail}" maxlength="100"/></td>
                                     <td><input  type="text" class="form-control money" id="row-${airdesc.count}-qty" name="row-${airdesc.count}-qty" value="${detail.qty}" maxlength="11"/></td>
-                                    <td><input  type="text" class="form-control money" id="row-${airdesc.count}-cost" name="row-${airdesc.count}-cost" value="${detail.cost}" maxlength="11"/></td>
+                                    <td><input  type="text" class="form-control decimal" id="row-${airdesc.count}-cost" name="row-${airdesc.count}-cost" value="${detail.cost}" maxlength="11"/></td>
                                     <td>
                                         <select id="row-${airdesc.count}-currencycost" name="row-${airdesc.count}-currencycost" class="form-control">
                                             <option id="" value="">---------</option>
@@ -349,7 +351,7 @@
                                             </c:forEach>
                                         </select>                                       
                                     </td>
-                                    <td><input  type="text" class="form-control money" id="row-${airdesc.count}-amount" name="row-${airdesc.count}-amount" value="${detail.amount}" maxlength="11"/></td>
+                                    <td><input  type="text" class="form-control decimal" id="row-${airdesc.count}-amount" name="row-${airdesc.count}-amount" value="${detail.amount}" maxlength="11"/></td>
                                     <td>
                                         <select id="row-${airdesc.count}-currency" name="row-${airdesc.count}-currency" class="form-control">
                                             <option id="" value="">---------</option>
@@ -619,3 +621,18 @@
         clear: both;
     }
 </style>
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0"
+        });
+    });
+</script>

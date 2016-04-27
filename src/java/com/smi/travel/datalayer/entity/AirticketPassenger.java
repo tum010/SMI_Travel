@@ -1,6 +1,9 @@
 package com.smi.travel.datalayer.entity;
 // Generated Dec 22, 2014 5:59:06 PM by Hibernate Tools 3.6.0
 
+import java.math.BigDecimal;
+
+
 
 
 /**
@@ -16,8 +19,8 @@ public class AirticketPassenger {
      private String series1;
      private String series2;
      private String series3;
-     private int ticketFare;
-     private int ticketTax;
+     private BigDecimal ticketFare;
+     private BigDecimal ticketTax;
      private String ticketFrom;
      private String ticketType;
 
@@ -25,7 +28,7 @@ public class AirticketPassenger {
     }
 
 	
-    public AirticketPassenger(String firstName, String lastName, String series1, String series2, String series3, int ticketFare, int ticketTax, String ticketFrom, String ticketType) {
+    public AirticketPassenger(String firstName, String lastName, String series1, String series2, String series3, BigDecimal ticketFare, BigDecimal ticketTax, String ticketFrom, String ticketType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.series1 = series1;
@@ -36,7 +39,7 @@ public class AirticketPassenger {
         this.ticketFrom = ticketFrom;
         this.ticketType = ticketType;
     }
-    public AirticketPassenger(AirticketAirline airticketAirline, MPricecategory MPricecategory, MInitialname MInitialname, String firstName, String lastName, String series1, String series2, String series3, String from, String to, int ticketFare, int ticketTax, String ticketFrom, String ticketType) {
+    public AirticketPassenger(AirticketAirline airticketAirline, MPricecategory MPricecategory, MInitialname MInitialname, String firstName, String lastName, String series1, String series2, String series3, String from, String to, BigDecimal ticketFare, BigDecimal ticketTax, String ticketFrom, String ticketType) {
        this.airticketAirline = airticketAirline;
        this.MPricecategory = MPricecategory;
        this.MInitialname = MInitialname;
@@ -115,20 +118,6 @@ public class AirticketPassenger {
         this.series3 = series3;
     }
 
-    public int getTicketFare() {
-        return this.ticketFare;
-    }
-    
-    public void setTicketFare(int ticketFare) {
-        this.ticketFare = ticketFare;
-    }
-    public int getTicketTax() {
-        return this.ticketTax;
-    }
-    
-    public void setTicketTax(int ticketTax) {
-        this.ticketTax = ticketTax;
-    }
     public String getTicketFrom() {
         return this.ticketFrom;
     }
@@ -144,9 +133,21 @@ public class AirticketPassenger {
         this.ticketType = ticketType;
     }
 
+    public BigDecimal getTicketFare() {
+        return ticketFare;
+    }
 
+    public void setTicketFare(BigDecimal ticketFare) {
+        this.ticketFare = ticketFare;
+    }
 
+    public BigDecimal getTicketTax() {
+        return ticketTax;
+    }
 
+    public void setTicketTax(BigDecimal ticketTax) {
+        this.ticketTax = ticketTax;
+    }
 
 }
 

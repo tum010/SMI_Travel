@@ -18,8 +18,11 @@ import com.smi.travel.datalayer.entity.MAmadeus;
 import com.smi.travel.datalayer.service.BookingAirticketService;
 import com.smi.travel.datalayer.service.MAirticketService;
 import com.smi.travel.datalayer.service.MAmadeusService;
+import com.smi.travel.util.UtilityFunction;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -308,19 +311,18 @@ public class MonitorAmadeus extends MonitorScheduler {
             bf = new BookingFlight(flightNo, sourceCode, desCode, deptDate, arrvDate, flightClass);
             bf.setDepartTime(deptTime);
             bf.setArriveTime(arrvTime);
-
-            bf.setAdCost(0);
-            bf.setAdPrice(0);
-            bf.setAdTax(0);
-            bf.setChCost(0);
-            bf.setChPrice(0);
-            bf.setChTax(0);
-            bf.setInCost(0);
-            bf.setInPrice(0);
-            bf.setInTax(0);
-            bf.setOtCost(0);
-            bf.setOtPrice(0);
-            bf.setOtTax(0);
+            bf.setAdCost(new BigDecimal(BigInteger.ZERO));
+            bf.setAdPrice(new BigDecimal(BigInteger.ZERO));
+            bf.setAdTax(new BigDecimal(BigInteger.ZERO));
+            bf.setChCost(new BigDecimal(BigInteger.ZERO));
+            bf.setChPrice(new BigDecimal(BigInteger.ZERO));
+            bf.setChTax(new BigDecimal(BigInteger.ZERO));
+            bf.setInCost(new BigDecimal(BigInteger.ZERO));
+            bf.setInPrice(new BigDecimal(BigInteger.ZERO));
+            bf.setInTax(new BigDecimal(BigInteger.ZERO));
+            bf.setOtCost(new BigDecimal(BigInteger.ZERO));
+            bf.setOtPrice(new BigDecimal(BigInteger.ZERO));
+            bf.setOtTax(new BigDecimal(BigInteger.ZERO));
             bAir.getBookingFlights().add(bf);
             bf.setBookingAirline(bAir);
         }
@@ -329,6 +331,7 @@ public class MonitorAmadeus extends MonitorScheduler {
 
     @Override
     void buildBookingPassenger(BookingAirline bAir) {
+        UtilityFunction util = new UtilityFunction();
         String passengerTypes = new String("");
         int costRefIndex = 0;
         MAmadeus pName = amadeusMap.get("passenger name");
@@ -417,9 +420,10 @@ public class MonitorAmadeus extends MonitorScheduler {
 //            String ticket_fare = getField("ticket fare").trim();
             ticket_fare = stripNumberDecimalString(ticket_fare);
             String total_amount = getField("ticket total").trim();
-            int tax = Integer.valueOf(total_amount) - Integer.valueOf(ticket_fare);
-            if (tax < 0) {
-                tax = tax * (-1);
+            BigDecimal tax = (util.convertStringToBigDecimal(total_amount)).subtract(util.convertStringToBigDecimal(ticket_fare));
+//            if (tax < 0) {
+            if (tax.compareTo(BigDecimal.ZERO) < 0) {
+                tax = tax.multiply(new BigDecimal(-1));
             }
 
 //            System.out.println("lastname [" + lastName + "] ,firstname[" + firstName + "] ,initial[" + initial + "] passengerType[" + passengerType + "]");
@@ -432,14 +436,14 @@ public class MonitorAmadeus extends MonitorScheduler {
             bp.setTicketnoS1(ticketNo1);//ticketNoS1);
             bp.setTicketnoS2(ticketNo2);
             bp.setTicketnoS3(ticketNo3);
-            bp.setTicketFare(Integer.valueOf(ticket_fare));
+            bp.setTicketFare(util.convertStringToBigDecimal(ticket_fare));
             bp.setTicketTax(tax);
             bAir.getBookingPassengers().add(bp);
             bp.setBookingAirline(bAir);
             if (!passengerTypes.contains(passengerType)) {
                 passengerTypes = passengerTypes + "," + passengerType;
-                Integer cost;
-                Integer price;
+                BigDecimal cost = new BigDecimal(BigInteger.ZERO);
+                BigDecimal price = new BigDecimal(BigInteger.ZERO);
                 if (isInternationalTicket(ticketType)) {
                     String costS = getField("cost").trim();
                     
@@ -447,12 +451,12 @@ public class MonitorAmadeus extends MonitorScheduler {
                     if (("0".equalsIgnoreCase(costS))||("0.00".equalsIgnoreCase(costS))) {
                         costS = ticket_fare;
                     }
-                    cost = Integer.valueOf(costS);
+                    cost = util.convertStringToBigDecimal(costS);
                     System.out.println("cost [" + cost +"]");
-                    price = cost + Integer.valueOf(fareCommission);
+                    price = cost.add(util.convertStringToBigDecimal(fareCommission));
                 } else {
-                    price = Integer.valueOf(ticket_fare);
-                    cost = (price * 95) / 100;
+                    price = util.convertStringToBigDecimal(ticket_fare);
+                    cost = (price.multiply(new BigDecimal(95))).divide(new BigDecimal(100));
                 }
                 costRefIndex++;
                 //Update cost,price,tax according to passengertype

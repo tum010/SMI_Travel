@@ -27,6 +27,8 @@ import com.smi.travel.datalayer.service.MStaffService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -342,19 +344,19 @@ public class AirTicketController extends SMITravelController {
             String curcost = request.getParameter("row-" + i + "-currencycost");
             
             Integer qtyInt = null;
-            Integer costInt = null;
-            Integer amountInt = null;
+            BigDecimal costInt = new BigDecimal(BigInteger.ZERO);
+            BigDecimal amountInt = new BigDecimal(BigInteger.ZERO);
 
             if (StringUtils.isNotEmpty(qty)) {
                 qtyInt = util.convertStringToInteger(qty);
             }
 
             if (StringUtils.isNotEmpty(cost)) {
-                costInt = util.convertStringToInteger(cost);
+                costInt = util.convertStringToBigDecimal(cost);
             }
 
             if (StringUtils.isNotEmpty(amount)) {
-                amountInt = util.convertStringToInteger(amount);
+                amountInt = util.convertStringToBigDecimal(amount);
             }
 
             System.out.println("airDesc Id=" + id);

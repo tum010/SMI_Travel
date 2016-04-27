@@ -43,51 +43,50 @@
         <property name="isBill" type="string">
             <column name="is_bill" length="1" />
         </property>
+        <property name="adCost" type="big_decimal">
+            <column name="ad_cost" precision="10" />
+        </property>
+        <property name="adPrice" type="big_decimal">
+            <column name="ad_price" precision="10" />
+        </property>
+        <property name="adTax" type="big_decimal">
+            <column name="ad_tax" precision="10" />
+        </property>
+        <property name="chCost" type="big_decimal">
+            <column name="ch_cost" precision="10" />
+        </property>
+        <property name="chPrice" type="big_decimal">
+            <column name="ch_price" precision="10" />
+        </property>
+        <property name="chTax" type="big_decimal">
+            <column name="ch_tax" precision="10" />
+        </property>
+        <property name="inCost" type="big_decimal">
+            <column name="in_cost" precision="10" />
+        </property>
+        <property name="inPrice" type="big_decimal">
+            <column name="in_price" precision="10" />
+        </property>
+        <property name="inTax" type="big_decimal">
+            <column name="in_tax" precision="10" />
+        </property>
+        <property name="costRefund" type="big_decimal">
+            <column name="cost_refund" precision="10" />
+        </property>
         <property name="subFlightClass" type="string">
             <column name="sub_flight_class" length="1" />
-        </property>
-
-        <property name="adCost" type="java.lang.Integer">
-            <column name="ad_cost" />
-        </property>
-        <property name="adPrice" type="java.lang.Integer">
-            <column name="ad_price" />
-        </property>
-        <property name="adTax" type="java.lang.Integer">
-            <column name="ad_tax" />
-        </property>
-        <property name="chCost" type="java.lang.Integer">
-            <column name="ch_cost" />
-        </property>
-        <property name="chPrice" type="java.lang.Integer">
-            <column name="ch_price" />
-        </property>
-        <property name="chTax" type="java.lang.Integer">
-            <column name="ch_tax" />
-        </property>
-        <property name="inCost" type="java.lang.Integer">
-            <column name="in_cost" />
-        </property>
-        <property name="inPrice" type="java.lang.Integer">
-            <column name="in_price" />
-        </property>
-        <property name="inTax" type="java.lang.Integer">
-            <column name="in_tax" />
-        </property>
-        <property name="costRefund" type="java.lang.Integer">
-            <column name="cost_refund" />
         </property>
         <property name="flightOrder" type="java.lang.Integer">
             <column name="flight_order" />
         </property>
-        <property name="adTaxCost" type="java.lang.Integer">
-            <column name="ad_tax_cost" />
+        <property name="adTaxCost" type="big_decimal">
+            <column name="ad_tax_cost" precision="10" />
         </property>
-        <property name="chTaxCost" type="java.lang.Integer">
-            <column name="ch_tax_cost" />
+        <property name="chTaxCost" type="big_decimal">
+            <column name="ch_tax_cost" precision="10" />
         </property>
-        <property name="inTaxCost" type="java.lang.Integer">
-            <column name="in_tax_cost" />
+        <property name="inTaxCost" type="big_decimal">
+            <column name="in_tax_cost" precision="10" />
         </property>
     </class>
 </hibernate-mapping>

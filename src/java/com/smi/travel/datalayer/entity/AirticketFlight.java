@@ -2,6 +2,7 @@ package com.smi.travel.datalayer.entity;
 // Generated Dec 22, 2014 5:59:06 PM by Hibernate Tools 3.6.0
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -22,23 +23,23 @@ public class AirticketFlight {
      private String departTime;
      private String arriveTime;
      private String isBill;
-     private Integer adCost;
-     private Integer adPrice;
-     private Integer adTax;
-     private Integer chCost;
-     private Integer chPrice;
-     private Integer chTax;
-     private Integer inCost;
-     private Integer inPrice;
-     private Integer inTax;
-     private Integer costRefund;
-     private Integer TotalPrice;
-     private Integer TotalCost;
+     private BigDecimal TotalPrice;
+     private BigDecimal TotalCost;
+     private BigDecimal adCost;
+     private BigDecimal adPrice;
+     private BigDecimal adTax;
+     private BigDecimal chCost;
+     private BigDecimal chPrice;
+     private BigDecimal chTax;
+     private BigDecimal inCost;
+     private BigDecimal inPrice;
+     private BigDecimal inTax;
+     private BigDecimal costRefund;
      private String subFlightClass;
      private Integer flightOrder;
-     private Integer adTaxCost;
-     private Integer chTaxCost;
-     private Integer inTaxCost;
+     private BigDecimal adTaxCost;
+     private BigDecimal chTaxCost;
+     private BigDecimal inTaxCost;
      
     public AirticketFlight() {
     }
@@ -54,7 +55,7 @@ public class AirticketFlight {
         this.arriveTime = arriveTime;
         
     }
-    public AirticketFlight(MTicketType MTicketType, AirticketAirline airticketAirline, MFlight MFlight, MItemstatus MItemstatus, String flightNo, String sourceCode, String desCode, Date departDate, Date arriveDate, String departTime, String arriveTime, String isBill, Integer adCost, Integer adPrice, Integer adTax, Integer chCost, Integer chPrice, Integer chTax, Integer inCost, Integer inPrice, Integer inTax, Integer costRefund,Integer TotalPrice,Integer TotalCost,String subFlightClass, Integer flightOrder) {
+    public AirticketFlight(MTicketType MTicketType, AirticketAirline airticketAirline, MFlight MFlight, MItemstatus MItemstatus, String flightNo, String sourceCode, String desCode, Date departDate, Date arriveDate, String departTime, String arriveTime, String isBill, BigDecimal adCost, BigDecimal adPrice, BigDecimal adTax, BigDecimal chCost, BigDecimal chPrice, BigDecimal chTax, BigDecimal inCost, BigDecimal inPrice, BigDecimal inTax, BigDecimal costRefund,BigDecimal TotalPrice,BigDecimal TotalCost,String subFlightClass, Integer flightOrder) {
        this.MTicketType = MTicketType;
        this.airticketAirline = airticketAirline;
        this.MFlight = MFlight;
@@ -178,91 +179,101 @@ public class AirticketFlight {
     public void setIsBill(String isBill) {
         this.isBill = isBill;
     }
-    public Integer getAdCost() {
-        return this.adCost;
-    }
-    
-    public void setAdCost(Integer adCost) {
-        this.adCost = adCost;
-    }
-    public Integer getAdPrice() {
-        return this.adPrice;
-    }
-    
-    public void setAdPrice(Integer adPrice) {
-        this.adPrice = adPrice;
-    }
-    public Integer getAdTax() {
-        return this.adTax;
-    }
-    
-    public void setAdTax(Integer adTax) {
-        this.adTax = adTax;
-    }
-    public Integer getChCost() {
-        return this.chCost;
-    }
-    
-    public void setChCost(Integer chCost) {
-        this.chCost = chCost;
-    }
-    public Integer getChPrice() {
-        return this.chPrice;
-    }
-    
-    public void setChPrice(Integer chPrice) {
-        this.chPrice = chPrice;
-    }
-    public Integer getChTax() {
-        return this.chTax;
-    }
-    
-    public void setChTax(Integer chTax) {
-        this.chTax = chTax;
-    }
-    public Integer getInCost() {
-        return this.inCost;
-    }
-    
-    public void setInCost(Integer inCost) {
-        this.inCost = inCost;
-    }
-    public Integer getInPrice() {
-        return this.inPrice;
-    }
-    
-    public void setInPrice(Integer inPrice) {
-        this.inPrice = inPrice;
-    }
-    public Integer getInTax() {
-        return this.inTax;
-    }
-    
-    public void setInTax(Integer inTax) {
-        this.inTax = inTax;
-    }
-    public Integer getCostRefund() {
-        return this.costRefund;
-    }
-    
-    public void setCostRefund(Integer costRefund) {
-        this.costRefund = costRefund;
-    }
 
-    public Integer getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return TotalPrice;
     }
 
-    public void setTotalPrice(Integer TotalPrice) {
+    public void setTotalPrice(BigDecimal TotalPrice) {
         this.TotalPrice = TotalPrice;
     }
 
-    public Integer getTotalCost() {
+    public BigDecimal getTotalCost() {
         return TotalCost;
     }
 
-    public void setTotalCost(Integer TotalCost) {
+    public void setTotalCost(BigDecimal TotalCost) {
         this.TotalCost = TotalCost;
+    }
+
+    public BigDecimal getAdCost() {
+        return adCost;
+    }
+
+    public void setAdCost(BigDecimal adCost) {
+        this.adCost = adCost;
+    }
+
+    public BigDecimal getAdPrice() {
+        return adPrice;
+    }
+
+    public void setAdPrice(BigDecimal adPrice) {
+        this.adPrice = adPrice;
+    }
+
+    public BigDecimal getAdTax() {
+        return adTax;
+    }
+
+    public void setAdTax(BigDecimal adTax) {
+        this.adTax = adTax;
+    }
+
+    public BigDecimal getChCost() {
+        return chCost;
+    }
+
+    public void setChCost(BigDecimal chCost) {
+        this.chCost = chCost;
+    }
+
+    public BigDecimal getChPrice() {
+        return chPrice;
+    }
+
+    public void setChPrice(BigDecimal chPrice) {
+        this.chPrice = chPrice;
+    }
+
+    public BigDecimal getChTax() {
+        return chTax;
+    }
+
+    public void setChTax(BigDecimal chTax) {
+        this.chTax = chTax;
+    }
+
+    public BigDecimal getInCost() {
+        return inCost;
+    }
+
+    public void setInCost(BigDecimal inCost) {
+        this.inCost = inCost;
+    }
+
+    public BigDecimal getInPrice() {
+        return inPrice;
+    }
+
+    public void setInPrice(BigDecimal inPrice) {
+        this.inPrice = inPrice;
+    }
+
+    public BigDecimal getInTax() {
+        return inTax;
+    }
+
+    public void setInTax(BigDecimal inTax) {
+        this.inTax = inTax;
+    }
+
+    public BigDecimal getCostRefund() {
+        return costRefund;
+    }
+
+    public void setCostRefund(BigDecimal costRefund) {
+        this.costRefund = costRefund;
     }
 
     public String getSubFlightClass() {
@@ -281,29 +292,30 @@ public class AirticketFlight {
         this.flightOrder = flightOrder;
     }
 
-    public Integer getAdTaxCost() {
+    public BigDecimal getAdTaxCost() {
         return adTaxCost;
     }
 
-    public void setAdTaxCost(Integer adTaxCost) {
+    public void setAdTaxCost(BigDecimal adTaxCost) {
         this.adTaxCost = adTaxCost;
     }
 
-    public Integer getChTaxCost() {
+    public BigDecimal getChTaxCost() {
         return chTaxCost;
     }
 
-    public void setChTaxCost(Integer chTaxCost) {
+    public void setChTaxCost(BigDecimal chTaxCost) {
         this.chTaxCost = chTaxCost;
     }
 
-    public Integer getInTaxCost() {
+    public BigDecimal getInTaxCost() {
         return inTaxCost;
     }
 
-    public void setInTaxCost(Integer inTaxCost) {
+    public void setInTaxCost(BigDecimal inTaxCost) {
         this.inTaxCost = inTaxCost;
     }
+   
  
 }
 

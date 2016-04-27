@@ -414,8 +414,8 @@ public class AirTicketDetailController extends SMITravelController {
             airticketPassenger.setSeries1(series1);
             airticketPassenger.setSeries2(series2);
             airticketPassenger.setSeries3(series3);
-            airticketPassenger.setTicketFare(utilityFunction.convertStringToInteger(ticketFare));
-            airticketPassenger.setTicketTax(utilityFunction.convertStringToInteger(ticketTax));
+            airticketPassenger.setTicketFare(utilityFunction.convertStringToBigDecimal(ticketFare));
+            airticketPassenger.setTicketTax(utilityFunction.convertStringToBigDecimal(ticketTax));
             MPricecategory priceCategory = utilservice.getMPricecategoryFromCode(category);
             airticketPassenger.setMPricecategory(priceCategory);
             airticketPassenger.setTicketType(ticketType);
@@ -492,6 +492,7 @@ public class AirTicketDetailController extends SMITravelController {
     }
 
     private void setAirticketFlight(HttpServletRequest request, String RowsCount, AirticketAirline airline) {
+        UtilityFunction util = new UtilityFunction();
         int Rows = Integer.parseInt(RowsCount);
         if (Rows == 1) {
             return;
@@ -551,40 +552,40 @@ public class AirTicketDetailController extends SMITravelController {
             //airFlight.setClass
             
             if (StringUtils.isNotEmpty(adCost)) {
-                airFlight.setAdCost(Integer.valueOf(adCost));
+                airFlight.setAdCost(util.convertStringToBigDecimal(adCost));
             }
             if (StringUtils.isNotEmpty(chCost)) {
-                airFlight.setChCost(Integer.valueOf(chCost));
+                airFlight.setChCost(util.convertStringToBigDecimal(chCost));
             }
             if (StringUtils.isNotEmpty(inCost)) {
-                airFlight.setInCost(Integer.valueOf(inCost));
+                airFlight.setInCost(util.convertStringToBigDecimal(inCost));
             }
             if (StringUtils.isNotEmpty(adPrice)) {
-                airFlight.setAdPrice(Integer.valueOf(adPrice));
+                airFlight.setAdPrice(util.convertStringToBigDecimal(adPrice));
             }
             if (StringUtils.isNotEmpty(chPrice)) {
-                airFlight.setChPrice(Integer.valueOf(chPrice));
+                airFlight.setChPrice(util.convertStringToBigDecimal(chPrice));
             }
             if (StringUtils.isNotEmpty(inPrice)) {
-                airFlight.setInPrice(Integer.valueOf(inPrice));
+                airFlight.setInPrice(util.convertStringToBigDecimal(inPrice));
             }
             if (StringUtils.isNotEmpty(adTax)) {
-                airFlight.setAdTax(Integer.valueOf(adTax));
+                airFlight.setAdTax(util.convertStringToBigDecimal(adTax));
             }
             if (StringUtils.isNotEmpty(chTax)) {
-                airFlight.setChTax(Integer.valueOf(chTax));
+                airFlight.setChTax(util.convertStringToBigDecimal(chTax));
             }
             if (StringUtils.isNotEmpty(inTax)) {
-                airFlight.setInTax(Integer.valueOf(inTax));
+                airFlight.setInTax(util.convertStringToBigDecimal(inTax));
             }
             if (StringUtils.isNotEmpty(adTaxCost)) {
-                airFlight.setAdTaxCost(Integer.valueOf(adTaxCost));
+                airFlight.setAdTaxCost(util.convertStringToBigDecimal(adTaxCost));
             }
             if (StringUtils.isNotEmpty(chTaxCost)) {
-                airFlight.setChTaxCost(Integer.valueOf(chTaxCost));
+                airFlight.setChTaxCost(util.convertStringToBigDecimal(chTaxCost));
             }
             if (StringUtils.isNotEmpty(inTaxCost)) {
-                airFlight.setInTaxCost(Integer.valueOf(inTaxCost));
+                airFlight.setInTaxCost(util.convertStringToBigDecimal(inTaxCost));
             }
             if (StringUtils.isNotEmpty(subFlightClass)) {
                 airFlight.setSubFlightClass(subFlightClass);
@@ -729,48 +730,48 @@ public class AirTicketDetailController extends SMITravelController {
         
         if (StringUtils.isNotEmpty(adCost)) {
             //airFlight.setAdCost(Integer.valueOf(adCost));
-            airFlight.setAdCost(util.convertStringToInteger(adCost));
+            airFlight.setAdCost(util.convertStringToBigDecimal(adCost));
         }
         if (StringUtils.isNotEmpty(chCost)) {
             //airFlight.setChCost(Integer.valueOf(chCost));
-            airFlight.setChCost(util.convertStringToInteger(chCost));
+            airFlight.setChCost(util.convertStringToBigDecimal(chCost));
         }
         if (StringUtils.isNotEmpty(inCost)) {
             //airFlight.setInCost(Integer.valueOf(inCost));
-            airFlight.setInCost(util.convertStringToInteger(inCost));
+            airFlight.setInCost(util.convertStringToBigDecimal(inCost));
         }
         if (StringUtils.isNotEmpty(adPrice)) {
             //airFlight.setAdPrice(Integer.valueOf(adPrice));
-            airFlight.setAdPrice(util.convertStringToInteger(adPrice));
+            airFlight.setAdPrice(util.convertStringToBigDecimal(adPrice));
         }
         if (StringUtils.isNotEmpty(chPrice)) {
             //airFlight.setChPrice(Integer.valueOf(chPrice));
-            airFlight.setChPrice(util.convertStringToInteger(chPrice));
+            airFlight.setChPrice(util.convertStringToBigDecimal(chPrice));
         }
         if (StringUtils.isNotEmpty(inPrice)) {
             //airFlight.setInPrice(Integer.valueOf(inPrice));
-            airFlight.setInPrice(util.convertStringToInteger(inPrice));
+            airFlight.setInPrice(util.convertStringToBigDecimal(inPrice));
         }
         if (StringUtils.isNotEmpty(adTax)) {
             //airFlight.setAdTax(Integer.valueOf(adTax));
-            airFlight.setAdTax(util.convertStringToInteger(adTax));
+            airFlight.setAdTax(util.convertStringToBigDecimal(adTax));
         }
         if (StringUtils.isNotEmpty(chTax)) {
             //airFlight.setChTax(Integer.valueOf(chTax));
-            airFlight.setChTax(util.convertStringToInteger(chTax));
+            airFlight.setChTax(util.convertStringToBigDecimal(chTax));
         }
         if (StringUtils.isNotEmpty(inTax)) {
             //airFlight.setInTax(Integer.valueOf(inTax));
-            airFlight.setInTax(util.convertStringToInteger(inTax));
+            airFlight.setInTax(util.convertStringToBigDecimal(inTax));
         }
         if (StringUtils.isNotEmpty(adTaxCost)) {
-            airFlight.setAdTaxCost(util.convertStringToInteger(adTaxCost));
+            airFlight.setAdTaxCost(util.convertStringToBigDecimal(adTaxCost));
         }
         if (StringUtils.isNotEmpty(chTaxCost)) {
-            airFlight.setChTaxCost(util.convertStringToInteger(chTaxCost));
+            airFlight.setChTaxCost(util.convertStringToBigDecimal(chTaxCost));
         }
         if (StringUtils.isNotEmpty(inTaxCost)) {
-            airFlight.setInTaxCost(util.convertStringToInteger(inTaxCost));
+            airFlight.setInTaxCost(util.convertStringToBigDecimal(inTaxCost));
         }
         if (airFlight.getId() == null) {
 
@@ -1164,36 +1165,39 @@ public class AirTicketDetailController extends SMITravelController {
             System.out.println("infant : "+infant );
             Set<AirticketFlight> flights = airline.getAirticketFlights();
             for (AirticketFlight flight : flights) {
-                int totalCost;
-                int totalPrice;
-                int costAdult = 0;
-                int priceAdult = 0;
-                int costChild = 0, priceChild = 0, costInfant = 0, priceInfant = 0;
+                BigDecimal totalCost = new BigDecimal(BigInteger.ZERO);
+                BigDecimal totalPrice = new BigDecimal(BigInteger.ZERO);
+                BigDecimal costAdult = new BigDecimal(BigInteger.ZERO);
+                BigDecimal priceAdult = new BigDecimal(BigInteger.ZERO);
+                BigDecimal costChild = new BigDecimal(BigInteger.ZERO);
+                BigDecimal priceChild = new BigDecimal(BigInteger.ZERO);
+                BigDecimal costInfant = new BigDecimal(BigInteger.ZERO);
+                BigDecimal priceInfant = new BigDecimal(BigInteger.ZERO);
                 if (flight.getAdCost() != null) {
-                    costAdult = flight.getAdCost() * adult;
+                    costAdult = flight.getAdCost().multiply(new BigDecimal(adult));
                 }
                 if (flight.getAdPrice() != null) {
-                    priceAdult = flight.getAdPrice() * adult;
+                    priceAdult = flight.getAdPrice().multiply(new BigDecimal(adult));
                     System.out.println("adult adprice : "+flight.getAdPrice() );
                 }
                 if (flight.getChCost() != null) {
-                    costChild = flight.getChCost() * child;
+                    costChild = flight.getChCost().multiply(new BigDecimal(child));
                 }
                 if (flight.getChPrice() != null) {
-                    priceChild = flight.getChPrice() * child;
+                    priceChild = flight.getChPrice().multiply(new BigDecimal(child));
                     System.out.println("adult chprice : "+flight.getChPrice() );
                 }
                 if (flight.getInCost() != null) {
-                    costInfant = flight.getInCost() * infant;
+                    costInfant = flight.getInCost().multiply(new BigDecimal(infant));
                 }
                 if (flight.getInPrice() != null) {
-                    priceInfant = flight.getInPrice() * infant;
+                    priceInfant = flight.getInPrice().multiply(new BigDecimal(infant));
                 }
                 System.out.println("priceAdult : "+priceAdult );
                 System.out.println("priceChild : "+priceChild );
                 System.out.println("priceInfant : "+priceInfant );
-                totalCost = costAdult + costChild + costInfant;
-                totalPrice = priceAdult + priceChild + priceInfant;
+                totalCost = (costAdult.add(costChild)).add(costInfant);
+                totalPrice = (priceAdult.add(priceChild)).add(priceInfant);
                 flight.setTotalCost(totalCost);
                 flight.setTotalPrice(totalPrice);
             }

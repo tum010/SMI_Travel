@@ -1,6 +1,9 @@
 package com.smi.travel.datalayer.entity;
 // Generated Dec 17, 2014 3:54:36 PM by Hibernate Tools 3.6.0
 
+import java.math.BigDecimal;
+
+
 
 
 /**
@@ -18,8 +21,8 @@ public class BookingPassenger  {
      private String firstName;
      private String lastName;
      private String passengerType;
-     private Integer ticketTax;
-     private Integer ticketFare;
+     private BigDecimal ticketFare;
+     private BigDecimal ticketTax;
      private String ticketType;
 
     public BookingPassenger() {
@@ -34,7 +37,7 @@ public class BookingPassenger  {
         this.passengerType = passengerType;
         this.ticketType = ticketType;
     }
-    public BookingPassenger(BookingAirline bookingAirline, String ticketnoS1, String ticketnoS2, String ticketnoS3, String initialName, String firstName, String lastName, String passengerType , Integer ticketTax, Integer ticketFare, String ticketType) {
+    public BookingPassenger(BookingAirline bookingAirline, String ticketnoS1, String ticketnoS2, String ticketnoS3, String initialName, String firstName, String lastName, String passengerType , BigDecimal ticketTax, BigDecimal ticketFare, String ticketType) {
        this.bookingAirline = bookingAirline;
        this.ticketnoS1 = ticketnoS1;
        this.ticketnoS2 = ticketnoS2;
@@ -111,15 +114,7 @@ public class BookingPassenger  {
     public void setPassengerType(String passengerType) {
         this.passengerType = passengerType;
     }
-    
-    public Integer getTicketTax() {
-        return this.ticketTax;
-    }
-    
-    public void setTicketTax(Integer ticketTax) {
-        this.ticketTax = ticketTax;
-    }
-    
+       
     public String getTicketType() {
         return this.ticketType;
     }
@@ -128,12 +123,20 @@ public class BookingPassenger  {
         this.ticketType = ticketType;
     }
 
-    public Integer getTicketFare() {
+    public BigDecimal getTicketFare() {
         return ticketFare;
     }
 
-    public void setTicketFare(Integer ticketFare) {
+    public void setTicketFare(BigDecimal ticketFare) {
         this.ticketFare = ticketFare;
+    }
+
+    public BigDecimal getTicketTax() {
+        return ticketTax;
+    }
+
+    public void setTicketTax(BigDecimal ticketTax) {
+        this.ticketTax = ticketTax;
     }
 
 }

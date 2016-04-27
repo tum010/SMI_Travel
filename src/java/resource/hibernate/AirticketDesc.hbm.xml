@@ -14,14 +14,14 @@
         <property name="detail" type="string">
             <column name="detail" length="100" not-null="true" />
         </property>
-        <property name="cost" type="java.lang.Integer">
-            <column name="cost" />
+        <property name="cost" type="big_decimal">
+            <column name="cost" precision="10" />
         </property>
         <property name="qty" type="java.lang.Integer">
             <column name="qty" />
         </property>
-        <property name="amount" type="java.lang.Integer">
-            <column name="amount" />
+        <property name="amount" type="big_decimal">
+            <column name="amount" precision="10" />
         </property>
         <property name="isBill" type="java.lang.Integer">
             <column name="is_bill" />

@@ -31,11 +31,11 @@
         <property name="passengerType" type="string">
             <column name="passenger_type" length="10" not-null="true" />
         </property>
-        <property name="ticketTax" type="java.lang.Integer">
-            <column name="ticket_tax" />
+        <property name="ticketFare" type="big_decimal">
+            <column name="ticket_fare" precision="10" />
         </property>
-        <property name="ticketFare" type="java.lang.Integer">
-            <column name="ticket_fare" />
+        <property name="ticketTax" type="big_decimal">
+            <column name="ticket_tax" precision="10" />
         </property>
         <property name="ticketType" type="string">
             <column name="ticket_type" length="1" />

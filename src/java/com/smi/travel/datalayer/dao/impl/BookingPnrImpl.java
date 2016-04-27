@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.entity.BookingAirline;
 import com.smi.travel.datalayer.entity.BookingFlight;
 import com.smi.travel.datalayer.entity.BookingPassenger;
 import com.smi.travel.datalayer.entity.BookingPnr;
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -192,21 +193,21 @@ public class BookingPnrImpl implements BookingPnrDao {
     }
     
     private void updateFlightAdult(BookingFlight newFlight, BookingFlight currentFlight) {
-        if ( newFlight.getAdCost() != 0 ) {
+        if ((newFlight.getAdCost().compareTo(BigDecimal.ZERO)) != 0 ) {
             currentFlight.setAdCost(newFlight.getAdCost());
             currentFlight.setAdPrice(newFlight.getAdPrice());
             currentFlight.setAdTax(newFlight.getAdTax());
         }
     }
     private void updateFlightChild(BookingFlight newFlight, BookingFlight currentFlight) {
-        if ( newFlight.getChCost() != 0 ) {
+        if ( (newFlight.getChCost().compareTo(BigDecimal.ZERO)) != 0 ) {
             currentFlight.setChCost(newFlight.getChCost());
             currentFlight.setChPrice(newFlight.getChPrice());
             currentFlight.setChTax(newFlight.getChTax());
         }
     }
     private void updateFlightInfant(BookingFlight newFlight, BookingFlight currentFlight) {
-        if ( newFlight.getInCost() != 0 ) {
+        if ( (newFlight.getInCost().compareTo(BigDecimal.ZERO)) != 0 ) {
             currentFlight.setInCost(newFlight.getInCost());
             currentFlight.setInPrice(newFlight.getInPrice());
             currentFlight.setInTax(newFlight.getInTax());

@@ -32,11 +32,11 @@
         <property name="series3" type="string">
             <column name="series3" length="3"  />
         </property>
-        <property name="ticketFare" type="int">
-            <column name="ticket_fare"  />
+        <property name="ticketFare" type="big_decimal">
+            <column name="ticket_fare" precision="10" />
         </property>
-        <property name="ticketTax" type="int">
-            <column name="ticket_tax"  />
+        <property name="ticketTax" type="big_decimal">
+            <column name="ticket_tax" precision="10" />
         </property>
         <property name="ticketFrom" type="string">
             <column name="ticket_from" length="1"  />

@@ -21,6 +21,8 @@ import com.smi.travel.datalayer.service.MGalileoService;
 import com.smi.travel.util.UtilityFunction;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -291,18 +293,18 @@ public class MonitorGalileo extends MonitorScheduler {
             bf = new BookingFlight(flightNo, sourceCode, desCode, deptDate, arrvDate, flightClass);
             bf.setDepartTime(deptTimeS);
             bf.setArriveTime(arrvTimeS);
-            bf.setAdCost(0);
-            bf.setAdPrice(0);
-            bf.setAdTax(0);
-            bf.setChCost(0);
-            bf.setChPrice(0);
-            bf.setChTax(0);
-            bf.setInCost(0);
-            bf.setInPrice(0);
-            bf.setInTax(0);
-            bf.setOtCost(0);
-            bf.setOtPrice(0);
-            bf.setOtTax(0);
+            bf.setAdCost(new BigDecimal(BigInteger.ZERO));
+            bf.setAdPrice(new BigDecimal(BigInteger.ZERO));
+            bf.setAdTax(new BigDecimal(BigInteger.ZERO));
+            bf.setChCost(new BigDecimal(BigInteger.ZERO));
+            bf.setChPrice(new BigDecimal(BigInteger.ZERO));
+            bf.setChTax(new BigDecimal(BigInteger.ZERO));
+            bf.setInCost(new BigDecimal(BigInteger.ZERO));
+            bf.setInPrice(new BigDecimal(BigInteger.ZERO));
+            bf.setInTax(new BigDecimal(BigInteger.ZERO));
+            bf.setOtCost(new BigDecimal(BigInteger.ZERO));
+            bf.setOtPrice(new BigDecimal(BigInteger.ZERO));
+            bf.setOtTax(new BigDecimal(BigInteger.ZERO));
             bAir.getBookingFlights().add(bf);
             bf.setBookingAirline(bAir);
 
@@ -314,6 +316,7 @@ public class MonitorGalileo extends MonitorScheduler {
 
     @Override
     void buildBookingPassenger(BookingAirline bAir) {
+        UtilityFunction util = new UtilityFunction();
         String passengerTypes = new String("");
         int costRefIndex = 0;
         String section = galileoMap.get("passenger name").getSection();
@@ -363,7 +366,7 @@ public class MonitorGalileo extends MonitorScheduler {
             String ticketTotalS = getField("ticket total", fareLine);
             ticketTotalS = stripNumberDecimalString(ticketTotalS);
             ticketFare = stripNumberDecimalString(ticketFare);
-            int tax = Integer.parseInt(ticketTotalS.trim()) - Integer.parseInt(ticketFare.trim());
+            BigDecimal tax = util.convertStringToBigDecimal(ticketTotalS.trim()).subtract(util.convertStringToBigDecimal(ticketFare.trim()));
 
             bp = new BookingPassenger();
             bp.setFirstName(firstName);
@@ -374,8 +377,8 @@ public class MonitorGalileo extends MonitorScheduler {
             bp.setTicketnoS1(ticketNoS1);
             bp.setTicketnoS2(ticketSerial2);
             bp.setTicketnoS3(ticketSerial3);
-            bp.setTicketFare(Integer.valueOf(ticketFare.trim()));
-            bp.setTicketTax(Integer.valueOf(tax));
+            bp.setTicketFare(util.convertStringToBigDecimal(ticketFare.trim()));
+            bp.setTicketTax(tax);
             bAir.getBookingPassengers().add(bp);
             bp.setBookingAirline(bAir);
 
@@ -383,8 +386,8 @@ public class MonitorGalileo extends MonitorScheduler {
                 passengerTypes = passengerTypes + "," + passengerType;
                 String costS = getField("cost", costRefIndex).trim();
                 String priceS = getField("price", costRefIndex).trim();
-                Integer cost = Integer.valueOf(costS);
-                Integer price = Integer.valueOf(priceS);
+                BigDecimal cost = util.convertStringToBigDecimal(costS);
+                BigDecimal price = util.convertStringToBigDecimal(priceS);
                 costRefIndex++;
                 //Update cost,price,tax according to passengertype
                 BookingFlight bf = this.getMostEarlyFlight(bAir.getBookingPnr());

@@ -36,41 +36,41 @@
         <property name="arriveTime" type="string">
             <column name="arrive_time" length="4" />
         </property>
-        <property name="adCost" type="java.lang.Integer">
-            <column name="ad_cost" />
+        <property name="adCost" type="big_decimal">
+            <column name="ad_cost" precision="10" />
         </property>
-        <property name="adPrice" type="java.lang.Integer">
-            <column name="ad_price" />
+        <property name="adPrice" type="big_decimal">
+            <column name="ad_price" precision="10" />
         </property>
-        <property name="adTax" type="java.lang.Integer">
-            <column name="ad_tax" />
+        <property name="adTax" type="big_decimal">
+            <column name="ad_tax" precision="10" />
         </property>
-        <property name="chCost" type="java.lang.Integer">
-            <column name="ch_cost" />
+        <property name="chCost" type="big_decimal">
+            <column name="ch_cost" precision="10" />
         </property>
-        <property name="chPrice" type="java.lang.Integer">
-            <column name="ch_price" />
+        <property name="chPrice" type="big_decimal">
+            <column name="ch_price" precision="10" />
         </property>
-        <property name="chTax" type="java.lang.Integer">
-            <column name="ch_tax" />
+        <property name="chTax" type="big_decimal">
+            <column name="ch_tax" precision="10" />
         </property>
-        <property name="inCost" type="java.lang.Integer">
-            <column name="in_cost" />
+        <property name="inCost" type="big_decimal">
+            <column name="in_cost" precision="10" />
         </property>
-        <property name="inPrice" type="java.lang.Integer">
-            <column name="in_price" />
+        <property name="inPrice" type="big_decimal">
+            <column name="in_price" precision="10" />
         </property>
-        <property name="inTax" type="java.lang.Integer">
-            <column name="in_tax" />
+        <property name="inTax" type="big_decimal">
+            <column name="in_tax" precision="10" />
         </property>
-        <property name="otCost" type="java.lang.Integer">
-            <column name="ot_cost" />
+        <property name="otCost" type="big_decimal">
+            <column name="ot_cost" precision="10" />
         </property>
-        <property name="otPrice" type="java.lang.Integer">
-            <column name="ot_price" />
+        <property name="otPrice" type="big_decimal">
+            <column name="ot_price" precision="10" />
         </property>
-        <property name="otTax" type="java.lang.Integer">
-            <column name="ot_tax" />
+        <property name="otTax" type="big_decimal">
+            <column name="ot_tax" precision="10" />
         </property>
     </class>
 </hibernate-mapping>
