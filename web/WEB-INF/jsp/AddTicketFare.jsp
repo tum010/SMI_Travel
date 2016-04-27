@@ -28,7 +28,7 @@
     </ol>
 </section>
 
-<div style="padding-top: 15px;padding-right: 0px "ng-app=""> 
+<div class="container" style="padding-top: 15px;padding-right: 0px; padding-left: 0px;"ng-app=""> 
     <div class="row">
         <!--Alert Save and Update-->
         <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
@@ -43,7 +43,7 @@
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <strong>Ticket no. not available !</strong> 
         </div>
-        <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
+        <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px;">
             <div ng-include="'WebContent/Checking/CheckingAirTicketMenu.html'"></div>
         </div>
         
@@ -170,11 +170,11 @@
                             </select>
                         </div>
                         <div class="col-xs-1 text-right" style="width: 150px">
-                            <label class="control-label text-right">Airline&nbsp; Agent</label>
+                            <label class="control-label text-right">Airline&nbsp;Agent</label>
                         </div> 
-                        <div class="col-xs-1" style="width: 120px">
+                        <div class="col-xs-1" style="width: 100px; padding-right: 0px;">
                             <select name="ticketAirline" id="ticketAirline" class="form-control" onclick="checkAirlineSelected()">
-                                <option value="">-- Airline --</option> 
+                                <option value="">-Airline-</option> 
                                 <c:forEach var="table" items="${airlineList}" >
                                     <c:set var="select" value="" />
                                     <c:set var="selectedId" value="${ticketFare.MAirlineAgent.id}" />
@@ -186,8 +186,8 @@
                                     <option value="OTHER">OTHER</option>
                             </select>
                         </div>
-                        <div class="col-xs-1" style="width:140px">
-                                <input id="ticketAirlineOther" name="ticketAirlineOther" type="text" class="form-control" maxlength="50" value="${ticketFare.otherAirAgent}" disabled="">
+                        <div class="col-xs-1" style="width:100px">
+                            <input id="ticketAirlineOther" name="ticketAirlineOther" type="text" class="form-control" maxlength="50" value="${ticketFare.otherAirAgent}" disabled="">
                         </div>
                     </div>
                 </div>
@@ -317,7 +317,7 @@
                                     <input id="ticketFare" name="ticketFare" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketFare}">
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 185px">
+                            <div class="col-xs-1 text-right"  style="width: 155px">
                                 <label class="control-label text-right">Ticket Tax </label> 
                             </div>
                             <div class="col-xs-1" style="width: 200px">
@@ -343,7 +343,7 @@
                                     <input id="ticketCommission" name="ticketCommission" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.ticketCommission}">
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 185px">
+                            <div class="col-xs-1 text-right"  style="width: 155px">
                                 <label class="control-label text-right">Agent Comm </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
@@ -369,7 +369,7 @@
                                     <input id="salePrice" name="salePrice" type="text" class="form-control numerical" style="text-align: right" onkeyup="insertCommas(this)" maxlength="16" onkeypress="return isNumberKey(event)" value="${ticketFare.salePrice}">
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 185px">
+                            <div class="col-xs-1 text-right"  style="width: 155px">
                                 <label class="control-label text-right">Diff Vat </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
@@ -406,7 +406,7 @@
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
-                                    <div class="col-xs-1 text-right"  style="width: 136px"></div>
+                            <div class="col-xs-1 text-right"  style="width: 110px"></div>
                             <div class="col-xs-1 text-right"  style="width: 50px">
                                 <c:choose>
                                     <c:when test="${ticketFare.isWaitPay == 1}">
@@ -439,7 +439,7 @@
                             <div class="col-xs-1" style="width: 298px">
                                 <input type="text" class="form-control" id="agent_name" name="agent_name" value="${SelectedAgent.name}" readonly="">
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 185px">
+                            <div class="col-xs-1 text-right"  style="width: 155px">
                                 <label class="control-label text-right">Agent Charge</label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
@@ -475,7 +475,7 @@
                                     <input id="invoiceDate" name="invoiceDate" type="text" class="form-control" readonly="" value="${requestScope['invoiceDate']}">
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 185px">
+                            <div class="col-xs-1 text-right"  style="width: 155px">
                                 <label class="control-label text-right">Credit</label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">

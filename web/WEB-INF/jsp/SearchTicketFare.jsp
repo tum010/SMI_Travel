@@ -20,7 +20,7 @@
     </ol>
 </section>
 
-<div style="padding-top: 15px;padding-right: 0px "ng-app=""> 
+<div class="container" style="padding-top: 15px;padding-right: 0px "ng-app=""> 
     <div class="row">
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
             <div ng-include="'WebContent/Checking/CheckingAirTicketMenu.html'"></div>
@@ -49,7 +49,7 @@
                 <div class="panel panel-default">
                     <div class="panel-body"  style="width: 100%" style="margin-top: -10px">
                         <div class="col-xs-12 form-group" style="margin-top: -10px">
-                            <div class="col-xs-1 text-right" style="width: 150px">
+                            <div class="col-xs-1 text-right" style="width: 100px">
                                 <label class="control-label text-right">Ticket&nbsp;Type&nbsp;</label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
@@ -135,7 +135,7 @@
                             </div>-->
                         </div>
                         <div class="col-xs-12 " style="margin-top: -10px">
-                            <div class="col-xs-1 text-right" style="width: 150px">
+                            <div class="col-xs-1 text-right" style="width: 100px">
                                 <label class="control-label text-right">Ticket No </label>
                             </div>
                             <div class="col-xs-1" style="width: 200px">
@@ -171,7 +171,7 @@
                             </div>
                         </div>
                         <div class="col-xs-12 form-group" style="margin-top: -10px">
-                            <div class="col-xs-1 text-right" style="width: 150px">
+                            <div class="col-xs-1 text-right" style="width: 100px">
                                 <label class="control-label text-right">Ref No </label>
                             </div>
                             <div class="col-xs-1 form-group" style="width: 200px">

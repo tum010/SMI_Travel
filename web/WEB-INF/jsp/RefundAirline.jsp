@@ -25,7 +25,7 @@
     </ol>
 </section>
 
-<div style="padding-top: 15px;padding-right: 0px "ng-app=""> 
+<div class="container" style="padding-top: 15px;padding-right: 0px "ng-app=""> 
     <div class="row">
 
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
@@ -61,7 +61,7 @@
                         <div class="col-xs-1 text-right" style="width: 140px">
                             <label class="control-label text-right">Refund No</label>
                         </div>
-                        <div class="col-xs-1" style="width: 290px">
+                        <div class="col-xs-1" style="width: 255px">
                             <input type="hidden" class="form-control" id="status" name="status" value="${refundAirline.status}" />
                             <input id="refundNo" name="refundNo" type="text" class="form-control" value="${refundAirline.refundNo}">
                         </div>
@@ -73,7 +73,7 @@
                         <div class="col-xs-1 text-right"  style="width: 140px">
                             <label class="control-label text-right">Refund Date </label>
                         </div>
-                        <div class="col-xs-1"  style="width: 200px">
+                        <div class="col-xs-1"  style="width: 170px">
                             <div class='input-group date'>
                                 <c:set var="refundDate" value="${refundAirline.refundDate}" />
                                 <fmt:parseDate value="${refundDate}" var="refundDate" pattern="yyyy-MM-dd" />
@@ -86,11 +86,11 @@
                     </div>
                 </div>
                 <div class="row" >
-                    <div class="col-xs-6 form-group" style="margin-top: -14px">
+                    <div class="col-xs-6 form-group" style="margin-top: -14px;">
                         <div class="col-xs-1 text-right"  style="width: 140px;padding-left:10px">
                             <label class="control-label text-right">Request Airline <font style="color: red">*</font> </label>
                         </div>
-                        <div class="col-xs-1"  style="width: 150px">
+                        <div class="col-xs-1"  style="width: 130px; padding-right: 0px;">
                             <div class="input-group" id="refundAgentCodeValidate">
                                 <input type="hidden" class="form-control" id="refundAgentId" name="agentId" value="${refundAirline.agent.id}" />
                                 <input type="text" class="form-control" id="refundAgentCode" name="agentCode" value="${refundAirline.agent.code}" />
@@ -99,7 +99,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-xs-1 text-left" style="width: 250px">
+                        <div class="col-xs-1 text-left" style="width: 230px">
                             <input type="text" class="form-control" id="refundAgentName" name="agentName" value="${refundAirline.agent.name}" readonly="">                           
                         </div>
                     </div>  
@@ -107,7 +107,7 @@
                         <div class="col-xs-1 text-right" style="width: 140px">
                             <label class="control-label text-right">Refund By </label>
                         </div>
-                        <div class="col-xs-1"  style="width: 150px">
+                        <div class="col-xs-1"  style="width: 150px;">
                             <div class="input-group" id="refundByValidate">
                                 <input type="text" class="form-control" id="refundBy" name="refundBy" value="${refundAirline.refundBy}" />
                                 <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#refundCustModal">
@@ -127,7 +127,7 @@
                         <div class="col-xs-1 text-right" style="width: 140px">
                             <label class="control-label text-right">Receive By </label>
                         </div>
-                        <div class="col-xs-1"  style="width: 150px">
+                        <div class="col-xs-1"  style="width: 130px; padding-right: 0px;">
                             <div class="input-group" id="receiveByValidate">
                                 <input type="text" class="form-control" id="receiveBy" name="receiveBy" value="${refundAirline.receiveBy}" />
                                 <span class="input-group-addon" id="agen_modal"  data-toggle="modal" data-target="#receiveUserModal">
@@ -135,7 +135,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-xs-1" style="width: 200px">
+                        <div class="col-xs-1" style="width: 230px">
                             <div class="input-group">
                                 <input id="receiveByName" name="receiveByName" type="text" class="form-control"  readonly="">
                             </div>
@@ -145,7 +145,7 @@
                         <div class="col-xs-1 text-right"  style="width: 140px">
                             <label class="control-label text-right">Receive Date </label>
                         </div>
-                        <div class="col-xs-1"  style="width: 200px">
+                        <div class="col-xs-1"  style="width: 170px">
                             <div class='input-group date'>
                                 <c:set var="receiveDate" value="${refundAirline.receiveDate}" />
                                 <fmt:parseDate value="${receiveDate}" var="receiveDate" pattern="yyyy-MM-dd" />

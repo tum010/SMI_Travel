@@ -32,7 +32,7 @@
     </ol>
 </section>
 
-<div style="padding-top: 15px;padding-right: 0px "ng-app=""> 
+<div class="container" style="padding-top: 15px;padding-right: 0px "ng-app=""> 
     <div class="row">
         <!--Alert Save and Update-->
         <div class="col-sm-2" style="border-right:  solid 1px #01C632;padding-top: 10px">
@@ -95,17 +95,17 @@
                 <input type="hidden" class="form-control" id="wildCardSearch" name="wildCardSearch"  value="${requestScope['wildCardSearch']}" >
                 <input type="hidden" class="form-control" id="keyCode" name="keyCode"  value="" >
                 <div class="panel panel-default">
-                    <div class="panel-body"  style="padding-right: 0px;" style="width: 100%" >
-                        <div class="col-xs-12" style="margin-top: -10px">
+                    <div class="panel-body"  style="padding-right: 0px; padding-left: 0px;" style="width: 100%" >
+                        <div class="col-xs-12" style="margin-top: -10px; padding-left: 0px; padding-right: 0px;">
                             <div class="col-xs-1 text-right"  style="width: 128px">
                                 <label class="control-label text-right">Payment No </label>
                             </div>
-                            <div class="col-xs-1" style="width:180px" id="paymentnopanel">
+                            <div class="col-xs-1" style="width:145px; padding-left: 0px;" id="paymentnopanel">
                                 <div class='input-group' id='paymentnumber'>
                                     <input type="hidden" name="exportDate" id="exportDate" value="${requestScope['exportDate']}">
                                     <input type="hidden" name="isExport" id="isExport" value="${paymentAirticket.isExport}">
                                     <input id="paymentId" name="paymentId" type="hidden" class="form-control" maxlength="11" value="${paymentAirticket.id}">
-                                    <input id="paymentNo" name="paymentNo" type="text" style="width: 180px" maxlength="20" class="form-control" value="${requestScope['payNo']}">
+                                    <input id="paymentNo" name="paymentNo" type="text" style="width: 165px" maxlength="20" class="form-control" value="${requestScope['payNo']}">
                                 </div>
                             </div>
                             <div class="col-xs-1 text-right" style="width: 8px"></div>
@@ -125,7 +125,7 @@
                                     <span class="input-group-addon spandate"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 165px">
+                            <div class="col-xs-1 text-right"  style="width: 155px">
                                 <label class="control-label text-right">Due Payment Date </label>
                             </div>
                             <div class="col-xs-1" style="width: 170px">
@@ -139,11 +139,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12" style="margin-top: -10px">
+                        <div class="col-xs-12" style="margin-top: -10px; padding-left: 0px; padding-right: 0px;">
                             <div class="col-xs-1 text-right"  style="width: 128px">
                                 <label class="control-label text-right">Invoice Sup<font style="color: red">*</font></label>
                             </div>
-                            <div class="form-group col-xs-1"  style="width: 155px">
+                            <div class="form-group col-xs-1"  style="width: 120px; padding-right: 0px; padding-left: 0px;">
                                 <div class="input-group">
                                     <input type="hidden" class="form-control" id="invoiceSupId" name="invoiceSupId" value="${SelectedInvoice.id}"/>
                                     <input type="text" class="form-control" id="invoiceSupCode" maxlength="11" name="invoiceSupCode" value="${SelectedInvoice.code}" style="text-transform:uppercase"/>
@@ -180,16 +180,16 @@
                                 <input type="radio" name="payto"  id="paytoC" value="C" ${checkC}/>&nbsp;Customer
                             </div>    
                         </div> 
-                        <div class="col-xs-12" style="margin-top: -10px;margin-bottom: -10px">
+                        <div class="col-xs-12" style="margin-top: -10px;margin-bottom: -10px; padding-left: 0px; padding-right: 0px;">
                             <div class="col-xs-1 text-right"  style="width: 128px">
                                 <label class="control-label text-right">Detail </label>
                             </div>
-                            <div class="col-xs-1"  style="width: 310px">
+                            <div class="col-xs-1"  style="width: 310px; padding-left: 0px; padding-right: 0px;">
                                 <div class="input-group">                                    
                                     <textarea rows="3" class="form-control" id="detail" name="detail" maxlength="255" style="width: 175%">${paymentAirticket.detail}</textarea>  
                                 </div>
                             </div>
-                            <div class="col-xs-1 text-right"  style="width: 120px">
+                            <div class="col-xs-1 text-right"  style="width: 85px">
                                 <label class="control-label text-right">Pay By </label>
                             </div>
                             <div class="col-xs-1" style="width: 170px">
@@ -213,12 +213,12 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">Ticket Fare</h4>
                     </div> 
-                    <div class="panel-body" style="width: 100%">
-                        <div class="col-xs-12" style="margin-top: -10px">
-                            <div class="col-xs-1 text-right" style="width: 128px">
+                    <div class="panel-body" style="width: 100%; padding-left: 0px; padding-right: 0px;">
+                        <div class="col-xs-12" style="margin-top: -10px; padding-left: 0px; padding-right: 0px;">
+                            <div class="col-xs-1 text-right" style="width: 128px;">
                                 <label class="control-label text-right">Ticket From </label>
                             </div>
-                            <div class="col-xs-1" style="width: 200px">
+                            <div class="col-xs-1" style="width: 200px; padding-left: 0px;">
                                 <select name="ticketFrom" id="ticketFrom" class="form-control">
                                     <option value="">--- Ticket From ---</option> 
                                      <c:choose>
@@ -295,11 +295,11 @@
                                 </select>
                             </div>    
                         </div>
-                        <div class="col-xs-12" style="margin-top: 4px">
+                        <div class="col-xs-12" style="margin-top: 4px; padding-left: 0px; padding-right: 0px;">
                             <div class="col-xs-1 text-right" style="width: 128px">
                                 <label class="control-label text-right">From </label>
                             </div>
-                            <div class="col-xs-1 form-group text-left" style="width: 200px" id="datefrompanel">
+                            <div class="col-xs-1 form-group text-left" style="width: 200px; padding-left: 0px;" id="datefrompanel">
                                 <div class='input-group date' id="inputDateFrom">
                                     <c:set var="dateFrom" value="${requestScope['dateFrom']}" />
                                     <fmt:parseDate value="${dateFrom}" var="dateFrom" pattern="yyyy-MM-dd" />
@@ -329,46 +329,48 @@
                                 <button style="height:34px" type="button"  id="ButtonSearchTicket"  name="ButtonSearchTicket" onclick="searchTicketFare();" class="btn btn-primary btn-sm"><i class="fa fa-search"></i>&nbsp;Search</button>
                             </div>
                         </div>
-                        <table class="display" id="TicketFareTable" style="margin-top: -20px">
-                            <thead class="datatable-header">
-                                <tr>
-                                    <!--<th style="width:5%;">Id</th>-->
-                                    <th style="width:5%;">Ref No</th>
-                                    <th style="width:15%;">Ticket No</th>
-                                    <th style="width:10%;">Department</th>
-                                    <th style="width:20%;">Fare</th>
-                                    <th style="width:10%;">Tax</th>
-                                    <th style="width:10%;">Insurance</th>
-                                    <th style="width:10%;">Commission</th>
-                                    <th style="width:10%;">Amount</th>
-                                    <th style="width:10%;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="table" items="${ticketFareList}" varStatus="dataStatus">
+                        <div class="col-xs-12" style="margin-top: 4px;">
+                            <table class="display" id="TicketFareTable" style="margin-top: -20px">
+                                <thead class="datatable-header">
                                     <tr>
-                                        <input type="hidden" name="count${dataStatus.count}" id="count${dataStatus.count}" value="${dataStatus.count}">
-                                        <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}">
-                                        <td align="center"> <c:out value="${table.referenceNo}" /></td>
-                                        <td align="left"> <c:out value="${table.ticketNo}" /></td>
-                                        <td align="left"> <c:out value="${table.department}" /></td>
-                                        <td class="money">${table.fare}</td>
-                                        <td class="money">${table.tax}</td>
-                                        <td class="money">${table.ticketIns}</td>
-                                        <td class="money">${table.ticketCommission}</td>
-                                        <td class="money">${table.ticketFareAmount}</td>
-                                        <td> 
-                                            <center> 
-                                                <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteTicket('${table.id}','${table.ticketNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
-                                            </center>
-                                            <input type="hidden" name="deleteTicketNo" id="deleteTicketNo">
-                                            <input type="hidden" name="deleteTicketId" id="deleteTicketId">
-                                            <input type="hidden" name="deleteTicketCount" id="deleteTicketCount">
-                                        </td>                                    
+                                        <!--<th style="width:5%;">Id</th>-->
+                                        <th style="width:5%;">Ref No</th>
+                                        <th style="width:15%;">Ticket No</th>
+                                        <th style="width:10%;">Department</th>
+                                        <th style="width:20%;">Fare</th>
+                                        <th style="width:10%;">Tax</th>
+                                        <th style="width:10%;">Insurance</th>
+                                        <th style="width:10%;">Commission</th>
+                                        <th style="width:10%;">Amount</th>
+                                        <th style="width:10%;">Action</th>
                                     </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="table" items="${ticketFareList}" varStatus="dataStatus">
+                                        <tr>
+                                            <input type="hidden" name="count${dataStatus.count}" id="count${dataStatus.count}" value="${dataStatus.count}">
+                                            <input type="hidden" name="tableId${dataStatus.count}" id="tableId${dataStatus.count}" value="${table.id}">
+                                            <td align="center"> <c:out value="${table.referenceNo}" /></td>
+                                            <td align="left"> <c:out value="${table.ticketNo}" /></td>
+                                            <td align="left"> <c:out value="${table.department}" /></td>
+                                            <td class="money">${table.fare}</td>
+                                            <td class="money">${table.tax}</td>
+                                            <td class="money">${table.ticketIns}</td>
+                                            <td class="money">${table.ticketCommission}</td>
+                                            <td class="money">${table.ticketFareAmount}</td>
+                                            <td> 
+                                                <center> 
+                                                    <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteTicket('${table.id}','${table.ticketNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                                </center>
+                                                <input type="hidden" name="deleteTicketNo" id="deleteTicketNo">
+                                                <input type="hidden" name="deleteTicketId" id="deleteTicketId">
+                                                <input type="hidden" name="deleteTicketCount" id="deleteTicketCount">
+                                            </td>                                    
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
                         <input type="hidden" class="form-control" id="counter" name="counter" value="${requestScope['ticketFareCount']}" />
                         
                         <div class="col-xs-12 form-group" style="margin-bottom:  -10px"> 
@@ -396,12 +398,12 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">Refund Ticket</h4>
                     </div> 
-                    <div class="panel-body" style="width: 100%">
-                        <div class="col-xs-12 form-group" style="margin-top: -10px">
-                            <div class="col-xs-1 text-right" style="width: 128px">
+                    <div class="panel-body" style="width: 100%; padding-left: 0px; padding-right: 0px;">
+                        <div class="col-xs-12 form-group" style="margin-top: -10px; padding-left: 0px; padding-right: 0px;">
+                            <div class="col-xs-1 text-right" style="width: 128px;">
                                 <label class="control-label text-right">Refund </label>
                             </div>
-                            <div class="col-xs-1" style="width: 280px" id="refundnopanel">
+                            <div class="col-xs-1" style="width: 280px; padding-left: 0px;" id="refundnopanel">
                                 <div class='input-group'>
                                     <input id="refundNo" name="refundNo" type="text" style="width: 260px" class="form-control" value="" onkeydown="refundnoValidate()">
                                 </div>
@@ -411,47 +413,49 @@
                                 <button style="height:30px" type="button"  id="ButtonAdd"  name="ButtonAdd" onclick="addAction();" class="btn btn-primary btn-sm">&nbsp;&nbsp;Add&nbsp;&nbsp;</button>
                             </div>
                         </div>
-                        <table class="display" id="RefundTicketTable" style="margin-top: -10px">
-                            <thead class="datatable-header">
-                                <tr>
-                                    <th style="width:5%;">Refund</th>
-                                    <th style="width:15%;">Ticket No</th>
-                                    <th style="width:10%;">Department</th>
-                                    <th style="width:10%;">Route</th>
-                                    <th style="width:15%;">Commission</th>
-                                    <th style="width:15%;">Amount</th>
-                                    <th style="width:15%;">Pay Customer</th>
-                                    <th style="width:10%;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="table" items="${addRefundList}" varStatus="dataStatus">
+                        <div class="col-xs-12" style="margin-top: 4px;">
+                            <table class="display" id="RefundTicketTable" style="margin-top: -10px">
+                                <thead class="datatable-header">
                                     <tr>
-                                        <input type="hidden" name="count${dataStatus.count}" id="count${dataStatus.count}" value="${dataStatus.count}">
-                                        <input type="hidden" name="tableRefundId${dataStatus.count}" id="tableRefundId${dataStatus.count}" value="${table.id}">
-                                        <input type="hidden" name="refundNoRow${dataStatus.count}" id="refundNoRow${dataStatus.count}" value="${table.refundNo}">
-                                        <td align="center"> <c:out value="${table.refundNo}" /></td>
-                                        <td align="left"> <c:out value="${table.ticketNo}" /></td>
-                                        <td align="left"> <c:out value="${table.department}" /></td>
-                                        <td align="center"> <c:out value="${table.route}" /></td>
-                                        <td align="right" class="money">${table.commisssion}</td>
-                                        <td class="money">${table.amount}</td>
-                                        <td class="money">${table.payCus}</td>
-                                        <td> 
-                                            <center> 
-                                                <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteRefund('${table.id}','${table.refundNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
-                                            </center>
-                                        </td>                                    
+                                        <th style="width:5%;">Refund</th>
+                                        <th style="width:15%;">Ticket No</th>
+                                        <th style="width:10%;">Department</th>
+                                        <th style="width:10%;">Route</th>
+                                        <th style="width:15%;">Commission</th>
+                                        <th style="width:15%;">Amount</th>
+                                        <th style="width:15%;">Pay Customer</th>
+                                        <th style="width:10%;">Action</th>
                                     </tr>
-                                </c:forEach>
-                                <input type="hidden" id="delRefundNo" name="delRefundNo" >
-                                <input type="hidden" id="delRefundId" name="delRefundId" >
-                                <input type="hidden" id="deleteRefundCount" name="deleteRefundCount"/>
-                                <input type="hidden" id="rowRefundCount" name="rowRefundCount"/>
-                                <input type="hidden" name="tableRefundId" id="tableRefundId" value="">
-                                <input type="hidden" name="searchPaymentNoFlag" id="searchPaymentNoFlag" value="${requestScope['searchPaymentNoFlag']}">
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="table" items="${addRefundList}" varStatus="dataStatus">
+                                        <tr>
+                                            <input type="hidden" name="count${dataStatus.count}" id="count${dataStatus.count}" value="${dataStatus.count}">
+                                            <input type="hidden" name="tableRefundId${dataStatus.count}" id="tableRefundId${dataStatus.count}" value="${table.id}">
+                                            <input type="hidden" name="refundNoRow${dataStatus.count}" id="refundNoRow${dataStatus.count}" value="${table.refundNo}">
+                                            <td align="center"> <c:out value="${table.refundNo}" /></td>
+                                            <td align="left"> <c:out value="${table.ticketNo}" /></td>
+                                            <td align="left"> <c:out value="${table.department}" /></td>
+                                            <td align="center"> <c:out value="${table.route}" /></td>
+                                            <td align="right" class="money">${table.commisssion}</td>
+                                            <td class="money">${table.amount}</td>
+                                            <td class="money">${table.payCus}</td>
+                                            <td> 
+                                                <center> 
+                                                    <a class="remCF"><span id="SpanRemove${dataStatus.count}" onclick="deleteRefund('${table.id}','${table.refundNo}','${dataStatus.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                                </center>
+                                            </td>                                    
+                                        </tr>
+                                    </c:forEach>
+                                    <input type="hidden" id="delRefundNo" name="delRefundNo" >
+                                    <input type="hidden" id="delRefundId" name="delRefundId" >
+                                    <input type="hidden" id="deleteRefundCount" name="deleteRefundCount"/>
+                                    <input type="hidden" id="rowRefundCount" name="rowRefundCount"/>
+                                    <input type="hidden" name="tableRefundId" id="tableRefundId" value="">
+                                    <input type="hidden" name="searchPaymentNoFlag" id="searchPaymentNoFlag" value="${requestScope['searchPaymentNoFlag']}">
+                                </tbody>
+                            </table>
+                        </div>        
                         <div class="col-xs-12 form-group" style="padding-top: 15px;margin-bottom: -10px">
                             <div class="col-xs-1 text-right"  style="width: 400px">
                                 <label class="control-label text-right">Total Amount Refund</label>
@@ -477,34 +481,35 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">Credit Note</h4>
                     </div> 
-                    <div class="panel-body" style="width: 100%;">    
-                        <table class="display" id="CreditDetailTable" style="margin-top: -10px">
-                            <thead class="datatable-header">
-                                <tr>
-                                    <th style="width:10%;">No</th>
-                                    <th style="width:35%;">Credit Note</th>
-                                    <th style="width:35%;">Credit Amount</th>
-                                    <th style="width:20;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="table" items="${creditList}" varStatus="i">
+                    <div class="panel-body" style="width: 100%; padding-left: 0px; padding-right: 0px;">
+                        <div class="col-xs-12" style="margin-top: 4px;">
+                            <table class="display" id="CreditDetailTable" style="margin-top: -10px">
+                                <thead class="datatable-header">
                                     <tr>
-                                        <!--<input type="hidden" name="paymentAirId${i.count}" id="paymentAirId${i.count}" value="${table.paymentAirticket.id}">-->
-                                        <input type="hidden" name="creditId${i.count}" id="creditId${i.count}" value="${table.id}">
-                                        <td align="center">${i.count}</td>
-                                        <td><input maxlength="255" id="creditNote${i.count}" name="creditNote${i.count}" type="text" class="form-control" value="${table.creditNote}"></td>
-                                        <td><input maxlength="10" id="creditAmount${i.count}"  name="creditAmount${i.count}"  type="text" class="form-control text-right"  value="${table.creditAmount}" onkeydown="calculateTotalCreditAmount()" onkeyup="insertCommas(this)"></td>
-                                        <td> 
-                                            <center> 
-                                                <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteCreditList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
-                                            </center>
-                                        </td>                                     
+                                        <th style="width:10%;">No</th>
+                                        <th style="width:35%;">Credit Note</th>
+                                        <th style="width:35%;">Credit Amount</th>
+                                        <th style="width:20;">Action</th>
                                     </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                        
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="table" items="${creditList}" varStatus="i">
+                                        <tr>
+                                            <!--<input type="hidden" name="paymentAirId${i.count}" id="paymentAirId${i.count}" value="${table.paymentAirticket.id}">-->
+                                            <input type="hidden" name="creditId${i.count}" id="creditId${i.count}" value="${table.id}">
+                                            <td align="center">${i.count}</td>
+                                            <td><input maxlength="255" id="creditNote${i.count}" name="creditNote${i.count}" type="text" class="form-control" value="${table.creditNote}"></td>
+                                            <td><input maxlength="10" id="creditAmount${i.count}"  name="creditAmount${i.count}"  type="text" class="form-control text-right"  value="${table.creditAmount}" onkeydown="calculateTotalCreditAmount()" onkeyup="insertCommas(this)"></td>
+                                            <td> 
+                                                <center> 
+                                                    <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteCreditList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                                </center>
+                                            </td>                                     
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
                         <div id="tr_CreditDetailAddRow" class="text-center hide" style="padding-top: 10px">
                             <a class="btn btn-success" onclick="AddRowCredit(1)">
                                 <i class="glyphicon glyphicon-plus"></i> Add
@@ -527,33 +532,34 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">Debit Note</h4>
                     </div> 
-                    <div class="panel-body" style="width: 100%;" >    
-                        <table class="display" id="DebitDetailTable" style="margin-top: -10px">
-                            <thead class="datatable-header">
-                                <tr>
-                                    <th style="width:10%;">No</th>
-                                    <th style="width:35%;">Debit Note</th>
-                                    <th style="width:35%;">Debit Amount</th>
-                                    <th style="width:20;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach var="table" items="${debitList}" varStatus="i">
+                    <div class="panel-body" style="width: 100%; padding-left: 0px; padding-right: 0px;" >
+                        <div class="col-xs-12" style="margin-top: 4px;">
+                            <table class="display" id="DebitDetailTable" style="margin-top: -10px">
+                                <thead class="datatable-header">
                                     <tr>
-                                        <input type="hidden" name="debitId${i.count}" id="debitId${i.count}" value="${table.id}">
-                                        <td align="center">${i.count}</td>
-                                        <td><input maxlength="255" id="debitNote${i.count}" name="debitNote${i.count}" type="text" class="form-control" value="${table.debitNote}"></td>
-                                        <td><input maxlength="10" id="debitAmount${i.count}"  name="debitAmount${i.count}"  type="text" class="form-control text-right"  value="${table.debitAmount}" onkeydown="calculateTotalDebitAmount()" onkeyup="insertCommas(this)"></td>
-                                        <td> 
-                                            <center> 
-                                                <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteDebitList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
-                                            </center>
-                                        </td>                                     
+                                        <th style="width:10%;">No</th>
+                                        <th style="width:35%;">Debit Note</th>
+                                        <th style="width:35%;">Debit Amount</th>
+                                        <th style="width:20;">Action</th>
                                     </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                        
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="table" items="${debitList}" varStatus="i">
+                                        <tr>
+                                            <input type="hidden" name="debitId${i.count}" id="debitId${i.count}" value="${table.id}">
+                                            <td align="center">${i.count}</td>
+                                            <td><input maxlength="255" id="debitNote${i.count}" name="debitNote${i.count}" type="text" class="form-control" value="${table.debitNote}"></td>
+                                            <td><input maxlength="10" id="debitAmount${i.count}"  name="debitAmount${i.count}"  type="text" class="form-control text-right"  value="${table.debitAmount}" onkeydown="calculateTotalDebitAmount()" onkeyup="insertCommas(this)"></td>
+                                            <td> 
+                                                <center> 
+                                                    <a class="remCF"><span id="SpanRemove${i.count}" onclick="deleteDebitList('${table.id}','${i.count}');" class="glyphicon glyphicon-remove deleteicon "></span></a>
+                                                </center>
+                                            </td>                                     
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
                         <div id="tr_DebitDetailAddRow" class="text-center hide" style="padding-top: 10px">
                             <a class="btn btn-success" onclick="AddRowDebit(1)">
                                 <i class="glyphicon glyphicon-plus"></i> Add
@@ -577,8 +583,8 @@
 <!--                    <div class="panel-heading">
                         <h4 class="panel-title">Ticket Detail</h4>
                     </div> -->
-                    <div class="panel-body" style="width: 100%">
-                        <div class="col-xs-12" style="margin-top: -10px">
+                    <div class="panel-body" style="width: 100%; padding-left: 0px; padding-right: 0px;">
+                        <div class="col-xs-12" style="margin-top: -10px; padding-left: 0px; padding-right: 0px;">
                             <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Agent Amount </label>
                             </div>
@@ -604,7 +610,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12" style="margin-top: 5px;margin-bottom: -10px">
+                        <div class="col-xs-12" style="margin-top: 5px;margin-bottom: -10px; padding-left: 0px; padding-right: 0px;">
                             <div class="col-xs-1 text-right"  style="width: 150px">
                                 <label class="control-label text-right">Chq No </label>
                             </div>
