@@ -458,7 +458,8 @@ public class BillableController extends SMITravelController {
         MBilltype billtype = utilservice.getMBilltypeFromName(billtypeS);
         AirticketAirline airB = null;
         String costS = request.getParameter("cost-" + index).trim();
-        int cost = Integer.parseInt(costS);
+//        int cost = Integer.parseInt(costS);
+        BigDecimal cost = new BigDecimal(costS);
         String priceS = request.getParameter("price-" + index).trim();
         String remark = request.getParameter("remark-" + index);
         String detail = request.getParameter("detail-"+index);
@@ -470,7 +471,8 @@ public class BillableController extends SMITravelController {
         
         Date billDate = util.convertStringToDate(billdate);
         System.out.println("remark[" + index + "] : " + remark);
-        int price = Integer.parseInt(priceS);
+//        int price = Integer.parseInt(priceS);
+        BigDecimal price = new BigDecimal(priceS);
         BillableDesc bd = new BillableDesc();
         bd.setBillable(billable);
         bd.setMBilltype(billtype);

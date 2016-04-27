@@ -850,12 +850,12 @@
 <c:if test="${! empty requestScope['result']}">
     <script language="javascript">
         
-        alert('<c:out value="${requestScope['result']}" />');
+//        alert('<c:out value="${requestScope['result']}" />');
     </script>
 </c:if>
     
 <script>
     $(document).ready(function () {
-            $('.datemask').mask('00-00-0000');
-        });
+        $('.datemask').mask('00-00-0000');
+    });
 </script>

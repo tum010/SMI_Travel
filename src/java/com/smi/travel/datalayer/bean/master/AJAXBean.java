@@ -1811,8 +1811,8 @@ public class AJAXBean extends AbstractBean implements
                     curcost = (billableDescs.get(i).getCurCost() == null ? "" : billableDescs.get(i).getCurCost());
                     curamount = (billableDescs.get(i).getCurrency() == null ? "" : billableDescs.get(i).getCurrency());
                     BigDecimal profitTaxInvoice = new BigDecimal(BigInteger.ZERO);
-                    BigDecimal costCheck = (billableDescs.get(i).getCost() != 0 ? new BigDecimal(billableDescs.get(i).getCost()) : new BigDecimal(BigInteger.ZERO));
-                    BigDecimal amountCheck = (billableDescs.get(i).getPrice()!= 0 ? new BigDecimal(billableDescs.get(i).getPrice()) : new BigDecimal(BigInteger.ZERO));
+                    BigDecimal costCheck = (billableDescs.get(i).getCost() != null ? (billableDescs.get(i).getCost()) : new BigDecimal(BigInteger.ZERO));
+                    BigDecimal amountCheck = (billableDescs.get(i).getPrice()!= null ? (billableDescs.get(i).getPrice()) : new BigDecimal(BigInteger.ZERO));
                     BigDecimal profitCheck = new BigDecimal(BigInteger.ZERO);
 
                     if(billableDescId.equalsIgnoreCase(invoiceDetailList.get(j).getBillableDesc().getId()) && !"".equalsIgnoreCase(curcost) && !"".equalsIgnoreCase(curamount)){
@@ -1862,7 +1862,7 @@ public class AJAXBean extends AbstractBean implements
                             String isProfit = taxInvoiceDao.checkIsProfitForSearchRefNo(invoiceDetailId);
 
                             if("success".equalsIgnoreCase(isProfit)){                           
-                                BigDecimal amounttemp = new BigDecimal(billableDescs.get(i).getPrice());
+                                BigDecimal amounttemp = (billableDescs.get(i).getPrice() != null ? billableDescs.get(i).getPrice() : new BigDecimal(BigInteger.ZERO));
                                 amountinvoice = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
 
                                 if (billableDescs.get(i).getMBilltype() != null) {
@@ -1870,7 +1870,7 @@ public class AJAXBean extends AbstractBean implements
                                     billTypeName = billableDescs.get(i).getMBilltype().getName();
                                 }
 
-                                BigDecimal costtemp = new BigDecimal(billableDescs.get(i).getCost());
+                                BigDecimal costtemp = (billableDescs.get(i).getCost() != null ? billableDescs.get(i).getCost() : new BigDecimal(BigInteger.ZERO));
                                 costinvoice = costtemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);                      
 
                                 BigDecimal[] value = checkTaxInvoiceDetailFromBilldescId(invoiceDetailId);
@@ -2182,14 +2182,14 @@ public class AJAXBean extends AbstractBean implements
             
             billableDescId = billableDescs.get(i).getId();
 //            description = billableDescs.get(i).getDetail();
-            BigDecimal amounttemp = new BigDecimal(billableDescs.get(i).getPrice());
+            BigDecimal amounttemp = (billableDescs.get(i).getPrice() != null ? billableDescs.get(i).getPrice() : new BigDecimal(BigInteger.ZERO));
             amountinvoice = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
             currency = billableDescs.get(i).getCurrency() == null ? "" : billableDescs.get(i).getCurrency();
             if (billableDescs.get(i).getMBilltype() != null) {
                 product = billableDescs.get(i).getMBilltype().getId();
                 billTypeName = billableDescs.get(i).getMBilltype().getName();
             }
-            BigDecimal costtemp = new BigDecimal(billableDescs.get(i).getCost());
+            BigDecimal costtemp = (billableDescs.get(i).getCost() != null ? billableDescs.get(i).getCost() : new BigDecimal(BigInteger.ZERO));
             costinvoice = costtemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
             cur = billableDescs.get(i).getCurCost() == null ? "" : billableDescs.get(i).getCurCost();
 
@@ -3212,7 +3212,7 @@ public class AJAXBean extends AbstractBean implements
         BigDecimal invDetailAmount = new BigDecimal(0);
         BigDecimal amount = new BigDecimal(0);
         List<InvoiceDetail> invoiceDetailList = invoicedao.getInvoiceDetailFromBillDescIdAndRecDetailId(billDescId,receiptDetailId);
-        BigDecimal billDescAmount = new BigDecimal(bill.getPrice());
+        BigDecimal billDescAmount = (bill.getPrice() != null ? bill.getPrice() : new BigDecimal(BigInteger.ZERO));
         BigDecimal receiptAmount = new BigDecimal(recAmount);
         if(invoiceDetailList != null){
             for (int i = 0; i < invoiceDetailList.size(); i++) {

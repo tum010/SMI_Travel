@@ -16,11 +16,11 @@
         <property name="description" type="string">
             <column name="description" length="100" not-null="true" />
         </property>
-        <property name="cost" type="int">
-            <column name="cost" not-null="true" />
+        <property name="cost" type="big_decimal">
+            <column name="cost" precision="10" not-null="true" />
         </property>
-        <property name="price" type="int">
-            <column name="price" not-null="true" />
+        <property name="price" type="big_decimal">
+            <column name="price" precision="10" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>

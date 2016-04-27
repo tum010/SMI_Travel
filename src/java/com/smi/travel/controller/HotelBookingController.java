@@ -17,6 +17,8 @@ import com.smi.travel.datalayer.service.LockUnlockBookingService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -90,26 +92,38 @@ public class HotelBookingController extends SMITravelController {
     private void sumPrice(List<HotelBooking> hotelBookingList) {
         UtilityFunction util = new UtilityFunction();
         for (int i = 0; i < hotelBookingList.size(); i++) {
-            int sumRoom = 0, sumReuest = 0;
-            int sumRoomCost = 0, sumReuestCost = 0;
+//            int sumRoom = 0; sumRequest = 0;
+//            int sumRoomCost = 0, sumReuestCost = 0;
             int Nonight = 0;
+            BigDecimal sumRoom = new BigDecimal(BigInteger.ZERO);
+            BigDecimal sumRoomCost = new BigDecimal(BigInteger.ZERO);
+            BigDecimal sumRequest = new BigDecimal(BigInteger.ZERO);
+            BigDecimal sumRequestCost = new BigDecimal(BigInteger.ZERO);
             HotelBooking hotelList = hotelBookingList.get(i);
             Nonight =util.getDateDiff(hotelList.getCheckin(), hotelList.getCheckout());
             List<HotelRoom> hotelRoom = new ArrayList<HotelRoom>(hotelList.getHotelRooms());
             for (int j = 0; j < hotelRoom.size(); j++) {
                 HotelRoom room = hotelRoom.get(j);
-                sumRoom += (room.getPrice() *room.getQty() * Nonight);
-                sumRoomCost += (room.getCost()*room.getQty() * Nonight);
+                BigDecimal roomQty = new BigDecimal(room.getQty() != 0 ? room.getQty() : 0);
+                BigDecimal roomPrice = (room.getPrice() != null ? room.getPrice() : new BigDecimal(BigInteger.ZERO));
+                BigDecimal sumRoomTemp = ((roomPrice).multiply(roomQty)).multiply(new BigDecimal(Nonight));
+                sumRoom = sumRoom.add(sumRoomTemp);
+                
+                BigDecimal roomCost = (room.getCost() != null ? room.getCost() : new BigDecimal(BigInteger.ZERO));
+                BigDecimal sumRoomCostTemp = ((roomCost).multiply(roomQty)).multiply(new BigDecimal(Nonight));
+                sumRoomCost = sumRoomCost.add(sumRoomCostTemp);
             }
-            hotelBookingList.get(i).setAdult(sumRoom);
+            hotelBookingList.get(i).setSumRoom(sumRoom);
             List<HotelRequest> hotelRequests = new ArrayList<HotelRequest>(hotelList.getHotelRequests());
             for (int j = 0; j < hotelRequests.size(); j++) {
                 HotelRequest hr = hotelRequests.get(j);
-                sumReuest += hr.getPrice();
-                sumReuestCost += hr.getCost();
+                BigDecimal sumRequestTemp = (hr.getPrice() != null ? hr.getPrice() : new BigDecimal(BigInteger.ZERO));
+                sumRequest = sumRequest.add(sumRequestTemp);
+                BigDecimal sumRequestCostTemp = (hr.getCost() != null ? hr.getCost() : new BigDecimal(BigInteger.ZERO));
+                sumRequestCost = sumRequestCost.add(sumRequestCostTemp);
             }
-            hotelBookingList.get(i).setChild(sumReuest);
-            hotelBookingList.get(i).setTotalcost(sumRoomCost + sumReuestCost);
+            hotelBookingList.get(i).setSumRequest(sumRequest);
+            hotelBookingList.get(i).setSumTotalCost(sumRoomCost.add(sumRequestCost));
 
         }
     }

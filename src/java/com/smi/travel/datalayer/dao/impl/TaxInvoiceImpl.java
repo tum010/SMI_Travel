@@ -678,8 +678,8 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
         InvoiceDetail invoiceDetailTemp = list.get(0);       
         if(invoiceDetailTemp.getBillableDesc() != null){
             billableDesc.setId(invoiceDetailTemp.getBillableDesc() != null ? invoiceDetailTemp.getBillableDesc().getId() : "");
-            billableDesc.setCost(invoiceDetailTemp.getBillableDesc().getCost() != 0 ? invoiceDetailTemp.getBillableDesc().getCost() : 0);
-            billableDesc.setPrice(invoiceDetailTemp.getBillableDesc().getPrice() != 0 ? invoiceDetailTemp.getBillableDesc().getPrice() : 0);
+            billableDesc.setCost(invoiceDetailTemp.getBillableDesc().getCost() != null ? invoiceDetailTemp.getBillableDesc().getCost() : new BigDecimal(BigInteger.ZERO));
+            billableDesc.setPrice(invoiceDetailTemp.getBillableDesc().getPrice() != null ? invoiceDetailTemp.getBillableDesc().getPrice() : new BigDecimal(BigInteger.ZERO));
             billableDesc.setCurCost(!"".equalsIgnoreCase(invoiceDetailTemp.getBillableDesc().getCurCost()) ? invoiceDetailTemp.getBillableDesc().getCurCost() : "");
             billableDesc.setCurrency(!"".equalsIgnoreCase(invoiceDetailTemp.getBillableDesc().getCurrency()) ? invoiceDetailTemp.getBillableDesc().getCurrency() : "");
         }

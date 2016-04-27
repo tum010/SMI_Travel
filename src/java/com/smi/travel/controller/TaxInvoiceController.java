@@ -825,8 +825,8 @@ public class TaxInvoiceController extends SMITravelController {
     private BigDecimal getMasterProfit(BillableDesc billableDesc, String invoiceDetailId) {
         String curcost = billableDesc.getCurCost();
         String curamount = billableDesc.getCurrency();
-        BigDecimal cost = new BigDecimal(billableDesc.getCost());
-        BigDecimal amount = new BigDecimal(billableDesc.getPrice());
+        BigDecimal cost = (billableDesc.getCost() != null ? billableDesc.getCost() : new BigDecimal(BigInteger.ZERO));
+        BigDecimal amount = (billableDesc.getPrice() != null ? billableDesc.getPrice() : new BigDecimal(BigInteger.ZERO));
         BigDecimal exRate = taxInvoiceService.getExRateFromInvoiceDetail(invoiceDetailId);
         BigDecimal profit = new BigDecimal(BigInteger.ZERO);
         if(!"THB".equalsIgnoreCase(curcost) && !"THB".equalsIgnoreCase(curamount) && !"".equalsIgnoreCase(curcost) && !"".equalsIgnoreCase(curamount)){

@@ -539,8 +539,8 @@ public class MListItemImpl implements MListItemDao {
         
         for (Object[] B : QueryList) {
             BillableView billableView = new BillableView();
-            billableView.setCost(B[0] == null ? 0 : util.convertStringToInteger(String.valueOf(B[0])));
-            billableView.setPrice(B[1] == null ? 0 : util.convertStringToInteger(String.valueOf(B[1])));
+            billableView.setCost(B[0] == null ? "0.00" : util.ConvertString(B[0]));
+            billableView.setPrice(B[1] == null ? "0.00" : util.ConvertString(B[1]));
             billableView.setCurCost(B[2] == null ? "" : util.ConvertString(B[2]));
             billableView.setCurAmount(B[3] == null ? "" : util.ConvertString(B[3]));
             billableViewList.add(billableView);
@@ -620,8 +620,8 @@ public class MListItemImpl implements MListItemDao {
         
         for (Object[] B : QueryList) {
             BillableView billableView = new BillableView();
-            billableView.setCost(B[0] == null ? 0 : util.convertStringToInteger(String.valueOf(B[0])));
-            billableView.setPrice(B[1] == null ? 0 : util.convertStringToInteger(String.valueOf(B[1])));
+            billableView.setCost(B[0] == null ? "0.00" : util.ConvertString((B[0])));
+            billableView.setPrice(B[1] == null ? "0.00" : util.ConvertString((B[1])));
             billableView.setCurCost(B[2] == null ? "" : util.ConvertString(B[2]));
             billableView.setCurAmount(B[3] == null ? "" : util.ConvertString(B[3]));
             billableView.setRefItemId(B[4] == null ? "" : util.ConvertString(B[4]));

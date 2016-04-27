@@ -13,12 +13,23 @@ $(document).ready(function () {
 //        $("#deadline").val(convertFormatDate(date));
 //    }
     $('.date').datetimepicker();
+    $('.datemask').mask('00-00-0000');
     $('.spandate').click(function () {
         var position = $(this).offset();
         console.log("positon :" + position.top);
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
     });
     $(".money").mask('000,000,000,000,000,000', {reverse: true});
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
 });
 
 // ### DETAIL PANAL ### //
@@ -261,12 +272,22 @@ function FormulaAddRow(row) {
             '<td><input id="row-room-' + row + '-qty" name="row-room-' + row + '-qty"  type="text" class="form-control text-right money" maxlength="3"></td>' +
             '<td><input id="row-room-' + row + '-room" name="row-room-' + row + '-room" type="text" class="form-control" maxlength="50"></td>' +
             '<td><input id="row-room-' + row + '-category" name="row-room-' + row + '-category" type="text" class="form-control" maxlength="50"></td>' +
-            '<td><input id="row-room-' + row + '-cost" name="row-room-' + row + '-cost" type="text" class="form-control money" maxlength="11"></td>' +
-            '<td><input id="row-room-' + row + '-price" name="row-room-' + row + '-price" type="text" class="form-control money" maxlength="11"></td>' +
+            '<td><input id="row-room-' + row + '-cost" name="row-room-' + row + '-cost" type="text" class="form-control decimal" maxlength="11"></td>' +
+            '<td><input id="row-room-' + row + '-price" name="row-room-' + row + '-price" type="text" class="form-control decimal" maxlength="11"></td>' +
             '<td class="text-center">' +
             '<a class="newRemCF" id="ButtonFormulaRemove'+row+'"><span id="SpanFormulaRemove'+row+'"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
             '</tr>'
             );
+    $(".decimal").inputmask({
+	alias: "decimal",
+	integerDigits: 8,
+	groupSeparator: ',',
+	autoGroup: true,
+	digits: 2,
+	allowMinus: false,
+	digitsOptional: false,
+	placeholder: "0.00",
+    });
     var tempCount = parseInt($("#roomCounter").val()) + 1;
     $("#roomCounter").val(tempCount);
 }
@@ -338,12 +359,22 @@ function AdditionAddRow(row) {
             '<tr>' +
             '<td><input id="row-request-' + row + '-category" name="row-request-' + row + '-category" type="text" class="form-control" maxlength="100"></td>' +
             '<td><input id="row-request-' + row + '-description" name="row-request-' + row + '-description" type="text" class="form-control" maxlength="100"></td>' +
-            '<td><input id="row-request-' + row + '-cost" name="row-request-' + row + '-cost" type="text" class="form-control money" maxlength="11"></td>' +
-            '<td><input id="row-request-' + row + '-price" name="row-request-' + row + '-price" type="text" class="form-control money" maxlength="11"></td>' +
+            '<td><input id="row-request-' + row + '-cost" name="row-request-' + row + '-cost" type="text" class="form-control decimal" maxlength="11"></td>' +
+            '<td><input id="row-request-' + row + '-price" name="row-request-' + row + '-price" type="text" class="form-control decimal" maxlength="11"></td>' +
             '<td class="text-center">' +
             '<a id="ButtonAdditonRemove'+row+'" class="newRemCF"><span id="SpanAdditionRemove'+row+'"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>' +
             '</tr>'
             );
+    $(".decimal").inputmask({
+	alias: "decimal",
+	integerDigits: 8,
+	groupSeparator: ',',
+	autoGroup: true,
+	digits: 2,
+	allowMinus: false,
+	digitsOptional: false,
+	placeholder: "0.00",
+    });
     var tempCount = parseInt($("#requestCounter").val()) + 1;
     $("#requestCounter").val(tempCount);
 }

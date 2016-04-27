@@ -2,6 +2,7 @@ package com.smi.travel.datalayer.entity;
 // Generated Jan 14, 2015 11:52:54 AM by Hibernate Tools 3.6.0
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -36,6 +37,9 @@ public class HotelBooking  {
      private List hotelPassengers = new LinkedList<HotelPassenger>();
      private List hotelRooms = new LinkedList<HotelRoom>();
      private List hotelRequests = new LinkedList<HotelRequest>();
+     private BigDecimal sumRoom;
+     private BigDecimal sumRequest;
+     private BigDecimal sumTotalCost;
 
     public HotelBooking() {
     }
@@ -49,7 +53,7 @@ public class HotelBooking  {
         this.checkin = checkin;
         this.checkout = checkout;
     }
-    public HotelBooking(MItemstatus MItemstatus, Master master, MMeal MMeal, Hotel hotel, int orderNo, String reconfirm, String hotelRef, Integer isBill, String remark, Date checkin, Date checkout, Integer adult, Integer child, Integer infant,String currency, List hotelPassengers, List hotelRooms, List hotelRequests,String curAmount,String curCost,String supplier) {
+    public HotelBooking(MItemstatus MItemstatus, Master master, MMeal MMeal, Hotel hotel, int orderNo, String reconfirm, String hotelRef, Integer isBill, String remark, Date checkin, Date checkout, Integer adult, Integer child, Integer infant,String currency, List hotelPassengers, List hotelRooms, List hotelRequests,String curAmount,String curCost,String supplier, BigDecimal sumRoom, BigDecimal sumRequest, BigDecimal sumTotalCost) {
        this.MItemstatus = MItemstatus;
        this.master = master;
        this.MMeal = MMeal;
@@ -72,6 +76,9 @@ public class HotelBooking  {
        this.hotelRooms = hotelRooms;
        this.hotelRequests = hotelRequests;
        this.supplier = supplier;
+       this.sumRoom = sumRoom;
+       this.sumRequest = sumRequest;
+       this.sumTotalCost = sumTotalCost;
     }
 
     public String getSupplier() {
@@ -251,6 +258,30 @@ public class HotelBooking  {
 
     public void setTotalcost(Integer totalcost) {
         this.totalcost = totalcost;
+    }
+
+    public BigDecimal getSumRoom() {
+        return sumRoom;
+    }
+
+    public void setSumRoom(BigDecimal sumRoom) {
+        this.sumRoom = sumRoom;
+    }
+
+    public BigDecimal getSumRequest() {
+        return sumRequest;
+    }
+
+    public void setSumRequest(BigDecimal sumRequest) {
+        this.sumRequest = sumRequest;
+    }
+
+    public BigDecimal getSumTotalCost() {
+        return sumTotalCost;
+    }
+
+    public void setSumTotalCost(BigDecimal sumTotalCost) {
+        this.sumTotalCost = sumTotalCost;
     }
 
 

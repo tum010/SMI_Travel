@@ -1,6 +1,9 @@
 package com.smi.travel.datalayer.entity;
 // Generated Jan 14, 2015 11:52:54 AM by Hibernate Tools 3.6.0
 
+import java.math.BigDecimal;
+
+
 
 
 /**
@@ -13,8 +16,8 @@ public class HotelRequest  {
      private HotelBooking hotelBooking;
      private String category;
      private String description;
-     private int cost;
-     private int price;
+     private BigDecimal cost;
+     private BigDecimal price;
      private String currency;
 
 
@@ -22,14 +25,14 @@ public class HotelRequest  {
     }
 
 	
-    public HotelRequest(HotelBooking hotelBooking, String description, int cost, int price,String currency) {
+    public HotelRequest(HotelBooking hotelBooking, String description, BigDecimal cost, BigDecimal price,String currency) {
         this.hotelBooking = hotelBooking;
         this.description = description;
         this.cost = cost;
         this.price = price;
         this.currency = currency;
     }
-    public HotelRequest(HotelBooking hotelBooking, String category, String description, int cost, int price,String currency) {
+    public HotelRequest(HotelBooking hotelBooking, String category, String description, BigDecimal cost, BigDecimal price,String currency) {
        this.hotelBooking = hotelBooking;
        this.category = category;
        this.description = description;
@@ -66,21 +69,7 @@ public class HotelRequest  {
     public void setDescription(String description) {
         this.description = description;
     }
-    public int getCost() {
-        return this.cost;
-    }
     
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-    public int getPrice() {
-        return this.price;
-    }
-    
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
     public String getCurrency() {
         return currency;
     }
@@ -89,8 +78,21 @@ public class HotelRequest  {
         this.currency = currency;
     }
 
+    public BigDecimal getCost() {
+        return cost;
+    }
 
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
+    }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
 }
 
