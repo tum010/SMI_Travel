@@ -4,6 +4,16 @@
 $(document).ready(function () {  
     checkExpenseTour();
     $(".money").mask('000,000,000,000,000,000', {reverse: true});
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
     $("a").click(function () {
         $(".collapse").collapse('hide');
     });
@@ -181,9 +191,9 @@ function BookingDriverTableAddRow(row) {
             '<td id="driverCarNo' + row + '"><input name="carNo' + row + '" type="hidden"></td>' +
             '<td class="hidden"><div class="col-sm-8"><input id="carNo' + row + '" name="carNo' + row + '" type="text" class="" maxlength="252" value=""></div>' +
             '<td><div class="col-sm-7"><input id="InfoTableGasFee' + row + '" name="InfoTableGasFee' + row + '" type="text" class="form-control " maxlength="252"></div>' +
-            '<div class="col-sm-5"><input id="InfoTableGasValue' + row + '" name="InfoTableGasValue' + row + '" type="text" class="form-control money" maxlength="252"></div></td>' +
+            '<div class="col-sm-5"><input id="InfoTableGasValue' + row + '" name="InfoTableGasValue' + row + '" type="text" class="form-control decimal" maxlength="252"></div></td>' +
             '<td><div class="col-sm-7"><input id="InfoTableTipFee' + row + '" name="InfoTableTipFee' + row + '" type="text" class="form-control " maxlength="252"></div>' +
-            '<div class="col-sm-5"><input id="InfoTableTipValue' + row + '" name="InfoTableTipValue' + row + '" type="text" class="form-control money" maxlength="252" onfocusout="calculateGuideBill()"></td></div>' +
+            '<div class="col-sm-5"><input id="InfoTableTipValue' + row + '" name="InfoTableTipValue' + row + '" type="text" class="form-control decimal" maxlength="252" onfocusout="calculateGuideBill()"></td></div>' +
             '<td class="text-center">' +
             '<a id="expenButtonRemove' + row + '" name="expenButtonRemove' + row + '" class="RemoveRow" onclick="calculateGuideBill()">' +
             '<span  id="expenSpanEdit' + row + '" name="expenSpanEdit' + row + '" class="glyphicon glyphicon-remove deleteicon"></span>' +
@@ -191,6 +201,16 @@ function BookingDriverTableAddRow(row) {
             '</tr>'
             );
     }
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
     $.each(driver, function (i, item) {
         $('#SelectTableDrive' + row).append($('<option>', {
             value: item.id,
@@ -247,7 +267,7 @@ function BookingExpenseTableAddRow(row) {
             '<td class="hidden"><input id="countExpen' + row + '" name="countExpen"  type="text" value="' + row + '">' +
             '<td><input id="expenDescription' + row + '" name="expenDescription' + row + '"  type="text" class="form-control" maxlength="50"></td>' +
             '<td style="width:80px"><input id="expenQty' + row + '" name="expenQty' + row + '" type="text" class="form-control money" maxlength="50" onfocusout="calculateGuideBill()"></td>' +
-            '<td style="width: 100px"><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control money" maxlength="50" onfocusout="calculateGuideBill()"></td>' +       
+            '<td style="width: 100px"><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control decimal" maxlength="50" onfocusout="calculateGuideBill()"></td>' +       
 //            '<td><select name="expenSelectCur' + row + '" id="expenSelectCur' + row + '" class=""><option value=""></option></select></td>' +
             '<td class="text-center"><input id="expenTypeS' + row + '" name="expenPriceType' + row + '" type="radio" value="S" checked="checked" onclick="calculateGuideBill()">&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;' +
             '<input id="expenTypeG' + row + '" name="expenPriceType' + row + '" type="radio" value="G" onclick="calculateGuideBill()">&nbsp;&nbsp;G</td>' +
@@ -257,6 +277,16 @@ function BookingExpenseTableAddRow(row) {
             '</a></td>' +
             '</tr>'
             );
+    $(".decimal").inputmask({
+        alias: "decimal",
+        integerDigits: 8,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 2,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.00",
+    });
     $("input[name=countExpen]").val(row);
 
 //    $.each(currency,function(i,item){
@@ -309,7 +339,7 @@ function addImportExpen(arrExpen) {
                 '<td class="hidden"><input id="countExpen' + row + '" name="countExpen"  type="text" value="' + row + '">' +
                 '<td><input id="expenDescription' + row + '" name="expenDescription' + row + '"  type="text" class="form-control text-left" maxlength="50" value="' + item.desciption + '"></td>' +
                 '<td style="width: 80px"><input id="expenQty' + row + '" name="expenQty' + row + '" type="text" class="form-control money" onfocusout="calculateGuideBill()" maxlength="50"></td>' +
-                '<td style="width: 100px"><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control money" maxlength="50" value="' + item.amount + '" onfocusout="calculateGuideBill()"></td>' +
+                '<td style="width: 100px"><input id="expenAmount' + row + '" name="expenAmount' + row + '" type="text" class="form-control decimal" maxlength="50" value="' + item.amount + '" onfocusout="calculateGuideBill()"></td>' +
 //                '<td><select name="expenSelectCur' + row + '" id="expenSelectCur' + row + '" class="form-control"><option value="' + item.cur + '">' + item.cur + '</option></select></td>' +
                 '<td class="text-center"><input id="expenTypeS' + row + '" name="expenPriceType' + row + '" type="radio" value="S" '+(item.priceType==="S"?"checked":"")+ '  onclick="calculateGuideBill()" >&nbsp;&nbsp;S&nbsp;&nbsp;&nbsp;&nbsp;' +
                 '<input id="expenTypeG' + row + '" name="expenPriceType' + row + '" type="radio" value="G" '+(item.priceType==="G"?"checked":"")+ ' onclick="calculateGuideBill()" >&nbsp;&nbsp;G</td>' +
@@ -319,7 +349,16 @@ function addImportExpen(arrExpen) {
                 '</a></td>' +
                 '</tr>'
                 );
-
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
         $("input[name=countExpen]").val(row);
         console.log('row :' + row);
 

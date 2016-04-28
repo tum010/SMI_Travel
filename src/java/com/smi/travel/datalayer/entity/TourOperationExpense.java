@@ -1,6 +1,9 @@
 package com.smi.travel.datalayer.entity;
 // Generated Mar 18, 2015 10:03:25 AM by Hibernate Tools 3.6.0
 
+import java.math.BigDecimal;
+
+
 
 
 /**
@@ -13,14 +16,14 @@ public class TourOperationExpense {
      private TourOperationDesc tourOperationDesc;
      private String description;
      private Integer qty;
-     private Integer amount;
+     private BigDecimal amount;
      private String currency;
      private String priceType;
 
     public TourOperationExpense() {
     }
 
-    public TourOperationExpense(TourOperationDesc tourOperationDesc, String description, Integer qty, Integer amount, String currency, String priceType) {
+    public TourOperationExpense(TourOperationDesc tourOperationDesc, String description, Integer qty, BigDecimal amount, String currency, String priceType) {
        this.tourOperationDesc = tourOperationDesc;
        this.description = description;
        this.qty = qty;
@@ -57,13 +60,7 @@ public class TourOperationExpense {
     public void setQty(Integer qty) {
         this.qty = qty;
     }
-    public Integer getAmount() {
-        return this.amount;
-    }
-    
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
+
     public String getCurrency() {
         return this.currency;
     }
@@ -79,8 +76,13 @@ public class TourOperationExpense {
         this.priceType = priceType;
     }
 
+    public BigDecimal getAmount() {
+        return amount;
+    }
 
-
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
 
 }
 

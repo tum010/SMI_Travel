@@ -61,11 +61,11 @@
         <property name="isBill" type="java.lang.Integer">
             <column name="is_bill" />
         </property>
-        <property name="agentComission" type="java.lang.Integer">
-            <column name="agent_comission" />
+        <property name="agentComission" type="big_decimal">
+            <column name="agent_comission" precision="10"/>
         </property>
-        <property name="guideCommission" type="java.lang.Integer">
-            <column name="guide_commission" />
+        <property name="guideCommission" type="big_decimal">
+            <column name="guide_commission" precision="10"/>
         </property>
         <property name="remarkGuideCom" type="string">
             <column name="remark_guide_com" />

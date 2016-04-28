@@ -282,10 +282,10 @@ public class DaytourOperationDetailController extends SMITravelController {
             driver.setStaff(staff);
             driver.setCarNo(carNo);
             driver.setGasFee(gasFee);
-            driver.setGasValue(util.convertStringToInteger(gasValue));
+            driver.setGasValue(!"".equalsIgnoreCase(gasValue) && gasValue != null ? new BigDecimal(gasValue.replaceAll(",", "")) : null);
             driver.setTourOperationDesc(tourOperationDesc);
             driver.setTipFee(tipFee);
-            driver.setTipValue(util.convertStringToInteger(tipValue));
+            driver.setTipValue(!"".equalsIgnoreCase(tipValue) && tipValue != null ? new BigDecimal(tipValue.replaceAll(",", "")) : null);
             if(!"".equalsIgnoreCase(driverId)){
                 DriverList.add(driver);
             }
@@ -346,7 +346,7 @@ public class DaytourOperationDetailController extends SMITravelController {
             TourOperationExpense tourOperationExpense = gettourOperationExpense(id, tourOperationDesc);
             tourOperationExpense.setDescription(description);
             tourOperationExpense.setQty(util.convertStringToInteger(qty));
-            tourOperationExpense.setAmount(util.convertStringToInteger(amount));
+            tourOperationExpense.setAmount(!"".equalsIgnoreCase(amount) && amount != null ? new BigDecimal(amount.replaceAll(",", "")) : null);
             tourOperationExpense.setPriceType(priceType);
 //            tourOperationExpense.setCurrency(selectCur);
             tourOperationExpense.setTourOperationDesc(tourOperationDesc);

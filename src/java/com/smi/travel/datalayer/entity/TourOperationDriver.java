@@ -1,6 +1,9 @@
 package com.smi.travel.datalayer.entity;
 // Generated Mar 18, 2015 10:03:25 AM by Hibernate Tools 3.6.0
 
+import java.math.BigDecimal;
+
+
 
 
 /**
@@ -14,9 +17,9 @@ public class TourOperationDriver {
      private SystemUser staff;
      private String carNo;
      private String gasFee;
-     private Integer gasValue;
+     private BigDecimal gasValue;
      private String tipFee;
-     private Integer tipValue;
+     private BigDecimal tipValue;
 
     public TourOperationDriver() {
     }
@@ -26,7 +29,7 @@ public class TourOperationDriver {
         this.tourOperationDesc = tourOperationDesc;
         this.staff = staff;
     }
-    public TourOperationDriver(TourOperationDesc tourOperationDesc, SystemUser staff, String carNo, String gasFee, Integer gasValue, String tipFee, Integer tipValue) {
+    public TourOperationDriver(TourOperationDesc tourOperationDesc, SystemUser staff, String carNo, String gasFee, BigDecimal gasValue, String tipFee, BigDecimal tipValue) {
        this.tourOperationDesc = tourOperationDesc;
        this.staff = staff;
        this.carNo = carNo;
@@ -71,13 +74,7 @@ public class TourOperationDriver {
     public void setGasFee(String gasFee) {
         this.gasFee = gasFee;
     }
-    public Integer getGasValue() {
-        return this.gasValue;
-    }
-    
-    public void setGasValue(Integer gasValue) {
-        this.gasValue = gasValue;
-    }
+
     public String getTipFee() {
         return this.tipFee;
     }
@@ -85,16 +82,22 @@ public class TourOperationDriver {
     public void setTipFee(String tipFee) {
         this.tipFee = tipFee;
     }
-    public Integer getTipValue() {
-        return this.tipValue;
+
+    public BigDecimal getGasValue() {
+        return gasValue;
     }
-    
-    public void setTipValue(Integer tipValue) {
+
+    public void setGasValue(BigDecimal gasValue) {
+        this.gasValue = gasValue;
+    }
+
+    public BigDecimal getTipValue() {
+        return tipValue;
+    }
+
+    public void setTipValue(BigDecimal tipValue) {
         this.tipValue = tipValue;
     }
-
-
-
 
 }
 

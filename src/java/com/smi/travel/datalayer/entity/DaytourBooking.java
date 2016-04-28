@@ -2,6 +2,7 @@ package com.smi.travel.datalayer.entity;
 // Generated Mar 18, 2015 10:03:25 AM by Hibernate Tools 3.6.0
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,8 +32,8 @@ public class DaytourBooking   {
      private Integer child;
      private Integer infant;
      private Integer isBill;
-     private Integer agentComission;
-     private Integer guideCommission;
+     private BigDecimal agentComission;
+     private BigDecimal guideCommission;
      private String remarkGuideCom;
      private String remarkAgentCom;
      private Integer pickupOrder;
@@ -47,7 +48,7 @@ public class DaytourBooking   {
         this.daytour = daytour;
         this.master = master;
     }
-    public DaytourBooking(Place place, MItemstatus MItemstatus, SystemUser guide, Daytour daytour, Master master, Agent agent, Date tourDate, String pickupDetail, String pickupRoom, Date pickupTime, String requirement, String remark, String memo, Integer isPay, Integer adult, Integer child, Integer infant, Integer isBill, Integer agentComission, Integer guideCommission, String remarkGuideCom, String remarkAgentCom,Integer pickupOrder, Set coupons, Set daytourBookingPrices) {
+    public DaytourBooking(Place place, MItemstatus MItemstatus, SystemUser guide, Daytour daytour, Master master, Agent agent, Date tourDate, String pickupDetail, String pickupRoom, Date pickupTime, String requirement, String remark, String memo, Integer isPay, Integer adult, Integer child, Integer infant, Integer isBill, BigDecimal agentComission, BigDecimal guideCommission, String remarkGuideCom, String remarkAgentCom,Integer pickupOrder, Set coupons, Set daytourBookingPrices) {
        this.place = place;
        this.MItemstatus = MItemstatus;
        this.guide = guide;
@@ -212,20 +213,7 @@ public class DaytourBooking   {
     public void setIsBill(Integer isBill) {
         this.isBill = isBill;
     }
-    public Integer getAgentComission() {
-        return this.agentComission;
-    }
-    
-    public void setAgentComission(Integer agentComission) {
-        this.agentComission = agentComission;
-    }
-    public Integer getGuideCommission() {
-        return this.guideCommission;
-    }
-    
-    public void setGuideCommission(Integer guideCommission) {
-        this.guideCommission = guideCommission;
-    }
+   
     public String getRemarkGuideCom() {
         return this.remarkGuideCom;
     }
@@ -261,6 +249,22 @@ public class DaytourBooking   {
 
     public void setPickupOrder(Integer pickupOrder) {
         this.pickupOrder = pickupOrder;
+    }
+
+    public BigDecimal getAgentComission() {
+        return agentComission;
+    }
+
+    public void setAgentComission(BigDecimal agentComission) {
+        this.agentComission = agentComission;
+    }
+
+    public BigDecimal getGuideCommission() {
+        return guideCommission;
+    }
+
+    public void setGuideCommission(BigDecimal guideCommission) {
+        this.guideCommission = guideCommission;
     }
 
     

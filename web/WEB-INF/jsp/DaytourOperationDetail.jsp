@@ -4,6 +4,8 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="js/selectize.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
 <script type="text/javascript" src="js/DaytourOperationDetail.js"></script> 
@@ -331,7 +333,7 @@
                                                                             <input id="InfoTableGasFee${status.count}" name="InfoTableGasFee${status.count}" class="form-control" value="${driver.gasFee}">
                                                                         </div>
                                                                         <div class="col-xs-5">
-                                                                            <input id="InfoTableValue"${status.count} name="InfoTableGasValue${status.count}" class="form-control money" value="${driver.gasValue}">
+                                                                            <input id="InfoTableValue"${status.count} name="InfoTableGasValue${status.count}" class="form-control decimal" value="${driver.gasValue}">
                                                                         </div>
                                                                     </td>
                                                                     <td>
@@ -339,7 +341,7 @@
                                                                             <input id="InfoTableTipFee${status.count}" name="InfoTableTipFee${status.count}" class="form-control" value="${driver.tipFee}">
                                                                         </div>
                                                                         <div class="col-xs-5">
-                                                                            <input id="InfoTableTipValue${status.count}" name="InfoTableTipValue${status.count}" class="form-control money" value="${driver.tipValue}" onfocusout="calculateGuideBill()">
+                                                                            <input id="InfoTableTipValue${status.count}" name="InfoTableTipValue${status.count}" class="form-control decimal" value="${driver.tipValue}" onfocusout="calculateGuideBill()">
                                                                         </div>
                                                                     </td>
                                                                     <td class="text-center">
@@ -670,7 +672,7 @@
                                                                             <input id="InfoTableGasFee${status.count}" name="InfoTableGasFee${status.count}" class="form-control" value="${driver.gasFee}" readonly="">
                                                                         </div>
                                                                         <div class="col-xs-5">
-                                                                            <input id="InfoTableValue"${status.count} name="InfoTableGasValue${status.count}" class="form-control money" value="${driver.gasValue}" readonly="">
+                                                                            <input id="InfoTableValue"${status.count} name="InfoTableGasValue${status.count}" class="form-control decimal" value="${driver.gasValue}" readonly="">
                                                                         </div>
                                                                     </td>
                                                                     <td>
@@ -678,7 +680,7 @@
                                                                             <input id="InfoTableTipFee${status.count}" name="InfoTableTipFee${status.count}" class="form-control" value="${driver.tipFee}" >
                                                                         </div>
                                                                         <div class="col-xs-5">
-                                                                            <input id="InfoTableTipValue${status.count}" name="InfoTableTipValue${status.count}" class="form-control money" value="${driver.tipValue}" onfocusout="calculateGuideBill()">
+                                                                            <input id="InfoTableTipValue${status.count}" name="InfoTableTipValue${status.count}" class="form-control decimal" value="${driver.tipValue}" onfocusout="calculateGuideBill()">
                                                                         </div>
                                                                     </td>                                                                   
                                                                 </tr>
@@ -842,7 +844,7 @@
                                                     </td>
                                                     <td style="width: 100px">
                                                         <input id="expenAmount${i.count}" name="expenAmount${i.count}" 
-                                                               class="form-control money" value="${expen.amount}" readonly="">
+                                                               class="form-control decimal" value="${expen.amount}" readonly="">
                                                     </td>
         <!--                                            <td>                            
                                                         <select name="expenSelectCur${i.count}" id="expenSelectCur${i.count}" class="form-control">
@@ -1040,7 +1042,7 @@
                                                     </td>
                                                     <td style="width: 100px">
                                                         <input id="expenAmount${i.count}" name="expenAmount${i.count}" 
-                                                               class="form-control money" value="${expen.amount}" onfocusout="calculateGuideBill()" onkeyup="insertCommas(this)">
+                                                               class="form-control decimal" value="${expen.amount}" onfocusout="calculateGuideBill()" onkeyup="insertCommas(this)">
                                                     </td>
         <!--                                            <td>                            
                                                         <select name="expenSelectCur${i.count}" id="expenSelectCur${i.count}" class="form-control">
@@ -1098,7 +1100,7 @@
                                             </c:forEach>
                                         </tbody>
                                     </table>                           
-                                    <div class="col-xs-12 form-group" style="margin-top: -10px;">
+                                    <div class="col-xs-12 form-group" style="margin-top: 10px;">
                                         <div class="col-xs-1">
                                             <label class="control-label">Guide&nbsp;bill</label>
                                         </div>

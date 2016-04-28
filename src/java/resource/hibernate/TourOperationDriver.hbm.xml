@@ -19,14 +19,14 @@
         <property name="gasFee" type="string">
             <column name="gas_fee" length="100" />
         </property>
-        <property name="gasValue" type="java.lang.Integer">
-            <column name="gas_value" />
+        <property name="gasValue" type="big_decimal">
+            <column name="gas_value" precision="10"/>
         </property>
         <property name="tipFee" type="string">
             <column name="tip_fee" length="100" />
         </property>
-        <property name="tipValue" type="java.lang.Integer">
-            <column name="tip_value" />
+        <property name="tipValue" type="big_decimal">
+            <column name="tip_value" precision="10"/>
         </property>
     </class>
 </hibernate-mapping>

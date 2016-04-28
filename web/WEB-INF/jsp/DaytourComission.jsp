@@ -4,6 +4,8 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="js/selectize.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <script type="text/javascript" src="js/DaytourComission.js"></script> 
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
@@ -210,7 +212,7 @@
                                     </select>
                                 </td>
                                 <td class="form-group" >
-                                    <input type="text" class="form-control money guidecom" id="guideComm-${status.count}" name="guideComm-" 
+                                    <input type="text" class="form-control decimal guidecom" id="guideComm-${status.count}" name="guideComm-" 
                                            value="${item.guideCommission}" maxlength="14">
                                 </td>
                                 <td class="form-group">
@@ -221,7 +223,7 @@
                                     <input type="text" class="form-control agentname" id="AgentName-${status.count}" name="AgentName-"  valHidden="${item.agent.id}" value="${item.agent.name}"  /> 
                                 </td>
                                 <td class="form-group">
-                                    <input type="text" class="form-control money agentcom" id="agentComm-${status.count}" name="agentComm-" 
+                                    <input type="text" class="form-control decimal agentcom" id="agentComm-${status.count}" name="agentComm-" 
                                            value="${item.agentComission}" maxlength="14">
                                 </td>
                                 <td class="agentRemark form-group">
@@ -442,6 +444,17 @@
             "bPaginate": true,
             "bInfo": true,
             "iDisplayLength":10
+        });
+        
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
         });
         
         //datetime
