@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CreditNoteSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="886f6a61-cb51-422c-a379-c72412e46d94">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CreditNoteSummaryReport" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="886f6a61-cb51-422c-a379-c72412e46d94">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="892"/>
+	<property name="ireport.x" value="881"/>
 	<property name="ireport.y" value="297"/>
 	<field name="systemdate" class="java.lang.String"/>
 	<field name="user" class="java.lang.String"/>
@@ -23,8 +23,7 @@
 	<field name="status" class="java.lang.String"/>
 	<field name="departmentshow" class="java.lang.String"/>
 	<variable name="totalsubtotal" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum">
-		<variableExpression><![CDATA[("VOID".equals($F{status})) ? new BigDecimal("0.00") : new BigDecimal($F{subtotal})
-]]></variableExpression>
+		<variableExpression><![CDATA[("VOID".equals($F{status})) ? new BigDecimal("0.00") : new BigDecimal($F{subtotal})]]></variableExpression>
 	</variable>
 	<variable name="totalsubreal" class="java.math.BigDecimal" resetType="Group" resetGroup="departmentGroup" calculation="Sum">
 		<variableExpression><![CDATA[("VOID".equals($F{status})) ? new BigDecimal("0.00") : new BigDecimal($F{subtotalreal})]]></variableExpression>
@@ -56,7 +55,7 @@
 	<variable name="countNo" class="java.lang.Integer" resetType="Group" resetGroup="departmentGroup" calculation="DistinctCount">
 		<variableExpression><![CDATA[($V{countNo}==null?0:$V{countNo}+1)]]></variableExpression>
 	</variable>
-	<group name="departmentGroup" isReprintHeaderOnEachPage="true" keepTogether="true">
+	<group name="departmentGroup" isStartNewPage="true" isReprintHeaderOnEachPage="true" keepTogether="true">
 		<groupExpression><![CDATA[$F{department}]]></groupExpression>
 		<groupHeader>
 			<band height="51">
