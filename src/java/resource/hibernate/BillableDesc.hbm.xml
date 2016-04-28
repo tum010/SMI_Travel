@@ -13,11 +13,11 @@
         <many-to-one name="MBilltype" class="com.smi.travel.datalayer.entity.MBilltype" fetch="select">
             <column name="bill_type" />
         </many-to-one>
-        <property name="cost" type="int">
-            <column name="cost" not-null="true" />
+        <property name="cost" type="big_decimal">
+            <column name="cost" precision="10" not-null="true" />
         </property>
-        <property name="price" type="int">
-            <column name="price" not-null="true" />
+        <property name="price" type="big_decimal">
+            <column name="price" precision="10" not-null="true" />
         </property>
         <property name="isBill" type="int">
             <column name="is_bill" not-null="true" />
