@@ -20,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -360,11 +361,12 @@ public class ReceiveTableImpl implements ReceiveTableDao{
 
     @Override
     public AdvanceReceivePeriod getReceivePeriod(String receiveDate, String department, String vatType) {
+        UtilityFunction util = new UtilityFunction();
         StringBuffer query = new StringBuffer("from AdvanceReceivePeriod ad ");
         boolean haveCondition = false;
         if ((receiveDate != null) && (!"".equalsIgnoreCase(receiveDate))) {
             query.append(haveCondition ? " or " : " where ");
-            query.append(" ad.receiveFrom <= '" + receiveDate + "' and ad.receiveTo >= '" + receiveDate + "'");
+            query.append(" ad.receiveFrom <= '" + util.covertStringDateToFormatYMD(receiveDate) + "' and ad.receiveTo >= '" + util.covertStringDateToFormatYMD(receiveDate) + "'");
             haveCondition = true;
         }
         if ((department != null) && (!"".equalsIgnoreCase(department))) {
@@ -486,13 +488,13 @@ public class ReceiveTableImpl implements ReceiveTableDao{
         
         if((receiveDate != null) && (!"".equalsIgnoreCase(receiveDate))) {
             queryReceiveView += (haveCondition ? " AND " : " WHERE ");
-            queryReceiveView += " crv.receivedate = '" + receiveDate + "' ";
+            queryReceiveView += " crv.receivedate = '" + util.covertStringDateToFormatYMD(receiveDate) + "' ";
             
 //            queryReceiptSummary += (haveCondition ? " AND " : " WHERE ");            
 //            queryReceiptSummary += " ((`rec`.`rec_date` >= (select `adp`.`receive_from` from `advance_receive_period` `adp` where ((`adp`.`receive_from` <= '" + receiveDate + "') and (`adp`.`receive_to` >= '" + receiveDate + "') and (adp.vat_type = '" + vatType + "') and (adp.department = '" + department + "')))) and (`rec`.`rec_date` <= (select `adp`.`receive_to` from `advance_receive_period` `adp` where ((`adp`.`receive_from` <= '" + receiveDate + "') and (`adp`.`receive_to` >= '" + receiveDate + "') and (adp.vat_type = '" + vatType + "') and (adp.department = '" + department + "')))) ";
             
             queryReceiveSummary += (haveCondition ? " AND " : " WHERE ");
-            queryReceiveSummary += " (( `ar`.`rec_date` = '" + receiveDate + "' ) ";
+            queryReceiveSummary += " (( `ar`.`rec_date` = '" + util.covertStringDateToFormatYMD(receiveDate) + "' ) ";
             
             haveCondition = true;           
         }
@@ -577,10 +579,8 @@ public class ReceiveTableImpl implements ReceiveTableDao{
                 .addScalar("remark", Hibernate.STRING)
                 .list();
                             
-        SimpleDateFormat dateformatSystemDate = new SimpleDateFormat();
-        dateformatSystemDate.applyPattern("dd-MMM-yyyy HH:mm");
-        SimpleDateFormat dateformatReceiveDate = new SimpleDateFormat();
-        dateformatReceiveDate.applyPattern("dd/MM/yyyy");
+        SimpleDateFormat dateformatSystemDate = new SimpleDateFormat("dd-MMM-yyyy HH:mm", Locale.US);
+        SimpleDateFormat dateformatReceiveDate = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         
         int i = 1;
         for (Object[] C : QueryReceiveView){
