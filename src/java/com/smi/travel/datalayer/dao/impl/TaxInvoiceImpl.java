@@ -216,16 +216,17 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
 
     @Override
     public List<TaxInvoiceView> SearchTaxInvoiceFromFilter(String from, String To, String Department, String Status) {
+        UtilityFunction util = new UtilityFunction();
         StringBuffer query = new StringBuffer("from TaxInvoice taxInv ");
         boolean haveCondition = false;
         if ((from != null) && (!"".equalsIgnoreCase(from))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" taxInv.taxInvDate >= '" + from + "'");
+            query.append(" taxInv.taxInvDate >= '" + util.covertStringDateToFormatYMD(from) + "'");
             haveCondition = true;
         }
         if ((To != null) && (!"".equalsIgnoreCase(To))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" taxInv.taxInvDate <= '" + To + "'");
+            query.append(" taxInv.taxInvDate <= '" + util.covertStringDateToFormatYMD(To) + "'");
             haveCondition = true;
         }
         if ((Department != null) && (!"".equalsIgnoreCase(Department))) {

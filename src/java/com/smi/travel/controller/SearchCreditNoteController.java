@@ -32,18 +32,18 @@ public class SearchCreditNoteController extends SMITravelController {
         String status = request.getParameter("status");
         
         //Set Date Format
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        dateFrom = (!"".equalsIgnoreCase(dateFrom) && dateFrom != null ? sdf.format(util.convertStringToDate(dateFrom)) : "");
-        dateTo = (!"".equalsIgnoreCase(dateTo) && dateTo != null ? sdf.format(util.convertStringToDate(dateTo)) : "");
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+//        dateFrom = (!"".equalsIgnoreCase(dateFrom) && dateFrom != null ? sdf.format(util.convertStringToDate(dateFrom)) : "");
+//        dateTo = (!"".equalsIgnoreCase(dateTo) && dateTo != null ? sdf.format(util.convertStringToDate(dateTo)) : "");
         
         if("search".equalsIgnoreCase(action)){
             List<CreditNoteView> creditNoteList = creditNoteService.getCreditNoteFromFilter(dateFrom, dateTo, department, status);
             request.setAttribute("creditNoteList", creditNoteList);
         }
         
-        sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        request.setAttribute("iDateFrom", (!"".equalsIgnoreCase(dateFrom) && dateFrom != null ? sdf.format(util.convertStringToDate(dateFrom)) : ""));
-        request.setAttribute("iDateTo", (!"".equalsIgnoreCase(dateTo) && dateTo != null ? sdf.format(util.convertStringToDate(dateTo)) : ""));
+//        sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        request.setAttribute("iDateFrom", dateFrom);
+        request.setAttribute("iDateTo", dateTo);
         request.setAttribute("department", department);
         request.setAttribute("status", status);
         return SearchCreditNote;

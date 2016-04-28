@@ -40,20 +40,19 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<TaxInvoiceSummaryReport>();
         
-        SimpleDateFormat dateformat = new SimpleDateFormat();
-        dateformat.applyPattern("dd-MMM-yyyy HH:mm:ss");         
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.US);        
         
         String departmentshow = "ALL";
         StringBuffer query = new StringBuffer(" SELECT * FROM `taxinvoice_summary` ");
         boolean haveCondition = false;
         if ((from != null) && (!"".equalsIgnoreCase(from))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `taxinvoice_summary`.taxdate >= '" + from + "'");
+            query.append(" `taxinvoice_summary`.taxdate >= '" + util.covertStringDateToFormatYMD(from) + "'");
             haveCondition = true;
         }
         if ((to != null) && (!"".equalsIgnoreCase(to))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `taxinvoice_summary`.taxdate <= '" + to + "'");
+            query.append(" `taxinvoice_summary`.taxdate <= '" + util.covertStringDateToFormatYMD(to) + "'");
             haveCondition = true;
         }
         if ((status != null) && (!"".equalsIgnoreCase(status))) {
@@ -92,8 +91,7 @@ public class TaxInvoiceSummaryReportImpl implements TaxInvoiceSummaryReportDao {
                 .list();
         
         int no = 1;
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("dd-MM-yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         for (Object[] B : QueryList) {
             TaxInvoiceSummaryReport taxInvoiceSummaryReport = new TaxInvoiceSummaryReport();
             taxInvoiceSummaryReport.setNo(String.valueOf(no));

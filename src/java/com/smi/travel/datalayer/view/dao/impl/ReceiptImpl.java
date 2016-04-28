@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -195,15 +196,15 @@ public class ReceiptImpl implements ReceiptDao{
         String prefix ="";
         
         if(((dateFrom != null) &&(!"".equalsIgnoreCase(dateFrom))) &&((dateTo != null) &&(!"".equalsIgnoreCase(dateTo)))){
-            query += " recdate >= '" +dateFrom +"' and recdate <= '"+dateTo +"' ";
+            query += " recdate >= '" + util.covertStringDateToFormatYMD(dateFrom) +"' and recdate <= '" + util.covertStringDateToFormatYMD(dateTo) + "' ";
             checkQuery = 1;
         }else if((dateFrom != null) &&(!"".equalsIgnoreCase(dateFrom))){
             checkQuery = 1;
-            query +=  " recdate >= '" +dateFrom +"'";
+            query +=  " recdate >= '" + util.covertStringDateToFormatYMD(dateFrom) + "'";
 
         }else if((dateTo != null) &&(!"".equalsIgnoreCase(dateTo))){
             checkQuery = 1;
-            query += " recdate <= '" +dateTo +"'";
+            query += " recdate <= '" + util.covertStringDateToFormatYMD(dateTo) + "'";
         }
 
         if((departmentRec != null) &&(!"".equalsIgnoreCase(departmentRec))){
@@ -253,10 +254,8 @@ public class ReceiptImpl implements ReceiptDao{
                                     .addScalar("status",Hibernate.STRING)
                                     .list();
         List data = new ArrayList();
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("dd-MM-yyyy");
-        SimpleDateFormat dateformat = new SimpleDateFormat();
-        dateformat.applyPattern("dd-MM-yyyy hh:mm");
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy hh:mm", Locale.US);
         int i = 1;
         for(Object[] recSum : QueryList){
             ReceiptView receiptView = new ReceiptView();

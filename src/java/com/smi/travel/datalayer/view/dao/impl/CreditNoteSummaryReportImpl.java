@@ -36,20 +36,19 @@ public class CreditNoteSummaryReportImpl implements CreditNoteSummaryReportDao{
         UtilityFunction util = new UtilityFunction();
         List data = new ArrayList<CreditNoteSummaryReport>();
         
-        SimpleDateFormat dateformat = new SimpleDateFormat();
-        dateformat.applyPattern("dd-MMM-yyyy HH:mm:ss");
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.US);
         
         String departmentshow = "ALL";
         StringBuffer query = new StringBuffer(" SELECT * FROM `creditnote_summary` ");
         boolean haveCondition = false;
         if ((from != null) && (!"".equalsIgnoreCase(from))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `creditnote_summary`.notedate >= '" + from + "'");
+            query.append(" `creditnote_summary`.notedate >= '" + util.covertStringDateToFormatYMD(from) + "'");
             haveCondition = true;
         }
         if ((to != null) && (!"".equalsIgnoreCase(to))) {
             query.append(haveCondition ? " and" : " where");
-            query.append(" `creditnote_summary`.notedate <= '" + to + "'");
+            query.append(" `creditnote_summary`.notedate <= '" + util.covertStringDateToFormatYMD(to) + "'");
             haveCondition = true;
         }
         if ((status != null) && (!"".equalsIgnoreCase(status))) {
@@ -89,8 +88,8 @@ public class CreditNoteSummaryReportImpl implements CreditNoteSummaryReportDao{
                 .list();
         
         int no = 1;
-        SimpleDateFormat df = new SimpleDateFormat();
-        df.applyPattern("dd-MM-yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+
         for (Object[] B : QueryList) {
             CreditNoteSummaryReport creditNoteSummaryReport = new CreditNoteSummaryReport();
             creditNoteSummaryReport.setNo(String.valueOf(no));

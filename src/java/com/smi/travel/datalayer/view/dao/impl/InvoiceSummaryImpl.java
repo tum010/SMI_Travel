@@ -113,10 +113,10 @@ public class InvoiceSummaryImpl implements InvoiceSummaryDao{
         if ((fromData != null )&&(!"".equalsIgnoreCase(fromData))) {
             if ((toDate != null )&&(!"".equalsIgnoreCase(toDate))) {
                 if(AndQuery == 1){
-                     query += " and st.invdate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
+                     query += " and st.invdate  BETWEEN  '" + util.covertStringDateToFormatYMD(fromData) + "' AND '" + util.covertStringDateToFormatYMD(toDate) + "' ";
                 }else{
                     AndQuery = 1;
-                     query += " st.invdate  BETWEEN  '" + fromData + "' AND '" + toDate + "' ";
+                     query += " st.invdate  BETWEEN  '" + util.covertStringDateToFormatYMD(fromData) + "' AND '" + util.covertStringDateToFormatYMD(toDate) + "' ";
                 }
                 
                

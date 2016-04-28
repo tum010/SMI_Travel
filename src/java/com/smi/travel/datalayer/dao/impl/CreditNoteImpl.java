@@ -244,19 +244,20 @@ public class CreditNoteImpl implements CreditNoteDao {
 
     @Override
     public List<CreditNoteView> getCreditNoteFromFilter(String from, String to, String Department, String status) {
+         UtilityFunction util = new UtilityFunction();
          String query = "from CreditNote cn Where";
          int checkQuery = 0;
          String prefix ="";
          if(((from != null) &&(!"".equalsIgnoreCase(from))) &&((to != null) &&(!"".equalsIgnoreCase(to)))){
-             query += " cn.cnDate >= '" +from +"' and cn.cnDate <= '"+to +"' ";
+             query += " cn.cnDate >= '" + util.covertStringDateToFormatYMD(from) + "' and cn.cnDate <= '" + util.covertStringDateToFormatYMD(to) + "' ";
              checkQuery = 1;
          }else if((from != null) &&(!"".equalsIgnoreCase(from))){
              if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-             query += prefix+ " cn.cnDate >= '" +from +"'";
+             query += prefix+ " cn.cnDate >= '" + util.covertStringDateToFormatYMD(from) + "'";
              
          }else if((to != null) &&(!"".equalsIgnoreCase(to))){
              if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
-             query += prefix+" cn.cnDate <= '" +to +"'";
+             query += prefix+" cn.cnDate <= '" + util.covertStringDateToFormatYMD(to) + "'";
          }
          
          if((Department != null) &&(!"".equalsIgnoreCase(Department))){
@@ -272,7 +273,7 @@ public class CreditNoteImpl implements CreditNoteDao {
              if(checkQuery == 1){prefix = " and "; }else{checkQuery = 1;}
              query += prefix+" cn.MFinanceItemstatus.id = '"+status+"'";
          }
-         
+         System.out.println("===== Credit Note Query ===== : "+query);
          if(checkQuery == 0){query = query.replaceAll("Where", "");}
          System.out.println("query : "+query);
          Session session = this.sessionFactory.openSession();
