@@ -66,44 +66,42 @@ public class MainMigrate {
     private static final String sqlInv2 = " SELECT inv2. ID AS ID, INV2.inv_no AS invno, INV2.\"NAME\" AS NAME, TO_CHAR (INV2.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd2.price) AS grand_total, SUM (invd2.price) AS grand_total_gross, 0 AS grand_total_vat, MIN (INVD2.CUR) AS cur, 'INBOUND' AS department, '2' AS acc_no FROM \"INBOUND\".\"INVOICE2\" inv2 INNER JOIN INBOUND.INVOICE2_DETAIL invd2 ON inv2. ID = invd2.INVOICE2_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv2. NAME WHERE \"TO_CHAR\" (inv2.INV_DATE, 'MMYYYY') IN ('102015', '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv2. ID, INV2.inv_no, INV2.\"NAME\", INV2.INV_DATE ORDER BY INV2. ID ";
     
     public static void main(String[] args) {
-        BigDecimal a = new BigDecimal(-1);
-        System.out.println(" a " + a.multiply(new BigDecimal(BigInteger.ONE)));
-//        Connection connect = null;
-//        Statement s = null;  
-//        Statement stmt = null;
-//        try {  
-//            connect = OracleConnection.getConnection();
-//            s = connect.createStatement();
-//            if (connect != null) {
-////                getTaxInvoice(s,stmt);
-////                getAgentReport(s, stmt);
-////                getStaffReport(s, stmt);
-////                getCity(s, stmt);
-////                getCountry(s,stmt);
-////                getCurrency(s, stmt);
-////                getAirline(s, stmt);
-////                getPackageTour(s, stmt);
-////                getProduct(s, stmt);
-////                getHotel(s, stmt);
-////                getCustomer(s, stmt);
-////                getARData(s,stmt);
-////                getAPData(s,stmt);
-////                getDeptorInvoiceData(s, stmt);
+        Connection connect = null;
+        Statement s = null;  
+        Statement stmt = null;
+        try {  
+            connect = OracleConnection.getConnection();
+            s = connect.createStatement();
+            if (connect != null) {
+//                getTaxInvoice(s,stmt);
+//                getAgentReport(s, stmt);
+//                getStaffReport(s, stmt);
+//                getCity(s, stmt);
+//                getCountry(s,stmt);
+//                getCurrency(s, stmt);
+//                getAirline(s, stmt);
+//                getPackageTour(s, stmt);
+//                getProduct(s, stmt);
+//                getHotel(s, stmt);
+//                getCustomer(s, stmt);
+//                getARData(s,stmt);
+//                getAPData(s,stmt);
+                getDeptorInvoiceData(s, stmt);
 //                getInvoiceData(s, stmt);
-//            } else {
-//                System.out.println("Database Connect Failed.");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }finally {
-//           if (connect != null) {
-//               try {
-//                   connect.close();
-//               } catch (SQLException ex) {
-//                   Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
-//               }
-//           }
-//        } 
+            } else {
+                System.out.println("Database Connect Failed.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+           if (connect != null) {
+               try {
+                   connect.close();
+               } catch (SQLException ex) {
+                   Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+               }
+           }
+        } 
     }
     
     
@@ -297,7 +295,7 @@ public class MainMigrate {
         BufferedReader br = null;
         try {
             String sCurrentLine;
-            br = new BufferedReader(new FileReader("C:\\Users\\Jittima\\Desktop\\deptor_invoice_all.txt"));
+            br = new BufferedReader(new FileReader("C:\\Users\\Jittima\\Desktop\\deptor_invoice_3112_all.txt"));
             while((sCurrentLine = br.readLine()) != null) {
                 String data[] = sCurrentLine.split("\\t");
                 MainMigrateModel migrateModel = new MainMigrateModel();
