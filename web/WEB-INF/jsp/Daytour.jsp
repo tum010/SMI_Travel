@@ -251,19 +251,20 @@
                             </td>
                             <td class="tdcenter">${table.curAmount}</td>
                             <td>
-                    <center> 
+                    <center>
                         <a href="OtherDetail.smi?referenceNo=${param.referenceNo}&itemid=${table.id}&action=edit&callPageFrom=FromDayTour"><span class="glyphicon glyphicon-edit editicon"      onclick="" ></span></a>
-                            <c:if test="${table.status.id == 2}">
+                        <c:if test="${table.status.id == 2}">
                             <span class="glyphicon glyphicon-plus addicon"   onclick="EnableOther('${table.id}', ' ${table.product.code}');" data-toggle="modal" data-target="#EnableOther" ></span>
                         </c:if>
                         <c:if test="${table.status.id == 1}">
                             <c:if test="${lockUnlockBookingOther == 0}">
                                 <c:if test="${table.isBill == 0}">
-                                    <span class="glyphicon glyphicon-remove deleteicon"   onclick="getCouponCheck('${table.id}', ' ${table.product.code}');" data-toggle="modal" data-target="" ></span>                            </c:if>
-                                </c:if>
+                                    <span class="glyphicon glyphicon-remove deleteicon"   onclick="getCouponCheck('${table.id}', ' ${table.product.code}');" data-toggle="modal" data-target="" ></span>                            
+                                </c:if>                              
                                 <c:if test="${table.isBill == 1}">
                                     <span class="glyphicon glyphicon-remove deleteicon" ></span>
                                 </c:if>
+                            </c:if>
                             <c:if test="${lockUnlockBookingOther == 1}">
                                 <span class="glyphicon glyphicon-remove deleteicon" ></span>
                             </c:if>
