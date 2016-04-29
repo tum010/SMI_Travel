@@ -567,7 +567,7 @@ public class PaymentWendytourImpl implements PaymentWendytourDao{
             PaymentTourHotelSummary paymentTourHotelSummary = new PaymentTourHotelSummary();
             paymentTourHotelSummary.setNo(String.valueOf(no));
             paymentTourHotelSummary.setPayno(util.ConvertString(B[0]));
-            paymentTourHotelSummary.setPaydate(util.ConvertString(B[1]));
+            paymentTourHotelSummary.setPaydate(!"".equalsIgnoreCase(util.ConvertString(B[1])) ? String.valueOf(df.format(util.convertStringToDate(util.ConvertString(B[1])))) : "");
             paymentTourHotelSummary.setPvtype(util.ConvertString(B[2]));
             paymentTourHotelSummary.setSupplier(util.ConvertString(B[3]));
             paymentTourHotelSummary.setRefno(util.ConvertString(B[4]));                           
