@@ -27,6 +27,7 @@ public class TransferJobReport {
     private String driver;
     private String systemdate;
     private String tourdate;
+    private String memo;
 
     public String getNo() {
         return no;
@@ -154,6 +155,14 @@ public class TransferJobReport {
 
     public void setTourdate(String tourdate) {
         this.tourdate = tourdate;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
 }

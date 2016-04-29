@@ -101,10 +101,13 @@ public class TransferJobReportImpl implements TransferJobReportDao {
             String[] passenger = calculatePassengerDaytour(PriceList);
             if(book.getPlace() != null){
                 String place = book.getPlace().getPlace();
+                String memo = "";
                 if((book.getMemo() != null)&&(!"".equalsIgnoreCase(book.getMemo()))){
-                    place += "<br>"+book.getMemo();
+//                    place += "<br>"+book.getMemo();
+                    memo = book.getMemo();
                 }
                 report.setPlace(place);
+                report.setMemo(memo);
                 System.out.println("place : "+place);
             }else{
                 report.setPlace("");
