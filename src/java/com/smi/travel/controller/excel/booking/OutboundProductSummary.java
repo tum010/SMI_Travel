@@ -1795,11 +1795,11 @@ public class OutboundProductSummary extends AbstractExcelView  {
             cell081.setCellStyle(styleHeader);
             sheet.autoSizeColumn(30);    
         HSSFCell cell082 = row6.createCell(31);
-            cell082.setCellValue("PAY RATE");
+            cell082.setCellValue("REAL RATE");
             cell082.setCellStyle(styleHeader);
             sheet.autoSizeColumn(31);        
         HSSFCell cell083 = row6.createCell(32);
-            cell083.setCellValue("REAL RATE");
+            cell083.setCellValue("PAY RATE");
             cell083.setCellStyle(styleHeader);
             sheet.autoSizeColumn(32);
         HSSFCell cell084 = row6.createCell(37);
@@ -1815,7 +1815,7 @@ public class OutboundProductSummary extends AbstractExcelView  {
             cell86.setCellStyle(styleHeader);
             sheet.autoSizeColumn(39);
         HSSFCell cell87 = row6.createCell(40);
-            cell87.setCellValue("STAFF");
+            cell87.setCellValue("PAYEE");
             cell87.setCellStyle(styleHeader);
             sheet.autoSizeColumn(40);
         HSSFCell cell88 = row6.createCell(41);
@@ -1928,10 +1928,10 @@ public class OutboundProductSummary extends AbstractExcelView  {
                 celldata30.setCellValue(String.valueOf(data.getCurprice()));
                 celldata30.setCellStyle(styleDetailTableCenter);    
             HSSFCell celldata31 = row.createCell(31);
-                celldata31.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPayrate())) ? 0 : (new BigDecimal(data.getPayrate())).doubleValue());
+                celldata31.setCellValue("".equalsIgnoreCase(String.valueOf(data.getRealrate())) ? 0 : (new BigDecimal(data.getRealrate())).doubleValue());
                 celldata31.setCellStyle(styleAlignRightBorderAllNumberRate);                    
             HSSFCell celldata32 = row.createCell(32);
-                celldata32.setCellValue("".equalsIgnoreCase(String.valueOf(data.getRealrate())) ? 0 : (new BigDecimal(data.getRealrate())).doubleValue());
+                celldata32.setCellValue("".equalsIgnoreCase(String.valueOf(data.getPayrate())) ? 0 : (new BigDecimal(data.getPayrate())).doubleValue());
                 celldata32.setCellStyle(styleAlignRightBorderAllNumberRate);                    
             HSSFCell celldata33 = row.createCell(33);
                 celldata33.setCellValue("".equalsIgnoreCase(String.valueOf(data.getAmountlocalp())) ? 0 : (new BigDecimal(data.getAmountlocalp())).doubleValue());

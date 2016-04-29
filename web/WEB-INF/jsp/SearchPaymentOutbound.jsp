@@ -491,8 +491,8 @@ $(document).ready(function () {
     }
 
     function printPaymentOutbound(){
-        var fromdate = document.getElementById("fromDate").value;
-        var todate= document.getElementById("toDate").value;
+        var fromdate = convertFormatDate(document.getElementById("fromDate").value);
+        var todate= convertFormatDate(document.getElementById("toDate").value);
         var status = document.getElementById("status").value;
         var invSupCode= document.getElementById("invSupCode").value;
         var refNo= document.getElementById("refNo").value;
