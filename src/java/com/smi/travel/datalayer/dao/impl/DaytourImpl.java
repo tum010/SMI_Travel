@@ -32,7 +32,7 @@ public class DaytourImpl implements DaytourDao{
     private static final String UsabilityTour ="from DaytourBooking t where t.daytour.id = :tour";
     private static final String TOURPRICEQUERY ="from DaytourPrice p where p.daytour.id = :tour";
     private static final String TOUREXPENSEQUERY ="from DaytourExpense p where p.daytour.id = :tour";
-    private static final String TOURACTIVEQUERY ="from Daytour d where d.status = 'active'";
+    private static final String TOURACTIVEQUERY ="from Daytour d where d.status = 'active' order by d.name";
     private static final String DELETE_PRICEQUERY = "DELETE FROM DaytourPrice p WHERE p.id = :priceid";
     private static final String DELETE_DAYTOUR = "DELETE FROM Daytour p WHERE p.id = :daytourid";
     private static final String DELETE_PRICEQUERY_BYDAYTOUR = "DELETE FROM DaytourPrice p WHERE p.daytour.id = :priceid";
