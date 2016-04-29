@@ -73,8 +73,8 @@
                             </c:when>
                         </c:choose>
                         <select name="section" id="section"  class="form-control">
-                            <option value="1"  ${mybook}>My booking </option>
                             <option value="2"  ${mydepart}>My department</option>
+                            <option value="1"  ${mybook}>My booking </option>
                             <option value="3"  ${all}>All</option>
                         </select>
                     </div>

@@ -1493,7 +1493,8 @@
                                 <td class="tour-name">${tour.name}</td>
                             </tr>
                         <script>
-                            tourCode.push({id: "${tour.id}", code: "${tour.code}", name: "${tour.name}"});
+                            tourCode.push({id: "${tour.id}", code: "${tour.code}", name: "${tour.name}", value: "${tour.code}" , search : "${tour.code}"});
+                            tourCode.push({id: "${tour.id}", code: "${tour.code}", name: "${tour.name}", value: "${tour.name}" , search : "${tour.name}"});
                         </script>
                     </c:forEach>
                     </tbody>
@@ -1545,24 +1546,36 @@
 
                     });
                     // ON KEY INPUT AUTO SELECT TOURCODE-TOURNAME
-                    $(function () {
-                        var availableTags = [];
+                    
 
-                        $.each(tourCode, function (key, value) {
-                            availableTags.push(value.code);
-                            if (!(value.name in availableTags)) {
-                                availableTags.push(value.name);
+
+                    $("#InputDetailTourCode").autocomplete({
+                           minLength:1,
+                            source: function(request, response) {
+                            var filteredArray = $.map(tourCode, function(item) {
+                                if((item.search.toUpperCase()).startsWith(request.term.toUpperCase())){
+                                    return item;
+                                }
+                                else{
+                                    return null;
+                                }
+                            });
+                            filteredArray = filteredArray.slice(0,10);
+                            response(filteredArray);
+                        },
+                           select: function(event, ui) {
+                             event.preventDefault();
+                             $("#InputDetailTourCode").trigger('keyup');
+                             $('#InputDetailTourCode').val(ui.item.code);
+                             $('#InputDetailTourName').val(ui.item.name);
+                             $('#InputDetailTourId').val(ui.item.id);
+                           },
+                            focus: function(event, ui) {
+                                event.preventDefault();
+                                 $("#InputDetailTourCode").trigger('keyup');
                             }
                         });
-
-                        $("#InputDetailTourCode").autocomplete({
-                            source: availableTags,
-                            close: function (event, ui) {
-                                $("#InputDetailTourCode").trigger('keyup');
-                            }
-                        });
-
-
+						
                         $("#InputDetailTourCode").keyup(function () {
                             var position = $(this).offset();
                             $(".ui-widget").css("top", position.top + 30);
@@ -1570,18 +1583,45 @@
                             var name = this.value;
                             var code = this.value.toUpperCase();
                             $("#InputDetailTourName").val(null);
-                            $.each(tourCode, function (key, value) {
-                                if (name === value.name) {
-                                    $("#InputDetailTourCode").val(value.code);
-                                    code = $("#InputDetailTourCode").val().toUpperCase();
-                                }
-                                if (value.code.toUpperCase() === code) {
-                                    $("#InputDetailTourId").val(value.id);
-                                    $("#InputDetailTourName").val(value.name);
-                                }
-                            }); //end each tourCode
-                        }); // end InputTourCode keyup
-                    }); // end AutoComplete TourCode TourName
+                        });
+
+//                    $(function () {
+//                        var availableTags = [];
+//
+//                        $.each(tourCode, function (key, value) {
+//                            availableTags.push(value.code);
+//                            if (!(value.name in availableTags)) {
+//                                availableTags.push(value.name);
+//                            }
+//                        });
+//
+//                        $("#InputDetailTourCode").autocomplete({
+//                            source: availableTags,
+//                            close: function (event, ui) {
+//                                $("#InputDetailTourCode").trigger('keyup');
+//                            }
+//                        });
+//
+//
+//                        $("#InputDetailTourCode").keyup(function () {
+//                            var position = $(this).offset();
+//                            $(".ui-widget").css("top", position.top + 30);
+//                            $(".ui-widget").css("left", position.left);
+//                            var name = this.value;
+//                            var code = this.value.toUpperCase();
+//                            $("#InputDetailTourName").val(null);
+//                            $.each(tourCode, function (key, value) {
+//                                if (name === value.name) {
+//                                    $("#InputDetailTourCode").val(value.code);
+//                                    code = $("#InputDetailTourCode").val().toUpperCase();
+//                                }
+//                                if (value.code.toUpperCase() === code) {
+//                                    $("#InputDetailTourId").val(value.id);
+//                                    $("#InputDetailTourName").val(value.name);
+//                                }
+//                            }); //end each tourCode
+//                        }); // end InputTourCode keyup
+//                    }); // end AutoComplete TourCode TourName
 
                 });
                 function checkUpdTour() {

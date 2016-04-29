@@ -9,7 +9,7 @@
 <script type="text/javascript" src="js/DaytourDetail.js"></script> 
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
-<link href="css/jquery-ui.min.css" rel="stylesheet">
+<!--<link href="css/jquery-ui.min.css" rel="stylesheet">-->
 
 <c:set var="booktype" value="${requestScope['BOOKING_TYPE']}" />
 <c:set var="booking_size" value="${requestScope['BookingSize']}" />
@@ -488,7 +488,8 @@
                                 <td class="tour-name">${tour.name}</td>
                             </tr>
                         <script>
-                            tourCode.push({id: "${tour.id}", code: "${tour.code}", name: "${tour.name}"});
+                            tourCode.push({id: "${tour.id}", code: "${tour.code}", name: "${tour.name}", value: "${tour.code}" , search : "${tour.code}"});
+                            tourCode.push({id: "${tour.id}", code: "${tour.code}", name: "${tour.name}", value: "${tour.name}" , search : "${tour.name}"});
                         </script>
                     </c:forEach>
                     </tbody>
@@ -548,24 +549,42 @@
 
                     });
                     // ON KEY INPUT AUTO SELECT TOURCODE-TOURNAME
-                    $(function () {
-                        var availableTags = [];
+//                    $(function () {
 
-                        $.each(tourCode, function (key, value) {
-                            availableTags.push(value.code);
-                            if ( !(value.name in availableTags) ){
-                               availableTags.push(value.name);
+//                        var availableTags = [];
+//                        $.each(tourCode, function (key, value) {
+//                            availableTags.push({"id": value.id, "code": value.code, "name": value.name, "value": value.name });
+////                            if ( !(value.name in availableTags) ){
+////                               availableTags.push(value.name);
+////                            }
+//                        });
+                        $("#InputTourCode").autocomplete({
+                           minLength:1,
+                            source: function(request, response) {
+                            var filteredArray = $.map(tourCode, function(item) {
+                                if((item.search.toUpperCase()).startsWith(request.term.toUpperCase())){
+                                    return item;
+                                }
+                                else{
+                                    return null;
+                                }
+                            });
+                            filteredArray = filteredArray.slice(0,10);
+                            response(filteredArray);
+                        },
+                           select: function(event, ui) {
+                             event.preventDefault();
+                             $("#InputTourCode").trigger('keyup');
+                             $('#InputTourCode').val(ui.item.code);
+                             $('#InputTourName').val(ui.item.name);
+                             $('#InputTourId').val(ui.item.id);
+                           },
+                            focus: function(event, ui) {
+                                event.preventDefault();
+                                 $("#InputTourCode").trigger('keyup');
                             }
                         });
-
-                        $("#InputTourCode").autocomplete({
-                            source: availableTags,
-                            close:function( event, ui ) {    
-                               $("#InputTourCode").trigger('keyup');
-                            }                        
-                        });
-                        
-                        
+						
                         $("#InputTourCode").keyup(function () {
                             var position = $(this).offset();
                             $(".ui-widget").css("top", position.top + 30);
@@ -573,18 +592,35 @@
                             var name = this.value;
                             var code = this.value.toUpperCase();
                             $("#InputTourName").val(null);
-                            $.each(tourCode, function (key, value) {
-                                if(name === value.name){
-                                    $("#InputTourCode").val(value.code);
-                                    code = $("#InputTourCode").val().toUpperCase();
-                                }
-                                if (value.code.toUpperCase() === code) {
-                                    $("#InputTourId").val(value.id);
-                                    $("#InputTourName").val(value.name);
-                                }
-                            }); //end each tourCode
-                        }); // end InputTourCode keyup
-                    }); // end AutoComplete TourCode TourName
+                        });
+
+//                        $("#InputTourCode").autocomplete({
+//                            source: availableTags,
+//                            close:function( event, ui ) {    
+//                               $("#InputTourCode").trigger('keyup');
+//                            }                        
+//                        });
+//                        
+//                        
+//                        $("#InputTourCode").keyup(function () {
+//                            var position = $(this).offset();
+//                            $(".ui-widget").css("top", position.top + 30);
+//                            $(".ui-widget").css("left", position.left);
+//                            var name = this.value;
+//                            var code = this.value.toUpperCase();
+//                            $("#InputTourName").val(null);
+//                            $.each(tourCode, function (key, value) {
+//                                if(name === value.name){
+//                                    $("#InputTourCode").val(value.code);
+//                                    code = $("#InputTourCode").val().toUpperCase();
+//                                }
+//                                if (value.code.toUpperCase() === code) {
+//                                    $("#InputTourId").val(value.id);
+//                                    $("#InputTourName").val(value.name);
+//                                }
+//                            }); //end each tourCode
+//                        }); // end InputTourCode keyup
+//                    }); // end AutoComplete TourCode TourName
                 });
             </script>
             <div class="modal-footer">
