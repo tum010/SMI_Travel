@@ -14,6 +14,7 @@ import com.smi.travel.datalayer.report.model.DailyTourReport;
 import com.smi.travel.datalayer.view.entity.DailyTourDetailView;
 import com.smi.travel.datalayer.view.entity.DailyTourListView;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -93,6 +94,8 @@ public class DaytourBookingImpl implements DaytourBookingDao {
     public String UpdateBookingDaytour(DaytourBooking DayTourBook) {
         String result = "";
         Session session = this.sessionFactory.openSession();
+        boolean isACnull = false;
+        boolean isGCnull = false;
         try {
             transaction = session.beginTransaction();
             int isTimenull =0;
@@ -103,7 +106,24 @@ public class DaytourBookingImpl implements DaytourBookingDao {
                 DayTourBook.setPickupTime(new Date());
                 isTimenull = 1;
             }
+            if(DayTourBook.getAgentComission() == null){
+                isACnull = true;
+                DayTourBook.setAgentComission(new BigDecimal(0));
+            }
+            if(DayTourBook.getGuideCommission() == null){
+                isGCnull = true;
+                DayTourBook.setGuideCommission(new BigDecimal(0));
+            }
             BeanUtils.copyProperties(dbBooking, DayTourBook);
+            if(isACnull){ 
+                dbBooking.setAgentComission(null);
+                DayTourBook.setAgentComission(null);
+            }
+            if(isGCnull){
+                dbBooking.setGuideCommission(null);
+                DayTourBook.setGuideCommission(null);
+            }
+            
             if(isTimenull == 1){
                 dbBooking.setPickupTime(null);
                 isTimenull = 1;
