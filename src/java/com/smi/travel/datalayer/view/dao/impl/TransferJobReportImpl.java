@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.entity.Customer;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.datalayer.entity.DaytourBookingPrice;
 import com.smi.travel.datalayer.entity.Master;
+import com.smi.travel.datalayer.entity.TourOperationDesc;
 import com.smi.travel.datalayer.entity.TransferJob;
 import com.smi.travel.datalayer.report.model.TransferJobReport;
 import com.smi.travel.datalayer.view.dao.TransferJobReportDao;
@@ -88,6 +89,30 @@ public class TransferJobReportImpl implements TransferJobReportDao {
         return Transferjoblist;
     }
     
+    private String getGuideTour(String tourid , Date tourdate) {
+        String GuideTour = "";
+        List datalist = new ArrayList();
+        Session session = this.sessionFactory.openSession();
+       
+        System.out.println("getGuideTour query: "+GuideTour);
+        List<TourOperationDesc> jobList = session.createQuery("from TourOperationDesc tod where tod.daytour.id = :tourid and tod.tourDate = :tourdate")
+                .setParameter("tourid", tourid)
+                .setParameter("tourdate", tourdate)
+                .list();
+        if (jobList.isEmpty()) {
+            return "";
+        }else{
+            if(jobList.get(0).getStaffByGuide1() != null){
+                GuideTour = jobList.get(0).getStaffByGuide1().getName();        
+            }   
+        }    
+        
+        System.out.println("getGuideTour : "+GuideTour);
+        this.sessionFactory.close();
+        session.close();
+        return GuideTour;
+    }
+    
     private List setTransferJobReportModel(List<DaytourBooking> Booklist,TransferJob job){
         List list = new ArrayList();
         UtilityFunction util = new UtilityFunction();
@@ -141,17 +166,18 @@ public class TransferJobReportImpl implements TransferJobReportDao {
             report.setGuidetour("");
             report.setPay(book.getIsPay()== 1?"Y":"N");
             report.setRemark(job.getRemark());
+            report.setGuidetour(getGuideTour(book.getDaytour().getId(), book.getTourDate()));
             if(job.getStaffByGuildeId() != null){
                 report.setGuide(job.getStaffByGuildeId().getName());
             }else{
                 report.setGuide("");
             }
             
-            if(book.getGuide() != null){
-                report.setGuidetour(book.getGuide().getName());
-            }else{
-                report.setGuidetour("");
-            }
+//            if(book.getGuide() != null){
+//                report.setGuidetour(book.getGuide().getName());
+//            }else{
+//                report.setGuidetour("");
+//            }
             
              if(job.getStaffByDriverId() != null){
                 report.setDriver(job.getStaffByDriverId().getName());
