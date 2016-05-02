@@ -58,13 +58,13 @@ public class GuideJobImpl implements GuideJobDao{
                 .addScalar("place", Hibernate.STRING)
                 .addScalar("room", Hibernate.STRING)
                 .addScalar("time", Hibernate.STRING)
-                .addScalar("amount", Hibernate.INTEGER)
+                .addScalar("amount", Hibernate.STRING)
                 .addScalar("pay", Hibernate.STRING)
                 .addScalar("meal", Hibernate.STRING)
                 .addScalar("remark", Hibernate.STRING)
                 .addScalar("book_remark", Hibernate.STRING)
                 .addScalar("stafftour", Hibernate.STRING)
-                .addScalar("coupon", Hibernate.INTEGER)
+                .addScalar("coupon", Hibernate.STRING)
                 .addScalar("coup_name", Hibernate.STRING)
                 .list();
         
@@ -97,7 +97,7 @@ public class GuideJobImpl implements GuideJobDao{
                  guidejob.setTime(util.ConvertString(B[17]).substring(0, util.ConvertString(B[17]).length()-3));
              }
              
-             guidejob.setAmount(B[18]== null ? 0:(Integer)B[18]);
+             guidejob.setAmount(B[18]== null ? "0.00" : util.ConvertString(B[18]));
              guidejob.setPay(util.ConvertString(B[19]));
              guidejob.setMeal(util.ConvertString(B[20]));
              guidejob.setRemark(getremark(tourdate,tourID));
@@ -124,7 +124,7 @@ public class GuideJobImpl implements GuideJobDao{
              
              guidejob.setStafftour(util.ConvertString(B[23]));
              if(B[24] != null){
-                 guidejob.setCoupon(util.ConvertString(decimalFormat.format(B[24])));
+                 guidejob.setCoupon(util.ConvertString(B[24]));
              }
                     
              data.add(guidejob);            

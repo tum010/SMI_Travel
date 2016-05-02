@@ -31,7 +31,7 @@ public class GuideJob {
     private String place;
     private String room;
     private String time;
-    private int amount;
+    private String amount;
     private String coupon;
     private String pay;
     private String meal;
@@ -193,14 +193,6 @@ public class GuideJob {
         this.time = time;
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
     public String getPay() {
         return pay;
     }
@@ -263,6 +255,14 @@ public class GuideJob {
 
     public void setCoup_name(String coup_name) {
         this.coup_name = coup_name;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
     
 }
