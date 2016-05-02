@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReceiptEmail" language="groovy" pageWidth="595" pageHeight="421" columnWidth="525" leftMargin="42" rightMargin="28" topMargin="42" bottomMargin="28" uuid="0038deea-02d3-4a9f-8925-fb54dc3fc533">
-	<property name="ireport.zoom" value="1.6500000000000075"/>
-	<property name="ireport.x" value="173"/>
-	<property name="ireport.y" value="352"/>
+	<property name="ireport.zoom" value="3.8906136901500203"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="442"/>
 	<field name="recto" class="java.lang.String"/>
 	<field name="recadd" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>
@@ -35,6 +35,8 @@
 	<field name="chqbank" class="java.lang.String"/>
 	<field name="sign" class="java.lang.String"/>
 	<field name="signname" class="java.lang.String"/>
+	<field name="taxidno" class="java.lang.String"/>
+	<field name="branch" class="java.lang.String"/>
 	<background>
 		<band height="275">
 			<image hAlign="Center" vAlign="Middle">
@@ -178,18 +180,18 @@
 				<text><![CDATA[Address]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="5" y="134" width="50" height="15" uuid="9ec5db4f-8e78-4d29-aa7b-c18030a0ae0d"/>
+				<reportElement x="5" y="134" width="62" height="15" uuid="9ec5db4f-8e78-4d29-aa7b-c18030a0ae0d"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Tel ]]></text>
+				<text><![CDATA[Tax ID NO.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="180" y="134" width="28" height="15" uuid="b5aba02e-89bd-43d1-81dc-e9c3e4a22e46"/>
+				<reportElement x="180" y="134" width="39" height="15" uuid="b5aba02e-89bd-43d1-81dc-e9c3e4a22e46"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<text><![CDATA[Fax  ]]></text>
+				<text><![CDATA[Branch]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="369" y="85" width="71" height="17" uuid="989322e5-8269-4473-9bb1-42193f96b24f"/>
@@ -227,7 +229,7 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="55" y="134" width="13" height="15" uuid="8d6ff44a-383f-4752-81ef-957c7cb45b51"/>
+				<reportElement x="61" y="134" width="13" height="15" uuid="8d6ff44a-383f-4752-81ef-957c7cb45b51"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -255,30 +257,31 @@
 				<text><![CDATA[:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="220" y="134" width="122" height="15" uuid="9a740e42-3e87-4517-b8f5-43530c07babd"/>
+				<reportElement x="231" y="134" width="111" height="15" uuid="9a740e42-3e87-4517-b8f5-43530c07babd"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="12" isBold="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{fax}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{branch}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="67" y="134" width="102" height="15" uuid="d14ff6ed-44d4-402a-b697-70d04b0734c8"/>
+				<reportElement x="69" y="134" width="106" height="15" uuid="d14ff6ed-44d4-402a-b697-70d04b0734c8"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="12" isBold="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{tel}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{taxidno}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="67" y="98" width="275" height="38" uuid="026ec529-e5b1-4c97-9629-29ecc27e73e3"/>
+				<reportElement x="67" y="96" width="275" height="38" uuid="026ec529-e5b1-4c97-9629-29ecc27e73e3"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="12" isBold="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="7.0"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recadd}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="67" y="84" width="275" height="17" uuid="18c4e19b-529f-48fe-9682-1fd8369d1578"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Tahoma" size="10" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="12" isBold="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{recto}]]></textFieldExpression>
 			</textField>
@@ -304,7 +307,7 @@
 				<textFieldExpression><![CDATA[$F{recdate}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="208" y="134" width="13" height="15" uuid="28c14a3a-d079-417c-b6a7-467d35102fee"/>
+				<reportElement x="221" y="134" width="13" height="15" uuid="28c14a3a-d079-417c-b6a7-467d35102fee"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Tahoma" size="10" isBold="true" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
@@ -359,7 +362,7 @@
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField isStretchWithOverflow="true" pattern="#,##0.00">
-				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="429" y="-1" width="88" height="14" uuid="dd249f80-444e-443e-b320-4b8a62986dd1"/>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="429" y="2" width="88" height="11" uuid="dd249f80-444e-443e-b320-4b8a62986dd1"/>
 				<box>
 					<pen lineWidth="0.75"/>
 					<topPen lineWidth="0.0"/>
@@ -368,7 +371,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="10" isBold="false" isUnderline="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="8" isBold="false" isUnderline="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[(!"null".equals($F{amount}) && $F{amount} != "null" && $F{amount}.length() > 0) ? Double.valueOf($F{amount}) : ""]]></textFieldExpression>
 			</textField>
@@ -382,7 +385,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="10" isBold="false" isUnderline="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="12" isBold="false" isUnderline="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
@@ -396,7 +399,7 @@
 					<rightPen lineWidth="0.0"/>
 				</box>
 				<textElement textAlignment="Left">
-					<font fontName="Tahoma" size="10" isBold="false" isUnderline="false" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="12" isBold="false" isUnderline="false" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{invdesc}]]></textFieldExpression>
 			</textField>

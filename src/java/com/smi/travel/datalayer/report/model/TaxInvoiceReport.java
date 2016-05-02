@@ -31,6 +31,8 @@ public class TaxInvoiceReport {
     private String curamount;
     private String sign;
     private String signname;
+    private String taxidno;
+    private String branch;
 
     public String getCustomer() {
         return customer;
@@ -190,5 +192,21 @@ public class TaxInvoiceReport {
 
     public void setSignname(String signname) {
         this.signname = signname;
+    }
+
+    public String getTaxidno() {
+        return taxidno;
+    }
+
+    public void setTaxidno(String taxidno) {
+        this.taxidno = taxidno;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
     }
 }

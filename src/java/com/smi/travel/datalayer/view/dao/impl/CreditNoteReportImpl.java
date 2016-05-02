@@ -55,6 +55,8 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
                  .addScalar("realamount", Hibernate.BIG_DECIMAL)
                  .addScalar("realvat", Hibernate.BIG_DECIMAL)
                  .addScalar("curamount", Hibernate.STRING)
+                 .addScalar("tax_no", Hibernate.STRING)
+                 .addScalar("branch", Hibernate.STRING)
                  .list();
         
         String curAmount = "";
@@ -86,6 +88,8 @@ public class CreditNoteReportImpl implements  CreditNoteReportDao{
             Realsubtotal = Realsubtotal.add(RealTotal);
             cn.setRemark(util.ConvertString(B[6]));
             cn.setUser(util.ConvertString(B[7]));
+            cn.setTaxidno(B[12] != null ? util.ConvertString(B[12]) : "");
+            cn.setBranch(B[13] != null ? util.ConvertString(B[13]) : "");
             curAmount = util.ConvertString(B[11]);
             data.add(cn);
         }

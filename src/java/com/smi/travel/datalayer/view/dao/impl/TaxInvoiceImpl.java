@@ -52,12 +52,13 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
                 .addScalar("vat",Hibernate.BIG_DECIMAL)
                 .addScalar("grandtotal",Hibernate.BIG_DECIMAL)
                 .addScalar("user",Hibernate.STRING)
-                .addScalar("curamount",Hibernate.STRING)   
+                .addScalar("curamount",Hibernate.STRING)
+                .addScalar("tax_no",Hibernate.STRING)
+                .addScalar("branch",Hibernate.STRING)
                 .list();
         
         String invdescTemp = "";
-        SimpleDateFormat sf = new SimpleDateFormat();
-        sf.applyPattern("dd-MM-yyyy");
+        SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         TaxInvoiceReport taxInvoiceViewTemp  = new TaxInvoiceReport();
         for (Object[] B : QueryList) {
             TaxInvoiceReport taxInvoiceView = new TaxInvoiceReport();
@@ -75,6 +76,8 @@ public class TaxInvoiceImpl implements TaxInvoiceReportDao{
             taxInvoiceView.setGrandtotal(df.format(B[14]));
             taxInvoiceView.setUser(util.ConvertString(B[15]));
             taxInvoiceView.setCuramount(util.ConvertString(B[16]));
+            taxInvoiceView.setTaxidno(B[17] != null ? util.ConvertString(B[17]) : "");
+            taxInvoiceView.setBranch(B[18] != null ? util.ConvertString(B[18]) : "");
             String curamount = "";
             if("THB".equalsIgnoreCase(util.ConvertString(B[16]))){
                 curamount = " BAHT ";

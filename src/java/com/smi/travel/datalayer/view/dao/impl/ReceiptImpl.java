@@ -64,12 +64,13 @@ public class ReceiptImpl implements ReceiptDao{
                 .addScalar("chqvalue2",Hibernate.STRING)
                 .addScalar("chqflag2",Hibernate.STRING)
                 .addScalar("currency",Hibernate.STRING)
+                .addScalar("tax_no",Hibernate.STRING)
+                .addScalar("branch",Hibernate.STRING)
                 .list();
         
         List data = new ArrayList();
         String invdescTemp = "";
-        SimpleDateFormat sf = new SimpleDateFormat();
-        sf.applyPattern("dd-MM-yyyy");
+        SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
         ReceiptView receiptViewTemp  = new ReceiptView();
         for(Object[] T : QueryList){
             ReceiptView receiptView = new ReceiptView();
@@ -104,6 +105,8 @@ public class ReceiptImpl implements ReceiptDao{
             receiptView.setChqdate2((("null".equals(String.valueOf(T[28])) ? "" : String.valueOf(sf.format(util.convertStringToDate(String.valueOf(T[28])))))));
             receiptView.setChqvalue2((("0.00".equals(String.valueOf(T[29])) ? "" : String.valueOf(T[29]))));
             receiptView.setChqbankflag2((("0.00".equals(String.valueOf(T[30]))? "" : String.valueOf(T[30]))));
+            receiptView.setTaxidno(T[32] != null ? String.valueOf(T[32]) : "");
+            receiptView.setBranch(T[33] != null ? String.valueOf(T[33]) : "");
             if(sign != null){
                 if("".equals(sign)){
                     receiptView.setSign("nosign");

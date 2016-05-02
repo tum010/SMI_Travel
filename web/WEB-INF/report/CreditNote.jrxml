@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TaxInvoiceEmailReport" language="groovy" pageWidth="648" pageHeight="396" columnWidth="569" leftMargin="28" rightMargin="51" topMargin="8" bottomMargin="28" uuid="346dddd2-e21a-4c7b-8d69-ccea53d38a9d">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="2.9230756500000017"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="288"/>
 	<field name="customer" class="java.lang.String"/>
 	<field name="address" class="java.lang.String"/>
 	<field name="cnno" class="java.lang.String"/>
@@ -114,16 +114,17 @@
 				<text><![CDATA[Date]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="67" y="85" width="321" height="20" uuid="c4ac93d0-2176-419a-be45-ac9e5277301a"/>
+				<reportElement x="67" y="84" width="321" height="16" uuid="c4ac93d0-2176-419a-be45-ac9e5277301a"/>
 				<textElement verticalAlignment="Top">
-					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="12" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{customer}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="66" y="104" width="322" height="37" uuid="097dc3e6-f519-4c14-a567-e9fcf7609276"/>
+				<reportElement x="66" y="102" width="322" height="39" uuid="097dc3e6-f519-4c14-a567-e9fcf7609276"/>
 				<textElement verticalAlignment="Top">
-					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="12" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="7.0"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{address}]]></textFieldExpression>
 			</textField>
@@ -259,14 +260,14 @@
 			<textField>
 				<reportElement x="2" y="1" width="426" height="14" uuid="3424cbf8-3a0a-4a5b-b76b-39c5167da121"/>
 				<textElement>
-					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="12" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="430" y="1" width="134" height="14" uuid="f5b98e75-f42f-4828-b743-cedeb262ba23"/>
+				<reportElement x="430" y="4" width="134" height="11" uuid="f5b98e75-f42f-4828-b743-cedeb262ba23"/>
 				<textElement textAlignment="Right">
-					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="8" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
 			</textField>
@@ -323,9 +324,9 @@
 				<text><![CDATA[Remark :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="50" y="95" width="317" height="33" uuid="625ce4ad-e4aa-4bd3-bc82-8669140c738d"/>
+				<reportElement x="50" y="93" width="317" height="33" uuid="625ce4ad-e4aa-4bd3-bc82-8669140c738d"/>
 				<textElement>
-					<font fontName="Tahoma" size="10" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Cordia New" size="12" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{remark}]]></textFieldExpression>
 			</textField>
