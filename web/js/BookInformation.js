@@ -12,7 +12,7 @@ $(document).ready(function() {
         console.log("positon :" + position.top);
         $(".bootstrap-datetimepicker-widget").css("top", position.top + 30);
     });
-    $(".money").mask('000,000,000,000', {reverse: true});
+    $(".money").mask('000,000,000,000.00', {reverse: true});
     $(".number").mask('00000000000', {reverse: true});
 
     setSearchFormat($("#searchType").val());
