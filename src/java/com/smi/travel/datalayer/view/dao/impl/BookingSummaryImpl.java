@@ -499,6 +499,8 @@ public class BookingSummaryImpl implements BookingSummaryDao{
                 .addScalar("description", Hibernate.STRING)
                 .addScalar("add_price", Hibernate.STRING)
                 .addScalar("refno", Hibernate.STRING)
+                .addScalar("curcost", Hibernate.STRING)
+                .addScalar("curamount", Hibernate.STRING)
                 .list();
         
         for (Object[] B : QueryList) {
@@ -507,7 +509,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             order ++ ;
             confirmdetail.setHotel(B[0]== null ? "" :util.ConvertString(B[0]));
             confirmdetail.setAmount(B[1]== null ? "" :util.ConvertString(B[1]));
-            confirmdetail.setCuramount("THB");
+            confirmdetail.setCuramount(B[4] == null ? "" :util.ConvertString(B[4]));
             data.add(confirmdetail);
         }
 
