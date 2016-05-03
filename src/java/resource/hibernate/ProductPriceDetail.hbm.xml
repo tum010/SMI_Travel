@@ -19,23 +19,23 @@
         <property name="effectiveTo" type="date">
             <column name="effective_to" />
         </property>
-        <property name="adCost" type="java.lang.Integer">
-            <column name="ad_cost" />
+        <property name="adCost" type="big_decimal">
+            <column name="ad_cost" precision="10"/>
         </property>
-        <property name="chCost" type="java.lang.Integer">
-            <column name="ch_cost" />
+        <property name="chCost" type="big_decimal">
+            <column name="ch_cost" precision="10"/>
         </property>
-        <property name="inCost" type="java.lang.Integer">
-            <column name="in_cost" />
+        <property name="inCost" type="big_decimal">
+            <column name="in_cost" precision="10"/>
         </property>
-        <property name="adPrice" type="java.lang.Integer">
-            <column name="ad_price" />
+        <property name="adPrice" type="big_decimal">
+            <column name="ad_price" precision="10"/>
         </property>
-        <property name="chPrice" type="java.lang.Integer">
-            <column name="ch_price" />
+        <property name="chPrice" type="big_decimal">
+            <column name="ch_price" precision="10"/>
         </property>
-        <property name="inPrice" type="java.lang.Integer">
-            <column name="in_price" />
+        <property name="inPrice" type="big_decimal">
+            <column name="in_price" precision="10"/>
         </property>
         <property name="description" type="string">
             <column name="detail"/>

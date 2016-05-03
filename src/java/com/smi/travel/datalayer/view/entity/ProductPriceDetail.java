@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.view.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -22,12 +23,12 @@ public class ProductPriceDetail {
      private String description;
      private Date effectiveFrom;
      private Date effectiveTo;
-     private Integer adCost;
-     private Integer chCost;
-     private Integer inCost;
-     private Integer adPrice;
-     private Integer chPrice;
-     private Integer inPrice;
+     private BigDecimal adCost;
+     private BigDecimal chCost;
+     private BigDecimal inCost;
+     private BigDecimal adPrice;
+     private BigDecimal chPrice;
+     private BigDecimal inPrice;
      private String updateBy;
      private String ProductTypeId;
      private String ProductTypeName;
@@ -88,54 +89,6 @@ public class ProductPriceDetail {
         this.effectiveTo = effectiveTo;
     }
 
-    public Integer getAdCost() {
-        return adCost;
-    }
-
-    public void setAdCost(Integer adCost) {
-        this.adCost = adCost;
-    }
-
-    public Integer getChCost() {
-        return chCost;
-    }
-
-    public void setChCost(Integer chCost) {
-        this.chCost = chCost;
-    }
-
-    public Integer getInCost() {
-        return inCost;
-    }
-
-    public void setInCost(Integer inCost) {
-        this.inCost = inCost;
-    }
-
-    public Integer getAdPrice() {
-        return adPrice;
-    }
-
-    public void setAdPrice(Integer adPrice) {
-        this.adPrice = adPrice;
-    }
-
-    public Integer getChPrice() {
-        return chPrice;
-    }
-
-    public void setChPrice(Integer chPrice) {
-        this.chPrice = chPrice;
-    }
-
-    public Integer getInPrice() {
-        return inPrice;
-    }
-
-    public void setInPrice(Integer inPrice) {
-        this.inPrice = inPrice;
-    }
-
     public String getUpdateBy() {
         return updateBy;
     }
@@ -158,6 +111,54 @@ public class ProductPriceDetail {
 
     public void setProductTypeName(String ProductTypeName) {
         this.ProductTypeName = ProductTypeName;
+    }
+
+    public BigDecimal getAdCost() {
+        return adCost;
+    }
+
+    public void setAdCost(BigDecimal adCost) {
+        this.adCost = adCost;
+    }
+
+    public BigDecimal getChCost() {
+        return chCost;
+    }
+
+    public void setChCost(BigDecimal chCost) {
+        this.chCost = chCost;
+    }
+
+    public BigDecimal getInCost() {
+        return inCost;
+    }
+
+    public void setInCost(BigDecimal inCost) {
+        this.inCost = inCost;
+    }
+
+    public BigDecimal getAdPrice() {
+        return adPrice;
+    }
+
+    public void setAdPrice(BigDecimal adPrice) {
+        this.adPrice = adPrice;
+    }
+
+    public BigDecimal getChPrice() {
+        return chPrice;
+    }
+
+    public void setChPrice(BigDecimal chPrice) {
+        this.chPrice = chPrice;
+    }
+
+    public BigDecimal getInPrice() {
+        return inPrice;
+    }
+
+    public void setInPrice(BigDecimal inPrice) {
+        this.inPrice = inPrice;
     }
      
     

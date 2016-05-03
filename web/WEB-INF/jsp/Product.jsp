@@ -42,7 +42,8 @@
                         $(this).addClass('row_selected');
                     }
                 });
-                setformat();
+//                setformat();
+                $(".money").mask('000,000,000,000,000,000.00', {reverse: true});
             });
 
             function setformat() {
@@ -117,18 +118,18 @@
 
             <div class="row">
                 <div class="col-md-12  ">
-                    <table id="MasterProductD" class="display" cellspacing="0">
+                    <table id="MasterProductD" class="display" cellspacing="0" style="table-layout: fixed;">
                         <thead>
                             <tr class="datatable-header">
-                                <th style="width: 93px" rowspan="2">Code</th>
-                                <th style="width: 200px" rowspan="2">Name</th>
-                                <th style="width: 90px" rowspan="2">Effective From</th>
-                                <th style="width: 90px" rowspan="2">Effective To</th>
-                                <th colspan="3" >Cost</th>
-                                <th colspan="3" >Price</th> 
-                                <th style="width: 220px" rowspan="2" >Detail</th>
-                                <th style="width: 50px" rowspan="2" >By</th>
-                                <th rowspan="2">Action</th>
+                                <th style="width: 11%" rowspan="2">Code</th>
+                                <th style="width: 11%" rowspan="2">Name</th>
+                                <th style="width: 9%" rowspan="2">Effective From</th>
+                                <th style="width: 9%" rowspan="2">Effective To</th>
+                                <th style="width: 20%" colspan="3" >Cost</th>
+                                <th style="width: 20%" colspan="3" >Price</th> 
+                                <th style="width: 10%" style="width: 220px" rowspan="2" >Detail</th>
+                                <th style="width: 4%" rowspan="2" >By</th>
+                                <th style="width: 6%" rowspan="2">Action</th>
                             </tr>
                             <tr class="datatable-header">
 
@@ -147,12 +148,12 @@
                                     <td><c:out value="${fn:toUpperCase(table.name)}" /></td>
                                     <td><fmt:formatDate value="${table.effectiveFrom}" var="effectiveFrom" pattern="dd-MM-yyyy" /><c:out value="${effectiveFrom}" /> </td>
                                     <td><fmt:formatDate value="${table.effectiveTo}" var="effectiveTo" pattern="dd-MM-yyyy" /><c:out value="${effectiveTo}" /> </td>
-                                    <td class='tdcenter moneyformat' ><c:out value="${table.adCost}" /> </td>
-                                    <td class='tdcenter moneyformat' ><c:out value="${table.chCost}" /> </td>
-                                    <td class='tdcenter moneyformat' ><c:out value="${table.inCost}" /> </td>
-                                    <td class='tdcenter moneyformat' ><c:out value="${table.adPrice}" /> </td>
-                                    <td class='tdcenter moneyformat' ><c:out value="${table.chPrice}" /> </td>
-                                    <td class='tdcenter moneyformat' ><c:out value="${table.inPrice}" /> </td>
+                                    <td class='tdcenter money' ><c:out value="${table.adCost}" /> </td>
+                                    <td class='tdcenter money' ><c:out value="${table.chCost}" /> </td>
+                                    <td class='tdcenter money' ><c:out value="${table.inCost}" /> </td>
+                                    <td class='tdcenter money' ><c:out value="${table.adPrice}" /> </td>
+                                    <td class='tdcenter money' ><c:out value="${table.chPrice}" /> </td>
+                                    <td class='tdcenter money' ><c:out value="${table.inPrice}" /> </td>
                                     <td ><c:out value="${table.description}" /> </td>
                                     <td><center><c:out value="${table.updateBy}" /> </center></td>
                             <td>

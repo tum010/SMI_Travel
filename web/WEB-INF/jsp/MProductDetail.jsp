@@ -60,7 +60,7 @@
         
         
         
-         $(".money").mask('000,000,000,000,000,000', {reverse: true});
+         $(".money").mask('000,000,000,000,000,000.00', {reverse: true});
          setformat();
     });
     function setformat() {
@@ -79,10 +79,26 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Success!</strong> 
             </div>
+            <div id="textAlertDivSavePrice"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Price Success!</strong> 
+            </div>
+            <div id="textAlertDivDeletePrice"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Delete Price Success!</strong> 
+            </div>
             <!--Alert Not Save --> 
             <div id="textAlertDivNotSave"  style="display:none;" class="alert alert-danger" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <strong>Save Not Success!</strong> 
+            </div>
+            <div id="textAlertDivNotSavePrice"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Save Price Not Success!</strong> 
+            </div>
+            <div id="textAlertDivNotDeletePrice"  style="display:none;" class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Delete Price Not Success!</strong> 
             </div>
             <!-- Alert Uni -->
             <div id="textAlertLap"  style="display:none;" class="alert alert-danger" role="alert">
@@ -184,15 +200,15 @@
                     </div>
                     <div class="row" style="padding-left: 15px;${displayTablePrice}" >    
                         <div class="col-md-12"> 
-                            <table id="ProductCostList" class="display" cellspacing="0"  >
+                            <table id="ProductCostList" class="display" cellspacing="0" style="table-layout: fixed;">
                                 <thead>
                                     <tr class="datatable-header">
                                         <th style="width:12%" rowspan="2">Effective from</th>
                                         <th style="width:12%" rowspan="2">Effective to</th>
                                         <th style="width:30%" colspan="3" >Cost</th>
                                         <th style="width:30%" colspan="3" >Price</th>
-                                        <th rowspan="2" >By</th>
-                                        <th style="width:12%" rowspan="2">Action</th>
+                                        <th style="width:7%" rowspan="2" >By</th>
+                                        <th style="width:9%" rowspan="2">Action</th>
                                     </tr>
                                     <tr class="datatable-header">
                                         <th>Adult</th>
@@ -402,6 +418,26 @@
            $('#textAlertDivNotSave').show();
         </script>
     </c:if>
+    <c:if test="${requestScope['result'] =='save price successful'}">        
+        <script language="javascript">
+//            $('#textAlertDivSavePrice').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='save price usuccessful'}">        
+        <script language="javascript">
+//           $('#textAlertDivNotSavePrice').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='delete price successful'}">        
+        <script language="javascript">
+//            $('#textAlertDivDeletePrice').show();
+        </script>
+    </c:if>
+    <c:if test="${requestScope['result'] =='delete price usuccessful'}">        
+        <script language="javascript">
+//           $('#textAlertDivNotDeletePrice').show();
+        </script>
+    </c:if>    
 </c:if>
 <script type="text/javascript" charset="utf-8">
 
@@ -415,7 +451,7 @@
             digits: 2,
             allowMinus: false,
             digitsOptional: false,
-            placeholder: "0"
+            placeholder: "0.00",
         });
         $('.datemask').mask('00-00-0000');
     

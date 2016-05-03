@@ -7,12 +7,14 @@ import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.ProductService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -85,12 +87,21 @@ public class MProductDetailController extends SMITravelController {
             productID.setId(ProductID);
             Priceitem.setEffectiveFrom(util.convertStringToDate(request.getParameter("effectivefrom")));
             Priceitem.setEffectiveTo(util.convertStringToDate(request.getParameter("effectiveto")));
-            Priceitem.setAdCost(util.convertStringToInteger(request.getParameter("ADcost")));
-            Priceitem.setAdPrice(util.convertStringToInteger(request.getParameter("ADprice")));
-            Priceitem.setChCost(util.convertStringToInteger(request.getParameter("CHcost")));
-            Priceitem.setChPrice(util.convertStringToInteger(request.getParameter("CHprice")));
-            Priceitem.setInCost(util.convertStringToInteger(request.getParameter("INcost")));
-            Priceitem.setInPrice(util.convertStringToInteger(request.getParameter("INprice")));
+            
+            String adCost = request.getParameter("ADcost");
+            String adPrice = request.getParameter("ADprice");
+            String chCost = request.getParameter("CHcost");
+            String chPrice = request.getParameter("CHprice");
+            String inCost = request.getParameter("INcost");
+            String inPrice = request.getParameter("INprice");
+                      
+            Priceitem.setAdCost(StringUtils.isNotEmpty(adCost) ? new BigDecimal(adCost.replaceAll(",", "")) : null);
+            Priceitem.setAdPrice(StringUtils.isNotEmpty(adPrice) ? new BigDecimal(adPrice.replaceAll(",", "")) : null);
+            Priceitem.setChCost(StringUtils.isNotEmpty(chCost) ? new BigDecimal(chCost.replaceAll(",", "")) : null);
+            Priceitem.setChPrice(StringUtils.isNotEmpty(chPrice) ? new BigDecimal(chPrice.replaceAll(",", "")) : null);
+            Priceitem.setInCost(StringUtils.isNotEmpty(inCost) ? new BigDecimal(inCost.replaceAll(",", "")) : null);
+            Priceitem.setInPrice(StringUtils.isNotEmpty(inPrice) ? new BigDecimal(inPrice.replaceAll(",", "")) : null);
+            
             Priceitem.setProduct(productID);
             Priceitem.setId(request.getParameter("PriceItemID"));
             request.setAttribute("disableProductCode", "disabled");
