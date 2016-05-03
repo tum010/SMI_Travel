@@ -409,7 +409,7 @@ function CityAddRow(row) {
     $("#City tbody").append(
             '<tr>' +
             '<td hidden="">' + row + '</td>' +
-            '<td  >'+row+'</td>' +
+            '<td class="text-center">'+row+'</td>' +
             '<td><select id="row-city-' + row + '-name" name="row-city-' + row + '-name" class="selectize not-full" ><option value="">- - City - -</option></select></td>' +
             '<td class="text-center">' +
             '<a class="remCF" onclick="ConfirmDelete(\'3\', \'\', \''+row+'\')">  '+

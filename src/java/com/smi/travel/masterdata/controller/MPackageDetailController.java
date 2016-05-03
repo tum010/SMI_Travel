@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.service.PackageTourService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -256,22 +257,28 @@ public class MPackageDetailController extends SMITravelController {
                     price.setEffectiveTo(util.convertStringToDate(dateto));
                 }
                 if (StringUtils.isNotEmpty(adcost)) {
-                    price.setAdCost(util.convertStringToInteger(adcost));
+//                    price.setAdCost(util.convertStringToInteger(adcost));
+                    price.setAdCost(new BigDecimal(adcost.replaceAll(",", "")));
                 }
                 if (StringUtils.isNotEmpty(chcost)) {
-                    price.setChCost(util.convertStringToInteger(chcost));
+//                    price.setChCost(util.convertStringToInteger(chcost));
+                    price.setChCost(new BigDecimal(chcost.replaceAll(",", "")));
                 }
                 if (StringUtils.isNotEmpty(incost)) {
-                    price.setInCost(util.convertStringToInteger(incost));
+//                    price.setInCost(util.convertStringToInteger(incost));
+                    price.setInCost(new BigDecimal(incost.replaceAll(",", "")));
                 }
                 if (StringUtils.isNotEmpty(adprice)) {
-                    price.setAdPrice(util.convertStringToInteger(adprice));
+//                    price.setAdPrice(util.convertStringToInteger(adprice));
+                    price.setAdPrice(new BigDecimal(adprice.replaceAll(",", "")));
                 }
                 if (StringUtils.isNotEmpty(chprice)) {
-                    price.setChPrice(util.convertStringToInteger(chprice));
+//                    price.setChPrice(util.convertStringToInteger(chprice));
+                    price.setChPrice(new BigDecimal(chprice.replaceAll(",", "")));
                 }
                 if (StringUtils.isNotEmpty(inprice)) {
-                    price.setInPrice(util.convertStringToInteger(inprice));
+//                    price.setInPrice(util.convertStringToInteger(inprice));
+                    price.setInPrice(new BigDecimal(inprice.replaceAll(",", "")));
                 }
                 price.setPackageTour(packagetour);
                 packagetour.getPackagePrices().add(price);

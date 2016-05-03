@@ -28,7 +28,7 @@
 <!--<input type="text" value="${requestScope['packageLap']}">-->
 <div class ="container"  style="padding-top: 15px;"> 
     <form action="MPackageDetail.smi" method="post" id="PackageForm" role="form" class="form-horizontal">
-        <div class="col-md-8 col-xs-offset-2">
+        <div class="col-md-9 col-xs-offset-2">
             <!--Alert Save --> 
             <div id="textAlertDivSave"  style="display:none;" class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -117,16 +117,16 @@
                             </div>
                         </div>
                         <div class="row" style="margin-left: 10px;margin-right: 10px;"> 
-                            <table id="Itinerary" class="display" cellspacing="0"  >
+                            <table id="Itinerary" class="display" cellspacing="0" style="table-layout: fixed;">
                                 <thead>
                                     <tr class="datatable-header">
                                         <th class="hidden">order</th>
                                         <th class="hidden">id</th>
                                         <th class="hidden">number</th>
-                                        <th>No</th>
-                                        <th>Time</th>
-                                        <th>Description</th>
-                                        <th>Action </th>
+                                        <th style="width: 5%;">No</th>
+                                        <th style="width: 11%;">Time</th>
+                                        <th style="width: 78%;">Description</th>
+                                        <th style="width: 6%;">Action </th>
                                     </tr>
 
                                 </thead>
@@ -135,9 +135,9 @@
                                         <tr style="higth:100px">
                                             <td class="hidden"> <input id="row-${dataStatus.count -1}-itineraryid" name="row-${dataStatus.count -1}-itineraryid"  type="hidden"  value="${table.id}">  </td>
                                             <td class="hidden orderrow">${dataStatus.count -1}</td>
-                                            <td><input style="width: 20px" id="row-${dataStatus.count -1}-no" name="row-${dataStatus.count -1}-no"   type="text" class="form-control number" value="${table.orderNo}"></td>
+                                            <td><input style="width: 30px" id="row-${dataStatus.count -1}-no" name="row-${dataStatus.count -1}-no"   type="text" class="form-control number" value="${table.orderNo}"></td>
                                             <td><input style="width: 70px" type="text" id="row-${dataStatus.count -1}-hour" name="row-${dataStatus.count -1}-hour" class="form-control time" placeholder="HH:MM" value="${table.time}"></td>
-                                            <td><input   class="form-control" maxlength="255" style="width:570px" id="row-${dataStatus.count -1}-des" name="row-${dataStatus.count -1}-des" rows="2" value="${table.detail.replace("\"","&quot;")}"></td>
+                                            <td><input   class="form-control" maxlength="255" id="row-${dataStatus.count -1}-des" name="row-${dataStatus.count -1}-des" rows="2" value="${table.detail.replace("\"","&quot;")}"></td>
                                             <td class="text-center">
                                                 <a class="remCF" onclick="ConfirmDelete('1', '${table.id}', '${dataStatus.count-1}')">  
                                                     <span  id="SpanRemove${dataStatus.count-1}"  class="glyphicon glyphicon-remove deleteicon"></span>
@@ -165,16 +165,16 @@
                             </div>
                         </div>
                         <div class="row" style="margin-left: 10px;margin-right: 10px;">            
-                            <table id="PackagePrice" class="display" cellspacing="0"  >
+                            <table id="PackagePrice" class="display" cellspacing="0" style="table-layout: fixed;">
                                 <thead>
                                     <tr class="datatable-header">   
                                         <th rowspan="2" class="hidden">id</th>
-                                         <th rowspan="2" class="hidden">number</th>
-                                        <th style="width: 100px" rowspan="2"> From</th>
-                                        <th style="width: 100px" rowspan="2"> To</th>
-                                        <th colspan="3" >Cost</th>
-                                        <th colspan="3" >Price</th> 
-                                        <th rowspan="2">Action</th>
+                                        <th rowspan="2" class="hidden">number</th>
+                                        <th style="width: 16%;" rowspan="2"> From</th>
+                                        <th style="width: 16%;" rowspan="2"> To</th>
+                                        <th style="width: 31%;" colspan="3" >Cost</th>
+                                        <th style="width: 31%;" colspan="3" >Price</th> 
+                                        <th style="width: 6%;" rowspan="2">Action</th>
                                     </tr>
                                     <tr class="datatable-header">
                                         <th >Adult</th>
@@ -193,7 +193,8 @@
                                             <td class="hidden orderrow">${priceStatus.count -1}</td>
                                             <td>
                                                 <div class='input-group daydatepicker' id='daydatepicker-${Counter.count}' style="padding-left: 0px">
-                                                    <input style="width: 100%" type='text' class="form-control"  id="row-${priceStatus.count-1}-datefrom" name="row-${priceStatus.count-1}-datefrom" data-date-format="YYYY-MM-DD"  value="${table1.effectiveFrom}" />
+                                                    <fmt:formatDate value="${table1.effectiveFrom}" var="dateFrom" pattern="dd-MM-yyyy" />
+                                                    <input style="width: 100%" type='text' class="form-control"  id="row-${priceStatus.count-1}-datefrom" name="row-${priceStatus.count-1}-datefrom" data-date-format="DD-MM-YYYY"  value="${dateFrom}" />
                                                     <span class="input-group-addon" style="padding : 1px 10px;">
                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
@@ -201,18 +202,19 @@
                                             </td>
                                             <td>
                                                 <div class='input-group daydatepicker' id='daydatepicker-${Counter.count}' style="padding-left: 0px">
-                                                    <input style="width: 100%" type='text' class="form-control"  id="row-${priceStatus.count-1}-dateto" name="row-${priceStatus.count-1}-dateto" data-date-format="YYYY-MM-DD"  value="${table1.effectiveTo}" />
+                                                    <fmt:formatDate value="${table1.effectiveTo}" var="dateTo" pattern="dd-MM-yyyy" />
+                                                    <input style="width: 100%" type='text' class="form-control"  id="row-${priceStatus.count-1}-dateto" name="row-${priceStatus.count-1}-dateto" data-date-format="DD-MM-YYYY"  value="${dateTo}" />
                                                     <span class="input-group-addon" style="padding : 1px 10px;">
                                                         <span class="glyphicon glyphicon-calendar"></span>
                                                     </span>
                                                 </div>
                                             </td>
-                                            <td><input class="form-control decimal"  style="width:50px" id="row-${priceStatus.count-1}-adcost" name="row-${priceStatus.count-1}-adcost" value="${table1.adCost}"></td>
-                                            <td><input class="form-control decimal"  style="width:50px" id="row-${priceStatus.count-1}-chcost" name="row-${priceStatus.count-1}-chcost" value="${table1.chCost}"></td>
-                                            <td><input class="form-control decimal"  style="width:50px" id="row-${priceStatus.count-1}-incost" name="row-${priceStatus.count-1}-incost" value="${table1.inCost}"></td>
-                                            <td><input class="form-control decimal"  style="width:50px" id="row-${priceStatus.count-1}-adprice" name="row-${priceStatus.count-1}-adprice" value="${table1.adPrice}"></td>
-                                            <td><input class="form-control decimal"  style="width:50px" id="row-${priceStatus.count-1}-chprice" name="row-${priceStatus.count-1}-chprice" value="${table1.chPrice}"></td>
-                                            <td><input class="form-control decimal"  style="width:50px" id="row-${priceStatus.count-1}-inprice" name="row-${priceStatus.count-1}-inprice" value="${table1.inPrice}"></td>
+                                            <td><input class="form-control decimal" id="row-${priceStatus.count-1}-adcost" name="row-${priceStatus.count-1}-adcost" value="${table1.adCost}"></td>
+                                            <td><input class="form-control decimal" id="row-${priceStatus.count-1}-chcost" name="row-${priceStatus.count-1}-chcost" value="${table1.chCost}"></td>
+                                            <td><input class="form-control decimal" id="row-${priceStatus.count-1}-incost" name="row-${priceStatus.count-1}-incost" value="${table1.inCost}"></td>
+                                            <td><input class="form-control decimal" id="row-${priceStatus.count-1}-adprice" name="row-${priceStatus.count-1}-adprice" value="${table1.adPrice}"></td>
+                                            <td><input class="form-control decimal" id="row-${priceStatus.count-1}-chprice" name="row-${priceStatus.count-1}-chprice" value="${table1.chPrice}"></td>
+                                            <td><input class="form-control decimal" id="row-${priceStatus.count-1}-inprice" name="row-${priceStatus.count-1}-inprice" value="${table1.inPrice}"></td>
                                             <td class="text-center">
                                                 <a class="remCF" onclick="ConfirmDelete('2', '${table1.id}', '${priceStatus.count-1}')">  
                                                     <span  id="SpanRemove${priceStatus.count-1}"  class="glyphicon glyphicon-remove deleteicon"></span>
@@ -266,12 +268,12 @@
                         </select>
                           
                             <div class="row" style="margin-left: 10px;margin-right: 10px;">            
-                            <table id="City" class="display" cellspacing="0"  >
+                            <table id="City" class="display" cellspacing="0" style="table-layout: fixed;">
                                 <thead>
                                     <tr class="datatable-header">   
-                                        <th style="width: 10%">No</th>
-                                        <th>Name</th>
-                                        <th style="width: 10%">Action</th>
+                                        <th style="width: 5%">No</th>
+                                        <th style="width: 89%">Name</th>
+                                        <th style="width: 6%">Action</th>
                                     </tr>
                                 </thead>
                             <script>
@@ -289,7 +291,7 @@
                                         <td hidden="">
                                             <input id="row-packcity-${city.count}-id" name="row-packcity-${city.count}-id" type="text" class="form-control" value="${pa.id}">
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             ${city.count}
                                         </td>
                                         <td >                 
@@ -381,12 +383,12 @@
             integerDigits: 8,
             groupSeparator: ',',
             autoGroup: true,
-            digits: 0,
+            digits: 2,
             allowMinus: false,
             digitsOptional: false,
-            placeholder: "0"
+            placeholder: "0.00",
         });
-         $("#dateFrom-").datepicker({ dateFormat: "yy-mm-dd" }).val()
+         $("#dateFrom-").datepicker({ dateFormat: "dd-mm-yy" }).val()
         
         $("#Itinerary").on("keyup", function() {
             var rowAll = $("#Itinerary tr").length;
@@ -414,7 +416,7 @@
         
         // ******************* end Itinerary script *******************
         $(".money").mask('000,000,000,000,000,000', {reverse: true});
-        $('.date').mask('0000-00-00');
+        $('.date').mask('00-00-0000');
         $('.time').mask('00:00');
         $('.number').mask('00');
 
@@ -479,14 +481,14 @@
                     '<tr>' +
                     '<td class="hidden"><input class="form-control" type="hidden"  style="width:50px" id="row-'+row+'-priceid" name="row-'+row+'-priceid" ></td>'+
                     '<td class="hidden orderrow">'+getrowcountPrice()+'</td>'+
-                    '<td><div class="input-group daydatepicker" id="daydatepicker-'+row+'" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="row-'+row+'-datefrom" name="row-'+row+'-datefrom" data-date-format="YYYY-MM-DD"/><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
-                    '<td><div class="input-group daydatepicker" id="daydatepicker-'+row+'" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="row-'+row+'-dateto" name="row-'+row+'-dateto" data-date-format="YYYY-MM-DD" /><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
-                    '<td><input class="form-control decimal" maxlength=10  style="width:50px" id="row-'+row+'-adcost" name="row-'+row+'-adcost" ></td>' +
-                    '<td><input class="form-control decimal" maxlength=10 style="width:50px" id="row-'+row+'-chcost" name="row-'+row+'-chcost" ></td>' +
-                    '<td><input class="form-control decimal" maxlength=10 style="width:50px" id="row-'+row+'-incost" name="row-'+row+'-incost" ></td>' +
-                    '<td><input class="form-control decimal" maxlength=10 style="width:50px" id="row-'+row+'-adprice" name="row-'+row+'-adprice" ></td>' +
-                    '<td><input class="form-control decimal" maxlength=10 style="width:50px" id="row-'+row+'-chprice" name="row-'+row+'-chprice" ></td>' +
-                    '<td><input class="form-control decimal" maxlength=10 style="width:50px" id="row-'+row+'-inprice" name="row-'+row+'-inprice" ></td>'+
+                    '<td><div class="input-group daydatepicker" id="daydatepicker-'+row+'" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="row-'+row+'-datefrom" name="row-'+row+'-datefrom" data-date-format="DD-MM-YYYY"/><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
+                    '<td><div class="input-group daydatepicker" id="daydatepicker-'+row+'" style="padding-left: 0px"><input style="width: 100%" type="text" class="form-control"  id="row-'+row+'-dateto" name="row-'+row+'-dateto" data-date-format="DD-MM-YYYY" /><span class="input-group-addon" style="padding : 1px 10px;"><span class="glyphicon glyphicon-calendar"></span></span></div></td>' +
+                    '<td><input class="form-control decimal" maxlength=10 id="row-'+row+'-adcost" name="row-'+row+'-adcost" ></td>' +
+                    '<td><input class="form-control decimal" maxlength=10 id="row-'+row+'-chcost" name="row-'+row+'-chcost" ></td>' +
+                    '<td><input class="form-control decimal" maxlength=10 id="row-'+row+'-incost" name="row-'+row+'-incost" ></td>' +
+                    '<td><input class="form-control decimal" maxlength=10 id="row-'+row+'-adprice" name="row-'+row+'-adprice" ></td>' +
+                    '<td><input class="form-control decimal" maxlength=10 id="row-'+row+'-chprice" name="row-'+row+'-chprice" ></td>' +
+                    '<td><input class="form-control decimal" maxlength=10 id="row-'+row+'-inprice" name="row-'+row+'-inprice" ></td>'+
                     '<td class="text-center">'+
                     '<a class="remCF" onclick="ConfirmDelete(\'2\', \'\', \''+row+'\')">  '+
                     '<span  id="SpanRemove'+row+'"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+                   
@@ -494,6 +496,16 @@
                     );
         var tempCount = parseInt($("#counterPrice").val()) + 1;
         $("#counterPrice").val(tempCount);
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0.00",
+        });
         reloadDatePicker();
     }
 
@@ -511,9 +523,9 @@
                     '<td class="hidden"> <input id="row-'+row+'-itineraryid" name="row-'+row+'-itineraryid"  type="hidden" >  </td>'+
                     '<td class="hidden orderrow">'+getrowcountItinerary()+'</td>'+
                     '<td class="hidden"> <input id="row-' + row + '-id" name="row-' + row + '-id"  type="hidden" >  </td>' +
-                    '<td><input style="width: 20px" id="row-' + row + '-no" name="row-' + row + '-no"   type="text" class="form-control number" ></td>' +
+                    '<td><input style="width: 30px" id="row-' + row + '-no" name="row-' + row + '-no"   type="text" class="form-control number" ></td>' +
                     '<td><input style="width: 70px" type="text" id="row-' + row + '-hour" name="row-' + row + '-hour" class="form-control time" placeholder="HH:MM" ></td>' +
-                    '<td><input   class="form-control" maxlength="255" style="width:570px" id="row-' + row + '-des" name="row-' + row + '-des" rows="2" ></td>' +
+                    '<td><input   class="form-control" maxlength="255" id="row-' + row + '-des" name="row-' + row + '-des" rows="2" ></td>' +
                     '<td class="text-center">'+
                     '<a class="remCF" onclick="ConfirmDelete(\'1\', \'\', \''+row+'\')">  '+
                     '<span  id="SpanRemove'+row+'"  class="glyphicon glyphicon-remove deleteicon"></span></a></td>'+   

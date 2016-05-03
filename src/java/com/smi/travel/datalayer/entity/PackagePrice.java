@@ -2,6 +2,7 @@ package com.smi.travel.datalayer.entity;
 // Generated Apr 17, 2015 1:56:04 PM by Hibernate Tools 3.6.0
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -14,12 +15,12 @@ public class PackagePrice {
      private PackageTour packageTour;
      private Date effectiveFrom;
      private Date effectiveTo;
-     private Integer adCost;
-     private Integer chCost;
-     private Integer inCost;
-     private Integer adPrice;
-     private Integer chPrice;
-     private Integer inPrice;
+     private BigDecimal adCost;
+     private BigDecimal chCost;
+     private BigDecimal inCost;
+     private BigDecimal adPrice;
+     private BigDecimal chPrice;
+     private BigDecimal inPrice;
      private String updateBy;
 
     public PackagePrice() {
@@ -29,7 +30,7 @@ public class PackagePrice {
     public PackagePrice(PackageTour packageTour) {
         this.packageTour = packageTour;
     }
-    public PackagePrice(PackageTour packageTour, Date effectiveFrom, Date effectiveTo, Integer adCost, Integer chCost, Integer inCost, Integer adPrice, Integer chPrice, Integer inPrice, String updateBy) {
+    public PackagePrice(PackageTour packageTour, Date effectiveFrom, Date effectiveTo, BigDecimal adCost, BigDecimal chCost, BigDecimal inCost, BigDecimal adPrice, BigDecimal chPrice, BigDecimal inPrice, String updateBy) {
        this.packageTour = packageTour;
        this.effectiveFrom = effectiveFrom;
        this.effectiveTo = effectiveTo;
@@ -70,48 +71,7 @@ public class PackagePrice {
     public void setEffectiveTo(Date effectiveTo) {
         this.effectiveTo = effectiveTo;
     }
-    public Integer getAdCost() {
-        return this.adCost;
-    }
     
-    public void setAdCost(Integer adCost) {
-        this.adCost = adCost;
-    }
-    public Integer getChCost() {
-        return this.chCost;
-    }
-    
-    public void setChCost(Integer chCost) {
-        this.chCost = chCost;
-    }
-    public Integer getInCost() {
-        return this.inCost;
-    }
-    
-    public void setInCost(Integer inCost) {
-        this.inCost = inCost;
-    }
-    public Integer getAdPrice() {
-        return this.adPrice;
-    }
-    
-    public void setAdPrice(Integer adPrice) {
-        this.adPrice = adPrice;
-    }
-    public Integer getChPrice() {
-        return this.chPrice;
-    }
-    
-    public void setChPrice(Integer chPrice) {
-        this.chPrice = chPrice;
-    }
-    public Integer getInPrice() {
-        return this.inPrice;
-    }
-    
-    public void setInPrice(Integer inPrice) {
-        this.inPrice = inPrice;
-    }
     public String getUpdateBy() {
         return this.updateBy;
     }
@@ -120,8 +80,53 @@ public class PackagePrice {
         this.updateBy = updateBy;
     }
 
+    public BigDecimal getAdCost() {
+        return adCost;
+    }
 
+    public void setAdCost(BigDecimal adCost) {
+        this.adCost = adCost;
+    }
 
+    public BigDecimal getChCost() {
+        return chCost;
+    }
+
+    public void setChCost(BigDecimal chCost) {
+        this.chCost = chCost;
+    }
+
+    public BigDecimal getInCost() {
+        return inCost;
+    }
+
+    public void setInCost(BigDecimal inCost) {
+        this.inCost = inCost;
+    }
+
+    public BigDecimal getAdPrice() {
+        return adPrice;
+    }
+
+    public void setAdPrice(BigDecimal adPrice) {
+        this.adPrice = adPrice;
+    }
+
+    public BigDecimal getChPrice() {
+        return chPrice;
+    }
+
+    public void setChPrice(BigDecimal chPrice) {
+        this.chPrice = chPrice;
+    }
+
+    public BigDecimal getInPrice() {
+        return inPrice;
+    }
+
+    public void setInPrice(BigDecimal inPrice) {
+        this.inPrice = inPrice;
+    }
 
 }
 
