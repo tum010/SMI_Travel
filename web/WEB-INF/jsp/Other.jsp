@@ -122,20 +122,20 @@
             </div>
 
             <div class="row" style="margin-left: 0px;margin-right: 0px;"> 
-                <table id="MasterOther" class="display" cellspacing="0"  >
+                <table id="MasterOther" class="display" cellspacing="0" width="100%" style="table-layout: auto;">
                     <thead>
                         <tr class="datatable-header">
                             <th class="hidden" rowspan="2">Code</th>
-                            <th rowspan="2" style="width: 90px">Date</th>
-                            <th rowspan="2">Product Name</th>
-                            <th colspan="3" >Adult</th>
-                            <th colspan="3">Child</th>
-                            <th colspan="3">Infant</th>
-                            <th rowspan="2">Cost</th>
-                            <th rowspan="2">Cur</th>
-                            <th rowspan="2">Price</th>
-                            <th rowspan="2">Cur</th>
-                            <th rowspan="2">Action</th>
+                            <th rowspan="2" style="width: 9%">Date</th>
+                            <th rowspan="2" style="width: 12%">Product Name</th>
+                            <th colspan="3" style="width: 17%">Adult</th>
+                            <th colspan="3" style="width: 17%">Child</th>
+                            <th colspan="3" style="width: 17%">Infant</th>
+                            <th rowspan="2" style="width: 7%">Cost</th>
+                            <th rowspan="2" style="width: 4%">Cur</th>
+                            <th rowspan="2" style="width: 7%">Price</th>
+                            <th rowspan="2" style="width: 4%">Cur</th>
+                            <th rowspan="2" style="width: 6%">Act</th>
 
                         </tr>
 
@@ -176,15 +176,15 @@
                                 <td class="tdcenter ${colourStatus}" id="otherdate-${table.id}" style="width:75px;${colourStatusFirstrow}">${otherDate}</td>
                                 <td> ${table.product.name}</td>
                                 
-                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.adCost}" /></td>
-                                <td class="tdcenter moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.adQty}" /></td>
-                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.adPrice}" /></td>
-                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.chCost}" /></td>
-                                <td class="tdcenter moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.chQty}" /></td>
-                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.chPrice}" /></td>
-                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.inCost}" /></td>
-                                <td class="tdcenter moneyformat"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.inQty}" /></td>
-                                <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.inPrice}" /></td>
+                                <td class="tdright moneyformat"><font size="2"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.adCost}" /></font></td>
+                                <td class="tdcenter moneyformat"><font size="2"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.adQty}" /></font></td>
+                                <td class="tdright moneyformat"><font size="2"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.adPrice}" /></font></td>
+                                <td class="tdright moneyformat"><font size="2"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.chCost}" /></font></td>
+                                <td class="tdcenter moneyformat"><font size="2"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.chQty}" /></font></td>
+                                <td class="tdright moneyformat"><font size="2"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.chPrice}" /></font></td>
+                                <td class="tdright moneyformat"><font size="2"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.inCost}" /></font></td>
+                                <td class="tdcenter moneyformat"><font size="2"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${table.inQty}" /></font></td>
+                                <td class="tdright moneyformat"><font size="2"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${table.inPrice}" /></font></td>
                                 <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${(table.adCost * table.adQty) + (table.chCost * table.chQty) + (table.inCost * table.inQty)}" /></td>
                                 <td class="tdcenter"> ${table.curCost}</td>
                                 <td class="tdright moneyformat"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${(table.adPrice * table.adQty) + (table.chPrice * table.chQty) + (table.inPrice * table.inQty)}" /></td>

@@ -176,5 +176,5 @@ public class Daytour {
     public void setGuideComission(BigDecimal guideComission) {
         this.guideComission = guideComission;
     }
-
+    
 }

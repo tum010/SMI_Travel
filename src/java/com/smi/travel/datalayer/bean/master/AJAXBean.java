@@ -345,22 +345,22 @@ public class AJAXBean extends AbstractBean implements
                         result = "0,0,0,0,0,0";
                     } else {
                         if(product.getAdCost() == null){
-                            product.setAdCost(0);
+                            product.setAdCost(new BigDecimal(BigInteger.ZERO));
                         }
                         if(product.getChCost() == null){
-                            product.setChCost(0);
+                            product.setChCost(new BigDecimal(BigInteger.ZERO));
                         }
                         if(product.getInCost() == null){
-                            product.setInCost(0);
+                            product.setInCost(new BigDecimal(BigInteger.ZERO));
                         }
                         if(product.getAdPrice() == null){
-                            product.setAdPrice(0);
+                            product.setAdPrice(new BigDecimal(BigInteger.ZERO));
                         }
                         if(product.getChPrice() == null){
-                            product.setChPrice(0);
+                            product.setChPrice(new BigDecimal(BigInteger.ZERO));
                         }
                         if(product.getInPrice() == null){
-                            product.setInPrice(0);
+                            product.setInPrice(new BigDecimal(BigInteger.ZERO));
                         }
                         result = product.getAdCost() + "," + product.getChCost() + "," + product.getInCost() + ","
                                 + product.getAdPrice() + "," + product.getChPrice() + "," + product.getInPrice();
@@ -585,6 +585,7 @@ public class AJAXBean extends AbstractBean implements
             } else if ("DaytourPrice".equalsIgnoreCase(type)) {
                 TourID = map.get("tourid").toString();
                 List<DaytourPrice> pricelist = daytourdao.getDaytourPrice(TourID);
+                System.out.println("===== Price List ===== : "+(pricelist != null ? "True" : "False"));
                 result = buildTourPriceListHTML(pricelist);
             }
         } else if (TRANSFERJOB.equalsIgnoreCase(servletName)) {
@@ -2655,7 +2656,7 @@ public class AJAXBean extends AbstractBean implements
                     + "<td class='priceCategoryName '>" + price.getMPricecategory().getName() + "</td>"
                     + "<td class='tourCode hidden'>" + price.getDaytour().getCode() + "</td>"
                     + "<td class='priceDetail'>" + price.getDetail() + "</td>"
-                    + "<td class='priceAmount moneyprice text-right'>" + price.getPrice() + "</td>"
+                    + "<td class='priceAmount moneyprice text-right'>" + (price.getPrice()!= null ? price.getPrice() : "") + "</td>"
                     + "<td class='priceCurrency text-center'>" + price.getCurrency() + "</td>"
                     + "<td class='text-center'><input type='checkbox' id='row-" + i + "-check'></td>"
                     + "</tr>";

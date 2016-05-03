@@ -126,22 +126,22 @@
             </div>
             <hr/>
             <!-- Hotel Table-->
-            <table class="display" id="HotelTable">
+            <table class="display" id="HotelTable" style="table-layout: fixed;">
                 <thead class="datatable-header">
                     <tr>
-                        <th >No</th>
-                        <th>Hotel</th>
-                        <th style="width: 9%">Check In</th>
-                        <th>Check Out</th>
-                        <th>No.night</th>
-                        <th>Remarks</th>
-                        <th>Price Room</th>
-                        <th>Price addition</th>
-                        <th>Total Cost</th>
-                        <th>Cur</th>
-                        <th>Total Price</th>
-                        <th>Cur</th>
-                        <th>Action</th>
+                        <th class="hidden">No</th>
+                        <th style="width: 13%">Hotel</th>
+                        <th style="width: 10%">Check In</th>
+                        <th style="width: 10%">Check Out</th>
+                        <th style="width: 6%">No. night</th>
+                        <th style="width: 10%">Remarks</th>
+                        <th style="width: 9%">Price Room</th>
+                        <th style="width: 9%">Price addition</th>
+                        <th style="width: 8%">Total Cost</th>
+                        <th style="width: 5%">Cur</th>
+                        <th style="width: 9%">Total Price</th>
+                        <th style="width: 5%">Cur</th>
+                        <th style="width: 6%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -157,12 +157,12 @@
                         </c:if>
 
                         <tr ${colourStatus} id="${b.id}">   
-                            <td class="text-center" ${colourStatus}>${loopCounter.count}</td>
+                            <td class="text-center hidden" ${colourStatus}>${loopCounter.count}</td>
                             <td>${b.hotel.getName()}</td>
                             <fmt:formatDate value="${b.checkin}" var="checkIn" pattern="dd-MM-yyyy" />
-                            <td>${checkIn}</td>
+                            <td class="text-center">${checkIn}</td>
                             <fmt:formatDate value="${b.checkout}" var="checkOut" pattern="dd-MM-yyyy" />
-                            <td>${checkOut}</td>
+                            <td class="text-center">${checkOut}</td>
                     <script>
                         $(document).ready(function () {
                             getDate();
