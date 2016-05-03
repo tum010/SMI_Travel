@@ -42,12 +42,13 @@ public class BookingSummaryImpl implements BookingSummaryDao{
     
     @Override
     public List<BookSummary> getListBookSummary(String refno) {
+        UtilityFunction util = new UtilityFunction();
         Session session = this.sessionFactory.openSession();
         List<Object[]> QueryList =  session.createSQLQuery("SELECT * FROM `booking_summary_view` where ref_no = "+refno)
                 .addScalar("type",Hibernate.STRING)
                 .addScalar("description",Hibernate.STRING)
                 .addScalar("date_tour",Hibernate.DATE)
-                .addScalar("price",Hibernate.INTEGER)
+                .addScalar("price",Hibernate.STRING)
                 .addScalar("book_date",Hibernate.DATE)
                 .list();
                 
@@ -58,7 +59,7 @@ public class BookingSummaryImpl implements BookingSummaryDao{
             book.setType(String.valueOf(B[0]));
             book.setDescription(String.valueOf(B[1]));
             book.setDateTour((Date) B[2]);
-            book.setPrice(String.valueOf(B[3]));
+            book.setPrice(B[3] != null ? util.convertStringToDecimalFormat(String.valueOf(B[3])) : "");
             book.setBookdate((Date) B[4]);
             BookSummaryList.add(book);
             

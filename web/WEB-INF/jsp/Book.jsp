@@ -737,7 +737,8 @@
         });
  
 //        $("#btnNew").appendTo("#example_filter label").show();
-
+        $(".moneyformat").mask('000,000,000,000.00', {reverse: true});
+    
         $('#BookList tbody').on('click', 'tr', function() {
             if ($(this).hasClass('row_selected')) {
                 $(this).removeClass('row_selected');
@@ -774,9 +775,9 @@
     function setformat() {
         $('#TableBookSummary tr td.moneyformat').each(function() {
             var innerHTML = $(this).html();
-            if($(this).html() !== ''){
-               $(this).html(numberWithCommas($(this).html())); 
-            }         
+//            if($(this).html() !== ''){
+//               $(this).html(numberWithCommas($(this).html())); 
+//            }         
         });
         
         $('#TableBookSummary tr td.dateformat').each(function() {
