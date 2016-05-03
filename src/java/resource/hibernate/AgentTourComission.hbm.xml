@@ -19,8 +19,8 @@
         <property name="to" type="date">
             <column name="effective_to" length="10" />
         </property>
-        <property name="comission" type="java.lang.Double">
-            <column name="comission" precision="22" scale="2" />
+        <property name="comission" type="big_decimal">
+            <column name="comission" precision="10"/>
         </property>
         <property name="createBy" type="string">
             <column name="create_by" length="10" />

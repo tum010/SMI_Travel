@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.dao;
 
 import com.smi.travel.datalayer.entity.DaytourBooking;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -16,6 +17,6 @@ import java.util.List;
 public interface DaytourComissionDao {
     public List<DaytourBooking> getListBookingDaytourComission(String StartDate,String EndDate,String agentID,String guideID);
     public String SaveDaytourComission(List<DaytourBooking> BookList);
-    public Double GetGuideComissionFromTour(String Tourcode);
-    public Double GetAgentComissionFromTour(String Agentcode,String Tourcode,String Tourdate);
+    public BigDecimal GetGuideComissionFromTour(String Tourcode);
+    public BigDecimal GetAgentComissionFromTour(String Agentcode,String Tourcode,String Tourdate);
 }

@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -67,11 +68,11 @@ public class MDaytourDetailController extends SMITravelController {
         String expenseId   = request.getParameter("expenseId");
         Integer min = 0 ;
         Integer max = 0 ;
-        Double  guideCommission = .0;
+        BigDecimal  guideCommission = new BigDecimal(0);
         min = util.convertStringToInteger(daytourMin);
         max = util.convertStringToInteger(daytourMax);
         if (StringUtils.isNotEmpty(daytourGuideCommission)) {
-            guideCommission = Double.parseDouble(daytourGuideCommission);
+            guideCommission = util.convertStringToBigDecimal(daytourGuideCommission);
         }
        
         log.info("action[" + action + "] id[" + currentDaytourId + "]");
@@ -187,8 +188,7 @@ public class MDaytourDetailController extends SMITravelController {
             dayprice.setDetail(detail);
             dayprice.setPrice(priceDe);
             dayprice.setCurrency(currencyCode);
-            
-            if( dayprice.getPrice() != null){ //for check if add row
+            if(dayprice.getPrice() != null && (dayprice.getPrice().compareTo(new BigDecimal(BigInteger.ZERO)) != 0)){ //for check if add row
                 if(dayprice.getId() == null){
                     dayprice.setDaytour(daytour);
                     priceList.add(dayprice);
@@ -199,9 +199,9 @@ public class MDaytourDetailController extends SMITravelController {
             }else{
                 System.out.println("Detail of Price  is null  ,Not update DB this object " + i);
             }
-            
         }
-        return priceList;
+        System.out.println(" priceList.size() ::: " + priceList.size());
+        return priceList; 
         
     }
     
@@ -219,10 +219,10 @@ public class MDaytourDetailController extends SMITravelController {
             String expense = request.getParameter("expenseInputAmount-"+i);
             String currencyCode = request.getParameter("ExpenseRowCur-"+i);
             String priceType  = request.getParameter("price_type-"+i);
-            Integer expenseInt = null;
+            BigDecimal expensede = new BigDecimal(0);
             
             if(StringUtils.isNotEmpty(expense)){
-                expenseInt = util.convertStringToInteger(expense);
+                expensede = util.convertStringToBigDecimal(expense);
             }
             DaytourExpense dayexpense = getDayExpense(id, daytour);
 
@@ -231,7 +231,7 @@ public class MDaytourDetailController extends SMITravelController {
             }
             
             dayexpense.setDescription(description);
-            dayexpense.setAmount(expenseInt);
+            dayexpense.setAmount(expensede);
             dayexpense.setCurrency(currencyCode);
             dayexpense.setPriceType(priceType);
             

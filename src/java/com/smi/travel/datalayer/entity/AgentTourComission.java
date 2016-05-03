@@ -2,6 +2,7 @@ package com.smi.travel.datalayer.entity;
 // Generated Mar 18, 2015 10:03:25 AM by Hibernate Tools 3.6.0
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -15,14 +16,14 @@ public class AgentTourComission   {
      private Daytour daytour;
      private Date from;
      private Date to;
-     private Double comission;
+     private BigDecimal comission;
      private String createBy;
      private String updateBy;
 
     public AgentTourComission() {
     }
 
-    public AgentTourComission(AgentComission agentComission, Daytour daytour, Date from, Date to, Double comission, String createBy, String updateBy) {
+    public AgentTourComission(AgentComission agentComission, Daytour daytour, Date from, Date to, BigDecimal comission, String createBy, String updateBy) {
        this.agentComission = agentComission;
        this.daytour = daytour;
        this.from = from;
@@ -67,13 +68,7 @@ public class AgentTourComission   {
     public void setTo(Date to) {
         this.to = to;
     }
-    public Double getComission() {
-        return this.comission;
-    }
     
-    public void setComission(Double comission) {
-        this.comission = comission;
-    }
     public String getCreateBy() {
         return this.createBy;
     }
@@ -87,6 +82,14 @@ public class AgentTourComission   {
     
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
+    }
+
+    public BigDecimal getComission() {
+        return comission;
+    }
+
+    public void setComission(BigDecimal comission) {
+        this.comission = comission;
     }
 
 

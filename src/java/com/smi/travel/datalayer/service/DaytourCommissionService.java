@@ -52,7 +52,7 @@ public class DaytourCommissionService {
                      
                  }
                  System.out.println("price : "+price);
-//                 dBookingList.get(i).setAdult(Integer.parseInt(price));
+                 dBookingList.get(i).setAdult(price.intValueExact());
             }           
         }
 

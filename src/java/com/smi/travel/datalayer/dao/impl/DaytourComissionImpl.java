@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.entity.AgentTourComission;
 import com.smi.travel.datalayer.entity.Daytour;
 import com.smi.travel.datalayer.entity.DaytourBooking;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -163,9 +164,9 @@ public class DaytourComissionImpl implements DaytourComissionDao {
     }
 
     @Override
-    public Double GetGuideComissionFromTour(String Tourcode) {
+    public BigDecimal GetGuideComissionFromTour(String Tourcode) {
         Session session = this.sessionFactory.openSession();
-        Double commission = new Double(0);
+        BigDecimal commission = new BigDecimal(0);
         List<Daytour> list = session.createQuery(GET_GUIDE_COMMISSION)
                 .setParameter("code", Tourcode)
                 .list();
@@ -173,11 +174,7 @@ public class DaytourComissionImpl implements DaytourComissionDao {
         if (list.isEmpty()) {
             return null;
         }else{
-            
-            
-            
             commission = list.get(0).getGuideComission();
-            
         }
         this.sessionFactory.close();
         session.close();
@@ -185,10 +182,10 @@ public class DaytourComissionImpl implements DaytourComissionDao {
     }
 
     @Override
-    public Double GetAgentComissionFromTour(String Agentcode, String Tourcode, String Tourdate) {
+    public BigDecimal GetAgentComissionFromTour(String Agentcode, String Tourcode, String Tourdate) {
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
-        Double commission = new Double(0);
+        BigDecimal commission = new BigDecimal(0);
         List<AgentTourComission> list = session.createQuery(GET_AGENT_COMMISSION)
                 .setParameter("tourDate", util.convertStringToDate(Tourdate))
                 .setParameter("tourCode", Tourcode)

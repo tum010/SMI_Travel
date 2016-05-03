@@ -788,7 +788,7 @@ public class BillableImpl implements BillableDao {
                 listRoom = list.get(i).getHotelRooms();
                 for (int j = 0; j < listRoom.size(); j++) {
                     if( listRoom.get(j).getPrice() != null){ // room price
-                        DecimalFormat myFormatter = new DecimalFormat("#,###");
+                        DecimalFormat myFormatter = new DecimalFormat("#,##0.00");
                         String output = myFormatter.format(listRoom.get(j).getPrice());
                         description += "            "+ output +"  ";
                     }else{

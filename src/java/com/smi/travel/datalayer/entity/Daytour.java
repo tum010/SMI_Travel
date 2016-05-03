@@ -6,6 +6,7 @@
 
 package com.smi.travel.datalayer.entity;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,7 +25,7 @@ public class Daytour {
      private String createBy;
      private String updateBy;
      private String status = "active";
-     private Double guideComission;
+     private BigDecimal guideComission;
      private Set agentTourComissions = new HashSet(0);
      private Set daytourBookings = new HashSet(0);
      private Set daytourPrices = new HashSet(0);
@@ -39,7 +40,7 @@ public class Daytour {
         this.code = code;
         this.name = name;
     }
-    public Daytour(String code, String name, Integer min, Integer max, String remark, String condition, String createBy, String updateBy, String status, Double guideComission, Set agentTourComissions, Set daytourBookings, Set daytourPrices, Set daytourExpenses, Set tourOperationDescs) {
+    public Daytour(String code, String name, Integer min, Integer max, String remark, String condition, String createBy, String updateBy, String status, BigDecimal guideComission, Set agentTourComissions, Set daytourBookings, Set daytourPrices, Set daytourExpenses, Set tourOperationDescs) {
        this.code = code;
        this.name = name;
        this.min = min;
@@ -127,13 +128,7 @@ public class Daytour {
     public void setStatus(String status) {
         this.status = status;
     }
-    public Double getGuideComission() {
-        return this.guideComission;
-    }
-    
-    public void setGuideComission(Double guideComission) {
-        this.guideComission = guideComission;
-    }
+
     public Set getAgentTourComissions() {
         return this.agentTourComissions;
     }
@@ -172,6 +167,14 @@ public class Daytour {
 
     public Object get(int i) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public BigDecimal getGuideComission() {
+        return guideComission;
+    }
+
+    public void setGuideComission(BigDecimal guideComission) {
+        this.guideComission = guideComission;
     }
 
 }

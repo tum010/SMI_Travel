@@ -626,6 +626,7 @@ public class AJAXBean extends AbstractBean implements
                 result = String.valueOf(daytourComdao.GetGuideComissionFromTour(TourCode));
                 System.out.println("result guide commission  : " + result);
             } else if ("getagentcom".equalsIgnoreCase(type)) {
+                UtilityFunction util = new UtilityFunction();
                 TourCode = map.get("tourcode").toString();
                 TourDate = map.get("tourdate").toString();
                 Price = map.get("price").toString();
@@ -638,8 +639,8 @@ public class AJAXBean extends AbstractBean implements
                 if (daytourdao == null) {
                     System.out.println(" id null");
                 }
-                double commission = daytourComdao.GetAgentComissionFromTour(AgentId, TourCode, TourDate);
-                double output = (Double.parseDouble(Price) * commission / 100);
+                BigDecimal commission = daytourComdao.GetAgentComissionFromTour(AgentId, TourCode, TourDate);
+                BigDecimal output = (util.convertStringToBigDecimal(Price).multiply(commission)).divide(new BigDecimal(100));
                 System.out.println("commission : " + commission + " price : " + output);
                 result = String.valueOf(output);
             }

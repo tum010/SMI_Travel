@@ -14,6 +14,7 @@ import com.smi.travel.datalayer.service.MTourCommissionService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -208,12 +209,12 @@ public class MCommissionDetailController extends SMITravelController {
             System.out.println("to"+i+" : "+to);
             
             
-            Double commissionDouble = null;
+            BigDecimal commissionBigDe = new BigDecimal(0);
             if(StringUtils.isNotEmpty(commission)){
-                commissionDouble = Double.parseDouble(commission);
-                System.out.println("commissionDouble = "+commissionDouble);
+                commissionBigDe = util.convertStringToBigDecimal(commission);
+                System.out.println("commissionBigDe = "+commissionBigDe);
             }else{
-                commissionDouble = Double.parseDouble("0");
+                commissionBigDe = new BigDecimal(0);
             }
             
             Date dateFrom = util.convertStringToDateS(from);
@@ -236,7 +237,7 @@ public class MCommissionDetailController extends SMITravelController {
             agenttourcommission.setDaytour(daytour);
             agenttourcommission.setTo(dateTo);
             agenttourcommission.setFrom(dateFrom);
-            agenttourcommission.setComission(commissionDouble);
+            agenttourcommission.setComission(commissionBigDe);
 //            agenttourcommission.setCreateBy();
 //            agenttourcommission.setUpdateBy();
             if(agenttourcommission.getFrom() != null){ 

@@ -34,8 +34,8 @@
         <property name="status" type="string">
             <column name="status" length="10" />
         </property>
-        <property name="guideComission" type="java.lang.Double">
-            <column name="guide_comission" precision="22" scale="0" />
+        <property name="guideComission" type="big_decimal">
+            <column name="guide_comission" precision="10"/>
         </property>
         <set name="agentTourComissions" table="agent_tour_comission" inverse="true" lazy="true" fetch="select">
             <key>
