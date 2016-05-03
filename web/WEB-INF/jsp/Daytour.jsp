@@ -125,7 +125,7 @@
                                  <c:set var="cur" value="${price.currency}" />
                             </c:forEach>
                             <td class="text-center money"><c:out value="${sumQty}"/></td>
-                            <td class="text-right money"><c:out value="${sumPrice}" /></td>
+                            <td class="text-right "><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${sumPrice}" /></td>
                             <td class="text-center">${cur}</td>
                             <td class="text-center">
                                 <a href="DaytourDetail.smi?referenceNo=${param.referenceNo}&action=edit&daytourBooking=${item.id}"><span class="glyphicon glyphicon-edit editicon"></span></a>

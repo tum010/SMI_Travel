@@ -81,14 +81,6 @@ $(document).ready(function () {
            
     //Number
     $(".money").mask('000,000,000', {reverse: true});
-   
-
-    $("#InputGuideCommission").inputmask("decimal",{
-         radixPoint:".", 
-         groupSeparator: ",", 
-         digits: 2,
-         autoGroup: true
-     });
 
 
 });

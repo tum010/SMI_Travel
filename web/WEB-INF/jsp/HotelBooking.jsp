@@ -182,11 +182,11 @@
                     </script>
                     <td class="text-center" id="day-${b.id}"></td>
                     <td>${b.remark}</td>
-                    <td class=" text-right"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${b.sumRoom}" /></td>
-                    <td class=" text-right"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${b.sumRequest}" /></td>
-                    <td class=" text-right"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${b.sumTotalCost}" /></td>
+                    <td class=" text-right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${b.sumRoom}" /></td>
+                    <td class=" text-right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${b.sumRequest}" /></td>
+                    <td class=" text-right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${b.sumTotalCost}" /></td>
                     <td class="tdcenter">${b.curCost}</td>
-                    <td class=" text-right"><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${b.sumRoom + b.sumRequest}" /></td>
+                    <td class=" text-right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${b.sumRoom + b.sumRequest}" /></td>
                     <td class="tdcenter">${b.curAmount}</td>
                     <td class="text-center">
                         

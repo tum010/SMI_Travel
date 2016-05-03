@@ -18,6 +18,7 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.BillableView;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -284,12 +285,12 @@ public class DaytourDetailController extends SMITravelController {
             //String priceDefault = request.getParameter("row-" + i + "-priceDefault");
 
             log.info("DaytourPrice row(" + priceRows + ") id(" + id + ") amount(" + amount + ")");
-            Integer amountInt = null;
+            BigDecimal amountDecimal = new BigDecimal(0);
             Integer qtyInt = null;
             //Integer priceDefaultInt = null;
 
             if (StringUtils.isNotEmpty(amount)) {
-                amountInt = utilfunction.convertStringToInteger(amount);
+                amountDecimal = utilfunction.convertStringToBigDecimal(amount);
             }
             if (StringUtils.isNotEmpty(qty)) {
                 qtyInt = utilfunction.convertStringToInteger(qty);
@@ -297,7 +298,7 @@ public class DaytourDetailController extends SMITravelController {
             //            if (StringUtils.isNotEmpty(priceDefault)) {
             //                priceDefaultInt = utilfunction.convertStringToInteger(priceDefault);
             //            }
-            log.info("amountInt= " + amountInt);
+            log.info("amountDecimal= " + amountDecimal);
             log.info("qtyInt= " + qtyInt);
             log.info("categoryid= " + categoryid);
             //log.info("priceDefault= " + priceDefaultInt);
@@ -312,7 +313,7 @@ public class DaytourDetailController extends SMITravelController {
 
             daytourprice.setMPricecategory(category);
             daytourprice.setDetail(deatil);
-            daytourprice.setPrice(amountInt);
+            daytourprice.setPrice(amountDecimal);
             daytourprice.setQty(qtyInt);
             daytourprice.setCurrency(currency);
             //daytourprice.setPdefault(priceDefaultInt);

@@ -1,6 +1,9 @@
 package com.smi.travel.datalayer.entity;
 // Generated Mar 18, 2015 10:03:25 AM by Hibernate Tools 3.6.0
 
+import java.math.BigDecimal;
+
+
 
 
 /**
@@ -8,13 +11,12 @@ package com.smi.travel.datalayer.entity;
  */
 public class DaytourBookingPrice {
 
-
      private String id;
      private DaytourBooking daytourBooking;
      private MPricecategory MPricecategory;
      private String detail;
      private Integer qty;
-     private Integer price;
+     private BigDecimal price;
      private String currency;
      //private Integer pdefault;
 
@@ -25,7 +27,7 @@ public class DaytourBookingPrice {
     public DaytourBookingPrice(DaytourBooking daytourBooking) {
         this.daytourBooking = daytourBooking;
     }
-    public DaytourBookingPrice(DaytourBooking daytourBooking, MPricecategory MPricecategory, String detail, Integer qty, Integer price,String currency) {//,Integer pdefault
+    public DaytourBookingPrice(DaytourBooking daytourBooking, MPricecategory MPricecategory, String detail, Integer qty, BigDecimal price,String currency) {//,Integer pdefault
        this.daytourBooking = daytourBooking;
        this.MPricecategory = MPricecategory;
        this.detail = detail;
@@ -70,13 +72,6 @@ public class DaytourBookingPrice {
     public void setQty(Integer qty) {
         this.qty = qty;
     }
-    public Integer getPrice() {
-        return this.price;
-    }
-    
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
 
     public String getCurrency() {
         return currency;
@@ -93,6 +88,14 @@ public class DaytourBookingPrice {
 //    public void setPdefault(Integer pdefault) {
 //        this.pdefault = pdefault;
 //    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
 }
 

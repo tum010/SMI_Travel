@@ -2442,11 +2442,13 @@ public class AJAXBean extends AbstractBean implements
             List<DaytourBookingPrice> prices = new ArrayList<DaytourBookingPrice>(book.getDaytourBookingPrices());
             String[] AllQty = calculatePassengerDaytour(prices);
 
-            Integer sumPrice = 0;
+            BigDecimal sumPrice = new BigDecimal(0);
             if (prices != null) {
                 for (DaytourBookingPrice price : prices) {
-                    Integer p = (price.getPrice() == null ? 0 : price.getPrice()) * (price.getQty() == null ? 0 : price.getQty());
-                    sumPrice += p;
+                    BigDecimal pricetemp = price.getPrice() == null ? new BigDecimal(0) : price.getPrice();
+                    BigDecimal qtytemp = price.getQty() == null ? new BigDecimal(0) : new BigDecimal(price.getQty());
+                    BigDecimal p = pricetemp.multiply(qtytemp);
+                    sumPrice = sumPrice.add(p);
                 }
             }
 
@@ -2460,7 +2462,7 @@ public class AJAXBean extends AbstractBean implements
                     + "<td>" + AllQty[0] + "</td>"
                     + "<td>" + AllQty[1] + "</td>"
                     + "<td>" + AllQty[2] + "</td>"
-                    + "<td class='money'>" + sumPrice + "</td>"
+                    + "<td class='decimal'>" + sumPrice + "</td>"
                     //                    + "<td>" + prices.get(0).getPrice() + "</td>"
                     + "<td>" + book.getPlace().getPlace() + "</td>"
                     + "<td>" + picktime + "</td>"
@@ -2652,7 +2654,7 @@ public class AJAXBean extends AbstractBean implements
                     + "<td class='priceCategoryName '>" + price.getMPricecategory().getName() + "</td>"
                     + "<td class='tourCode hidden'>" + price.getDaytour().getCode() + "</td>"
                     + "<td class='priceDetail'>" + price.getDetail() + "</td>"
-                    + "<td class='priceAmount money'>" + price.getPrice() + "</td>"
+                    + "<td class='priceAmount moneyprice text-right'>" + price.getPrice() + "</td>"
                     + "<td class='priceCurrency text-center'>" + price.getCurrency() + "</td>"
                     + "<td class='text-center'><input type='checkbox' id='row-" + i + "-check'></td>"
                     + "</tr>";

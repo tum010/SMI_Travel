@@ -19,8 +19,8 @@
         <property name="qty" type="java.lang.Integer">
             <column name="qty" />
         </property>
-        <property name="price" type="java.lang.Integer">
-            <column name="price" />
+        <property name="price" type="big_decimal">
+            <column name="price" precision="10"/>
         </property>
         <property name="currency" type="string">
             <column name="currency"   length="3"/>

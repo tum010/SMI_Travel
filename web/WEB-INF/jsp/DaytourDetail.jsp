@@ -7,6 +7,8 @@
 <script type="text/javascript" src="js/selectize.js"></script>
 <script type="text/javascript" src="js/bootstrapValidator.min.js"></script>
 <script type="text/javascript" src="js/DaytourDetail.js"></script> 
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <link href="css/selectize.bootstrap3.css" rel="stylesheet">
 <link href="css/jquery-ui.css" rel="stylesheet">
 <!--<link href="css/jquery-ui.min.css" rel="stylesheet">-->
@@ -307,10 +309,13 @@
                                         <td class="tourCode hide">${item.daytourBooking.daytour.code}</td>
                                         <td class="priceDetail"><input  type=hidden id="row-${loop.count}-pricedetail" name="row-${loop.count}-pricedetail" value="${item.detail}" >${item.detail}</td>
                                         <td class="hide"><input type=hidden id="row-${loop.count}-priceDefault" name="row-${loop.count}-priceDefault" value="${item.price}" ></td>
-                                        <td class="priceAmountDefault money">${item.price}</td>
-                                        <td class="priceAmount"><input type="text" class="form-control money otherprice" id="row-${loop.count}-priceamount" name="row-${loop.count}-priceamount" value="${item.price}" ></td>
+                                        <td class="priceAmountDefault text-right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${item.price}" /></td>
+                                        <td class="priceAmount text-right"><input type="text" class="form-control decimal otherprice" id="row-${loop.count}-priceamount" name="row-${loop.count}-priceamount" value="${item.price}" ></td>
                                         <td class="priceQty"><input type=text class="form-control text-right numbermask qty" id="row-${loop.count}-priceqty" name="row-${loop.count}-priceqty"  value="${item.qty}" maxlength="3"></td>
-                                        <td class="priceTotal money"><input  type=hidden class="form-control money" id="row-${loop.count}-pricetotal" name="row-${loop.count}-pricetotal" value="${item.qty * item.price}" readonly="">${item.qty * item.price}</td>                                      
+                                        <td class="priceTotal decimal text-right">
+                                            <input  type=hidden class="form-control decimal" id="row-${loop.count}-pricetotal" name="row-${loop.count}-pricetotal" value="${item.qty * item.price}" readonly="">
+                                            <fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${item.qty * item.price}" />
+                                        </td>                                      
                                         <td class="priceCurrency text-center">
                                             <select id="row-${loop.count}-pricecurrency" name="row-${loop.count}-pricecurrency" class="form-control">
                                                 <option id="" value="">---------</option>
@@ -797,12 +802,26 @@
 <script>
 
     $(document).ready(function () {
+        
+        $(".decimal").inputmask({
+            alias: "decimal",
+            integerDigits: 8,
+            groupSeparator: ',',
+            autoGroup: true,
+            digits: 2,
+            allowMinus: false,
+            digitsOptional: false,
+            placeholder: "0"
+        });
+        
         $('.time').mask('00:00');
         $('.datemask').mask('00-00-0000');
         $('.numbermask').mask('0000');
         //Number
         var maskMoney = "000,000,000";
         $(".money").mask('000,000,000', {reverse: true});
+        $(".moneyprice").mask('000,000,000.00', {reverse: true});
+        
         $('.date').datetimepicker();
         $('.spandate').click(function () {
             var position = $(this).offset();
@@ -912,16 +931,17 @@
 
     function addCommas(nStr)
     {
-        nStr += '';
-        x = nStr.split('.');
-        x1 = x[0];
-        x2 = x.length > 1 ? '.' + x[1] : '';
-        var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '$1' + ',' + '$2');
-        }
-        var result = x1 + x2;
-        return result;
+//        nStr += '';
+//        x = nStr.split('.');
+//        x1 = x[0];
+//        x2 = x.length > 1 ? '.' + x[1] : '';
+//        var rgx = /(\d+)(\d{3})/;
+//        while (rgx.test(x1)) {
+//            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+//        }
+//        var result = x1 + x2;
+//        return result;
+        return nStr.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     }
 
 
@@ -1031,6 +1051,7 @@
                         }
                     }
                     $("#dayTourPriceTable tbody").empty().append(msg);
+                    
                     hideChosenDayTourPriceRow();
                 }, error: function (msg) {
 //                    console.log('dayTourPrice error ' + msg);
@@ -1078,7 +1099,9 @@
                     if ($(this).hasClass('priceAmount')){
                         priceAmount = $(this).text();
                         priceAmount = priceAmount.replace("," , "");
-                        priceAmount = priceAmount.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+//                        priceAmount = priceAmount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+                        priceAmount = priceAmount.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+
                     }
                 });
 
@@ -1159,7 +1182,7 @@
                         priceTotal = priceAmount * priceQtyInfant;
                         priceQty = priceQtyInfant;
                     }
-
+                    priceTotal = addCommas(priceTotal);
                     $("#bookingTourPriceTable tbody").append(
                             '<tr id="bTourPriceId' + priceId + '" >' +
                             '<td class="bookingPriceId hide"><input  type=hidden id="row-' + row + '-bookingpriceid" name="row-' + row + '-bookingpriceid" value=""></td>' +
@@ -1170,10 +1193,10 @@
                             '<td class="tourCode hide">' + tourCode + '</td>' +
                             '<td class="priceDetail"><input  type=hidden id="row-' + row + '-pricedetail" name="row-' + row + '-pricedetail" value="' + priceDetail + '" >' + priceDetail + '</td>' +
                             '<td class="hide"><input type=hidden id="row-' + row + '-priceDefault" name="row-' + row + '-priceDefault" value="' + priceAmount + '" ></td>'+
-                            '<td class="priceAmountDefault money">'+ priceAmount + '</td>' + 
-                            '<td class="priceAmount"><input class="form-control money otherprice text-right" type="text" id="row-' + row + '-priceamount" name="row-' + row + '-priceamount" value="' + priceAmount + '" ></td>' +
+                            '<td class="priceAmountDefault moneyprice text-right">'+ priceAmount + '</td>' + 
+                            '<td class="priceAmount"><input class="form-control decimal otherprice text-right" type="text" id="row-' + row + '-priceamount" name="row-' + row + '-priceamount" value="' + priceAmount + '" ></td>' +
                             '<td class="priceQty"><input type=text class="form-control text-right numbermask qty" id="row-' + row + '-priceqty" name="row-' + row + '-priceqty"  value="' + priceQty + '" maxlength="3"></td>' +
-                            '<td class="priceTotal money"><input type=hidden class="form-control" id="row-' + row + '-pricetotal" name="row-' + row + '-pricetotal" value="' + priceTotal + '" >' + priceTotal + '</td>' +
+                            '<td class="priceTotal moneyprice text-right"><input type=hidden class="form-control decimal text-right" id="row-' + row + '-pricetotal" name="row-' + row + '-pricetotal" value="' + priceTotal + '" >' + priceTotal + '</td>' +
                             '<td class="priceCurrency text-center">' +
                                 '<select id="row-' + row + '-pricecurrency" name="row-' + row + '-pricecurrency" class="form-control"></select>' +
                             '</td>' +
@@ -1186,6 +1209,18 @@
                             '</tr>'
                             
                             );
+                    
+                    
+                    $(".decimal").inputmask({
+                        alias: "decimal",
+                        integerDigits: 8,
+                        groupSeparator: ',',
+                        autoGroup: true,
+                        digits: 2,
+                        allowMinus: false,
+                        digitsOptional: false,
+                        placeholder: "0"
+                    });
                     $("#select-currency-list option").clone().appendTo("#row-" + row + "-pricecurrency");
                     $('[name=row-' + row + '-pricecurrency] option').filter(function() { 
                         return ($(this).text() === priceCurrency);

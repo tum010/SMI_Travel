@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2 text-right"><label class="control-label " for="InputGuideCommission">Guide&nbsp;Commission</label></div>
-                            <div class="col-md-2 "><input id="InputGuideCommission" name="InputGuideCommission" class="form-control text-right" value="${daytour.guideComission}" placeholder="0.00" maxlength="11"></div>
+                            <div class="col-md-2 "><input id="InputGuideCommission" name="InputGuideCommission" class="form-control decimal text-right" value="${daytour.guideComission}" placeholder="0.00" maxlength="11"></div>
                             <div class="col-md-1 text-right"><label class="control-label " for="InputStatus">Status</label></div>
                             <div class="col-md-2">
                                 <select name="InputStatus" id="InputStatus"  class="form-control">
@@ -470,7 +470,7 @@
             integerDigits: 8,
             groupSeparator: ',',
             autoGroup: true,
-            digits: 0,
+            digits: 2,
             allowMinus: false,
             digitsOptional: false,
             placeholder: "0"

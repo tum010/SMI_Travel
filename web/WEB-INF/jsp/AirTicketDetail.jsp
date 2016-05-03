@@ -257,8 +257,8 @@
                                             <input type="text" id="flight-${i.count}-subClassCom" name="flight-${i.count}-subClassCom" value="${flight.subFlightClass}" class="form-control" maxlength="1"/>    
                                         </div>
                                     </td>
-                                    <td class="text-right "><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${flight.totalCost}" /></td>
-                                    <td class="text-right "><fmt:formatNumber type="currency" pattern="#,##0;-#,##0" value="${flight.totalPrice}" /></td>
+                                    <td class="text-right "><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${flight.totalCost}" /></td>
+                                    <td class="text-right "><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${flight.totalPrice}" /></td>
                                     <td>${flight.MItemstatus.getName()}</td>
                                     <td class="text-center">
                                         <a id="ButtonEdit${i.count}" class="carousel" data-toggle="collapse" data-parent="#accordion" data-target="#flight${i.count}" aria-expanded="true" aria-controls="collapseExample">

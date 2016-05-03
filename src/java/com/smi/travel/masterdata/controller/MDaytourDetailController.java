@@ -8,6 +8,7 @@ import com.smi.travel.datalayer.service.MDaytourService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -168,10 +169,10 @@ public class MDaytourDetailController extends SMITravelController {
             String detail = request.getParameter("priceInputDetail-"+i);
             String price = request.getParameter("priceInputPrice-"+i);
             String currencyCode = request.getParameter("priceRowSelectCur-"+i);
-            Integer priceInt = null;
+            BigDecimal priceDe = new BigDecimal(0);
             
             if(StringUtils.isNotEmpty(price)){
-                priceInt = util.convertStringToInteger(price);
+                priceDe = util.convertStringToBigDecimal(price);
             }
            
             log.info("detail:= "+ detail);
@@ -184,7 +185,7 @@ public class MDaytourDetailController extends SMITravelController {
             
             dayprice.setMPricecategory(category);
             dayprice.setDetail(detail);
-            dayprice.setPrice(priceInt);
+            dayprice.setPrice(priceDe);
             dayprice.setCurrency(currencyCode);
             
             if( dayprice.getPrice() != null){ //for check if add row

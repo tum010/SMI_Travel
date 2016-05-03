@@ -412,7 +412,7 @@
             integerDigits: 8,
             groupSeparator: ',',
             autoGroup: true,
-            digits: 0,
+            digits: 2,
             allowMinus: false,
             digitsOptional: false,
             placeholder: "0"

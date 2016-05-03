@@ -10,7 +10,6 @@ import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.master.controller.SMITravelController;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Date;
@@ -44,7 +43,7 @@ public class OtherController extends SMITravelController {
         String action = request.getParameter("action");
         String OtherID = request.getParameter("OtherID");
         String callPageFrom = request.getParameter("callPageFrom");
-        String pattern = "###,##0.##";
+        String pattern = "###,##0.00";
         DecimalFormat dF = new DecimalFormat(pattern);
         SystemUser user = (SystemUser) session.getAttribute("USER");
 //        long TotalCost = 0;
