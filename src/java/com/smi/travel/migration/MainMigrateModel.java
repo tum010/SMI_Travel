@@ -131,6 +131,23 @@ public class MainMigrateModel {
 //    private String department;
     private String accno;
     
+    private String gj;
+//    private String payno;
+//    private String name;
+//    private String apcode;
+    private String systemdate;
+    private String invoicenum;
+//    private String code;
+    private String typeproduct;
+    private String totalamount;
+    private String totalvat;
+//    private String cur;
+    private String amount;
+//    private String department;
+//    private String vattype;
+//    private String accno;
+    private String expensedate;
+    
     public String getCode() {
         return code;
     }
@@ -858,6 +875,72 @@ public class MainMigrateModel {
     public void setAccno(String accno) {
         this.accno = accno;
     }
+
+    public String getGj() {
+        return gj;
+    }
+
+    public void setGj(String gj) {
+        this.gj = gj;
+    }
+
+    public String getSystemdate() {
+        return systemdate;
+    }
+
+    public void setSystemdate(String systemdate) {
+        this.systemdate = systemdate;
+    }
+
+    public String getInvoicenum() {
+        return invoicenum;
+    }
+
+    public void setInvoicenum(String invoicenum) {
+        this.invoicenum = invoicenum;
+    }
+
+    public String getTypeproduct() {
+        return typeproduct;
+    }
+
+    public void setTypeproduct(String typeproduct) {
+        this.typeproduct = typeproduct;
+    }
+
+    public String getTotalamount() {
+        return totalamount;
+    }
+
+    public void setTotalamount(String totalamount) {
+        this.totalamount = totalamount;
+    }
+
+    public String getTotalvat() {
+        return totalvat;
+    }
+
+    public void setTotalvat(String totalvat) {
+        this.totalvat = totalvat;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
+    public String getExpensedate() {
+        return expensedate;
+    }
+
+    public void setExpensedate(String expensedate) {
+        this.expensedate = expensedate;
+    }
+
+  
 
     
 }

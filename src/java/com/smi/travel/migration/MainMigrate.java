@@ -64,7 +64,8 @@ public class MainMigrate {
     private static final String sqlAP = " SELECT payd. ID AS payid, (pay.PAY_NO) AS PAY_NO, (PAY.INVOICE_SUP) AS AP_CODE, ap. NAME AS NAME, TO_CHAR (pay.pay_DATE, 'DD-MM-YYYY') AS pay_date, (PAY.REF_DEPARTMENT) AS DEPARTMENT, CASE WHEN pay.VAT_TYPE = 'X' THEN 'TEMP' WHEN pay.VAT_TYPE = 'V' THEN 'VAT' ELSE 'NO VAT' END AS vattype FROM travox3.AC_PAYMENT pay INNER JOIN travox3.AC_PAYMENT_DETAIL payd ON payd.AC_PAYMENT_ID = pay. ID INNER JOIN ACCSMI3.AP_CODE ap ON ap.code = pay.INVOICE_SUP WHERE TO_CHAR (pay.pay_DATE, 'MMYYYY') IN ( '112015','122015','012016', '022016', '032016') ORDER BY pay.pay_DATE , PAY.PAY_NO ";
     private static final String sqlInv1 = " SELECT inv3. ID AS ID, INV3.inv_no AS invno, INV3.\"NAME\" AS NAME, TO_CHAR (INV3.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd3.price) AS grand_total, SUM (invd3.price) - SUM ( ROUND ( INVD3.price - INVD3.price * 100 / (100 + INV3.vat), 2 )) AS grand_total_gross, SUM ( ROUND ( INVD3.price - INVD3.price * 100 / (100 + INV3.vat), 2 )) AS grand_total_vat, MIN (INVD3.CUR) AS cur, 'INBOUND' AS department, '1' AS acc_no FROM \"INBOUND\".\"INVOICE3\" inv3 INNER JOIN INBOUND.INVOICE3_DETAIL invd3 ON inv3. ID = invd3.INVOICE3_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv3. NAME WHERE \"TO_CHAR\" (inv3.INV_DATE, 'MMYYYY') IN ('102015', '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv3. ID, INV3.inv_no, INV3.\"NAME\", INV3.INV_DATE ORDER BY INV3. ID  ";
     private static final String sqlInv2 = " SELECT inv2. ID AS ID, INV2.inv_no AS invno, INV2.\"NAME\" AS NAME, TO_CHAR (INV2.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd2.price) AS grand_total, SUM (invd2.price) AS grand_total_gross, 0 AS grand_total_vat, MIN (INVD2.CUR) AS cur, 'INBOUND' AS department, '2' AS acc_no FROM \"INBOUND\".\"INVOICE2\" inv2 INNER JOIN INBOUND.INVOICE2_DETAIL invd2 ON inv2. ID = invd2.INVOICE2_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv2. NAME WHERE \"TO_CHAR\" (inv2.INV_DATE, 'MMYYYY') IN ('102015', '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv2. ID, INV2.inv_no, INV2.\"NAME\", INV2.INV_DATE ORDER BY INV2. ID ";
-    
+    private static final String sqlTravoxProduction = " SELECT gj.gj_no AS gj, '' AS PAY_NO, ( SELECT ap. NAME FROM ACCTSMI3.ap_code ap WHERE ap.code = ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID )) AS NAME, ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID ) AS AP_CODE, TO_CHAR ( gj.SYSTEM_DATE, 'DD-MM-YYYY' ) AS system_date, '' AS INVOICE_NUM, CASE WHEN act.code IS NULL THEN act1.code ELSE act.code END AS code, CASE WHEN act.code IS NULL THEN act1.detail ELSE act.detail END AS type_product, ( SELECT SUM (NVL(GJD1.cr_amount, 0)) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID GROUP BY gj. ID ) AS TOTAL_AMOUNT, ( SELECT SUM (NVL(GJD1.dr_amount, 0)) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.acct_code_id = - 10 GROUP BY gj. ID ) AS TOTAL_VAT, 'THB' AS cur, CASE WHEN gjd.cr_amount IS NULL THEN gjd.dr_amount ELSE gjd.cr_amount * - 1 END AS amount, CASE WHEN GJD.department = 'I' THEN 'Inbound' WHEN GJD.department = 'O' THEN 'Outbound' WHEN GJD.department = 'W' THEN 'Wendy' ELSE '' END AS DEPARTMENT, SUBSTR (gj.gj_no, 0, 1) AS acc_no, TO_CHAR (gj.book_DATE, 'DD-MM-YYYY') AS EXPENSE_DATE FROM ACCTSMI3.GENERAL_JOURNAL1 gj INNER JOIN ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD ON gj. ID = gjd.general_journal1_ID LEFT JOIN ACCTSMI3.ap_code ap ON ap.code = gjd.code_AP LEFT JOIN ACCTSMI3.ACCT_CODE act ON act. ID = gjd.acct_code_id LEFT JOIN ACCTSMI3.ACCT_CODE act1 ON act1. ID = gjd.ap_acct_code_id WHERE TO_CHAR (gj.book_DATE, 'MMYYYY') IN ( '102015', '112015', '122015', '012016', '022016', '032016' ) AND GJD.ap_acct_code_id IS NULL AND ( gj.book_type1 = 1 OR gj.book_type1 = 2 ) AND gj.book_type = 'E' ORDER BY gj.book_DATE ASC ";
+
     public static void main(String[] args) {
         Connection connect = null;
         Statement s = null;  
@@ -86,8 +87,9 @@ public class MainMigrate {
 //                getCustomer(s, stmt);
 //                getARData(s,stmt);
 //                getAPData(s,stmt);
-                getDeptorInvoiceData(s, stmt);
+//                getDeptorInvoiceData(s, stmt);
 //                getInvoiceData(s, stmt);
+                getTravoxData(s, stmt);
             } else {
                 System.out.println("Database Connect Failed.");
             }
@@ -104,7 +106,207 @@ public class MainMigrate {
         } 
     }
     
+    public static void getTravoxData(Statement s,Statement stmt){
+        List<MainMigrateModel> list = new ArrayList<MainMigrateModel>();
+        UtilityFunction util = new UtilityFunction();
+        try {
+            ResultSet rs = s.executeQuery(sqlTravoxProduction);
+            while (rs.next()){
+                String gj = rs.getString("GJ") == null ? "" : new String(rs.getString("GJ").getBytes("ISO8859_1"),"TIS-620");
+                String payno = rs.getString("PAY_NO") == null ? "" : new String(rs.getString("PAY_NO").getBytes("ISO8859_1"),"TIS-620");
+                String name = rs.getString("NAME") == null ? "" : new String(rs.getString("NAME").getBytes("ISO8859_1"),"TIS-620");
+                String apcode = rs.getString("AP_CODE") == null ? "" : new String(rs.getString("AP_CODE").getBytes("ISO8859_1"),"TIS-620");
+                String systemdate = rs.getString("SYSTEM_DATE") == null ? "" : new String(rs.getString("SYSTEM_DATE").getBytes("ISO8859_1"),"TIS-620");
+                String invoicenum = rs.getString("INVOICE_NUM") == null ? "" : new String(rs.getString("INVOICE_NUM").getBytes("ISO8859_1"),"TIS-620");
+                String code = rs.getString("CODE") == null ? "" : new String(rs.getString("CODE").getBytes("ISO8859_1"),"TIS-620");
+                String typeproduct = rs.getString("TYPE_PRODUCT") == null ? "" : new String(rs.getString("TYPE_PRODUCT").getBytes("ISO8859_1"),"TIS-620");
+                String totalamount = rs.getString("TOTAL_AMOUNT") == null ? "" : new String(rs.getString("TOTAL_AMOUNT").getBytes("ISO8859_1"),"TIS-620");
+                String totalvat = rs.getString("TOTAL_VAT") == null ? "" : new String(rs.getString("TOTAL_VAT").getBytes("ISO8859_1"),"TIS-620");
+                String cur = rs.getString("CUR") == null ? "" : new String(rs.getString("CUR").getBytes("ISO8859_1"),"TIS-620");
+                String amount = rs.getString("AMOUNT") == null ? "" : new String(rs.getString("AMOUNT").getBytes("ISO8859_1"),"TIS-620");
+                String department = rs.getString("DEPARTMENT") == null ? "" : new String(rs.getString("DEPARTMENT").getBytes("ISO8859_1"),"TIS-620");
+//                String vattype = rs.getString("VATTYPE") == null ? "" : new String(rs.getString("VATTYPE").getBytes("ISO8859_1"),"TIS-620");
+                String accno = rs.getString("ACC_NO") == null ? "" : new String(rs.getString("ACC_NO").getBytes("ISO8859_1"),"TIS-620");
+                String expensedate = rs.getString("EXPENSE_DATE") == null ? "" : new String(rs.getString("EXPENSE_DATE").getBytes("ISO8859_1"),"TIS-620");
+                MainMigrateModel migrateModel = new MainMigrateModel();
+                migrateModel.setGj(gj);
+                migrateModel.setPayno(payno);
+                migrateModel.setName(name);
+                migrateModel.setApcode(apcode);
+                migrateModel.setSystemdate(systemdate);
+                migrateModel.setInvoicenum(invoicenum);
+                migrateModel.setCode(code);
+                migrateModel.setTypeproduct(typeproduct);
+                migrateModel.setTotalamount(totalamount);
+                migrateModel.setTotalvat(totalvat);
+                migrateModel.setCur(cur);
+                migrateModel.setAmount(amount);
+                migrateModel.setDepartment(department);
+//                migrateModel.setVattype(vattype);
+                migrateModel.setAccno(accno);
+                migrateModel.setExpensedate(expensedate);
+                list.add(migrateModel);
+            }
+            
+            System.out.println(" list.size() ::: " + list.size());
+        } catch (SQLException e ) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try { 
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        ExportTravoxReport(list);
+    }
     
+    public static void ExportTravoxReport(List<MainMigrateModel> list){
+        UtilityExcelFunction excelFunction = new UtilityExcelFunction();
+        HSSFWorkbook wb = new HSSFWorkbook();
+        HSSFCellStyle styleC1 = wb.createCellStyle();
+        // Set align Text
+        HSSFCellStyle styleC21 = wb.createCellStyle();
+        styleC21.setAlignment(styleC21.ALIGN_RIGHT);
+        HSSFCellStyle styleC22 = wb.createCellStyle();
+        styleC22.setAlignment(styleC22.ALIGN_LEFT);
+
+        // Header Table
+        HSSFCellStyle styleC3Center = wb.createCellStyle();
+        styleC3Center.setFont(excelFunction.getHeaderTable(wb.createFont()));
+        styleC3Center.setAlignment(styleC3Center.ALIGN_CENTER);
+        styleC3Center.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        styleC3Center.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+        
+        HSSFDataFormat currency = wb.createDataFormat();
+        HSSFCellStyle styleC23 = wb.createCellStyle();
+        styleC23.setAlignment(styleC23.ALIGN_CENTER);
+        HSSFCellStyle styleC24 = wb.createCellStyle();
+        styleC24.setAlignment(styleC24.ALIGN_LEFT);
+        HSSFCellStyle styleC25 = wb.createCellStyle();
+        styleC25.setAlignment(styleC25.ALIGN_RIGHT);
+        styleC25.setDataFormat(currency.getFormat("#,##0.00"));
+        
+        HSSFSheet sheet = wb.createSheet("TravoxReport");
+
+        HSSFRow row2 = sheet.createRow(0);
+        HSSFCell cell20 = row2.createCell(0);
+        cell20.setCellValue("GJ");
+        cell20.setCellStyle(styleC3Center);
+        HSSFCell cell21 = row2.createCell(1);
+        cell21.setCellValue("PAY NO");
+        cell21.setCellStyle(styleC3Center);
+        HSSFCell cell22 = row2.createCell(2);
+        cell22.setCellValue("NAME");
+        cell22.setCellStyle(styleC3Center);
+        HSSFCell cell23 = row2.createCell(3);
+        cell23.setCellValue("AP CODE");
+        cell23.setCellStyle(styleC3Center);
+        HSSFCell cell24 = row2.createCell(4);
+        cell24.setCellValue("SYSTEM DATE");
+        cell24.setCellStyle(styleC3Center);
+        HSSFCell cell25 = row2.createCell(5);
+        cell25.setCellValue("INVOICE NUM");
+        cell25.setCellStyle(styleC3Center);
+        HSSFCell cell26 = row2.createCell(6);
+        cell26.setCellValue("CODE");
+        cell26.setCellStyle(styleC3Center);
+        HSSFCell cell27 = row2.createCell(7);
+        cell27.setCellValue("TYPE PRODUCT");
+        cell27.setCellStyle(styleC3Center);
+        HSSFCell cell28 = row2.createCell(8);
+        cell28.setCellValue("TOTAL AMOUNT");
+        cell28.setCellStyle(styleC3Center);
+        HSSFCell cell29 = row2.createCell(9);
+        cell29.setCellValue("TOTAL VAT");
+        cell29.setCellStyle(styleC3Center);
+        HSSFCell cell30 = row2.createCell(10);
+        cell30.setCellValue("CUR");
+        cell30.setCellStyle(styleC3Center);
+        HSSFCell cell31 = row2.createCell(11);
+        cell31.setCellValue("AMOUNT");
+        cell31.setCellStyle(styleC3Center);
+        HSSFCell cell32 = row2.createCell(12);
+        cell32.setCellValue("DEPARTMENT");
+        cell32.setCellStyle(styleC3Center);
+        HSSFCell cell33 = row2.createCell(13);
+        cell33.setCellValue("ACC NO");
+        cell33.setCellStyle(styleC3Center);
+        HSSFCell cell34 = row2.createCell(14);
+        cell34.setCellValue("EXPENSE DATE");
+        cell34.setCellStyle(styleC3Center);
+//        HSSFCell cell35 = row2.createCell(15);
+//        cell35.setCellValue("");
+//        cell35.setCellStyle(styleC3Center);
+
+        if(list != null){
+            int count = 1 ;
+            for(int i=0;i<list.size();i++){
+                MainMigrateModel data = (MainMigrateModel)list.get(i);
+                HSSFRow row = sheet.createRow(count + i);
+                HSSFCell cell0 = row.createCell(0);
+                cell0.setCellValue(data.getGj());
+                cell0.setCellStyle(styleC24);
+             HSSFCell cell1 = row.createCell(1);
+                cell1.setCellValue(data.getPayno());
+                cell1.setCellStyle(styleC24);
+             HSSFCell cell13 = row.createCell(2);
+                cell13.setCellValue(data.getName());
+                cell13.setCellStyle(styleC24);  
+             HSSFCell cell2 = row.createCell(3);
+                cell2.setCellValue(data.getApcode());
+                cell2.setCellStyle(styleC24);   
+             HSSFCell cell3= row.createCell(4);
+                cell3.setCellValue(data.getSystemdate());
+//                cell3.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getGrandtotal())) ? (new BigDecimal(data.getGrandtotal())).doubleValue() : 0);
+                cell3.setCellStyle(styleC24);
+            HSSFCell cell4 = row.createCell(5);
+                cell4.setCellValue(data.getInvoicenum());
+//                cell4.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getGrandtotalgross())) ? (new BigDecimal(data.getGrandtotalgross())).doubleValue() : 0);
+                cell4.setCellStyle(styleC24);   
+            HSSFCell cell5 = row.createCell(6);
+               cell5.setCellValue(data.getCode());
+               cell5.setCellStyle(styleC24);  
+            HSSFCell cell6 = row.createCell(7);
+                cell6.setCellValue(data.getTypeproduct());
+                cell6.setCellStyle(styleC24);
+            HSSFCell cell7 = row.createCell(8);
+                cell7.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getTotalamount())) ? (new BigDecimal(data.getTotalamount())).doubleValue() : 0);
+                cell7.setCellStyle(styleC25);
+            HSSFCell cell8 = row.createCell(9);
+                cell8.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getTotalvat())) ? (new BigDecimal(data.getTotalvat())).doubleValue() : 0);
+                cell8.setCellStyle(styleC25);
+                
+            HSSFCell cell9 = row.createCell(10);
+                cell9.setCellValue(data.getCur());
+                cell9.setCellStyle(styleC23);   
+            HSSFCell cell11 = row.createCell(11);
+                cell11.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getAmount())) ? (new BigDecimal(data.getAmount())).doubleValue() : 0);
+                cell11.setCellStyle(styleC25);
+            HSSFCell cell12 = row.createCell(12);
+                cell12.setCellValue(data.getDepartment());
+                cell12.setCellStyle(styleC24);  
+            HSSFCell cell013 = row.createCell(13);
+                cell013.setCellValue(data.getAccno());
+                cell013.setCellStyle(styleC24);  
+            HSSFCell cell14 = row.createCell(14);
+                cell14.setCellValue(data.getExpensedate());
+                cell14.setCellStyle(styleC24);  
+//            HSSFCell cell15 = row.createCell(15);
+//                cell15.setCellValue(data.getExpensedate());
+//                cell15.setCellStyle(styleC24);  
+            }
+        }
+        for(int x=0;x<15;x++){
+            sheet.autoSizeColumn(x);
+        }
+//        sheet.setColumnWidth(2, 256*30);
+        exportFileExcel("TravoxReport",wb);
+    }
     
     public static void getInvoiceData(Statement s,Statement stmt){
         List<MainMigrateModel> list = new ArrayList<MainMigrateModel>();
@@ -2157,11 +2359,11 @@ public class MainMigrate {
 }
 
 class OracleConnection{
-    private static final String ip = "192.168.99.48";
+    private static final String ip = "192.168.0.100";
     private static final String port = "1521";
     private static final String schema   = "ORCL";
     private static final String username = "travox3";
-    private static final String password = "oracle";
+    private static final String password = "mik;v8";
     
      static{
         try {
