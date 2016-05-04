@@ -1359,10 +1359,8 @@ public class MainMigrate {
                     + list.get(i).getAddress().replaceAll("'", "''")+"','"+list.get(i).getTelNo()+"','"+list.get(i).getFax()+"','"+list.get(i).getEmail()+"','"
                     + list.get(i).getWeb()+"',"+country+" , " +city+ "  ) ";
                 try {
-                    System.out.println(" sql ::" +sql );
                     stm.executeUpdate(sql);
                 } catch (SQLException ex) {
-                    System.out.println(" sql ::" +sql );
                     Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

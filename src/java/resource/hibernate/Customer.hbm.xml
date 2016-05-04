@@ -48,7 +48,7 @@
             <column name="last_name_japan" length="255" />
         </property>
         <property name="remark" type="string">
-            <column name="remark" length="100" />
+            <column name="remark" length="255" />
         </property>
         <property name="passportNo" type="string">
             <column name="passport_no" length="30" />
