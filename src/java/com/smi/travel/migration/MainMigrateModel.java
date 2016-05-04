@@ -23,7 +23,7 @@ public class MainMigrateModel {
     private String firstName;
     private String lastName;
     private String nationality;
-    private Date birthDate;
+    private String birthDate;
     private String age;
     private String agemonth;
     private String sex;
@@ -132,21 +132,26 @@ public class MainMigrateModel {
     private String accno;
     
     private String gj;
-//    private String payno;
-//    private String name;
-//    private String apcode;
     private String systemdate;
     private String invoicenum;
-//    private String code;
     private String typeproduct;
     private String totalamount;
     private String totalvat;
-//    private String cur;
     private String amount;
-//    private String department;
-//    private String vattype;
-//    private String accno;
     private String expensedate;
+    
+    private String refdoc;
+    private String duedate;
+    private String maindescription;
+    private String voucherno;
+    private String voucheramount;
+    
+    private String costad;
+    private String costch;
+    private String costin;
+    private String pricead;
+    private String pricech;
+    private String pricein;
     
     public String getCode() {
         return code;
@@ -188,13 +193,7 @@ public class MainMigrateModel {
         this.nationality = nationality;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
 
     public String getAge() {
         return age;
@@ -938,6 +937,102 @@ public class MainMigrateModel {
 
     public void setExpensedate(String expensedate) {
         this.expensedate = expensedate;
+    }
+
+    public String getRefdoc() {
+        return refdoc;
+    }
+
+    public void setRefdoc(String refdoc) {
+        this.refdoc = refdoc;
+    }
+
+    public String getDuedate() {
+        return duedate;
+    }
+
+    public void setDuedate(String duedate) {
+        this.duedate = duedate;
+    }
+
+    public String getMaindescription() {
+        return maindescription;
+    }
+
+    public void setMaindescription(String maindescription) {
+        this.maindescription = maindescription;
+    }
+
+    public String getVoucherno() {
+        return voucherno;
+    }
+
+    public void setVoucherno(String voucherno) {
+        this.voucherno = voucherno;
+    }
+
+    public String getVoucheramount() {
+        return voucheramount;
+    }
+
+    public void setVoucheramount(String voucheramount) {
+        this.voucheramount = voucheramount;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getCostad() {
+        return costad;
+    }
+
+    public void setCostad(String costad) {
+        this.costad = costad;
+    }
+
+    public String getCostch() {
+        return costch;
+    }
+
+    public void setCostch(String costch) {
+        this.costch = costch;
+    }
+
+    public String getCostin() {
+        return costin;
+    }
+
+    public void setCostin(String costin) {
+        this.costin = costin;
+    }
+
+    public String getPricead() {
+        return pricead;
+    }
+
+    public void setPricead(String pricead) {
+        this.pricead = pricead;
+    }
+
+    public String getPricech() {
+        return pricech;
+    }
+
+    public void setPricech(String pricech) {
+        this.pricech = pricech;
+    }
+
+    public String getPricein() {
+        return pricein;
+    }
+
+    public void setPricein(String pricein) {
+        this.pricein = pricein;
     }
 
   

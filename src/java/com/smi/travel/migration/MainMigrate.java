@@ -29,6 +29,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,23 +49,23 @@ import org.apache.poi.hssf.util.HSSFColor;
 public class MainMigrate {
     
     private static final String TaxInvoiceReport = " SELECT SALE.*, agt.tax_no AS TAXNO, agt. BRANCH, agt.branch_no FROM ACCTSMI3.REPORT_TAX_INVOICE sale INNER JOIN \"TRAVOX3\".\"AC_TAX_INVOICE\" tax ON tax.\"ID\" = sale.TAX_ID LEFT JOIN TRAVOX3.AGENT AGT ON AGT.code = tax.TAX_INV_TO AND AGT.\"NAME\" = TAX.TAX_INV_NAME WHERE TO_CHAR (sale.TAX_DATE, 'mm') = '11' AND TO_CHAR (sale.TAX_DATE, 'yyyy') = '2014' ORDER BY sale.invoice_type, sale.TAX_NO, sale.TAX_DATE ";
-    private static final String AgentReport = " SELECT * FROM TRAVOX3.AGENT ";
+    private static final String AgentReport = " SELECT * FROM TRAVOX3.agent where  code is not null and name is not  null and length(code) <> 1 ";
     private static final String StaffReport = " SELECT * FROM TRAVOX3.STAFF ";
     private static final String ExportFilePath = "C:\\Users\\Jittima\\Desktop\\ExcelFile\\";
     
     private static final String sqlAirline = " SELECT * FROM TRAVOX3.AIRLINE ";
-    private static final String sqlProduct = " SELECT * FROM TRAVOX3.PRODUCT ";
+    private static final String sqlProduct = " SELECT * FROM TRAVOX3.PRODUCT where code <> '' or code is not null ";
     private static final String sqlPackageTour = " SELECT * FROM TRAVOX3.PACKAGE_TOUR ";
-    private static final String sqlHotel = " SELECT * FROM TRAVOX3.HOTEL ";
+    private static final String sqlHotel = " SELECT * FROM TRAVOX3.HOTEL where code is not null and name is not null ";
     private static final String sqlCurrency = " SELECT * FROM TRAVOX3.CURRENCY ";
     private static final String sqlCountry = " SELECT * FROM TRAVOX3.COUNTRY ";
     private static final String sqlCity = " SELECT * FROM TRAVOX3.CITY ";
-    private static final String sqlCustomer = " SELECT * FROM TRAVOX3.CUSTOMER ";
+    private static final String sqlCustomer = " SELECT * FROM \"TRAVOX3\".\"CUSTOMER\" where  FIRST_NAME is not null and length(code) = 8 ";
     private static final String sqlAR = " SELECT CASE WHEN (agt.code IS NULL) THEN 'DUMMY' ELSE agt.code END AS CODE, inv.inv_name, INV.INV_NO, TO_CHAR (inv.inv_date, 'DD-MM-YYYY') AS inv_date FROM \"TRAVOX3\".\"AC_INVOICE\" inv INNER JOIN \"TRAVOX3\".AC_INVOICE_DETAIL invd ON INVD.AC_INVOICE_ID = INV.\"ID\" LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv.INV_NAME WHERE TO_CHAR (inv.inv_date, 'MMYYYY') IN ('112015','122015','012016', '022016', '032016') ORDER BY  inv.inv_date , inv.inv_no " ;
     private static final String sqlAP = " SELECT payd. ID AS payid, (pay.PAY_NO) AS PAY_NO, (PAY.INVOICE_SUP) AS AP_CODE, ap. NAME AS NAME, TO_CHAR (pay.pay_DATE, 'DD-MM-YYYY') AS pay_date, (PAY.REF_DEPARTMENT) AS DEPARTMENT, CASE WHEN pay.VAT_TYPE = 'X' THEN 'TEMP' WHEN pay.VAT_TYPE = 'V' THEN 'VAT' ELSE 'NO VAT' END AS vattype FROM travox3.AC_PAYMENT pay INNER JOIN travox3.AC_PAYMENT_DETAIL payd ON payd.AC_PAYMENT_ID = pay. ID INNER JOIN ACCSMI3.AP_CODE ap ON ap.code = pay.INVOICE_SUP WHERE TO_CHAR (pay.pay_DATE, 'MMYYYY') IN ( '112015','122015','012016', '022016', '032016') ORDER BY pay.pay_DATE , PAY.PAY_NO ";
     private static final String sqlInv1 = " SELECT inv3. ID AS ID, INV3.inv_no AS invno, INV3.\"NAME\" AS NAME, TO_CHAR (INV3.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd3.price) AS grand_total, SUM (invd3.price) - SUM ( ROUND ( INVD3.price - INVD3.price * 100 / (100 + INV3.vat), 2 )) AS grand_total_gross, SUM ( ROUND ( INVD3.price - INVD3.price * 100 / (100 + INV3.vat), 2 )) AS grand_total_vat, MIN (INVD3.CUR) AS cur, 'INBOUND' AS department, '1' AS acc_no FROM \"INBOUND\".\"INVOICE3\" inv3 INNER JOIN INBOUND.INVOICE3_DETAIL invd3 ON inv3. ID = invd3.INVOICE3_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv3. NAME WHERE \"TO_CHAR\" (inv3.INV_DATE, 'MMYYYY') IN ('102015', '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv3. ID, INV3.inv_no, INV3.\"NAME\", INV3.INV_DATE ORDER BY INV3. ID  ";
     private static final String sqlInv2 = " SELECT inv2. ID AS ID, INV2.inv_no AS invno, INV2.\"NAME\" AS NAME, TO_CHAR (INV2.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd2.price) AS grand_total, SUM (invd2.price) AS grand_total_gross, 0 AS grand_total_vat, MIN (INVD2.CUR) AS cur, 'INBOUND' AS department, '2' AS acc_no FROM \"INBOUND\".\"INVOICE2\" inv2 INNER JOIN INBOUND.INVOICE2_DETAIL invd2 ON inv2. ID = invd2.INVOICE2_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv2. NAME WHERE \"TO_CHAR\" (inv2.INV_DATE, 'MMYYYY') IN ('102015', '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv2. ID, INV2.inv_no, INV2.\"NAME\", INV2.INV_DATE ORDER BY INV2. ID ";
-    private static final String sqlTravoxProduction = " SELECT gj.gj_no AS gj, '' AS PAY_NO, ( SELECT ap. NAME FROM ACCTSMI3.ap_code ap WHERE ap.code = ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID )) AS NAME, ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID ) AS AP_CODE, TO_CHAR ( gj.SYSTEM_DATE, 'DD-MM-YYYY' ) AS system_date, '' AS INVOICE_NUM, CASE WHEN act.code IS NULL THEN act1.code ELSE act.code END AS code, CASE WHEN act.code IS NULL THEN act1.detail ELSE act.detail END AS type_product, ( SELECT SUM (NVL(GJD1.cr_amount, 0)) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID GROUP BY gj. ID ) AS TOTAL_AMOUNT, ( SELECT SUM (NVL(GJD1.dr_amount, 0)) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.acct_code_id = - 10 GROUP BY gj. ID ) AS TOTAL_VAT, 'THB' AS cur, CASE WHEN gjd.cr_amount IS NULL THEN gjd.dr_amount ELSE gjd.cr_amount * - 1 END AS amount, CASE WHEN GJD.department = 'I' THEN 'Inbound' WHEN GJD.department = 'O' THEN 'Outbound' WHEN GJD.department = 'W' THEN 'Wendy' ELSE '' END AS DEPARTMENT, SUBSTR (gj.gj_no, 0, 1) AS acc_no, TO_CHAR (gj.book_DATE, 'DD-MM-YYYY') AS EXPENSE_DATE FROM ACCTSMI3.GENERAL_JOURNAL1 gj INNER JOIN ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD ON gj. ID = gjd.general_journal1_ID LEFT JOIN ACCTSMI3.ap_code ap ON ap.code = gjd.code_AP LEFT JOIN ACCTSMI3.ACCT_CODE act ON act. ID = gjd.acct_code_id LEFT JOIN ACCTSMI3.ACCT_CODE act1 ON act1. ID = gjd.ap_acct_code_id WHERE TO_CHAR (gj.book_DATE, 'MMYYYY') IN ( '102015', '112015', '122015', '012016', '022016', '032016' ) AND ( gj.book_type1 = 1 OR gj.book_type1 = 2 ) AND gj.book_type = 'E' ORDER BY gj.book_DATE ASC ";
+    private static final String sqlTravoxProduction = " SELECT gj.gj_no AS gj, '' AS PAY_NO, ( SELECT ap. NAME FROM ACCTSMI3.ap_code ap WHERE ap.code = ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID )) AS NAME, ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID ) AS AP_CODE, gj.ref_doc_no AS REFDOC, TO_CHAR ( gj.SYSTEM_DATE, 'DD-MM-YYYY' ) AS system_date, TO_CHAR (gj.DUE_DATE, 'DD-MM-YYYY') AS due_date, '' AS INVOICE_NUM, GJ.DESCRIPTION AS Main_Description, CASE WHEN act.code IS NULL THEN act1.code ELSE act.code END AS code, CASE WHEN act.code IS NULL THEN act1.detail ELSE act.detail END AS type_product, GJD.DESCRIPTION AS description, ( SELECT SUM ( CASE WHEN GJD1.ACCT_CODE_ID = - 30 THEN 0 ELSE NVL (GJD1.cr_amount, 0) END ) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID GROUP BY gj. ID ) AS TOTAL_AMOUNT, GJD.ACCT_CODE_ID, ( SELECT SUM (NVL(GJD1.dr_amount, 0)) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.acct_code_id = - 10 GROUP BY gj. ID ) AS TOTAL_VAT, 'THB' AS cur, CASE WHEN gjd.cr_amount IS NULL THEN gjd.dr_amount ELSE gjd.cr_amount * - 1 END AS amount, CASE WHEN GJD.department = 'I' THEN 'Inbound' WHEN GJD.department = 'O' THEN 'Outbound' WHEN GJD.department = 'W' THEN 'Wendy' ELSE '' END AS DEPARTMENT, SUBSTR (gj.gj_no, 0, 1) AS acc_no, TO_CHAR (gj.book_DATE, 'DD-MM-YYYY') AS EXPENSE_DATE, gv.voucher_no AS voucher_no, gvd.amount AS voucher_amount FROM ACCTSMI3.GENERAL_JOURNAL1 gj INNER JOIN ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD ON gj. ID = gjd.general_journal1_ID LEFT JOIN ACCTSMI3.ap_code ap ON ap.code = gjd.code_AP LEFT JOIN ACCTSMI3.ACCT_CODE act ON act. ID = gjd.acct_code_id LEFT JOIN ACCTSMI3.ACCT_CODE act1 ON act1. ID = gjd.ap_acct_code_id LEFT JOIN ACCTSMI3.GENERAL_VOUCHER_DETAIL gvd ON gvd.general_journal_id = gj. ID LEFT JOIN ACCTSMI3.GENERAL_VOUCHER gv ON gv. ID = gvd.general_voucher_id WHERE TO_CHAR (gj.book_DATE, 'MMYYYY') IN ( '102015', '112015', '122015', '012016', '022016', '032016' ) AND ( gj.book_type1 = 1 OR gj.book_type1 = 2 ) AND gj.book_type = 'E' ORDER BY gj.book_DATE ASC ";
 
     public static void main(String[] args) {
         Connection connect = null;
@@ -84,12 +85,12 @@ public class MainMigrate {
 //                getPackageTour(s, stmt);
 //                getProduct(s, stmt);
 //                getHotel(s, stmt);
-//                getCustomer(s, stmt);
+                getCustomer(s, stmt);
 //                getARData(s,stmt);
 //                getAPData(s,stmt);
 //                getDeptorInvoiceData(s, stmt);
 //                getInvoiceData(s, stmt);
-                getTravoxData(s, stmt);
+//                getTravoxData(s, stmt);
             } else {
                 System.out.println("Database Connect Failed.");
             }
@@ -125,9 +126,16 @@ public class MainMigrate {
                 String cur = rs.getString("CUR") == null ? "" : new String(rs.getString("CUR").getBytes("ISO8859_1"),"TIS-620");
                 String amount = rs.getString("AMOUNT") == null ? "" : new String(rs.getString("AMOUNT").getBytes("ISO8859_1"),"TIS-620");
                 String department = rs.getString("DEPARTMENT") == null ? "" : new String(rs.getString("DEPARTMENT").getBytes("ISO8859_1"),"TIS-620");
-//                String vattype = rs.getString("VATTYPE") == null ? "" : new String(rs.getString("VATTYPE").getBytes("ISO8859_1"),"TIS-620");
                 String accno = rs.getString("ACC_NO") == null ? "" : new String(rs.getString("ACC_NO").getBytes("ISO8859_1"),"TIS-620");
                 String expensedate = rs.getString("EXPENSE_DATE") == null ? "" : new String(rs.getString("EXPENSE_DATE").getBytes("ISO8859_1"),"TIS-620");
+                
+                String refdoc = rs.getString("REFDOC") == null ? "" : new String(rs.getString("REFDOC").getBytes("ISO8859_1"),"TIS-620");
+                String duedate = rs.getString("DUE_DATE") == null ? "" : new String(rs.getString("DUE_DATE").getBytes("ISO8859_1"),"TIS-620");
+                String maindescription = rs.getString("MAIN_DESCRIPTION") == null ? "" : new String(rs.getString("MAIN_DESCRIPTION").getBytes("ISO8859_1"),"TIS-620");
+                String description = rs.getString("DESCRIPTION") == null ? "" : new String(rs.getString("DESCRIPTION").getBytes("ISO8859_1"),"TIS-620");
+                String voucherno = rs.getString("VOUCHER_NO") == null ? "" : new String(rs.getString("VOUCHER_NO").getBytes("ISO8859_1"),"TIS-620");
+                String voucheramount = rs.getString("VOUCHER_AMOUNT") == null ? "" : new String(rs.getString("VOUCHER_AMOUNT").getBytes("ISO8859_1"),"TIS-620");
+                
                 MainMigrateModel migrateModel = new MainMigrateModel();
                 migrateModel.setGj(gj);
                 migrateModel.setPayno(payno);
@@ -142,9 +150,15 @@ public class MainMigrate {
                 migrateModel.setCur(cur);
                 migrateModel.setAmount(amount);
                 migrateModel.setDepartment(department);
-//                migrateModel.setVattype(vattype);
                 migrateModel.setAccno(accno);
                 migrateModel.setExpensedate(expensedate);
+                
+                migrateModel.setRefdoc(refdoc);
+                migrateModel.setDuedate(duedate);
+                migrateModel.setMaindescription(maindescription);
+                migrateModel.setDescription(description);
+                migrateModel.setVoucherno(voucherno);
+                migrateModel.setVoucheramount(voucheramount);
                 list.add(migrateModel);
             }
             
@@ -207,41 +221,56 @@ public class MainMigrate {
         cell23.setCellValue("AP CODE");
         cell23.setCellStyle(styleC3Center);
         HSSFCell cell24 = row2.createCell(4);
-        cell24.setCellValue("SYSTEM DATE");
+        cell24.setCellValue("REFDOC");
         cell24.setCellStyle(styleC3Center);
         HSSFCell cell25 = row2.createCell(5);
-        cell25.setCellValue("INVOICE NUM");
+        cell25.setCellValue("SYSTEM_DATE");
         cell25.setCellStyle(styleC3Center);
         HSSFCell cell26 = row2.createCell(6);
-        cell26.setCellValue("CODE");
+        cell26.setCellValue("DUE DATE");
         cell26.setCellStyle(styleC3Center);
         HSSFCell cell27 = row2.createCell(7);
-        cell27.setCellValue("TYPE PRODUCT");
+        cell27.setCellValue("INVOICE NUM");
         cell27.setCellStyle(styleC3Center);
         HSSFCell cell28 = row2.createCell(8);
-        cell28.setCellValue("TOTAL AMOUNT");
+        cell28.setCellValue("MAIN DESCRIPTION");
         cell28.setCellStyle(styleC3Center);
         HSSFCell cell29 = row2.createCell(9);
-        cell29.setCellValue("TOTAL VAT");
+        cell29.setCellValue("CODE");
         cell29.setCellStyle(styleC3Center);
         HSSFCell cell30 = row2.createCell(10);
-        cell30.setCellValue("CUR");
+        cell30.setCellValue("TYPE PRODUCT");
         cell30.setCellStyle(styleC3Center);
         HSSFCell cell31 = row2.createCell(11);
-        cell31.setCellValue("AMOUNT");
+        cell31.setCellValue("DESCRIPTION");
         cell31.setCellStyle(styleC3Center);
         HSSFCell cell32 = row2.createCell(12);
-        cell32.setCellValue("DEPARTMENT");
+        cell32.setCellValue("TOTAL AMOUNT");
         cell32.setCellStyle(styleC3Center);
         HSSFCell cell33 = row2.createCell(13);
-        cell33.setCellValue("ACC NO");
+        cell33.setCellValue("TOTAL VAT");
         cell33.setCellStyle(styleC3Center);
         HSSFCell cell34 = row2.createCell(14);
-        cell34.setCellValue("EXPENSE DATE");
+        cell34.setCellValue("CUR");
         cell34.setCellStyle(styleC3Center);
-//        HSSFCell cell35 = row2.createCell(15);
-//        cell35.setCellValue("");
-//        cell35.setCellStyle(styleC3Center);
+        HSSFCell cell35 = row2.createCell(15);
+        cell35.setCellValue("AMOUNT");
+        cell35.setCellStyle(styleC3Center);
+        HSSFCell cell36 = row2.createCell(16);
+        cell36.setCellValue("DEPARTMENT");
+        cell36.setCellStyle(styleC3Center);
+        HSSFCell cell37 = row2.createCell(17);
+        cell37.setCellValue("ACC NO");
+        cell37.setCellStyle(styleC3Center);
+        HSSFCell cell38 = row2.createCell(18);
+        cell38.setCellValue("EXPENSE DATE");
+        cell38.setCellStyle(styleC3Center);
+        HSSFCell cell39 = row2.createCell(19);
+        cell39.setCellValue("VOUCHER NO");
+        cell39.setCellStyle(styleC3Center);
+        HSSFCell cell40 = row2.createCell(20);
+        cell40.setCellValue("VOUCHER AMOUNT");
+        cell40.setCellStyle(styleC3Center);
 
         if(list != null){
             int count = 1 ;
@@ -261,50 +290,64 @@ public class MainMigrate {
                 cell2.setCellValue(data.getApcode());
                 cell2.setCellStyle(styleC24);   
              HSSFCell cell3= row.createCell(4);
-                cell3.setCellValue(data.getSystemdate());
-//                cell3.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getGrandtotal())) ? (new BigDecimal(data.getGrandtotal())).doubleValue() : 0);
+                cell3.setCellValue(data.getRefdoc());
                 cell3.setCellStyle(styleC24);
             HSSFCell cell4 = row.createCell(5);
-                cell4.setCellValue(data.getInvoicenum());
-//                cell4.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getGrandtotalgross())) ? (new BigDecimal(data.getGrandtotalgross())).doubleValue() : 0);
+                cell4.setCellValue(data.getSystemdate());
                 cell4.setCellStyle(styleC24);   
             HSSFCell cell5 = row.createCell(6);
-               cell5.setCellValue(data.getCode());
+               cell5.setCellValue(data.getDuedate());
                cell5.setCellStyle(styleC24);  
             HSSFCell cell6 = row.createCell(7);
-                cell6.setCellValue(data.getTypeproduct());
+                cell6.setCellValue(data.getInvoicenum());
                 cell6.setCellStyle(styleC24);
             HSSFCell cell7 = row.createCell(8);
-                cell7.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getTotalamount())) ? (new BigDecimal(data.getTotalamount())).doubleValue() : 0);
-                cell7.setCellStyle(styleC25);
+                cell7.setCellValue(data.getMaindescription());
+                cell7.setCellStyle(styleC24);
             HSSFCell cell8 = row.createCell(9);
-                cell8.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getTotalvat())) ? (new BigDecimal(data.getTotalvat())).doubleValue() : 0);
-                cell8.setCellStyle(styleC25);
-                
+                cell8.setCellValue(data.getCode());
+                cell8.setCellStyle(styleC24);
             HSSFCell cell9 = row.createCell(10);
-                cell9.setCellValue(data.getCur());
-                cell9.setCellStyle(styleC23);   
+                cell9.setCellValue(data.getTypeproduct());
+                cell9.setCellStyle(styleC24);   
             HSSFCell cell11 = row.createCell(11);
-                cell11.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getAmount())) ? (new BigDecimal(data.getAmount())).doubleValue() : 0);
-                cell11.setCellStyle(styleC25);
+                cell11.setCellValue(data.getDescription());
+                cell11.setCellStyle(styleC24);
             HSSFCell cell12 = row.createCell(12);
-                cell12.setCellValue(data.getDepartment());
-                cell12.setCellStyle(styleC24);  
+                cell12.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getTotalamount())) ? (new BigDecimal(data.getTotalamount())).doubleValue() : 0);
+                cell12.setCellStyle(styleC25);  
             HSSFCell cell013 = row.createCell(13);
-                cell013.setCellValue(data.getAccno());
-                cell013.setCellStyle(styleC24);  
+                cell013.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getTotalvat())) ? (new BigDecimal(data.getTotalvat())).doubleValue() : 0);
+                cell013.setCellStyle(styleC25);  
             HSSFCell cell14 = row.createCell(14);
-                cell14.setCellValue(data.getExpensedate());
-                cell14.setCellStyle(styleC24);  
-//            HSSFCell cell15 = row.createCell(15);
-//                cell15.setCellValue(data.getExpensedate());
-//                cell15.setCellStyle(styleC24);  
+                cell14.setCellValue(data.getCur());
+                cell14.setCellStyle(styleC23);  
+            HSSFCell cell15 = row.createCell(15);
+                cell15.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getAmount())) ? (new BigDecimal(data.getAmount())).doubleValue() : 0);
+                cell15.setCellStyle(styleC25);
+            HSSFCell cell16 = row.createCell(16);
+                cell16.setCellValue(data.getDepartment());
+                cell16.setCellStyle(styleC24);  
+            HSSFCell cell17 = row.createCell(17);
+                cell17.setCellValue(data.getAccno());
+                cell17.setCellStyle(styleC24);  
+            HSSFCell cell18 = row.createCell(18);
+                cell18.setCellValue(data.getExpensedate());
+                cell18.setCellStyle(styleC24);  
+            HSSFCell cell19 = row.createCell(19);
+                cell19.setCellValue(data.getVoucherno());
+                cell19.setCellStyle(styleC24);  
+            HSSFCell cell020 = row.createCell(20);
+                cell020.setCellValue(!"".equalsIgnoreCase(String.valueOf(data.getVoucheramount())) ? (new BigDecimal(data.getVoucheramount())).doubleValue() : 0);
+                cell020.setCellStyle(styleC25);  
             }
         }
-        for(int x=0;x<15;x++){
+        for(int x=0;x<21;x++){
             sheet.autoSizeColumn(x);
         }
-//        sheet.setColumnWidth(2, 256*30);
+        sheet.setColumnWidth(2, 256*30);
+        sheet.setColumnWidth(8, 256*30);
+        sheet.setColumnWidth(11, 256*30);
         exportFileExcel("TravoxReport",wb);
     }
     
@@ -1176,7 +1219,7 @@ public class MainMigrate {
                 migrateModel.setFirstName(firstName);
                 migrateModel.setLastName(lastName);
                 migrateModel.setNationality(nationality);
-                migrateModel.setBirthDate("".equalsIgnoreCase(birthDate) ? null : util.convertStringToDate(birthDate));
+                migrateModel.setBirthDate("".equalsIgnoreCase(birthDate) ? null : "'"+birthDate+"'");
                 migrateModel.setSex(sex);
                 migrateModel.setPostalAddress(postalAddress);
                 migrateModel.setPostalTel(postalTel);
@@ -1215,28 +1258,28 @@ public class MainMigrate {
             String sql = "";
             
             System.out.println(" customer size :: "+ list.size());
-            for(int i = 0 ; i< list.size(); i ++){ 
+            for(int i = 0 ; i< list.size() ; i ++){ 
                 sql = " INSERT INTO `customer` ( `code`, `initial_name`, `first_name`, `last_name`, `nationality`, `birth_date`, `sex`, `address`, `tel`, `email`, `passport_no`, `remark`, `personal_id`, `phone`, `first_name_japan`, `last_name_japan` ) "
-                    + "VALUES ('"+list.get(i).getCode().replaceAll("'", " ")+"',"
+                    + " VALUES ('"+list.get(i).getCode().replaceAll("'", "''")+"',"
                     + list.get(i).getInitialname().getId() +",'"
-                    + list.get(i).getFirstName().replaceAll("'", " ")+"','"
-                    + list.get(i).getLastName().replaceAll("'", " ")+"','"
-                    + list.get(i).getNationality().replaceAll("'", " ") +"',"
+                    + list.get(i).getFirstName().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/")+"','"
+                    + list.get(i).getLastName().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/", "\\\\/")+"','"
+                    + list.get(i).getNationality().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"',"
                     + list.get(i).getBirthDate()+",'"
-                    + list.get(i).getSex().replaceAll("'", " ") +"','"
-                    + list.get(i).getPostalAddress().replaceAll("'", " ") +"','"
-                    + list.get(i).getPostalTel().replaceAll("'", " ") +"','"
-                    + list.get(i).getPostalEmail().replaceAll("'", " ") +"','"
-                    + list.get(i).getPassportNo().replaceAll("'", " ") +"','"
-                    + list.get(i).getWarning().replaceAll("'", " ") +"','"
-                    + list.get(i).getCitizenNo().replaceAll("'", " ") +"','"
-                    + list.get(i).getMobileNo().replaceAll("'", " ") +"','"
-                    + list.get(i).getFirstNameJapan().replaceAll("'", " ") +"','"
-                    + list.get(i).getLastNameJapan().replaceAll("'", " ")+"' ) ";
-//                System.out.println(" sql :: " + sql);
+                    + list.get(i).getSex().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+                    + list.get(i).getPostalAddress().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+                    + list.get(i).getPostalTel().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+                    + list.get(i).getPostalEmail().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+                    + list.get(i).getPassportNo().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+                    + list.get(i).getWarning().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+                    + list.get(i).getCitizenNo().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+                    + list.get(i).getMobileNo().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+                    + list.get(i).getFirstNameJapan().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"','"
+                    + list.get(i).getLastNameJapan().replaceAll("'", "''").replaceAll("\\\\"," ").replaceAll("/","\\\\/") +"' ) ";
                 try {
                     stm.executeUpdate(sql);
                 } catch (SQLException ex) {
+                    System.out.println(" sql ::: " +sql);
                     Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -1312,13 +1355,14 @@ public class MainMigrate {
                     city = " (select MAX(id) from m_city where `code`='"+list.get(i).getCity().getCode()+"') ";
                 }
                 sql = " INSERT INTO  `hotel` (`code`,`name`,`remark`,`address`,`tel_no`,`fax`,`email`,`web`,`country`,`city`)  "
-                    + "VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getRemark().replaceAll("'", " ")+"','"
-                    + list.get(i).getAddress().replaceAll("'", " ")+"','"+list.get(i).getTelNo()+"','"+list.get(i).getFax()+"','"+list.get(i).getEmail()+"','"
+                    + "VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", "''")+"','"+list.get(i).getRemark().replaceAll("'", "''")+"','"
+                    + list.get(i).getAddress().replaceAll("'", "''")+"','"+list.get(i).getTelNo()+"','"+list.get(i).getFax()+"','"+list.get(i).getEmail()+"','"
                     + list.get(i).getWeb()+"',"+country+" , " +city+ "  ) ";
-//                System.out.println(" sql ::" +sql );
                 try {
+                    System.out.println(" sql ::" +sql );
                     stm.executeUpdate(sql);
                 } catch (SQLException ex) {
+                    System.out.println(" sql ::" +sql );
                     Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -1326,6 +1370,7 @@ public class MainMigrate {
     }
     
     public static void getProduct(Statement s,Statement stmt){
+        
         List<MainMigrateModel> list = new ArrayList<MainMigrateModel>();
         try {
             ResultSet rs = s.executeQuery(sqlProduct);
@@ -1335,7 +1380,14 @@ public class MainMigrate {
                 String description = rs.getString("DESCRIPTION") == null ? "" : new String(rs.getString("DESCRIPTION").getBytes("ISO8859_1"),"TIS-620");
                 String remarks = rs.getString("REMARKS") == null ? "" :rs.getString("REMARKS");
                 String productype = rs.getString("PRODUCT_TYPE") == null ? null :rs.getString("PRODUCT_TYPE");
-
+                String id = rs.getString("ID") == null ? "" : new String(rs.getString("ID").getBytes("ISO8859_1"),"TIS-620");
+                String costad = rs.getString("COST") == null ? null : new String(rs.getString("COST").getBytes("ISO8859_1"),"TIS-620");
+                String costch = rs.getString("COST_CHILD") == null ? null : new String(rs.getString("COST_CHILD").getBytes("ISO8859_1"),"TIS-620");
+                String costin = rs.getString("COST_INFANT") == null ? null : new String(rs.getString("COST_INFANT").getBytes("ISO8859_1"),"TIS-620");
+                String pricead = rs.getString("PRICE_ADULT") == null ? null : new String(rs.getString("PRICE_ADULT").getBytes("ISO8859_1"),"TIS-620");
+                String pricech = rs.getString("PRICE_CHILD") == null ? null : new String(rs.getString("PRICE_CHILD").getBytes("ISO8859_1"),"TIS-620");
+                String pricein = rs.getString("PRICE_INFANT") == null ? null : new String(rs.getString("PRICE_INFANT").getBytes("ISO8859_1"),"TIS-620");
+                                        
                 MainMigrateModel product = new MainMigrateModel();
                 product.setCode(code);
                 product.setName(name);
@@ -1344,10 +1396,17 @@ public class MainMigrate {
                 MProductType mProductType = new MProductType();
                 mProductType.setId(productype);
                 product.setProductType(mProductType);
+                product.setId(id);
+                product.setCostad(costad);
+                product.setCostch(costch);
+                product.setCostin(costin);
+                product.setPricead(pricead);
+                product.setPricech(pricech);
+                product.setPricein(pricein);
                 list.add(product);
             }
         } catch (SQLException e ) {
-            
+            e.printStackTrace();
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -1359,6 +1418,16 @@ public class MainMigrate {
                 }
             }
         }
+        Date date = new Date();
+        String month = String.valueOf(date.getMonth() + 1);
+        String day = String.valueOf(date.getDate());
+        if (month.length() == 1) {
+            month = "0" + month;
+        }
+        if (day.length() == 1) {
+            day = "0" + day;
+        }
+        String datestring = String.valueOf(date.getYear() + 1900) + "-" + month + "-" + day;
         
         Connection connect = null;
         Statement stm = null; 
@@ -1372,12 +1441,35 @@ public class MainMigrate {
             String sql = "";
             System.out.println(" product size :: "+ list.size());
             for(int i = 0 ; i< list.size() ; i ++){               
-                sql = " INSERT INTO `product` (`code`,`name`,`description`,`remark`,`product_type`) "
-                        + "VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getDescription().replaceAll("'", " ")+"','"
-                        + list.get(i).getRemark().replaceAll("'", " ")+"',"+list.get(i).getProductType().getId()+") ";
+                sql = " INSERT INTO `product` ( `code`,`name`,`description`,`remark`,`product_type` ) "
+                        + "VALUES ('"+list.get(i).getCode()
+                        + "','"+list.get(i).getName().replaceAll("'", "''")
+                        + "','"+list.get(i).getDescription().replaceAll("'", "''")
+                        + "','"+list.get(i).getRemark().replaceAll("'", "''")
+                        + "',"+list.get(i).getProductType().getId()+") ";
                 try {
                     stm.executeUpdate(sql);
+                    String sqlselectproductid = " SELECT id FROM `product` where code = '" +list.get(i).getCode()+ "' ";
+                    String id = "";
+                    ResultSet rs2 = stm.executeQuery(sqlselectproductid);
+                    while (rs2.next()){
+                        id = rs2.getString("ID") == null ? "" : new String(rs2.getString("ID").getBytes("ISO8859_1"),"TIS-620");
+                    }
+                    String sqlinsertpd = " INSERT INTO product_detail ( product_id, effective_from, effective_to, ad_cost, ch_cost, in_cost, ad_price, ch_price, in_price, create_by, create_date )  "
+                        + " VALUES ('"+id+ "','2016-05-01','2020-12-31',"
+                        + list.get(i).getCostad() + ","
+                        + list.get(i).getCostch() + ","
+                        + list.get(i).getCostin() + ","
+                        + list.get(i).getPricead() + ","
+                        + list.get(i).getPricech() + ","
+                        + list.get(i).getPricein() + ",'"
+                        + "ADMIN" + "','"
+                        + datestring + "' ) ";
+                    
+                    stm.executeUpdate(sqlinsertpd);
                 } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }catch (UnsupportedEncodingException ex) {
                     Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -1430,7 +1522,7 @@ public class MainMigrate {
             System.out.println(" package_tour size :: "+ list.size());
             for(int i = 0 ; i< list.size() ; i ++){
                 sql = " INSERT INTO `package_tour` (`code`,`name`,`remark`,`status`) "
-                        + "VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", " ")+"','"
+                        + "VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", "''")+"','"
                         + list.get(i).getRemark()+"','"+list.get(i).getStatus()+"') ";
                 try {
                     stm.executeUpdate(sql);
@@ -1482,9 +1574,9 @@ public class MainMigrate {
             System.out.println(" m_airline size :: "+ list.size());
             for(int i = 0 ; i< list.size() ; i ++){
                 if(list.get(i).getCode().length() > 5 ){
-                    sql = " INSERT INTO `m_airline` (`code`,`name`,`code_3_letter` ) VALUES ('"+list.get(i).getCode().substring(0,5)+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getCode3Letter().replaceAll("'", " ")+"'); " ;
+                    sql = " INSERT INTO `m_airline` (`code`,`name`,`code_3_letter` ) VALUES ('"+list.get(i).getCode().substring(0,5)+"','"+list.get(i).getName().replaceAll("'", "''")+"','"+list.get(i).getCode3Letter().replaceAll("'", "''")+"'); " ;
                 }else{
-                    sql = " INSERT INTO `m_airline` (`code`,`name`,`code_3_letter` ) VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", " ")+"','"+list.get(i).getCode3Letter().replaceAll("'", " ")+"'); " ;
+                    sql = " INSERT INTO `m_airline` (`code`,`name`,`code_3_letter` ) VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getName().replaceAll("'", "''")+"','"+list.get(i).getCode3Letter().replaceAll("'", "''")+"'); " ;
                 }
                 try {
                     stm.executeUpdate(sql);
@@ -1537,9 +1629,9 @@ public class MainMigrate {
             System.out.println(" m_currency size :: "+ list.size());
             for(int i = 0 ; i< list.size() ; i ++){
                 if(list.get(i).getCode().length() > 3 ){
-                    sql = " INSERT INTO `m_currency` (`CODE`,`DESCRIPTION`) VALUES ('"+list.get(i).getCode().substring(0,3)+"','"+list.get(i).getDescription().replaceAll("'", " ")+"'); " ;
+                    sql = " INSERT INTO `m_currency` (`CODE`,`DESCRIPTION`) VALUES ('"+list.get(i).getCode().substring(0,3)+"','"+list.get(i).getDescription().replaceAll("'", "''")+"'); " ;
                 }else{
-                    sql = " INSERT INTO `m_currency` (`CODE`,`DESCRIPTION`) VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getDescription().replaceAll("'", " ")+"'); " ;
+                    sql = " INSERT INTO `m_currency` (`CODE`,`DESCRIPTION`) VALUES ('"+list.get(i).getCode()+"','"+list.get(i).getDescription().replaceAll("'", "''")+"'); " ;
                 }
                 try {
                     stm.executeUpdate(sql);
@@ -1592,9 +1684,9 @@ public class MainMigrate {
             System.out.println(" m_country size :: "+ mCountrys.size());
             for(int i = 0 ; i< mCountrys.size() ; i ++){
                 if(mCountrys.get(i).getCode().length() > 3 ){
-                    sql = " INSERT INTO `m_country` (`code`,`name`) VALUES ('"+mCountrys.get(i).getCode().substring(0,3)+"','"+mCountrys.get(i).getName().replaceAll("'", " ")+"'); " ;
+                    sql = " INSERT INTO `m_country` (`code`,`name`) VALUES ('"+mCountrys.get(i).getCode().substring(0,3)+"','"+mCountrys.get(i).getName().replaceAll("'", "''")+"'); " ;
                 }else{
-                    sql = " INSERT INTO `m_country` (`code`,`name`) VALUES ('"+mCountrys.get(i).getCode()+"','"+mCountrys.get(i).getName().replaceAll("'", " ")+"'); " ;
+                    sql = " INSERT INTO `m_country` (`code`,`name`) VALUES ('"+mCountrys.get(i).getCode()+"','"+mCountrys.get(i).getName().replaceAll("'", "''")+"'); " ;
                 }
                 try {
                     stm.executeUpdate(sql);
@@ -1646,9 +1738,9 @@ public class MainMigrate {
             System.out.println(" City size :: "+ mCitys.size());
             for(int i = 0 ; i< mCitys.size() ; i ++){
                 if(mCitys.get(i).getCode().length() > 3 ){
-                    sql = " INSERT INTO `m_city` (`code`,`name`) VALUES ('"+mCitys.get(i).getCode().substring(0,3)+"','"+mCitys.get(i).getName().replaceAll("'", " ")+"'); " ;
+                    sql = " INSERT INTO `m_city` (`code`,`name`) VALUES ('"+mCitys.get(i).getCode().substring(0,3)+"','"+mCitys.get(i).getName().replaceAll("'", "''")+"'); " ;
                 }else{
-                    sql = " INSERT INTO `m_city` (`code`,`name`) VALUES ('"+mCitys.get(i).getCode()+"','"+mCitys.get(i).getName().replaceAll("'", " ")+"'); " ;
+                    sql = " INSERT INTO `m_city` (`code`,`name`) VALUES ('"+mCitys.get(i).getCode()+"','"+mCitys.get(i).getName().replaceAll("'", "''")+"'); " ;
                 }
                 try {
                     stm.executeUpdate(sql);
@@ -2386,10 +2478,10 @@ class OracleConnection{
 }
 
 class MySqlConnection{
-    private static final String ip = "192.168.99.48";
+    private static final String ip = "192.168.0.100";
     private static final String port = "3306";
-    private static final String schema   = "test";
-    private static final String username = "root";
+    private static final String schema   = "smitravel_production";
+    private static final String username = "DEV01";
     private static final String password = "P@ssw0rd";
     
      static{
