@@ -465,9 +465,9 @@
                                                             <tr>
                                                                 <td>${price.MPricecategory.name}</td>
                                                                 <td>${price.detail}</td>
-                                                                <td class="money">${price.price}</td>
+                                                                <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${price.price}" /></td>
                                                                 <td class="text-center">${price.qty}</td>
-                                                                <td class="money">${price.price*price.qty}</td>
+                                                                <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${price.price*price.qty}" /></td>
                                                                 <td class="text-center">${price.currency}</td>
                                                             </tr>
                                                         </c:forEach>
@@ -792,9 +792,9 @@
                                                             <tr>
                                                                 <td>${price.MPricecategory.name}</td>
                                                                 <td>${price.detail}</td>
-                                                                <td class="money">${price.price}</td>
+                                                                <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${price.price}" /></td>
                                                                 <td class="text-center">${price.qty}</td>
-                                                                <td class="money">${price.price*price.qty}</td>
+                                                                <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${price.price*price.qty}" /> </td>
                                                                 <td class="text-center">${price.currency}</td>
                                                             </tr>
                                                         </c:forEach>
@@ -1231,7 +1231,8 @@
                                             <tr>
                                                 <td class="text-center">${mPrice.MPricecategory.name}</td>
                                                 <td>${mPrice.detail}</td>
-                                                <td class="money">${mPrice.price}</td>
+                                                <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${mPrice.price}" /></td>
+                                                <!--<td class="money">${mPrice.price}</td>-->
                                                 <td class="text-center">${mPrice.currency}</td>
                                             </tr>
                                         </c:forEach>
@@ -1253,7 +1254,8 @@
                                         <c:forEach var="mExpen" items="${MasterExpen}" varStatus="status">
                                             <tr>
                                                 <td class="text-left">${mExpen.description}</td>
-                                                <td class="money">${mExpen.amount}</td>
+                                                <td align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${mExpen.amount}" /></td>
+                                                <!--<td class="money">${mExpen.amount}</td>-->
                                                 <td class="text-center">${mExpen.currency}</td>
                                             </tr>
                                         </c:forEach>
@@ -1363,7 +1365,8 @@
                             <tr id="expenID-${mExpen.id}">
                                 <td id="rowImportExpenId">${mExpen.id}</td>
                                 <td id="rowImportExpenDescription">${mExpen.description}</td>
-                                <td id="rowImportExpenAmount"class="money">${mExpen.amount}</td>
+                                <!--<td id="rowImportExpenAmount" class="money">${mExpen.amount}</td>-->
+                                <td id="rowImportExpenAmount" align="right"><fmt:formatNumber type="currency" pattern="#,##0.00;-#,##0.00" value="${mExpen.amount}" /></td>
                                 <td id="rowImportExpenCurrency" class="text-center">${mExpen.currency}</td>
                                 <td class="text-center"><input id="inputCheckbook${expenStatus.count}" type="checkbox"></td>
                                 <td id="rowImportExpenPriceType" class="hidden">${mExpen.priceType}</td>
