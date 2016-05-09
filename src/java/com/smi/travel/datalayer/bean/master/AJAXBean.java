@@ -2432,6 +2432,7 @@ public class AJAXBean extends AbstractBean implements
     }
 
     public String buildTourReferenceListHTML(List<DaytourBooking> ListBook) {
+        UtilityFunction util = new UtilityFunction();
         String result = "";
         if (ListBook == null) {
             System.out.println("DaytourBooking null");
@@ -2464,7 +2465,7 @@ public class AJAXBean extends AbstractBean implements
                     + "<td>" + AllQty[0] + "</td>"
                     + "<td>" + AllQty[1] + "</td>"
                     + "<td>" + AllQty[2] + "</td>"
-                    + "<td class='decimal'>" + sumPrice + "</td>"
+                    + "<td class='decimal'>" + util.setFormatMoney(sumPrice) + "</td>"
                     //                    + "<td>" + prices.get(0).getPrice() + "</td>"
                     + "<td>" + book.getPlace().getPlace() + "</td>"
                     + "<td>" + picktime + "</td>"
