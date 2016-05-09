@@ -224,7 +224,7 @@ public class MDaytourDetailController extends SMITravelController {
             BigDecimal expensede = new BigDecimal(0);
             
             if(StringUtils.isNotEmpty(expense)){
-                expensede = util.convertStringToBigDecimal(expense);
+                expensede = util.convertStringToBigDecimal(expense.replaceAll(",", ""));
             }
             DaytourExpense dayexpense = getDayExpense(id, daytour);
 
@@ -233,7 +233,7 @@ public class MDaytourDetailController extends SMITravelController {
             }
             
             dayexpense.setDescription(description);
-            dayexpense.setAmount(expensede);
+            dayexpense.setAmount(StringUtils.isNotEmpty(expense) ? expensede : new BigDecimal(BigInteger.ZERO));
             dayexpense.setCurrency(currencyCode);
             dayexpense.setPriceType(priceType);
             
