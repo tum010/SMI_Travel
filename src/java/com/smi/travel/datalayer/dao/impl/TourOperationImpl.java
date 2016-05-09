@@ -145,14 +145,15 @@ public class TourOperationImpl implements TourOperationDao {
             session.update(tourInfoToUpdate);
 
             //List<TourOperationDriver> DriverList = new ArrayList<TourOperationDriver>(TourInfo.getTourOperationDrivers());
-            for (int i = 0; i < DriverList.size(); i++) {
-                System.out.println("staff name : "+DriverList.get(i).getStaff().getId());
-                if (DriverList.get(i).getId() == null) {
-                    session.save(DriverList.get(i));
-                } else {
-                    session.update(DriverList.get(i));
+            if(DriverList != null){
+                for (int i = 0; i < DriverList.size(); i++) {
+                    System.out.println("staff name : "+DriverList.get(i).getStaff().getId());
+                    if (DriverList.get(i).getId() == null) {
+                        session.save(DriverList.get(i));
+                    } else {
+                        session.update(DriverList.get(i));
+                    }
                 }
-
             }
 
             List<TourOperationExpense> ExpenseList = new ArrayList<TourOperationExpense>(TourInfo.getTourOperationExpenses());

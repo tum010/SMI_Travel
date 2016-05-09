@@ -517,3 +517,12 @@ function CallFilterAjax(param) {
 
 
 }
+
+function selectMInitialname(){
+    var miname = $("#MInitialname").val();
+    if(miname === '1'){
+        $("input[name=sex][value=m]").prop('checked', true);
+    }else if(miname === '2' || miname === '3' || miname === '4'){
+        $("input[name=sex][value=w]").prop('checked', true);
+    }
+}

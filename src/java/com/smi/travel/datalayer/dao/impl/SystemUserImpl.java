@@ -23,8 +23,8 @@ public class SystemUserImpl implements SystemUserDao {
     private SessionFactory sessionFactory;
     private Transaction transaction;
     private static final String authenquery = "select u from SystemUser u   WHERE (u.username=:user) and (u.password=:pass) ";
-    private static final String GUIDEQUERY = "select u from SystemUser u   WHERE u.position= 'GUIDE' and u.status = 'active'";
-    private static final String DRIVERQUERY = "select u from SystemUser u   WHERE u.position= 'DRIVER' and u.status = 'active'";
+    private static final String GUIDEQUERY = "select u from SystemUser u   WHERE u.position= 'GUIDE' ";
+    private static final String DRIVERQUERY = "select u from SystemUser u   WHERE u.position= 'DRIVER' ";
     private static final String STAFFQUERY = "select u from SystemUser u   WHERE  u.status = 'active'";
     
     @Override

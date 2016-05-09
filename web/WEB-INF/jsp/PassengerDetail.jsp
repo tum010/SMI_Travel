@@ -141,8 +141,7 @@
                                                 <option value="${initial.id}"><c:out value="${initial.name}" /></option>
                                             </c:forEach>
                                         </select>-->
-                                        
-                                    <select name="MInitialname" id="MInitialname" class="form-control">
+                                    <select name="MInitialname" id="MInitialname" class="form-control" onchange="selectMInitialname()">
                                         <option value="">---</option> 
                                          <c:forEach var="initial" items="${initialList}">
                                             <c:set var="select" value="" />

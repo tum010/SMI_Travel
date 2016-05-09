@@ -107,7 +107,7 @@ public class DaytourOperationDetailController extends SMITravelController {
                     Daytour daytour = daytourBookingDetail.get(0).getDaytour();
                     List<DaytourBooking> daytourBookings = new ArrayList<DaytourBooking>(daytour.getDaytourBookings());
                     List<DaytourBookingPrice> daytourBookingPrice = new ArrayList<DaytourBookingPrice>(daytourBookings.get(0).getDaytourBookingPrices());
-                    CalculatePassengertype(daytourBookings);
+//                    CalculatePassengertype(daytourBookings);
                     Set daytourExpenses = daytour.getDaytourExpenses();
                     Set daytourPrice = daytour.getDaytourPrices();
                     Master master = daytourBookingDetail.get(0).getMaster();
