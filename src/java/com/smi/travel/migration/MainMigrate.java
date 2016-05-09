@@ -65,8 +65,8 @@ public class MainMigrate {
     private static final String sqlAP = " SELECT payd. ID AS payid, (pay.PAY_NO) AS PAY_NO, (PAY.INVOICE_SUP) AS AP_CODE, ap. NAME AS NAME, TO_CHAR (pay.pay_DATE, 'DD-MM-YYYY') AS pay_date, (PAY.REF_DEPARTMENT) AS DEPARTMENT, CASE WHEN pay.VAT_TYPE = 'X' THEN 'TEMP' WHEN pay.VAT_TYPE = 'V' THEN 'VAT' ELSE 'NO VAT' END AS vattype FROM travox3.AC_PAYMENT pay INNER JOIN travox3.AC_PAYMENT_DETAIL payd ON payd.AC_PAYMENT_ID = pay. ID INNER JOIN ACCSMI3.AP_CODE ap ON ap.code = pay.INVOICE_SUP WHERE TO_CHAR (pay.pay_DATE, 'MMYYYY') IN ( '112015','122015','012016', '022016', '032016') ORDER BY pay.pay_DATE , PAY.PAY_NO ";
     private static final String sqlInv1 = " SELECT inv3. ID AS ID, INV3.inv_no AS invno, INV3.\"NAME\" AS NAME, TO_CHAR (INV3.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd3.price) AS grand_total, SUM (invd3.price) - SUM ( ROUND ( INVD3.price - INVD3.price * 100 / (100 + INV3.vat), 2 )) AS grand_total_gross, SUM ( ROUND ( INVD3.price - INVD3.price * 100 / (100 + INV3.vat), 2 )) AS grand_total_vat, MIN (INVD3.CUR) AS cur, 'INBOUND' AS department, '1' AS acc_no FROM \"INBOUND\".\"INVOICE3\" inv3 INNER JOIN INBOUND.INVOICE3_DETAIL invd3 ON inv3. ID = invd3.INVOICE3_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv3. NAME WHERE \"TO_CHAR\" (inv3.INV_DATE, 'MMYYYY') IN ('102015', '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv3. ID, INV3.inv_no, INV3.\"NAME\", INV3.INV_DATE ORDER BY INV3. ID  ";
     private static final String sqlInv2 = " SELECT inv2. ID AS ID, INV2.inv_no AS invno, INV2.\"NAME\" AS NAME, TO_CHAR (INV2.INV_DATE, 'DD-MM-YYYY') AS invdate, SUM (invd2.price) AS grand_total, SUM (invd2.price) AS grand_total_gross, 0 AS grand_total_vat, MIN (INVD2.CUR) AS cur, 'INBOUND' AS department, '2' AS acc_no FROM \"INBOUND\".\"INVOICE2\" inv2 INNER JOIN INBOUND.INVOICE2_DETAIL invd2 ON inv2. ID = invd2.INVOICE2_ID LEFT JOIN ( SELECT NAME, MIN (code) AS code FROM \"TRAVOX3\".AGENT GROUP BY NAME ) agt ON agt. NAME = inv2. NAME WHERE \"TO_CHAR\" (inv2.INV_DATE, 'MMYYYY') IN ('102015', '112015', '122015', '012016', '022016', '032016' ) GROUP BY inv2. ID, INV2.inv_no, INV2.\"NAME\", INV2.INV_DATE ORDER BY INV2. ID ";
-    private static final String sqlTravoxProduction = " SELECT gj.gj_no AS gj, '' AS PAY_NO, ( SELECT ap. NAME FROM ACCTSMI3.ap_code ap WHERE ap.code = ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID )) AS NAME, ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID ) AS AP_CODE, gj.ref_doc_no AS REFDOC, TO_CHAR ( gj.SYSTEM_DATE, 'DD-MM-YYYY' ) AS system_date, TO_CHAR (gj.DUE_DATE, 'DD-MM-YYYY') AS due_date, '' AS INVOICE_NUM, GJ.DESCRIPTION AS Main_Description, CASE WHEN act.code IS NULL THEN act1.code ELSE act.code END AS code, CASE WHEN act.code IS NULL THEN act1.detail ELSE act.detail END AS type_product, GJD.DESCRIPTION AS description, ( SELECT SUM ( CASE WHEN GJD1.ACCT_CODE_ID = - 30 THEN 0 ELSE NVL (GJD1.cr_amount, 0) END ) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID GROUP BY gj. ID ) AS TOTAL_AMOUNT, GJD.ACCT_CODE_ID, ( SELECT SUM (NVL(GJD1.dr_amount, 0)) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.acct_code_id = - 10 GROUP BY gj. ID ) AS TOTAL_VAT, 'THB' AS cur, CASE WHEN gjd.cr_amount IS NULL THEN gjd.dr_amount ELSE gjd.cr_amount * - 1 END AS amount, CASE WHEN GJD.department = 'I' THEN 'Inbound' WHEN GJD.department = 'O' THEN 'Outbound' WHEN GJD.department = 'W' THEN 'Wendy' ELSE '' END AS DEPARTMENT, SUBSTR (gj.gj_no, 0, 1) AS acc_no, TO_CHAR (gj.book_DATE, 'DD-MM-YYYY') AS EXPENSE_DATE, gv.voucher_no AS voucher_no, gvd.amount AS voucher_amount FROM ACCTSMI3.GENERAL_JOURNAL1 gj INNER JOIN ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD ON gj. ID = gjd.general_journal1_ID LEFT JOIN ACCTSMI3.ap_code ap ON ap.code = gjd.code_AP LEFT JOIN ACCTSMI3.ACCT_CODE act ON act. ID = gjd.acct_code_id LEFT JOIN ACCTSMI3.ACCT_CODE act1 ON act1. ID = gjd.ap_acct_code_id LEFT JOIN ACCTSMI3.GENERAL_VOUCHER_DETAIL gvd ON gvd.general_journal_id = gj. ID LEFT JOIN ACCTSMI3.GENERAL_VOUCHER gv ON gv. ID = gvd.general_voucher_id WHERE TO_CHAR (gj.book_DATE, 'MMYYYY') IN ( '102015', '112015', '122015', '012016', '022016', '032016' ) AND ( gj.book_type1 = 1 OR gj.book_type1 = 2 ) AND gj.book_type = 'E' ORDER BY gj.book_DATE ASC ";
-
+    private static final String sqlTravoxProduction = " SELECT gj.gj_no AS gj, '' AS PAY_NO, ( SELECT ap. NAME FROM ACCTSMI3.ap_code ap WHERE ap.code = ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID )) AS NAME, ( SELECT MIN (GJD1.code_ap) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.code_ap IS NOT NULL GROUP BY gj. ID ) AS AP_CODE, gj.ref_doc_no AS REFDOC, TO_CHAR ( gj.SYSTEM_DATE, 'DD-MM-YYYY' ) AS system_date, TO_CHAR (gj.DUE_DATE, 'DD-MM-YYYY') AS due_date, '' AS INVOICE_NUM, GJ.DESCRIPTION AS Main_Description, CASE WHEN act.code IS NULL THEN act1.code ELSE act.code END AS code, CASE WHEN act.code IS NULL THEN act1.detail ELSE act.detail END AS type_product, GJD.DESCRIPTION AS description, ( SELECT SUM ( CASE WHEN GJD1.ACCT_CODE_ID = - 30 OR GJD1.ACCT_CODE_ID = 157 THEN 0 ELSE NVL (GJD1.cr_amount, 0) END ) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID GROUP BY gj. ID ) AS TOTAL_AMOUNT, GJD.ACCT_CODE_ID, ( SELECT SUM (NVL(GJD1.dr_amount, 0)) FROM ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD1 WHERE GJD1.general_journal1_ID = gj. ID AND GJD1.acct_code_id = - 10 GROUP BY gj. ID ) AS TOTAL_VAT, 'THB' AS cur, CASE WHEN gjd.cr_amount IS NULL THEN gjd.dr_amount ELSE gjd.cr_amount * - 1 END AS amount, CASE WHEN GJD.department = 'I' THEN 'Inbound' WHEN GJD.department = 'O' THEN 'Outbound' WHEN GJD.department = 'W' THEN 'Wendy' ELSE '' END AS DEPARTMENT, SUBSTR (gj.gj_no, 0, 1) AS acc_no, TO_CHAR (gj.book_DATE, 'DD-MM-YYYY') AS EXPENSE_DATE, gv.voucher_no AS voucher_no, gvd.amount AS voucher_amount FROM ACCTSMI3.GENERAL_JOURNAL1 gj INNER JOIN ACCTSMI3.GENERAL_JOURNAL_DETAIL1 GJD ON gj. ID = gjd.general_journal1_ID LEFT JOIN ACCTSMI3.ap_code ap ON ap.code = gjd.code_AP LEFT JOIN ACCTSMI3.ACCT_CODE act ON act. ID = gjd.acct_code_id LEFT JOIN ACCTSMI3.ACCT_CODE act1 ON act1. ID = gjd.ap_acct_code_id LEFT JOIN ACCTSMI3.GENERAL_VOUCHER_DETAIL gvd ON gvd.general_journal_id = gj. ID LEFT JOIN ACCTSMI3.GENERAL_VOUCHER gv ON gv. ID = gvd.general_voucher_id WHERE TO_CHAR (gj.book_DATE, 'MMYYYY') IN ( '102015', '112015', '122015', '012016', '022016', '032016' ) AND ( gj.book_type1 = 1 OR gj.book_type1 = 2 ) AND gj.book_type = 'E' ORDER BY gj.GJ_NO, gj.book_DATE ASC ";
+    private static final String sqlDaytourExpense = " SELECT * FROM `daytour_expense` ";
     public static void main(String[] args) {
         Connection connect = null;
         Statement s = null;  
@@ -85,12 +85,13 @@ public class MainMigrate {
 //                getPackageTour(s, stmt);
 //                getProduct(s, stmt);
 //                getHotel(s, stmt);
-                getCustomer(s, stmt);
+//                getCustomer(s, stmt);
 //                getARData(s,stmt);
 //                getAPData(s,stmt);
 //                getDeptorInvoiceData(s, stmt);
 //                getInvoiceData(s, stmt);
-//                getTravoxData(s, stmt);
+                getTravoxData(s, stmt);
+                getDaytourExpense(s, stmt);
             } else {
                 System.out.println("Database Connect Failed.");
             }
@@ -106,6 +107,58 @@ public class MainMigrate {
            }
         } 
     }
+    
+    
+    public static void getDaytourExpense(Statement s,Statement stmt){
+        List<MainMigrateModel> list = new ArrayList<MainMigrateModel>();
+        Connection connect = null;
+        Statement stm = null; 
+        connect = MySqlConnection.getConnection();
+        try {
+            stm = connect.createStatement();
+            ResultSet rs = stm.executeQuery(sqlDaytourExpense);
+            while (rs.next()) {
+                String id = rs.getString("id") == null ? "" : rs.getString("id");
+                String description = rs.getString("description") == null ? "" : new String(rs.getString("description").getBytes("ISO8859_1"),"TIS-620");
+                MainMigrateModel day = new MainMigrateModel();
+                day.setId(id);
+                day.setDescription(description);
+                list.add(day);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try { 
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (s != null) {
+                try { 
+                    s.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        System.out.println(" list daytour size :: "+ list.size());
+        if(list != null){
+            String sql = "";
+            for(int i = 0 ; i< list.size() ; i ++){               
+                sql = " UPDATE `daytour_expense` SET description = '"+list.get(i).getDescription()+"' WHERE id = '"+list.get(i).getId()+"' ";
+                try {
+                    stm.executeUpdate(sql);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainMigrate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+    
     
     public static void getTravoxData(Statement s,Statement stmt){
         List<MainMigrateModel> list = new ArrayList<MainMigrateModel>();
@@ -152,7 +205,6 @@ public class MainMigrate {
                 migrateModel.setDepartment(department);
                 migrateModel.setAccno(accno);
                 migrateModel.setExpensedate(expensedate);
-                
                 migrateModel.setRefdoc(refdoc);
                 migrateModel.setDuedate(duedate);
                 migrateModel.setMaindescription(maindescription);

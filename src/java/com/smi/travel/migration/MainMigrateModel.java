@@ -110,6 +110,7 @@ public class MainMigrateModel {
     private String department;
     private String vattype;
     
+    //invoice
     private String invoiceno;
     private String invoicedate;
     private String invoicename;
@@ -119,18 +120,12 @@ public class MainMigrateModel {
     private String receiveamount;
     private String remainamount;
     private String grandtotal;
-    
-//    private String id;
-//    private String invno;
-//    private String name;
-//    private String invdate;
-//    private String grandtotal;
     private String grandtotalgross;
     private String grandtotalvat;
     private String cur;
-//    private String department;
     private String accno;
     
+    //travox production
     private String gj;
     private String systemdate;
     private String invoicenum;
@@ -139,7 +134,6 @@ public class MainMigrateModel {
     private String totalvat;
     private String amount;
     private String expensedate;
-    
     private String refdoc;
     private String duedate;
     private String maindescription;
