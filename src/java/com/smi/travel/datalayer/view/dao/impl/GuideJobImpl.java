@@ -102,11 +102,11 @@ public class GuideJobImpl implements GuideJobDao{
              guidejob.setMeal(util.ConvertString(B[20]));
              guidejob.setRemark(getremark(tourdate,tourID));
              if(B[22] != null){
-                String coup = "<br>"+util.ConvertString(B[25]);
+                String coup = (B[25] != null ? "\n"+util.ConvertString(B[25]) : "");
                 if(B[25] != null){
 //                    String coupNew = splitIndexCoupon(coup);
                     System.out.println("coup : "+coup);
-                    coup = coup.replaceAll("<br>", "<br>Coupon : ");
+                    coup = coup.replaceAll("\n", "\nCoupon : ");
                     guidejob.setCoup_name(coup);
                 }else{
                     guidejob.setCoup_name("");
@@ -116,15 +116,15 @@ public class GuideJobImpl implements GuideJobDao{
                 if(B[25] != null){
                     String coupNew = splitIndexCoupon(util.ConvertString(B[25]));
                     System.out.println("data : "+coupNew);
-                    coupNew = coupNew.replaceAll("<br>", "<br>Coupon : ");
+                    coupNew = coupNew.replaceAll("\n", "\nCoupon : ");
                     guidejob.setCoup_name(coupNew);
                 } 
                 guidejob.setBookremark("");
              }
-             
+             System.out.println("===== Book Remark ===== :"+guidejob.getBookremark());
              guidejob.setStafftour(util.ConvertString(B[23]));
              if(B[24] != null){
-                 guidejob.setCoupon(util.ConvertString(B[24]));
+                 guidejob.setCoupon("("+util.convertStringToDecimalFormat(util.ConvertString(B[24]))+")");
              }
                     
              data.add(guidejob);            

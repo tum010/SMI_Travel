@@ -138,6 +138,8 @@ public class InvoiceImpl implements InvoiceReportDao{
                 String[] desc = util.getTagPDescription(util.ConvertString(B[4]));
                 invoice.setDescription(desc[0]);
                 invoice.setPrice(desc[1]);
+                invoice.setIsHide(desc[0].indexOf("\n") == -1 ? "0" : "1");
+                System.out.println("===== Index of ===== : "+desc[0].indexOf("\n"));
 //                invoice.setDescription(util.ConvertString(B[4]));
                 String Description = invoice.getDescription();
                 String remark = util.ConvertString(B[19]) == null ? "" : util.ConvertString(B[19]);
@@ -151,6 +153,8 @@ public class InvoiceImpl implements InvoiceReportDao{
                 String[] desc = util.getTagPDescription(util.ConvertString(B[4]));
                 invoice.setDescription(desc[0]);
                 invoice.setPrice(desc[1]);
+                invoice.setIsHide(desc[0].indexOf("\n") == -1 ? "0" : "1");
+                System.out.println("===== Index of ===== : "+desc[0].indexOf("\n"));
 //                invoice.setDescription(util.ConvertString(B[4]));
             }
             

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InvoiceEmail" language="groovy" pageWidth="595" pageHeight="843" columnWidth="522" leftMargin="45" rightMargin="28" topMargin="59" bottomMargin="56" uuid="573bfe06-de4f-4adc-b5b3-76cb68d89d08">
 	<property name="ireport.zoom" value="2.196150000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="499"/>
+	<property name="ireport.y" value="739"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -570,9 +570,9 @@
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement x="13" y="58" width="208" height="32" uuid="606580e8-0632-46bc-a83c-297e7417026b"/>
-				<textElement verticalAlignment="Top">
-					<font fontName="Tahoma" size="9" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				<reportElement x="13" y="56" width="208" height="32" uuid="606580e8-0632-46bc-a83c-297e7417026b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="7" pdfFontName="resource/fonts/Tahoma.ttf " pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{textmoney}]]></textFieldExpression>
 			</textField>

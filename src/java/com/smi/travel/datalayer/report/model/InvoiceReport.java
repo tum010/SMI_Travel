@@ -52,6 +52,7 @@ public class InvoiceReport {
     private Integer vatpercent;
     private String printby;
     private String currencytotal;
+    private String isHide;
 
     public String getCurrencytotal() {
         return currencytotal;
@@ -382,6 +383,14 @@ public class InvoiceReport {
 
     public void setFax(String fax) {
         this.fax = fax;
+    }
+
+    public String getIsHide() {
+        return isHide;
+    }
+
+    public void setIsHide(String isHide) {
+        this.isHide = isHide;
     }
     
 }
