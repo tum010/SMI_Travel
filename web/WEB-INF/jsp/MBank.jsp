@@ -250,7 +250,7 @@
                     <div class="form-group">
                         <label for="BankAccountNo" class="col-sm-3 control-label" >Account No. <font style="color: red">*</font></label>
                         <div class="col-sm-8">   
-                            <input type="text" style="text-transform:uppercase" class="form-control numerical" maxlength="20" id="BankAccountNo" name="BankAccountNo" onchange="clearAlertMessage()"> 
+                            <input type="text" style="text-transform:uppercase" class="form-control " onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 45))' maxlength="20" id="BankAccountNo" name="BankAccountNo" onchange="clearAlertMessage()"> 
                         </div>
                     </div>
                     <div class="form-group">
