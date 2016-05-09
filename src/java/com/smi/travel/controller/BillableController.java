@@ -17,6 +17,7 @@ import com.smi.travel.datalayer.entity.MAccpay;
 import com.smi.travel.datalayer.entity.MAccterm;
 import com.smi.travel.datalayer.entity.MBank;
 import com.smi.travel.datalayer.entity.MBilltype;
+import com.smi.travel.datalayer.entity.MExchangeRate;
 import com.smi.travel.datalayer.entity.MInitialname;
 import com.smi.travel.datalayer.entity.Master;
 import com.smi.travel.datalayer.entity.Passenger;
@@ -24,6 +25,7 @@ import com.smi.travel.datalayer.entity.SystemUser;
 import com.smi.travel.datalayer.service.AgentService;
 import com.smi.travel.datalayer.service.BillableService;
 import com.smi.travel.datalayer.service.BookingAirticketService;
+import com.smi.travel.datalayer.service.MExchangeRateService;
 import com.smi.travel.datalayer.service.ReceiptService;
 import com.smi.travel.datalayer.service.UtilityService;
 import com.smi.travel.datalayer.view.entity.CustomerAgentInfo;
@@ -41,6 +43,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,6 +67,7 @@ public class BillableController extends SMITravelController {
     private UtilityService utilservice;
     private AgentService agentService;
     private ReceiptService receiptService;
+    private MExchangeRateService mExchangeRateService;
     private static final String ACTION = "action";
     private static final String Bookiing_Size = "BookingSize";
     private static final String BillableList = "BillableList";
@@ -218,7 +222,8 @@ public class BillableController extends SMITravelController {
                 request.setAttribute(ACTION, "insert");
             }
             
-            List<BillableDesc> billableDesc = billable.getBillableDescs();
+            List<BillableDesc> billableDesc = billable.getBillableDescs();          
+            
             //billableDesc = SortBillDescList(billableDesc);
             List<BillableDesc> billableDescNopay = billableService.getListBillableNopay(refNo);
             if (billableDescNopay != null) {
@@ -243,6 +248,10 @@ public class BillableController extends SMITravelController {
                 // request.setAttribute(BillableDesc,billable.getBillableDescs());
             } else {
                 request.setAttribute(BillableDesc, billableDesc);
+            }
+            
+            if(billableDesc != null){
+                setExchangeRate(billableDesc);
             }
       
             setDefaultBill(master,billable);
@@ -632,5 +641,34 @@ public class BillableController extends SMITravelController {
 
     public void setReceiptService(ReceiptService receiptService) {
         this.receiptService = receiptService;
+    }
+
+    public MExchangeRateService getmExchangeRateService() {
+        return mExchangeRateService;
+    }
+
+    public void setmExchangeRateService(MExchangeRateService mExchangeRateService) {
+        this.mExchangeRateService = mExchangeRateService;
+    }
+
+    private void setExchangeRate(List<BillableDesc> billableDesc) {
+        System.out.println("===== setExchangeRate =====");
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        String todayDate = sdf.format(date);
+        System.out.println("===== todayDate ===== : "+todayDate);
+        System.out.println("===== billableDesc.size() ===== : "+billableDesc.size());
+        for(int i=0; i<billableDesc.size(); i++){
+            BillableDesc billableDescTemp = billableDesc.get(i);
+            System.out.println("===== Is Bill ===== : "+billableDescTemp.getIsBill());
+            System.out.println("===== Currency ===== : "+billableDescTemp.getCurrency());
+            if(billableDescTemp.getIsBill() == 0 && !"".equalsIgnoreCase(billableDescTemp.getCurrency())){
+                List<MExchangeRate> listMExchange = mExchangeRateService.searchExchangeRate(todayDate, todayDate, billableDescTemp.getCurrency());
+                billableDescTemp.setExRate(listMExchange != null && listMExchange.size() > 0 ? listMExchange.get(0).getExrate() : BigDecimal.ZERO);
+            } else {
+                billableDescTemp.setExRate(BigDecimal.ZERO);
+            }           
+        }
+
     }
 }

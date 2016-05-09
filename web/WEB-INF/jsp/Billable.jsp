@@ -8,6 +8,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script type="text/javascript" src="js/jquery.inputmask.js"></script>
+<script type="text/javascript" src="js/jquery.inputmask.numeric.extensions.js"></script>
 <script type="text/javascript" src="js/jquery.mask.min.js"></script>
 <script type="text/javascript" src="js/Billable.js"></script> 
 <link href="css/jquery-ui.css" rel="stylesheet">
@@ -352,7 +354,9 @@
                                     Open
                                 </c:if>
                             </td>
-                            <td><input type="text" id="exrate-${Counter.count}" name="exrate-${Counter.count}" value="${b.exRate}" class="form-control text-right numerical"  maxlength="7" /></td>
+                            <td>
+                                <input type="text" id="exrate-${Counter.count}" name="exrate-${Counter.count}" value="${b.exRate}" class="form-control text-right decimalexrate"  maxlength="7" />
+                            </td>
                             <td>      
                                
                                 <div class="input-group  datetime" id="billDescId-${Counter.count}" name="billDescId-${Counter.count}">

@@ -361,6 +361,7 @@
 		<property name="utilservice" ref="UtilityService" />
 		<property name="agentService" ref="AgentService" />
                 <property name="receiptService" ref="ReceiptService" />
+                <property name="mExchangeRateService" ref="MExchangeRateService" />
 	</bean>
 	<bean id="HistoryController" class="com.smi.travel.controller.HistoryController">
 		<property name="bookingAirticketService" ref="BookingAirticket" />
