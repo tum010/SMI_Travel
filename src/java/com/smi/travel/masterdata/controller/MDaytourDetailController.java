@@ -173,31 +173,33 @@ public class MDaytourDetailController extends SMITravelController {
             BigDecimal priceDe = new BigDecimal(0);
             
             if(StringUtils.isNotEmpty(price)){
-                priceDe = util.convertStringToBigDecimal(price);
+                priceDe = util.convertStringToBigDecimal(price.replaceAll(",", ""));
             }
            
             log.info("detail:= "+ detail);
-            DaytourPrice dayprice = getDayPrice(id, daytour);
-            MPricecategory category = new MPricecategory();
-            if(dayprice == null){
-                dayprice = new DaytourPrice();
-            }
-            category.setId(category_id);
-            
-            dayprice.setMPricecategory(category);
-            dayprice.setDetail(detail);
-            dayprice.setPrice(priceDe);
-            dayprice.setCurrency(currencyCode);
-            if(dayprice.getPrice() != null && (dayprice.getPrice().compareTo(new BigDecimal(BigInteger.ZERO)) != 0)){ //for check if add row
-                if(dayprice.getId() == null){
-                    dayprice.setDaytour(daytour);
-                    priceList.add(dayprice);
-                }else{
-                    dayprice.setDaytour(daytour);
-                    priceList.add(dayprice);
+            if(category_id != null && !"".equalsIgnoreCase(category_id) && !"0".equalsIgnoreCase(category_id)){
+                DaytourPrice dayprice = getDayPrice(id, daytour);
+                MPricecategory category = new MPricecategory();
+                if(dayprice == null){
+                    dayprice = new DaytourPrice();
                 }
-            }else{
-                System.out.println("Detail of Price  is null  ,Not update DB this object " + i);
+                category.setId(category_id);
+
+                dayprice.setMPricecategory(category);
+                dayprice.setDetail(detail);
+                dayprice.setPrice(StringUtils.isNotEmpty(price) ? priceDe : new BigDecimal(BigInteger.ZERO));
+                dayprice.setCurrency(currencyCode != null && !"".equalsIgnoreCase(currencyCode) && !"0".equalsIgnoreCase(currencyCode) ? currencyCode : "");
+                if(dayprice.getPrice() != null){ //for check if add row
+                    if(dayprice.getId() == null){
+                        dayprice.setDaytour(daytour);
+                        priceList.add(dayprice);
+                    }else{
+                        dayprice.setDaytour(daytour);
+                        priceList.add(dayprice);
+                    }
+                }else{
+                    System.out.println("Detail of Price  is null  ,Not update DB this object " + i);
+                }
             }
         }
         System.out.println(" priceList.size() ::: " + priceList.size());

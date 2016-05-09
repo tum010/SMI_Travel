@@ -54,7 +54,17 @@ $(document).ready(function() {
         
     });
     
-  
+    $(".decimalexrate").inputmask({
+        alias: "decimal",
+        integerDigits: 6,
+        groupSeparator: ',',
+        autoGroup: true,
+        digits: 4,
+        allowMinus: false,
+        digitsOptional: false,
+        placeholder: "0.0000",
+    });
+    
 });
 
 function searchCustomerAutoList(name){
