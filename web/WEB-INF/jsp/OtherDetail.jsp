@@ -405,35 +405,48 @@
                         <input type="hidden" class="form-control" id="ticketstatus" name="ticketstatus" value="">
                         <input type="hidden" class="form-control" id="addticket" name="addticket" value="">
                         <input type="hidden" class="form-control" id="counter" name="counter" value="">
-                        <div class="text-center" >    
-                            <c:choose>
-                                <c:when test="${requestScope['status'] == 2}">
-                                    <button type="submit" disabled  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:if test="${lockUnlockBooking == 0}">
-                                        <c:if test="${isBillStatus == 0}">
-                                            <button type="button" class="btn btn-success duplicate" onclick="saveOther()"><span class="fa fa-save"></span> Save</button>
+                        <div class="col-xs-12" >  
+                            <!--<button type="button" class="btn btn-default duplicate" onclick="printOther()"><span class="glyphicon glyphicon-print"></span> Print </button>-->
+                            <div class="col-xs-3"></div>
+                            <div class="col-xs-2">
+                                <select name="voucher" id="voucher"  class="form-control" style="width: 160px; height: 34px">
+                                    <option value="">--Select Type--</option>
+                                    <option value="OtherVouncher">Other Voucher</option>
+                                    <option value="OtherVoucherEmail">Other Voucher Email</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-1">
+                                <button type="button" class="btn btn-default duplicate" onclick="printOther()"><span class="glyphicon glyphicon-print"></span> Print </button>
+                            </div>
+                            <div class="col-xs-1">
+                                <c:choose>
+                                    <c:when test="${requestScope['status'] == 2}">
+                                        <button type="submit" disabled  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:if test="${lockUnlockBooking == 0}">
+                                            <c:if test="${isBillStatus == 0}">
+                                                <button type="button" class="btn btn-success duplicate" onclick="saveOther()"><span class="fa fa-save"></span> Save</button>
+                                            </c:if>
+                                            <c:if test="${isBillStatus == 1}">
+                                                <c:choose>
+                                                    <c:when test="${enableSave == 0}">
+                                                        <button type="button" class="btn btn-success" onclick="saveOther()"><span class="fa fa-save"></span> Save</button>
+                                                    </c:when>
+                                                    <c:when test="${enableSave == 1}">
+                                                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                                    </c:when>
+                                                </c:choose> 
+                                            </c:if>
                                         </c:if>
-                                        <c:if test="${isBillStatus == 1}">
-                                            <c:choose>
-                                                <c:when test="${enableSave == 0}">
-                                                    <button type="button" class="btn btn-success" onclick="saveOther()"><span class="fa fa-save"></span> Save</button>
-                                                </c:when>
-                                                <c:when test="${enableSave == 1}">
-                                                    <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                                                </c:when>
-                                            </c:choose> 
-                                        </c:if>
-                                    </c:if>
-                                    <c:if test="${lockUnlockBooking == 1}">
-                                        <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
-                                    </c:if>   
-                                </c:otherwise>
-                            </c:choose>                               
+                                        <c:if test="${lockUnlockBooking == 1}">
+                                            <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
+                                        </c:if>   
+                                    </c:otherwise>
+                                </c:choose>  
+                            </div>
                         </div>
                         <input type="hidden" id="callPageFrom" name="callPageFrom" value="${callpage}">
-                       
                 </div>
             </div>
             <div class="panel panel-default">
@@ -535,9 +548,6 @@
                     </script>
                     </div>
                 </div>
-            </div>
-            <div class="text-center" >    
-                <button type="button" class="btn btn-default duplicate" onclick="printOther()"><span class="glyphicon glyphicon-print"></span> Print </button>
             </div>       
             </div>
         </form>                

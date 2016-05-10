@@ -696,7 +696,17 @@ function checkDateValue(inputFromDate,InputToDate){
 }
 
 function printOther(){
-
+    var voucher = document.getElementById("voucher").value;
+    var otherId = document.getElementById("itemid").value;
+    var InputRefNo = document.getElementById("refno").value;
+    
+    var passengerId = '';
+    var status = '';
+    if (voucher === "OtherVouncher"){
+        window.open("report.smi?name=DaytourOther&otherId=" + otherId + "&passengerId=" + passengerId + "&refNo=" + InputRefNo + "&comfirm="+status);
+    }else{
+        window.open("report.smi?name=OtherVouncherEmail&otherId=" + otherId + "&passengerId=" + passengerId + "&refNo=" + InputRefNo + "&comfirm="+status);
+    }
 }
 
 
