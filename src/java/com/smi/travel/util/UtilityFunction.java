@@ -510,9 +510,13 @@ public class UtilityFunction {
             int indexTagP = data[i].indexOf("<P>");
             //step 3 cut data to new field
             if(indexTagP != -1){
-                String tagdescription = data[i].substring(indexTagP+3 ,data[i].indexOf("</P>") );
+                String tagdescription = data[i].substring(indexTagP+3 ,data[i].indexOf("</P>"));
                 String datatemp[] = data[i].split("<P>");
                 output[0] += datatemp[0]+"\n";
+                int dl = data[i].length() / 70 ;
+                for(int x = 0 ; x < dl ; x++){
+                    output[1] += "\n";
+                }
                 output[1] += tagdescription.trim();
             }else{
                 if(i < data.length-1){
@@ -520,6 +524,10 @@ public class UtilityFunction {
                 }else{
                     output[0] += data[i];
                 }
+            }
+            int dl = data[i].length() / 70 ;
+            for(int x = 0 ; x < dl ; x++){
+                output[1] += "\n";
             }
             output[1] += "\n";
         }
