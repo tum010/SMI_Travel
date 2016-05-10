@@ -38,6 +38,7 @@ public class OtherBooking  {
      private String remark;
      private String curAmount;
      private String curCost;
+     private String memo;
      private BigDecimal agentCommission;
      private BigDecimal guideCommission;
      private String remarkTicket;
@@ -55,7 +56,7 @@ public class OtherBooking  {
         this.master = master;
         this.status = status;
     }
-    public OtherBooking(Product product,SystemUser guide, Master master,Agent agent, BigDecimal adCost, BigDecimal adPrice, Integer adQty, BigDecimal chCost, BigDecimal chPrice, Integer chQty, BigDecimal inCost, BigDecimal inPrice, Integer inQty,Integer isBill, MItemstatus status, Date otherDate, Date otherTime, Date createDate, String updateBy, Date updateDate, String createBy, String remark,String currency,Date cancelDate, BigDecimal agentCommission,BigDecimal guideCommission,String remarkGuideCommission,String remarkAgentCommission,String remarkTicket,Set coupons,String curAmount,String curCost) {
+    public OtherBooking(Product product,SystemUser guide, Master master,Agent agent, BigDecimal adCost, BigDecimal adPrice, Integer adQty, BigDecimal chCost, BigDecimal chPrice, Integer chQty, BigDecimal inCost, BigDecimal inPrice, Integer inQty,Integer isBill, MItemstatus status, Date otherDate, Date otherTime, Date createDate, String updateBy, Date updateDate, String createBy, String remark,String currency,Date cancelDate, BigDecimal agentCommission,BigDecimal guideCommission,String remarkGuideCommission,String remarkAgentCommission,String remarkTicket,Set coupons,String curAmount,String curCost,String memo) {
        this.product = product;
        this.master = master;
        this.agent = agent;
@@ -86,6 +87,7 @@ public class OtherBooking  {
        this.guideCommission = guideCommission;
        this.remarkGuideCommission = remarkGuideCommission;
        this.coupons = coupons;
+       this.memo = memo;
     }
    
     public String getId() {
@@ -352,6 +354,14 @@ public class OtherBooking  {
 
     public void setGuideCommission(BigDecimal guideCommission) {
         this.guideCommission = guideCommission;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 
    

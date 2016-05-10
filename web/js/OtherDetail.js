@@ -695,4 +695,8 @@ function checkDateValue(inputFromDate,InputToDate){
     return isSave;
 }
 
+function printOther(){
+
+}
+
 

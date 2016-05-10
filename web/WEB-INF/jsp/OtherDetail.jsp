@@ -365,7 +365,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label text-right"  for="fromdes">Remark</label>
                                     <div class="col-sm-9">  
-                                        <textarea class="form-control" maxlength="500" rows="3" id="remark" name="remark">${requestScope['remark']}</textarea>
+                                        <textarea class="form-control" maxlength="500" rows="2" id="remark" name="remark">${requestScope['remark']}</textarea>
                                     </div>   
                                 </div>
                             </div>   
@@ -384,6 +384,16 @@
                                     </div>
                                 </div>
                             </div>  
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 " style="margin-top: -10px;">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label text-right" >Memo</label>
+                                    <div class="col-sm-9">  
+                                        <textarea class="form-control" maxlength="500" rows="2" id="memo" name="memo">${requestScope['memo']}</textarea>
+                                    </div>   
+                                </div>
+                            </div>    
                         </div>
                         <input type="hidden" class="form-control" id="action" name="action" value="save">
                         <input type="hidden" class="form-control" id="itemid" name="itemid" value="${requestScope['itemid']}">
@@ -526,7 +536,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="text-center" >    
+                <button type="button" class="btn btn-default duplicate" onclick="printOther()"><span class="glyphicon glyphicon-print"></span> Print </button>
+            </div>       
+            </div>
         </form>                
     </div>
 </div>                        

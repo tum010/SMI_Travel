@@ -100,6 +100,9 @@
         <property name="otherDateTo" type="date">
             <column name="other_date_to" length="10"/>
         </property>
+        <property name="memo" type="string">
+            <column name="memo" />
+        </property>
          <set name="coupons" table="coupon" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="other_booking_id" />
