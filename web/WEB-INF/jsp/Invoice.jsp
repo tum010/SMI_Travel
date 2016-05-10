@@ -1094,9 +1094,9 @@
                     <div class="col-md-7">
                         <select id="selectPayment" name="selectPayment" class="form-control">
                             <option value="0">Not show</option>
-                            <option value="SCB2">Payment Bank Siam commercial bank PCL</option>
+                            <option value="SCB">Payment Bank Siam commercial bank PCL</option>
                             <option value="BBL">Payment Bank Bangkok bank PCL</option>
-                            <option value="SCB2,BBL">All</option>
+                            <option value="SCB,BBL">All</option>
                         </select>
                     </div>
                 </div>

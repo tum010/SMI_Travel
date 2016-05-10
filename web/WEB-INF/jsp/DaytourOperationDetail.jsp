@@ -1395,6 +1395,7 @@
                 <table class="display" id="PacketTable">
                     <thead class="datatable-header">
                         <tr>
+                            <th class="hidden">Dates</th>
                             <th>Date</th>
                             <th>Code</th>
                             <th>Action</th>
@@ -1405,7 +1406,8 @@
                     <tbody>
                         <c:forEach var="table" items="${dayTourList}" varStatus="dayStatus">
                             <tr class="packet">
-                                <td class="pack-date"><fmt:formatDate value="${table.tourDate}" var="tourDate" pattern="dd-MM-yyyy" />${tourDate}</td>
+                                <td class="hidden">${table.tourDate}</td>
+                                <td class="pack-date"><fmt:formatDate value="${table.tourDate}" var="tourDate" pattern="yyyy-MM-dd" />${tourDate}</td>
                                 <td>${table.daytour.code}</td>
                                 <td class="text-center" >
                                     <a href="DaytourOperationDetail.smi?action=edit&tourID=${table.daytour.id}&tourDate=${table.tourDate}">
@@ -1479,6 +1481,7 @@
                 <table class="display" id="tourTable">
                     <thead class="datatable-header">
                         <tr>
+                            <th class="hidden">CODE</th>
                             <th class="hidden">ID</th>
                             <th style="width:20%">Code</th>
                             <th>Name</th>
@@ -1486,11 +1489,11 @@
                     </thead>
                     <script>
                         tourCode = [];
-                        
                     </script>
                     <tbody>
                         <c:forEach var="tour" items="${tourList}">
                             <tr>
+                                <td class="hidden">${tour.code}</td>
                                 <td class="tour-id hidden">${tour.id}</td>
                                 <td class="tour-code">${tour.code}</td>
                                 <td class="tour-name">${tour.name}</td>
