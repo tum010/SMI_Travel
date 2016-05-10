@@ -714,7 +714,7 @@ import org.hibernate.Transaction;
             HqlQuery = session.createQuery(queryTemp.toString());
             HqlQuery.setMaxResults(1);
             List<Receipt> receiptListTemp = HqlQuery.list();
-            return receiptListTemp.get(0);
+            return (!receiptListTemp.isEmpty() ? receiptListTemp.get(0) : null);
         }
         
         this.sessionFactory.close();

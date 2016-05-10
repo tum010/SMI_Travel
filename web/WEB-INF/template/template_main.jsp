@@ -74,6 +74,8 @@
         <script src="js/datatable/js/jquery.jeditable.checkbox.js" type="text/javascript"></script>
         <script type="text/javascript">
             $(document).ready(function(){
+                $('.refnomask').mask('00-0000');
+                
                 var path = location.pathname;
                 var name = path.split("/");
                 var str = name[2].split(".");

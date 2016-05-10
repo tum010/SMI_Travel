@@ -646,7 +646,13 @@ public class UtilityFunction {
             dateformat = new SimpleDateFormat("yyyy-MM-dd", new Locale("us", "us")).format(convertStringToDate(date));
         }
         return dateformat;
-    } 
+    }
     
+    public String convertRefNo(String refNo){
+        if(refNo.indexOf("-") >= 0){
+            refNo = refNo.replaceAll("-", "");
+        }
+        return refNo;
+    } 
 
 }

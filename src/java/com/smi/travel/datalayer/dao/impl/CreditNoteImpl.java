@@ -360,7 +360,7 @@ public class CreditNoteImpl implements CreditNoteDao {
             HqlQuery = session.createQuery(queryTemp.toString());
             HqlQuery.setMaxResults(1);
             List<CreditNote> creditNoteListTemp = HqlQuery.list();
-            return creditNoteListTemp.get(0);
+            return (!creditNoteListTemp.isEmpty() ? creditNoteListTemp.get(0) : null);
         }
         
 //        this.sessionFactory.close();
