@@ -761,6 +761,7 @@ public class ReceiptController extends SMITravelController {
                 request.setAttribute(RECEIPT,receipt);
                 request.setAttribute(RECEIPTDATE,receipt.getRecDate());
                 request.setAttribute(RECEIVEDATE,receipt.getReceiveDate());
+                checkDuplicateUser = checkDuplicateUser(request,response,session,receipt.getId(),1);
             }
             
             //Duplicate User
@@ -773,8 +774,7 @@ public class ReceiptController extends SMITravelController {
                     cdu.setOperationUser(user.getUsername());
                     checkDuplicateUserService.updateOperationNull(cdu);
                 }
-            }
-            checkDuplicateUser = checkDuplicateUser(request,response,session,receipt.getId(),1);         
+            }                   
             
         }else if (!"".equalsIgnoreCase(searchId)) {
             System.out.println(" Id ::: "+ searchId);

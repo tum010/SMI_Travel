@@ -171,8 +171,8 @@ public class CreditNoteController extends SMITravelController {
             CreditNote creditNote = new CreditNote();
             creditNote = creditNoteService.getCreditNoteByWildCardSearch(cnId,cnNo,wildCardSearch,keyCode,department);            
             if (creditNote == null) {
-                request.setAttribute("failStatus", true);
-                request.setAttribute("failMessage", "Credit note no:" + creditNo + " not available !");
+//                request.setAttribute("failStatus", true);
+//                request.setAttribute("failMessage", "Credit note no:" + creditNo + " not available !");
             } else {
                 request.setAttribute("creditNote", creditNote);
                 request.setAttribute("enableVoid", true);

@@ -452,21 +452,26 @@ public class InvoiceController extends SMITravelController {
                 } 
             } 
             
-            invoice = invoiceService.getInvoiceByWildCardSearch(invoiceId,invoiceNo,wildCardSearch,keyCode,department,invoiceType);            
-            saveAction(invoice.getInvNo(), invoiceNo, invoice, "wildCardSearch", request);
-            request.setAttribute("thisdate", invoice.getInvDate());
-            if(invNoForCheckUser != null){
-                if(!"".equalsIgnoreCase(invNoForCheckUser) && !"".equalsIgnoreCase(keyCode)){
-                    System.out.println(" invNoForCheckUser " + invNoForCheckUser);
-                    CheckDuplicateUser cdu = new CheckDuplicateUser();
-                    cdu.setOperationTable("Invoice");
-                    cdu.setTableId(operationTableId);
-                    cdu.setOperationUser(user.getUsername());
-                    checkDuplicateUserService.updateOperationNull(cdu);
+            invoice = invoiceService.getInvoiceByWildCardSearch(invoiceId,invoiceNo,wildCardSearch,keyCode,department,invoiceType); 
+            if(invoice != null){
+                saveAction(invoice.getInvNo(), invoiceNo, invoice, "wildCardSearch", request);
+                request.setAttribute("thisdate", invoice.getInvDate());
+                if(invNoForCheckUser != null){
+                    if(!"".equalsIgnoreCase(invNoForCheckUser) && !"".equalsIgnoreCase(keyCode)){
+                        System.out.println(" invNoForCheckUser " + invNoForCheckUser);
+                        CheckDuplicateUser cdu = new CheckDuplicateUser();
+                        cdu.setOperationTable("Invoice");
+                        cdu.setTableId(operationTableId);
+                        cdu.setOperationUser(user.getUsername());
+                        checkDuplicateUserService.updateOperationNull(cdu);
+                    }
                 }
-            }
-            //Duplicate User
-            checkDuplicateUser = checkDuplicateUser(request,response,session,invoice.getId(),1);
+                //Duplicate User
+                checkDuplicateUser = checkDuplicateUser(request,response,session,invoice.getId(),1);
+            
+            }else{
+               request.setAttribute("thisdate", utilty.convertDateToString(new Date())); 
+            }           
             
         }else{
             request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
