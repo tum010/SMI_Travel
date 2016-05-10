@@ -456,9 +456,12 @@ function setGuideName(name,no){
     }
     
     if(no === 'ready'){
-        var name1 = document.getElementById('InputGuideName1').value;
-        var name2 = document.getElementById('InputGuideName2').value;             
-        var guideName = document.getElementById('guideName').value;
+        var MDname = document.getElementById("MDname").value;
+        if(MDname === 'tour'){
+            var name1 = document.getElementById('InputGuideName1').value;
+            var name2 = document.getElementById('InputGuideName2').value;             
+            var guideName = document.getElementById('guideName').value;
+        }
         $('#InvoiceSupGuideBill')
             .find('option')
             .remove()
@@ -608,17 +611,20 @@ function printGuideJob() {
 }
 
 function checkExpenseTour(){
-    var booking = document.getElementById('BookingExpenseTable').tBodies[0];
-    for (var r=0, n = booking.rows.length; r < n; r++) {
-        $('#toureExpenTable > tbody  > tr  ').each(
-        function() {
-                var book = booking.rows[r].cells[1].childNodes[0].value;
-                var tour = $(this).find("#rowImportExpenDescription").html();
-                var tourId = $(this).find("#rowImportExpenId").html();
-                if(book === tour){
-                     $('#expenID-'+tourId).hide();
-                }         
-        });  
+    var MDname = document.getElementById("MDname").value;
+    if(MDname === 'tour'){
+        var booking = document.getElementById('BookingExpenseTable').tBodies[0];
+        for (var r=0, n = booking.rows.length; r < n; r++) {
+            $('#toureExpenTable > tbody  > tr  ').each(
+            function() {
+                    var book = booking.rows[r].cells[1].childNodes[0].value;
+                    var tour = $(this).find("#rowImportExpenDescription").html();
+                    var tourId = $(this).find("#rowImportExpenId").html();
+                    if(book === tour){
+                         $('#expenID-'+tourId).hide();
+                    }         
+            });  
+        }
     }
 }
 
@@ -709,32 +715,35 @@ function calculateGuideBill(){
             }
         }
     }    
-    
-    document.getElementById('InputGuideBill').value = formatNumber(guideBillTotal);
-    document.getElementById('AmountGuideBill').value = formatNumber(guideBillTotal);  
-    document.getElementById('InputTotal').value = formatNumber(total);
-    
-    var check = document.getElementById('ConfirmGuideBill').checked;
-    if(check){
-        document.getElementById('AmountGuideBill').value = formatNumber(guideBillTotal);
+    var MDname = document.getElementById("MDname").value;
+    if(MDname === 'tour'){
+        document.getElementById('InputGuideBill').value = formatNumber(guideBillTotal);
+        document.getElementById('AmountGuideBill').value = formatNumber(guideBillTotal);  
+        document.getElementById('InputTotal').value = formatNumber(total);
+        var check = document.getElementById('ConfirmGuideBill').checked;
+        if(check){
+            document.getElementById('AmountGuideBill').value = formatNumber(guideBillTotal);
+        }
     }
-    
 }
 
 function confirmCheckboxGuideBill(){
-    var check = document.getElementById('ConfirmGuideBill').checked;
-    if(check){
-        var InputGuideBill = document.getElementById('InputGuideBill').value;
-        document.getElementById('AmountGuideBill').value = InputGuideBill;
-    } else {
-        var checkAmount = document.getElementById('AmountGuideBillDefault');
-        if(checkAmount.value !== ''){
-            var amountDefault = parseFloat(document.getElementById('AmountGuideBillDefault').value);
-            document.getElementById('AmountGuideBill').value = formatNumber(amountDefault);
+    var MDname = document.getElementById("MDname").value;
+    if(MDname === 'tour'){
+        var check = document.getElementById('ConfirmGuideBill').checked;
+        if(check){
+            var InputGuideBill = document.getElementById('InputGuideBill').value;
+            document.getElementById('AmountGuideBill').value = InputGuideBill;
         } else {
-            document.getElementById('AmountGuideBill').value = '';
-        }       
-    }   
+            var checkAmount = document.getElementById('AmountGuideBillDefault');
+            if(checkAmount.value !== ''){
+                var amountDefault = parseFloat(document.getElementById('AmountGuideBillDefault').value);
+                document.getElementById('AmountGuideBill').value = formatNumber(amountDefault);
+            } else {
+                document.getElementById('AmountGuideBill').value = '';
+            }       
+        } 
+    }
 }
 
 function formatNumber(num) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="HotelVoucher" language="groovy" pageWidth="575" pageHeight="392" columnWidth="574" leftMargin="1" rightMargin="0" topMargin="0" bottomMargin="0" uuid="053f4d0e-4534-4ae9-bd3a-d9c39367ad2d">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="65"/>
-	<property name="ireport.y" value="61"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="60"/>
 	<queryString>
 		<![CDATA[SELECT
      *,
@@ -134,6 +134,7 @@ FROM
 				<textElement>
 					<font fontName="Tahoma" size="12" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
+				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="299" y="0" width="87" height="18" uuid="495760cf-d56f-4f6b-9210-f7a4dba27ec1"/>
