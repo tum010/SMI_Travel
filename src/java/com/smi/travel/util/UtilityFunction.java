@@ -521,7 +521,8 @@ public class UtilityFunction {
                     output[0] += data[i];
                 }
             }
-            if(data[i].length() > 50){
+            int dl = data[i].length() / 49 ;
+            for(int x = 0 ; x < dl ; x++){
                 output[1] += "\n";
             }
             output[1] += "\n";
