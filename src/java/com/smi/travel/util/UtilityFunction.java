@@ -521,6 +521,9 @@ public class UtilityFunction {
                     output[0] += data[i];
                 }
             }
+            if(data[i].length() > 50){
+                output[1] += "\n";
+            }
             output[1] += "\n";
         }
         return output;

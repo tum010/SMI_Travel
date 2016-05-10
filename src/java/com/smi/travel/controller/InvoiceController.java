@@ -921,7 +921,9 @@ public class InvoiceController extends SMITravelController {
         request.setAttribute(CHECKDUPLICATEUSER, cdu);
         if(cdu.getIsDuplicateUser() == 0){
             result = "success";
-            invoice.setOperationDate(util.convertStringToDateTime(cdu.getOperationDate()));
+            if(cdu.getOperationDate() != null){
+                invoice.setOperationDate(util.convertStringToDateTime(cdu.getOperationDate()));
+            }
             invoice.setOperationUser(cdu.getOperationUser());
         }
         return result;
