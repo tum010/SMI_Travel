@@ -74,7 +74,7 @@
                 </div>
 
                 <div class="col-xs-3">
-                    <input id="InputRefNo" name="InputRefNo"  type="text"  class="form-control number"  value="<c:out value="${RefNo}" />">
+                    <input id="InputRefNo" name="InputRefNo"  type="text"  class="form-control refnomask"  value="<c:out value="${RefNo}" />">
                 </div>
                 <div class="col-xs-3">
                     <input type="hidden" name="action" id="action">

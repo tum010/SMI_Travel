@@ -11,6 +11,7 @@ import com.smi.travel.datalayer.service.BookingOtherService;
 import com.smi.travel.datalayer.service.PassengerService;
 import com.smi.travel.datalayer.view.entity.OtherBookingView;
 import com.smi.travel.master.controller.SMITravelController;
+import com.smi.travel.util.UtilityFunction;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -30,8 +31,10 @@ public class DaytourOperationOtherController extends SMITravelController {
     
     @Override
     protected ModelAndView process(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        UtilityFunction util = new UtilityFunction();
         String action = request.getParameter("action");
         String refNo = request.getParameter("InputRefNo");
+        refNo = (refNo != null ? util.convertRefNo(refNo) : refNo);
         System.out.println(""+refNo);
         List<OtherBooking> listOtherBooking = new LinkedList<OtherBooking>();
         List<OtherBooking> listOtherBookingAll = new LinkedList<OtherBooking>();
