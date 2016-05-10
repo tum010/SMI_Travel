@@ -125,6 +125,8 @@ public class GuideJobImpl implements GuideJobDao{
              guidejob.setStafftour(util.ConvertString(B[23]));
              if(B[24] != null){
                  guidejob.setCoupon("("+util.convertStringToDecimalFormat(util.ConvertString(B[24]))+")");
+             }else{
+                 guidejob.setCoupon("");
              }
                     
              data.add(guidejob);            
