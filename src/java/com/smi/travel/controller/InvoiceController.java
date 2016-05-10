@@ -43,6 +43,8 @@ public class InvoiceController extends SMITravelController {
     MFinanceItemstatus mStatus = new MFinanceItemstatus();
     MAccterm type = new MAccterm();
     UtilityFunction utilty = new UtilityFunction();
+    Date opDate;
+    String opUser;
 //    private UtilityFunction utilty; test
     
     @Override
@@ -696,6 +698,9 @@ public class InvoiceController extends SMITravelController {
                 invoice.setSubDepartment(subDepartment);
             }
             
+            invoice.setOperationDate(opDate);
+            invoice.setOperationUser(opUser);
+            
             listInvoiceDetail = setInvoiceDetailList(request, invoice,action);
             if(listInvoiceDetail != null){
                 invoice.setInvoiceDetails(listInvoiceDetail);
@@ -921,10 +926,13 @@ public class InvoiceController extends SMITravelController {
         request.setAttribute(CHECKDUPLICATEUSER, cdu);
         if(cdu.getIsDuplicateUser() == 0){
             result = "success";
-            if(!"null".equalsIgnoreCase(String.valueOf(cdu.getOperationDate())) && !"".equalsIgnoreCase(String.valueOf(cdu.getOperationDate()))){
-                invoice.setOperationDate(util.convertStringToDateTime(cdu.getOperationDate()));
-            }
-            invoice.setOperationUser(cdu.getOperationUser());
+//            if(!"null".equalsIgnoreCase(String.valueOf(cdu.getOperationDate())) && !"".equalsIgnoreCase(String.valueOf(cdu.getOperationDate()))){
+//                invoice.setOperationDate(util.convertStringToDateTime(cdu.getOperationDate()));
+//            }
+//            invoice.setOperationUser(cdu.getOperationUser());
+            
+            opDate = util.convertStringToDateTime(cdu.getOperationDate());
+            opUser = cdu.getOperationUser();
         }
         return result;
     }
