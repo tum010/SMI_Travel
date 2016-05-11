@@ -473,13 +473,13 @@ public class BillableImpl implements BillableDao {
                 }
                 if(isgroup == 1){
                     //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}(PAX)
-                    description += "FOR" +"               " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+" ("+passengerList.size()+")</P>\n";
+                    description += "FOR" +"               " + Initname +" "+passenger.getFirstName() +"/"+passenger.getLastName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+" ("+passengerList.size()+")</P>\n";
                     ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n\n";
                     //Break Loop
                     p +=  passengerList.size(); 
                 }else{
                     //FOR  {INITNAME} {LAST NAME}/{FIRST NAME}        {PRICE} + {TAX}
-                    description += "FOR" +"               " + Initname +" "+passenger.getLastName() +"/"+passenger.getFirstName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
+                    description += "FOR" +"               " + Initname +" "+passenger.getFirstName() +"/"+passenger.getLastName() +"<P>"+ utility.setFormatMoney(price) +" + "+utility.setFormatMoney(tax)+"</P>\n";
                     ticketno+= "                   "+"  TICKET NO. "+ passenger.getSeries1() +" - "+passenger.getSeries2()+" - "+passenger.getSeries3()+"\n\n";
                 }
                 description += ticketno;
@@ -492,7 +492,7 @@ public class BillableImpl implements BillableDao {
             }
             if(format == 1){
              if(k ==0){
-                LeaderName = "|"+ MInitialname +" "+ passengerList.get(0).getLastName() +" "+ passengerList.get(0).getFirstName() ;
+                LeaderName = "|"+ MInitialname +" "+ passengerList.get(0).getFirstName() +" "+ passengerList.get(0).getLastName() ;
                 
              }
             }
