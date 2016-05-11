@@ -365,7 +365,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label text-right"  for="fromdes">Remark</label>
                                     <div class="col-sm-9">  
-                                        <textarea class="form-control" maxlength="500" rows="3" id="remark" name="remark">${requestScope['remark']}</textarea>
+                                        <textarea class="form-control" maxlength="500" rows="2" id="remark" name="remark">${requestScope['remark']}</textarea>
                                     </div>   
                                 </div>
                             </div>   
@@ -385,6 +385,16 @@
                                 </div>
                             </div>  
                         </div>
+                        <div class="row">
+                            <div class="col-md-6 " style="margin-top: -10px;">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label text-right" >Memo</label>
+                                    <div class="col-sm-9">  
+                                        <textarea class="form-control" maxlength="500" rows="2" id="memo" name="memo">${requestScope['memo']}</textarea>
+                                    </div>   
+                                </div>
+                            </div>    
+                        </div>
                         <input type="hidden" class="form-control" id="action" name="action" value="save">
                         <input type="hidden" class="form-control" id="itemid" name="itemid" value="${requestScope['itemid']}">
                         <input type="hidden" value="${param.referenceNo}" id="refno" name="referenceNo">
@@ -395,35 +405,52 @@
                         <input type="hidden" class="form-control" id="ticketstatus" name="ticketstatus" value="">
                         <input type="hidden" class="form-control" id="addticket" name="addticket" value="">
                         <input type="hidden" class="form-control" id="counter" name="counter" value="">
-                        <div class="text-center" >    
-                            <c:choose>
-                                <c:when test="${requestScope['status'] == 2}">
-                                    <button type="submit" disabled  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:if test="${lockUnlockBooking == 0}">
-                                        <c:if test="${isBillStatus == 0}">
-                                            <button type="button" class="btn btn-success duplicate" onclick="saveOther()"><span class="fa fa-save"></span> Save</button>
+                        <div class="col-xs-12" >  
+                            <!--<button type="button" class="btn btn-default duplicate" onclick="printOther()"><span class="glyphicon glyphicon-print"></span> Print </button>-->
+                            <div class="col-xs-3"></div>
+                            <c:set var="disabled" value=""/>
+                            <c:if test="${requestScope['itemid'] == null || requestScope['itemid'] == ''}">
+                                <c:set var="disabled" value="disabled"/>
+                            </c:if>
+                            <div class="col-xs-2">
+                                <select name="voucher" id="voucher"  class="form-control" style="width: 160px; height: 34px" ${disabled}>
+                                    <option value="">--Select Type--</option>
+                                    <option value="OtherVouncher">Other Voucher</option>
+                                    <option value="OtherVoucherEmail">Other Voucher Email</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-1">
+                                <button type="button" class="btn btn-default duplicate" onclick="printOther()" ${disabled}><span class="glyphicon glyphicon-print"></span> Print </button>
+                            </div>
+                            <div class="col-xs-1">
+                                <c:choose>
+                                    <c:when test="${requestScope['status'] == 2}">
+                                        <button type="submit" disabled  class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:if test="${lockUnlockBooking == 0}">
+                                            <c:if test="${isBillStatus == 0}">
+                                                <button type="button" class="btn btn-success duplicate" onclick="saveOther()"><span class="fa fa-save"></span> Save</button>
+                                            </c:if>
+                                            <c:if test="${isBillStatus == 1}">
+                                                <c:choose>
+                                                    <c:when test="${enableSave == 0}">
+                                                        <button type="button" class="btn btn-success" onclick="saveOther()"><span class="fa fa-save"></span> Save</button>
+                                                    </c:when>
+                                                    <c:when test="${enableSave == 1}">
+                                                        <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
+                                                    </c:when>
+                                                </c:choose> 
+                                            </c:if>
                                         </c:if>
-                                        <c:if test="${isBillStatus == 1}">
-                                            <c:choose>
-                                                <c:when test="${enableSave == 0}">
-                                                    <button type="button" class="btn btn-success" onclick="saveOther()"><span class="fa fa-save"></span> Save</button>
-                                                </c:when>
-                                                <c:when test="${enableSave == 1}">
-                                                    <button class="btn btn-success disabled" ><span class="fa fa-save"></span> Save</button>
-                                                </c:when>
-                                            </c:choose> 
-                                        </c:if>
-                                    </c:if>
-                                    <c:if test="${lockUnlockBooking == 1}">
-                                        <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
-                                    </c:if>   
-                                </c:otherwise>
-                            </c:choose>                               
+                                        <c:if test="${lockUnlockBooking == 1}">
+                                            <button class="btn btn-success disabled"><span class="fa fa-save"></span> Save</button>
+                                        </c:if>   
+                                    </c:otherwise>
+                                </c:choose>  
+                            </div>
                         </div>
                         <input type="hidden" id="callPageFrom" name="callPageFrom" value="${callpage}">
-                       
                 </div>
             </div>
             <div class="panel panel-default">
@@ -448,12 +475,12 @@
                         </div>
                     </div>
                     <div class="form-group col-md-1" style="width: 200px">
-                        <button type="button"  class="btn btn-success duplicate" onclick="addStockTicket()" id="addTicketButton" name="addTicketButton">
+                        <button type="button"  class="btn btn-success duplicate" onclick="addStockTicket()" id="addTicketButton" name="addTicketButton" ${disabled}>
                             <span class="glyphicon glyphicon-plus"></span> Add
                         </button>
                     </div>
                     <div class="form-group col-md-1 text-right" style="padding-left: 190px">
-                        <button type="button" class="btn btn-danger duplicate" onclick="setStockTicket()" id="changeStatusButton" name="changeStatusButton">
+                        <button type="button" class="btn btn-danger duplicate" onclick="setStockTicket()" id="changeStatusButton" name="changeStatusButton" ${disabled}>
                             <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Change Status
                         </button>
                     </div> 
@@ -525,8 +552,8 @@
                     </script>
                     </div>
                 </div>
+            </div>       
             </div>
-        </div>
         </form>                
     </div>
 </div>                        

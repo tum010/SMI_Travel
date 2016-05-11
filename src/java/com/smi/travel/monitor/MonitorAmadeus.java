@@ -456,7 +456,7 @@ public class MonitorAmadeus extends MonitorScheduler {
                     price = cost.add(util.convertStringToBigDecimal(fareCommission));
                 } else {
                     price = util.convertStringToBigDecimal(ticket_fare);
-                    cost = (price.multiply(new BigDecimal(95))).divide(new BigDecimal(100));
+                    cost = (price.multiply((new BigDecimal(100)).subtract(new BigDecimal(fareCommission)))).divide(new BigDecimal(100));
                 }
                 costRefIndex++;
                 //Update cost,price,tax according to passengertype

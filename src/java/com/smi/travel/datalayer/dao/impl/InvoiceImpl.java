@@ -980,7 +980,7 @@ public class InvoiceImpl implements InvoiceDao{
             HqlQuery = session.createQuery(queryTemp.toString());
             HqlQuery.setMaxResults(1);
             List<Invoice> invoiceListTemp = HqlQuery.list();
-            return invoiceListTemp.get(0);
+            return (!invoiceListTemp.isEmpty() ? invoiceListTemp.get(0) : null);
         }
         
         this.sessionFactory.close();

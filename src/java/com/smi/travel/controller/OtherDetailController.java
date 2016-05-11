@@ -81,6 +81,7 @@ public class OtherDetailController extends SMITravelController {
         String chTicket = request.getParameter("chTicket");
         String infTicket = request.getParameter("infTicket");       
         String counter = request.getParameter("counter");
+        String memo = request.getParameter("memo");
                         
         SystemUser user = (SystemUser) session.getAttribute("USER");
         
@@ -168,8 +169,12 @@ public class OtherDetailController extends SMITravelController {
                 Other.setIsBill(Integer.parseInt(isbill));
             }
             
-            if(remark != null)
-            Other.setRemark(remark.trim());
+            if(remark != null){
+                Other.setRemark(remark.trim());
+            }
+            if(memo != null){
+                Other.setMemo(memo.trim());
+            }
             Other.setMaster(utilservice.getbookingFromRefno(refno));
             if(!"".equalsIgnoreCase(otherdate)){
                 Other.setOtherDate(util.convertStringToDate(otherdate));
@@ -358,6 +363,7 @@ public class OtherDetailController extends SMITravelController {
                 status = Other.getStatus().getId();
             }
             remark = Other.getRemark();
+            memo = Other.getMemo();
             currency = Other.getCurAmount();
             currencycost = Other.getCurCost();
             createby = Other.getCreateBy();
@@ -412,6 +418,7 @@ public class OtherDetailController extends SMITravelController {
         request.setAttribute("othertime", othertime);
         request.setAttribute("cancelDate", canceldate);
         request.setAttribute("remark", remark);
+        request.setAttribute("memo", memo);
         request.setAttribute("createby", createby);
         request.setAttribute("createdate", createdate);       
         request.setAttribute(PRODUCTLIST, OtherService.getListMasterProduct());

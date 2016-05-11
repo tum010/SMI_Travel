@@ -43,6 +43,8 @@ public class InvoiceController extends SMITravelController {
     MFinanceItemstatus mStatus = new MFinanceItemstatus();
     MAccterm type = new MAccterm();
     UtilityFunction utilty = new UtilityFunction();
+    Date opDate;
+    String opUser;
 //    private UtilityFunction utilty; test
     
     @Override
@@ -452,21 +454,26 @@ public class InvoiceController extends SMITravelController {
                 } 
             } 
             
-            invoice = invoiceService.getInvoiceByWildCardSearch(invoiceId,invoiceNo,wildCardSearch,keyCode,department,invoiceType);            
-            saveAction(invoice.getInvNo(), invoiceNo, invoice, "wildCardSearch", request);
-            request.setAttribute("thisdate", invoice.getInvDate());
-            if(invNoForCheckUser != null){
-                if(!"".equalsIgnoreCase(invNoForCheckUser) && !"".equalsIgnoreCase(keyCode)){
-                    System.out.println(" invNoForCheckUser " + invNoForCheckUser);
-                    CheckDuplicateUser cdu = new CheckDuplicateUser();
-                    cdu.setOperationTable("Invoice");
-                    cdu.setTableId(operationTableId);
-                    cdu.setOperationUser(user.getUsername());
-                    checkDuplicateUserService.updateOperationNull(cdu);
+            invoice = invoiceService.getInvoiceByWildCardSearch(invoiceId,invoiceNo,wildCardSearch,keyCode,department,invoiceType); 
+            if(invoice != null){
+                saveAction(invoice.getInvNo(), invoiceNo, invoice, "wildCardSearch", request);
+                request.setAttribute("thisdate", invoice.getInvDate());
+                if(invNoForCheckUser != null){
+                    if(!"".equalsIgnoreCase(invNoForCheckUser) && !"".equalsIgnoreCase(keyCode)){
+                        System.out.println(" invNoForCheckUser " + invNoForCheckUser);
+                        CheckDuplicateUser cdu = new CheckDuplicateUser();
+                        cdu.setOperationTable("Invoice");
+                        cdu.setTableId(operationTableId);
+                        cdu.setOperationUser(user.getUsername());
+                        checkDuplicateUserService.updateOperationNull(cdu);
+                    }
                 }
-            }
-            //Duplicate User
-            checkDuplicateUser = checkDuplicateUser(request,response,session,invoice.getId(),1);
+                //Duplicate User
+                checkDuplicateUser = checkDuplicateUser(request,response,session,invoice.getId(),1);
+            
+            }else{
+               request.setAttribute("thisdate", utilty.convertDateToString(new Date())); 
+            }           
             
         }else{
             request.setAttribute("thisdate", utilty.convertDateToString(new Date()));
@@ -690,6 +697,9 @@ public class InvoiceController extends SMITravelController {
             if(subDepartment != null && !"".equals(subDepartment) ){
                 invoice.setSubDepartment(subDepartment);
             }
+            
+            invoice.setOperationDate(opDate);
+            invoice.setOperationUser(opUser);
             
             listInvoiceDetail = setInvoiceDetailList(request, invoice,action);
             if(listInvoiceDetail != null){
@@ -916,8 +926,13 @@ public class InvoiceController extends SMITravelController {
         request.setAttribute(CHECKDUPLICATEUSER, cdu);
         if(cdu.getIsDuplicateUser() == 0){
             result = "success";
-            invoice.setOperationDate(util.convertStringToDateTime(cdu.getOperationDate()));
-            invoice.setOperationUser(cdu.getOperationUser());
+//            if(!"null".equalsIgnoreCase(String.valueOf(cdu.getOperationDate())) && !"".equalsIgnoreCase(String.valueOf(cdu.getOperationDate()))){
+//                invoice.setOperationDate(util.convertStringToDateTime(cdu.getOperationDate()));
+//            }
+//            invoice.setOperationUser(cdu.getOperationUser());
+            
+            opDate = util.convertStringToDateTime(cdu.getOperationDate());
+            opUser = cdu.getOperationUser();
         }
         return result;
     }

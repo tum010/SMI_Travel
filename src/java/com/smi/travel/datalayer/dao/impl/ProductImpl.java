@@ -10,6 +10,7 @@ import com.smi.travel.datalayer.dao.ProductDao;
 import com.smi.travel.datalayer.entity.Product;
 import com.smi.travel.datalayer.view.entity.ProductPriceDetail;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,10 +32,19 @@ public class ProductImpl implements ProductDao {
         String query = "from Product p";
         Session session = this.sessionFactory.openSession();
         List<Product> ProductList = session.createQuery(query).list();
+        List<Product> ProductLists = new LinkedList<Product>();
         if (ProductList.isEmpty()) {
             return null;
-        }
-        return ProductList;
+        }else{
+            for(int i=0 ; i<ProductList.size();i++){
+                Product pro = ProductList.get(i);
+                pro.setCode(ProductList.get(i).getCode() == null ? null : ProductList.get(i).getCode().replaceAll("'", "\\\\\'"));
+                pro.setName(ProductList.get(i).getName() == null ? null : ProductList.get(i).getName().replaceAll("'", "\\\\\'"));
+                pro.setDescription(ProductList.get(i).getDescription() == null ? null : ProductList.get(i).getDescription().replaceAll("'", "\\\\\'"));
+                ProductLists.add(pro);
+            }
+        }   
+        return ProductLists;
     }
 
     public Product getProductFromID(String ProductID) {

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TicketOrder_InfoSubreport" language="groovy" pageWidth="147" pageHeight="842" columnWidth="147" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a85f3ef3-c07b-4461-b356-71d5e1347b45">
 	<property name="ireport.zoom" value="4.287177620000008"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="13"/>
+	<property name="ireport.y" value="541"/>
 	<field name="issuedate" class="java.lang.String"/>
 	<field name="companyname" class="java.lang.String"/>
 	<field name="tel" class="java.lang.String"/>

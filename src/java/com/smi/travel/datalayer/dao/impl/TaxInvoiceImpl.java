@@ -559,7 +559,7 @@ public class TaxInvoiceImpl implements TaxInvoiceDao{
             HqlQuery = session.createQuery(queryTemp.toString());
             HqlQuery.setMaxResults(1);
             List<TaxInvoice> taxInvoiceListTemp = HqlQuery.list();
-            return taxInvoiceListTemp.get(0);
+            return (!taxInvoiceListTemp.isEmpty() ? taxInvoiceListTemp.get(0) : null);
         }
         
 //        this.sessionFactory.close();

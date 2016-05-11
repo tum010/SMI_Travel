@@ -472,9 +472,9 @@ public class TaxInvoiceController extends SMITravelController {
 //            String disabledFieldSearch = checkDisabledFieldSearch(taxInvoiceList);
 //            request.setAttribute(DISABLEDFIELDSEARCH, disabledFieldSearch);
             request.setAttribute(TAXINVOICE, taxInvoice);
-            request.setAttribute("invToDate", taxInvoice.getTaxInvDate());
-            request.setAttribute("createDate", taxInvoice.getCreateDate());
-            request.setAttribute("postDate", taxInvoice.getPostDate());
+            request.setAttribute("invToDate", taxInvoice != null ? taxInvoice.getTaxInvDate() : "");
+            request.setAttribute("createDate", taxInvoice != null ? taxInvoice.getCreateDate() : "");
+            request.setAttribute("postDate", taxInvoice != null ? taxInvoice.getPostDate() : "");
             request.setAttribute(TAXINVOICEDETAILLIST, taxInvoiceList);
             if(taxNoForCheckUser != null){
                 if(!"".equalsIgnoreCase(taxNoForCheckUser) && !"".equalsIgnoreCase(keyCode)){

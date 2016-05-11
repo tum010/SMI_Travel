@@ -49,6 +49,7 @@ public class DaytourOtherImpl implements DaytourOtherDao{
                 .list();
         System.out.println("Size Report Other Day tour : " + QueryDaytourOtherList.size());
         for (Object[] B : QueryDaytourOtherList) {
+            SimpleDateFormat dateformat = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
              DaytourOther daytourother = new DaytourOther();
              
              daytourother.setRefno(util.ConvertString(B[0]));
@@ -64,9 +65,12 @@ public class DaytourOtherImpl implements DaytourOtherDao{
              
              daytourother.setLeadername(util.ConvertString(B[2]));
              daytourother.setCode(util.ConvertString(B[3]));
-             daytourother.setDescription(util.ConvertString(B[4]));
-             daytourother.setDate(util.ConvertString(B[5]));
-             daytourother.setTime(util.ConvertString(B[6]));
+             daytourother.setDescription(B[4] == null || "".equalsIgnoreCase(util.ConvertString(B[4])) ? "" : util.ConvertString(B[4]));
+             daytourother.setDate((B[5] == null || "".equalsIgnoreCase(util.ConvertString(B[5])))? "" : String.valueOf(format.format(util.convertStringToDate(String.valueOf(B[5])))));
+             daytourother.setTime((B[6] == null || "".equalsIgnoreCase(util.ConvertString(B[6]))) ? "" : dateformat.format(util.convertStringToTime(util.ConvertString(B[6]))));
+//             daytourother.setDescription(util.ConvertString(B[4]));
+//             daytourother.setDate(util.ConvertString(B[5]));
+//             daytourother.setTime(util.ConvertString(B[6]));
              daytourother.setAdult(util.ConvertInt(B[7]));
              daytourother.setChild(util.ConvertInt(B[8]));
              daytourother.setInfant(util.ConvertInt(B[9]));             
@@ -176,7 +180,7 @@ public class DaytourOtherImpl implements DaytourOtherDao{
 //             dateformat.applyPattern("dd-MM-yyyy");         
              daytourother.setLeadername(util.ConvertString(B[2]));
              daytourother.setCode(util.ConvertString(B[3]));
-             daytourother.setDescription(util.ConvertString(B[4]));
+             daytourother.setDescription(B[4] == null || "".equalsIgnoreCase(util.ConvertString(B[4])) ? "" : util.ConvertString(B[4]));
              daytourother.setDate((B[5] == null || "".equalsIgnoreCase(util.ConvertString(B[5])))? "" : String.valueOf(format.format(util.convertStringToDate(String.valueOf(B[5])))));
              daytourother.setTime((B[6] == null || "".equalsIgnoreCase(util.ConvertString(B[6]))) ? "" : dateformat.format(util.convertStringToTime(util.ConvertString(B[6]))));
              daytourother.setAdult(util.ConvertInt(B[7]));
