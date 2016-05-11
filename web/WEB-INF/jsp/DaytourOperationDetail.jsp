@@ -256,9 +256,9 @@
                                             <div class="col-xs-1">
                                                 <label class="control-label">Remark</lable>
                                             </div>
-                                            <div class="col-xs-5">
+                                            <div class="col-xs-8" style="width: 750px;">
                                                 <div class="col-xs-12">
-                                                    <textarea id="TextareaRemark" name="TextareaRemark" class="form-control" maxlength="255" style="resize: none">${dayTourOperation.remark}</textarea>
+                                                    <textarea id="TextareaRemark" name="TextareaRemark" rows="3" class="form-control" style="resize: none">${dayTourOperation.remark}</textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -1204,8 +1204,12 @@
                             <input class="form-control" type="hidden" id="invNo" name="invNo" value="${paymentWendyDetailList.invoiceCreditor}" readonly="">
                             
                             <div class="col-xs-12 form-group"><hr/></div>  
+                            <c:set var="disabled" value=""/>
+                            <c:if test="${dayTourOperation.id == null || dayTourOperation.id == ''}">
+                                <c:set var="disabled" value="disabled"/>
+                            </c:if>
                             <div class="text-center" style="padding-top: 10px">
-                                <a id="ButtonPrint" name="ButtonPrint" onclick="printGuideJob();" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
+                                <a id="ButtonPrint" name="ButtonPrint" onclick="printGuideJob();" class="btn btn-primary" ${disabled}><i class="fa fa-print"></i> Print</a>
                                 <input type="hidden" name="action" value="update" />
                                 <input type="hidden" name="tourID" value="${param.tourID}" />
                                 <input type="hidden" name="tourDate" value="${param.tourDate}" />

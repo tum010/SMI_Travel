@@ -167,11 +167,12 @@ public class GuideJobImpl implements GuideJobDao{
                 Guide2Detail = util.ConvertString(B[1]);  
                 OperationRemark  = util.ConvertString(B[2]);  
             }
-            if(GuideRemark.indexOf("<br>") != -1){
-                GuideRemark = GuideRemark.substring(GuideRemark.indexOf("<br>")+4);
+            System.out.println("===== GuideRemark.indexOf(\"\\n\") ===== : "+GuideRemark.indexOf("\n"));
+            if(GuideRemark.indexOf("\n") != -1){
+                GuideRemark = GuideRemark.substring(GuideRemark.indexOf("\n")+1);
             }
             if((OperationRemark != null)&&(!"".equalsIgnoreCase(OperationRemark))){
-                OperationRemark +=  "<br>";
+                OperationRemark +=  "\n";
             }
             remark = OperationRemark + Guide2Detail +GuideRemark;
         }
