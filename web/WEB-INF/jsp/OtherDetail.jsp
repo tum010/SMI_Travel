@@ -408,15 +408,19 @@
                         <div class="col-xs-12" >  
                             <!--<button type="button" class="btn btn-default duplicate" onclick="printOther()"><span class="glyphicon glyphicon-print"></span> Print </button>-->
                             <div class="col-xs-3"></div>
+                            <c:set var="disabled" value=""/>
+                            <c:if test="${requestScope['itemid'] == null || requestScope['itemid'] == ''}">
+                                <c:set var="disabled" value="disabled"/>
+                            </c:if>
                             <div class="col-xs-2">
-                                <select name="voucher" id="voucher"  class="form-control" style="width: 160px; height: 34px">
+                                <select name="voucher" id="voucher"  class="form-control" style="width: 160px; height: 34px" ${disabled}>
                                     <option value="">--Select Type--</option>
                                     <option value="OtherVouncher">Other Voucher</option>
                                     <option value="OtherVoucherEmail">Other Voucher Email</option>
                                 </select>
                             </div>
                             <div class="col-xs-1">
-                                <button type="button" class="btn btn-default duplicate" onclick="printOther()"><span class="glyphicon glyphicon-print"></span> Print </button>
+                                <button type="button" class="btn btn-default duplicate" onclick="printOther()" ${disabled}><span class="glyphicon glyphicon-print"></span> Print </button>
                             </div>
                             <div class="col-xs-1">
                                 <c:choose>
@@ -471,12 +475,12 @@
                         </div>
                     </div>
                     <div class="form-group col-md-1" style="width: 200px">
-                        <button type="button"  class="btn btn-success duplicate" onclick="addStockTicket()" id="addTicketButton" name="addTicketButton">
+                        <button type="button"  class="btn btn-success duplicate" onclick="addStockTicket()" id="addTicketButton" name="addTicketButton" ${disabled}>
                             <span class="glyphicon glyphicon-plus"></span> Add
                         </button>
                     </div>
                     <div class="form-group col-md-1 text-right" style="padding-left: 190px">
-                        <button type="button" class="btn btn-danger duplicate" onclick="setStockTicket()" id="changeStatusButton" name="changeStatusButton">
+                        <button type="button" class="btn btn-danger duplicate" onclick="setStockTicket()" id="changeStatusButton" name="changeStatusButton" ${disabled}>
                             <span id="SpanDisableVoid" class="glyphicon glyphicon-remove" ></span> Change Status
                         </button>
                     </div> 
