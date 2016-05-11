@@ -1227,8 +1227,9 @@ public class BillableImpl implements BillableDao {
                 queryupdate = "update  HotelBooking   hotel  set  hotel.isBill = 0 where  hotel.id  = :refid";
             }else if("6".equalsIgnoreCase(billTypeId)){
                 queryupdate = "update  DaytourBooking tour  set  tour.isBill = 0 where tour.id  = :refid";
+            }else if("7".equalsIgnoreCase(billTypeId)){
+                queryupdate = "update  AirticketDesc ad set  ad.isBill = 0 where ad.id  = :refid ";
             }
-            
             try {
                 Query queryup = session.createQuery(queryupdate);
                 if(!"1".equalsIgnoreCase(billTypeId)){
