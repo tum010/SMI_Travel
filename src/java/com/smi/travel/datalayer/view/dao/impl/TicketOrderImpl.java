@@ -13,6 +13,8 @@ import com.smi.travel.datalayer.view.dao.TicketOrderDao;
 import com.smi.travel.datalayer.view.entity.TicketOrderDescription;
 import com.smi.travel.datalayer.view.entity.TicketOrderInfo;
 import com.smi.travel.util.UtilityFunction;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,10 +45,14 @@ public class TicketOrderImpl implements TicketOrderDao{
         Session session = this.sessionFactory.openSession();
         UtilityFunction util = new UtilityFunction();
         TicketOrder ticket = new TicketOrder();
-        int price =0;
-        int priceTax = 0;
-        int cost =0;
-        int costtax =0;
+//        int price =0;
+//        int priceTax = 0;
+//        int cost =0;
+//        int costtax =0;
+        BigDecimal price = new BigDecimal(BigInteger.ZERO);
+        BigDecimal priceTax = new BigDecimal(BigInteger.ZERO);
+        BigDecimal cost = new BigDecimal(BigInteger.ZERO);
+        BigDecimal costtax = new BigDecimal(BigInteger.ZERO);
          List<Object[]> QueryTicketInfo = session.createSQLQuery(" SELECT * FROM `ticket_order_info`  where  `ticket_order_info`.pnr_id =  " + pnrID)
                 .addScalar("ref_no", Hibernate.STRING)
                 .addScalar("leader_name", Hibernate.STRING)
@@ -55,10 +61,10 @@ public class TicketOrderImpl implements TicketOrderDao{
                 .addScalar("tel", Hibernate.STRING)
                 .addScalar("pnr", Hibernate.STRING)
                 .addScalar("inv", Hibernate.STRING)
-                .addScalar("sell", Hibernate.INTEGER)
-                .addScalar("sell_tax", Hibernate.INTEGER)
-                .addScalar("net", Hibernate.INTEGER)
-                .addScalar("net_tax", Hibernate.INTEGER)
+                .addScalar("sell", Hibernate.STRING)
+                .addScalar("sell_tax", Hibernate.STRING)
+                .addScalar("net", Hibernate.STRING)
+                .addScalar("net_tax", Hibernate.STRING)
                 .addScalar("term_of_payment", Hibernate.STRING)
                 .addScalar("remark", Hibernate.STRING)
                 .addScalar("prepare_by", Hibernate.STRING) 
@@ -73,10 +79,15 @@ public class TicketOrderImpl implements TicketOrderDao{
             ticket.setPrepareby(util.ConvertString(B[13]));
             ticket.setIssueby(util.ConvertString(B[14]));
                        
-            price += (!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[7])))? (int)B[7] : 0);
-            priceTax += (!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[8])))? (int)B[8] : 0);
-            cost += (!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[9])))? (int)B[9] : 0);
-            costtax += (!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[10])))? (int)B[10] : 0);
+//            price += (!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[7])))? (int)B[7] : 0);
+//            priceTax += (!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[8])))? (int)B[8] : 0);
+//            cost += (!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[9])))? (int)B[9] : 0);
+//            costtax += (!"".equalsIgnoreCase(String.valueOf(util.ConvertString(B[10])))? (int)B[10] : 0);
+            
+            price = price.add((B[7]) == null ? new BigDecimal(BigInteger.ZERO) : new BigDecimal(util.ConvertString(B[7])));
+            priceTax = priceTax.add((B[8]) == null ? new BigDecimal(BigInteger.ZERO) : new BigDecimal(util.ConvertString(B[8])));
+            cost = cost.add((B[9]) == null ? new BigDecimal(BigInteger.ZERO) : new BigDecimal(util.ConvertString(B[9])));
+            costtax = costtax.add((B[10]) == null ? new BigDecimal(BigInteger.ZERO) : new BigDecimal(util.ConvertString(B[10])));
                         
             if(check == QueryTicketInfo.size()){
                TicketOrderInfo ticketOrderInfo = new TicketOrderInfo();
