@@ -215,6 +215,9 @@
                                         <c:set var="departTimeTemp1" value="${fn:substring(flight.departTime, 0, 2)}" />
                                         <c:set var="departTimeTemp2" value="${fn:substring(flight.departTime, 2, 4)}" />
                                         <c:set value="${departTimeTemp1}:${departTimeTemp2}" var="dateDepartTimeTemps" />
+                                        <c:if test="${dateDepartTimeTemps == ':'}">
+                                            <c:set value="00:00" var="dateDepartTimeTemps" />
+                                        </c:if>
                                         <fmt:parseDate value="${dateDepartTimeTemps}" var="dateDepartTimes" pattern="HH:mm" />
                                         <fmt:formatDate value="${dateDepartTimes}" pattern="HH:mm" />  
                                     </td>
@@ -390,8 +393,10 @@
                                                 <c:set var="departTime1" value="${fn:substring(flight.departTime, 0, 2)}" />
                                                 <c:set var="departTime2" value="${fn:substring(flight.departTime, 2,4)}" />
                                                 <c:set value="${departTime1}:${departTime2}" var="dateDepartTimeTemp" />
-                                                <fmt:parseDate value="${dateDepartTimeTemp}" var="dateDepartTime"
-                                                pattern="HH:mm" />
+                                                <c:if test="${dateDepartTimeTemp == ':'}">
+                                                    <c:set value="00:00" var="dateDepartTimeTemp" />
+                                                </c:if>
+                                                <fmt:parseDate value="${dateDepartTimeTemp}" var="dateDepartTime" pattern="HH:mm" />
                                                 <input id="flight-${fStatus.count}-departTime" name="flight-${fStatus.count}-departTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="<fmt:formatDate value="${dateDepartTime}" pattern="HH:mm" />" onkeyup="validateTimeDepart(this,${fStatus.count});" >
                                             </div>
                                         </div>
@@ -445,6 +450,9 @@
                                                 <c:set var="arriveTime1" value="${fn:substring(flight.arriveTime, 0, 2)}" />
                                                 <c:set var="arriveTime2" value="${fn:substring(flight.arriveTime, 2,4)}" />
                                                 <c:set value="${arriveTime1}:${arriveTime2}" var="dateArriveTimeTemp" />
+                                                <c:if test="${dateArriveTimeTemp == ':'}">
+                                                    <c:set value="00:00" var="dateArriveTimeTemp" />
+                                                </c:if>
                                                 <fmt:parseDate value="${dateArriveTimeTemp}" var="dateArriveTime"
                                                 pattern="HH:mm" />
                                                 <input id="flight-${fStatus.count}-arriveTime" name="flight-${fStatus.count}-arriveTime" class="form-control time" maxlength="255" style="width: 60px" placeholder="HH:MM" value="<fmt:formatDate value="${dateArriveTime}" pattern="HH:mm" />" onkeyup="validateTimeArrive(this,${fStatus.count});">
