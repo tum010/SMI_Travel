@@ -513,10 +513,10 @@ public class UtilityFunction {
                 String tagdescription = data[i].substring(indexTagP+3 ,data[i].indexOf("</P>"));
                 String datatemp[] = data[i].split("<P>");
                 output[0] += datatemp[0]+"\n";
-                int dl = data[i].length() / 70 ;
-                for(int x = 0 ; x < dl ; x++){
-                    output[1] += "\n";
-                }
+//                int dl = data[i].length() / 70 ;
+//                for(int x = 0 ; x < dl ; x++){
+//                    output[1] += "\n";
+//                }
                 output[1] += tagdescription.trim();
             }else{
                 if(i < data.length-1){
@@ -525,10 +525,10 @@ public class UtilityFunction {
                     output[0] += data[i];
                 }
             }
-            int dl = data[i].length() / 70 ;
-            for(int x = 0 ; x < dl ; x++){
-                output[1] += "\n";
-            }
+//            int dl = data[i].length() / 70 ;
+//            for(int x = 0 ; x < dl ; x++){
+//                output[1] += "\n";
+//            }
             output[1] += "\n";
         }
         return output;
@@ -658,7 +658,7 @@ public class UtilityFunction {
     
     public String convertRefNo(String refNo){
         if(refNo.indexOf("-") >= 0){
-            refNo = refNo.replaceAll("-", "");
+            refNo = (refNo.trim()).replaceAll("-", "");
         }
         return refNo;
     } 

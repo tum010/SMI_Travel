@@ -658,7 +658,7 @@ import org.hibernate.Transaction;
                 List<BillableDesc> billDesc = session.createQuery("from BillableDesc bill where  bill.id = :billDescId").setParameter("billDescId", billDescId).list();
                 if(!billDesc.isEmpty()){
                     for (int j = 0; j < billDesc.size() ; j++) {
-                        BigDecimal amounttemp = (billDesc.get(j).getPrice() != null ? billDesc.get(i).getPrice() : new BigDecimal(BigInteger.ZERO));
+                        BigDecimal amounttemp = (billDesc.get(j).getPrice() != null ? billDesc.get(j).getPrice() : new BigDecimal(BigInteger.ZERO));
                         billamount = amounttemp.setScale(2, BigDecimal.ROUND_HALF_EVEN);
                         receiptDetailView.setBillAmount(billamount);
                         receiptDetailView.setCurrency(billDesc.get(j).getCurrency());
