@@ -131,8 +131,9 @@ public class APNirvana {
     private String payment_detail_id;
     private String accno;
     private String payno;
+    private String dataNo;
     
-    public Object connectSybase(SsDataexch ssDataexch) throws Exception {
+    public String connectSybase(SsDataexch ssDataexch) throws Exception {
         String result = "";
         String status = "";
         sybDriver = (SybDriver) Class.forName("com.sybase.jdbc3.jdbc.SybDriver").newInstance();  
@@ -156,7 +157,7 @@ public class APNirvana {
         if(!"9".equalsIgnoreCase(status)){
             return "fail";
         }
-        return result;
+        return ssDataexch.getDataNo();
     }
     
     
@@ -1507,5 +1508,13 @@ public class APNirvana {
 
     public void setPayno(String payno) {
         this.payno = payno;
+    }
+
+    public String getDataNo() {
+        return dataNo;
+    }
+
+    public void setDataNo(String dataNo) {
+        this.dataNo = dataNo;
     }
 }

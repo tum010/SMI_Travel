@@ -40,11 +40,12 @@ public class PaymentOutboundDetail {
      private BigDecimal whtAmount;
      private Integer isWht;
      private String saleCurrency;
+     private String dataNo;
 
     public PaymentOutboundDetail() {
     }
 
-    public PaymentOutboundDetail(String id, Master master, PaymentOutbound paymentOutbound, MPaytype MPaytype, Integer bookDetailId, String description, String invoiceCreditor, BigDecimal cost, BigDecimal gross, BigDecimal vat, Integer isVat, BigDecimal amount, String currency, BigDecimal recCom, BigDecimal value, String accCode, String bookDetailType, Integer payStockId, Date exportDate, Integer isExport) {
+    public PaymentOutboundDetail(String id, Master master, PaymentOutbound paymentOutbound, MPaytype MPaytype, Integer bookDetailId, String description, String invoiceCreditor, BigDecimal cost, BigDecimal gross, BigDecimal vat, Integer isVat, BigDecimal amount, String currency, BigDecimal recCom, BigDecimal value, String accCode, String bookDetailType, Integer payStockId, Date exportDate, Integer isExport, String dataNo) {
        this.id = id;
        this.master = master;
        this.paymentOutbound = paymentOutbound;
@@ -64,6 +65,7 @@ public class PaymentOutboundDetail {
        this.bookDetailType = bookDetailType;
        this.exportDate = exportDate;
        this.isExport =isExport;
+       this.dataNo = dataNo;
     }
      
     public Master getMaster() {
@@ -298,6 +300,14 @@ public class PaymentOutboundDetail {
 
     public void setPaymentStock(PaymentStock paymentStock) {
         this.paymentStock = paymentStock;
+    }
+
+    public String getDataNo() {
+        return dataNo;
+    }
+
+    public void setDataNo(String dataNo) {
+        this.dataNo = dataNo;
     }
 
 }

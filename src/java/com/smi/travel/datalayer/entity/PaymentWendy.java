@@ -34,14 +34,14 @@ public class PaymentWendy   {
      private String currency;
      private Date updateDate;
      private Date exportDate;
-     private String dataNo;
+     
      private List paymentDetailWendies = new LinkedList<PaymentDetailWendy>();
 
     public PaymentWendy() {
     }
 
 
-    public PaymentWendy( MPaymentDoctype MPaymentDoctype, MAccpay MAccpay, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String remark, String chqNo, BigDecimal cash, BigDecimal chqAmount, String createBy, Date createDate, List paymentDetailWendies,Integer isExport,String currency,TourOperationDesc tourOperationDesc, Date updateDate, Date exportDate, String dataNo) {
+    public PaymentWendy( MPaymentDoctype MPaymentDoctype, MAccpay MAccpay, MItemstatus MItemstatus, String payNo, Date payDate, Integer account, String invoiceSup, String apCode, String detail, String remark, String chqNo, BigDecimal cash, BigDecimal chqAmount, String createBy, Date createDate, List paymentDetailWendies,Integer isExport,String currency,TourOperationDesc tourOperationDesc, Date updateDate, Date exportDate) {
        this.MPaymentDoctype = MPaymentDoctype;
        this.MAccpay = MAccpay;
        this.MItemstatus = MItemstatus;
@@ -63,7 +63,7 @@ public class PaymentWendy   {
        this.tourOperationDesc =  tourOperationDesc;
        this.updateDate = updateDate;
        this.exportDate = exportDate;
-       this.dataNo = dataNo;
+       
     }
    
     public String getId() {
@@ -227,13 +227,6 @@ public class PaymentWendy   {
         this.exportDate = exportDate;
     }
 
-    public String getDataNo() {
-        return dataNo;
-    }
-
-    public void setDataNo(String dataNo) {
-        this.dataNo = dataNo;
-    }
 
 }
 

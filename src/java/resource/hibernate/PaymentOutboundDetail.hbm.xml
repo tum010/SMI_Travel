@@ -97,5 +97,8 @@
         <property name="saleCurrency" type="string">
             <column name="sale_currency" length="3"/>
         </property>
+        <property name="dataNo" type="string">
+            <column name="data_no" length="10" />
+        </property>
     </class>
 </hibernate-mapping>
