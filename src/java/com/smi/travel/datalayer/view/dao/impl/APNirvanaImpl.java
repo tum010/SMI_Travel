@@ -124,7 +124,7 @@ public class APNirvanaImpl implements APNirvanaDao {
     }
     
     @Override
-    public String UpdateStatusAPInterface(List<APNirvana> APList) {
+    public String UpdateStatusAPInterface(List<APNirvana> APList,String dataNo) {
         int result = 0;
         try {
             Session session = this.getSessionFactory().openSession();
@@ -134,14 +134,18 @@ public class APNirvanaImpl implements APNirvanaDao {
                 APNirvana apNirvana = APList.get(i);
                 String paymentDetailId = apNirvana.getPayment_detail_id();
                 String paymentType = apNirvana.getPaymenttype();
+//                String dataNo = apNirvana.getDataNo();
                 Date date = new Date();
                 if ("W".equalsIgnoreCase(paymentType)) {
-                    String hql = "update PaymentDetailWendy pay set pay.isExport = 1 , pay.exportDate = :date where pay.id = :paymentDetailId";
+                    String hql = "update PaymentDetailWendy pay set pay.isExport = 1 , pay.exportDate = :date , pay.dataNo = :dataNo where pay.id = :paymentDetailId";
                     try {
                         Query query = session.createQuery(hql);
                         query.setParameter("paymentDetailId", paymentDetailId);
                         query.setParameter("date", date);
+                        query.setParameter("dataNo", dataNo);
+                        
                         System.out.println(" query " + query);
+                        
                         result = query.executeUpdate();
                         System.out.println("Rows affected: " + result);
                     } catch (Exception ex) {
@@ -149,12 +153,15 @@ public class APNirvanaImpl implements APNirvanaDao {
                         result = 0;
                     }
                 } else if ("A".equalsIgnoreCase(paymentType)) {
-                    String hql = "update PaymentAirticket air set air.isExport = 1 , air.exportDate = :date where air.id = :paymentDetailId";
+                    String hql = "update PaymentAirticket air set air.isExport = 1 , air.exportDate = :date , air.dataNo = :dataNo where air.id = :paymentDetailId";
                     try {
                         Query query = session.createQuery(hql);
                         query.setParameter("paymentDetailId", paymentDetailId);
                         query.setParameter("date", date);
+                        query.setParameter("dataNo", dataNo);
+                        
                         System.out.println(" query " + query);
+                        
                         result = query.executeUpdate();
                         System.out.println("Rows affected: " + result);
                     } catch (Exception ex) {
@@ -162,12 +169,15 @@ public class APNirvanaImpl implements APNirvanaDao {
                         result = 0;
                     }
                 } else if ("O".equalsIgnoreCase(paymentType)) {
-                    String hql = "update PaymentOutboundDetail pod set pod.isExport = 1 , pod.exportDate = :date where pod.id = :paymentDetailId";
+                    String hql = "update PaymentOutboundDetail pod set pod.isExport = 1 , pod.exportDate = :date , pod.dataNo = :dataNo where pod.id = :paymentDetailId";
                     try {
                         Query query = session.createQuery(hql);
                         query.setParameter("paymentDetailId", paymentDetailId);
                         query.setParameter("date", date);
+                        query.setParameter("dataNo", dataNo);
+                        
                         System.out.println(" query " + query);
+                        
                         result = query.executeUpdate();
                         System.out.println("Rows affected: " + result);
                     } catch (Exception ex) {
@@ -869,7 +879,7 @@ public class APNirvanaImpl implements APNirvanaDao {
             
             APNirvana ap = new APNirvana();
             try {
-                ap.connectSybase(ssDataexchTemp);
+                result = ap.connectSybase(ssDataexchTemp);
             } catch (Exception ex) {
                 Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -57,8 +57,8 @@ public class APMonitorController extends SMITravelController {
             }
 //            String result = apNirvanaService.ExportAPFileInterface(apNirvanaData,apNirvanaService.GetPartFileExport()); 
             String result = apNirvanaService.MappingAPNirvana(apNirvanaData);
-            if("success".equalsIgnoreCase(result)){             
-                String update = apNirvanaService.UpdateStatusAPInterface(apNirvanaData);
+            if(!"fail".equalsIgnoreCase(result)){             
+                String update = apNirvanaService.UpdateStatusAPInterface(apNirvanaData,result);
                 System.out.println("Update Result : "+update);                
                 request.setAttribute("update", update);
             }

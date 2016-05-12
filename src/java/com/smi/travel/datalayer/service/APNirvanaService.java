@@ -27,8 +27,8 @@ public class APNirvanaService {
         return apNirvanaDao.ExportAPFileInterface(APList, pathfile);
     }
     
-    public String UpdateStatusAPInterface(List<APNirvana> apNirvanaList) {
-        return apNirvanaDao.UpdateStatusAPInterface(apNirvanaList);
+    public String UpdateStatusAPInterface(List<APNirvana> apNirvanaList,String dataNo) {
+        return apNirvanaDao.UpdateStatusAPInterface(apNirvanaList,dataNo);
     }
 
     public APNirvanaDao getApNirvanaDao() {

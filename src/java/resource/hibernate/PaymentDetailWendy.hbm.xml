@@ -61,5 +61,8 @@
         <property name="tourDate" type="date">
             <column name="tour_date" length="10" />
         </property>
+        <property name="dataNo" type="string">
+            <column name="data_no" length="10" />
+        </property>
     </class>
 </hibernate-mapping>
