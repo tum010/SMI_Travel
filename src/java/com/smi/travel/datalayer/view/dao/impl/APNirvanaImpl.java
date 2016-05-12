@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -99,22 +100,22 @@ public class APNirvanaImpl implements APNirvanaDao {
         dataArea += util.generateDataAreaNirvana(purhmamt,23);
         dataArea += util.generateDataAreaNirvana("",61);
         
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
         SsDataexchTr ssdtr = new SsDataexchTr();
         ssdtr.setDataCd("240020");
         ssdtr.setDataNo(datano);
         ssdtr.setDataSeq("1");
         ssdtr.setEntSysCd("SMI");
         ssdtr.setEntSysDate(sdf.format(new Date()));
-        ssdtr.setEntDataNo(datano);
-        ssdtr.setEntComment("");
-        ssdtr.setRcvSysCd("NIRVANA");
-        ssdtr.setRcvStaCd("1");
-        ssdtr.setCvSysDate("00000000.000000");
+//        ssdtr.setEntDataNo(datano);
+//        ssdtr.setEntComment("");
+//        ssdtr.setRcvSysCd("NIRVANA");
+//        ssdtr.setRcvStaCd("1");
+//        ssdtr.setCvSysDate("00000000.000000");
         ssdtr.setRcvComment("");
-        ssdtr.setTraNesCd("1");
-        ssdtr.setTraStaCd("1");
-        ssdtr.setTraSysDate("00000000.000000");
+//        ssdtr.setTraNesCd("1");
+//        ssdtr.setTraStaCd("1");
+//        ssdtr.setTraSysDate("00000000.000000");
         ssdtr.setDataArea(dataArea);  
 
         return ssdtr;
@@ -726,29 +727,29 @@ public class APNirvanaImpl implements APNirvanaDao {
     @Override
     public String MappingAPNirvana(List<APNirvana> APList) {
         String result = "fail";
-        SimpleDateFormat sf = new SimpleDateFormat("DD/MM/YYYY");
+        SimpleDateFormat sf = new SimpleDateFormat("DD/MM/YYYY", Locale.US);
         UtilityFunction util = new UtilityFunction();
         List<APNirvana> apDataList = this.SearchApNirvanaFromPaymentDetailId(APList);
         List<SsDataexch> ssDataexchList = new ArrayList<SsDataexch>();
         for(int i=0; i<apDataList.size(); i++){
             APNirvana apNirvana = apDataList.get(i);
-            SsDataexch ssDataexchTemp = new SsDataexch();
-            ssDataexchTemp.setDataCd("240020");
             String apNirvanaNo = gennarateAPNirvanaNo("AP");
-            ssDataexchTemp.setDataNo(apNirvanaNo);
-            ssDataexchTemp.setEntSysCd("SMI");
             Date date = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
+            SsDataexch ssDataexchTemp = new SsDataexch();
+            ssDataexchTemp.setDataCd("240020");            
+            ssDataexchTemp.setDataNo(apNirvanaNo);
+            ssDataexchTemp.setEntSysCd("SMI");           
             ssDataexchTemp.setEntSysDate(sdf.format(date));
-            ssDataexchTemp.setEntDataNo(apNirvanaNo);
-            ssDataexchTemp.setEntComment("");
-            ssDataexchTemp.setRcvSysCd("NIRVANA");
+//            ssDataexchTemp.setEntDataNo(apNirvanaNo);
+//            ssDataexchTemp.setEntComment("");
+//            ssDataexchTemp.setRcvSysCd("NIRVANA");
             ssDataexchTemp.setRcvStaCd("1");
             ssDataexchTemp.setRcvSysDate("00000000.000000");
             ssDataexchTemp.setRcvComment("");
-            ssDataexchTemp.setTraNesCd("1");
-            ssDataexchTemp.setTraStaCd("1");
-            ssDataexchTemp.setTraSysDate("00000000.000000");
+//            ssDataexchTemp.setTraNesCd("1");
+//            ssDataexchTemp.setTraStaCd("1");
+//            ssDataexchTemp.setTraSysDate("00000000.000000");
             
             String dataArea = "";
             String companyId = "";
