@@ -24,7 +24,7 @@ import java.util.Date;
  */
 public class APNirvana {
     
-    private static final String ip = "192.168.96.152";
+    private static final String ip = "192.168.129.184";
     private static final String port = "2638";
     private static final String username = "ICONEXT";
     private static final String password = "iconext";
@@ -140,6 +140,7 @@ public class APNirvana {
             System.out.println(" sybase connected ");
             stmt = con.createStatement();
             result = insertHeader(ssDataexch);
+            stmt.executeQuery(" exec SOFTPACK.zz_SMI_payablejrnl ");
         }
         stmt.close();
         con.close();  
@@ -160,14 +161,14 @@ public class APNirvana {
                 + ",'" + ssDataexch.getDataArea()+ "' );";
         stmt.executeUpdate(sql);
         
-        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "'");
-        while (rs.next()) {    
-            dataNo = rs.getString("data_no") == null ? "" : rs.getString("data_no");
-            System.out.println("Active ::  " + rs.getString("data_no") == null ? " null " : rs.getString("data_no"));
-            
-            String datanodetail = insertDetail(ssDataexch.getSsDataexchTr());
-            System.out.println(" datanodetail ::: " +datanodetail);
-        }
+//        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "'");
+//        while (rs.next()) {    
+//            dataNo = rs.getString("data_no") == null ? "" : rs.getString("data_no");
+//            System.out.println("Active ::  " + rs.getString("data_no") == null ? " null " : rs.getString("data_no"));
+//            
+//            String datanodetail = insertDetail(ssDataexch.getSsDataexchTr());
+//            System.out.println(" datanodetail ::: " +datanodetail);
+//        }
         return dataNo;
     }
     
@@ -182,11 +183,11 @@ public class APNirvana {
                 + ",'" + ssDataexchTr.getRcvComment()+ "'"
                 + ",'" + ssDataexchTr.getDataArea()+ "' );";
         stmt.executeUpdate(sql);
-        ResultSet rs = stmt.executeQuery("select * from ss_dataexchtr2 where data_no = '" + ssDataexchTr.getDataNo() + "'");
-        while (rs.next()) {    
-            dataNo = rs.getString("data_no") == null ? "" : rs.getString("data_no");
-            System.out.println("Active ::  " + rs.getString("data_no") == null ? " null " : rs.getString("data_no"));
-        }
+//        ResultSet rs = stmt.executeQuery("select * from ss_dataexchtr2 where data_no = '" + ssDataexchTr.getDataNo() + "'");
+//        while (rs.next()) {    
+//            dataNo = rs.getString("data_no") == null ? "" : rs.getString("data_no");
+//            System.out.println("Active ::  " + rs.getString("data_no") == null ? " null " : rs.getString("data_no"));
+//        }
         return dataNo;
     }
 

@@ -26,6 +26,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -861,6 +863,13 @@ public class APNirvanaImpl implements APNirvanaDao {
             ssDataexchTemp.setSsDataexchTr(ssDataexchTr);
             
             util.logsNirvana(ssDataexchTemp,apNirvana.getRowid());
+            
+            APNirvana ap = new APNirvana();
+            try {
+                ap.connectSybase(ssDataexchTemp);
+            } catch (Exception ex) {
+                Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
             ssDataexchList.add(ssDataexchTemp);
             
