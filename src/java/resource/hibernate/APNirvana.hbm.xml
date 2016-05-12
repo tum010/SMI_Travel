@@ -25,9 +25,9 @@
         <property name="transcode" type="string">
             <column name="transcode"/>
         </property> 
-<!--        <property name="transdate" type="string">
+        <property name="transdate" type="date">
             <column name="transdate"/>
-        </property> -->
+        </property> 
         <property name="duedate" type="date">
             <column name="duedate"/>
         </property> 

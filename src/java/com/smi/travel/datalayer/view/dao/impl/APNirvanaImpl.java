@@ -729,7 +729,7 @@ public class APNirvanaImpl implements APNirvanaDao {
     @Override
     public String MappingAPNirvana(List<APNirvana> APList) {
         String result = "fail";
-        SimpleDateFormat sf = new SimpleDateFormat("DD/MM/YYYY", Locale.US);
+        SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
         UtilityFunction util = new UtilityFunction();
         List<APNirvana> apDataList = this.SearchApNirvanaFromPaymentDetailId(APList);
         List<SsDataexch> ssDataexchList = new ArrayList<SsDataexch>();
@@ -778,11 +778,13 @@ public class APNirvanaImpl implements APNirvanaDao {
             String transCode = (apNirvana.getTranscode() != null && !"".equalsIgnoreCase(apNirvana.getTranscode()) ? apNirvana.getTranscode() : "");
             dataArea += util.generateDataAreaNirvana(transCode,2);
             
-            String transDate = (apNirvana.getTransdate() != null ? sf.format(apNirvana.getTransdate()) : "");
-            dataArea += transDate;
-            
-            String dueDate = (apNirvana.getDuedate() != null ? sf.format(apNirvana.getDuedate()) : "");
-            dataArea += dueDate;
+            String transDate = (apNirvana.getTransdate() != null && !"".equalsIgnoreCase(String.valueOf(apNirvana.getTransdate())) ? sf.format(apNirvana.getTransdate()) : "");
+            dataArea += util.generateDataAreaNirvana("28/03/2559",10);
+            System.out.println("===== getTransdate ===== : "+apNirvana.getTransdate());
+            System.out.println("===== TransDate ===== : "+transDate);
+           
+            String dueDate = (apNirvana.getDuedate() != null && !"".equalsIgnoreCase(String.valueOf(apNirvana.getDuedate())) ? sf.format(apNirvana.getDuedate()) : "");
+            dataArea += util.generateDataAreaNirvana("28/03/2559",10);
             
             String vatFlag = (apNirvana.getVatflag() != null && !"".equalsIgnoreCase(apNirvana.getVatflag()) ? apNirvana.getVatflag() : "");
             dataArea += util.generateDataAreaNirvana(vatFlag,1);
