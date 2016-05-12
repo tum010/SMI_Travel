@@ -134,6 +134,7 @@ public class APNirvana {
     
     public Object connectSybase(SsDataexch ssDataexch) throws Exception {
         String result = "";
+        String status = "";
         sybDriver = (SybDriver) Class.forName("com.sybase.jdbc3.jdbc.SybDriver").newInstance();  
         con = DriverManager.getConnection(url,username, password);  
         if(con != null){
@@ -141,9 +142,20 @@ public class APNirvana {
             stmt = con.createStatement();
             result = insertHeader(ssDataexch);
             stmt.executeQuery(" exec SOFTPACK.zz_SMI_payablejrnl ");
+            if(!"null".equalsIgnoreCase(result)){
+                ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "'");
+                while (rs.next()) {    
+                    status = rs.getString("rcv_sta_cd") == null ? "" : rs.getString("rcv_sta_cd");
+                    System.out.println("Active ::  " + status );
+                }
+            }
         }
         stmt.close();
         con.close();  
+        
+        if(!"9".equalsIgnoreCase(status)){
+            return "fail";
+        }
         return result;
     }
     
@@ -165,10 +177,10 @@ public class APNirvana {
 //        while (rs.next()) {    
 //            dataNo = rs.getString("data_no") == null ? "" : rs.getString("data_no");
 //            System.out.println("Active ::  " + rs.getString("data_no") == null ? " null " : rs.getString("data_no"));
-//            
-//            String datanodetail = insertDetail(ssDataexch.getSsDataexchTr());
-//            System.out.println(" datanodetail ::: " +datanodetail);
+            String datanodetail = insertDetail(ssDataexch.getSsDataexchTr());
+            System.out.println(" datanodetail ::: " +datanodetail);
 //        }
+        
         return dataNo;
     }
     

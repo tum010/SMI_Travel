@@ -32,12 +32,13 @@ public class Invoice {
      private Integer isExport;
      private Date operationDate;
      private String operationUser;
+     private String dataNo;
      private List invoiceDetails = new LinkedList<InvoiceDetail>();
 
     public Invoice() {
     }
 
-    public Invoice(MAccterm MAccTerm, MFinanceItemstatus MFinanceItemstatus, SystemUser staff, String invNo, String invTo, String invName, String invAddress, Date dueDate, String deparement, String arcode, String remark, String invType, Integer isGroup, Integer isLock, String createBy, Date createDate, String subDepartment,Date invDate,Date updateDate,Date exportDate,Integer isExport, List invoiceDetails,Date operationDate,String operationUser) {
+    public Invoice(MAccterm MAccTerm, MFinanceItemstatus MFinanceItemstatus, SystemUser staff, String invNo, String invTo, String invName, String invAddress, Date dueDate, String deparement, String arcode, String remark, String invType, Integer isGroup, Integer isLock, String createBy, Date createDate, String subDepartment,Date invDate,Date updateDate,Date exportDate,Integer isExport, List invoiceDetails,Date operationDate,String operationUser, String dataNo) {
        this.MAccTerm = MAccTerm;
        this.MFinanceItemstatus = MFinanceItemstatus;
        this.staff = staff;
@@ -60,6 +61,7 @@ public class Invoice {
        this.updateDate = updateDate;
        this.operationDate = operationDate;
        this.operationUser = operationUser;
+       this.dataNo = dataNo;
     }
 
     public Date getExportDate() {
@@ -257,6 +259,14 @@ public class Invoice {
 
     public void setOperationUser(String operationUser) {
         this.operationUser = operationUser;
+    }
+
+    public String getDataNo() {
+        return dataNo;
+    }
+
+    public void setDataNo(String dataNo) {
+        this.dataNo = dataNo;
     }
 }
 

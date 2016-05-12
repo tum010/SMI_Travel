@@ -754,7 +754,7 @@ public class APNirvanaImpl implements APNirvanaDao {
 //            ssDataexchTemp.setTraSysDate("00000000.000000");
             
             String dataArea = "";
-            String companyId = "";
+            String companyId = "SMI";
             dataArea += util.generateDataAreaNirvana(companyId,21);
 
             String refInvoiceNo = (apNirvana.getRefinvoiceno()!= null && !"".equalsIgnoreCase(apNirvana.getRefinvoiceno()) ? apNirvana.getRefinvoiceno() : "");
@@ -764,27 +764,27 @@ public class APNirvanaImpl implements APNirvanaDao {
             dataArea += util.generateDataAreaNirvana(vendorId,21);
             
             String vendorName = (apNirvana.getVendorname()!= null && !"".equalsIgnoreCase(apNirvana.getVendorname()) ? apNirvana.getVendorname() : "");
-            dataArea += util.generateDataAreaNirvana(vendorName,100);
+            dataArea += util.generateDataAreaNirvana(vendorName,61);
             
-            String remitId = "";
+            String remitId = (apNirvana.getVendorid()!= null && !"".equalsIgnoreCase(apNirvana.getVendorid()) ? apNirvana.getVendorid() : "");
             dataArea += util.generateDataAreaNirvana(remitId,21);
             
             String divisionId = (apNirvana.getDivisionid() != null && !"".equalsIgnoreCase(apNirvana.getDivisionid()) ? apNirvana.getDivisionid() : "");
             dataArea += util.generateDataAreaNirvana(divisionId,21);
             
-            String projectId = "0";
+            String projectId = "00";
             dataArea += util.generateDataAreaNirvana(projectId,21);
             
             String transCode = (apNirvana.getTranscode() != null && !"".equalsIgnoreCase(apNirvana.getTranscode()) ? apNirvana.getTranscode() : "");
             dataArea += util.generateDataAreaNirvana(transCode,2);
             
+//            String transDate = (apNirvana.getTransdate() != null ? sf.format(apNirvana.getTransdate()) : "");
             String transDate = (apNirvana.getTransdate() != null && !"".equalsIgnoreCase(String.valueOf(apNirvana.getTransdate())) ? sf.format(apNirvana.getTransdate()) : "");
-            dataArea += util.generateDataAreaNirvana("28/03/2559",10);
-            System.out.println("===== getTransdate ===== : "+apNirvana.getTransdate());
-            System.out.println("===== TransDate ===== : "+transDate);
-           
+            dataArea += util.generateDataAreaNirvana(transDate,10);
+            
+//            String dueDate = (apNirvana.getDuedate() != null ? sf.format(apNirvana.getDuedate()) : "");
             String dueDate = (apNirvana.getDuedate() != null && !"".equalsIgnoreCase(String.valueOf(apNirvana.getDuedate())) ? sf.format(apNirvana.getDuedate()) : "");
-            dataArea += util.generateDataAreaNirvana("28/03/2559",10);
+            dataArea += util.generateDataAreaNirvana(dueDate,10);
             
             String vatFlag = (apNirvana.getVatflag() != null && !"".equalsIgnoreCase(apNirvana.getVatflag()) ? apNirvana.getVatflag() : "");
             dataArea += util.generateDataAreaNirvana(vatFlag,1);
@@ -793,31 +793,31 @@ public class APNirvanaImpl implements APNirvanaDao {
             dataArea += util.generateDataAreaNirvana(vatId,6);
             
             String transAmt = (apNirvana.getTransamt() != null ? String.valueOf(apNirvana.getTransamt()) : "0.00");
-            dataArea += util.generateDataAreaNirvana(transAmt,23);
+            dataArea += util.generateDataAreaNirvana(transAmt,20);
             
             String transHmamt = (apNirvana.getTranshmamt()!= null ? String.valueOf(apNirvana.getTranshmamt()) : "0.00");
-            dataArea += util.generateDataAreaNirvana(transHmamt,23);
+            dataArea += util.generateDataAreaNirvana(transHmamt,20);
             
             String totBaseVatAmt = ("Y".equalsIgnoreCase(vatFlag) ? transAmt : "0.00");
-            dataArea += util.generateDataAreaNirvana(totBaseVatAmt,23);
+            dataArea += util.generateDataAreaNirvana(totBaseVatAmt,20);
             
             String totBaseVatHmAmt = ("Y".equalsIgnoreCase(vatFlag) ? transHmamt : "0.00");
-            dataArea += util.generateDataAreaNirvana(totBaseVatHmAmt,23);
+            dataArea += util.generateDataAreaNirvana(totBaseVatHmAmt,20);
             
             String totVatAmt = (apNirvana.getVatamt() != null ? String.valueOf(apNirvana.getVatamt()) : "0.00");
-            dataArea += util.generateDataAreaNirvana(totVatAmt,23);
+            dataArea += util.generateDataAreaNirvana(totVatAmt,20);
             
             String totVatHmAmt = (apNirvana.getVathmamt() != null ? String.valueOf(apNirvana.getVathmamt()) : "0.00");
-            dataArea += util.generateDataAreaNirvana(totVatHmAmt,23);
+            dataArea += util.generateDataAreaNirvana(totVatHmAmt,20);
             
             String currencyId = (apNirvana.getCurrencyid() != null && !"".equalsIgnoreCase(apNirvana.getCurrencyid()) ? apNirvana.getCurrencyid() : "");
             dataArea += util.generateDataAreaNirvana(currencyId,6);
             
             String homeRate = (apNirvana.getHomerate()!= null ? String.valueOf(apNirvana.getHomerate()) : "0.000000");
-            dataArea += util.generateDataAreaNirvana(homeRate,25);
+            dataArea += util.generateDataAreaNirvana(homeRate,18);
             
             String foreignRate = (apNirvana.getForeignrate() != null ? String.valueOf(apNirvana.getForeignrate()) : "0.000000");
-            dataArea += util.generateDataAreaNirvana(foreignRate,25);
+            dataArea += util.generateDataAreaNirvana(foreignRate,18);
             
             String note = (apNirvana.getNote() != null && !"".equalsIgnoreCase(apNirvana.getNote()) ? apNirvana.getNote() : "");
             dataArea += util.generateDataAreaNirvana(note,61);
@@ -863,8 +863,9 @@ public class APNirvanaImpl implements APNirvanaDao {
             ssDataexchTemp.setDataArea(dataArea);
             SsDataexchTr ssDataexchTr = setApNirvanaDetail(apNirvana,apNirvanaNo);
             ssDataexchTemp.setSsDataexchTr(ssDataexchTr);
-            
+            System.out.println("===== dataArea Lenght ===== : "+dataArea.length());
             util.logsNirvana(ssDataexchTemp,apNirvana.getRowid());
+            
             
             APNirvana ap = new APNirvana();
             try {
@@ -872,7 +873,6 @@ public class APNirvanaImpl implements APNirvanaDao {
             } catch (Exception ex) {
                 Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
             ssDataexchList.add(ssDataexchTemp);
             
 //            if(i == APList.size()-1){
@@ -882,7 +882,7 @@ public class APNirvanaImpl implements APNirvanaDao {
         
         return result;
     }
-
+    
     private String gennarateAPNirvanaNo(String type){
         String hql = "from MRunningCode run where run.type =  :type";
         Session session = this.sessionFactory.openSession();

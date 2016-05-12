@@ -82,6 +82,9 @@
         <property name="wht" type="big_decimal">
             <column name="wht" precision="10" />
         </property>
+        <property name="dataNo" type="string">
+            <column name="data_no" length="10" />
+        </property>
         <bag name="paymentAirticketRefunds" table="payment_airticket_refund" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="paymane_air_id" />

@@ -76,6 +76,9 @@
         <property name="operationUser" type="string">
             <column name="operation_user" length="20" />
         </property>
+        <property name="dataNo" type="string">
+            <column name="data_no" length="10" />
+        </property>
         <bag name="invoiceDetails" table="invoice_detail" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="invoice_id" not-null="true" />
