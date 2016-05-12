@@ -6,7 +6,13 @@
 
 package com.smi.travel.datalayer.view.entity;
 
+import com.smi.travel.nirvana.ConnectSybase;
+import com.sybase.jdbcx.SybDriver;
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Date;
 
 /**
@@ -14,6 +20,16 @@ import java.util.Date;
  * @author Surachai
  */
 public class APNirvana {
+    
+    private static final String ip = "192.168.96.152";
+    private static final String port = "2638";
+    private static final String username = "ICONEXT";
+    private static final String password = "iconext";
+    private static final String url = "jdbc:sybase:Tds:"+ip+":"+port; 
+    Connection con = null;  
+    Statement stmt = null;  
+    SybDriver sybDriver = null; 
+    
     private String rowid;
     private String systemdate;
     private String user;
@@ -113,6 +129,22 @@ public class APNirvana {
     private String accno;
     private String payno;
     
+    public Object connectSybase() throws Exception {
+        sybDriver = (SybDriver) Class.forName("com.sybase.jdbc3.jdbc.SybDriver").newInstance();  
+        con = DriverManager.getConnection(url,username, password);  
+        if(con != null){
+            System.out.println(" sybase connected ");
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from Currency");
+            while (rs.next()) {    
+                System.out.println("Active ::  " + rs.getString("CurrencyID") == null ? " null " : rs.getString("CurrencyID"));
+            }
+        }
+        stmt.close();
+        con.close();  
+        return "success";
+    }
+
     public String getRefinvoiceno() {
         return refinvoiceno;
     }
