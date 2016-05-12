@@ -6,12 +6,15 @@
 
 package com.smi.travel.datalayer.view.entity;
 
+import com.smi.travel.model.nirvana.SsDataexch;
+import com.smi.travel.model.nirvana.SsDataexchTr;
 import com.smi.travel.nirvana.ConnectSybase;
 import com.sybase.jdbcx.SybDriver;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
@@ -129,20 +132,62 @@ public class APNirvana {
     private String accno;
     private String payno;
     
-    public Object connectSybase() throws Exception {
+    public Object connectSybase(SsDataexch ssDataexch) throws Exception {
+        String result = "";
         sybDriver = (SybDriver) Class.forName("com.sybase.jdbc3.jdbc.SybDriver").newInstance();  
         con = DriverManager.getConnection(url,username, password);  
         if(con != null){
             System.out.println(" sybase connected ");
             stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from Currency");
-            while (rs.next()) {    
-                System.out.println("Active ::  " + rs.getString("CurrencyID") == null ? " null " : rs.getString("CurrencyID"));
-            }
+            result = insertHeader(ssDataexch);
         }
         stmt.close();
         con.close();  
-        return "success";
+        return result;
+    }
+    
+    
+    public String insertHeader(SsDataexch ssDataexch) throws SQLException {
+        String dataNo = "";
+        String sql = " INSERT INTO ss_dataexch2 values ("
+                + "'" + ssDataexch.getDataCd() + "'"
+                + ",'" + ssDataexch.getDataNo() + "'"
+                + ",'" + ssDataexch.getEntSysCd() + "'"
+                + ",'" + ssDataexch.getEntSysDate()+ "'"
+                + ",'" + ssDataexch.getRcvStaCd()+ "'"
+                + ",'" + ssDataexch.getRcvSysDate()+ "'"
+                + ",'" + ssDataexch.getRcvComment()+ "'"
+                + ",'" + ssDataexch.getDataArea()+ "' );";
+        stmt.executeUpdate(sql);
+        
+        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "'");
+        while (rs.next()) {    
+            dataNo = rs.getString("data_no") == null ? "" : rs.getString("data_no");
+            System.out.println("Active ::  " + rs.getString("data_no") == null ? " null " : rs.getString("data_no"));
+            
+            String datanodetail = insertDetail(ssDataexch.getSsDataexchTr());
+            System.out.println(" datanodetail ::: " +datanodetail);
+        }
+        return dataNo;
+    }
+    
+    public String insertDetail(SsDataexchTr ssDataexchTr) throws SQLException {
+        String dataNo = "";
+        String sql = " INSERT INTO ss_dataexchtr2 values ("
+                + "'" + ssDataexchTr.getDataCd() + "'"
+                + ",'" + ssDataexchTr.getDataNo() + "'"
+                + ",'" + ssDataexchTr.getDataSeq()+ "'"
+                + ",'" + ssDataexchTr.getEntSysCd()+ "'"
+                + ",'" + ssDataexchTr.getEntSysDate()+ "'"
+                + ",'" + ssDataexchTr.getRcvComment()+ "'"
+                + ",'" + ssDataexchTr.getDataArea()+ "' );";
+        stmt.executeUpdate(sql);
+        ResultSet rs = stmt.executeQuery("select * from ss_dataexchtr2 where data_no = '" + ssDataexchTr.getDataNo() + "'");
+        while (rs.next()) {    
+            dataNo = rs.getString("data_no") == null ? "" : rs.getString("data_no");
+            System.out.println("Active ::  " + rs.getString("data_no") == null ? " null " : rs.getString("data_no"));
+        }
+        return dataNo;
     }
 
     public String getRefinvoiceno() {
