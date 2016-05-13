@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.view.dao;
 
 import com.smi.travel.datalayer.view.entity.APNirvana;
+import com.smi.travel.datalayer.view.entity.NirvanaInterface;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public interface APNirvanaDao {
     public String ExportAPFileInterface(List<APNirvana> APList,String pathfile);
-    public String UpdateStatusAPInterface(List<APNirvana> APList,String dataNo);
+    public String UpdateStatusAPInterface(List<NirvanaInterface> nirvanaInterfaceList);
     public List<APNirvana> SearchApNirvanaFromFilter(String paymentType,String producttype,String status,String from,String to, String accno);
     public List getApNirvanaReport(String paymentType, String producttype, String status, String from, String to, String printby);
     public String MappingAPNirvana(List<APNirvana> apNirvanaData);

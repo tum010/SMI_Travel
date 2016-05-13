@@ -268,8 +268,11 @@
         <property name="accno" type="string">
             <column name="accno"/>
         </property> 
-<!--        <property name="payno" type="string">
+        <property name="payno" type="string">
             <column name="payno"/>
-        </property> -->
+        </property>
+        <property name="comid" type="string">
+            <column name="comid"/>
+        </property>  
     </class>
 </hibernate-mapping>

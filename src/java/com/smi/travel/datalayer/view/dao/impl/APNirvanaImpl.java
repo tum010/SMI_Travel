@@ -9,6 +9,7 @@ import com.smi.travel.datalayer.entity.MRunningCode;
 import com.smi.travel.datalayer.view.dao.APNirvanaDao;
 import com.smi.travel.datalayer.view.entity.APNirvana;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
+import com.smi.travel.datalayer.view.entity.NirvanaInterface;
 import com.smi.travel.model.nirvana.SsDataexch;
 import com.smi.travel.model.nirvana.SsDataexchTr;
 import com.smi.travel.util.UtilityFunction;
@@ -86,9 +87,11 @@ public class APNirvanaImpl implements APNirvanaDao {
         return status;
     }
     
-    public SsDataexchTr setApNirvanaDetail(APNirvana ap,String datano){
+    public List<SsDataexchTr> setApNirvanaDetail(APNirvana ap,String datano){
+        List<SsDataexchTr> ssdtrList = new ArrayList<SsDataexchTr>();
         UtilityFunction util = new UtilityFunction();
-        String dataArea = "";       
+        String dataArea = "";
+        int count = 1;
         for(int i=1; i<11; i++){
             String puraccount = "";
             String purdivision = "";
@@ -161,48 +164,52 @@ public class APNirvanaImpl implements APNirvanaDao {
                 dataArea += util.generateDataAreaNirvana(puraccount,21);
                 dataArea += util.generateDataAreaNirvana(purdivision,21);
                 dataArea += util.generateDataAreaNirvana(purproject,21);
-                dataArea += util.generateDataAreaNirvana(puramt,23);
-                dataArea += util.generateDataAreaNirvana(purhmamt,23);
+                dataArea += util.generateDataAreaNirvana(puramt,20);
+                dataArea += util.generateDataAreaNirvana(purhmamt,20);
                 dataArea += util.generateDataAreaNirvana("detail",61);
-            }    
-        }
-//        String puramt = (ap.getPuramt1() != null ? String.valueOf(ap.getPuramt1()) : "0.00");
-//        String purhmamt = (ap.getPurhmamt1() != null ? String.valueOf(ap.getPurhmamt1()) : "0.00");
-//        System.out.println("===== Puramt2 ===== : "+ap.getPuramt2());
-                             
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
-        SsDataexchTr ssdtr = new SsDataexchTr();
-        ssdtr.setDataCd("240020");
-        ssdtr.setDataNo(datano);
-        ssdtr.setDataSeq("1");
-        ssdtr.setEntSysCd("SMI");
-        ssdtr.setEntSysDate(sdf.format(new Date()));
-//        ssdtr.setEntDataNo(datano);
-//        ssdtr.setEntComment("");
-//        ssdtr.setRcvSysCd("NIRVANA");
-//        ssdtr.setRcvStaCd("1");
-//        ssdtr.setCvSysDate("00000000.000000");
-        ssdtr.setRcvComment("");
-//        ssdtr.setTraNesCd("1");
-//        ssdtr.setTraStaCd("1");
-//        ssdtr.setTraSysDate("00000000.000000");
-        ssdtr.setDataArea(dataArea);  
+                
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss", Locale.US);
+                SsDataexchTr ssdtr = new SsDataexchTr();
+                ssdtr.setDataCd("240020");
+                ssdtr.setDataNo(datano);
+                ssdtr.setDataSeq(String.valueOf(count));
+                ssdtr.setEntSysCd("SMI");
+                ssdtr.setEntSysDate(sdf.format(new Date()));
+        //        ssdtr.setEntDataNo(datano);
+        //        ssdtr.setEntComment("");
+        //        ssdtr.setRcvSysCd("NIRVANA");
+        //        ssdtr.setRcvStaCd("1");
+        //        ssdtr.setCvSysDate("00000000.000000");
+                ssdtr.setRcvComment("");
+        //        ssdtr.setTraNesCd("1");
+        //        ssdtr.setTraStaCd("1");
+        //        ssdtr.setTraSysDate("00000000.000000");
+                ssdtr.setDataArea(dataArea);
+                ssdtrList.add(ssdtr);
+                count += 1;
+            }
+                      
+        }                             
 
-        return ssdtr;
+        return ssdtrList;
     }
     
     @Override
-    public String UpdateStatusAPInterface(List<APNirvana> APList,String dataNo) {
+    public String UpdateStatusAPInterface(List<NirvanaInterface> nirvanaInterfaceList) {
         int result = 0;
         try {
             Session session = this.getSessionFactory().openSession();
             setTransaction(session.beginTransaction());
 
-            for (int i = 0; i < APList.size(); i++) {
-                APNirvana apNirvana = APList.get(i);
-                String paymentDetailId = apNirvana.getPayment_detail_id();
-                String paymentType = apNirvana.getPaymenttype();
+            for (int i = 0; i < nirvanaInterfaceList.size(); i++) {
+                NirvanaInterface nirvanaInterface = nirvanaInterfaceList.get(i);
+                String paymentDetailId = nirvanaInterface.getPayment_detail_id();
+                String paymentType = nirvanaInterface.getPaymenttype();
+                String dataNo = nirvanaInterface.getDatano();
 //                String dataNo = apNirvana.getDataNo();
+                System.out.println("===== paymentDetailId ===== : "+paymentDetailId);
+                System.out.println("===== paymentType ===== : "+paymentType);
+                System.out.println("===== dataNo ===== : "+dataNo);
                 Date date = new Date();
                 if ("W".equalsIgnoreCase(paymentType)) {
                     String hql = "update PaymentDetailWendy pay set pay.isExport = 1 , pay.exportDate = :date , pay.dataNo = :dataNo where pay.id = :paymentDetailId";
@@ -262,7 +269,7 @@ public class APNirvanaImpl implements APNirvanaDao {
             ex.printStackTrace();
             result = 0;
         }
-        return String.valueOf(result);
+        return (result == 1 ? "success" : "fail");
     }
 
     @Override
@@ -832,7 +839,7 @@ public class APNirvanaImpl implements APNirvanaDao {
 //            ssDataexchTemp.setTraSysDate("00000000.000000");
             
             String dataArea = "";
-            String companyId = "SMI";
+            String companyId = (apNirvana.getComid()!= null && !"".equalsIgnoreCase(apNirvana.getComid()) ? apNirvana.getComid() : "");
             dataArea += util.generateDataAreaNirvana(companyId,21);
 
             String refInvoiceNo = (apNirvana.getRefinvoiceno()!= null && !"".equalsIgnoreCase(apNirvana.getRefinvoiceno()) ? apNirvana.getRefinvoiceno() : "");
@@ -859,7 +866,6 @@ public class APNirvanaImpl implements APNirvanaDao {
             String transDate = (apNirvana.getTransdate() != null && !"".equalsIgnoreCase(String.valueOf(apNirvana.getTransdate())) ? sf.format(apNirvana.getTransdate()) : "");
             dataArea += util.generateDataAreaNirvana(transDate,10);
             
-//            String dueDate = (apNirvana.getDuedate() != null ? sf.format(apNirvana.getDuedate()) : "");
             String dueDate = (apNirvana.getDuedate() != null && !"".equalsIgnoreCase(String.valueOf(apNirvana.getDuedate())) ? sf.format(apNirvana.getDuedate()) : "");
             dataArea += util.generateDataAreaNirvana(dueDate,10);
             
@@ -937,24 +943,42 @@ public class APNirvanaImpl implements APNirvanaDao {
             
             String custBranch = (apNirvana.getVendor_branch()!= null ? String.valueOf(apNirvana.getVendor_branch()) : "0");
             dataArea += util.generateDataAreaNirvana(custBranch,6);
+            
             ssDataexchTemp.setDataArea(dataArea);
-            SsDataexchTr ssDataexchTr = setApNirvanaDetail(apNirvana,apNirvanaNo);
-            ssDataexchTemp.setSsDataexchTr(ssDataexchTr);
-            System.out.println("===== dataArea Lenght ===== : "+dataArea.length());
+                    
+            String paymentDetailId = (apNirvana.getPayment_detail_id()!= null ? String.valueOf(apNirvana.getPayment_detail_id()) : "");
+            ssDataexchTemp.setPayment_detail_id(paymentDetailId);
+            
+            String paymentType = (apNirvana.getPaymenttype()!= null ? String.valueOf(apNirvana.getPaymenttype()) : "");
+            ssDataexchTemp.setPaymenttype(paymentType);
+            
+            List<SsDataexchTr> ssDataexchTrList = setApNirvanaDetail(apNirvana,apNirvanaNo);
+            ssDataexchTemp.setSsDataexchTrList(ssDataexchTrList);
+
             util.logsNirvana(ssDataexchTemp,apNirvana.getRowid());
             
-            
-            APNirvana ap = new APNirvana();
             try {
-                result = ap.connectSybase(ssDataexchTemp);
+                result = ssDataexchTemp.connectSybase(ssDataexchTemp);
             } catch (Exception ex) {
                 Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
             ssDataexchList.add(ssDataexchTemp);
             
-//            if(i == APList.size()-1){
+            if(i == APList.size()-1){
+                try {
+                    List<NirvanaInterface> nirvanaInterfaceList = ssDataexchTemp.callStoredProcedure(ssDataexchList);
+                    if(nirvanaInterfaceList != null){
+                        System.out.println("===== UpdateStatusAPInterface =====");
+                        result = UpdateStatusAPInterface(nirvanaInterfaceList);
+                    }
+               
+                } catch (Exception ex) {
+                    Logger.getLogger(APNirvanaImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
 //                result = "success";
-//            }
+            }
         }
         
         return result;

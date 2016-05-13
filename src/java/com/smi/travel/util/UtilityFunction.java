@@ -603,23 +603,28 @@ public class UtilityFunction {
         logger.info(" rowid : " +  rowid);
         logger.info(" data_area : " +  data.getDataArea());
         logger.info("===================  Detail  ========================");
-        SsDataexchTr detail = data.getSsDataexchTr();
-        logger.info(" data_cd : " +  detail.getDataCd());
-        logger.info(" data_no : " +  detail.getDataNo());
-        logger.info(" data_seq : " +  detail.getDataSeq());
-        logger.info(" ent_sys_cd : " +  detail.getEntSysCd());
-        logger.info(" ent_sys_date : " +  detail.getEntSysDate());
-        logger.info(" ent_date_no : " +  detail.getEntDataNo());
-        logger.info(" ent_comment : " +  detail.getEntComment());
-        logger.info(" rcv_sys_cd : " +  detail.getRcvSysCd());
-        logger.info(" rcv_sta_cd : " +  detail.getRcvStaCd());
-        logger.info(" cv_sys_date : " +  detail.getCvSysDate());
-        logger.info(" rcv_comment : " +  detail.getRcvComment());
-        logger.info(" tra_nes_cd : " +  detail.getTraNesCd());
-        logger.info(" tra_sta_cd : " +  detail.getTraStaCd());
-        logger.info(" tra_sys_date : " +  detail.getTraSysDate());
-        logger.info("===============  Detail Data Area  ==================");
-        logger.info(" data_area : " +  detail.getDataArea());
+        List<SsDataexchTr> ssDataexchTrList = data.getSsDataexchTrList();
+        for(int i=0; i<ssDataexchTrList.size(); i++){
+            SsDataexchTr detail = ssDataexchTrList.get(i);
+            logger.info(" data_seq : " +  detail.getDataSeq());
+            logger.info(" data_cd : " +  detail.getDataCd());
+            logger.info(" data_no : " +  detail.getDataNo());
+            logger.info(" data_seq : " +  detail.getDataSeq());
+            logger.info(" ent_sys_cd : " +  detail.getEntSysCd());
+            logger.info(" ent_sys_date : " +  detail.getEntSysDate());
+            logger.info(" ent_date_no : " +  detail.getEntDataNo());
+            logger.info(" ent_comment : " +  detail.getEntComment());
+            logger.info(" rcv_sys_cd : " +  detail.getRcvSysCd());
+            logger.info(" rcv_sta_cd : " +  detail.getRcvStaCd());
+            logger.info(" cv_sys_date : " +  detail.getCvSysDate());
+            logger.info(" rcv_comment : " +  detail.getRcvComment());
+            logger.info(" tra_nes_cd : " +  detail.getTraNesCd());
+            logger.info(" tra_sta_cd : " +  detail.getTraStaCd());
+            logger.info(" tra_sys_date : " +  detail.getTraSysDate());
+            logger.info("===============  Detail Data Area "+ detail.getDataSeq() +" ==================");
+            logger.info(" data_area : " +  detail.getDataArea());
+        }
+        
     }
     
     public void logsGalileo(String data , int option){
