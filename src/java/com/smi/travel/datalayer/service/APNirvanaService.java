@@ -8,6 +8,7 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.view.dao.APNirvanaDao;
 import com.smi.travel.datalayer.view.entity.APNirvana;
+import com.smi.travel.datalayer.view.entity.NirvanaInterface;
 import com.smi.travel.report.GenerateReport;
 import java.util.List;
 
@@ -27,8 +28,8 @@ public class APNirvanaService {
         return apNirvanaDao.ExportAPFileInterface(APList, pathfile);
     }
     
-    public String UpdateStatusAPInterface(List<APNirvana> apNirvanaList,String dataNo) {
-        return apNirvanaDao.UpdateStatusAPInterface(apNirvanaList,dataNo);
+    public String UpdateStatusAPInterface(List<NirvanaInterface> nirvanaInterfaceList) {
+        return apNirvanaDao.UpdateStatusAPInterface(nirvanaInterfaceList);
     }
 
     public APNirvanaDao getApNirvanaDao() {
