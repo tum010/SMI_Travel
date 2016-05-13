@@ -17,6 +17,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -132,6 +133,7 @@ public class APNirvana {
     private String accno;
     private String payno;
     private String dataNo;
+    private String comid;
     
     public String connectSybase(SsDataexch ssDataexch) throws Exception {
         String result = "";
@@ -178,16 +180,18 @@ public class APNirvana {
 //        while (rs.next()) {    
 //            dataNo = rs.getString("data_no") == null ? "" : rs.getString("data_no");
 //            System.out.println("Active ::  " + rs.getString("data_no") == null ? " null " : rs.getString("data_no"));
-            String datanodetail = insertDetail(ssDataexch.getSsDataexchTr());
+            String datanodetail = insertDetail(ssDataexch.getSsDataexchTrList());
             System.out.println(" datanodetail ::: " +datanodetail);
 //        }
         
         return dataNo;
     }
     
-    public String insertDetail(SsDataexchTr ssDataexchTr) throws SQLException {
+    public String insertDetail(List<SsDataexchTr> ssDataexchTrList) throws SQLException {
         String dataNo = "";
-        String sql = " INSERT INTO ss_dataexchtr2 values ("
+        for(int i=0; i<ssDataexchTrList.size(); i++){
+            SsDataexchTr ssDataexchTr = ssDataexchTrList.get(i);
+            String sql = " INSERT INTO ss_dataexchtr2 values ("
                 + "'" + ssDataexchTr.getDataCd() + "'"
                 + ",'" + ssDataexchTr.getDataNo() + "'"
                 + ",'" + ssDataexchTr.getDataSeq()+ "'"
@@ -195,7 +199,9 @@ public class APNirvana {
                 + ",'" + ssDataexchTr.getEntSysDate()+ "'"
                 + ",'" + ssDataexchTr.getRcvComment()+ "'"
                 + ",'" + ssDataexchTr.getDataArea()+ "' );";
-        stmt.executeUpdate(sql);
+            stmt.executeUpdate(sql);
+        }
+        
 //        ResultSet rs = stmt.executeQuery("select * from ss_dataexchtr2 where data_no = '" + ssDataexchTr.getDataNo() + "'");
 //        while (rs.next()) {    
 //            dataNo = rs.getString("data_no") == null ? "" : rs.getString("data_no");
@@ -1516,5 +1522,13 @@ public class APNirvana {
 
     public void setDataNo(String dataNo) {
         this.dataNo = dataNo;
+    }
+
+    public String getComid() {
+        return comid;
+    }
+
+    public void setComid(String comid) {
+        this.comid = comid;
     }
 }
