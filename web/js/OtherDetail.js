@@ -328,7 +328,6 @@ function returnvat(input) {
         return null;
     }
 }
-
 function CallAjaxCheckStock(param) {
     var url = 'AJAXServlet';
     try {
@@ -385,26 +384,25 @@ function CallAjax(param, booktype) {
                 var IN_PriceRP = IN_Price.replace(',', '');
 
                 if (AD_CostRP === '' || AD_CostRP === 'null') {
-                    AD_CostRP = '0';
+                    AD_CostRP = '0.00';
                 }
                 if (AD_PriceRP === '' || AD_PriceRP === 'null') {
-                    AD_PriceRP = '0';
+                    AD_PriceRP = '0.00';
                 }
                 if (CH_CostRP === '' || CH_CostRP === 'null') {
-                    CH_CostRP = '0';
+                    CH_CostRP = '0.00';
                 }
                 if (CH_PriceRP === '' || CH_PriceRP === 'null') {
-                    CH_PriceRP = '0';
+                    CH_PriceRP = '0.00';
                 }
                 if (IN_CostRP === '' || IN_CostRP === 'null') {
-                    IN_CostRP = '0';
+                    IN_CostRP = '0.00';
                 }
                 if (IN_PriceRP === '' || IN_PriceRP === 'null') {
-                    IN_PriceRP = '0';
+                    IN_PriceRP = '0.00';
                 }
-
                 if (booktype === 'i') {
-                    if ((AD_CostRP === '0') && (CH_CostRP === '0') && (IN_CostRP === '0') && (AD_PriceRP === '0') && (CH_PriceRP === '0') && (IN_PriceRP === '0')) {
+                    if ((AD_CostRP === '0.00') && (CH_CostRP === '0.00') && (IN_CostRP === '0.00') && (AD_PriceRP === '0.00') && (CH_PriceRP === '0.00') && (IN_PriceRP === '0.00')) {
                         setformatNumber('ad_cost', path[0]);
                         setformatNumber('ch_cost', path[1]);
                         setformatNumber('in_cost', path[2]);
@@ -412,8 +410,8 @@ function CallAjax(param, booktype) {
                         setformatNumber('ch_price', path[4]);
                         setformatNumber('in_price', path[5]);
                     } else if ((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2]) && (AD_PriceRP === path[3]) && (CH_PriceRP === path[4]) && (IN_PriceRP === path[5])) {
-
-                    } else if ((path[0] === '0') && (path[1] === '0') && (path[2] === '0') && (path[3] === '0') && (path[4] === '0') && (path[5] === '0')){
+                        
+                    } else if ((path[0] === '0.00') && (path[1] === '0.00') && (path[2] === '0.00') && (path[3] === '0.00') && (path[4] === '0.00') && (path[5] === '0.00')){
                         
                     } else {
                         document.getElementById('path0').value = path[0];
@@ -427,7 +425,7 @@ function CallAjax(param, booktype) {
                 }
 
                 if (booktype === 'o') {
-                    if ((AD_CostRP === 0) && (CH_CostRP === 0) && (IN_CostRP === 0) && (AD_PriceRP === 0) && (CH_PriceRP === 0) && (IN_PriceRP === 0)) {
+                    if ((AD_CostRP === '0.00') && (CH_CostRP === '0.00') && (IN_CostRP === '0.00') && (AD_PriceRP === '0.00') && (CH_PriceRP === '0.00') && (IN_PriceRP === '0.00')) {
                         setformatNumber('ad_cost', path[0]);
                         setformatNumber('ch_cost', path[1]);
                         setformatNumber('in_cost', path[2]);
@@ -436,7 +434,7 @@ function CallAjax(param, booktype) {
                         setformatNumber('in_price', path[5]);
                     } else if ((AD_CostRP === path[0]) && (CH_CostRP === path[1]) && (IN_CostRP === path[2]) && (AD_PriceRP === path[3]) && (CH_PriceRP === path[4]) && (IN_PriceRP === path[5])) {
 
-                    } else if ((path[0] === '0') && (path[1] === '0') && (path[2] === '0') && (path[3] === '0') && (path[4] === '0') && (path[5] === '0')){
+                    } else if ((path[0] === '0.00') && (path[1] === '0.00') && (path[2] === '0.00') && (path[3] === '0.00') && (path[4] === '0.00') && (path[5] === '0.00')){
                         
                     } else {
                         document.getElementById('path0').value = path[0];
