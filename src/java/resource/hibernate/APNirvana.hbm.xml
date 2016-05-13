@@ -265,6 +265,9 @@
         <property name="payment_detail_id" type="string">
             <column name="payment_detail_id"/>
         </property>
+        <property name="paymenttype" type="string">
+            <column name="paymenttype"/>
+        </property>
         <property name="accno" type="string">
             <column name="accno"/>
         </property> 
