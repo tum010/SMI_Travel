@@ -967,7 +967,7 @@ public class APNirvanaImpl implements APNirvanaDao {
             
             if(i == APList.size()-1){
                 try {
-                    List<NirvanaInterface> nirvanaInterfaceList = ssDataexchTemp.callStoredProcedure(ssDataexchList);
+                    List<NirvanaInterface> nirvanaInterfaceList = ssDataexchTemp.callStoredProcedureAP(ssDataexchList);
                     if(nirvanaInterfaceList != null){
                         System.out.println("===== UpdateStatusAPInterface =====");
                         result = UpdateStatusAPInterface(nirvanaInterfaceList);

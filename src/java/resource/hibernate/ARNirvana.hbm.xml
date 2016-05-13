@@ -165,6 +165,9 @@
         </property>
         <property name="accno" type="string">
             <column name="accno"/>
-        </property> 
+        </property>
+        <property name="comid" type="string">
+            <column name="comid"/>
+        </property>  
     </class>
 </hibernate-mapping>

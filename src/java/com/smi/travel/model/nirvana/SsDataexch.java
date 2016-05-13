@@ -90,16 +90,69 @@ public class SsDataexch {
         return ssDataexch.getDataNo();
     }
     
-    public List<NirvanaInterface> callStoredProcedure(List<SsDataexch> ssDataexchList) throws Exception {
+    public List<NirvanaInterface> callStoredProcedureAP(List<SsDataexch> ssDataexchList) throws Exception {
         String result = "success";
         List<NirvanaInterface> nirvanaInterfaceList = new ArrayList<NirvanaInterface>();
         sybDriver = (SybDriver) Class.forName("com.sybase.jdbc3.jdbc.SybDriver").newInstance();  
         con = DriverManager.getConnection(url,username, password);
         try {
             if(con != null){
-                System.out.println(" ===== callStoredProcedure ===== ");
+                System.out.println(" ===== callStoredProcedure AP===== ");
                 stmt = con.createStatement();
                 stmt.executeUpdate(" exec SOFTPACK.zz_SMI_payablejrnl "); 
+                if(!"null".equalsIgnoreCase(result)){
+                    for(int i=0; i<ssDataexchList.size(); i++){
+                        SsDataexch ssDataexch = ssDataexchList.get(i);
+                        System.out.println("===== Data No ===== : "+ssDataexch.getDataNo());
+                        ResultSet rs = stmt.executeQuery("select * from ss_dataexch2 where data_no = '" + ssDataexch.getDataNo() + "'");
+                        while (rs.next()) {    
+                            String status = rs.getString("rcv_sta_cd") == null ? "" : rs.getString("rcv_sta_cd");
+                            
+                            if("9".equalsIgnoreCase(status)){
+//                                result = "fail";
+                                //AP
+                                String datano = (ssDataexch.getDataNo() != null && !"".equalsIgnoreCase(ssDataexch.getDataNo()) ? ssDataexch.getDataNo() : "");
+                                String paymentDetailId = (ssDataexch.getPayment_detail_id() != null && !"".equalsIgnoreCase(ssDataexch.getPayment_detail_id()) ? ssDataexch.getPayment_detail_id() : "");
+                                String paymentType = (ssDataexch.getPaymenttype() != null && !"".equalsIgnoreCase(ssDataexch.getPaymenttype()) ? ssDataexch.getPaymenttype() : "");
+
+                                //AR
+                                String rowid = (ssDataexch.getRowid() != null && !"".equalsIgnoreCase(ssDataexch.getRowid()) ? ssDataexch.getRowid() : "");
+
+                                NirvanaInterface nirvanaInterface = new NirvanaInterface();
+                                nirvanaInterface.setDatano(datano);
+                                nirvanaInterface.setPayment_detail_id(paymentDetailId);
+                                nirvanaInterface.setPaymenttype(paymentType);
+                                nirvanaInterface.setRowid(rowid);
+                                
+                                nirvanaInterfaceList.add(nirvanaInterface);
+                            }
+                        }
+                    }
+                }
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+        } finally {
+            stmt.close();
+            con.close();
+            
+        }
+                
+        return nirvanaInterfaceList;
+    }
+    
+    public List<NirvanaInterface> callStoredProcedureAR(List<SsDataexch> ssDataexchList) throws Exception {
+        String result = "success";
+        List<NirvanaInterface> nirvanaInterfaceList = new ArrayList<NirvanaInterface>();
+        sybDriver = (SybDriver) Class.forName("com.sybase.jdbc3.jdbc.SybDriver").newInstance();  
+        con = DriverManager.getConnection(url,username, password);
+        try {
+            if(con != null){
+                System.out.println(" ===== callStoredProcedure AR ===== ");
+                stmt = con.createStatement();
+                stmt.executeUpdate(" exec SOFTPACK.zz_smi_salesjrnl "); 
                 if(!"null".equalsIgnoreCase(result)){
                     for(int i=0; i<ssDataexchList.size(); i++){
                         SsDataexch ssDataexch = ssDataexchList.get(i);

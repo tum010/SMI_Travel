@@ -39,13 +39,13 @@
             <input type="hidden" value="" id="currentPage" name="currentPage">
             <input type="hidden" value="" id="row" name="row">
             <div class="col-xs-12" style="margin-top: -17px">
-                <c:if test="${requestScope['update'] =='updatesuccess'}">                                            
+                <c:if test="${requestScope['update'] =='success'}">                                            
                     <div id="textAlertDivSave"  style="" class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <strong>Update Status Success!</strong> 
                     </div>
                 </c:if>
-                <c:if test="${requestScope['update'] =='updatefail'}">
+                <c:if test="${requestScope['update'] =='fail'}">
                 <div id="textAlertDivSave"  style="" class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                    <strong>Update Status Unsuccess!</strong> 

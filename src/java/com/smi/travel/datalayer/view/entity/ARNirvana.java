@@ -77,6 +77,7 @@ public class ARNirvana {
     private String receive_detail_id;
     private String rowid;
     private String accno;
+    private String comid;
     
     //header 
     private String printofdatePage;
@@ -954,6 +955,14 @@ public class ARNirvana {
 
     public void setAccno(String accno) {
         this.accno = accno;
+    }
+
+    public String getComid() {
+        return comid;
+    }
+
+    public void setComid(String comid) {
+        this.comid = comid;
     }
     
     

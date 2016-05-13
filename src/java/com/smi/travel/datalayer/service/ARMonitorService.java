@@ -7,6 +7,7 @@ package com.smi.travel.datalayer.service;
 
 import com.smi.travel.datalayer.view.dao.ARNirvanaDao;
 import com.smi.travel.datalayer.view.entity.ARNirvana;
+import com.smi.travel.datalayer.view.entity.NirvanaInterface;
 import com.smi.travel.report.GenerateReport;
 import java.util.List;
 
@@ -26,8 +27,8 @@ public class ARMonitorService {
         return arNirvanaDao.ExportARFileInterface(APList,pathfile);
     }
     
-    public String UpdateStatusARInterface(List<ARNirvana> APList){
-        return arNirvanaDao.UpdateStatusARInterface(APList);
+    public String UpdateStatusARInterface(List<NirvanaInterface> nirvanaInterfaceList){
+        return arNirvanaDao.UpdateStatusARInterface(nirvanaInterfaceList);
     }
 
     public ARNirvanaDao getArNirvanaDao() {

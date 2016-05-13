@@ -7,6 +7,7 @@
 package com.smi.travel.datalayer.view.dao;
 
 import com.smi.travel.datalayer.view.entity.ARNirvana;
+import com.smi.travel.datalayer.view.entity.NirvanaInterface;
 import java.util.List;
 
 /**
@@ -16,6 +17,6 @@ import java.util.List;
 public interface ARNirvanaDao {
     public List<ARNirvana> SearchArNirvanaFromFilter(String invtype,String department,String billtype,String from,String to,String status,String accno);
     public String ExportARFileInterface(List<ARNirvana> APList,String pathfile);
-    public String UpdateStatusARInterface(List<ARNirvana> APList);
+    public String UpdateStatusARInterface(List<NirvanaInterface> nirvanaInterfaceList);
     public String MappingARNirvana(List<ARNirvana> arNirvanaData);
 }
