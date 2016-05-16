@@ -712,11 +712,24 @@ function searchCustomerAgentList(name) {
     }
 }
 
-function setBillValue(billto, billname, address, term, pay) {
+function setBillValue(billto, billname, term, pay) {
 
     $("#refundBy").val(billto);
     $("#refundByName").val(billname);
     $("#refundCustModal").modal('hide');
+}
+
+function setRefundAgent(id, code, name) {
+    document.getElementById("refundAgentId").value = id;
+    document.getElementById("refundAgentCode").value = code;
+    document.getElementById("refundAgentName").value = name;
+    $("#RefundAgentModal").modal('hide');
+}
+
+function clearNew() {
+    var action = document.getElementById('action');
+    action.value = 'new';
+    document.getElementById('RefundAirlineForm').submit();
 }
 
 function calculateProfitReady(){

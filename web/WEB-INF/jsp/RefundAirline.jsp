@@ -269,6 +269,7 @@
                     <!--</div>-->
                     <button  id="buttonSave" name="ButtonSave" class="btn btn-success" value="save"><i class="fa fa-save"></i> Save</button>
                     <button id="ButtonSaveAndNew" name="ButtonSaveAndNew" class="btn btn-success"><i class="fa fa-save"></i> Save &amp; New</button>
+                    <button type="button" id="ButtonNew" name="ButtonNew" onclick="clearNew()" class="btn btn-primary"><i class="fa fa-plus-circle"></i> New</button>
                 </div>            
             </form>
         </div>
@@ -289,9 +290,7 @@
                             <th class="hidden">ID</th>
                             <th>User</th>
                             <th>Name</th>
-                            <th class="hidden">Address</th>
-                            <th class="hidden">Tel</th>
-                            <th class="hidden">Fax</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -299,17 +298,14 @@
                         agent = [];
                     </script>
                     <c:forEach var="a" items="${agent}">
-                        <tr>
+                        <tr onclick="setRefundAgent('${a.id}', '${a.code}', '${a.name}');">
                             <td class="agent-id hidden">${a.id}</td>
                             <td class="agent-user">${a.code}</td>
                             <td class="agent-name">${a.name}</td>
-                            <td class="agent-addr hidden">${a.address}</td>
-                            <td class="agent-tel hidden">${a.tel}</td>
-                            <td class="agent-fax hidden">${a.fax}</td>
                         </tr>
                         <script>
                             agent.push({id: "${a.id}", code: "${a.code}", name: "${a.name}",
-                                address: "${a.address}", tel: "${a.tel}", fax: "${a.fax}"});
+                                 tel: "${a.tel}", fax: "${a.fax}"});
                         </script>
                     </c:forEach>
                     </tbody>
@@ -389,8 +385,6 @@
                         <tr class="datatable-header">
                             <th>Code</th>
                             <th>Name</th>
-                            <th class="hidden">Address</th>
-                            <th class="hidden">Tel</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -398,15 +392,13 @@
                             customerRefund = [];
                         </script>
                         <c:forEach var="item" items="${cust}">
-                            <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.address}', '${item.term}', '${item.pay}');">
+                            <tr onclick="setBillValue('${item.billTo}', '${item.billName}', '${item.term}', '${item.pay}');">
                                 <td class="item-billto">${item.billTo}</td>
                                 <td class="item-name">${item.billName}</td>                                
-                                <td class="item-address hidden">${item.address}</td>
-                                <td class="item-tel hidden">${item.tel}</td>
                             </tr>
                             <script>
                                 customerRefund.push({id: "${item.billTo}", code: "${item.billTo}", name: "${item.billName}",
-                                    address: "${item.address}", tel: "${item.tel}", fax: "${item.tel}"});
+                                    tel: "${item.tel}", fax: "${item.tel}"});
                             </script>
                         </c:forEach>
                     </tbody>
