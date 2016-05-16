@@ -2742,7 +2742,10 @@ public class AJAXBean extends AbstractBean implements
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
         if ("Air Ticket".equals(invType)) {
             for (int i = 0; i < billdeescList.size(); i++) {
-                if (billdeescList.get(i).getMBilltype().getName().equals(invType) || billdeescList.get(i).getMBilltype().getName().equals("Air Additional")) {
+                if (billdeescList.get(i).getMBilltype().getName().equals(invType) 
+                        || billdeescList.get(i).getMBilltype().getName().equals("Air Additional") 
+                        || billdeescList.get(i).getMBilltype().getName().equals("Others") 
+                        || billdeescList.get(i).getMBilltype().getName().equals("Coupon")) {
                     BigDecimal[] valueresult = invoicedao.checkBillDescInuse(billdeescList.get(i).getId(), String.valueOf(billdeescList.get(i).getCost()), String.valueOf(billdeescList.get(i).getPrice()));
                     System.out.println("valueresult[1] : " + valueresult[1]);
                     if (valueresult[1].compareTo(BigDecimal.ZERO) != 0) {
