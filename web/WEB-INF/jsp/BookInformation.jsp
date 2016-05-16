@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label>Booking Date</label>
+                        <label>Create Date</label>
                         <div class=' col-sm-12 input-group date' id='effectivefromClass'>
                             <input type='text' class="form-control datemask"  id="bookDate" name="bookDate" 
                                    data-date-format="DD-MM-YYYY" placeholder="DD-MM-YYYY" value="${requestScope['bookDate']}" />
@@ -215,7 +215,7 @@
                             <tr class="datatable-header" >
                                 <th style="width: 5%">No</th>
                                 <th style="width: 5%">Ref No</th>
-                                <th style="width: 7%">Ref Date</th>
+                                <th style="width: 7%">Create Date</th>
                                 <th style="width: 20%">Agent</th>
                                 <th style="width: 20%">Leader</th>
                                 <th style="width: 6%">Flight</th>
@@ -267,7 +267,7 @@
                             <tr class="datatable-header" >
                                 <th style="width: 3%">No</th>
                                 <th style="width: 5%">Ref No</th>
-                                <th style="width: 7%">Ref Date</th>
+                                <th style="width: 7%">Create Date</th>
                                 <th style="width: 12%">Agent</th>
                                 <th style="width: 18%">Leader</th>
                                 <th style="width: 12%">Hotel</th>
@@ -321,7 +321,7 @@
                             <tr class="datatable-header" >
                                 <th style="width: 5%">No</th>
                                 <th style="width: 5%">Ref No</th>
-                                <th style="width: 10%">Ref Date</th>
+                                <th style="width: 10%">Create Date</th>
                                 <th style="width: 20%">Agent</th>
                                 <th style="width: 20%">Leader</th>
                                 <th style="width: 16%">Code</th>
@@ -365,7 +365,7 @@
                             <tr class="datatable-header" >
                                 <th style="width: 2%">No</th>
                                 <th style="width: 5%">Ref No</th>
-                                <th style="width: 6%">Ref Date</th>
+                                <th style="width: 6%">Create Date</th>
                                 <th style="width: 11%">Agent</th>
                                 <th style="width: 11%">Leader</th>
                                 <th style="width: 3%">Pax</th>
@@ -425,7 +425,7 @@
                             <tr class="datatable-header" >
                                 <th style="width: 2%">No</th>
                                 <th style="width: 3%">Ref No</th>
-                                <th style="width: 5%">Ref Date</th>
+                                <th style="width: 5%">Create Date</th>
                                 <th style="width: 12%">Agent</th>
                                 <th style="width: 12%">Leader</th>
                                 <th style="width: 6%">Code</th>
@@ -471,7 +471,7 @@
                             <tr class="datatable-header" >
                                 <th style="width: 2%">No</th>
                                 <th style="width: 5%">Ref No</th>
-                                <th style="width: 6%">Ref Date</th>
+                                <th style="width: 6%">Create Date</th>
                                 <th style="width: 14%">Agent</th>
                                 <th style="width: 14%">Leader</th>
                                 <th style="width: 4%">OK By</th>
