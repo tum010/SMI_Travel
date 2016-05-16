@@ -551,7 +551,11 @@ public class BillableImpl implements BillableDao {
                     String newDate = dateArr[2] +"/" + dateArr[1] + "/" + dateArr[0];
                     description += "  ("+newDate +")\n";
                 }else{
-                     description += "\n";
+                    boolean haveNewLine = ((list.get(i).getAdCost() != null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getAdCost()) != 0)
+                            || list.get(i).getChCost() != null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getChCost()) != 0
+                            || list.get(i).getInCost() != null &&(new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getInCost())  != 0
+                            ? true : false);
+                     description += (haveNewLine ? "\n" : "");
                 }
                 String amount = "";
                 if(list.get(i).getAdCost() != null && (new BigDecimal(BigInteger.ZERO)).compareTo(list.get(i).getAdCost()) != 0 ){ // Adult Cost
@@ -813,9 +817,9 @@ public class BillableImpl implements BillableDao {
                 
                 int day = getDifferenceDays(list.get(i).getCheckin(), list.get(i).getCheckout()); // Day 
                 if( day != 0){
-                   description += "  :  "+day +" NST";
+                   description += "  :  "+day +" NTS";
                 }else{
-                     description += "0 NST";
+                     description += "0 NTS";
                 }
                 if(format == 1){
                     if(list.get(i).getMaster().getCustomer().getMInitialname() != null){ // prename

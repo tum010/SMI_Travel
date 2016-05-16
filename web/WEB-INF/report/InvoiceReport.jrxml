@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" language="groovy" pageWidth="595" pageHeight="842" columnWidth="560" leftMargin="15" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59f0ec99-8109-4367-975c-dc17aad92f4d">
 	<property name="ireport.zoom" value="1.818181818181819"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="76"/>
+	<property name="ireport.y" value="316"/>
 	<field name="invto" class="java.lang.String"/>
 	<field name="invno" class="java.lang.String"/>
 	<field name="invdate" class="java.lang.String"/>
@@ -151,16 +151,16 @@
 				<textFieldExpression><![CDATA[$F{co}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="9" y="165" width="57" height="20" uuid="ee0c79fa-417c-4cf0-b4e0-af1bcd4ebd5c">
+				<reportElement x="8" y="165" width="64" height="20" uuid="ee0c79fa-417c-4cf0-b4e0-af1bcd4ebd5c">
 					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null]]></printWhenExpression>
 				</reportElement>
 				<textElement>
 					<font fontName="Cordia New" size="16" isBold="true" pdfFontName="resource/fonts/Cordia.ttf " pdfEncoding="Identity-H"/>
 				</textElement>
-				<text><![CDATA[TAX ID NO : ]]></text>
+				<text><![CDATA[TAX.ID NO : ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="66" y="165" width="89" height="20" uuid="b61e4b97-9c3e-4ed0-bb59-fc5513a89b7f">
+				<reportElement x="73" y="165" width="89" height="20" uuid="b61e4b97-9c3e-4ed0-bb59-fc5513a89b7f">
 					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -169,7 +169,7 @@
 				<textFieldExpression><![CDATA[$F{taxid}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="155" y="165" width="52" height="20" uuid="c1c6068c-4dba-40ac-bcd4-e54da796bae4">
+				<reportElement x="163" y="165" width="52" height="20" uuid="c1c6068c-4dba-40ac-bcd4-e54da796bae4">
 					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -178,7 +178,7 @@
 				<text><![CDATA[ BRANCH : ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="207" y="164" width="103" height="20" uuid="64ec884c-deb0-4d6c-9ac1-b50a64719374">
+				<reportElement x="214" y="165" width="103" height="20" uuid="64ec884c-deb0-4d6c-9ac1-b50a64719374">
 					<printWhenExpression><![CDATA[!("").equalsIgnoreCase($F{taxid}) && $F{taxid} != null]]></printWhenExpression>
 				</reportElement>
 				<textElement>
