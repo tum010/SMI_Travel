@@ -131,7 +131,11 @@ public class TransferJobReportImpl implements TransferJobReportDao {
 //                    place += "<br>"+book.getMemo();
                     memo = book.getMemo();
                 }
+                
                 report.setPlace(place);
+                if("OTHERS".equalsIgnoreCase(place)){
+                    report.setPlace(job.getPlaceOther());
+                }
                 report.setMemo(memo);
                 System.out.println("place : "+place);
             }else{

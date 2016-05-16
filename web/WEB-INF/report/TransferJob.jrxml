@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="AirlineVolumn" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="36591689-e817-40b9-bb01-c68bf69d6b71">
-	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.zoom" value="2.4200000000000266"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="259"/>
+	<property name="ireport.y" value="186"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<queryString>
 		<![CDATA[]]>
@@ -69,11 +69,17 @@
 	<pageHeader>
 		<band height="40" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="39" height="15" uuid="521a9977-4083-4b5f-8a87-6d7e37ed4436"/>
+				<reportElement x="0" y="0" width="49" height="17" uuid="521a9977-4083-4b5f-8a87-6d7e37ed4436"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
 				<text><![CDATA[Guide :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="170" y="0" width="42" height="15" uuid="4f8de899-15d0-47f7-bca9-3e26246d03cd"/>
+				<reportElement x="170" y="0" width="42" height="17" uuid="4f8de899-15d0-47f7-bca9-3e26246d03cd"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
 				<text><![CDATA[Driver :]]></text>
 			</staticText>
 			<staticText>
@@ -81,9 +87,9 @@
 				<text><![CDATA[Date :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="39" y="-3" width="120" height="20" uuid="f73f94e2-e702-4016-aadb-f2e6dd38cb0a"/>
+				<reportElement x="44" y="-2" width="120" height="20" uuid="f73f94e2-e702-4016-aadb-f2e6dd38cb0a"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="9" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="11" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{guide}]]></textFieldExpression>
 			</textField>
@@ -95,9 +101,9 @@
 				<textFieldExpression><![CDATA[$F{tourdate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="212" y="-3" width="120" height="20" uuid="b9fa02e9-5043-45c9-890e-56ff2c267326"/>
+				<reportElement x="213" y="-2" width="120" height="20" uuid="b9fa02e9-5043-45c9-890e-56ff2c267326"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Tahoma" size="9" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					<font fontName="Tahoma" size="11" isBold="false" pdfFontName="resource/fonts/Tahoma.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{driver}]]></textFieldExpression>
 			</textField>
@@ -106,7 +112,7 @@
 	<columnHeader>
 		<band height="19" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="1" width="555" height="18" backcolor="#E6E6E6" uuid="ad6573ea-8127-4be8-940a-3a4d819f0ee2"/>
+				<reportElement x="0" y="0" width="555" height="19" backcolor="#E6E6E6" uuid="ad6573ea-8127-4be8-940a-3a4d819f0ee2"/>
 				<graphicElement>
 					<pen lineWidth="0.25" lineColor="#000000"/>
 				</graphicElement>
@@ -114,10 +120,11 @@
 			<staticText>
 				<reportElement x="0" y="1" width="27" height="18" backcolor="#FFFFFF" uuid="80e62658-6145-4ebb-b49e-4600a847a307"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -125,12 +132,13 @@
 				<text><![CDATA[No.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="27" y="1" width="132" height="18" uuid="8d1446dc-26ab-4bc8-8577-83e239890a57"/>
+				<reportElement x="27" y="1" width="132" height="18" backcolor="#CCCCCC" uuid="8d1446dc-26ab-4bc8-8577-83e239890a57"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -140,10 +148,11 @@
 			<staticText>
 				<reportElement x="159" y="1" width="35" height="18" uuid="e483f3ca-4b44-422a-bc8d-de10314058ce"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -153,10 +162,11 @@
 			<staticText>
 				<reportElement x="194" y="1" width="32" height="18" uuid="a8ea0ac2-ad92-4341-bd71-e24620414795"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -166,10 +176,11 @@
 			<staticText>
 				<reportElement x="316" y="1" width="24" height="18" backcolor="#FFFFFF" uuid="83edb736-492d-4623-8ee4-433b052f46a6"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -179,10 +190,11 @@
 			<staticText>
 				<reportElement x="226" y="1" width="90" height="18" uuid="2c511a20-3573-420b-8c32-d6395dc30413"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -190,12 +202,13 @@
 				<text><![CDATA[Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="340" y="1" width="23" height="18" backcolor="#FFFFFF" uuid="5662c245-01cf-4077-b48a-18b0f8b26619"/>
+				<reportElement x="340" y="1" width="22" height="18" backcolor="#FFFFFF" uuid="5662c245-01cf-4077-b48a-18b0f8b26619"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -205,10 +218,11 @@
 			<staticText>
 				<reportElement x="362" y="1" width="23" height="18" backcolor="#FFFFFF" uuid="99046828-24ec-4859-9fd2-6b1d66d3e2cc"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineColor="#000000"/>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -216,12 +230,13 @@
 				<text><![CDATA[In]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="384" y="1" width="49" height="18" backcolor="#FFFFFF" uuid="0120ecea-dd9d-48f1-95d2-2d83a900f94a"/>
+				<reportElement x="385" y="1" width="48" height="18" backcolor="#FFFFFF" uuid="0120ecea-dd9d-48f1-95d2-2d83a900f94a"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -231,10 +246,11 @@
 			<staticText>
 				<reportElement x="433" y="1" width="92" height="18" backcolor="#FFFFFF" uuid="37d0ba9c-ba13-4b7a-b036-3be4123e13a1"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
@@ -244,16 +260,77 @@
 			<staticText>
 				<reportElement x="525" y="1" width="30" height="18" backcolor="#FFFFFF" uuid="10cbaa94-53aa-4915-b2a7-020f04e1122b"/>
 				<box>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
+					<pen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#CCCCCC"/>
 				</box>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Pay]]></text>
 			</staticText>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="194" y="0" width="1" height="19" uuid="115f81fc-2471-4945-827e-1ec9d9b337d5"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="385" y="0" width="1" height="19" uuid="24b0702a-0c5b-41bc-9007-df8f6376c683"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="316" y="0" width="1" height="19" uuid="e2097a0d-249c-466f-8d4a-f97408ab90e6"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="340" y="0" width="1" height="19" uuid="90711a65-78e4-437d-8953-b53ecd657ba0"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="525" y="0" width="1" height="19" uuid="b89bf044-e07a-4c04-8fc6-1047e39793c2"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="362" y="0" width="1" height="19" uuid="7ca3c140-9474-445e-975b-69ba79ea3994"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="26" y="0" width="1" height="19" uuid="d4c1e53e-ab74-4d8a-83f2-86d3b163bad6"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="433" y="0" width="1" height="19" uuid="4eb3f6ae-9807-4cef-9f3c-96e298ab712d"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="226" y="0" width="1" height="19" uuid="8c657cff-2515-4c51-9328-b7dee77f6a5c"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement stretchType="RelativeToBandHeight" x="159" y="0" width="1" height="19" uuid="3ee57372-dae5-41e1-be19-97c6229084ee"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
@@ -337,42 +414,81 @@
 			</textField>
 			<line>
 				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="1" height="33" uuid="ffb313de-a206-40ed-9c9b-0bf4ad683758"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
 				<reportElement stretchType="RelativeToBandHeight" x="26" y="0" width="1" height="33" uuid="8ba1593b-f925-4dfb-8389-69b2eaec2a17"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
 				<reportElement stretchType="RelativeToBandHeight" x="159" y="0" width="1" height="33" uuid="ce494241-7ae4-4c74-883d-21956298fc92"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="193" y="0" width="1" height="33" uuid="5697b0ab-4e77-419e-93d5-5b4a750d027a"/>
+				<reportElement stretchType="RelativeToBandHeight" x="194" y="0" width="1" height="33" uuid="5697b0ab-4e77-419e-93d5-5b4a750d027a"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="225" y="0" width="1" height="33" uuid="fc5ca6dc-c228-47d3-a420-e59cc167fff1"/>
+				<reportElement stretchType="RelativeToBandHeight" x="226" y="0" width="1" height="33" uuid="fc5ca6dc-c228-47d3-a420-e59cc167fff1"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="315" y="0" width="1" height="33" uuid="93413823-c80e-411a-b3dd-076ce2ec392f"/>
+				<reportElement stretchType="RelativeToBandHeight" x="316" y="0" width="1" height="33" uuid="93413823-c80e-411a-b3dd-076ce2ec392f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
 				<reportElement stretchType="RelativeToBandHeight" x="340" y="0" width="1" height="33" uuid="3be9bde1-59d5-471f-9f1d-c10ba84e7149"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="361" y="0" width="1" height="33" uuid="81b1cb13-9450-44c4-af05-cdaa4e75f51f"/>
+				<reportElement stretchType="RelativeToBandHeight" x="362" y="0" width="1" height="33" uuid="81b1cb13-9450-44c4-af05-cdaa4e75f51f"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
-				<reportElement stretchType="RelativeToBandHeight" x="384" y="0" width="1" height="33" uuid="280aad0b-b1a4-4eda-acd8-e46bab108a4d"/>
+				<reportElement stretchType="RelativeToBandHeight" x="385" y="0" width="1" height="33" uuid="280aad0b-b1a4-4eda-acd8-e46bab108a4d"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
 				<reportElement stretchType="RelativeToBandHeight" x="554" y="0" width="1" height="33" uuid="29aac059-d050-4d2a-8aa3-7f2a395bedc5"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
 				<reportElement stretchType="RelativeToBandHeight" x="525" y="0" width="1" height="33" uuid="9659bc02-8168-4b60-b1af-958b8ce846a4"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
 				<reportElement stretchType="RelativeToBandHeight" x="433" y="0" width="1" height="33" uuid="96a650a4-fdf6-408e-bbac-0858467b99a5"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<line>
-				<reportElement positionType="Float" x="0" y="32" width="554" height="1" uuid="ae239207-b085-45cb-8f11-bd64d1b3ad1c"/>
+				<reportElement positionType="Float" x="0" y="32" width="555" height="1" uuid="ae239207-b085-45cb-8f11-bd64d1b3ad1c"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
 			</line>
 			<textField>
 				<reportElement x="29" y="18" width="130" height="15" uuid="d138b76c-f28f-445c-9d6c-86ba2cbd2da0"/>
